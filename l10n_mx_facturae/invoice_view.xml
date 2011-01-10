@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!--
+        <record model="ir.ui.view" id="account_invoice_form_inh_l10n_mx_facturae_01">
+            <field name="name">account.invoice.form.inh_l10n_mx_facturae_01</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <button name="button_reset_taxes" position="after">
+                    <button name="action_make_cfd" states="proforma2,sale,open,paid,cancel" string="Crear Factura Electronica" type="object" colspan="2" icon="gtk-execute"/>
+                </button>
+            </field>
+        </record>
+        -->
+    </data>
+</openerp>
