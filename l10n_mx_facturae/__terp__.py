@@ -6,7 +6,7 @@
     "category" : "Localisation/Accounting",
     "description" : """This module creates e-invoice files from invoices with standard of Mexican SAT.
     """,
-    "website" : "moylop260@hotmail.com",
+    "website" : "http://moylop260.wordpress.com/",
     "license" : "GPL-2",
     "depends" : ["account", "base_vat", "document", 
             "sale",#no depende de sale directamente, pero marca error en algunas versiones
