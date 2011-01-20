@@ -1,0 +1,11 @@
+Valida XML WEB
+https://www.consulta.sat.gob.mx/SICOFI_WEB/ModuloECFD_Plus/ValidadorComprobantes/Validador.html
+
+Verifica comprobante
+http://www.sat.gob.mx/sitio_internet/sitio_aplicaciones/verifica_comprobante/
+
+Valida XML Desktop
+http://www.validacfd.com/phpbb3/download/file.php?id=74
+
+Verifica comprobantes por el FTP
+ftp://ftp2.sat.gob.mx/agti_servicio_ftp/verifica_comprobante_ftp/
