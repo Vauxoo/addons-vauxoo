@@ -474,7 +474,7 @@ class account_invoice(osv.osv):
                 invoice_comprobante_data['folio'] or '',
                 str( invoice_comprobante_data['anoAprobacion'] ) + str( invoice_comprobante_data['noAprobacion'] ),
                 time.strftime('%d/%m/%Y %H:%M:%S', time.strptime( facturae_data['date_invoice'], '%Y-%m-%d %H:%M:%S')),#invoice_comprobante_data['fecha'].replace('T', ' '),
-                invoice_comprobante_data['subTotal'] or 0.0,
+                invoice_comprobante_data['total'] or 0.0,
                 invoice_comprobante_data['Impuestos']['totalImpuestosTrasladados'] or 0.0,
                 facturae_state,
                 facturae_type,
