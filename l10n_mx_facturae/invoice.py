@@ -346,6 +346,8 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
     
     def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context = {}
         res = {}
         sequence_obj = self.pool.get('ir.sequence')
         
@@ -358,6 +360,7 @@ class account_invoice(osv.osv):
             fname = ""
             fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
             fname += '.'
+            context.update({ 'number_work': invoice.number or False })
             fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
             fname += '.'
             fname += invoice.number or ''
@@ -544,6 +547,7 @@ class account_invoice(osv.osv):
             """
             if sequence_id:
                 #NO ES COMPATIBLE CON TINYERP approval_id = sequence.approval_id.id
+                context.update({ 'number_work': invoice.number or False })
                 approval_id = self.pool.get('ir.sequence')._get_current_approval(cr, uid, [sequence_id], field_names=None, arg=False, context=context)[sequence_id]
                 approval = approval_id and self.pool.get('ir.sequence.approval').browse(cr, uid, [approval_id], context=context)[0] or False
                 if approval:

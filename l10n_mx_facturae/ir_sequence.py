@@ -90,15 +90,18 @@ class ir_sequence(osv.osv):
         return super(ir_sequence, self).copy(cr, uid, id, default, context=context) 
     
     def _get_current_approval(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context = {}
         res = {}
         for id in ids:
             res[id] = False
         approval_obj = self.pool.get('ir.sequence.approval')
         for sequence in self.browse(cr, uid, ids, context=context):
+            number_work = context.get('number_work', None) or sequence.number_next
             approval_ids = approval_obj.search(cr, uid, [
                     ('sequence_id', '=', sequence.id),
-                    ('number_start', '<=', sequence.number_next),
-                    ('number_end', '>=', sequence.number_next)], 
+                    ('number_start', '<=', number_work),
+                    ('number_end', '>=', number_work)], 
                 limit=1)
             approval_id = approval_ids and approval_ids[0] or False
             res[sequence.id] = approval_id

@@ -78,6 +78,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
     
     def _set_invoice_sequence_and_approval(self, invoice_id):
         #TinyERP Compatibility
+        context = {}
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
         sequence_obj = pool.get('ir.sequence')
@@ -87,7 +88,9 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         sequence = sequence_obj.browse(self.cr, self.uid, [sequence_id])[0]
         self.sequence = sequence
         
-        approval_id = sequence_obj._get_current_approval(self.cr, self.uid, [sequence_id])[sequence_id]
+        invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
+        context.update({'number_work': invoice.number})
+        approval_id = sequence_obj._get_current_approval(self.cr, self.uid, [sequence_id], context=context)[sequence_id]
         approval = approval_obj.browse(self.cr, self.uid, [approval_id])[0]
         self.approval = approval
         return sequence, approval
