@@ -42,6 +42,7 @@ import hashlib
 import tempfile
 import os
 import netsvc
+from tools.translate import _
 
 
 
@@ -636,6 +637,9 @@ class account_invoice(osv.osv):
         fname_txt, txt_str = self._xml2cad_orig(cr=False, uid=False, ids=False, context=context)
         data_dict['cadena_original'] = txt_str
         
+        if not data_dict['Comprobante'].get('folio', ''):
+            raise osv.except_osv(_('Error en Folio!'), -('No se pudo obtener el Folio del comprobante (Numero de Factura).\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
+            
         #time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
         context.update( { 'fecha': data_dict['Comprobante']['fecha'] } )
         sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
@@ -657,9 +661,6 @@ class account_invoice(osv.osv):
             raise osv.except_osv('Error en Certificado!', 'No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s'%(msg2))
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
-        
-        if not data_dict['Comprobante'].get('folio', ''):
-            raise osv.except_osv('Error en Folio!', 'No se pudo obtener el Folio del comprobante.\nVerifique su configuracion.\n%s'%(msg2))
         
         if context.get('type_data') == 'dict':
             return data_dict
