@@ -29,7 +29,7 @@ msgstr "facturae file"
 #. module: l10n_mx_facturae
 #: help:res.company,invoice_out_sequence_id:0
 msgid "The sequence used for invoice out numbers."
-msgstr "La secuencia utilizada para los nrumeros de factura"
+msgstr "La secuencia utilizada para los números de factura"
 
 #. module: l10n_mx_facturae
 #: rml:account.invoice.facturae.pdf:0
@@ -495,7 +495,7 @@ msgstr "Secuencia utilizada como numero de reembolso de factura"
 #: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt.py:0
 #, python-format
 msgid "Abra el archivo y verfique que la informacion, este correcta. Folios, RFC, montos y estatus reportados.\nAsegurese de que no este reportando folios, que no pertenecen a facturas electronicas (se pueden eliminar directamente en el archivo).\nTIP: Recuerde que este archivo tambien contiene folios de nota de credito."
-msgstr "Abra el archivo y verfique que la información, este correcta. Folios, RFC, montos y estatus reportados.\nAsegurese de que no este reportando folios, que no pertenecen a facturas electrónicas (se pueden eliminar directamente en el archivo).\nTIP: Recuerde que este archivo tambien contiene folios de nota de crédito.\nDespués de tener el TXT, hay que subirlo a SICOFI.\n1. Ingresar a SICOFI\nhttp://www.sat.gob.mx/sitio_internet/e_sat/comprobantes_fiscales/15_15788.html\n2. Ingresar\n  RFC\n  Contraseña de Clave Privada\n"
+msgstr "Abra el archivo y verfique que la información, este correcta. Folios, RFC, montos y estatus reportados.\nAsegurese de que no este reportando folios, que no pertenecen a facturas electrónicas (se pueden eliminar directamente en el archivo).\nTIP: Recuerde que este archivo tambien contiene folios de nota de crédito.\nDespués de tener el TXT, hay que subirlo a SICOFI.\n1. Ingresar a SICOFI\nhttp://www.sat.gob.mx/sitio_internet/e_sat/comprobantes_fiscales/15_15788.html\n2. Ingresar\n  RFC\n  Contraseña de Clave Privada"
 
 #. module: l10n_mx_facturae
 #: view:ir.sequence:0
