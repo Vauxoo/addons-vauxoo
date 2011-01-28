@@ -2,9 +2,9 @@
 <openerp>
     <data noupdate="True">
         <!-- Currencies -->
-        <record id="MXP" model="res.currency">
-            <field name="name">MXP</field>
-            <field name="code">MXP</field>
+        <record id="MXN" model="res.currency">
+            <field name="name">MXN</field>
+            <field name="code">MXN</field>
             <field name="rounding">0.01</field>
             <field name="accuracy">4</field>
         </record>
