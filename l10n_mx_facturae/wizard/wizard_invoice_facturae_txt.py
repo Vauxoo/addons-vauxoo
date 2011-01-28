@@ -80,14 +80,22 @@ def _create_facturae_txt(self, cr, uid, data, context={}):
         txt_data, fname = invoice_obj._get_facturae_invoice_txt_data(cr, uid, invoice_ids, context=context)
         if txt_data:
             txt_data = base64.encodestring( txt_data )
-            return {'facturae': txt_data, 'facturae_fname': fname, 'note': u'Abra el archivo y verfique que la informacion, este correcta. Folios, RFC, montos y estatus reportados.\nAsegurese de que no este reportando folios, que no pertenecen a facturas electronicas (se pueden eliminar directamente en el archivo).\nTIP: Recuerde que este archivo tambien contiene folios de nota de credito.'}
+            return {'facturae': txt_data, 'facturae_fname': fname, 'note': _('Abra el archivo y verfique que la informacion, este correcta. Folios, RFC, montos y estatus reportados.\nAsegurese de que no este reportando folios, que no pertenecen a facturas electronicas (se pueden eliminar directamente en el archivo).\nTIP: Recuerde que este archivo tambien contiene folios de nota de credito.')}
     return {}
 
 end_form = """<?xml version="1.0"?>
-<form string="facturae export">
-    <field name="facturae" filename="facturae_fname"/>
+<form string="ARCHIVO TXT PARA EL SAT">
+    <newline/>
+    <separator/>
+    <newline/>
+    <field name="facturae" filename="facturae_fname" nolabel="1"/>
     <field name="facturae_fname" invisible="1"/>
-    <field name="note" colspan="4" nolabel="1"/>
+    <newline/>
+    <separator string="IMPORTANTE"/>
+    <newline/>
+    <group  rowspan="10" colspan="4">
+        <field name="note" readonly="1" nolabel="1"/>
+    </group>
 </form>"""
 
 end_fields = {
