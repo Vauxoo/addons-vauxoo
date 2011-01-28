@@ -638,7 +638,7 @@ class account_invoice(osv.osv):
         data_dict['cadena_original'] = txt_str
         
         if not data_dict['Comprobante'].get('folio', ''):
-            raise osv.except_osv(_('Error en Folio!'), -('No se pudo obtener el Folio del comprobante (Numero de Factura).\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
+            raise osv.except_osv(_('Error en Folio!'), _('No se pudo obtener el Folio del comprobante (Numero de Factura).\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
             
         #time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
         context.update( { 'fecha': data_dict['Comprobante']['fecha'] } )
