@@ -552,12 +552,12 @@ class account_invoice(osv.osv):
                 approval = approval_id and self.pool.get('ir.sequence.approval').browse(cr, uid, [approval_id], context=context)[0] or False
                 if approval:
                     folio_data = {
-                        'serie': approval.serie,
+                        'serie': approval.serie or '',
                         #'folio': '1',
-                        'noAprobacion': approval.approval_number,
-                        'anoAprobacion': approval.approval_year,
-                        'desde': approval.number_start,
-                        'hasta': approval.number_end,
+                        'noAprobacion': approval.approval_number or '',
+                        'anoAprobacion': approval.approval_year or '',
+                        'desde': approval.number_start or '',
+                        'hasta': approval.number_end or '',
                         #'noCertificado': "30001000000100000800",
                     }
                 else:
