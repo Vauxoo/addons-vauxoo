@@ -131,12 +131,21 @@ class res_company(osv.osv):
                         res[company.id][f] = certificate_id
         return res
     
-    def _get_current_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        res = {}
-        for id in ids:
-            res[id] = False
+    def _get_current_certificate(self, cr, uid, ids, field_names=False, arg=False, context={}):
+        if not context:
+            context = {}
+        res = {}.fromkeys(ids, False)
         certificate_obj = self.pool.get('res.company.facturae.certificate')
-        date = context.get('date', False) or time.strftime('%Y-%m-%d')
+        
+        date = time.strftime('%Y-%m-%d')
+        
+        if context.has_key('date_work'):
+            #Si existe este key, significa, que no viene de un function, si no de una invocacion de factura
+            date = context['date_work']
+            if not date:
+                #Si existe el campo, pero no esta asignado, significa que no fue por un function, y que no se requiere la current_date
+                ###print "NOTA: Se omitio el valor de date"
+                return res
         for company in self.browse(cr, uid, ids, context=context):
             current_company = company
             while True:

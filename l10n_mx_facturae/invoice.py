@@ -411,12 +411,15 @@ class account_invoice(osv.osv):
         return fname
     
     def _get_file_globals(self, cr, uid, ids, context={}):
+        if not context:
+            context={}
         id = ids and ids[0] or False
         file_globals = {}
         if id:
             invoice = self.browse(cr, uid, id, context=context)
             #certificate_id = invoice.company_id.certificate_id
-            certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.company_id.id], field_names=None, arg=False, context=context)[invoice.company_id.id]
+            context.update( {'date_work': invoice.date_invoice} )
+            certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
             certificate_id = certificate_id and self.pool.get('res.company.facturae.certificate').browse(cr, uid, [certificate_id], context=context)[0] or False
             
             if certificate_id:
