@@ -7,7 +7,7 @@
 #    info moylop260 (moylop260@hotmail.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@hotmail.com)
-#    Finance by: Grupo de empresas varias
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
