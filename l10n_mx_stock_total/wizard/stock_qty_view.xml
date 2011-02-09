@@ -53,7 +53,7 @@
         <menuitem 
             action="stock2" 
             id="menu_wz_reporte2_stock" 
-            parent="l10n_co_stock_count.reportes_stock"/>
+            parent="l10n_mx_stock_count.reportes_stock"/>
 
 
     </data>
