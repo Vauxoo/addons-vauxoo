@@ -197,6 +197,6 @@ class rep_conteo_stock2(report_sxw.rml_parse):
 report_sxw.report_sxw(
     'report.hoja222'                                             ,  
     'stock.total'                                                ,
-    'addons/l10n_co_stock_total/report/hoja_conteo_qty2.rml'     ,  
+    'addons/l10n_mx_stock_total/report/hoja_conteo_qty2.rml'     ,  
     parser=rep_conteo_stock2                                     ,
 )      

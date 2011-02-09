@@ -362,6 +362,6 @@ class rep_conteo_stock(report_sxw.rml_parse):
 report_sxw.report_sxw(
     'report.hoja.conteo.stock'                              ,  
     'stock.count'                                           ,
-    'addons/l10n_co_stock_count/report/hoja_conteo.rml'     ,  
+    'addons/l10n_mx_stock_count/report/hoja_conteo.rml'     ,  
     parser=rep_conteo_stock                                 ,
 )      
