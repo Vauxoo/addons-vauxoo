@@ -25,12 +25,12 @@
 ##############################################################################
 
 {
-    "name" : "l10n-co-stock-total"                                  ,
+    "name" : "Totales de Stock"                                  ,
     "version" : "0.1"                                               ,
     "depends" : ['base'                                             ,
                  'stock'                                            ,
                  'product'                                          ,
-                 'l10n_co_stock_count'                              ,
+                 'l10n_mx_stock_count'                              ,
                 ]                                                   ,
     "author" : "OpenERP Venezuela"                                  ,
     "description" : """
