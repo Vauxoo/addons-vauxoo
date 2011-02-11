@@ -177,7 +177,7 @@
         <record id="res_country_state_mx_talx" model="res.country.state">
             <field name="country_id" ref="base.mx"/>
             <field name="name">Tlaxcala</field>
-            <field name="code">TALX</field>
+            <field name="code">TLAX</field>
         </record>
         
         <record id="res_country_state_mx_ver" model="res.country.state">
