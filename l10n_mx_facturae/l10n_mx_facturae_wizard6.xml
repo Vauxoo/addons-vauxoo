@@ -15,13 +15,13 @@
             menu="False"
         />
         <menuitem id="menu_wizard_invoice_facturae_txt"
-            name="Factura-E Reporte Mensual TXT" parent="account.menu_finance_invoice"
+            name="Factura-E Reporte Mensual TXT" parent="account.menu_finance_receivables"
             action="wizard_invoice_facturae_txt"
             type="wizard"
             sequence="150"
         />
         <!--v5.0-parent name="Factura-E Reporte Mensual TXT" parent="account.menu_finance_invoice"
-            v6.0-parent name="Factura-E Reporte Mensual TXT" parent="account.menu_finance_receivables"
+            v6.0-parent 
         -->
         
     </data>
