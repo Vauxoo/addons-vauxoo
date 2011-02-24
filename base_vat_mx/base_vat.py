@@ -43,8 +43,5 @@ class res_partner(osv.osv):
                 return False
         return True
     
-    def _construct_constraint_msg(self, cr, uid, ids, context=None):            
-        return _('El RFC es incorrecto, debería ser algo como XYZA010203A01 or XYZ0102039A8')
-
-    _constraints = [(check_vat, _construct_constraint_msg, ["vat"])]
+    _constraints = [(check_vat, _('Error RFC es incorrecto, debería ser algo como XYZA010203A01 or XYZ0102039A8'), ["vat"])]
 res_partner()
