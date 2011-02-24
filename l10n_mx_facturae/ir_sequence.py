@@ -98,6 +98,17 @@ class ir_sequence(osv.osv):
         approval_obj = self.pool.get('ir.sequence.approval')
         for sequence in self.browse(cr, uid, ids, context=context):
             number_work = context.get('number_work', None) or sequence.number_next
+            
+            
+            if number_work == ''.join([x for x in str(number_work) if x.isdigit()]) or number_work=='':
+                print "Chain complain with format"
+            else:
+                if context.has_key('number_work'):
+                    msg = _("Corrige las sequencias de la factura tienen text debes estar duplicando una factura con error de este tipo.")
+                    number_work = ''.join([x for x in str(number_work) if x.isdigit()])
+                    raise osv.except_osv(_('Warning !'), '%s %s'%(msg,''.join([x for x in str(number_work) if not x.isdigit()])))
+                    
+                    
             approval_ids = approval_obj.search(cr, uid, [
                     ('sequence_id', '=', sequence.id),
                     ('number_start', '<=', number_work),
