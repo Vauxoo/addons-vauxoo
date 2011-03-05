@@ -363,9 +363,13 @@ class account_invoice(osv.osv):
             fname = ""
             fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
             fname += '.'
-            context.update({ 'number_work': invoice.number or False })
-            fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
-            fname += '.'
+            try:
+                int(invoice.number)
+                context.update({ 'number_work': invoice.number or False })
+                fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
+                fname += '.'
+            except:
+                pass
             fname += invoice.number or ''
             res[invoice.id] = fname
         return res
@@ -553,7 +557,14 @@ class account_invoice(osv.osv):
             """
             if sequence_id:
                 #NO ES COMPATIBLE CON TINYERP approval_id = sequence.approval_id.id
-                context.update({ 'number_work': invoice.number or False })
+                number_work = invoice.number
+                if invoice.type in ['out_invoice', 'out_refund']:
+                    try:
+                        if number_work:
+                            int(number_work)
+                    except(ValueError):
+                        raise osv.except_osv(_('Warning !'), _('El folio [%s] tiene que ser un numero entero, sin letras.')%( number_work ) )
+                context.update({ 'number_work': number_work or False })
                 approval_id = self.pool.get('ir.sequence')._get_current_approval(cr, uid, [sequence_id], field_names=None, arg=False, context=context)[sequence_id]
                 approval = approval_id and self.pool.get('ir.sequence.approval').browse(cr, uid, [approval_id], context=context)[0] or False
                 if approval:
