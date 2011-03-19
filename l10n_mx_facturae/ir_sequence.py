@@ -28,6 +28,7 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import release
 
 class ir_sequence_approval(osv.osv):
     _name = 'ir.sequence.approval'
@@ -134,33 +135,61 @@ class ir_sequence(osv.osv):
         return data
     
     def get_id(self, cr, uid, sequence_id, test='id=%s', context=None):
-        #inicia copy & paste, de una seccion de la funcion original
-        if context is None:
-            context = {}
-        approval_obj = self.pool.get('ir.sequence.approval')
-        if test not in ('id=%s', 'code=%s'):
-            raise ValueError('invalid test')
-        cr.execute('select id from ir_sequence where '+test+' and active=%s', (sequence_id, True,))
-        res = cr.dictfetchone()
-        #Finaliza copy & paste, de una seccion de la funcion original
-        if res:
-            sequence = self.browse(cr, uid, res['id'], context=context)
-            if sequence.approval_ids:
-                approval_id = self._get_current_approval(cr, uid, [sequence.id], field_names=None, arg=False, context=context)[sequence.id]
-                approval_id = approval_id and approval_obj.browse(cr, uid, [approval_id], context=context)[0] or False
-                if not approval_id:
-                    raise osv.except_osv('Error !', 'No hay una aprobacion valida de folios.')
-                """
-                else:
-                    _validation_sequence_number_diff(self, cr, uid, ids, context={}):
-                    sequence_number_diff = sequence.approval_id.number_end - sequence.next_number
-                    if sequence_number_diff <= sequence_number_diff_rate:
-                        #warning ya esta proximo a vencer
-                        #raise osv.except_osv(_('Warning !'), _('You cannot remove/deactivate an account which is set as a property to any Partner!'))
-                        pass
-                """
-        #return super(ir_sequence, self).get_id(cr, uid, sequence_id, test, context=context)
-        return super(ir_sequence, self).get_id(cr, uid, sequence_id, test)
+        if release.version < '6':
+            #inicia copy & paste, de una seccion de la funcion original
+            if context is None:
+                context = {}
+            approval_obj = self.pool.get('ir.sequence.approval')
+            if test not in ('id=%s', 'code=%s'):
+                raise ValueError('invalid test')
+            cr.execute('select id from ir_sequence where '+test+' and active=%s', (sequence_id, True,))
+            res = cr.dictfetchone()
+            #Finaliza copy & paste, de una seccion de la funcion original
+            if res:
+                sequence = self.browse(cr, uid, res['id'], context=context)
+                if sequence.approval_ids:
+                    approval_id = self._get_current_approval(cr, uid, [sequence.id], field_names=None, arg=False, context=context)[sequence.id]
+                    approval_id = approval_id and approval_obj.browse(cr, uid, [approval_id], context=context)[0] or False
+                    if not approval_id:
+                        raise osv.except_osv('Error !', 'No hay una aprobacion valida de folios.')
+                    """
+                    else:
+                        _validation_sequence_number_diff(self, cr, uid, ids, context={}):
+                        sequence_number_diff = sequence.approval_id.number_end - sequence.next_number
+                        if sequence_number_diff <= sequence_number_diff_rate:
+                            #warning ya esta proximo a vencer
+                            #raise osv.except_osv(_('Warning !'), _('You cannot remove/deactivate an account which is set as a property to any Partner!'))
+                            pass
+                    """
+            #return super(ir_sequence, self).get_id(cr, uid, sequence_id, test, context=context)
+            return super(ir_sequence, self).get_id(cr, uid, sequence_id, test)
+        else:
+            #inicia copy & paste, de una seccion de la funcion original
+            if test =='id=%s':
+                test = 'id'
+            if test =='code=%s':
+                test = 'code'
+            assert test in ('code','id')
+            company_id = self.pool.get('res.users').read(cr, uid, uid, ['company_id'], context=context)['company_id'][0] or None
+            cr.execute('''SELECT id, number_next, prefix, suffix, padding
+                          FROM ir_sequence
+                          WHERE %s=%%s
+                           AND active=true
+                           AND (company_id = %%s or company_id is NULL)
+                          ORDER BY company_id, id
+                          --FOR UPDATE NOWAIT''' % test,
+                          (sequence_id, company_id))
+            res = cr.dictfetchone()
+            #Finaliza copy & paste, de una seccion de la funcion original
+            if res:
+                sequence = self.browse(cr, uid, res['id'], context=context)
+                if sequence.approval_ids:
+                    approval_id = self._get_current_approval(cr, uid, [sequence.id], field_names=None, arg=False, context=context)[sequence.id]
+                    approval_id = approval_id and approval_obj.browse(cr, uid, [approval_id], context=context)[0] or False
+                    if not approval_id:
+                        raise osv.except_osv('Error !', 'No hay una aprobacion valida de folios.')
+                    return super(ir_sequence, self).get_id(cr, uid, sequence_id=res['id'], test='id')
+            return super(ir_sequence, self).get_id(cr, uid, sequence_id=sequence_id, test=test)
 ir_sequence()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
