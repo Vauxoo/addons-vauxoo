@@ -157,7 +157,10 @@ class account_invoice(osv.osv):
                 if sequence_id or not company:
                     break
             if not sequence_id:
-                sequence_id = invoice.journal_id.invoice_sequence_id
+                if invoice.journal_id._columns.has_key('invoice_sequence_id') and invoice.journal_id.invoice_sequence_id:
+                    sequence_id = invoice.journal_id.invoice_sequence_id
+                elif invoice.journal_id._columns.has_key('sequence_id') and invoice.journal_id.sequence_id:
+                    sequence_id = invoice.journal_id.sequence_id
             sequence_id = sequence_id and sequence_id.id or False
             if not sequence_id:
                 sequence_str = 'account.invoice.' + invoice.type

@@ -52,7 +52,7 @@ Requires the following programs:
         "l10n_mx_facturae_report.xml",
         "l10n_mx_facturae_wizard6.xml",
         "ir_sequence_view.xml",
-        "res_company_view.xml",
+        "res_company_view6.xml",
         "invoice_view.xml"
     ],
     "installable" : True,

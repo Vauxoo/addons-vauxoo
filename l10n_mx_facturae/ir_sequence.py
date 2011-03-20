@@ -135,11 +135,11 @@ class ir_sequence(osv.osv):
         return data
     
     def get_id(self, cr, uid, sequence_id, test='id=%s', context=None):
+        if context is None:
+            context = {}
+        approval_obj = self.pool.get('ir.sequence.approval')
         if release.version < '6':
             #inicia copy & paste, de una seccion de la funcion original
-            if context is None:
-                context = {}
-            approval_obj = self.pool.get('ir.sequence.approval')
             if test not in ('id=%s', 'code=%s'):
                 raise ValueError('invalid test')
             cr.execute('select id from ir_sequence where '+test+' and active=%s', (sequence_id, True,))
