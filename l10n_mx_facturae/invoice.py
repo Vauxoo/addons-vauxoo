@@ -1020,18 +1020,20 @@ class account_invoice(osv.osv):
             #Inicia seccion: Conceptos
             invoice_data['Conceptos'] = []
             for line in invoice.invoice_line:
+                #price_type = invoice._columns.has_key('price_type') and invoice.price_type or 'tax_excluded'
+                #if price_type == 'tax_included':
+                price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con modulo TaxIncluded
                 concepto = {
                     'cantidad': "%.2f"%( line.quantity or 0.0),
                     'descripcion': line.name or '',
-                    'valorUnitario': "%.2f"%( line.price_unit or 0.0),
+                    'valorUnitario': "%.2f"%( price_unit or 0.0),
                     'importe': "%.2f"%( line.price_subtotal or 0.0),#round(line.price_unit *(1-(line.discount/100)),2) or 0.00),#Calc: iva, disc, qty
                     ##Falta agregar discount
-                    ##Falta agregar codigo del producto
                 }
                 unidad = line.uos_id and line.uos_id.name or ''
                 if unidad:
                     concepto.update({'unidad': unidad})
-                product_code = line.product_id and line.product_id.default_code or ''
+                product_code = ''#line.product_id and line.product_id.default_code or ''
                 if product_code:
                     concepto.update({'noIdentificacion': product_code})
                 invoice_data['Conceptos'].append( {'Concepto': concepto} )
@@ -1054,16 +1056,18 @@ class account_invoice(osv.osv):
             totalImpuestosRetenidos = 0
             for line_tax_id in invoice.tax_line:
                 #tax_name = line_tax_id.name.split(' - ')[0]
+                line_tax_id_amount = abs( line_tax_id.amount or 0.0 )
+                tasa = line_tax_id_amount and invoice.amount_untaxed and line_tax_id_amount * 100 / invoice.amount_untaxed or 0.0
+                
                 tax_name = line_tax_id.name.lower().replace('.','').replace(' ', '').replace('-', '')
                 if 'iva' in tax_name:
                     tax_name = 'IVA'
+                    tasa = round(tasa, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
                 elif 'isr' in tax_name:
                     tax_name = 'ISR'
                 elif 'ieps' in tax_name:
                     tax_name = 'IEPS'
                 tax_names.append( tax_name )
-                line_tax_id_amount = abs( line_tax_id.amount or 0.0 )
-                tasa = line_tax_id_amount and invoice.amount_untaxed and line_tax_id_amount * 100 / invoice.amount_untaxed or 0.0
                 
                 if line_tax_id.amount > 0:
                     impuesto_list = invoice_data_impuestos['Traslados']
