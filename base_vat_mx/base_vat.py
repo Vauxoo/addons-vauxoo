@@ -31,6 +31,42 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
     
     def check_vat(self, cr, uid, ids, context=None):
+        '''
+        Verificar RFC México
+        '''
+        #[IMP] base_vat: check_vat_mx by moylop260@hotmail.com, tested with 242,665 real RFC's
+        import time
+        import re
+        map_initials = "[A-Z|&]"*4
+        map_date = "[0-9][0-9][0-1][1-9][0-3][0-9]"
+        map_code = "[A-Z|&|0-9]"*3
+        mapping = map_initials + map_date + map_code
+        for partner in self.browse(cr, uid, ids, context=context):
+            vat = partner.vat
+            if not vat:
+                continue
+            vat = vat.upper().replace('ñ', 'Ñ').replace('\xd1', 'Ñ').replace('\xf1', 'Ñ')#upper ascii
+            vat = vat.replace('Ñ', 'X')#Replace ascii valid char, these is problems with match in regexp
+            vat = vat.replace(' ', '').replace('-', '')#Replace some char valid, but no required
+            if len(vat)==12:
+                vat = "X" + vat#Add a valid char, for pass validation with case with cad of len = 12
+            if len(vat) <> 13:
+                return False
+            regex = re.compile(mapping)
+            if not regex.match(vat):
+                #No valid format
+                return False
+            date_match = re.search(map_date, vat)
+            date_format = '%y%m%d'
+            try:
+                time.strptime(date_match.group(), date_format)
+            except:
+                #Valid format, but date wrong
+                return False
+            #Valid format and valid date
+        return True
+    
+    def _______ANTERIOR____check_vat(self, cr, uid, ids, context=None):
         for partner in self.browse(cr, uid, ids, context=context):
             vat = partner.vat
             if not vat:
@@ -39,7 +75,8 @@ class res_partner(osv.osv):
             vat = ''.join( [x for x in vat if x.isupper() or x.isdigit() ] ) #Remove all characteres what no is digit or letter
             if len(vat)==12:
                 vat = "X" + vat#Add a valid char, for pass validation with case with cad of len = 12
-            if len(vat) <> 13 or not( vat[:4].isupper() and vat[4:10].isdigit() and vat[10:13].isalnum() ):
+            if len(vat) <> 13 or not( vat[:4].isupper() 
+            and vat[4:10].isdigit() and vat[10:13].isalnum() ):
                 return False
         return True
     
