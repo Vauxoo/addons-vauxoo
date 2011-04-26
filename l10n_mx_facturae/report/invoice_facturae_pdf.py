@@ -34,6 +34,8 @@ amount_to_text_obj = amount_to_text_class()
 #amount_to_text = amount_to_text_obj.amount_to_text
 amount_to_text = amount_to_text_obj.amount_to_text_cheque
 
+###sql_delete_report = "DELETE FROM ir_act_report_xml WHERE report_name = 'account.invoice.facturae.pdf'"--Si no toma la actualizacion del reporte xml, borrarlo directamente desde la base de datos, con este script.
+
 class account_invoice_facturae_pdf(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(account_invoice_facturae_pdf, self).__init__(cr, uid, name, context=context)
