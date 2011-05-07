@@ -1119,7 +1119,7 @@ class account_invoice(osv.osv):
             #rate = self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id, invoice.company_id.currency_id.id, 1, round=False, context=date_ctx, account=None, account_invert=False)
             #rate = 1.0/self.pool.get('res.currency')._current_rate(cr, uid, [invoice.currency_id.id], name=False, arg=[], context=date_ctx)[invoice.currency_id.id]
             currency = self.pool.get('res.currency').browse(cr, uid, [invoice.currency_id.id], context=date_ctx)[0]
-            rate = currency.rate
+            rate = currency.rate <> 0 and 1.0/currency.rate or 0.0
             #print "currency.rate",currency.rate
             
             invoice_data_parent['rate'] = rate
