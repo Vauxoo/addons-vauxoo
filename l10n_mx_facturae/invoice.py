@@ -484,6 +484,8 @@ class account_invoice(osv.osv):
             else:
                 continue
             facturae_type = facturae_type_dict[ facturae_data['type'] ]
+            rate = facturae_data['rate']
+            
             if not facturae_type:
                 continue
             #if not invoice_comprobante_data['Receptor']['rfc']:
@@ -494,8 +496,8 @@ class account_invoice(osv.osv):
                 invoice_comprobante_data['folio'] or '',
                 str( invoice_comprobante_data['anoAprobacion'] ) + str( invoice_comprobante_data['noAprobacion'] ),
                 time.strftime('%d/%m/%Y %H:%M:%S', time.strptime( facturae_data['date_invoice'], '%Y-%m-%d %H:%M:%S')),#invoice_comprobante_data['fecha'].replace('T', ' '),
-                invoice_comprobante_data['total'] or 0.0,
-                invoice_comprobante_data['Impuestos']['totalImpuestosTrasladados'] or 0.0,
+                "%.2f"%( round( float(invoice_comprobante_data['total'] or 0.0) * rate, 2) ),
+                "%.2f"%( round( float(invoice_comprobante_data['Impuestos']['totalImpuestosTrasladados'] or 0.0) * rate, 2) ),
                 facturae_state,
                 facturae_type,
                 '',
@@ -1111,5 +1113,15 @@ class account_invoice(osv.osv):
             invoice_data_parent['invoice_id'] = invoice.id
             invoice_data_parent['type'] = invoice.type
             invoice_data_parent['date_invoice'] = invoice.date_invoice
+            invoice_data_parent['currency_id'] = invoice.currency_id.id
+            
+            date_ctx = {'date': time.strftime('%Y-%m-%d', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))}
+            #rate = self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id, invoice.company_id.currency_id.id, 1, round=False, context=date_ctx, account=None, account_invert=False)
+            #rate = 1.0/self.pool.get('res.currency')._current_rate(cr, uid, [invoice.currency_id.id], name=False, arg=[], context=date_ctx)[invoice.currency_id.id]
+            currency = self.pool.get('res.currency').browse(cr, uid, [invoice.currency_id.id], context=date_ctx)[0]
+            rate = currency.rate
+            #print "currency.rate",currency.rate
+            
+            invoice_data_parent['rate'] = rate
         return invoice_data_parents
 account_invoice()
