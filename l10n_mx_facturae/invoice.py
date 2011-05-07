@@ -103,6 +103,8 @@ msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
+    _order = 'date_invoice asc'
+    
     """
     def action_number(self, cr, uid, ids, *args):
         cr.execute('SELECT id, type, number, move_id, reference ' \
