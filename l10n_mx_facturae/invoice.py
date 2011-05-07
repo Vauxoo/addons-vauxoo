@@ -1035,7 +1035,7 @@ class account_invoice(osv.osv):
                 unidad = line.uos_id and line.uos_id.name or ''
                 if unidad:
                     concepto.update({'unidad': unidad})
-                product_code = ''#line.product_id and line.product_id.default_code or ''
+                product_code = line.product_id and line.product_id.default_code or ''
                 if product_code:
                     concepto.update({'noIdentificacion': product_code})
                 invoice_data['Conceptos'].append( {'Concepto': concepto} )
