@@ -27,6 +27,26 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+def conv_ascii(text):
+    """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
+    old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
+        'ô', 'û', 'Á', 'É', 'Í', 'Ú', 'Ó', 'À', 'È', 'Ì', 'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', \
+        'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' '
+    ]
+    new_chars = ['a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', \
+        'o', 'u', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', \
+        'O', 'U', 'n', 'N', 'c', 'C', 'a', 'o', 'o', ' '
+    ]
+    for old, new in zip(old_chars, new_chars):
+        try:
+            text = text.replace(unicode(old,'UTF-8'), new)
+        except:
+            try:
+                text = text.replace(old, new)
+            except:
+                raise osv.except_osv(_('Warning !'), 'No se pudo re-codificar la cadena [%s] en la letra [%s]'%(text, old) )
+    return text
+
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     
@@ -45,9 +65,10 @@ class res_partner(osv.osv):
             vat = partner.vat
             if not vat:
                 continue
-            vat = vat.upper().replace('ñ', 'Ñ').replace('\xd1', 'Ñ').replace('\xf1', 'Ñ')#upper ascii
-            vat = vat.replace('Ñ', 'X')#Replace ascii valid char, these is problems with match in regexp
-            vat = vat.replace(' ', '').replace('-', '')#Replace some char valid, but no required
+            vat = conv_ascii(vat).upper().replace(' ', '').replace('-', '')
+            #vat = vat.upper().replace('ñ', 'Ñ').replace('\xd1', 'Ñ').replace('\xf1', 'Ñ')#upper ascii
+            #vat = vat.replace('Ñ', 'X')#Replace ascii valid char, these is problems with match in regexp
+            #vat = vat.replace(' ', '').replace('-', '')#Replace some char valid, but no required
             if len(vat)==12:
                 vat = "X" + vat#Add a valid char, for pass validation with case with cad of len = 12
             if len(vat) <> 13:
