@@ -411,7 +411,7 @@ class account_invoice(osv.osv):
     }
     
     _defaults = {
-        'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
     
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
