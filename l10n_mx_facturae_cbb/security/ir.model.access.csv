@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_res_company_facturae_certificate","res.company.facturae.certificate","model_res_company_facturae_certificate","",1,1,1,1
+"access_ir_sequence_approval","ir.sequence.approval","model_ir_sequence_approval","",1,1,1,1

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:psgecfd="http://www.sat.gob.mx/psgecfd" targetNamespace="http://www.sat.gob.mx/psgecfd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="PrestadoresDeServiciosDeCFD">
+		<xs:annotation>
+			<xs:documentation>Complemento requerido para los Proveedores de Servicio de generación y envío de Comprobantes Fiscales Digitales.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="nombre" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para el nombre o razón social del proveedor de servicios autorizado que generó y envió el comprobante fiscal digital.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="rfc" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para el Registro Federal de Contribuyentes del proveedor de servicios de generación y envío de comprobantes fiscales digitales.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="12"/>
+						<xs:maxLength value="13"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="noCertificado" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar el número de serie del certificado de sello digital del proveedor del servicio autorizado que generó y envió el comprobante fiscal digital.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="20"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="fechaAutorizacion" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para la expresión de la fecha y hora de autorización del proveedor del servicio que generó y envió el comprobante fiscal digital. Se expresa en la forma aaaa-mm-ddThh:mm:ss, de acuerdo con la especificación ISO 8601.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:dateTime">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="noAutorizacion" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para precisar el número de autorización del proveedor del servicio de generación y envío comprobantes autorizado por el SAT.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="selloDelPSGECFD" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para contener el sello digital del  proveedor del servicio de generación y envío de comprobantes fiscales digitales que generó y emitió el comprobante fiscal digital. El sello deberá ser expresado cómo una cadena de texto en formato Base 64.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

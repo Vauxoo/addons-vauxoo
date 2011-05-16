@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="56.0" width="498" height="719"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="#000080" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000080" start="1,0" stop="1,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" alignment="RIGHT"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="8.0" leading="10"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P4" fontName="Times-Roman" textColor="#280099"/>
+    <paraStyle name="P5" fontName="Times-Roman" alignment="RIGHT" textColor="#280099"/>
+    <paraStyle name="P6" fontName="Times-Roman" textColor="#ff3333"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="12.0" leading="15" textColor="#800000"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="2.0" leading="3" textColor="#800000"/>
+    <paraStyle name="P9" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P11" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P12" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P13" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P14" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P15" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P16" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="18.0" leading="22" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P17" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P18" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
+    <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_9" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="Quotations" rightIndent="28.0" leftIndent="28.0" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="14.0"/>
+    <images/>
+  </stylesheet>
+  <story>
+    <section>
+      <para style="P13">[[ repeatIn(objects,'o') ]] <font face="Times-Roman" size="9.0">[[ set_global_data(o) ]]</font></para>
+      <para style="P16">[[ o.company_id.parent_id and o.company_id.parent_id.partner_id.name or o.company_id.partner_id.name ]]</para>
+      <blockTable colWidths="125.0,207.0,166.0" style="Tabla1">
+        <tr>
+          <td>
+            <para style="P20">[[ o.company_id.logo and setTag('para','image',{'width':'120.0','height':'80.0'}) ]] [[ o.company_id.logo ]]</para>
+          </td>
+          <td>
+            <para style="P15">[[ company_address()['name'] or o.company_id.partner_id.name ]]</para>
+            <para style="P18">
+              <font color="white"> </font>
+            </para>
+            <para style="P15">[[ company_address()['street'] or '' ]]</para>
+            <para style="P18">
+              <font color="white"> </font>
+            </para>
+            <para style="P15">[[ company_address()['street2'] or '' ]]</para>
+            <para style="P18">
+              <font color="white"> </font>
+            </para>
+            <para style="P15">[[ company_address()['city'] or '' ]], [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]]</para>
+            <para style="P18">
+              <font color="white"> </font>
+            </para>
+            <para style="P15">CP [[ company_address()['zip'] or '' ]]</para>
+            <para style="P18">
+              <font color="white"> </font>
+            </para>
+            <para style="P15">RFC : [[ o.company_id.partner_id.vat ]]</para>
+            <para style="P18">
+              <font color="white"> </font>
+            </para>
+            <para style="P17">Teléfono(s): </para>
+            <para style="P17">[[ company_address()['phone'] or removeParentNode('para') ]]</para>
+            <para style="P17">[[ company_address()['fax'] or removeParentNode('para') ]]</para>
+            <para style="P17">[[ company_address()['mobile'] or removeParentNode('para') ]]</para>
+          </td>
+          <td>
+            <para style="P6">
+              <font face="Helvetica" size="18.0">Folio: [[ ( o.type in ['out_invoice', 'out_refund'] ) and ( o.state in ['open', 'paid', 'cancel'] ) and o.number or 'SIN FOLIO O ESTATUS NO VALIDO' ]]</font>
+            </para>
+            <para style="P8">
+              <font color="white"> </font>
+            </para>
+            <para style="P7">[[ o.state == 'cancel' and 'FACTURA CANCELADA' ]]</para>
+            <para style="P8">
+              <font color="white"> </font>
+            </para>
+            <para style="Table Contents">[[ company_address()['city'] or '' ]], [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] a</para>
+            <para style="Table Contents">[[ formatLang(o.date_invoice, date_time=True) ]]</para>
+            <para style="Table Contents">Serie: [[ get_approval() and get_approval().serie or '' ]]</para>
+            <para style="Table Contents">Aprobación: [[ get_approval() and get_approval().approval_number or '' ]]</para>
+            <para style="Table Contents">Año Aprobación:[[ get_approval() and get_approval().approval_year or '' ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <blockTable colWidths="249.0,249.0" style="Tabla2">
+        <tr>
+          <td>
+            <para style="P4">Receptor</para>
+            <para style="Table Contents"><font face="Times-Roman">Nombre: </font>[[ o.partner_id.name ]]</para>
+            <para style="terp_default_8"><font face="Times-Roman">Dirección:</font> [[ o.address_invoice_id.street ]]</para>
+            <para style="terp_default_8"><font face="Times-Roman">Colonia:</font> [[ o.address_invoice_id.street2 or '' ]]</para>
+            <para style="terp_default_8"><font face="Times-Roman">Ciudad:</font> [[ o.address_invoice_id.city or '' ]], [[ o.address_invoice_id.state_id and o.address_invoice_id.state_id.name or '' ]]</para>
+            <para style="terp_default_8"><font face="Times-Roman">C.P.:</font> [[ o.address_invoice_id.zip or '' ]] </para>
+            <para style="terp_default_8"><font face="Times-Roman">R. F. C. :</font> [[ o.partner_id.vat ]]</para>
+            <para style="P19">Teléfono(s): </para>
+            <para style="P14">[[ o.address_invoice_id.phone or removeParentNode('para') ]]</para>
+            <para style="P14">[[ o.address_invoice_id.fax or removeParentNode('para') ]]</para>
+            <para style="P14">[[ o.address_invoice_id.mobile or removeParentNode('para') ]]</para>
+          </td>
+          <td>
+            <para style="Table Contents">Condición de pago: [[ format(o.payment_term and (o.payment_term.note or o.payment_term.name) or removeParentNode('para') ) ]]</para>
+            <para style="P3">Origen: [[ o.origin or removeParentNode('para') ]]</para>
+            <para style="P3">Expedido en:</para>
+            <para style="P3">[[ subcompany_address()['name'] or o.company_id.partner_id.name ]]</para>
+            <para style="P3">[[ subcompany_address()['street'] or '' ]], [[ subcompany_address()['street2'] or '' ]]</para>
+            <para style="P3">[[ subcompany_address()['city'] or '' ]], [[ subcompany_address()['state_id'] and subcompany_address()['state_id']['name'] or '' ]]</para>
+            <para style="P3">CP [[ subcompany_address()['zip'] or '' ]] </para>
+          </td>
+        </tr>
+      </blockTable>
+      <blockTable colWidths="47.0,38.0,174.0,89.0,67.0,85.0" style="Tabla3">
+        <tr>
+          <td>
+            <para style="P4">Cantidad</para>
+          </td>
+          <td>
+            <para style="P4">Unidad</para>
+          </td>
+          <td>
+            <para style="P4">Descripción</para>
+          </td>
+          <td>
+            <para style="P4">Clave</para>
+          </td>
+          <td>
+            <para style="P5">P.Unitario</para>
+          </td>
+          <td>
+            <para style="P5">Importe</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="Table Contents"><font face="Times-Roman" size="8.0">[[ repeatIn(o.invoice_line,'l') ]] </font>[[ formatLang(l.quantity) ]]</para>
+          </td>
+          <td>
+            <para style="Table Contents">[[ (l.uos_id and l.uos_id.name) or '' ]]</para>
+          </td>
+          <td>
+            <para style="Table Contents">[[ l.name ]]</para>
+          </td>
+          <td>
+            <para style="Table Contents">[[ l.product_id and l.product_id.default_code ]]</para>
+          </td>
+          <td>
+            <para style="P1">[[ formatLang(l.price_unit) ]]</para>
+          </td>
+          <td>
+            <para style="P1">[[ formatLang(l.price_subtotal) ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <blockTable colWidths="427.0,71.0" style="Tabla7">
+        <tr>
+          <td>
+            <para style="P5">Sub Total $</para>
+          </td>
+          <td>
+            <para style="P1">[[ formatLang(o.amount_untaxed) ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P5">
+              <font face="Times-Roman" size="6.0">[[ repeatIn( get_taxes(), 'tax' ) ]]</font>
+              <font face="Times-Roman">[[ tax['impuesto'] ]] ([[ round( float( tax['tasa'] ) ) ]]%) $</font>
+            </para>
+          </td>
+          <td>
+            <para style="P1">[[ formatLang( float( tax['importe'] ) ) ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P5">
+              <font face="Times-Roman" size="6.0">[[ repeatIn( get_taxes_ret(), 'tax_ret' ) ]]</font>
+              <font face="Times-Roman">[[ tax_ret['impuesto'] ]] Ret ([[ round( float( tax_ret['tasa'] ),2 )*-1 ]]%) $</font>
+            </para>
+          </td>
+          <td>
+            <para style="P1">[[ formatLang( float( tax_ret['importe'] )*-1 ) ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P5">Total $</para>
+          </td>
+          <td>
+            <para style="P1">[[ formatLang(o.amount_total) ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P12">IMPORTE CON LETRA:</para>
+            <para style="P10">[[ amount_to_text(o.amount_total, 'es_cheque', o.currency_id._columns.has_key('code') and o.currency_id.code or o.currency_id.name) ]]</para>
+          </td>
+          <td>
+            <para style="P1">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P9">PAGO EN UNA SOLA EXHIBICIÓN</para>
+      <para style="P9">
+        <font color="white"> </font>
+      </para>
+      <para style="P9">“Este documento es una representacion impresa de un CFD” </para>
+      <para style="P9">CFD, Comprobante Fiscal Digital</para>
+      <blockTable colWidths="101.0,397.0" style="Tabla4">
+        <tr>
+          <td>
+            <para style="P2">[[ o.company_id.cif_file and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ o.company_id.cif_file ]]</para>
+          </td>
+          <td>
+            <para style="P9">Cadena original :</para>
+            <para style="P9">[[ split_string( facturae_data_dict()['cadena_original'] ) ]]</para>
+            <para style="P9">
+              <font color="white"> </font>
+            </para>
+            <para style="P9">Serie del Certificado :</para>
+            <para style="P9">[[ facturae_data_dict()['Comprobante']['noCertificado'] ]]</para>
+            <para style="P9">
+              <font color="white"> </font>
+            </para>
+            <para style="P9">Sello digital :</para>
+            <para style="P11">[[ split_string( facturae_data_dict()['Comprobante']['sello'] ) ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="terp_default_9">[[ format(o.comment or '') ]]</para>
+    </section>
+    <para style="Standard">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+
