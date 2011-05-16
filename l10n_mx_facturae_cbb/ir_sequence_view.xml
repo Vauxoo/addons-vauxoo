@@ -19,6 +19,7 @@
                                 <field name="approval_year"/>
                                 <field name="number_start"/>
                                 <field name="number_end"/>
+                                <field name="approval_date"/>
                             </tree>
                             <form string="Aprobaciones">
                                 <field name="approval_number"/>
@@ -26,6 +27,8 @@
                                 <field name="approval_year"/>
                                 <field name="number_start"/>
                                 <field name="number_end"/>
+                                <field name="approval_date"/>
+                                <field name="cbb_image"/>
                             </form>
                         </field>
                     </page>

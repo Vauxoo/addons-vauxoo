@@ -105,44 +105,6 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
     _order = 'date_invoice asc'
     
-    """
-    def action_number(self, cr, uid, ids, *args):
-        cr.execute('SELECT id, type, number, move_id, reference ' \
-                'FROM account_invoice ' \
-                'WHERE id IN ('+','.join(map(str,ids))+')')
-        obj_inv = self.browse(cr, uid, ids)[0]
-        for (id, invtype, number, move_id, reference) in cr.fetchall():
-            if not number:
-                tmp_context = {
-                    #'fiscalyear_id' : obj_inv.period_id.fiscalyear_id.id,
-                }
-                if obj_inv.journal_id.invoice_sequence_id:
-                    sid = obj_inv.journal_id.invoice_sequence_id.id
-                    number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
-                else:
-                    number = self.pool.get('ir.sequence').get_id(cr, uid,
-                                                                 'account.invoice.' + invtype,
-                                                                 'code=%s',
-                                                                 context=tmp_context)
-                if not number:
-                    raise osv.except_osv(_('Warning !'), _('There is no active invoice sequence defined for the journal !'))
-                if invtype in ('in_invoice', 'in_refund'):
-                    ref = reference
-                else:
-                    ref = self._convert_ref(cr, uid, number)
-                cr.execute('UPDATE account_invoice SET number=%s ' \
-                        'WHERE id=%d', (number, id))
-                cr.execute('UPDATE account_move_line SET ref=%s ' \
-                        'WHERE move_id=%d AND (ref is null OR ref = \'\')',
-                        (ref, move_id))
-                cr.execute('UPDATE account_analytic_line SET ref=%s ' \
-                        'FROM account_move_line ' \
-                        'WHERE account_move_line.move_id = %d ' \
-                            'AND account_analytic_line.move_id = account_move_line.id',
-                            (ref, move_id))
-        return True
-    """
-    
     def _get_invoice_sequence(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
@@ -172,13 +134,7 @@ class account_invoice(osv.osv):
                 sequence_id = res2 and res2['id'] or False
             res[invoice.id] = sequence_id
         return res
-    """
-    def action_number(self, cr, uid, ids, context=None):#usando super
-        if not context:
-            context = {}
-        self._attach_invoice(cr, uid, ids)#Linea agregada
-        return res
-    """
+
     def action_number(self, cr, uid, ids, *args):
         invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids)#Linea agregada
         #Sustituye a la funcion original, es el mismo codigo, solo le agrega unas lineas, y no hacer SUPER
@@ -235,7 +191,6 @@ class account_invoice(osv.osv):
                             (ref, move_id))
         return True
     
-    
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
@@ -282,49 +237,8 @@ class account_invoice(osv.osv):
         self._attach_invoice(cr, uid, ids)
         return True
     
-    def ________action_number(self, cr, uid, ids, *args):
-        cr.execute('SELECT id, type, number, move_id, reference ' \
-                'FROM account_invoice ' \
-                'WHERE id IN ('+','.join(map(str,ids))+')')
-        obj_inv = self.browse(cr, uid, ids)[0]
-        
-        invoice_id__sequence_id = self._get_sequence(cr, uid, ids)##agregado
-        
-        for (id, invtype, number, move_id, reference) in cr.fetchall():
-            if not number:
-                tmp_context = {
-                    'fiscalyear_id' : obj_inv.period_id.fiscalyear_id.id,
-                }
-                if invoice_id__sequence_id[id]:
-                    sid = invoice_id__sequence_id[id]
-                    number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
-                elif obj_inv.journal_id.invoice_sequence_id:
-                    sid = obj_inv.journal_id.invoice_sequence_id.id
-                    number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
-                else:
-                    number = self.pool.get('ir.sequence').get_id(cr, uid,
-                                                                 'account.invoice.' + invtype,
-                                                                 'code=%s',
-                                                                 context=tmp_context)
-                if not number:
-                    raise osv.except_osv('Warning !', 'No hay una secuencia de folios bien definida. !')
-                if invtype in ('in_invoice', 'in_refund'):
-                    ref = reference
-                else:
-                    ref = self._convert_ref(cr, uid, number)
-                cr.execute('UPDATE account_invoice SET number=%s ' \
-                        'WHERE id=%d', (number, id))
-                cr.execute('UPDATE account_move_line SET ref=%s ' \
-                        'WHERE move_id=%d AND (ref is null OR ref = \'\')',
-                        (ref, move_id))
-                cr.execute('UPDATE account_analytic_line SET ref=%s ' \
-                        'FROM account_move_line ' \
-                        'WHERE account_move_line.move_id = %d ' \
-                            'AND account_analytic_line.move_id = account_move_line.id',
-                            (ref, move_id))
-        return True
-    
     def _attach_invoice(self, cr, uid, ids, context=None):
+        ###borrar esta funcion
         if not context:
             context = {}
         inv_type_facturae = {'out_invoice': True, 'out_refund': True, 'in_invoice': False, 'in_refund': False}
@@ -383,14 +297,6 @@ class account_invoice(osv.osv):
         attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids):
             try:
-                attachment_xml_id = attachment_obj.search(cr, uid, [
-                    ('name','=',invoice.fname_invoice+'.xml'),
-                    ('datas_fname','=',invoice.fname_invoice+'.xml'),
-                    ('res_model','=','account.invoice'),
-                    ('res_id','=',invoice.id)
-                ], limit=1)
-                attachment_obj.unlink(cr, uid, attachment_xml_id)
-                
                 attachment_pdf_id = attachment_obj.search(cr, uid, [
                     ('name','=',invoice.fname_invoice),###no se agrega.pdf, porque el generador de reportes, no lo hace asi, actualmente o agrega doble .pdf o nada
                     #('name','=',invoice.fname_invoice+'.pdf'),
@@ -423,6 +329,7 @@ class account_invoice(osv.osv):
         return fname
     
     def _get_file_globals(self, cr, uid, ids, context={}):
+        ###borrar esta funcion
         if not context:
             context={}
         id = ids and ids[0] or False
@@ -471,6 +378,7 @@ class account_invoice(osv.osv):
         return file_globals
     
     def _get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
+        ###borrar esta funcion: PROBABLEMENTE
         facturae_datas = self._get_facturae_invoice_dict_data(cr, uid, ids, context=context)
         facturae_data_txt_lists = []
         folio_data = self._get_folio(cr, uid, ids, context=context)
@@ -591,6 +499,7 @@ class account_invoice(osv.osv):
         return folio_data
     
     def _dict_iteritems_sort(self, data_dict):#cr=False, uid=False, ids=[], context={}):
+        ###borrar esta funcion
         key_order = [
             'Emisor',
             'Receptor',
@@ -608,6 +517,7 @@ class account_invoice(osv.osv):
         return key_item_sort
     
     def dict2xml(self, data_dict, node=False, doc=False):
+        ###borrar esta funcion
         parent = False
         if node:
             parent = True
@@ -641,6 +551,7 @@ class account_invoice(osv.osv):
         return doc
 
     def _get_facturae_invoice_xml_data(self, cr, uid, ids, context={}):
+        ###borrar esta funcion
         if not context:
             context = {}
         data_dict = self._get_facturae_invoice_dict_data(cr, uid, ids, context=context)[0]
@@ -699,6 +610,7 @@ class account_invoice(osv.osv):
         return fname_xml, data_xml
 
     def _get_noCertificado(self, fname_cer, pem=True):
+        ###borrar esta funcion
         """
         fcer = open(fname_cer, "r")
         filetype = pem and OpenSSL.crypto.FILETYPE_PEM or OpenSSL.crypto.FILETYPE_ASN1
@@ -755,6 +667,7 @@ class account_invoice(osv.osv):
         
 
     def _get_sello(self, cr=False, uid=False, ids=False, context={}):
+        ###borrar esta funcion
         if not context:
             context = {}
         if os.name == "nt":
@@ -815,6 +728,7 @@ class account_invoice(osv.osv):
         return sign_str
     
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context={}):
+        ###borrar esta funcion
         if not context:
             context = {}
         if os.name == "nt":
@@ -887,6 +801,7 @@ class account_invoice(osv.osv):
         return components_dict
     """
     def _get_certificate_str( self, fname_cer_pem = ""):
+        ###borrar esta funcion
         fcer = open( fname_cer_pem, "r")
         lines = fcer.readlines()
         fcer.close()
@@ -902,11 +817,13 @@ class account_invoice(osv.osv):
         return cer_str
     
     def _get_md5_cad_orig(self, cadorig_str, fname_cadorig_digest):
+        ###borrar esta funcion
         cadorig_digest = hashlib.md5(cadorig_str).hexdigest()
         open(fname_cadorig_digest, "w").write(cadorig_digest)
         return cadorig_digest, fname_cadorig_digest
     
     def _get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
+        ###borrar esta funcion
         invoices = self.browse(cr, uid, ids, context=context)
         invoice_datas = []
         invoice_data_parents = []

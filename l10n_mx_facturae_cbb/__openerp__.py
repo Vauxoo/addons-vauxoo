@@ -26,19 +26,13 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
+    "name" : "Creacion de Factura Electronica para Mexico (CBB)",
     "version" : "1.0",
     "author" : "moylop260@hotmail.com",
-    "category" : "Localisation/Accounting",
-    "description" : """This module creates e-invoice files from invoices with standard of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
-  
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
+    "category" : "Localization/Mexico",
+    "description" : """This module creates e-invoice files from invoices with standard CBB of Mexican SAT.
+Codigo de Barras Bidimensional.
+http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19084.html
     """,
     "website" : "http://moylop.blogspot.com/",
     "license" : "AGPL-3",
@@ -50,10 +44,10 @@ Requires the following programs:
     "update_xml" : [
         'security/ir.model.access.csv',
         "l10n_mx_facturae_report.xml",
-        "l10n_mx_facturae_wizard6.xml",
+        #"l10n_mx_facturae_wizard6.xml",
         "ir_sequence_view.xml",
-        "res_company_view6.xml",
-        "invoice_view.xml"
+        #"res_company_view6.xml",
+        #"invoice_view.xml"
     ],
     "installable" : True,
     "active" : False,
