@@ -42,7 +42,8 @@ class ir_sequence_approval(osv.osv):
         'number_start': fields.integer(u'Desde', required=False),
         'number_end': fields.integer(u'Hasta', required=True),
         'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade'),
-        'approval_date': fields.date(u'Fecha de Aprobación', size=32, required=True),
+        'date_start': fields.date(u'Fecha de Aprobación', size=32, required=True),
+        'date_end': fields.date(u'Fecha de Vigencia', size=32, required=True),
         'cbb_image': fields.binary(u'Imagen de Código de Barras Bidimensional'),
     }
     
