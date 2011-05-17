@@ -34,9 +34,11 @@
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
@@ -249,7 +251,7 @@
       <para style="P2">
         <font color="white"> </font>
       </para>
-      <blockTable colWidths="101.0,397.0" style="Tabla4">
+      <blockTable colWidths="95.0,268.0,135.0" style="Tabla4">
         <tr>
           <td>
             <para style="P2">[[ o.company_id.cif_file and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ o.company_id.cif_file ]]</para>
@@ -262,6 +264,9 @@
             <para style="P21">
               <font face="Helvetica" size="8.0">Fecha de Vigencia:[[ get_approval() and get_approval().date_end or '' ]]</font>
             </para>
+          </td>
+          <td>
+            <para style="P2">[[ get_approval() and get_approval().cbb_image and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ get_approval().cbb_image ]]</para>
           </td>
         </tr>
       </blockTable>
