@@ -30,7 +30,8 @@
                                 <field name="date_start"/>
                                 <field name="date_end"/>
                                 <field name="approval_year"/>
-                                <field name="cbb_image" colspan="4"/>
+                                <separator colspan="4" string="Codigo de Barras Bidimensional (CBB)"/>
+                                <field name="cbb_image" colspan="4" widget="image"/>
                             </form>
                         </field>
                     </page>
