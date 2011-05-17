@@ -82,6 +82,33 @@ class account_invoice(osv.osv):
             res[invoice.id] = sequence_id
         return res
     
+        
+    def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context = {}
+        res = {}
+        sequence_obj = self.pool.get('ir.sequence')
+        
+        invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids, context=context)
+        for invoice in self.browse(cr, uid, ids, context=context):
+            sequence_id = invoice_id__sequence_id[invoice.id]
+            sequence = False
+            if sequence_id:
+                sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
+            fname = ""
+            fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
+            fname += '.'
+            try:
+                int(invoice.number)
+                context.update({ 'number_work': invoice.number or False })
+                fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
+                fname += '.'
+            except:
+                pass
+            fname += invoice.number or ''
+            res[invoice.id] = fname
+        return res
+    
     _columns = {
         ##Extract date_invoice from original, but add datetime
         'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
@@ -179,32 +206,6 @@ class account_invoice(osv.osv):
             if not inv.date_invoice:
                 self.write(cr, uid, [inv.id], {'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-    
-    def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context = {}
-        res = {}
-        sequence_obj = self.pool.get('ir.sequence')
-        
-        invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids, context=context)
-        for invoice in self.browse(cr, uid, ids, context=context):
-            sequence_id = invoice_id__sequence_id[invoice.id]
-            sequence = False
-            if sequence_id:
-                sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
-            fname = ""
-            fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
-            fname += '.'
-            try:
-                int(invoice.number)
-                context.update({ 'number_work': invoice.number or False })
-                fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
-                fname += '.'
-            except:
-                pass
-            fname += invoice.number or ''
-            res[invoice.id] = fname
-        return res
         
     def action_cancel_draft(self, cr, uid, ids, *args):
         attachment_obj = self.pool.get('ir.attachment')
@@ -220,5 +221,4 @@ class account_invoice(osv.osv):
             except:
                 pass
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
-        
 account_invoice()
