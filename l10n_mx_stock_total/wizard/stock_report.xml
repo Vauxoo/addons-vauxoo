@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+         <report             
+            id="report_qty" 
+            model="stock.total" 
+            name="hoja222" 
+            rml="l10n_co_stock_total/report/hoja_conteo_qty2.rml"
+            string="Reporte Total de Inventario"
+            auto="False" 
+            menu="False"
+            header="False" />
+
+    </data>
+</openerp>
+
+

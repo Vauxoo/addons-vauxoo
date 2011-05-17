@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:implocal="http://www.sat.gob.mx/implocal" targetNamespace="http://www.sat.gob.mx/implocal" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="ImpuestosLocales">
+		<xs:annotation>
+			<xs:documentation>Complemento al Comprobante Fiscal Digital para Impuestos Locales</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="unbounded">
+				<xs:element name="RetencionesLocales" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Nodo opcional para la expresión de los impuestos locales retenidos</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="ImpLocRetenido" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Nombre del impuesto local retenido</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="TasadeRetencion" use="required">
+							<xs:annotation>
+								<xs:documentation>Porcentaje de retención del impuesto local</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:fractionDigits value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="Importe" use="required">
+							<xs:annotation>
+								<xs:documentation>Monto del impuesto local retenido</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:fractionDigits value="2"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TrasladosLocales" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Nodo opcional para la expresión de los impuestos locales trasladados</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="ImpLocTrasladado" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Nombre del impuesto local trasladado</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="TasadeTraslado" use="required">
+							<xs:annotation>
+								<xs:documentation>Porcentaje de traslado del impuesto local</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:fractionDigits value="2"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="Importe" use="required">
+							<xs:annotation>
+								<xs:documentation>Monto del impuesto local trasladado</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:fractionDigits value="2"/>
+									<xs:whiteSpace value="collapse"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar la versión del complemento</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="TotaldeRetenciones" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar la suma total de Retenciones aplicables</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="TotaldeTraslados" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para expresar la suma total de traslados aplicables</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:fractionDigits value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
