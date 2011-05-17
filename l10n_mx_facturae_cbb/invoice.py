@@ -227,8 +227,6 @@ class account_invoice_tax(osv.osv):
     _inherit= "account.invoice.tax"
     
     def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        #ver que pasa con los negativos.
-        print "_get_tax_data"
         if not context:
             context = {}
         res = {}
@@ -246,6 +244,5 @@ class account_invoice_tax(osv.osv):
             res[invoice_tax.id]['name2'] = tax_name
             res[invoice_tax.id]['percent'] = tax_percent
             res[invoice_tax.id]['amount'] = invoice_tax.amount
-        print "res",res
         return res
 account_invoice_tax()

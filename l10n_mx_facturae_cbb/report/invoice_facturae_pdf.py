@@ -66,10 +66,8 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             print "exception: %s"%( e )
             pass
         try:
-            print "probando 1.1"
             self._get_facturae_data_dict(o.id)
         except Exception, e:
-            print "probando 2.1"
             print "exception: %s"%( e )
             pass
         return ""
@@ -109,33 +107,6 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             pass
         return []
     
-    '''
-    def _set_taxes(self, invoice_id):
-        """
-        pool = pooler.get_pool(self.cr.dbname)
-        invoice_obj = pool.get('account.invoice')
-        invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
-        taxes = []
-        for line_tax_id in invoice.tax_line:
-            tax_name = line_tax_id.name.lower().replace('.','').replace('-','').replace(' ', '')
-            if tax_name in ['iva']:
-                tax_name = 'IVA'
-            elif 'isr' in tax_name:
-                tax_name = 'ISR'
-            elif 'ieps' in tax_name:
-                tax_name = 'IEPS'
-            tax_names.append( tax_name )
-            taxes.append({
-                'name': tax_name,
-                'rate': "%.2f"%( round( line_tax_id.amount/(invoice.amount_total-line_tax_id.amount)*100, 0) ),
-                'amount': "%.2f"%( line_tax_id.amount or 0.0),
-            })
-        """
-        self.taxes = self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']
-        #self.taxes = taxes
-        return taxes
-    '''
-    
     def _split_string(self, string, length=100):
         if string:
             for i in range(0, len(string), length):
@@ -160,8 +131,6 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         address_obj = pool.get('res.partner.address')
         invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
         partner_id = invoice.company_id.parent_id and invoice.company_id.parent_id.partner_id.id or invoice.company_id.partner_id.id
-        #print "partner_id",partner_id
-        #invoice = partner_obj.browse(cr, uid, invoice_id)
         address_id = partner_obj.address_get(self.cr, self.uid, [partner_id], ['invoice'])['invoice']
         self.company_address_invoice = address_obj.browse(self.cr, self.uid, address_id)
         
@@ -171,64 +140,30 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         else:
             subaddress_id = partner_obj.address_get(self.cr, self.uid, [subpartner_id], ['invoice'])['invoice']
             self.subcompany_address_invoice = address_obj.browse(self.cr, self.uid, subaddress_id)
-        #print "self.company_address_invoice",self.company_address_invoice
-        #print "self.company_address_invoice[0]",self.company_address_invoice[0]
-        #self.company_address_invoice  = self.company_address_invoice and self.company_address_invoice[0] or False
-        #print "self.company_address_invoice",self.company_address_invoice
-        #return [self.company_address_invoice]
         return ""
     
     def _company_address(self):
-        #print "self.company_address_invoice",self.company_address_invoice
         return self.company_address_invoice
     
     def _subcompany_address(self):
         return self.subcompany_address_invoice
     
     def _facturae_data_dict(self):
-        #print "self.invoice_data_dict",self.invoice_data_dict
         return self.invoice_data_dict
     
     def _get_facturae_data_dict(self, invoice_id):
-        print "aqui voy 1"
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
         invoice_tax_obj = pool.get('account.invoice.tax')
-        print "aqui voy 2"
         try:
             self._set_invoice_sequence_and_approval( invoice_id )
         except:
             print "report error: self._set_invoice_sequence_and_approval( invoice_id )"
             pass
-        print "aqui voy 3"
         invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
-        #invoice_tax_obj.browse(self.cr, self.uid, [invoice.])[invoice_id]
-        print "aqui voy 3"
-        print "probando"
         tax_line_ids = [tax_line.id for tax_line in invoice.tax_line]
-        print "tax_line_ids",tax_line_ids
         tax_datas = invoice_tax_obj._get_tax_data(self.cr, self.uid, tax_line_ids)
-        print "tax_datas",tax_datas
         self.taxes = tax_datas.values()
-        #for tax_data in tax_datas.values:
-            #print "tax_data",tax_data
-            #print "tax_data.values()",tax_data.values()
-        #self.taxes = [ tax_data.values() for tax_data in tax_datas]
-        print "self.taxes ",self.taxes 
-        print "probando2"
-        #for tax_data in tax_datas:
-            #tax_data
-        #self.taxes = 
-        #invoice_tax = invoice_tax_obj.browse(self.cr, self.uid, [tax_line.id])[invoice_id]
-        #invoice.fs
-        #try:
-        #self.taxes_ret = []
-        #self.taxes_ret.append( retencion['Retencion'] )
-        #self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) >0.01 ]
-        #except Exception, e:
-            #print "exception: %s"%( e )
-            #pass
-        
         return ""
     
 report_sxw.report_sxw(
