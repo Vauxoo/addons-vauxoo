@@ -36,9 +36,9 @@ class ir_sequence_approval(osv.osv):
     _rec_name = 'approval_number'
     
     _columns = {
-        'approval_number': fields.char(u'Numero de Aprobacion', size=64, required=True),
-        'serie': fields.char(u'Serie de Folios', size=12, required=False, help="Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para notas de credito)"),
-        'approval_year': fields.char(u'Anio de Aprobacion', size=32, required=True),
+        'approval_number': fields.char(u'Número de Aprobación', size=64, required=True),
+        'serie': fields.char(u'Serie de Folios', size=12, required=False, help="Con la que se reportó al SAT, por ejemplo. FA (para facturas), NC (Para notas de crédito)"),
+        'approval_year': fields.char(u'Año de Aprobación', size=32, required=True),
         'number_start': fields.integer(u'Desde', required=False),
         'number_end': fields.integer(u'Hasta', required=True),
         'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade'),
@@ -49,8 +49,8 @@ class ir_sequence_approval(osv.osv):
     }
     
     _sql_constraints = [
-        ('number_start', 'CHECK (number_start < number_end )', 'El numero inicial (Desde), tiene que ser menor al final (Hasta)!'),
-        ('number_end', 'CHECK (number_end > number_start )', 'El numero final (Hasta), tiene que ser mayor al inicial (Desde)!'),
+        ('number_start', 'CHECK (number_start < number_end )', 'El número inicial (Desde), tiene que ser menor al final (Hasta)!'),
+        ('number_end', 'CHECK (number_end > number_start )', 'El número final (Hasta), tiene que ser mayor al inicial (Desde)!'),
         #('approval_number_uniq', 'UNIQUE (approval_number)', 'El numero de aprobacion tiene que ser unico'),
     ]
     

@@ -29,8 +29,8 @@
     "name" : "Creacion de Factura Electronica para Mexico (CFD)",
     "version" : "1.0",
     "author" : "moylop260@hotmail.com",
-    "category" : "Localisation/Accounting",
-    "description" : """This module creates e-invoice files from invoices with standard of Mexican SAT.
+    "category" : "Localization/Mexico",
+    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
 Requires the following programs:
   xsltproc
     Ubuntu insall with:

@@ -152,9 +152,11 @@ class account_invoice(osv.osv):
             company = invoice.company_id
             while True:
                 if invoice.type == 'out_invoice':
-                    sequence_id = company.invoice_out_sequence_id
+                    if company._columns.has_key('invoice_out_sequence_id'):
+                        sequence_id = company.invoice_out_sequence_id
                 elif invoice.type == 'out_refund':
-                    sequence_id = company.invoice_out_refund_sequence_id
+                    if company._columns.has_key('invoice_out_refund_sequence_id'):
+                        sequence_id = company.invoice_out_refund_sequence_id
                 company = company.parent_id
                 if sequence_id or not company:
                     break
