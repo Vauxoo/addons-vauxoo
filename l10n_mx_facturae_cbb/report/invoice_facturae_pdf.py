@@ -66,8 +66,10 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             print "exception: %s"%( e )
             pass
         try:
+            print "probando 1.1"
             self._get_facturae_data_dict(o.id)
         except Exception, e:
+            print "probando 2.1"
             print "exception: %s"%( e )
             pass
         return ""
@@ -188,25 +190,45 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         return self.invoice_data_dict
     
     def _get_facturae_data_dict(self, invoice_id):
+        print "aqui voy 1"
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
-        self.invoice_data_dict = invoice_obj._get_facturae_invoice_xml_data(self.cr, self.uid, [invoice_id], context={'type_data': 'dict'})
-        self._set_invoice_sequence_and_approval( invoice_id )
-        #print "self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']",self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']
+        invoice_tax_obj = pool.get('account.invoice.tax')
+        print "aqui voy 2"
         try:
-            self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) >0.01 ]
-            #self.taxes.extend( self.taxes_ret )
-        except Exception, e:
-            print "exception: %s"%( e )
+            self._set_invoice_sequence_and_approval( invoice_id )
+        except:
+            print "report error: self._set_invoice_sequence_and_approval( invoice_id )"
             pass
+        print "aqui voy 3"
+        invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
+        #invoice_tax_obj.browse(self.cr, self.uid, [invoice.])[invoice_id]
+        print "aqui voy 3"
+        print "probando"
+        tax_line_ids = [tax_line.id for tax_line in invoice.tax_line]
+        print "tax_line_ids",tax_line_ids
+        tax_datas = invoice_tax_obj._get_tax_data(self.cr, self.uid, tax_line_ids)
+        print "tax_datas",tax_datas
+        self.taxes = tax_datas.values()
+        #for tax_data in tax_datas.values:
+            #print "tax_data",tax_data
+            #print "tax_data.values()",tax_data.values()
+        #self.taxes = [ tax_data.values() for tax_data in tax_datas]
+        print "self.taxes ",self.taxes 
+        print "probando2"
+        #for tax_data in tax_datas:
+            #tax_data
+        #self.taxes = 
+        #invoice_tax = invoice_tax_obj.browse(self.cr, self.uid, [tax_line.id])[invoice_id]
+        #invoice.fs
+        #try:
+        #self.taxes_ret = []
+        #self.taxes_ret.append( retencion['Retencion'] )
+        #self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) >0.01 ]
+        #except Exception, e:
+            #print "exception: %s"%( e )
+            #pass
         
-        self.taxes_ret = []
-        for retencion in self.invoice_data_dict['Comprobante']['Impuestos'].get('Retenciones', []):
-            amount_untaxed = float( self.invoice_data_dict['Comprobante']['subTotal'] )
-            tax_ret_amount = float( retencion['Retencion']['importe'] )
-            tasa = tax_ret_amount and amount_untaxed and tax_ret_amount * 100 / amount_untaxed or 0.0
-            retencion['Retencion'].update({'tasa':  tasa})
-            self.taxes_ret.append( retencion['Retencion'] )
         return ""
     
 report_sxw.report_sxw(
