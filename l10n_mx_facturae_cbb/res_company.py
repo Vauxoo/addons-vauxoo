@@ -7,7 +7,6 @@
 #    info moylop260 (moylop260@hotmail.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,28 +24,18 @@
 #
 ##############################################################################
 
-{
-    "name" : "Creacion de Factura Electronica para Mexico (CBB)",
-    "version" : "1.0",
-    "author" : "moylop260@hotmail.com",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CBB of Mexican SAT.
-Codigo de Barras Bidimensional.
-http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19084.html
-    """,
-    "website" : "http://moylop.blogspot.com/",
-    "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document", 
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
-        "ir_sequence_view.xml",
-        "res_company_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from osv import osv
+from osv import fields
+from tools.translate import _
+import os
+import time
+
+class res_company(osv.osv):
+    _inherit = 'res.company'
+    
+    _columns = {
+        'cif_file': fields.binary('Cedula de Identificacion Fiscal'),
+    }
+res_company()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
