@@ -32,6 +32,7 @@
     "category" : "Localization/Mexico",
     "description" : """This module creates e-invoice files from invoices with standard CBB of Mexican SAT.
 Codigo de Barras Bidimensional.
+http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19204.html
 http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19084.html
     """,
     "website" : "http://moylop.blogspot.com/",
