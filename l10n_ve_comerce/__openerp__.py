@@ -25,7 +25,7 @@
 {
     "name" : "Venezuela -Chart of Account",
     "version" : "1.0",
-    "author" : "Tiny & Netquatro",
+    "author" : "Tiny & Vauxoo",
     "category" : "Localisation/Account Charts",
     "description": 
 '''
@@ -38,7 +38,6 @@ Este módulo es para manejar un catálogo de cuentas ejemplo para Venezuela.
                     'account_tax.xml','l10n_chart_ve_wizard.xml'],
     "active": False,
     "installable": True,
-    "certificate" : "00763145921185574557",
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
