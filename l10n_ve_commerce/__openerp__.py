@@ -23,19 +23,24 @@
 #
 ##############################################################################
 {
-    "name" : "Venezuela -Chart of Account",
+    "name" : "Commercial Chart Account for Venezuela",
     "version" : "1.0",
     "author" : "Tiny & Vauxoo",
     "category" : "Localisation/Account Charts",
     "description": 
 '''
-This is the module to manage the accounting chart for Venezuela in Open ERP.
-Este módulo es para manejar un catálogo de cuentas ejemplo para Venezuela.
+This Module load a generic format for manage medium and big business.
+You will need accounting knowledge to understad sone concepts.
 ''',
-    "depends" : ["account", "base_vat", "account_chart"],
+    "depends" : ["account",
+                 "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
-                    'account_tax.xml','l10n_chart_ve_wizard.xml'],
+    "update_xml" : ['account_tax_code.xml',
+                    'account_user_types.xml',
+                    'account_chart.xml',
+                    'account_account.xml',
+                    'account_tax.xml',
+                    'l10n_chart_ve_wizard.xml'],
     "active": False,
     "installable": True,
 }
