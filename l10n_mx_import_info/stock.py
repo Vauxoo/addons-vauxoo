@@ -15,16 +15,25 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import time
-from osv import osv,fields
+from osv import osv
+from osv import fields
+from tools.translate import _
 
 
 class stock_production_lot(osv.osv):
-    _inherit = "stock.production.lot"
+    _inherit = "stock.tracking"
     _columns={
         'import_id':fields.many2one('import.info','Import Lot', required=False,
                                     help="Import Information, it is required for manipulation if import info in invoices."),
     }
 
+    def name_get(self, cr, uid, ids, context=None):
+        if not len(ids):
+            return []
+        #Avoiding use 000 in show name.
+        res = [(r['id'], ''.join([a for a in r['name'] if a<>'0'])+'::'+(self.browse(cr,uid,r['id'],context).import_id.name or '')) for r in self.read(cr, uid, ids, ['name',], context)]
+        #res = [(r['id'], 'COMO QUIERO') for r in self.read(cr, uid, ids, ['name',], context)]
+        return res
 
 stock_production_lot()
 

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 # Author=Nhomar Hernandez nhomar@vauxoo.com
+# Audited by=
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -26,18 +27,23 @@ class import_info(osv.osv):
     _columns = {
         'name' : fields.char('Number of Operation',15, required=True, 
                 help="Transaction Number of tramit Information"),
-        'customs' : fields.char('Aduana',64, help="Customs House product came in to contry where"),
-        'date':fields.date('Fecha', help="Date of Custom and Import Information (In Document)"),
-        'lot_id' : fields.many2one('stock.production.lot','pedimento'),
+        'customs' : fields.char('Customs',64, help="What Customs was used in your country for import this lot (Generally it is a legal information)"),
+        'date':fields.date('Date', help="Date of Custom and Import Information (In Document)"),
+        'lot_ids' : fields.one2many('stock.tracking','import_id','Production Lot'),
         'rate': fields.float('Exchange Rate', required=True, digits=(16, 4), 
                 help='Exchange rate informed on Custom House when the transaction was approved'),
-        'company_id':fields.many2one('res.company', 'Company', required=True, 
+        'company_id':fields.many2one('res.company', 'Company', 
+                                    required=True, select=1,
                                     help="Company related to this document."),
         'invoice_ids':fields.many2many('account.invoice', 'account_invoice_rel', 
                                         'import_id', 'invoice_id',
                                         'Invoices Related'),
     }
 
+
+    _defaults = {
+    'company_id': lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid, 'import.info', context=c)
+    }
 
 import_info()
 

@@ -14,5 +14,45 @@
             id="menu_action_import_info_tree" 
             action="action_import_info_tree"
             name="Import Information Packing"/>
+        <record model="ir.ui.view" id="view_import_info_form">
+            <field name="name">import.info.form</field>
+            <field name="model">import.info</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Import Info">
+                    <group col="4" colspan="4">
+                        <field name="name"/>
+                        <field name="customs"/>
+                        <field name="date"/>
+                        <field name="rate"/>
+                        <field name="company_id" select="1" groups="base.group_multi_company" widget="selection"/>
+                    </group>
+                    <newline/>
+                    <notebook colspan="4">
+                        <page string="Invoices">
+                            <field name="invoice_ids" nolabel="1"/>
+                        </page>
+                        <page string="Production Lots">
+                            <field name="lot_ids" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_import_info_tree">
+            <field name="name">import.info.tree</field>
+            <field name="model">import.info</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Import Info">
+                        <field name="name"/>
+                        <field name="customs"/>
+                        <field name="date"/>
+                        <field name="rate"/>
+                        <field name="company_id" select="1" groups="base.group_multi_company" widget="selection"/>
+                </tree>
+            </field>
+        </record>
     </data>
 </openerp>
