@@ -16,3 +16,4 @@
 
 import import_info
 import stock
+import product

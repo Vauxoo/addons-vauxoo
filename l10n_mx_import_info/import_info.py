@@ -38,6 +38,7 @@ class import_info(osv.osv):
         'invoice_ids':fields.many2many('account.invoice', 'account_invoice_rel', 
                                         'import_id', 'invoice_id',
                                         'Invoices Related'),
+        'product_info_ids':fields.one2many('product.import.info', 'import_id', 'Products Info', required=False),
     }
 
 

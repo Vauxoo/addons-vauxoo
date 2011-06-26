@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- 
+
 {
     "name" : "Customs Information on lots",
     "version" : "0.1",
@@ -25,11 +25,14 @@ Make relation between information of import with goverment.
 With this module you will be able to make a relation between invoice and Information of importing transaction.
 It will work as production lot make better control with quantities.
     """,
-    "depends" : ["base","product","stock"],
+    "depends" : ["base","product","stock","account"],
     "init_xml" : [],
-    "demo_xml" : [], 
+    "demo_xml" : [
+    'demo/import_info_demo.xml',
+    ], 
     "update_xml" : [
     'import_info_view.xml',
+    'product_view.xml',
     'stock_view.xml',
     'security/groups.xml',
     ],
