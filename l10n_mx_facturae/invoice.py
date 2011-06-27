@@ -469,7 +469,7 @@ class account_invoice(osv.osv):
                 
                 file_globals['serial_number'] = certificate_id.serial_number
             else:
-                raise osv.except_osv('Warning !', 'No se tiene un certificado valido\nVerique las fechas del certificado, y que este activo, %s !'%(msg2))
+                raise osv.except_osv('Warning !', 'Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!'%(msg2))
         return file_globals
     
     def _get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
@@ -932,8 +932,8 @@ class account_invoice(osv.osv):
             invoice_data_parent['Comprobante'].update({
                 'xmlns': "http://www.sat.gob.mx/cfd/2",
                 'xmlns:xsi': "http://www.w3.org/2001/XMLSchema-instance",
-                    'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv2.xsd",
-                    'version': "2.0",
+                'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv2.xsd",
+                'version': "2.0",
             })
             invoice_data_parent['Comprobante'].update({
                 'folio': invoice.number,
@@ -946,9 +946,9 @@ class account_invoice(osv.osv):
                 'noCertificado': '@',
                 'sello': '@',
                 'certificado': '@',
-                'subTotal': invoice.amount_untaxed,
+                'subTotal': "%.2f"%( invoice.amount_untaxed or 0.0),
                 'descuento': "0",#Add field general
-                'total': invoice.amount_total,
+                'total': "%.2f"%( invoice.amount_total or 0.0),
             })
             folio_data = self._get_folio(cr, uid, [invoice.id], context=context)
             invoice_data_parent['Comprobante'].update({
@@ -1075,7 +1075,7 @@ class account_invoice(osv.osv):
                     tax_name = 'IEPS'
                 tax_names.append( tax_name )
                 
-                if line_tax_id.amount > 0:
+                if line_tax_id.amount >= 0:
                     impuesto_list = invoice_data_impuestos['Traslados']
                     impuesto_str = 'Traslado'
                     totalImpuestosTrasladados += line_tax_id_amount
@@ -1090,7 +1090,7 @@ class account_invoice(osv.osv):
                         'importe': "%.2f"%( line_tax_id_amount ),
                     }
                 }
-                if line_tax_id.amount > 0:
+                if line_tax_id.amount >= 0:
                     impuesto_dict[impuesto_str].update({'tasa': "%.2f"%( tasa )})
                 impuesto_list.append( impuesto_dict )
             
@@ -1119,7 +1119,7 @@ class account_invoice(osv.osv):
             invoice_data_parent['date_invoice'] = invoice.date_invoice
             invoice_data_parent['currency_id'] = invoice.currency_id.id
             
-            date_ctx = {'date': time.strftime('%Y-%m-%d', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))}
+            date_ctx = {'date': invoice.date_invoice and time.strftime('%Y-%m-%d', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S')) or False}
             #rate = self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id, invoice.company_id.currency_id.id, 1, round=False, context=date_ctx, account=None, account_invert=False)
             #rate = 1.0/self.pool.get('res.currency')._current_rate(cr, uid, [invoice.currency_id.id], name=False, arg=[], context=date_ctx)[invoice.currency_id.id]
             currency = self.pool.get('res.currency').browse(cr, uid, [invoice.currency_id.id], context=date_ctx)[0]
