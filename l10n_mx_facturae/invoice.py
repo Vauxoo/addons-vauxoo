@@ -1063,7 +1063,8 @@ class account_invoice(osv.osv):
             for line_tax_id in invoice.tax_line:
                 #tax_name = line_tax_id.name.split(' - ')[0]
                 line_tax_id_amount = abs( line_tax_id.amount or 0.0 )
-                tasa = line_tax_id_amount and invoice.amount_untaxed and line_tax_id_amount * 100 / invoice.amount_untaxed or 0.0
+                #tasa = line_tax_id_amount and invoice.amount_untaxed and line_tax_id_amount * 100 / invoice.amount_untaxed or 0.0
+                tasa = line_tax_id_amount and line_tax_id.base and line_tax_id_amount * 100.0 / abs( line_tax_id.base ) or 0.0
                 
                 tax_name = line_tax_id.name.lower().replace('.','').replace(' ', '').replace('-', '')
                 if 'iva' in tax_name:
