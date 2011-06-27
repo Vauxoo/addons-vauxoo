@@ -25,7 +25,7 @@ class import_info(osv.osv):
     _description = "Information about customs"
     _order = 'name asc'
     _columns = {
-        'name' : fields.char('Number of Operation',15, required=True, 
+        'name' : fields.char('Number of Operation',15,
                 help="Transaction Number of tramit Information"),
         'customs' : fields.char('Customs',64, help="What Customs was used in your country for import this lot (Generally it is a legal information)"),
         'date':fields.date('Date', help="Date of Custom and Import Information (In Document)"),

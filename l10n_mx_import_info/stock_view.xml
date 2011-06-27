@@ -10,6 +10,9 @@
                 <field name="date" position="after">
                     <field name="import_id" domain="[]"/>
                 </field>
+<!--                <field name="date" position="after">-->
+<!--                    <field name="import_product_id"/>-->
+<!--                </field>-->
             </field>
         </record>
         <record model="ir.ui.view" id="stock_tracking_form">
