@@ -28,6 +28,11 @@ from tools.translate import _
 class product_import_info(osv.osv):
     _name = 'product.import.info'
     _rec_name = 'import_id'
+    def _calc_stock(self, cr, uid, ids, field_name, arg, context):
+        result ={}
+        for i in ids:
+            result[i]="HELLO"
+        return result
     _columns = {
             'product_id': fields.many2one('product.product','Product',required=True,
             help="Product to be counted on this Import Document information"),
@@ -37,6 +42,7 @@ class product_import_info(osv.osv):
             help="Quantity of this product on this document,"),
             'uom_id':fields.many2one('product.uom', 'UoM', required=False,
             help="Unit of measure, be care this unit must be on the same category of unit indicated on the product form,"),
+#            'logistical': fields.function(_calc_stock, method=True, type='text', string='Logistic',),
     }
     _defaults = {
     }
@@ -67,9 +73,18 @@ class product_product(osv.osv):
     product_product
     """
     _inherit = 'product.product'
+    def _has_import(self, cr, uid, ids, field_name, arg, context):
+        result = {}
+        for i in ids:
+            if len(self.browse(cr,uid,[i],context)[0].import_info_ids)!=0: 
+                result[i]=True
+            else:
+                result[i]=False
+        return result
     _columns = {
         'pack_control':fields.boolean('Pack Control', required=False,
         help="If you wnat to track import information to be used on invoices and other documents check this field, remember, if the product is a service this information can not be tracked, if this field is checked you will need to use consumable or stockable type of product on information page."),
         'import_info_ids':fields.one2many('product.import.info', 'product_id', 'Import Info', required=False),
+        'has_import': fields.function(_has_import, method=True, type='boolean', string='Has Import'),
     }
 product_product()

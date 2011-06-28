@@ -109,8 +109,8 @@ class stock_move_constraint(osv.osv):
 #        print "I checked"
 #        return True
 
-    _constraints = [(_check_import_info,'You must assign a track lot with import information for this product, if it is assigned verify if you have enought products planified on this import document or at least if the product exist in the list of products in this import document, if you are trying to generate a new pack with the wizard it is not possible if the product is checked as Pack Control, check with your product manager to make the analisys of the situation',['tracking_id'])],
-
+    _constraints = [(_check_import_info,'You must assign a track lot with import information for this product, if it is assigned verify if you have enought products planified on this import document or at least if the product exist in the list of products in this import document, if you are trying to generate a new pack with the wizard it is not possible if the product is checked as Pack Control, check with your product manager to make the analisys of the situation',['tracking_id'])]
+    
 
 stock_move_constraint()
 
