@@ -44,9 +44,15 @@ class product_import_info(osv.osv):
             help="Unit of measure, be care this unit must be on the same category of unit indicated on the product form,"),
 #            'logistical': fields.function(_calc_stock, method=True, type='text', string='Logistic',),
     }
-    _defaults = {
-    }
-    
+    def _check_uom(self, cr, uid, ids, context=None):
+        for import_info in self.browse(cr, uid, ids, context=context):
+            if import_info.uom_id and import_info.uom_id.category_id.id <> import_info.product_id.uom_po_id.category_id.id:
+                return False
+        return True
+
+    _constraints = [
+        (_check_uom, 'Error: The default UOM and the Import Product Info must be in the same category.', ['uom_id']),
+    ]
     
     def onchange_product_id(self, cr, uid, ids, product_id, context=None):
         """
