@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report id="label_report_import_info"
+            name="label.report.import.info"
+            string="Labels"
+            model="import.info"
+            header="False"
+            rml="l10n_mx_import_info/report/label_report.rml"
+        />
+    </data>
+</openerp>

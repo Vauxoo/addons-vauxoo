@@ -28,11 +28,18 @@ from tools.translate import _
 class product_import_info(osv.osv):
     _name = 'product.import.info'
     _rec_name = 'import_id'
-    def _calc_stock(self, cr, uid, ids, field_name, arg, context):
+    
+    
+    def _get_qtymoved(self, cr, uid, ids, field_name, arg, context):
+    #TODO metodo para calcular el la cantidad de movimientos.
         result ={}
+        print arg
+        obj=self.pool.get('stock.report.tracklots')
         for i in ids:
-            result[i]="HELLO"
+            result[i]=10.00
         return result
+        
+        
     _columns = {
             'product_id': fields.many2one('product.product','Product',required=True,
             help="Product to be counted on this Import Document information"),
@@ -42,6 +49,7 @@ class product_import_info(osv.osv):
             help="Quantity of this product on this document,"),
             'uom_id':fields.many2one('product.uom', 'UoM', required=False,
             help="Unit of measure, be care this unit must be on the same category of unit indicated on the product form,"),
+            'qty_moved': fields.function(_get_qtymoved, method=True, type='float', string='Qty already moved',),
 #            'logistical': fields.function(_calc_stock, method=True, type='text', string='Logistic',),
     }
     def _check_uom(self, cr, uid, ids, context=None):

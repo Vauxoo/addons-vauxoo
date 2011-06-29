@@ -34,6 +34,7 @@ It will work as production lot make better control with quantities.
     'import_info_view.xml',
     'product_view.xml',
     'stock_view.xml',
+    'label_report.xml',
     'security/groups.xml',
     ],
     "active": False,

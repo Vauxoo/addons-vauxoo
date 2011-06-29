@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(295.0,174.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="3.0" y1="3.0" width="289" height="168"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <images/>
+  </stylesheet>
+  <story>
+    <para style="Standard">[[ repeatIn(objects,'info') ]]</para>
+    <para style="Standard">[[ info.company_id.name ]]</para>
+    <section>
+      <para style="Standard">[[ repeatIn(info.product_info_ids,'product_info_ids') ]]</para>
+      <para style="Standard">[[ product_info_ids.qty ]][[ product_info_ids.product_id.name ]]</para>
+    </section>
+    <para style="Standard">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>

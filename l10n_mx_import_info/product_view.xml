@@ -33,13 +33,14 @@
                                         <field name="uom_id"/>
 <!--                                        TODO is possible add a field to write the log of events with a product in logistic-->
 <!--                                        <separator string="Resume of logistic" colspan="4"/>-->
-<!--                                        <field name="logistical" colspan="4" nolabel="1"/>-->
+                                        <field name="qty_moved" colspan="4"/>
                                     </group>
                                 </form>
                                 <tree string="Import Info">
                                     <field name="import_id"/>
                                     <field name="qty"/>
                                     <field name="uom_id"/>
+                                    <field name="qty_moved" colspan="4"/>
                                 </tree>
                             </field>
                         </page>
