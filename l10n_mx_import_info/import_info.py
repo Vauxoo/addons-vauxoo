@@ -35,6 +35,8 @@ class import_info(osv.osv):
         'company_id':fields.many2one('res.company', 'Company', 
                                     required=True, select=1,
                                     help="Company related to this document."),
+        'supplier_id':fields.many2one('res.partner', 'Supplier', select=1,
+                                    help="Partner who i bught this product related to to this document."),
         'invoice_ids':fields.many2many('account.invoice', 'account_invoice_rel', 
                                         'import_id', 'invoice_id',
                                         'Invoices Related'),

@@ -9,13 +9,15 @@ class label_report(report_sxw.rml_parse):
         super(label_report, self).__init__(cr, user, name, context=context)
         self.localcontext.update({
             'time': time,
+            'getAdd': self._getAdd,
         })
     
-    def method_name(self, obj):
+    def _getAdd(self, obj):
         """
         Custom method that process obj and return required data to report
         @param obj: parameter to method
         """
+        return self.pool.get('res.partner').browse(cr,uid,[obj])[0].name
         
         
         
@@ -25,3 +27,4 @@ report_sxw.report_sxw(
     'addons/l10n_mx_import_info/report/label_report.rml',
     parser=label_report
 )
+
