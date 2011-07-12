@@ -48,6 +48,14 @@
       <field name="user_type" ref="account_type_view"/>
       <field name="parent_id" ref="chart_11110"/>
     </record>
+    <record id="chart_1111001999" model="account.account.template">
+      <field name="code">1111001999</field>
+      <field name="name">Cash</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_1111001"/>
+    </record>
     <record id="chart_1111020" model="account.account.template">
       <field name="code">1111020</field>
       <field name="name">Caja chica</field>
@@ -407,6 +415,14 @@
       <field eval="False" name="reconcile"/>
       <field name="user_type" ref="account_type_view"/>
       <field name="parent_id" ref="chart_11210"/>
+    </record>
+    <record id="chart_1121010999" model="account.account.template">
+      <field name="code">1121010999</field>
+      <field name="name">Efectos por cobrar Locales [Cta. Generica]</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_1121010"/>
     </record>
     <record id="chart_1121050" model="account.account.template">
       <field name="code">1121050</field>
@@ -3760,6 +3776,14 @@
       <field name="user_type" ref="account_type_view"/>
       <field name="parent_id" ref="chart_21210"/>
     </record>
+    <record id="chart_2121010999" model="account.account.template">
+      <field name="code">2121010999</field>
+      <field name="name">Efectos por pagar Locales [Cta. Generica]</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_2121010"/>
+    </record>
     <record id="chart_2121050" model="account.account.template">
       <field name="code">2121050</field>
       <field name="name">Efect.p/pagar-mon.extrerior</field>
@@ -6672,6 +6696,30 @@
       <field name="user_type" ref="account_type_view"/>
       <field name="parent_id" ref="chart_411"/>
     </record>
+    <record id="chart_4119001" model="account.account.template">
+      <field name="code">4119001</field>
+      <field name="name">Vtas.ntas.mercancias-diversas NACIONALES</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_41190"/>
+    </record>
+    <record id="chart_4119001999" model="account.account.template">
+      <field name="code">4119001999</field>
+      <field name="name">Vtas.ntas.mercancias-diversas NACIONALES [GENERICA]</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_4119001"/>
+    </record>
+    <record id="chart_4119002" model="account.account.template">
+      <field name="code">4119002</field>
+      <field name="name">Vtas.ntas.mercancias-diversas IMPORTADOS</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_41190"/>
+    </record>
     <record id="chart_412" model="account.account.template">
       <field name="code">412</field>
       <field name="name">Vtas.netas-acc.y tit.valores</field>
@@ -7591,6 +7639,14 @@
       <field eval="False" name="reconcile"/>
       <field name="user_type" ref="account_type_view"/>
       <field name="parent_id" ref="chart_51240"/>
+    </record>
+    <record id="chart_5124010999" model="account.account.template">
+      <field name="code">5124010999</field>
+      <field name="name">Comp.netas mercancias-nacionales [GENERICA]</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_5124010"/>
     </record>
     <record id="chart_5124050" model="account.account.template">
       <field name="code">5124050</field>
