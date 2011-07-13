@@ -43,6 +43,7 @@ import tempfile
 import os
 import netsvc
 from tools.translate import _
+import codecs
 
 
 
@@ -697,6 +698,7 @@ class account_invoice(osv.osv):
         if context.get('type_data') == 'xml_obj':
             return doc_xml
         data_xml = doc_xml.toxml('UTF-8')
+        data_xml = codecs.BOM_UTF8 + data_xml
         fname_xml = (data_dict['Comprobante']['Emisor']['rfc'] or '') + '.' + ( data_dict['Comprobante'].get('serie', '') or '') + '.' + ( data_dict['Comprobante'].get('folio', '') or '') + '.xml'
         return fname_xml, data_xml
 
