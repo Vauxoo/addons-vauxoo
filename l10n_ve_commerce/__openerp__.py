@@ -6,7 +6,7 @@
 #    $Id$
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Netquatro, C.A. (<http://openerp.netquatro.com>). All Rights Reserved
+#    Copyright (C) 2004-2008 Vauxoo, C.A. (<http://vauxoo.com>). All Rights Reserved
 #    $Id$
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by

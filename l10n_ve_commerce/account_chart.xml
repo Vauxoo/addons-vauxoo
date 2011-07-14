@@ -4288,6 +4288,14 @@
       <field name="user_type" ref="account_type_view"/>
       <field name="parent_id" ref="chart_21602"/>
     </record>
+    <record id="chart_2160201001" model="account.account.template">
+      <field name="code">2160201001</field>
+      <field name="name">I.v.a. debito fiscal por pagar (Venta)</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_2160201"/>
+    </record>
     <record id="chart_2160220" model="account.account.template">
       <field name="code">2160220</field>
       <field name="name">I.v.a. credito fiscal</field>
@@ -4295,6 +4303,14 @@
       <field eval="False" name="reconcile"/>
       <field name="user_type" ref="account_type_view"/>
       <field name="parent_id" ref="chart_21602"/>
+    </record>
+    <record id="chart_2160220001" model="account.account.template">
+      <field name="code">2160220001</field>
+      <field name="name">I.v.a. credito fiscal por cobrar (Compra)</field>
+      <field name="type">view</field>
+      <field eval="False" name="reconcile"/>
+      <field name="user_type" ref="account_type_view"/>
+      <field name="parent_id" ref="chart_2160220"/>
     </record>
     <record id="chart_21608" model="account.account.template">
       <field name="code">21608</field>
