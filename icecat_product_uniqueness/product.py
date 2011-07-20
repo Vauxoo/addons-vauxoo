@@ -44,10 +44,6 @@ class product_inherited(osv.osv):
     def _check_uniqueness(self, cr, uid, ids, context=None):
         all_ids = self.search(cr, uid, [('id', '<>', ids[0])])
         all_products = [p for p in self.browse(cr, uid, all_ids, [], context) if p.ean13 != False]
-        print "all products"
-        print all_products
-        print "ids"
-        print ids
         if all_products == []:
             return True
         for product in self.browse(cr, uid, ids, context):
@@ -60,4 +56,5 @@ class product_inherited(osv.osv):
         return True
 
     _constraints = [(_check_uniqueness, 'ERROR, product already exists for this company', ['ean13'])]
+
 product_inherited()
