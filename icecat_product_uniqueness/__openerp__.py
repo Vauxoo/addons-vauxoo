@@ -33,7 +33,7 @@
     'category' : 'Custom',
     'website' : 'http://vauxoo.com',
     'depends' : ['base', 'product_icecat', 'product'],
-    'update_xml' : ['product_view.xml'],
+    'update_xml' : [], #['product_view.xml'], Comented because the view was modified before the module instalation
     'demo' : [],
     'active' : False,
     'installable': True,
