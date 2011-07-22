@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="product.product_search_form_view" />
             <field name="arch" type="xml">  
                 <data>
-                    <field name="categ_id" position="after">
+                    <field name="categ_id" position="before">
                         <field name="ean13" />
                     </field>
                 </data>
