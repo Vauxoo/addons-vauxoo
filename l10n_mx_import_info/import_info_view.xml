@@ -36,6 +36,8 @@
                         </page>
                         <page string="Track Lots">
                             <field name="lot_ids" nolabel="1" context="{'form_view_ref' : 'l10n_mx_import_info.stock_tracking_form'}"/>
+                            <separator string="Notes for Audit (Save after Analisys)" colspan="4"/>
+                            <field name="audit_note" nolabel="1"/>
                         </page>
                         <page string="Products">
                             <field name="product_info_ids" nolabel="1" colspan="4"
@@ -45,7 +47,7 @@
                                     <field name="qty"/>
                                     <field name="uom_id"/>
                                 </form>
-                                <tree>
+                                <tree editable="bottom">
                                     <field name="product_id"/>
                                     <field name="qty"/>
                                     <field name="uom_id"/>

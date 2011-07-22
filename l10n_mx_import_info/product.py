@@ -52,6 +52,8 @@ class product_import_info(osv.osv):
             'qty_moved': fields.function(_get_qtymoved, method=True, type='float', string='Qty already moved',),
 #            'logistical': fields.function(_calc_stock, method=True, type='text', string='Logistic',),
     }
+    
+    
     def _check_uom(self, cr, uid, ids, context=None):
         for import_info in self.browse(cr, uid, ids, context=context):
             if import_info.uom_id and import_info.uom_id.category_id.id <> import_info.product_id.uom_po_id.category_id.id:

@@ -24,6 +24,21 @@ class import_info(osv.osv):
     _name = "import.info"
     _description = "Information about customs"
     _order = 'name asc'
+
+
+    def _get_audit(self, cr, uid, ids, field_name, arg, context):
+        result={}
+        prod_obj=self.pool.get('product.product')
+        for i in ids:
+            chain=''
+            for p in self.browse(cr,uid,[i],context)[0].product_info_ids:
+                if not self.browse(cr,uid,[i],context)[0].supplier_id.id in [s.name.id for s in p.product_id.seller_ids]:
+                    chain2 = '\nVerify the product: %s the Supplier on this document is not related to this product.\n' % p.product_id.name
+                    chain=chain+chain2
+            result[i]=chain
+        return result
+
+
     _columns = {
         'name' : fields.char('Number of Operation',15,
                 help="Transaction Number of tramit Information"),
@@ -41,12 +56,14 @@ class import_info(osv.osv):
                                         'import_id', 'invoice_id',
                                         'Invoices Related'),
         'product_info_ids':fields.one2many('product.import.info', 'import_id', 'Products Info', required=False),
+        'audit_note': fields.function(_get_audit, method=True, type='text', string='Audit Notes'),
     }
 
 
     _defaults = {
     'company_id': lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid, 'import.info', context=c)
     }
+
 
 import_info()
 

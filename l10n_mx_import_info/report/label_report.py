@@ -14,11 +14,12 @@ class label_report(report_sxw.rml_parse):
     
     def _getAdd(self, obj):
         """
-        Custom method that process obj and return required data to report
-        @param obj: parameter to method
+    Custom method that process obj and return required data to report
+    @param obj: parameter to method
         """
-        return self.pool.get('res.partner').browse(cr,uid,[obj])[0].name
-        
+        print 'DEDEDEED'
+        return 'ESTA ES LA DIRECCION Y EL TELEELFONO (52)222333444'
+    
         
         
 report_sxw.report_sxw(
