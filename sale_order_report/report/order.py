@@ -24,13 +24,13 @@ import time
 from report import report_sxw
 from osv import osv
 
-class order(report_sxw.rml_parse):
+class Order(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(order, self).__init__(cr, uid, name, context=context)
+        super(Order, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
         })
-report_sxw.report_sxw('report.sale.order.amd','sale.order','addons/sale_order_report/report/order.rml',parser=order)
+report_sxw.report_sxw('report.sale.order.amd','sale.order','addons/sale_order_report/report/order.rml',parser=Order)
 
 
 

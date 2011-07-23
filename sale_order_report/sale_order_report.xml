@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <report auto="False" id="report_sale_order_amd" model="sale.order" name="sale.order.amd" rml="sale_order_report/report/order.rml" string="Quotation / Order" header="False"/>
+        <report auto="False" id="report_sale_order_amd" model="sale.order" name="sale.order.amd" rml="sale_order_report/report/order.rml" string="Quotation Vauxoo" header="False"/>
     </data>
 </openerp>
