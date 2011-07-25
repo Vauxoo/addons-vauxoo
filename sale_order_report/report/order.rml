@@ -112,19 +112,19 @@
       <paraStyle name="all" alignment="JUSTIFY" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="blue"/>
     </initialize>
 
-    <paraStyle name="COMPANYNAME" alignment="LEFT" fontName="Helvetica-Bold" fontSize="16.0" leading="10" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="TITLE" alignment="CENTER" fontName="Helvetica" fontSize="18.0" leading="8" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="COMPANYNAME" alignment="LEFT" fontName="Helvetica-Bold" fontSize="14.0" leading="10" spaceBefore="3.0" textColor="black"/>
+    <paraStyle name="TITLE" alignment="CENTER" fontName="Helvetica" fontSize="14.0" leading="8" spaceBefore="3.0" textColor="white"/>
     <paraStyle name="SUPPLIERNAME" alignment="LEFT" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="green"/>
     <paraStyle name="NOTEANDNUMBER" alignment="JUSTIFY" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="darkblue"/>
-    <paraStyle name="BILLTO" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>
-    <paraStyle name="TERMS" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="12" spaceBefore="3.0" textColor="white"/>
-    <paraStyle name="ITEMSTITLE" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="BILLTO" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="TERMS" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="white"/>
+    <paraStyle name="ITEMSTITLE" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="white"/>
     <paraStyle name="ITEMSLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="7.0" leading="9.0" spaceBefore="0.5" textColor="black"/>
-    <paraStyle name="ITEMSLEFTITALIC" alignment="LEFT" fontName="Helvetica-Oblique" fontSize="8.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSLEFTITALIC" alignment="LEFT" fontName="Helvetica-Oblique" fontSize="6.0" leading="8" spaceBefore="1.0" textColor="black"/>
     <paraStyle name="ITEMSLEFTITALICPEQ" alignment="LEFT" fontName="Helvetica-Oblique" fontSize="2mm" leading="2.1mm" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="ITEMSCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="ITEMSRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="ITEMSSMALL" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="ITEMSSMALL" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="1.0" textColor="black"/>
     <paraStyle name="ITEMFOOTER" alignment="RIGHT" fontName="Helvetica-Oblique" fontSize="3mm" leading="4mm" spaceBefore="1.0" textColor="black"/>
 
 
@@ -154,7 +154,6 @@
                 </td>
                 <td>
                     <para style="ITEMSLEFT">SR(A).: [[ o.partner_order_id.name or removeParentNode('para') ]]</para>
-                    <para style="ITEMSLEFT">[[ o.partner_order_id.function.name or removeParentNode('para') ]]</para>
                     <para style="ITEMSLEFT">TELF.: [[ o.partner_order_id.phone or removeParentNode('para') ]]</para>
                     <para style="ITEMSLEFT">FAX.: [[ o.partner_order_id.fax or removeParentNode('para') ]]</para>
                     <para style="ITEMSLEFT">CEL.: [[ o.partner_order_id.mobile or removeParentNode('para') ]]</para>
@@ -225,19 +224,7 @@
                 <td><para style="ITEMSCENTER">[[ o.user_id.name  ]]</para></td>
                 <td><para style="ITEMSCENTER">[[ o.payment_term.name  or removeParentNode('para')]]</para></td>
                 <td>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'EXW' and 'EXW' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'FCA' and 'FCA' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'FAS' and 'FAS' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'FOB' and 'FOB' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CFR' and 'CFR' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CIF' and 'CIF' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CPT' and 'CPT' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CIP' and 'CIP' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DAF' and 'DAF' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DES' and 'DES' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DEQ' and 'DEQ' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DDU' and 'DDU' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm.description == False and 'NO APLICA']]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm and ('%s [%s]'%(o.incoterm.name,o.incoterm.code)) or 'No Aplica' ]]</para>
                 </td>
             </tr>
 		</blockTable>
