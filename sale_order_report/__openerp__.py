@@ -16,6 +16,7 @@
     ],
     "update_xml" : [
         "sale_order_report.xml",
+        "sale_order_view.xml",
     ],
     "active": False,
     "installable": True,
