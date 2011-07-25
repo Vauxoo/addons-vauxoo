@@ -38,7 +38,6 @@
                     <tr>
                         <td>
                             <para style="ITEMSLEFT">[[ o.user_id.company_id.partner_id.name or removeParentNode('para') ]], RIF: [[ o.user_id.company_id.partner_id.vat[2:] or removeParentNode('para') ]]</para>
-                            <para style="ITEMSLEFT">[[ o.user_id.company_id.rml_footer1 or removeParentNode('para')  ]]</para>
                             <para style="ITEMSLEFT">[[ o.user_id.company_id.partner_id.address[0].street or  '' ]]</para>
                             <para style="ITEMSLEFT">[[ o.user_id.company_id.partner_id.address[0].street2 or  '' ]], [[ o.user_id.company_id.partner_id.address[0].country or  '' ]], [[ o.user_id.company_id.partner_id.address[0].city or  '' ]],  [[ o.user_id.company_id.partner_id.address[0].zip or  '' ]]</para>
                             <para style="ITEMSLEFT">Contactos: [[ o.user_id.company_id.partner_id.address[0].email or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].phone or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].fax or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].mobile or  '' ]]</para>
@@ -130,62 +129,6 @@
 
 
   </stylesheet>
-
-  <!--ESTILO CLARO / TONOS GRISES-->
-<!--
-  <stylesheet>
-
-		<blockTableStyle id="TITLE">
-            <blockBackground colorName="grey" start="1,0" stop="-1,-1"/>
-            <blockValign value="TOP"/>
-		</blockTableStyle>
-
-		<blockTableStyle id="TERMS">
-            <blockBackground colorName="grey" start="0,0" stop="-1,0"/>
-            <blockValign value="TOP"/>
-			<lineStyle kind="GRID" colorName="grey" start="0,0" stop="-1,0" thickness="0.5"/>
-			<lineStyle kind="GRID" colorName="grey" start="0,1" stop="-1,-1" thickness="0.5"/>
-			<lineStyle kind="OUTLINE" colorName="grey" thickness="0.5"/>
-		</blockTableStyle>
-
-		<blockTableStyle id="ITEMSTITLE">
-            <blockBackground colorName="grey" start="0,0" stop="5,0"/>
-            <blockValign value="TOP"/>
-			<lineStyle kind="GRID" colorName="grey" start="0,0" stop="5,0" thickness="0.5"/>
-			<lineStyle kind="OUTLINE" colorName="grey" thickness="0.5"/>
-		</blockTableStyle>
-
-		<blockTableStyle id="ITEMS">
-            <blockValign value="TOP"/>
-			<lineStyle kind="GRID" colorName="grey" start="0,0" stop="5,-1" thickness="0.5" />
-			<lineStyle kind="OUTLINE" colorName="grey" thickness="0.5"/>
-		</blockTableStyle>
-
-		<blockTableStyle id="TOTAL">
-            <blockValign value="TOP"/>
-			<lineStyle kind="GRID" colorName="grey" start="1,0" stop="-1,-1" thickness="0.5" />
-		</blockTableStyle>
-
-    <initialize>
-      <paraStyle name="all" alignment="JUSTIFY" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="blue"/>
-    </initialize>
-
-    <paraStyle name="COMPANYNAME" alignment="LEFT" fontName="Helvetica-Bold" fontSize="16.0" leading="10" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="TITLE" alignment="CENTER" fontName="Helvetica" fontSize="18.0" leading="8" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="SUPPLIERNAME" alignment="LEFT" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="green"/>
-    <paraStyle name="NOTEANDNUMBER" alignment="JUSTIFY" fontName="Helvetica" fontSize="10.0" leading="12" spaceBefore="3.0" textColor="darkblue"/>
-    <paraStyle name="BILLTO" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="TERMS" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="12" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="ITEMSTITLE" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="ITEMSLEFT" alignment="LEFT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="ITEMSCENTER" alignment="CENTER" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
-    <paraStyle name="ITEMSRIGHT" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="8.0" leading="10" spaceBefore="3.0" textColor="black"/>
-
-
-  </stylesheet>
--->
-
-
   <images/>
   <story>
     <para>[[repeatIn(objects,'o')]]</para>
@@ -282,19 +225,19 @@
                 <td><para style="ITEMSCENTER">[[ o.user_id.name  ]]</para></td>
                 <td><para style="ITEMSCENTER">[[ o.payment_term.name  or removeParentNode('para')]]</para></td>
                 <td>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'EXW' and 'EXW' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'FCA' and 'FCA' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'FAS' and 'FAS' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'FOB' and 'FOB' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'CFR' and 'CFR' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'CIF' and 'CIF' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'CPT' and 'CPT' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'CIP' and 'CIP' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'DAF' and 'DAF' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'DES' and 'DES' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'DEQ' and 'DEQ' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == 'DDU' and 'DDU' or removeParentNode('para')]]</para>
-                    <para style="ITEMSCENTER">[[ o.incoterm == False and 'NO APLICA']]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'EXW' and 'EXW' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'FCA' and 'FCA' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'FAS' and 'FAS' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'FOB' and 'FOB' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CFR' and 'CFR' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CIF' and 'CIF' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CPT' and 'CPT' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'CIP' and 'CIP' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DAF' and 'DAF' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DES' and 'DES' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DEQ' and 'DEQ' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == 'DDU' and 'DDU' or removeParentNode('para')]]</para>
+                    <para style="ITEMSCENTER">[[ o.incoterm.description == False and 'NO APLICA']]</para>
                 </td>
             </tr>
 		</blockTable>
@@ -391,31 +334,20 @@
             <tr noRowsplits="1">
                 <td>
                     <para style="ITEMSSMALL">(2) TÉRMINOS DE ENTREGA</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'EXW' and 'EXW: ( "EX WORKS" / "EN FÁBRICA") EL VENDEDOR CUMPLE SU OBLIGACIÓN DE ENTREGA CUANDO PONE LAS MERCANCÍAS A DISPOSICIÓN DEL COMPRADOR EN EL ESTABLECIMIENTO DEL VENDEDOR O EN OTRO LUGAR CONVENIDO ( FÁBRICA, FACTORÍA, ALMACÉN, ETC) SIN DESPACHARLAS PARA LA EXPORTACIÓN NI CARGARLAS EN EL MEDIO DE TRANSPORTE EL COMPRADOR ASUME TODOS LOS COSTES Y RIESGOS DESDE LA ENTREGA DE LA MERCADERÍA.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'FCA' and 'FCA: ( "FREE CARRIER" / "FRANCO TRANSPORTISTA") EL VENDEDOR CUMPLE CON SU OBLIGACIÓN CUANDO ENTREGA LAS MERCANCÍAS,DESPACHADAS PARA EXPORTACIÓN, AL TRANSPORTISTA DESIGNADO POR EL COMPRADOR EN EL LUGAR CONVENIDO. SI LA ENTREGA SE REALIZA EN LOS LOCALES DEL VENDEDOR, ESTE ES RESPONSABLE DE LA CARGA, EN CAMBIO SI LA ENTREGA SE REALIZA EN OTRO LUGAR, EL VENDEDOR NO ES RESPONSABLE DE LA DESCARGA.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'FAS' and 'FAS ( "FREE ALONGSIDE SHIP" / "FRANCO AL COSTADO DEL BUQUE") EL VENDEDOR CUMPLE CON SU OBLIGACIÓN DE ENTREGA CUANDO LAS MERCANCÍAS SON PUESTAS AL COSTADO DEL BUQUE EN EL PUERTO CONVENIDO. A PARTIR DE LA ENTREGA , EL COMPRADOR ASUME LOS COSTES Y RIESGOS DE LA MERCANCÍA. EL TÉRMINO FAS EXIGE AL VENDEDOR DESPACHAR LAS MERCADERÍAS PARA LA EXPORTACIÓN.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'FOB' and 'FOB ( "FREE ON BOARD" / "FRANCO A BORDO") EL VENDEDOR CUMPLE CON SU OBLIGACIÓN DE ENTREGA CUANDO LA MERCANCÍA, DESPACHADA PARA EXPORTACIÓN, HA SOBREPASADO LA BORDA DEL BUQUE EN EL PUERTO DE EMBARQUE CONVENIDO. A PARTIR DE ESTE MOMENTO EL COMPRADOR ASUME TODOS LOS COSTES Y RIESGOS DE LA MERCANCÍA.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'CFR' and 'CFR ("COST AND FREIGHT" / " COSTO Y FLETE") EL VENDEDOR CUMPLE CON SU OBLIGACIÓN DE ENTREGA CUANDO LA MERCANCÍA SOBREPASA LA BORDA DEL BUQUE EN EL PUERTO DE EMBARQUE CONVENIDO, ASUMIENDO EL MISMSO EL PAGO DE LOS COSTES Y EL FLETE PARA HACER LLEGAR LA MERCANCÍA AL PUERTO DE DESTINO CONVENIDO. EL COSTO DEL SEGURO CORRESPONDE AL COMPRADOR. EL TÉRMINO CFR EXIGE AL VENDEDOR DESPACHAR LAS MERCANCÍAS PARA LA EXPORTACIÓN.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'CIF' and 'CIF ("COST, INSURANCE AND FREIGHT" / "COSTO, SEGURO Y FLETE) CORRESPONDEN AL VENDEDOR LAS MISMAS OBLIGACIONES QUE EN EL TÉRMINO CFR, INCLUYENDO EN ESTE CASO LA CONTRATACIÓN DEL SEGURO Y EL PAGO DE LA PRIMA CORRESPONDIENTE. EL TÉRMINO CIF EXIGE AL VENDEDOR DESPACHAR LAS MERCANCÍAS PARA LA EXPORTACIÓN.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'CPT' and 'CPT ( "CARRIAGE PAID TO" / "TRANSPORTE PAGADO HASTA") EL VENDEDOR ENTREGA LAS MERCANCÍAS AL TRANSPORTISTA POR EL DESIGNADO, PAGANDO EL FLETE DEL TRASPORTE DE LAS MISMAS HASTA EL DESTINO CONVENIDO. ENTREGADA LA MERCANCÍA AL TRANSPORTISTA, EL COMPRADOR ASUME TODOS LOS RIESGOS DE PERDIDA O DAÑO DE LA MERCANCÍA. EL CPT REQUIERE QUE EL VENDEDOR DESPACHE LAS MERCANCÍAS PARA LA EXPORTACIÓN.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'CIP' and 'CIP ( "CARRIAGE AND INSURRANCE PAID TO" / " TRASNSPORTE Y SEGURO PAGADO HASTA") CORRESPONDEN AL VENDEDOR LAS MISMAS OBLIGACIONES QUE EN EL TÉRMINO CPT, INCLUYENDO EN ESTE CASO LA CONTRATACIÓN DEL SEGURO Y EL PAGO DE LA PRIMA CORRESPONDIENTE, DURANTE EL TRANSPORTE DE LA MERCANCÍA.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'DAF' and 'DAF ( "DELIVERED AT FRONTIER" / " ENTREGADO EN FRONTERA") EL VENDEDOR HA CUMPLIDO CON SU OBLIGACIÓN DE ENTREGA CUANDO PONE LAS MERCANCÍAS, DESPACHADAS PARA LA EXPORTACIÓN, EN EL PUNTO Y LUGAR DE FRONTERA CONVENIDOS, NO DESPACHADAS PARA LA IMPORTACIÓN. EL VENDEDOR HA DE SOPORTAR LOS RIESGOS DE DAÑO Y PERDIDA DE LA MERCANCÍA HASTA EL MOMENTO DE LA ENTREGA.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'DES' and 'DES ( "DELIVERED EX SHIP" / "ENTREGADO SOBRE BUQUE") EL VENDEDOR ENTREGA LAS MERCANCÍAS CUANDO LAS MISMAS SON PUESTAS A DISPOSICIÓN DEL COMPRADOR, A BORDO DEL BUQUE, EN EL PUERTO DE DESTINO ACORDADO, NO DESPACHADAS PARA IMPORTACIÓN. EL VENDEDOR HA DE SOPORTAR LOS GASTOS Y RIESGOS HASTA EL MOMENTO DE LA ENTREGA. EL COMPRADOR ASUME LOS GASTOS DE DESCARGA.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'DEQ' and 'DEQ ( "DELIVERED EX QUAY" / "ENTREGADO EN MUELLE") EL VENDEDOR CUMPLE CON SU OBLIGACIÓN DE ENTREGA CUANDO PONE LA MERCANCÍA A DISPOSICIÓN DEL COMPRADOR, SIN DESPACHAR PARA LA IMPORTACIÓN, SOBRE EL MUELLE EN EL PUERTO DE DESTINO CONVENIDO. EL VENDEDOR HA DE SOPORTAR LOS RIESGOS Y GASTOS HASTA LA ENTREGA, INCLUIDOS LOS DE DESCARGA. EL TÉRMINO DEQ EXIGE QUE EL COMPRADOR DESPACHE LAS MERCANCÍAS PARA LA IMPORTACIÓN Y QUE PAGUE TODOS LOS TRÁMITES, DERECHOS, IMPUESTOS Y DEMÁS CARGAS DE IMPORTACIÓN.LAS PARTES PUEDEN, SI ASÍ LO DESEAN, INCLUIR ENTRE LAS OBLIGACIONES DEL VENDEDOR TODOS O PARTE DE LOS COSTES PAGADEROS POR LA IMPORTACIÓN DE LAS MERCANCÍAS.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == 'DDU' and 'DDU ("DELIVERED DUTY UNPAID" / "ENTREGADO, DERECHOS NO PAGADOS") EL VENDEDOR CUMPLE CON SU OBLIGACIÓN DE ENTREGA CUANDO COLOCA LA MERCANCÍA A DISPOSICIÓN DEL COMPRADOR, EN EL PUNTO DE DESTINO ACORDADO DEL PAÍS DE IMPORTACIÓN, SIN DESPACHARLAS PARA IMPORTACIÓN. EL VENDEDOR HA DE ASUMIR LA TOTALIDAD DE LOS RIESGOS Y GASTOS HASTA EL MOMENTO QUE SE REALIZA LA ENTREGA.' or removeParentNode('para')]]</para>
-                    <para style="ITEMSSMALL">[[ o.incoterm == False and 'NO SE HA ESTIPULADO TÉRMINOS COMERCIALES DE TRANSPORTE' or removeParentNode('para')]]</para>
+                    <para style="ITEMSSMALL">[[ o.incoterm.description or removeParentNode('para')]]</para>
+                    <para style="ITEMSSMALL">[[ not o.incoterm and 'No se ha estipulado términos comerciales de transporte' or removeParentNode('para')]]</para>
                 </td>
             </tr>
             <tr noRowsplits="1">
                 <td>
                     <para style="ITEMSSMALL">(3) PLAZO DE ENTREGA</para>
-                    <para style="ITEMSSMALL">DE ACUERDO AL PLAN DE TRABAJO / CRONOGRAMA ACORDADO ENTRE LAS PARTES, AL CONFIRMAR SU ORDEN DE COMPRA POR LOS TELF.: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].phone or '' ]]  / FAX: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].fax or '' ]]; EMAIL: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].email or '' ]] LOS PLAZOS PUEDEN VARIAR DE ACUERDO A ETAPAS DE DESARROLLO.</para>
+                    <para style="ITEMSSMALL">De acuerdo al plan de trabajo / Cronograma acordado y mostrado en cada línea, a partir de la confirmación de la orden de compra por los telefonos.: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].phone or '' ]]  / FAX: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].fax or '' ]]; EMAIL: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].email or '' ]] LOS PLAZOS PUEDEN VARIAR DE ACUERDO A ETAPAS DE DESARROLLO.</para>
                 </td>
             </tr>
             <tr noRowsplits="1">
                 <td>
                     <para style="ITEMSSMALL">(4) PRECIOS</para>
-                    <para style="ITEMSSMALL">LA VALIDEZ DE ESTOS PRECIOS ES POR QUINCE (15) DÍAS CALENDARIO A LA FECHA DE ESTA COTIZACIÓN Y CINCO (5) DÍAS HÁBILES A LA FECHA DE SU ORDEN DE COMPRA.</para>
+                    <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer1 or removeParentNode('para')  ]]</para>
                 </td>
             </tr>
 		</blockTable>
