@@ -29,4 +29,13 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+class inherited_product(osv.osv):
+    """
+    M321 Customizations for product.product model
+    """
+    _inherit = "product.product"
 
+    _columns = {
+            'upc': fields.char("UPC", size=16, help="Universal Product Code (12 digits)"),
+        }
+inherited_product()
