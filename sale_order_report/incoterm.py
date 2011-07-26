@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    d$
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,18 +19,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import time
-from report import report_sxw
 from osv import osv
+from osv import fields
+from tools.translate import _
 
-class Order(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(Order, self).__init__(cr, uid, name, context=context)
-        self.localcontext.update({
-            'time': time,
-        })
-report_sxw.report_sxw('report.sale.order.amd','sale.order','addons/sale_order_report/report/order.rml',parser=Order)
-
-
-
+class stock_incoterms(osv.osv):
+    """
+    stock_incoterm
+    """
+    
+    _inherit = 'stock.incoterms'
+    _columns = {
+        'description':fields.text('Description', help='Formal description for this incoterm.'),
+    }
+stock_incoterms()
