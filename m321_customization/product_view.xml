@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="inherited_product_product_tree_view">
+            <field name="name">product.product.tree.inherit.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <field name="name" position="before">
+                        <field name="manufacturer_pref" />
+                    </field>
+                </data>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="inherited_product_search_form_view">
+            <field name="name">product.product.search.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_search_form_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <field name="categ_id" position="before">
+                        <field name="upc" />
+                    </field>
+                    <field name="default_code" position="replace">
+                        <field name="manufacturer_pref" />
+                    </field>
+                </data>
+            </field>
+    </record>
+    <record model="ir.ui.view" id="inherited_product_product_form">
+            <field name="name">product.product.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <field name="ean13" position="after">
+                        <field name="upc" />
+                    </field>
+                </data>
+            </field>
+        </record>
 
     </data>
 </openerp>
