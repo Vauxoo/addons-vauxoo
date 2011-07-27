@@ -54,18 +54,21 @@ class inherited_product(osv.osv):
     # Source for the validation algorithm: http://www.ehow.com/how_6810204_verify-upc-number.html
     def _check_upc(self, cr, uid, ids, context=None):
         this_record = self.browse(cr, uid, ids)
-        upc = map(int, this_record[0].upc)
-        if len(upc) == 12
-            check = upc[-1]
-            del(upc[-1])
-            result = (sum(tuple(self._get_odd_pos(upc))) * 3) + sum(tuple(self._get_even_pos(upc)))
-            multi_ten = self._find_next_ten_multi(result)
-            if multi_ten - result == check:
-                return True
-        return False
+        if this_record[0].upc:
+            upc = map(int, this_record[0].upc)
+            if len(upc) == 12:
+                check = upc[-1]
+                del(upc[-1])
+                result = (sum(tuple(self._get_odd_pos(upc))) * 3) + sum(tuple(self._get_even_pos(upc)))
+                multi_ten = self._find_next_ten_multi(result)
+                if multi_ten - result == check:
+                    return True
+            return False
+        else:
+            return True
 
     _columns = {
-            'upc': fields.char("UPC", size=16, help="Universal Product Code (12 digits)"),
+            'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
         }
 
     _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc'])]
