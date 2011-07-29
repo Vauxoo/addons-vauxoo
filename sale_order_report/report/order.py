@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,14 +23,20 @@
 import time
 from report import report_sxw
 from osv import osv
+from report import pyPdf
 
 class Order(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(Order, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
+            'hello': self._hello,
         })
+    def _hello(self,p):
+        print "estoy en hello"
+        output = pyPdf.PdfFileWriter()
+        print output
+        return "Hello World %s" % output
 report_sxw.report_sxw('report.sale.order.amd','sale.order','addons/sale_order_report/report/order.rml',parser=Order)
-
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
