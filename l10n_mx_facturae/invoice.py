@@ -44,6 +44,7 @@ import os
 import netsvc
 from tools.translate import _
 import codecs
+import release
 
 
 
@@ -183,6 +184,12 @@ class account_invoice(osv.osv):
         return res
     """
     def action_number(self, cr, uid, ids, *args):
+        if release.version >='6':
+            return super(account_invoice, self).action_number(cr, uid, ids, *args)
+        else:
+            return self.action_number5(cr, uid, ids, *args)
+    
+    def action_number5(self, cr, uid, ids, *args):
         invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids)#Linea agregada
         #Sustituye a la funcion original, es el mismo codigo, solo le agrega unas lineas, y no hacer SUPER
         """OpenERP
@@ -371,14 +378,14 @@ class account_invoice(osv.osv):
             fname = ""
             fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
             fname += '.'
+            number_work = invoice.number or invoice.internal_number
             try:
-                int(invoice.number)
-                context.update({ 'number_work': invoice.number or False })
+                context.update({ 'number_work': int( number_work ) or False })
                 fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
                 fname += '.'
             except:
                 pass
-            fname += invoice.number or ''
+            fname += number_work or ''
             res[invoice.id] = fname
         return res
         
@@ -567,7 +574,7 @@ class account_invoice(osv.osv):
             """
             if sequence_id:
                 #NO ES COMPATIBLE CON TINYERP approval_id = sequence.approval_id.id
-                number_work = invoice.number
+                number_work = invoice.number or invoice.internal_number
                 if invoice.type in ['out_invoice', 'out_refund']:
                     try:
                         if number_work:
@@ -937,8 +944,9 @@ class account_invoice(osv.osv):
                 'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv2.xsd",
                 'version': "2.0",
             })
+            number_work = invoice.number or invoice.internal_number
             invoice_data_parent['Comprobante'].update({
-                'folio': invoice.number,
+                'folio': number_work,
                 'fecha': invoice.date_invoice and \
                     #time.strftime('%d/%m/%y', time.strptime(invoice.date_invoice, '%Y-%m-%d')) \
                     time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
