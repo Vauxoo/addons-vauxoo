@@ -9,6 +9,26 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page/field[@name='order_line']/form/notebook/page/field[@name='product_packaging']" position="after">
                     <field name="sequence"/>
+                    <field name="att_bro"/>
+                </xpath>
+                <xpath expr="/form/notebook/page/group/field[@name='amount_total']" position="after">
+                        <button colspan="1"
+                            name="print_with_attachment"
+                            states="draft,confirmed"
+                            string="Print With Attachments"
+                            type="object"
+                            icon="terp-document-new" />
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_sale_order_tree_inherit">
+            <field name="name">sale.order.tree.report</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='order_line']/tree/field[@name='product_uom']" position="after">
+                    <field name="att_bro"/>
                 </xpath>
             </field>
         </record>
