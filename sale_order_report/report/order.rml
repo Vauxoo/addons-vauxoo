@@ -314,8 +314,7 @@
             </tr>
             <tr noRowsplits="1">
                 <td>
-                    <para style="ITEMSSMALL">(4) PRECIOS...................kkkkkkkkkkkkkkkkkkkkhhhhhhhhhhhhhhhhhh </para>
-                    <para style="ITEMSSMALL">[[hello(5)]]</para>
+                    <para style="ITEMSSMALL">(4) PRECIOS</para>
                     <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer1 or removeParentNode('para')  ]]</para>
                 </td>
             </tr>
