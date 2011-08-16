@@ -31,11 +31,12 @@ It will work as production lot make better control with quantities.
     'demo/import_info_demo.xml',
     ], 
     "update_xml" : [
-    'import_info_view.xml',
-    'product_view.xml',
-    'stock_view.xml',
-    'label_report.xml',
-    'security/groups.xml',
+        'import_info_view.xml',
+        'product_view.xml',
+        'stock_view.xml',
+        'label_report.xml',
+        'security/groups.xml',
+        'invoice_view.xml'
     ],
     "active": False,
     "installable": True
