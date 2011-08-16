@@ -135,7 +135,7 @@ def _get_invoices_month(self, cr, uid, data, context={}):
             ( 'state', 'in', ['open', 'paid', 'cancel'] ),
             ( 'date_invoice', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'date_invoice', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
-            ( 'number', '<>', False )
+            #( 'number', '<>', False )
             ], order='date_invoice', context=context)
     )
     return {'invoice_ids': invoice_ids}

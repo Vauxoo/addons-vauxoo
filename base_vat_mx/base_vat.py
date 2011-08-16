@@ -26,7 +26,11 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import re
+from tools.misc import ustr
+import datetime
 
+'''
 def conv_ascii(text):
     """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
@@ -46,11 +50,56 @@ def conv_ascii(text):
             except:
                 raise osv.except_osv(_('Warning !'), 'No se pudo re-codificar la cadena [%s] en la letra [%s]'%(text, old) )
     return text
-
+'''
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     
+    __check_vat_mx_re = re.compile(r"(?P<primeras>[A-Za-z\xd1\xf1&]{3,4})" \
+                                    r"[ \-_]?" \
+                                    r"(?P<ano>[0-9]{2})(?P<mes>[01][0-9])(?P<dia>[0-3][0-9])" \
+                                    r"[ \-_]?" \
+                                    r"(?P<code>[A-Za-z0-9&\xd1\xf1]{3})$")
+    
+    def check_vat_mx(self, vat):
+        ''' Mexican VAT verification
+        
+        Verificar RFC México
+        '''
+        # we convert to 8-bit encoding, to help the regex parse only bytes
+        vat = ustr(vat).encode('iso8859-1')
+        m = self.__check_vat_mx_re.match(vat)
+        if not m:
+            #No valid format
+            return False
+        try:
+            ano = int(m.group('ano'))
+            if ano > 30:
+                ano = 1900 + ano
+            else:
+                ano = 2000 + ano
+            datetime.date(ano, int(m.group('mes')), int(m.group('dia')))
+        except ValueError:
+            return False
+        #Valid format and valid date
+        return True
+    #check_vat = lambda *a: check_vat_mx
+    
     def check_vat(self, cr, uid, ids, context=None):
+        return all( [ self.check_vat_mx( partner.vat ) for partner in self.browse(cr, uid, ids, context=context) ] )
+            
+    def write(self, cr, uid, ids, vals, context=None):
+        if context is None:
+            context = {}
+        #print "vals",vals
+        if 'vat' in vals:
+            vals['vat'] = vals['vat'] and vals['vat'].replace('-', '').replace(' ', '').replace('.', '').replace('/','').replace('ñ','Ñ').upper() or vals['vat']
+            #print "vals['vat']",vals['vat']
+        #if 'active' in vals and not vals['active']:
+        #if 'type' in vals.keys():
+        return super(res_partner, self).write(cr, uid, ids, vals, context=context)
+
+    
+    def ____ANTERIOR2____check_vat(self, cr, uid, ids, context=None):
         '''
         Verificar RFC México
         '''
