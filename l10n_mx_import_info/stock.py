@@ -54,16 +54,33 @@ class stock_move_constraint(osv.osv):
 #        Product qty planified.
 #        product_qty_p=[{'product_id':p.product_id.id,'qty':p.qty,'uom_id':p.uom_id.id} for p in move.tracking_id.import_id.product_info_ids if p.product_id.id==move.product_id.id]
         return True
-
-
+    
+    
     def _check_if_product_in_track(self, cr, uid, ids, move, context=None):
         """
         check if product at least exist in import track
         """
-        if move.tracking_id.import_id:
-            if move.product_id.id in [p.product_id.id for p in move.tracking_id.import_id.product_info_ids]:
+        #TODO: Validar, que si tiene pack_control, valide que tenga el tracking correcto y que ademas exista el producto en este import_info
+        #      Si no tiene pack_control, dejalo pasar
+        #      Si no tiene pack_control, y ademas le agregaste import_info, obligalo a que no quite el import_info
+        '''
+        print "move.tracking_id.import_id",move.tracking_id.import_id
+        print "move.product_id.pack_control",move.product_id.pack_control
+        if move.product_id.pack_control:
+            if move.tracking_id and move.tracking_id.import_id:
+                print "[p.product_id.id for p in move.tracking_id.import_id.product_info_ids]", [p.product_id.id for p in move.tracking_id.import_id.product_info_ids]
+                print "move.product_id.id",move.product_id.id
+                if move.product_id.id in [p.product_id.id for p in move.tracking_id.import_id.product_info_ids]:
+                    return True
+            else:
+                return False
+        else:
+            if move.tracking_id and move.tracking_id.import_id:
+                return False
+            else:
                 return True
-        return False
+        '''
+        return True
 
 
     def onchange_track_id(self, cr, user, track_id, context=None):
