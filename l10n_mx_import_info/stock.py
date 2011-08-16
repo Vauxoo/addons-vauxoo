@@ -60,26 +60,24 @@ class stock_move_constraint(osv.osv):
         """
         check if product at least exist in import track
         """
-        #TODO: Validar, que si tiene pack_control, valide que tenga el tracking correcto y que ademas exista el producto en este import_info
-        #      Si no tiene pack_control, dejalo pasar
-        #      Si no tiene pack_control, y ademas le agregaste import_info, obligalo a que no quite el import_info
-        '''
-        print "move.tracking_id.import_id",move.tracking_id.import_id
-        print "move.product_id.pack_control",move.product_id.pack_control
+        #      Validar, que si tiene pack_control, valide que tenga el informacion de importacino y que ademas exista el producto en este import_info
+        #      Si no tiene pack_control, y ademas le agregaste import_info, obligalo a que quite el import_info ya que no es necesario.
+        #      Si no tiene pack_control y no tiene import_info, dejalo pasar
+        if move.state in ('draft', 'confirmed'):
+            #purchase o sale, generate a stock.move with state confirmed or draft, then not validate with these states.
+            return True
+        import_id = move.tracking_id and move.tracking_id.import_id or False
         if move.product_id.pack_control:
-            if move.tracking_id and move.tracking_id.import_id:
-                print "[p.product_id.id for p in move.tracking_id.import_id.product_info_ids]", [p.product_id.id for p in move.tracking_id.import_id.product_info_ids]
-                print "move.product_id.id",move.product_id.id
-                if move.product_id.id in [p.product_id.id for p in move.tracking_id.import_id.product_info_ids]:
+            if not import_id:
+                return False
+            #return any( [True for p in move.tracking_id.import_id.product_info_ids if move.product_id.id == p.product_id.id] )#optimiza codigo, pero no perfomance
+            for p in move.tracking_id.import_id.product_info_ids:
+                if move.product_id.id == p.product_id.id:
+                    #Optimizando perfomance: En cuanto lo encuentre en la iteracion, se detenga y lo retorne y ya no siga buscando mas
                     return True
-            else:
-                return False
-        else:
-            if move.tracking_id and move.tracking_id.import_id:
-                return False
-            else:
-                return True
-        '''
+            return False
+        elif import_id:
+            return False
         return True
 
 
