@@ -41,14 +41,18 @@ class product_import_info(osv.osv):
         
         
     _columns = {
-            'product_id': fields.many2one('product.product','Product',required=True,
-            help="Product to be counted on this Import Document information"),
+            'product_id': fields.many2one('product.product','Product',required=True, 
+                domain=[
+                    '|', ('type','=','consu'), ('type','=','product'),
+                    '&', ('pack_control','=',True), ('purchase_ok','=',True),
+                ],
+                help="Product to be counted on this Import Document information"),
             'import_id': fields.many2one('import.info','Import Info', required=True,
-            help="Import Document related"),
+                help="Import Document related"),
             'qty': fields.float('Quantity', (16,4), 
-            help="Quantity of this product on this document,"),
+                help="Quantity of this product on this document,"),
             'uom_id':fields.many2one('product.uom', 'UoM', required=False,
-            help="Unit of measure, be care this unit must be on the same category of unit indicated on the product form,"),
+                help="Unit of measure, be care this unit must be on the same category of unit indicated on the product form,"),
             'qty_moved': fields.function(_get_qtymoved, method=True, type='float', string='Qty already moved',),
 #            'logistical': fields.function(_calc_stock, method=True, type='text', string='Logistic',),
     }
@@ -99,7 +103,7 @@ class product_product(osv.osv):
         return result
     _columns = {
         'pack_control':fields.boolean('Pack Control', required=False,
-        help="If you wnat to track import information to be used on invoices and other documents check this field, remember, if the product is a service this information can not be tracked, if this field is checked you will need to use consumable or stockable type of product on information page."),
+        help="If you want to track import information to be used on invoices and other documents check this field, remember, if the product is a service this information can not be tracked, if this field is checked you will need to use consumable or stockable type of product on information page."),
         'import_info_ids':fields.one2many('product.import.info', 'product_id', 'Import Info', required=False),
         'has_import': fields.function(_has_import, method=True, type='boolean', string='Has Import'),
     }

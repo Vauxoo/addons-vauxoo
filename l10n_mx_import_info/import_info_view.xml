@@ -48,7 +48,7 @@
                                     <field name="uom_id"/>
                                 </form>
                                 <tree editable="bottom">
-                                    <field name="product_id"/>
+                                    <field name="product_id" on_change="onchange_product_id(product_id)"/>
                                     <field name="qty"/>
                                     <field name="uom_id"/>
                                 </tree>
