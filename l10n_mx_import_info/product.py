@@ -32,13 +32,28 @@ class product_import_info(osv.osv):
     
     def _get_qtymoved(self, cr, uid, ids, field_name, arg, context):
     #TODO metodo para calcular el la cantidad de movimientos.
+        if not context:
+            context = {}
+        '''
+        cr.execute("""
+            SELECT stock_move.id, stock_move.product_qty, stock_picking.type, stock_move.*
+            FROM stock_move
+            INNER JOIN stock_tracking
+               ON stock_tracking.id = stock_move.tracking_id
+            INNER JOIN import_info
+               ON import_info.id = stock_tracking.import_id
+            LEFT OUTER JOIN stock_picking
+              ON stock_picking.id = stock_move.picking_id
+            WHERE stock_picking.type = 'in'
+              --AND stock_move.state = 'done'
+        """)
+        '''
         result ={}
         print arg
         obj=self.pool.get('stock.report.tracklots')
         for i in ids:
             result[i]=10.00
         return result
-        
         
     _columns = {
             'product_id': fields.many2one('product.product','Product',required=True, 
