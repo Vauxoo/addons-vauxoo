@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report id="crm_report_profile" string="Print Profile Report" model="res.partner" name="crm.profile.reporting" rml="crm_profile_reporting/report/report_profile.rml"/>
+    </data>
+</openerp>

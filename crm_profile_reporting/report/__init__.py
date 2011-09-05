@@ -1,2 +1,2 @@
 # -*- encoding: utf-8 -*-
-import report
+import crm_profile_report
