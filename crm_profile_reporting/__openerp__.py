@@ -2,7 +2,7 @@
 {
     "name" : "Opening balance Update",
     "version" : "0.1",
-    "depends" : ["base",],
+    "depends" : ["base","crm_profiling"],
     "author" : "",
     "description" : """
     What do this module:
@@ -11,7 +11,7 @@
     "category" : "Generic Modules/Accounting",
     "init_xml" : [    ],
     "demo_xml" : [    ],
-    "update_xml" : ["report/profiling_rml.xml"],
+    "update_xml" : ["crm_profile_reporting_report.xml"],
     "active": False,
     "installable": True,
 }

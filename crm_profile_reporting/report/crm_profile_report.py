@@ -20,10 +20,10 @@ class crm_report_profile(report_sxw.rml_parse):
     super(crm_report_profile, self).__init__(cr, user, name, context=context)
     self.localcontext.update({
       'time': time,
-      'method':selfself.method_name,
+      'method':self.method_name,
     })
   
-  def self.method_name(self, obj):
+  def method_name(self, obj):
     """
     Custom method that process obj and return required data to report
     @param obj: parameter to method
@@ -34,6 +34,6 @@ class crm_report_profile(report_sxw.rml_parse):
 report_sxw.report_sxw(
   'report.crm.profile.reporting',
   'res.partner',
-  "addons/crm_profile_reporting/report/report_profile.rml",
+  'addons/crm_profile_reporting/report/crm_profile_report.rml',
   parser=crm_report_profile
 )
