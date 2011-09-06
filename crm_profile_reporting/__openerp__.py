@@ -13,7 +13,8 @@
     "demo_xml" : [    ],
     "update_xml" : [
     "crm_profile_reporting_report.xml",
-    "data/crm_profiling_data.xml"],
+    "data/crm_profiling_data.xml"
+    ],
     "active": False,
     "installable": True,
 }

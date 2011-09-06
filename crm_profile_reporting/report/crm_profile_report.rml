@@ -10,39 +10,66 @@
       <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+
     <blockTableStyle id="ClientData">
       <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
-        <blockBackground kind="GRID" colorName="#E5E5E5" start="0,0" stop="-1,0"/>
+        <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,0"/>
     <blockSpan start="0,0" stop="-1,0"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+
     <blockTableStyle id="OtherContacts">
       <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
-      <blockValign value="TOP"/>
+      <blockSpan start="0,0" stop="0,-1"/>
+      <blockValign value="CENTER"/>
     </blockTableStyle>
+
+    <blockTableStyle id="OtherContactsInfo">
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <blockValign value="CENTER"/>
+    </blockTableStyle>
+
     <blockTableStyle id="ProfileData">
       <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <blockSpan start="0,0" stop="-1,0"/>
+      <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,0"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+    
+    <blockTableStyle id="ProfileData2">
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <blockSpan start="0,0" stop="-1,0"/>
+      <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,0"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+
     <paraStyle 
     name="header_General_Centre" 
     fontName="Helvetica-Bold" 
     fontSize="8.0" leading="10" 
     alignment="CENTER" textColor="white" 
     spaceBefore="6.0" spaceAfter="6.0"/>
+  
+    <paraStyle 
+    name="allData" 
+    alignment="CENTER" fontName="Helvetica" 
+    fontSize="6.0" leading="8" 
+    spaceBefore="3.0"/>
+
     <initialize>
       <paraStyle 
       name="all" 
-      alignment="JUSTIFY" fontName="Helvetica" 
+      alignment="CENTER" fontName="Helvetica" 
       fontSize="6.0" leading="8" 
       spaceBefore="3.0"/>
     </initialize>
+    
   </stylesheet>
 
   <images/>
   <story>
     <blockTable  colWidths="190mm" style="Header">
-        <tr><td><para>INSIDE CELL</para></td></tr>
+        <tr><td><para>Cabecera de la Empresa</para></td></tr>
     </blockTable>
     <blockTable  colWidths="63mm,127mm" style="ClientData">
         <tr>
@@ -78,11 +105,142 @@
             <td><para></para></td>
         </tr>
     </blockTable>
-    <blockTable  colWidths="190mm" style="OtherContacts">
-        <tr><td><para>INSIDE CELL CLIENT DATA OTHER CONTACTS</para></td></tr>
+    <blockTable  colWidths="63mm,127mm" style="OtherContacts">
+        <tr>
+          <td>
+            <para> PERSONA(S) CONTACTO:</para>
+          </td>
+          <td>
+            <blockTable  colWidths="41mm,41mm,41mm" style="OtherContactsInfo">
+              <tr>
+                <td>
+                  <para> NOMBRE COMPLETO</para>
+                </td>
+                <td>
+                  <para> EMAIL</para>
+                </td>
+                <td>
+                  <para> CELULAR</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para> Dato</para>
+                </td>
+                <td>
+                  <para> Dato</para>
+                </td>
+                <td>
+                  <para> Dato</para>
+                </td>
+              </tr>
+            </blockTable>
+          </td>
+        </tr>
     </blockTable>
-    <blockTable  colWidths="190mm" style="ProfileData">
-        <tr><td><para>PROFILEDATA</para></td></tr>
+    <blockTable  colWidths="63mm,127mm" style="ProfileData">
+        <tr>
+          <td>
+            <para style="header_General_Centre"> DOCUMENTOS LEGALES DEL PROVEEDOR</para>
+          </td>
+          <td>
+            <para></para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para>REGISTRO MERCANTIL (COPIA)</para>
+          </td>
+          <td>
+            <blockTable  colWidths="10mm,10mm,103mm" style="ProfileData2">
+              <tr>
+                <td>
+                  <para style="header_General_Centre">RESPUESTAS</para>
+                </td>
+                <td>
+                  <para> </para>
+                </td>
+                <td>
+                  <para> </para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="allData"> SI</para>
+                </td>
+                <td>
+                  <para style="allData"> NO</para>
+                </td>
+                <td>
+                  <para style="allData"> OBSERVACIÓN:</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para> D</para>
+                </td>
+                <td>
+                  <para> D</para>
+                </td>
+                <td>
+                  <para> D</para>
+                </td>
+              </tr>
+            </blockTable>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para>R.I.F. (COPIA)</para>
+          </td>
+          <td>
+
+          <blockTable  colWidths="10mm,10mm,103mm" style="ProfileData2">
+              <tr>
+                <td>
+                  <para style="header_General_Centre">RESPUESTAS</para>
+                </td>
+                <td>
+                  <para> </para>
+                </td>
+                <td>
+                  <para> </para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="allData"> SI</para>
+                </td>
+                <td>
+                  <para style="allData"> NO</para>
+                </td>
+                <td>
+                  <para style="allData"> OBSERVACIÓN:</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para> D</para>
+                </td>
+                <td>
+                  <para> D</para>
+                </td>
+                <td>
+                  <para> D</para>
+                </td>
+              </tr>
+            </blockTable>
+
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para>OTRAS EMPRESAS RELACIONADAS:</para>
+          </td>
+          <td>
+            <para></para>
+          </td>
+        </tr>
     </blockTable>
   </story>
 </document>
