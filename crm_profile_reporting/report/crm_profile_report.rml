@@ -2,18 +2,87 @@
 <document filename="test.pdf">
   <template pageSize="(210.0mm,297.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary="0">
     <pageTemplate id="first">
-      <frame id="first"     x1="10.0mm"     y1="15mm"    width="260mm"  height="180mm"/>
+      <frame id="first"     x1="10.0mm"     y1="15mm"    width="190mm"  height="267mm"/>
     </pageTemplate>
   </template>
-
   <stylesheet>
+    <blockTableStyle id="Header">
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="ClientData">
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+        <blockBackground kind="GRID" colorName="#E5E5E5" start="0,0" stop="-1,0"/>
+    <blockSpan start="0,0" stop="-1,0"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="OtherContacts">
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="ProfileData">
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <paraStyle 
+    name="header_General_Centre" 
+    fontName="Helvetica-Bold" 
+    fontSize="8.0" leading="10" 
+    alignment="CENTER" textColor="white" 
+    spaceBefore="6.0" spaceAfter="6.0"/>
     <initialize>
-      <paraStyle name="all" alignment="JUSTIFY" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="blue"/>
+      <paraStyle 
+      name="all" 
+      alignment="JUSTIFY" fontName="Helvetica" 
+      fontSize="6.0" leading="8" 
+      spaceBefore="3.0"/>
     </initialize>
   </stylesheet>
 
   <images/>
   <story>
-    <para> Hola Mundo </para>
+    <blockTable  colWidths="190mm" style="Header">
+        <tr><td><para>INSIDE CELL</para></td></tr>
+    </blockTable>
+    <blockTable  colWidths="63mm,127mm" style="ClientData">
+        <tr>
+            <td><para style="header_General_Centre">Datos del Cliente</para></td>
+            <td><para></para></td>
+        </tr>
+        <tr>
+            <td><para>Razon Social</para></td>
+            <td><para></para></td>
+        </tr>
+        <tr>
+            <td><para>Rif</para></td>
+            <td><para></para></td>
+        </tr>
+        <tr>
+            <td><para>Direccion Facturacion</para></td>
+            <td><para></para></td>
+        </tr>
+        <tr>
+            <td><para>Telefono</para></td>
+            <td><para></para></td>
+        </tr>
+        <tr>
+            <td><para>Fax</para></td>
+            <td><para></para></td>
+        </tr>
+        <tr>
+            <td><para>Celular</para></td>
+            <td><para></para></td>
+        </tr>
+        <tr>
+            <td><para>Email</para></td>
+            <td><para></para></td>
+        </tr>
+    </blockTable>
+    <blockTable  colWidths="190mm" style="OtherContacts">
+        <tr><td><para>INSIDE CELL CLIENT DATA OTHER CONTACTS</para></td></tr>
+    </blockTable>
+    <blockTable  colWidths="190mm" style="ProfileData">
+        <tr><td><para>PROFILEDATA</para></td></tr>
+    </blockTable>
   </story>
 </document>
