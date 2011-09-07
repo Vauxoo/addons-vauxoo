@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<document filename="test.pdf">
+<document filename="crm_profile_report.pdf">
   <template pageSize="(210.0mm,297.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary="0">
     <pageTemplate id="first">
       <frame id="first"     x1="10.0mm"     y1="15mm"    width="190mm"  height="267mm"/>
@@ -26,7 +26,7 @@
 
     <blockTableStyle id="OtherContactsInfo">
       <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
-      <blockValign value="CENTER"/>
+      <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,0"/>
     </blockTableStyle>
 
     <blockTableStyle id="ProfileData">
@@ -43,9 +43,16 @@
       <blockValign value="CENTER"/>
     </blockTableStyle>
 
+    <blockTableStyle id="OtherCompany">
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <blockSpan start="0,0" stop="-1,0"/>
+      <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,0"/>
+      <blockValign value="CENTER"/>
+    </blockTableStyle>
+
     <paraStyle 
     name="header_General_Centre" 
-    fontName="Helvetica-Bold" 
+    fontName="Helvetica" 
     fontSize="8.0" leading="10" 
     alignment="CENTER" textColor="white" 
     spaceBefore="6.0" spaceAfter="6.0"/>
@@ -71,13 +78,18 @@
     [[repeatIn(objects,'partner')]]
     
     <blockTable  colWidths="190mm" style="Header">
-        <tr><td><para style="Generic">Cabecera de la Empresa</para></td></tr>
+        <tr>
+          <td>
+            <para style="Generic">CABECERA</para>
+          </td>
+        </tr>
+        
     </blockTable>
-    
+    <spacer length="5mm"/>
     <blockTable  colWidths="63mm,127mm" style="ClientData">
       
         <tr>
-            <td><para style="header_General_Centre">Datos del Cliente</para></td>
+            <td><para style="header_General_Centre">DATOS DEL CLIENTE</para></td>
             <td><para style="Generic"></para></td>
         </tr>
         <tr>
@@ -90,7 +102,7 @@
         </tr>
         <tr>
             <td><para style="Generic">Direccion Facturacion</para></td>
-            <td><para style="Generic">[[ [i.city for i in partner.address if i.type=='invoice'] and [i.city for i in partner.address if i.type=='invoice'][0] or '' ]], [[ [i.street for i in partner.address if i.type=='invoice'] and [i.street for i in partner.address if i.type=='invoice'][0] or '' ]], [[ [i.street2 for i in partner.address if i.type=='invoice'] and [i.street2 for i in partner.address if i.type=='invoice'][0] or '' ]]</para></td>
+            <td><para style="Generic">[[ [i.city for i in partner.address] and [i.city for i in partner.address][0] or '' ]], [[ [i.street for i in partner.address ] and [i.street for i in partner.address ][0] or '' ]], [[ [i.street2 for i in partner.address ] and [i.street2 for i in partner.address ][0] or '' ]]</para></td>
         </tr>
         <tr>
             <td><para style="Generic">Telefono</para></td>
@@ -115,19 +127,19 @@
             <para style="Generic"> PERSONA(S) CONTACTO:</para>
           </td>
           <td>
-            <blockTable  colWidths="43mm,40m,40mm,40mm" style="OtherContactsInfo">
+            <blockTable  colWidths="44mm,35mm,22mm,22mm" style="OtherContactsInfo">
               <tr>
                 <td>
-                  <para style="Generic"> NOMBRE COMPLETO</para>
+                  <para style="header_General_Centre"> NOMBRE COMPLETO</para>
                 </td>
                 <td>
-                  <para style="Generic"> EMAIL</para>
+                  <para style="header_General_Centre"> EMAIL</para>
                 </td>
                 <td>
-                  <para style="Generic"> PHONE</para>
+                  <para style="header_General_Centre"> PHONE</para>
                 </td>
                 <td>
-                  <para style="Generic"> CELULAR</para>
+                  <para style="header_General_Centre"> CELULAR</para>
                 </td>
               </tr>
               <tr>[[repeatIn(partner.address,'a')]]
@@ -148,106 +160,58 @@
           </td>
         </tr>
     </blockTable>
-    <blockTable  colWidths="63mm,127mm" style="ProfileData">
+    <spacer length="5mm"/>
+    <blockTable  colWidths="63mm,40mm,87mm" style="ProfileData">
         <tr>
           <td>
             <para style="header_General_Centre"> DOCUMENTOS LEGALES DEL PROVEEDOR</para>
           </td>
           <td>
+            <para style="Generic"> </para>
+          </td>
+          <td>
+            <para style="Generic"> </para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="Generic">PREGUNTAS</para>
+          </td>
+          <td>
+            <para style="Generic">RESPUESTAS</para>
+          </td>
+          <td>
+            <para style="Generic">OBSERVACIONES</para>
+          </td>
+        </tr>
+        <tr>[[repeatIn(partner.answers_ids,'b')]]
+          <td>
+            <para style="Generic">[[b.question_id.name]]</para>
+          </td>
+          <td>
+            <para style="Generic">[[b.name]]</para>
+          </td>
+          <td>
+            <para style="Generic"> </para>
+          </td>
+        </tr>
+    </blockTable>
+    <spacer length="5mm"/>
+    <blockTable  colWidths="63mm,127mm" style="OtherCompany">
+        <tr>
+          <td>
+            <para style="header_General_Centre">OTRA INFORMACION:</para>
+          </td>
+          <td>
             <para style="Generic"></para>
           </td>
         </tr>
         <tr>
           <td>
-            <para style="Generic">REGISTRO MERCANTIL (COPIA)</para>
+            <para style="Generic"> EMPRESA RELACIONADA</para>
           </td>
           <td>
-            <blockTable  colWidths="10mm,10mm,103mm" style="ProfileData2">
-              <tr>
-                <td>
-                  <para style="header_General_Centre">RESPUESTAS</para>
-                </td>
-                <td>
-                  <para style="Generic"> </para>
-                </td>
-                <td>
-                  <para style="Generic"> </para>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <para style="Generic"> SI</para>
-                </td>
-                <td>
-                  <para style="Generic"> NO</para>
-                </td>
-                <td>
-                  <para style="Generic"> OBSERVACIÓN:</para>
-                </td>
-              </tr>
-              <tr>[[repeatIn(partner.answers_ids,'b')]]
-                <td>[[b.question_id.name =='Acta Constitutiva?' and removeParentNode('tr') or '']]
-                  <para style="Generic"> [[ [i.name for i in partner.answers_ids if i.name=='SI'][0] or '' ]]</para>
-                </td>
-                <td>
-                  <para style="Generic"> [[ [i.name for i in partner.answers_ids if i.name=='NO'][0] or '' ]]</para>
-                </td>
-                <td>
-                  <para style="Generic"> </para>
-                </td>
-              </tr>
-            </blockTable>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <para style="Generic">R.I.F. (COPIA)</para>
-          </td>
-          <td>
-
-          <blockTable  colWidths="10mm,10mm,103mm" style="ProfileData2">
-              <tr>
-                <td>
-                  <para style="header_General_Centre">RESPUESTAS</para>
-                </td>
-                <td>
-                  <para style="Generic"> </para>
-                </td>
-                <td>
-                  <para style="Generic"> </para>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <para style="Generic"> SI</para>
-                </td>
-                <td>
-                  <para style="Generic"> NO</para>
-                </td>
-                <td>
-                  <para style="Generic"> OBSERVACIÓN:</para>
-                </td>
-              </tr>
-              <tr>[[repeatIn(partner.answers_ids,'b')]]
-                <td>[[b.question_id.name=='Rif?'and removeParentNode('tr') or '']]
-                  <para style="Generic">D</para>
-                </td>
-                <td>
-                  <para style="Generic"> D</para>
-                </td>
-                <td>
-                  <para style="Generic"> D</para>
-                </td>
-              </tr>
-            </blockTable>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <para style="Generic">OTRAS EMPRESAS RELACIONADAS:</para>
-          </td>
-          <td>
-            <para style="Generic"></para>
+            <para style="Generic"> [[partner.parent_id.name]]</para>
           </td>
         </tr>
     </blockTable>
