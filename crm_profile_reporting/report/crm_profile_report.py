@@ -9,7 +9,7 @@ class crm_report_profile(report_sxw.rml_parse):
   Description about crm_report_profile
   """
   
-  def __init__(self, cr, user, name, context):
+  def __init__(self, cr, uid, name, context=None):
     """
     Initlize a report parser, add custome methods to localcontext 
     @param cr: cursor to database
@@ -17,20 +17,14 @@ class crm_report_profile(report_sxw.rml_parse):
     @param name: name of the reports it self
     @param context: context arguments, like lang, time zone 
     """
-    super(crm_report_profile, self).__init__(cr, user, name, context=context)
+    super(crm_report_profile, self).__init__(cr, uid, name, context=context)
     self.localcontext.update({
       'time': time,
-      'method':self.method_name,
+#      'get_addresses':self.get_addresses,
     })
   
-  def method_name(self, obj):
-    """
-    Custom method that process obj and return required data to report
-    @param obj: parameter to method
-    """
-    
-    
-    
+#  def get_addresses(self, obj):
+
 report_sxw.report_sxw(
   'report.crm.profile.reporting',
   'res.partner',
