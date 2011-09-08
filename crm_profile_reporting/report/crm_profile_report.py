@@ -20,10 +20,7 @@ class crm_report_profile(report_sxw.rml_parse):
     super(crm_report_profile, self).__init__(cr, uid, name, context=context)
     self.localcontext.update({
       'time': time,
-#      'get_addresses':self.get_addresses,
     })
-  
-#  def get_addresses(self, obj):
 
 report_sxw.report_sxw(
   'report.crm.profile.reporting',
