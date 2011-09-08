@@ -3,6 +3,10 @@
   <template pageSize="(210.0mm,297.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary="0">
     <pageTemplate id="first">
       <frame id="first"     x1="10.0mm"     y1="15mm"    width="190mm"  height="267mm"/>
+      <pageGraphics>
+            <!-- You Logo - Change X,Y,Width and Height -->
+            <image x="1.3cm" y="27.6cm" height="40.0" >[[ user.company_id.logo or removeParentNode('image') ]]</image>
+    </pageGraphics>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -81,6 +85,8 @@
         <tr>
           <td>
             <para style="Generic">CABECERA</para>
+            <para style="Generic">[[user.name]]</para>
+            <para style="Generic">[[user.company_id.name]]</para>
           </td>
         </tr>
         
