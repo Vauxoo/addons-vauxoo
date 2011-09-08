@@ -30,7 +30,8 @@
 
     <blockTableStyle id="OtherContactsInfo">
       <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
-      <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,0"/>
+      <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,1"/>
+      <blockSpan start="0,0" stop="-1,0"/>
     </blockTableStyle>
 
     <blockTableStyle id="ProfileData">
@@ -52,12 +53,13 @@
       <blockSpan start="0,0" stop="-1,0"/>
       <blockBackground kind="GRID" colorName="#4D4D4D" start="0,0" stop="-1,0"/>
       <blockValign value="CENTER"/>
+      
     </blockTableStyle>
 
     <paraStyle 
     name="header_General_Centre" 
     fontName="Helvetica" 
-    fontSize="8.0" leading="10" 
+    fontSize="5.0" leading="10" 
     alignment="CENTER" textColor="white" 
     spaceBefore="6.0" spaceAfter="6.0"/>
   
@@ -65,6 +67,18 @@
     name="Generic" 
     alignment="CENTER" fontName="Helvetica" 
     fontSize="6.0" leading="8" 
+    spaceBefore="3.0"/>
+
+    <paraStyle 
+    name="Generic2" 
+    alignment="LEFT" fontName="Helvetica" 
+    fontSize="8.0" leading="8" 
+    spaceBefore="3.0"/>
+
+    <paraStyle 
+    name="Generic3" 
+    alignment="CENTER" fontName="Helvetica" 
+    fontSize="10.0" leading="8" 
     spaceBefore="3.0"/>
 
     <initialize>
@@ -84,14 +98,20 @@
     <blockTable  colWidths="190mm" style="Header">
         <tr>
           <td>
-            <para style="Generic">CABECERA</para>
-            <para style="Generic">[[user.name]]</para>
-            <para style="Generic">[[user.company_id.name]]</para>
+            <para style="Generic3">[[user.company_id.name]]</para>
+            <spacer length="3mm"/>
+            <para style="Generic2">SOLICITUD DE REGISTRO :</para> 
+            <spacer length="1mm"/>
+            <para style="Generic3">[[user.name]]</para>
+            <para style="Generic3">[[user.context_section_id.name]]</para>
+            <para style="Generic3">[[user.user_email]]</para>
+            <para style="Generic3">FECHA : [[ formatLang(time.strftime('%Y-%m-%d'), date=True) ]]</para> 
+            <spacer length="1mm"/>
           </td>
         </tr>
         
     </blockTable>
-    <spacer length="5mm"/>
+    <spacer length="2mm"/>
     <blockTable  colWidths="63mm,127mm" style="ClientData">
       
         <tr>
@@ -127,46 +147,52 @@
             <td><para style="Generic">[[ [i.email for i in partner.address if i.type=='invoice'] and [i.email for i in partner.address if i.type=='invoice'][0] or '' ]]</para></td>
         </tr>
     </blockTable>
-    <blockTable  colWidths="63mm,127mm" style="OtherContacts">
-        <tr>
-          <td>
-            <para style="Generic"> PERSONA(S) CONTACTO:</para>
-          </td>
-          <td>
-            <blockTable  colWidths="44mm,35mm,22mm,22mm" style="OtherContactsInfo">
-              <tr>
-                <td>
-                  <para style="header_General_Centre"> NOMBRE COMPLETO</para>
-                </td>
-                <td>
-                  <para style="header_General_Centre"> EMAIL</para>
-                </td>
-                <td>
-                  <para style="header_General_Centre"> PHONE</para>
-                </td>
-                <td>
-                  <para style="header_General_Centre"> CELULAR</para>
-                </td>
-              </tr>
-              <tr>[[repeatIn(partner.address,'a')]]
-                <td>[[a.type=='invoice' and removeParentNode('tr') or '']]
-                  <para style="Generic"> [[a.name]]</para>
-                </td>
-                <td>
-                  <para style="Generic"> [[a.email]]</para>
-                </td>
-                <td>
-                  <para style="Generic"> [[a.phone]]</para>
-                </td>
-                <td>
-                  <para style="Generic"> [[a.mobile]]</para>
-                </td>
-              </tr>
-            </blockTable>
-          </td>
-        </tr>
+    <spacer length="2mm"/>
+    <blockTable colWidths="50mm,60mm,40mm,40mm" style="OtherContactsInfo">
+      <tr>
+        <td>
+          <para style="header_General_Centre"> PERSONA(S) CONTACTO:</para>
+        </td>
+         <td>
+          <para style="header_General_Centre"></para>
+        </td>
+        <td>
+          <para style="header_General_Centre"></para>
+        </td>
+        <td>
+          <para style="header_General_Centre"></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="header_General_Centre"> NOMBRE COMPLETO</para>
+        </td>
+        <td>
+          <para style="header_General_Centre"> EMAIL</para>
+        </td>
+        <td>
+          <para style="header_General_Centre"> PHONE</para>
+        </td>
+        <td>
+          <para style="header_General_Centre"> CELULAR</para>
+        </td>
+      </tr>
+      <tr>[[repeatIn(partner.address,'a')]]
+        <td>[[a.type=='invoice' and removeParentNode('tr') or '']]
+          <para style="Generic"> [[a.name]]</para>
+        </td>
+        <td>
+          <para style="Generic"> [[a.email]]</para>
+        </td>
+        <td>
+          <para style="Generic"> [[a.phone]]</para>
+        </td>
+        <td>
+          <para style="Generic"> [[a.mobile]]</para>
+        </td>
+      </tr>
     </blockTable>
-    <spacer length="5mm"/>
+    <spacer length="2mm"/>
     <blockTable  colWidths="63mm,40mm,87mm" style="ProfileData">
         <tr>
           <td>
@@ -202,7 +228,7 @@
           </td>
         </tr>
     </blockTable>
-    <spacer length="5mm"/>
+    <spacer length="2mm"/>
     <blockTable  colWidths="63mm,127mm" style="OtherCompany">
         <tr>
           <td>
