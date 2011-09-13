@@ -99,12 +99,12 @@
           <td>
             <para style="Generic3">[[user.company_id.name]]</para>
             <spacer length="3mm"/>
-            <para style="Generic2">SOLICITUD DE REGISTRO :</para> 
+            <para style="Generic2">APPLICATION FOR REGISTRATION:</para> 
             <spacer length="1mm"/>
             <para style="Generic3">[[user.name]]</para>
             <para style="Generic3">[[user.context_section_id.name]]</para>
             <para style="Generic3">[[user.user_email]]</para>
-            <para style="Generic3">FECHA : [[ formatLang(time.strftime('%Y-%m-%d'), date=True) ]]</para> 
+            <para style="Generic3">DATE : [[ formatLang(time.strftime('%Y-%m-%d'), date=True) ]]</para> 
             <spacer length="1mm"/>
           </td>
         </tr>
@@ -114,35 +114,35 @@
     <blockTable  colWidths="63mm,127mm" style="ClientData">
       
         <tr>
-            <td><para style="header_General_Centre">DATOS DEL CLIENTE</para></td>
+            <td><para style="header_General_Centre">CUSTOMER DATA</para></td>
             <td><para style="Generic"></para></td>
         </tr>
         <tr>
-            <td><para style="Generic">Razon Social</para></td>
+            <td><para style="Generic">SOCIAL REASON</para></td>
             <td><para style="Generic"></para>[[partner.name]]</td>
         </tr>
         <tr>
-            <td><para style="Generic">RIF</para></td>
+            <td><para style="Generic">VAT</para></td>
             <td><para style="Generic">[[partner.vat]]</para></td>
         </tr>
         <tr>
-            <td><para style="Generic">Direccion Facturacion</para></td>
+            <td><para style="Generic">BILLING ADDRESS</para></td>
             <td><para style="Generic">[[ [i.city for i in partner.address] and [i.city for i in partner.address][0] or '' ]], [[ [i.street for i in partner.address ] and [i.street for i in partner.address ][0] or '' ]], [[ [i.street2 for i in partner.address ] and [i.street2 for i in partner.address ][0] or '' ]]</para></td>
         </tr>
         <tr>
-            <td><para style="Generic">Telefono</para></td>
+            <td><para style="Generic">PHONE</para></td>
             <td><para style="Generic">[[ [i.phone for i in partner.address if i.type=='invoice'] and [i.phone for i in partner.address if i.type=='invoice'][0] or '' ]]</para></td>
         </tr>
         <tr>
-            <td><para style="Generic">Fax</para></td>
+            <td><para style="Generic">FAX</para></td>
             <td><para style="Generic">[[ [i.fax for i in partner.address if i.type=='invoice'] and [i.fax for i in partner.address if i.type=='invoice'][0] or '' ]]</para></td>
         </tr>
         <tr>
-            <td><para style="Generic">Celular</para></td>
+            <td><para style="Generic">CELL</para></td>
             <td><para style="Generic">[[ [i.mobile for i in partner.address if i.type=='invoice'] and [i.mobile for i in partner.address if i.type=='invoice'][0] or '' ]]</para></td>
         </tr>
         <tr>
-            <td><para style="Generic">Email</para></td>
+            <td><para style="Generic">EMAIL</para></td>
             <td><para style="Generic">[[ [i.email for i in partner.address if i.type=='invoice'] and [i.email for i in partner.address if i.type=='invoice'][0] or '' ]]</para></td>
         </tr>
     </blockTable>
@@ -150,7 +150,7 @@
     <blockTable colWidths="50mm,60mm,40mm,40mm" style="OtherContactsInfo">
       <tr>
         <td>
-          <para style="header_General_Centre"> PERSONA(S) CONTACTO:</para>
+          <para style="header_General_Centre"> PERSON(S) OF CONTACT:</para>
         </td>
          <td>
           <para style="header_General_Centre"></para>
@@ -164,7 +164,7 @@
       </tr>
       <tr>
         <td>
-          <para style="header_General_Centre"> NOMBRE COMPLETO</para>
+          <para style="header_General_Centre"> ALL NAME</para>
         </td>
         <td>
           <para style="header_General_Centre"> EMAIL</para>
@@ -173,7 +173,7 @@
           <para style="header_General_Centre"> PHONE</para>
         </td>
         <td>
-          <para style="header_General_Centre"> CELULAR</para>
+          <para style="header_General_Centre"> CELL</para>
         </td>
       </tr>
       <tr>[[repeatIn(partner.address,'a')]]
@@ -195,7 +195,7 @@
     <blockTable  colWidths="63mm,40mm,87mm" style="ProfileData">
         <tr>
           <td>
-            <para style="header_General_Centre"> DOCUMENTOS LEGALES DEL PROVEEDOR</para>
+            <para style="header_General_Centre"> SUPPLIER OF LEGAL DOCUMENTS</para>
           </td>
           <td>
             <para style="Generic"> </para>
@@ -206,13 +206,13 @@
         </tr>
         <tr>
           <td>
-            <para style="Generic">PREGUNTAS</para>
+            <para style="Generic">QUESTIONS</para>
           </td>
           <td>
-            <para style="Generic">RESPUESTAS</para>
+            <para style="Generic">ANSWERS</para>
           </td>
           <td>
-            <para style="Generic">OBSERVACIONES</para>
+            <para style="Generic">NOTES</para>
           </td>
         </tr>
         <tr>[[repeatIn(partner.answers_ids,'b')]]
@@ -231,7 +231,7 @@
     <blockTable  colWidths="63mm,127mm" style="OtherCompany">
         <tr>
           <td>
-            <para style="header_General_Centre">OTRA INFORMACION:</para>
+            <para style="header_General_Centre">OTHER INFORMATION:</para>
           </td>
           <td>
             <para style="Generic"></para>
@@ -239,7 +239,7 @@
         </tr>
         <tr>
           <td>
-            <para style="Generic"> EMPRESA RELACIONADA</para>
+            <para style="Generic">RELATED COMPANY</para>
           </td>
           <td>
             <para style="Generic"> [[partner.parent_id.name]]</para>

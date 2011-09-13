@@ -34,12 +34,3 @@ report_sxw.report_sxw(
   parser=crm_report_profile
 )
 
-#aux = var
-#print aux
-#var2 =str(var)
-#var3=var2.split(' ')
-#var4=var3[-1]
-#var5=var4[:-1]
-#var6=var5.decode('utf-8')
-#print var6
-
