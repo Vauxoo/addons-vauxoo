@@ -4,14 +4,13 @@
     <pageTemplate id="first">
       <frame id="first"     x1="10.0mm"     y1="15mm"    width="190mm"  height="267mm"/>
       <pageGraphics>
-            <!-- You Logo - Change X,Y,Width and Height -->
-            <image x="1.3cm" y="27.6cm" height="40.0" >[[ user.company_id.logo or removeParentNode('image') ]]</image>
+           <image x="1.3cm" y="27.6cm" height="40.0" >[[ user.company_id.logo or removeParentNode('image') ]]</image>
     </pageGraphics>
     </pageTemplate>
   </template>
   <stylesheet>
     <blockTableStyle id="Header">
-      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="GRID" colorName="#ffffff" start="0,0" stop="-1,-1"/>
       <blockValign value="CENTER"/>
     </blockTableStyle>
 

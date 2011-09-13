@@ -3,6 +3,11 @@ import time
 import pooler
 from report import report_sxw
 from tools.translate import _
+import smtplib 
+import mimetypes
+import base64
+from email.MIMEText import MIMEText
+from email.Encoders import encode_base64
 
 class crm_report_profile(report_sxw.rml_parse):
   """
@@ -28,3 +33,13 @@ report_sxw.report_sxw(
   'addons/crm_profile_reporting/report/crm_profile_report.rml',
   parser=crm_report_profile
 )
+
+#aux = var
+#print aux
+#var2 =str(var)
+#var3=var2.split(' ')
+#var4=var3[-1]
+#var5=var4[:-1]
+#var6=var5.decode('utf-8')
+#print var6
+

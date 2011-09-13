@@ -6,6 +6,6 @@
         model="res.partner" 
         name="crm.profile.reporting" 
         rml="crm_profile_reporting/report/crm_profile_report.rml"
-        header="False"/>
+        header="False" />
     </data>
 </openerp>
