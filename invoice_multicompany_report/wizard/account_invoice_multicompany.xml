@@ -9,6 +9,10 @@
             <field name="arch" type="xml">
                 <form string="Print">
                     <group col="4" colspan="4">
+                        <field name="company" />
+                        <newline />
+                        <field name="report_format" />
+                        <newline />
                         <button icon="gtk-cancel" special="cancel" string="Print Report Invoice" />
                     </group>
                 </form>
