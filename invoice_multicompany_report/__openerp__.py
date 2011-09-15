@@ -37,8 +37,8 @@
     "demo_xml" : [    ],
     "update_xml" : [
     "view/invoice_multicompany_report_view.xml",
-    "view/invoice_view.xml",
     "wizard/account_invoice_multicompany.xml",
+    "view/invoice_view.xml",
     ],
     "active": False,
     "installable": True,
