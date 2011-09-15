@@ -35,11 +35,17 @@ class print_account_invoice_report(osv.osv_memory):
     """
     _name = "print.account.invoice.report"
 
+    def __get_company_object(self, cr, uid):
+        user = self.pool.get('res.users').browse(cr, uid, uid)[0]
+        if not user.company_id:
+            raise except_osv(_('ERROR !'), _('There is no company configured for this user'))
+        return user.company_id
+
     def _get_company(self, cr, uid, ids, context=None):
-        pass
+        return self.__get_company_object(cr, uid).partner_id.name
 
     def _get_report(self, cr, uid, ids, context=None):
-        pass
+        
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),
