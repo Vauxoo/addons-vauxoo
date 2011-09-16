@@ -13,7 +13,10 @@
                         <newline />
                         <field name="report_format" />
                         <newline />
-                        <button icon="gtk-cancel" special="cancel" string="Print Report Invoice" />
+                        <group col="2" colspan="2">
+                            <button icon="gtk-cancel" special="cancel" string="Cancel" />
+                            <button icon="gtk-ok" string="Print Invoice" />
+                        </group>
                     </group>
                 </form>
             </field>
