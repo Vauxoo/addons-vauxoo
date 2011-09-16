@@ -33,7 +33,8 @@
                     """,
     "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [    ],
+    "init_xml" : [
+                  "data/payment_method_data.xml"],
     "demo_xml" : [    ],
     "update_xml" : [
                    "m321_report.xml",

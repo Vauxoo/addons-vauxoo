@@ -48,7 +48,7 @@ class base_report(report_sxw.rml_parse):
 report_sxw.report_sxw(
   'report.base.report',
   'account.invoice',
-  'addons/base_report/report/report_company1.rml',
+  'addons/m321_reports/report/report_company1.rml',
   parser=base_report
 )
   # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
