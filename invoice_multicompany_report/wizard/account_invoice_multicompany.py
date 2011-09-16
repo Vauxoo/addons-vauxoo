@@ -28,6 +28,9 @@
 ###############################################################################
 from osv import osv
 from osv import fields
+from tools.translate import _
+import base64
+import netsvc
 
 class print_account_invoice_report(osv.osv_memory):
     """
@@ -36,16 +39,23 @@ class print_account_invoice_report(osv.osv_memory):
     _name = "print.account.invoice.report"
 
     def __get_company_object(self, cr, uid):
-        user = self.pool.get('res.users').browse(cr, uid, uid)[0]
+        user = self.pool.get('res.users').browse(cr, uid, uid)
         if not user.company_id:
             raise except_osv(_('ERROR !'), _('There is no company configured for this user'))
         return user.company_id
 
-    def _get_company(self, cr, uid, ids, context=None):
+    def _get_company(self, cr, uid, context=None):
         return self.__get_company_object(cr, uid).partner_id.name
 
-    def _get_report(self, cr, uid, ids, context=None):
-        
+    def _get_report(self, cr, uid, context=None):
+        report = self.__get_company_object(cr, uid).invoice_report_id
+        if not report:
+            rep_id = self.pool.get("ir.actions.report.xml").search(cr, uid, [('model', '=', 'account.invoice'),], order="id")[0]
+            report = self.pool.get("ir.actions.report.xml").browse(cr, uid, rep_id)
+
+        service = netsvc.LocalService('report.' + report.report_name)
+        (result, format) = service.create(cr, uid, context['active_ids'], {'model': context['active_model']}, {})
+        return base64.encodestring(result)
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),
