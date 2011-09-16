@@ -33,7 +33,7 @@
                 <blockTable colWidths="185.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
-                            <para style="IZQDA">[[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city_id and ('%s - '%(o.partner_id.address[0].city_id.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para>
+                            <para style="IZQDA">[[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para>
                         </td>
                     </tr>
                 </blockTable>
