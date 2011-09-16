@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name" : "Opening balance Update",
+    "name" : "M321 Reports Instalator",
     "version" : "0.1",
-    "depends" : ["base","account","account_accountant"],
+    "depends" : ["account","account_accountant"],
     "author" : "Vauxoo",
     "description" : """
-    What do this module:
-    This is a base report module
+        This module installs the basic reports and formats for the M321 Companies
                     """,
     "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
