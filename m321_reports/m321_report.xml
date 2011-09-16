@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+
+      <report id="base_report"
+        string="Print Report base"
+        menu="True"
+        model="account.invoice"
+        name="base.report"
+        rml="base_report/report/report_company1.rml"
+        header="False"/>
+<!-- 'rml = nombre del modulo/carpeta(report)/nombre del archivo rml '-->
+  </data>
+</openerp>

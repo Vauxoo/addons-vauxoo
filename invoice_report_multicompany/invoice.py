@@ -23,7 +23,6 @@ class account_invoices(osv.osv):
     
         result = None
         #TODO : Business Process
-        print "Toyyyyyyyyyyyyyyy"
         return {'type':'ir.action.report.xml',
                 'report_name': 'account.invoice'}
         
