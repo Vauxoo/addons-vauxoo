@@ -23,13 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 {
-    "name" : "New Module Name",
+    "name" : "Account Invoice Multicompany Report",
     "version" : "0.1",
-    "depends" : ["base","account"],
+    "depends" : ["account"],
     "author" : "Vauxoo",
     "description" : """
-    What do this module:
-
+        Adds a "Report" field on the Company model and a "Print Invoice" button on the customer invoices view which calls
+        a wizard to print an invoice on a MultiCompany enviroment
                     """,
     "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
