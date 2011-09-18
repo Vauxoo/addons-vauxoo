@@ -2,12 +2,28 @@
 <openerp>
   <data>
 
-      <report id="base_report"
-        string="Print Report base"
+      <report id="m321_ca_report"
+        string="Print Report Computacion Activa"
         menu="True"
         model="account.invoice"
-        name="base.report"
-        rml="m321_reports/report/report_company1.rml"
+        name="m321.ca.report"
+        rml="m321_reports/report/computacion_activa_report.rml"
+        header="False"/>
+
+        <report id="m321_cs_report"
+        string="Print Report Computer Shop"
+        menu="True"
+        model="account.invoice"
+        name="m321.cs.report"
+        rml="m321_reports/report/amd_computer_shop_report.rml"
+        header="False"/>
+
+        <report id="m321_c_report"
+        string="Print Report AMD Computadoras"
+        menu="True"
+        model="account.invoice"
+        name="m321.c.report"
+        rml="m321_reports/report/amd_computadoras_report.rml"
         header="False"/>
 <!-- 'rml = nombre del modulo/carpeta(report)/nombre del archivo rml '-->
   </data>
