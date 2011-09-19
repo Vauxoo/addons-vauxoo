@@ -101,9 +101,9 @@
       <paraStyle name="all" alignment="justify"/>
     </initialize>
 
-    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="10.0" leading="12" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="12" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="10.0" leading="12" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
+    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
+    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
     
   </stylesheet>
   <images/>
@@ -119,7 +119,7 @@
             <para style="IZQUIERDA">[[l.product_id and (l.product_id.code and ('[%s]'%(l.product_id.code.upper())) or '') or '']]</para>
           </td>
           <td>
-            <para style="CENTRO">[[l.product_id and  l.product_id.name.upper() or l.name.upper() ]]</para>
+            <para style="IZQUIERDA">[[l.product_id and  l.product_id.name.upper() or l.name.upper() ]]</para>
           </td>
           <td>
             <para style="IZQUIERDA">[[ formatLang(l.quantity,digits=0)]]</para>

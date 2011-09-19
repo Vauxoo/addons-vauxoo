@@ -101,10 +101,9 @@
       <paraStyle name="all" alignment="justify"/>
     </initialize>
 
-    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="10.0" leading="12" spaceBefore="1.0" textColor="black"/>
-
-    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="12" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="10.0" leading="12" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
+    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
+    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
     
   </stylesheet>
   <images/>
