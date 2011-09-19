@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(215.0mm,280.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary='0'>
+    <pageTemplate id="first">
+        <pageGraphics>
+    <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
+            <setFont name="Courier-Bold" size="12.0"/>
+
+            <place x="52.0mm"     y="250.0mm"    width="82.0mm"  height="25.0mm">  
+                <blockTable colWidths="50.0mm,32.0mm" style="TABLA_SIN_AUX">
+                    <tr>
+                        <td><para style="IZQDA">Factura:</para></td>
+                        <td><para style="IZQDA">[[o.number]]</para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="IZQDA">Pagina:</para></td>
+                        <td><para style="IZQDA"> </para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="IZQDA">Fecha de Emisión:</para></td>
+                        <td><para style="IZQDA">[[formatLang(o.date_invoice,date=True) ]]</para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="IZQDA">Fecha de Vencimiento:</para></td>
+                        <td><para style="IZQDA"></para></td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="5.0mm"     y="191.0mm"    width="149.0mm"  height="40.0mm">  
+                <blockTable colWidths="85.0mm,63.0mm" style="TABLA_SIN_AUX">
+                    <tr>
+                        <td><para style="IZQDA">Cliente: [[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para></td>
+                        <td><para style="IZQDA"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="IZQDA">R.I.F: [[ o.partner_id.vat  and (' RIF.:%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para></td>
+                        <td><para style="IZQDA">N.I.T:</para></td>
+                    </tr>.
+                    <tr>
+                        <td><para style="IZQDA">Dirección: [[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para></td>
+                        <td><para style="IZQDA"></para></td>
+                    </tr>
+                    <tr>
+                        <td><para style="IZQDA">Telefonos: [[ o.partner_id.phone]]</para></td>
+                        <td><para style="IZQDA">Fax: [[ o.partner_id.fax]]</para></td>
+                    </tr>
+                     <tr>
+                        <td><para style="IZQDA">Transporte: </para></td>
+                        <td><para style="IZQDA"> </para></td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="155.0mm"     y="202.0mm"    width="54.0mm"  height="29.0mm">
+                <blockTable colWidths="54.0mm" style="TABLA_SIN_AUX">
+                    <tr>
+                      <td>
+                            <para style="IZQDA">Condic. Pago: [[o.payment_method_id.name ]]</para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                            <para style="IZQDA">Vendedor: </para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                            <para style="IZQDA"> </para>
+                      </td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="124.0mm"     y="22.0mm"    width="83.0mm"  height="35.0mm">
+                <blockTable colWidths="50.0mm,33.0mm" style="TABLA_CON_TOTAL">
+                    <tr>
+                      <td>
+                            <para style="IZQDA">Sub-Total</para>
+                      </td>
+                      <td>
+                            <para style="DERECHA">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                            <para style="IZQDA">% Desc.:</para>
+                      </td>
+                      <td>
+                            <para style="DERECHA"> </para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                            <para style="IZQDA">Recargo </para>
+                      </td>
+                      <td>
+                            <para style="DERECHA"> </para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                            <para style="IZQDA">I.V.A.:</para>
+                      </td>
+                      <td>
+                            <para style="DERECHA"></para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                            <para style="IZQDA">Otros: </para>
+                      </td>
+                      <td>
+                            <para style="DERECHA"> </para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                            <para style="IZQDA">Neto:</para>
+                      </td>
+                      <td>
+                            <para style="DERECHA">[[ formatLang(o.amount_total,digits=2)]]</para>
+                      </td>
+                    </tr>
+
+                </blockTable>
+            </place>
+
+            <place x="5.0mm"     y="22.0mm"    width="119.0mm"  height="35.0mm">  
+                <blockTable colWidths="119.0mm" style="TABLA_CON">
+                    <tr>
+                        <td><para style="IZQDA">[[user.company_id.rml_footer1 ]]</para></td>
+                    </tr>
+                </blockTable>
+            </place>
+
+      </pageGraphics>
+      
+    <frame id="first" x1="5.0mm" y1="55.0mm" width="204.0mm" height="135.0mm"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+
+    <blockTableStyle id="TABLA_SIN">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="CENTER"/>
+    </blockTableStyle>
+
+    <blockTableStyle id="TABLA_SIN_AUX">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="CENTER"/>
+      <lineStyle kind="OUTLINE" colorName="black" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+
+    <blockTableStyle id="TABLA_CON_TOTAL">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="OUTLINE" colorName="black" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="OUTLINE" colorName="black" start="0,-1" stop="-1,-1"/>
+    </blockTableStyle>
+
+     <blockTableStyle id="TABLA_CON">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+
+    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="10.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="12" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="10.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    
+  </stylesheet>
+  <images/>
+  <story>
+    <para>[[repeatIn(objects,'o')]][[ setLang(o.partner_id.lang) ]]</para>
+    
+    <section>
+
+      <blockTable colWidths="24.0mm,17.0mm,74.0mm,12.0mm,20.0mm,40.0mm,20.0mm" style="TABLA_CON">
+        <tr>
+          <td>
+            <para style="IZQUIERDA">Código</para>
+          </td>
+          <td>
+            <para style="IZQUIERDA">Modelo</para>
+          </td>
+          <td>
+            <para style="IZQUIERDA">Descripcion</para>
+          </td>
+          <td>
+            <para style="IZQUIERDA">Gtia</para>
+          </td>
+          <td>
+            <para style="IZQUIERDA">Cantidad</para>
+          </td>
+          <td>
+            <para style="IZQUIERDA">Precio Unitario</para>
+          </td>
+          <td>
+            <para style="IZQUIERDA">Neto</para>
+          </td>
+        </tr>
+        
+        
+        <tr>[[ repeatIn(o.invoice_line,'l') ]]
+          <td>
+            <para style="IZQUIERDA">[[l.product_id and (l.product_id.code and ('[%s]'%(l.product_id.code.upper())) or '') or '']]</para>
+          </td>
+          <td>
+<!--            Aqui va el Modelo del producto -->
+            <para style="IZQUIERDA"> </para>
+          </td>
+          <td>
+            <para style="IZQUIERDA">[[l.product_id and l.product_id.name.upper() or l.name.upper() ]]</para>
+          </td>
+          <td>
+<!--            aqui va la garantia -->
+            <para style="DERECHA">  </para>
+          </td>
+          <td>
+            <para style="DERECHA">[[formatLang(l.quantity,digits=0)]]</para>
+          </td>
+          <td>
+            <para style="DERECHA">[[ l.price_unit and formatLang(l.price_unit) or '']]</para>
+          </td>
+          <td>
+            <para style="DERECHA">[[ l.price_subtotal and formatLang(l.price_subtotal)  or '']]</para>
+          </td>
+        </tr>
+      </blockTable>
+    </section>
+
+  </story>
+</document>

@@ -25,6 +25,14 @@
         name="m321.c.report"
         rml="m321_reports/report/amd_computadoras_report.rml"
         header="False"/>
+
+        <report id="cm321_report"
+        string="Print Report Comercializadora M321"
+        menu="True"
+        model="account.invoice"
+        name="cm321.report"
+        rml="m321_reports/report/comercializadora_m321_report.rml"
+        header="False"/>
 <!-- 'rml = nombre del modulo/carpeta(report)/nombre del archivo rml '-->
   </data>
 </openerp>
