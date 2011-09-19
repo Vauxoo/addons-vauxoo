@@ -15,7 +15,7 @@
                         <newline />
                         <group col="2" colspan="2">
                             <button icon="gtk-cancel" special="cancel" string="Cancel" />
-                            <button icon="gtk-ok" string="Print Invoice" />
+                            <button icon="gtk-ok" name="print_invoice" type="object" string="Print Invoice" />
                         </group>
                     </group>
                 </form>
