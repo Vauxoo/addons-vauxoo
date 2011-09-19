@@ -45,7 +45,7 @@ class m321_c_report(report_sxw.rml_parse):
         return res
 
 report_sxw.report_sxw(
-  'report.m321.c.report',
+  'report.m321_reports.m321_c_report',
   'account.invoice',
   'addons/m321_reports/report/amd_computadoras_report.rml',
   parser=m321_c_report

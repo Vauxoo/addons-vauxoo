@@ -45,7 +45,7 @@ class m321_ca_report(report_sxw.rml_parse):
         return res
 
 report_sxw.report_sxw(
-  'report.m321.ca.report',
+  'report.m321_reports.m321_ca_report',
   'account.invoice',
   'addons/m321_reports/report/computacion_activa_report.rml',
   parser=m321_ca_report
@@ -53,3 +53,4 @@ report_sxw.report_sxw(
   # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
   # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
   #   pero podria ser cualquier modulo.
+  # 3 report."modulo"."clase"

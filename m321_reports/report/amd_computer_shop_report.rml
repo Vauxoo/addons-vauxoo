@@ -49,7 +49,7 @@
                             <para style="IZQUIERDA">[[ o.origin]]</para>
                         </td>
                         <td>
-                            <para style="IZQUIERDA">[[ o.type=='out_invoice' and format((o.payment_term and (%s'%(o.payment_term.name))) or '') ]]</para>
+                            <para style="IZQUIERDA">[[o.payment_term.name]]</para>
                         </td>
                     </tr>
                 </blockTable>

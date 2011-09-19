@@ -33,7 +33,7 @@ class m321_cs_report(report_sxw.rml_parse):
         self.localcontext.update({
             'get_date': self._get_date,
         })
-    
+
     def _get_date(self, cr, uid, context=None):
         account_obj = self.pool.get('account.invoice')
         print "***********************"
@@ -45,7 +45,7 @@ class m321_cs_report(report_sxw.rml_parse):
         return res
 
 report_sxw.report_sxw(
-  'report.m321.cs.report',
+  'report.m321_reports.m321_cs_report',
   'account.invoice',
   'addons/m321_reports/report/amd_computer_shop_report.rml',
   parser=m321_cs_report

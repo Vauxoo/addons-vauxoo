@@ -33,7 +33,7 @@ class cm321_report(report_sxw.rml_parse):
         self.localcontext.update({  })
 
 report_sxw.report_sxw(
-  'report.cm321.report',
+  'report.m321_reports.cm321_report',
   'account.invoice',
   'addons/m321_reports/report/comercializadora_m321_report.rml',
   parser=cm321_report
