@@ -22,4 +22,6 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-import report_company1
+import amd_computadoras_report
+import amd_computer_shop_report
+import computacion_activa_report
