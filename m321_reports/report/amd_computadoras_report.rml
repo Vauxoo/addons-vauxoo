@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(215.0mm,280.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary='0'>
+    <pageTemplate id="first">
+        <pageGraphics>
+    <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
+            <setFont name="Courier-Bold" size="12.0"/>
+
+            <place x="40.0mm"     y="228.0mm"    width="50.0mm"  height="7.0mm">  
+                <blockTable colWidths="50.0mm" style="TABLA_SIN">
+                    <tr>
+                        <td>
+                            <para style="IZQDA">[[get_date()]] [[formatLang(o.date_invoice,date=True) ]]</para>
+                        </td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="40.0mm"     y="210.5mm"    width="190.0mm"  height="10.0mm">  
+                <blockTable colWidths="130.0mm,35.0mm" style="TABLA_SIN">
+                    <tr>
+                        <td>
+                            <para style="IZQDA">[[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para>
+                        </td>
+                        <td>
+                            <para style="IZQDA">[[ o.partner_id.vat  and (' RIF.:%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para>
+                        </td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="30.0mm"     y="200.5mm"    width="170.0mm"  height="10.0mm">  
+                <blockTable colWidths="170.0mm" style="TABLA_SIN">
+                    <tr>
+                        <td>
+                            <para style="IZQDA">[[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para>
+                        </td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="30.0mm"     y="192.5mm"    width="190.0mm"  height="10.0mm">  
+                <blockTable colWidths="67.0mm,55.0mm,67.0mm" style="TABLA_SIN">
+                    <tr>
+                        <td>
+                            <para style="IZQDA">[[ o.partner_id.phone]]</para>
+                        </td>
+                        <td>
+                            <para style="IZQDA">[[ o.origin]]</para>
+                        </td>
+                        <td>
+                            <para style="IZQDA">[[ o.type=='out_invoice' and format((o.payment_term and (%s'%(o.payment_term.name))) or '') ]]</para>
+                        </td>
+                    </tr>
+                </blockTable>
+            </place>
+
+            <place x="40.0mm"     y="27.0mm"    width="185.0mm"  height="20.0mm">
+                <blockTable colWidths="140.0mm,45.0mm" style="TABLA_SIN">
+
+                    <tr>
+                      <td>
+                            <para style="IZQDA">[[o.payment_method_id.name ]]</para>
+                      </td>
+                      <td>
+                            <para style="IZQDA">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
+                      </td>
+                    </tr>
+
+                </blockTable>
+            </place>
+
+            <place x="40.0mm"     y="7.5mm"    width="185.0mm"  height="20.0mm">
+                <blockTable colWidths="140.0mm,45.0mm" style="TABLA_SIN">
+
+                    <tr>
+                      <td>
+                            <para style="IZQDA"></para>
+                      </td>
+                      <td>
+                            <para style="IZQDA">[[ formatLang(o.amount_total,digits=2)]]</para>
+                      </td>
+                    </tr>
+
+                </blockTable>
+            </place>
+
+      </pageGraphics>
+      
+    <frame id="first" x1="16.0mm" y1="48.0mm" width="189.0mm" height="137.0mm"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+
+    <blockTableStyle id="TABLA_SIN">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="CENTER"/>
+    </blockTableStyle>
+
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+
+    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="10.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="10.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    
+  </stylesheet>
+  <images/>
+  <story>
+    <para>[[repeatIn(objects,'o')]][[ setLang(o.partner_id.lang) ]]</para>
+    
+    <section>
+      <para style="DERECHA">[[ repeatIn(o.invoice_line,'l') ]]</para>
+
+      <blockTable colWidths="31.0mm,100.0mm,10.5mm,17.0mm,30.0mm" style="TABLA_SIN">
+        <tr>
+          <td>
+            <para style="CENTRO">[[l.product_id and (l.product_id.code and ('[%s]'%(l.product_id.code.upper())) or '') or '']]</para>
+          </td>
+          <td>
+            <para style="CENTRO">[[l.product_id and  l.product_id.name.upper() or l.name.upper() ]]</para>
+          </td>
+          <td>
+            <para style="CENTRO">[[ formatLang(l.quantity,digits=0)]]</para>
+          </td>
+          <td>
+            <para style="CENTRO">[[ l.price_unit and formatLang(l.price_unit) or '']]</para>
+          </td>
+          <td>
+            <para style="CENTRO">[[ l.price_subtotal and formatLang(l.price_subtotal)  or '']]</para>
+          </td>
+        </tr>
+      </blockTable>
+
+    </section>
+
+  </story>
+</document>
