@@ -62,12 +62,10 @@ class print_account_invoice_report(osv.osv_memory):
         if not report:
             rep_id = self.pool.get("ir.actions.report.xml").search(cr, uid, [('model', '=', 'account.invoice'),], order="id")[0]
             report = self.pool.get("ir.actions.report.xml").browse(cr, uid, rep_id)
-        
-        return report.name
+        return report.report_name
 
-
-    def print_invoice(self, cr, uid, ids, data, context=None):
-        return {'type': 'ir.actions.report.xml', 'report_name': 'base.report', 'datas': data}
+    def print_invoice(self, cr, uid, ids, context=None):
+        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid, context), 'datas': {'ids': context['active_ids']} }
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),
