@@ -70,7 +70,8 @@ class print_sale_order_report(osv.osv_memory):
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),
-        'report_format': fields.binary("Report", readonly=True, required=True)
+        'report_format': fields.binary("Report", readonly=True, required=True),
+        'wa':fields.boolean('With Attachment?'),
     }
 
     _defaults = {
