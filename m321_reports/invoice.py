@@ -31,6 +31,6 @@ class account_invoice(osv.osv):
     
     _inherit = 'account.invoice'
     _columns = {
-        'payment_method_id':fields.many2one('payment.method', 'Payment Method', required=False),
+        'payment_method_id':fields.many2one('payment.method', 'Payment Method', required=False, help="In this field selects the payment method with which to cancel the invoice"),
     }
 account_invoice()

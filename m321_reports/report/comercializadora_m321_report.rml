@@ -9,19 +9,19 @@
             <place x="52.0mm"     y="250.0mm"    width="82.0mm"  height="25.0mm">  
                 <blockTable colWidths="50.0mm,32.0mm" style="TABLA_SIN_AUX">
                     <tr>
-                        <td><para style="IZQUIERDA">Factura:</para></td>
+                        <td><para style="IZQUIERDA">Invoice:</para></td>
                         <td><para style="IZQUIERDA">[[o.number]]</para></td>
                     </tr>
                     <tr>
-                        <td><para style="IZQUIERDA">Pagina:</para></td>
+                        <td><para style="IZQUIERDA">Page:</para></td>
                         <td><para style="IZQUIERDA"> </para></td>
                     </tr>
                     <tr>
-                        <td><para style="IZQUIERDA">Fecha de Emisión:</para></td>
+                        <td><para style="IZQUIERDA">Issue Date</para></td>
                         <td><para style="IZQUIERDA">[[formatLang(o.date_invoice,date=True) ]]</para></td>
                     </tr>
                     <tr>
-                        <td><para style="IZQUIERDA">Fecha de Vencimiento:</para></td>
+                        <td><para style="IZQUIERDA">Expiration Date:</para></td>
                         <td><para style="IZQUIERDA"></para></td>
                     </tr>
                 </blockTable>
@@ -30,23 +30,23 @@
             <place x="5.0mm"     y="191.0mm"    width="149.0mm"  height="40.0mm">  
                 <blockTable colWidths="85.0mm,63.0mm" style="TABLA_SIN_AUX">
                     <tr>
-                        <td><para style="IZQUIERDA">Cliente: [[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para></td>
+                        <td><para style="IZQUIERDA">Customer: [[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para></td>
                         <td><para style="IZQUIERDA"></para></td>
                     </tr>
                     <tr>
-                        <td><para style="IZQUIERDA">R.I.F: [[ o.partner_id.vat  and (' RIF.:%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para></td>
+                        <td><para style="IZQUIERDA">V.A.T: [[ o.partner_id.vat  and (' RIF.:%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para></td>
                         <td><para style="IZQUIERDA">N.I.T:</para></td>
                     </tr>.
                     <tr>
-                        <td><para style="IZQUIERDA">Dirección: [[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para></td>
+                        <td><para style="IZQUIERDA">Address: [[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para></td>
                         <td><para style="IZQUIERDA"></para></td>
                     </tr>
                     <tr>
-                        <td><para style="IZQUIERDA">Telefonos: [[ o.partner_id.phone]]</para></td>
+                        <td><para style="IZQUIERDA">Phone: [[ o.partner_id.phone]]</para></td>
                         <td><para style="IZQUIERDA">Fax: [[ o.partner_id.fax]]</para></td>
                     </tr>
                      <tr>
-                        <td><para style="IZQUIERDA">Transporte: </para></td>
+                        <td><para style="IZQUIERDA">Shipping: </para></td>
                         <td><para style="IZQUIERDA"> </para></td>
                     </tr>
                 </blockTable>
@@ -56,12 +56,12 @@
                 <blockTable colWidths="54.0mm" style="TABLA_SIN_AUX">
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">Condic. Pago: [[o.payment_method_id.name ]]</para>
+                            <para style="IZQUIERDA">Payment condition: [[o.payment_method_id.name ]]</para>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">Vendedor: </para>
+                            <para style="IZQUIERDA">Salesman: [[o.user_id.name]]</para>
                       </td>
                     </tr>
                     <tr>
@@ -84,7 +84,7 @@
                     </tr>
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">% Desc.:</para>
+                            <para style="IZQUIERDA">% Discount.:</para>
                       </td>
                       <td>
                             <para style="DERECHA"> </para>
@@ -92,7 +92,7 @@
                     </tr>
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">Recargo </para>
+                            <para style="IZQUIERDA">Surcharge </para>
                       </td>
                       <td>
                             <para style="DERECHA"> </para>
@@ -100,7 +100,7 @@
                     </tr>
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">I.V.A.:</para>
+                            <para style="IZQUIERDA">V.A.T.:</para>
                       </td>
                       <td>
                             <para style="DERECHA"></para>
@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">Otros: </para>
+                            <para style="IZQUIERDA">Others: </para>
                       </td>
                       <td>
                             <para style="DERECHA"> </para>
@@ -116,7 +116,7 @@
                     </tr>
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">Neto:</para>
+                            <para style="IZQUIERDA">Total:</para>
                       </td>
                       <td>
                             <para style="DERECHA">[[ formatLang(o.amount_total,digits=2)]]</para>
@@ -180,28 +180,28 @@
     
     <section>
 
-      <blockTable colWidths="24.0mm,17.0mm,74.0mm,12.0mm,20.0mm,40.0mm,20.0mm" style="TABLA_CON">
+      <blockTable colWidths="24.0mm,17.0mm,74.0mm,20.0mm,20.0mm,32.0mm,20.0mm" style="TABLA_CON">
         <tr>
           <td>
-            <para style="IZQUIERDA">Código</para>
+            <para style="IZQUIERDA">Code</para>
           </td>
           <td>
-            <para style="IZQUIERDA">Modelo</para>
+            <para style="IZQUIERDA">Model</para>
           </td>
           <td>
-            <para style="IZQUIERDA">Descripcion</para>
+            <para style="IZQUIERDA">Description</para>
           </td>
           <td>
-            <para style="IZQUIERDA">Gtia</para>
+            <para style="IZQUIERDA">Warranty</para>
           </td>
           <td>
-            <para style="IZQUIERDA">Cantidad</para>
+            <para style="IZQUIERDA">Quantity</para>
           </td>
           <td>
-            <para style="IZQUIERDA">Precio Unitario</para>
+            <para style="IZQUIERDA">Unit Price</para>
           </td>
           <td>
-            <para style="IZQUIERDA">Neto</para>
+            <para style="IZQUIERDA">Total</para>
           </td>
         </tr>
         
