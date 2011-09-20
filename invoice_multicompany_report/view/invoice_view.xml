@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@string='Print Invoice']" position="replace">
-                    <button name="%(invoice_multicompany_report)d" string="Print Invoicesss" type="action" icon="gtk-print" states="open,paid,proforma,sale,proforma2"/>
+                    <button name="%(invoice_multicompany_report)d" string="Print Invoice" type="action" icon="gtk-print" states="open,paid,proforma,sale,proforma2"/>
                 </xpath>
             </field>
         </record>
