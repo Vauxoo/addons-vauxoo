@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    author.name@company.com
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,8 +19,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import amd_computadoras_sale_report
-import amd_computer_shop_sale_report
-import computacion_activa_sale_report
-import comercializadora_m321_sale_report
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import time
+from report import report_sxw
+from osv import osv
+from report import pyPdf
+
+class amd_computer_shop_sale(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(amd_computer_shop_sale, self).__init__(cr, uid, name, context=context)
+        self.localcontext.update({
+            'time': time,
+            'hello': self._hello,
+        })
+    def _hello(self,p):
+        print "estoy en hello"
+        output = pyPdf.PdfFileWriter()
+        print output
+        return "Hello World %s" % output
+
+report_sxw.report_sxw(
+'report.sale_m321_cs_report',
+'sale.order',
+'addons/sale_order_report/report/amd_computer_shop_sale_report.rml',
+parser=amd_computer_shop_sale)

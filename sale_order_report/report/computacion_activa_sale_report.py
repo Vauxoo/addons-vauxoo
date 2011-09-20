@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    author.name@company.com
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,15 +19,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 import time
 from report import report_sxw
 from osv import osv
 from report import pyPdf
 
-class Order(report_sxw.rml_parse):
+class computacion_activa_sale(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(Order, self).__init__(cr, uid, name, context=context)
+        super(computacion_activa_sale, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'hello': self._hello,
@@ -37,6 +36,9 @@ class Order(report_sxw.rml_parse):
         output = pyPdf.PdfFileWriter()
         print output
         return "Hello World %s" % output
-report_sxw.report_sxw('report.sale.order.amd','sale.order','addons/sale_order_report/report/order.rml',parser=Order)
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+report_sxw.report_sxw(
+'report.sale_m321_ca_report',
+'sale.order',
+'addons/sale_order_report/report/computacion_activa_sale_report.rml',
+parser=computacion_activa_sale)

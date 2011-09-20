@@ -13,11 +13,11 @@
                 </xpath>
                 <xpath expr="/form/notebook/page/group/field[@name='amount_total']" position="after">
                         <button colspan="1"
-                            name="print_with_attachment"
+                            name="%(sale_multicompany_report)d"
                             states="draft,confirmed"
                             string="Print With Attachments"
-                            type="object"
-                            icon="terp-document-new" />
+                            type="action"
+                            icon="terp-document-new"/>
                 </xpath>
             </field>
         </record>
