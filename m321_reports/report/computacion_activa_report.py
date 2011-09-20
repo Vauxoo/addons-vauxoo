@@ -28,21 +28,25 @@ from report import report_sxw
 from tools.translate import _
 
 class m321_ca_report(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
+
+    def __init__(self, cr, uid, name, context=None):
+        if context is None:
+            context = {}
         super(m321_ca_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'get_date': self._get_date,
         })
-    
-    def _get_date(self, cr, uid, context=None):
-        account_obj = self.pool.get('account.invoice')
-        print "***********************"
-        if context is None:
-          context = {}
-        account = account_obj.browse(cr, uid, context.get('active_id', False))
-        res = datetime.strftime(account.date_invoice,"%Y-%m-%d")
-        print "paso por aquiiiiiiiii" ,res
-        return res
+
+    def _get_date(self,obj,aux):
+        aux2= obj.date_invoice
+        DMY=str(aux2)
+        res= DMY.split('/')
+        if aux == 0:
+            return res[0]
+        if aux == 1:
+            return res[1]
+        if aux == 2:
+            return res[2]
 
 report_sxw.report_sxw(
   'report.m321_reports.m321_ca_report',

@@ -6,11 +6,17 @@
     <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
             <setFont name="Courier-Bold" size="12.0"/>
 
-            <place x="40.0mm"     y="225.0mm"    width="50.0mm"  height="7.0mm">  
-                <blockTable colWidths="50.0mm" style="TABLA_SIN">
+            <place x="37.0mm"     y="223.0mm"    width="47.0mm"  height="10.0mm">  
+                <blockTable colWidths="14.0mm,14.0mm,19.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
-                            <para style="IZQUIERDA">[[get_date()]] [[formatLang(o.date_invoice,date=True) ]]</para>
+                            <para style="IZQUIERDA">[[get_date(o,0)]]</para>
+                        </td>
+                        <td>
+                            <para style="IZQUIERDA">[[get_date(o,1)]]</para>
+                        </td>
+                        <td>
+                            <para style="IZQUIERDA">[[get_date(o,2)]]</para>
                         </td>
                     </tr>
                 </blockTable>
