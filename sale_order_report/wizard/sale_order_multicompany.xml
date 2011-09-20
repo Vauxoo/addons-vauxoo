@@ -12,6 +12,7 @@
                         <field name="company" />
                         <newline />
                         <field name="report_format" />
+                        <newline />
                         <field name="wa"/>
                         <newline />
                         <group col="2" colspan="2">
