@@ -14,17 +14,17 @@
                             <para style="COMPANYNAME">[[o.user_id.company_id.logo and removeParentNode('para') or o.user_id.company_id.name]] </para>
                         </td>
                         <td>
-                            <para style="TITLE"><b>FECHA</b></para>
+                            <para style="TITLE"><b>DATE</b></para>
                             <spacer length="1mm"/>
                         <para style="TERMS">[[formatLang(o.date_order,date=True) ]]</para>
                         </td>
                         <td>
-                            <para style="TITLE"><b>PRESUPUESTO</b></para>
+                            <para style="TITLE"><b>BUDGET</b></para>
                             <spacer length="1mm"/>
                             <para style="TERMS"><b>N°.: [[ o.name ]]</b></para>
                         </td>
                         <td>
-                            <para style="TITLE"><b>MONEDA</b></para>
+                            <para style="TITLE"><b>CURRENCY</b></para>
                             <spacer length="1mm"/>
                             <para style="TERMS"><b>[[ '%s(%s)'%(o.pricelist_id.currency_id.name,o.pricelist_id.currency_id.symbol) ]]</b></para>
                         </td>
@@ -45,7 +45,7 @@
 
             <place x="5mm"     y="5mm"    width="205.0mm"  height="4.0mm">
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
-            <para style="ITEMSCENTER">Este documento fue impreso con OpenERP/ReportLab</para>
+            <para style="ITEMSCENTER">This document was printed with OpenERP/ReportLab</para>
             </place>
 
             <!--TABLA DE DATOS VARIOS-->
@@ -55,7 +55,7 @@
                             <td><para style="ITEMSCENTER">[[ o.user_id.name  ]]</para></td>
                         </tr>
                         <tr>
-                            <td><para style="TERMS-INV">ASESOR DE VENTAS</para></td>
+                            <td><para style="TERMS-INV">SALES ADVISOR</para></td>
                         </tr>
                     </blockTable>
             </place>
@@ -64,7 +64,7 @@
             <para style="ITEMSCENTER">[[ o.user_id.company_id.rml_footer2 or removeParentNode('para')  ]] - Twitter: @vauxoo Contactos: [[ o.user_id.company_id.partner_id.address[0].email or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].phone or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].fax or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].mobile or  '' ]]</para>
             </place>
             <!--NUMERO DE PAGINA Y HOJAS-->
-            <drawRightString x="198mm" y="242mm">PAGINA: <pageNumber/></drawRightString>
+            <drawRightString x="198mm" y="242mm">PAGE: <pageNumber/></drawRightString>
         </pageGraphics>
       <frame id="first" x1="0.0mm" y1="10mm" width="220mm" height="233.0mm"/>
     </pageTemplate>
@@ -163,13 +163,13 @@
         <blockTable colWidths="80mm,80mm,50mm" style="ITEMSNOTES">
             <tr>
                 <td>
-                    <para style="BILLTO">CLIENTE</para>
+                    <para style="BILLTO">CUSTOMER</para>
                 </td>
                 <td>
-                    <para style="BILLTO">CONTACTO</para>
+                    <para style="BILLTO">CONTACT</para>
                 </td>
                 <td>
-                    <para style="BILLTO">ORIGEN/REFERENCIA</para>
+                    <para style="BILLTO">ORIGIN/REFERENCE</para>
                 </td>
             </tr>
             <tr>
@@ -191,13 +191,13 @@
         <blockTable colWidths="80mm,80mm,50mm" style="ITEMSTITLE">
             <tr>
                 <td>
-                    <para style="BILLTO">FACTURAR A</para>
+                    <para style="BILLTO">INVOICE TO</para>
                 </td>
                 <td>
-                    <para style="BILLTO">ENTREGAR EN</para>
+                    <para style="BILLTO">SHIPPING</para>
                 </td>
                 <td>
-                    <para style="TERMS">TÉRMINOS DE ENTREGA <super>(2)</super></para>
+                    <para style="TERMS">SHIPPING TERMS <super>(2)</super></para>
                 </td>
             </tr>
         </blockTable>
@@ -224,21 +224,21 @@
         <blockTable colWidths="20mm,150mm,20mm,20mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
                 <td>
-                <para style="ITEMSTITLE">CANTIDAD</para>
+                <para style="ITEMSTITLE">QUANTITY</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
                 <para style="ITEMSTITLE">[ LÍNEA ]</para>
                 </td>
                 <td>
-                <para style="ITEMSTITLE">[CÓDIGO] PRODUCTO</para>
+                <para style="ITEMSTITLE">[CODE] PRODUCT</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
-                <para style="ITEMSTITLE">DESCRIPCIÓN</para>
+                <para style="ITEMSTITLE">DESCRIPTION</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
                 <para style="ITEMSTITLE">PLAZO DE ENTREGA <super>(3)</super></para>
                 </td>
-                <td><para style="ITEMSTITLE">UNIDAD</para>
+                <td><para style="ITEMSTITLE">UNIT</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
-                <para style="ITEMSTITLE">PRECIO <super>(4)</super></para></td>
-                <td><para style="ITEMSTITLE">SUBTOTAL</para></td>
+                <para style="ITEMSTITLE">PRICE <super>(4)</super></para></td>
+                <td><para style="ITEMSTITLE">SUB-TOTAL</para></td>
             </tr>
             <tr>
                 [[repeatIn(o.order_line,'line')]]
@@ -253,7 +253,7 @@
                 <para style="ITEMSLEFTITALIC">[[ line.product_id.description  or removeParentNode('para') ]]</para>
                 <para style="ITEMSLEFTITALIC">[[ line.notes or removeParentNode('para') ]]</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
-                <para style="ITEMSLEFTITALIC">PLAZO DE ENTREGA: [[ formatLang(line.delay, digits=0, date=False, date_time=False, grouping=True, monetary=False) or removeParentNode('para') ]][[ line.delay==0.00 and removeParentNode('para')  ]] DÍAS</para>
+                <para style="ITEMSLEFTITALIC">DELIVERY TIME: [[ formatLang(line.delay, digits=0, date=False, date_time=False, grouping=True, monetary=False) or removeParentNode('para') ]][[ line.delay==0.00 and removeParentNode('para')  ]] DÍAS</para>
                 <para style="ITEMSLEFTITALICPEQ">[[ line.delay==0.00 and 'A CONVENIR' or removeParentNode('para')  ]]</para>
                 </td>
                 <td><para style="ITEMSCENTER">[ [[ line.product_uom.name  ]] ]</para>
@@ -267,7 +267,7 @@
         <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
                 <tr>
                     <td>
-                    <para style="ITEMSSMALL">(1) TÉRMINOS DE PAGO</para>
+                    <para style="ITEMSSMALL">(1) PAYMENT TERMS</para>
                     <para style="ITEMSSMALL">[[ o.payment_term.name or removeParentNode('para') ]]: [[ o.payment_term.note or removeParentNode('para') ]]</para>
                     </td>
                     <td><para style="ITEMSRIGHT">SUBTOTAL</para></td>
@@ -275,7 +275,7 @@
                 </tr>
                 <tr>
                     <td><para></para></td>
-                    <td><para style="ITEMSRIGHT">IMP. (IVA 12%)</para></td>
+                    <td><para style="ITEMSRIGHT">TAX. (VAT 12%)</para></td>
                     <td><para style="ITEMSCENTER">[[ formatLang(o.amount_tax) ]]</para></td>
                 </tr>
                 <tr>
@@ -291,30 +291,30 @@
 
         <blockTable colWidths="210mm" repeatRows="1" style="CONDICIONES">
             <tr>
-                <td><para style="TERMS">CONDICIONES</para></td>
+                <td><para style="TERMS">CONDITIONS</para></td>
             </tr>
             <tr>
                 <td>
-                    <para style="ITEMSSMALL">NOTAS</para>
+                    <para style="ITEMSSMALL">NOTES</para>
                     <para style="ITEMSSMALL">[[ o.note and o.note or '' ]]</para>
                 </td>
             </tr>
             <tr noRowsplits="1">
                 <td>
-                    <para style="ITEMSSMALL">(2) TÉRMINOS DE ENTREGA</para>
+                    <para style="ITEMSSMALL">(2) SHIPPING TERMS</para>
                     <para style="ITEMSSMALL">[[ o.incoterm.description or removeParentNode('para')]]</para>
                     <para style="ITEMSSMALL">[[ not o.incoterm and 'No se ha estipulado términos comerciales de transporte' or removeParentNode('para')]]</para>
                 </td>
             </tr>
             <tr noRowsplits="1">
                 <td>
-                    <para style="ITEMSSMALL">(3) PLAZO DE ENTREGA</para>
+                    <para style="ITEMSSMALL">(3) DELIVERY TIME</para>
                     <para style="ITEMSSMALL">De acuerdo al plan de trabajo / Cronograma acordado y mostrado en cada línea, a partir de la confirmación de la orden de compra por los telefonos.: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].phone or '' ]]  / FAX: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].fax or '' ]]; EMAIL: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].email or '' ]] LOS PLAZOS PUEDEN VARIAR DE ACUERDO A ETAPAS DE DESARROLLO.</para>
                 </td>
             </tr>
             <tr noRowsplits="1">
                 <td>
-                    <para style="ITEMSSMALL">(4) PRECIOS</para>
+                    <para style="ITEMSSMALL">(4) PRICES</para>
                     <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer1 or removeParentNode('para')  ]]</para>
                 </td>
             </tr>
