@@ -61,7 +61,7 @@
             </place>
             <place x="5mm"     y="7mm"    width="205.0mm"  height="8.0mm">
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
-            <para style="ITEMSCENTER">[[ o.user_id.company_id.rml_footer2 or removeParentNode('para')  ]] - Twitter: @vauxoo Contactos: [[ o.user_id.company_id.partner_id.address[0].email or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].phone or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].fax or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].mobile or  '' ]]</para>
+            <para style="ITEMSCENTER">[[ o.user_id.company_id.rml_footer2 or removeParentNode('para')  ]] - Twitter: @vauxoo Contacts: [[ o.user_id.company_id.partner_id.address[0].email or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].phone or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].fax or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].mobile or  '' ]]</para>
             </place>
             <!--NUMERO DE PAGINA Y HOJAS-->
             <drawRightString x="198mm" y="242mm">PAGE: <pageNumber/></drawRightString>
@@ -177,7 +177,7 @@
                     <para style="ITEMSSTRONG">[[ o.partner_id.name.upper() ]]</para>
                 </td>
                 <td>
-                    <para style="ITEMSLEFT">SR(A).: [[ o.partner_order_id.name ]] TELF.: [[ o.partner_order_id.phone ]] FAX.: [[ o.partner_order_id.fax]] CEL.: [[ o.partner_order_id.mobile ]] EMAIL:[[ o.partner_order_id.email ]]</para>
+                    <para style="ITEMSLEFT">SR(A).: [[ o.partner_order_id.name ]] PHONE.: [[ o.partner_order_id.phone ]] FAX.: [[ o.partner_order_id.fax]] CELPHONE.: [[ o.partner_order_id.mobile ]] EMAIL:[[ o.partner_order_id.email ]]</para>
                 </td>
                 <td>
                     <para style="ITEMSCENTER">[[ o.origin]][[ o.name and ' /' or '' ]][[ o.client_order_ref ]]</para>
@@ -206,10 +206,10 @@
         <blockTable colWidths="80mm,80mm,50mm" style="ITEMS">
             <tr>
                 <td>
-                    <para style="ITEMSLEFT">[[ o.partner_id.name ]] RIF.: [[ o.partner_invoice_id.partner_id.vat and o.partner_invoice_id.partner_id.vat[2:] or "No Hay Suficiente Informacion para Facturar" ]] Direccion [[ o.partner_invoice_id.street ]] [[ o.partner_invoice_id.street2 ]], [[ o.partner_invoice_id.city ]], [[ o.partner_invoice_id.state_id.name ]], [[ o.partner_invoice_id.country_id.name ]], [[ o.partner_invoice_id.phone ]] Contacto: [[ o.partner_invoice_id.name ]]</para>
+                    <para style="ITEMSLEFT">[[ o.partner_id.name ]] RIF.: [[ o.partner_invoice_id.partner_id.vat and o.partner_invoice_id.partner_id.vat[2:] or "Not enough information for Invoices" ]] address [[ o.partner_invoice_id.street ]] [[ o.partner_invoice_id.street2 ]], [[ o.partner_invoice_id.city ]], [[ o.partner_invoice_id.state_id.name ]], [[ o.partner_invoice_id.country_id.name ]], [[ o.partner_invoice_id.phone ]] Contact: [[ o.partner_invoice_id.name ]]</para>
                 </td>
                 <td>
-                    <para style="ITEMSLEFT">[[ o.partner_shipping_id.name or 'NO APLICA']], [[ o.partner_shipping_id.street ]] [[ o.partner_shipping_id.street2 ]], [[ o.partner_shipping_id.zip ]], [[ o.partner_shipping_id.city ]] [[ o.partner_shipping_id.state_id.name ]] [[ o.partner_shipping_id.country_id.name ]], [[ o.partner_shipping_id.phone ]]</para>
+                    <para style="ITEMSLEFT">[[ o.partner_shipping_id.name or 'NO APPLY']], [[ o.partner_shipping_id.street ]] [[ o.partner_shipping_id.street2 ]], [[ o.partner_shipping_id.zip ]], [[ o.partner_shipping_id.city ]] [[ o.partner_shipping_id.state_id.name ]] [[ o.partner_shipping_id.country_id.name ]], [[ o.partner_shipping_id.phone ]]</para>
                 </td>
                 <td>
                     <para style="ITEMSCENTER">[[ o.incoterm and ('%s [%s]'%(o.incoterm.name,o.incoterm.code))]]</para>
@@ -226,7 +226,7 @@
                 <td>
                 <para style="ITEMSTITLE">QUANTITY</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
-                <para style="ITEMSTITLE">[ LÍNEA ]</para>
+                <para style="ITEMSTITLE">[ LINE ]</para>
                 </td>
                 <td>
                 <para style="ITEMSTITLE">[CODE] PRODUCT</para>
@@ -309,7 +309,7 @@
             <tr noRowsplits="1">
                 <td>
                     <para style="ITEMSSMALL">(3) DELIVERY TIME</para>
-                    <para style="ITEMSSMALL">De acuerdo al plan de trabajo / Cronograma acordado y mostrado en cada línea, a partir de la confirmación de la orden de compra por los telefonos.: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].phone or '' ]]  / FAX: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].fax or '' ]]; EMAIL: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].email or '' ]] LOS PLAZOS PUEDEN VARIAR DE ACUERDO A ETAPAS DE DESARROLLO.</para>
+                    <para style="ITEMSSMALL">According to the work plan / timetable agreed and displayed on each line, after the confirmation of the order by phone.: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].phone or '' ]]  / FAX: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].fax or '' ]]; EMAIL: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].email or '' ]] LOS PLAZOS PUEDEN VARIAR DE ACUERDO A ETAPAS DE DESARROLLO.</para>
                 </td>
             </tr>
             <tr noRowsplits="1">

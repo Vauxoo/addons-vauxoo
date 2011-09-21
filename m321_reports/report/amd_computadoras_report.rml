@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
-  <template pageSize="(215.0mm,280.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary='0'>
+  <template pageSize="(209.0mm,280.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary='0'>
     <pageTemplate id="first">
         <pageGraphics>
     <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
             <setFont name="Courier-Bold" size="12.0"/>
 
-            <place x="37.0mm"     y="223.0mm"    width="47.0mm"  height="10.0mm">  
+            <place x="37.0mm"     y="225.0mm"    width="47.0mm"  height="10.0mm">  
                 <blockTable colWidths="14.0mm,14.0mm,19.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
@@ -93,7 +93,7 @@
 
       </pageGraphics>
       
-    <frame id="first" x1="16.0mm" y1="48.0mm" width="189.0mm" height="137.0mm"/>
+    <frame id="first" x1="12.0mm" y1="48.0mm" width="189.0mm" height="137.0mm"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -128,13 +128,13 @@
             <para style="IZQUIERDA">[[l.product_id and  l.product_id.name.upper() or l.name.upper() ]]</para>
           </td>
           <td>
-            <para style="IZQUIERDA">[[ formatLang(l.quantity,digits=0)]]</para>
+            <para style="DERECHA">[[ formatLang(l.quantity,digits=0)]]</para>
           </td>
           <td>
-            <para style="IZQUIERDA">[[ l.price_unit and formatLang(l.price_unit) or '']]</para>
+            <para style="DERECHA">[[ l.price_unit and formatLang(l.price_unit) or '']]</para>
           </td>
           <td>
-            <para style="IZQUIERDA">[[ l.price_subtotal and formatLang(l.price_subtotal)  or '']]</para>
+            <para style="DERECHA">[[ l.price_subtotal and formatLang(l.price_subtotal)  or '']]</para>
           </td>
         </tr>
       </blockTable>

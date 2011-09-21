@@ -6,14 +6,14 @@
     <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
             <setFont name="Courier-Bold" size="12.0"/>
 
-            <place x="37.0mm"     y="223.0mm"    width="47.0mm"  height="10.0mm">  
+            <place x="37.0mm"     y="225.0mm"    width="47.0mm"  height="10.0mm">  
                 <blockTable colWidths="14.0mm,14.0mm,19.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
-                            <para style="IZQUIERDA">[[get_date(o,0)]]</para>
+                            <para style="IZQUIERDA">[[get_date(o,1)]]</para>
                         </td>
                         <td>
-                            <para style="IZQUIERDA">[[get_date(o,1)]]</para>
+                            <para style="IZQUIERDA">[[get_date(o,0)]]</para>
                         </td>
                         <td>
                             <para style="IZQUIERDA">[[get_date(o,2)]]</para>
@@ -26,7 +26,7 @@
                 <blockTable colWidths="130.0mm,35.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
-                            <para style="IZQUIERDA">[[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para>
+                            <para style="IZQUIERDA">[[o.partner_id.name and ('%s'%(o.partner_id.name.upper())) or '' ]]</para>
                         </td>
                         <td>
                             <para style="IZQUIERDA">[[ o.partner_id.vat  and ('%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para>
@@ -45,7 +45,7 @@
                 </blockTable>
             </place>
 
-            <place x="30.0mm"     y="195.0mm"    width="190.0mm"  height="10.0mm">  
+            <place x="30.0mm"     y="191.0mm"    width="190.0mm"  height="10.0mm">  
                 <blockTable colWidths="67.0mm,55.0mm,67.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
@@ -128,13 +128,13 @@
             <para style="IZQUIERDA">[[l.product_id and  l.product_id.name.upper() or l.name.upper() ]]</para>
           </td>
           <td>
-            <para style="IZQUIERDA">[[ formatLang(l.quantity,digits=0)]]</para>
+            <para style="DERECHA">[[ formatLang(l.quantity,digits=0)]]</para>
           </td>
           <td>
-            <para style="CENTRO">[[ l.price_unit and formatLang(l.price_unit) or '']]</para>
+            <para style="DERECHA">[[ l.price_unit and formatLang(l.price_unit) or '']]</para>
           </td>
           <td>
-            <para style="CENTRO">[[ l.price_subtotal and formatLang(l.price_subtotal)  or '']]</para>
+            <para style="DERECHA">[[ l.price_subtotal and formatLang(l.price_subtotal)  or '']]</para>
           </td>
         </tr>
       </blockTable>

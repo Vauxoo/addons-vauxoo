@@ -55,7 +55,6 @@ report_sxw.report_sxw(
 parser=m321_c_report,
 header=False
 )
-
   # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
   # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
   #   pero podria ser cualquier modulo.

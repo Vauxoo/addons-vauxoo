@@ -22,6 +22,7 @@
 import time
 from report import report_sxw
 from osv import osv
+from tools.translate import _
 from report import pyPdf
 
 class comercializadora_m321_sale(report_sxw.rml_parse):
