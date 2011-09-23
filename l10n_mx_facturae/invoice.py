@@ -1025,7 +1025,8 @@ class account_invoice(osv.osv):
                 'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    #'noExterior': 'No Exterior',
+                    'noExterior': invoice.address_invoice_id.street3 and invoice.address_invoice_id.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Exterior"
+                    'noInterior': invoice.address_invoice_id.street4 and invoice.address_invoice_id.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Interior"
                     'colonia':  invoice.address_invoice_id.street2 and invoice.address_invoice_id.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'localidad': invoice.address_invoice_id.city and invoice.address_invoice_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'municipio': invoice.address_invoice_id.city and invoice.address_invoice_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
