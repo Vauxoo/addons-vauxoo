@@ -13,7 +13,8 @@
             id="menu_create_wizard" 
             name="Add Attendees" 
             parent="openacademy_menu"
-            action="session_create_attendee_wizard"/>
+            action="session_create_attendee_wizard"
+            sequence="25"/>
         <record model="ir.ui.view" id="view_wiz_form">
             <field name="name">openacademy.create.attendee.wizard.form</field>
             <field name="model">openacademy.create.attendee.wizard</field>

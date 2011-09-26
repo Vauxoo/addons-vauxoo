@@ -18,6 +18,11 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
+    <record model="ir.actions.act_window" id="act_session_list">
+        <field name="res_model">openacademy.session</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
     <record model="ir.ui.view" id="board_session_form">
         <field name="name">Session Dashboard Form</field>
         <field name="model">board.board</field>
@@ -27,22 +32,22 @@
     <hpaned>
         <child1>
                 <action
-                string="Attendees by course"
-                name="%(act_session_graph)d"
-                colspan="4"
-                height="150"
-                width="510"/>
-                <action
                 string="Courses"
                 name="%(act_course_list)d"
-                colspan="4"/>
-                </child1>
-            <child2>
-                    <action
-                    string="Sessions"
-                    name="%(act_session_calendar)d"
-                    colspan="4"/>
-            </child2>
+                colspan="2"/>
+                <action
+                string="Sessions"
+                name="%(act_session_list)d"
+                colspan="2"/>
+        </child1>
+        <child2>
+                <action
+                string="Attendees by course"
+                name="%(act_session_graph)d"
+                colspan="2"
+                height="150"
+                width="510"/>
+        </child2>
     </hpaned>
 </form>
         </field>
@@ -59,9 +64,8 @@
     <menuitem id="board.menu_dashboard" name="Dashboard" sequence="0" parent="openacademy_menu"/>
     <menuitem name="Session Dashboard" parent="board.menu_dashboard"
                 action="open_board_session"
-                sequence="1"
                 id="menu_board_session" icon="terp-graph"
-                groups="base.group_sale_salesman"/>
+                groups="base.group_sale_salesman" sequence="10"/>
 </data>
 </openerp>
 

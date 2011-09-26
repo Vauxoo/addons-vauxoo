@@ -2,7 +2,8 @@
 <openerp>
     <data>
         <!--Menu Item-->
-        <menuitem id="openacademy_menu" name="OpenAcademy" />
+        <menuitem id="openacademy_menu" name="Trainings" />
+        <menuitem id="openacademy_menu_data" name="Master Data" parent="openacademy_menu" sequence="15"/>
     <record model="ir.ui.view" id="course_search_view">
         <field name="name">course.search</field>
         <field name="model">openacademy.course</field>
@@ -29,7 +30,7 @@
         </record>
         <menuitem id="course_menu" 
                     name="Courses" 
-                    parent="openacademy_menu"
+                    parent="openacademy_menu_data"
                     action="course_list_action" />
                     
         <record model="ir.ui.view" id="openacademy_course_view_form">
@@ -85,8 +86,8 @@
             <field name="help">All sessions availables to attendees, a session is a planified class for a course</field>
         </record>
         <menuitem id="session_menu" 
-                    name="sessions" 
-                    parent="openacademy_menu"
+                    name="Sessions" 
+                    parent="openacademy_menu_data"
                     action="session_list_action" />
                     
         <record model="ir.ui.view" id="openacademy_session_view_form">
@@ -162,8 +163,9 @@
             <field name="arch" type="xml">
                 <calendar string="Session Calendar"
                         date_start="start_date"
-                        date_delay="duration"
-                        day_length="1">
+                        date_delay="duration" 
+                        day_length="1" 
+                        color="instructor_id">
                     <field name="name"/>
                     <field name="state"/>
                 </calendar>
