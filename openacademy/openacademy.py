@@ -111,17 +111,15 @@ class Session(osv.osv):
     }
    
     def action_draft(self,cr,uid,ids,context=None):
-    #set to "draft" state
         return self.write(cr,uid,ids,{'state':'draft'},context=context)
     
     def action_confirm(self,cr,uid,ids,context=None):
-    #set to "confirmed" state
         return self.write(cr,uid,ids,{'state':'confirmed'},context=context)
     
     def action_done(self,cr,uid,ids,context=None):
-    #set to "done" state
         return self.write(cr,uid,ids,{'state':'done'},context=context)
-#Set the default values for the specified fields
+
+
     _defaults = {
     'start_date': lambda *a : time.strftime('%Y-%m-%d'),
     'active':True,
