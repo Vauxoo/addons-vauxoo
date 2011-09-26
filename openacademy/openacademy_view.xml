@@ -12,7 +12,7 @@
                 <filter string="My Courses" icon="terp-partner"
                 name="my_courses"
                 domain="[('responsible_id','=',uid)]"
-                help="My own ideas" />
+                help="My own courses" />
                 <field name="name"/>
                 <field name="responsible_id"/>
             </search>
@@ -23,7 +23,7 @@
             <field name="res_model">openacademy.course</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="help">All courses availables to prepare sessions</field>
+            <field name="help">All courses availables to prepare sessions, a course is an type of class to give training.</field>
                 <field name="search_view_id" ref="course_search_view"/>
                 <field name="context">{'search_default_my_courses':1}</field>
         </record>
@@ -82,7 +82,7 @@
             <field name="res_model">openacademy.session</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,gantt,graph</field>
-            <field name="help">All sessions availables to attendees</field>
+            <field name="help">All sessions availables to attendees, a session is a planified class for a course</field>
         </record>
         <menuitem id="session_menu" 
                     name="sessions" 
@@ -150,6 +150,7 @@
                 colors="blue:duration&lt;5;red:duration>15"> 
                     <field name="name"/>
                     <field name="start_date"/>
+                    <field name="remaining_seats_percent" widget="progressbar"/>
                     <field name="duration" invisible="True"/>
                 </tree>
             </field>
@@ -162,9 +163,9 @@
                 <calendar string="Session Calendar"
                         date_start="start_date"
                         date_delay="duration"
-                        day_length="1"
-                        color="instructor_id">
-                <field name="name"/>
+                        day_length="1">
+                    <field name="name"/>
+                    <field name="state"/>
                 </calendar>
             </field>
         </record>
@@ -178,7 +179,7 @@
                     date_delay="duration" 
                     day_length="1" color="course_id">
                     <level object="res.partner" link="instructor_id">
-                    <field name="name"/>
+                        <field name="name"/>
                     </level>
             </gantt>
             </field>
