@@ -19,31 +19,8 @@ class Course(osv.osv):
         'session_ids':fields.one2many('openacademy.session', 'course_id', 'Sessions', required=False),
 
     }
-    
-    
-#    def create(self, cr, user, vals, context={}):
-#        res_id = super(Course, self).create(cr, user, vals, context)
-#        obj_partner=self.pool.get('res.partner')
-#        p_ids = obj_partner.search(cr,user,['|',
-#                       ('is_instructor','=',True),'&',
-#                       ('name','like','p'),
-#                       ('name','like','a')],
-#                       context=context, order='name')
-#        for o in obj_partner.browse(cr, user, p_ids, context=context):
-#            print o.name
-#        return res_id
-#    def write(self, cr, user, ids, vals, context=None):
-#        print "SELF ES : %s" % self
-#        print "CR ES : %s" % cr
-#        print "USER ES : %s" % user
-#        print "VALS ES : %s" % vals
-#        print "CONTEXT ES : %s" % context
-#        print "IDS ES : %s" % ids
-#        res = super(Course, self).write(cr, user, ids, vals, context)
-#        print "RES ES : %s" % res
-#        return res
 
-    
+
     def _check_description(self, cr, user, ids):
         for s in self.browse(cr,user,ids):
             if s.description==s.name:
@@ -68,8 +45,6 @@ class Course(osv.osv):
             new_name='%s (%s)' % (new_name,len(list)+1)
         defaults['name']=new_name
         return super(Course,self).copy(cr,uid,id,defaults,context=context)
-
-
 Course()
 
 class Session(osv.osv):
@@ -82,7 +57,6 @@ class Session(osv.osv):
 
 
     def _get_remaining_seats_percent(self,seats,attendee_list):
-        print "attendee_list %s" % attendee_list
         return seats and ((100.0 * (seats - len(attendee_list)))/ seats) or 0
 
     def _get_attendee_count(self, cr, uid, ids, name, args, context=None):
