@@ -38,7 +38,7 @@ class attendee_memory(osv.osv_memory):
         'wiz_id':fields.many2one('openacademy.create.attendee.wizard',),
     }
     _defaults = {
-        'name': lambda *a: "La chingada",
+        'name': lambda *a: "",
     }
 attendee_memory()
 
@@ -50,7 +50,6 @@ class create_attendee_wizard(osv.osv_memory):
         }
         
     def _get_active_session(self, cr, uid, context=None):
-        print context
         if not context:
             return False
         else:
@@ -67,17 +66,10 @@ class create_attendee_wizard(osv.osv_memory):
         else:
             session_ids=[wizard.session_id.id]
         attendee_pool = self.pool.get('openacademy.attendee')
-        print _('Hello we are in the wizard %(id)s and %(partner)s') % {'id':wizard.id,'partner':wizard.attendee_ids}
         for session_id in session_ids:
             for attendee in wizard.attendee_ids:
                 attendee_pool.create(cr,uid,{'partner_id':attendee.partner_id.id,
                 'session_id':session_id} )
-        return {
-            'name': 'wired_action',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'res_model': 'openacademy.session',
-            'view_id': False,
-            'type': 'ir.actions.act_window'}
+        return {}
 
 create_attendee_wizard()

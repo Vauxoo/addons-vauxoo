@@ -13,7 +13,5 @@ class res_partner(osv.osv):
         'session_ids': fields.many2many('openacademy.session',
                                         'openacademy_attendee',
                                         'partner_id','session_id','Sessions'),
-        'a_guevo':fields.char('A guevo', 64, required=True, readonly=False),
-
     }
 res_partner()

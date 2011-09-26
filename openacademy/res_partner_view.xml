@@ -13,7 +13,6 @@
                 </field>
                 <xpath expr="/form/notebook/page[@string='Notes']" position="after">
                     <page string="Sessions">
-                        <field name="a_guevo"/>
                         <field name="session_ids" nolabel="1" colspan="4"/>
                     </page>
                 </xpath>
