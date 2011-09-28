@@ -27,7 +27,7 @@
 
 from osv import osv
 from osv import fields
-from tools import amount_to_text
+#from tools import amount_to_text
 import tools
 import time
 from xml.dom import minidom
@@ -46,7 +46,24 @@ from tools.translate import _
 import codecs
 import release
 
+from report.amount_to_text_es import amount_to_text as amount_to_text_class
 
+amount_to_text_obj = amount_to_text_class()
+#amount_to_text = amount_to_text_obj.amount_to_text
+amount_to_text = amount_to_text_obj.amount_to_text_cheque
+
+def get_amount_to_text(self, amount, lang, currency=""):
+    if currency.upper() in ('MXP', 'MXN', 'PESOS', 'PESOS MEXICANOS'):
+        sufijo = 'M. N.'
+        currency = 'PESOS'
+    else:
+        sufijo = 'M. E.'
+    #return amount_to_text(amount, lang, currency)
+    amount_text = amount_to_text(amount, currency, sufijo)
+    amount_text = amount_text and amount_text.upper() or ''
+    return amount_text
+
+#_get_amount_to_text(o.amount_total, 'es_cheque', o.currency_id._columns.has_key('code') and o.currency_id.code or o.currency_id.name)
 
 def exec_command_pipe(name, *args):
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
@@ -245,7 +262,6 @@ class account_invoice(osv.osv):
                             (ref, move_id))
         return True
     
-    
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
@@ -411,13 +427,48 @@ class account_invoice(osv.osv):
                 attachment_obj.unlink(cr, uid, attachment_pdf_id)
             except:
                 pass
+        self.write(cr, uid, ids, {
+            'no_certificado': False,
+            'certificado': False,
+            'sello': False,
+            'cadena_original': False,
+        })
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
         
+    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context={}
+        company_obj = self.pool.get('res.company')
+        certificate_obj = self.pool.get('res.company.facturae.certificate')
+        res = {}
+        for invoice in self.browse(cr, uid, ids, context=context):
+            context.update( {'date_work': invoice.date_invoice} )
+            certificate_id = False
+            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
+            certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
+            res[invoice.id] = certificate_id and certificate_id.id or False
+        return res
+    
+    def _get_amount_to_text(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context={}
+        res = {}
+        for invoice in self.browse(cr, uid, ids, context=context):
+            amount_to_text = get_amount_to_text(self, invoice.amount_total, 'es_cheque', invoice.currency_id._columns.has_key('code') and invoice.currency_id.code or invoice.currency_id.name)
+            res[invoice.id] = amount_to_text
+        return res
+    
     _columns = {
         ##Extract date_invoice from original, but add datetime
         'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
-        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size='26', string='File Name Invoice'),
+        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
+        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice'),
+        'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
+        'no_certificado': fields.char('No. Certificado', size=64),
+        'certificado': fields.text('Certificado', size=64),
+        'sello': fields.text('Sello', size=512),
+        'cadena_original': fields.text('No. Certificado', size=512),
     }
     
     _defaults = {
@@ -713,6 +764,8 @@ class account_invoice(osv.osv):
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
         
+        self.write_cfd_data(cr, uid, ids, data_dict, context=context)
+        
         if context.get('type_data') == 'dict':
             return data_dict
         if context.get('type_data') == 'xml_obj':
@@ -721,7 +774,29 @@ class account_invoice(osv.osv):
         data_xml = codecs.BOM_UTF8 + data_xml
         fname_xml = (data_dict['Comprobante']['Emisor']['rfc'] or '') + '.' + ( data_dict['Comprobante'].get('serie', '') or '') + '.' + ( data_dict['Comprobante'].get('folio', '') or '') + '.xml'
         return fname_xml, data_xml
-
+    
+    def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
+        if not cfd_datas:
+            cfd_datas = {}
+        ##obtener cfd_data con varios ids
+        #for id in ids:
+        id = ids[0]
+        if True:
+            data = {}
+            cfd_data = cfd_datas
+            noCertificado = cfd_data.get('Comprobante', {}).get('noCertificado', '')
+            certificado = cfd_data.get('Comprobante', {}).get('certificado', '')
+            sello = cfd_data.get('Comprobante', {}).get('sello', '')
+            cadena_original = cfd_data.get('cadena_original', '')
+            data = {
+                'no_certificado': noCertificado,
+                'certificado': certificado,
+                'sello': sello,
+                'cadena_original': cadena_original,
+            }
+            self.write(cr, uid, [id], data, context=context)
+        return True
+    
     def _get_noCertificado(self, fname_cer, pem=True):
         """
         fcer = open(fname_cer, "r")
