@@ -452,14 +452,27 @@ class account_invoice(osv.osv):
                     fname_cer_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.cer.pem')
                 except:
                     raise osv.except_osv('Error !', 'No se ha capturado un archivo CERTIFICADO en formato PEM, en la company!')
-                file_globals['fname_cer_pem'] = fname_cer_pem
                 file_globals['fname_cer'] = fname_cer_pem
+                
                 try:
                     fname_key_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_key_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.key.pem')
                 except:
                     raise osv.except_osv('Error !', 'No se ha capturado un archivo KEY en formato PEM, en la company!')
-                file_globals['fname_key_pem'] = fname_key_pem
                 file_globals['fname_key'] = fname_key_pem
+                
+                try:
+                    fname_cer_no_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_file, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.cer')
+                except:
+                    pass
+                file_globals['fname_cer_no_pem'] = fname_cer_no_pem
+                
+                try:
+                    fname_key_no_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_key_file, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.key')
+                except:
+                    pass
+                file_globals['fname_key_no_pem'] = fname_key_no_pem
+                
+                file_globals['password'] = certificate_id.certificate_password
                 
                 if certificate_id.fname_xslt:
                     if ( certificate_id.fname_xslt[0] == os.sep or certificate_id.fname_xslt[1] == ':' ):
