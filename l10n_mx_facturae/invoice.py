@@ -1007,6 +1007,7 @@ class account_invoice(osv.osv):
     
     def _get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
         invoices = self.browse(cr, uid, ids, context=context)
+        invoice_tax_obj = self.pool.get("account.invoice.tax")
         invoice_datas = []
         invoice_data_parents = []
         #'type': fields.selection([
@@ -1162,21 +1163,9 @@ class account_invoice(osv.osv):
             totalImpuestosTrasladados = 0
             totalImpuestosRetenidos = 0
             for line_tax_id in invoice.tax_line:
-                #tax_name = line_tax_id.name.split(' - ')[0]
-                line_tax_id_amount = abs( line_tax_id.amount or 0.0 )
-                #tasa = line_tax_id_amount and invoice.amount_untaxed and line_tax_id_amount * 100 / invoice.amount_untaxed or 0.0
-                tasa = line_tax_id_amount and line_tax_id.base and line_tax_id_amount * 100.0 / abs( line_tax_id.base ) or 0.0
-                
-                tax_name = line_tax_id.name.lower().replace('.','').replace(' ', '').replace('-', '')
-                if 'iva' in tax_name:
-                    tax_name = 'IVA'
-                    tasa = round(tasa, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
-                elif 'isr' in tax_name:
-                    tax_name = 'ISR'
-                elif 'ieps' in tax_name:
-                    tax_name = 'IEPS'
+                tax_name = line_tax_id.name2
                 tax_names.append( tax_name )
-                
+                line_tax_id_amount = abs( line_tax_id.amount or 0.0 )
                 if line_tax_id.amount >= 0:
                     impuesto_list = invoice_data_impuestos['Traslados']
                     impuesto_str = 'Traslado'
@@ -1193,7 +1182,7 @@ class account_invoice(osv.osv):
                     }
                 }
                 if line_tax_id.amount >= 0:
-                    impuesto_dict[impuesto_str].update({'tasa': "%.2f"%( tasa )})
+                    impuesto_dict[impuesto_str].update({'tasa': "%.2f"%( abs( line_tax_id.tax_percent ) )})
                 impuesto_list.append( impuesto_dict )
             
             invoice_data['Impuestos'].update({
@@ -1231,3 +1220,32 @@ class account_invoice(osv.osv):
             invoice_data_parent['rate'] = rate
         return invoice_data_parents
 account_invoice()
+
+class account_invoice_tax(osv.osv):
+    _inherit= "account.invoice.tax"
+    
+    def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context = {}
+        res = {}
+        for invoice_tax in self.browse(cr, uid, ids, context=context):
+            res[invoice_tax.id] = {}
+            tax_name = invoice_tax.name.lower().replace('.','').replace(' ', '').replace('-', '')
+            tax_percent = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
+            if 'iva' in tax_name:
+                tax_name = 'IVA'
+                tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
+            elif 'isr' in tax_name:
+                tax_name = 'ISR'
+            elif 'ieps' in tax_name:
+                tax_name = 'IEPS'
+            res[invoice_tax.id]['name2'] = tax_name
+            res[invoice_tax.id]['tax_percent'] = tax_percent
+            #res[invoice_tax.id]['amount'] = invoice_tax.amount
+        return res
+    
+    _columns = {
+        'name2': fields.function(_get_tax_data, method=True, type='char', size=32, string='Name2', multi='tax_percent', store=True),
+        'tax_percent': fields.function(_get_tax_data, method=True, type='float', string='Tax Percent', multi='tax_percent', store=True),
+    }
+account_invoice_tax()
