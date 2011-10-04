@@ -432,8 +432,13 @@ class account_invoice(osv.osv):
             'certificado': False,
             'sello': False,
             'cadena_original': False,
+            'date_invoice_cancel': False,
         })
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
+    
+    def action_cancel(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
+        return super(account_invoice, self).action_cancel(cr, uid, ids, args)
         
     def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
@@ -468,7 +473,8 @@ class account_invoice(osv.osv):
         'no_certificado': fields.char('No. Certificado', size=64),
         'certificado': fields.text('Certificado', size=64),
         'sello': fields.text('Sello', size=512),
-        'cadena_original': fields.text('No. Certificado', size=512),
+        'cadena_original': fields.text('Cadena Original', size=512),
+        'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
     }
     
     _defaults = {
