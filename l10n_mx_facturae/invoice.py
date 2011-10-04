@@ -474,6 +474,18 @@ class account_invoice(osv.osv):
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+        
+    def copy(self, cr, uid, id, default={}, context=None):
+        if context is None:
+            context = {}
+        default.update({
+            'invoice_sequence_id': False,
+            'no_certificado': False,
+            'certificado': False,
+            'sello': False,
+            'cadena_original': False,
+        })
+        return super(account_invoice, self).copy(cr, uid, id, default, context=context)
     
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
