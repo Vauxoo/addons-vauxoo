@@ -52,15 +52,61 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
     def sf_cancel(self, cr, uid, ids, context=None):
         print 'esta dentro del cancel'
+        user = 'testing@solucionfactible.com'
+        password = 'timbrado.SF.16672'
+
         context_id=context.get('active_ids',[])
         print context_id
-        invoice_obj=self.pool.get('account.invoice')
-        invoice_brw=invoice_obj.browse(cr, uid, ids, context)[0]
+        print 'context= ',context
+
+        invoice_obj = self.pool.get('account.invoice')
+        company_obj = self.pool.get('res.company.facturae.certificate')
+        invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
+        company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
         print 'el invoice_brw',invoice_brw
-        print 'el certificado es: ',invoice_brw.state
+
+        #~ params=[user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
+        print 'company_id es: ',invoice_brw.company_id.id
+
+        cerCSD = company_brw.certificate_file#base64.encodestring(company_brw.certificate_file)
+        keyCSD = company_brw.certificate_key_file#base64.encodestring(company_brw.certificate_key_file)
+        contrasenaCSD = company_brw.certificate_password
+        uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
+
+        print 'el certificate file es: ',cerCSD
+        print 'el certificate key file es: ',keyCSD
+        print 'el certificate password es: ',contrasenaCSD
+        print 'el uuids folio fiscal es: ',uuids
 
 
-        #~ self.journal = journal_obj.browse(self.cr, self.uid, [journal_id])[0]
+        print '----------------------------inicia envio a pac-------------------------------'
+
+        #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  moy
+        #~ wsdl_url='http://testing.solucionfactible.com/cfdi/timbrado/test/timbrado.jsp'
+        wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
+        namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
+
+        wsdl_client = False
+        #try:
+        #wsdl_client = WSDL.Proxy( wsdl_url, namespace )
+        wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
+        #except:
+            #pass
+        if True:#if wsdl_client:
+            params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
+            print '-----------------inicia llamado al web service'
+            wsdl_client.soapproxy.config.dumpSOAPOut = 0
+            wsdl_client.soapproxy.config.dumpSOAPIn = 0
+            wsdl_client.soapproxy.config.debug = 0
+            wsdl_client.soapproxy.config.dict_encoding='UTF-8'
+            print 'antes de obtener resultado params es: ',params
+            resultado = wsdl_client.cancelar(*params)
+            print "-------------------resultado:",resultado
+            #~ msg = resultado['resultados']['mensaje']
+            #~ status = resultado['resultados']['status']
+            print "--------------El resultado es: ",resultado
+
+
 
         return{}
     """
