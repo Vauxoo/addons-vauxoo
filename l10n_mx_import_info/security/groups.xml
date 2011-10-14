@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="res.groups" id="import_group_user">
+            <field name="name">Warehouse / Import Manager</field>
+        </record>
+        <record model="res.groups" id="import_group_user">
+            <field name="name">Warehouse / Import User</field>
+        </record>
+    </data>
+</openerp>

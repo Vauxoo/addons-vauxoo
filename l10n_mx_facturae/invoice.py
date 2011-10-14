@@ -584,6 +584,22 @@ class account_invoice(osv.osv):
                 continue
             #if not invoice_comprobante_data['Receptor']['rfc']:
                 #raise osv.except_osv('Warning !', 'No se tiene definido el RFC de la factura [%s].\n%s !'%(facturae_data['Comprobante']['folio'], msg2))
+            
+            invoice = self.browse(cr, uid, [facturae_data['invoice_id']], context=context)[0]
+            pedimento_numeros = []
+            pedimento_fechas = []
+            pedimento_aduanas = []
+            for line in invoice.invoice_line:
+                try:
+                    pedimento_numeros.append(line.tracking_id.import_id.name or '')
+                    pedimento_fechas.append(line.tracking_id.import_id.date or '')
+                    pedimento_aduanas.append(line.tracking_id.import_id.customs or '')
+                except:
+                    pass
+            pedimento_numeros = ','.join(map(lambda x: str(x) or '', pedimento_numeros))
+            pedimento_fechas = ','.join(map(lambda x: str(x) or '', pedimento_fechas))
+            pedimento_aduanas = ','.join(map(lambda x: str(x) or '', pedimento_aduanas))                
+            
             facturae_data_txt_list = [
                 invoice_comprobante_data['Receptor']['rfc'] or '',
                 invoice_comprobante_data['serie'] or '',
@@ -594,7 +610,9 @@ class account_invoice(osv.osv):
                 "%.2f"%( round( float(invoice_comprobante_data['Impuestos']['totalImpuestosTrasladados'] or 0.0) * rate, 2) ),
                 facturae_state,
                 facturae_type,
-                '',
+                pedimento_numeros,
+                pedimento_fechas,
+                pedimento_aduanas,
             ]
             facturae_data_txt_lists.append( facturae_data_txt_list )
         
@@ -605,7 +623,7 @@ class account_invoice(osv.osv):
         cad = ""
         for facturae_data_txt in facturae_data_txt_lists:
             cad += '|'
-            cad += '|'.join(map(lambda x: str(x) or '||', facturae_data_txt))
+            cad += '|'.join(map(lambda x: str(x) or '', facturae_data_txt))
             cad += '|'
             cad += '\r\n'
         
@@ -1163,6 +1181,19 @@ class account_invoice(osv.osv):
                 if product_code:
                     concepto.update({'noIdentificacion': product_code})
                 invoice_data['Conceptos'].append( {'Concepto': concepto} )
+                
+                pedimento = None
+                try:
+                    pedimento = line.tracking_id.import_id
+                except:
+                    pass
+                if pedimento:
+                    informacion_aduanera = {
+                        'numero': pedimento.name or '',
+                        'fecha': pedimento.date or '',
+                        'aduana': pedimento.customs,
+                    }
+                    concepto.update( {'InformacionAduanera': informacion_aduanera} )
             #Termina seccion: Conceptos
             #Inicia seccion: impuestos
             invoice_data['Impuestos'] = {}
