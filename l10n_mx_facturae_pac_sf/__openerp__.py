@@ -30,7 +30,10 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.""",
+    "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
+Ubuntu Package Depends:
+    sudo apt-get install python-soappy
+""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["l10n_mx_facturae"],
