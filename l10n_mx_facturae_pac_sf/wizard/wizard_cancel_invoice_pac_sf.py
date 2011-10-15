@@ -49,12 +49,36 @@ import time
 
 class wizard_cancel_invoice_pac_sf(osv.osv_memory):
     _name='wizard.cancel.invoice.pac.sf'
+    _columns={
+        'pac': fields.many2one('params.pac', 'PAC'),
 
+        }
+
+    #~ def get_wizard_data(self, cr, uid, ids, context=None):
+        #~ datas = {}
+        #~ if context is None:
+            #~ context = {}
+        #~ data = self.read(cr, uid, ids)[0]
+        #~ datas = {
+            #~ 'ids': context.get('active_ids',[]),
+            #~ 'model': 'wizard.account.journal.move',
+            #~ 'form': data
+        #~ }
+        #~ return {
+            #~ 'type': 'ir.actions.report.xml',
+            #~ 'report_name': 'account.journal.move.report',
+            #~ 'datas': datas,
+        #~ }
 
     def sf_cancel(self, cr, uid, ids, context=None):
         print 'esta dentro del cancel'
-        user = 'testing@solucionfactible.com'
-        password = 'timbrado.SF.16672'
+        data = self.read(cr, uid, ids)[0]
+        print 'las datas son',data
+        pac=data['pac']
+        print 'las datas ped',pac
+
+
+
 
         context_id=context.get('active_ids',[])
         print context_id
@@ -62,8 +86,23 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
         invoice_obj = self.pool.get('account.invoice')
         company_obj = self.pool.get('res.company.facturae.certificate')
+        pac_obj = self.pool.get('params.pac')
+
         invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
         company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
+        pac_brw=pac_obj.browse(cr, uid, pac, context)
+
+
+        user = pac_brw.user
+        password = pac_brw.password
+        wsdl_url = pac_brw.url_webservice
+        namespace = pac_brw.namespace
+        print '---------------------------el user desde el brw es ',user
+        print '---------------------------el password desde el brw es ',password
+        print '---------------------------el password desde el brw es ',wsdl_url
+        print '---------------------------el password desde el brw es ',namespace
+
+
         print 'el invoice_brw',invoice_brw
 
         #~ params=[user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
@@ -82,11 +121,9 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
         print '----------------------------inicia envio a pac-------------------------------'
 
-        #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl' #moy
-        #~ namespace = 'http://timbradocfd.ws.cfdi.solucionfactible.com'#moy
 
-        wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'#url buenas
-        namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'#url Buenas
+        #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'#url buenas
+        #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'#url Buenas
 
         wsdl_client = False
         #try:

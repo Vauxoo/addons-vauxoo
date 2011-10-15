@@ -8,7 +8,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Cancel invoice">
-
+                    <field name='pac'/>
                     <button special="cancel" string="_Cancel" icon="gtk-cancel"/>
                     <button name="sf_cancel" type="object" string="_Cancel invoice" icon="gtk-ok"/>
                 </form>
