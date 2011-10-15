@@ -33,7 +33,7 @@
     "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae","l10n_mx_params_pac"],
+    "depends" : ["l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [

@@ -49,10 +49,6 @@ import time
 
 class wizard_cancel_invoice_pac_sf(osv.osv_memory):
     _name='wizard.cancel.invoice.pac.sf'
-    _columns={
-        'pac': fields.many2one('params.pac', 'PAC'),
-
-        }
 
     #~ def get_wizard_data(self, cr, uid, ids, context=None):
         #~ datas = {}
@@ -74,8 +70,8 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
         print 'esta dentro del cancel'
         data = self.read(cr, uid, ids)[0]
         print 'las datas son',data
-        pac=data['pac']
-        print 'las datas ped',pac
+        #~ pac=data['pac'] activar
+        #~ print 'las datas ped',pac  activar
 
 
 
@@ -86,24 +82,30 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
         invoice_obj = self.pool.get('account.invoice')
         company_obj = self.pool.get('res.company.facturae.certificate')
-        pac_obj = self.pool.get('params.pac')
+        #pac_obj = self.pool.get('pac') activar
 
         invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
         company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
-        pac_brw=pac_obj.browse(cr, uid, pac, context)
+        #pac_brw=pac_obj.browse(cr, uid, pac, context) activar
 
+#~
+        #~ user = pac_brw.user
+        #~ password = pac_brw.password
+        #~ wsdl_url = pac_brw.url_webservice
+        #~ namespace = pac_brw.namespace  activar
 
-        user = pac_brw.user
-        password = pac_brw.password
-        wsdl_url = pac_brw.url_webservice
-        namespace = pac_brw.namespace
+        user = 'testing@solucionfactible.com'
+        password = 'timbrado.SF.16672'
+        wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
+        namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
+
         print '---------------------------el user desde el brw es ',user
         print '---------------------------el password desde el brw es ',password
         print '---------------------------el password desde el brw es ',wsdl_url
         print '---------------------------el password desde el brw es ',namespace
 
 
-        print 'el invoice_brw',invoice_brw
+        #print 'el invoice_brw',invoice_brw activar
 
         #~ params=[user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
         print 'company_id es: ',invoice_brw.company_id.id

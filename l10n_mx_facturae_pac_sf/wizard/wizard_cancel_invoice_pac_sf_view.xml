@@ -8,7 +8,6 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Cancel invoice">
-                    <field name='pac'/>
                     <button special="cancel" string="_Cancel" icon="gtk-cancel"/>
                     <button name="sf_cancel" type="object" string="_Cancel invoice" icon="gtk-ok"/>
                 </form>
@@ -38,30 +37,7 @@
 
 
 
-<!--
 
-        <menuitem
-            id="menu_cancel_factura"
-            name="cancelar fact"
-            parent='account.accounting'
-            action='action_wizard_cancel_pac_sf_form'
-        />
-
-
-            <field name="key2">client_print_multi</field>
-            <field name="key">action</field>
-
-        <menuitem
-            parent="account.menu_finance_legal_statement"
-            id="reports_account_journal_move_line"
-            name="Reports"/>
-        <menuitem
-            id="wizard_account_jornal_move"
-            name="Banking Movements Report"
-            parent='reports_account_journal_move_line'
-            action='action_wizard_acount_journal_move'
-        />
--->
 
     </data>
 </openerp>
