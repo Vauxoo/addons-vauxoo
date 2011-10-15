@@ -82,22 +82,27 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
         invoice_obj = self.pool.get('account.invoice')
         company_obj = self.pool.get('res.company.facturae.certificate')
-        #pac_obj = self.pool.get('pac') activar
+        pac_params_obj = self.pool.get('params.pac')
 
         invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
         company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
-        #pac_brw=pac_obj.browse(cr, uid, pac, context) activar
+        pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','cancelar')],context=context)
+        pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
 
-#~
-        #~ user = pac_brw.user
-        #~ password = pac_brw.password
-        #~ wsdl_url = pac_brw.url_webservice
-        #~ namespace = pac_brw.namespace  activar
+        print "---------pac_brw",pac_params_srch
+        print "---------pac_params_brw",pac_params_brw
+        print "---------pac_params_brw user",pac_params_brw.user
 
-        user = 'testing@solucionfactible.com'
-        password = 'timbrado.SF.16672'
-        wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
-        namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
+
+        user = pac_params_brw.user
+        password = pac_params_brw.password
+        wsdl_url = pac_params_brw.url_webservice
+        namespace = pac_params_brw.namespace
+#---------constantes
+        #~ user = 'testing@solucionfactible.com'
+        #~ password = 'timbrado.SF.16672'
+        #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
+        #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
 
         print '---------------------------el user desde el brw es ',user
         print '---------------------------el password desde el brw es ',password
@@ -150,7 +155,8 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
             status = resultado['resultados']['status']
             status_uuid = resultado['resultados']['statusUUID']
             if status =='200':
-                print 'El proceso de cancelación se ha completado correctamente, estatus ',status
+                msg_status= 'El proceso de cancelación se ha completado correctamente, estatus ',status
+                print msg_status
             elif status =='500':
                 print 'Han ocurrido errores que no han permitido completar el proceso de cancelación ',status
 

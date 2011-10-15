@@ -35,24 +35,13 @@ import pooler
 class params_pac(osv.osv):
     _name = 'params.pac'
     _columns = {
-        'name': fields.char('Params name', size=128, required=True),
+        'name': fields.char('Name', size=128, required=True),
         'url_webservice': fields.char('URL WebService', size=256),
         'namespace': fields.char('NameSpace', size=256),
         'user': fields.char('User', size=128),
         'password': fields.char('Password', size=128),
         'method_type': fields.selection([('timbrar','Timbrar'),('cancelar','Cancelar')],"Proceso a realizar"),
-        'pac_id': fields.many2one('pac','Pac')
        # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
     }
 params_pac()
 
-class pac(osv.osv):
-    _name = 'pac'
-    _columns = {
-        #~ 'name': fields.char('PAC', size=128),
-        'name': fields.char('PAC', size =128, required=True),
-        'description': fields.text('Descripcion'),
-        'params_id': fields.one2many('params.pac','pac_id','Params')
-
-    }
-pac()
