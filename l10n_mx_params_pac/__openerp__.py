@@ -7,6 +7,7 @@
 #    info moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
@@ -25,5 +26,18 @@
 #
 ##############################################################################
 
-import wizard_export_invoice_pac_sf
-import wizard_cancel_invoice_pac_sf
+{
+    "name" : "Lectura se parámetros dinamicos a enviar al PAC del Factura Electronica para Mexico (CFDI-2011) ",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """TThis module reads the params required for PAC.""",
+    "website" : "http://www.vauxoo.com/",
+    "license" : "AGPL-3",
+    "depends" : ["l10n_mx_facturae"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : ["params_pac_view.xml"],
+    "installable" : True,
+    "active" : False,
+}
