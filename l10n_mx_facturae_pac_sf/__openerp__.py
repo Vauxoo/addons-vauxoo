@@ -42,6 +42,7 @@ Ubuntu Package Depends:
     "update_xml" : [
         "invoice_wizard.xml",
         "l10n_mx_facturae_pac_sf_report.xml",
+        "wizard/wizard_cancel_invoice_pac_sf_view.xml",
     ],
     "installable" : True,
     "active" : False,

@@ -7,6 +7,7 @@
 #    info moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
@@ -25,5 +26,22 @@
 #
 ##############################################################################
 
-import wizard_export_invoice_pac_sf
-import wizard_cancel_invoice_pac_sf
+import time
+from tools.translate import _
+from osv import fields, osv
+import pooler
+
+
+class params_pac(osv.osv):
+    _name = 'params.pac'
+    _columns = {
+        'name': fields.char('Name', size=128, required=True),
+        'url_webservice': fields.char('URL WebService', size=256),
+        'namespace': fields.char('NameSpace', size=256),
+        'user': fields.char('User', size=128),
+        'password': fields.char('Password', size=128),
+        'method_type': fields.selection([('timbrar','Timbrar'),('cancelar','Cancelar')],"Proceso a realizar"),
+       # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
+    }
+params_pac()
+
