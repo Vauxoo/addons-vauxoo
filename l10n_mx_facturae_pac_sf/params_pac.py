@@ -33,21 +33,18 @@ import pooler
 
 
 class params_pac(osv.osv):
-    _name = 'params.pac'
+    _inherit = 'params.pac'
     
     def _get_method_type_selection(self, cr, uid, context=None):
-        #From module of PAC inherit this function and add new methods
-        types = []
+        types = super(params_pac, self)._get_method_type_selection(cr, uid, context=context)
+        types.extend([
+            ('pac_sf_cancelar','PAC SF - Cancelar'),
+            ('pac_sf_firmar','PAC SF - Firmar'),
+        ])
         return types
     
     _columns = {
-        'name': fields.char('Name', size=128, required=True),
-        'url_webservice': fields.char('URL WebService', size=256, required=True),
-        'namespace': fields.char('NameSpace', size=256),
-        'user': fields.char('User', size=128),
-        'password': fields.char('Password', size=128),
         'method_type': fields.selection(_get_method_type_selection, "Proceso a realizar", type='char', size=64, required=True),
-       # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
     }
 params_pac()
 
