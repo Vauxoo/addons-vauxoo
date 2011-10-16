@@ -7,6 +7,7 @@
 #    info moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
@@ -25,25 +26,25 @@
 #
 ##############################################################################
 
-{
-    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Solucion Factible",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
-Ubuntu Package Depends:
-    sudo apt-get install python-soappy
-""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae", "l10n_mx_params_pac"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "invoice_wizard.xml",
-        "l10n_mx_facturae_pac_sf_report.xml",
-        "wizard/wizard_cancel_invoice_pac_sf_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+import time
+from tools.translate import _
+from osv import fields, osv
+import pooler
+
+
+class params_pac(osv.osv):
+    _inherit = 'params.pac'
+    
+    def _get_method_type_selection(self, cr, uid, context=None):
+        types = super(params_pac, self)._get_method_type_selection(cr, uid, context=context)
+        types.extend([
+            ('pac_sf_cancelar','PAC SF - Cancelar'),
+            ('pac_sf_firmar','PAC SF - Firmar'),
+        ])
+        return types
+    
+    _columns = {
+        'method_type': fields.selection(_get_method_type_selection, "Proceso a realizar", type='char', size=64, required=True),
+    }
+params_pac()
+
