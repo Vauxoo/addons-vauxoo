@@ -86,7 +86,7 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
         invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
         company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
-        pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','cancelar')],context=context)
+        pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_cancelar')],context=context)
         pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
 
         print "---------pac_brw",pac_params_srch

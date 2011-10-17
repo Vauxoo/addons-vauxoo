@@ -98,62 +98,71 @@ def _get_file(self, cr, uid, data, context={}):
 def _upload_ws_file(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')
-    
+    pac_params_obj = pool.get('params.pac')
     cfd_data = base64.decodestring( data['form']['file'] or '' )
     invoice_ids = data['ids']
     invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
-    msg = 'no se pudo subir el archivo'
-    if cfd_data:
-        #wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'###Agregarlo a un modelo dinamico
-        wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'
-        namespace = 'http://timbradocfd.ws.cfdi.solucionfactible.com'
-        wsdl_client = False
-        #try:
-        #wsdl_client = WSDL.Proxy( wsdl_url, namespace )
-        wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
-        #except:
-            #pass
-        if True:#if wsdl_client:
-            user = 'testing@solucionfactible.com'
-            password = 'timbrado.SF.16672'
-            file_globals = invoice_obj._get_file_globals(cr, uid, invoice_ids, context=context)
-            fname_cer_no_pem = file_globals['fname_cer']
-            cerCSD = fname_cer_no_pem and base64.encodestring( open(fname_cer_no_pem, "r" ).read() ) or ''
-            fname_key_no_pem = file_globals['fname_key']
-            keyCSD = fname_key_no_pem and base64.encodestring( open(fname_key_no_pem, "r" ).read() ) or ''
-            cfdi = base64.encodestring( cfd_data.replace(codecs.BOM_UTF8,'') )
-            zip = False#Validar si es un comprimido zip, con la extension del archivo
-            contrasenaCSD = file_globals.get('password', '')
-            params = [user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
-            wsdl_client.soapproxy.config.dumpSOAPOut = 0
-            wsdl_client.soapproxy.config.dumpSOAPIn = 0
-            wsdl_client.soapproxy.config.debug = 0
-            wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-            resultado = wsdl_client.timbrar(*params)
-            print "resultado",resultado
-            msg = resultado['resultados']['mensaje']
-            status = resultado['resultados']['status']
-            print "[status]",[status]
-            if status == '200' or status == '307':
-                fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
-                fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
-                cfdi_data = {
-                    #'cfdi_cbb': base64.decodestring( resultado['resultados']['qrCode'] or '' ) or False,
-                    'cfdi_cbb': resultado['resultados']['qrCode'] or False,#ya lo regresa en base64
-                    'cfdi_sello': resultado['resultados']['selloSAT'] or False,
-                    'cfdi_no_certificado': resultado['resultados']['certificadoSAT'] or False,
-                    'cfdi_cadena_original': resultado['resultados']['cadenaOriginal'] or False,
-                    'cfdi_fecha_timbrado': fecha_timbrado,
-                    'cfdi_xml': base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ),#este se necesita en uno que no es base64
-                    'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
-                }
-                invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
-                msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
-                #open("D:\\cfdi_b64.xml", "wb").write( resultado['resultados']['cfdiTimbrado'] or '' )
-                #open("D:\\cfdi.xml", "wb").write( base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ) )
-            elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
-                msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema."
-                
+    
+    pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
+    if pac_params_ids:
+        pac_params = pac_params_obj.browse(cr, uid, pac_params_ids, context)[0]
+        user = pac_params.user
+        password = pac_params.password
+        wsdl_url = pac_params.url_webservice
+        namespace = pac_params.namespace
+        msg = 'no se pudo subir el archivo'
+        if cfd_data:
+            #wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'###Agregarlo a un modelo dinamico
+            wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'
+            namespace = 'http://timbradocfd.ws.cfdi.solucionfactible.com'
+            wsdl_client = False
+            #try:
+            #wsdl_client = WSDL.Proxy( wsdl_url, namespace )
+            wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
+            #except:
+                #pass
+            if True:#if wsdl_client:
+                user = 'testing@solucionfactible.com'
+                password = 'timbrado.SF.16672'
+                file_globals = invoice_obj._get_file_globals(cr, uid, invoice_ids, context=context)
+                fname_cer_no_pem = file_globals['fname_cer']
+                cerCSD = fname_cer_no_pem and base64.encodestring( open(fname_cer_no_pem, "r" ).read() ) or ''
+                fname_key_no_pem = file_globals['fname_key']
+                keyCSD = fname_key_no_pem and base64.encodestring( open(fname_key_no_pem, "r" ).read() ) or ''
+                cfdi = base64.encodestring( cfd_data.replace(codecs.BOM_UTF8,'') )
+                zip = False#Validar si es un comprimido zip, con la extension del archivo
+                contrasenaCSD = file_globals.get('password', '')
+                params = [user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
+                wsdl_client.soapproxy.config.dumpSOAPOut = 0
+                wsdl_client.soapproxy.config.dumpSOAPIn = 0
+                wsdl_client.soapproxy.config.debug = 0
+                wsdl_client.soapproxy.config.dict_encoding='UTF-8'
+                resultado = wsdl_client.timbrar(*params)
+                print "resultado",resultado
+                msg = resultado['resultados']['mensaje']
+                status = resultado['resultados']['status']
+                print "[status]",[status]
+                if status == '200' or status == '307':
+                    fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
+                    fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
+                    cfdi_data = {
+                        #'cfdi_cbb': base64.decodestring( resultado['resultados']['qrCode'] or '' ) or False,
+                        'cfdi_cbb': resultado['resultados']['qrCode'] or False,#ya lo regresa en base64
+                        'cfdi_sello': resultado['resultados']['selloSAT'] or False,
+                        'cfdi_no_certificado': resultado['resultados']['certificadoSAT'] or False,
+                        'cfdi_cadena_original': resultado['resultados']['cadenaOriginal'] or False,
+                        'cfdi_fecha_timbrado': fecha_timbrado,
+                        'cfdi_xml': base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ),#este se necesita en uno que no es base64
+                        'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
+                    }
+                    invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
+                    msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                    #open("D:\\cfdi_b64.xml", "wb").write( resultado['resultados']['cfdiTimbrado'] or '' )
+                    #open("D:\\cfdi.xml", "wb").write( base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ) )
+                elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
+                    msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema."
+    else:
+        msg = 'No se encontro informacion del webservices del PAC'
     return {'file': data['form']['file'], 'msg': msg}
     
 class wizard_export_invoice_pac_sf(wizard.interface):
