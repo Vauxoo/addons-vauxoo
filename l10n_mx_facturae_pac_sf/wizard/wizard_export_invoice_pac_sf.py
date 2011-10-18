@@ -124,10 +124,6 @@ def _upload_ws_file(self, cr, uid, data, context={}):
         wsdl_url = pac_params.url_webservice
         namespace = pac_params.namespace
 
-        print 'el user es ',user
-        print 'el password es ',password
-        print 'el wsdw_url es',wsdl_url
-        print 'el namespace es',namespace
         msg = 'no se pudo subir el archivo'
         if cfd_data_adenda:
 
