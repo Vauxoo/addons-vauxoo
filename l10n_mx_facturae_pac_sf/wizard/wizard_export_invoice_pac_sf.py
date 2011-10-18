@@ -100,37 +100,21 @@ def _upload_ws_file(self, cr, uid, data, context={}):
     invoice_obj = pool.get('account.invoice')
     pac_params_obj = pool.get('params.pac')
     cfd_data = base64.decodestring( data['form']['file'] or '' )
-
-
     invoice_ids = data['ids']
     invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
+    #get currency and rate from invoice
+    currency = invoice.currency_id.name
+    currency_enc=currency.encode(encoding='UTF-8', errors='strict')
+    rate = invoice.currency_id.rate
+    rate_str = str(rate)
+
     moneda = '''<Addenda>
         <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
-    </Addenda> </Comprobante>'''%(invoice.currency_id.name,invoice.currency_id.name,invoice.currency_id.rate)
-
-    print 'la moneda es ',moneda
-    cfd_data2=cfd_data
-
-    currency = invoice.currency_id.name
-    currency_enc='"'+currency.encode(encoding='UTF-8', errors='strict')+'"'
-    rate = invoice.currency_id.rate
-    rate_str = '"'+str(rate)+'"'
+    </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate_str)
 
 
-    print 'currency encode ',currency_enc
-    print 'rate ',rate_str
-
-
-    print 'la cfd_data reemplazada es: ',cfd_data2.replace('</Comprobante>', '''<Addenda>
-        <sferp:Divisa codigoISO='''+currency_enc+ ''' nombre='''+currency_enc+''' tipoDeCambio='''+rate_str+''' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
-    </Addenda> </Comprobante>''')
-    cfd_data_adenda = cfd_data.replace('</Comprobante>', '''<Addenda>
-        <sferp:Divisa codigoISO='''+currency_enc+ ''' nombre='''+currency_enc+''' tipoDeCambio='''+rate_str+''' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
-    </Addenda> </Comprobante>''')
-    #~ cfd_data_adenda = cfd_data.replace('</Comprobante>', '''<Addenda> <sferp:Divisa codigoISO=%s nombre=%s tipoDeCambio=%s xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>    </Addenda> </Comprobante>'''%(invoice.currency_id.name,invoice.currency_id.name,invoice.currency_id.rate))
-#~
-    #~ print 'el cfd_data es concatenado es',cfd_data_adenda
-
+    cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
+    print 'la cfd_data_adenda con moneda reemplazada es ',cfd_data_adenda
     pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
 
 
@@ -145,7 +129,8 @@ def _upload_ws_file(self, cr, uid, data, context={}):
 
             #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  originales
             #~ namespace = 'http://timbradocfd.ws.cfdi.solucionfactible.com' originales
-
+            #~ user = 'testing@solucionfactible.com' originales
+            #~ password = 'timbrado.SF.16672' originales
 
             #try:
             #wsdl_client = WSDL.Proxy( wsdl_url, namespace )
@@ -153,9 +138,6 @@ def _upload_ws_file(self, cr, uid, data, context={}):
             #except:
                 #pass
             if True:#if wsdl_client:
-                #~ user = 'testing@solucionfactible.com' originales
-                #~ password = 'timbrado.SF.16672' originales
-
 
                 file_globals = invoice_obj._get_file_globals(cr, uid, invoice_ids, context=context)
                 fname_cer_no_pem = file_globals['fname_cer']
