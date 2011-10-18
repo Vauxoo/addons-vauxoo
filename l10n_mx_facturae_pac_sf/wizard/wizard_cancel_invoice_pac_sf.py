@@ -66,78 +66,83 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
         invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
         company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
         pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_cancelar')],context=context)
-        pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
 
-        user = pac_params_brw.user
-        password = pac_params_brw.password
-        wsdl_url = pac_params_brw.url_webservice
-        namespace = pac_params_brw.namespace
-#---------constantes
-        #~ user = 'testing@solucionfactible.com'
-        #~ password = 'timbrado.SF.16672'
-        #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
-        #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
+        if pac_params_srch:
+            pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
 
-        #~ params=[user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
-        print 'company_id es: ',invoice_brw.company_id.id
+            user = pac_params_brw.user
+            password = pac_params_brw.password
+            wsdl_url = pac_params_brw.url_webservice
+            namespace = pac_params_brw.namespace
+    #---------constantes
+            #~ user = 'testing@solucionfactible.com'
+            #~ password = 'timbrado.SF.16672'
+            #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
+            #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
 
-        cerCSD = company_brw.certificate_file#base64.encodestring(company_brw.certificate_file)
-        keyCSD = company_brw.certificate_key_file#base64.encodestring(company_brw.certificate_key_file)
-        contrasenaCSD = company_brw.certificate_password
-        uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
+            #~ params=[user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
+            print 'company_id es: ',invoice_brw.company_id.id
 
-        print '----------------------------inicia envio a pac-------------------------------'
+            cerCSD = company_brw.certificate_file#base64.encodestring(company_brw.certificate_file)
+            keyCSD = company_brw.certificate_key_file#base64.encodestring(company_brw.certificate_key_file)
+            contrasenaCSD = company_brw.certificate_password
+            uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
 
-        #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'#url buenas
-        #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'#url Buenas
+            print '----------------------------inicia envio a pac-------------------------------'
 
-        wsdl_client = False
-        #try:
-        #wsdl_client = WSDL.Proxy( wsdl_url, namespace )
-        wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
-        #except:
-            #pass
-        if True:#if wsdl_client:
-            params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
-            print '-----------------inicia llamado al web service'
-            wsdl_client.soapproxy.config.dumpSOAPOut = 0
-            wsdl_client.soapproxy.config.dumpSOAPIn = 0
-            wsdl_client.soapproxy.config.debug = 0
-            wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-            #~ print 'antes de obtener resultado params es: ',params
-            resultado = wsdl_client.cancelar(*params)
+            #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'#url buenas
+            #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'#url Buenas
 
-            status = resultado['resultados']['status']
-            status_uuid = resultado['resultados']['statusUUID']
-            msg_status={}
-            if status =='200':
-                mensaje_global = '\nEl proceso de cancelación se ha completado correctamente'
-                print msg_status
+            wsdl_client = False
+            #try:
+            #wsdl_client = WSDL.Proxy( wsdl_url, namespace )
+            wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
+            #except:
+                #pass
+            if True:#if wsdl_client:
+                params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
+                print '-----------------inicia llamado al web service'
+                wsdl_client.soapproxy.config.dumpSOAPOut = 0
+                wsdl_client.soapproxy.config.dumpSOAPIn = 0
+                wsdl_client.soapproxy.config.debug = 0
+                wsdl_client.soapproxy.config.dict_encoding='UTF-8'
+                #~ print 'antes de obtener resultado params es: ',params
+                resultado = wsdl_client.cancelar(*params)
 
-            elif status =='500':
-                mensaje_global = '\nHan ocurrido errores que no han permitido completar el proceso de cancelación'
-                print msg_status
+                status = resultado['resultados']['status']
+                status_uuid = resultado['resultados']['statusUUID']
+                msg_status={}
+                if status =='200':
+                    mensaje_global = '\nEl proceso de cancelación se ha completado correctamente'
+                    print msg_status
 
-            print 'El mensaje del resultado es: ',resultado['resultados']['mensaje']
-            print 'El uuid cancelado es: ',resultado['resultados']['uuid']
-            folio_cancel = resultado['resultados']['uuid']
-            mensaje_global = mensaje_global +'\nEl uuid cancelado es: ' + folio_cancel
+                elif status =='500':
+                    mensaje_global = '\nHan ocurrido errores que no han permitido completar el proceso de cancelación'
+                    print msg_status
 
-            if status_uuid == '201':
-                mensaje_SAT = '\nEstatus de respuesta del SAT: 201 El folio se ha cancelado con éxito'
-            elif status_uuid == '202':
-                mensaje_SAT = '\nEstatus de respuesta del SAT: 202 El folio ya se había cancelado previamente'
-            elif status_uuid == '203':
-                mensaje_SAT = '\nEstatus de respuesta del SAT: 203 El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
-            elif status_uuid == '204':
-                mensaje_SAT = '\nEstatus de respuesta del SAT: 204 El CFDI no aplica para cancelación'
-            elif status_uuid == '205':
-                mensaje_SAT = '\nEstatus de respuesta del SAT: 205 No se encuentra el folio del CFDI para su cancelación'
-            else:
-                mensaje_SAT = 'status uuid desconocido'
-            mensaje_global = mensaje_global + mensaje_SAT
+                print 'El mensaje del resultado es: ',resultado['resultados']['mensaje']
+                print 'El uuid cancelado es: ',resultado['resultados']['uuid']
+                folio_cancel = resultado['resultados']['uuid']
+                mensaje_global = mensaje_global +'\nEl uuid cancelado es: ' + folio_cancel
 
-            print 'mensaje final es: ',mensaje_global.decode(encoding='UTF-8', errors='strict')
+                if status_uuid == '201':
+                    mensaje_SAT = '\nEstatus de respuesta del SAT: 201 El folio se ha cancelado con éxito'
+                elif status_uuid == '202':
+                    mensaje_SAT = '\nEstatus de respuesta del SAT: 202 El folio ya se había cancelado previamente'
+                elif status_uuid == '203':
+                    mensaje_SAT = '\nEstatus de respuesta del SAT: 203 El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
+                elif status_uuid == '204':
+                    mensaje_SAT = '\nEstatus de respuesta del SAT: 204 El CFDI no aplica para cancelación'
+                elif status_uuid == '205':
+                    mensaje_SAT = '\nEstatus de respuesta del SAT: 205 No se encuentra el folio del CFDI para su cancelación'
+                else:
+                    mensaje_SAT = 'status uuid desconocido'
+                mensaje_global = mensaje_global + mensaje_SAT
+
+                print 'mensaje final es: ',mensaje_global.decode(encoding='UTF-8', errors='strict')
+                raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
+        else:
+            mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
             raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
         return {}
 

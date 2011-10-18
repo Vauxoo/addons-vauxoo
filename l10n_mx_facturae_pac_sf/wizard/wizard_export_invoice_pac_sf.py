@@ -117,13 +117,17 @@ def _upload_ws_file(self, cr, uid, data, context={}):
     print 'la cfd_data_adenda con moneda reemplazada es ',cfd_data_adenda
     pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
 
-
     if pac_params_ids:
         pac_params = pac_params_obj.browse(cr, uid, pac_params_ids, context)[0]
         user = pac_params.user
         password = pac_params.password
         wsdl_url = pac_params.url_webservice
         namespace = pac_params.namespace
+
+        print 'el user es ',user
+        print 'el password es ',password
+        print 'el wsdw_url es',wsdl_url
+        print 'el namespace es',namespace
         msg = 'no se pudo subir el archivo'
         if cfd_data_adenda:
 
@@ -177,7 +181,7 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                 elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
                     msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema."
     else:
-        msg = 'No se encontro informacion del webservices del PAC'
+        msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
     return {'file': data['form']['file'], 'msg': msg}
 
 class wizard_export_invoice_pac_sf(wizard.interface):
