@@ -84,7 +84,6 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
             wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
             if True:#if wsdl_client:
                 params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
-                print '-----------------inicia llamado al web service'
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0

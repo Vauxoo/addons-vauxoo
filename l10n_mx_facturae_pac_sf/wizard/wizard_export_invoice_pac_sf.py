@@ -114,7 +114,6 @@ def _upload_ws_file(self, cr, uid, data, context={}):
 
 
     cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
-    print 'la cfd_data_adenda con moneda reemplazada es ',cfd_data_adenda
     pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
 
     if pac_params_ids:
@@ -153,10 +152,8 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                 resultado = wsdl_client.timbrar(*params)
-                print "resultado",resultado
                 msg = resultado['resultados']['mensaje']
                 status = resultado['resultados']['status']
-                print "[status]",[status]
                 if status == '200' or status == '307':
                     fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
                     fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
