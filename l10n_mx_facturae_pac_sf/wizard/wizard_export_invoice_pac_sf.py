@@ -104,7 +104,8 @@ def _upload_ws_file(self, cr, uid, data, context={}):
     invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
     #get currency and rate from invoice
     currency = invoice.currency_id.name
-    currency_enc=currency.encode(encoding='UTF-8', errors='strict')
+    currency_enc = currency.encode('UTF-8', 'strict')
+    #currency_enc = ustr(currency)
     rate = invoice.currency_id.rate
     rate_str = str(rate)
 
