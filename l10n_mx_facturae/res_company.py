@@ -47,7 +47,7 @@ class res_company_facturae_certificate(osv.osv):
         'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
         'date_start': fields.date('Fecha Inicio', required=False),
         'date_end': fields.date('Fecha Fin', required=True),
-        'fname_xslt': fields.char('Archivo XML Parser (.xslt)', help='Ubicacion en servidor de archivo XSLT, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"', size=256, required=False),
+        'fname_xslt': fields.char('Archivo XML Parser (.xslt)', help='Ubicacion en servidor de archivo XSLT, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.', size=256, required=False),
         'active': fields.boolean('Active'),
     }
     
@@ -62,7 +62,7 @@ class res_company_facturae_certificate(osv.osv):
     
     _defaults = {
         'active': lambda *a: True,
-        'fname_xslt': lambda *a: os.path.join('addons', 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt'),
+        #'fname_xslt': lambda *a: os.path.join('addons', 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt'),
         'date_start': lambda *a: time.strftime('%Y-%m-%d'),
     }
     
