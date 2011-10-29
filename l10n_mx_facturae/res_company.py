@@ -76,22 +76,32 @@ class res_company_facturae_certificate(osv.osv):
         #print "value",value
         return {'value': value}
     
-    def _generate_pem_b64(self, cr, uid, ids, file_b64, type='cer', password=None):
-        invoice_obj = self.pool.get('account.invoice')
-        fname_certificate = invoice_obj.binary2file(cr, uid, [], file_b64, file_prefix="openerp__", file_suffix="."+type)
-        pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_certificate)
-        os.unlink( fname_certificate )
+    def _generate_pem_fname(self, cr, uid, ids, fname, type='cer', password=None):
+        #invoice_obj = self.pool.get('account.invoice')
+        #fname_certificate = invoice_obj.binary2file(cr, uid, [], file_b64, file_prefix="openerp__", file_suffix="."+type)
+        #pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_certificate)
+        #os.unlink( fname_certificate )
+        file_b64 = base64.encodestring( open(fname, "r").read() )
+        pem_b64 = self._generate_pem_fname(cr, uid, ids, file_b64)
         return pem_b64
     
-    def _generate_pem_fname(self, cr, uid, ids, fname, type='cer', password=None):
+    def _generate_pem_b64(self, cr, uid, ids, file_b64, type='cer', password=None):
+        invoice_obj = self.pool.get('account.invoice')
+        fname = invoice_obj.binary2file(cr, uid, [], file_b64, file_prefix="openerp__", file_suffix="."+type)
+        
         (fileno_pem, fname_pem) = tempfile.mkstemp('.'+type+'.pem', 'openerp_' + (type or '') + '__facturae__' )
         os.close(fileno_pem)
         pem = ''
         if type == 'cer':
             cmd = 'openssl x509 -inform DER -in %s -outform PEM -pubkey -out %s'%(fname, fname_pem)
-            args = tuple(cmd.split(' '))
+            args = tuple( cmd.split(' ') )
             input, output = tools.exec_command_pipe(*args)
             pem = output.read()
+            #input.close()
+            #output.close()
+            
+            #pem = open( fname_pem, "r").read()
+            print type,"pem",pem
         elif type == 'key':
             (fileno_password, fname_password) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae__' )
             os.close(fileno_password)
@@ -101,10 +111,15 @@ class res_company_facturae_certificate(osv.osv):
             args = tuple(cmd.split(' '))
             input, output = tools.exec_command_pipe(*args)
             pem = output.read()
-            
+            #input.close()
+            #output.close()
             os.unlink(fname_password)
+            
+            #pem = open( fname_pem, "r").read()
+            print type,"pem",pem
         pem_b64 = base64.encodestring( pem or '') or False
         os.unlink(fname_pem)
+        os.unlink(fname)
         return pem_b64
     
     def _get_pem_b64(self, cr, uid, ids, file_cer_b64, file_key_b64, password):
