@@ -97,8 +97,8 @@ class res_company_facturae_certificate(osv.osv):
             args = tuple( cmd.split(' ') )
             input, output = tools.exec_command_pipe(*args)
             pem = output.read()
-            #input.close()
-            #output.close()
+            input.close()
+            output.close()
             
             #pem = open( fname_pem, "r").read()
             print type,"pem",pem
@@ -111,8 +111,8 @@ class res_company_facturae_certificate(osv.osv):
             args = tuple(cmd.split(' '))
             input, output = tools.exec_command_pipe(*args)
             pem = output.read()
-            #input.close()
-            #output.close()
+            input.close()
+            output.close()
             os.unlink(fname_password)
             
             #pem = open( fname_pem, "r").read()
