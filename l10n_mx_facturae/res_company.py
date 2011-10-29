@@ -62,77 +62,18 @@ class res_company_facturae_certificate(osv.osv):
     
     def onchange_certificate_info(self, cr, uid, ids, certificate_file, certificate_key_file, certificate_password, context=None):
         #print "ENTRO A onchange_certificate_info"
+        certificate_lib = self.pool.get('facturae.certificate.library')
         value = {}
         certificate_file_pem = False
         certificate_key_file_pem = False
         invoice_obj = self.pool.get('account.invoice')
-        if certificate_file and certificate_key_file and certificate_password:            
-            certificate_file_pem, certificate_key_file_pem = self._get_pem_b64(cr, uid, ids, certificate_file, certificate_key_file, certificate_password)
+        if certificate_file and certificate_key_file and certificate_password:
+            certificate_file_pem, certificate_key_file_pem = certificate_lib._get_pem_b64(cr, uid, ids, certificate_file, certificate_key_file, certificate_password)
             value.update({
                 'certificate_file_pem': certificate_file_pem,
                 'certificate_key_file_pem': certificate_key_file_pem,
             })
         return {'value': value}
-    
-    def _generate_pem_fname(self, cr, uid, ids, fname, type='cer', password=None):
-        file_b64 = base64.encodestring( open(fname, "r").read() )
-        pem_b64 = self._generate_pem_fname(cr, uid, ids, file_b64)
-        return pem_b64
-    
-    def _read_file_attempts(self, fname, max_attempt=6, seconds_delay=0.5):
-        fdata = False
-        cont = 1
-        while True:
-            time.sleep( seconds_delay )
-            try:
-                fdata = open( fname, "r").read()
-            except:
-                pass
-            if fdata or max_attempt < cont:
-                break
-            cont += 1
-        return fdata
-    
-    def _generate_pem_b64(self, cr, uid, ids, file_b64, type='cer', password=None):
-        invoice_obj = self.pool.get('account.invoice')
-        fname = invoice_obj.binary2file(cr, uid, [], file_b64, file_prefix="openerp__", file_suffix="."+type)
-        
-        (fileno_pem, fname_pem) = tempfile.mkstemp('.'+type+'.pem', 'openerp_' + (type or '') + '__facturae__' )
-        os.close(fileno_pem)
-        pem = ''
-        if type == 'cer':
-            cmd = 'openssl x509 -inform DER -in %s -outform PEM -pubkey -out %s'%(fname, fname_pem)
-            args = tuple( cmd.split(' ') )
-            input, output = tools.exec_command_pipe(*args)
-            pem = self._read_file_attempts(fname_pem, max_attempt=6, seconds_delay=0.5)
-            input.close()
-            output.close()
-        elif type == 'key':
-            (fileno_password, fname_password) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae__' )
-            os.close(fileno_password)
-            open(fname_password, "w").write( password )
-            
-            cmd = 'openssl pkcs8 -inform DER -in %s -passin file:%s -out %s'%(fname, fname_password, fname_pem)
-            args = tuple(cmd.split(' '))
-            input, output = tools.exec_command_pipe(*args)
-            pem = self._read_file_attempts(fname_pem, max_attempt=6, seconds_delay=0.5)
-            input.close()
-            output.close()
-            os.unlink(fname_password)
-        pem_b64 = base64.encodestring( pem or '') or False
-        os.unlink(fname_pem)
-        os.unlink(fname)
-        return pem_b64
-    
-    def _get_pem_b64(self, cr, uid, ids, file_cer_b64, file_key_b64, password):
-        cer_pem_b64 = self._generate_pem_b64(cr, uid, ids, file_cer_b64, type='cer', password=None)
-        key_pem_b64 = self._generate_pem_b64(cr, uid, ids, file_key_b64, type='key', password=password)
-        return [cer_pem_b64, key_pem_b64]
-        
-    def _get_pem_fname(self, cr, uid, ids, fname_cer, fname_key, password):
-        cer_pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_cer, type='cer', password=None)
-        key_pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_key, type='key', password=password)
-        return [cer_pem_b64, key_pem_b64]
     
     '''
     _sql_constraints = [
