@@ -33,23 +33,10 @@ import netsvc
 import time
 import os
 
-class account_payment_term(osv.osv):
-    _inherit = "account.payment.term"
-    
-    def compute(self, cr, uid, id, value, date_ref=False, context={}):
-        if date_ref:
-            try:
-                date_ref = time.strftime('%Y-%m-%d', time.strptime(date_ref, '%Y-%m-%d %H:%M:%S'))
-            except:
-                pass
-        return super(account_payment_term, self).compute(cr, uid, id, value, date_ref, context=context)
-account_payment_term()
-
 msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
-    _order = 'date_invoice asc'
     
     def _get_invoice_sequence(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
@@ -112,7 +99,7 @@ class account_invoice(osv.osv):
     
     _columns = {
         ##Extract date_invoice from original, but add datetime
-        'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
+        #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
         'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size='26', string='File Name Invoice'),
     }
@@ -199,15 +186,7 @@ class account_invoice(osv.osv):
             }
             self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
         return True
-
-    def action_move_create(self, cr, uid, ids, *args):
-        for inv in self.browse(cr, uid, ids):
-            if inv.move_id:
-                continue
-            if not inv.date_invoice:
-                self.write(cr, uid, [inv.id], {'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S')})
-        return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-        
+    
     def action_cancel_draft(self, cr, uid, ids, *args):
         attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids):
