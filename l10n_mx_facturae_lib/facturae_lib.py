@@ -94,16 +94,6 @@ class facturae_certificate_library(osv.osv):
         os.unlink(fname_pem)
         os.unlink(fname)
         return pem_b64
-    
-    def _get_pem_b64(self, cr, uid, ids, file_cer_b64, file_key_b64, password):
-        cer_pem_b64 = self._generate_pem_b64(cr, uid, ids, file_cer_b64, type='cer', password=None)
-        key_pem_b64 = self._generate_pem_b64(cr, uid, ids, file_key_b64, type='key', password=password)
-        return [cer_pem_b64, key_pem_b64]
-        
-    def _get_pem_fname(self, cr, uid, ids, fname_cer, fname_key, password):
-        cer_pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_cer, type='cer', password=None)
-        key_pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_key, type='key', password=password)
-        return [cer_pem_b64, key_pem_b64]
 facturae_certificate_library()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

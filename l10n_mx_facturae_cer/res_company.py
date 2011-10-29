@@ -68,10 +68,14 @@ class res_company_facturae_certificate(osv.osv):
         certificate_key_file_pem = False
         invoice_obj = self.pool.get('account.invoice')
         if certificate_file and certificate_key_file and certificate_password:
-            certificate_file_pem, certificate_key_file_pem = certificate_lib._get_pem_b64(cr, uid, ids, certificate_file, certificate_key_file, certificate_password)
+            #certificate_file_pem, certificate_key_file_pem = certificate_lib._get_pem_b64(cr, uid, ids, certificate_file, certificate_key_file, certificate_password)
+            
+            cer_pem_b64 = certificate_lib._generate_pem_b64(cr, uid, ids, certificate_file, type='cer', password=None)
+            key_pem_b64 = certificate_lib._generate_pem_b64(cr, uid, ids, certificate_key_file, type='key', password=certificate_password)
+            
             value.update({
-                'certificate_file_pem': certificate_file_pem,
-                'certificate_key_file_pem': certificate_key_file_pem,
+                'certificate_file_pem': cer_pem_b64,
+                'certificate_key_file_pem': key_pem_b64,
             })
         return {'value': value}
     
