@@ -39,6 +39,9 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
     "license" : "AGPL-3",
     "depends" : ["account", "base_vat", "document", 
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
+            "l10n_mx_partner_address",
+            "l10n_mx_invoice_datetime",
+            "l10n_mx_invoice_tax_ref",
         ],
     "init_xml" : [],
     "demo_xml" : [],

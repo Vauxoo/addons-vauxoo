@@ -25,41 +25,34 @@
 #
 ##############################################################################
 
-{
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
-    "version" : "1.0",
-    "author" : "moylop260@hotmail.com",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
-  
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
-    """,
-    "website" : "http://moylop.blogspot.com/",
-    "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document", 
-            "l10n_mx_facturae_lib", "l10n_mx_partner_address",
-            "l10n_mx_facturae_cer",
-            "l10n_mx_invoice_datetime",
-            "l10n_mx_invoice_tax_ref",
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
-        "l10n_mx_facturae_wizard6.xml",
-        "ir_sequence_view.xml",
-        #"res_company_view6.xml",
-        "invoice_view.xml",
-        #"partner_address_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from osv import osv
+from osv import fields
+import tools
+from tools.translate import _
+import netsvc
+import time
+import os
+
+class account_invoice_tax(osv.osv):
+    _inherit= "account.invoice.tax"
+    
+    def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context = {}
+        res = {}
+        for invoice_tax in self.browse(cr, uid, ids, context=context):
+            res[invoice_tax.id] = {}
+            tax_name = invoice_tax.name.lower().replace('.','').replace(' ', '').replace('-', '')
+            tax_percent = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100/invoice_tax.base or 0.0
+            if 'iva' in tax_name:
+                tax_name = 'IVA'
+                tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
+            elif 'isr' in tax_name:
+                tax_name = 'ISR'
+            elif 'ieps' in tax_name:
+                tax_name = 'IEPS'
+            res[invoice_tax.id]['name2'] = tax_name
+            res[invoice_tax.id]['percent'] = tax_percent
+            res[invoice_tax.id]['amount'] = invoice_tax.amount
+        return res
+account_invoice_tax()
