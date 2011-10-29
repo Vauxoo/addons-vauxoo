@@ -42,7 +42,8 @@ Requires the following programs:
     """,
     "website" : "http://moylop.blogspot.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document", "l10n_mx_facturae_lib",
+    "depends" : ["account", "base_vat", "document", 
+            "l10n_mx_facturae_lib", "l10n_mx_partner_address",
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
         ],
     "init_xml" : [],
@@ -54,7 +55,7 @@ Requires the following programs:
         "ir_sequence_view.xml",
         "res_company_view6.xml",
         "invoice_view.xml",
-        "partner_address_view.xml",
+        #"partner_address_view.xml",
     ],
     "installable" : True,
     "active" : False,

@@ -25,9 +25,4 @@
 #
 ##############################################################################
 
-import invoice
-import wizard
-import report
-import ir_sequence
-import res_company
-#import partner_address
+import partner_address

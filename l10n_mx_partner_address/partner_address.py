@@ -27,8 +27,6 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
-import os
-import time
 
 class res_partner_address(osv.osv):
     _inherit = 'res.partner.address'
@@ -36,5 +34,6 @@ class res_partner_address(osv.osv):
     _columns = {
         'street3': fields.char('Street3', size=128),
         'street4': fields.char('Street4', size=128),
+        'city2': fields.char('City2', size=128),
     }
 res_partner_address()

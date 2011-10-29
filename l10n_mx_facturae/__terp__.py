@@ -54,7 +54,7 @@ Requires the following programs:
         "ir_sequence_view.xml",
         "res_company_view.xml",
         "invoice_view.xml",
-        "partner_address_view.xml",
+        #"partner_address_view.xml",
     ],
     "installable" : True,
     "active" : False,

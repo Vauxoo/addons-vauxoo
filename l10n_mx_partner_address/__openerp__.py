@@ -25,9 +25,23 @@
 #
 ##############################################################################
 
-import invoice
-import wizard
-import report
-import ir_sequence
-import res_company
-#import partner_address
+{
+    "name" : "l10n_mx_address",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """Add new fields of address
+    """,
+    "website" : "http://vauxoo.com",
+    "license" : "AGPL-3",
+    "depends" : [
+            "base",
+        ],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+        "partner_address_view.xml",
+    ],
+    "installable" : True,
+    "active" : False,
+}
