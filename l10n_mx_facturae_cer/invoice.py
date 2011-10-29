@@ -25,5 +25,30 @@
 #
 ##############################################################################
 
-import res_company
-import invoice
+from osv import osv
+from osv import fields
+from tools.translate import _
+
+class account_invoice(osv.osv):
+    _inherit = 'account.invoice'
+    
+    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context={}
+        company_obj = self.pool.get('res.company')
+        certificate_obj = self.pool.get('res.company.facturae.certificate')
+        res = {}
+        for invoice in self.browse(cr, uid, ids, context=context):
+            context.update( {'date_work': invoice.date_invoice} )
+            certificate_id = False
+            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
+            certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
+            res[invoice.id] = certificate_id and certificate_id.id or False
+        return res
+    
+    _columns = {
+        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
+    }
+    
+    
+account_invoice()

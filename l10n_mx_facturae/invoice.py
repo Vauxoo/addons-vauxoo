@@ -280,20 +280,6 @@ class account_invoice(osv.osv):
     def action_cancel(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
-        
-    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context={}
-        company_obj = self.pool.get('res.company')
-        certificate_obj = self.pool.get('res.company.facturae.certificate')
-        res = {}
-        for invoice in self.browse(cr, uid, ids, context=context):
-            context.update( {'date_work': invoice.date_invoice} )
-            certificate_id = False
-            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
-            certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
-            res[invoice.id] = certificate_id and certificate_id.id or False
-        return res
     
     def _get_amount_to_text(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
@@ -308,7 +294,7 @@ class account_invoice(osv.osv):
         ##Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
-        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
+        #'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
         'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice'),
         'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
         'no_certificado': fields.char('No. Certificado', size=64),
