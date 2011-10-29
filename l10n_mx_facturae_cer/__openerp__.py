@@ -36,6 +36,7 @@
     "license" : "AGPL-3",
     "depends" : [
         "base",
+        "l10n_mx_facturae_lib",
     ],
     "init_xml" : [],
     "demo_xml" : [],
