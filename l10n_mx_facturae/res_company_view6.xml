@@ -22,7 +22,7 @@
                     <field name="certificate_file" colspan="4"/>
                     <field name="certificate_key_file" colspan="4"/>
                     <newline/>
-                    <field name="certificate_password" password="True"/>
+                    <field name="certificate_password" password="True" on_change="onchange_certificate_info(certificate_file, certificate_key_file, certificate_password)"/>
                     <separator string="Certificates PEM FORMAT (Transformados de los originales)" colspan="4"/>
                     <field name="certificate_file_pem" colspan="4"/>
                     <field name="certificate_key_file_pem" colspan="4"/>

@@ -28,9 +28,12 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import tools
 import os
 import time
 import release
+import tempfile
+import base64
 
 class res_company_facturae_certificate(osv.osv):
     _name = 'res.company.facturae.certificate'
@@ -40,9 +43,9 @@ class res_company_facturae_certificate(osv.osv):
     _columns = {
         'serial_number': fields.char('Serial Number', size=64, required=False),
         'company_id': fields.many2one('res.company', 'Company', required=True),
-        'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert'),
-        'certificate_key_file': fields.binary('Certificate Key File', filters='*.key'),
-        'certificate_password': fields.char('Certificate Password', size=64, invisible=True),
+        'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
+        'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
+        'certificate_password': fields.char('Certificate Password', size=64, invisible=True, required=True),
         'certificate_file_pem': fields.binary('Certificate File PEM', filters='*.pem,*.cer,*.certificate,*.cert'),
         'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
         'date_start': fields.date('Fecha Inicio', required=False),
@@ -50,15 +53,71 @@ class res_company_facturae_certificate(osv.osv):
         'fname_xslt': fields.char('Archivo XML Parser (.xslt)', help='Ubicacion en servidor de archivo XSLT, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.', size=256, required=False),
         'active': fields.boolean('Active'),
     }
-    
-    def _generate_pem(fname_cer, type="certificate"):
+    def onchange_certificate_info(self, cr, uid, ids, certificate_file, certificate_key_file, certificate_password, context=None):
+        print "ENTRO A onchange_certificate_info"
+        value = {}
+        certificate_file_pem = False
+        certificate_key_file_pem = False
+        invoice_obj = self.pool.get('account.invoice')
+        if certificate_file and certificate_key_file and certificate_password:
+            print "certificate_file",certificate_file
+            fname_certificate = invoice_obj.binary2file(cr, uid, [], certificate_file, file_prefix="openerp__", file_suffix=".cer")
+            fname_key = invoice_obj.binary2file(cr, uid, [], certificate_key_file, file_prefix="openerp__", file_suffix=".key")
+            #certificate_file_pem = fname_certificate
+            #fname_key = certificate_key_file_pem
+            #if os.name == "nt":
+                #prog_openssl = 'openssl.exe'
+            #else:
+                #prog_openssl = 'openssl'
+            #subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
+            #prog_openssl_fullpath = tools.find_in_path( prog_openssl ) or find_in_subpath(prog_openssl, subpath) or prog_openssl
+            #cmd = 'x509 -in "%s" -serial -noout > "%s"'%(fname_certificate, fname_key, certificate_password)            
+            certificate_file_pem, certificate_key_file_pem = self._generate_pem(cr, uid, ids, fname_certificate, fname_key, certificate_password)
+            value.update({
+                'certificate_file_pem': certificate_file_pem,
+                'certificate_key_file_pem': certificate_key_file_pem,
+                'fname_xslt': 'probando',
+            })
+            #os.unlink( fname_key )
+            #os.unlink( fname_certificate )
+            #os.unlink( fname_certificate_pem )
+        print "value",value
+        return {'value': value}
+        
+    def _generate_pem(self, cr, uid, ids, fname_cer, fname_key, password):
         #certificate
         #cmd = "openssl x509 -inform DER -outform PEM -in AAA010101AAAsd.cer -pubkey >AAA010101AAA.cer.pem"
-        if type == 'certificate':
-            cmd = "openssl x509 -inform DER -outform PEM -in cer.cer -pubkey >cer.cer.pem"
-        if type == 'key':
-            cmd = "openssl pkcs8 -inform DER -in key.key -out key.key.pem"
-        #contrasenia: a0123456789
+        
+        (fileno_certificate_pem, fname_certificate_pem) = tempfile.mkstemp('.cer.pem', 'openerp_' + (False or '') + '__facturae__' )
+        os.close(fileno_certificate_pem)
+        
+        (fileno_key_pem, fname_key_pem) = tempfile.mkstemp('.key.pem', 'openerp_' + (False or '') + '__facturae__' )
+        os.close(fileno_key_pem)
+        
+        (fileno_password, fname_password) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae__' )
+        os.close(fileno_password)
+        open(fname_password, "w").write( password )
+        
+        cmd = 'openssl x509 -inform DER -in %s -outform PEM -pubkey -out %s'%(fname_cer, fname_certificate_pem)
+        args = tuple(cmd.split(' '))
+        input, output = tools.exec_command_pipe(*args)
+        #print "output.read()",output.read()
+        fname_certificate_pem_str = output.read()
+        fname_certificate_pem_str = fname_certificate_pem_str and fname_certificate_pem_str[:-1] or ''#quitando la linea nueva
+        
+        cmd = 'openssl pkcs8 -inform DER -in %s -passin file:%s -out %s'%(fname_key, fname_password, fname_key_pem)
+        args = tuple(cmd.split(' '))
+        input, output = tools.exec_command_pipe(*args)
+        #print "output.read()",output.read()
+        fname_key_pem_str = output.read()
+        fname_key_pem_str = fname_key_pem_str and fname_key_pem_str[:-1] or ''
+        
+         
+        #fname_certificate_pem_str = base64.encodestring( open(fname_certificate_pem, "rb").read() )
+        fname_certificate_pem_str_b64 = base64.encodestring( fname_certificate_pem_str )
+        fname_key_pem_str_b64 = base64.encodestring( fname_key_pem_str )
+        #print "[fname_certificate_pem_str_b64, fname_key_pem_str_b64]",[fname_certificate_pem_str_b64, fname_key_pem_str_b64]
+        return [fname_certificate_pem_str_b64, fname_key_pem_str_b64]
     
     _defaults = {
         'active': lambda *a: True,
