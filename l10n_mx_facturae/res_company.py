@@ -53,77 +53,69 @@ class res_company_facturae_certificate(osv.osv):
         'fname_xslt': fields.char('Archivo XML Parser (.xslt)', help='Ubicacion en servidor de archivo XSLT, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.', size=256, required=False),
         'active': fields.boolean('Active'),
     }
-    def onchange_certificate_info(self, cr, uid, ids, certificate_file, certificate_key_file, certificate_password, context=None):
-        print "ENTRO A onchange_certificate_info"
-        value = {}
-        certificate_file_pem = False
-        certificate_key_file_pem = False
-        invoice_obj = self.pool.get('account.invoice')
-        if certificate_file and certificate_key_file and certificate_password:
-            print "certificate_file",certificate_file
-            fname_certificate = invoice_obj.binary2file(cr, uid, [], certificate_file, file_prefix="openerp__", file_suffix=".cer")
-            fname_key = invoice_obj.binary2file(cr, uid, [], certificate_key_file, file_prefix="openerp__", file_suffix=".key")
-            #certificate_file_pem = fname_certificate
-            #fname_key = certificate_key_file_pem
-            #if os.name == "nt":
-                #prog_openssl = 'openssl.exe'
-            #else:
-                #prog_openssl = 'openssl'
-            #subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
-            #prog_openssl_fullpath = tools.find_in_path( prog_openssl ) or find_in_subpath(prog_openssl, subpath) or prog_openssl
-            #cmd = 'x509 -in "%s" -serial -noout > "%s"'%(fname_certificate, fname_key, certificate_password)            
-            certificate_file_pem, certificate_key_file_pem = self._generate_pem(cr, uid, ids, fname_certificate, fname_key, certificate_password)
-            value.update({
-                'certificate_file_pem': certificate_file_pem,
-                'certificate_key_file_pem': certificate_key_file_pem,
-                'fname_xslt': 'probando',
-            })
-            #os.unlink( fname_key )
-            #os.unlink( fname_certificate )
-            #os.unlink( fname_certificate_pem )
-        print "value",value
-        return {'value': value}
-        
-    def _generate_pem(self, cr, uid, ids, fname_cer, fname_key, password):
-        #certificate
-        #cmd = "openssl x509 -inform DER -outform PEM -in AAA010101AAAsd.cer -pubkey >AAA010101AAA.cer.pem"
-        
-        (fileno_certificate_pem, fname_certificate_pem) = tempfile.mkstemp('.cer.pem', 'openerp_' + (False or '') + '__facturae__' )
-        os.close(fileno_certificate_pem)
-        
-        (fileno_key_pem, fname_key_pem) = tempfile.mkstemp('.key.pem', 'openerp_' + (False or '') + '__facturae__' )
-        os.close(fileno_key_pem)
-        
-        (fileno_password, fname_password) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae__' )
-        os.close(fileno_password)
-        open(fname_password, "w").write( password )
-        
-        cmd = 'openssl x509 -inform DER -in %s -outform PEM -pubkey -out %s'%(fname_cer, fname_certificate_pem)
-        args = tuple(cmd.split(' '))
-        input, output = tools.exec_command_pipe(*args)
-        #print "output.read()",output.read()
-        fname_certificate_pem_str = output.read()
-        fname_certificate_pem_str = fname_certificate_pem_str and fname_certificate_pem_str[:-1] or ''#quitando la linea nueva
-        
-        cmd = 'openssl pkcs8 -inform DER -in %s -passin file:%s -out %s'%(fname_key, fname_password, fname_key_pem)
-        args = tuple(cmd.split(' '))
-        input, output = tools.exec_command_pipe(*args)
-        #print "output.read()",output.read()
-        fname_key_pem_str = output.read()
-        fname_key_pem_str = fname_key_pem_str and fname_key_pem_str[:-1] or ''
-        
-         
-        #fname_certificate_pem_str = base64.encodestring( open(fname_certificate_pem, "rb").read() )
-        fname_certificate_pem_str_b64 = base64.encodestring( fname_certificate_pem_str )
-        fname_key_pem_str_b64 = base64.encodestring( fname_key_pem_str )
-        #print "[fname_certificate_pem_str_b64, fname_key_pem_str_b64]",[fname_certificate_pem_str_b64, fname_key_pem_str_b64]
-        return [fname_certificate_pem_str_b64, fname_key_pem_str_b64]
     
     _defaults = {
         'active': lambda *a: True,
         #'fname_xslt': lambda *a: os.path.join('addons', 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt'),
         'date_start': lambda *a: time.strftime('%Y-%m-%d'),
     }
+    
+    def onchange_certificate_info(self, cr, uid, ids, certificate_file, certificate_key_file, certificate_password, context=None):
+        #print "ENTRO A onchange_certificate_info"
+        value = {}
+        certificate_file_pem = False
+        certificate_key_file_pem = False
+        invoice_obj = self.pool.get('account.invoice')
+        if certificate_file and certificate_key_file and certificate_password:            
+            certificate_file_pem, certificate_key_file_pem = self._get_pem_b64(cr, uid, ids, certificate_file, certificate_key_file, certificate_password)
+            value.update({
+                'certificate_file_pem': certificate_file_pem,
+                'certificate_key_file_pem': certificate_key_file_pem,
+                'fname_xslt': 'probando',
+            })
+        #print "value",value
+        return {'value': value}
+    
+    def _generate_pem_b64(self, cr, uid, ids, file_b64, type='cer', password=None):
+        invoice_obj = self.pool.get('account.invoice')
+        fname_certificate = invoice_obj.binary2file(cr, uid, [], file_b64, file_prefix="openerp__", file_suffix="."+type)
+        pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_certificate)
+        os.unlink( fname_certificate )
+        return pem_b64
+    
+    def _generate_pem_fname(self, cr, uid, ids, fname, type='cer', password=None):
+        (fileno_pem, fname_pem) = tempfile.mkstemp('.'+type+'.pem', 'openerp_' + (type or '') + '__facturae__' )
+        os.close(fileno_pem)
+        pem = ''
+        if type == 'cer':
+            cmd = 'openssl x509 -inform DER -in %s -outform PEM -pubkey -out %s'%(fname, fname_pem)
+            args = tuple(cmd.split(' '))
+            input, output = tools.exec_command_pipe(*args)
+            pem = output.read()
+        elif type == 'key':
+            (fileno_password, fname_password) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae__' )
+            os.close(fileno_password)
+            open(fname_password, "w").write( password )
+            
+            cmd = 'openssl pkcs8 -inform DER -in %s -passin file:%s -out %s'%(fname, fname_password, fname_pem)
+            args = tuple(cmd.split(' '))
+            input, output = tools.exec_command_pipe(*args)
+            pem = output.read()
+            
+            os.unlink(fname_password)
+        pem_b64 = base64.encodestring( pem or '') or False
+        os.unlink(fname_pem)
+        return pem_b64
+    
+    def _get_pem_b64(self, cr, uid, ids, file_cer_b64, file_key_b64, password):
+        cer_pem_b64 = self._generate_pem_b64(cr, uid, ids, file_cer_b64, type='cer', password=None)
+        key_pem_b64 = self._generate_pem_b64(cr, uid, ids, file_key_b64, type='key', password=password)
+        return [cer_pem_b64, key_pem_b64]
+        
+    def _get_pem_fname(self, cr, uid, ids, fname_cer, fname_key, password):
+        cer_pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_cer, type='cer', password=None)
+        key_pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_key, type='key', password=password)
+        return [cer_pem_b64, key_pem_b64]
     
     '''
     _sql_constraints = [
