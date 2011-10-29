@@ -495,7 +495,7 @@ class account_invoice(osv.osv):
     
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
-        f = open( fname, 'w' )
+        f = open( fname, 'wb' )
         f.write( base64.decodestring( binary_data ) )
         f.close()
         os.close( fileno )
