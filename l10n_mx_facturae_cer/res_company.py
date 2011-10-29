@@ -64,6 +64,7 @@ class res_company_facturae_certificate(osv.osv):
         #print "ENTRO A onchange_certificate_info"
         certificate_lib = self.pool.get('facturae.certificate.library')
         value = {}
+        warning = {}
         certificate_file_pem = False
         certificate_key_file_pem = False
         invoice_obj = self.pool.get('account.invoice')
@@ -72,12 +73,21 @@ class res_company_facturae_certificate(osv.osv):
             
             cer_pem_b64 = certificate_lib._generate_pem_b64(cr, uid, ids, certificate_file, type='cer', password=None)
             key_pem_b64 = certificate_lib._generate_pem_b64(cr, uid, ids, certificate_key_file, type='key', password=certificate_password)
-            
-            value.update({
-                'certificate_file_pem': cer_pem_b64,
-                'certificate_key_file_pem': key_pem_b64,
-            })
-        return {'value': value}
+            if not key_pem_b64 or not cer_pem_b64:
+                warning = {
+                   'title': _('Warning!'),
+                   'message': _('You certificate file, key file or password is incorrect.\nVerify uppercase and lowercase')
+                }
+                value.update({
+                    'certificate_file_pem': False,
+                    'certificate_key_file_pem': False,
+                })
+            else:
+                value.update({
+                    'certificate_file_pem': cer_pem_b64,
+                    'certificate_key_file_pem': key_pem_b64,
+                })
+        return {'value': value, 'warning': warning}
     
     '''
     _sql_constraints = [
