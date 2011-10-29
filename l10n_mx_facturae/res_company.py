@@ -71,19 +71,27 @@ class res_company_facturae_certificate(osv.osv):
             value.update({
                 'certificate_file_pem': certificate_file_pem,
                 'certificate_key_file_pem': certificate_key_file_pem,
-                'fname_xslt': 'probando',
             })
-        #print "value",value
         return {'value': value}
     
     def _generate_pem_fname(self, cr, uid, ids, fname, type='cer', password=None):
-        #invoice_obj = self.pool.get('account.invoice')
-        #fname_certificate = invoice_obj.binary2file(cr, uid, [], file_b64, file_prefix="openerp__", file_suffix="."+type)
-        #pem_b64 = self._generate_pem_fname(cr, uid, ids, fname_certificate)
-        #os.unlink( fname_certificate )
         file_b64 = base64.encodestring( open(fname, "r").read() )
         pem_b64 = self._generate_pem_fname(cr, uid, ids, file_b64)
         return pem_b64
+    
+    def _read_file_attempts(self, fname, max_attempt=6, seconds_delay=0.5):
+        fdata = False
+        cont = 1
+        while True:
+            time.sleep( seconds_delay )
+            try:
+                fdata = open( fname, "r").read()
+            except:
+                pass
+            if fdata or max_attempt < cont:
+                break
+            cont += 1
+        return fdata
     
     def _generate_pem_b64(self, cr, uid, ids, file_b64, type='cer', password=None):
         invoice_obj = self.pool.get('account.invoice')
@@ -96,12 +104,9 @@ class res_company_facturae_certificate(osv.osv):
             cmd = 'openssl x509 -inform DER -in %s -outform PEM -pubkey -out %s'%(fname, fname_pem)
             args = tuple( cmd.split(' ') )
             input, output = tools.exec_command_pipe(*args)
-            pem = output.read()
+            pem = self._read_file_attempts(fname_pem, max_attempt=6, seconds_delay=0.5)
             input.close()
             output.close()
-            
-            #pem = open( fname_pem, "r").read()
-            print type,"pem",pem
         elif type == 'key':
             (fileno_password, fname_password) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae__' )
             os.close(fileno_password)
@@ -110,13 +115,10 @@ class res_company_facturae_certificate(osv.osv):
             cmd = 'openssl pkcs8 -inform DER -in %s -passin file:%s -out %s'%(fname, fname_password, fname_pem)
             args = tuple(cmd.split(' '))
             input, output = tools.exec_command_pipe(*args)
-            pem = output.read()
+            pem = self._read_file_attempts(fname_pem, max_attempt=6, seconds_delay=0.5)
             input.close()
             output.close()
             os.unlink(fname_password)
-            
-            #pem = open( fname_pem, "r").read()
-            print type,"pem",pem
         pem_b64 = base64.encodestring( pem or '') or False
         os.unlink(fname_pem)
         os.unlink(fname)
