@@ -41,7 +41,6 @@ class res_company_facturae_certificate(osv.osv):
     _rec_name = 'serial_number'
     
     _columns = {
-        'serial_number': fields.char('Serial Number', size=64, required=False),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
         'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
@@ -50,6 +49,7 @@ class res_company_facturae_certificate(osv.osv):
         'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
         'date_start': fields.date('Fecha Inicio', required=False),
         'date_end': fields.date('Fecha Fin', required=True),
+        'serial_number': fields.char('Serial Number', size=64, required=False),
         'fname_xslt': fields.char('Archivo XML Parser (.xslt)', help='Ubicacion en servidor de archivo XSLT, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.', size=256, required=False),
         'active': fields.boolean('Active'),
     }
