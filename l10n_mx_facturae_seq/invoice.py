@@ -28,6 +28,7 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import release
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
