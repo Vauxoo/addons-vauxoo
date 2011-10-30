@@ -8,24 +8,25 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Certificates">
-                    <field name="serial_number"/>
-                    <newline/>
-                    <!--<field name="company_id"/>-->
-                    <field name="date_start"/>
-                    <newline/>
-                    <field name="date_end"/>
-                    <newline/>
-                    <field name="fname_xslt"/>
-                    <newline/>
-                    <field name="active"/>
-                    <separator string="Certificates NO PEM FORMAT (Originales del SAT)" colspan="4"/>
+                    <separator string="Certificates DER FORMAT (Original)" colspan="4"/>
                     <field name="certificate_file" colspan="4"/>
                     <field name="certificate_key_file" colspan="4"/>
                     <newline/>
                     <field name="certificate_password" password="True" on_change="onchange_certificate_info(certificate_file, certificate_key_file, certificate_password)"/>
-                    <separator string="Certificates PEM FORMAT (Transformados de los originales)" colspan="4"/>
+                    <separator string="Certificates PEM FORMAT (Transformed)" colspan="4"/>
                     <field name="certificate_file_pem" colspan="4"/>
                     <field name="certificate_key_file_pem" colspan="4"/>
+                    <separator string="General Information of Certificate" colspan="4"/>
+                    <field name="serial_number"/>
+                    <newline/>
+                    <field name="date_start"/>
+                    <newline/>
+                    <field name="date_end"/>
+                    <separator string="Extra Information" colspan="4"/>
+                    <field name="fname_xslt"/>
+                    <!--<field name="company_id"/>-->
+                    <newline/>
+                    <field name="active"/>
                 </form>
             </field>
         </record>
@@ -55,7 +56,7 @@
                     <page string="Certificados SAT">
                         <!--<field name="cif_file" widget='image'/>-->
                         <newline/>
-                        <separator colspan="4" string="Para configurar los folios, hay que irse a la secuencia (sequence) del Diario (Journal)."/>
+                        <separator colspan="4" string="For configurate sequence, access to sequence of Sale Journal."/>
                         <!--
                         <field name="invoice_out_sequence_id"/>
                         <field name="invoice_out_refund_sequence_id"/>
@@ -63,7 +64,7 @@
                         <newline/>
                         <field name="certificate_id"/>
                         <newline/>
-                        <field name="certificate_ids" nolabel="1" colspan ="4"/>
+                        <field name="certificate_ids" nolabel="1" colspan="4"/>
                         
                     </page>
                 </page>

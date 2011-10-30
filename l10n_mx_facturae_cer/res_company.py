@@ -47,10 +47,13 @@ class res_company_facturae_certificate(osv.osv):
         'certificate_password': fields.char('Certificate Password', size=64, invisible=True, required=True),
         'certificate_file_pem': fields.binary('Certificate File PEM', filters='*.pem,*.cer,*.certificate,*.cert'),
         'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
-        'date_start': fields.date('Fecha Inicio', required=False),
-        'date_end': fields.date('Fecha Fin', required=True),
-        'serial_number': fields.char('Serial Number', size=64, required=False),
-        'fname_xslt': fields.char('Archivo XML Parser (.xslt)', help='Ubicacion en servidor de archivo XSLT, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.', size=256, required=False),
+        'date_start': fields.date('Date Start', required=False),
+        'date_end': fields.date('Date End', required=True),
+        'serial_number': fields.char('Serial Number', size=64, required=True),
+        'fname_xslt': fields.char('File XML Parser (.xslt)', size=256, required=False,
+            help='Folder in server with XSLT file',
+            #TODO, translate to english and later translate to spanish, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.'
+        ),
         'active': fields.boolean('Active'),
     }
     
