@@ -143,7 +143,18 @@ class amount_to_text:
     
                                 if lFemenino and resto==1:  cRes+="a"
         return cRes
-    
+
+def get_amount_to_text(self, amount, lang, currency=""):
+    if currency.upper() in ('MXP', 'MXN', 'PESOS', 'PESOS MEXICANOS'):
+        sufijo = 'M. N.'
+        currency = 'PESOS'
+    else:
+        sufijo = 'M. E.'
+    #return amount_to_text(amount, lang, currency)
+    amount_text = amount_to_text().amount_to_text_cheque(amount, currency, sufijo)
+    amount_text = amount_text and amount_text.upper() or ''
+    return amount_text
+
 # Crear una demo interactiva
 if __name__=="__main__":
     """
@@ -156,3 +167,4 @@ if __name__=="__main__":
     letra = amount_to_text().amount_to_text_cheque(1500.25, 'pesos', 'M. N.')
     letra = amount_to_text().amount_to_text(1500.25)
     print letra.upper()
+    

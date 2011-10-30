@@ -46,25 +46,6 @@ from tools.translate import _
 import codecs
 import release
 
-from report.amount_to_text_es import amount_to_text as amount_to_text_class
-
-amount_to_text_obj = amount_to_text_class()
-#amount_to_text = amount_to_text_obj.amount_to_text
-amount_to_text = amount_to_text_obj.amount_to_text_cheque
-
-def get_amount_to_text(self, amount, lang, currency=""):
-    if currency.upper() in ('MXP', 'MXN', 'PESOS', 'PESOS MEXICANOS'):
-        sufijo = 'M. N.'
-        currency = 'PESOS'
-    else:
-        sufijo = 'M. E.'
-    #return amount_to_text(amount, lang, currency)
-    amount_text = amount_to_text(amount, currency, sufijo)
-    amount_text = amount_text and amount_text.upper() or ''
-    return amount_text
-
-#_get_amount_to_text(o.amount_total, 'es_cheque', o.currency_id._columns.has_key('code') and o.currency_id.code or o.currency_id.name)
-
 def exec_command_pipe(name, *args):
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
     prog = tools.find_in_path(name)
@@ -281,22 +262,13 @@ class account_invoice(osv.osv):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
     
-    def _get_amount_to_text(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context={}
-        res = {}
-        for invoice in self.browse(cr, uid, ids, context=context):
-            amount_to_text = get_amount_to_text(self, invoice.amount_total, 'es_cheque', invoice.currency_id._columns.has_key('code') and invoice.currency_id.code or invoice.currency_id.name)
-            res[invoice.id] = amount_to_text
-        return res
-    
     _columns = {
         ##Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
         #'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
         'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice'),
-        'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
+        #'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
         'no_certificado': fields.char('No. Certificado', size=64),
         'certificado': fields.text('Certificado', size=64),
         'sello': fields.text('Sello', size=512),
