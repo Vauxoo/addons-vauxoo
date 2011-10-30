@@ -114,7 +114,60 @@ class facturae_certificate_library(osv.osv):
             output.close()
         return result
     
-    def _get_serial(self, fname, fname_out=None, type='DER'):
+    def _get_param_serial(self, fname, fname_out=None, type='DER'):
+        result = self._get_params(fname, params=['serial'], fname_out=fname_out, type=type)
+        result = result and result.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '') or ''
+        return result
+        
+    def _get_param_dates(self, fname, fname_out=None, date_fmt_return='%Y-%m-%d %H:%M:%S', type='DER'):
+        result_dict = self._get_params_dict(fname, params=['dates'], fname_out=fname_out, type=type)
+        translate_key = {
+            'notAfter': 'enddate',
+            'notBefore': 'startdate',
+        }
+        result2 = {}
+        if result_dict:
+            date_fmt_src = "%b %d %H:%M:%S %Y GMT"
+            for key in result_dict.keys():
+                date = result_dict[key]
+                date_obj = time.strptime(date, date_fmt_src)
+                date_fmt = time.strftime(date_fmt_return, date_obj)
+                result2[ translate_key[key] ] = date_fmt
+        return result2 or None
+    
+    def _get_params_dict(self, fname, params=None, fname_out=None, type='DER'):
+        result = self._get_params(fname, params, fname_out, type)
+        result = result.replace('\r\n', '\n').replace('\r', '\n')#.replace('\n', '\n)
+        result = result.rstrip('\n').lstrip('\n').rstrip(' ').lstrip(' ')
+        params = result.split('\n')
+        params_dict = {}
+        for param in params:
+            key,value = param.split('=')
+            params_dict[key] = value
+        return params_dict
+
+    def _get_params(self, fname, params=None, fname_out=None, type='DER'):
+        """
+        @params: list [noout serial startdate enddate subject issuer dates]
+        @type: str DER or PEM
+        """
+        #params = "-startdate -enddate"
+        #params.split(' ')
+        cmd_params = ' -'.join(params)
+        cmd_params = cmd_params and '-' + cmd_params or ''
+        #print "cmd_params",cmd_params
+        #cmd = "openssl x509 -inform %s -noout %s -in %s -out %s"%(type, cmd_params, fname, fname_out)
+        cmd = "openssl x509 -inform %s -in %s -noout %s -out %s"%( type, fname, cmd_params, fname_out )
+        #print "cmd",cmd
+        args = tuple( cmd.split(' ') )
+        input, output = tools.exec_command_pipe(*args)
+        result = output.read()
+        input.close()
+        output.close()
+        return result
+        
+    ##############TODAS ESTAS FUNCIONES QUEDARAN EN DESUSO###
+    def _____get_serial(self, fname, fname_out=None, type='DER'):
         """
         @type: DER or PEM
         """
@@ -128,7 +181,6 @@ class facturae_certificate_library(osv.osv):
         input.close()
         output.close()
         return result
-    ##############TODAS ESTAS FUNCIONES QUEDARAN EN DESUSO###
     def _generate_pem_fname(self, fname, type='cer', password=None):
         file_b64 = base64.encodestring( open(fname, "r").read() )
         pem_b64 = self._generate_pem_fname(cr, uid, ids, file_b64)

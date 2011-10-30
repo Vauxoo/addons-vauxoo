@@ -81,9 +81,12 @@ class res_company_facturae_certificate(osv.osv):
             key_pem = certificate_lib._transform_der_to_pem(fname_key_der, fname_tmp, fname_password, type_der='key')
             key_pem_b64 = base64.encodestring( key_pem )
             
-            serial = certificate_lib._get_serial(fname_cer_der, fname_tmp, type='DER')
-            #startdate_enddate = certificate_lib._get_startdate_enddate(certificate_file)
-            #print "startdate_enddate",startdate_enddate
+            #date_fmt_return='%Y-%m-%d %H:%M:%S'
+            date_fmt_return='%Y-%m-%d'
+            serial = certificate_lib._get_param_serial(fname_cer_der, fname_tmp, type='DER')
+            dates = certificate_lib._get_param_dates(fname_cer_der, fname_tmp, date_fmt_return=date_fmt_return, type='DER')
+            date_start = dates.get('startdate', False)
+            date_end = dates.get('enddate', False)
             
             os.unlink( fname_cer_der )
             os.unlink( fname_key_der )
@@ -104,6 +107,8 @@ class res_company_facturae_certificate(osv.osv):
                     'certificate_file_pem': cer_pem_b64,
                     'certificate_key_file_pem': key_pem_b64,
                     'serial_number': serial,
+                    'date_start': date_start,
+                    'date_end': date_end,
                 })
         return {'value': value, 'warning': warning}
     
