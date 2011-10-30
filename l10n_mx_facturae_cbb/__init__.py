@@ -28,4 +28,4 @@
 import invoice
 import report
 import ir_sequence
-import res_company
+#import res_company

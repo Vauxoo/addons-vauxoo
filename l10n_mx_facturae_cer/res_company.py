@@ -197,7 +197,7 @@ class res_company(osv.osv):
     _columns = {
         'certificate_ids': fields.one2many('res.company.facturae.certificate', 'company_id', 'Certificates'),
         'certificate_id': fields.function(_get_current_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Certificate Current'), 
-        'cif_file': fields.binary('Cedula de Identificacion Fiscal'),
+        #'cif_file': fields.binary('Cedula de Identificacion Fiscal'),
         'invoice_out_sequence_id': fields.many2one('ir.sequence', 'Invoice Out Sequence', \
             help="The sequence used for invoice out numbers."),
         'invoice_out_refund_sequence_id': fields.many2one('ir.sequence', 'Invoice Out Refund Sequence', \

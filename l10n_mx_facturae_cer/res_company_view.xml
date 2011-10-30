@@ -53,7 +53,7 @@
             <field name="arch" type="xml">
                  <page string="Configuration" position="after">
                     <page string="Certificados SAT">
-                        <field name="cif_file" widget='image'/>
+                        <!--<field name="cif_file" widget='image'/>-->
                         <newline/>
                         <separator colspan="4" string="Para configurar los folios, hay que irse a la secuencia (sequence) del Diario (Journal)."/>
                         <!--
