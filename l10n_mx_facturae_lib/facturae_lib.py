@@ -94,6 +94,22 @@ class facturae_certificate_library(osv.osv):
         os.unlink(fname_pem)
         os.unlink(fname)
         return pem_b64
+    
+    def _get_serial(self, file_b64, pem=True):
+        fname = self.binary2file(False, False, [], file_b64, file_prefix="openerp__", file_suffix=".pem")
+        (fileno_tmp, fname_tmp) = tempfile.mkstemp('.txt', 'openerp_' + ('serial' or '') + '__facturae__')
+        os.close(fileno_tmp)
+        cmd = "openssl x509 -in %s -serial -noout -out %s"%(fname, fname_tmp)
+        args = tuple( cmd.split(' ') )
+        input, output = tools.exec_command_pipe(*args)
+        #no_certificado = self._read_file_attempts(fname_tmp, max_attempt=6, seconds_delay=0.5)
+        no_certificado_hex = output.read()
+        no_certificado = no_certificado_hex.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '')
+        input.close()
+        output.close()
+        os.unlink(fname)
+        os.unlink(fname_tmp)
+        return no_certificado
 facturae_certificate_library()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -83,9 +83,11 @@ class res_company_facturae_certificate(osv.osv):
                     'certificate_key_file_pem': False,
                 })
             else:
+                serial = certificate_lib._get_serial(cer_pem_b64)
                 value.update({
                     'certificate_file_pem': cer_pem_b64,
                     'certificate_key_file_pem': key_pem_b64,
+                    'serial_number': serial,
                 })
         return {'value': value, 'warning': warning}
     
