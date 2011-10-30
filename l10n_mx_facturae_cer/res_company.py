@@ -60,19 +60,36 @@ class res_company_facturae_certificate(osv.osv):
         'date_start': lambda *a: time.strftime('%Y-%m-%d'),
     }
     
-    def onchange_certificate_info(self, cr, uid, ids, certificate_file, certificate_key_file, certificate_password, context=None):
-        #print "ENTRO A onchange_certificate_info"
+    def onchange_certificate_info(self, cr, uid, ids, cer_der_b64str, key_der_b64str, password, context=None):
+        #print "ENTRO A onchange_certificate_info"        
         certificate_lib = self.pool.get('facturae.certificate.library')
         value = {}
         warning = {}
         certificate_file_pem = False
         certificate_key_file_pem = False
         invoice_obj = self.pool.get('account.invoice')
-        if certificate_file and certificate_key_file and certificate_password:
-            #certificate_file_pem, certificate_key_file_pem = certificate_lib._get_pem_b64(cr, uid, ids, certificate_file, certificate_key_file, certificate_password)
+        if cer_der_b64str and key_der_b64str and password:
             
-            cer_pem_b64 = certificate_lib._generate_pem_b64(cr, uid, ids, certificate_file, type='cer', password=None)
-            key_pem_b64 = certificate_lib._generate_pem_b64(cr, uid, ids, certificate_key_file, type='key', password=certificate_password)
+            fname_cer_der = certificate_lib.b64str_to_tempfile(cer_der_b64str, file_suffix='.der.cer', file_prefix='openerp__' + (False or '') + '__ssl__', )
+            fname_key_der = certificate_lib.b64str_to_tempfile(key_der_b64str, file_suffix='.der.key', file_prefix='openerp__' + (False or '') + '__ssl__', )
+            fname_password = certificate_lib.b64str_to_tempfile(base64.encodestring(password), file_suffix='der.txt', file_prefix='openerp__' + (False or '') + '__ssl__', ) 
+            fname_tmp = certificate_lib.b64str_to_tempfile('', file_suffix='tmp.txt', file_prefix='openerp__' + (False or '') + '__ssl__', )
+            
+            cer_pem = certificate_lib._transform_der_to_pem(fname_cer_der, fname_tmp, type_der='cer')
+            cer_pem_b64 = base64.encodestring( cer_pem )
+            
+            key_pem = certificate_lib._transform_der_to_pem(fname_key_der, fname_tmp, fname_password, type_der='key')
+            key_pem_b64 = base64.encodestring( key_pem )
+            
+            serial = certificate_lib._get_serial(fname_cer_der, fname_tmp, type='DER')
+            #startdate_enddate = certificate_lib._get_startdate_enddate(certificate_file)
+            #print "startdate_enddate",startdate_enddate
+            
+            os.unlink( fname_cer_der )
+            os.unlink( fname_key_der )
+            os.unlink( fname_password )
+            os.unlink( fname_tmp ) 
+            
             if not key_pem_b64 or not cer_pem_b64:
                 warning = {
                    'title': _('Warning!'),
@@ -83,7 +100,6 @@ class res_company_facturae_certificate(osv.osv):
                     'certificate_key_file_pem': False,
                 })
             else:
-                serial = certificate_lib._get_serial(cer_pem_b64)
                 value.update({
                     'certificate_file_pem': cer_pem_b64,
                     'certificate_key_file_pem': key_pem_b64,
