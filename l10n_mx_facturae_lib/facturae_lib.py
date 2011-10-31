@@ -104,17 +104,18 @@ class facturae_certificate_library(osv.osv):
                 date_obj = time.strptime(date, date_fmt_src)
                 date_fmt = time.strftime(date_fmt_return, date_obj)
                 result2[ translate_key[key] ] = date_fmt
-        return result2 or None
+        return result2
     
     def _get_params_dict(self, fname, params=None, fname_out=None, type='DER'):
         result = self._get_params(fname, params, fname_out, type)
         result = result.replace('\r\n', '\n').replace('\r', '\n')#.replace('\n', '\n)
         result = result.rstrip('\n').lstrip('\n').rstrip(' ').lstrip(' ')
-        params = result.split('\n')
+        result_list = result.split('\n')
         params_dict = {}
-        for param in params:
-            key,value = param.split('=')
-            params_dict[key] = value
+        for result_item in result_list:
+            if result_item:
+                key,value = result_item.split('=')
+                params_dict[key] = value
         return params_dict
 
     def _get_params(self, fname, params=None, fname_out=None, type='DER'):
