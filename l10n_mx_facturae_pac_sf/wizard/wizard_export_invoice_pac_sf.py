@@ -176,7 +176,7 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                 elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
                     msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema."
                 else:
-                    msg += '\n\n\n\n\n' + resultado['mensaje']
+                    msg += '\n' + resultado['mensaje'] or ''
                     if not status:
                         status = 'parent_' + resultado['status']
     else:
