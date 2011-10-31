@@ -82,15 +82,17 @@ class facturae_certificate_library(osv.osv):
         os.close( fileno )
         return fname
     
-    def _read_file_attempts(self, fname, max_attempt=6, seconds_delay=0.5):
+    def _read_file_attempts(self, file_obj, max_attempt=6, seconds_delay=0.5):
         fdata = False
         cont = 1
         while True:
             time.sleep( seconds_delay )
-            try:
-                fdata = open( fname, "r").read()
-            except:
-                pass
+            if True:
+            #try:
+                #fdata = open( fname, "r").read()
+                fdata = file_obj.read()
+            #except:
+                #pass
             if fdata or max_attempt < cont:
                 break
             cont += 1
@@ -109,7 +111,7 @@ class facturae_certificate_library(osv.osv):
         if cmd:
             args = tuple( cmd.split(' ') )
             input, output = tools.exec_command_pipe(*args)
-            result = self._read_file_attempts(fname_out, max_attempt=3, seconds_delay=0.5)
+            result = self._read_file_attempts(open(fname_out, "r"))
             input.close()
             output.close()
         return result
@@ -161,7 +163,8 @@ class facturae_certificate_library(osv.osv):
         #print "cmd",cmd
         args = tuple( cmd.split(' ') )
         input, output = tools.exec_command_pipe(*args)
-        result = output.read()
+        #result = output.read()
+        result = self._read_file_attempts(output)
         input.close()
         output.close()
         return result
@@ -176,7 +179,8 @@ class facturae_certificate_library(osv.osv):
         args = tuple( cmd.split(' ') )
         input, output = tools.exec_command_pipe(*args)
         #no_certificado = self._read_file_attempts(fname_out, max_attempt=6, seconds_delay=0.5)
-        result = output.read()
+        #result = output.read()
+        result = self._read_file_attempts(output)
         result = result.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '')
         input.close()
         output.close()
@@ -196,7 +200,7 @@ class facturae_certificate_library(osv.osv):
             cmd = 'openssl x509 -inform DER -in %s -outform PEM -pubkey -out %s'%(fname, fname_pem)
             args = tuple( cmd.split(' ') )
             input, output = tools.exec_command_pipe(*args)
-            pem = self._read_file_attempts(fname_pem, max_attempt=6, seconds_delay=0.5)
+            pem = self._read_file_attempts(output)
             input.close()
             output.close()
         elif type == 'key':
@@ -207,7 +211,7 @@ class facturae_certificate_library(osv.osv):
             cmd = 'openssl pkcs8 -inform DER -in %s -passin file:%s -out %s'%(fname, fname_password, fname_pem)
             args = tuple(cmd.split(' '))
             input, output = tools.exec_command_pipe(*args)
-            pem = self._read_file_attempts(fname_pem, max_attempt=6, seconds_delay=0.5)
+            pem = self._read_file_attempts(output)
             input.close()
             output.close()
             os.unlink(fname_password)
@@ -224,7 +228,8 @@ class facturae_certificate_library(osv.osv):
         args = tuple( cmd.split(' ') )
         input, output = tools.exec_command_pipe(*args)
         #no_certificado = self._read_file_attempts(fname_tmp, max_attempt=6, seconds_delay=0.5)
-        no_certificado_hex = output.read()
+        #no_certificado_hex = output.read()
+        no_certificado_hex = self._read_file_attempts(output)
         no_certificado = no_certificado_hex.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '')
         input.close()
         output.close()
@@ -239,9 +244,7 @@ class facturae_certificate_library(osv.osv):
         cmd = "openssl x509 -inform DER -noout -startdate -enddate -in %s -out %s"%( fname, fname_tmp)
         args = tuple( cmd.split(' ') )
         input, output = tools.exec_command_pipe(*args)
-        #res = self._read_file_attempts(fname_tmp, max_attempt=6, seconds_delay=0.5)
-        #print "res",res
-        res = output.read()
+        res = self._read_file_attempts(output)
         input.close()
         output.close()
         os.unlink(fname)
