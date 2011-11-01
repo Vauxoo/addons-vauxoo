@@ -29,26 +29,30 @@ from osv import fields
 import tools
 
 import os
+import sys
 import time
 import tempfile
 import base64
 
+depends_app_path = os.path.join( tools.config["addons_path"], u'l10n_mx_facturae', u'depends_app')
+openssl_path = os.path.abspath( tools.ustr( os.path.join( depends_app_path,  u'openssl_win')  ) )
+xsltproc_path = os.path.abspath( tools.ustr( os.path.join( depends_app_path,  u'xsltproc_win')  ) )
+
+#sys.path.insert(1, openssl_path)
+#sys.path.insert(1, xsltproc_path)
+#os.environ['PATH'] =  openssl_path + ";" + os.environ['PATH']
+#os.environ['PATH'] =  xsltproc_path + ";" + os.environ['PATH']
+
+#TODO: Validar que esta instalado openssl & xsltproc
 class facturae_certificate_library(osv.osv):
     _name = 'facturae.certificate.library'
     _auto = False
+    #Agregar find subpath
     
     def b64str_to_tempfile(self, b64_str="", file_suffix="", file_prefix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open( fname, 'wb' )
         f.write( base64.decodestring( b64_str ) )
-        f.close()
-        os.close( fileno )
-        return fname
-    
-    def binary2file(self, cr=False, uid=False, ids=[], binary_data=False, file_prefix="", file_suffix=""):
-        (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
-        f = open( fname, 'wb' )
-        f.write( base64.decodestring( binary_data ) )
         f.close()
         os.close( fileno )
         return fname
@@ -132,6 +136,56 @@ class facturae_certificate_library(osv.osv):
         input.close()
         output.close()
         return result
+    
+    def _sign(self, fname, fname_xslt, fname_key, fname_out, encrypt='sha1', type_key='PEM'):
+        result = ""
+        cmd = ''
+        
+        #print "sys.path",sys.path
+        #print "os.environ['PATH']",os.environ['PATH']
+        
+        if os.name == "nt":
+            prog_xsltproc = 'xsltproc.exe'
+            prog_openssl = 'openssl.exe'
+        else:
+            prog_xsltproc = 'xsltproc'
+            prog_openssl = 'openssl'
+        
+        prog_openssl_fullpath = os.path.join( openssl_path, prog_openssl )
+        if not os.path.isfile( prog_openssl_fullpath ):
+            prog_openssl_fullpath = tools.find_in_path( prog_openssl )
+        
+        prog_xsltproc_fullpath = os.path.join( xsltproc_path, prog_xsltproc )
+        if not os.path.isfile( prog_xsltproc_fullpath ):
+            prog_xsltproc_fullpath = tools.find_in_path( prog_xsltproc )
+        #raise "error"
+        if type_key == 'PEM':
+            #cmd = 'xsltproc "%s" "%s" | openssl dgst -%s -sign "%s" | openssl enc -base64 -A -out "%s"'%( fname_xslt, fname, encrypt, fname_key, fname_out)
+            #cmd = '"%s" "%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A -out "%s"'%(
+            cmd = ' %s %s %s | %s dgst %s sign %s | %s enc base64 A out %s'%(
+                prog_xsltproc_fullpath, fname_xslt, fname, prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_out)
+            #print "cmd",cmd
+        elif type_key == 'DER':
+            #TODO: Dev for type certificate DER
+            pass
+        if cmd:
+            #output = os.popen(cmd)
+            #output, input = os.popen2(cmd, 'b')
+            #args = cmd.split( ' ' )
+            #input, output = tools.exec_command_pipe(*args)
+            #result = self._read_file_attempts( open(fname_out, "r") )
+            #input.close()
+            #output.close()
+        return result
+    
+    #Funciones en desuso
+    def binary2file(self, cr=False, uid=False, ids=[], binary_data=False, file_prefix="", file_suffix=""):
+        (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
+        f = open( fname, 'wb' )
+        f.write( base64.decodestring( binary_data ) )
+        f.close()
+        os.close( fileno )
+        return fname
 facturae_certificate_library()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

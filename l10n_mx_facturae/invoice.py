@@ -57,6 +57,7 @@ def exec_command_pipe(name, *args):
         cmd = prog+' '+' '.join(args)
     return os.popen2(cmd, 'b')
 
+#TODO: Eliminar esta funcionalidad, mejor agregar al path la aplicacion que deseamos
 def find_in_subpath(name, subpath):
     if os.path.isdir( subpath ):
         path = [dir for dir in map(lambda x: os.path.join(subpath, x), os.listdir(subpath) )
@@ -67,6 +68,7 @@ def find_in_subpath(name, subpath):
                 return val
     return None
 
+#TODO: Agregar una libreria para esto
 def conv_ascii(text):
     """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
@@ -87,6 +89,7 @@ def conv_ascii(text):
                 raise osv.except_osv(_('Warning !'), 'No se pudo re-codificar la cadena [%s] en la letra [%s]'%(text, old) )
     return text
 
+#Cambiar el error
 msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
 
 class account_invoice(osv.osv):
@@ -133,7 +136,7 @@ class account_invoice(osv.osv):
             }
             self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
         return True
-        
+    
     def action_make_cfd(self, cr, uid, ids, *args):
         self._attach_invoice(cr, uid, ids)
         return True
@@ -635,7 +638,8 @@ class account_invoice(osv.osv):
             }
             self.write(cr, uid, [id], data, context=context)
         return True
-    
+
+#TODO: agregar esta funcionalidad con openssl
     def _get_noCertificado(self, fname_cer, pem=True):
         """
         fcer = open(fname_cer, "r")
@@ -691,8 +695,16 @@ class account_invoice(osv.osv):
         number_cert_str = number_cert_str.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '')
         return number_cert_str
         
-
+#TODO: agregar esta funcionalidad con openssl
     def _get_sello(self, cr=False, uid=False, ids=False, context={}):
+        #TODO: Put encrypt date dynamic
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_sign = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__sign__' )
+        #self._____get_sello(cr, uid, ids, context=context)
+        result = certificate_lib._sign(fname=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_key=context['fname_key'], fname_out=fname_sign, encrypt='sha1', type_key='PEM')
+        return result
+    
+    def _____get_sello(self, cr=False, uid=False, ids=False, context={}):
         if not context:
             context = {}
         if os.name == "nt":
@@ -728,6 +740,7 @@ class account_invoice(osv.osv):
             encrypt = "md5"
         cmd = '"%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A > "%s"'%( fname_xslt, fname_xml, \
             prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_sign)
+        #print "cmd CORRECTO",prog_xsltproc+cmd
         if os.name == "nt":
             (fileno_cmd, fname_cmd) = tempfile.mkstemp('.cmd', 'openerp_' + ('cmd' or '') + '__facturae__' )
             f = open(fname_cmd, 'w')
@@ -751,7 +764,8 @@ class account_invoice(osv.osv):
             cont += 1
         fsign.close()
         return sign_str
-    
+
+#TODO: Agregar esta funcionalidad con openssl
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context={}):
         if not context:
             context = {}
@@ -824,6 +838,7 @@ class account_invoice(osv.osv):
         components_dict = dict( cer.get_subject().get_components() )
         return components_dict
     """
+#TODO: agregar esta funcionalidad con openssl
     def _get_certificate_str( self, fname_cer_pem = ""):
         fcer = open( fname_cer_pem, "r")
         lines = fcer.readlines()
@@ -838,7 +853,7 @@ class account_invoice(osv.osv):
             if 'BEGIN CERTIFICATE' in line:
                 loading = True
         return cer_str
-    
+#TODO: agregar esta funcionalidad con openssl
     def _get_md5_cad_orig(self, cadorig_str, fname_cadorig_digest):
         cadorig_digest = hashlib.md5(cadorig_str).hexdigest()
         open(fname_cadorig_digest, "w").write(cadorig_digest)
