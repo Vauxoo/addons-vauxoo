@@ -38,6 +38,21 @@ depends_app_path = os.path.join( tools.config["addons_path"], u'l10n_mx_facturae
 openssl_path = os.path.abspath( tools.ustr( os.path.join( depends_app_path,  u'openssl_win')  ) )
 xsltproc_path = os.path.abspath( tools.ustr( os.path.join( depends_app_path,  u'xsltproc_win')  ) )
 
+def exec_command_pipe(name, *args):
+    #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
+#TODO: Hacer separacion de argumentos, no por espacio, sino tambien por " ", como tipo csv, pero separator espace & delimiter "
+    if name:
+        prog = tools.find_in_path(name)
+        if not prog:
+            raise Exception('Couldn\'t find %s' % name)
+        if os.name == "nt":
+            cmd = '"'+prog+'" '+' '.join(args)
+        else:
+            cmd = prog+' '+' '.join(args)
+    else:
+        cmd = ' '.join(args)
+    return os.popen2(cmd, 'b')
+
 #sys.path.insert(1, openssl_path)
 #sys.path.insert(1, xsltproc_path)
 #os.environ['PATH'] =  openssl_path + ";" + os.environ['PATH']
@@ -158,24 +173,31 @@ class facturae_certificate_library(osv.osv):
         prog_xsltproc_fullpath = os.path.join( xsltproc_path, prog_xsltproc )
         if not os.path.isfile( prog_xsltproc_fullpath ):
             prog_xsltproc_fullpath = tools.find_in_path( prog_xsltproc )
+        
         #raise "error"
         if type_key == 'PEM':
             #cmd = 'xsltproc "%s" "%s" | openssl dgst -%s -sign "%s" | openssl enc -base64 -A -out "%s"'%( fname_xslt, fname, encrypt, fname_key, fname_out)
-            #cmd = '"%s" "%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A -out "%s"'%(
-            cmd = ' %s %s %s | %s dgst %s sign %s | %s enc base64 A out %s'%(
+            cmd = '"%s" "%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A -out "%s"'%(
                 prog_xsltproc_fullpath, fname_xslt, fname, prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_out)
+            #Con -variable, marca error. Debe de ser sin - y separado con argumento. Lo mismo pasa con las comillas "
+            #cmd = ' %s %s %s | %s dgst %s sign %s | %s enc base64 A out %s'%(
+                #prog_xsltproc_fullpath, fname_xslt, fname, prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_out)
             #print "cmd",cmd
         elif type_key == 'DER':
             #TODO: Dev for type certificate DER
             pass
         if cmd:
-            #output = os.popen(cmd)
+            input, output = exec_command_pipe(None, cmd)#os.popen(cmd)
+            result = self._read_file_attempts( open(fname_out, "r") )
+            input.close()
+            output.close()
             #output, input = os.popen2(cmd, 'b')
             #args = cmd.split( ' ' )
             #input, output = tools.exec_command_pipe(*args)
             #result = self._read_file_attempts( open(fname_out, "r") )
             #input.close()
             #output.close()
+        #print "******************result",result
         return result
     
     #Funciones en desuso

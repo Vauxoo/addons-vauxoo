@@ -701,6 +701,7 @@ class account_invoice(osv.osv):
         certificate_lib = self.pool.get('facturae.certificate.library')
         fname_sign = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__sign__' )
         #self._____get_sello(cr, uid, ids, context=context)
+        #print "++++++++++++++++++++++Aqui voy"
         result = certificate_lib._sign(fname=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_key=context['fname_key'], fname_out=fname_sign, encrypt='sha1', type_key='PEM')
         return result
     
