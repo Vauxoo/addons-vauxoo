@@ -23,11 +23,12 @@
                     <newline/>
                     <group col="9" colspan="8">
                         <field name="state"/>
-                        <button name="action_confirm" states="draft" string="Confirm" type="object"/>
-                        <button name="action_sign" states="confirm" string="Sign" type="object"/>
-                        <button name="action_printable" states="sign" string="Generate Printable" type="object"/>
-                        <button name="action_done" states="printable" string="Done" type="object"/>
-                        <button name="action_cancel" states="draft,confirm,sign,printable,done" string="Cancel" type="object"/>
+                        <button name="action_confirm" states="draft" string="Confirm" type="workflow"/>
+                        <button name="action_sign" states="confirmed" string="Sign" type="workflow"/>
+                        <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow"/>
+                        <button name="action_send_email" states="printable" string="Send Mail" type="workflow"/>
+                        <button name="action_done" states="sent_email" string="Done" type="workflow"/>
+                        <button name="action_cancel" states="draft,confirmed" string="Cancel" type="workflow"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
                     </group>
                 </form>

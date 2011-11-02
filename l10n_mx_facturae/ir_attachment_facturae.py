@@ -28,12 +28,14 @@
 
 from osv import osv
 from osv import fields
+import netsvc
 
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids, context=None):
-        return []
+        types = [('cfd2010', 'CFD 2010'), ('cfdi2011', 'CFD-I 2011'), ('cbb', 'CBB')]
+        return types
 
     def _get_index(self, cr, uid, ids, context=None):
         return True
@@ -42,6 +44,7 @@ class ir_attachment_facturae_mx(osv.osv):
         'name': fields.char('Name', size=128, required=True),
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
         'company_id': fields.many2one('res.company', 'Company'),
+        #'pac_id': ,Ver si no genera dependencia del modelo de pac
         'file_xml': fields.binary('File XML'),
         'file_xml_index': fields.text('File XML Index'),
         'file_xml_sign': fields.binary('File XML Sign'),
@@ -49,14 +52,15 @@ class ir_attachment_facturae_mx(osv.osv):
         'file_pdf': fields.binary('File PDF'),
         'file_pdf_index': fields.text('File PDF Index'),
         'identifier': fields.char('Identifier', size=128),
-        'type': fields.selection(_get_type, 'Type', size=64),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64),
         'state': fields.selection([
                 ('draft', 'Draft'),
-                ('confirm', 'Confirm'),#Generate XML
-                ('sign', 'Sign'),#Generate XML Sign
-                ('printable', 'Printable Format'),#Generate PDF
+                ('confirmed', 'Confirmed'),#Generate XML
+                ('signed', 'Signed'),#Generate XML Sign
+                ('printable', 'Printable Format Generated'),#Generate PDF
+                ('sent_email', 'Sent Email'),
                 ('done', 'Done'),
-                ('cancel', 'Cancel'),
+                ('cancel', 'Cancelled'),
             ], 'State', readonly=True, required=True),
     }
     
@@ -65,13 +69,16 @@ class ir_attachment_facturae_mx(osv.osv):
     }
     
     def action_confirm(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'confirm'})
+        return self.write(cr, uid, ids, {'state': 'confirmed'})
     
     def action_sign(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'sign'})
+        return self.write(cr, uid, ids, {'state': 'signed'})
 
     def action_printable(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'printable'})
+
+    def action_send_email(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'sent_email'})
 
     def action_done(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'done'})
@@ -80,5 +87,10 @@ class ir_attachment_facturae_mx(osv.osv):
         return self.write(cr, uid, ids, {'state': 'cancel'})
     
     def reset_to_draft(self, cr, uid, ids, context=None):
+        wf_service = netsvc.LocalService("workflow")
+        for row in self.browse(cr, uid, ids, context=context):
+            # Deleting the existing instance of workflow
+            wf_service.trg_delete(uid, 'ir.attachment.facturae.mx', row.id, cr)
+            wf_service.trg_create(uid, 'ir.attachment.facturae.mx', row.id, cr)
         return self.write(cr, uid, ids, {'state': 'draft'})
 ir_attachment_facturae_mx()

@@ -57,6 +57,7 @@ Requires the following programs:
         'security/ir.model.access.csv',
         "l10n_mx_facturae_report.xml",
         "l10n_mx_facturae_wizard6.xml",
+        "l10n_mx_facturae_workflow.xml",
         #"ir_sequence_view.xml",
         #"res_company_view6.xml",
         "invoice_view.xml",
