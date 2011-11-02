@@ -187,6 +187,9 @@ class facturae_certificate_library(osv.osv):
             #TODO: Dev for type certificate DER
             pass
         if cmd:
+            if os.name == "nt":
+                cmd = cmd.replace('"', '')
+#TODO: Separar los parametros como separacion por csv
             input, output = exec_command_pipe(None, cmd)#os.popen(cmd)
             result = self._read_file_attempts( open(fname_out, "r") )
             input.close()
