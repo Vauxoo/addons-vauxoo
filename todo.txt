@@ -64,6 +64,7 @@ Cambiar la posicion del RFC
 
 Validar la factura con workflow, para que la valide normalmente, pero le asigne el número de factura a como nosotros queremos.
 
+Poner todos los campos de serie, certificado y demas, en la factura.
 
 ISAAC
 Agregar info demo

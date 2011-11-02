@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_ir_attachment_facturae_mx_form" model="ir.ui.view">
+            <field name="name">view.ir.attachment.facturae.mx.form</field>
+            <field name="model">ir.attachment.facturae.mx</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Attachment Factura-E">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="invoice_id"/>
+                    <newline/>
+                    <field name="file_xml"/>
+                    <newline/>
+                    <field name="file_xml_sign"/>
+                    <newline/>
+                    <field name="file_pdf"/>
+                    <newline/>
+                    <field name="identifier"/>
+                    <field name="type"/>
+                    <newline/>
+                    <group col="9" colspan="8">
+                        <field name="state"/>
+                        <button name="action_confirm" states="draft" string="Confirm" type="object"/>
+                        <button name="action_sign" states="confirm" string="Sign" type="object"/>
+                        <button name="action_printable" states="sign" string="Generate Printable" type="object"/>
+                        <button name="action_done" states="printable" string="Done" type="object"/>
+                        <button name="action_cancel" states="draft,confirm,sign,printable,done" string="Cancel" type="object"/>
+                        <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="view_ir_attachment_facturae_mx_tree" model="ir.ui.view">
+            <field name="name">view.ir.attachment.facturae.mx.tree</field>
+            <field name="model">ir.attachment.facturae.mx</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Attachment Factura-E">
+                    <field name="name"/>
+                    <field name="identifier"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

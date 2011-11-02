@@ -61,6 +61,7 @@ Requires the following programs:
         #"res_company_view6.xml",
         "invoice_view.xml",
         #"partner_address_view.xml",
+        "ir_attachment_facturae_view.xml",
     ],
     "installable" : True,
     "active" : False,
