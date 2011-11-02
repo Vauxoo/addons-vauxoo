@@ -638,64 +638,13 @@ class account_invoice(osv.osv):
             }
             self.write(cr, uid, [id], data, context=context)
         return True
-
-#TODO: agregar esta funcionalidad con openssl
+    
     def _get_noCertificado(self, fname_cer, pem=True):
-        """
-        fcer = open(fname_cer, "r")
-        filetype = pem and OpenSSL.crypto.FILETYPE_PEM or OpenSSL.crypto.FILETYPE_ASN1
-        cer = OpenSSL.crypto.load_certificate(filetype, fcer.read())
-        serial_number_hex_str = hex( cer.get_serial_number() )
-        #serial_number_fmt_str = '3' + serial_number_hex_str.replace('3', '').replace('0x', '').replace('L', '')
-        serial_number_fmt_str = serial_number_hex_str.replace('3', '').replace('0x', '').replace('L', '')
-        fcer.close()
-        return serial_number_fmt_str
-        """
-        if os.name == "nt":
-            prog_openssl = 'openssl.exe'
-        else:
-            prog_openssl = 'openssl'
-        
-        subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
-        prog_openssl_fullpath = tools.find_in_path( prog_openssl ) or find_in_subpath(prog_openssl, subpath) or prog_openssl
-        
-        #(fileno, fname_no_cert) = tempfile.mkstemp("no_cert", "__openerp_cfd__")
-        #f = open( fname_no_cert, 'w' )
-        #f.close( )
-        #os.close( fileno )
-        
-        (fileno_serial_number_cert, fname_serial_number_cert) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae_serial_number_cert__' )
-        os.close(fileno_serial_number_cert)
-        
-        (fileno_serial_number_cert_bat, fname_serial_number_cert_bat) = tempfile.mkstemp('.txt.bat', 'openerp_' + (False or '') + '__facturae_serial_number_cert__' )
-        os.close(fileno_serial_number_cert_bat)
-        
-        cmd = 'x509 -in "%s" -serial -noout > "%s"'%(fname_cer, fname_serial_number_cert)
-        if os.name == "nt":
-            f = open(fname_serial_number_cert_bat, 'w')
-            f.write( '"' + prog_openssl_fullpath + '"' + ' ' + cmd )
-            f.close()
-            #os.close(fileno_serial_number_cert)
-            os.startfile( fname_serial_number_cert_bat )
-        else:
-            args = tuple( cmd.split(' ') )
-            input, output = exec_command_pipe(prog_openssl_fullpath, *args)
-            input.close()
-            output.close()
-        fserial_number_cert = file( fname_serial_number_cert, "r" )
-        max = 3
-        cont = 1
-        while True:
-            time.sleep(1)
-            number_cert_str = fserial_number_cert.read()
-            if number_cert_str or max < cont:
-                break
-            cont += 1
-        fserial_number_cert.close()
-        number_cert_str = number_cert_str.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '')
-        return number_cert_str
-        
-#TODO: agregar esta funcionalidad con openssl
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_serial = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__serial__' )
+        result = certificate_lib._get_param_serial(fname_cer, fname_out=fname_serial, type='PEM')
+        return result
+    
     def _get_sello(self, cr=False, uid=False, ids=False, context={}):
         #TODO: Put encrypt date dynamic
         fecha = context['fecha']
