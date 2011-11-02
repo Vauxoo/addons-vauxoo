@@ -581,8 +581,11 @@ class account_invoice(osv.osv):
         fname_txt, txt_str = self._xml2cad_orig(cr=False, uid=False, ids=False, context=context)
         data_dict['cadena_original'] = txt_str
         
+        if not txt_str:
+            raise osv.except_osv(_('Error en Cadena original!'), _('No se pudo obtener la cadena original del comprobante.\nVerifique su configuracion.\n%s'%(msg2)) )
+        
         if not data_dict['Comprobante'].get('folio', ''):
-            raise osv.except_osv(_('Error en Folio!'), _('No se pudo obtener el Folio del comprobante (Numero de Factura).\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
+            raise osv.except_osv(_('Error en Folio!'), _('No se pudo obtener el Folio del comprobante.\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
             
         #time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
         context.update( { 'fecha': data_dict['Comprobante']['fecha'] } )
@@ -657,80 +660,13 @@ class account_invoice(osv.osv):
         fname_sign = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__sign__' )
         result = certificate_lib._sign(fname=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_key=context['fname_key'], fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
         return result
-
-#TODO: Agregar esta funcionalidad con openssl
+    
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context={}):
-        if not context:
-            context = {}
-        if os.name == "nt":
-            prog_xsltproc = 'xsltproc.exe'
-        else:
-            prog_xsltproc = 'xsltproc'
-        
-        subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
-        prog_xsltproc_fullpath = tools.find_in_path( prog_xsltproc ) or find_in_subpath(prog_xsltproc, subpath) or prog_xsltproc
-        
-        fname_xslt = context['fname_xslt']
-        fname_xml = context['fname_xml']
-        (fileno_cad_orig, fname_cad_orig) = tempfile.mkstemp('.cmd', 'openerp_' + ('cad_orig' or '') + '__facturae__' )
-        cmd = '"%s" "%s" >"%s"'%( fname_xslt, fname_xml, fname_cad_orig )
-        os.close(fileno_cad_orig)
-        
-        if os.name == "nt":
-            (fileno_cmd, fname_cmd) = tempfile.mkstemp('.cmd', 'openerp_' + ('cmd_cad_orig' or '') + '__facturae__' )
-            f = open(fname_cmd, 'w')
-            f.write( '"' + prog_xsltproc_fullpath + '"' + ' ' + cmd )
-            f.close()
-            os.close(fileno_cmd)
-            os.startfile( fname_cmd )
-        else:
-            args = tuple( cmd.split(' ') )
-            input, output = exec_command_pipe(prog_xsltproc, *args)
-            input.close()
-            output.close()
-        fcad_orig = file( fname_cad_orig, "r" )
-        max = 3
-        cont = 1
-        cad_orig_str = ""
-        while True:
-            time.sleep(1)
-            cad_orig_str = fcad_orig.read()
-            if cad_orig_str or max < cont:
-                break
-            cont += 1
-        fcad_orig.close()
-        return fname_cad_orig, cad_orig_str
-        
-        """
-        
-        txt_str = ""
-        fname_xml = context.get('fname_xml', '')
-        fname_txt = context.get('fname_txt', '') or (fname_xml and fname_xml + '.txt' or '')
-        fname_xslt = context['fname_xslt']
-        if fname_xml:
-            styledoc = libxml2.parseFile(fname_xslt)
-            style = libxslt.parseStylesheetDoc(styledoc)
-            doc = libxml2.parseFile(fname_xml)
-            result = style.applyStylesheet(doc, None)
-            #print "result",result
-            style.saveResultToFilename(fname_txt, result, 0)
-            style.freeStylesheet()
-            doc.freeDoc()
-            result.freeDoc()
-            txt_str = open(fname_txt, "r").read()
-        return fname_txt, txt_str
-        """
-    """
-    def _get_certificate_components(self, cr=False, uid=False, ids=False, context={}):
-        if not context:
-            context = {}
-        fname_cer = context['fname_cer']
-        fcer = open(fname_cer, "r")
-        pem = fcer.read()
-        cer = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, pem)
-        components_dict = dict( cer.get_subject().get_components() )
-        return components_dict
-    """
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_tmp = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__cadorig__' )
+        cad_orig = certificate_lib._transform_xml(fname_xml=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_out=fname_tmp)
+        return fname_tmp, cad_orig
+
 #TODO: agregar esta funcionalidad con openssl
     def _get_certificate_str( self, fname_cer_pem = ""):
         fcer = open( fname_cer_pem, "r")

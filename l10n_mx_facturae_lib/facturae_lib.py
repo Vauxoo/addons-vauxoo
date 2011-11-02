@@ -116,6 +116,15 @@ class facturae_certificate_library(osv.osv):
         result = result and result.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '') or ''
         return result
     
+    def _transform_xml(self, fname_xml, fname_xslt, fname_out):
+        cmd = '"%s" "%s" "%s" >"%s"'%(app_xsltproc_fullpath, fname_xslt, fname_xml, fname_out )
+        args = tuple( cmd.split(' ') )
+        input, output = exec_command_pipe(*args)
+        result = self._read_file_attempts( open(fname_out, "r") )
+        input.close()
+        output.close()
+        return result
+    
     def _get_param_dates(self, fname, fname_out=None, date_fmt_return='%Y-%m-%d %H:%M:%S', type='DER'):
         result_dict = self._get_params_dict(fname, params=['dates'], fname_out=fname_out, type=type)
         translate_key = {
