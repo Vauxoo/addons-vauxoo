@@ -152,9 +152,9 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-                resultado = wsdl_client.timbrar(*params)
-                msg = resultado['resultados']['mensaje']
-                status = resultado['resultados']['status']
+                resultado = wsdl_client.timbrar(*params)               
+                msg = resultado['resultados'] and resultado['resultados']['mensaje'] or ''
+                status = resultado['resultados'] and resultado['resultados']['status'] or ''
                 if status == '200' or status == '307':
                     fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
                     fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
@@ -173,7 +173,11 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                     #open("D:\\cfdi_b64.xml", "wb").write( resultado['resultados']['cfdiTimbrado'] or '' )
                     #open("D:\\cfdi.xml", "wb").write( base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ) )
                 elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
-                    msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema."
+                    msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
+                else:
+                    msg += '\n' + resultado['mensaje'] or ''
+                    if not status:
+                        status = 'parent_' + resultado['status']
     else:
         msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
     return {'file': data['form']['file'], 'msg': msg}
