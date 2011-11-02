@@ -698,73 +698,16 @@ class account_invoice(osv.osv):
 #TODO: agregar esta funcionalidad con openssl
     def _get_sello(self, cr=False, uid=False, ids=False, context={}):
         #TODO: Put encrypt date dynamic
-        certificate_lib = self.pool.get('facturae.certificate.library')
-        fname_sign = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__sign__' )
-        #self._____get_sello(cr, uid, ids, context=context)
-        #print "++++++++++++++++++++++Aqui voy"
-        result = certificate_lib._sign(fname=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_key=context['fname_key'], fname_out=fname_sign, encrypt='sha1', type_key='PEM')
-        return result
-    
-    def _____get_sello(self, cr=False, uid=False, ids=False, context={}):
-        if not context:
-            context = {}
-        if os.name == "nt":
-            prog_xsltproc = 'xsltproc.exe'
-            prog_openssl = 'openssl.exe'
-        else:
-            prog_xsltproc = 'xsltproc'
-            prog_openssl = 'openssl'
-        
-        subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
-        prog_openssl_fullpath = tools.find_in_path( prog_openssl ) or find_in_subpath(prog_openssl, subpath) or prog_openssl
-        prog_xsltproc_fullpath = tools.find_in_path( prog_xsltproc ) or find_in_subpath(prog_xsltproc, subpath) or prog_xsltproc
-        
-        #if not prog_openssl_fullpath:
-            #raise osv.except_osv('Warning !', 'No se ha encontrado la aplicacion requerida: %s.\n%s !'%(prog_openssl, msg2))
-        #if not prog_xsltproc_fullpath:
-            #raise osv.except_osv('Warning !', 'No se ha encontrado la aplicacion requerida: %s.\n%s !'%(prog_xsltproc, msg2))
-        
-        fname_xslt = context['fname_xslt']
-        fname_xml = context['fname_xml']
-        fname_cer = context['fname_cer']
-        fname_key = context['fname_key']
-        fname_sign = context['fname_sign']
         fecha = context['fecha']
-        fsign = file( fname_sign, "w" )
-        fsign.close()
-        #fecha_2 = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha, '%Y-%m-%dT%H:%M:%S'))
-        #print "fecha_2",fecha_2
         year = float( time.strftime('%Y', time.strptime(fecha, '%Y-%m-%dT%H:%M:%S')) )
         if year >= 2011:
             encrypt = "sha1"
         if year <= 2010:
             encrypt = "md5"
-        cmd = '"%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A > "%s"'%( fname_xslt, fname_xml, \
-            prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_sign)
-        #print "cmd CORRECTO",prog_xsltproc+cmd
-        if os.name == "nt":
-            (fileno_cmd, fname_cmd) = tempfile.mkstemp('.cmd', 'openerp_' + ('cmd' or '') + '__facturae__' )
-            f = open(fname_cmd, 'w')
-            f.write( '"' + prog_xsltproc_fullpath + '"' + ' ' + cmd )
-            f.close()
-            os.close(fileno_cmd)
-            os.startfile( fname_cmd )
-        else:
-            args = tuple( cmd.split(' ') )
-            input, output = exec_command_pipe(prog_xsltproc, *args)
-            input.close()
-            output.close()
-        fsign = file( fname_sign, "r" )
-        max = 3
-        cont = 1
-        while True:
-            time.sleep(1)
-            sign_str = fsign.read()
-            if sign_str or max < cont:
-                break
-            cont += 1
-        fsign.close()
-        return sign_str
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_sign = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__sign__' )
+        result = certificate_lib._sign(fname=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_key=context['fname_key'], fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
+        return result
 
 #TODO: Agregar esta funcionalidad con openssl
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context={}):
