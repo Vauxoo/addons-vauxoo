@@ -38,25 +38,29 @@ depends_app_path = os.path.join( tools.config["addons_path"], u'l10n_mx_facturae
 openssl_path = os.path.abspath( tools.ustr( os.path.join( depends_app_path,  u'openssl_win')  ) )
 xsltproc_path = os.path.abspath( tools.ustr( os.path.join( depends_app_path,  u'xsltproc_win')  ) )
 
-def exec_command_pipe(name, *args):
+def exec_command_pipe(*args):
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
 #TODO: Hacer separacion de argumentos, no por espacio, sino tambien por " ", como tipo csv, pero separator espace & delimiter "
-    if name:
-        prog = tools.find_in_path(name)
-        if not prog:
-            raise Exception('Couldn\'t find %s' % name)
-        if os.name == "nt":
-            cmd = '"'+prog+'" '+' '.join(args)
-        else:
-            cmd = prog+' '+' '.join(args)
-    else:
-        cmd = ' '.join(args)
+    cmd = ' '.join(args)
+    if os.name == "nt":
+        cmd = cmd.replace('"', '')#provisionalmente, porque no funcionaba en win32
     return os.popen2(cmd, 'b')
 
-#sys.path.insert(1, openssl_path)
-#sys.path.insert(1, xsltproc_path)
-#os.environ['PATH'] =  openssl_path + ";" + os.environ['PATH']
-#os.environ['PATH'] =  xsltproc_path + ";" + os.environ['PATH']
+if os.name == "nt":
+    app_xsltproc = 'xsltproc.exe'
+    app_openssl = 'openssl.exe'
+else:
+    app_xsltproc = 'xsltproc'
+    app_openssl = 'openssl'
+
+app_openssl_fullpath = os.path.join( openssl_path, app_openssl )
+if not os.path.isfile( app_openssl_fullpath ):
+    app_openssl_fullpath = tools.find_in_path( app_openssl )
+
+app_xsltproc_fullpath = os.path.join( xsltproc_path, app_xsltproc )
+if not os.path.isfile( app_xsltproc_fullpath ):
+    app_xsltproc_fullpath = tools.find_in_path( app_xsltproc )
+            
 
 #TODO: Validar que esta instalado openssl & xsltproc
 class facturae_certificate_library(osv.osv):
@@ -93,12 +97,15 @@ class facturae_certificate_library(osv.osv):
         cmd = ''
         result = ''
         if type_der == 'cer':
-            cmd = 'openssl x509 -inform DER -outform PEM -in %s -pubkey -out %s'%( fname_der, fname_out )
+            cmd = '"%s" x509 -inform DER -outform PEM -in "%s" -pubkey -out "%s"'%( 
+                app_openssl_fullpath, fname_der, fname_out )
         elif type_der == 'key':
-            cmd = 'openssl pkcs8 -inform DER -outform PEM -in %s -passin file:%s -out %s'%( fname_der, fname_password_der, fname_out )
+            cmd = '"%s" pkcs8 -inform DER -outform PEM -in "%s" -passin file:%s -out "%s"'%( 
+                app_openssl_fullpath, fname_der, fname_password_der, fname_out )
         if cmd:
             args = tuple( cmd.split(' ') )
-            input, output = tools.exec_command_pipe(*args)
+            #input, output = tools.exec_command_pipe(*args)
+            input, output = exec_command_pipe(*args)
             result = self._read_file_attempts(open(fname_out, "r"))
             input.close()
             output.close()
@@ -108,7 +115,7 @@ class facturae_certificate_library(osv.osv):
         result = self._get_params(fname, params=['serial'], fname_out=fname_out, type=type)
         result = result and result.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '') or ''
         return result
-        
+    
     def _get_param_dates(self, fname, fname_out=None, date_fmt_return='%Y-%m-%d %H:%M:%S', type='DER'):
         result_dict = self._get_params_dict(fname, params=['dates'], fname_out=fname_out, type=type)
         translate_key = {
@@ -144,9 +151,11 @@ class facturae_certificate_library(osv.osv):
         """
         cmd_params = ' -'.join(params)
         cmd_params = cmd_params and '-' + cmd_params or ''
-        cmd = "openssl x509 -inform %s -in %s -noout %s -out %s"%( type, fname, cmd_params, fname_out )
+        cmd = '"%s" x509 -inform "%s" -in "%s" -noout "%s" -out "%s"'%( 
+            app_openssl_fullpath, type, fname, cmd_params, fname_out )
         args = tuple( cmd.split(' ') )
-        input, output = tools.exec_command_pipe(*args)
+        #input, output = tools.exec_command_pipe(*args)
+        input, output = exec_command_pipe(*args)
         result = self._read_file_attempts(output)
         input.close()
         output.close()
@@ -155,52 +164,17 @@ class facturae_certificate_library(osv.osv):
     def _sign(self, fname, fname_xslt, fname_key, fname_out, encrypt='sha1', type_key='PEM'):
         result = ""
         cmd = ''
-        
-        #print "sys.path",sys.path
-        #print "os.environ['PATH']",os.environ['PATH']
-        
-        if os.name == "nt":
-            prog_xsltproc = 'xsltproc.exe'
-            prog_openssl = 'openssl.exe'
-        else:
-            prog_xsltproc = 'xsltproc'
-            prog_openssl = 'openssl'
-        
-        prog_openssl_fullpath = os.path.join( openssl_path, prog_openssl )
-        if not os.path.isfile( prog_openssl_fullpath ):
-            prog_openssl_fullpath = tools.find_in_path( prog_openssl )
-        
-        prog_xsltproc_fullpath = os.path.join( xsltproc_path, prog_xsltproc )
-        if not os.path.isfile( prog_xsltproc_fullpath ):
-            prog_xsltproc_fullpath = tools.find_in_path( prog_xsltproc )
-        
-        #raise "error"
         if type_key == 'PEM':
-            #cmd = 'xsltproc "%s" "%s" | openssl dgst -%s -sign "%s" | openssl enc -base64 -A -out "%s"'%( fname_xslt, fname, encrypt, fname_key, fname_out)
             cmd = '"%s" "%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A -out "%s"'%(
-                prog_xsltproc_fullpath, fname_xslt, fname, prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_out)
-            #Con -variable, marca error. Debe de ser sin - y separado con argumento. Lo mismo pasa con las comillas "
-            #cmd = ' %s %s %s | %s dgst %s sign %s | %s enc base64 A out %s'%(
-                #prog_xsltproc_fullpath, fname_xslt, fname, prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_out)
-            #print "cmd",cmd
+                app_xsltproc_fullpath, fname_xslt, fname, app_openssl_fullpath, encrypt, fname_key, app_openssl_fullpath, fname_out)
         elif type_key == 'DER':
             #TODO: Dev for type certificate DER
             pass
         if cmd:
-            if os.name == "nt":
-                cmd = cmd.replace('"', '')
-#TODO: Separar los parametros como separacion por csv
-            input, output = exec_command_pipe(None, cmd)#os.popen(cmd)
+            input, output = exec_command_pipe(cmd)
             result = self._read_file_attempts( open(fname_out, "r") )
             input.close()
             output.close()
-            #output, input = os.popen2(cmd, 'b')
-            #args = cmd.split( ' ' )
-            #input, output = tools.exec_command_pipe(*args)
-            #result = self._read_file_attempts( open(fname_out, "r") )
-            #input.close()
-            #output.close()
-        #print "******************result",result
         return result
     
     #Funciones en desuso
