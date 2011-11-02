@@ -33,10 +33,10 @@ Domicilio, cuando tipo es facturar poner como requeridos los campos de
 
 
 
-Publicar mejora de RFC para v6
-sellar xml sin abrir .bat
+Publicar mejora de RFC para v6, solo esta en trunk
+****************sellar xml sin abrir .bat
 
-Hacer un find de la herramienta de openssl, antes de mandar a llamar el comando
+**************Hacer un find de la herramienta de openssl, antes de mandar a llamar el comando
 Modulo para convertir de ascii
 
 *****************Cambiar la aplicacion openssl a lib
@@ -45,15 +45,13 @@ Obtener fecha de vencimiento de un archivo de certificación.
 
 Parsear el xml con el xslt para ver que errores marca
 
-Desarrollar un actualizador de xlst desde internet
+---------------Desarrollar un actualizador de xlst desde internet
 
 Quitar __terp__.py y solo dejar __openerp__.py
 
 Agregar funcionalidad para comprimir xml
 
 Agregar modelo de adjuntos pdf & xml
-
-Add find_path openssl
 
 Depurar codigo comentado
 
@@ -68,3 +66,4 @@ Agregar log info de cuando no está instalado una dependencia
 Agregar access rules manager & usuario
 Traducir idioma de módulos nuevos
 Cambiar la license
+
