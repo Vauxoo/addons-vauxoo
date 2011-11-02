@@ -265,6 +265,19 @@ class account_invoice(osv.osv):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
     
+    def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
+        res = {}
+        attachment_obj = self.pool.get('ir.attachment')
+        for invoice in self.browse(cr, uid, ids, context=context):
+            attachment_xml_id = attachment_obj.search(cr, uid, [
+                    ('name','=',invoice.fname_invoice+'.xml'),
+                    ('datas_fname','=',invoice.fname_invoice+'.xml'),
+                    ('res_model','=','account.invoice'),
+                    ('res_id','=',invoice.id),
+                ], limit=1)
+            res[invoice.id] = attachment_xml_id and attachment_xml_id[0] or False
+        return res
+    
     _columns = {
         ##Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
@@ -277,6 +290,7 @@ class account_invoice(osv.osv):
         'sello': fields.text('Sello', size=512),
         'cadena_original': fields.text('Cadena Original', size=512),
         'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
+        'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML'),
     }
     
     _defaults = {
@@ -357,6 +371,8 @@ class account_invoice(osv.osv):
                 else:
                     file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
                 
+                file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
+                
                 if not file_globals.get('fname_xslt', False):
                     raise osv.except_osv('Warning !', 'No se ha definido fname_xslt. !')
                 
@@ -368,6 +384,20 @@ class account_invoice(osv.osv):
                 raise osv.except_osv('Warning !', 'Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!'%(msg2))
         return file_globals
     
+    def _____________get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
+        #TODO: Transform date to fmt %d/%m/%Y %H:%M:%S
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_repmensual_xslt = self._get_file_globals(cr, uid, ids, context=context)['fname_repmensual_xslt']
+        fname_tmp = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__repmensual__' )
+        rep_mensual = ''
+        for invoice in self.browse(cr, uid, ids, context=context):
+            xml_b64 = invoice.cfd_xml_id and invoice.cfd_xml_id.datas or False
+            if xml_b64:
+                fname_xml = certificate_lib.b64str_to_tempfile( xml_b64 or '', file_suffix='.xml', file_prefix='openerp__' + (False or '') + '__xml__' )
+                rep_mensual += certificate_lib._transform_xml(fname_xml=fname_xml, fname_xslt=fname_repmensual_xslt, fname_out=fname_tmp)
+                rep_mensual += '\r\n'
+        return rep_mensual, fname_tmp
+        
     def _get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
         facturae_datas = self._get_facturae_invoice_dict_data(cr, uid, ids, context=context)
         facturae_data_txt_lists = []
