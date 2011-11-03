@@ -53,7 +53,8 @@ Requires the following programs:
         "l10n_mx_facturae_wizard.xml",
         "ir_sequence_view.xml",
         "res_company_view.xml",
-        "invoice_view.xml"
+        "invoice_view.xml",
+        "partner_address_view.xml",
     ],
     "installable" : True,
     "active" : False,

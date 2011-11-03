@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info moylop260 (moylop260@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -36,9 +36,9 @@ import tools
 
 ###sql_delete_report = "DELETE FROM ir_act_report_xml WHERE report_name = 'account.invoice.facturae.pdf'"--Si no toma la actualizacion del reporte xml, borrarlo directamente desde la base de datos, con este script.
 
-class account_invoice_facturae_pdf(report_sxw.rml_parse):
+class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(account_invoice_facturae_pdf, self).__init__(cr, uid, name, context=context)
+        super(account_invoice_facturae_pac_sf_pdf, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'set_global_data': self._set_global_data,
             'facturae_data_dict': self._facturae_data_dict,
@@ -66,10 +66,11 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             print "exception: %s"%( e )
             pass
         try:
-            self._get_facturae_data_dict(o)
+            self._get_facturae_data_dict(o.id)
         except Exception, e:
             print "exception: %s"%( e )
             pass
+        print "*************\n**o.cfdi_cbb",o.cfdi_cbb
         return ""
         
     def _get_approval(self):
@@ -79,24 +80,21 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         return self.sequence
     
     def _set_invoice_sequence_and_approval(self, invoice_id):
+        #TinyERP Compatibility
         context = {}
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
         sequence_obj = pool.get('ir.sequence')
-        #approval_obj = pool.get('ir.sequence.approval')
-        invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id], context=context)[0]
-        context.update({'number_work': invoice.number})
-        sequence = invoice.invoice_sequence_id or False
-        sequence_id = sequence and sequence.id or False
-        #invoice_obj._get_invoice_sequence(self.cr, self.uid, [invoice_id])[invoice_id]
-        #sequence_obj.browse(self.cr, self.uid, [sequence_id])[0]
+        approval_obj = pool.get('ir.sequence.approval')
+        #invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
+        sequence_id = invoice_obj._get_invoice_sequence(self.cr, self.uid, [invoice_id])[invoice_id]
+        sequence = sequence_obj.browse(self.cr, self.uid, [sequence_id])[0]
         self.sequence = sequence
         
-        #invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
-        approval = sequence and sequence.approval_id or False
-        approval_id = approval and approval.id or False
-        #approval_id = sequence_obj._get_current_approval(self.cr, self.uid, [sequence_id], context=context)[sequence_id]
-        #approval = approval_obj.browse(self.cr, self.uid, [approval_id])[0]
+        invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
+        context.update({'number_work': invoice.number})
+        approval_id = sequence_obj._get_current_approval(self.cr, self.uid, [sequence_id], context=context)[sequence_id]
+        approval = approval_obj.browse(self.cr, self.uid, [approval_id])[0]
         self.approval = approval
         return sequence, approval
     
@@ -137,7 +135,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         return taxes
     '''
     
-    def _split_string(self, string, length=100):
+    def _split_string(self, string, length=75):
         if string:
             for i in range(0, len(string), length):
                 string = string[:i] + ' ' + string[i:]
@@ -190,26 +188,20 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         #print "self.invoice_data_dict",self.invoice_data_dict
         return self.invoice_data_dict
     
-    def _get_facturae_data_dict(self, invoice):
-        self._set_invoice_sequence_and_approval( invoice.id )
-        #invoice_obj = pool.get('account.invoice')
-        self.taxes = [tax for tax in invoice.tax_line if tax.tax_percent > 0.01]
-        self.taxes_ret = [tax for tax in invoice.tax_line if tax.tax_percent <= 0.01]
-        return ""
-        """
+    def _get_facturae_data_dict(self, invoice_id):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
         self.invoice_data_dict = invoice_obj._get_facturae_invoice_xml_data(self.cr, self.uid, [invoice_id], context={'type_data': 'dict'})
+        self._set_invoice_sequence_and_approval( invoice_id )
         #print "self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']",self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']
         try:
             self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) >0.01 ]
-            #self.taxes = [tax for tax in invoice.account_invoice_tax if tax.tax_percent > 0.01]
             #self.taxes.extend( self.taxes_ret )
         except Exception, e:
             print "exception: %s"%( e )
             pass
         
-        #self.taxes_ret = []
+        self.taxes_ret = []
         for retencion in self.invoice_data_dict['Comprobante']['Impuestos'].get('Retenciones', []):
             amount_untaxed = float( self.invoice_data_dict['Comprobante']['subTotal'] )
             tax_ret_amount = float( retencion['Retencion']['importe'] )
@@ -217,13 +209,12 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             retencion['Retencion'].update({'tasa':  tasa})
             self.taxes_ret.append( retencion['Retencion'] )
         return ""
-        """
     
 report_sxw.report_sxw(
-    'report.account.invoice.facturae.pdf',
+    'report.account.invoice.facturae.pac.sf.pdf',
     'account.invoice',
-    'addons/l10n_mx_facturae/report/invoice_facturae_pdf.rml',
+    'addons/l10n_mx_facturae_pac_sf/report/invoice_facturae_pac_sf_pdf.rml',
     header=False,
-    parser=account_invoice_facturae_pdf,
+    parser=account_invoice_facturae_pac_sf_pdf,
 )
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

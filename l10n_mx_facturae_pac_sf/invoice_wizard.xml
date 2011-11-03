@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+        <wizard id="wizard_export_invoice_pac_sf"
+            name="wizard.export.invoice.pac.sf"
+            string="Export invoice PAC SF"
+            model="account.invoice"
+        />
+    
+    </data>
+</openerp>
+

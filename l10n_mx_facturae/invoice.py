@@ -27,7 +27,7 @@
 
 from osv import osv
 from osv import fields
-from tools import amount_to_text
+#from tools import amount_to_text
 import tools
 import time
 from xml.dom import minidom
@@ -46,7 +46,24 @@ from tools.translate import _
 import codecs
 import release
 
+from report.amount_to_text_es import amount_to_text as amount_to_text_class
 
+amount_to_text_obj = amount_to_text_class()
+#amount_to_text = amount_to_text_obj.amount_to_text
+amount_to_text = amount_to_text_obj.amount_to_text_cheque
+
+def get_amount_to_text(self, amount, lang, currency=""):
+    if currency.upper() in ('MXP', 'MXN', 'PESOS', 'PESOS MEXICANOS'):
+        sufijo = 'M. N.'
+        currency = 'PESOS'
+    else:
+        sufijo = 'M. E.'
+    #return amount_to_text(amount, lang, currency)
+    amount_text = amount_to_text(amount, currency, sufijo)
+    amount_text = amount_text and amount_text.upper() or ''
+    return amount_text
+
+#_get_amount_to_text(o.amount_total, 'es_cheque', o.currency_id._columns.has_key('code') and o.currency_id.code or o.currency_id.name)
 
 def exec_command_pipe(name, *args):
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
@@ -245,7 +262,6 @@ class account_invoice(osv.osv):
                             (ref, move_id))
         return True
     
-    
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
@@ -411,18 +427,71 @@ class account_invoice(osv.osv):
                 attachment_obj.unlink(cr, uid, attachment_pdf_id)
             except:
                 pass
+        self.write(cr, uid, ids, {
+            'no_certificado': False,
+            'certificado': False,
+            'sello': False,
+            'cadena_original': False,
+            'date_invoice_cancel': False,
+        })
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
+    
+    def action_cancel(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
+        return super(account_invoice, self).action_cancel(cr, uid, ids, args)
         
+    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context={}
+        company_obj = self.pool.get('res.company')
+        certificate_obj = self.pool.get('res.company.facturae.certificate')
+        res = {}
+        for invoice in self.browse(cr, uid, ids, context=context):
+            context.update( {'date_work': invoice.date_invoice} )
+            certificate_id = False
+            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
+            certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
+            res[invoice.id] = certificate_id and certificate_id.id or False
+        return res
+    
+    def _get_amount_to_text(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context={}
+        res = {}
+        for invoice in self.browse(cr, uid, ids, context=context):
+            amount_to_text = get_amount_to_text(self, invoice.amount_total, 'es_cheque', invoice.currency_id._columns.has_key('code') and invoice.currency_id.code or invoice.currency_id.name)
+            res[invoice.id] = amount_to_text
+        return res
+    
     _columns = {
         ##Extract date_invoice from original, but add datetime
         'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
-        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size='26', string='File Name Invoice'),
+        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
+        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice'),
+        'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
+        'no_certificado': fields.char('No. Certificado', size=64),
+        'certificado': fields.text('Certificado', size=64),
+        'sello': fields.text('Sello', size=512),
+        'cadena_original': fields.text('Cadena Original', size=512),
+        'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
     }
     
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+        
+    def copy(self, cr, uid, id, default={}, context=None):
+        if context is None:
+            context = {}
+        default.update({
+            'invoice_sequence_id': False,
+            'no_certificado': False,
+            'certificado': False,
+            'sello': False,
+            'cadena_original': False,
+        })
+        return super(account_invoice, self).copy(cr, uid, id, default, context=context)
     
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
@@ -448,18 +517,35 @@ class account_invoice(osv.osv):
                 if not certificate_id.certificate_file_pem:
                     #generate certificate_id.certificate_file_pem, a partir del certificate_id.certificate_file
                     pass
+                fname_cer_pem = False
                 try:
                     fname_cer_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.cer.pem')
                 except:
                     raise osv.except_osv('Error !', 'No se ha capturado un archivo CERTIFICADO en formato PEM, en la company!')
-                file_globals['fname_cer_pem'] = fname_cer_pem
                 file_globals['fname_cer'] = fname_cer_pem
+                
+                fname_key_pem = False
                 try:
                     fname_key_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_key_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.key.pem')
                 except:
                     raise osv.except_osv('Error !', 'No se ha capturado un archivo KEY en formato PEM, en la company!')
-                file_globals['fname_key_pem'] = fname_key_pem
                 file_globals['fname_key'] = fname_key_pem
+                
+                fname_cer_no_pem = False
+                try:
+                    fname_cer_no_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_file, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.cer')
+                except:
+                    pass
+                file_globals['fname_cer_no_pem'] = fname_cer_no_pem
+                
+                fname_key_no_pem = False
+                try:
+                    fname_key_no_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_key_file, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.key')
+                except:
+                    pass
+                file_globals['fname_key_no_pem'] = fname_key_no_pem
+                
+                file_globals['password'] = certificate_id.certificate_password
                 
                 if certificate_id.fname_xslt:
                     if ( certificate_id.fname_xslt[0] == os.sep or certificate_id.fname_xslt[1] == ':' ):
@@ -502,6 +588,22 @@ class account_invoice(osv.osv):
                 continue
             #if not invoice_comprobante_data['Receptor']['rfc']:
                 #raise osv.except_osv('Warning !', 'No se tiene definido el RFC de la factura [%s].\n%s !'%(facturae_data['Comprobante']['folio'], msg2))
+            
+            invoice = self.browse(cr, uid, [facturae_data['invoice_id']], context=context)[0]
+            pedimento_numeros = []
+            pedimento_fechas = []
+            pedimento_aduanas = []
+            for line in invoice.invoice_line:
+                try:
+                    pedimento_numeros.append(line.tracking_id.import_id.name or '')
+                    pedimento_fechas.append(line.tracking_id.import_id.date or '')
+                    pedimento_aduanas.append(line.tracking_id.import_id.customs or '')
+                except:
+                    pass
+            pedimento_numeros = ','.join(map(lambda x: str(x) or '', pedimento_numeros))
+            pedimento_fechas = ','.join(map(lambda x: str(x) or '', pedimento_fechas))
+            pedimento_aduanas = ','.join(map(lambda x: str(x) or '', pedimento_aduanas))                
+            
             facturae_data_txt_list = [
                 invoice_comprobante_data['Receptor']['rfc'] or '',
                 invoice_comprobante_data['serie'] or '',
@@ -512,7 +614,9 @@ class account_invoice(osv.osv):
                 "%.2f"%( round( float(invoice_comprobante_data['Impuestos']['totalImpuestosTrasladados'] or 0.0) * rate, 2) ),
                 facturae_state,
                 facturae_type,
-                '',
+                pedimento_numeros,
+                pedimento_fechas,
+                pedimento_aduanas,
             ]
             facturae_data_txt_lists.append( facturae_data_txt_list )
         
@@ -523,7 +627,7 @@ class account_invoice(osv.osv):
         cad = ""
         for facturae_data_txt in facturae_data_txt_lists:
             cad += '|'
-            cad += '|'.join(map(lambda x: str(x) or '||', facturae_data_txt))
+            cad += '|'.join(map(lambda x: str(x) or '', facturae_data_txt))
             cad += '|'
             cad += '\r\n'
         
@@ -700,6 +804,8 @@ class account_invoice(osv.osv):
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
         
+        self.write_cfd_data(cr, uid, ids, data_dict, context=context)
+        
         if context.get('type_data') == 'dict':
             return data_dict
         if context.get('type_data') == 'xml_obj':
@@ -708,7 +814,29 @@ class account_invoice(osv.osv):
         data_xml = codecs.BOM_UTF8 + data_xml
         fname_xml = (data_dict['Comprobante']['Emisor']['rfc'] or '') + '.' + ( data_dict['Comprobante'].get('serie', '') or '') + '.' + ( data_dict['Comprobante'].get('folio', '') or '') + '.xml'
         return fname_xml, data_xml
-
+    
+    def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
+        if not cfd_datas:
+            cfd_datas = {}
+        ##obtener cfd_data con varios ids
+        #for id in ids:
+        id = ids[0]
+        if True:
+            data = {}
+            cfd_data = cfd_datas
+            noCertificado = cfd_data.get('Comprobante', {}).get('noCertificado', '')
+            certificado = cfd_data.get('Comprobante', {}).get('certificado', '')
+            sello = cfd_data.get('Comprobante', {}).get('sello', '')
+            cadena_original = cfd_data.get('cadena_original', '')
+            data = {
+                'no_certificado': noCertificado,
+                'certificado': certificado,
+                'sello': sello,
+                'cadena_original': cadena_original,
+            }
+            self.write(cr, uid, [id], data, context=context)
+        return True
+    
     def _get_noCertificado(self, fname_cer, pem=True):
         """
         fcer = open(fname_cer, "r")
@@ -919,6 +1047,7 @@ class account_invoice(osv.osv):
     
     def _get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
         invoices = self.browse(cr, uid, ids, context=context)
+        invoice_tax_obj = self.pool.get("account.invoice.tax")
         invoice_datas = []
         invoice_data_parents = []
         #'type': fields.selection([
@@ -994,7 +1123,8 @@ class account_invoice(osv.osv):
                 
                 'DomicilioFiscal': {
                     'calle': address_invoice_parent.street and address_invoice_parent.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    #'noExterior': 'No Exterior',
+                    'noExterior': address_invoice_parent.street3 and address_invoice_parent.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Exterior"
+                    'noInterior': address_invoice_parent.street4 and address_invoice_parent.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Interior"
                     'colonia':  address_invoice_parent.street2 and address_invoice_parent.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'localidad': address_invoice_parent.city and address_invoice_parent.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'municipio': address_invoice_parent.city and address_invoice_parent.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
@@ -1004,7 +1134,8 @@ class account_invoice(osv.osv):
                 },
                 'ExpedidoEn': {
                     'calle': address_invoice.street and address_invoice.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    #'noExterior': 'No Exterior',
+                    'noExterior': address_invoice.street3 and address_invoice.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Exterior"
+                    'noInterior': address_invoice.street4 and address_invoice.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Interior"
                     'colonia':  address_invoice.street2 and address_invoice.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'localidad': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'municipio': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
@@ -1023,7 +1154,8 @@ class account_invoice(osv.osv):
                 'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    #'noExterior': 'No Exterior',
+                    'noExterior': invoice.address_invoice_id.street3 and invoice.address_invoice_id.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Exterior"
+                    'noInterior': invoice.address_invoice_id.street4 and invoice.address_invoice_id.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Interior"
                     'colonia':  invoice.address_invoice_id.street2 and invoice.address_invoice_id.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'localidad': invoice.address_invoice_id.city and invoice.address_invoice_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'municipio': invoice.address_invoice_id.city and invoice.address_invoice_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
@@ -1053,6 +1185,19 @@ class account_invoice(osv.osv):
                 if product_code:
                     concepto.update({'noIdentificacion': product_code})
                 invoice_data['Conceptos'].append( {'Concepto': concepto} )
+                
+                pedimento = None
+                try:
+                    pedimento = line.tracking_id.import_id
+                except:
+                    pass
+                if pedimento:
+                    informacion_aduanera = {
+                        'numero': pedimento.name or '',
+                        'fecha': pedimento.date or '',
+                        'aduana': pedimento.customs,
+                    }
+                    concepto.update( {'InformacionAduanera': informacion_aduanera} )
             #Termina seccion: Conceptos
             #Inicia seccion: impuestos
             invoice_data['Impuestos'] = {}
@@ -1071,21 +1216,9 @@ class account_invoice(osv.osv):
             totalImpuestosTrasladados = 0
             totalImpuestosRetenidos = 0
             for line_tax_id in invoice.tax_line:
-                #tax_name = line_tax_id.name.split(' - ')[0]
-                line_tax_id_amount = abs( line_tax_id.amount or 0.0 )
-                #tasa = line_tax_id_amount and invoice.amount_untaxed and line_tax_id_amount * 100 / invoice.amount_untaxed or 0.0
-                tasa = line_tax_id_amount and line_tax_id.base and line_tax_id_amount * 100.0 / abs( line_tax_id.base ) or 0.0
-                
-                tax_name = line_tax_id.name.lower().replace('.','').replace(' ', '').replace('-', '')
-                if 'iva' in tax_name:
-                    tax_name = 'IVA'
-                    tasa = round(tasa, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
-                elif 'isr' in tax_name:
-                    tax_name = 'ISR'
-                elif 'ieps' in tax_name:
-                    tax_name = 'IEPS'
+                tax_name = line_tax_id.name2
                 tax_names.append( tax_name )
-                
+                line_tax_id_amount = abs( line_tax_id.amount or 0.0 )
                 if line_tax_id.amount >= 0:
                     impuesto_list = invoice_data_impuestos['Traslados']
                     impuesto_str = 'Traslado'
@@ -1102,7 +1235,7 @@ class account_invoice(osv.osv):
                     }
                 }
                 if line_tax_id.amount >= 0:
-                    impuesto_dict[impuesto_str].update({'tasa': "%.2f"%( tasa )})
+                    impuesto_dict[impuesto_str].update({'tasa': "%.2f"%( abs( line_tax_id.tax_percent ) )})
                 impuesto_list.append( impuesto_dict )
             
             invoice_data['Impuestos'].update({
@@ -1140,3 +1273,32 @@ class account_invoice(osv.osv):
             invoice_data_parent['rate'] = rate
         return invoice_data_parents
 account_invoice()
+
+class account_invoice_tax(osv.osv):
+    _inherit= "account.invoice.tax"
+    
+    def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context = {}
+        res = {}
+        for invoice_tax in self.browse(cr, uid, ids, context=context):
+            res[invoice_tax.id] = {}
+            tax_name = invoice_tax.name.lower().replace('.','').replace(' ', '').replace('-', '')
+            tax_percent = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
+            if 'iva' in tax_name:
+                tax_name = 'IVA'
+                tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
+            elif 'isr' in tax_name:
+                tax_name = 'ISR'
+            elif 'ieps' in tax_name:
+                tax_name = 'IEPS'
+            res[invoice_tax.id]['name2'] = tax_name
+            res[invoice_tax.id]['tax_percent'] = tax_percent
+            #res[invoice_tax.id]['amount'] = invoice_tax.amount
+        return res
+    
+    _columns = {
+        'name2': fields.function(_get_tax_data, method=True, type='char', size=32, string='Name2', multi='tax_percent', store=True),
+        'tax_percent': fields.function(_get_tax_data, method=True, type='float', string='Tax Percent', multi='tax_percent', store=True),
+    }
+account_invoice_tax()

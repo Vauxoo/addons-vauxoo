@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.actions.act_window" id="action_import_info_tree">
+            <field name="name">Import Info</field>
+            <field name="res_model">import.info</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="help">Here you are seeing the basical information need to track the packages aroun you importing information, it is used on Mexico and Latinamerica for put this information on every legal transport and transaction document (invoices, pickings, etc.)</field>
+        </record>
+        <menuitem
+            parent="stock.menu_traceability" 
+            id="menu_action_import_info_tree" 
+            action="action_import_info_tree"
+            name="Import Information Packing"/>
+        <record model="ir.ui.view" id="view_import_info_form">
+            <field name="name">import.info.form</field>
+            <field name="model">import.info</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Import Info">
+                    <group col="4" colspan="4">
+                        <field name="name"/>
+                        <field name="customs"/>
+                        <field name="date"/>
+                        <field name="rate"/>
+                        <field name="supplier_id"/>
+                        <field name="company_id" select="1" groups="base.group_multi_company" widget="selection"/>
+                    </group>
+                    <newline/>
+                    <notebook colspan="4">
+                        <page string="Invoices">
+                            <field name="invoice_ids" nolabel="1"/>
+                        </page>
+                        <page string="Track Lots">
+                            <field name="lot_ids" nolabel="1" context="{'form_view_ref' : 'l10n_mx_import_info.stock_tracking_form'}"/>
+                            <separator string="Notes for Audit (Save after Analisys)" colspan="4"/>
+                            <field name="audit_note" nolabel="1"/>
+                        </page>
+                        <page string="Products">
+                            <field name="product_info_ids" nolabel="1" colspan="4"
+                                mode="tree,form" string="Products">
+                                <form>
+                                    <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                </form>
+                                <tree editable="bottom">
+                                    <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_import_info_tree">
+            <field name="name">import.info.tree</field>
+            <field name="model">import.info</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Import Info">
+                        <field name="name"/>
+                        <field name="customs"/>
+                        <field name="date"/>
+                        <field name="rate"/>
+                        <field name="company_id" select="1" groups="base.group_multi_company" widget="selection"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

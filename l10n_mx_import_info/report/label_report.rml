@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(104mm,61mm)" title="Test" author="Martin Simon" allowSplitting="10">
+    <pageTemplate id="first">
+      <frame id="first" x1="1mm" y1="1mm" width="101mm" height="57mm"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Table_header_Content">
+      <blockAlignment value="LEFT"/>
+    <lineStyle kind="GRID" colorName="black" thickness="1" start="0,0" stop="-1,0" />
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="Standard" fontName="Helvetica" fontSize="2mm" leading="2mm" spaceBefore="0mm" spaceAfter="1mm"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="3mm" leading="3mm" spaceBefore="3mm" spaceAfter="6mm"/>
+    <paraStyle name="Name" fontName="Helvetica" fontSize="5mm" leading="5mm" spaceBefore="0mm" spaceAfter="0mm"/>
+    <paraStyle name="Qty" fontName="Helvetica" fontSize="10mm" leading="10mm" spaceBefore="2mm" spaceAfter="2mm"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0mm" spaceAfter="6mm"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0mm" spaceAfter="6mm"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12mm" leading="6mm" spaceBefore="6mm" spaceAfter="6mm"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <images/>
+  </stylesheet>
+  <story>
+[[ repeatIn(objects,'info') ]]
+    <section>[[ repeatIn(info.product_info_ids,'product_info_ids') ]]
+    <blockTable colWidths="70mm,30mm" style="Table_header_Content">
+      <tr>
+        <td>
+            <para style="Standard">[[ info.company_id.partner_id.name ]]</para>
+            <para style="Standard">Number of Document: [[ info.name or '' ]]</para>
+            <para style="Standard">Fernando Aranguren 850 PQUE. Belenes NTE CP 45150 GDL JAL MEX</para>
+            <para style="Standard">Tel: (0133)3540 - 1200 RFC: GPT-890807-CJ9, http://www.pessah.com.mx</para>
+        </td>
+        <td>
+            <para style="Standard">Customs: [[ info.customs or '' ]]</para>
+            <para style="Standard">Made in: [[ info.supplier_id.country.name or '' ]]</para>
+            <para style="Standard">Date: [[ info.date or '' ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+<spacer length="0.5cm"/>
+        <para style="Name">[[ product_info_ids.product_id.name ]]</para>
+        <para style="Qty">[[ str(product_info_ids.qty)[:-2] ]] MTS</para>
+        <barCode code="code128" xdim="60mm" ratio="3.2">[[ product_info_ids.product_id.default_code ]][[ product_info_ids.qty ]]</barCode>
+    </section>
+  </story>
+</document>

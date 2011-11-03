@@ -2,12 +2,13 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info moylop260 (moylop260@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,9 +26,25 @@
 #
 ##############################################################################
 
-import invoice
-import wizard
-import report
-import ir_sequence
-import res_company
-import partner_address
+import time
+from tools.translate import _
+from osv import fields, osv
+import pooler
+
+
+class params_pac(osv.osv):
+    _inherit = 'params.pac'
+    
+    def _get_method_type_selection(self, cr, uid, context=None):
+        types = super(params_pac, self)._get_method_type_selection(cr, uid, context=context)
+        types.extend([
+            ('pac_sf_cancelar','PAC SF - Cancelar'),
+            ('pac_sf_firmar','PAC SF - Firmar'),
+        ])
+        return types
+    
+    _columns = {
+        'method_type': fields.selection(_get_method_type_selection, "Proceso a realizar", type='char', size=64, required=True),
+    }
+params_pac()
+
