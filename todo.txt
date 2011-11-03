@@ -9,15 +9,12 @@ agregar parche a datetime invoice para modificar el real
 
 ----PUDIERAN SER UTILES----Eliminar campos de sequence_id en company
 Eliminar order date in invoice inherit, except in invoice_datetime module
-Agregar a los certificados el procesamiento en invoice
-Agregar a los folios el procesamiento en invoice
+*******************Agregar a los certificados el procesamiento en invoice
+*******************Agregar a los folios el procesamiento en invoice
 Agregar módulo de remover acentos
 Verificar tambien los _terp_
 
-Obtener el numero de certificado
-
-Traducir idioma de módulos nuevos
-Cambiar la license
+*************Obtener el numero de certificado
 Agregar un menuitem global para configuracion de facturae
 Modificar el orden de city2
 
@@ -36,27 +33,25 @@ Domicilio, cuando tipo es facturar poner como requeridos los campos de
 
 
 
-Publicar mejora de RFC para v6
-sellar xml sin abrir .bat
+Publicar mejora de RFC para v6, solo esta en trunk
+****************sellar xml sin abrir .bat
 
-Hacer un find de la herramienta de openssl, antes de mandar a llamar el comando
+**************Hacer un find de la herramienta de openssl, antes de mandar a llamar el comando
 Modulo para convertir de ascii
 
-Cambiar la aplicacion openssl a lib
+*****************Cambiar la aplicacion openssl a lib
 
 Obtener fecha de vencimiento de un archivo de certificación.
 
 Parsear el xml con el xslt para ver que errores marca
 
-Desarrollar un actualizador de xlst desde internet
+---------------Desarrollar un actualizador de xlst desde internet
 
 Quitar __terp__.py y solo dejar __openerp__.py
 
 Agregar funcionalidad para comprimir xml
 
 Agregar modelo de adjuntos pdf & xml
-
-Add find_path openssl
 
 Depurar codigo comentado
 
@@ -70,3 +65,6 @@ ISAAC
 Agregar info demo
 Agregar log info de cuando no está instalado una dependencia
 Agregar access rules manager & usuario
+Traducir idioma de módulos nuevos
+Cambiar la license
+

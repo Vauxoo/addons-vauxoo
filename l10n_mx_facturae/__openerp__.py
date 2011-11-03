@@ -49,6 +49,7 @@ Requires the following programs:
             "l10n_mx_invoice_tax_ref",
             "l10n_mx_facturae_seq",
             "l10n_mx_company_cif",
+            "l10n_mx_partner_address",
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
         ],
     "init_xml" : [],
