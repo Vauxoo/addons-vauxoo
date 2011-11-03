@@ -11,6 +11,7 @@
                 <field name="street" position="after">
                     <field name="street3"/>
                     <field name="street4"/>
+                    <field name="city2"/>
                 </field>
             </field>
         </record>
@@ -23,6 +24,7 @@
                 <field name="street" position="after">
                     <field name="street3"/>
                     <field name="street4"/>
+                    <field name="city2"/>
                 </field>
             </field>
         </record>
@@ -36,6 +38,7 @@
                 <xpath expr="/form/notebook/page[@string='General']/field[@name='address']/form/group/field[@name='street']" position="after">
                     <field name="street3"/>
                     <field name="street4"/>
+                    <field name="city2"/>
                 </xpath>
             </field>
         </record>

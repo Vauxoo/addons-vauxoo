@@ -46,25 +46,6 @@ from tools.translate import _
 import codecs
 import release
 
-from report.amount_to_text_es import amount_to_text as amount_to_text_class
-
-amount_to_text_obj = amount_to_text_class()
-#amount_to_text = amount_to_text_obj.amount_to_text
-amount_to_text = amount_to_text_obj.amount_to_text_cheque
-
-def get_amount_to_text(self, amount, lang, currency=""):
-    if currency.upper() in ('MXP', 'MXN', 'PESOS', 'PESOS MEXICANOS'):
-        sufijo = 'M. N.'
-        currency = 'PESOS'
-    else:
-        sufijo = 'M. E.'
-    #return amount_to_text(amount, lang, currency)
-    amount_text = amount_to_text(amount, currency, sufijo)
-    amount_text = amount_text and amount_text.upper() or ''
-    return amount_text
-
-#_get_amount_to_text(o.amount_total, 'es_cheque', o.currency_id._columns.has_key('code') and o.currency_id.code or o.currency_id.name)
-
 def exec_command_pipe(name, *args):
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
     prog = tools.find_in_path(name)
@@ -76,6 +57,7 @@ def exec_command_pipe(name, *args):
         cmd = prog+' '+' '.join(args)
     return os.popen2(cmd, 'b')
 
+#TODO: Eliminar esta funcionalidad, mejor agregar al path la aplicacion que deseamos
 def find_in_subpath(name, subpath):
     if os.path.isdir( subpath ):
         path = [dir for dir in map(lambda x: os.path.join(subpath, x), os.listdir(subpath) )
@@ -86,6 +68,7 @@ def find_in_subpath(name, subpath):
                 return val
     return None
 
+#TODO: Agregar una libreria para esto
 def conv_ascii(text):
     """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
@@ -106,162 +89,12 @@ def conv_ascii(text):
                 raise osv.except_osv(_('Warning !'), 'No se pudo re-codificar la cadena [%s] en la letra [%s]'%(text, old) )
     return text
 
-class account_payment_term(osv.osv):
-    _inherit = "account.payment.term"
-    
-    def compute(self, cr, uid, id, value, date_ref=False, context={}):
-        if date_ref:
-            try:
-                date_ref = time.strftime('%Y-%m-%d', time.strptime(date_ref, '%Y-%m-%d %H:%M:%S'))
-            except:
-                pass
-        return super(account_payment_term, self).compute(cr, uid, id, value, date_ref, context=context)
-account_payment_term()
-
+#Cambiar el error
 msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
-    _order = 'date_invoice asc'
-    
-    """
-    def action_number(self, cr, uid, ids, *args):
-        cr.execute('SELECT id, type, number, move_id, reference ' \
-                'FROM account_invoice ' \
-                'WHERE id IN ('+','.join(map(str,ids))+')')
-        obj_inv = self.browse(cr, uid, ids)[0]
-        for (id, invtype, number, move_id, reference) in cr.fetchall():
-            if not number:
-                tmp_context = {
-                    #'fiscalyear_id' : obj_inv.period_id.fiscalyear_id.id,
-                }
-                if obj_inv.journal_id.invoice_sequence_id:
-                    sid = obj_inv.journal_id.invoice_sequence_id.id
-                    number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
-                else:
-                    number = self.pool.get('ir.sequence').get_id(cr, uid,
-                                                                 'account.invoice.' + invtype,
-                                                                 'code=%s',
-                                                                 context=tmp_context)
-                if not number:
-                    raise osv.except_osv(_('Warning !'), _('There is no active invoice sequence defined for the journal !'))
-                if invtype in ('in_invoice', 'in_refund'):
-                    ref = reference
-                else:
-                    ref = self._convert_ref(cr, uid, number)
-                cr.execute('UPDATE account_invoice SET number=%s ' \
-                        'WHERE id=%d', (number, id))
-                cr.execute('UPDATE account_move_line SET ref=%s ' \
-                        'WHERE move_id=%d AND (ref is null OR ref = \'\')',
-                        (ref, move_id))
-                cr.execute('UPDATE account_analytic_line SET ref=%s ' \
-                        'FROM account_move_line ' \
-                        'WHERE account_move_line.move_id = %d ' \
-                            'AND account_analytic_line.move_id = account_move_line.id',
-                            (ref, move_id))
-        return True
-    """
-    
-    def _get_invoice_sequence(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context = {}
-        res = {}
-        for invoice in self.browse(cr, uid, ids):
-            sequence_id = False
-            company = invoice.company_id
-            while True:
-                if invoice.type == 'out_invoice':
-                    if company._columns.has_key('invoice_out_sequence_id'):
-                        sequence_id = company.invoice_out_sequence_id
-                elif invoice.type == 'out_refund':
-                    if company._columns.has_key('invoice_out_refund_sequence_id'):
-                        sequence_id = company.invoice_out_refund_sequence_id
-                company = company.parent_id
-                if sequence_id or not company:
-                    break
-            if not sequence_id:
-                if invoice.journal_id._columns.has_key('invoice_sequence_id') and invoice.journal_id.invoice_sequence_id:
-                    sequence_id = invoice.journal_id.invoice_sequence_id
-                elif invoice.journal_id._columns.has_key('sequence_id') and invoice.journal_id.sequence_id:
-                    sequence_id = invoice.journal_id.sequence_id
-            sequence_id = sequence_id and sequence_id.id or False
-            if not sequence_id:
-                sequence_str = 'account.invoice.' + invoice.type
-                test = 'code=%s'
-                cr.execute('SELECT id FROM ir_sequence WHERE '+test+' AND active=%s LIMIT 1', (sequence_str, True))
-                res2 = cr.dictfetchone()
-                sequence_id = res2 and res2['id'] or False
-            res[invoice.id] = sequence_id
-        return res
-    """
-    def action_number(self, cr, uid, ids, context=None):#usando super
-        if not context:
-            context = {}
-        self._attach_invoice(cr, uid, ids)#Linea agregada
-        return res
-    """
-    def action_number(self, cr, uid, ids, *args):
-        if release.version >='6':
-            return super(account_invoice, self).action_number(cr, uid, ids, *args)
-        else:
-            return self.action_number5(cr, uid, ids, *args)
-    
-    def action_number5(self, cr, uid, ids, *args):
-        invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids)#Linea agregada
-        #Sustituye a la funcion original, es el mismo codigo, solo le agrega unas lineas, y no hacer SUPER
-        """OpenERP
-        cr.execute('SELECT id, type, number, move_id, reference ' \
-                   'FROM account_invoice ' \
-                   'WHERE id IN %s',
-                   (tuple(ids),))
-        """
-        #TinyERP compatibility
-        cr.execute('SELECT id, type, number, move_id, reference ' \
-                'FROM account_invoice ' \
-                'WHERE id IN ('+','.join(map(str,ids))+')')
-        obj_inv = self.browse(cr, uid, ids)[0]
-        for (id, invtype, number, move_id, reference) in cr.fetchall():
-            if not number:
-                tmp_context = {
-                    'fiscalyear_id' : obj_inv.period_id and obj_inv.period_id.fiscalyear_id and obj_inv.period_id.fiscalyear_id.id or False,
-                }
-                """
-                #if obj_inv.journal_id.invoice_sequence_id:#Original line code
-                if obj_inv.journal_id.invoice_sequence_id or invoice_id__sequence_id[id]:#Agregue esta linea
-                    #sid = obj_inv.journal_id.invoice_sequence_id.id#Original line code
-                    sid = invoice_id__sequence_id[id] or obj_inv.journal_id.invoice_sequence_id.id#Esta es la linea modificada
-                    number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
-                else:
-                    number = self.pool.get('ir.sequence').get_id(cr, uid,
-                                                                 'account.invoice.' + invtype,
-                                                                 'code=%s',
-                                                                 context=tmp_context)
-                """
-                sid = invoice_id__sequence_id[id]
-                if sid:
-                    number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
-                if not number:
-                    raise osv.except_osv('Warning !', 'No hay una secuencia de folios, definida !')
 
-                if invtype in ('in_invoice', 'in_refund'):
-                    ref = reference
-                else:
-                    ref = self._convert_ref(cr, uid, number)
-                cr.execute('UPDATE account_invoice SET number=%s ' \
-                        'WHERE id=%s', (number, id))
-                cr.execute('UPDATE account_move SET ref=%s ' \
-                        'WHERE id=%s AND (ref is null OR ref = \'\')',
-                        (ref, move_id))
-                cr.execute('UPDATE account_move_line SET ref=%s ' \
-                        'WHERE move_id=%s AND (ref is null OR ref = \'\')',
-                        (ref, move_id))
-                cr.execute('UPDATE account_analytic_line SET ref=%s ' \
-                        'FROM account_move_line ' \
-                        'WHERE account_move_line.move_id = %s ' \
-                            'AND account_analytic_line.move_id = account_move_line.id',
-                            (ref, move_id))
-        return True
-    
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
@@ -303,7 +136,7 @@ class account_invoice(osv.osv):
             }
             self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
         return True
-        
+    
     def action_make_cfd(self, cr, uid, ids, *args):
         self._attach_invoice(cr, uid, ids)
         return True
@@ -371,14 +204,6 @@ class account_invoice(osv.osv):
                 self.create_report_pdf(cr, uid, ids, context={'fname': fname})
         return True
     
-    def action_move_create(self, cr, uid, ids, *args):
-        for inv in self.browse(cr, uid, ids):
-            if inv.move_id:
-                continue
-            if not inv.date_invoice:
-                self.write(cr, uid, [inv.id], {'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S')})
-        return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-    
     def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
@@ -439,42 +264,33 @@ class account_invoice(osv.osv):
     def action_cancel(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
-        
-    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context={}
-        company_obj = self.pool.get('res.company')
-        certificate_obj = self.pool.get('res.company.facturae.certificate')
-        res = {}
-        for invoice in self.browse(cr, uid, ids, context=context):
-            context.update( {'date_work': invoice.date_invoice} )
-            certificate_id = False
-            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
-            certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
-            res[invoice.id] = certificate_id and certificate_id.id or False
-        return res
     
-    def _get_amount_to_text(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context={}
+    def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
         res = {}
+        attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids, context=context):
-            amount_to_text = get_amount_to_text(self, invoice.amount_total, 'es_cheque', invoice.currency_id._columns.has_key('code') and invoice.currency_id.code or invoice.currency_id.name)
-            res[invoice.id] = amount_to_text
+            attachment_xml_id = attachment_obj.search(cr, uid, [
+                    ('name','=',invoice.fname_invoice+'.xml'),
+                    ('datas_fname','=',invoice.fname_invoice+'.xml'),
+                    ('res_model','=','account.invoice'),
+                    ('res_id','=',invoice.id),
+                ], limit=1)
+            res[invoice.id] = attachment_xml_id and attachment_xml_id[0] or False
         return res
     
     _columns = {
         ##Extract date_invoice from original, but add datetime
-        'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
-        'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
-        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
+        #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
+        #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
+        #'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
         'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice'),
-        'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
+        #'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
         'no_certificado': fields.char('No. Certificado', size=64),
         'certificado': fields.text('Certificado', size=64),
         'sello': fields.text('Sello', size=512),
         'cadena_original': fields.text('Cadena Original', size=512),
         'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
+        'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML'),
     }
     
     _defaults = {
@@ -495,7 +311,7 @@ class account_invoice(osv.osv):
     
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
-        f = open( fname, 'w' )
+        f = open( fname, 'wb' )
         f.write( base64.decodestring( binary_data ) )
         f.close()
         os.close( fileno )
@@ -555,6 +371,8 @@ class account_invoice(osv.osv):
                 else:
                     file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
                 
+                file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
+                
                 if not file_globals.get('fname_xslt', False):
                     raise osv.except_osv('Warning !', 'No se ha definido fname_xslt. !')
                 
@@ -566,6 +384,20 @@ class account_invoice(osv.osv):
                 raise osv.except_osv('Warning !', 'Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!'%(msg2))
         return file_globals
     
+    def _____________get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
+        #TODO: Transform date to fmt %d/%m/%Y %H:%M:%S
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_repmensual_xslt = self._get_file_globals(cr, uid, ids, context=context)['fname_repmensual_xslt']
+        fname_tmp = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__repmensual__' )
+        rep_mensual = ''
+        for invoice in self.browse(cr, uid, ids, context=context):
+            xml_b64 = invoice.cfd_xml_id and invoice.cfd_xml_id.datas or False
+            if xml_b64:
+                fname_xml = certificate_lib.b64str_to_tempfile( xml_b64 or '', file_suffix='.xml', file_prefix='openerp__' + (False or '') + '__xml__' )
+                rep_mensual += certificate_lib._transform_xml(fname_xml=fname_xml, fname_xslt=fname_repmensual_xslt, fname_out=fname_tmp)
+                rep_mensual += '\r\n'
+        return rep_mensual, fname_tmp
+        
     def _get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
         facturae_datas = self._get_facturae_invoice_dict_data(cr, uid, ids, context=context)
         facturae_data_txt_lists = []
@@ -779,8 +611,11 @@ class account_invoice(osv.osv):
         fname_txt, txt_str = self._xml2cad_orig(cr=False, uid=False, ids=False, context=context)
         data_dict['cadena_original'] = txt_str
         
+        if not txt_str:
+            raise osv.except_osv(_('Error en Cadena original!'), _('No se pudo obtener la cadena original del comprobante.\nVerifique su configuracion.\n%s'%(msg2)) )
+        
         if not data_dict['Comprobante'].get('folio', ''):
-            raise osv.except_osv(_('Error en Folio!'), _('No se pudo obtener el Folio del comprobante (Numero de Factura).\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
+            raise osv.except_osv(_('Error en Folio!'), _('No se pudo obtener el Folio del comprobante.\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
             
         #time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
         context.update( { 'fecha': data_dict['Comprobante']['fecha'] } )
@@ -838,193 +673,31 @@ class account_invoice(osv.osv):
         return True
     
     def _get_noCertificado(self, fname_cer, pem=True):
-        """
-        fcer = open(fname_cer, "r")
-        filetype = pem and OpenSSL.crypto.FILETYPE_PEM or OpenSSL.crypto.FILETYPE_ASN1
-        cer = OpenSSL.crypto.load_certificate(filetype, fcer.read())
-        serial_number_hex_str = hex( cer.get_serial_number() )
-        #serial_number_fmt_str = '3' + serial_number_hex_str.replace('3', '').replace('0x', '').replace('L', '')
-        serial_number_fmt_str = serial_number_hex_str.replace('3', '').replace('0x', '').replace('L', '')
-        fcer.close()
-        return serial_number_fmt_str
-        """
-        if os.name == "nt":
-            prog_openssl = 'openssl.exe'
-        else:
-            prog_openssl = 'openssl'
-        
-        subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
-        prog_openssl_fullpath = tools.find_in_path( prog_openssl ) or find_in_subpath(prog_openssl, subpath) or prog_openssl
-        
-        #(fileno, fname_no_cert) = tempfile.mkstemp("no_cert", "__openerp_cfd__")
-        #f = open( fname_no_cert, 'w' )
-        #f.close( )
-        #os.close( fileno )
-        
-        (fileno_serial_number_cert, fname_serial_number_cert) = tempfile.mkstemp('.txt', 'openerp_' + (False or '') + '__facturae_serial_number_cert__' )
-        os.close(fileno_serial_number_cert)
-        
-        (fileno_serial_number_cert_bat, fname_serial_number_cert_bat) = tempfile.mkstemp('.txt.bat', 'openerp_' + (False or '') + '__facturae_serial_number_cert__' )
-        os.close(fileno_serial_number_cert_bat)
-        
-        cmd = 'x509 -in "%s" -serial -noout > "%s"'%(fname_cer, fname_serial_number_cert)
-        if os.name == "nt":
-            f = open(fname_serial_number_cert_bat, 'w')
-            f.write( '"' + prog_openssl_fullpath + '"' + ' ' + cmd )
-            f.close()
-            #os.close(fileno_serial_number_cert)
-            os.startfile( fname_serial_number_cert_bat )
-        else:
-            args = tuple( cmd.split(' ') )
-            input, output = exec_command_pipe(prog_openssl_fullpath, *args)
-            input.close()
-            output.close()
-        fserial_number_cert = file( fname_serial_number_cert, "r" )
-        max = 3
-        cont = 1
-        while True:
-            time.sleep(1)
-            number_cert_str = fserial_number_cert.read()
-            if number_cert_str or max < cont:
-                break
-            cont += 1
-        fserial_number_cert.close()
-        number_cert_str = number_cert_str.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '')
-        return number_cert_str
-        
-
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_serial = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__serial__' )
+        result = certificate_lib._get_param_serial(fname_cer, fname_out=fname_serial, type='PEM')
+        return result
+    
     def _get_sello(self, cr=False, uid=False, ids=False, context={}):
-        if not context:
-            context = {}
-        if os.name == "nt":
-            prog_xsltproc = 'xsltproc.exe'
-            prog_openssl = 'openssl.exe'
-        else:
-            prog_xsltproc = 'xsltproc'
-            prog_openssl = 'openssl'
-        
-        subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
-        prog_openssl_fullpath = tools.find_in_path( prog_openssl ) or find_in_subpath(prog_openssl, subpath) or prog_openssl
-        prog_xsltproc_fullpath = tools.find_in_path( prog_xsltproc ) or find_in_subpath(prog_xsltproc, subpath) or prog_xsltproc
-        
-        #if not prog_openssl_fullpath:
-            #raise osv.except_osv('Warning !', 'No se ha encontrado la aplicacion requerida: %s.\n%s !'%(prog_openssl, msg2))
-        #if not prog_xsltproc_fullpath:
-            #raise osv.except_osv('Warning !', 'No se ha encontrado la aplicacion requerida: %s.\n%s !'%(prog_xsltproc, msg2))
-        
-        fname_xslt = context['fname_xslt']
-        fname_xml = context['fname_xml']
-        fname_cer = context['fname_cer']
-        fname_key = context['fname_key']
-        fname_sign = context['fname_sign']
+        #TODO: Put encrypt date dynamic
         fecha = context['fecha']
-        fsign = file( fname_sign, "w" )
-        fsign.close()
-        #fecha_2 = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha, '%Y-%m-%dT%H:%M:%S'))
-        #print "fecha_2",fecha_2
         year = float( time.strftime('%Y', time.strptime(fecha, '%Y-%m-%dT%H:%M:%S')) )
         if year >= 2011:
             encrypt = "sha1"
         if year <= 2010:
             encrypt = "md5"
-        cmd = '"%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A > "%s"'%( fname_xslt, fname_xml, \
-            prog_openssl_fullpath, encrypt, fname_key, prog_openssl_fullpath, fname_sign)
-        if os.name == "nt":
-            (fileno_cmd, fname_cmd) = tempfile.mkstemp('.cmd', 'openerp_' + ('cmd' or '') + '__facturae__' )
-            f = open(fname_cmd, 'w')
-            f.write( '"' + prog_xsltproc_fullpath + '"' + ' ' + cmd )
-            f.close()
-            os.close(fileno_cmd)
-            os.startfile( fname_cmd )
-        else:
-            args = tuple( cmd.split(' ') )
-            input, output = exec_command_pipe(prog_xsltproc, *args)
-            input.close()
-            output.close()
-        fsign = file( fname_sign, "r" )
-        max = 3
-        cont = 1
-        while True:
-            time.sleep(1)
-            sign_str = fsign.read()
-            if sign_str or max < cont:
-                break
-            cont += 1
-        fsign.close()
-        return sign_str
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_sign = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__sign__' )
+        result = certificate_lib._sign(fname=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_key=context['fname_key'], fname_out=fname_sign, encrypt=encrypt, type_key='PEM')
+        return result
     
     def _xml2cad_orig(self, cr=False, uid=False, ids=False, context={}):
-        if not context:
-            context = {}
-        if os.name == "nt":
-            prog_xsltproc = 'xsltproc.exe'
-        else:
-            prog_xsltproc = 'xsltproc'
-        
-        subpath = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'depends_app')
-        prog_xsltproc_fullpath = tools.find_in_path( prog_xsltproc ) or find_in_subpath(prog_xsltproc, subpath) or prog_xsltproc
-        
-        fname_xslt = context['fname_xslt']
-        fname_xml = context['fname_xml']
-        (fileno_cad_orig, fname_cad_orig) = tempfile.mkstemp('.cmd', 'openerp_' + ('cad_orig' or '') + '__facturae__' )
-        cmd = '"%s" "%s" >"%s"'%( fname_xslt, fname_xml, fname_cad_orig )
-        os.close(fileno_cad_orig)
-        
-        if os.name == "nt":
-            (fileno_cmd, fname_cmd) = tempfile.mkstemp('.cmd', 'openerp_' + ('cmd_cad_orig' or '') + '__facturae__' )
-            f = open(fname_cmd, 'w')
-            f.write( '"' + prog_xsltproc_fullpath + '"' + ' ' + cmd )
-            f.close()
-            os.close(fileno_cmd)
-            os.startfile( fname_cmd )
-        else:
-            args = tuple( cmd.split(' ') )
-            input, output = exec_command_pipe(prog_xsltproc, *args)
-            input.close()
-            output.close()
-        fcad_orig = file( fname_cad_orig, "r" )
-        max = 3
-        cont = 1
-        cad_orig_str = ""
-        while True:
-            time.sleep(1)
-            cad_orig_str = fcad_orig.read()
-            if cad_orig_str or max < cont:
-                break
-            cont += 1
-        fcad_orig.close()
-        return fname_cad_orig, cad_orig_str
-        
-        """
-        
-        txt_str = ""
-        fname_xml = context.get('fname_xml', '')
-        fname_txt = context.get('fname_txt', '') or (fname_xml and fname_xml + '.txt' or '')
-        fname_xslt = context['fname_xslt']
-        if fname_xml:
-            styledoc = libxml2.parseFile(fname_xslt)
-            style = libxslt.parseStylesheetDoc(styledoc)
-            doc = libxml2.parseFile(fname_xml)
-            result = style.applyStylesheet(doc, None)
-            #print "result",result
-            style.saveResultToFilename(fname_txt, result, 0)
-            style.freeStylesheet()
-            doc.freeDoc()
-            result.freeDoc()
-            txt_str = open(fname_txt, "r").read()
-        return fname_txt, txt_str
-        """
-    """
-    def _get_certificate_components(self, cr=False, uid=False, ids=False, context={}):
-        if not context:
-            context = {}
-        fname_cer = context['fname_cer']
-        fcer = open(fname_cer, "r")
-        pem = fcer.read()
-        cer = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, pem)
-        components_dict = dict( cer.get_subject().get_components() )
-        return components_dict
-    """
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        fname_tmp = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__cadorig__' )
+        cad_orig = certificate_lib._transform_xml(fname_xml=context['fname_xml'], fname_xslt=context['fname_xslt'], fname_out=fname_tmp)
+        return fname_tmp, cad_orig
+
+#TODO: agregar esta funcionalidad con openssl
     def _get_certificate_str( self, fname_cer_pem = ""):
         fcer = open( fname_cer_pem, "r")
         lines = fcer.readlines()
@@ -1039,7 +712,7 @@ class account_invoice(osv.osv):
             if 'BEGIN CERTIFICATE' in line:
                 loading = True
         return cer_str
-    
+#TODO: agregar esta funcionalidad con openssl
     def _get_md5_cad_orig(self, cadorig_str, fname_cadorig_digest):
         cadorig_digest = hashlib.md5(cadorig_str).hexdigest()
         open(fname_cadorig_digest, "w").write(cadorig_digest)
@@ -1126,7 +799,7 @@ class account_invoice(osv.osv):
                     'noExterior': address_invoice_parent.street3 and address_invoice_parent.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Exterior"
                     'noInterior': address_invoice_parent.street4 and address_invoice_parent.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Interior"
                     'colonia':  address_invoice_parent.street2 and address_invoice_parent.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
-                    'localidad': address_invoice_parent.city and address_invoice_parent.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'localidad': address_invoice_parent.city2 and address_invoice_parent.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'municipio': address_invoice_parent.city and address_invoice_parent.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': address_invoice_parent.state_id and address_invoice_parent.state_id.name and address_invoice_parent.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': address_invoice_parent.country_id and address_invoice_parent.country_id.name and address_invoice_parent.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
@@ -1137,7 +810,7 @@ class account_invoice(osv.osv):
                     'noExterior': address_invoice.street3 and address_invoice.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Exterior"
                     'noInterior': address_invoice.street4 and address_invoice.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '', #"Numero Interior"
                     'colonia':  address_invoice.street2 and address_invoice.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
-                    'localidad': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'localidad': address_invoice.city2 and address_invoice.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'municipio': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': address_invoice.state_id and address_invoice.state_id.name and address_invoice.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': address_invoice.country_id and address_invoice.country_id.name and address_invoice.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
@@ -1273,32 +946,3 @@ class account_invoice(osv.osv):
             invoice_data_parent['rate'] = rate
         return invoice_data_parents
 account_invoice()
-
-class account_invoice_tax(osv.osv):
-    _inherit= "account.invoice.tax"
-    
-    def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context = {}
-        res = {}
-        for invoice_tax in self.browse(cr, uid, ids, context=context):
-            res[invoice_tax.id] = {}
-            tax_name = invoice_tax.name.lower().replace('.','').replace(' ', '').replace('-', '')
-            tax_percent = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
-            if 'iva' in tax_name:
-                tax_name = 'IVA'
-                tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
-            elif 'isr' in tax_name:
-                tax_name = 'ISR'
-            elif 'ieps' in tax_name:
-                tax_name = 'IEPS'
-            res[invoice_tax.id]['name2'] = tax_name
-            res[invoice_tax.id]['tax_percent'] = tax_percent
-            #res[invoice_tax.id]['amount'] = invoice_tax.amount
-        return res
-    
-    _columns = {
-        'name2': fields.function(_get_tax_data, method=True, type='char', size=32, string='Name2', multi='tax_percent', store=True),
-        'tax_percent': fields.function(_get_tax_data, method=True, type='float', string='Tax Percent', multi='tax_percent', store=True),
-    }
-account_invoice_tax()

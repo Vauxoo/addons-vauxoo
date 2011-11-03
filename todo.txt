@@ -1,0 +1,69 @@
+**************Separar datetime invoice
+***********Agregar otro lib de facturae donde solo tenga folios & certificados
+****************Add module text2amount_mx
+Separar la forma de llenar el xml
+Agregar el menuitem de certificados & folios
+agregar parche a datetime invoice para modificar el real
+
+
+
+----PUDIERAN SER UTILES----Eliminar campos de sequence_id en company
+Eliminar order date in invoice inherit, except in invoice_datetime module
+*******************Agregar a los certificados el procesamiento en invoice
+*******************Agregar a los folios el procesamiento en invoice
+Agregar módulo de remover acentos
+Verificar tambien los _terp_
+
+*************Obtener el numero de certificado
+Agregar un menuitem global para configuracion de facturae
+Modificar el orden de city2
+
+modulo para la cedula de identificacion fiscal
+
+Activar una bandera, para reportar CFD y otra bandera para CFDI
+
+agregar localidad a factura electronica y dependencia
+
+Domicilio, cuando tipo es facturar poner como requeridos los campos de 
+	*Calle1
+	*Pais
+	*Estado
+	*City
+	*CP
+
+
+
+Publicar mejora de RFC para v6, solo esta en trunk
+****************sellar xml sin abrir .bat
+
+**************Hacer un find de la herramienta de openssl, antes de mandar a llamar el comando
+Modulo para convertir de ascii
+
+*****************Cambiar la aplicacion openssl a lib
+
+Obtener fecha de vencimiento de un archivo de certificación.
+
+Parsear el xml con el xslt para ver que errores marca
+
+---------------Desarrollar un actualizador de xlst desde internet
+
+Quitar __terp__.py y solo dejar __openerp__.py
+
+Agregar funcionalidad para comprimir xml
+
+Agregar modelo de adjuntos pdf & xml
+
+Depurar codigo comentado
+
+Cambiar la posicion del RFC
+
+Validar la factura con workflow, para que la valide normalmente, pero le asigne el número de factura a como nosotros queremos.
+
+
+ISAAC
+Agregar info demo
+Agregar log info de cuando no está instalado una dependencia
+Agregar access rules manager & usuario
+Traducir idioma de módulos nuevos
+Cambiar la license
+

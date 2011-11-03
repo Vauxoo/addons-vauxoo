@@ -26,42 +26,20 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
+    "name" : "l10n_mx_invoice_taxline_ref",
     "version" : "1.0",
     "author" : "moylop260@hotmail.com",
     "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
-  
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
+    "description" : """
     """,
     "website" : "http://moylop.blogspot.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document", 
-            "l10n_mx_facturae_lib", "l10n_mx_partner_address",
-            "l10n_mx_facturae_cer",
-            "l10n_mx_invoice_datetime",
-            "l10n_mx_invoice_tax_ref",
-            "l10n_mx_facturae_seq",
-            "l10n_mx_company_cif",
-            "l10n_mx_partner_address",
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
-        ],
+    "depends" : [
+        "account",
+    ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
-        "l10n_mx_facturae_wizard6.xml",
-        #"ir_sequence_view.xml",
-        #"res_company_view6.xml",
-        "invoice_view.xml",
-        #"partner_address_view.xml",
     ],
     "installable" : True,
     "active" : False,

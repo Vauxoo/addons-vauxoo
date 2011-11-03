@@ -25,37 +25,30 @@
 #
 ##############################################################################
 
-{
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
-    "version" : "1.0",
-    "author" : "moylop260@hotmail.com",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
-  
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
-    """,
-    "website" : "http://moylop.blogspot.com/",
-    "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document", 
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
-        "l10n_mx_facturae_wizard.xml",
-        "ir_sequence_view.xml",
-        "res_company_view.xml",
-        "invoice_view.xml",
-        #"partner_address_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from osv import osv
+from osv import fields
+from tools.translate import _
+
+class account_invoice(osv.osv):
+    _inherit = 'account.invoice'
+    
+    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
+        if not context:
+            context={}
+        company_obj = self.pool.get('res.company')
+        certificate_obj = self.pool.get('res.company.facturae.certificate')
+        res = {}
+        for invoice in self.browse(cr, uid, ids, context=context):
+            context.update( {'date_work': invoice.date_invoice} )
+            certificate_id = False
+            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
+            certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
+            res[invoice.id] = certificate_id and certificate_id.id or False
+        return res
+    
+    _columns = {
+        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
+    }
+    
+    
+account_invoice()
