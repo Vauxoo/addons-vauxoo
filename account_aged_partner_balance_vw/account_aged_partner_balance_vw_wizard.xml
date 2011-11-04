@@ -8,13 +8,14 @@
             model="account.invoice"
             menu="False"
         />
+        <!--
         <menuitem id="menu_wizard_open_move_line"
             name="Open Movew" parent="account.menu_finance_receivables"
             action="wizard_open_move_line"
             type="wizard"
             sequence="150"
         />
-        
+        -->
         
     </data>
 </openerp>
