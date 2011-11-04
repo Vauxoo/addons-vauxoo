@@ -2,8 +2,8 @@
 <openerp>
     <data>
     
-        <report id="account_invoice_facturae_pdf"
-            name="account.invoice.facturae.pdf"
+        <report id="account_invoice_facturae_pdf2"
+            name="account.invoice.facturae.pdf2"
             string="Factura Electronica PDF"
             model="account.invoice"
             header="False"

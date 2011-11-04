@@ -28,9 +28,12 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import tools
 import os
 import time
 import release
+import tempfile
+import base64
 
 class res_company_facturae_certificate(osv.osv):
     _name = 'res.company.facturae.certificate'
@@ -38,33 +41,79 @@ class res_company_facturae_certificate(osv.osv):
     _rec_name = 'serial_number'
     
     _columns = {
-        'serial_number': fields.char('Serial Number', size=64, required=False),
         'company_id': fields.many2one('res.company', 'Company', required=True),
-        'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert'),
-        'certificate_key_file': fields.binary('Certificate Key File', filters='*.key'),
-        'certificate_password': fields.char('Certificate Password', size=64, invisible=True),
+        'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
+        'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
+        'certificate_password': fields.char('Certificate Password', size=64, invisible=True, required=True),
         'certificate_file_pem': fields.binary('Certificate File PEM', filters='*.pem,*.cer,*.certificate,*.cert'),
         'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
-        'date_start': fields.date('Fecha Inicio', required=False),
-        'date_end': fields.date('Fecha Fin', required=True),
-        'fname_xslt': fields.char('Archivo XML Parser (.xslt)', help='Ubicacion en servidor de archivo XSLT, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"', size=256, required=False),
+        'date_start': fields.date('Date Start', required=False),
+        'date_end': fields.date('Date End', required=True),
+        'serial_number': fields.char('Serial Number', size=64, required=True),
+        'fname_xslt': fields.char('File XML Parser (.xslt)', size=256, required=False,
+            help='Folder in server with XSLT file',
+            #TODO, translate to english and later translate to spanish, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.'
+        ),
         'active': fields.boolean('Active'),
     }
     
-    def _generate_pem(fname_cer, type="certificate"):
-        #certificate
-        #cmd = "openssl x509 -inform DER -outform PEM -in AAA010101AAAsd.cer -pubkey >AAA010101AAA.cer.pem"
-        if type == 'certificate':
-            cmd = "openssl x509 -inform DER -outform PEM -in cer.cer -pubkey >cer.cer.pem"
-        if type == 'key':
-            cmd = "openssl pkcs8 -inform DER -in key.key -out key.key.pem"
-        #contrasenia: a0123456789
-    
     _defaults = {
         'active': lambda *a: True,
-        'fname_xslt': lambda *a: os.path.join('addons', 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt'),
+        #'fname_xslt': lambda *a: os.path.join('addons', 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt'),
         'date_start': lambda *a: time.strftime('%Y-%m-%d'),
     }
+    
+    def onchange_certificate_info(self, cr, uid, ids, cer_der_b64str, key_der_b64str, password, context=None):
+        #print "ENTRO A onchange_certificate_info"        
+        certificate_lib = self.pool.get('facturae.certificate.library')
+        value = {}
+        warning = {}
+        certificate_file_pem = False
+        certificate_key_file_pem = False
+        invoice_obj = self.pool.get('account.invoice')
+        if cer_der_b64str and key_der_b64str and password:
+            
+            fname_cer_der = certificate_lib.b64str_to_tempfile(cer_der_b64str, file_suffix='.der.cer', file_prefix='openerp__' + (False or '') + '__ssl__', )
+            fname_key_der = certificate_lib.b64str_to_tempfile(key_der_b64str, file_suffix='.der.key', file_prefix='openerp__' + (False or '') + '__ssl__', )
+            fname_password = certificate_lib.b64str_to_tempfile(base64.encodestring(password), file_suffix='der.txt', file_prefix='openerp__' + (False or '') + '__ssl__', ) 
+            fname_tmp = certificate_lib.b64str_to_tempfile('', file_suffix='tmp.txt', file_prefix='openerp__' + (False or '') + '__ssl__', )
+            
+            cer_pem = certificate_lib._transform_der_to_pem(fname_cer_der, fname_tmp, type_der='cer')
+            cer_pem_b64 = base64.encodestring( cer_pem )
+            
+            key_pem = certificate_lib._transform_der_to_pem(fname_key_der, fname_tmp, fname_password, type_der='key')
+            key_pem_b64 = base64.encodestring( key_pem )
+            
+            #date_fmt_return='%Y-%m-%d %H:%M:%S'
+            date_fmt_return='%Y-%m-%d'
+            serial = certificate_lib._get_param_serial(fname_cer_der, fname_tmp, type='DER')
+            dates = certificate_lib._get_param_dates(fname_cer_der, fname_tmp, date_fmt_return=date_fmt_return, type='DER')
+            date_start = dates.get('startdate', False)
+            date_end = dates.get('enddate', False)
+            
+            os.unlink( fname_cer_der )
+            os.unlink( fname_key_der )
+            os.unlink( fname_password )
+            os.unlink( fname_tmp ) 
+            
+            if not key_pem_b64 or not cer_pem_b64:
+                warning = {
+                   'title': _('Warning!'),
+                   'message': _('You certificate file, key file or password is incorrect.\nVerify uppercase and lowercase')
+                }
+                value.update({
+                    'certificate_file_pem': False,
+                    'certificate_key_file_pem': False,
+                })
+            else:
+                value.update({
+                    'certificate_file_pem': cer_pem_b64,
+                    'certificate_key_file_pem': key_pem_b64,
+                    'serial_number': serial,
+                    'date_start': date_start,
+                    'date_end': date_end,
+                })
+        return {'value': value, 'warning': warning}
     
     '''
     _sql_constraints = [
@@ -174,7 +223,7 @@ class res_company(osv.osv):
     _columns = {
         'certificate_ids': fields.one2many('res.company.facturae.certificate', 'company_id', 'Certificates'),
         'certificate_id': fields.function(_get_current_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Certificate Current'), 
-        'cif_file': fields.binary('Cedula de Identificacion Fiscal'),
+        #'cif_file': fields.binary('Cedula de Identificacion Fiscal'),
         'invoice_out_sequence_id': fields.many2one('ir.sequence', 'Invoice Out Sequence', \
             help="The sequence used for invoice out numbers."),
         'invoice_out_refund_sequence_id': fields.many2one('ir.sequence', 'Invoice Out Refund Sequence', \

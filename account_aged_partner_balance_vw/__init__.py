@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2011 moylop260 - http://moylop.blogspot.com/
 #    All Rights Reserved.
 #    info moylop260 (moylop260@hotmail.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,9 +24,5 @@
 #
 ##############################################################################
 
-import invoice
+import account_aged_partner_balance_vw
 import wizard
-import report
-#import ir_sequence
-#import res_company
-#import partner_address

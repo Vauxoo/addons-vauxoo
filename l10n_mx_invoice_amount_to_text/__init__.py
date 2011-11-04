@@ -7,6 +7,7 @@
 #    info moylop260 (moylop260@hotmail.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@hotmail.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,17 +25,5 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
-import os
-import time
-
-class res_partner_address(osv.osv):
-    _inherit = 'res.partner.address'
-    
-    _columns = {
-        'street3': fields.char('Street3', size=128),
-        'street4': fields.char('Street4', size=128),
-    }
-res_partner_address()
+import invoice
+import amount_to_text_es_MX

@@ -1,14 +1,11 @@
-# -*- encoding: utf-8 -*-
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
-#    All Rights Reserved
-###############Credits######################################################
-#    Coded by: nhomar@openerp.com.ve,
-#    Planified by: Nhomar Hernandez
-#    Finance by: 
-#    Audited by: Alejandro Negrin alejandro@openerpmexico.com
-#############################################################################
+#!/usr/bin/env python
+#-*- coding:utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    d$
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -21,4 +18,22 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 ##############################################################################
+
+import time
+import netsvc
+from osv import fields, osv
+from mx import DateTime
+from tools import config
+from tools.translate import _
+
+class res_partner(osv.osv):
+    _inherit = 'res.partner'
+    _columns = {
+        'over_credit':fields.boolean('Allow Over Credit?', required=False),
+        'maturity_over_credit':fields.boolean('Allow Maturity Over Credit?', required=False),
+        'credit_maturity_limit': fields.float(string='Credit Maturity Limit'),
+    }
+res_partner()
+

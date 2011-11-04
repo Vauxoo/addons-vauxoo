@@ -167,7 +167,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         return ""
     
 report_sxw.report_sxw(
-    'report.account.invoice.facturae.pdf',
+    'report.account.invoice.facturae.pdf2',
     'account.invoice',
     'addons/l10n_mx_facturae_cbb/report/invoice_facturae_pdf.rml',
     header=False,
