@@ -12,7 +12,7 @@
                     <field name="company_id"/>
                     <field name="invoice_id"/>
                     <newline/>
-                    <field name="file_xml"/>
+                    <field name="file_input"/>
                     <newline/>
                     <field name="file_xml_sign"/>
                     <newline/>

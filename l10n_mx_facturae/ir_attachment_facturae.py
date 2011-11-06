@@ -33,7 +33,7 @@ import netsvc
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
 
-    def _get_type(self, cr, uid, ids, context=None):
+    def _get_type(self, cr, uid, ids=None, context=None):
         types = [('cfd2010', 'CFD 2010'), ('cfdi2011', 'CFD-I 2011'), ('cbb', 'CBB')]
         return types
 
@@ -45,14 +45,16 @@ class ir_attachment_facturae_mx(osv.osv):
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
         'company_id': fields.many2one('res.company', 'Company'),
         #'pac_id': ,Ver si no genera dependencia del modelo de pac
-        'file_xml': fields.binary('File XML'),
-        'file_xml_index': fields.text('File XML Index'),
+        'file_input': fields.binary('File input'),#TODO: Agregar readonly dependiendo del state
+        'file_input_index': fields.text('File input'),
         'file_xml_sign': fields.binary('File XML Sign'),
         'file_xml_sign_index': fields.text('File XML Sign Index'),
         'file_pdf': fields.binary('File PDF'),
         'file_pdf_index': fields.text('File PDF Index'),
         'identifier': fields.char('Identifier', size=128),
         'type': fields.selection(_get_type, 'Type', type='char', size=64),
+        'description': fields.text('Description'),
+        #'invoice_type': fields.ref(),#referencia al tipo de factura
         'state': fields.selection([
                 ('draft', 'Draft'),
                 ('confirmed', 'Confirmed'),#Generate XML

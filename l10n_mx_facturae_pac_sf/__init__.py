@@ -28,3 +28,4 @@ import invoice
 import report
 import wizard
 import params_pac
+import ir_attachment_facturae
