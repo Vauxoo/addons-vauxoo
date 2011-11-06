@@ -34,7 +34,7 @@ class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = [('cfd2010', 'CFD 2010'), ('cfdi2011', 'CFD-I 2011'), ('cbb', 'CBB')]
+        types = [('cfd2010', 'CFD 2010'), ('cbb', 'CBB')]
         return types
 
     def _get_index(self, cr, uid, ids, context=None):

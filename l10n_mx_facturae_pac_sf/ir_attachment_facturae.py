@@ -53,7 +53,6 @@ class ir_attachment_facturae_mx(osv.osv):
     #def action_confirm(self, cr, uid, ids, context=None):
         #return self.write(cr, uid, ids, {'state': 'confirmed'})
     def sign_pac_solfact(self, cr, uid, ids, context=None):
-        print "entro a sign_pac_solfact"
         invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = self.pool.get('params.pac')
         #TODO: Agregar moneda, al crear (transformar info)
@@ -164,15 +163,22 @@ class ir_attachment_facturae_mx(osv.osv):
         return res
     
     def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'})
+        for attachment in self.browse(cr, uid, ids, context=context):
+            if attachment.type == 'cfdi2011_pac_solfact':#TODO: Aqui deberia de ir un reporte generico, para todos.
+                report_name = 'account.invoice.facturae.pac.sf.pdf'
+                service = netsvc.LocalService("report."+report_name)
+                (result,format) = service.create(cr, uid, [attachment.invoice_id.id], {}, {})
+                file_pdf = base64.encodestring( result )
+                self.write(cr, uid, ids, {'file_pdf': file_pdf})
+        res = super(ir_attachment_facturae_mx, self).action_printable(cr, uid, ids, context=context)
+        return res
 
     def action_send_email(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'sent_email'})
+        return super(ir_attachment_facturae_mx, self).action_send_email(cr, uid, ids, context=context)
     
     def action_done(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'done'})
+        return super(ir_attachment_facturae_mx, self).action_done(cr, uid, ids, context=context)
     
     def action_cancel(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'cancel'})
-    
+        return super(ir_attachment_facturae_mx, self).action_cancel(cr, uid, ids, context=context)
 ir_attachment_facturae_mx()
