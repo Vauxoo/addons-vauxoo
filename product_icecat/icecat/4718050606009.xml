@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3659662-1712.jpg" HighPicHeight="280" HighPicSize="32477" HighPicWidth="280" ID="3659662" LowPic="http://images.icecat.biz/img/norm/low/3659662-1712.jpg" LowPicHeight="200" LowPicSize="19471" LowPicWidth="200" Name="4GB DDR3 1333MHz DIMM" Prod_id="AD3U1333C4G9-S" Quality="ICECAT" ReleaseDate="2009-09-21" ThumbPic="http://images.icecat.biz/thumbs/3659662.jpg" ThumbPicSize="4251" Title="A-DATA  4GB DDR3 1333MHz DIMM">
+       <Category ID="911">
+       
+    <Name ID="496750" Value="memorias" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="1545" No="10">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5275" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1546" No="27">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1548" No="0">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5276" No="0">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1549" No="8">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1552" No="20">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1551" No="6">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1550" No="12">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1547" No="25">
+     <FeatureGroup ID="33">
+       <Name ID="510137" Value="Tiempo de acceso" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5273" No="0">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5274" No="0">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6347" No="0">
+     <FeatureGroup ID="146">
+       <Name ID="624351" Value="Other features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="4718050606009"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="30385227" LongDesc="" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="A-Data Memoria DDR3 1333 4GB" URL="" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="71247625" Local_ID="0" Value="4096" CategoryFeature_ID="11699" CategoryFeatureGroup_ID="1546" No="10101000" Presentation_Value="4096 MB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="6">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508089" Value="Memoria interna" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247626" Local_ID="0" Value="DDR3" CategoryFeature_ID="6137" CategoryFeatureGroup_ID="1546" No="10100980" Presentation_Value="DDR3" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="427">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508131" Value="Tipo de memoria interna" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247628" Local_ID="0" Value="1333" CategoryFeature_ID="29552" CategoryFeatureGroup_ID="1546" No="2147583647" Presentation_Value="1333 MHz" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2900">
+	    <Measure ID="18" Sign="">
+	      <Signs><Sign ID="7430" langid="6">MHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="508512" Value="Velocidad de memoria del reloj" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247633" Local_ID="0" Value="1 x 4096" CategoryFeature_ID="26153" CategoryFeatureGroup_ID="1546" No="10100000" Presentation_Value="1 x 4096 MB" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2014">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508462" Value="Diseño de memoria" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247627" Local_ID="0" Value="240-pin DIMM" CategoryFeature_ID="45866" CategoryFeatureGroup_ID="1546" No="10100000" Presentation_Value="240-pin DIMM" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="7696">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="595973" Value="Memory form factor" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247631" Local_ID="0" Value="9" CategoryFeature_ID="6141" CategoryFeatureGroup_ID="1546" No="200000" Presentation_Value="9" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1635">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506926" Value="Latencia CAS" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247629" Local_ID="0" Value="N" CategoryFeature_ID="6130" CategoryFeatureGroup_ID="1546" No="100994" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1628">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504884" Value="ECC" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247630" Local_ID="0" Value="N" CategoryFeature_ID="33154" CategoryFeatureGroup_ID="1546" No="100993" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6580">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506960" Value="Registrado" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247634" Local_ID="0" Value="1.5" CategoryFeature_ID="36754" CategoryFeatureGroup_ID="1552" No="101000" Presentation_Value="1.5 V" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="6266">
+	    <Measure ID="42" Sign="">
+	      <Signs><Sign ID="7451" langid="6">V</Sign></Signs>
+	    </Measure>
+	    <Name ID="506958" Value="Voltaje de memoria" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247632" Local_ID="0" Value="128Mx8" CategoryFeature_ID="33153" CategoryFeatureGroup_ID="1545" No="100111" Presentation_Value="128Mx8" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6579">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506959" Value="Organización de los chips" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71247574" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33611" CategoryFeatureGroup_ID="1545" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">A-DATA 4GB DDR3 1333MHz DIMM, 4096 MB, DDR3, 1333 MHz, 1 x 4096 MB, 240-pin DIMM, 1.5 V</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">A-DATA 4GB DDR3 1333MHz DIMM. Memoria: 4096 MB, DDR3, 1333 MHz, 1 x 4096 MB, 240-pin DIMM. Contro de energía: 1.5 V</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2634" Name="A-DATA"/>
+      </Product>
+
+</ICECAT-interface>

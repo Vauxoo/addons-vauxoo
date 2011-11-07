@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/343223-HP.jpg" HighPicHeight="400" HighPicSize="45235" HighPicWidth="400" ID="343223" LowPic="http://images.icecat.biz/img/norm/low/343223-HP.jpg" LowPicHeight="200" LowPicSize="18186" LowPicWidth="200" Name="Cartucho de impresión magenta para HP Color LaserJet Q6473A" Prod_id="Q6473A" Quality="SUPPLIER" ReleaseDate="2005-11-03" ThumbPic="http://images.icecat.biz/thumbs/343223.jpg" ThumbPicSize="4668" Title="HP Color LaserJet 3600 Printing Supplies Cartucho de impresión magenta para HP Color LaserJet Q6473A">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="8291607030770"/>
+        <EANCode EAN="0829160703077"/>
+        <EANCode EAN="0735029220435"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="21330500" LongDesc="&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Overview&lt;/span&gt;&lt;br /&gt;Los consumibles de impresión HP Color LaserJet 3600 proporcionan excelentes resultados de forma rápida y sencilla. El nuevo tóner HP ColorSphere se ajusta al sistema de impresión para optimizar la calidad y fiabilidad, lo que aumenta la productividad y reduce los costes de impresión.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Features&lt;/span&gt;&lt;br /&gt;&lt;b&gt;Los consumibles de impresión HP Color LaserJet 3600 con tóner ColorSphere proporcionan siempre textos nítidos y colores brillantes. La mejora del satinado ofrece una gama dinámica de colores brillantes e intensos que le permiten producir documentos de empresa admirables.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Los consumibles de impresión HP Color LaserJet 3600 con tóner ColorSphere y tecnología de impresión HP Smart [1] son fáciles de reponer y permiten realizar una impresión rápida, fácil y productiva. HP SureSupply [2] permite realizar pedidos en línea sin complicaciones.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Los consumibles de tinta HP Color LaserJet 3600 con tecnología de impresión HP Smart [1] permiten que los cartuchos y la impresora realicen ajustes continuos para optimizar la calidad y la fiabilidad de impresión; también proporcionan un menor coste total de impresión.&lt;/b&gt;&lt;br /&gt;\n\n" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="Cartucho de impresión magenta HP Color LaserJet Q6473A con tóner ColorSphere" URL="" WarrantyInfo="Garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra.\nDeclaración estándar de garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra. Esta garantía no cubre productos que (a) hayan sido rellenados, restaurados o modificados de cualquier modo, (b) presenten problemas que se deban a un uso incorrecto, un almacenamiento inadecuado o que se hayan utilizado fuera de las especificaciones medioambientales publicadas para el producto de impresora, o (c) presenten un uso distinto al habitual. Para acceder al servicio de garantía, devuelva el producto al lugar donde lo adquirió (con una descripción por escrito del problema y muestras de impresión) o póngase en contacto con el servicio de atención al cliente de HP.  HP reemplazará o devolverá el importe de compra, según estime oportuno, de los productos que en efecto estén defectuosos. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, LA GARANTÍA ANTERIOR ES EXCLUSIVA Y PREVALECE SOBRE CUALQUIER OTRA GARANTÍA O CONDICIÓN, ESCRITA U ORAL, EXPRESA O IMPLÍCITA, Y HP NO SE RESPONSABILIZA DE FORMA ESPECÍFICA DE NINGUNA GARANTÍA IMPLÍCITA O CONDICIÓN DE COMERCIALIZACIÓN, CALIDAD SATISFACTORIA E IDONEIDAD PARA UN DETERMINADO FIN. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, NI HP NI SUS PROVEEDORES SERÁN RESPONSABLES DE LOS DAÑOS Y PERJUICIOS DIRECTOS, ESPECIALES, FORTUITOS, DERIVADOS (INCLUIDAS PÉRDIDAS ECONÓMICAS O DE DATOS) O DE OTRO TIPO, INDEPENDIENTEMENTE DE SI SE BASAN EN UN CONTRATO, RESPONSABILIDADES EXTRACONTRACTUALES U OTROS. LOS TÉRMINOS DE LA GARANTÍA INCLUIDOS EN ESTE DOCUMENTO, Y HASTA DONDE LO PERMITA LA LEY, NO EXCLUYEN, RESTRINGEN NI MODIFICAN, SINO QUE SE AÑADEN A LOS DERECHOS ESTABLECIDOS POR LA LEY APLICABLES A LA VENTA AL PÚBLICO DE ESTE PRODUCTO.\n" langid="6"/>
+       <ProductFamily ID="52517">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="1" ID="98776590" Local_ID="26402862" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Laser" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" Value="Tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103558364" Local_ID="3838600" Value="Magenta" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Magenta" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" Value="Impresión a color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100182710" Local_ID="3838608" Value="10 - 27" CategoryFeature_ID="5573" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="10 - 27 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838592" Value="" CategoryFeature_ID="5769" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="HR de 10 a 70%" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838598" Value="" CategoryFeature_ID="5770" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de -20 a 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838605" Value="" CategoryFeature_ID="12235" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="HR de 10 a 90%" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838591" Value="" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="376 x 132 x 147 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98772174" Local_ID="3838606" Value="1500" CategoryFeature_ID="5067" CategoryFeatureGroup_ID="2279" No="100030" Presentation_Value="1500 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" Value="Paquete, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98784193" Local_ID="3838604" Value="1200" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="1200 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838594" Value="" CategoryFeature_ID="7206" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="1.110 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1690">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="504358" Value="Peso vacío" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26402861" Value="" CategoryFeature_ID="8457" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="376 x 132 x 147 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="582">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508152" Value="Dimensiones del embalaje (alto x alto x peso)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100191689" Local_ID="26402866" Value="1150 x 790 x 1174" CategoryFeature_ID="30379" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="1150 x 790 x 1174 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4824">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506470" Value="Dimensiones europeas del pallet (An x F x Al)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838596" Value="" CategoryFeature_ID="9878" CategoryFeatureGroup_ID="2281" No="0" Presentation_Value="Aproximadamente 4.000 páginas con un 5% de cobertura" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2021">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506447" Value="Producción de papel para formato A4 (color)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838597" Value="" CategoryFeature_ID="1914" CategoryFeatureGroup_ID="2279" No="16854" Presentation_Value="152.5 kg (336.2 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="513">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506906" Value="Palet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98772173" Local_ID="3838607" Value="85" CategoryFeature_ID="1911" CategoryFeatureGroup_ID="2279" No="16851" Presentation_Value="85 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" Value="Cantidad por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838595" Value="" CategoryFeature_ID="1909" CategoryFeatureGroup_ID="2279" No="16849" Presentation_Value="1150 x 790 x 1174 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="530">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506907" Value="Dimensiones de Palet (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98772180" Local_ID="26402864" Value="85" CategoryFeature_ID="27820" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="85 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3293">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506463" Value="Cantidad de europalet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98772181" Local_ID="26402867" Value="1" CategoryFeature_ID="30381" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" Value="Cantidad por caja" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="106467558" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838593" Value="" CategoryFeature_ID="10488" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="El tóner HP ColorSphere consigue un mayor satinado, con lo que se obtiene una gama dinámica de colores luminosos." Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2143">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508476" Value="Características técnicas" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838599" Value="" CategoryFeature_ID="7207" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="17" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" Value="Número de cartones por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838601" Value="" CategoryFeature_ID="9881" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="4" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2066">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506454" Value="Número de apilado para palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838602" Value="" CategoryFeature_ID="7208" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="5" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" Value="Número de capa por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3838603" Value="" CategoryFeature_ID="9880" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="20" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2065">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506453" Value="Número de apilado para caja de cartón" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26402863" Value="" CategoryFeature_ID="27319" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Inteligente" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1879">
+	    <Measure ID="35" Sign="">
+	      <Signs><Sign ID="7444" langid="6">DPI</Sign></Signs>
+	    </Measure>
+	    <Name ID="506442" Value="Resolución de la tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26402865" Value="" CategoryFeature_ID="30376" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="152.5 kg (336.2 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3288">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506462" Value="Europalet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="text/html" Date="2010-01-27 10:34:10" Description="Consumibles de impresión HP Color LaserJet 3600" Height="0" KeepAsURL="1" MultimediaObject_ID="277682" Size="209253" Type="data sheet" URL="http://objects.icecat.biz/objects/343223-277682.html" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      	  <ProductRelated ID="84444784" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="1367165" Prod_id="629463" ThumbPic="http://images2.icecat.biz/thumbs/1367165.jpg" Name="Toner cartridge magenta">
+	      <Supplier ID="383" Name="Pelikan"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="61015860" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="2602705" Prod_id="27376" ThumbPic="http://images.icecat.biz/thumbs/2602705.jpg" Name="27376">
+	      <Supplier ID="81" Name="Imation"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59996474" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="2825471" Prod_id="V73600M" ThumbPic="http://images.icecat.biz/thumbs/2825471.jpg" Name="V73600M">
+	      <Supplier ID="138" Name="V7"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279935" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="378018" Prod_id="Q5987A#401" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922414" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="377981" Prod_id="Q5988A#401" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279948" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="378228" Prod_id="Q5986A#401" ThumbPic="http://images.icecat.biz/thumbs/342143.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58940519" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="341962" Prod_id="Q5987A" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279940" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="610096" Prod_id="Q5987A#426" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58940520" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="342143" Prod_id="Q5986A" ThumbPic="http://images.icecat.biz/thumbs/342143.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922413" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="341932" Prod_id="Q5988A" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279941" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902264" Prod_id="Q5987A#430" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279953" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="610095" Prod_id="Q5986A#426" ThumbPic="http://images.icecat.biz/thumbs/342143.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922418" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902051" Prod_id="Q5988A#430" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279944" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198822" Prod_id="Q5987A#ABA" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49083920" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="936894" Prod_id="Q5987AR#401" ThumbPic="" Name="Color LaserJet 3600n Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49084316" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1317744" Prod_id="Q5988AR#401" ThumbPic="http://images.icecat.biz/thumbs/1489060.jpg" Name="Color LaserJet 3600dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279939" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1575060" Prod_id="Q5987A#420" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922415" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="512363" Prod_id="Q5988A#ABU" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922419" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198821" Prod_id="Q5988A#ABA" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279943" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1743080" Prod_id="Q5987A#483" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279946" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="573493" Prod_id="Q5987A#ABY" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279954" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902050" Prod_id="Q5986A#430" ThumbPic="http://images.icecat.biz/thumbs/342143.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279945" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="514051" Prod_id="Q5987A#ABU" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279942" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="935219" Prod_id="Q5987A#436" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922417" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="610093" Prod_id="Q5988A#426" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279955" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="514111" Prod_id="Q5986A#ABU" ThumbPic="http://images.icecat.biz/thumbs/342143.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34216725" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1621028" Prod_id="Q5987A#401-KIT2" ThumbPic="http://images2.icecat.biz/thumbs/1621028.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32279956" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="566171" Prod_id="Q5986A#ABY" ThumbPic="http://images.icecat.biz/thumbs/342143.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="15987455" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1268520" Prod_id="Q5986A#ACTIE" ThumbPic="http://images2.icecat.biz/thumbs/1268520.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34216623" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554689" Prod_id="Q5987A#401+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554689.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922416" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="566170" Prod_id="Q5988A#ABY" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72922420" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1608198" Prod_id="Q5988A#436" ThumbPic="http://images.icecat.biz/thumbs/341932.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="22663915" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554693" Prod_id="Q5988A#401+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554693.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="23979053" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1621026" Prod_id="Q5986A#401-KIT2" ThumbPic="http://images2.icecat.biz/thumbs/1621026.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34216521" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="849562" Prod_id="Q5987A#401 G" ThumbPic="http://images2.icecat.biz/thumbs/849562.jpg" Name="Impresora HP Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49084315" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1239548" Prod_id="Q5988AR#ABA" ThumbPic="http://images.icecat.biz/thumbs/1489060.jpg" Name="Color LaserJet 3600dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="22663917" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554682" Prod_id="Q5986A#401+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554682.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="26491076" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1717449" Prod_id="Q5986A#401 G" ThumbPic="http://images2.icecat.biz/thumbs/1717449.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49083921" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198823" Prod_id="Q5987AR#ABA" ThumbPic="" Name="Color LaserJet 3600n Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="27956712" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1825869" Prod_id="Q5986A#401#" ThumbPic="http://images2.icecat.biz/thumbs/1825869.jpg" Name="Impresora HP Color LaserJet 3600">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="27956806" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1825951" Prod_id="Q5988A#401#" ThumbPic="http://images2.icecat.biz/thumbs/1825951.jpg" Name="Impresora HP Color LaserJet 3600dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="5807406" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="555123" Prod_id="BDL/Q5987A#ABU" ThumbPic="http://images.icecat.biz/thumbs/341962.jpg" Name="Color LaserJet 3600n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP Cartucho de impresión magenta para HP Color LaserJet Q6473A Color LaserJet 3600 Printing Supplies, Laser, Magenta, 10 - 27 °C, 1500 g, 1200 g</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP Cartucho de impresión magenta para HP Color LaserJet Q6473A, Color LaserJet 3600 Printing Supplies. Calidad de impresión: Laser, Magenta. Condiciones ambientales: 10 - 27 °C. Peso y dimensiones: 1500 g, 1200 g</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

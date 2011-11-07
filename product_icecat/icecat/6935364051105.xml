@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3875523-TP-LINK.jpg" HighPicHeight="270" HighPicSize="24042" HighPicWidth="450" ID="3875523" LowPic="http://images.icecat.biz/img/norm/low/3875523-TP-LINK.jpg" LowPicHeight="120" LowPicSize="5485" LowPicWidth="200" Name="54Mbps eXtended Range™ Wireless Access Point " Prod_id="TL-WA500G" Quality="ICECAT" ReleaseDate="2009-11-19" ThumbPic="http://images.icecat.biz/thumbs/3875523.jpg" ThumbPicSize="2141" Title="TP-LINK  54Mbps eXtended Range™ Wireless Access Point">
+       <Category ID="909">
+       
+    <Name ID="496748" Value="puntos de acceso WLAN" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="909" No="1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5878" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2994" No="12">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1505" No="7">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1448" No="44">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="912" No="39">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1447" No="45">
+     <FeatureGroup ID="23">
+       <Name ID="510128" Value="Anchura de banda" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1670" No="33">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="911" No="35">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2993" No="71">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="908" No="95">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4463" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2507" No="9">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1898" No="11">
+     <FeatureGroup ID="54">
+       <Name ID="510156" Value="Navegación" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3580" No="100">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3121" No="38">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2504" No="42">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2505" No="34">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3460" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2991" No="13">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2992" No="99">
+     <FeatureGroup ID="91">
+       <Name ID="510190" Value="Wireless LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2995" No="40">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364051105"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26695362" LongDesc="El Punto de Acceso Inalámbrico a 54Mbps TL-WA500G está diseñado para establecer una red inalámbrica G escalable o conectar dispositivos adaptados a Ethernet a una red por cable ya existente.\n\nMúltiples modos operativos\n\nSoportando hasta seis modos operativos, el TL-WA500G es el punto de acceso multimodo más versátil. Modo AP: el modo más básico, le permite crear una red inalámbrica;\n\nModo Cliente: conecta un AP TL-WA500G a sus consolas de juegos, setop box y otros dispositivos multimedia con puerto Ethernet, y añadirlos a su red inalámbrica actual, habilitándolos con facilidad para la WiFi al tiempo que se elimina la necesidad de extender un cableado antiestético y de instalar drivers;\n\nRepetidor: Amplía la señal inalámbrica a zonas a las que antes era difícil llegar, aumentando significativamente la cobertura de su red inalámbrica;\n\nBridge (Puente): Dos o más TL-WA500G pueden convertirse en puentes inalámbricos cuando une lugares distantes difíciles de cablear, proporcionando una solución adecuada y económica para el desarrollo de su red.\n\neXtended RangeTM\n\nEl Punto de Acceso inalámbrico TL-WA500G a 54Mbps es compatible con los estándares IEEE 802.11g/b y adopta la tecnología de transmisión 2x a 3x eXtended Range™ de forma que la distancia de transmisión es de 4 veces superior a la de las soluciones tradicionales 11g/b.\n\nSeguridad\n\nCon la mejor seguridad inalámbrica, el Punto de Acceso Inalámbrico TL-WA500G a 54Mbps cuenta con múltiples medidas de protección. Puede configurarse de forma que deshabilite la opción de emisión de una identidad de la red inalámbrica (SSID) de forma que solamente las estaciones que tengan la SSID puedan conectarse. Este punto de acceso proporciona seguridad por encriptación de LAN inalámbrica WEP 64/128/152-bit y autenticación WPA/WPA2 y WPA-PSK/WPA2-PSK así como seguridad por encriptación TKIP/AES.\n\nEn resumen: ¡El TL-WA500G es la solución integral para su red inalámbrica!" ManualPDFSize="0" ManualPDFURL="" PDFSize="858820" PDFURL="http://pdfs.icecat.biz/pdf/26695362-3727.pdf" ShortDesc="TL-WA500G - Punto de Acceso Inalámbrico eXtended Range a 54Mbps" URL="http://www.tp-link.com/es/products/productDetails.asp?class=&amp;content=spe&amp;pmodel=TL-WA500G" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="82550271" Local_ID="0" Value="54" CategoryFeature_ID="8584" CategoryFeatureGroup_ID="3580" No="10100111" Presentation_Value="54 Mbit/s" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1165">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="506175" Value="Tasa de transferencia (máx)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550272" Local_ID="0" Value="10/100" CategoryFeature_ID="23350" CategoryFeatureGroup_ID="3580" No="100000" Presentation_Value="10/100 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3768">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="504222" Value="Ethernet LAN, velocidad de transferencia de datos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550273" Local_ID="0" Value="2.4 - 2.4835" CategoryFeature_ID="7582" CategoryFeatureGroup_ID="2992" No="100089" Presentation_Value="2.4 - 2.4835 GHz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1769">
+	    <Measure ID="37" Sign="">
+	      <Signs><Sign ID="7446" langid="6">GHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="504886" Value="Frecuencia de banda" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550274" Local_ID="0" Value="802.11b/g" CategoryFeature_ID="8548" CategoryFeatureGroup_ID="2992" No="100000" Presentation_Value="802.11b/g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1048">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508296" Value="Tecnología inalámbrica" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550280" Local_ID="0" Value="IEEE 802.11b: DQPSK, DBPSK, DSSS, and CCK IEEE 802.11g: BPSK, QPSK, 16QAM, 64QAM, OFDM" CategoryFeature_ID="12554" CategoryFeatureGroup_ID="2992" No="100000" Presentation_Value="IEEE 802.11b: DQPSK, DBPSK, DSSS, and CCK IEEE 802.11g: BPSK, QPSK, 16QAM, 64QAM, OFDM" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1503">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504873" Value="Modulación" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550275" Local_ID="0" Value="Fast Ethernet" CategoryFeature_ID="17442" CategoryFeatureGroup_ID="1448" No="100000" Presentation_Value="Fast Ethernet" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="747">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508176" Value="Tecnología de cableado" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550276" Local_ID="0" Value="1" CategoryFeature_ID="23345" CategoryFeatureGroup_ID="1448" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2312">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508388" Value="Ethernet LAN (RJ-45) cantidad de puertos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550277" Local_ID="0" Value="150 x 100 x 28" CategoryFeature_ID="7589" CategoryFeatureGroup_ID="912" No="100002" Presentation_Value="150 x 100 x 28 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550282" Local_ID="0" Value="0 - 40" CategoryFeature_ID="7585" CategoryFeatureGroup_ID="911" No="100085" Presentation_Value="0 - 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550284" Local_ID="0" Value="-40 - 70" CategoryFeature_ID="7846" CategoryFeatureGroup_ID="911" No="100000" Presentation_Value="-40 - 70 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550278" Local_ID="0" Value="IEEE 802.11g, IEEE 802.11b" CategoryFeature_ID="7840" CategoryFeatureGroup_ID="2505" No="100000" Presentation_Value="IEEE 802.11g, IEEE 802.11b" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="793">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508182" Value="Cumplimiento de estándares del mercado" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550279" Local_ID="0" Value="Power" CategoryFeature_ID="20755" CategoryFeatureGroup_ID="3460" No="100000" Presentation_Value="Power" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3662">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504946" Value="Energía LED" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550281" Local_ID="0" Value="54M: -68dBm@10% PER\n11M: -85dBm@8% PER\n6M: -88dBm@10% PER\n1M: -90dBm@8% PER" CategoryFeature_ID="14457" CategoryFeatureGroup_ID="2504" No="0" Presentation_Value="54M: -68dBm@10% PER\n11M: -85dBm@8% PER\n6M: -88dBm@10% PER\n1M: -90dBm@8% PER" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="248">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508125" Value="Características físicas" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82550283" Local_ID="0" Value="10 - 90" CategoryFeature_ID="7842" CategoryFeatureGroup_ID="911" No="0" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="621">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508155" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82549994" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33652" CategoryFeatureGroup_ID="909" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="488666" Prod_id="LW053" ThumbPic="http://images.icecat.biz/thumbs/488666.jpg" Name="Wireless LAN USB 2.0 Adapter">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="1798596" Prod_id="LW057V2" ThumbPic="http://images2.icecat.biz/thumbs/1798596.jpg" Name="Wireless LAN PCI Card 54 Mbps">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="1811388" Prod_id="LW056V2" ThumbPic="http://images2.icecat.biz/thumbs/1811388.jpg" Name="Wireless LAN Cardbus Adapter">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="137" Reversed="0" Preferred="0">
+	    <Product ID="2113001" Prod_id="NA025" ThumbPic="http://images2.icecat.biz/thumbs/2113001.jpg" Name="Wi-Fi Antenna 5 dBi">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="1791655" Prod_id="LW313" ThumbPic="http://images2.icecat.biz/thumbs/1791655.jpg" Name="WLAN USB 2.0 Adapter 300Mbps">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="137" Reversed="0" Preferred="0">
+	    <Product ID="2113604" Prod_id="NA027" ThumbPic="http://images2.icecat.biz/thumbs/2113604.jpg" Name="Wi-Fi Antenna 7 dBi">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="1793404" Prod_id="LW311" ThumbPic="http://images2.icecat.biz/thumbs/1793404.jpg" Name="Wireless LAN Cardbus adapter 300 Mbps">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="137" Reversed="0" Preferred="0">
+	    <Product ID="559601" Prod_id="NA015" ThumbPic="http://images.icecat.biz/thumbs/559601.jpg" Name="Indoor Dipole Antenna 5 dBi">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="883" Reversed="0" Preferred="0">
+	    <Product ID="1549666" Prod_id="UT012" ThumbPic="" Name="CAB UTP SWEEX CAT5e Grey 3m">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="1794065" Prod_id="LW312" ThumbPic="http://images2.icecat.biz/thumbs/1794065.jpg" Name="Wireless LAN PCI Card 300 Mbps">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="137" Reversed="0" Preferred="0">
+	    <Product ID="2110085" Prod_id="NA030" ThumbPic="http://images2.icecat.biz/thumbs/2110085.jpg" Name="Wi-Fi Antenna 10 dBi">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="137" Reversed="0" Preferred="0">
+	    <Product ID="559572" Prod_id="NA018" ThumbPic="http://images.icecat.biz/thumbs/559572.jpg" Name="Indoor Dipole Antenna 8 dBi">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 54Mbps eXtended Range™ Wireless Access Point , 54 Mbit/s, 10/100 Mbit/s, 2.4 - 2.4835 GHz, 802.11b/g, IEEE 802.11b: DQPSK, DBPSK, DSSS, and CCK IEEE 802.11g: BPSK, QPSK, 16QAM, 64QAM, OFDM, Fast Ethernet</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 54Mbps eXtended Range™ Wireless Access Point . Transmisión de datos: 54 Mbit/s, 10/100 Mbit/s. Wireless LAN features: 2.4 - 2.4835 GHz, 802.11b/g, IEEE 802.11b: DQPSK, DBPSK, DSSS, and CCK IEEE 802.11g: BPSK, QPSK, 16QAM, 64QAM, OFDM. Conectividad: Fast Ethernet. Peso y dimensiones: 150 x 100 x 28 mm. Condiciones ambientales: 0 - 40 °C, -40 - 70 °C. Aprobaciones reguladoras: IEEE 802.11g, IEEE 802.11b. Iluminación/Alarmas: Power</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

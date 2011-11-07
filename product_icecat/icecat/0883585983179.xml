@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images2.icecat.biz/img/norm/high/1597343-6107.jpg" HighPicHeight="500" HighPicSize="101694" HighPicWidth="500" ID="1597343" LowPic="http://images2.icecat.biz/img/norm/low/1597343-6107.jpg" LowPicHeight="200" LowPicSize="32521" LowPicWidth="200" Name="60 Black Ink Cartridge" Prod_id="CC640WL" Quality="SUPPLIER" ReleaseDate="2008-05-17" ThumbPic="http://images2.icecat.biz/thumbs/1597343.jpg" ThumbPicSize="7459" Title="HP 60 Ink Cartridges Black Ink Cartridge">
+       <Category ID="377">
+       
+    <Name ID="496575" Value="cartuchos de tinta" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="485" No="21">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2247" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2249" No="10">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4609" No="0">
+     <FeatureGroup ID="20">
+       <Name ID="510125" Value="Tecnología de la impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2248" No="7">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3583" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3682" No="0">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0883585983179"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="55806">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="31918682" Local_ID="0" Value="Inkjet" CategoryFeature_ID="8121" CategoryFeatureGroup_ID="485" No="99999" Presentation_Value="inyección de tinta" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" Value="Tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="33264074" Local_ID="0" Value="20 - 80" CategoryFeature_ID="1932" CategoryFeatureGroup_ID="2248" No="116999" Presentation_Value="20 - 80 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="33264079" Local_ID="0" Value="15 - 32" CategoryFeature_ID="5556" CategoryFeatureGroup_ID="2248" No="100000" Presentation_Value="15 - 32 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="33264089" Local_ID="0" Value="20 - 80" CategoryFeature_ID="12142" CategoryFeatureGroup_ID="2248" No="100000" Presentation_Value="20 - 80 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="31922145" Local_ID="0" Value="50" CategoryFeature_ID="5017" CategoryFeatureGroup_ID="2247" No="100050" Presentation_Value="50 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" Value="Paquete, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="31922143" Local_ID="0" Value="336" CategoryFeature_ID="27310" CategoryFeatureGroup_ID="485" No="0" Presentation_Value="336" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="453">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506429" Value="Inyectores de cabezal de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="33264086" Local_ID="0" Value="0.56" CategoryFeature_ID="9668" CategoryFeatureGroup_ID="485" No="0" Presentation_Value="1.42 cm (0.56 &quot;)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2043">
+	    <Measure ID="16" Sign="&quot;">
+	      <Signs><Sign ID="7428" langid="6">"</Sign></Signs>
+	    </Measure>
+	    <Name ID="506451" Value="Franja de cabeza de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="31922142" Local_ID="0" Value="1" CategoryFeature_ID="29237" CategoryFeatureGroup_ID="485" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" Value="Cantidad por caja" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="101478996" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33640" CategoryFeatureGroup_ID="485" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="31922146" Local_ID="0" Value="60" CategoryFeature_ID="2596" CategoryFeatureGroup_ID="3682" No="35637" Presentation_Value="60 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="777">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504746" Value="Cantidad de estuches o cajas de cartón" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="31922147" Local_ID="0" Value="5760" CategoryFeature_ID="1928" CategoryFeatureGroup_ID="3682" No="16913" Presentation_Value="5760 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" Value="Cantidad por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="33264081" Local_ID="0" Value="12" CategoryFeature_ID="7170" CategoryFeatureGroup_ID="3682" No="0" Presentation_Value="12" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" Value="Número de cartones por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="31922144" Local_ID="0" Value="8" CategoryFeature_ID="7171" CategoryFeatureGroup_ID="3682" No="0" Presentation_Value="8" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" Value="Número de capa por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="76604221" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3406455" Prod_id="CB774B#BGW" ThumbPic="http://images.icecat.biz/thumbs/3340374.jpg" Name="Deskjet D5560 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604240" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3480242" Prod_id="Q8418B#BEL" ThumbPic="http://images.icecat.biz/thumbs/3462001.jpg" Name="Impresora multifunción HP Photosmart C4680">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604225" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3429621" Prod_id="CB730B#BGW" ThumbPic="http://images.icecat.biz/thumbs/3432364.jpg" Name="Impresora multifunción HP Deskjet F2480">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604243" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3509490" Prod_id="CB770B#BGW" ThumbPic="http://images.icecat.biz/thumbs/3509490.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604263" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3804451" Prod_id="Q8380B#BEK" ThumbPic="http://images.icecat.biz/thumbs/3539337.jpg" Name="Impresora multifunción HP Photosmart C4780">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604242" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3509390" Prod_id="CB735B#BGW" ThumbPic="http://images.icecat.biz/thumbs/3554394.jpg" Name="Deskjet F2420 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604217" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3340374" Prod_id="CB774B" ThumbPic="http://images.icecat.biz/thumbs/3340374.jpg" Name="Impresora HP Deskjet D5560">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604244" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3511344" Prod_id="Q8418B#BEK" ThumbPic="http://images.icecat.biz/thumbs/3462001.jpg" Name="Impresora multifunción HP Photosmart C4680">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604248" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3554394" Prod_id="CB735B" ThumbPic="http://images.icecat.biz/thumbs/3554394.jpg" Name="Deskjet F2420 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604229" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3432364" Prod_id="CB730B" ThumbPic="http://images.icecat.biz/thumbs/3432364.jpg" Name="Impresora multifunción HP Deskjet F2480">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604223" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3426943" Prod_id="CB770B#BEK" ThumbPic="http://images.icecat.biz/thumbs/3509490.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604227" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3432330" Prod_id="CB770A" ThumbPic="http://images.icecat.biz/thumbs/3432330.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604214" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3333410" Prod_id="Q8418B#BEV" ThumbPic="http://images.icecat.biz/thumbs/3462001.jpg" Name="Impresora multifunción HP Photosmart C4680">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604247" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3539337" Prod_id="Q8380B" ThumbPic="http://images.icecat.biz/thumbs/3539337.jpg" Name="Impresora multifunción HP Photosmart C4780">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604253" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3596121" Prod_id="Q8380B#BEL" ThumbPic="http://images.icecat.biz/thumbs/3539337.jpg" Name="Photosmart C4780 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604215" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3333411" Prod_id="CB770B#BEV" ThumbPic="http://images.icecat.biz/thumbs/3509490.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604230" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3432365" Prod_id="CB770B" ThumbPic="http://images.icecat.biz/thumbs/3509490.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604216" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3333417" Prod_id="Q8380B#BEV" ThumbPic="http://images.icecat.biz/thumbs/3539337.jpg" Name="Photosmart C4780 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604236" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3459892" Prod_id="CB730B#BEV" ThumbPic="http://images.icecat.biz/thumbs/3432364.jpg" Name="Impresora multifunción HP Deskjet F2480">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604237" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3462001" Prod_id="Q8418B" ThumbPic="http://images.icecat.biz/thumbs/3462001.jpg" Name="Impresora multifunción HP Photosmart C4680">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604246" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3516055" Prod_id="Q8418B#BEP" ThumbPic="http://images.icecat.biz/thumbs/3462001.jpg" Name="Impresora multifunción HP Photosmart C4680">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604261" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3738085" Prod_id="Q8418B#BEQ" ThumbPic="http://images.icecat.biz/thumbs/3462001.jpg" Name="Impresora multifunción HP Photosmart C4680">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604260" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3731986" Prod_id="Q8380B#BEQ" ThumbPic="http://images.icecat.biz/thumbs/3539337.jpg" Name="Impresora multifunción HP Photosmart C4780">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604241" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3509356" Prod_id="Q8380B#BEP" ThumbPic="http://images.icecat.biz/thumbs/3539337.jpg" Name="Photosmart C4780 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604252" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3594411" Prod_id="Q8416B" ThumbPic="http://images.icecat.biz/thumbs/3594411.jpg" Name="Photosmart C4685 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604222" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3426928" Prod_id="CB730B#BEK" ThumbPic="http://images.icecat.biz/thumbs/3432364.jpg" Name="Impresora multifunción HP Deskjet F2480">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604250" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3557436" Prod_id="CB735B#BEV" ThumbPic="http://images.icecat.biz/thumbs/3554394.jpg" Name="Deskjet F2420 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604210" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2096936" Prod_id="Q8418A" ThumbPic="http://images.icecat.biz/thumbs/2096936.jpg" Name="Photosmart C4680 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604232" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3432377" Prod_id="Q8380A" ThumbPic="http://images.icecat.biz/thumbs/3432377.jpg" Name="Photosmart C4780 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604239" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3466716" Prod_id="CB742A" ThumbPic="http://images.icecat.biz/thumbs/3466716.jpg" Name="Deskjet F2410 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604220" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3401004" Prod_id="CB774A" ThumbPic="http://images.icecat.biz/thumbs/3401004.jpg" Name="Deskjet D5560 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604211" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2746654" Prod_id="Q8418A#ABA" ThumbPic="http://images.icecat.biz/thumbs/2096936.jpg" Name="Photosmart C4680 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604245" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3511350" Prod_id="CB735B#BEK" ThumbPic="http://images.icecat.biz/thumbs/3554394.jpg" Name="Deskjet F2420 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604231" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3432376" Prod_id="CB770C" ThumbPic="http://images.icecat.biz/thumbs/3432376.jpg" Name="Deskjet D1663 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604233" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3445366" Prod_id="CB730A" ThumbPic="http://images.icecat.biz/thumbs/3445366.jpg" Name="Deskjet F2480 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604264" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3916146" Prod_id="Q8380B#ABZ" ThumbPic="http://images.icecat.biz/thumbs/3539337.jpg" Name="Impresora multifunción HP Photosmart C4780">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604213" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3326389" Prod_id="CB774B#BEV" ThumbPic="http://images.icecat.biz/thumbs/3340374.jpg" Name="Impresora HP Deskjet D5560">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604266" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="4073497" Prod_id="CB770A#B1H" ThumbPic="http://images.icecat.biz/thumbs/3432330.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604267" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4081993" Prod_id="Q8418B#ABU" ThumbPic="http://images.icecat.biz/thumbs/3462001.jpg" Name="Impresora multifunción HP Photosmart C4680">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604212" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2968168" Prod_id="Q8418A#B1H" ThumbPic="http://images.icecat.biz/thumbs/2096936.jpg" Name="Photosmart C4680 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604269" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="4528773" Prod_id="CB774A#AKY" ThumbPic="http://images.icecat.biz/thumbs/3401004.jpg" Name="Deskjet D5560 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604262" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3794973" Prod_id="CB770A#AKY" ThumbPic="http://images.icecat.biz/thumbs/3432330.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604270" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4528777" Prod_id="Q8418A#AKY" ThumbPic="http://images.icecat.biz/thumbs/2096936.jpg" Name="Photosmart C4680 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604271" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4564134" Prod_id="CB730B#ABF" ThumbPic="http://images.icecat.biz/thumbs/3432364.jpg" Name="Impresora multifunción HP Deskjet F2480">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604265" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4071011" Prod_id="Q8380A#ABA" ThumbPic="http://images.icecat.biz/thumbs/3432377.jpg" Name="Photosmart C4780 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604251" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3590907" Prod_id="CB767A" ThumbPic="http://images.icecat.biz/thumbs/3590907.jpg" Name="Deskjet D1660 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604268" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4528769" Prod_id="Q8380A#AKY" ThumbPic="http://images.icecat.biz/thumbs/3432377.jpg" Name="Photosmart C4780 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604272" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4607714" Prod_id="Q8380A#B1H" ThumbPic="http://images.icecat.biz/thumbs/3432377.jpg" Name="Photosmart C4780 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604218" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3400990" Prod_id="CB774D" ThumbPic="http://images.icecat.biz/thumbs/3400990.jpg" Name="Deskjet D5568 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604219" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3400994" Prod_id="CB774C" ThumbPic="http://images.icecat.biz/thumbs/3400994.jpg" Name="Impresora HP Deskjet D5563">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604226" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3432320" Prod_id="CB730C" ThumbPic="http://images.icecat.biz/thumbs/3432320.jpg" Name="Deskjet F2483 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604228" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3432332" Prod_id="Q8380D" ThumbPic="http://images.icecat.biz/thumbs/3432332.jpg" Name="Photosmart C4788 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604234" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3445383" Prod_id="CB730D" ThumbPic="http://images.icecat.biz/thumbs/3445383.jpg" Name="Deskjet F2488 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604235" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="3459181" Prod_id="CB767D" ThumbPic="http://images.icecat.biz/thumbs/3459181.jpg" Name="Deskjet D1668 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604238" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3466709" Prod_id="CB742D" ThumbPic="http://images.icecat.biz/thumbs/3466709.jpg" Name="Deskjet F2418 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604249" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3554398" Prod_id="CB735C" ThumbPic="" Name="Deskjet F2423 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604254" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3612985" Prod_id="CB731A" ThumbPic="http://images.icecat.biz/thumbs/3612985.jpg" Name="Deskjet F2476 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604255" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3613072" Prod_id="CB745D" ThumbPic="http://images.icecat.biz/thumbs/3613072.jpg" Name="Deskjet F4488 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604256" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3613074" Prod_id="Q8415B" ThumbPic="http://images.icecat.biz/thumbs/3613074.jpg" Name="Photosmart C4670 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604257" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3613075" Prod_id="Q8418C" ThumbPic="http://images.icecat.biz/thumbs/3613075.jpg" Name="Photosmart C4683 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604258" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3713214" Prod_id="Q8380C" ThumbPic="http://images.icecat.biz/thumbs/3713214.jpg" Name="Photosmart C4783 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76604259" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3713230" Prod_id="Q8418D" ThumbPic="http://images.icecat.biz/thumbs/3713230.jpg" Name="Photosmart C4688 All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP 60 Black Ink Cartridge 60 Ink Cartridges, 20 - 80 %, 15 - 32 °C, 20 - 80 %, 50 g</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP 60 Black Ink Cartridge, 60 Ink Cartridges. Condiciones ambientales: 20 - 80 %, 15 - 32 °C, 20 - 80 %. Peso y dimensiones: 50 g</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

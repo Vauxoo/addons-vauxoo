@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images2.icecat.biz/img/norm/high/1069151-6335.jpg" HighPicHeight="150" HighPicSize="4278" HighPicWidth="150" ID="1069151" LowPic="http://images2.icecat.biz/img/norm/low/1069151-6335.jpg" LowPicHeight="150" LowPicSize="5311" LowPicWidth="150" Name="DFX-9000 Black Ribbon" Prod_id="S015384" Quality="ICECAT" ReleaseDate="2007-08-09" ThumbPic="http://images2.icecat.biz/thumbs/1069151.jpg" ThumbPicSize="2719" Title="Epson  DFX-9000 Black Ribbon">
+       <Category ID="905">
+       
+    <Name ID="496745" Value="cintas para impresora" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="1098" No="0">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1097" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4077" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0010343606944"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="41822209" Local_ID="0" Value="DFX-9000 Impact Printer" CategoryFeature_ID="12809" CategoryFeatureGroup_ID="1098" No="100000" Presentation_Value="DFX-9000 Impact Printer" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2190">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504359" Value="Productos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="41822210" Local_ID="0" Value="Black" CategoryFeature_ID="31286" CategoryFeatureGroup_ID="4077" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="46619775" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33776" CategoryFeatureGroup_ID="1098" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="23454061" Category_ID="228" Reversed="0" Preferred="0">
+	    <Product ID="1590647" Prod_id="C11C605011A3" ThumbPic="http://images.icecat.biz/thumbs/1590647.jpg" Name="DFX-9000N">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Epson DFX-9000 Black Ribbon, Negro</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Epson DFX-9000 Black Ribbon. Color: Negro</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="13" Name="Epson"/>
+      </Product>
+
+</ICECAT-interface>

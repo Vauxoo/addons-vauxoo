@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3414274-TP-LINK.jpg" HighPicHeight="270" HighPicSize="40642" HighPicWidth="450" ID="3414274" LowPic="http://images.icecat.biz/img/norm/low/3414274-TP-LINK.jpg" LowPicHeight="120" LowPicSize="7677" LowPicWidth="200" Name="Single USB2.0 Port MFP and Storage Server" Prod_id="TL-PS310U" Quality="ICECAT" ReleaseDate="2009-06-27" ThumbPic="http://images.icecat.biz/thumbs/3414274.jpg" ThumbPicSize="2390" Title="TP-LINK  Single USB2.0 Port MFP and Storage Server">
+       <Category ID="925">
+       
+    <Name ID="496760" Value="servidores de impresión" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="1153" No="1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3241" No="61">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3242" No="62">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3240" No="63">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1156" No="70">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1154" No="50">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1152" No="3">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1172" No="12">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1157" No="10">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3239" No="72">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1155" No="77">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2579" No="71">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2934" No="2">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2580" No="9">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3591" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3590" No="0">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5944" No="0">
+     <FeatureGroup ID="114">
+       <Name ID="510212" Value="Inner carton" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5945" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364031060"/>
+        <EANCode EAN="5055205187303"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26723207" LongDesc="El Servidor de Almacenamiento e Impresora multifunción TL-PS310U de TP-LINK está diseñado para compartir sus dispositivos USB instalados en la red del hogar o la oficina. Es más que un servidor de impresora multifunción, el TL-PS310U también soporta varios dispositivos USB, como escáner, disco duro externo, lector de tarjeta de memoria, cámara web USB, altavoz USB, etc. Cumple la normativa USB 2.0 y cuenta con un puerto 10/100Base-T con autodetección. Simplemente conectándolo a un hub USB, el TL-PS310U puede soportar hasta 4 dispositivos USB al mismo tiempo. También puede acceder a los dispositivos USB de forma inalámbrica si conecta el TL-PS310U a un Router inalámbrico." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="Servidor de Almacenamiento e Impresora multifunción MFP de un Puerto USB2.0" URL="http://www.tp-link.com/es/products/productDetails.asp?class=&amp;pmodel=TL-PS310U" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="71614906" Local_ID="0" Value="Wired" CategoryFeature_ID="8519" CategoryFeatureGroup_ID="1155" No="10100006" Presentation_Value="Con cables" Translated="1"  Mandatory="1" Searchable="1">
+	  <Feature ID="1655">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506667" Value="Tecnología de conectividad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614907" Local_ID="0" Value="100" CategoryFeature_ID="8522" CategoryFeatureGroup_ID="2579" No="100009" Presentation_Value="100 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1774">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="504887" Value="Velocidad de transferencia de datos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614908" Local_ID="0" Value="Windows 2000, XP, Vista" CategoryFeature_ID="13947" CategoryFeatureGroup_ID="1156" No="100000" Presentation_Value="Windows 2000, XP, Vista" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" Value="Sistemas operativos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614909" Local_ID="0" Value="1" CategoryFeature_ID="25311" CategoryFeatureGroup_ID="1154" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508488" Value="Cantidad de puertos USB 2.0" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614910" Local_ID="0" Value="1" CategoryFeature_ID="25312" CategoryFeatureGroup_ID="1154" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2312">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508388" Value="Ethernet LAN (RJ-45) cantidad de puertos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614911" Local_ID="0" Value="Y" CategoryFeature_ID="26172" CategoryFeatureGroup_ID="1154" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2316">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508494" Value="DC-in jack" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614915" Local_ID="0" Value="0 - 50" CategoryFeature_ID="8527" CategoryFeatureGroup_ID="1157" No="100002" Presentation_Value="0 - 50 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614916" Local_ID="0" Value="0 - 70" CategoryFeature_ID="8526" CategoryFeatureGroup_ID="1157" No="100001" Presentation_Value="0 - 70 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614917" Local_ID="0" Value="-5 - 65" CategoryFeature_ID="8890" CategoryFeatureGroup_ID="1157" No="100000" Presentation_Value="-5 - 65 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614919" Local_ID="0" Value="CE, FCC" CategoryFeature_ID="17724" CategoryFeatureGroup_ID="2580" No="100000" Presentation_Value="CE, FCC" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="249">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508126" Value="Certificados" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614913" Local_ID="0" Value="56 x 52 x 23" CategoryFeature_ID="8515" CategoryFeatureGroup_ID="1152" No="100002" Presentation_Value="56 x 52 x 23 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614914" Local_ID="0" Value="Power" CategoryFeature_ID="25314" CategoryFeatureGroup_ID="3591" No="100000" Presentation_Value="Power" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3662">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504946" Value="Energía LED" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614918" Local_ID="0" Value="0 - 80" CategoryFeature_ID="9489" CategoryFeatureGroup_ID="1157" No="0" Presentation_Value="0 - 80 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="621">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508155" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="71614452" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33658" CategoryFeatureGroup_ID="1153" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK Single USB2.0 Port MFP and Storage Server, Con cables, 100 Mbit/s, Windows 2000, XP, Vista, 0 - 50 °C, 0 - 70 %, -5 - 65 °C</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK Single USB2.0 Port MFP and Storage Server. Red: Con cables. Transmisión de datos: 100 Mbit/s. Requisitos del sistema: Windows 2000, XP, Vista. Condiciones ambientales: 0 - 50 °C, 0 - 70 %, -5 - 65 °C. Aprobaciones reguladoras: CE, FCC. Peso y dimensiones: 56 x 52 x 23 mm. Iluminación/Alarmas: Power</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

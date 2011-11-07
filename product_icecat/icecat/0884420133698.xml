@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3515040-HP.jpg" HighPicHeight="400" HighPicSize="44270" HighPicWidth="400" ID="3515040" LowPic="http://images.icecat.biz/img/norm/low/3515040-HP.jpg" LowPicHeight="200" LowPicSize="20628" LowPicWidth="200" Name="Cartucho de impresión en negro HP LaserJet CE255A" Prod_id="CE255A" Quality="SUPPLIER" ReleaseDate="2009-08-07" ThumbPic="http://images.icecat.biz/thumbs/3515040.jpg" ThumbPicSize="5060" Title="HP LaserJet CE255 Family Print Cartridges Cartucho de impresión en negro HP LaserJet CE255A">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="8844201336986"/>
+        <EANCode EAN="0884420133698"/>
+        <EANCode EAN="0843964039132"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="24212341" LongDesc="&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Overview&lt;/span&gt;&lt;br /&gt;Impresión sin problema, resultados homogéneos, y confianza en el liderazgo medioambiental de HP.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Features&lt;/span&gt;&lt;br /&gt;&lt;b&gt;Los cartuchos de impresión en negro HP LaserJet CE255A producen un promedio de 6.000 páginas estándar, perfectos para la impresión diaria de la oficina[1]. Para grandes volúmenes de impresión, elija cartuchos de impresión en negro HP LaserJet CE255X de alta capacidad.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Aumente la eficacia de la oficina con los consumibles originales HP, para una impresión sin problemas. La fórmula de tóner exclusiva de HP proporciona la fiabilidad y la calidad que necesita para su negocio. La gestión de suministros para el ahorro de tiempo hace más productiva y más barata la impresión.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Consiga la máxima calidad de impresión durante toda la vida del cartucho con los cartuchos originales HP y la fórmula exclusiva del tóner HP. Puesto que el 70% del proceso de impresión depende del cartucho, elija uno diseñado expresamente para la impresora.&lt;/b&gt;&lt;br /&gt;\n\n" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="HP 55A Black LaserJet Toner Cartridge with Smart Printing Technology" URL="" WarrantyInfo="Garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra.\nDeclaración estándar de garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra. Esta garantía no cubre productos que (a) hayan sido rellenados, restaurados o modificados de cualquier modo, (b) presenten problemas que se deban a un uso incorrecto, un almacenamiento inadecuado o que se hayan utilizado fuera de las especificaciones medioambientales publicadas para el producto de impresora, o (c) presenten un uso distinto al habitual. Para acceder al servicio de garantía, devuelva el producto al lugar donde lo adquirió (con una descripción por escrito del problema y muestras de impresión) o póngase en contacto con el servicio de atención al cliente de HP.  HP reemplazará o devolverá el importe de compra, según estime oportuno, de los productos que en efecto estén defectuosos. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, LA GARANTÍA ANTERIOR ES EXCLUSIVA Y PREVALECE SOBRE CUALQUIER OTRA GARANTÍA O CONDICIÓN, ESCRITA U ORAL, EXPRESA O IMPLÍCITA, Y HP NO SE RESPONSABILIZA DE FORMA ESPECÍFICA DE NINGUNA GARANTÍA IMPLÍCITA O CONDICIÓN DE COMERCIALIZACIÓN, CALIDAD SATISFACTORIA E IDONEIDAD PARA UN DETERMINADO FIN. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, NI HP NI SUS PROVEEDORES SERÁN RESPONSABLES DE LOS DAÑOS Y PERJUICIOS DIRECTOS, ESPECIALES, FORTUITOS, DERIVADOS (INCLUIDAS PÉRDIDAS ECONÓMICAS O DE DATOS) O DE OTRO TIPO, INDEPENDIENTEMENTE DE SI SE BASAN EN UN CONTRATO, RESPONSABILIDADES EXTRACONTRACTUALES U OTROS. LOS TÉRMINOS DE LA GARANTÍA INCLUIDOS EN ESTE DOCUMENTO, Y HASTA DONDE LO PERMITA LA LEY, NO EXCLUYEN, RESTRINGEN NI MODIFICAN, SINO QUE SE AÑADEN A LOS DERECHOS ESTABLECIDOS POR LA LEY APLICABLES A LA VENTA AL PÚBLICO DE ESTE PRODUCTO.\n" langid="6"/>
+       <ProductFamily ID="52658">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="1" ID="100952442" Local_ID="40494717" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Láser" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" Value="Tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103559901" Local_ID="40494718" Value="Black" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Negro" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" Value="Impresión a color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100948849" Local_ID="40494710" Value="10 - 32.5" CategoryFeature_ID="5573" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de 10 a 32,5° C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494711" Value="" CategoryFeature_ID="5769" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="De 20 a 80% HR" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494712" Value="" CategoryFeature_ID="5770" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de -20 a 40° C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494720" Value="" CategoryFeature_ID="12235" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="De 10 a 80% RH" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494707" Value="" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="395 x 160 x 261 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494709" Value="" CategoryFeature_ID="5067" CategoryFeatureGroup_ID="2279" No="100030" Presentation_Value="1.82 kg (4.01 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" Value="Paquete, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100943417" Local_ID="40494716" Value="1250" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="1.25 kg (2.76 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494713" Value="" CategoryFeature_ID="7206" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="1.239 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1690">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="504358" Value="Peso vacío" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494715" Value="" CategoryFeature_ID="8457" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="395 x 160 x 261 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="582">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508152" Value="Dimensiones del embalaje (alto x alto x peso)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494724" Value="" CategoryFeature_ID="30379" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="1.200 x 800 x 1.193 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4824">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506470" Value="Dimensiones europeas del pallet (An x F x Al)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="72127857" Value="" CategoryFeature_ID="27320" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="Not applicable" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2049">
+	    <Measure ID="75" Sign="">
+	      <Signs><Sign ID="7483" langid="6">Año(s)</Sign></Signs>
+	    </Measure>
+	    <Name ID="506452" Value="Vida útil en almacén de la impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494706" Value="" CategoryFeature_ID="1905" CategoryFeatureGroup_ID="2281" No="16845" Presentation_Value="El rendimiento del cartucho medio es de 6000 páginas normales. Rendimiento declarado de conformidad con la norma ISO/IEC 19752*" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="626">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506431" Value="Producción de páginas para imprimir (A4, blanco y negro, ISO/IEC 19752)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="61799063" Value="" CategoryFeature_ID="1914" CategoryFeatureGroup_ID="2279" No="16854" Presentation_Value="122.4 kg (269.8 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="513">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506906" Value="Palet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="99823166" Local_ID="40494708" Value="56" CategoryFeature_ID="1911" CategoryFeatureGroup_ID="2279" No="16851" Presentation_Value="56 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" Value="Cantidad por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="75774922" Value="" CategoryFeature_ID="1909" CategoryFeatureGroup_ID="2279" No="16849" Presentation_Value="1.200 x 800 x 1.193 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="530">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506907" Value="Dimensiones de Palet (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="99823169" Local_ID="40494722" Value="56" CategoryFeature_ID="27820" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="14 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3293">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506463" Value="Cantidad de europalet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="99823170" Local_ID="40494725" Value="1" CategoryFeature_ID="30381" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" Value="Cantidad por caja" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103558152" Local_ID="40494726" Value="N" CategoryFeature_ID="30382" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="No" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6132">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506491" Value="Indicador de sólo para distribución al por menor" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="106328929" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494714" Value="" CategoryFeature_ID="7208" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="4" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" Value="Número de capa por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494719" Value="" CategoryFeature_ID="9881" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="16" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2066">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506454" Value="Número de apilado para palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494721" Value="" CategoryFeature_ID="27319" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Inteligente" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1879">
+	    <Measure ID="35" Sign="">
+	      <Signs><Sign ID="7444" langid="6">DPI</Sign></Signs>
+	    </Measure>
+	    <Name ID="506442" Value="Resolución de la tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="40494723" Value="" CategoryFeature_ID="30376" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="122.4 kg (269.8 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3288">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506462" Value="Europalet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="58795376" Value="" CategoryFeature_ID="10488" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Rendimiento óptimo e impresión homogénea de calidad a la velocidad que demanda su negocio." Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2143">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508476" Value="Características técnicas" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="75774923" Value="" CategoryFeature_ID="7207" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="14" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" Value="Número de cartones por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="application/pdf" Date="2010-04-30 07:35:31" Description="Cartuchos de impresión de la familia HP LaserJet CE255" Height="0" KeepAsURL="0" MultimediaObject_ID="279345" Size="173019" Type="data sheet" URL="http://objects.icecat.biz/objects/HP_literature_es_es_4AA2-3598ESE.pdf" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      	  <ProductRelated ID="57671572" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3475134" Prod_id="CE528A#B19" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671571" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3475129" Prod_id="CE529A#B19" ThumbPic="http://images.icecat.biz/thumbs/3413836.jpg" Name="Impresora HP LaserJet empresarial P3015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671573" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3475135" Prod_id="CE526A#B19" ThumbPic="http://images.icecat.biz/thumbs/3340360.jpg" Name="Impresora HP LaserJet empresarial P3015d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="60332446" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3901959" Prod_id="CE525A#B19" ThumbPic="http://images.icecat.biz/thumbs/3340375.jpg" Name="Impresora HP LaserJet empresarial P3015">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59299174" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3340328" Prod_id="CE528A" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58676055" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3794972" Prod_id="CE528A#ABA" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59299176" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3413836" Prod_id="CE529A" ThumbPic="http://images.icecat.biz/thumbs/3413836.jpg" Name="Impresora HP LaserJet empresarial P3015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59299175" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3340360" Prod_id="CE526A" ThumbPic="http://images.icecat.biz/thumbs/3340360.jpg" Name="Impresora HP LaserJet empresarial P3015d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671569" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3340375" Prod_id="CE525A" ThumbPic="http://images.icecat.biz/thumbs/3340375.jpg" Name="Impresora HP LaserJet empresarial P3015">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="63698277" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4068738" Prod_id="CE529A#ABA" ThumbPic="http://images.icecat.biz/thumbs/3413836.jpg" Name="Impresora HP LaserJet empresarial P3015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671577" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3555901" Prod_id="CE526A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/3340360.jpg" Name="Impresora HP LaserJet empresarial P3015d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72154314" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4847573" Prod_id="CE528A#BB5" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671578" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3555902" Prod_id="CE528A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671579" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3556034" Prod_id="CE529A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/3413836.jpg" Name="Impresora HP LaserJet empresarial P3015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="70727268" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4733990" Prod_id="CE528A#ABY" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89024794" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="8115231" Prod_id="CE528A#201" ThumbPic="http://images.icecat.biz/thumbs/8115231.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89024796" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="8115237" Prod_id="CE529A#201" ThumbPic="http://images.icecat.biz/thumbs/8115237.jpg" Name="Impresora HP LaserJet empresarial P3015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="70727267" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4733988" Prod_id="CE529A#ABY" ThumbPic="http://images.icecat.biz/thumbs/3413836.jpg" Name="Impresora HP LaserJet empresarial P3015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="63962986" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4135903" Prod_id="CE525A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/3340375.jpg" Name="Impresora HP LaserJet empresarial P3015">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671575" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3537472" Prod_id="CE528A#ABU" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="70727269" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4736779" Prod_id="CE526A#ABY" ThumbPic="http://images.icecat.biz/thumbs/3340360.jpg" Name="Impresora HP LaserJet empresarial P3015d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671576" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3537473" Prod_id="CE529A#ABU" ThumbPic="http://images.icecat.biz/thumbs/3413836.jpg" Name="Impresora HP LaserJet empresarial P3015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89024795" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="8115232" Prod_id="CE528A#AAZ" ThumbPic="http://images.icecat.biz/thumbs/8115232.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="70727271" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4742467" Prod_id="CE528A#ABD" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="57671574" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3537470" Prod_id="CE526A#ABU" ThumbPic="http://images.icecat.biz/thumbs/3340360.jpg" Name="Impresora HP LaserJet empresarial P3015d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="70727270" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4742461" Prod_id="CE528A#ABF" ThumbPic="http://images.icecat.biz/thumbs/3340328.jpg" Name="Impresora HP LaserJet empresarial P3015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="63698278" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4072492" Prod_id="CE526A#ABA" ThumbPic="http://images.icecat.biz/thumbs/3340360.jpg" Name="Impresora HP LaserJet empresarial P3015d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84762167" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="7016535" Prod_id="CE525A#ABY" ThumbPic="http://images.icecat.biz/thumbs/3340375.jpg" Name="Impresora HP LaserJet empresarial P3015">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89024793" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="8115227" Prod_id="CE526A#201" ThumbPic="http://images.icecat.biz/thumbs/8115227.jpg" Name="Impresora HP LaserJet empresarial P3015d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP Cartucho de impresión en negro HP LaserJet CE255A LaserJet CE255 Family Print Cartridges, Láser, Negro, de 10 a 32,5° C, 1.25 kg (2.76 libras)</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP Cartucho de impresión en negro HP LaserJet CE255A, LaserJet CE255 Family Print Cartridges. Calidad de impresión: Láser, Negro. Condiciones ambientales: de 10 a 32,5° C. Peso y dimensiones: 1.25 kg (2.76 libras)</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

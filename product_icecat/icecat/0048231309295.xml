@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images2.icecat.biz/img/norm/high/1625675-6470.jpg" HighPicHeight="350" HighPicSize="27549" HighPicWidth="429" ID="1625675" LowPic="http://images2.icecat.biz/img/norm/low/1625675-6470.jpg" LowPicHeight="163" LowPicSize="14630" LowPicWidth="200" Name="GH22NP20, Black" Prod_id="GH22NP20RB" Quality="ICECAT" ReleaseDate="2008-06-23" ThumbPic="http://images2.icecat.biz/thumbs/1625675.jpg" ThumbPicSize="3255" Title="LG  GH22NP20, Black">
+       <Category ID="214">
+       
+    <Name ID="496499" Value="grabadoras de CD/DVD" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="332" No="-1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="103" No="56">
+     <FeatureGroup ID="4">
+       <Name ID="510110" Value="Impulsión óptica" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="105" No="7">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="114" No="40">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="104" No="17">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2882" No="43">
+     <FeatureGroup ID="19">
+       <Name ID="510124" Value="Formatos de los medios" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1369" No="5">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="111" No="3">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2884" No="2">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2883" No="60">
+     <FeatureGroup ID="33">
+       <Name ID="510137" Value="Tiempo de acceso" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3464" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2878" No="1">
+     <FeatureGroup ID="38">
+       <Name ID="510142" Value="Emisión de sonidos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3485" No="55">
+     <FeatureGroup ID="48">
+       <Name ID="510152" Value="Modos de registro" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2069" No="20">
+     <FeatureGroup ID="54">
+       <Name ID="510156" Value="Navegación" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2879" No="39">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2885" No="16">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2881" No="4">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2860" No="70">
+     <FeatureGroup ID="88">
+       <Name ID="510187" Value="Velocidad de la lectura" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2859" No="71">
+     <FeatureGroup ID="89">
+       <Name ID="510188" Value="Velocidad de la escritura" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2880" No="8">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3597" No="0">
+     <FeatureGroup ID="114">
+       <Name ID="510212" Value="Inner carton" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3598" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3621" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0048231309295"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="22031128" LongDesc="Grabación Multiformato \n- DVD+R. \n- DVD+RW. \n- DVD-R. \n- DVD-RW.\n- DVD+RAM. \n- CD-RW." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="http://pdfs.icecat.biz/pdf/22031128-416.pdf" ShortDesc="GH22NP20, Black" URL="http://es.lge.com/products/model/detail/regrabadoramultidvd_gh22np.jhtml#" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="47217216" Local_ID="0" Value="48" CategoryFeature_ID="2156" CategoryFeatureGroup_ID="2859" No="10100120" Presentation_Value="48 x" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="42">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508102" Value="CD velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217217" Local_ID="0" Value="32" CategoryFeature_ID="4876" CategoryFeatureGroup_ID="2859" No="10100110" Presentation_Value="32 x" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="45">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508103" Value="CD velocidad de reescritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217218" Local_ID="0" Value="22" CategoryFeature_ID="18413" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="22 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3201">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508517" Value="DVD+R, velociad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217219" Local_ID="0" Value="22" CategoryFeature_ID="18414" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="22 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3202">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508518" Value="DVD-R, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217220" Local_ID="0" Value="12" CategoryFeature_ID="18415" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="12 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3203">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508519" Value="DVD-R Doble capa, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217221" Local_ID="0" Value="16" CategoryFeature_ID="18416" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="16 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3204">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508520" Value="DVD+R Doble capa, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217222" Local_ID="0" Value="8" CategoryFeature_ID="18417" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="8 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3205">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508521" Value="DVD+RW, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217223" Local_ID="0" Value="6" CategoryFeature_ID="18418" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="6 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3206">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508522" Value="DVD-RW, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217224" Local_ID="0" Value="48" CategoryFeature_ID="18419" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="48 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3207">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508523" Value="CD-R, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217225" Local_ID="0" Value="32" CategoryFeature_ID="18420" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="32 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3208">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508524" Value="CD-RW, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217226" Local_ID="0" Value="12" CategoryFeature_ID="18431" CategoryFeatureGroup_ID="2859" No="100000" Presentation_Value="12 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3219">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508534" Value="DVD-RAM, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217227" Local_ID="0" Value="48" CategoryFeature_ID="5" CategoryFeatureGroup_ID="2860" No="10100105" Presentation_Value="48 x" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="16">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508094" Value="CD velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217228" Local_ID="0" Value="16" CategoryFeature_ID="18421" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="16 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3209">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508525" Value="DVD+R, velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217229" Local_ID="0" Value="16" CategoryFeature_ID="18422" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="16 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3210">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508526" Value="DVD-R, velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217230" Local_ID="0" Value="12" CategoryFeature_ID="18423" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="12 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3211">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508527" Value="DVD-R Doble capa, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217231" Local_ID="0" Value="12" CategoryFeature_ID="18424" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="12 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3212">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508528" Value="DVD+R Doble capa, velocidad de escritura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217232" Local_ID="0" Value="12" CategoryFeature_ID="18425" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="12 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3213">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508529" Value="DVD+RW, velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217233" Local_ID="0" Value="12" CategoryFeature_ID="18426" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="12 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3214">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508530" Value="DVD-RW, velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217234" Local_ID="0" Value="48" CategoryFeature_ID="18427" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="48 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3215">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508531" Value="CD-R, velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217235" Local_ID="0" Value="12" CategoryFeature_ID="18430" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="12 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3218">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508533" Value="DVD-RAM, velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217236" Local_ID="0" Value="16" CategoryFeature_ID="18492" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="16 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3226">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="508535" Value="DVD-ROM, velocidad máxima" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217237" Local_ID="0" Value="48" CategoryFeature_ID="18493" CategoryFeatureGroup_ID="2860" No="100000" Presentation_Value="48 x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3227">
+	    <Measure ID="21" Sign="">
+	      <Signs><Sign ID="7433" langid="6">x</Sign></Signs>
+	    </Measure>
+	    <Name ID="503806" Value="CD-ROM, velocidad de lectura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217238" Local_ID="0" Value="140/230" CategoryFeature_ID="5282" CategoryFeatureGroup_ID="2883" No="130000" Presentation_Value="140/230 ms" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1079">
+	    <Measure ID="27" Sign="">
+	      <Signs><Sign ID="7437" langid="6">ms</Sign></Signs>
+	    </Measure>
+	    <Name ID="508321" Value="DVD, tiempo medio de acceso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217239" Local_ID="0" Value="120" CategoryFeature_ID="19461" CategoryFeatureGroup_ID="2883" No="100000" Presentation_Value="120 ms" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1130">
+	    <Measure ID="27" Sign="">
+	      <Signs><Sign ID="7437" langid="6">ms</Sign></Signs>
+	    </Measure>
+	    <Name ID="508359" Value="Unidad CD-ROM Tiempo medio de acceso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217240" Local_ID="0" Value="Y" CategoryFeature_ID="7" CategoryFeatureGroup_ID="103" No="10100008" Presentation_Value="Si" Translated="1"  Mandatory="1" Searchable="1">
+	  <Feature ID="22">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506151" Value="Interno" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217241" Local_ID="0" Value="Tray" CategoryFeature_ID="2412" CategoryFeatureGroup_ID="103" No="127486" Presentation_Value="Bandeja" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="860">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="503985" Value="Mecanismos de carga" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217242" Local_ID="0" Value="2" CategoryFeature_ID="2150" CategoryFeatureGroup_ID="103" No="100100" Presentation_Value="2 MB" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="27">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508096" Value="Memoria temporal" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217243" Local_ID="0" Value="EIDE/ATA" CategoryFeature_ID="3" CategoryFeatureGroup_ID="103" No="100007" Presentation_Value="EIDE/ATA" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="21">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504706" Value="Interfaz" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217244" Local_ID="0" Value="Vertical/Horizontal" CategoryFeature_ID="12788" CategoryFeatureGroup_ID="103" No="100000" Presentation_Value="Vertical/Horizontal" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1867">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504739" Value="Montaje" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217245" Local_ID="0" Value="146 x 165 x 41.3" CategoryFeature_ID="2159" CategoryFeatureGroup_ID="104" No="100012" Presentation_Value="146 x 165 x 41.3 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217246" Local_ID="0" Value="800" CategoryFeature_ID="5393" CategoryFeatureGroup_ID="104" No="100000" Presentation_Value="800 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217247" Local_ID="0" Value="100000" CategoryFeature_ID="2153" CategoryFeatureGroup_ID="2884" No="119982" Presentation_Value="100000 h" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="533">
+	    <Measure ID="46" Sign="">
+	      <Signs><Sign ID="7455" langid="6">h</Sign></Signs>
+	    </Measure>
+	    <Name ID="506908" Value="Tiempo medio entre fallos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217254" Local_ID="0" Value="Black" CategoryFeature_ID="11452" CategoryFeatureGroup_ID="3464" No="113000" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47217185" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33579" CategoryFeatureGroup_ID="332" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images2.icecat.biz/img/gallery/1625675_289.jpg" PicHeight="350" PicWidth="429" ProductPicture_ID="185817" Size="34644" ThumbPic="http://images2.icecat.biz/img/gallery_thumbs/1625675_4334.jpg" ThumbSize="3100"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="29246912" Category_ID="214" Reversed="0" Preferred="0">
+	    <Product ID="1730164" Prod_id="GH22NP20RBB" ThumbPic="http://images2.icecat.biz/thumbs/1730164.jpg" Name="GH22NP20, Black">
+	      <Supplier ID="293" Name="LG"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">LG GH22NP20, Black, 48 x, 32 x, 22 x, 22 x, 12 x, 16 x</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">LG GH22NP20, Black. Velocidad de la escritura: 48 x, 32 x, 22 x, 22 x, 12 x, 16 x, 8 x, 6 x, 48 x, 32 x, 12 x. Velocidad de la lectura: 48 x, 16 x, 16 x, 12 x, 12 x, 12 x, 12 x, 48 x, 12 x, 16 x, 48 x. Tiempo de acceso: 140/230 ms, 120 ms. Impulsión óptica: Bandeja, 2 MB, EIDE/ATA, Vertical/Horizontal. Peso y dimensiones: 146 x 165 x 41.3 mm, 800 g. Resistencia: 100000 h. Color: Negro</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="293" Name="LG"/>
+      </Product>
+
+</ICECAT-interface>

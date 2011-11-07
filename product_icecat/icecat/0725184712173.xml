@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/1592655-HP.jpg" HighPicHeight="3522" HighPicSize="2776719" HighPicWidth="3378" ID="1592655" LowPic="http://images.icecat.biz/img/norm/low/1592655-HP.jpg" LowPicHeight="200" LowPicSize="30903" LowPicWidth="191" Name="56 Black Inkjet Print Cartridge" Prod_id="C6656AL" Quality="SUPPLIER" ReleaseDate="2008-05-10" ThumbPic="http://images.icecat.biz/thumbs/1592655.jpg" ThumbPicSize="7300" Title="HP Cartuchos de inyección de tinta HP 56 56 Black Inkjet Print Cartridge">
+       <Category ID="377">
+       
+    <Name ID="496575" Value="cartuchos de tinta" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="485" No="21">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2247" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2249" No="10">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4609" No="0">
+     <FeatureGroup ID="20">
+       <Name ID="510125" Value="Tecnología de la impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2248" No="7">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3583" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3682" No="0">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0725184712173"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="49703">
+       <Name ID="656762" Value="Cartuchos de inyección de tinta HP 56" langid="6"/><Series ID="1"><Name/></Series>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="101990252" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33640" CategoryFeatureGroup_ID="485" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="application/pdf" Date="2010-04-30 07:35:31" Description="Cartuchos negros de inyección de tinta HP 56" Height="0" KeepAsURL="0" MultimediaObject_ID="278574" Size="295087" Type="data sheet" URL="http://objects.icecat.biz/objects/HP_literature_es_es_4AA0-9245ESE.pdf" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP 56 Black Inkjet Print Cartridge Cartuchos de inyección de tinta HP 56</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP 56 Black Inkjet Print Cartridge, Cartuchos de inyección de tinta HP 56</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

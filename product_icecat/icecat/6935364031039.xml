@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/2125178-TP-LINK.jpg" HighPicHeight="270" HighPicSize="25053" HighPicWidth="450" ID="2125178" LowPic="http://images.icecat.biz/img/norm/low/2125178-TP-LINK.jpg" LowPicHeight="120" LowPicSize="5425" LowPicWidth="200" Name="54Mbps Pocked-Sized Wirerless Print Server" Prod_id="TL-WPS510U" Quality="ICECAT" ReleaseDate="2009-04-23" ThumbPic="http://images.icecat.biz/thumbs/2125178.jpg" ThumbPicSize="2235" Title="TP-LINK  54Mbps Pocked-Sized Wirerless Print Server">
+       <Category ID="925">
+       
+    <Name ID="496760" Value="servidores de impresión" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="1153" No="1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3241" No="61">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3242" No="62">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3240" No="63">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1156" No="70">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1154" No="50">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1152" No="3">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1172" No="12">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1157" No="10">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3239" No="72">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1155" No="77">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2579" No="71">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2934" No="2">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2580" No="9">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3591" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3590" No="0">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5944" No="0">
+     <FeatureGroup ID="114">
+       <Name ID="510212" Value="Inner carton" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5945" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364031039"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26688183" LongDesc="&lt;b&gt;¿Por qué utilizar un servidor de impresión externo?&lt;/b&gt;\nLos servidores de impresión ofrecen a las empresas la posibilidad de dinamizar sus tareas de impresión, usando impresoras comunes y dispositivos multifunción y conectándolos a una red.\n\nDe esta forma se consigue una gestión de las impresiones más eficiente y un rendimiento más fiable de los dispositivos conectados, que requieren menos mantenimiento, por lo que se reducen considerablemente los problemas de impresión.\n\n&lt;b&gt;Ventajas de los servidores de impresión inalámbricos&lt;/b&gt;\nLos productos inalámbricos son cada vez más frecuentes en el hogar y la oficina.\n\nTP-Link se esfuerza por mantenerse a la cabeza de la tecnología de trabajo en red y sacar al mercado los productos que nuestros clientes desean y necesitan.\n\nUno de los productos más recientes de TP-Link’, el TL-WPS510U, presenta una serie de funciones destinadas a facilitar la vida de los usuarios.\n\nSi se compara con nuestros primeros servidores de impresión por cable en términos de servicio, utilidad y compatibilidad, el TL-WPS510U ha alcanzado un nivel superior en la excelencia tecnológica.\n\n¡Con sus funciones sumadas a las ventajas inalámbricas, el TL-WPS510U da a sus impresoras la capacidad de volar!" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="TL-WPS510U - IEEE 802.11g, IEEE 802.11b, 2,4..2,4835GHz, CCK, OFDM" URL="http://www.tp-link.com/es/products/productDetails.asp?class=&amp;pmodel=TL-WPS510U" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="52159340" Local_ID="0" Value="Wireless" CategoryFeature_ID="8519" CategoryFeatureGroup_ID="1155" No="10100006" Presentation_Value="Wireless" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1655">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506667" Value="Tecnología de conectividad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159341" Local_ID="0" Value="IEEE 802.11g, 802.11b" CategoryFeature_ID="11798" CategoryFeatureGroup_ID="1155" No="100000" Presentation_Value="IEEE 802.11g, 802.11b" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="793">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508182" Value="Cumplimiento de estándares del mercado" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159342" Local_ID="0" Value="LPD / LPR, DHCP Client, POST" CategoryFeature_ID="8520" CategoryFeatureGroup_ID="3239" No="100007" Presentation_Value="LPD / LPR, DHCP Client, POST" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="446">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508011" Value="Protocolo de trasmisión de datos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159343" Local_ID="0" Value="Win 2000 / XP / 2003 / Vista\nMac OS X 10 +\nLinux" CategoryFeature_ID="13947" CategoryFeatureGroup_ID="1156" No="100000" Presentation_Value="Win 2000 / XP / 2003 / Vista\nMac OS X 10 +\nLinux" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" Value="Sistemas operativos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159344" Local_ID="0" Value="USB 2.0" CategoryFeature_ID="18555" CategoryFeatureGroup_ID="1154" No="100033" Presentation_Value="USB 2.0" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="21">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504706" Value="Interfaz" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159345" Local_ID="0" Value="1" CategoryFeature_ID="25311" CategoryFeatureGroup_ID="1154" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508488" Value="Cantidad de puertos USB 2.0" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91691157" Local_ID="0" Value="Y" CategoryFeature_ID="26172" CategoryFeatureGroup_ID="1154" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2316">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508494" Value="DC-in jack" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159353" Local_ID="0" Value="3.3V" CategoryFeature_ID="8585" CategoryFeatureGroup_ID="1172" No="100003" Presentation_Value="3.3V" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="780">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508181" Value="Requisitos de energía" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159354" Local_ID="0" Value="0 - 50" CategoryFeature_ID="8527" CategoryFeatureGroup_ID="1157" No="100002" Presentation_Value="0 - 50 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159355" Local_ID="0" Value="0 - 70" CategoryFeature_ID="8526" CategoryFeatureGroup_ID="1157" No="100001" Presentation_Value="0 - 70 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159356" Local_ID="0" Value="-5 - 65" CategoryFeature_ID="8890" CategoryFeatureGroup_ID="1157" No="100000" Presentation_Value="-5 - 65 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159358" Local_ID="0" Value="CE, FCC" CategoryFeature_ID="17724" CategoryFeatureGroup_ID="2580" No="100000" Presentation_Value="CE, FCC" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="249">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508126" Value="Certificados" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159346" Local_ID="0" Value="65 x 40 x 19" CategoryFeature_ID="8515" CategoryFeatureGroup_ID="1152" No="100002" Presentation_Value="65 x 40 x 19 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159347" Local_ID="0" Value="45" CategoryFeature_ID="8514" CategoryFeatureGroup_ID="1152" No="100001" Presentation_Value="45 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159359" Local_ID="0" Value="Omni" CategoryFeature_ID="10134" CategoryFeatureGroup_ID="1153" No="100003" Presentation_Value="Omni" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1494">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="505792" Value="Tipo de antena" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159348" Local_ID="0" Value="2" CategoryFeature_ID="17723" CategoryFeatureGroup_ID="1153" No="100000" Presentation_Value="2 dBi" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1804">
+	    <Measure ID="99" Sign="">
+	      <Signs><Sign ID="7504" langid="6">dBi</Sign></Signs>
+	    </Measure>
+	    <Name ID="507944" Value="Antena de refuerzo (max)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159349" Local_ID="0" Value="2.4 - 2.4835" CategoryFeature_ID="13035" CategoryFeatureGroup_ID="1153" No="100000" Presentation_Value="2.4 - 2.4835 GHz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1769">
+	    <Measure ID="37" Sign="">
+	      <Signs><Sign ID="7446" langid="6">GHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="504886" Value="Frecuencia de banda" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159350" Local_ID="0" Value="64/128 Bits WEP, WPA/WPA2/WPA-PSK/WPA2-PSK" CategoryFeature_ID="14426" CategoryFeatureGroup_ID="1153" No="100000" Presentation_Value="64/128 Bits WEP, WPA/WPA2/WPA-PSK/WPA2-PSK" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="454">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506160" Value="Algoritmo de  seguridad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159360" Local_ID="0" Value="Y" CategoryFeature_ID="11279" CategoryFeatureGroup_ID="1153" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1501">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504872" Value="Indicadores LED" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159362" Local_ID="0" Value="CCK, OFDM" CategoryFeature_ID="17721" CategoryFeatureGroup_ID="1153" No="100000" Presentation_Value="CCK, OFDM" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1503">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504873" Value="Modulación" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159351" Local_ID="0" Value="Y" CategoryFeature_ID="25313" CategoryFeatureGroup_ID="3590" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3635">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="507795" Value="Administración de Web-based" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159352" Local_ID="0" Value="Power" CategoryFeature_ID="25314" CategoryFeatureGroup_ID="3591" No="100000" Presentation_Value="Power" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3662">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504946" Value="Energía LED" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159357" Local_ID="0" Value="0 - 80" CategoryFeature_ID="9489" CategoryFeatureGroup_ID="1157" No="0" Presentation_Value="0 - 80 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="621">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508155" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159202" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33658" CategoryFeatureGroup_ID="1153" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159361" Local_ID="0" Value="UPNP" CategoryFeature_ID="10484" CategoryFeatureGroup_ID="1153" No="0" Presentation_Value="UPNP" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2143">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508476" Value="Características técnicas" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="52159363" Local_ID="0" Value="Y" CategoryFeature_ID="28764" CategoryFeatureGroup_ID="1153" No="0" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6063">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506543" Value="Firmware actualizable de red" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="76601736" Category_ID="137" Reversed="0" Preferred="0">
+	    <Product ID="1674170" Prod_id="TL-ANT2414A" ThumbPic="http://images.icecat.biz/thumbs/1674170.jpg" Name="2.4GHz 14dBi Directional Antenna">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76601733" Category_ID="137" Reversed="0" Preferred="0">
+	    <Product ID="1674172" Prod_id="TL-ANT2406A" ThumbPic="http://images.icecat.biz/thumbs/1674172.jpg" Name="2.4GHz 6dBi Indoor Directional Antenna">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="43053979" Category_ID="244" Reversed="0" Preferred="0">
+	    <Product ID="2062042" Prod_id="TD-W8910G" ThumbPic="http://images.icecat.biz/thumbs/2062042.jpg" Name="54Mbps Wireless ADSL2+ Modem Router">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 54Mbps Pocked-Sized Wirerless Print Server, Wireless, IEEE 802.11g, 802.11b, LPD / LPR, DHCP Client, POST, Win 2000 / XP / 2003 / Vista Mac OS X 10 + Linux, USB 2.0, 3.3V</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 54Mbps Pocked-Sized Wirerless Print Server. Red: Wireless, IEEE 802.11g, 802.11b. Protocolos: LPD / LPR, DHCP Client, POST. Requisitos del sistema: Win 2000 / XP / 2003 / Vista Mac OS X 10 + Linux. Conectividad: USB 2.0. Contro de energía: 3.3V. Condiciones ambientales: 0 - 50 °C, 0 - 70 %, -5 - 65 °C. Aprobaciones reguladoras: CE, FCC. Peso y dimensiones: 65 x 40 x 19 mm, 45 g. Iluminación/Alarmas: Power</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

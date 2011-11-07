@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/4808873-4691.jpg" HighPicHeight="2008" HighPicSize="556912" HighPicWidth="2048" ID="4808873" LowPic="http://images.icecat.biz/img/norm/low/4808873-4691.jpg" LowPicHeight="196" LowPicSize="13196" LowPicWidth="200" Name="SH02 mini Portable 500GB" Prod_id="ASH02-500GU-CBK" Quality="ICECAT" ReleaseDate="2010-05-17" ThumbPic="http://images.icecat.biz/thumbs/4808873.jpg" ThumbPicSize="2409" Title="A-DATA  SH02 mini Portable 500GB">
+       <Category ID="219">
+       
+    <Name ID="496504" Value="discos duros" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="337" No="-1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5876" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="67" No="60">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3577" No="0">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2845" No="11">
+     <FeatureGroup ID="5">
+       <Name ID="510111" Value="Exhibición" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1710" No="30">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="66" No="0">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="65" No="51">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2842" No="0">
+     <FeatureGroup ID="19">
+       <Name ID="510124" Value="Formatos de los medios" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1594" No="52">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1595" No="38">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2846" No="40">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2847" No="0">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2475" No="54">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2841" No="25">
+     <FeatureGroup ID="38">
+       <Name ID="510142" Value="Emisión de sonidos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2844" No="-4">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2476" No="58">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2474" No="36">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2918" No="0">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2843" No="15">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3592" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3608" No="32">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3606" No="-2">
+     <FeatureGroup ID="114">
+       <Name ID="510212" Value="Inner carton" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3607" No="-3">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3609" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="4718050608164"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="29129349" LongDesc="Disponible en tres modernos temas de colores, el disco duro mini portátil ADATA SH02 de 2.5&quot; Serie Superior ha sido elegantemente creado en patrones impresos en 3 dimensiones, haciendo de él un accesorio digital imprescindible para cualquiera que desee llevar una unidad portátil atractiva y llamativa al mismo tiempo. El SH02 Serie Superior ahora está disponible en tres capacidades: 320GB, 500GB y 640GB, suficiente para almacenar sus valiosos datos, fotos, música o vídeos.\n\n&lt;b&gt;Elegantes patrones impresos en 3-D&lt;/b&gt;\nCon la elegante superficie creada utilizando la tecnología IMF ( Formación de Película en Moldura ) , el SH02 Serie Superior se presenta a sí mismo como una llamada sensorial de la que se puede disfrutar con los ojos y el tacto. Los elegantes patrones impresos en 3-D son atractivos y con clase, haciendo del SH02 un perfecto aparato electrónico.\n\n&lt;b&gt;Elegante y ligero&lt;/b&gt;\nPesando sólo 162 gramos, el SH02 Serie Superior es increíblemente ligero y el dispositivo de almacenamiento portátil perfecto. Puede encajar fácilmente en su bolso o bolsillo trasero, permitiéndole llevarlo y acceder a sus películas, música y aplicaciones favoritas libremente y en cualquier lugar.\n\n&lt;b&gt;Resistente a rayas y huellas&lt;/b&gt;\nLa superficie del SH02 Serie Superior ha sido especialmente tratada para resistir las inevitables rayas y abrasiones al transportarlo de un sitio a otro. Incluso sin una funda protectora, la belleza del dispositivo no disminuirá por el desgaste y roturas. La superficie también es a prueba de huellas, manteniendo su aspecto siempre como nuevo.\n\n&lt;b&gt;Encendido inteligente:El medio para la protección total&lt;/b&gt;\nConocidas por su calidad superior, con un rendimiento extraordinario y diseños innovadores, las unidades de disco duro portátiles ADATA tienen más que ofrecer que la “potencia dura”, especialmente el software más valioso.\n\nLa herramienta OStoGO le ayuda a convertir su DVD de instalación de Microsoft Windows 7 en un dispositivo de almacenamiento portátil ADATA, ofreciendo la posibilidad de instalar Windows 7 a través del arranque USB sin necesidad de una unidad óptica.\n\nLa potente herramienta HDDtoGo sincroniza datos, correos electrónicos y sus Favoritos, permitiéndole una movilidad total.\n\nNorton Internet Security 2010 ( versión de prueba de 60 días ) salvaguarda sus datos de virus y otros procesos dañinos. Si registra su producto ADATA en línea podrá tener esta protección gratis. La descarga gratuita de valioso software y registros de productos está disponible para productos ADATA con la marca impresa exclusiva Software Download." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="SH02 mini Portable 500GB, 6.35 cm (2.5 &quot;) , USB 2.0, 162g, 480Mb/s" URL="http://www.adatausa.com/index.php?action=product_feature&amp;cid=2&amp;piid=22" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="86708169" Local_ID="0" Value="500" CategoryFeature_ID="3684" CategoryFeatureGroup_ID="67" No="10100100" Presentation_Value="500 GB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="7">
+	    <Measure ID="20" Sign="">
+	      <Signs><Sign ID="7432" langid="6">GB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508090" langid="6" Value="Capacidad de disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708171" Local_ID="0" Value="-" CategoryFeature_ID="15510" CategoryFeatureGroup_ID="67" No="10100001" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="430">
+	    <Measure ID="28" Sign="">
+	      <Signs><Sign ID="7438" langid="6">RPM</Sign></Signs>
+	    </Measure>
+	    <Name ID="508132" langid="6" Value="Velocidad de rotación del disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708172" Local_ID="0" Value="USB 2.0" CategoryFeature_ID="11666" CategoryFeatureGroup_ID="67" No="100104" Presentation_Value="USB 2.0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="982">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508248" langid="6" Value="Interfaz del disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708173" Local_ID="0" Value="2.5" CategoryFeature_ID="18866" CategoryFeatureGroup_ID="67" No="100098" Presentation_Value="6.35 cm (2.5 &quot;)" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1926">
+	    <Measure ID="16" Sign="&quot;">
+	      <Signs><Sign ID="7428" langid="6">&quot;</Sign></Signs>
+	    </Measure>
+	    <Name ID="508457" langid="6" Value="Tamaño de disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313029" Local_ID="0" Value="-" CategoryFeature_ID="13" CategoryFeatureGroup_ID="67" No="100097" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="27">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508096" langid="6" Value="Memoria temporal"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708176" Local_ID="0" Value="162" CategoryFeature_ID="3853" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="162 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313031" Local_ID="0" Value="15.5" CategoryFeature_ID="8681" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="15.5 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1464">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508417" langid="6" Value="Altura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313032" Local_ID="0" Value="112" CategoryFeature_ID="16567" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="112 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1649">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508434" langid="6" Value="Ancho"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313030" Local_ID="0" Value="77.5" CategoryFeature_ID="16569" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="77.5 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1650">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508435" langid="6" Value="Profundidad"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313035" Local_ID="0" Value="Y" CategoryFeature_ID="5246" CategoryFeatureGroup_ID="1710" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="853">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504750" langid="6" Value="Mac, compatible"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708174" Local_ID="0" Value="1" CategoryFeature_ID="48027" CategoryFeatureGroup_ID="66" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508488" langid="6" Value="Cantidad de puertos USB 2.0"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313037" Local_ID="0" Value="Y" CategoryFeature_ID="23044" CategoryFeatureGroup_ID="3609" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="3981">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504960" langid="6" Value="Guía de configuración rápida"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708175" Local_ID="0" Value="112 x 77.5 x 15.5" CategoryFeature_ID="3485" CategoryFeatureGroup_ID="337" No="100005" Presentation_Value="112 x 77.5 x 15.5 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708178" Local_ID="0" Value="Black" CategoryFeature_ID="17345" CategoryFeatureGroup_ID="337" No="100001" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708170" Local_ID="0" Value="N" CategoryFeature_ID="16" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="22">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506151" langid="6" Value="Interno"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708179" Local_ID="0" Value="Y" CategoryFeature_ID="18515" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="775">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="625155" langid="6" Value="Enchugar y usar"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313036" Local_ID="0" Value="Plastic" CategoryFeature_ID="18516" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Plástico" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="898">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504761" langid="6" Value="Materiales"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313033" Local_ID="0" Value="480" CategoryFeature_ID="6426" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="480 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1165">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="506175" langid="6" Value="Tasa de transferencia (máx)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708177" Local_ID="0" Value="Y" CategoryFeature_ID="13033" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2337">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506167" langid="6" Value="USB suministro de corriente"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313034" Local_ID="0" Value="Windows XP/Vista/7, Mac OS X 10.5, 10.6." CategoryFeature_ID="13903" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Windows XP/Vista/7, Mac OS X 10.5, 10.6." Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" langid="6" Value="Sistemas operativos compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708276" Local_ID="0" Value="Y" CategoryFeature_ID="23049" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="5170">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506221" langid="6" Value="USB"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103313038" Local_ID="0" Value="USB" CategoryFeature_ID="23048" CategoryFeatureGroup_ID="3609" No="0" Presentation_Value="USB" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4019">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504963" langid="6" Value="Cable USB"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86672538" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33609" CategoryFeatureGroup_ID="337" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/4808873_2308.jpg" PicHeight="1536" PicWidth="2048" ProductPicture_ID="870173" Size="425524" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/4808873_1109.jpg" ThumbSize="2960"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">A-DATA SH02 mini Portable 500GB, 500 GB, USB 2.0, 6.35 cm (2.5 &quot;), 162 g, 15.5 mm, 112 mm</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">A-DATA SH02 mini Portable 500GB. Accionamiento de disco: 500 GB, USB 2.0, 6.35 cm (2.5 &quot;). Peso y dimensiones: 162 g, 15.5 mm, 112 mm, 77.5 mm</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2634" Name="A-DATA"/>
+      </Product>
+
+</ICECAT-interface>

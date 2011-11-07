@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/5080711-TP-LINK.jpg" HighPicHeight="270" HighPicSize="26083" HighPicWidth="450" ID="5080711" LowPic="http://images.icecat.biz/img/norm/low/5080711-TP-LINK.jpg" LowPicHeight="120" LowPicSize="5862" LowPicWidth="200" Name="150Mbps Wireless Range Extender " Prod_id="TL-WA730RE" Quality="ICECAT" ReleaseDate="2010-06-11" ThumbPic="http://images.icecat.biz/thumbs/5080711.jpg" ThumbPicSize="2249" Title="TP-LINK  150Mbps Wireless Range Extender">
+       <Category ID="262">
+       
+    <Name ID="496536" Value="repetidores y transceptores" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="380" No="1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1492" No="10">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1491" No="30">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1487" No="3">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1609" No="9">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1489" No="4">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3039" No="15">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3040" No="71">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1488" No="40">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3037" No="99">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2768" No="13">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2506" No="14">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3490" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3036" No="90">
+     <FeatureGroup ID="91">
+       <Name ID="510190" Value="Wireless LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3038" No="8">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364051471"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="89174263" Local_ID="0" Value="125" CategoryFeature_ID="11307" CategoryFeatureGroup_ID="3037" No="10100004" Presentation_Value="125 Mbit/s" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1165">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="506175" langid="6" Value="Tasa de transferencia (máx)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174264" Local_ID="0" Value="Omni" CategoryFeature_ID="11301" CategoryFeatureGroup_ID="3036" No="100023" Presentation_Value="Omni" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1494">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="505792" langid="6" Value="Tipo de antena"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174274" Local_ID="0" Value="DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM" CategoryFeature_ID="17449" CategoryFeatureGroup_ID="3036" No="100000" Presentation_Value="DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1503">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504873" langid="6" Value="Modulación"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174265" Local_ID="0" Value="4" CategoryFeature_ID="17450" CategoryFeatureGroup_ID="3036" No="100000" Presentation_Value="4 dBi" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1804">
+	    <Measure ID="99" Sign="">
+	      <Signs><Sign ID="7504" langid="6">dBi</Sign></Signs>
+	    </Measure>
+	    <Name ID="507944" langid="6" Value="Antena de refuerzo (max)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174266" Local_ID="0" Value="2.4-2.4835" CategoryFeature_ID="11306" CategoryFeatureGroup_ID="1488" No="100023" Presentation_Value="2.4-2.4835 GHz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1769">
+	    <Measure ID="37" Sign="">
+	      <Signs><Sign ID="7446" langid="6">GHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="504886" langid="6" Value="Frecuencia de banda"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174267" Local_ID="0" Value="Wireless" CategoryFeature_ID="11292" CategoryFeatureGroup_ID="1491" No="100096" Presentation_Value="Wireless" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1655">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506667" langid="6" Value="Tecnología de conectividad"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174268" Local_ID="0" Value="1" CategoryFeature_ID="40443" CategoryFeatureGroup_ID="1491" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2312">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508388" langid="6" Value="Ethernet LAN (RJ-45) cantidad de puertos"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174269" Local_ID="0" Value="Y" CategoryFeature_ID="40445" CategoryFeatureGroup_ID="1491" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2316">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508494" langid="6" Value="DC-in jack"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174270" Local_ID="0" Value="IEEE 802.11g, IEEE 802.11b" CategoryFeature_ID="11952" CategoryFeatureGroup_ID="2506" No="100000" Presentation_Value="IEEE 802.11g, IEEE 802.11b" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="793">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508182" langid="6" Value="Cumplimiento de estándares del mercado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174271" Local_ID="0" Value="WPA/WPA2" CategoryFeature_ID="11296" CategoryFeatureGroup_ID="2768" No="100025" Presentation_Value="WPA/WPA2" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="454">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506160" langid="6" Value="Algoritmo de  seguridad"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174275" Local_ID="0" Value="0 - 40" CategoryFeature_ID="11300" CategoryFeatureGroup_ID="1489" No="100021" Presentation_Value="0 - 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" langid="6" Value="Alcance de temperatura operativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174276" Local_ID="0" Value="10 - 90" CategoryFeature_ID="11298" CategoryFeatureGroup_ID="1489" No="100019" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" langid="6" Value="Humedad relativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174277" Local_ID="0" Value="40 - 70" CategoryFeature_ID="11289" CategoryFeatureGroup_ID="1489" No="100000" Presentation_Value="40 - 70 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" langid="6" Value="Temperatura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174278" Local_ID="0" Value="5 - 95" CategoryFeature_ID="18204" CategoryFeatureGroup_ID="1489" No="100000" Presentation_Value="5 - 95 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" langid="6" Value="Húmedad (en almacenaje)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174272" Local_ID="0" Value="150 x 100 x 28" CategoryFeature_ID="11294" CategoryFeatureGroup_ID="1487" No="100000" Presentation_Value="150 x 100 x 28 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89174273" Local_ID="0" Value="Power" CategoryFeature_ID="21026" CategoryFeatureGroup_ID="3490" No="100000" Presentation_Value="Power" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3662">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504946" langid="6" Value="Energía LED"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89173579" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33797" CategoryFeatureGroup_ID="380" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="76601708" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="3468963" Prod_id="TL-WN721N" ThumbPic="http://images.icecat.biz/thumbs/3468963.jpg" Name="150Mbps Wireless N USB Adapter ">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 150Mbps Wireless Range Extender , 125 Mbit/s, Omni, DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM, 4 dBi, 2.4-2.4835 GHz, Wireless</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 150Mbps Wireless Range Extender . Transmisión de datos: 125 Mbit/s. Wireless LAN features: Omni, DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM, 4 dBi. Red: 2.4-2.4835 GHz. Conectividad: Wireless. Aprobaciones reguladoras: IEEE 802.11g, IEEE 802.11b. Seguridad: WPA/WPA2. Condiciones ambientales: 0 - 40 °C, 10 - 90 %, 40 - 70 °C, 5 - 95 %. Peso y dimensiones: 150 x 100 x 28 mm. Iluminación/Alarmas: Power</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

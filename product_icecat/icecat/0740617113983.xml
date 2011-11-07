@@ -1,0 +1,1224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/695824-128.jpg" HighPicHeight="632" HighPicSize="52343" HighPicWidth="792" ID="695824" LowPic="http://images.icecat.biz/img/norm/low/695824-128.jpg" LowPicHeight="159" LowPicSize="16004" LowPicWidth="200" Name="2GB microSD" Prod_id="SDC/2GB" Quality="ICECAT" ReleaseDate="2007-02-15" ThumbPic="http://images.icecat.biz/thumbs/695824.jpg" ThumbPicSize="3758" Title="Kingston  2GB microSD">
+       <Category ID="902">
+       
+    <Name ID="496742" Value="memorias flash" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="834" No="0">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="829" No="100">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1706" No="40">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2848" No="0">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="854" No="80">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="851" No="55">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="852" No="50">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="853" No="65">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2849" No="0">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4162" No="49">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2590" No="15">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2861" No="70">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2850" No="5">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3974" No="60">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3971" No="0">
+     <FeatureGroup ID="114">
+       <Name ID="510212" Value="Inner carton" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3972" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3973" No="10">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6204" No="75">
+     <FeatureGroup ID="144">
+       <Name ID="619999" Value="Special features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="7406171139830"/>
+        <EANCode EAN="0740617113983"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26479189" LongDesc="Aproveche mejor sus dispositivos móviles. Aproveche mejor sus dispositivos móviles gracias a la tarjeta de memoria extraíble microSD de Kingston Technology, una solución versátil para aumentar el espacio de almacenamiento de los teléfonos móviles más avanzados. Con ella, podrá guardar una mayor cantidad de canciones, películas, vídeos, fotografías, melodías y todo tipo de archivos." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="MicroSD" URL="http://www.kingston.com/esroot/flash/sd_micro.asp" WarrantyInfo="Garantía de por vida" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="19192737" Local_ID="0" Value="2048" CategoryFeature_ID="6902" CategoryFeatureGroup_ID="829" No="10100100" Presentation_Value="2048 MB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="6">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508089" langid="6" Value="Memoria interna"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="19192738" Local_ID="0" Value="Micro Secure Digital (MicroSD)" CategoryFeature_ID="12811" CategoryFeatureGroup_ID="829" No="10100012" Presentation_Value="Micro Secure Digital (MicroSD)" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="2305">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="505799" langid="6" Value="Tipo de tarjeta flash"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="19192770" Local_ID="0" Value="1.4" CategoryFeature_ID="7254" CategoryFeatureGroup_ID="854" No="100100" Presentation_Value="1.4 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97804580" Local_ID="0" Value="Y" CategoryFeature_ID="27237" CategoryFeatureGroup_ID="6204" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="775">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="625155" langid="6" Value="Enchufar y usar"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97804578" Local_ID="0" Value="Y" CategoryFeature_ID="19533" CategoryFeatureGroup_ID="6204" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3461">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="505801" langid="6" Value="Adaptador de memoria incluido"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97804579" Local_ID="0" Value="Y" CategoryFeature_ID="23013" CategoryFeatureGroup_ID="2861" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="4321">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="505803" langid="6" Value="Conmutador protección contra escritura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="19192818" Local_ID="0" Value="-25 - 85" CategoryFeature_ID="7262" CategoryFeatureGroup_ID="852" No="100100" Presentation_Value="-25 - 85 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" langid="6" Value="Alcance de temperatura operativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="19192820" Local_ID="0" Value="-40 - 85" CategoryFeature_ID="15780" CategoryFeatureGroup_ID="852" No="100090" Presentation_Value="-40 - 85 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" langid="6" Value="Temperatura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97804581" Local_ID="0" Value="Black" CategoryFeature_ID="31314" CategoryFeatureGroup_ID="4162" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="19192769" Local_ID="0" Value="11 x 15 x 1" CategoryFeature_ID="7253" CategoryFeatureGroup_ID="834" No="100100" Presentation_Value="11 x 15 x 1 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100289280" Local_ID="0" Value="8-pin microSD" CategoryFeature_ID="7259" CategoryFeatureGroup_ID="834" No="100090" Presentation_Value="8-pin microSD" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="771">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508180" langid="6" Value="Factor de forma"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="105295503" Local_ID="0" Value="Flash" CategoryFeature_ID="7326" CategoryFeatureGroup_ID="834" No="100080" Presentation_Value="Flash" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="427">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508131" langid="6" Value="Tipo de memoria interna"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100288409" Local_ID="0" Value="N" CategoryFeature_ID="45041" CategoryFeatureGroup_ID="834" No="100030" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6580">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506960" langid="6" Value="Registrado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100291747" Local_ID="0" Value="Lifetime" CategoryFeature_ID="23010" CategoryFeatureGroup_ID="834" No="0" Presentation_Value="Lifetime" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1448">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508138" langid="6" Value="Garantía"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="46715399" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33614" CategoryFeatureGroup_ID="834" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/695824_3067.jpg" PicHeight="520" PicWidth="503" ProductPicture_ID="638824" Size="41755" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/695824_474.jpg" ThumbSize="6406"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/695824_5681.jpg" PicHeight="783" PicWidth="581" ProductPicture_ID="638822" Size="23235" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/695824_5414.jpg" ThumbSize="3955"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/695824_7350.jpg" PicHeight="436" PicWidth="485" ProductPicture_ID="638821" Size="11228" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/695824_9152.jpg" ThumbSize="3868"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/695824_8634.jpg" PicHeight="489" PicWidth="600" ProductPicture_ID="681765" Size="19084" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/695824_8990.jpg" ThumbSize="3291"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="80900115" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="5774174" Prod_id="010-00864-01" ThumbPic="http://images.icecat.biz/thumbs/5774174.jpg" Name="GPSMAP 78s">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153221" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1239712" Prod_id="FA982AA#ABB" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80900114" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="3695419" Prod_id="010-00781-01" ThumbPic="http://images.icecat.biz/thumbs/3695419.jpg" Name="Dakota 20">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153224" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1264441" Prod_id="FA982AA#ABD" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409358" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1231658" Prod_id="FA982AA" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="Dispositivo HP iPAQ 114 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80900116" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="5793494" Prod_id="010-00868-01" ThumbPic="http://images.icecat.biz/thumbs/5793494.jpg" Name="GPSMAP 62s ">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="75629885" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="3543753" Prod_id="010-00697-10" ThumbPic="http://images.icecat.biz/thumbs/3543753.jpg" Name="Oregon 550">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153234" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1310776" Prod_id="FB052AA#ABB" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153236" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1311464" Prod_id="FA982AT#ABB" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153235" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1311463" Prod_id="FA982AT#ABH" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409362" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1231846" Prod_id="FA982AT" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153223" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1254728" Prod_id="FA992AA#ABB" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153247" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1352743" Prod_id="FA982AT#ABF" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153226" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1270813" Prod_id="FB052AA#ABD" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153238" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1311675" Prod_id="FA982AA#ABF" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153237" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1311672" Prod_id="FA982AA#ABH" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153262" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1631471" Prod_id="FB052AA#ABF" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153290" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1862310" Prod_id="FB149AA#ABD" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153255" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1507004" Prod_id="FA982AA#ABE" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="Dispositivo HP iPAQ 114 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153285" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1768077" Prod_id="FB149AA#ABB" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153241" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1327318" Prod_id="FA982AT#ABE" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153248" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1354510" Prod_id="FA992AA#ABS" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153270" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1693715" Prod_id="FB052AT#ABE" ThumbPic="http://images2.icecat.biz/thumbs/1231788.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153260" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1627434" Prod_id="FB153AA#ABB" ThumbPic="http://images.icecat.biz/thumbs/3612965.jpg" Name="iPAQ 914c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153228" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1270815" Prod_id="FA992AA#ABD" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153256" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1507005" Prod_id="FA982AA#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="Dispositivo HP iPAQ 114 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81260861" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="447826" Prod_id="SGH-E770" ThumbPic="http://images.icecat.biz/thumbs/447826.jpg" Name="SGH-E770">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153259" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1624882" Prod_id="FB052AA#ABH" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153286" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1768113" Prod_id="FB149AA#ABH" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153250" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1380809" Prod_id="FB052AT#ABH" ThumbPic="http://images2.icecat.biz/thumbs/1231788.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153230" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1310047" Prod_id="FA992AT#ABB" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153249" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1379792" Prod_id="FA992AT#ABH" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80900117" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="5848520" Prod_id="010-00864-00" ThumbPic="http://images.icecat.biz/thumbs/5848520.jpg" Name="GPSMAP 78">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81260920" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="1208258" Prod_id="SGH-U600" ThumbPic="http://images.icecat.biz/thumbs/1208258.jpg" Name="U600">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409385" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1312163" Prod_id="FB052AA" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409360" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1231788" Prod_id="FB052AT" ThumbPic="http://images2.icecat.biz/thumbs/1231788.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153291" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1905214" Prod_id="FB149AA#ABF" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153239" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1311816" Prod_id="FB052AA#ABS" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153253" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1421641" Prod_id="FA992AT#ABF" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153243" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1330449" Prod_id="FA982AT#BUN" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409449" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1751595" Prod_id="FB149AA" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153258" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1580954" Prod_id="FA992AA#ABF" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153288" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1858477" Prod_id="FA992AA#ABH" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153302" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2090955" Prod_id="FA982AT#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="Dispositivo HP iPAQ 114 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153292" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1905639" Prod_id="FB149AA#ABZ" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409418" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1594494" Prod_id="010-00577-01" ThumbPic="http://images.icecat.biz/thumbs/1594494.jpg" Name="nüvi® 860">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153265" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1635508" Prod_id="FA992AA#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153293" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1946271" Prod_id="FB149AA#ABE" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153271" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1730531" Prod_id="FA992AA#AKD" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409431" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1689019" Prod_id="010-00697-01" ThumbPic="http://images2.icecat.biz/thumbs/1689019.jpg" Name="Oregon 300">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153242" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1330448" Prod_id="FA982AA#BUN" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409359" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1231766" Prod_id="FA992AA" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153328" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3423350" Prod_id="FB137AA#AR9" ThumbPic="http://images.icecat.biz/thumbs/3423350.jpg" Name="IPAQ 610C">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153233" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1310775" Prod_id="FA988AA#ABB" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153225" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1266538" Prod_id="FA982AA#ABU" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81260870" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="675099" Prod_id="SGH-I600" ThumbPic="http://images.icecat.biz/thumbs/675099.jpg" Name="SGH-I600 Black, WM5">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81260862" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="464495" Prod_id="SGH-E870" ThumbPic="http://images.icecat.biz/thumbs/464495.jpg" Name="SGH-E870 White">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153232" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1310049" Prod_id="FA982AT#ABU" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409436" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1732950" Prod_id="010-00700-01 " ThumbPic="http://images.icecat.biz/thumbs/1732950.jpg" Name="nüvi 550">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153301" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2064442" Prod_id="FA988AA#ABD#*KIT" ThumbPic="http://images2.icecat.biz/thumbs/2064442.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153264" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1635466" Prod_id="FA982AT#ABD" ThumbPic="http://images.icecat.biz/thumbs/1231846.jpg" Name="Dispositivo HP iPAQ 114 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153231" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1310048" Prod_id="FB052AT#ABB" ThumbPic="http://images2.icecat.biz/thumbs/1231788.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153229" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1300722" Prod_id="FA992AT#ABS" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409513" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3694062" Prod_id="FB051AA" ThumbPic="http://images.icecat.biz/thumbs/3694062.jpg" Name="iPAQ 912c">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153331" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="5693427" Prod_id="FB167AA#AR9" ThumbPic="http://images.icecat.biz/thumbs/5693427.jpg" Name="FB167AA#AR9">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261399" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="2288943" Prod_id="SGH-F480" ThumbPic="http://images.icecat.biz/thumbs/2288943.jpg" Name="SGH-F480">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153261" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1630259" Prod_id="FB052AT#ABF" ThumbPic="http://images2.icecat.biz/thumbs/1231788.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261084" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="1637244" Prod_id="SGH-I900" ThumbPic="http://images2.icecat.biz/thumbs/1637244.jpg" Name="Omnia i900 Modern">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153227" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1270814" Prod_id="FA988AA#ABD" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81260859" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="447766" Prod_id="SGH-D720" ThumbPic="http://images.icecat.biz/thumbs/447766.jpg" Name="SGH-D720 Black">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153263" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1635463" Prod_id="FA992AT#ABD" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153266" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1635659" Prod_id="FB052AA#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153278" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1747793" Prod_id="FA982AA#ABB?KIT" ThumbPic="http://images2.icecat.biz/thumbs/1747793.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="75629886" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="4067438" Prod_id="010-00697-11" ThumbPic="http://images.icecat.biz/thumbs/4067438.jpg" Name="Oregon 550t">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409410" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1570734" Prod_id="010-00576-00" ThumbPic="http://images.icecat.biz/thumbs/1570734.jpg" Name="nüvi 275T ">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153277" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1747792" Prod_id="FA982AT#ABB?KIT" ThumbPic="http://images2.icecat.biz/thumbs/1747792.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153269" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1678877" Prod_id="FB068AA#ABA" ThumbPic="http://images.icecat.biz/thumbs/1584583.jpg" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153272" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1730773" Prod_id="FA982AA#ABB?LPL" ThumbPic="http://images2.icecat.biz/thumbs/1730773.jpg" Name="iPAQ 114 Classic Handheld, 65 MB, pantalla TFT de 3,5&quot;, Windows Mobile™ 6.0 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153257" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1555622" Prod_id="FA992AT#ABE" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409432" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1690257" Prod_id="010-00697-00" ThumbPic="http://images2.icecat.biz/thumbs/1690257.jpg" Name="Oregon 200">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153300" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1996532" Prod_id="FA992AA#ABD#*KIT" ThumbPic="http://images2.icecat.biz/thumbs/1996532.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153246" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1349796" Prod_id="FA992AT#ABN" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="74265809" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="4809004" Prod_id="010-00858-00" ThumbPic="http://images.icecat.biz/thumbs/4809004.jpg" Name="nüvi 3760T">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409377" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1310554" Prod_id="FA988AA" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="74265810" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="4809099" Prod_id="010-00858-20" ThumbPic="http://images.icecat.biz/thumbs/4809099.jpg" Name="nuvi 3790T">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153245" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1349795" Prod_id="FA992AT#ABY" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153284" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1760636" Prod_id="FA988AA#ABDSET" ThumbPic="http://images2.icecat.biz/thumbs/1760636.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153252" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1389767" Prod_id="FA988AA#ABH" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153282" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1749635" Prod_id="FA992AT#ABB?KIT1" ThumbPic="http://images2.icecat.biz/thumbs/1749635.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153268" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1677162" Prod_id="FA900AA#ABA" ThumbPic="http://images.icecat.biz/thumbs/1591786.jpg" Name="iPAQ 510 Voice Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153294" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1950902" Prod_id="FB052AT#ABY" ThumbPic="http://images2.icecat.biz/thumbs/1231788.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153329" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3440368" Prod_id="FB052AT#ABZ" ThumbPic="http://images2.icecat.biz/thumbs/1231788.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153330" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3738386" Prod_id="FA982AA#ACB" ThumbPic="http://images.icecat.biz/thumbs/1231658.jpg" Name="Dispositivo HP iPAQ 114 Classic">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153267" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1646322" Prod_id="FB052AA#ABE" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153305" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2118857" Prod_id="FA992AT#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81260963" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="1287968" Prod_id="SGH-E590" ThumbPic="http://images2.icecat.biz/thumbs/1287968.jpg" Name="SGH-E590">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409361" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1231844" Prod_id="FA992AT" ThumbPic="http://images.icecat.biz/thumbs/1231844.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153274" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1747785" Prod_id="FB052AT#ABB?KIT" ThumbPic="http://images2.icecat.biz/thumbs/1747785.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153276" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1747790" Prod_id="FA992AT#ABB?KIT" ThumbPic="http://images2.icecat.biz/thumbs/1747790.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153275" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1747787" Prod_id="FA992AA#ABB?KIT" ThumbPic="http://images2.icecat.biz/thumbs/1747787.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153307" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404782" Prod_id="FB068AA#ABA-KIT" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153320" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2762874" Prod_id="FB068AA#ABA-KIT-F6" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153323" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3230714" Prod_id="FA980AA#ABA1052" ThumbPic="" Name="iPAQ 110 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153283" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1760020" Prod_id="FA992AA#ABDSET" ThumbPic="http://images2.icecat.biz/thumbs/1760020.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153306" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404781" Prod_id="FB068AA#ABA-S" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153279" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1749252" Prod_id="FB052AT#ABB?KIT1" ThumbPic="http://images2.icecat.biz/thumbs/1749252.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153316" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404794" Prod_id="FB050AA#ABA-S" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153321" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2789080" Prod_id="FA980AA#ABA-A1" ThumbPic="" Name="iPAQ 110 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153281" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1749634" Prod_id="FA992AA#ABB?KIT1" ThumbPic="http://images.icecat.biz/thumbs/1749634.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153296" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1954655" Prod_id="FB149AA#ACTIE" ThumbPic="" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153311" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404786" Prod_id="FB068AA#ABA-KIT-B2" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153313" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404788" Prod_id="FB068AA#ABA-A1" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153319" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2762873" Prod_id="FB068AA#ABA-KIT-G7" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153322" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3197174" Prod_id="FA979AA#ABA-S" ThumbPic="" Name="iPAQ 111 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153317" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2681636" Prod_id="FB068AA#ABA1071" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153324" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3230715" Prod_id="FB068AA#ABA1052" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153326" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3302533" Prod_id="FA980AA#ABA1071" ThumbPic="" Name="iPAQ 110 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153273" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1747784" Prod_id="FB052AA#ABB?KIT" ThumbPic="http://images2.icecat.biz/thumbs/1747784.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153310" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404785" Prod_id="FB068AA#ABA-KIT-C3" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153308" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404783" Prod_id="FB068AA#ABA-KIT-E5" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153309" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404784" Prod_id="FB068AA#ABA-KIT-D4" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153325" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3239104" Prod_id="FB068AA#ABA-B2" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153240" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1315077" Prod_id="FA988AA#ABS" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153298" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1959472" Prod_id="FA988AA#ABF" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153312" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404787" Prod_id="FB068AA#ABA-KIT-A1" ThumbPic="" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153280" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1749633" Prod_id="FB052AA#ABB?KIT1" ThumbPic="http://images2.icecat.biz/thumbs/1749633.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80900112" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1066205" Prod_id="010-00629-00" ThumbPic="http://images2.icecat.biz/thumbs/1066205.jpg" Name="eTrex Legend HCx Portable Navigator">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153222" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1249137" Prod_id="FA979AA#ABA" ThumbPic="http://images.icecat.biz/thumbs/1488769.jpg" Name="iPAQ 111 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409365" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1249561" Prod_id="010-00596-00" ThumbPic="http://images2.icecat.biz/thumbs/1249561.jpg" Name="Astro 220">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409488" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="2651720" Prod_id="010-00717-40" ThumbPic="http://images.icecat.biz/thumbs/2651720.jpg" Name="nüvi 205 ">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153295" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1950903" Prod_id="FB052AA#ABY" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153327" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3423347" Prod_id="FA983AA#B16" ThumbPic="http://images.icecat.biz/thumbs/2295514.jpg" Name="iPAQ 116 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153303" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2111413" Prod_id="FB052AA#AB9" ThumbPic="http://images.icecat.biz/thumbs/1312163.jpg" Name="iPAQ 914c Business Messenger, 65 MB, pantalla TFT de 2,4&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409417" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1592888" Prod_id="FA980AA" ThumbPic="http://images.icecat.biz/thumbs/1592888.jpg" Name="iPAQ 110 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409406" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1488769" Prod_id="FA979AA" ThumbPic="http://images.icecat.biz/thumbs/1488769.jpg" Name="iPAQ 111 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409476" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2295518" Prod_id="FA981AA" ThumbPic="http://images.icecat.biz/thumbs/2295518.jpg" Name="iPAQ 112 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153244" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1349311" Prod_id="FA988AA#ABU" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153304" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2112079" Prod_id="FA992AA#AB9" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153251" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1384099" Prod_id="FA980AA#ABA" ThumbPic="http://images.icecat.biz/thumbs/1592888.jpg" Name="iPAQ 110 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153299" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1959490" Prod_id="FA992AA#ABE" ThumbPic="http://images.icecat.biz/thumbs/1231766.jpg" Name="iPAQ 614c Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409413" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1584583" Prod_id="FB068AA" ThumbPic="http://images.icecat.biz/thumbs/1584583.jpg" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153254" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1436256" Prod_id="FB136AA#ABB" ThumbPic="http://images.icecat.biz/thumbs/1456474.jpg" Name="iPAQ 614c Business Navigator 65 M 2.8&quot; TFT W Mobile® 6 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409400" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1389572" Prod_id="010-00555-00" ThumbPic="http://images2.icecat.biz/thumbs/1389572.jpg" Name="Edge 605 Cycle Computer Navigator">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409489" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="2651722" Prod_id="010-00717-20" ThumbPic="http://images2.icecat.biz/thumbs/2651722.jpg" Name="nüvi 255, North America">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409412" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1584580" Prod_id="FB050AA" ThumbPic="http://images.icecat.biz/thumbs/1584580.jpg" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153289" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1861718" Prod_id="FA988AA#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153297" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1959470" Prod_id="FA988AA#ABE" ThumbPic="http://images.icecat.biz/thumbs/1310554.jpg" Name="iPAQ 614 Business Navigator, 65 MB, pantalla TFT de 2,8&quot;, Windows Mobile™ 6,0 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153315" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404793" Prod_id="FB050AA#ABA" ThumbPic="http://images.icecat.biz/thumbs/1584580.jpg" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409490" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="2651732" Prod_id="010-00697-04" ThumbPic="http://images.icecat.biz/thumbs/2651732.jpg" Name="Oregon 400i">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836590" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026250" Prod_id="010-00902-30" ThumbPic="http://images.icecat.biz/thumbs/8026250.jpg" Name="nüvi 2300">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409401" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1389573" Prod_id="010-00555-20" ThumbPic="http://images2.icecat.biz/thumbs/1389573.jpg" Name="Edge 705 Cycle Computer Navigator">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="67840076" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="4226508" Prod_id="010-00697-02" ThumbPic="http://images.icecat.biz/thumbs/4226508.jpg" Name="Oregon 400t">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409356" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1066234" Prod_id="010-00469-00" ThumbPic="http://images2.icecat.biz/thumbs/1066234.jpg" Name="GPSMAP 76CSx Portable Navigator">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153314" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2404792" Prod_id="FB050AA#ABC" ThumbPic="http://images.icecat.biz/thumbs/1584580.jpg" Name="iPAQ 910c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409500" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="3005237" Prod_id="010-00727-00" ThumbPic="http://images2.icecat.biz/thumbs/3005237.jpg" Name="Zūmo 660, North America">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153318" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2711902" Prod_id="FA980AA#ABC" ThumbPic="http://images.icecat.biz/thumbs/1592888.jpg" Name="iPAQ 110 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836588" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026248" Prod_id="010-00902-12" ThumbPic="http://images.icecat.biz/thumbs/8026248.jpg" Name="nüvi 2350">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80900113" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1066206" Prod_id="010-00630-00" ThumbPic="http://images2.icecat.biz/thumbs/1066206.jpg" Name="eTrex Vista HCx">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84192524" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="7041526" Prod_id="010-00868-02" ThumbPic="http://images.icecat.biz/thumbs/7041526.jpg" Name="GPSMAP 62st">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836583" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026242" Prod_id="010-00901-10" ThumbPic="http://images.icecat.biz/thumbs/8026242.jpg" Name="nüvi 2250LT">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836576" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026225" Prod_id="010-00810-02" ThumbPic="http://images.icecat.biz/thumbs/8026225.jpg" Name="nüvi 1490LMT">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409437" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="1732951" Prod_id="010-00700-10" ThumbPic="http://images.icecat.biz/thumbs/1732951.jpg" Name="nüvi 500, USA">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="90679755" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="9032411" Prod_id="010-00858-01" ThumbPic="http://images.icecat.biz/thumbs/9032411.jpg" Name="nüvi 3760LMT">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="68590381" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="4554694" Prod_id="010-00697-03" ThumbPic="http://images.icecat.biz/thumbs/4554694.jpg" Name="Oregon 400c">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409493" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="2651764" Prod_id="010-00576-10" ThumbPic="http://images2.icecat.biz/thumbs/2651764.jpg" Name="nüvi 265T">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836587" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026247" Prod_id="010-00902-10" ThumbPic="http://images.icecat.biz/thumbs/8026247.jpg" Name="nüvi 2350LT">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836577" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026227" Prod_id="010-00810-22" ThumbPic="http://images.icecat.biz/thumbs/8026227.jpg" Name="nüvi 1450T">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836581" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026236" Prod_id="010-00864-02" ThumbPic="http://images.icecat.biz/thumbs/8026236.jpg" Name="GPSMAP 78sc">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836585" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026245" Prod_id="010-00901-30" ThumbPic="http://images.icecat.biz/thumbs/8026245.jpg" Name="nüvi 2200">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836580" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026234" Prod_id="010-00858-40" ThumbPic="http://images.icecat.biz/thumbs/8026234.jpg" Name="nüvi 3750">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836573" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026208" Prod_id="010-00697-41" ThumbPic="http://images.icecat.biz/thumbs/8026208.jpg" Name="Oregon 450t">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836584" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026243" Prod_id="010-00901-12" ThumbPic="http://images.icecat.biz/thumbs/8026243.jpg" Name="nüvi 2250">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836592" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026252" Prod_id="010-00912-00" ThumbPic="http://images.icecat.biz/thumbs/8026252.jpg" Name="nüLink! 1695">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836582" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026239" Prod_id="010-00876-00" ThumbPic="http://images.icecat.biz/thumbs/8026239.jpg" Name="zūmo 220">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836578" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026230" Prod_id="010-00822-00" ThumbPic="http://images.icecat.biz/thumbs/8026230.jpg" Name="nüvi 1690">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836593" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026253" Prod_id="010-00916-00" ThumbPic="http://images.icecat.biz/thumbs/8026253.jpg" Name="nüvi 295W">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88836586" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="8026246" Prod_id="010-00902-06" ThumbPic="http://images.icecat.biz/thumbs/8026246.jpg" Name="nüvi 2360LMT">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81022022" Category_ID="910" Reversed="0" Preferred="0">
+	    <Product ID="6287204" Prod_id="010-00577-20" ThumbPic="http://images.icecat.biz/thumbs/6287204.jpg" Name="nüvi 850">
+	      <Supplier ID="202" Name="Garmin"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="92153287" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1769536" Prod_id="FB149AA#ABU" ThumbPic="http://images2.icecat.biz/thumbs/1768113.jpg" Name="iPAQ Data Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261879" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="4491798" Prod_id="SGH-D820" ThumbPic="http://images.icecat.biz/thumbs/4491798.jpg" Name="D820">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261882" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="4500102" Prod_id="SGH-P900" ThumbPic="http://images.icecat.biz/thumbs/4500102.jpg" Name="P900">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261914" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="4566745" Prod_id="SGH-I607" ThumbPic="http://images.icecat.biz/thumbs/4566745.jpg" Name="i607 BlackJack">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261922" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="4593588" Prod_id="SGH-I310" ThumbPic="http://images.icecat.biz/thumbs/4593588.jpg" Name="SGH-i310">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261924" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="4593601" Prod_id="SGH-I300" ThumbPic="http://images.icecat.biz/thumbs/4593601.jpg" Name="SGH-i300">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="81261925" Category_ID="119" Reversed="0" Preferred="0">
+	    <Product ID="4593604" Prod_id="SCH-I760" ThumbPic="http://images.icecat.biz/thumbs/4593604.jpg" Name="SCH-i760">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="93874944" Category_ID="1893" Reversed="0" Preferred="0">
+	    <Product ID="10598355" Prod_id="SPH-M810" ThumbPic="http://images.icecat.biz/thumbs/10598355.jpg" Name="SPH-M810">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409405" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1456474" Prod_id="FB136AA" ThumbPic="http://images.icecat.biz/thumbs/1456474.jpg" Name="iPAQ 614c Business Navigator 65 M 2.8&quot; TFT W Mobile® 6 Professional">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409414" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1591786" Prod_id="FA900AA" ThumbPic="http://images.icecat.biz/thumbs/1591786.jpg" Name="iPAQ 510 Voice Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409415" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1592478" Prod_id="FA986AA" ThumbPic="http://images.icecat.biz/thumbs/1592478.jpg" Name="iPAQ 610 Business Navigator">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409416" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="1592492" Prod_id="FA990AA" ThumbPic="http://images.icecat.biz/thumbs/1592492.jpg" Name="iPAQ 610c Business Navigator">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409475" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="2295514" Prod_id="FA983AA" ThumbPic="http://images.icecat.biz/thumbs/2295514.jpg" Name="iPAQ 116 Classic Handheld">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58409511" Category_ID="154" Reversed="0" Preferred="0">
+	    <Product ID="3612965" Prod_id="FB153AA" ThumbPic="http://images.icecat.biz/thumbs/3612965.jpg" Name="iPAQ 914c Business Messenger">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Kingston 2GB microSD, 2048 MB, Micro Secure Digital (MicroSD), 1.4 g, -25 - 85 °C, -40 - 85 °C, Negro</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Kingston 2GB microSD. Memoria: 2048 MB, Micro Secure Digital (MicroSD). Peso y dimensiones: 1.4 g. Condiciones ambientales: -25 - 85 °C, -40 - 85 °C. Color: Negro</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="18" Name="Kingston"/>
+      </Product>
+
+</ICECAT-interface>

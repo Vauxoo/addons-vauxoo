@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images2.icecat.biz/img/norm/high/610964-2629.jpg" HighPicHeight="144" HighPicSize="3759" HighPicWidth="216" ID="610964" LowPic="http://images2.icecat.biz/img/norm/low/610964-2629.jpg" LowPicHeight="133" LowPicSize="8653" LowPicWidth="200" Name="Black Cartridge" Prod_id="8755" Quality="ICECAT" ReleaseDate="2006-11-01" ThumbPic="http://images2.icecat.biz/thumbs/610964.jpg" ThumbPicSize="1878" Title="Epson  Black Cartridge">
+       <Category ID="905">
+       
+    <Name ID="496745" Value="cintas para impresora" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="1098" No="0">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1097" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4077" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0010343600935"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="47639392" Local_ID="0" Value="ActionPrinter Series Wide 9 Pin\nActionPrinter-2500 Impact Printer\n\nFX &amp; EX Series Dot Matrix-Wide\nFX-100 Impact Printer\nFX-1050 Impact Printer\nFX-1170 Impact Printer\nFX-1180 Impact Printer\nFX-185 Impact Printer\nFX-286 Impact Printer\nFX-286e Impact Printer\n\nMX Series Dot Matrix-Wide\nMX-100 Impact Printer\n\nRX Series Dot Matrix-Wide\nRX-100 Impact Printer" CategoryFeature_ID="12809" CategoryFeatureGroup_ID="1098" No="100000" Presentation_Value="ActionPrinter Series Wide 9 Pin\nActionPrinter-2500 Impact Printer\n\nFX &amp; EX Series Dot Matrix-Wide\nFX-100 Impact Printer\nFX-1050 Impact Printer\nFX-1170 Impact Printer\nFX-1180 Impact Printer\nFX-185 Impact Printer\nFX-286 Impact Printer\nFX-286e Impact Printer\n\nMX Series Dot Matrix-Wide\nMX-100 Impact Printer\n\nRX Series Dot Matrix-Wide\nRX-100 Impact Printer" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2190">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504359" Value="Productos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47639393" Local_ID="0" Value="Black" CategoryFeature_ID="31286" CategoryFeatureGroup_ID="4077" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47639340" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33776" CategoryFeatureGroup_ID="1098" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="84442377" Category_ID="905" Reversed="0" Preferred="0">
+	    <Product ID="819665" Prod_id="515379" ThumbPic="http://images.icecat.biz/thumbs/819665.jpg" Name="1 Nylon HD">
+	      <Supplier ID="383" Name="Pelikan"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Epson Black Cartridge, Negro</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Epson Black Cartridge. Color: Negro</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="13" Name="Epson"/>
+      </Product>
+
+</ICECAT-interface>

@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/5745416-TP-LINK.jpg" HighPicHeight="270" HighPicSize="20110" HighPicWidth="450" ID="5745416" LowPic="http://images.icecat.biz/img/norm/low/5745416-TP-LINK.jpg" LowPicHeight="120" LowPicSize="9069" LowPicWidth="200" Name="Ultimate Wireless N Gigabit Router " Prod_id="TL-WR1043ND" Quality="ICECAT" ReleaseDate="2010-06-30" ThumbPic="http://images.icecat.biz/thumbs/5745416.jpg" ThumbPicSize="3027" Title="TP-LINK  Ultimate Wireless N Gigabit Router">
+       <Category ID="244">
+       
+    <Name ID="489" Value="routers" langid="1"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="362" No="1">
+     <FeatureGroup ID="0">
+       <Name ID="5073" Value="Technical details" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2284" No="20">
+     <FeatureGroup ID="1">
+       <Name ID="4859" Value="Processor" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2282" No="21">
+     <FeatureGroup ID="3">
+       <Name ID="4863" Value="Memory" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1170" No="44">
+     <FeatureGroup ID="8">
+       <Name ID="4885" Value="System requirements" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1469" No="63">
+     <FeatureGroup ID="12">
+       <Name ID="4995" Value="Connectivity" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1171" No="3">
+     <FeatureGroup ID="14">
+       <Name ID="5023" Value="Weight &amp; dimensions" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2955" No="62">
+     <FeatureGroup ID="23">
+       <Name ID="5041" Value="Bandwidth" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1169" No="5">
+     <FeatureGroup ID="27">
+       <Name ID="5049" Value="Energy management" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1168" No="4">
+     <FeatureGroup ID="28">
+       <Name ID="5067" Value="Environmental conditions" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2959" No="7">
+     <FeatureGroup ID="32">
+       <Name ID="5133" Value="Endurance" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2957" No="65">
+     <FeatureGroup ID="34">
+       <Name ID="5139" Value="Protocols" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1167" No="66">
+     <FeatureGroup ID="35">
+       <Name ID="5167" Value="Networking" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4055" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="5181" Value="Colour" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2283" No="61">
+     <FeatureGroup ID="46">
+       <Name ID="5689" Value="Modem" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2958" No="68">
+     <FeatureGroup ID="62">
+       <Name ID="27261" Value="Data transmission" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3123" No="2">
+     <FeatureGroup ID="67">
+       <Name ID="27423" Value="Packaging data" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2495" No="60">
+     <FeatureGroup ID="75">
+       <Name ID="27867" Value="Security" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2500" No="6">
+     <FeatureGroup ID="76">
+       <Name ID="28540" Value="Certificates" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3452" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="28858" Value="Illumination/Alarms" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2956" No="45">
+     <FeatureGroup ID="90">
+       <Name ID="30562" Value="Operating system/software" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2941" No="78">
+     <FeatureGroup ID="91">
+       <Name ID="30754" Value="Wireless LAN features" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2942" No="76">
+     <FeatureGroup ID="92">
+       <Name ID="30760" Value="DSL features" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3482" No="63">
+     <FeatureGroup ID="93">
+       <Name ID="30784" Value="Management features" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3481" No="80">
+     <FeatureGroup ID="112">
+       <Name ID="42875" Value="Ethernet LAN features" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5223" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="78827" Value="Outer carton" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3857" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="78852" Value="Packaging content" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4272" No="64">
+     <FeatureGroup ID="125">
+       <Name ID="223412" Value="Antenna" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6647" No="0">
+     <FeatureGroup ID="146">
+       <Name ID="624346" Value="Other features" langid="1"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364051389"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26482544" LongDesc="What This Product Does  \n300Mbps Ultimate Wireless N Gigabit Router TL-WR1043ND is a combined wired/wireless network connection device integrated with internet-sharing router and 4-port switch. It creates wireless network with incredibly high speeds of up to 300Mbps, which ensures that you are freer to simultaneously enjoy multiple high-bandwidth consuming and interruption sensitive applications such as streaming HD video, making VoIP calls, sharing large files and playing online games. Specially, it equipped with a USB storage port on the back of the router for connecting USB storage devices to the network, for convenient resource sharing for everyone on the network.  \n\nGigabit Ports - Incredible Bandwidth  \nWith built-in Gigabit Ethernet Switch, TL-WR1043ND provides more powerful data processing abilities, which unleashes the full potential of the N-abled freedom, eliminating bottlenecks in transferring speed between megabit wired and 11n wireless connection. Meanwhile, everything they do will be faster and more efficient, thus users are sharing large files such as high definition video in minutes instead of hours. \n\nWireless N - Extreme Speed &amp; Range  \nComplies with the IEEE 802.11n standard, users can create a wireless network and get up to 18X the speed and 6X the range of conventional 11g products. The router has the speed to work smoothly with almost any bandwidth intensive application including VoIP, HD streaming, or online gaming, without the lag. Using its powerful N technologies, the router is also able to mitigate data loss over long distances and through obstacles turning your home and even your yard into one big hot - spot.\n\nMore Stable Wireless Signals  \nSignal Sustain Technology (SST) dramatically increases link robustness and throughput by simultaneously transmitting across three spatially-diverse signal paths, and incorporating information from three receivers simultaneously within the signal processing at the receiver. Network connection drops greatly reduced, link robustness and throughput increased, achieves, on average, 50 percent greater sustained throughput at range than 2x2 MIMO systems.\n\nClear Channel Assessment (CCA) applies the existing WLAN listen-before-talk rule to the bandwidth needed for binding channels. It automatically avoids channel conflicts using its clear channel selection feature and fully realizes the advantages of channel binding, greatly enhanced the wireless performance. \n\nUSB Storage Port - Portable Server  \nCentralizing an external storage device and file sharing is easy. The TL-WR1043ND features a USB port that allows users to attach USB storage such as a flash disk directly to the router itself allowing any network connected users to instantly access the data on the disk such as enjoying HD video directly or sharing flies at will, just like a NAS (Network Attached Storage) system. \n\nQuick Secure Setup  \nCompatible with Wi-Fi Protected Setup™ (WPS), TL-WR1043ND features Quick Security Setup that allows users to almost instantly setup their security simply by pressing the &quot;QSS&quot; button on the router automatically establishing a WPA2 secure connection, which is more security compared with WEP encryptions. Not only is this faster than normal security setups but more convenient in that you don't need to remember a password!\n\nIP QoS - Control Bandwidth Reasonably  \nAmong the wireless network, indiscriminate Internet surfing and bandwidth-guzzling downloads by internal users often leave home or small office with insufficient bandwidth. TL-WR1043ND supports IP QoS function, allowing optimum utilization of bandwidth and offers bandwidth control over congestion, preventing the bandwidth abuse. In this way, the users of a small network receive committed and specific bandwidth, preventing non-critical applications from degrading network performance.\n\nEasy To Use  \nEven novice users can easily setup their networking products. The device comes with a CD with an Easy Setup Assistant that leads you through the setup process step-by-step, and even helps with wireless network settings and security configurations." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="Ultimate Wireless N Gigabit Router" URL=" http://www.tplink.com/En/products/prodetail.aspx?mid=010303010101&amp;id=1150" WarrantyInfo="3 year limited warranty" langid="1"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="90335295" Local_ID="0" Value="Y" CategoryFeature_ID="36267" CategoryFeatureGroup_ID="3481" No="10100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1347">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="4235" Value="Ethernet LAN connection" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047188" Local_ID="0" Value="10,100,1000" CategoryFeature_ID="20920" CategoryFeatureGroup_ID="3481" No="100090" Presentation_Value="10,100,1000 Mbit/s" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3768">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="4" langid="1">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="42597" Value="Ethernet LAN data transfer rates" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335294" Local_ID="0" Value="Y" CategoryFeature_ID="2406" CategoryFeatureGroup_ID="3481" No="100070" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="536">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="2603" Value="Full duplex" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335296" Local_ID="0" Value="Y" CategoryFeature_ID="18582" CategoryFeatureGroup_ID="2941" No="10100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="3239">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="30766" Value="Wireless LAN (WLAN) connection" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047189" Local_ID="0" Value="802.11b/g/n" CategoryFeature_ID="42675" CategoryFeatureGroup_ID="2941" No="100090" Presentation_Value="802.11b/g/n" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="432">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="2231" Value="Wireless LAN type" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047190" Local_ID="0" Value="300" CategoryFeature_ID="18658" CategoryFeatureGroup_ID="2941" No="100080" Presentation_Value="300 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3261">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="4" langid="1">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="30922" Value="WLAN data transfer rates supported" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335298" Local_ID="0" Value="N" CategoryFeature_ID="18581" CategoryFeatureGroup_ID="2942" No="10100000" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="3238">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="30748" Value="DSL connection type" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335289" Local_ID="0" Value="10/100" CategoryFeature_ID="2394" CategoryFeatureGroup_ID="2958" No="100110" Presentation_Value="10/100" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="606">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="2743" Value="Supported data transfer rates" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335290" Local_ID="0" Value="300" CategoryFeature_ID="8583" CategoryFeatureGroup_ID="2958" No="100011" Presentation_Value="300 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1774">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="4" langid="1">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="5523" Value="Data transfer rate" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335291" Local_ID="0" Value="Wireless" CategoryFeature_ID="17418" CategoryFeatureGroup_ID="1167" No="100000" Presentation_Value="Wireless" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1655">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="5169" Value="Connectivity technology" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047191" Local_ID="0" Value="Y" CategoryFeature_ID="20918" CategoryFeatureGroup_ID="2957" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3765">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="42526" Value="DHCP client" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047192" Local_ID="0" Value="Y" CategoryFeature_ID="20919" CategoryFeatureGroup_ID="2957" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="42543" Value="DHCP server" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047193" Local_ID="0" Value="Y" CategoryFeature_ID="33018" CategoryFeatureGroup_ID="2957" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6570">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="223614" Value="DMZ support" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335297" Local_ID="0" Value="3" CategoryFeature_ID="17428" CategoryFeatureGroup_ID="4272" No="100000" Presentation_Value="3 dBi" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1804">
+	    <Measure ID="99" Sign="">
+	      <Signs><Sign ID="81" langid="1">dBi</Sign></Signs>
+	    </Measure>
+	    <Name ID="5591" Value="Antenna gain level (max)" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335301" Local_ID="0" Value="4" CategoryFeature_ID="20921" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="4" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2312">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="11976" Value="Ethernet LAN (RJ-45) ports quantity" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335302" Local_ID="0" Value="1" CategoryFeature_ID="20923" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="11964" Value="USB 2.0 ports quantity" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335303" Local_ID="0" Value="Y" CategoryFeature_ID="20924" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2316">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="11988" Value="DC-in jack" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335304" Local_ID="0" Value="Y" CategoryFeature_ID="25310" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1513">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="4723" Value="WAN port" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335299" Local_ID="0" Value="Y" CategoryFeature_ID="20925" CategoryFeatureGroup_ID="3482" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3780">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="42892" Value="Reset button" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335300" Local_ID="0" Value="Y" CategoryFeature_ID="25349" CategoryFeatureGroup_ID="3482" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3242">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="30790" Value="Quality of Service (QoS) support" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047194" Local_ID="0" Value="Y" CategoryFeature_ID="20574" CategoryFeatureGroup_ID="3482" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3635">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="40000" Value="Web-based management" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047195" Local_ID="0" Value="SPI" CategoryFeature_ID="5988" CategoryFeatureGroup_ID="2495" No="100077" Presentation_Value="SPI" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1612">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="5003" Value="Firewall security" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047196" Local_ID="0" Value="64-bit WEP,128-bit WEP,WPA,WPA2,WPA-PSK,WPA2-PSK" CategoryFeature_ID="5615" CategoryFeatureGroup_ID="2495" No="100044" Presentation_Value="64-bit WEP,128-bit WEP,WPA,WPA2,WPA-PSK,WPA2-PSK" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="454">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="2439" Value="Security algorithms supported" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047197" Local_ID="0" Value="Y" CategoryFeature_ID="18206" CategoryFeatureGroup_ID="2495" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3122">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="29716" Value="MAC address filtering" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047198" Local_ID="0" Value="IEEE 802.3,IEEE 802.3u,IEEE 802.11b,IEEE 802.11g,IEEE 802.11n" CategoryFeature_ID="7835" CategoryFeatureGroup_ID="2500" No="100000" Presentation_Value="IEEE 802.3,IEEE 802.3u,IEEE 802.11b,IEEE 802.11g,IEEE 802.11n" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1802">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="5587" Value="Networking standards" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335306" Local_ID="0" Value="N" CategoryFeature_ID="17839" CategoryFeatureGroup_ID="1169" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2988">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="28528" Value="Power over Ethernet (PoE) Support" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335307" Local_ID="0" Value="1.5" CategoryFeature_ID="30262" CategoryFeatureGroup_ID="1169" No="100000" Presentation_Value="1.5 A" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3377">
+	    <Measure ID="41" Sign="">
+	      <Signs><Sign ID="25" langid="1">A</Sign></Signs>
+	    </Measure>
+	    <Name ID="32392" Value="Input current" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047199" Local_ID="0" Value="10" CategoryFeature_ID="12099" CategoryFeatureGroup_ID="1169" No="100000" Presentation_Value="10 W" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="445">
+	    <Measure ID="44" Sign="">
+	      <Signs><Sign ID="28" langid="1">W</Sign></Signs>
+	    </Measure>
+	    <Name ID="2257" Value="Power consumption" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047200" Local_ID="0" Value="DC" CategoryFeature_ID="17426" CategoryFeatureGroup_ID="1169" No="100000" Presentation_Value="DC" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="514">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="2559" Value="Power supply type" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047201" Local_ID="0" Value="12" CategoryFeature_ID="30264" CategoryFeatureGroup_ID="1169" No="100000" Presentation_Value="12 V" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1466">
+	    <Measure ID="42" Sign="">
+	      <Signs><Sign ID="26" langid="1">V</Sign></Signs>
+	    </Measure>
+	    <Name ID="4629" Value="Input voltage" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335313" Local_ID="0" Value="0 - 40" CategoryFeature_ID="5606" CategoryFeatureGroup_ID="1168" No="100100" Presentation_Value="0 - 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="48" langid="1">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="3765" Value="Operating temperature range (T-T)" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335314" Local_ID="0" Value="-40 - 70" CategoryFeature_ID="5719" CategoryFeatureGroup_ID="1168" No="100099" Presentation_Value="-40 - 70 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="48" langid="1">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="3045" Value="Storage temperature range (T-T)" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335315" Local_ID="0" Value="10 - 90" CategoryFeature_ID="5607" CategoryFeatureGroup_ID="1168" No="100098" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="47" langid="1">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="2937" Value="Operating relative humidity range" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335316" Local_ID="0" Value="5 - 95" CategoryFeature_ID="12359" CategoryFeatureGroup_ID="1168" No="100097" Presentation_Value="5 - 95 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="47" langid="1">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="4307" Value="Storage relative humidity range" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335308" Local_ID="0" Value="200 x 140 x 28" CategoryFeature_ID="5593" CategoryFeatureGroup_ID="1171" No="100020" Presentation_Value="200 x 140 x 28 mm" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="3" langid="1">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="1435" Value="Dimensions (WxDxH)" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100047202" Local_ID="0" Value="-" CategoryFeature_ID="8725" CategoryFeatureGroup_ID="1171" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="22" langid="1">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="1525" Value="Weight" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335293" Local_ID="0" Value="Y" CategoryFeature_ID="18593" CategoryFeatureGroup_ID="362" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3248">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="30826" Value="Supports ISDN connection" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335309" Local_ID="0" Value="Y" CategoryFeature_ID="25040" CategoryFeatureGroup_ID="362" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="775">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="3081" Value="Plug and Play" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335310" Local_ID="0" Value="Power" CategoryFeature_ID="20739" CategoryFeatureGroup_ID="3452" No="100000" Presentation_Value="Power" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3662">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="40453" Value="Power LED" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335311" Local_ID="0" Value="Y" CategoryFeature_ID="20740" CategoryFeatureGroup_ID="3452" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3664">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="40487" Value="Connectivity LEDs" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335319" Local_ID="0" Value="Y" CategoryFeature_ID="11268" CategoryFeatureGroup_ID="3452" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1501">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="4699" Value="LED indicators" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335318" Local_ID="0" Value="Y" CategoryFeature_ID="25039" CategoryFeatureGroup_ID="3857" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3965">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="56040" Value="Manual" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="90335312" Local_ID="0" Value="White,Black" CategoryFeature_ID="27200" CategoryFeatureGroup_ID="4055" No="100000" Presentation_Value="White,Black" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="5487" Value="Colour of product" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89449340" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33617" CategoryFeatureGroup_ID="362" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="241024" Value="Source data-sheet" langid="1"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="1">TP-LINK Ultimate Wireless N Gigabit Router , 10,100,1000 Mbit/s, 802.11b/g/n, 300 Mbit/s, 10/100, 300 Mbit/s, Wireless</ShortSummaryDescription>
+	    <LongSummaryDescription langid="1">TP-LINK Ultimate Wireless N Gigabit Router . Ethernet LAN features: 10,100,1000 Mbit/s. Wireless LAN features: 802.11b/g/n, 300 Mbit/s. Data transmission: 10/100, 300 Mbit/s. Networking: Wireless. Antenna: 3 dBi. Security: SPI, 64-bit WEP,128-bit WEP,WPA,WPA2,WPA-PSK,WPA2-PSK. Certificates: IEEE 802.3,IEEE 802.3u,IEEE 802.11b,IEEE 802.11g,IEEE 802.11n. Energy management: 1.5 A, 10 W, DC, 12 V. Environmental conditions: 0 - 40 °C, -40 - 70 °C, 10 - 90 %, 5 - 95 %. Weight &amp; dimensions: 200 x 140 x 28 mm. Illumination/Alarms: Power. Colour: White,Black</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

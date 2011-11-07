@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/5809419-7958.jpg" HighPicHeight="1200" HighPicSize="99160" HighPicWidth="1200" ID="5809419" LowPic="http://images.icecat.biz/img/norm/low/5809419-7958.jpg" LowPicHeight="200" LowPicSize="8129" LowPicWidth="200" Name="2GB DataTraveler G3" Prod_id="DTIG3/2GB" Quality="ICECAT" ReleaseDate="2010-08-01" ThumbPic="http://images.icecat.biz/thumbs/5809419.jpg" ThumbPicSize="3037" Title="Kingston DataTraveler 2GB DataTraveler G3">
+       <Category ID="1554">
+       
+    <Name ID="497256" Value="USB flash drives" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="4131" No="0">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4125" No="100">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4126" No="90">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4133" No="60">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4137" No="35">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4134" No="30">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4128" No="45">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4132" No="70">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4127" No="80">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6195" No="20">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4130" No="50">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4135" No="10">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4136" No="25">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4129" No="40">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6196" No="15">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6197" No="55">
+     <FeatureGroup ID="144">
+       <Name ID="619999" Value="Special features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0740617171747"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26744262" LongDesc="Una amplia gama de unidades USB para uso diario. Las unidades flash USB de gama básica de Kingston Technology son ideales para llevarlas siempre encima. Además, son fáciles de usar y constituyen una forma fiable de transportar y transferir canciones, fotos, vídeos, documentos y mucho más. Estas memorias son perfectas para el día a día y están disponibles en varias capacidades, diseños y colores." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="DataTraveler Entry level" URL="http://www.kingston.com/esroot/flash/dtig3.asp" WarrantyInfo="5 años" langid="6"/>
+       <ProductFamily ID="1029">
+       <Name ID="242363" Value="DataTraveler" langid="6"/><Series ID="1"><Name/></Series>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="94039983" Local_ID="0" Value="2048" CategoryFeature_ID="31141" CategoryFeatureGroup_ID="4125" No="10100095" Presentation_Value="2048 MB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="6">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508089" langid="6" Value="Memoria interna"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039984" Local_ID="0" Value="USB 2.0" CategoryFeature_ID="31142" CategoryFeatureGroup_ID="4125" No="100090" Presentation_Value="USB 2.0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="990">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508254" langid="6" Value="Tipo de interfaz"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039985" Local_ID="0" Value="10" CategoryFeature_ID="31143" CategoryFeatureGroup_ID="4125" No="100000" Presentation_Value="10 MB/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1644">
+	    <Measure ID="40" Sign="">
+	      <Signs><Sign ID="7449" langid="6">MB/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="506934" langid="6" Value="Velocidad de lectura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039986" Local_ID="0" Value="5" CategoryFeature_ID="31144" CategoryFeatureGroup_ID="4125" No="100000" Presentation_Value="5 MB/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1645">
+	    <Measure ID="40" Sign="">
+	      <Signs><Sign ID="7449" langid="6">MB/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="506935" langid="6" Value="Velocidad de escritura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039987" Local_ID="0" Value="Orange,White" CategoryFeature_ID="31150" CategoryFeatureGroup_ID="4132" No="100000" Presentation_Value="Naranja, Blanco" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039990" Local_ID="0" Value="10.66" CategoryFeature_ID="31153" CategoryFeatureGroup_ID="4133" No="100000" Presentation_Value="10.66 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1464">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508417" langid="6" Value="Altura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039988" Local_ID="0" Value="65.68" CategoryFeature_ID="31151" CategoryFeatureGroup_ID="4133" No="100000" Presentation_Value="65.68 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1649">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508434" langid="6" Value="Ancho"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039989" Local_ID="0" Value="22.37" CategoryFeature_ID="31152" CategoryFeatureGroup_ID="4133" No="100000" Presentation_Value="22.37 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1650">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508435" langid="6" Value="Profundidad"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039992" Local_ID="0" Value="Y" CategoryFeature_ID="31149" CategoryFeatureGroup_ID="6197" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="775">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="625155" langid="6" Value="Enchufar y usar"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039993" Local_ID="0" Value="0 - 60" CategoryFeature_ID="31155" CategoryFeatureGroup_ID="4134" No="100100" Presentation_Value="0 - 60 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" langid="6" Value="Alcance de temperatura operativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039994" Local_ID="0" Value="-20 - 85" CategoryFeature_ID="31156" CategoryFeatureGroup_ID="4134" No="100090" Presentation_Value="-20 - 85 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" langid="6" Value="Temperatura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="94039991" Local_ID="0" Value="Windows 7, Vista, XP, 2000 (SP4)\nMac OS X v.10.5.x+\nLinux v.2.6.x+" CategoryFeature_ID="31146" CategoryFeatureGroup_ID="4131" No="100000" Presentation_Value="Windows 7, Vista, XP,  2000 (SP4)\nMac OS X v.10.5.x+\nLinux v.2.6.x+" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" langid="6" Value="Sistemas operativos compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="100475580" Local_ID="0" Value="5 Yrs" CategoryFeature_ID="37225" CategoryFeatureGroup_ID="4131" No="0" Presentation_Value="5 Yrs" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1448">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508138" langid="6" Value="Garantía"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91367012" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33653" CategoryFeatureGroup_ID="4131" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/5809419_3313.jpg" PicHeight="540" PicWidth="734" ProductPicture_ID="637910" Size="47444" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/5809419_2276.jpg" ThumbSize="2974"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/5809419_5206.jpg" PicHeight="432" PicWidth="900" ProductPicture_ID="637908" Size="72990" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/5809419_9565.jpg" ThumbSize="2291"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/5809419_6985.jpg" PicHeight="587" PicWidth="900" ProductPicture_ID="637909" Size="56763" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/5809419_3286.jpg" ThumbSize="2552"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/5809419_7012.jpg" PicHeight="1200" PicWidth="1200" ProductPicture_ID="630072" Size="61104" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/5809419_9913.jpg" ThumbSize="2822"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/5809419_8700.jpg" PicHeight="1960" PicWidth="2000" ProductPicture_ID="637911" Size="230057" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/5809419_6198.jpg" ThumbSize="6117"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="80007381" Category_ID="1554" Reversed="0" Preferred="0">
+	    <Product ID="5784723" Prod_id="DTIG3/16GB" ThumbPic="http://images.icecat.biz/thumbs/5784723.jpg" Name="16GB DataTraveler G3">
+	      <Supplier ID="18" Name="Kingston"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80007379" Category_ID="1554" Reversed="0" Preferred="0">
+	    <Product ID="5809421" Prod_id="DTIG3/4GB" ThumbPic="http://images.icecat.biz/thumbs/5809421.jpg" Name="4GB DataTraveler G3">
+	      <Supplier ID="18" Name="Kingston"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80007380" Category_ID="1554" Reversed="0" Preferred="0">
+	    <Product ID="5784727" Prod_id="DTIG3/8GB" ThumbPic="http://images.icecat.biz/thumbs/5784727.jpg" Name="8GB DataTraveler G3">
+	      <Supplier ID="18" Name="Kingston"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="80007382" Category_ID="1554" Reversed="0" Preferred="0">
+	    <Product ID="5784725" Prod_id="DTIG3/32GB" ThumbPic="http://images.icecat.biz/thumbs/5784725.jpg" Name="32GB DataTraveler G3">
+	      <Supplier ID="18" Name="Kingston"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Kingston 2GB DataTraveler G3 DataTraveler, 2048 MB, USB 2.0, 10 MB/s, 5 MB/s, Naranja, Blanco, 10.66 mm</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Kingston 2GB DataTraveler G3, DataTraveler. Memoria: 2048 MB, USB 2.0, 10 MB/s, 5 MB/s. Color: Naranja, Blanco. Peso y dimensiones: 10.66 mm, 65.68 mm, 22.37 mm. Condiciones ambientales: 0 - 60 °C, -20 - 85 °C</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="18" Name="Kingston"/>
+      </Product>
+
+</ICECAT-interface>

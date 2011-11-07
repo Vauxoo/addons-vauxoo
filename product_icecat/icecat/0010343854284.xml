@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/1226622-9908.jpg" HighPicHeight="130" HighPicSize="7250" HighPicWidth="130" ID="1226622" LowPic="http://images.icecat.biz/img/norm/low/1226622-9908.jpg" LowPicHeight="130" LowPicSize="8376" LowPicWidth="130" Name="220ml Light  Light Black, Stylus Pro 7880/9880/7800/9800" Prod_id="C13T603900" Quality="ICECAT" ReleaseDate="2007-08-30" ThumbPic="http://images.icecat.biz/thumbs/1226622.jpg" ThumbPicSize="4742" Title="Epson  220ml Light  Light Black, Stylus Pro 7880/9880/7800/9800">
+       <Category ID="377">
+       
+    <Name ID="496575" Value="cartuchos de tinta" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="485" No="21">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2247" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2249" No="10">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4609" No="0">
+     <FeatureGroup ID="20">
+       <Name ID="510125" Value="Tecnología de la impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2248" No="7">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3583" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3682" No="0">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0010343864511"/>
+        <EANCode EAN="0010343854284"/>
+        <EANCode EAN="0103438645116"/>
+        <EANCode EAN="4960999853715"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="104442572" Local_ID="0" Value="black" CategoryFeature_ID="9666" CategoryFeatureGroup_ID="485" No="600000" Presentation_Value="Negro" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" langid="6" Value="Colores de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91271932" Local_ID="0" Value="Singlepack" CategoryFeature_ID="39951" CategoryFeatureGroup_ID="485" No="100000" Presentation_Value="Singlepack" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4463">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="505032" langid="6" Value="Tipo de embalaje"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="25534774" Local_ID="0" Value="N" CategoryFeature_ID="6166" CategoryFeatureGroup_ID="485" No="99999" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="46">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506417" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="25534775" Local_ID="0" Value="Inkjet" CategoryFeature_ID="8121" CategoryFeatureGroup_ID="485" No="99999" Presentation_Value="inyección de tinta" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" langid="6" Value="Tecnología de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="46604498" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33640" CategoryFeatureGroup_ID="485" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/1226622-Epson-C13T603900-7331.jpg" PicHeight="200" PicWidth="400" ProductPicture_ID="773966" Size="19585" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/1226622_8864.jpg" ThumbSize="3570"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="8942009" Category_ID="377" Reversed="0" Preferred="0">
+	    <Product ID="1231250" Prod_id="C13T611800" ThumbPic="http://images.icecat.biz/thumbs/1231250.jpg" Name="110ml Matte Black, Stylus Pro 7450/9450/7400/9400/7880/9880/7800/9800">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="8942283" Category_ID="230" Reversed="0" Preferred="0">
+	    <Product ID="1226401" Prod_id="C11C699001A0" ThumbPic="http://images.icecat.biz/thumbs/1226401.jpg" Name="Stylus Pro 9880">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="8942031" Category_ID="230" Reversed="0" Preferred="0">
+	    <Product ID="1226480" Prod_id="C11C700001A0" ThumbPic="http://images.icecat.biz/thumbs/1226480.jpg" Name="Stylus Pro 7880">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76589083" Category_ID="230" Reversed="0" Preferred="0">
+	    <Product ID="629842" Prod_id="C11C594001A2" ThumbPic="http://images.icecat.biz/thumbs/629842.jpg" Name="Stylus Pro 7800">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="17268215" Category_ID="230" Reversed="0" Preferred="0">
+	    <Product ID="311202" Prod_id="C11C595001BC" ThumbPic="http://images.icecat.biz/thumbs/311202.jpg" Name="Stylus Pro 9800">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="17268214" Category_ID="230" Reversed="0" Preferred="0">
+	    <Product ID="311204" Prod_id="C11C594001BC" ThumbPic="http://images.icecat.biz/thumbs/311204.jpg" Name="Stylus Pro 7800">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="17535545" Category_ID="230" Reversed="0" Preferred="0">
+	    <Product ID="1425084" Prod_id="C11C700001DA" ThumbPic="http://images.icecat.biz/thumbs/1425084.jpg" Name="Stylus Pro 7880">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="17535523" Category_ID="230" Reversed="0" Preferred="0">
+	    <Product ID="1425086" Prod_id="C11C699001DA" ThumbPic="http://images.icecat.biz/thumbs/1425086.jpg" Name="Stylus Pro 9880+ 3 Years Extension Warranty">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76589084" Category_ID="234" Reversed="0" Preferred="0">
+	    <Product ID="5797398" Prod_id="C11C595001A2" ThumbPic="http://images.icecat.biz/thumbs/5797398.jpg" Name="Epson Stylus Pro 9800 Xrite Eye One Pro Epson Edition">
+	      <Supplier ID="13" Name="Epson"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Epson 220ml Light  Light Black, Stylus Pro 7880/9880/7800/9800</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Epson 220ml Light  Light Black, Stylus Pro 7880/9880/7800/9800</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="13" Name="Epson"/>
+      </Product>
+
+</ICECAT-interface>

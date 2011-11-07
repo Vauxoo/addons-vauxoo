@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/460241-4554.jpg" HighPicHeight="440" HighPicSize="113683" HighPicWidth="640" ID="460241" LowPic="http://images.icecat.biz/img/norm/low/460241-4554.jpg" LowPicHeight="137" LowPicSize="17857" LowPicWidth="200" Name="SCX-4521D3" Prod_id="SCX-4521D3" Quality="ICECAT" ReleaseDate="2006-04-28" ThumbPic="http://images.icecat.biz/thumbs/460241.jpg" ThumbPicSize="4502" Title="Samsung  SCX-4521D3">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="8809796834200"/>
+        <EANCode EAN="8808979683420"/>
+        <EANCode EAN="8808979749768"/>
+        <EANCode EAN="0635753611694"/>
+        <EANCode EAN="4063575361140"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="24294284" LongDesc="El cartucho SAMSUNG SCX-4521D3 supone una solución económica que proporciona excelentes resultados para usuarios con poco volumen de impresión y está especialmente diseñado para garantizar una óptima calidad de impresión con resultados nítidos e intensos desde la primera vez hasta la última. La facilidad en la instalación y la función avanzada de ahorro de tóner complementan la impresora multifunción y aseguran un funcionamiento eficaz y rentable, a la vez que proporcionan resultados profesionales en todo momento." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="SCX-4521D3 - Negro Toner" URL="http://www.samsung.com/it/function/search/resultList.do?searchWord=SCX-4521D3" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="13948639" Local_ID="0" Value="3000" CategoryFeature_ID="9072" CategoryFeatureGroup_ID="2281" No="100777" Presentation_Value="3000 páginas" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1953">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506443" langid="6" Value="Producción de papel"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="13948640" Local_ID="0" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Láser" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" langid="6" Value="Tecnología de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="104432525" Local_ID="0" Value="black" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" langid="6" Value="Colores de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="13948642" Local_ID="0" Value="151 x 326 x 113" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="151 x 326 x 113 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="13948643" Local_ID="0" Value="980" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="980 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="13948638" Local_ID="0" Value="N" CategoryFeature_ID="6389" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="46">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506417" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="46777370" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="2187527" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="387463" Prod_id="SCX-4521F" ThumbPic="http://images.icecat.biz/thumbs/387463.jpg" Name="SCX-4521F Laser Multifunctional">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="6114763" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="818170" Prod_id="SCX-4321" ThumbPic="http://images.icecat.biz/thumbs/818170.jpg" Name="SCX-4321 Mono Laser MFP">
+	      <Supplier ID="26" Name="Samsung"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Samsung SCX-4521D3, 3000 páginas, Láser, Negro, 151 x 326 x 113 mm, 980 g</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Samsung SCX-4521D3. Calidad de impresión: 3000 páginas, Láser, Negro. Peso y dimensiones: 151 x 326 x 113 mm, 980 g</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="26" Name="Samsung"/>
+      </Product>
+
+</ICECAT-interface>

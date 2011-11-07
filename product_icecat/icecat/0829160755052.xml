@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/513558-HP.jpg" HighPicHeight="400" HighPicSize="52367" HighPicWidth="400" ID="513558" LowPic="http://images.icecat.biz/img/norm/low/513558-HP.jpg" LowPicHeight="200" LowPicSize="23075" LowPicWidth="200" Name="70A Black LaserJet Toner Cartridge" Prod_id="Q7570A" Quality="ICECAT" ReleaseDate="2006-09-21" ThumbPic="http://images.icecat.biz/thumbs/513558.jpg" ThumbPicSize="5623" Title="HP LaserJet Q7570 Family Print Cartridges 70A Black LaserJet Toner Cartridge">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="8291607550520"/>
+        <EANCode EAN="0829160755052"/>
+        <EANCode EAN="0807027520166"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="21338497" LongDesc="- Calidad homogénea sin problemas. El cartucho de tóner HP funciona: tan bien que la tecnología ha ganado el primer puesto en fiabilidad HP (Revista PC Magazine 8/05). Al reducirse el número de interrupciones, ahorrará tiempo y disminuirán sus costes de impresión.\n- El cartucho de tóner HP LaserJet incluye el tóner y el tambor de imagen en un consumible. Para minimizar las interrupciones, la tecnología HP Smart envía alertas cuando los suministros se agotan. Simplemente elija su distribuidor preferido y haga su pedido a través de HP SureSupply.1\n- Optimice la calidad de impresión y la fiabilidad de sus trabajos. La tecnología del tóner y de los cartuchos de impresión HP garantiza unos constantes resultados profesionales.\n\n1 La utilización de consumibles HP auténticos garantiza la disponibilidad de todas las funciones de impresión HP. Las características y la disponibilidad del programa pueden variar según el país. Si desea más información, visite www.hp.com/learn/suresupply" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="M5025/M5035, 15K, negro" URL="http://h10010.www1.hp.com/wwpc/es/es/sm/WF06c/A1-12771-64209-64548-64548-1847621-1847624.html?lang=es&amp;jumpid=oc_R1002_ESESC-001_Cartucho%20de%20tner%20negro%20HP%2070A%20para%20LaserJet&amp;cc=es" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="52102">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="105437373" Local_ID="0" Value="15000" CategoryFeature_ID="9072" CategoryFeatureGroup_ID="2281" No="100777" Presentation_Value="15000 páginas" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1953">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506443" Value="Producción de papel" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97402913" Local_ID="26397344" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Láser" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" Value="Tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103560069" Local_ID="3979753" Value="Black" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Negro" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" Value="Impresión a color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="105437374" Local_ID="0" Value="M5025/M5035" CategoryFeature_ID="34200" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="M5025/M5035" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2190">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504359" Value="Productos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="105437375" Local_ID="0" Value="1" CategoryFeature_ID="41695" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="1" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1675">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506438" Value="Cantidad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105438800" Local_ID="3979747" Value="10 - 80" CategoryFeature_ID="5769" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="De 10 a 80% HR" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105438801" Local_ID="3979751" Value="-20 - 40" CategoryFeature_ID="5770" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de -20 a 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477415" Local_ID="3979762" Value="15 - 32.5" CategoryFeature_ID="5573" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de 15 a 32,5 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3979757" Value="" CategoryFeature_ID="12235" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="HR de 10 a 90%" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3979746" Value="" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="497 x 195 x 330 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97502165" Local_ID="3979760" Value="2700" CategoryFeature_ID="5067" CategoryFeatureGroup_ID="2279" No="100030" Presentation_Value="2.7 kg (5.95 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" Value="Paquete, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477324" Local_ID="3979758" Value="2300" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="2300 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26397343" Value="" CategoryFeature_ID="8457" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="497 x 195 x 330 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="582">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508152" Value="Dimensiones del embalaje (alto x alto x peso)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="39247559" Value="" CategoryFeature_ID="7206" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="2.246 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1690">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="504358" Value="Peso vacío" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="105437377" Local_ID="0" Value="cartridge" CategoryFeature_ID="41694" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="Cartucho" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="31">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508097" Value="Tipo" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477417" Local_ID="26397348" Value="1200 x 800 x 1139" CategoryFeature_ID="30379" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="1200 x 800 x 1139 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4824">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506470" Value="Dimensiones europeas del pallet (An x F x Al)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477416" Local_ID="3979759" Value="15000" CategoryFeature_ID="1905" CategoryFeatureGroup_ID="2281" No="16845" Presentation_Value="15.000 páginas estándar según ISO/IEC 19752 páginas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="626">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506431" Value="Producción de páginas para imprimir (A4, blanco y negro, ISO/IEC 19752)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477418" Local_ID="3979750" Value="98" CategoryFeature_ID="1914" CategoryFeatureGroup_ID="2279" No="16854" Presentation_Value="98 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="513">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506906" Value="Palet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477323" Local_ID="3979761" Value="27" CategoryFeature_ID="1911" CategoryFeatureGroup_ID="2279" No="16851" Presentation_Value="27 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" Value="Cantidad por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477419" Local_ID="3979749" Value="1200 x 800 x 1139" CategoryFeature_ID="1909" CategoryFeatureGroup_ID="2279" No="16849" Presentation_Value="1.200 x 800 x 1.139 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="530">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506907" Value="Dimensiones de Palet (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="104598515" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477321" Local_ID="26397349" Value="1" CategoryFeature_ID="30381" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" Value="Cantidad por caja" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477322" Local_ID="26397346" Value="27" CategoryFeature_ID="27820" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="9 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3293">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506463" Value="Cantidad de europalet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3979752" Value="" CategoryFeature_ID="7207" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="27" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" Value="Número de cartones por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3979754" Value="" CategoryFeature_ID="9881" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="4" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2066">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506454" Value="Número de apilado para palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3979755" Value="" CategoryFeature_ID="7208" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="3" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" Value="Número de capa por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3979756" Value="" CategoryFeature_ID="9880" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="12" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2065">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506453" Value="Número de apilado para caja de cartón" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26397345" Value="" CategoryFeature_ID="27319" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Inteligente" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1879">
+	    <Measure ID="35" Sign="">
+	      <Signs><Sign ID="7444" langid="6">DPI</Sign></Signs>
+	    </Measure>
+	    <Name ID="506442" Value="Resolución de la tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26397347" Value="" CategoryFeature_ID="30376" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="98 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3288">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506462" Value="Europalet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="58780137" Value="" CategoryFeature_ID="10488" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Incluye tóner y tambor de creación de imágenes en un mismo consumible, diseñado junto al sistema de impresión HP." Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2143">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508476" Value="Características técnicas" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="text/html" Date="2010-01-27 10:34:10" Description="Cartuchos de impresión de la familia HP LaserJet Q7570" Height="0" KeepAsURL="1" MultimediaObject_ID="277884" Size="217607" Type="data sheet" URL="http://objects.icecat.biz/objects/513558-277884.html" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      	  <ProductRelated ID="59996638" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="2830751" Prod_id="V770AP" ThumbPic="http://images.icecat.biz/thumbs/2830751.jpg" Name="V770AP">
+	      <Supplier ID="138" Name="V7"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49129289" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3424371" Prod_id="Q7831A#B1F" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49129282" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3424430" Prod_id="Q7829A#B1F" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357409" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3424370" Prod_id="Q7840A#BC1" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="71234076" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4763171" Prod_id="Q7831A#B19" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357410" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4603318" Prod_id="Q7840A#B19" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="70117295" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4737439" Prod_id="Q7830A#B19" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="70117296" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4737464" Prod_id="Q7829A#B19" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951237" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491512" Prod_id="Q7831A#BAP" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951216" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491513" Prod_id="Q7830A#BAP" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951202" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491514" Prod_id="Q7829A#BAP" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951200" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="541237" Prod_id="Q7829A#ABU" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951214" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567678" Prod_id="Q7830A#ABY" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58974631" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="551614" Prod_id="Q7830A" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357397" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491510" Prod_id="Q7840A#BAP" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58974633" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="551630" Prod_id="Q7831A" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58974632" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="551619" Prod_id="Q7829A" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951241" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567677" Prod_id="Q7831A#BB1" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357399" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="556187" Prod_id="Q7840A" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951207" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198682" Prod_id="Q7829A#BCC" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951234" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="565730" Prod_id="Q7831A#ABY" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951218" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567720" Prod_id="Q7830A#BAQ" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951245" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198677" Prod_id="Q7831A#BCC" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49129280" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2968734" Prod_id="Q7829A#AK2" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951239" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567627" Prod_id="Q7831A#BAQ" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951224" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198681" Prod_id="Q7830A#BCC" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49129281" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3424427" Prod_id="Q7829A#BC1" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84721112" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="6338272" Prod_id="Q7830A#AK2" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951204" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1334721" Prod_id="Q7829A#BAQ" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951219" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="561953" Prod_id="Q7830A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357400" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="576168" Prod_id="Q7840A#ABY" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72317278" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="4849289" Prod_id="Q7829A#BCQ" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951233" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="541676" Prod_id="Q7831A#ABU" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951249" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="570648" Prod_id="Q7831A#BCT" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951201" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567680" Prod_id="Q7829A#ABY" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951208" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="909864" Prod_id="Q7829A#BCT" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951205" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1636200" Prod_id="Q7829A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951213" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="553526" Prod_id="Q7830A#ABU" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951206" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="653702" Prod_id="Q7829A#BB1" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357406" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1334557" Prod_id="Q7840A#BAQ" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951240" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567669" Prod_id="Q7831A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951220" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567679" Prod_id="Q7830A#BB1" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357408" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1633957" Prod_id="Q7840A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46091022" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2669079" Prod_id="Q7830A#BCC1052" ThumbPic="http://images2.icecat.biz/thumbs/2669079.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46060536" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2669081" Prod_id="Q7831A#BCC1071" ThumbPic="http://images2.icecat.biz/thumbs/2669081.jpg" Name="Impresora multifuncional HP LaserJet M5035xs">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46091147" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2669080" Prod_id="Q7830A#BCC1071" ThumbPic="http://images2.icecat.biz/thumbs/2669080.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951228" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567560" Prod_id="Q7830A#BCT" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951198" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198683" Prod_id="Q7829A#201" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46059827" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2669078" Prod_id="Q7829A#BCC1052" ThumbPic="http://images2.icecat.biz/thumbs/2669078.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46059702" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2355665" Prod_id="Q7829A#BCC-A1" ThumbPic="http://images2.icecat.biz/thumbs/2355665.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33971598" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="511637" Prod_id="Q7831A#BAP#*IRIS" ThumbPic="http://images2.icecat.biz/thumbs/511637.jpg" Name="Impresora multifuncional HP LaserJet M5035xs">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951225" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567553" Prod_id="Q7830A#BCQ" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951221" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="570988" Prod_id="Q7830A#BB5" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357401" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="653543" Prod_id="Q7840A#BB1" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357407" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1433118" Prod_id="Q7840A#BCQ" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33973650" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="509913" Prod_id="Q7829A#BAP#*IRIS" ThumbPic="http://images2.icecat.biz/thumbs/509913.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46060411" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2355657" Prod_id="Q7831A#BCC1052" ThumbPic="http://images2.icecat.biz/thumbs/2355657.jpg" Name="Impresora multifuncional HP LaserJet M5035xs">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46090897" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2355661" Prod_id="Q7830A#BCC-A1" ThumbPic="http://images2.icecat.biz/thumbs/2355661.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46060286" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2355658" Prod_id="Q7831A#BCC-A1" ThumbPic="http://images2.icecat.biz/thumbs/2355658.jpg" Name="Impresora multifuncional HP LaserJet M5035xs">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49129287" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2191240" Prod_id="Q7831A #BAQ" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32160519" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="511668" Prod_id="Q7830A#BAP#*IRIS" ThumbPic="http://images2.icecat.biz/thumbs/511668.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32940156" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="510369" Prod_id="Q7840A#BAP#*IRIS" ThumbPic="http://images2.icecat.biz/thumbs/510369.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32939752" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1300661" Prod_id="Q7840A#ABU--RET" ThumbPic="http://images2.icecat.biz/thumbs/1300661.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951242" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="569086" Prod_id="Q7831A#BB5" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951210" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198680" Prod_id="Q7830A#201" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46059952" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2355664" Prod_id="Q7829A#BCC1071" ThumbPic="http://images2.icecat.biz/thumbs/2355664.jpg" Name="Impresora multifuncional HP LaserJet M5035">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951246" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="564687" Prod_id="Q7831A#BCQ" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357404" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198675" Prod_id="Q7840A#AK2" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951230" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198678" Prod_id="Q7831A#201" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357402" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="909861" Prod_id="Q7840A#BCT" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951223" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="564896" Prod_id="Q7830A#BC4" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951222" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="565270" Prod_id="Q7830A#BB6" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951236" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198679" Prod_id="Q7831A#AK2" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357398" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="553521" Prod_id="Q7840A#ABU" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951226" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="569454" Prod_id="Q7830A#BCR" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951247" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567547" Prod_id="Q7831A#BCR" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951227" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567550" Prod_id="Q7830A#BCS" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951231" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491042" Prod_id="Q7831A#419" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951211" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491124" Prod_id="Q7830A#419" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951232" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="564167" Prod_id="Q7831A#ABT" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951215" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567554" Prod_id="Q7830A#ACQ" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951235" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567549" Prod_id="Q7831A#ACQ" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951212" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567556" Prod_id="Q7830A#ABT" ThumbPic="http://images.icecat.biz/thumbs/551614.jpg" Name="Impresora multifuncional HP LaserJet M5035x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357405" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198676" Prod_id="Q7840A#BCC" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951244" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567546" Prod_id="Q7831A#BC4" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357403" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198674" Prod_id="Q7840A#201" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951243" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567548" Prod_id="Q7831A#BB6" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951248" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="567545" Prod_id="Q7831A#BCS" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89357396" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491139" Prod_id="Q7840A#419" ThumbPic="http://images.icecat.biz/thumbs/556187.jpg" Name="Impresora multifuncional HP LaserJet M5025">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31951199" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="491128" Prod_id="Q7829A#419" ThumbPic="http://images.icecat.biz/thumbs/551619.jpg" Name="Impresora multifuncional HP LaserJet M5035:">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45531457" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2201809" Prod_id="Q7831A#BC1" ThumbPic="http://images.icecat.biz/thumbs/551630.jpg" Name="Impresora multifuncional HP LaserJet M5035xs">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP 70A Black LaserJet Toner Cartridge LaserJet Q7570 Family Print Cartridges, 15000 páginas, Láser, Negro, M5025/M5035, De 10 a 80% HR, de -20 a 40 °C</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP 70A Black LaserJet Toner Cartridge, LaserJet Q7570 Family Print Cartridges. Calidad de impresión: 15000 páginas, Láser, Negro, M5025/M5035. Condiciones ambientales: De 10 a 80% HR, de -20 a 40 °C, de 15 a 32,5 °C. Peso y dimensiones: 2.7 kg (5.95 libras), 2300 g</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

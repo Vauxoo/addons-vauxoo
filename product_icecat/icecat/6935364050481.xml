@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3950760-TP-LINK.jpg" HighPicHeight="270" HighPicSize="10949" HighPicWidth="450" ID="3950760" LowPic="http://images.icecat.biz/img/norm/low/3950760-TP-LINK.jpg" LowPicHeight="120" LowPicSize="4382" LowPicWidth="200" Name="300Mbps Wireless N USB Adapter" Prod_id="TL-WN821NC" Quality="ICECAT" ReleaseDate="2010-01-09" ThumbPic="http://images.icecat.biz/thumbs/3950760.jpg" ThumbPicSize="1975" Title="TP-LINK  300Mbps Wireless N USB Adapter">
+       <Category ID="182">
+       
+    <Name ID="496472" Value="adaptadores y tarjetas de red" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="300" No="27">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5873" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3388" No="6">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1044" No="10">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1046" No="80">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1045" No="20">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1024" No="77">
+     <FeatureGroup ID="23">
+       <Name ID="510128" Value="Anchura de banda" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2982" No="0">
+     <FeatureGroup ID="26">
+       <Name ID="510130" Value="Fax" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1638" No="25">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1047" No="2">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2980" No="17">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2981" No="8">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1043" No="70">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4053" No="25">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5076" No="0">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2978" No="0">
+     <FeatureGroup ID="59">
+       <Name ID="510160" Value="Interno I/O" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2704" No="0">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2983" No="10">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2979" No="18">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3497" No="19">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2977" No="23">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2975" No="60">
+     <FeatureGroup ID="91">
+       <Name ID="510190" Value="Wireless LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2976" No="39">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3807" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3808" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4271" No="30">
+     <FeatureGroup ID="125">
+       <Name ID="510222" Value="Antena" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6648" No="-1">
+     <FeatureGroup ID="146">
+       <Name ID="624351" Value="Other features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364050481"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26661572" LongDesc="El Adaptador N USB Inalámbrico TL- WN821N es compatible con los estándares IEEE 802.11n (Versión 2.0), IEEE 802.11g, y IEEE 802.11b.\n\nLa transmisión inalámbrica puede alcanzar hasta 300Mbps.\n\nEl adaptador utiliza tecnología MIMO y tiene Antenas Inteligentes internas que proporcionan el mejor funcionamiento inalámbrico, así como las mejores tasas de transmisión, estabilidad y cobertura.\n\nAl mismo tiempo, la tecnología CCA evita automáticamente conflictos de canal mediante su capacidad de selección de canales\n\nESte producto soporta encriptaciones WEP a 64/128-bit, así como encriptaciones y autenticación WPA/WPA2 y WPA-PSK/WPA2-PSK además del sistema QSS (Quick Secure Setup) del adaptador, que permite a los usuarios establecer una red inalámbrica segura de forma rápida y sencilla.\n\nEste producto puede manejar simultáneamente aplicaciones que requieren mucho ancho de banda, como voz y video.\n\nPara asegurar la calidad, se concede prioridad a las aplicaciones que requieren amplio ancho de banda y son sensibles a las interrupciones, tales como las aplicaciones de voz y video.\n\nTambién funciona correctamente con otros productos inalámbricos 11g y 11n.\n\n&lt;b&gt;Características&lt;/b&gt;\n- Posibilidad de dos métodos de funcionamiento: Infraestructura y Ad-Hoc;\n- Adopta tecnología MIMO para alcanzar tasas de transferencia inalámbrica de hasta 300Mbps;\n- Adopta tecnología CCA, que evita automáticamente conflictos de canal mediante su capacidad de selección de canales;\n- Quick Secure Setup, compatible con WPS para obtener una seguridad inalámbrica sin problemas;\n- Soporta WEP 64/128-bit, cumple la norma WPA 128 bit (TKIP/AES), soporta MIC, Expansión IV, Shared Key Authentication (autenticación con clave compartida), IEEE 802.1X;\n- Configuración y supervisión sencillas;\n- Soporta tecnología Roaming, que garantiza conexiones inalámbricas eficientes;\n- Soporta los sistemas operativos Windows 2000/XP/Vista." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="TL-WN821NC, 300Mbit/s IEEE 802.11n/b/g, 20dBm, USB 2.0, Negro" URL="http://www.tp-link.com/es/products/productDetails.asp?class=&amp;pmodel=TL-WN821N" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="85978678" Local_ID="0" Value="Wireless" CategoryFeature_ID="8067" CategoryFeatureGroup_ID="1046" No="10100094" Presentation_Value="Wireless" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1655">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506667" Value="Tecnología de conectividad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978679" Local_ID="0" Value="USB" CategoryFeature_ID="8076" CategoryFeatureGroup_ID="1046" No="10100087" Presentation_Value="USB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="2377">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504909" Value="Interfaz de host" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91643303" Local_ID="0" Value="USB" CategoryFeature_ID="12403" CategoryFeatureGroup_ID="1046" No="100080" Presentation_Value="USB" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="21">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504706" Value="Interfaz" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978683" Local_ID="0" Value="N" CategoryFeature_ID="12400" CategoryFeatureGroup_ID="1046" No="100014" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="22">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506151" Value="Interno" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978676" Local_ID="0" Value="300" CategoryFeature_ID="7991" CategoryFeatureGroup_ID="1024" No="10100055" Presentation_Value="300 Mbit/s" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1165">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="506175" Value="Tasa de transferencia (máx)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91643304" Local_ID="0" Value="Atheros" CategoryFeature_ID="16317" CategoryFeatureGroup_ID="1043" No="100099" Presentation_Value="Atheros" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="753">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508177" Value="Chipset" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978681" Local_ID="0" Value="Y" CategoryFeature_ID="24779" CategoryFeatureGroup_ID="1043" No="100095" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3239">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508538" Value="WLAN, conexión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978689" Local_ID="0" Value="IEEE 802.11n/b/g, IEEE 802.x" CategoryFeature_ID="12401" CategoryFeatureGroup_ID="300" No="100099" Presentation_Value="IEEE 802.11n/b/g, IEEE 802.x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="793">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508182" Value="Cumplimiento de estándares del mercado" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978685" Local_ID="0" Value="2.4 - 2.4835" CategoryFeature_ID="50533" CategoryFeatureGroup_ID="300" No="100000" Presentation_Value="2.4 - 2.4835 GHz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="5713">
+	    <Measure ID="37" Sign="">
+	      <Signs><Sign ID="7446" langid="6">GHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="503679" Value="Alcance de frecuencia" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978688" Local_ID="0" Value="White" CategoryFeature_ID="27195" CategoryFeatureGroup_ID="4053" No="100000" Presentation_Value="Blanco" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978697" Local_ID="0" Value="CE, FCC" CategoryFeature_ID="8089" CategoryFeatureGroup_ID="2979" No="100032" Presentation_Value="CE, FCC" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="249">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508126" Value="Certificados" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978682" Local_ID="0" Value="64/128 bit WEP, WPA/WPA2, WPA-PSK/WPA2-PSK" CategoryFeature_ID="8074" CategoryFeatureGroup_ID="2983" No="100089" Presentation_Value="64/128 bit WEP, WPA/WPA2, WPA-PSK/WPA2-PSK" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="454">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506160" Value="Algoritmo de  seguridad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978693" Local_ID="0" Value="0 - 40" CategoryFeature_ID="8083" CategoryFeatureGroup_ID="1047" No="100040" Presentation_Value="0 - 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978694" Local_ID="0" Value="-40 - 70" CategoryFeature_ID="10855" CategoryFeatureGroup_ID="1047" No="100035" Presentation_Value="-40 - 70 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978695" Local_ID="0" Value="10 - 90" CategoryFeature_ID="8082" CategoryFeatureGroup_ID="1047" No="100030" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978696" Local_ID="0" Value="5 - 95" CategoryFeature_ID="14434" CategoryFeatureGroup_ID="1047" No="100025" Presentation_Value="5 - 95 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978686" Local_ID="0" Value="93.5 x 26 x 11" CategoryFeature_ID="8071" CategoryFeatureGroup_ID="6648" No="100000" Presentation_Value="93.5 x 26 x 11 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85978687" Local_ID="0" Value="Microsoft® Windows®  2000, XP 32bit/64bit, Vista™ 32bit/64bit, Windows 7 32bit/64bit " CategoryFeature_ID="13960" CategoryFeatureGroup_ID="6648" No="100000" Presentation_Value="Microsoft® Windows®  2000, XP 32bit/64bit, Vista™ 32bit/64bit, Windows 7 32bit/64bit" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" Value="Sistemas operativos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="85977491" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33605" CategoryFeatureGroup_ID="300" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3950760_2160.jpg" PicHeight="450" PicWidth="356" ProductPicture_ID="461014" Size="40297" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3950760_4194.jpg" ThumbSize="3612"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3950760_6093.jpg" PicHeight="359" PicWidth="450" ProductPicture_ID="461017" Size="50931" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3950760_2136.jpg" ThumbSize="3532"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="76599178" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="2062074" Prod_id="TL-WN851N" ThumbPic="http://images.icecat.biz/thumbs/2062074.jpg" Name="300Mbps Wireless N PCI Adapter">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76599179" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="2061978" Prod_id="TL-WN821N" ThumbPic="http://images.icecat.biz/thumbs/2061978.jpg" Name="300Mbps Wireless N USB Adapter ">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76599177" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="2062075" Prod_id="TL-WN811N" ThumbPic="http://images.icecat.biz/thumbs/2062075.jpg" Name="300Mbps Wireless N CardBus Adapter">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="244" Reversed="0" Preferred="0">
+	    <Product ID="1684822" Prod_id="20002427" ThumbPic="http://images2.icecat.biz/thumbs/1684822.jpg" Name="FRITZ!Box Fon WLAN 7270 International Edition">
+	      <Supplier ID="42" Name="AVM"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="244" Reversed="0" Preferred="0">
+	    <Product ID="859910" Prod_id="20002387" ThumbPic="http://images.icecat.biz/thumbs/859910.jpg" Name="FRITZ!Box Fon WLAN 7170 Annex A">
+	      <Supplier ID="42" Name="AVM"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="244" Reversed="0" Preferred="0">
+	    <Product ID="859908" Prod_id="20002388" ThumbPic="http://images.icecat.biz/thumbs/859908.jpg" Name="FRITZ!Box Fon WLAN 7170 Annex B">
+	      <Supplier ID="42" Name="AVM"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 300Mbps Wireless N USB Adapter, Wireless, USB, USB, 300 Mbit/s, Atheros, Blanco</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 300Mbps Wireless N USB Adapter. Conectividad: Wireless, USB, USB. Anchura de banda: 300 Mbit/s. Red: Atheros. Color: Blanco. Aprobaciones reguladoras: CE, FCC. Seguridad: 64/128 bit WEP, WPA/WPA2, WPA-PSK/WPA2-PSK. Condiciones ambientales: 0 - 40 °C, -40 - 70 °C, 10 - 90 %, 5 - 95 %. Other features: 93.5 x 26 x 11 mm, Microsoft® Windows®  2000, XP 32bit/64bit, Vista™ 32bit/64bit, Windows 7 32bit/64bit</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

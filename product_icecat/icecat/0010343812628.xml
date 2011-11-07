@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images2.icecat.biz/img/norm/high/1069169-6160.jpg" HighPicHeight="280" HighPicSize="21987" HighPicWidth="280" ID="1069169" LowPic="http://images2.icecat.biz/img/norm/low/1069169-6160.jpg" LowPicHeight="200" LowPicSize="20312" LowPicWidth="200" Name="Black Fabric Ribbon TMU/TM/IT" Prod_id="ERC-38B" Quality="ICECAT" ReleaseDate="2007-08-09" ThumbPic="http://images2.icecat.biz/thumbs/1069169.jpg" ThumbPicSize="4408" Title="Epson  Black Fabric Ribbon TMU/TM/IT">
+       <Category ID="905">
+       
+    <Name ID="496745" Value="cintas para impresora" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="1098" No="0">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1097" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4077" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0010343812628"/>
+        <EANCode EAN="0010343380011"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="47639661" Local_ID="0" Value="TM-U200D/ 300A/ 300B/ 300C/ 300D/ 370/ 375" CategoryFeature_ID="12809" CategoryFeatureGroup_ID="1098" No="100000" Presentation_Value="TM-U200D/ 300A/ 300B/ 300C/ 300D/ 370/ 375" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2190">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504359" Value="Productos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47639662" Local_ID="0" Value="Black" CategoryFeature_ID="31286" CategoryFeatureGroup_ID="4077" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="47639660" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33776" CategoryFeatureGroup_ID="1098" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Epson Black Fabric Ribbon TMU/TM/IT, Negro</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Epson Black Fabric Ribbon TMU/TM/IT. Color: Negro</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="13" Name="Epson"/>
+      </Product>
+
+</ICECAT-interface>

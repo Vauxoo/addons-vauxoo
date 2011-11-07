@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/790954-8242.jpg" HighPicHeight="200" HighPicSize="13694" HighPicWidth="183" ID="790954" LowPic="http://images.icecat.biz/img/norm/low/790954-8242.jpg" LowPicHeight="200" LowPicSize="13706" LowPicWidth="183" Name="StarCam 370i Black" Prod_id="S1B-0403012-M63" Quality="ICECAT" ReleaseDate="2007-02-21" ThumbPic="http://images.icecat.biz/thumbs/790954.jpg" ThumbPicSize="3176" Title="MSI  StarCam 370i Black">
+       <Category ID="577">
+       
+    <Name ID="496662" Value="webcams" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="624" No="5">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="16" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="43" No="0">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="17" No="0">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3140" No="0">
+     <FeatureGroup ID="5">
+       <Name ID="510111" Value="Exhibición" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="15" No="175">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3551" No="0">
+     <FeatureGroup ID="9">
+       <Name ID="510115" Value="Audio" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1709" No="185">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="45" No="205">
+     <FeatureGroup ID="13">
+       <Name ID="510118" Value="Sistema de la lente" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="44" No="180">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3552" No="0">
+     <FeatureGroup ID="21">
+       <Name ID="510126" Value="Exposición ligera" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1034" No="176">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1035" No="165">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1181" No="0">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3553" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3137" No="220">
+     <FeatureGroup ID="45">
+       <Name ID="510149" Value="Vídeo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3661" No="0">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2345" No="0">
+     <FeatureGroup ID="54">
+       <Name ID="510156" Value="Navegación" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3138" No="170">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3658" No="0">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3657" No="150">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3656" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3134" No="210">
+     <FeatureGroup ID="84">
+       <Name ID="510182" Value="Sensor de la imagen" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3136" No="198">
+     <FeatureGroup ID="85">
+       <Name ID="510184" Value="El enfocarse" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3135" No="0">
+     <FeatureGroup ID="86">
+       <Name ID="510185" Value="Flash" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3554" No="182">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3022" No="0">
+     <FeatureGroup ID="94">
+       <Name ID="510193" Value="Viewfinder" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3139" No="200">
+     <FeatureGroup ID="95">
+       <Name ID="510194" Value="Cámara fotográfica" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3659" No="0">
+     <FeatureGroup ID="96">
+       <Name ID="510195" Value="Ergonómica" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3654" No="0">
+     <FeatureGroup ID="107">
+       <Name ID="510205" Value="White balance" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3660" No="215">
+     <FeatureGroup ID="111">
+       <Name ID="510209" Value="Still image" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3653" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3655" No="140">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="4719072019525"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="24405095" Local_ID="0" Value="640 x 480" CategoryFeature_ID="48241" CategoryFeatureGroup_ID="3137" No="10100100" Presentation_Value="640 x 480 Pixeles" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="7514">
+	    <Measure ID="39" Sign="">
+	      <Signs><Sign ID="7448" langid="6">Pixeles</Sign></Signs>
+	    </Measure>
+	    <Name ID="625193" langid="6" Value="Máxima resolución de video"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405094" Local_ID="0" Value="30" CategoryFeature_ID="48242" CategoryFeatureGroup_ID="3137" No="100100" Presentation_Value="30 fps" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="7515">
+	    <Measure ID="85" Sign="">
+	      <Signs><Sign ID="7492" langid="6">fps</Sign></Signs>
+	    </Measure>
+	    <Name ID="566483" langid="6" Value="Maximum frame rate"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405104" Local_ID="0" Value="1280 x 960" CategoryFeature_ID="48244" CategoryFeatureGroup_ID="3660" No="100100" Presentation_Value="1280 x 960 Pixeles" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="7570">
+	    <Measure ID="39" Sign="">
+	      <Signs><Sign ID="7448" langid="6">Pixeles</Sign></Signs>
+	    </Measure>
+	    <Name ID="625212" langid="6" Value="Máxima resolución de imagen"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405127" Local_ID="0" Value="CMOS" CategoryFeature_ID="5760" CategoryFeatureGroup_ID="3134" No="100100" Presentation_Value="CMOS" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1574">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504880" langid="6" Value="Tipo de sensor"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405128" Local_ID="0" Value="1/4" CategoryFeature_ID="10702" CategoryFeatureGroup_ID="3134" No="100000" Presentation_Value="1/1.57 cm (1/4 &quot;)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1618">
+	    <Measure ID="16" Sign="&quot;">
+	      <Signs><Sign ID="7428" langid="6">&quot;</Sign></Signs>
+	    </Measure>
+	    <Name ID="505365" langid="6" Value="Tamaño del sensor óptico"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405139" Local_ID="0" Value="Y" CategoryFeature_ID="8053" CategoryFeatureGroup_ID="3139" No="100100" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1025">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508278" langid="6" Value="Micrófono incorporado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405108" Local_ID="0" Value="56" CategoryFeature_ID="8118" CategoryFeatureGroup_ID="3139" No="100070" Presentation_Value="56 °" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="37">
+	    <Measure ID="32" Sign="">
+	      <Signs><Sign ID="7441" langid="6">°</Sign></Signs>
+	    </Measure>
+	    <Name ID="504707" langid="6" Value="Ángulo de visión, horizontal"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405170" Local_ID="0" Value="Black" CategoryFeature_ID="15924" CategoryFeatureGroup_ID="3139" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405141" Local_ID="0" Value="USB 2.0" CategoryFeature_ID="5759" CategoryFeatureGroup_ID="1709" No="100010" Presentation_Value="USB 2.0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="21">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504706" langid="6" Value="Interfaz"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405175" Local_ID="0" Value="64" CategoryFeature_ID="8777" CategoryFeatureGroup_ID="15" No="100095" Presentation_Value="64 MB" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="68">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508118" langid="6" Value="Memoria interna, mínimo (RAM)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405171" Local_ID="0" Value="50" CategoryFeature_ID="5762" CategoryFeatureGroup_ID="15" No="100090" Presentation_Value="50 MB" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="66">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="509329" langid="6" Value="Espacio de disco duro, mínimo"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405110" Local_ID="0" Value="Y" CategoryFeature_ID="5726" CategoryFeatureGroup_ID="624" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="46">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506417" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405129" Local_ID="0" Value="3 cm" CategoryFeature_ID="9554" CategoryFeatureGroup_ID="624" No="100000" Presentation_Value="3 cm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1291">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504813" langid="6" Value="Distancia de foco"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="24405176" Local_ID="0" Value="Windows 98/ Me/ 2000/ XP" CategoryFeature_ID="13938" CategoryFeatureGroup_ID="624" No="100000" Presentation_Value="Windows 98/ Me/ 2000/ XP" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" langid="6" Value="Sistemas operativos compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="46249489" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33563" CategoryFeatureGroup_ID="624" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">MSI StarCam 370i Black, 640 x 480 Pixeles, 30 fps, 1280 x 960 Pixeles, CMOS, 1/1.57 cm (1/4 &quot;), 56 °</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">MSI StarCam 370i Black. Vídeo: 640 x 480 Pixeles, 30 fps. Still image: 1280 x 960 Pixeles. Sensor de la imagen: CMOS, 1/1.57 cm (1/4 &quot;). Cámara fotográfica: 56 °, Negro. Conectividad: USB 2.0. Requisitos del sistema: 64 MB, 50 MB</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="278" Name="MSI"/>
+      </Product>
+
+</ICECAT-interface>

@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/4804097-6075.jpg" HighPicHeight="800" HighPicSize="576973" HighPicWidth="1000" ID="4804097" LowPic="http://images.icecat.biz/img/norm/low/4804097-6075.jpg" LowPicHeight="160" LowPicSize="14615" LowPicWidth="200" Name="Wind Top AE2220-213EU" Prod_id="AE2220-213EU" Quality="ICECAT" ReleaseDate="2010-05-14" ThumbPic="http://images.icecat.biz/thumbs/4804097.jpg" ThumbPicSize="3872" Title="MSI Wind Top AE2220-213EU">
+       <Category ID="153">
+       
+    <Name ID="496460" Value="Ordenadores Sobremesa" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="271" No="-1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2" No="100">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4" No="92">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3" No="95">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5" No="88">
+     <FeatureGroup ID="4">
+       <Name ID="510110" Value="Impulsión óptica" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6" No="50">
+     <FeatureGroup ID="5">
+       <Name ID="510111" Value="Exhibición" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1308" No="4">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2688" No="89">
+     <FeatureGroup ID="9">
+       <Name ID="510115" Value="Audio" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="821" No="33">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1309" No="11">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1306" No="2">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1307" No="3">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1871" No="29">
+     <FeatureGroup ID="31">
+       <Name ID="510135" Value="Teclado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2691" No="1">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2066" No="31">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4140" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4607" No="0">
+     <FeatureGroup ID="38">
+       <Name ID="510142" Value="Emisión de sonidos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2692" No="90">
+     <FeatureGroup ID="45">
+       <Name ID="510149" Value="Vídeo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4138" No="94">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2690" No="30">
+     <FeatureGroup ID="49">
+       <Name ID="510153" Value="Dispositivo de entrada" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1522" No="49">
+     <FeatureGroup ID="51">
+       <Name ID="510155" Value="Memoria video" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2409" No="20">
+     <FeatureGroup ID="53">
+       <Name ID="510157" Value="Altavoces" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2379" No="10">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3361" No="19">
+     <FeatureGroup ID="69">
+       <Name ID="510170" Value="Sintonizador de la TV" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2410" No="21">
+     <FeatureGroup ID="70">
+       <Name ID="510171" Value="Micrófono" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2689" No="6">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2693" No="5">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3402" No="34">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4370" No="0">
+     <FeatureGroup ID="91">
+       <Name ID="510190" Value="Wireless LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4606" No="0">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3270" No="29">
+     <FeatureGroup ID="95">
+       <Name ID="510194" Value="Cámara fotográfica" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4190" No="32">
+     <FeatureGroup ID="124">
+       <Name ID="510221" Value="Ranuras de expansión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5625" No="31">
+     <FeatureGroup ID="136">
+       <Name ID="582552" Value="Chassis" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6656" No="0">
+     <FeatureGroup ID="146">
+       <Name ID="624351" Value="Other features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="4719072159740"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1033">
+       <Name ID="242471" Value="Wind" langid="6"/><Series ID="1"><Name/></Series>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="86661214" Local_ID="0" Value="2200" CategoryFeature_ID="61" CategoryFeatureGroup_ID="2" No="10103311" Presentation_Value="2200 MHz" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="5">
+	    <Measure ID="18" Sign="">
+	      <Signs><Sign ID="7430" langid="6">MHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="508088" langid="6" Value="Velocidad de reloj"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661218" Local_ID="0" Value="Intel Core 2 Duo" CategoryFeature_ID="11561" CategoryFeatureGroup_ID="2" No="2147583647" Presentation_Value="Intel Core 2 Duo" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2196">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508412" langid="6" Value="Familia de procesador"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661217" Local_ID="0" Value="T6600" CategoryFeature_ID="62" CategoryFeatureGroup_ID="2" No="1100000" Presentation_Value="T6600" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="47">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508104" langid="6" Value="Procesador"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661215" Local_ID="0" Value="1" CategoryFeature_ID="2216" CategoryFeatureGroup_ID="2" No="120887" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="596">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504726" langid="6" Value="Número de procesadores instalados"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661219" Local_ID="0" Value="800" CategoryFeature_ID="16766" CategoryFeatureGroup_ID="2" No="100000" Presentation_Value="800 MHz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1020">
+	    <Measure ID="18" Sign="">
+	      <Signs><Sign ID="7430" langid="6">MHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="508275" langid="6" Value="Bus del sistema"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661220" Local_ID="0" Value="2" CategoryFeature_ID="14591" CategoryFeatureGroup_ID="2" No="100000" Presentation_Value="2 MB" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1564">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508427" langid="6" Value="Caché de 2º nivel"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661216" Local_ID="0" Value="NVIDIA ION" CategoryFeature_ID="47146" CategoryFeatureGroup_ID="2" No="99999" Presentation_Value="NVIDIA ION" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="436">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504712" langid="6" Value="Placa madre chipset"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661221" Local_ID="0" Value="4096" CategoryFeature_ID="60" CategoryFeatureGroup_ID="3" No="10103325" Presentation_Value="4096 MB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="6">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508089" langid="6" Value="Memoria interna"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661222" Local_ID="0" Value="DDR2" CategoryFeature_ID="1226" CategoryFeatureGroup_ID="3" No="100043" Presentation_Value="DDR2" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="427">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508131" langid="6" Value="Tipo de memoria interna"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661223" Local_ID="0" Value="Y" CategoryFeature_ID="31167" CategoryFeatureGroup_ID="4138" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3374">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508543" langid="6" Value="Tarjeta de lectura integrada"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661224" Local_ID="0" Value="640" CategoryFeature_ID="33231" CategoryFeatureGroup_ID="4" No="10100000" Presentation_Value="640 GB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="3318">
+	    <Measure ID="20" Sign="">
+	      <Signs><Sign ID="7432" langid="6">GB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508539" langid="6" Value="Capacidad total de almacenaje"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661225" Local_ID="0" Value="Serial ATA II" CategoryFeature_ID="3023" CategoryFeatureGroup_ID="4" No="211111" Presentation_Value="Serial ATA II" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="982">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508248" langid="6" Value="Interfaz del disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661226" Local_ID="0" Value="7200" CategoryFeature_ID="1207" CategoryFeatureGroup_ID="4" No="211111" Presentation_Value="7200 RPM" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="430">
+	    <Measure ID="28" Sign="">
+	      <Signs><Sign ID="7438" langid="6">RPM</Sign></Signs>
+	    </Measure>
+	    <Name ID="508132" langid="6" Value="Velocidad de rotación del disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661227" Local_ID="0" Value="N" CategoryFeature_ID="36485" CategoryFeatureGroup_ID="4" No="99999" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6783">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504257" langid="6" Value="Disco flexible instalado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661228" Local_ID="0" Value="GeForce 9300" CategoryFeature_ID="2611" CategoryFeatureGroup_ID="2692" No="143200" Presentation_Value="GeForce 9300" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="614">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508154" langid="6" Value="Adaptador gráfico"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661229" Local_ID="0" Value="256" CategoryFeature_ID="31176" CategoryFeatureGroup_ID="2692" No="100000" Presentation_Value="256 MB" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6222">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508582" langid="6" Value="Dedicated video memory"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661230" Local_ID="0" Value="Y" CategoryFeature_ID="35448" CategoryFeatureGroup_ID="2692" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3511">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508551" langid="6" Value="Adaptador de vídeo integrado (UMA/GMA)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661231" Local_ID="0" Value="SRS Premium Sound" CategoryFeature_ID="1211" CategoryFeatureGroup_ID="2688" No="100028" Presentation_Value="SRS Premium Sound" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="442">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508140" langid="6" Value="Sistema de sonido"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661232" Local_ID="0" Value="2 x 5W" CategoryFeature_ID="3754" CategoryFeatureGroup_ID="2688" No="100000" Presentation_Value="2 x 5W" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1024">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504767" langid="6" Value="Altavoces"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661233" Local_ID="0" Value="Y" CategoryFeature_ID="3755" CategoryFeatureGroup_ID="2688" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1025">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508278" langid="6" Value="Micrófono incorporado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661234" Local_ID="0" Value="5.1" CategoryFeature_ID="31180" CategoryFeatureGroup_ID="2688" No="100000" Presentation_Value="5.1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2197">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504218" langid="6" Value="Audio output channels"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661235" Local_ID="0" Value="DVD±RW DL" CategoryFeature_ID="2968" CategoryFeatureGroup_ID="5" No="1211111" Presentation_Value="DVD±RW DL" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1120">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508351" langid="6" Value="Tipo de unidad óptica"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661236" Local_ID="0" Value="Y" CategoryFeature_ID="11391" CategoryFeatureGroup_ID="6" No="10100000" Presentation_Value="Si" Translated="1"  Mandatory="1" Searchable="1">
+	  <Feature ID="2177">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504204" langid="6" Value="Pantalla incluida"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661237" Local_ID="0" Value="Full-HD" CategoryFeature_ID="54" CategoryFeatureGroup_ID="6" No="100210" Presentation_Value="Full-HD" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="83">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508119" langid="6" Value="Pantalla"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661238" Local_ID="0" Value="1920 x 1080" CategoryFeature_ID="30916" CategoryFeatureGroup_ID="6" No="100000" Presentation_Value="1920 x 1080 Pixeles" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1585">
+	    <Measure ID="39" Sign="">
+	      <Signs><Sign ID="7448" langid="6">Pixeles</Sign></Signs>
+	    </Measure>
+	    <Name ID="508429" langid="6" Value="Resolución de la pantalla"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661239" Local_ID="0" Value="21.5" CategoryFeature_ID="11604" CategoryFeatureGroup_ID="6" No="100000" Presentation_Value="54.6 cm (21.5 &quot;)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="944">
+	    <Measure ID="16" Sign="&quot;">
+	      <Signs><Sign ID="7428" langid="6">&quot;</Sign></Signs>
+	    </Measure>
+	    <Name ID="508222" langid="6" Value="Tamaño de pantalla en diagonal"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661240" Local_ID="0" Value="Y" CategoryFeature_ID="41064" CategoryFeatureGroup_ID="6" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="4963">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508556" langid="6" Value="Pantalla táctil"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661241" Local_ID="0" Value="Windows 7 Home Premium" CategoryFeature_ID="20011" CategoryFeatureGroup_ID="3402" No="10100000" Presentation_Value="Windows 7 Home Premium" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="3233">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508536" langid="6" Value="Sistema operativo suministrado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661242" Local_ID="0" Value="Microsoft TouchPack 5.0, msi EasyViewer, msi Wind Touch, msi Wind Notes, msi Wind Match, ArcSoft Webcom Companion, ArcSoft Magic, ArcSoft Print Creations, Motorola SoftStylus, Skype, MSN, Adobe Adobe Reader, Kidoz kids game, SRS Premium Sound" CategoryFeature_ID="1034" CategoryFeatureGroup_ID="3402" No="100011" Presentation_Value="Microsoft TouchPack 5.0, msi EasyViewer, msi Wind Touch, msi Wind Notes, msi Wind Match, ArcSoft Webcom Companion, ArcSoft Magic, ArcSoft Print Creations, Motorola SoftStylus, Skype, MSN, Adobe Adobe Reader, Kidoz kids game, SRS Premium Sound" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="251">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508128" langid="6" Value="Software incluido"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661243" Local_ID="0" Value="N" CategoryFeature_ID="5241" CategoryFeatureGroup_ID="3402" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="853">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504750" langid="6" Value="Mac, compatible"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661244" Local_ID="0" Value="Microsoft Works + Office Trial\nSymantec Norton Internet Security, WinRAR" CategoryFeature_ID="13793" CategoryFeatureGroup_ID="3402" No="100000" Presentation_Value="Microsoft Works + Office Trial\nSymantec Norton Internet Security, WinRAR" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" langid="6" Value="Sistemas operativos compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661245" Local_ID="0" Value="0" CategoryFeature_ID="15681" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2310">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508490" langid="6" Value="IEEE 1394/Firewire cantidad de puertos"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661246" Local_ID="0" Value="6" CategoryFeature_ID="14583" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="6" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508488" langid="6" Value="Cantidad de puertos USB 2.0"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661247" Local_ID="0" Value="0" CategoryFeature_ID="14584" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1337">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508398" langid="6" Value="Puerto serial"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661248" Local_ID="0" Value="0" CategoryFeature_ID="14585" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1336">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508397" langid="6" Value="Puerto paralelo"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661249" Local_ID="0" Value="0" CategoryFeature_ID="14586" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1340">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508399" langid="6" Value="Puerto de ratón PS/2"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661250" Local_ID="0" Value="1" CategoryFeature_ID="14587" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="1" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2323">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508501" langid="6" Value="Cantidad de puertos VGA (D-Sub)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661251" Local_ID="0" Value="Y" CategoryFeature_ID="14588" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="2314">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508492" langid="6" Value="Micrófono, line-in jack"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661252" Local_ID="0" Value="1" CategoryFeature_ID="14590" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="1" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2312">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508388" langid="6" Value="Ethernet LAN (RJ-45) cantidad de puertos"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661253" Local_ID="0" Value="N" CategoryFeature_ID="15957" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2319">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508497" langid="6" Value="Puerto DVI"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661254" Local_ID="0" Value="1" CategoryFeature_ID="15773" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="1" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2313">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508491" langid="6" Value="Altavoz/ auricular / line-out jack"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661255" Local_ID="0" Value="1" CategoryFeature_ID="27300" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2830">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508510" langid="6" Value="Cantidad de puetos SATA externos"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661256" Local_ID="0" Value="1" CategoryFeature_ID="31178" CategoryFeatureGroup_ID="821" No="100000" Presentation_Value="1" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3566">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508186" langid="6" Value="Candidad de puertos HDMI"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661261" Local_ID="0" Value="Y" CategoryFeature_ID="36488" CategoryFeatureGroup_ID="2066" No="122222" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1347">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504833" langid="6" Value="Ethernet connexión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661260" Local_ID="0" Value="Y" CategoryFeature_ID="36487" CategoryFeatureGroup_ID="2066" No="111111" Presentation_Value="Y" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3239">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508538" langid="6" Value="WLAN, conexión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661257" Local_ID="0" Value="WLAN, Gigabit Ethernet" CategoryFeature_ID="14250" CategoryFeatureGroup_ID="2066" No="100000" Presentation_Value="WLAN, Gigabit Ethernet" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1104">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508339" langid="6" Value="Características de red"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661258" Local_ID="0" Value="10/100/1000 Base-T(X)" CategoryFeature_ID="31179" CategoryFeatureGroup_ID="2066" No="100000" Presentation_Value="10/100/1000 Base-T(X)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="747">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508176" langid="6" Value="Tecnología de cableado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661259" Local_ID="0" Value="100/1000" CategoryFeature_ID="31181" CategoryFeatureGroup_ID="2066" No="100000" Presentation_Value="100/1000 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3768">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="504222" langid="6" Value="Ethernet LAN, velocidad de transferencia de datos"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661272" Local_ID="0" Value="All-in-One" CategoryFeature_ID="2195" CategoryFeatureGroup_ID="5625" No="104500" Presentation_Value="All-in-One" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="734">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508173" langid="6" Value="Tipo de chasis"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661262" Local_ID="0" Value="Y" CategoryFeature_ID="48224" CategoryFeatureGroup_ID="3270" No="100001" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="8074">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="623123" langid="6" Value="Built-in camera"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661263" Local_ID="0" Value="N" CategoryFeature_ID="21135" CategoryFeatureGroup_ID="3361" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2252">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508460" langid="6" Value="TV, sintonizador integrado"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661264" Local_ID="0" Value="554.1" CategoryFeature_ID="6228" CategoryFeatureGroup_ID="1309" No="100055" Presentation_Value="554.1 mm" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1649">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508434" langid="6" Value="Ancho"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661265" Local_ID="0" Value="403.5" CategoryFeature_ID="6225" CategoryFeatureGroup_ID="1309" No="100054" Presentation_Value="403.5 mm" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1650">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508435" langid="6" Value="Profundidad"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661266" Local_ID="0" Value="61.5" CategoryFeature_ID="6226" CategoryFeatureGroup_ID="1309" No="100053" Presentation_Value="61.5 mm" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1464">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508417" langid="6" Value="Altura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661267" Local_ID="0" Value="8404" CategoryFeature_ID="8718" CategoryFeatureGroup_ID="1309" No="100000" Presentation_Value="8404 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661268" Local_ID="0" Value="120" CategoryFeature_ID="3028" CategoryFeatureGroup_ID="1306" No="100413" Presentation_Value="120 W" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1242">
+	    <Measure ID="44" Sign="">
+	      <Signs><Sign ID="7453" langid="6">W</Sign></Signs>
+	    </Measure>
+	    <Name ID="508381" langid="6" Value="Fuente de alimentación"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661269" Local_ID="0" Value="802.11 b/g/n" CategoryFeature_ID="19353" CategoryFeatureGroup_ID="4370" No="100000" Presentation_Value="802.11 b/g/n" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1048">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508296" langid="6" Value="Tecnología inalámbrica"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661270" Local_ID="0" Value="Y" CategoryFeature_ID="6845" CategoryFeatureGroup_ID="4606" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1665">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508442" langid="6" Value="Mando a distancia"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661271" Local_ID="0" Value="White" CategoryFeature_ID="28831" CategoryFeatureGroup_ID="271" No="100000" Presentation_Value="Blanco" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661273" Local_ID="0" Value="Y" CategoryFeature_ID="20512" CategoryFeatureGroup_ID="271" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2944">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508513" langid="6" Value="Ratón incluido"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86661192" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33622" CategoryFeatureGroup_ID="271" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/4804097_3606.jpg" PicHeight="800" PicWidth="1000" ProductPicture_ID="476480" Size="49278" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/4804097_7773.jpg" ThumbSize="2061"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/4804097_488.jpg" PicHeight="800" PicWidth="1000" ProductPicture_ID="476479" Size="273118" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/4804097_7025.jpg" ThumbSize="3794"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/4804097_896.jpg" PicHeight="800" PicWidth="1000" ProductPicture_ID="476481" Size="46708" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/4804097_9610.jpg" ThumbSize="2010"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">MSI Wind Top AE2220-213EU Wind, 2200 MHz, Intel Core 2 Duo, T6600, 800 MHz, 2 MB, NVIDIA ION</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">MSI Wind Top AE2220-213EU, Wind. Procesador: 2200 MHz, Intel Core 2 Duo, T6600, 800 MHz, 2 MB, NVIDIA ION. Memoria: 4096 MB, DDR2. Accionamiento de disco: 640 GB, Serial ATA II, 7200 RPM. Vídeo: GeForce 9300, 256 MB. Audio: SRS Premium Sound, 2 x 5W, 5.1. Impulsión óptica: DVD±RW DL. Exhibición: Full-HD, 1920 x 1080 Pixeles, 54.6 cm (21.5 &quot;). Sistema operativo/software: Windows 7 Home Premium, Microsoft Works + Office Trial Symantec Norton Internet Security, WinRAR. Red: WLAN, Gigabit Ethernet, 10/100/1000 Base-T(X), 100/1000 Mbit/s. Chassis: All-in-One. Peso y dimensiones: 554.1 mm, 403.5 mm, 61.5 mm, 8404 g. Contro de energía: 120 W. Wireless LAN features: 802.11 b/g/n</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="278" Name="MSI"/>
+      </Product>
+
+</ICECAT-interface>

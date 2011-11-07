@@ -1,0 +1,1736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/52978-HP.jpg" HighPicHeight="400" HighPicSize="24247" HighPicWidth="400" ID="52978" LowPic="http://images.icecat.biz/img/norm/low/52978-HP.jpg" LowPicHeight="200" LowPicSize="14315" LowPicWidth="200" Name="Cartucho negro de impresión HP LaserJet Q2612A" Prod_id="Q2612A" Quality="ICECAT" ReleaseDate="2005-08-30" ThumbPic="http://images.icecat.biz/thumbs/52978.jpg" ThumbPicSize="4360" Title="HP Cartuchos de tóner HP 12 LaserJet Cartucho negro de impresión HP LaserJet Q2612A">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="8087365581360"/>
+        <EANCode EAN="0808736558136"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="21298844" LongDesc="&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Overview&lt;/span&gt;&lt;br /&gt;Los cartuchos de impresión de la familia HP LaserJet Q2612 con tóner Ultraprecise se han diseñado para utilizarlos con las impresoras HP LaserJet series 1010-12-15-18/1020-22/LJ 3015-20-30/3050-52-55aio/M1005mfp para obtener un rendimiento fiable y una impresión asequible y sin problemas.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Features&lt;/span&gt;&lt;br /&gt;&lt;b&gt;Los cartuchos de impresión de la familia HP LaserJet Q2612 con tóner Ultraprecise garantizan textos en negro de gran nitidez, escalas de grises y medios tonos suaves. El rodillo helicoidal elimina las rayas para ofrecer una calidad de impresión precisa y un rendimiento fiable siempre que imprima.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Los cartuchos de impresión de la familia HP LaserJet Q2612 están integrados por componentes que se ajustan con precisión para garantizar un rendimiento fiable en todo momento. Las rigurosas pruebas de calidad y fiabilidad garantizan un tiempo de actividad máximo de la impresora con la mínima intervención del usuario.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Los cartuchos de impresión de la familia HP LaserJet Q2612 con tóner Ultraprecise presentan un diseño multifuncional que permite una instalación y un mantenimiento sencillos. Los cierres magnéticos herméticos encierran el tóner dentro del cartucho para evitar goteos.&lt;/b&gt;&lt;br /&gt;\n\n" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="Cartucho de impresión HP LaserJet Q2612A con tóner de gran precisión" URL="" WarrantyInfo="Garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra.\nDeclaración estándar de garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra. Esta garantía no cubre productos que (a) hayan sido rellenados, restaurados o modificados de cualquier modo, (b) presenten problemas que se deban a un uso incorrecto, un almacenamiento inadecuado o que se hayan utilizado fuera de las especificaciones medioambientales publicadas para el producto de impresora, o (c) presenten un uso distinto al habitual. Para acceder al servicio de garantía, devuelva el producto al lugar donde lo adquirió (con una descripción por escrito del problema y muestras de impresión) o póngase en contacto con el servicio de atención al cliente de HP.  HP reemplazará o devolverá el importe de compra, según estime oportuno, de los productos que en efecto estén defectuosos. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, LA GARANTÍA ANTERIOR ES EXCLUSIVA Y PREVALECE SOBRE CUALQUIER OTRA GARANTÍA O CONDICIÓN, ESCRITA U ORAL, EXPRESA O IMPLÍCITA, Y HP NO SE RESPONSABILIZA DE FORMA ESPECÍFICA DE NINGUNA GARANTÍA IMPLÍCITA O CONDICIÓN DE COMERCIALIZACIÓN, CALIDAD SATISFACTORIA E IDONEIDAD PARA UN DETERMINADO FIN. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, NI HP NI SUS PROVEEDORES SERÁN RESPONSABLES DE LOS DAÑOS Y PERJUICIOS DIRECTOS, ESPECIALES, FORTUITOS, DERIVADOS (INCLUIDAS PÉRDIDAS ECONÓMICAS O DE DATOS) O DE OTRO TIPO, INDEPENDIENTEMENTE DE SI SE BASAN EN UN CONTRATO, RESPONSABILIDADES EXTRACONTRACTUALES U OTROS. LOS TÉRMINOS DE LA GARANTÍA INCLUIDOS EN ESTE DOCUMENTO, Y HASTA DONDE LO PERMITA LA LEY, NO EXCLUYEN, RESTRINGEN NI MODIFICAN, SINO QUE SE AÑADEN A LOS DERECHOS ESTABLECIDOS POR LA LEY APLICABLES A LA VENTA AL PÚBLICO DE ESTE PRODUCTO.\n" langid="6"/>
+       <ProductFamily ID="61812">
+       <Name ID="656861" Value="Cartuchos de tóner HP 12 LaserJet" langid="6"/><Series ID="1"><Name/></Series>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="102596657" Local_ID="0" Value="2000" CategoryFeature_ID="9072" CategoryFeatureGroup_ID="2281" No="100777" Presentation_Value="2000 páginas" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1953">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506443" langid="6" Value="Producción de papel"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98613261" Local_ID="26410001" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Laser" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" langid="6" Value="Tecnología de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="102596663" Local_ID="0" Value="HP LaserJet 1010/1012/1015" CategoryFeature_ID="34200" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="HP LaserJet 1010/1012/1015" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2190">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504359" langid="6" Value="Productos compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="102596665" Local_ID="0" Value="1" CategoryFeature_ID="41695" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="1" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1675">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506438" langid="6" Value="Cantidad"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="104432340" Local_ID="3650835" Value="black" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" langid="6" Value="Colores de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608434" Local_ID="3650828" Value="20 - 80" CategoryFeature_ID="5769" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="20 - 80 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" langid="6" Value="Humedad relativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98642302" Local_ID="3650839" Value="10 - 90" CategoryFeature_ID="12235" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" langid="6" Value="Húmedad (en almacenaje)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100164513" Local_ID="3650833" Value="-20 - 40" CategoryFeature_ID="5770" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="-20 - 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" langid="6" Value="Temperatura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100184032" Local_ID="3650844" Value="10 - 32.5" CategoryFeature_ID="5573" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="10 - 32.5 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" langid="6" Value="Alcance de temperatura operativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103997616" Local_ID="3650827" Value="357 x 105 x 140" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="357 x 105 x 140 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98617626" Local_ID="3650842" Value="900" CategoryFeature_ID="5067" CategoryFeatureGroup_ID="2279" No="100030" Presentation_Value="900 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" langid="6" Value="Paquete, peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98618954" Local_ID="3650840" Value="690" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="690 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="101730479" Local_ID="3650830" Value="685" CategoryFeature_ID="7206" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="685 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1690">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="504358" langid="6" Value="Peso vacío"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="102596662" Local_ID="26409999" Value="357 x 105 x 140" CategoryFeature_ID="8457" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="357 x 105 x 140 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="582">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508152" langid="6" Value="Dimensiones del embalaje (alto x alto x peso)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100192280" Local_ID="26410009" Value="1200 x 800 x 1080" CategoryFeature_ID="30379" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="1200 x 800 x 1080 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4824">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506470" langid="6" Value="Dimensiones europeas del pallet (An x F x Al)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="102596664" Local_ID="0" Value="cartridge" CategoryFeature_ID="41694" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="Cartucho" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="31">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508097" langid="6" Value="Tipo"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="102634556" Local_ID="3650841" Value="2.000" CategoryFeature_ID="1905" CategoryFeatureGroup_ID="2281" No="16845" Presentation_Value="2.000 páginas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="626">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506431" langid="6" Value="Producción de páginas para imprimir (A4, blanco y negro, ISO/IEC 19752)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103997618" Local_ID="3650832" Value="174" CategoryFeature_ID="1914" CategoryFeatureGroup_ID="2279" No="16854" Presentation_Value="174 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="513">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506906" langid="6" Value="Palet, peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608433" Local_ID="3650843" Value="168" CategoryFeature_ID="1911" CategoryFeatureGroup_ID="2279" No="16851" Presentation_Value="168 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" langid="6" Value="Cantidad por palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103997619" Local_ID="3650831" Value="1200 x 800 x 1080" CategoryFeature_ID="1909" CategoryFeatureGroup_ID="2279" No="16849" Presentation_Value="1200 x 800 x 1080 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="530">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506907" langid="6" Value="Dimensiones de Palet (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608435" Local_ID="3650834" Value="24" CategoryFeature_ID="7207" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="24" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" langid="6" Value="Número de cartones por palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608436" Local_ID="3650837" Value="7" CategoryFeature_ID="7208" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="7" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" langid="6" Value="Número de capa por palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608437" Local_ID="3650838" Value="28" CategoryFeature_ID="9880" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="28" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2065">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506453" langid="6" Value="Número de apilado para caja de cartón"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608438" Local_ID="3650836" Value="4" CategoryFeature_ID="9881" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="4" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2066">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506454" langid="6" Value="Número de apilado para palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608439" Local_ID="26410005" Value="168" CategoryFeature_ID="27820" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="168 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3293">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506463" langid="6" Value="Cantidad de europalet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="98608440" Local_ID="26410011" Value="1" CategoryFeature_ID="30381" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" langid="6" Value="Cantidad por caja"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="102596655" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103997617" Local_ID="26410007" Value="176" CategoryFeature_ID="30376" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="176 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3288">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506462" langid="6" Value="Europalet, peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="105477102" Local_ID="84450154" Value="N" CategoryFeature_ID="30382" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6132">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506491" langid="6" Value="Indicador de sólo para distribución al por menor"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26410003" Value="" CategoryFeature_ID="27319" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Ultraprecisa" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1879">
+	    <Measure ID="35" Sign="">
+	      <Signs><Sign ID="7444" langid="6">DPI</Sign></Signs>
+	    </Measure>
+	    <Name ID="506442" langid="6" Value="Resolución de la tecnología de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="56512665" Value="" CategoryFeature_ID="10488" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Tóner Ultraprecise para resultados claros y nítidos" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2143">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508476" langid="6" Value="Características técnicas"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/52978_3393.jpg" PicHeight="207" PicWidth="480" ProductPicture_ID="475462" Size="53217" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/52978_7673.jpg" ThumbSize="3067"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/52978_4072.jpg" PicHeight="206" PicWidth="480" ProductPicture_ID="475461" Size="50224" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/52978_9169.jpg" ThumbSize="2974"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/52978_8929.jpg" PicHeight="184" PicWidth="480" ProductPicture_ID="475460" Size="46702" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/52978_1891.jpg" ThumbSize="2696"/>
+        </ProductGallery>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="application/pdf" Date="2010-04-30 07:35:31" Description="Consumibles de impresión HP LaserJet 1010/1012/1015" Height="0" KeepAsURL="0" MultimediaObject_ID="277210" Size="82343" Type="data sheet" URL="http://objects.icecat.biz/objects/HP_literature_es_es_5981-9626ESE.pdf" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      	  <ProductRelated ID="84441806" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="819568" Prod_id="624222" ThumbPic="http://images.icecat.biz/thumbs/819568.jpg" Name="Toner HP Q2612A Black">
+	      <Supplier ID="383" Name="Pelikan"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="61016858" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="2602879" Prod_id="27311" ThumbPic="http://images.icecat.biz/thumbs/2602879.jpg" Name="27311">
+	      <Supplier ID="81" Name="Imation"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59995282" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="2275913" Prod_id="V712A" ThumbPic="http://images.icecat.biz/thumbs/2275913.jpg" Name="V712A">
+	      <Supplier ID="138" Name="V7"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041887" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1353984" Prod_id="CC372A" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041892" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1356374" Prod_id="CC372A#ABH" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impr. mult. HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041891" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1356146" Prod_id="CC372A#BB1" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impr. mult. HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041894" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1509651" Prod_id="CC372A#ABD" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041890" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1356136" Prod_id="CC372A#B14" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impr. mult. HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041895" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1555910" Prod_id="CC372A#ABE" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041893" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1458802" Prod_id="CC372A#ABF" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impr. mult. HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499200" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1743178" Prod_id="CC372A#ABM" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041889" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1355258" Prod_id="CC372A#BCM" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impr. mult. HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041888" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1353576" Prod_id="CC372A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impr. mult. HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="24041896" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1635241" Prod_id="CC372A#AR8" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499199" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1730988" Prod_id="CC372A#AKD" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499202" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1950858" Prod_id="CC372A#ABY" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499198" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1677053" Prod_id="CC372A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499216" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="3740198" Prod_id="CC372A#AKC" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499214" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="2994137" Prod_id="CC372A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499201" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="1745104" Prod_id="CC372A#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499208" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="2731320" Prod_id="CC372A#A2L" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499204" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="2112146" Prod_id="CC372A#AB9" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88499206" Category_ID="304" Reversed="0" Preferred="1">
+	    <Product ID="2191239" Prod_id="CC372A #ABZ" ThumbPic="http://images.icecat.biz/thumbs/1353984.jpg" Name="Impresora multifuncional HP LaserJet M1522n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480278" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="488454" Prod_id="CB376A" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332508" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274181" Prod_id="Q5911A" ThumbPic="http://images.icecat.biz/thumbs/274181.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831147" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="488934" Prod_id="Q7814A#BAN" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332516" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="327604" Prod_id="Q5911A#427" ThumbPic="http://images.icecat.biz/thumbs/274181.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822031" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="489112" Prod_id="Q7812A#BAN" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831283" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="488931" Prod_id="Q7816A#BAN" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831162" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653697" Prod_id="Q7814A#BB2" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53749298" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="54450" Prod_id="Q2460A" ThumbPic="http://images.icecat.biz/thumbs/54450.jpg" Name="LaserJet 1010 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480339" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1568942" Prod_id="CB536A#ABH" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332519" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="461451" Prod_id="CB419A" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53749299" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="54548" Prod_id="Q2460A#405" ThumbPic="http://images.icecat.biz/thumbs/54450.jpg" Name="LaserJet 1010 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831264" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="488972" Prod_id="Q7815A#BAN" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332517" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="453520" Prod_id="CB419A#427" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53749323" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87057" Prod_id="Q2669A#ABH" ThumbPic="http://images.icecat.biz/thumbs/87056.jpg" Name="LaserJet 3015 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332509" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274186" Prod_id="Q5912A" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480262" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="328172" Prod_id="Q5914A#427" ThumbPic="http://images.icecat.biz/thumbs/274187.jpg" Name="LaserJet 1022nw Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53749316" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="54452" Prod_id="Q2462A" ThumbPic="http://images.icecat.biz/thumbs/54452.jpg" Name="LaserJet 1015 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831235" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="489071" Prod_id="Q7813A#BAN" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53749322" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87056" Prod_id="Q2669A" ThumbPic="http://images.icecat.biz/thumbs/87056.jpg" Name="LaserJet 3015 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332515" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="323884" Prod_id="Q5912A#427" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480270" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="440942" Prod_id="Q6502A#ABH" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332514" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="323767" Prod_id="Q5913A#427" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480276" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="484453" Prod_id="CB376A#BCL" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332505" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87054" Prod_id="Q2665A" ThumbPic="http://images.icecat.biz/thumbs/87054.jpg" Name="LaserJet 3020 all-in-one printer/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480271" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="440948" Prod_id="Q6503A#ABH" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="74291584" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87058" Prod_id="Q2666A#ABH" ThumbPic="http://images.icecat.biz/thumbs/87055.jpg" Name="LaserJet 3030 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480342" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1578280" Prod_id="CB536A" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332506" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87059" Prod_id="Q2665A#ABH" ThumbPic="http://images.icecat.biz/thumbs/87054.jpg" Name="LaserJet 3020 all-in-one printer/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480266" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="436147" Prod_id="Q6504A#ABH" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53749319" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="54549" Prod_id="Q2462A#405" ThumbPic="http://images.icecat.biz/thumbs/54452.jpg" Name="LaserJet 1015 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480338" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1550496" Prod_id="CB536A#ABD" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332504" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="54493" Prod_id="Q2461A#405" ThumbPic="http://images.icecat.biz/thumbs/54451.jpg" Name="LaserJet 1012 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822040" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653695" Prod_id="Q7812A#BB2" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831273" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198690" Prod_id="Q7815A#ABA" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831242" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198693" Prod_id="Q7813A#ABA" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831272" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902267" Prod_id="Q7815A#BB3" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831159" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653541" Prod_id="Q7814A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480345" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1623238" Prod_id="CB536A#ABE" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480269" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="440673" Prod_id="Q6503A" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831241" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902266" Prod_id="Q7813A#BB3" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831282" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="551598" Prod_id="Q7816A" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831171" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="861015" Prod_id="Q7814A#BB3" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831286" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653699" Prod_id="Q7816A#BB2" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480341" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1574051" Prod_id="CB536A#B14" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480343" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1590488" Prod_id="CB536A#ABF" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831289" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198688" Prod_id="Q7816A#ABA" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831288" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902268" Prod_id="Q7816A#BB3" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831274" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198691" Prod_id="Q7815A#202" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822028" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="542047" Prod_id="Q7812A" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480340" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1569890" Prod_id="CB536A#BB1" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831263" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="551008" Prod_id="Q7815A" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831243" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198696" Prod_id="Q7813A#202" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822052" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902265" Prod_id="Q7812A#BB3" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480356" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2201787" Prod_id="CB536A#ABM" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332530" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902260" Prod_id="Q5911A#428" ThumbPic="http://images.icecat.biz/thumbs/274181.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831174" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198692" Prod_id="Q7814A#202" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831245" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1636208" Prod_id="Q7813A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480337" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1540500" Prod_id="CB536A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480346" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1634684" Prod_id="CB536A#AR8" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822067" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1636209" Prod_id="Q7812A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831297" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1637230" Prod_id="Q7816A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480320" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198803" Prod_id="Q6502A#ABA" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831290" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198689" Prod_id="Q7816A#202" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480311" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902263" Prod_id="Q5914A#420" ThumbPic="http://images.icecat.biz/thumbs/274187.jpg" Name="LaserJet 1022nw Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480327" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1334782" Prod_id="CB376A#B1J" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831296" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1633530" Prod_id="Q7816A#BAN?30665564" ThumbPic="http://images2.icecat.biz/thumbs/1633530.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332536" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198845" Prod_id="Q5911A#ABA" ThumbPic="http://images.icecat.biz/thumbs/274181.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831281" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1576901" Prod_id="Q7815A#BAN#*BNDL" ThumbPic="http://images2.icecat.biz/thumbs/1576901.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480258" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274243" Prod_id="Q5914A#405" ThumbPic="http://images.icecat.biz/thumbs/274187.jpg" Name="LaserJet 1022nw Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480307" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="892031" Prod_id="Q2460A#ABU" ThumbPic="http://images.icecat.biz/thumbs/54450.jpg" Name="LaserJet 1010 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480331" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1351073" Prod_id="CB376A#ABA" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480295" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="573090" Prod_id="Q5914A#ABY" ThumbPic="http://images.icecat.biz/thumbs/274187.jpg" Name="LaserJet 1022nw Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332510" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274188" Prod_id="Q5913A" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822049" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="793171" Prod_id="Q7812A#401" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831234" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="542044" Prod_id="Q7813A" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480279" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="511954" Prod_id="Q5914A#ABU" ThumbPic="http://images.icecat.biz/thumbs/274187.jpg" Name="LaserJet 1022nw Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480268" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="440666" Prod_id="Q6502A" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822046" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="677042" Prod_id="Q7812A#BB5" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="28742320" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1955233" Prod_id="Q7814A#BANPRO" ThumbPic="http://images2.icecat.biz/thumbs/1955233.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480353" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1949820" Prod_id="CB536A#ABY" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332522" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="512229" Prod_id="CB419A#ABU" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831150" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="512759" Prod_id="Q7814A#ABU" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822058" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1550436" Prod_id="Q7812A#BAN G" ThumbPic="http://images2.icecat.biz/thumbs/1550436.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831144" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="541976" Prod_id="Q7814A" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831276" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1524207" Prod_id="Q7815A#BAN G" ThumbPic="http://images2.icecat.biz/thumbs/1524207.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831291" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1524197" Prod_id="Q7816A#BAN G" ThumbPic="http://images2.icecat.biz/thumbs/1524197.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480349" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1730635" Prod_id="CB536A#AKD" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480267" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="440651" Prod_id="Q6504A" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831267" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653542" Prod_id="Q7815A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831284" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="512760" Prod_id="Q7816A#ABU" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831268" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653698" Prod_id="Q7815A#BB2" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822061" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554687" Prod_id="Q7812A#BAN+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554687.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831165" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="663278" Prod_id="Q7814A#ABA" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831168" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="740749" Prod_id="Q7814A#401" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="27984199" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1828924" Prod_id="Q7815A#ABD?75721908" ThumbPic="http://images2.icecat.biz/thumbs/1828924.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822055" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198695" Prod_id="Q7812A#202" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="29385056" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2047012" Prod_id="Q7815A#BB5" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332503" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="54451" Prod_id="Q2461A" ThumbPic="http://images.icecat.biz/thumbs/54451.jpg" Name="LaserJet 1012 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831280" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555980" Prod_id="Q7815A#BAN+CB443A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555980.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468487" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2355793" Prod_id="Q7814A#201" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831153" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="556058" Prod_id="Q7814A#BB5" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831236" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="514916" Prod_id="Q7813A#ABU" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831287" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="793173" Prod_id="Q7816A#401" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831244" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554688" Prod_id="Q7813A#BAN+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554688.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831279" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555977" Prod_id="Q7815A#BAN+CB444A#BA" ThumbPic="http://images.icecat.biz/thumbs/1555977.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831294" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555978" Prod_id="Q7816A#BAN+CB442A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555978.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831295" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555979" Prod_id="Q7816A#BAN+CB443A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555979.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332524" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="516487" Prod_id="Q5912A#ABU" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831189" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555916" Prod_id="Q7814A#BAN+CB444A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555916.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480253" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274187" Prod_id="Q5914A" ThumbPic="http://images.icecat.biz/thumbs/274187.jpg" Name="LaserJet 1022nw Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831180" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554684" Prod_id="Q7814A#BAN+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554684.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831192" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1566336" Prod_id="Q7814A#BAN G" ThumbPic="http://images2.icecat.biz/thumbs/1566336.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831278" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555917" Prod_id="Q7815A#BAN+CB442A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555917.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831292" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554677" Prod_id="Q7816A#BAN+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554677.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822034" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="514175" Prod_id="Q7812A#ABU" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831183" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555914" Prod_id="Q7814A#BAN+CB442A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555914.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831186" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555915" Prod_id="Q7814A#BAN+CB443A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555915.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831275" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1488450" Prod_id="Q7815A#BAN/KIT3X" ThumbPic="http://images2.icecat.biz/thumbs/1488450.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831277" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1554683" Prod_id="Q7815A#BAN+FB079AT#1" ThumbPic="http://images2.icecat.biz/thumbs/1554683.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831293" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555976" Prod_id="Q7816A#BAN+CB444A#BA" ThumbPic="http://images2.icecat.biz/thumbs/1555976.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332526" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="573088" Prod_id="Q5911A#ABY" ThumbPic="http://images.icecat.biz/thumbs/274181.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332534" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198841" Prod_id="Q5913A#ABA" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822043" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="675071" Prod_id="Q7812A#ABA" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822064" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1599772" Prod_id="Q7812A#BANPRO" ThumbPic="http://images2.icecat.biz/thumbs/1599772.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831177" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1434898" Prod_id="Q7814A#BAN/KIT2X" ThumbPic="http://images2.icecat.biz/thumbs/1434898.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480355" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2111613" Prod_id="CB536A#AB9" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468489" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2355802" Prod_id="Q7813A#201" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468501" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2355805" Prod_id="Q7812A#201" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480284" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="514652" Prod_id="Q6503A#ABU" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="27471386" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1756313" Prod_id="Q7815A#BANPRO" ThumbPic="http://images2.icecat.biz/thumbs/1756313.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468520" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3755462" Prod_id="Q7815A#BB6" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468522" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2355772" Prod_id="Q7816A#201" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480288" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="564537" Prod_id="Q6502A#ABY" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480348" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1677229" Prod_id="CB536A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468514" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2355776" Prod_id="Q7815A#AK2" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468516" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2355780" Prod_id="Q7815A#201" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480286" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="516446" Prod_id="CB376A#ABU" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480344" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1596560" Prod_id="CB536A#BCM" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480319" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198802" Prod_id="Q6503A#ABA" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831156" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="576177" Prod_id="Q7814A#ABY" ThumbPic="http://images.icecat.biz/thumbs/541976.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831285" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="576179" Prod_id="Q7816A#ABY" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468518" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2968854" Prod_id="Q7815A#AB2" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831239" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653696" Prod_id="Q7813A#BB2" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="74291583" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87055" Prod_id="Q2666A" ThumbPic="http://images.icecat.biz/thumbs/87055.jpg" Name="LaserJet 3030 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25822037" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="576175" Prod_id="Q7812A#ABY" ThumbPic="http://images.icecat.biz/thumbs/542047.jpg" Name="Impresora HP LaserJet P3005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="26266760" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1691690" Prod_id="Q7814A#BAN/KITM1319F" ThumbPic="http://images2.icecat.biz/thumbs/1691690.jpg" Name="Impresora HP LaserJet P3005n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468524" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3947049" Prod_id="Q7816A#B19" ThumbPic="http://images.icecat.biz/thumbs/551598.jpg" Name="Impresora HP LaserJet P3005x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332521" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="512036" Prod_id="Q5911A#ABU" ThumbPic="http://images.icecat.biz/thumbs/274181.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480360" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="5664397" Prod_id="Q2669A#ABU" ThumbPic="http://images.icecat.biz/thumbs/87056.jpg" Name="LaserJet 3015 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45997628" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2478337" Prod_id="CB536A#ABA-B2" ThumbPic="http://images2.icecat.biz/thumbs/2478337.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332511" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274240" Prod_id="Q5911A#405" ThumbPic="http://images.icecat.biz/thumbs/274181.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480354" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2091519" Prod_id="CB536A#ABZ" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480299" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="584711" Prod_id="CB376A#BB1" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480304" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="738272" Prod_id="CB376A#ABD" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480283" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="514651" Prod_id="Q6502A#ABU" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34190354" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1301337" Prod_id="Q5911A#427--OK" ThumbPic="http://images2.icecat.biz/thumbs/1301337.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480289" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="566152" Prod_id="CB376A#ABY" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831265" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="515324" Prod_id="Q7815A#ABU" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480264" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="429708" Prod_id="Q6502A#ABF" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480303" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="724452" Prod_id="Q6503A#ABD" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332523" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="515485" Prod_id="Q5913A#ABU" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480358" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="3741412" Prod_id="CB536A#AKC" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831237" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="542256" Prod_id="Q7813A#BB5" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88468872" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3723166" Prod_id="Q5911AR#405" ThumbPic="http://images.icecat.biz/thumbs/1393769.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480277" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="484638" Prod_id="Q6503A#ABB" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480298" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="584578" Prod_id="Q6503A#BB1" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480300" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="610088" Prod_id="Q6502A#BB1" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45997604" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2478338" Prod_id="CB536A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2478338.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46683371" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2765149" Prod_id="CB536A#ABA1071" ThumbPic="http://images2.icecat.biz/thumbs/2765149.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332527" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="573089" Prod_id="Q5912A#ABY" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480313" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="909871" Prod_id="Q6503A#AKB" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480316" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="909970" Prod_id="CB376A#BCM" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332525" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="566859" Prod_id="Q5913A#ABY" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332528" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="575572" Prod_id="CB419A#ABY" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332529" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="833561" Prod_id="CB419A#370" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480359" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="5277339" Prod_id="Q2666A#AB9" ThumbPic="http://images.icecat.biz/thumbs/87055.jpg" Name="LaserJet 3030 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46541877" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2731341" Prod_id="CB536A#A2L-KIT" ThumbPic="http://images2.icecat.biz/thumbs/2731341.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332531" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902261" Prod_id="Q5912A#428" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480317" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="919481" Prod_id="CB376A#AKD" ThumbPic="http://images.icecat.biz/thumbs/488454.jpg" Name="Impresora Multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831238" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="576176" Prod_id="Q7813A#ABY" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45997652" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2478336" Prod_id="CB536A#ABA-C3" ThumbPic="http://images2.icecat.biz/thumbs/2478336.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46683323" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2765150" Prod_id="CB536A#ABA1027" ThumbPic="http://images2.icecat.biz/thumbs/2765150.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332520" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="480229" Prod_id="CB419A#428" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480312" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="909870" Prod_id="Q6502A#AKB" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53749324" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87062" Prod_id="Q2669A#B14" ThumbPic="http://images.icecat.biz/thumbs/87056.jpg" Name="LaserJet 3015 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480357" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2731340" Prod_id="CB536A#A2L" ThumbPic="http://images.icecat.biz/thumbs/1578280.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46683347" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="2765148" Prod_id="CB536A#ABA1052" ThumbPic="http://images2.icecat.biz/thumbs/2765148.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480290" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="566158" Prod_id="Q6503A#ABY" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480334" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1522608" Prod_id="Q6502A#BC8" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="17034971" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1352677" Prod_id="CB376A#BB1 10+1" ThumbPic="http://images2.icecat.biz/thumbs/1352677.jpg" Name="Impresora multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480263" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="429654" Prod_id="Q6503A#B14" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="26058309" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1393769" Prod_id="Q5911AR" ThumbPic="http://images.icecat.biz/thumbs/1393769.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480328" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1335180" Prod_id="Q6502A#ABE" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480350" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1743078" Prod_id="Q6504A#AR9" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831266" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="576178" Prod_id="Q7815A#ABY" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480297" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="584577" Prod_id="Q6504A#BB1" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480306" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="862493" Prod_id="Q6502A#AKG" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32065630" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1587698" Prod_id="CB536A#B14#*KIT" ThumbPic="http://images2.icecat.biz/thumbs/1587698.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480302" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="724451" Prod_id="Q6502A#ABD" ThumbPic="http://images.icecat.biz/thumbs/440666.jpg" Name="Producto multifuncional HP LaserJet 3052">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332532" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902262" Prod_id="Q5913A#428" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480330" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1335186" Prod_id="Q6504A#ABE" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332540" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1523081" Prod_id="CB419A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34190316" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1572039" Prod_id="Q5911A#427 G" ThumbPic="http://images2.icecat.biz/thumbs/1572039.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34190643" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1292665" Prod_id="Q5912A#427PRO" ThumbPic="http://images2.icecat.biz/thumbs/1292665.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332535" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198842" Prod_id="Q5912A#ABA" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="35309006" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="653627" Prod_id="CB419A#427#*5PACK" ThumbPic="http://images.icecat.biz/thumbs/653627.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="35309023" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="792608" Prod_id="CB419A#427#*MSH" ThumbPic="http://images.icecat.biz/thumbs/792608.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34190297" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1352367" Prod_id="Q5911A#427 10+1" ThumbPic="http://images2.icecat.biz/thumbs/1352367.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34209280" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1281458" Prod_id="Q6503A#ABDPRO" ThumbPic="http://images2.icecat.biz/thumbs/1281458.jpg" Name="Impresora multifunción HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480329" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1335181" Prod_id="Q6503A#ABE" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480335" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1523076" Prod_id="Q6503A#ABZ" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332507" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87061" Prod_id="Q2665A#ABF" ThumbPic="http://images.icecat.biz/thumbs/87054.jpg" Name="LaserJet 3020 all-in-one printer/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480321" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198839" Prod_id="Q5914A#ABA" ThumbPic="http://images.icecat.biz/thumbs/274187.jpg" Name="LaserJet 1022nw Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="1773621" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="343701" Prod_id="Q2669A#B14#*IRISBDL" ThumbPic="http://images.icecat.biz/thumbs/343701.jpg" Name="Imprimante/télécopieur/scanner/copieur tout-en-un HP LaserJet 3015">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="26058310" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198844" Prod_id="Q5911AR#ABA" ThumbPic="http://images.icecat.biz/thumbs/1393769.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="35308989" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1352679" Prod_id="CB419A#427 10+1" ThumbPic="http://images.icecat.biz/thumbs/1352679.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="74291586" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="87060" Prod_id="Q2666A#B14" ThumbPic="http://images.icecat.biz/thumbs/87055.jpg" Name="LaserJet 3030 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480351" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1743079" Prod_id="Q6503A#AR9" ThumbPic="http://images.icecat.biz/thumbs/440673.jpg" Name="Producto multifuncional HP LaserJet 3055">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="1391696" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="350397" Prod_id="Q2665A#ABH#*IRISBDL" ThumbPic="http://images.icecat.biz/thumbs/350397.jpg" Name="LaserJet 3020 all-in-one printer/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="35309040" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1555314" Prod_id="CB419A#427+Q2612A-KI" ThumbPic="http://images.icecat.biz/thumbs/1555314.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332537" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1200629" Prod_id="CB419A#ABA" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480333" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1457438" Prod_id="Q6504A#ABF" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="1779453" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="349135" Prod_id="Q2666A#B14#*IRISBDL" ThumbPic="http://images.icecat.biz/thumbs/349135.jpg" Name="Imprimante/télécopieur/scanner/copieur tout-en-un HP LaserJet 3030">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="1400553" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="346126" Prod_id="Q2665A#ABF#*IRISBDL" ThumbPic="http://images.icecat.biz/thumbs/346126.jpg" Name="Imprimante/scanner/copieur tout-en-un HP LaserJet 3020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="16687988" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="875925" Prod_id="CB376A#BCL#*KIT" ThumbPic="http://images2.icecat.biz/thumbs/875925.jpg" Name="Impresora multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480265" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="434956" Prod_id="Q6504A#B14" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480318" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1198801" Prod_id="Q6504A#ABA" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34190335" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="855727" Prod_id="Q5911A#427#*KIT" ThumbPic="http://images2.icecat.biz/thumbs/855727.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480301" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="724450" Prod_id="Q6504A#ABD" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831270" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="691557" Prod_id="Q7815A#BAN/KIT" ThumbPic="http://images2.icecat.biz/thumbs/691557.jpg" Name="Impresora HP LaserJet P3005dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480282" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="514650" Prod_id="Q6504A#ABU" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480291" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="566676" Prod_id="Q6504A#ABY" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480314" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="909872" Prod_id="Q6504A#AKB" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="831749" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="267049" Prod_id="Q2669A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/267049.jpg" Name="LaserJet 3015 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480352" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1744567" Prod_id="Q6504A#ABZ" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32065654" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1589572" Prod_id="CB536A#B14/KIT2SHOW" ThumbPic="http://images2.icecat.biz/thumbs/1589572.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34190955" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="784607" Prod_id="Q5913A#427 G" ThumbPic="http://images2.icecat.biz/thumbs/784607.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="83480347" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1636887" Prod_id="Q6504A#AR8" ThumbPic="http://images.icecat.biz/thumbs/440651.jpg" Name="Producto multifuncional HP LaserJet 3050">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="831767" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="267105" Prod_id="Q2666A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/267105.jpg" Name="LaserJet 3030 all-in-one printer/fax/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="35309057" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="835572" Prod_id="CB419A#427PRO" ThumbPic="http://images.icecat.biz/thumbs/835572.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="830251" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="266037" Prod_id="Q2665A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/266037.jpg" Name="LaserJet 3020 all-in-one printer/scanner/copier">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32065678" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1608938" Prod_id="CB536A#B14/KITP1505" ThumbPic="http://images2.icecat.biz/thumbs/1608938.jpg" Name="Impresora multifuncional HP LaserJet M1319f">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="16687954" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="835381" Prod_id="CB376A#ABDPRO" ThumbPic="http://images2.icecat.biz/thumbs/835381.jpg" Name="Impresora multifunción HP LaserJet M1005">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34190373" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="855698" Prod_id="Q5911A#427/KIT" ThumbPic="http://images2.icecat.biz/thumbs/855698.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332512" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274241" Prod_id="Q5912A#405" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332513" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="274242" Prod_id="Q5913A#405" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332518" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="455189" Prod_id="CB419A#419" ThumbPic="http://images.icecat.biz/thumbs/461451.jpg" Name="Impresora HP LaserJet 1018">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332533" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="909873" Prod_id="Q5913A#430" ThumbPic="http://images.icecat.biz/thumbs/274188.jpg" Name="Impresora HP LaserJet 1022n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332538" Category_ID="304" Reversed="0" Preferred="0">
+	    <Product ID="1319652" Prod_id="Q6510A" ThumbPic="http://images.icecat.biz/thumbs/1319652.jpg" Name="LaserJet 3050z All-in-One Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="89332539" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1356872" Prod_id="Q5912A#420" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="Impresora HP LaserJet 1022">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="4430146" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="784614" Prod_id="LA-Q5912A" ThumbPic="http://images.icecat.biz/thumbs/274186.jpg" Name="LaserJet 1022 Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831240" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="793172" Prod_id="Q7813A#401" ThumbPic="http://images.icecat.biz/thumbs/542044.jpg" Name="Impresora HP LaserJet P3005d">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831269" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="690013" Prod_id="Q7815A#KIT" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="25831271" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="740750" Prod_id="Q7815A#401" ThumbPic="http://images.icecat.biz/thumbs/551008.jpg" Name="LaserJet P3005dn Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="26058308" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1682987" Prod_id="Q7514A" ThumbPic="http://images.icecat.biz/thumbs/1682987.jpg" Name="Impresora HP LaserJet 1020">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP Cartucho negro de impresión HP LaserJet Q2612A Cartuchos de tóner HP 12 LaserJet, 2000 páginas, Laser, HP LaserJet 1010/1012/1015, Negro, 20 - 80 %, 10 - 90 %</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP Cartucho negro de impresión HP LaserJet Q2612A, Cartuchos de tóner HP 12 LaserJet. Calidad de impresión: 2000 páginas, Laser, HP LaserJet 1010/1012/1015, Negro. Condiciones ambientales: 20 - 80 %, 10 - 90 %, -20 - 40 °C, 10 - 32.5 °C. Peso y dimensiones: 357 x 105 x 140 mm, 900 g, 690 g, 685 g, 357 x 105 x 140 mm</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

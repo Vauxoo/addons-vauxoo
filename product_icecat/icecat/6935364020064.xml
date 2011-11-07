@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/1667378-TP-LINK.jpg" HighPicHeight="270" HighPicSize="44663" HighPicWidth="450" ID="1667378" LowPic="http://images.icecat.biz/img/norm/low/1667378-TP-LINK.jpg" LowPicHeight="120" LowPicSize="9359" LowPicWidth="200" Name="5-Port 10/100Mbps Desktop Switch" Prod_id="TL-SF1005D" Quality="ICECAT" ReleaseDate="2008-08-16" ThumbPic="http://images.icecat.biz/thumbs/1667378.jpg" ThumbPicSize="2668" Title="TP-LINK  5-Port 10/100Mbps Desktop Switch">
+       <Category ID="258">
+       
+    <Name ID="496535" Value="switches" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="376" No="1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2755" No="51">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1475" No="50">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1180" No="6">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="763" No="52">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1144" No="32">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2985" No="49">
+     <FeatureGroup ID="23">
+       <Name ID="510128" Value="Anchura de banda" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1142" No="9">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1143" No="2">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2988" No="4">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2987" No="53">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1141" No="55">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4054" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2984" No="10">
+     <FeatureGroup ID="38">
+       <Name ID="510142" Value="Emisión de sonidos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2484" No="100">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2483" No="31">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2482" No="45">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2481" No="3">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3459" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2986" No="8">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2943" No="53">
+     <FeatureGroup ID="91">
+       <Name ID="510190" Value="Wireless LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2944" No="54">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5714" No="0">
+     <FeatureGroup ID="119">
+       <Name ID="510217" Value="Material" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5713" No="54">
+     <FeatureGroup ID="137">
+       <Name ID="593570" Value="Optical fiber" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364020064"/>
+        <EANCode EAN="4250236800110"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26687948" LongDesc="El Conmutador Fast Ethernet TL-SF1005D con 5 puertos a 10/100Mbps cuenta con 5 puertos RJ45 con autonegociación a 10/100Mbps. Todos los puertos soportan la función Auto MDI/MDIX, eliminando la necesidad de cables cruzados o puertos Uplink.\n\nEl conmutador es Plug-and-Play y cada uno de los puertos puede utilizarse como puerto general o puerto Uplink, se puede conectar a un servidor, hub o conmutador mediante cable directo o cable cruzado.\n\nEl Conmutador Fast Ethernet TL-SF1005D con 5 puertos a 10/100Mbps de TP-LINK le ofrece una actualización económica, fácil de usar, de alto rendimiento y perfectamente integrada para convertir su red antigua en una red a 100Mbps.\n\nAumentará el rendimiento de su red a una transferencia de datos a full duplex.\n\nLa conmutación de paquetes a velocidad de cable puede ser tan rápida como la velocidad a la que su red envía estos paquetes." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="TL-SF1005D, 5-port 10/100M, IEEE802.3, 802.3u, 802.3x, CSMA/CD, TCP/IP" URL="http://www.tp-link.com/es/products/productDetails.asp?class=&amp;pmodel=TL-SF1005D" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="40307658" Local_ID="0" Value="0.1" CategoryFeature_ID="8769" CategoryFeatureGroup_ID="2484" No="10100022" Presentation_Value="0.1 Gbit/s" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="3188">
+	    <Measure ID="68" Sign="">
+	      <Signs><Sign ID="7476" langid="6">Gbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="504357" Value="Tasa de transferencia (máx)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307659" Local_ID="0" Value="Y" CategoryFeature_ID="2042" CategoryFeatureGroup_ID="2484" No="119340" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="536">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509334" Value="Full dúplex" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307660" Local_ID="0" Value="10/100 Mbps" CategoryFeature_ID="2029" CategoryFeatureGroup_ID="2484" No="119327" Presentation_Value="10/100 Mbps" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="606">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504727" Value="Tasa de transferencia de datos(min/max)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307661" Local_ID="0" Value="1" CategoryFeature_ID="11205" CategoryFeatureGroup_ID="2484" No="100014" Presentation_Value="1 Gbit/s" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1801">
+	    <Measure ID="68" Sign="">
+	      <Signs><Sign ID="7476" langid="6">Gbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="508016" Value="Capacidad de conmutación" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307662" Local_ID="0" Value="1000" CategoryFeature_ID="2026" CategoryFeatureGroup_ID="1141" No="119324" Presentation_Value="1000 entradas" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="566">
+	    <Measure ID="56" Sign="">
+	      <Signs><Sign ID="7464" langid="6">entradas</Sign></Signs>
+	    </Measure>
+	    <Name ID="507552" Value="Tamaño de la tabla de direcciones MAC" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307663" Local_ID="0" Value="Y" CategoryFeature_ID="16314" CategoryFeatureGroup_ID="1141" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2756">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508020" Value="Soporte de control flow" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307664" Local_ID="0" Value="Y" CategoryFeature_ID="20896" CategoryFeatureGroup_ID="1141" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3760">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508041" Value="Guardar y remitir" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307674" Local_ID="0" Value="IEEE 802.3, IEEE 802.3u, IEEE 802.3x" CategoryFeature_ID="45644" CategoryFeatureGroup_ID="1141" No="100000" Presentation_Value="IEEE 802.3, IEEE 802.3u, IEEE 802.3x" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1802">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509584" Value="Estándar de red" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307665" Local_ID="0" Value="Unmanaged" CategoryFeature_ID="20904" CategoryFeatureGroup_ID="2944" No="10100000" Presentation_Value="No administrado" Translated="1"  Mandatory="1" Searchable="1">
+	  <Feature ID="3769">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508048" Value="Tipo de interruptor" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91692873" Local_ID="0" Value="-" CategoryFeature_ID="18586" CategoryFeatureGroup_ID="2944" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3241">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508028" Value="Switch capa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307666" Local_ID="0" Value="CSMA/CD, TCP/IP" CategoryFeature_ID="19582" CategoryFeatureGroup_ID="2987" No="100000" Presentation_Value="CSMA/CD, TCP/IP" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="557">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504174" Value="Protocolos de red admitidos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307667" Local_ID="0" Value="5" CategoryFeature_ID="11134" CategoryFeatureGroup_ID="763" No="10100000" Presentation_Value="5" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1415">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504851" Value="Cantidad de puertos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307668" Local_ID="0" Value="10BASE-T, 100BASE-TX" CategoryFeature_ID="2027" CategoryFeatureGroup_ID="763" No="119325" Presentation_Value="10BASE-T, 100BASE-TX" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="7659">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="593420" Value="Copper ethernet cabling technology" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307670" Local_ID="0" Value="5" CategoryFeature_ID="20893" CategoryFeatureGroup_ID="763" No="100000" Presentation_Value="5" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2312">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508388" Value="Ethernet LAN (RJ-45) cantidad de puertos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307671" Local_ID="0" Value="Y" CategoryFeature_ID="21106" CategoryFeatureGroup_ID="763" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2316">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508494" Value="DC-in jack" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91692874" Local_ID="0" Value="N" CategoryFeature_ID="2038" CategoryFeatureGroup_ID="1144" No="119336" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="483">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504717" Value="Montaje en bastidor" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307672" Local_ID="0" Value="140 x 87 x 27.5" CategoryFeature_ID="5038" CategoryFeatureGroup_ID="1144" No="100050" Presentation_Value="140 x 87 x 27.5 mm" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91692875" Local_ID="0" Value="N" CategoryFeature_ID="18590" CategoryFeatureGroup_ID="1144" No="100000" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3245">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508032" Value="Apilabre" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307673" Local_ID="0" Value="N" CategoryFeature_ID="17380" CategoryFeatureGroup_ID="1142" No="10100000" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="2988">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508025" Value="Energía sobre Ethernet (PoE), soporte" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91692876" Local_ID="0" Value="3" CategoryFeature_ID="11195" CategoryFeatureGroup_ID="1142" No="100008" Presentation_Value="3 W" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="445">
+	    <Measure ID="44" Sign="">
+	      <Signs><Sign ID="7453" langid="6">W</Sign></Signs>
+	    </Measure>
+	    <Name ID="508142" Value="Consumo energético" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307678" Local_ID="0" Value="FCC, CE" CategoryFeature_ID="17378" CategoryFeatureGroup_ID="2481" No="100000" Presentation_Value="FCC, CE" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="249">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508126" Value="Certificados" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307679" Local_ID="0" Value="10 - 90" CategoryFeature_ID="7825" CategoryFeatureGroup_ID="1143" No="100000" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307680" Local_ID="0" Value="0 - 40" CategoryFeature_ID="7827" CategoryFeatureGroup_ID="1143" No="100000" Presentation_Value="0 - 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307681" Local_ID="0" Value="-40 - 70" CategoryFeature_ID="7830" CategoryFeatureGroup_ID="1143" No="100000" Presentation_Value="-40 - 70 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307682" Local_ID="0" Value="5 - 95" CategoryFeature_ID="12190" CategoryFeatureGroup_ID="1143" No="100000" Presentation_Value="5 - 95 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307675" Local_ID="0" Value="Power" CategoryFeature_ID="20753" CategoryFeatureGroup_ID="3459" No="100000" Presentation_Value="Power" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3662">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504946" Value="Energía LED" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307676" Local_ID="0" Value="Y" CategoryFeature_ID="20754" CategoryFeatureGroup_ID="3459" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3664">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508039" Value="ConectividadLEDs" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="40307677" Local_ID="0" Value="White" CategoryFeature_ID="27196" CategoryFeatureGroup_ID="4054" No="100000" Presentation_Value="Blanco" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="46455893" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33586" CategoryFeatureGroup_ID="376" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="76601745" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="1671788" Prod_id="TG-3269" ThumbPic="http://images.icecat.biz/thumbs/1671788.jpg" Name="Gigabit PCI Network Adapter">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76601747" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="2125426" Prod_id="TF-3239DL" ThumbPic="http://images.icecat.biz/thumbs/2125426.jpg" Name="10/100Mbps PCI Network Adapter">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="489937" Prod_id="LC101" ThumbPic="http://images.icecat.biz/thumbs/489937.jpg" Name="Gigabit LAN PCI Card">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="468298" Prod_id="LC102" ThumbPic="http://images.icecat.biz/thumbs/468298.jpg" Name="LAN PC Card Gigabit">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="1505" Reversed="0" Preferred="0">
+	    <Product ID="1318217" Prod_id="N-707522" ThumbPic="http://images.icecat.biz/thumbs/1318217.jpg" Name="UTP Crimping Tang">
+	      <Supplier ID="2171" Name="ICIDU"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="1172" Reversed="0" Preferred="0">
+	    <Product ID="1318117" Prod_id="N-707521" ThumbPic="http://images.icecat.biz/thumbs/1318117.jpg" Name="UTP Shieldcaps for RJ45, 10 Pieces">
+	      <Supplier ID="2171" Name="ICIDU"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="883" Reversed="0" Preferred="0">
+	    <Product ID="1318218" Prod_id="N-707523" ThumbPic="http://images.icecat.biz/thumbs/1318218.jpg" Name="UTP CAT5 Pullbox Network Cable, 100m">
+	      <Supplier ID="2171" Name="ICIDU"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76598414" Category_ID="925" Reversed="0" Preferred="0">
+	    <Product ID="2123053" Prod_id="TL-PS110P" ThumbPic="http://images.icecat.biz/thumbs/2123053.jpg" Name="Single Parallel Port Fast Ethernet Print Server">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76598417" Category_ID="925" Reversed="0" Preferred="0">
+	    <Product ID="2123054" Prod_id="TL-PS110U" ThumbPic="http://images.icecat.biz/thumbs/2123054.jpg" Name="Single USB2.0 Port Fast Ethernet Print Server">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="883" Reversed="0" Preferred="0">
+	    <Product ID="1549666" Prod_id="UT012" ThumbPic="" Name="CAB UTP SWEEX CAT5e Grey 3m">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76601746" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="2122407" Prod_id="TF-3239D" ThumbPic="http://images.icecat.biz/thumbs/2122407.jpg" Name="10/100Mbps PCI Network Adapter">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="1959688" Prod_id="LC103" ThumbPic="http://images2.icecat.biz/thumbs/1959688.jpg" Name="LAN PCI Express Card Gigabit">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76601748" Category_ID="182" Reversed="0" Preferred="0">
+	    <Product ID="2125417" Prod_id="TF-5239" ThumbPic="http://images2.icecat.biz/thumbs/2125417.jpg" Name="10/100Mbps CardBus Network Adapter">
+	      <Supplier ID="2988" Name="TP-LINK"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 5-Port 10/100Mbps Desktop Switch, 0.1 Gbit/s, 10/100 Mbps, 1 Gbit/s, 1000 entradas, IEEE 802.3, IEEE 802.3u, IEEE 802.3x, No administrado</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 5-Port 10/100Mbps Desktop Switch. Transmisión de datos: 0.1 Gbit/s, 10/100 Mbps, 1 Gbit/s. Red: 1000 entradas, IEEE 802.3, IEEE 802.3u, IEEE 802.3x. Características de manejo: No administrado. Protocolos: CSMA/CD, TCP/IP. Conectividad: 10BASE-T, 100BASE-TX. Peso y dimensiones: 140 x 87 x 27.5 mm. Contro de energía: 3 W. Aprobaciones reguladoras: FCC, CE. Condiciones ambientales: 10 - 90 %, 0 - 40 °C, -40 - 70 °C, 5 - 95 %. Iluminación/Alarmas: Power. Color: Blanco</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

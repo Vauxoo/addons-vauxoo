@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/5763711-3490.jpg" HighPicHeight="400" HighPicSize="41999" HighPicWidth="400" ID="5763711" LowPic="http://images.icecat.biz/img/norm/low/5763711-3490.jpg" LowPicHeight="200" LowPicSize="17051" LowPicWidth="200" Name="Photosmart e-All-in-One Printer - D110a" Prod_id="CN731A" Quality="ICECAT" ReleaseDate="2010-07-09" ThumbPic="http://images.icecat.biz/thumbs/5763711.jpg" ThumbPicSize="4624" Title="HP Photosmart e-All-in-One Printer series - D110 - D110a">
+       <Category ID="304">
+       
+    <Name ID="496550" Value="multifuncionales" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="412" No="-1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1513" No="4">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2429" No="5">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2301" No="5">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1496" No="11">
+     <FeatureGroup ID="5">
+       <Name ID="510111" Value="Exhibición" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1639" No="0">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="73" No="9">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="72" No="2">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="68" No="23">
+     <FeatureGroup ID="15">
+       <Name ID="510120" Value="Velocidad de la impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="71" No="25">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="70" No="14">
+     <FeatureGroup ID="17">
+       <Name ID="510122" Value="Capacidad de salida" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="69" No="16">
+     <FeatureGroup ID="18">
+       <Name ID="510123" Value="Capacidad de la entrada" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3432" No="0">
+     <FeatureGroup ID="19">
+       <Name ID="510124" Value="Formatos de los medios" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="74" No="4">
+     <FeatureGroup ID="20">
+       <Name ID="510125" Value="Tecnología de la impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="75" No="20">
+     <FeatureGroup ID="24">
+       <Name ID="510116" Value="Exploración" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="76" No="22">
+     <FeatureGroup ID="25">
+       <Name ID="510129" Value="Copiado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="77" No="18">
+     <FeatureGroup ID="26">
+       <Name ID="510130" Value="Fax" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="78" No="3">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1380" No="1">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1424" No="7">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2496" No="3">
+     <FeatureGroup ID="38">
+       <Name ID="510142" Value="Emisión de sonidos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2739" No="0">
+     <FeatureGroup ID="39">
+       <Name ID="510143" Value="Consumibles" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1381" No="12">
+     <FeatureGroup ID="40">
+       <Name ID="510144" Value="Dirección de papel" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2421" No="5">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2738" No="0">
+     <FeatureGroup ID="49">
+       <Name ID="510153" Value="Dispositivo de entrada" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2737" No="2">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2736" No="0">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2740" No="1">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5217" No="1">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3431" No="0">
+     <FeatureGroup ID="103">
+       <Name ID="510202" Value="Media types" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3433" No="0">
+     <FeatureGroup ID="104">
+       <Name ID="510201" Value="Media weight" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0884962753095"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="58100">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="101480018" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33569" CategoryFeatureGroup_ID="412" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/5763711_2629.jpg" PicHeight="400" PicWidth="400" ProductPicture_ID="715478" Size="14673" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/5763711_7461.jpg" ThumbSize="3616"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/5763711_4074.jpg" PicHeight="329" PicWidth="349" ProductPicture_ID="715477" Size="13829" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/5763711_9882.jpg" ThumbSize="4307"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP Photosmart e-All-in-One Printer - D110a Photosmart e-All-in-One Printer series - D110</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP Photosmart e-All-in-One Printer - D110a, Photosmart e-All-in-One Printer series - D110</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

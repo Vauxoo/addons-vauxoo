@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/4808726-5146.jpg" HighPicHeight="280" HighPicSize="24667" HighPicWidth="280" ID="4808726" LowPic="http://images.icecat.biz/img/norm/low/4808726-5146.jpg" LowPicHeight="200" LowPicSize="17530" LowPicWidth="200" Name="ASH02-320GU-CBK" Prod_id="ASH02-320GU-CBK" Quality="ICECAT" ReleaseDate="2010-05-17" ThumbPic="http://images.icecat.biz/thumbs/4808726.jpg" ThumbPicSize="3648" Title="A-DATA  ASH02-320GU-CBK">
+       <Category ID="219">
+       
+    <Name ID="496504" Value="discos duros" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="337" No="-1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5876" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="67" No="60">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3577" No="0">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2845" No="11">
+     <FeatureGroup ID="5">
+       <Name ID="510111" Value="Exhibición" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1710" No="30">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="66" No="0">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="65" No="51">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2842" No="0">
+     <FeatureGroup ID="19">
+       <Name ID="510124" Value="Formatos de los medios" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1594" No="52">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1595" No="38">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2846" No="40">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2847" No="0">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2475" No="54">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2841" No="25">
+     <FeatureGroup ID="38">
+       <Name ID="510142" Value="Emisión de sonidos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2844" No="-4">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2476" No="58">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2474" No="36">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2918" No="0">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2843" No="15">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3592" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3608" No="32">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3606" No="-2">
+     <FeatureGroup ID="114">
+       <Name ID="510212" Value="Inner carton" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3607" No="-3">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3609" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="4718050608157"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="86707948" Local_ID="0" Value="320" CategoryFeature_ID="3684" CategoryFeatureGroup_ID="67" No="10100100" Presentation_Value="320 GB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="7">
+	    <Measure ID="20" Sign="">
+	      <Signs><Sign ID="7432" langid="6">GB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508090" langid="6" Value="Capacidad de disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707950" Local_ID="0" Value="-" CategoryFeature_ID="15510" CategoryFeatureGroup_ID="67" No="10100001" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="430">
+	    <Measure ID="28" Sign="">
+	      <Signs><Sign ID="7438" langid="6">RPM</Sign></Signs>
+	    </Measure>
+	    <Name ID="508132" langid="6" Value="Velocidad de rotación del disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707951" Local_ID="0" Value="USB 2.0" CategoryFeature_ID="11666" CategoryFeatureGroup_ID="67" No="100104" Presentation_Value="USB 2.0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="982">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508248" langid="6" Value="Interfaz del disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707952" Local_ID="0" Value="2.5" CategoryFeature_ID="18866" CategoryFeatureGroup_ID="67" No="100098" Presentation_Value="6.35 cm (2.5 &quot;)" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1926">
+	    <Measure ID="16" Sign="&quot;">
+	      <Signs><Sign ID="7428" langid="6">&quot;</Sign></Signs>
+	    </Measure>
+	    <Name ID="508457" langid="6" Value="Tamaño de disco duro"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707954" Local_ID="0" Value="162" CategoryFeature_ID="3853" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="162 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708045" Local_ID="0" Value="1" CategoryFeature_ID="48027" CategoryFeatureGroup_ID="66" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508488" langid="6" Value="Cantidad de puertos USB 2.0"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707953" Local_ID="0" Value="112 x 77.5 x 15.5" CategoryFeature_ID="3485" CategoryFeatureGroup_ID="337" No="100005" Presentation_Value="112 x 77.5 x 15.5 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707956" Local_ID="0" Value="Black" CategoryFeature_ID="17345" CategoryFeatureGroup_ID="337" No="100001" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707949" Local_ID="0" Value="N" CategoryFeature_ID="16" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="22">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506151" langid="6" Value="Interno"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707957" Local_ID="0" Value="Y" CategoryFeature_ID="18515" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="775">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="625155" langid="6" Value="Enchugar y usar"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86707955" Local_ID="0" Value="Y" CategoryFeature_ID="13033" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2337">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506167" langid="6" Value="USB suministro de corriente"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86708290" Local_ID="0" Value="Y" CategoryFeature_ID="23049" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="5170">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506221" langid="6" Value="USB"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="86672533" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33609" CategoryFeatureGroup_ID="337" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/4808726_5729.jpg" PicHeight="280" PicWidth="280" ProductPicture_ID="477779" Size="32247" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/4808726_5923.jpg" ThumbSize="4658"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">A-DATA ASH02-320GU-CBK, 320 GB, USB 2.0, 6.35 cm (2.5 &quot;), 162 g</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">A-DATA ASH02-320GU-CBK. Accionamiento de disco: 320 GB, USB 2.0, 6.35 cm (2.5 &quot;). Peso y dimensiones: 162 g</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2634" Name="A-DATA"/>
+      </Product>
+
+</ICECAT-interface>

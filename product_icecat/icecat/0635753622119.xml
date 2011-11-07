@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/5913636-Samsung.jpg" HighPicHeight="250" HighPicSize="17861" HighPicWidth="250" ID="5913636" LowPic="http://images.icecat.biz/img/norm/low/5913636-Samsung.jpg" LowPicHeight="200" LowPicSize="13110" LowPicWidth="200" Name="ML-1710D3/ELS" Prod_id="ML-1710D3" Quality="ICECAT" ReleaseDate="2010-09-09" ThumbPic="http://images.icecat.biz/thumbs/5913636.jpg" ThumbPicSize="4021" Title="Samsung  ML-1710D3/ELS">
+       <Category ID="1170">
+       
+    <Name ID="496909" Value="no categorizado" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="1985" No="0">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0635753622119"/>
+        <EANCode EAN="7509401410126"/>
+        <EANCode EAN="8803821704032"/>
+        <EANCode EAN="8808979569441"/>
+        <EANCode EAN="2001252337003"/>
+        <EANCode EAN="4063575390012"/>
+        <EANCode EAN="7509400000000"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26928649" LongDesc="Los cartuchos de impresión de la serie SAMSUNG están especialmente diseñados para asegurar una calidad de impresión nítida y vibrante desde la primera hasta la última página. Estos cartuchos de fácil instalación ofrecen cada vez un funcionamiento fiable y rentable y unos resultados nítidos y profesionales." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="ML-1710D3/ELS" URL="" WarrantyInfo="" langid="6"/>
+      
+	<ProductFeature Localized="0" ID="96415718" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33962" CategoryFeatureGroup_ID="1985" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="84446385" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="1595293" Prod_id="628893" ThumbPic="http://images.icecat.biz/thumbs/1595293.jpg" Name="Toner cartridge black">
+	      <Supplier ID="383" Name="Pelikan"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Samsung ML-1710D3/ELS</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Samsung ML-1710D3/ELS</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="26" Name="Samsung"/>
+      </Product>
+
+</ICECAT-interface>

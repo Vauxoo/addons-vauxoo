@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images2.icecat.biz/img/norm/high/1099441-8152.jpg" HighPicHeight="250" HighPicSize="20134" HighPicWidth="250" ID="1099441" LowPic="http://images2.icecat.biz/img/norm/low/1099441-8152.jpg" LowPicHeight="200" LowPicSize="18036" LowPicWidth="200" Name="PG-30 Black Ink Cartridge" Prod_id="1899B002AA" Quality="ICECAT" ReleaseDate="2007-08-09" ThumbPic="http://images2.icecat.biz/thumbs/1099441.jpg" ThumbPicSize="5071" Title="Canon  PG-30 Black Ink Cartridge">
+       <Category ID="377">
+       
+    <Name ID="496575" Value="cartuchos de tinta" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="485" No="21">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2247" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2249" No="10">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4609" No="0">
+     <FeatureGroup ID="20">
+       <Name ID="510125" Value="Tecnología de la impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2248" No="7">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3583" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3682" No="0">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0013803078404"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="104442543" Local_ID="0" Value="black" CategoryFeature_ID="9666" CategoryFeatureGroup_ID="485" No="600000" Presentation_Value="Negro" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" Value="Impresión a color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="42084968" Local_ID="0" Value="N" CategoryFeature_ID="6166" CategoryFeatureGroup_ID="485" No="99999" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="46">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506417" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="42084969" Local_ID="0" Value="Inkjet" CategoryFeature_ID="8121" CategoryFeatureGroup_ID="485" No="99999" Presentation_Value="inyección de tinta" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" Value="Tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="46617352" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33640" CategoryFeatureGroup_ID="485" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Canon PG-30 Black Ink Cartridge</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Canon PG-30 Black Ink Cartridge</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="10" Name="Canon"/>
+      </Product>
+
+</ICECAT-interface>

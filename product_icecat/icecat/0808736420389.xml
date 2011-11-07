@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/38973-HP.jpg" HighPicHeight="400" HighPicSize="57972" HighPicWidth="400" ID="38973" LowPic="http://images.icecat.biz/img/norm/low/38973-HP.jpg" LowPicHeight="200" LowPicSize="21053" LowPicWidth="200" Name="13A Black LaserJet Toner Cartridge" Prod_id="Q2613A" Quality="SUPPLIER" ReleaseDate="2005-08-30" ThumbPic="http://images.icecat.biz/thumbs/38973.jpg" ThumbPicSize="5119" Title="HP LaserJet Q2613 Family Print Cartridges 13A Black LaserJet Toner Cartridge">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="8087364203898"/>
+        <EANCode EAN="0808736420389"/>
+        <EANCode EAN="0735029212249"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="21263980" LongDesc="&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Overview&lt;/span&gt;&lt;br /&gt;Los cartuchos de impresión de la familia HP LaserJet Q2613 con tecnología de impresión Smart[1] se han diseñado específicamente para las impresoras HP LaserJet serie 1300. Son fiables y fáciles de usar, con una calidad de impresión excelente y una gestión de consumibles eficaz.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Features&lt;/span&gt;&lt;br /&gt;&lt;b&gt;La avanzada fórmula del tóner y el depósito preciso de la tinta de los cartuchos de impresión de la familia HP LaserJet Q2613 ofrecen una excelente calidad de impresión en todo momento, con texto negro extranítido, escalas de grises suaves y fotografías y gráficos de gran detalle.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;br /&gt;\n\n" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="Cartucho de impresión HP LaserJet Q2613A con tecnología de impresión Smart" URL="" WarrantyInfo="Garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra.\nDeclaración estándar de garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra. Esta garantía no cubre productos que (a) hayan sido rellenados, restaurados o modificados de cualquier modo, (b) presenten problemas que se deban a un uso incorrecto, un almacenamiento inadecuado o que se hayan utilizado fuera de las especificaciones medioambientales publicadas para el producto de impresora, o (c) presenten un uso distinto al habitual. Para acceder al servicio de garantía, devuelva el producto al lugar donde lo adquirió (con una descripción por escrito del problema y muestras de impresión) o póngase en contacto con el servicio de atención al cliente de HP.  HP reemplazará o devolverá el importe de compra, según estime oportuno, de los productos que en efecto estén defectuosos. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, LA GARANTÍA ANTERIOR ES EXCLUSIVA Y PREVALECE SOBRE CUALQUIER OTRA GARANTÍA O CONDICIÓN, ESCRITA U ORAL, EXPRESA O IMPLÍCITA, Y HP NO SE RESPONSABILIZA DE FORMA ESPECÍFICA DE NINGUNA GARANTÍA IMPLÍCITA O CONDICIÓN DE COMERCIALIZACIÓN, CALIDAD SATISFACTORIA E IDONEIDAD PARA UN DETERMINADO FIN. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, NI HP NI SUS PROVEEDORES SERÁN RESPONSABLES DE LOS DAÑOS Y PERJUICIOS DIRECTOS, ESPECIALES, FORTUITOS, DERIVADOS (INCLUIDAS PÉRDIDAS ECONÓMICAS O DE DATOS) O DE OTRO TIPO, INDEPENDIENTEMENTE DE SI SE BASAN EN UN CONTRATO, RESPONSABILIDADES EXTRACONTRACTUALES U OTROS. LOS TÉRMINOS DE LA GARANTÍA INCLUIDOS EN ESTE DOCUMENTO, Y HASTA DONDE LO PERMITA LA LEY, NO EXCLUYEN, RESTRINGEN NI MODIFICAN, SINO QUE SE AÑADEN A LOS DERECHOS ESTABLECIDOS POR LA LEY APLICABLES A LA VENTA AL PÚBLICO DE ESTE PRODUCTO.\n" langid="6"/>
+       <ProductFamily ID="52602">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="1" ID="97402828" Local_ID="26407077" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Láser" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" Value="Tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103560067" Local_ID="3836163" Value="Black" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Negro" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" Value="Impresión a color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100181113" Local_ID="3836172" Value="10 - 32.5" CategoryFeature_ID="5573" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="10 a 32,5° C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836157" Value="" CategoryFeature_ID="5769" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="20 a 80% HR" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836161" Value="" CategoryFeature_ID="5770" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de -20 a 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836167" Value="" CategoryFeature_ID="12235" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="HR de 10 a 90%" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836156" Value="" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="333 x 142 x 198 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97501980" Local_ID="3836170" Value="1070" CategoryFeature_ID="5067" CategoryFeatureGroup_ID="2279" No="100030" Presentation_Value="1.07 kg (2.36 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" Value="Paquete, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836158" Value="" CategoryFeature_ID="7206" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="0.746 kg (1.64 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1690">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="504358" Value="Peso vacío" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836168" Value="" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="770 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26407076" Value="" CategoryFeature_ID="8457" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="333 x 142 x 198 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="582">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508152" Value="Dimensiones del embalaje (alto x alto x peso)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100190747" Local_ID="26407081" Value="1200 x 800 x 1139" CategoryFeature_ID="30379" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="1200 x 800 x 1139 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4824">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506470" Value="Dimensiones europeas del pallet (An x F x Al)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97437727" Local_ID="3836169" Value="2500" CategoryFeature_ID="1905" CategoryFeatureGroup_ID="2281" No="16845" Presentation_Value="2.500 páginas estándar de acuerdo con ISO/IEC 19752 páginas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="626">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506431" Value="Producción de páginas para imprimir (A4, blanco y negro, ISO/IEC 19752)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97419197" Local_ID="3836160" Value="121" CategoryFeature_ID="1914" CategoryFeatureGroup_ID="2279" No="16854" Presentation_Value="121 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="513">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506906" Value="Palet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97366473" Local_ID="3836171" Value="90" CategoryFeature_ID="1911" CategoryFeatureGroup_ID="2279" No="16851" Presentation_Value="90 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" Value="Cantidad por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100190746" Local_ID="3836159" Value="1200 x 800 x 1139" CategoryFeature_ID="1909" CategoryFeatureGroup_ID="2279" No="16849" Presentation_Value="1.200 x 800 x 1.139 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="530">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506907" Value="Dimensiones de Palet (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97366479" Local_ID="26407079" Value="90" CategoryFeature_ID="27820" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="18 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3293">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506463" Value="Cantidad de europalet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97366480" Local_ID="26407082" Value="1" CategoryFeature_ID="30381" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" Value="Cantidad por caja" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="106199377" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836162" Value="" CategoryFeature_ID="7207" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="18" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" Value="Número de cartones por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836164" Value="" CategoryFeature_ID="9881" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="4" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2066">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506454" Value="Número de apilado para palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836165" Value="" CategoryFeature_ID="7208" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="5" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" Value="Número de capa por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3836166" Value="" CategoryFeature_ID="9880" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="20" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2065">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506453" Value="Número de apilado para caja de cartón" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26407078" Value="" CategoryFeature_ID="27319" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Inteligente" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1879">
+	    <Measure ID="35" Sign="">
+	      <Signs><Sign ID="7444" langid="6">DPI</Sign></Signs>
+	    </Measure>
+	    <Name ID="506442" Value="Resolución de la tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26407080" Value="" CategoryFeature_ID="30376" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="121 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3288">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506462" Value="Europalet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="application/pdf" Date="2010-04-30 07:35:31" Description="Cartucho de impresión inteligente HP LaserJet 1300" Height="0" KeepAsURL="0" MultimediaObject_ID="277167" Size="95336" Type="data sheet" URL="http://objects.icecat.biz/objects/HP_literature_es_es_5981-4903ESE.pdf" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      	  <ProductRelated ID="84441861" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="819574" Prod_id="624253" ThumbPic="http://images.icecat.biz/thumbs/819574.jpg" Name="Toner HP Q2613A Black">
+	      <Supplier ID="383" Name="Pelikan"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="61016862" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="2602878" Prod_id="27312" ThumbPic="http://images.icecat.biz/thumbs/2602878.jpg" Name="27312">
+	      <Supplier ID="81" Name="Imation"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59995324" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="2830146" Prod_id="V713A" ThumbPic="http://images.icecat.biz/thumbs/2830146.jpg" Name="V713A">
+	      <Supplier ID="138" Name="V7"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58853440" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="40020" Prod_id="Q1334A" ThumbPic="http://images.icecat.biz/thumbs/40020.jpg" Name="LaserJet 1300 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58853439" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="40019" Prod_id="Q1335A" ThumbPic="http://images.icecat.biz/thumbs/40019.jpg" Name="LaserJet 1300n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31875093" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="48669" Prod_id="Q1334A#405" ThumbPic="http://images.icecat.biz/thumbs/40020.jpg" Name="LaserJet 1300 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31875100" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="48670" Prod_id="Q1335A#405" ThumbPic="http://images.icecat.biz/thumbs/40019.jpg" Name="LaserJet 1300n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31875098" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="52843" Prod_id="Q1334A#ABU" ThumbPic="http://images.icecat.biz/thumbs/40020.jpg" Name="LaserJet 1300 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="445468" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="92766" Prod_id="Q1334A#405#*BNDL" ThumbPic="http://images.icecat.biz/thumbs/92766.jpg" Name="LaserJet 1300 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="637082" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="149683" Prod_id="Q1334A#405#*SP" ThumbPic="http://images.icecat.biz/thumbs/149683.jpg" Name="LaserJet 1300 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP 13A Black LaserJet Toner Cartridge LaserJet Q2613 Family Print Cartridges, Láser, Negro, 10 a 32,5° C, 1.07 kg (2.36 libras)</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP 13A Black LaserJet Toner Cartridge, LaserJet Q2613 Family Print Cartridges. Calidad de impresión: Láser, Negro. Condiciones ambientales: 10 a 32,5° C. Peso y dimensiones: 1.07 kg (2.36 libras)</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

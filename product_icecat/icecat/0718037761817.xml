@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3781899-5933.jpg" HighPicHeight="357" HighPicSize="72301" HighPicWidth="400" ID="3781899" LowPic="http://images.icecat.biz/img/norm/low/3781899-5933.jpg" LowPicHeight="178" LowPicSize="18029" LowPicWidth="200" Name="Caviar Green 1TB" Prod_id="WD10EARS" Quality="ICECAT" ReleaseDate="2009-10-20" ThumbPic="http://images.icecat.biz/thumbs/3781899.jpg" ThumbPicSize="4452" Title="Western Digital  Caviar Green 1TB">
+       <Category ID="219">
+       
+    <Name ID="496504" Value="discos duros" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="337" No="-1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5876" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="67" No="60">
+     <FeatureGroup ID="2">
+       <Name ID="510108" Value="Accionamiento de disco" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3577" No="0">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2845" No="11">
+     <FeatureGroup ID="5">
+       <Name ID="510111" Value="Exhibición" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1710" No="30">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="66" No="0">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="65" No="51">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2842" No="0">
+     <FeatureGroup ID="19">
+       <Name ID="510124" Value="Formatos de los medios" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1594" No="52">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1595" No="38">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2846" No="40">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2847" No="0">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2475" No="54">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2841" No="25">
+     <FeatureGroup ID="38">
+       <Name ID="510142" Value="Emisión de sonidos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2844" No="-4">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2476" No="58">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2474" No="36">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2918" No="0">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2843" No="15">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3592" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3608" No="32">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3606" No="-2">
+     <FeatureGroup ID="114">
+       <Name ID="510212" Value="Inner carton" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3607" No="-3">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3609" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0718037761817"/>
+        <EANCode EAN="2001859509001"/>
+        <EANCode EAN="8032976059890"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="24505800" LongDesc="A medida que aumentan las capacidades de los discos duros, también aumenta la energía necesaria para hacerlos funcionar. Las unidades Caviar Green de WD hacen posible para los clientes más exigentes con el manejo de la energía, fabricar sistemas con altas capacidades y con un adecuado equilibrio entre el rendimiento del sistema, confiabilidad y conservación de energía. \n\n&lt;b&gt;Consumo de energía reducido&lt;/b&gt; - WD ha reducido el consumo de energía hasta en un 40 por ciento en comparación con las unidades estándar de escritorio, con la combinación de tecnologías IntelliSeek, No Touch, e IntelliPower de WD.\n\n&lt;b&gt;Ayuda a habilitar PCs ecológicamente responsables&lt;/b&gt; - Las unidades WD Caviar Green ofrecen un ahorro promedio de energía de 4-5 vatios sobre las unidades de disco estándar de escritorio, haciendo posible que nuestros clientes concientes de la energía, fabriquen sistemas con mayores capacidades y con el balance correcto de rendimiento del sistema, confiabilidad garantizada y conservación de energía.\n\n&lt;b&gt;Fresco y silencioso&lt;/b&gt; - La tecnología WD GreenPower ofrece bajas temperaturas de operación para mayor confiabilidad y baja acústica para computadoras personales ultrasilenciosas y unidades externas.\n\n&lt;b&gt;Enorme capacidad&lt;/b&gt; - Capacidades de hasta 2 TB ofrecen la capacidad más disponible para programas de almacenamiento intensivo y sistemas operativos que consumen mucho espacio, como Windows Vista®, con muchísimo espacio para fotos, música y video.\n\n&lt;b&gt;Perfecto para unidades de disco duro externas&lt;/b&gt; - Los fabricantes de discos externos pueden eliminar la necesidad de usar un ventilador en un producto de alta capacidad al usar un disco Caviar Green de WD, el más fresco y silencioso en su categoría.\n\n&lt;b&gt;IntelliPower&lt;/b&gt; - Un delicado equilibrio entre velocidad de rotación, tasa de transferencia y algoritmos de cache diseñado para proporcionar tanto extraordinarios ahorros de energía como un sólido rendimiento.\n\n&lt;b&gt;IntelliSeek&lt;/b&gt; - Calcula las velocidades óptimas de búsqueda para reducir el consumo de energía, el ruido y la vibración.\n\n&lt;b&gt;Tecnología de carga de rampa NoTouch&lt;/b&gt; -  El cabezal de grabación nunca toca el disco, con lo que se logra un desgaste significativamente menor del cabezal y del medio de grabación, así como una mejor protección de la unidad cuando está en tránsito.\n\n&lt;b&gt;Grabación Magnética Perpendicular (PMR)&lt;/b&gt; - Emplea la tecnología PMR para lograr una mayor densidad de almacenamiento.\n\n&lt;b&gt;StableTrac&lt;/b&gt; - El eje del motor está asegurado en ambos extremos para reducir las vibraciones induciudas por el sistema y estabilizar las placas, logrando así un acceso preciso de las pistas durante las operaciones de lectura y escritura. (sólo modelos de 2 TB)\n\n&lt;b&gt;Rotación de baja energía&lt;/b&gt; - Las unidades WD Caviar Green consumen menos energía durante el arranque, permitiendo picos de carga menores.\n\n&lt;b&gt;Tecnología avanzada de energía&lt;/b&gt; - Los componentes electrónicos proporcionan el menor consumo de energía en su clase, lo que reduce sus demandas de energía y aumenta su confiabilidad.\n\n&lt;b&gt;Ideal para&lt;/b&gt;\nPCs y almacenamiento externo ecológicos que requieren un menor consumo de energía y una operación fresca y silenciosa." ManualPDFSize="1109593" ManualPDFURL="http://pdfs.icecat.biz/pdf/24505800-4645-manual.pdf" PDFSize="461567" PDFURL="http://pdfs.icecat.biz/pdf/24505800-6975.pdf" ShortDesc="Caviar Green 1TB, 64 MB Cache" URL="http://www.wdc.com/sp/products/products.asp?DriveID=763" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="75612034" Local_ID="0" Value="1000" CategoryFeature_ID="3684" CategoryFeatureGroup_ID="67" No="10100100" Presentation_Value="1000 GB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="7">
+	    <Measure ID="20" Sign="">
+	      <Signs><Sign ID="7432" langid="6">GB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508090" Value="Capacidad de disco duro" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612036" Local_ID="0" Value="Variable" CategoryFeature_ID="15510" CategoryFeatureGroup_ID="67" No="10100001" Presentation_Value="Variable" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="430">
+	    <Measure ID="28" Sign="">
+	      <Signs><Sign ID="7438" langid="6">RPM</Sign></Signs>
+	    </Measure>
+	    <Name ID="508132" Value="Velocidad de rotación del disco duro" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612037" Local_ID="0" Value="Serial ATA" CategoryFeature_ID="11666" CategoryFeatureGroup_ID="67" No="100104" Presentation_Value="Serial ATA" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="982">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508248" Value="Interfaz del disco duro" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612038" Local_ID="0" Value="3.5" CategoryFeature_ID="18866" CategoryFeatureGroup_ID="67" No="100098" Presentation_Value="8.89 cm (3.5 &quot;)" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1926">
+	    <Measure ID="16" Sign="&quot;">
+	      <Signs><Sign ID="7428" langid="6">"</Sign></Signs>
+	    </Measure>
+	    <Name ID="508457" Value="Tamaño de disco duro" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612039" Local_ID="0" Value="64" CategoryFeature_ID="13" CategoryFeatureGroup_ID="67" No="100097" Presentation_Value="64 MB" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="27">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508096" Value="Memoria temporal" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276153" Local_ID="0" Value="Y" CategoryFeature_ID="31393" CategoryFeatureGroup_ID="67" No="100078" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6253">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506240" Value="IntelliPower" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612040" Local_ID="0" Value="3" CategoryFeature_ID="6889" CategoryFeatureGroup_ID="2476" No="100000" Presentation_Value="3 Gbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1551">
+	    <Measure ID="68" Sign="">
+	      <Signs><Sign ID="7476" langid="6">Gbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="508408" Value="Velocidad de transferencia de datos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612051" Local_ID="0" Value="3.7" CategoryFeature_ID="13699" CategoryFeatureGroup_ID="1594" No="100008" Presentation_Value="3.7 W" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="445">
+	    <Measure ID="44" Sign="">
+	      <Signs><Sign ID="7453" langid="6">W</Sign></Signs>
+	    </Measure>
+	    <Name ID="508142" Value="Consumo energético" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612053" Local_ID="0" Value="0.80" CategoryFeature_ID="17108" CategoryFeatureGroup_ID="1594" No="100006" Presentation_Value="0.80 W" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2036">
+	    <Measure ID="44" Sign="">
+	      <Signs><Sign ID="7453" langid="6">W</Sign></Signs>
+	    </Measure>
+	    <Name ID="508464" Value="Consumo de energía (inactivo)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612041" Local_ID="0" Value="730" CategoryFeature_ID="3853" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="730 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612042" Local_ID="0" Value="147" CategoryFeature_ID="16569" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="147 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1650">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508435" Value="Profundidad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612043" Local_ID="0" Value="26.1" CategoryFeature_ID="8681" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="26.1 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1464">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508417" Value="Altura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612044" Local_ID="0" Value="101.6" CategoryFeature_ID="16567" CategoryFeatureGroup_ID="65" No="100000" Presentation_Value="101.6 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1649">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508434" Value="Ancho" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612047" Local_ID="0" Value="0 - 60" CategoryFeature_ID="5577" CategoryFeatureGroup_ID="1595" No="100100" Presentation_Value="0 - 60 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612048" Local_ID="0" Value="-40 - 70" CategoryFeature_ID="17248" CategoryFeatureGroup_ID="1595" No="100099" Presentation_Value="-40 - 70 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612045" Local_ID="0" Value="65" CategoryFeature_ID="17247" CategoryFeatureGroup_ID="1595" No="100000" Presentation_Value="65 G" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1637">
+	    <Measure ID="72" Sign="">
+	      <Signs><Sign ID="7480" langid="6">G</Sign></Signs>
+	    </Measure>
+	    <Name ID="506927" Value="Golpes en funcionamiento" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612049" Local_ID="0" Value="250" CategoryFeature_ID="17249" CategoryFeatureGroup_ID="1595" No="100000" Presentation_Value="250 G" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2965">
+	    <Measure ID="72" Sign="">
+	      <Signs><Sign ID="7480" langid="6">G</Sign></Signs>
+	    </Measure>
+	    <Name ID="506195" Value="Golpes cuando no está en funcionamiento" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276154" Local_ID="0" Value="N" CategoryFeature_ID="20373" CategoryFeatureGroup_ID="66" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2370">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504219" Value="Compatibilidad con router Fibre Channel" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276155" Local_ID="0" Value="0" CategoryFeature_ID="48027" CategoryFeatureGroup_ID="66" No="100000" Presentation_Value="0" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508488" Value="Cantidad de puertos USB 2.0" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276156" Local_ID="0" Value="N" CategoryFeature_ID="20089" CategoryFeatureGroup_ID="66" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3533">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506209" Value="FireWire 400" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276157" Local_ID="0" Value="N" CategoryFeature_ID="20090" CategoryFeatureGroup_ID="66" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3534">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506210" Value="FireWire 800" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276159" Local_ID="0" Value="0" CategoryFeature_ID="36300" CategoryFeatureGroup_ID="66" No="100000" Presentation_Value="0" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6768">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508591" Value="Cantidad de puertos USB 3.0" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276158" Local_ID="0" Value="N" CategoryFeature_ID="20091" CategoryFeatureGroup_ID="2847" No="100018" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1347">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504833" Value="Ethernet connexión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612050" Local_ID="0" Value="12/5 VDC" CategoryFeature_ID="5550" CategoryFeatureGroup_ID="337" No="100095" Presentation_Value="12/5 VDC" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="780">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508181" Value="Requisitos de energía" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276161" Local_ID="0" Value="Black" CategoryFeature_ID="17345" CategoryFeatureGroup_ID="337" No="100001" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612035" Local_ID="0" Value="Y" CategoryFeature_ID="16" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="22">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506151" Value="Interno" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="91276160" Local_ID="0" Value="N" CategoryFeature_ID="13033" CategoryFeatureGroup_ID="337" No="100000" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2337">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506167" Value="USB suministro de corriente" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75612046" Local_ID="0" Value="24/29" CategoryFeature_ID="5585" CategoryFeatureGroup_ID="2841" No="7" Presentation_Value="24/29 Db" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="585">
+	    <Measure ID="76" Sign="">
+	      <Signs><Sign ID="7484" langid="6">Db</Sign></Signs>
+	    </Measure>
+	    <Name ID="504724" Value="Emisiones de presión acústica" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="75611632" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33609" CategoryFeatureGroup_ID="337" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3781899_1150.jpg" PicHeight="400" PicWidth="400" ProductPicture_ID="378034" Size="64412" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3781899_3502.jpg" ThumbSize="5265"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3781899_1674.jpg" PicHeight="400" PicWidth="400" ProductPicture_ID="378033" Size="69829" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3781899_4177.jpg" ThumbSize="5862"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3781899_3953.jpg" PicHeight="400" PicWidth="400" ProductPicture_ID="378032" Size="67220" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3781899_8085.jpg" ThumbSize="5731"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3781899_6110.jpg" PicHeight="400" PicWidth="400" ProductPicture_ID="378029" Size="79730" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3781899_2589.jpg" ThumbSize="5235"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3781899_6356.jpg" PicHeight="400" PicWidth="400" ProductPicture_ID="378031" Size="57416" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3781899_7641.jpg" ThumbSize="5128"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3781899_7047.jpg" PicHeight="400" PicWidth="400" ProductPicture_ID="378030" Size="61230" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3781899_6142.jpg" ThumbSize="5291"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="0" Category_ID="862" Reversed="0" Preferred="0">
+	    <Product ID="1381107" Prod_id="SI-707127" ThumbPic="http://images.icecat.biz/thumbs/1381107.jpg" Name="3.5&quot; SATA Hard Disk Casing">
+	      <Supplier ID="2171" Name="ICIDU"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="862" Reversed="0" Preferred="0">
+	    <Product ID="1370898" Prod_id="ST021V2" ThumbPic="http://images.icecat.biz/thumbs/1370898.jpg" Name="External 3.5 inch Storage Solution USB 2.0">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="862" Reversed="0" Preferred="0">
+	    <Product ID="1343001" Prod_id="ST031" ThumbPic="http://images.icecat.biz/thumbs/1343001.jpg" Name="External 3.5&quot; SATA/USB 2.0 Storage Box">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Western Digital Caviar Green 1TB, 1000 GB, Variable, Serial ATA, 8.89 cm (3.5 &quot;), 64 MB, 3 Gbit/s</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Western Digital Caviar Green 1TB. Accionamiento de disco: 1000 GB, Variable, Serial ATA, 8.89 cm (3.5 &quot;), 64 MB. Transmisión de datos: 3 Gbit/s. Contro de energía: 3.7 W, 0.80 W. Peso y dimensiones: 730 g, 147 mm, 26.1 mm, 101.6 mm. Condiciones ambientales: 0 - 60 °C, -40 - 70 °C, 65 G, 250 G</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="29" Name="Western Digital"/>
+      </Product>
+
+</ICECAT-interface>

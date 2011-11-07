@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/5745139-TP-LINK.jpg" HighPicHeight="270" HighPicSize="9703" HighPicWidth="450" ID="5745139" LowPic="http://images.icecat.biz/img/norm/low/5745139-TP-LINK.jpg" LowPicHeight="120" LowPicSize="3981" LowPicWidth="200" Name="2.4GHz 8dBi Indoor Desktop Omni-directional Antenna " Prod_id="TL-ANT2408C" Quality="ICECAT" ReleaseDate="2010-06-29" ThumbPic="http://images.icecat.biz/thumbs/5745139.jpg" ThumbPicSize="1958" Title="TP-LINK  2.4GHz 8dBi Indoor Desktop Omni-directional Antenna">
+       <Category ID="137">
+       
+    <Name ID="496454" Value="antenas" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="255" No="12">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1894" No="0">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="971" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4023" No="0">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="972" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5077" No="0">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="970" No="10">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5389" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3122" No="0">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364052164"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="89447324" Local_ID="0" Value="8" CategoryFeature_ID="7858" CategoryFeatureGroup_ID="255" No="10100009" Presentation_Value="8 dBi" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1804">
+	    <Measure ID="99" Sign="">
+	      <Signs><Sign ID="7504" langid="6">dBi</Sign></Signs>
+	    </Measure>
+	    <Name ID="507944" Value="Antena de refuerzo (max)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89447325" Local_ID="0" Value="2.4" CategoryFeature_ID="7855" CategoryFeatureGroup_ID="255" No="100012" Presentation_Value="2.4 GHz" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1769">
+	    <Measure ID="37" Sign="">
+	      <Signs><Sign ID="7446" langid="6">GHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="504886" Value="Frecuencia de banda" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89447326" Local_ID="0" Value="50" CategoryFeature_ID="14428" CategoryFeatureGroup_ID="255" No="100000" Presentation_Value="50 Ohmio" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1889">
+	    <Measure ID="87" Sign="&amp;#937;">
+	      <Signs><Sign ID="7494" langid="6">Ohmio</Sign></Signs>
+	    </Measure>
+	    <Name ID="504889" Value="Obstrucción" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89447327" Local_ID="0" Value="Vertically Linear" CategoryFeature_ID="17453" CategoryFeatureGroup_ID="255" No="100000" Presentation_Value="Vertically Linear" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2993">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="507961" Value="Polarización" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89447330" Local_ID="0" Value="-10 - 60" CategoryFeature_ID="7861" CategoryFeatureGroup_ID="972" No="100006" Presentation_Value="-10 - 60 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89447331" Local_ID="0" Value="-40 - 80" CategoryFeature_ID="10578" CategoryFeatureGroup_ID="972" No="100000" Presentation_Value="-40 - 80 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89447328" Local_ID="0" Value="360" CategoryFeature_ID="17455" CategoryFeatureGroup_ID="255" No="0" Presentation_Value="360 °" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2995">
+	    <Measure ID="32" Sign="">
+	      <Signs><Sign ID="7441" langid="6">°</Sign></Signs>
+	    </Measure>
+	    <Name ID="504346" Value="Horizontal ancho de luz" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89447329" Local_ID="0" Value="15" CategoryFeature_ID="17456" CategoryFeatureGroup_ID="255" No="0" Presentation_Value="15 °" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2997">
+	    <Measure ID="32" Sign="">
+	      <Signs><Sign ID="7441" langid="6">°</Sign></Signs>
+	    </Measure>
+	    <Name ID="504347" Value="Vertical ancho de luz" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="89350439" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33751" CategoryFeatureGroup_ID="255" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 2.4GHz 8dBi Indoor Desktop Omni-directional Antenna , -10 - 60 °C, -40 - 80 °C</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 2.4GHz 8dBi Indoor Desktop Omni-directional Antenna . Condiciones ambientales: -10 - 60 °C, -40 - 80 °C</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

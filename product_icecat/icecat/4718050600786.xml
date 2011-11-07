@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3395701-2643.jpg" HighPicHeight="171" HighPicSize="40821" HighPicWidth="500" ID="3395701" LowPic="http://images.icecat.biz/img/norm/low/3395701-2643.jpg" LowPicHeight="68" LowPicSize="6717" LowPicWidth="200" Name="C802 4GB" Prod_id="AC802-4G-RBK" Quality="ICECAT" ReleaseDate="2009-06-18" ThumbPic="http://images.icecat.biz/thumbs/3395701.jpg" ThumbPicSize="2359" Title="A-DATA  C802 4GB">
+       <Category ID="1554">
+       
+    <Name ID="497256" Value="USB flash drives" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="4131" No="0">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4125" No="100">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4126" No="90">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4133" No="60">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4137" No="35">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4134" No="30">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4128" No="45">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4132" No="70">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4127" No="80">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6195" No="20">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4130" No="50">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4135" No="10">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4136" No="25">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4129" No="40">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6196" No="15">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6197" No="55">
+     <FeatureGroup ID="144">
+       <Name ID="619999" Value="Special features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="4718050600786"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="29094421" LongDesc="La unidad flash USB ADATA C802 habla por sí sola – simple, aunque hermosa.\nEl negro contrasta con el blanco, representando el yin y el yang de la simplicidad con genio y estilo tecnológico.\nEl azul va con el exterior blanco, de modo que este pequeño dispositivo sobresale sutilmente.\n\n&lt;b&gt;Tan pequeña, pero tan grande.&lt;/b&gt;\n\nDe sólo 58,5 x 21,5 x 21,5mm y pesando 10 gramos, la unidad flash USB C802 no le pesará ni le ocupará espacio independientemente de donde la guarde o la lleve.\nDiseñada con un agujero para cuerda, se engancha fácilmente a una correa o llavero, haciéndola aún más portátil y dificultando su pérdida o extravío.\n\n&lt;b&gt;Retráctil – La última comodidad en unidades flash USB.&lt;/b&gt;\n\nSimplemente deslice el conector USB y enchúfelo en el puerto USB de su ordenador – no necesita instalación de software.\nCuando haya terminado, meta el conector de nuevo en la unidad hasta que necesite usarla de nuevo.\nLa C802 añade comodidad sin necesidad de preocuparse por la molesta tapa, mientras que al mismo tiempo protege el conector por completo.\n\n&lt;b&gt;Bonita por fuera, potente por dentro.&lt;/b&gt;\n\nEn su esfuerzo por el minimalismo, ADATA ha creado la unidad flash USB Serie Clásica C802, ajustándose a las necesidades de todos.\nDisponible en una variedad de capacidades ( de 2GB a 32GB ) y con transferencia a alta velocidad USB 2.0, este pequeño aparato habla por sí solo y prueba ser el mejor accesorio para cumplir con todas sus necesidades de almacenamiento de datos, manteniéndole en el extremo de la vida digital moderna." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="Unidad Flash USB C802 Serie Clásica 4GB" URL="http://www.adata.com.tw/index.php?action=product_feature&amp;cid=1&amp;piid=10" WarrantyInfo="Lifetime" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="57577487" Local_ID="0" Value="4096" CategoryFeature_ID="31141" CategoryFeatureGroup_ID="4125" No="10100095" Presentation_Value="4096 MB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="6">
+	    <Measure ID="19" Sign="">
+	      <Signs><Sign ID="7431" langid="6">MB</Sign></Signs>
+	    </Measure>
+	    <Name ID="508089" langid="6" Value="Memoria interna"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577488" Local_ID="0" Value="USB 2.0" CategoryFeature_ID="31142" CategoryFeatureGroup_ID="4125" No="100090" Presentation_Value="USB 2.0" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="990">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508254" langid="6" Value="Tipo de interfaz"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577489" Local_ID="0" Value="Black" CategoryFeature_ID="31150" CategoryFeatureGroup_ID="4132" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577493" Local_ID="0" Value="10" CategoryFeature_ID="31154" CategoryFeatureGroup_ID="4133" No="100000" Presentation_Value="10 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577492" Local_ID="0" Value="9.5" CategoryFeature_ID="31153" CategoryFeatureGroup_ID="4133" No="100000" Presentation_Value="9.5 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1464">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508417" langid="6" Value="Altura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577490" Local_ID="0" Value="58.5" CategoryFeature_ID="31151" CategoryFeatureGroup_ID="4133" No="100000" Presentation_Value="58.5 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1649">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508434" langid="6" Value="Ancho"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577491" Local_ID="0" Value="22.9" CategoryFeature_ID="31152" CategoryFeatureGroup_ID="4133" No="100000" Presentation_Value="22.9 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1650">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508435" langid="6" Value="Profundidad"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577495" Local_ID="0" Value="Y" CategoryFeature_ID="31149" CategoryFeatureGroup_ID="6197" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="775">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="625155" langid="6" Value="Enchufar y usar"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57577494" Local_ID="0" Value="Windows 98/98SE/ME/2000/XP/Vista/7\nMac OS 9.0+\nLinux Kernel 2.4+" CategoryFeature_ID="31146" CategoryFeatureGroup_ID="4131" No="100000" Presentation_Value="Windows 98/98SE/ME/2000/XP/Vista/7\nMac OS 9.0+\nLinux Kernel 2.4+" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" langid="6" Value="Sistemas operativos compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="103094933" Local_ID="0" Value="Y" CategoryFeature_ID="37224" CategoryFeatureGroup_ID="4131" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="5170">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506221" langid="6" Value="USB"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="57575708" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33653" CategoryFeatureGroup_ID="4131" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/3395701_2841.jpg" PicHeight="1900" PicWidth="1709" ProductPicture_ID="850310" Size="435876" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/3395701_8350.jpg" ThumbSize="4958"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">A-DATA C802 4GB, 4096 MB, USB 2.0, Negro, 10 g, 9.5 mm, 58.5 mm</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">A-DATA C802 4GB. Memoria: 4096 MB, USB 2.0. Color: Negro. Peso y dimensiones: 10 g, 9.5 mm, 58.5 mm, 22.9 mm</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2634" Name="A-DATA"/>
+      </Product>
+
+</ICECAT-interface>

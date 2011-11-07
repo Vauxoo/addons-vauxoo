@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="view_product_icecat_form_expiry">
+        <field name="name">product.icecat.form.expiry</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product_manufacturer.view_product_form_expiry"/>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <field name="value" position="after" >
+                <field name="sequence" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_icecat_manufacturer_attribute_tree_view">
+        <field name="name">product.icecat.manufacturer.attribute.tree.view</field>
+        <field name="model">product.product</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="product_manufacturer.product_manufacturer_attribute_tree_view"/>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <field name="value" position="after" >
+                <field name="sequence" />
+            </field>
+        </field>
+    </record>
+
+</data>
+</openerp>

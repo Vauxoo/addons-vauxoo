@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/2936525-225.jpg" HighPicHeight="406" HighPicSize="74056" HighPicWidth="402" ID="2936525" LowPic="http://images.icecat.biz/img/norm/low/2936525-225.jpg" LowPicHeight="200" LowPicSize="18711" LowPicWidth="198" Name="USB MicroSD Reader" Prod_id="FCR-MRG2" Quality="ICECAT" ReleaseDate="2009-05-27" ThumbPic="http://images.icecat.biz/thumbs/2936525.jpg" ThumbPicSize="4245" Title="Kingston  USB MicroSD Reader">
+       <Category ID="858">
+       
+    <Name ID="496717" Value="lector de tarjetas" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="736" No="-1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="786" No="95">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="771" No="60">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6557" No="0">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2168" No="65">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4056" No="64">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2292" No="100">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2294" No="90">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6391" No="12">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2901" No="5">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2900" No="75">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6393" No="11">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6392" No="80">
+     <FeatureGroup ID="144">
+       <Name ID="619999" Value="Special features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6390" No="0">
+     <FeatureGroup ID="146">
+       <Name ID="624351" Value="Other features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0740617152326"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26479251" LongDesc="Una solución esencial para sacar más partido del teléfono móvil. Este lector micro SD/ SDHC constituye una solución portátil muy cómoda para transferir con rapidez fotografías, vídeos, canciones y todo tipo de archivos del teléfono móvil al ordenador y viceversa." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="microSD reader" URL="http://www.kingston.com/esroot/flash/usb_microsd_reader.asp" WarrantyInfo="2 años" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="97880951" Local_ID="0" Value="microSD,microSDHC" CategoryFeature_ID="12402" CategoryFeatureGroup_ID="2292" No="10100100" Presentation_Value="microSD, microSDHC" Translated="1"  Mandatory="1" Searchable="1">
+	  <Feature ID="730">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508172" langid="6" Value="Tarjetas de memorias compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97880955" Local_ID="0" Value="N" CategoryFeature_ID="41560" CategoryFeatureGroup_ID="2292" No="100095" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="22">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506151" langid="6" Value="Interno"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="56877653" Local_ID="0" Value="N" CategoryFeature_ID="27275" CategoryFeatureGroup_ID="2292" No="100010" Presentation_Value="N" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="5704">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504600" langid="6" Value="SIM card support"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="56877659" Local_ID="0" Value="USB 2.0/1.1" CategoryFeature_ID="5939" CategoryFeatureGroup_ID="786" No="100100" Presentation_Value="USB 2.0/1.1" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="990">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508254" langid="6" Value="Tipo de interfaz"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97880952" Local_ID="0" Value="480" CategoryFeature_ID="33433" CategoryFeatureGroup_ID="2294" No="100000" Presentation_Value="480 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1774">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="504887" langid="6" Value="Velocidad de transferencia de datos"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="56877660" Local_ID="0" Value="Y" CategoryFeature_ID="16221" CategoryFeatureGroup_ID="6392" No="100100" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="775">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="625155" langid="6" Value="Enchufar y usar"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97880957" Local_ID="0" Value="-40 - 85" CategoryFeature_ID="16220" CategoryFeatureGroup_ID="2168" No="100000" Presentation_Value="-40 - 85 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" langid="6" Value="Temperatura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97880956" Local_ID="0" Value="0 - 60" CategoryFeature_ID="16219" CategoryFeatureGroup_ID="2168" No="100000" Presentation_Value="0 - 60 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" langid="6" Value="Alcance de temperatura operativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="56877661" Local_ID="0" Value="Black" CategoryFeature_ID="27201" CategoryFeatureGroup_ID="4056" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" langid="6" Value="Color"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97880954" Local_ID="0" Value="24.99 x 12.14 x 2.64" CategoryFeature_ID="7411" CategoryFeatureGroup_ID="771" No="100100" Presentation_Value="24.99 x 12.14 x 2.64 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="97880953" Local_ID="0" Value="Windows Vista, 2000 SP4, XP (SP1, SP2)\nMac OS 10.3.x +\nLinux 2.6 +" CategoryFeature_ID="13917" CategoryFeatureGroup_ID="6390" No="99999" Presentation_Value="Windows Vista, 2000 SP4, XP (SP1,  SP2)\nMac OS 10.3.x +\nLinux 2.6 +" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" langid="6" Value="Sistemas operativos compatibles"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="56877665" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33602" CategoryFeatureGroup_ID="736" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+        <ProductGallery>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/2936525_3433.jpg" PicHeight="828" PicWidth="750" ProductPicture_ID="641494" Size="161405" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/2936525_6941.jpg" ThumbSize="6355"/>
+          <ProductPicture Pic="http://images.icecat.biz/img/gallery/2936525_9587.jpg" PicHeight="428" PicWidth="571" ProductPicture_ID="641493" Size="64872" ThumbPic="http://images.icecat.biz/img/gallery_thumbs/2936525_2185.jpg" ThumbSize="3340"/>
+        </ProductGallery>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="0" Category_ID="858" Reversed="0" Preferred="0">
+	    <Product ID="799045" Prod_id="33407EU" ThumbPic="http://images.icecat.biz/thumbs/799045.jpg" Name="7 IN 1 READER PER EXPRESS CARD">
+	      <Supplier ID="87" Name="Kensington"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">Kingston USB MicroSD Reader, microSD, microSDHC, USB 2.0/1.1, 480 Mbit/s, -40 - 85 °C, 0 - 60 °C, Negro</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">Kingston USB MicroSD Reader. Medios de almacenaje: microSD, microSDHC. Conectividad: USB 2.0/1.1. Transmisión de datos: 480 Mbit/s. Condiciones ambientales: -40 - 85 °C, 0 - 60 °C. Color: Negro. Peso y dimensiones: 24.99 x 12.14 x 2.64 mm. Other features: Windows Vista, 2000 SP4, XP (SP1,  SP2) Mac OS 10.3.x + Linux 2.6 +</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="18" Name="Kingston"/>
+      </Product>
+
+</ICECAT-interface>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: Icecat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3468957-TP-LINK.jpg" HighPicHeight="270" HighPicSize="6825" HighPicWidth="450" ID="3468957" LowPic="http://images.icecat.biz/img/norm/low/3468957-TP-LINK.jpg" LowPicHeight="120" LowPicSize="3054" LowPicWidth="200" Name="2.4GHz 5dBi Indoor Omni-directional Antenna" Prod_id="TL-ANT2405CL" Quality="ICECAT" ReleaseDate="2009-07-29" ThumbPic="http://images.icecat.biz/thumbs/3468957.jpg" ThumbPicSize="1763" Title="TP-LINK  2.4GHz 5dBi Indoor Omni-directional Antenna">
+       <Category ID="137">
+       
+    <Name ID="496454" Value="antenas" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="255" No="12">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1894" No="0">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="971" No="0">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4023" No="0">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="972" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5077" No="0">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="970" No="10">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5389" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3122" No="0">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364052188"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26698382" LongDesc="La antena TL-ANT2405CL 5dBi es ideal para actualizar sus routers/puntos de acceso inalámbricos. Es muy fácil de utilizar, no necesita software de instalación o configuración." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="TL-ANT2405CL - Antena Interior Omnidireccional 2.4GHz 5dBi" URL="http://www.tp-link.com/es/products/productDetails.asp?class=&amp;content=spe&amp;pmodel=TL-ANT2405CL" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="79750926" Local_ID="0" Value="5" CategoryFeature_ID="7858" CategoryFeatureGroup_ID="255" No="10100009" Presentation_Value="5 dBi" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1804">
+	    <Measure ID="99" Sign="">
+	      <Signs><Sign ID="7504" langid="6">dBi</Sign></Signs>
+	    </Measure>
+	    <Name ID="507944" langid="6" Value="Antena de refuerzo (max)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750927" Local_ID="0" Value="2.4 - 2.48" CategoryFeature_ID="7855" CategoryFeatureGroup_ID="255" No="100012" Presentation_Value="2.4 - 2.48 GHz" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1769">
+	    <Measure ID="37" Sign="">
+	      <Signs><Sign ID="7446" langid="6">GHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="504886" langid="6" Value="Frecuencia de banda"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750928" Local_ID="0" Value="50" CategoryFeature_ID="14428" CategoryFeatureGroup_ID="255" No="100000" Presentation_Value="50 Ohmio" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1889">
+	    <Measure ID="87" Sign="&amp;#937;">
+	      <Signs><Sign ID="7494" langid="6">Ohmio</Sign></Signs>
+	    </Measure>
+	    <Name ID="504889" langid="6" Value="Obstrucción"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750936" Local_ID="0" Value="RP-SMA, M" CategoryFeature_ID="14429" CategoryFeatureGroup_ID="255" No="100000" Presentation_Value="RP-SMA, M" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2991">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="507962" langid="6" Value="Tipo de conector de antena"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750929" Local_ID="0" Value="Vertically Linear" CategoryFeature_ID="17453" CategoryFeatureGroup_ID="255" No="100000" Presentation_Value="Vertically Linear" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2993">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="507961" langid="6" Value="Polarización"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750930" Local_ID="0" Value="1.92: 1" CategoryFeature_ID="17459" CategoryFeatureGroup_ID="255" No="100000" Presentation_Value="1.92: 1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2998">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="507963" langid="6" Value="Ratio de voltaje de onda estacionaria (VSWR)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750925" Local_ID="0" Value="11b/g/n" CategoryFeature_ID="7853" CategoryFeatureGroup_ID="970" No="100014" Presentation_Value="11b/g/n" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1802">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509584" langid="6" Value="Estándar de red"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750932" Local_ID="0" Value="-10 - 60" CategoryFeature_ID="7861" CategoryFeatureGroup_ID="972" No="100006" Presentation_Value="-10 - 60 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" langid="6" Value="Alcance de temperatura operativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750934" Local_ID="0" Value="10 - 90" CategoryFeature_ID="32909" CategoryFeatureGroup_ID="972" No="100000" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" langid="6" Value="Humedad relativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750933" Local_ID="0" Value="-40 - 80" CategoryFeature_ID="10578" CategoryFeatureGroup_ID="972" No="100000" Presentation_Value="-40 - 80 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" langid="6" Value="Temperatura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750935" Local_ID="0" Value="5 - 90" CategoryFeature_ID="32910" CategoryFeatureGroup_ID="972" No="100000" Presentation_Value="5 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" langid="6" Value="Húmedad (en almacenaje)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750931" Local_ID="0" Value="Y" CategoryFeature_ID="34813" CategoryFeatureGroup_ID="3122" No="100000" Presentation_Value="Y" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6694">
+	    <Measure ID="26" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="503948" langid="6" Value="RoHS compliance"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="79750854" Local_ID="0" Value="Icecat.biz" CategoryFeature_ID="33751" CategoryFeatureGroup_ID="255" No="0" Presentation_Value="Icecat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 2.4GHz 5dBi Indoor Omni-directional Antenna, 11b/g/n, -10 - 60 °C, 10 - 90 %, -40 - 80 °C, 5 - 90 %</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 2.4GHz 5dBi Indoor Omni-directional Antenna. Red: 11b/g/n. Condiciones ambientales: -10 - 60 °C, 10 - 90 %, -40 - 80 °C, 5 - 90 %</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

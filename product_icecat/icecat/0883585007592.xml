@@ -1,0 +1,1039 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/1554518-HP.jpg" HighPicHeight="400" HighPicSize="39726" HighPicWidth="400" ID="1554518" LowPic="http://images.icecat.biz/img/norm/low/1554518-HP.jpg" LowPicHeight="200" LowPicSize="22863" LowPicWidth="200" Name="Cartucho de tóner negro HP 64A LaserJet" Prod_id="CC364A" Quality="SUPPLIER" ReleaseDate="2008-04-04" ThumbPic="http://images.icecat.biz/thumbs/1554518.jpg" ThumbPicSize="5721" Title="HP LaserJet CC364A Black Print Cartridges Cartucho de tóner negro HP 64A LaserJet">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="8835850075920"/>
+        <EANCode EAN="0883585007592"/>
+        <EANCode EAN="0843964024688"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="21798384" LongDesc="&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Overview&lt;/span&gt;&lt;br /&gt;Los cartuchos de impresión HP LaserJet CC364 Family imprimen sin problemas y de forma homogénea todas las páginas. El tóner mejorado y la impresión de calidad profesional de los cartuchos originales de HP, le permitirá dedicar más tiempo a otros asuntos.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Features&lt;/span&gt;&lt;br /&gt;&lt;b&gt;Obtenga los mejores resultados con los consumibles originales de HP y mantenga el trabajo de su oficina sin problemas y sin interrupciones. El tóner mejorado de HP proporciona la fiabilidad y la calidad que necesita para su negocio.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Los cartuchos HP originales ofrecen una impresión homogénea de gran calidad desde la primera a la última página. Los cartuchos han sido diseñados para producir un mayor rendimiento e integran una tecnología inteligente que permite unos ajustes que optimizan la fiabilidad y la calidad de impresión.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Confíe en la iniciativa medioambiental reconocida de HP. El compromiso de HP con el medioambiente es completo, desde el diseño del producto hasta un programa de devolución de material apropiado y gratuito para reciclar cartuchos de tóner originales de HP LaserJet.&lt;/b&gt;&lt;br /&gt;\n\n" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="HP 64A Black LaserJet Toner Cartridge with Smart Printing Technology" URL="" WarrantyInfo="Garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra.\nDeclaración estándar de garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra. Esta garantía no cubre productos que (a) hayan sido rellenados, restaurados o modificados de cualquier modo, (b) presenten problemas que se deban a un uso incorrecto, un almacenamiento inadecuado o que se hayan utilizado fuera de las especificaciones medioambientales publicadas para el producto de impresora, o (c) presenten un uso distinto al habitual. Para acceder al servicio de garantía, devuelva el producto al lugar donde lo adquirió (con una descripción por escrito del problema y muestras de impresión) o póngase en contacto con el servicio de atención al cliente de HP.  HP reemplazará o devolverá el importe de compra, según estime oportuno, de los productos que en efecto estén defectuosos. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, LA GARANTÍA ANTERIOR ES EXCLUSIVA Y PREVALECE SOBRE CUALQUIER OTRA GARANTÍA O CONDICIÓN, ESCRITA U ORAL, EXPRESA O IMPLÍCITA, Y HP NO SE RESPONSABILIZA DE FORMA ESPECÍFICA DE NINGUNA GARANTÍA IMPLÍCITA O CONDICIÓN DE COMERCIALIZACIÓN, CALIDAD SATISFACTORIA E IDONEIDAD PARA UN DETERMINADO FIN. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, NI HP NI SUS PROVEEDORES SERÁN RESPONSABLES DE LOS DAÑOS Y PERJUICIOS DIRECTOS, ESPECIALES, FORTUITOS, DERIVADOS (INCLUIDAS PÉRDIDAS ECONÓMICAS O DE DATOS) O DE OTRO TIPO, INDEPENDIENTEMENTE DE SI SE BASAN EN UN CONTRATO, RESPONSABILIDADES EXTRACONTRACTUALES U OTROS. LOS TÉRMINOS DE LA GARANTÍA INCLUIDOS EN ESTE DOCUMENTO, Y HASTA DONDE LO PERMITA LA LEY, NO EXCLUYEN, RESTRINGEN NI MODIFICAN, SINO QUE SE AÑADEN A LOS DERECHOS ESTABLECIDOS POR LA LEY APLICABLES A LA VENTA AL PÚBLICO DE ESTE PRODUCTO.\n" langid="6"/>
+       <ProductFamily ID="62918">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="1" ID="100952473" Local_ID="26417810" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Laser" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" langid="6" Value="Tecnología de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103560421" Local_ID="13221544" Value="Black" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Negro" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" langid="6" Value="Colores de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100948935" Local_ID="13221538" Value="10 - 32.5" CategoryFeature_ID="5573" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="10 - 32.5 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" langid="6" Value="Alcance de temperatura operativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221539" Value="" CategoryFeature_ID="5769" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="De 20 a 80% HR" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" langid="6" Value="Humedad relativa"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221540" Value="" CategoryFeature_ID="5770" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de -20 a 40° C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" langid="6" Value="Temperatura"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221547" Value="" CategoryFeature_ID="12235" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de 10 a 90% de HR" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" langid="6" Value="Húmedad (en almacenaje)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221533" Value="" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="391 x 193 x 300 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" langid="6" Value="Dimensiones (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221537" Value="" CategoryFeature_ID="5067" CategoryFeatureGroup_ID="2279" No="100030" Presentation_Value="2.47 kg (5.45 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" langid="6" Value="Paquete, peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100944632" Local_ID="13221543" Value="1710" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="1710 g" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" langid="6" Value="Peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26417809" Value="" CategoryFeature_ID="8457" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="391 x 193 x 300 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="582">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508152" langid="6" Value="Dimensiones del embalaje (alto x alto x peso)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="38291443" Value="" CategoryFeature_ID="7206" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="1.705 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1690">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="504358" langid="6" Value="Peso vacío"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100949436" Local_ID="26417814" Value="1200 x 800 x 1044" CategoryFeature_ID="30379" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="1200 x 800 x 1044 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4824">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506470" langid="6" Value="Dimensiones europeas del pallet (An x F x Al)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221532" Value="" CategoryFeature_ID="1905" CategoryFeatureGroup_ID="2281" No="16845" Presentation_Value="El cartucho promedio rinde 10000 páginas normales. Valor de rendimiento declarado de conformidad con la norma ISO/IEC 19752*" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="626">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506431" langid="6" Value="Producción de páginas para imprimir (A4, blanco y negro, ISO/IEC 19752)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100944634" Local_ID="13221536" Value="114" CategoryFeature_ID="1914" CategoryFeatureGroup_ID="2279" No="16854" Presentation_Value="114 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="513">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506906" langid="6" Value="Palet, peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97378728" Local_ID="13221535" Value="36" CategoryFeature_ID="1911" CategoryFeatureGroup_ID="2279" No="16851" Presentation_Value="36 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" langid="6" Value="Cantidad por palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100949437" Local_ID="13221534" Value="1200 x 800 x 1044" CategoryFeature_ID="1909" CategoryFeatureGroup_ID="2279" No="16849" Presentation_Value="1200 x 800 x 1044 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="530">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506907" langid="6" Value="Dimensiones de Palet (Ancho x Profundidad x Altura)"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97378734" Local_ID="26417812" Value="36" CategoryFeature_ID="27820" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="36 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3293">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506463" langid="6" Value="Cantidad de europalet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97378735" Local_ID="26417815" Value="1" CategoryFeature_ID="30381" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" langid="6" Value="Cantidad por caja"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="107248169" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" langid="6" Value="Source data-sheet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221541" Value="" CategoryFeature_ID="7207" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="36" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" langid="6" Value="Número de cartones por palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221542" Value="" CategoryFeature_ID="7208" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="3" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" langid="6" Value="Número de capa por palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="13221545" Value="" CategoryFeature_ID="9881" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="4" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2066">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506454" langid="6" Value="Número de apilado para palet"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26417811" Value="" CategoryFeature_ID="27319" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Inteligente" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1879">
+	    <Measure ID="35" Sign="">
+	      <Signs><Sign ID="7444" langid="6">DPI</Sign></Signs>
+	    </Measure>
+	    <Name ID="506442" langid="6" Value="Resolución de la tecnología de impresión"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26417813" Value="" CategoryFeature_ID="30376" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="114 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3288">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506462" langid="6" Value="Europalet, peso"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="58795918" Value="" CategoryFeature_ID="10488" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Rendimiento óptimo e impresión homogénea de calidad a la velocidad que demanda su negocio." Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2143">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508476" langid="6" Value="Características técnicas"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="application/pdf" Date="2010-04-30 07:35:31" Description="Cartuchos de impresión de la familia HP LaserJet CC364 (CC364A  CC364X)" Height="0" KeepAsURL="0" MultimediaObject_ID="278489" Size="186992" Type="data sheet" URL="http://objects.icecat.biz/objects/HP_literature_es_es_4AA1-7357ESE.pdf" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      	  <ProductRelated ID="73414463" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1677390" Prod_id="CB507A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463793" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1712823" Prod_id="CB526A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669198" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570268" Prod_id="CB509A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669195" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1677508" Prod_id="CB509A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669223" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570267" Prod_id="CB511A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414465" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1712821" Prod_id="CB512A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414460" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570699" Prod_id="CB507A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669252" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570266" Prod_id="CB516A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="91719757" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570700" Prod_id="CB506A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556393.jpg" Name="Impresora HP LaserJet P4014">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669233" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570698" Prod_id="CB514A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669197" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548248" Prod_id="CB509A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463795" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1749949" Prod_id="CB526A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085701" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1690807" Prod_id="CB526A" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414467" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1739237" Prod_id="CB512A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669209" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1569596" Prod_id="CB509A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085694" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556388" Prod_id="CB511A" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669222" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548246" Prod_id="CB511A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669229" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1569536" Prod_id="CB511A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085692" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556386" Prod_id="CB509A" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463797" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1950274" Prod_id="CB526A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414464" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1690753" Prod_id="CB512A" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414458" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548249" Prod_id="CB507A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669232" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548245" Prod_id="CB514A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669238" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1569986" Prod_id="CB514A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669242" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570264" Prod_id="CB515A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556390.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669256" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1569973" Prod_id="CB516A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669184" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548250" Prod_id="CB506A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556393.jpg" Name="Impresora HP LaserJet P4014">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414459" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556385" Prod_id="CB507A" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669251" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548243" Prod_id="CB516A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669213" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570265" Prod_id="CB510A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085697" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556391" Prod_id="CB516A" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669259" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1570263" Prod_id="CB517A#BAN" ThumbPic="http://images.icecat.biz/thumbs/1556392.jpg" Name="Impresora HP LaserJet P4515xm">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669219" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1569934" Prod_id="CB510A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414472" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3738278" Prod_id="CB507A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985553" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478473" Prod_id="CB509A#201" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085695" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556389" Prod_id="CB514A" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414468" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478452" Prod_id="CB512A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669221" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1677151" Prod_id="CB511A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085699" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556393" Prod_id="CB506A" ThumbPic="http://images.icecat.biz/thumbs/1556393.jpg" Name="Impresora HP LaserJet P4014">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669231" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1677647" Prod_id="CB514A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669250" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1679146" Prod_id="CB516A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669228" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586731" Prod_id="CB511A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463794" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1717631" Prod_id="CB526A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414461" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586736" Prod_id="CB507A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414462" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634688" Prod_id="CB507A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669237" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586732" Prod_id="CB514A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669187" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586735" Prod_id="CB506A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556393.jpg" Name="Impresora HP LaserJet P4014">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085693" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556387" Prod_id="CB510A" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414466" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1717632" Prod_id="CB512A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463796" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1777652" Prod_id="CB526A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669227" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634693" Prod_id="CB511A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669208" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1751481" Prod_id="CB509A#BB5" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463798" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478419" Prod_id="CB526A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985576" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478439" Prod_id="CB516A#201" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="72338251" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4850977" Prod_id="CB509A#BCK" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669255" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586734" Prod_id="CB516A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085696" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556390" Prod_id="CB515A" ThumbPic="http://images.icecat.biz/thumbs/1556390.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669236" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634692" Prod_id="CB514A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669206" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634519" Prod_id="CB509A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669207" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586737" Prod_id="CB509A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985562" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478460" Prod_id="CB511A#201" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669254" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634691" Prod_id="CB516A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33636274" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1597555" Prod_id="CB511A#BAN?30553398" ThumbPic="http://images2.icecat.biz/thumbs/1597555.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="79553943" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5888491" Prod_id="CB512A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669186" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634687" Prod_id="CB506A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556393.jpg" Name="Impresora HP LaserJet P4014">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669248" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1569741" Prod_id="CB515A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556390.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="59085698" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1556392" Prod_id="CB517A" ThumbPic="http://images.icecat.biz/thumbs/1556392.jpg" Name="Impresora HP LaserJet P4515xm">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414469" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478453" Prod_id="CB512A#201" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="38630925" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2106232" Prod_id="CB516A#BAN#*BDL7" ThumbPic="http://images.icecat.biz/thumbs/2106232.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="38655774" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2106240" Prod_id="CB512A#BAN#*BDL1" ThumbPic="http://images.icecat.biz/thumbs/2106240.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985579" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478436" Prod_id="CB516A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1556391.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="38630831" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2106238" Prod_id="CB515A#BAN#*BDL6" ThumbPic="http://images.icecat.biz/thumbs/2106238.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="38651356" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2106239" Prod_id="CB509A#BAN#*BDL4" ThumbPic="http://images.icecat.biz/thumbs/2106239.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="38656033" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2106234" Prod_id="CB526A#BAN#*BDL3" ThumbPic="http://images.icecat.biz/thumbs/2106234.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33635208" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1587269" Prod_id="CB510A#BAN#*KIT" ThumbPic="http://images2.icecat.biz/thumbs/1587269.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32002634" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1959047" Prod_id="CB509A#BAN#*BNDL" ThumbPic="http://images.icecat.biz/thumbs/1959047.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33638001" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1590097" Prod_id="CB515A#BAN#*KIT" ThumbPic="http://images.icecat.biz/thumbs/1590097.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33638096" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1589574" Prod_id="CB515A#BAN/KIT2SHOW" ThumbPic="http://images.icecat.biz/thumbs/1589574.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669240" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1677307" Prod_id="CB515A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1556390.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414473" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3747812" Prod_id="CB512A#ABE" ThumbPic="http://images.icecat.biz/thumbs/1690753.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669196" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1620248" Prod_id="CB509A#ABD" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414471" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478492" Prod_id="CB507A#201" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="73414470" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478489" Prod_id="CB507A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1556385.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669262" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1569692" Prod_id="CB517A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556392.jpg" Name="Impresora HP LaserJet P4515xm">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985572" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478449" Prod_id="CB514A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32002536" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1650139" Prod_id="CB509A#BAN G" ThumbPic="http://images.icecat.biz/thumbs/1650139.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45980083" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2695640" Prod_id="CB511A#2011071" ThumbPic="http://images2.icecat.biz/thumbs/2695640.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985561" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478464" Prod_id="CB510A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46129145" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2666961" Prod_id="CB510A#2011071" ThumbPic="http://images2.icecat.biz/thumbs/2666961.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46129270" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478465" Prod_id="CB510A#ABA-KIT" ThumbPic="http://images2.icecat.biz/thumbs/2478465.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669212" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548247" Prod_id="CB510A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33636176" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1899922" Prod_id="CB511A#BAN/YS" ThumbPic="http://images.icecat.biz/thumbs/1899922.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45980211" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478459" Prod_id="CB511A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2478459.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45980435" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2666962" Prod_id="CB511A#ABA-C3" ThumbPic="http://images2.icecat.biz/thumbs/2666962.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58597777" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3737091" Prod_id="CB506A#BEQ" ThumbPic="http://images.icecat.biz/thumbs/1556393.jpg" Name="Impresora HP LaserJet P4014">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32002830" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2006271" Prod_id="CB509A#BAN/KIT" ThumbPic="http://images.icecat.biz/thumbs/2006271.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33502038" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1899928" Prod_id="CB516A#BAN/YS" ThumbPic="http://images.icecat.biz/thumbs/1899928.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45980323" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478458" Prod_id="CB511A#ABA-B2" ThumbPic="http://images2.icecat.biz/thumbs/2478458.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46091576" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478450" Prod_id="CB514A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2478450.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46129633" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478443" Prod_id="CB515A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2478443.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669217" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634686" Prod_id="CB510A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32825725" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1905345" Prod_id="CB512A#BAN?SP" ThumbPic="http://images.icecat.biz/thumbs/1905345.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46059323" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2666964" Prod_id="CB512A#ABA1052" ThumbPic="http://images2.icecat.biz/thumbs/2666964.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463799" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478420" Prod_id="CB526A#201" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985558" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478466" Prod_id="CB510A#201" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32003026" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1899933" Prod_id="CB509A#BAN/YS" ThumbPic="http://images.icecat.biz/thumbs/1899933.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33638191" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1899929" Prod_id="CB515A#BAN/YS" ThumbPic="http://images.icecat.biz/thumbs/1899929.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46027137" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478472" Prod_id="CB509A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2478472.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669211" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1678938" Prod_id="CB510A#ABA" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33637237" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1858056" Prod_id="CB514A#BANPRO" ThumbPic="http://images.icecat.biz/thumbs/1858056.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="34002424" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1899934" Prod_id="CB526A#BAN/YS" ThumbPic="http://images.icecat.biz/thumbs/1899934.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46059099" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2673756" Prod_id="CB512A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2673756.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46091686" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2297704" Prod_id="CB514A#ABA-B2" ThumbPic="http://images2.icecat.biz/thumbs/2297704.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46728423" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2765165" Prod_id="CB510A#ABA1071" ThumbPic="http://images2.icecat.biz/thumbs/2765165.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33637141" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1903991" Prod_id="CB514A#BAN/YS" ThumbPic="http://images.icecat.biz/thumbs/1903991.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46022805" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478438" Prod_id="CB516A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2478438.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46022915" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478437" Prod_id="CB516A#ABA-B2" ThumbPic="http://images2.icecat.biz/thumbs/2478437.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46086528" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2680591" Prod_id="CB526A#ABA1052" ThumbPic="http://images2.icecat.biz/thumbs/2680591.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46550785" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2712105" Prod_id="CB510A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2712105.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46717071" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2765161" Prod_id="CB514A#ABA1071" ThumbPic="http://images2.icecat.biz/thumbs/2765161.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669258" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548242" Prod_id="CB517A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556392.jpg" Name="Impresora HP LaserJet P4515xm">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33635400" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1589573" Prod_id="CB510A#BAN/KIT2SHOW" ThumbPic="http://images.icecat.biz/thumbs/1589573.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45980547" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2666963" Prod_id="CB511A#ABA1071" ThumbPic="http://images2.icecat.biz/thumbs/2666963.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46023151" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2680588" Prod_id="CB516A#AKV1071" ThumbPic="http://images2.icecat.biz/thumbs/2680588.jpg" Name="Impresora HP LaserJet P4515x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46129742" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2673757" Prod_id="CB515A#ABA-B2" ThumbPic="http://images2.icecat.biz/thumbs/2673757.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46129851" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2680586" Prod_id="CB515A#ABA1071" ThumbPic="http://images2.icecat.biz/thumbs/2680586.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46716951" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2765160" Prod_id="CB514A#ABA1052" ThumbPic="http://images2.icecat.biz/thumbs/2765160.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46728303" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2765164" Prod_id="CB510A#ABA1052" ThumbPic="http://images2.icecat.biz/thumbs/2765164.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33636372" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1714766" Prod_id="CB511A#BANPRO" ThumbPic="http://images2.icecat.biz/thumbs/1714766.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46027249" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478471" Prod_id="CB509A#ABA-B2" ThumbPic="http://images2.icecat.biz/thumbs/2478471.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46027361" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2695639" Prod_id="CB509A#ABA1027" ThumbPic="http://images2.icecat.biz/thumbs/2695639.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46059211" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2695641" Prod_id="CB512A#ABA1027" ThumbPic="http://images2.icecat.biz/thumbs/2695641.jpg" Name="Impresora HP LaserJet P4014dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32003124" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1905344" Prod_id="CB509A#BAN?SP" ThumbPic="http://images.icecat.biz/thumbs/1905344.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33635304" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1970197" Prod_id="CB510A#BAN/CC364A/LE" ThumbPic="http://images.icecat.biz/thumbs/1970197.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="38630714" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2106235" Prod_id="CB507A#BAN#*BDL2" ThumbPic="http://images.icecat.biz/thumbs/2106235.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669241" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1548244" Prod_id="CB515A#ABU" ThumbPic="http://images.icecat.biz/thumbs/1556390.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32002928" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1955698" Prod_id="CB509A#BAN/KITCC364A" ThumbPic="http://images.icecat.biz/thumbs/1955698.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985557" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478470" Prod_id="CB509A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1556386.jpg" Name="Impresora HP LaserJet P4015n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985568" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478457" Prod_id="CB511A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1556388.jpg" Name="Impresora HP LaserJet P4015x">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="53463800" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2994899" Prod_id="CB526A#AKV" ThumbPic="http://images.icecat.biz/thumbs/1690807.jpg" Name="Impresora HP LaserJet P4015dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46707967" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2765168" Prod_id="CB507A#2011071" ThumbPic="http://images.icecat.biz/thumbs/2765168.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669246" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634694" Prod_id="CB515A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556390.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669247" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586733" Prod_id="CB515A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556390.jpg" Name="Impresora HP LaserJet P4515tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="45985569" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478451" Prod_id="CB514A#201" ThumbPic="http://images.icecat.biz/thumbs/1556389.jpg" Name="Impresora HP LaserJet P4515n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669260" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1634690" Prod_id="CB517A#BAZ" ThumbPic="http://images.icecat.biz/thumbs/1556392.jpg" Name="Impresora HP LaserJet P4515xm">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669218" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1586738" Prod_id="CB510A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556387.jpg" Name="Impresora HP LaserJet P4015tn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46068348" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478493" Prod_id="CB507A#201-A1" ThumbPic="http://images.icecat.biz/thumbs/2478493.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46068476" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478491" Prod_id="CB507A#ABA-A1" ThumbPic="http://images.icecat.biz/thumbs/2478491.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46068588" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2478490" Prod_id="CB507A#ABA-B2" ThumbPic="http://images.icecat.biz/thumbs/2478490.jpg" Name="Impresora HP LaserJet P4014n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31669261" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1587609" Prod_id="CB517A#BB3" ThumbPic="http://images.icecat.biz/thumbs/1556392.jpg" Name="Impresora HP LaserJet P4515xm">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP Cartucho de tóner negro HP 64A LaserJet LaserJet CC364A Black Print Cartridges, Laser, Negro, 10 - 32.5 °C, 1710 g</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP Cartucho de tóner negro HP 64A LaserJet, LaserJet CC364A Black Print Cartridges. Calidad de impresión: Laser, Negro. Condiciones ambientales: 10 - 32.5 °C. Peso y dimensiones: 1710 g</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>

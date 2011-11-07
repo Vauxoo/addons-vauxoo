@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/3326612-5418.jpg" HighPicHeight="384" HighPicSize="27358" HighPicWidth="600" ID="3326612" LowPic="http://images.icecat.biz/img/norm/low/3326612-5418.jpg" LowPicHeight="128" LowPicSize="9610" LowPicWidth="200" Name="US300EX Lite" Prod_id="11N-US300EX-L-010R" Quality="ICECAT" ReleaseDate="2009-06-11" ThumbPic="http://images.icecat.biz/thumbs/3326612.jpg" ThumbPicSize="3193" Title="MSI  US300EX Lite">
+       <Category ID="182">
+       
+    <Name ID="496472" Value="adaptadores y tarjetas de red" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="300" No="27">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5873" No="0">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3388" No="6">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1044" No="10">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1046" No="80">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1045" No="20">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1024" No="77">
+     <FeatureGroup ID="23">
+       <Name ID="510128" Value="Anchura de banda" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2982" No="0">
+     <FeatureGroup ID="26">
+       <Name ID="510130" Value="Fax" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1638" No="25">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1047" No="2">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2980" No="17">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2981" No="8">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1043" No="70">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4053" No="25">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5076" No="0">
+     <FeatureGroup ID="47">
+       <Name ID="510151" Value="Medios de almacenaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2978" No="0">
+     <FeatureGroup ID="59">
+       <Name ID="510160" Value="Interno I/O" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2704" No="0">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2983" No="10">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2979" No="18">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3497" No="19">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2977" No="23">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2975" No="60">
+     <FeatureGroup ID="91">
+       <Name ID="510190" Value="Wireless LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2976" No="39">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3807" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3808" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4271" No="30">
+     <FeatureGroup ID="125">
+       <Name ID="510222" Value="Antena" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6648" No="-1">
+     <FeatureGroup ID="146">
+       <Name ID="624351" Value="Other features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="4719072000905"/>
+      <ProductBundled/>
+      <ProductDescription/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="82882313" Local_ID="0" Value="Wireless" CategoryFeature_ID="8067" CategoryFeatureGroup_ID="1046" No="10100094" Presentation_Value="Wireless" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1655">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506667" Value="Tecnología de conectividad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882314" Local_ID="0" Value="USB" CategoryFeature_ID="8076" CategoryFeatureGroup_ID="1046" No="10100087" Presentation_Value="USB" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="2377">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504909" Value="Interfaz de host" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882312" Local_ID="0" Value="150" CategoryFeature_ID="7991" CategoryFeatureGroup_ID="1024" No="10100055" Presentation_Value="150 Mbit/s" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="1165">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="506175" Value="Tasa de transferencia (máx)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882320" Local_ID="0" Value="IEEE 802.3, IEEE 802.3u, IEEE 802.11b, IEEE 802.11g, IEEE 802.11n (draft)" CategoryFeature_ID="12401" CategoryFeatureGroup_ID="300" No="100099" Presentation_Value="IEEE 802.3, IEEE 802.3u, IEEE 802.11b, IEEE 802.11g, IEEE 802.11n (draft)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="793">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508182" Value="Cumplimiento de estándares del mercado" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882319" Local_ID="0" Value="White" CategoryFeature_ID="27195" CategoryFeatureGroup_ID="4053" No="100000" Presentation_Value="Blanco" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882317" Local_ID="0" Value="64/128-bit WEP, WPA &amp; WPA2, WPS" CategoryFeature_ID="8074" CategoryFeatureGroup_ID="2983" No="100089" Presentation_Value="64/128-bit WEP, WPA &amp; WPA2, WPS" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="454">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506160" Value="Algoritmo de  seguridad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882315" Local_ID="0" Value="Extern" CategoryFeature_ID="8073" CategoryFeatureGroup_ID="6648" No="100000" Presentation_Value="Extern" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="771">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508180" Value="Factor de forma" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882316" Local_ID="0" Value="IEEE 802.11b, IEEE 802.11g, IEEE 802.11n (draft)" CategoryFeature_ID="14270" CategoryFeatureGroup_ID="6648" No="100000" Presentation_Value="IEEE 802.11b, IEEE 802.11g, IEEE 802.11n (draft)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1104">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508339" Value="Características de red" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882318" Local_ID="0" Value="Microsoft Windows 2000/XP/Vista" CategoryFeature_ID="13960" CategoryFeatureGroup_ID="6648" No="100000" Presentation_Value="Microsoft Windows 2000/XP/Vista" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2507">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508506" Value="Sistemas operativos compatibles" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="82882311" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33605" CategoryFeatureGroup_ID="300" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      	  <ProductRelated ID="0" Category_ID="883" Reversed="0" Preferred="0">
+	    <Product ID="1318139" Prod_id="N-707539" ThumbPic="http://images.icecat.biz/thumbs/1318139.jpg" Name="UTP CAT5 Network Cable, 5m">
+	      <Supplier ID="2171" Name="ICIDU"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="883" Reversed="0" Preferred="0">
+	    <Product ID="1318208" Prod_id="N-707504" ThumbPic="http://images.icecat.biz/thumbs/1318208.jpg" Name="UTP CAT5 Network Cable, 15m">
+	      <Supplier ID="2171" Name="ICIDU"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="883" Reversed="0" Preferred="0">
+	    <Product ID="1318209" Prod_id="N-707505" ThumbPic="http://images.icecat.biz/thumbs/1318209.jpg" Name="UTP CAT5 Network Cable, 20m">
+	      <Supplier ID="2171" Name="ICIDU"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="0" Category_ID="883" Reversed="0" Preferred="0">
+	    <Product ID="1549666" Prod_id="UT012" ThumbPic="" Name="CAB UTP SWEEX CAT5e Grey 3m">
+	      <Supplier ID="702" Name="Sweex"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">MSI US300EX Lite, Wireless, USB, 150 Mbit/s, Blanco, 64/128-bit WEP, WPA &amp; WPA2, WPS, Extern</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">MSI US300EX Lite. Conectividad: Wireless, USB. Anchura de banda: 150 Mbit/s. Color: Blanco. Seguridad: 64/128-bit WEP, WPA &amp; WPA2, WPS. Other features: Extern, IEEE 802.11b, IEEE 802.11g, IEEE 802.11n (draft), Microsoft Windows 2000/XP/Vista</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="278" Name="MSI"/>
+      </Product>
+
+</ICECAT-interface>

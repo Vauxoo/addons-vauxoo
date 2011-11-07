@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/5894041-TP-LINK.jpg" HighPicHeight="270" HighPicSize="12162" HighPicWidth="450" ID="5894041" LowPic="http://images.icecat.biz/img/norm/low/5894041-TP-LINK.jpg" LowPicHeight="120" LowPicSize="5274" LowPicWidth="200" Name="3G/3.75G Wireless N Router" Prod_id="TL-MR3220" Quality="ICECAT" ReleaseDate="2010-09-02" ThumbPic="http://images.icecat.biz/thumbs/5894041.jpg" ThumbPicSize="2373" Title="TP-LINK  3G/3.75G Wireless N Router">
+       <Category ID="244">
+       
+    <Name ID="496526" Value="routers" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="362" No="1">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2284" No="20">
+     <FeatureGroup ID="1">
+       <Name ID="510107" Value="Procesador" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2282" No="21">
+     <FeatureGroup ID="3">
+       <Name ID="510109" Value="Memoria" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1170" No="44">
+     <FeatureGroup ID="8">
+       <Name ID="510114" Value="Requisitos del sistema" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1469" No="63">
+     <FeatureGroup ID="12">
+       <Name ID="510117" Value="Conectividad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1171" No="3">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2955" No="62">
+     <FeatureGroup ID="23">
+       <Name ID="510128" Value="Anchura de banda" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1169" No="5">
+     <FeatureGroup ID="27">
+       <Name ID="510131" Value="Contro de energía" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1168" No="4">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2959" No="7">
+     <FeatureGroup ID="32">
+       <Name ID="510136" Value="Resistencia" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2957" No="65">
+     <FeatureGroup ID="34">
+       <Name ID="510138" Value="Protocolos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="1167" No="66">
+     <FeatureGroup ID="35">
+       <Name ID="510139" Value="Red" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4055" No="0">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2283" No="61">
+     <FeatureGroup ID="46">
+       <Name ID="510150" Value="Módem" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2958" No="68">
+     <FeatureGroup ID="62">
+       <Name ID="510163" Value="Transmisión de datos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3123" No="2">
+     <FeatureGroup ID="67">
+       <Name ID="510168" Value="Empaquetado" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2495" No="60">
+     <FeatureGroup ID="75">
+       <Name ID="510176" Value="Seguridad" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2500" No="6">
+     <FeatureGroup ID="76">
+       <Name ID="510177" Value="Aprobaciones reguladoras" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3452" No="0">
+     <FeatureGroup ID="79">
+       <Name ID="510180" Value="Iluminación/Alarmas" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2956" No="45">
+     <FeatureGroup ID="90">
+       <Name ID="510189" Value="Sistema operativo/software" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2941" No="78">
+     <FeatureGroup ID="91">
+       <Name ID="510190" Value="Wireless LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2942" No="76">
+     <FeatureGroup ID="92">
+       <Name ID="510191" Value="Características de DSL" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3482" No="63">
+     <FeatureGroup ID="93">
+       <Name ID="510192" Value="Características de manejo" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3481" No="80">
+     <FeatureGroup ID="112">
+       <Name ID="510210" Value="Ethernet LAN features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="5223" No="0">
+     <FeatureGroup ID="115">
+       <Name ID="510213" Value="Caja exterior" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3857" No="0">
+     <FeatureGroup ID="116">
+       <Name ID="510214" Value="Contenido del embalaje" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="4272" No="64">
+     <FeatureGroup ID="125">
+       <Name ID="510222" Value="Antena" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="6647" No="0">
+     <FeatureGroup ID="146">
+       <Name ID="624351" Value="Other features" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="6935364051501"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="26899381" LongDesc="&lt;b&gt;3G “On-the-Go”&lt;/b&gt;\nEl Router Inalámbrico Lite N TL-MR3220 3G/3.75G de TP-LINK le permite establecer rápidamente una red inalámbrica a 150Mbps y compartir una conexión móvil a 3G/3.75G. Conectando una tarjeta USB UMTS/HSPA/EVDO al router, se establece instantáneamente un sitio Wi-Fi que permite a los usuarios compartir la conexión a Internet en cualquier lugar donde se disponga de cobertura 3G/3.75G. De esta forma, tanto si está en el tren, de camping o en una obra, tendrá una conexión inalámbrica fiable que se ajusta a sus necesidades de trabajo en red.\n\n&lt;b&gt;Siempre conectado&lt;/b&gt;\nNo hay nada más frustrante que perder la conexión a Internet a mitad del trabajo. Para evitar estas interrupciones y proporcionar a nuestros clientes una conexión “siempre online”, TP-LINK presenta el TL-MR3220, un robusto router inalámbrico N 3G/3.75G con auténtica capacidad failover (recuperación ante fallos) 3G/WAN.\n\nPuede establecer un enlace primario, 3G/3.75G o WAN (xDSL/Cable). El TL-MR3220 pasa al enlace secundario cuando se interrumpe el servicio primario. Cuando se restaura el servicio, el router regresará automáticamente al enlace primario, manteniendo su negocio online con una interrupción mínima para los usuarios." ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="3G/3.75G Wireless Lite N Router" URL="http://www.tp-link.com/es/products/productDetails.asp?class=&amp;pmodel=TL-MR3220" WarrantyInfo="" langid="6"/>
+       <ProductFamily ID="1">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="0" ID="92599885" Local_ID="0" Value="Y" CategoryFeature_ID="36267" CategoryFeatureGroup_ID="3481" No="10100000" Presentation_Value="Si" Translated="1"  Mandatory="1" Searchable="1">
+	  <Feature ID="1347">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504833" Value="Ethernet connexión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599886" Local_ID="0" Value="10,100" CategoryFeature_ID="20920" CategoryFeatureGroup_ID="3481" No="100090" Presentation_Value="10, 100 Mbit/s" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="3768">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="504222" Value="Ethernet LAN, velocidad de transferencia de datos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599887" Local_ID="0" Value="Y" CategoryFeature_ID="18582" CategoryFeatureGroup_ID="2941" No="10100000" Presentation_Value="Si" Translated="1"  Mandatory="1" Searchable="1">
+	  <Feature ID="3239">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508538" Value="WLAN, conexión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599889" Local_ID="0" Value="802.11b/g" CategoryFeature_ID="42675" CategoryFeatureGroup_ID="2941" No="100090" Presentation_Value="802.11b/g" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="432">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508134" Value="Tipo de Wireless LAN" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599890" Local_ID="0" Value="11/150" CategoryFeature_ID="18658" CategoryFeatureGroup_ID="2941" No="100080" Presentation_Value="11/150 Mbit/s" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3261">
+	    <Measure ID="23" Sign="">
+	      <Signs><Sign ID="7435" langid="6">Mbit/s</Sign></Signs>
+	    </Measure>
+	    <Name ID="507968" Value="WLAN velocidad de transferencia de datos, soportada" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599888" Local_ID="0" Value="2.4/2.4835" CategoryFeature_ID="13150" CategoryFeatureGroup_ID="2941" No="100000" Presentation_Value="2.4/2.4835 GHz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1587">
+	    <Measure ID="37" Sign="">
+	      <Signs><Sign ID="7446" langid="6">GHz</Sign></Signs>
+	    </Measure>
+	    <Name ID="506920" Value="Ancho de banda" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599912" Local_ID="0" Value="DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM" CategoryFeature_ID="5986" CategoryFeatureGroup_ID="2941" No="100000" Presentation_Value="DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1503">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504873" Value="Modulación" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599891" Local_ID="0" Value="N" CategoryFeature_ID="18581" CategoryFeatureGroup_ID="2942" No="10100000" Presentation_Value="N" Translated="0"  Mandatory="1" Searchable="1">
+	  <Feature ID="3238">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509152" Value="DSL conexión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599892" Local_ID="0" Value="-" CategoryFeature_ID="20918" CategoryFeatureGroup_ID="2957" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3765">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508045" Value="DHCP, cliente" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599893" Local_ID="0" Value="-" CategoryFeature_ID="20919" CategoryFeatureGroup_ID="2957" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508046" Value="DHCP, servidor" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599894" Local_ID="0" Value="3" CategoryFeature_ID="17428" CategoryFeatureGroup_ID="4272" No="100000" Presentation_Value="3 dBi" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1804">
+	    <Measure ID="99" Sign="">
+	      <Signs><Sign ID="7504" langid="6">dBi</Sign></Signs>
+	    </Measure>
+	    <Name ID="507944" Value="Antena de refuerzo (max)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599895" Local_ID="0" Value="2" CategoryFeature_ID="35668" CategoryFeatureGroup_ID="4272" No="100000" Presentation_Value="2" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6737">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509164" Value="Antennas quantity" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599897" Local_ID="0" Value="USB 2.0" CategoryFeature_ID="5603" CategoryFeatureGroup_ID="1469" No="100025" Presentation_Value="USB 2.0" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="21">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="504706" Value="Interfaz" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599898" Local_ID="0" Value="4" CategoryFeature_ID="20921" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="4" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2312">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508388" Value="Ethernet LAN (RJ-45) cantidad de puertos" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599899" Local_ID="0" Value="1" CategoryFeature_ID="20923" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="1" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2308">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508488" Value="Cantidad de puertos USB 2.0" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599900" Local_ID="0" Value="Y" CategoryFeature_ID="20924" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="Si" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="2316">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508494" Value="DC-in jack" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599901" Local_ID="0" Value="RJ-45" CategoryFeature_ID="25310" CategoryFeatureGroup_ID="1469" No="100000" Presentation_Value="RJ-45" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1513">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509145" Value="Características del puerto WAN" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599896" Local_ID="0" Value="-" CategoryFeature_ID="20574" CategoryFeatureGroup_ID="3482" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3635">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="507795" Value="Administración de Web-based" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599902" Local_ID="0" Value="-" CategoryFeature_ID="5988" CategoryFeatureGroup_ID="2495" No="100077" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="1612">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509144" Value="Firewall, seguridad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599903" Local_ID="0" Value="Unspecified" CategoryFeature_ID="5615" CategoryFeatureGroup_ID="2495" No="100044" Presentation_Value="No específicado" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="454">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506160" Value="Algoritmo de  seguridad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599904" Local_ID="0" Value="-" CategoryFeature_ID="18206" CategoryFeatureGroup_ID="2495" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="3122">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508027" Value="MAC, filtro de direcciones" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599905" Local_ID="0" Value="IEEE 802.3u,IEEE 802.11b,IEEE 802.11g" CategoryFeature_ID="7835" CategoryFeatureGroup_ID="2500" No="100000" Presentation_Value="IEEE 802.3u, IEEE 802.11b, IEEE 802.11g" Translated="1"  Mandatory="1" Searchable="0">
+	  <Feature ID="1802">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509584" Value="Estándar de red" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599906" Local_ID="0" Value="9VDC / 0.85A" CategoryFeature_ID="5604" CategoryFeatureGroup_ID="1169" No="100014" Presentation_Value="9VDC / 0.85A" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="780">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508181" Value="Requisitos de energía" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599907" Local_ID="0" Value="-" CategoryFeature_ID="12099" CategoryFeatureGroup_ID="1169" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="445">
+	    <Measure ID="44" Sign="">
+	      <Signs><Sign ID="7453" langid="6">W</Sign></Signs>
+	    </Measure>
+	    <Name ID="508142" Value="Consumo energético" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599913" Local_ID="0" Value="0 - 40" CategoryFeature_ID="5606" CategoryFeatureGroup_ID="1168" No="100100" Presentation_Value="0 - 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599914" Local_ID="0" Value="-40 - 70" CategoryFeature_ID="5719" CategoryFeatureGroup_ID="1168" No="100099" Presentation_Value="-40 - 70 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599915" Local_ID="0" Value="10 - 90" CategoryFeature_ID="5607" CategoryFeatureGroup_ID="1168" No="100098" Presentation_Value="10 - 90 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599916" Local_ID="0" Value="5 - 95" CategoryFeature_ID="12359" CategoryFeatureGroup_ID="1168" No="100097" Presentation_Value="5 - 95 %" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599908" Local_ID="0" Value="174 x 111 x 30" CategoryFeature_ID="5593" CategoryFeatureGroup_ID="1171" No="100020" Presentation_Value="174 x 111 x 30 mm" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599909" Local_ID="0" Value="-" CategoryFeature_ID="8725" CategoryFeatureGroup_ID="1171" No="100000" Presentation_Value="-" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599910" Local_ID="0" Value="20dBm" CategoryFeature_ID="35612" CategoryFeatureGroup_ID="362" No="100000" Presentation_Value="20dBm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3129">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="509151" Value="Transmisión de potencia" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599917" Local_ID="0" Value="130M: -68dBm@10% PER,\n108M: -68dBm@10% PER,\n54M: -68dBm@10% PER,\n11M: -85dBm@8% PER,\n6M: -88dBm@10% PER,\n1M: -90dBm@8% PER" CategoryFeature_ID="18657" CategoryFeatureGroup_ID="362" No="100000" Presentation_Value="130M: -68dBm@10% PER, 108M: -68dBm@10% PER, 54M: -68dBm@10% PER, 11M: -85dBm@8% PER, 6M: -88dBm@10% PER, 1M: -90dBm@8% PER" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1506">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="507950" Value="Receptor de sensibilidad" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599911" Local_ID="0" Value="Black,White" CategoryFeature_ID="27200" CategoryFeatureGroup_ID="4055" No="100000" Presentation_Value="Negro, Blanco" Translated="1"  Mandatory="0" Searchable="0">
+	  <Feature ID="1766">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508447" Value="Color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="92599520" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33617" CategoryFeatureGroup_ID="362" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      <ProductMultimediaObject/>
+      <ProductRelated/>
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">TP-LINK 3G/3.75G Wireless N Router, 10, 100 Mbit/s, 802.11b/g, 11/150 Mbit/s, 2.4/2.4835 GHz, DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM, 3 dBi</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">TP-LINK 3G/3.75G Wireless N Router. Ethernet LAN features: 10, 100 Mbit/s. Wireless LAN features: 802.11b/g, 11/150 Mbit/s, 2.4/2.4835 GHz, DBPSK, DQPSK, CCK, OFDM, 16-QAM, 64-QAM. Antena: 3 dBi. Conectividad: USB 2.0, RJ-45. Seguridad: No específicado. Aprobaciones reguladoras: IEEE 802.3u, IEEE 802.11b, IEEE 802.11g. Contro de energía: 9VDC / 0.85A. Condiciones ambientales: 0 - 40 °C, -40 - 70 °C, 10 - 90 %, 5 - 95 %. Peso y dimensiones: 174 x 111 x 30 mm. Color: Negro, Blanco</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="2988" Name="TP-LINK"/>
+      </Product>
+
+</ICECAT-interface>

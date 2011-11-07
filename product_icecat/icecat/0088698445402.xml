@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd">
+	<!-- source: ICEcat.biz 2011 -->
+	<ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
+      <Product Code="1" HighPic="http://images.icecat.biz/img/norm/high/24564-HP.jpg" HighPicHeight="400" HighPicSize="56382" HighPicWidth="400" ID="24564" LowPic="http://images.icecat.biz/img/norm/low/24564-HP.jpg" LowPicHeight="200" LowPicSize="18723" LowPicWidth="200" Name="Cartucho de impresión HP 645A LaserJet negro" Prod_id="C9730A" Quality="SUPPLIER" ReleaseDate="2005-07-15" ThumbPic="http://images.icecat.biz/thumbs/24564.jpg" ThumbPicSize="4789" Title="HP 645 LaserJet Printing Supplies Cartucho de impresión HP 645A LaserJet negro">
+       <Category ID="375">
+       
+    <Name ID="496573" Value="toner y cartuchos láser" langid="6"/>
+
+       </Category>
+      
+    <CategoryFeatureGroup ID="483" No="2">
+     <FeatureGroup ID="0">
+       <Name ID="510134" Value="Detalles técnicos" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2279" No="4">
+     <FeatureGroup ID="14">
+       <Name ID="510119" Value="Peso y dimensiones" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2281" No="7">
+     <FeatureGroup ID="16">
+       <Name ID="510121" Value="Calidad de impresión" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="2280" No="5">
+     <FeatureGroup ID="28">
+       <Name ID="510132" Value="Condiciones ambientales" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+    <CategoryFeatureGroup ID="3586" No="6">
+     <FeatureGroup ID="36">
+       <Name ID="510140" Value="Color" langid="6"/>
+     </FeatureGroup>
+    </CategoryFeatureGroup>
+
+        <EANCode EAN="0088698445402"/>
+        <EANCode EAN="0886984454028"/>
+      <ProductBundled/>
+      
+    <ProductDescription ID="21305782" LongDesc="&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Overview&lt;/span&gt;&lt;br /&gt;Obtenga los mejores resultados de su sistema de impresión HP. La tecnología HP Smart[1] y las fórmulas de tóner químicamente crecidas en cartuchos de impresión HP 645A LaserJet trabajan con su impresora, para ofrecer color preciso y consistente, así como rendimiento fiable y rentable.&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot;font-size: larger; font-weight: bold;&quot;&gt;Features&lt;/span&gt;&lt;br /&gt;&lt;b&gt;Colores exactos, reproducción precisa de las imágenes y texto claro y nítido en cada impresión. Las fórmulas del tóner de crecimiento químico y el sistema de tecnología de impresión HP Smart[1] ofrecen resultados consistentes y un rendimiento fiable durante toda la duración del cartucho.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n&lt;b&gt;Ahorre tiempo con los consumibles all-in-one HP 645A LaserJet. La tecnología HP Smart[1] realiza ajustes automáticos, para optimizar la calidad de impresión y mejorar la fiabilidad. La mínima intervención del usuario ahorra tiempo, mejora la productividad y reduce costes de impresión generales.&lt;/b&gt;&lt;br /&gt;\n&lt;br /&gt;\n\n" ManualPDFSize="0" ManualPDFURL="" PDFSize="0" PDFURL="" ShortDesc="Cartucho de impresión negro HP Color LaserJet C9730A con tecnología de impresión Smart" URL="" WarrantyInfo="Garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra.\nDeclaración estándar de garantía: Este producto HP está garantizado contra defectos en materiales y mano de obra. Esta garantía no cubre productos que (a) hayan sido rellenados, restaurados o modificados de cualquier modo, (b) presenten problemas que se deban a un uso incorrecto, un almacenamiento inadecuado o que se hayan utilizado fuera de las especificaciones medioambientales publicadas para el producto de impresora, o (c) presenten un uso distinto al habitual. Para acceder al servicio de garantía, devuelva el producto al lugar donde lo adquirió (con una descripción por escrito del problema y muestras de impresión) o póngase en contacto con el servicio de atención al cliente de HP.  HP reemplazará o devolverá el importe de compra, según estime oportuno, de los productos que en efecto estén defectuosos. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, LA GARANTÍA ANTERIOR ES EXCLUSIVA Y PREVALECE SOBRE CUALQUIER OTRA GARANTÍA O CONDICIÓN, ESCRITA U ORAL, EXPRESA O IMPLÍCITA, Y HP NO SE RESPONSABILIZA DE FORMA ESPECÍFICA DE NINGUNA GARANTÍA IMPLÍCITA O CONDICIÓN DE COMERCIALIZACIÓN, CALIDAD SATISFACTORIA E IDONEIDAD PARA UN DETERMINADO FIN. EN LA MEDIDA EN QUE LO PERMITA LA LEGISLACIÓN LOCAL, NI HP NI SUS PROVEEDORES SERÁN RESPONSABLES DE LOS DAÑOS Y PERJUICIOS DIRECTOS, ESPECIALES, FORTUITOS, DERIVADOS (INCLUIDAS PÉRDIDAS ECONÓMICAS O DE DATOS) O DE OTRO TIPO, INDEPENDIENTEMENTE DE SI SE BASAN EN UN CONTRATO, RESPONSABILIDADES EXTRACONTRACTUALES U OTROS. LOS TÉRMINOS DE LA GARANTÍA INCLUIDOS EN ESTE DOCUMENTO, Y HASTA DONDE LO PERMITA LA LEY, NO EXCLUYEN, RESTRINGEN NI MODIFICAN, SINO QUE SE AÑADEN A LOS DERECHOS ESTABLECIDOS POR LA LEY APLICABLES A LA VENTA AL PÚBLICO DE ESTE PRODUCTO.\n" langid="6"/>
+       <ProductFamily ID="60920">
+       <Name/>
+       </ProductFamily>
+      
+	<ProductFeature Localized="1" ID="100952469" Local_ID="26415542" Value="Laser" CategoryFeature_ID="9073" CategoryFeatureGroup_ID="2281" No="100666" Presentation_Value="Láser" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="78">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506428" Value="Tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="103559722" Local_ID="3483405" Value="Black" CategoryFeature_ID="9879" CategoryFeatureGroup_ID="2281" No="100000" Presentation_Value="Negro" Translated="0"  Mandatory="1" Searchable="0">
+	  <Feature ID="2037">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506449" Value="Impresión a color" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100948738" Local_ID="3483414" Value="15 - 25" CategoryFeature_ID="5573" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de 15 a 25 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1112">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508345" Value="Alcance de temperatura operativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483399" Value="" CategoryFeature_ID="5769" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="20 a 80% HR" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="703">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508169" Value="Humedad relativa" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483403" Value="" CategoryFeature_ID="5770" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="de -20 a 40 °C" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="757">
+	    <Measure ID="65" Sign="">
+	      <Signs><Sign ID="7473" langid="6">°C</Sign></Signs>
+	    </Measure>
+	    <Name ID="508178" Value="Temperatura" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483409" Value="" CategoryFeature_ID="12235" CategoryFeatureGroup_ID="2280" No="100000" Presentation_Value="HR de 10 a 90%" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1383">
+	    <Measure ID="64" Sign="">
+	      <Signs><Sign ID="7472" langid="6">%</Sign></Signs>
+	    </Measure>
+	    <Name ID="508405" Value="Húmedad (en almacenaje)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483398" Value="" CategoryFeature_ID="1908" CategoryFeatureGroup_ID="2279" No="116848" Presentation_Value="500 x 160 x 265 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="49">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508111" Value="Dimensiones (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97499735" Local_ID="3483412" Value="2900" CategoryFeature_ID="5067" CategoryFeatureGroup_ID="2279" No="100030" Presentation_Value="2.9 kg (6.39 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="762">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508179" Value="Paquete, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483400" Value="" CategoryFeature_ID="7206" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="2.420 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1690">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="504358" Value="Peso vacío" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483410" Value="" CategoryFeature_ID="8733" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="2.47 kg (5.45 libras)" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="94">
+	    <Measure ID="38" Sign="">
+	      <Signs><Sign ID="7447" langid="6">g</Sign></Signs>
+	    </Measure>
+	    <Name ID="508122" Value="Peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26415540" Value="" CategoryFeature_ID="8457" CategoryFeatureGroup_ID="2279" No="100000" Presentation_Value="500 x 160 x 265 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="582">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="508152" Value="Dimensiones del embalaje (alto x alto x peso)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100949280" Local_ID="26415550" Value="1200 x 800 x 944" CategoryFeature_ID="30379" CategoryFeatureGroup_ID="483" No="100000" Presentation_Value="1200 x 800 x 944 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="4824">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506470" Value="Dimensiones europeas del pallet (An x F x Al)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483411" Value="" CategoryFeature_ID="1905" CategoryFeatureGroup_ID="2281" No="16845" Presentation_Value="Aproximadamente 13.000 páginas con un 5% de cobertura" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="626">
+	    <Measure ID="55" Sign="pages">
+	      <Signs><Sign ID="7463" langid="6">páginas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506431" Value="Producción de páginas para imprimir (A4, blanco y negro, ISO/IEC 19752)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97419921" Local_ID="3483402" Value="121" CategoryFeature_ID="1914" CategoryFeatureGroup_ID="2279" No="16854" Presentation_Value="121 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="513">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506906" Value="Palet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97381392" Local_ID="3483413" Value="33" CategoryFeature_ID="1911" CategoryFeatureGroup_ID="2279" No="16851" Presentation_Value="33 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="732">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506909" Value="Cantidad por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="100949281" Local_ID="3483401" Value="1200 x 800 x 944" CategoryFeature_ID="1909" CategoryFeatureGroup_ID="2279" No="16849" Presentation_Value="1.200 x 800 x 944 mm" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="530">
+	    <Measure ID="24" Sign="">
+	      <Signs><Sign ID="7436" langid="6">mm</Sign></Signs>
+	    </Measure>
+	    <Name ID="506907" Value="Dimensiones de Palet (Ancho x Profundidad x Altura)" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97381398" Local_ID="26415546" Value="33" CategoryFeature_ID="27820" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="11 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3293">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="506463" Value="Cantidad de europalet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="97381399" Local_ID="26415552" Value="1" CategoryFeature_ID="30381" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="1 piezas" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2055">
+	    <Measure ID="144" Sign="">
+	      <Signs><Sign ID="7549" langid="6">piezas</Sign></Signs>
+	    </Measure>
+	    <Name ID="504897" Value="Cantidad por caja" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="0" ID="106199363" Local_ID="0" Value="ICEcat.biz" CategoryFeature_ID="33627" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="ICEcat.biz" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="6617">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="508589" Value="Source data-sheet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483404" Value="" CategoryFeature_ID="7207" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="33" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1679">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506940" Value="Número de cartones por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483406" Value="" CategoryFeature_ID="9881" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="4" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2066">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506454" Value="Número de apilado para palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483407" Value="" CategoryFeature_ID="7208" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="3" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1680">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506941" Value="Número de capa por palet" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="3483408" Value="" CategoryFeature_ID="9880" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="12" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="2065">
+	    <Measure ID="29" Sign="">
+	      <Signs/>
+	    </Measure>
+	    <Name ID="506453" Value="Número de apilado para caja de cartón" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26415544" Value="" CategoryFeature_ID="27319" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="Inteligente" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="1879">
+	    <Measure ID="35" Sign="">
+	      <Signs><Sign ID="7444" langid="6">DPI</Sign></Signs>
+	    </Measure>
+	    <Name ID="506442" Value="Resolución de la tecnología de impresión" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+	<ProductFeature Localized="1" ID="0" Local_ID="26415548" Value="" CategoryFeature_ID="30376" CategoryFeatureGroup_ID="483" No="0" Presentation_Value="121 kg" Translated="0"  Mandatory="0" Searchable="0">
+	  <Feature ID="3288">
+	    <Measure ID="17" Sign="">
+	      <Signs><Sign ID="7429" langid="6">kg</Sign></Signs>
+	    </Measure>
+	    <Name ID="506462" Value="Europalet, peso" langid="6"/>
+	  </Feature>
+	</ProductFeature>
+
+      <ProductGallery/>
+      
+    <ProductMultimediaObject>
+      <MultimediaObject ContentType="application/pdf" Date="2010-04-30 07:35:31" Description="Cartuchos de impresión inteligente HP Color LaserJet para impresoras de las series 5500 y 5550" Height="0" KeepAsURL="0" MultimediaObject_ID="277069" Size="173150" Type="data sheet" URL="http://objects.icecat.biz/objects/HP_literature_es_es_5982-6780ESE.pdf" Width="0" langid="6"/>
+    </ProductMultimediaObject>
+
+      	  <ProductRelated ID="84445723" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="1582126" Prod_id="627735" ThumbPic="http://images2.icecat.biz/thumbs/1582126.jpg" Name="Toner cartridge black">
+	      <Supplier ID="383" Name="Pelikan"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="61015775" Category_ID="375" Reversed="0" Preferred="0">
+	    <Product ID="3115984" Prod_id="27349" ThumbPic="http://images.icecat.biz/thumbs/3115984.jpg" Name="27349">
+	      <Supplier ID="81" Name="Imation"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570559" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3424357" Prod_id="Q3715A#B1F" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570531" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="513834" Prod_id="Q3717A#ABU" ThumbPic="http://images.icecat.biz/thumbs/127357.jpg" Name="Impresora HP Color LaserJet 5550hdn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570529" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="513832" Prod_id="Q3715A#ABU" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570528" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="513831" Prod_id="Q3714A#ABU" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570527" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="513830" Prod_id="Q3713A#ABU" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570530" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="513833" Prod_id="Q3716A#ABU" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31830719" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127376" Prod_id="Q3716A#401" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="31830729" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127470" Prod_id="Q3715A#401" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76741885" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127472" Prod_id="Q3714A#401" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="77583687" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127484" Prod_id="Q3713A#401" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58850167" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127359" Prod_id="Q3715A" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="58850166" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127358" Prod_id="Q3716A" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="79421801" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127468" Prod_id="Q3717A#401" ThumbPic="http://images.icecat.biz/thumbs/127357.jpg" Name="Impresora HP Color LaserJet 5550hdn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76741882" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127360" Prod_id="Q3714A" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015065" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33742" Prod_id="C7131A#ABH" ThumbPic="http://images.icecat.biz/thumbs/33601.jpg" Name="color LaserJet 5500n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570546" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902017" Prod_id="Q3716A#430" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015066" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33743" Prod_id="C9657A#ABH" ThumbPic="http://images.icecat.biz/thumbs/33600.jpg" Name="color LaserJet 5500dn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015068" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33745" Prod_id="C9658A#ABH" ThumbPic="http://images.icecat.biz/thumbs/33599.jpg" Name="color LaserJet 5500dtn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570542" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="610146" Prod_id="Q3714A#425" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570551" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198913" Prod_id="Q3715A#ABA" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015069" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33746" Prod_id="C9659A#ABH" ThumbPic="http://images.icecat.biz/thumbs/33598.jpg" Name="color LaserJet 5500hdn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015064" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33741" Prod_id="C9656A#ABH" ThumbPic="http://images.icecat.biz/thumbs/33602.jpg" Name="color LaserJet 5500 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570553" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198915" Prod_id="Q3714A#ABA" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="77583686" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127361" Prod_id="Q3713A" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570544" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902015" Prod_id="Q3713A#430" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015061" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33600" Prod_id="C9657A" ThumbPic="http://images.icecat.biz/thumbs/33600.jpg" Name="color LaserJet 5500dn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="79421800" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="127357" Prod_id="Q3717A" ThumbPic="http://images.icecat.biz/thumbs/127357.jpg" Name="Impresora HP Color LaserJet 5550hdn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015062" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33601" Prod_id="C7131A" ThumbPic="http://images.icecat.biz/thumbs/33601.jpg" Name="color LaserJet 5500n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015060" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33599" Prod_id="C9658A" ThumbPic="http://images.icecat.biz/thumbs/33599.jpg" Name="color LaserJet 5500dtn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015059" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33598" Prod_id="C9659A" ThumbPic="http://images.icecat.biz/thumbs/33598.jpg" Name="color LaserJet 5500hdn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015063" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33602" Prod_id="C9656A" ThumbPic="http://images.icecat.biz/thumbs/33602.jpg" Name="color LaserJet 5500 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570526" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="376063" Prod_id="Q3714A#430" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570567" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814653" Prod_id="Q3713A#441" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570545" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902016" Prod_id="Q3715A#430" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570541" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="610145" Prod_id="Q3713A#425" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570543" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="610147" Prod_id="Q3715A#425" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570539" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="609917" Prod_id="Q3716A#425" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570556" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1633430" Prod_id="Q3716A#420" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570554" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1522628" Prod_id="Q3715A#420" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570564" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4849291" Prod_id="Q3714A#441" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570570" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814656" Prod_id="Q3715A#441" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570550" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198912" Prod_id="Q3716A#ABA" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570552" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198914" Prod_id="Q3715A#AK2" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570555" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1633429" Prod_id="Q3714A#420" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570535" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="563895" Prod_id="Q3714A#ABY" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49066853" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="892023" Prod_id="Q3716AR#401" ThumbPic="" Name="Color LaserJet 5550dtn Remarketed Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46047094" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359176" Prod_id="Q3714A#ABA-BN" ThumbPic="http://images.icecat.biz/thumbs/2359176.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49066276" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1646771" Prod_id="Q3715AR#401" ThumbPic="http://images.icecat.biz/thumbs/1595023.jpg" Name="Color LaserJet 5550dn Remarketed Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570538" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="570789" Prod_id="Q3716A#ABY" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570534" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="562858" Prod_id="Q3715A#ABY" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570573" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814659" Prod_id="Q3716A#441" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570533" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="557177" Prod_id="Q3714A#436" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="49065944" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1809023" Prod_id="Q3714AR#401" ThumbPic="http://images.icecat.biz/thumbs/1594927.jpg" Name="Color LaserJet 5550n Remarketed Printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570557" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2201789" Prod_id="Q3715A#483" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570548" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="919482" Prod_id="Q3715A#AKD" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33642566" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1633554" Prod_id="Q3715A#401?30553744" ThumbPic="http://images.icecat.biz/thumbs/1633554.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570547" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="902018" Prod_id="Q3717A#430" ThumbPic="http://images.icecat.biz/thumbs/127357.jpg" Name="Impresora HP Color LaserJet 5550hdn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570558" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2973080" Prod_id="Q3716A#AK2" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33644692" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1516351" Prod_id="Q3716A#401?KIT" ThumbPic="http://images.icecat.biz/thumbs/1516351.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33642870" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1516352" Prod_id="Q3715A#401?FIXIEREINHEIT" ThumbPic="http://images.icecat.biz/thumbs/1516352.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570565" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814651" Prod_id="Q3713A#420" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32061381" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1516353" Prod_id="Q3714A#401?FIXIEREINHEIT" ThumbPic="http://images.icecat.biz/thumbs/1516353.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570549" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1198910" Prod_id="Q3717A#ABA" ThumbPic="http://images.icecat.biz/thumbs/127357.jpg" Name="Impresora HP Color LaserJet 5550hdn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33641487" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1516354" Prod_id="Q3713A#401?FIXIEREINHEIT" ThumbPic="http://images2.icecat.biz/thumbs/1516354.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570536" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="568254" Prod_id="Q3717A#ABY" ThumbPic="http://images.icecat.biz/thumbs/127357.jpg" Name="Impresora HP Color LaserJet 5550hdn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570560" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3424358" Prod_id="Q3716A#B1F" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570537" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="568255" Prod_id="Q3713A#ABY" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570562" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3424366" Prod_id="Q3716A#483" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33641332" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="873330" Prod_id="Q3713A#401#*BNDL" ThumbPic="http://images.icecat.biz/thumbs/873330.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015067" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="33744" Prod_id="C9657A#ABB" ThumbPic="http://images.icecat.biz/thumbs/33600.jpg" Name="color LaserJet 5500dn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570561" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="3424361" Prod_id="Q3713A#483" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570540" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="610144" Prod_id="Q3717A#425" ThumbPic="http://images.icecat.biz/thumbs/127357.jpg" Name="Impresora HP Color LaserJet 5550hdn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32061151" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="860495" Prod_id="Q3714A#401#*ECON" ThumbPic="http://images.icecat.biz/thumbs/860495.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015078" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74493" Prod_id="C9656A#ABF" ThumbPic="http://images.icecat.biz/thumbs/33602.jpg" Name="color LaserJet 5500 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015073" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74488" Prod_id="C9658A#ABF" ThumbPic="http://images.icecat.biz/thumbs/33599.jpg" Name="color LaserJet 5500dtn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015074" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74489" Prod_id="C9657A#ABF" ThumbPic="http://images.icecat.biz/thumbs/33600.jpg" Name="color LaserJet 5500dn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="470851" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="100373" Prod_id="C9659A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/100373.jpg" Name="color LaserJet 5500hdn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="471072" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="100399" Prod_id="C9656A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/100399.jpg" Name="color LaserJet 5500 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="498068" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="111162" Prod_id="C9656A#ABH/KIT2" ThumbPic="http://images.icecat.biz/thumbs/111162.jpg" Name="color LaserJet 5500 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="498612" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="111243" Prod_id="C9658A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/111243.jpg" Name="color LaserJet 5500dtn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="470771" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="100367" Prod_id="C7131A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/100367.jpg" Name="color LaserJet 5500n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015071" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74486" Prod_id="C9659A#ABF" ThumbPic="http://images.icecat.biz/thumbs/33598.jpg" Name="color LaserJet 5500hdn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015075" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74490" Prod_id="C7131A#ABB" ThumbPic="http://images.icecat.biz/thumbs/33601.jpg" Name="color LaserJet 5500n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="471132" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="100400" Prod_id="C9657A#ABH/KIT" ThumbPic="http://images.icecat.biz/thumbs/100400.jpg" Name="color LaserJet 5500dn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="498686" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="111245" Prod_id="C9659A#ABH/KIT2" ThumbPic="http://images.icecat.biz/thumbs/111245.jpg" Name="color LaserJet 5500hdn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015070" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74485" Prod_id="C9659A#ABB" ThumbPic="http://images.icecat.biz/thumbs/33598.jpg" Name="color LaserJet 5500hdn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570569" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814655" Prod_id="Q3715A#437" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="470998" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="100394" Prod_id="C9658A#ABH/KIT2" ThumbPic="http://images.icecat.biz/thumbs/100394.jpg" Name="color LaserJet 5500dtn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="498128" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="111163" Prod_id="C9657A#ABH/KIT2" ThumbPic="http://images.icecat.biz/thumbs/111163.jpg" Name="color LaserJet 5500dn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33644843" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1642971" Prod_id="Q3716A#401PRO" ThumbPic="http://images2.icecat.biz/thumbs/1642971.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015072" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74487" Prod_id="C9658A#ABB" ThumbPic="http://images.icecat.biz/thumbs/33599.jpg" Name="color LaserJet 5500dtn printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015076" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74491" Prod_id="C7131A#ABF" ThumbPic="http://images.icecat.biz/thumbs/33601.jpg" Name="color LaserJet 5500n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="76015077" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="74492" Prod_id="C9656A#ABB" ThumbPic="http://images.icecat.biz/thumbs/33602.jpg" Name="color LaserJet 5500 printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="498337" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="111225" Prod_id="C7131A#ABH/KIT2" ThumbPic="http://images.icecat.biz/thumbs/111225.jpg" Name="color LaserJet 5500n printer">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46092545" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359169" Prod_id="Q3716A#ABA-A1" ThumbPic="http://images2.icecat.biz/thumbs/2359169.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46069207" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359173" Prod_id="Q3715A#ABA-A1" ThumbPic="http://images.icecat.biz/thumbs/2359173.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46092709" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359168" Prod_id="Q3716A#ABA-BN" ThumbPic="http://images.icecat.biz/thumbs/2359168.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46069372" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359172" Prod_id="Q3715A#ABA-BN" ThumbPic="http://images.icecat.biz/thumbs/2359172.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="33642718" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1804332" Prod_id="Q3715A#401?FIXIEREIN" ThumbPic="http://images.icecat.biz/thumbs/1804332.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46069702" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359171" Prod_id="Q3715A#ABA1052" ThumbPic="http://images.icecat.biz/thumbs/2359171.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570563" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="4849288" Prod_id="Q3714A#AB8" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46092873" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2669028" Prod_id="Q3716A#ABA-BN1071" ThumbPic="http://images.icecat.biz/thumbs/2669028.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="32061266" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="1897882" Prod_id="Q3714A#401?FIXIEREIN" ThumbPic="http://images.icecat.biz/thumbs/1897882.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46046973" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359177" Prod_id="Q3714A#ABA-A1" ThumbPic="http://images.icecat.biz/thumbs/2359177.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46069537" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2682728" Prod_id="Q3715A#ABA-BN1071" ThumbPic="http://images2.icecat.biz/thumbs/2682728.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570571" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814657" Prod_id="Q3716A#316" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46047215" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2669026" Prod_id="Q3714A#ABA-BN1071" ThumbPic="http://images.icecat.biz/thumbs/2669026.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570566" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814652" Prod_id="Q3713A#437" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570568" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814654" Prod_id="Q3714A#437" ThumbPic="http://images.icecat.biz/thumbs/127360.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570572" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="5814658" Prod_id="Q3716A#437" ThumbPic="http://images.icecat.biz/thumbs/127358.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46047336" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2359175" Prod_id="Q3714A#ABA1052" ThumbPic="http://images.icecat.biz/thumbs/2359175.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46093037" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2669029" Prod_id="Q3716A#ABA1071" ThumbPic="http://images.icecat.biz/thumbs/2669029.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46070071" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2302746" Prod_id="Q3715A#AK2-A1" ThumbPic="http://images.icecat.biz/thumbs/2302746.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46717490" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2751788" Prod_id="Q3716A#ABA1052" ThumbPic="http://images2.icecat.biz/thumbs/2751788.jpg" Name="Impresora HP Color LaserJet 5550dtn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46069867" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2682729" Prod_id="Q3715A#ABA1071" ThumbPic="http://images.icecat.biz/thumbs/2682729.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="46047457" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="2669027" Prod_id="Q3714A#ABA1071" ThumbPic="http://images2.icecat.biz/thumbs/2669027.jpg" Name="Impresora HP Color LaserJet 5550n">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="84570532" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="556197" Prod_id="Q3715A#436" ThumbPic="http://images.icecat.biz/thumbs/127359.jpg" Name="Impresora HP Color LaserJet 5550dn">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88991697" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="7893045" Prod_id="Q3713A#B1F" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+	  <ProductRelated ID="88991698" Category_ID="235" Reversed="0" Preferred="0">
+	    <Product ID="7971753" Prod_id="Q3713A#AB7" ThumbPic="http://images.icecat.biz/thumbs/127361.jpg" Name="Impresora HP Color LaserJet 5550">
+	      <Supplier ID="1" Name="HP"/>
+	    </Product>
+	  </ProductRelated>
+
+      
+	  <SummaryDescription>
+	    <ShortSummaryDescription langid="6">HP Cartucho de impresión HP 645A LaserJet negro 645 LaserJet Printing Supplies, Láser, Negro, de 15 a 25 °C, 2.9 kg (6.39 libras)</ShortSummaryDescription>
+	    <LongSummaryDescription langid="6">HP Cartucho de impresión HP 645A LaserJet negro, 645 LaserJet Printing Supplies. Calidad de impresión: Láser, Negro. Condiciones ambientales: de 15 a 25 °C. Peso y dimensiones: 2.9 kg (6.39 libras)</LongSummaryDescription>
+	  </SummaryDescription>
+
+       <Supplier ID="1" Name="HP"/>
+      </Product>
+
+</ICECAT-interface>
