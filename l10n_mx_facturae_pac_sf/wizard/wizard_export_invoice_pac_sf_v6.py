@@ -128,7 +128,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
 
-            msg = 'no se pudo subir el archivo'
+            msg = 'No se pudo subir el archivo'
             if cfd_data_adenda:
 
                 #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  originales
@@ -136,11 +136,8 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                 #~ user = 'testing@solucionfactible.com' originales
                 #~ password = 'timbrado.SF.16672' originales
 
-                #try:
-                #wsdl_client = WSDL.Proxy( wsdl_url, namespace )
                 wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
-                #except:
-                    #pass
+
                 if True:#if wsdl_client:
 
                     file_globals = invoice_obj._get_file_globals(cr, uid, invoice_ids, context=context)
@@ -157,9 +154,10 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                     wsdl_client.soapproxy.config.debug = 0
                     wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                     resultado = wsdl_client.timbrar(*params)
+                    print '-----------------------------probando el resultado es',resultado
                     msg = resultado['resultados'] and resultado['resultados']['mensaje'] or ''
                     status = resultado['resultados'] and resultado['resultados']['status'] or ''
-                    if status == '200' or status == '307':
+                    if status == '200':
                         fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
                         fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                         cfdi_data = {
@@ -178,14 +176,8 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                         if cfdi_data['cfdi_xml']:
                             print 'el cfdi data es',cfdi_data['cfdi_xml']
                             escribe=self.write(cr, uid, data, {'message': msg, 'file':  base64.encodestring(cfdi_data['cfdi_xml']), }, context=None)
-                        if not escribe:
-                            print '--------------------no escribio en mensaje'
-                        else:
-                            print '------escribio'
 
-                        #open("D:\\cfdi_b64.xml", "wb").write( resultado['resultados']['cfdiTimbrado'] or '' )
-                        #open("D:\\cfdi.xml", "wb").write( base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ) )
-                    elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
+                    elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
                         msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
                     else:
                         msg += '\n' + resultado['mensaje'] or ''
@@ -194,121 +186,17 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
         else:
             msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
         self.write(cr, uid, data, {'message': msg }, context=None)
-        #~ return {'file': data['form']['file'], 'msg': msg}
-
-
-        #~ print '-----------------------------antes del return de upload'
-        #~ print 'el msg es',msg
-        #~
-        #~ if cfdi_data['cfdi_xml']:
-            #~ print 'el cfdi data es',cfdi_data['cfdi_xml']
-#~
-#~
-            #~ escribe=self.write(cr, uid, data, {'file': cfdi_data['cfdi_xml'],}, context=None)
-            #~ if escribe:
-                #~ print '--------------------si escribio'
-            #~ else:
-                #~ print '--------no escribio'
-            #~ return cfdi_data['cfdi_xml']
-            #~ raise osv.except_osv(('Estado de Timbrado!'),(msg))
-        #~ else:
-            #~ return False
-            #~ raise osv.except_osv(('Estado de Timbrado!'),('nada de naa'))
-
-
-
+        return True
     _columns = {
         'file': fields.binary('File', readonly=True),
-        #~ 'file': fields.char('file',size=128),
         'message': fields.text('text'),
 
     }
 
     _defaults= {
-        'message': 'Select upload button for export to PAC',
+        'message': 'Seleccione el botón Subir para exportar al PAC',
         'file': _get_file,
     }
-
-
-
-#~
-    #~ def upload_invoice(self, cr, uid, ids, context=None):
-        #~ data = self.read(cr, uid, ids)[0]
-        #~ print 'dentro de la funcion y data es',data
-        #~ escribe=self.write(cr, uid, ids, {'message':'el mensaje de prueba',}, context=None)
-        #~ print 'el escribe es:',escribe
-#~
-    #~ def sf_cancel(self, cr, uid, ids, context=None):
-        #~ data = self.read(cr, uid, ids)[0]
-        #~ context_id=context.get('active_ids',[])
-#~
-        #~ invoice_obj = self.pool.get('account.invoice')
-        #~ company_obj = self.pool.get('res.company.facturae.certificate')
-        #~ pac_params_obj = self.pool.get('params.pac')
-#~
-        #~ invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
-        #~ company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
-        #~ pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_cancelar')],context=context)
-#~
-        #~ if pac_params_srch:
-            #~ pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
-#~
-            #~ user = pac_params_brw.user
-            #~ password = pac_params_brw.password
-            #~ wsdl_url = pac_params_brw.url_webservice
-            #~ namespace = pac_params_brw.namespace
-            #~ #---------constantes
-            #user = 'testing@solucionfactible.com'
-            #password = 'timbrado.SF.16672'
-            #wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
-            #namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
-#~
-            #~ cerCSD = company_brw.certificate_file#base64.encodestring(company_brw.certificate_file)
-            #~ keyCSD = company_brw.certificate_key_file#base64.encodestring(company_brw.certificate_key_file)
-            #~ contrasenaCSD = company_brw.certificate_password
-            #~ uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
-#~
-            #~ wsdl_client = False        })
-
-            #~ wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
-            #~ if True:#if wsdl_client:
-                #~ params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
-                #~ wsdl_client.soapproxy.config.dumpSOAPOut = 0
-                #~ wsdl_client.soapproxy.config.dumpSOAPIn = 0
-                #~ wsdl_client.soapproxy.config.debug = 0
-                #~ wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-                #~ resultado = wsdl_client.cancelar(*params)
-#~
-                #~ status = resultado['resultados']['status']
-                #~ status_uuid = resultado['resultados']['statusUUID']
-                #~ msg_status={}
-                #~ if status =='200':
-                    #~ mensaje_global = '- El proceso de cancelación se ha completado correctamente'
-                #~ elif status =='500':
-                    #~ mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
-                #~ folio_cancel = resultado['resultados']['uuid']
-                #~ mensaje_global = mensaje_global +'\n- El uuid cancelado es: ' + folio_cancel
-#~
-                #~ if status_uuid == '201':
-                    #~ mensaje_SAT = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
-                #~ elif status_uuid == '202':
-                    #~ mensaje_SAT = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
-                #~ elif status_uuid == '203':
-                    #~ mensaje_SAT = '\n- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
-                #~ elif status_uuid == '204':
-                    #~ mensaje_SAT = '\n- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación'
-                #~ elif status_uuid == '205':
-                    #~ mensaje_SAT = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
-                #~ else:
-                    #~ mensaje_SAT = '- Etatus uuid desconocido'
-                #~ mensaje_global = mensaje_global + mensaje_SAT
-#~
-                #~ print 'mensaje final es: ',mensaje_global.decode(encoding='UTF-8', errors='strict')
-                #~ raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
-        #~ else:
-            #~ mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
-            #~ raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
-        #~ return {}
 
 wizard_export_invoice_pac_sf_v6()
 

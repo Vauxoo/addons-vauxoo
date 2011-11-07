@@ -115,19 +115,15 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
                     mensaje_SAT = '\n- Estatus de respuesta del SAT desconocido'
                 mensaje_global = mensaje_global + mensaje_SAT
 
-                #~ print '----------context,',context,'data',data,'ids',ids
-                #~ raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
         else:
             mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
-            #~ raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
         self.write(cr, uid, ids, {'message': mensaje_global }, context=None)
-
         return True
 
     def _get_file(self,cr, uid, context):
         print '_get_file, el context es',context
         atta_obj = self.pool.get('ir.attachment')
-        atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id'])], context=context)
+        atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('name', 'ilike', '%.xml')], context=context)
         res={}
         print '---------atta id',atta_id
         if atta_id:
@@ -136,18 +132,16 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
         else:
             inv_xml = False
-            raise osv.except_osv(('Estado de Cancelacion!'),('Esta factra no ha sido timbrada, por lo que no es posible cancelarse'))
-            #~ self.msg_g = 'Esta factura no ha sido timbrada, por lo que no es posible cancelarla'
+            raise osv.except_osv(('Estado de Cancelación!'),('Esta factra no ha sido timbrada, por lo que no es posible cancelarse.'))
         return inv_xml
 
 
     _columns = {
         'file': fields.binary('File', readonly=True),
-        #~ 'file': fields.char('file',size=128),
         'message': fields.text('text'),
 
     }
-#~ #~
+
     _defaults= {
         'message': 'Select cancel Invoice button for cancel to PAC',
         'file': _get_file
