@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE ICECAT-interface SYSTEM "http://data.icecat.biz/dtd/ICECAT-interface_response.dtd"><!-- source: ICEcat.biz 2011 --><ICECAT-interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://data.icecat.biz/xsd/ICECAT-interface_response.xsd">
-
-	<Product Code="-1" ID="?6935364051495?" ErrorMessage="IP address not included in the user profile: 192.168.1.238"  />
-
-</ICECAT-interface>
