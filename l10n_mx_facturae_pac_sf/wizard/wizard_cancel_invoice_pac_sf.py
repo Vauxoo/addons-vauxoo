@@ -89,16 +89,17 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                 resultado = wsdl_client.cancelar(*params)
-
-                status = resultado['resultados']['status']
-                status_uuid = resultado['resultados']['statusUUID']
+                status = resultado['resultados'] and resultado['resultados']['status'] or ''
+                status_uuid = resultado['resultados'] and resultado['resultados']['statusUUID'] or ''
                 msg_status={}
                 if status =='200':
-                    mensaje_global = '- El proceso de cancelación se ha completado correctamente'
-                elif status =='500':
-                    mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
-                folio_cancel = resultado['resultados']['uuid']
-                mensaje_global = mensaje_global +'\n- El uuid cancelado es: ' + folio_cancel
+                    folio_cancel = resultado['resultados'] and resultado['resultados']['uuid'] or ''
+                    mensaje_global = '- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel
+                    #~ mensaje_global = mensaje_global +'\n- El uuid cancelado es: ' + folio_cancel
+                #~ elif status =='500':
+                    #~ mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
+                else:
+                    mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente'
 
                 if status_uuid == '201':
                     mensaje_SAT = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
@@ -111,15 +112,45 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
                 elif status_uuid == '205':
                     mensaje_SAT = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
                 else:
-                    mensaje_SAT = '- Etatus uuid desconocido'
+                    mensaje_SAT = '\n- Estatus de respuesta del SAT desconocido'
                 mensaje_global = mensaje_global + mensaje_SAT
 
-                #~ print 'mensaje final es: ',mensaje_global.decode(encoding='UTF-8', errors='strict')
-                raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
+                #~ print '----------context,',context,'data',data,'ids',ids
+                #~ raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
         else:
             mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
-            raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
-        return {}
+            #~ raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
+        self.write(cr, uid, ids, {'message': mensaje_global }, context=None)
 
+        return True
+
+    def _get_file(self,cr, uid, context):
+        print '_get_file, el context es',context
+        atta_obj = self.pool.get('ir.attachment')
+        atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id'])], context=context)
+        res={}
+        print '---------atta id',atta_id
+        if atta_id:
+            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
+            inv_xml = base64.encodestring(atta_brw.db_datas)
+
+        else:
+            inv_xml = False
+            raise osv.except_osv(('Estado de Cancelacion!'),('Esta factra no ha sido timbrada, por lo que no es posible cancelarse'))
+            #~ self.msg_g = 'Esta factura no ha sido timbrada, por lo que no es posible cancelarla'
+        return inv_xml
+
+
+    _columns = {
+        'file': fields.binary('File', readonly=True),
+        #~ 'file': fields.char('file',size=128),
+        'message': fields.text('text'),
+
+    }
+#~ #~
+    _defaults= {
+        'message': 'Select cancel Invoice button for cancel to PAC',
+        'file': _get_file
+    }
 wizard_cancel_invoice_pac_sf()
 
