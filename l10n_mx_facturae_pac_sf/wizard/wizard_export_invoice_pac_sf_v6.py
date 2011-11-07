@@ -50,13 +50,7 @@ import time
 class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
     _name='wizard.export.invoice.pac.sf.v6'
 
-    def inicia(self, cr, uid, context=None):
-       print 'entro de inicia'
-       return 'nada'
-
-
     def _get_file(self, cr, uid, data, context={}):
-        print 'dentro del _get_file el data es',data
         if not context:
             context = {}
         #context.update( {'date': data['form']['date']} )
@@ -84,7 +78,6 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
 
         fdata = base64.encodestring( xml_data )
         msg = "Presiona clic en el boton 'subir archivo'"
-        #~ return {'file': fdata, 'fname': fname_invoice, 'msg': msg}
         self.fdata=fdata
         self.msg=msg
         self.fdata=fdata
@@ -96,16 +89,11 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
         invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = self.pool.get('params.pac')
         cfd_data = base64.decodestring( self.fdata )
-        print 'dentro de upload ws es data es',data
-        print 'el context es',context
-        print 'el invoce_obj es',invoice_obj
 
-        #~ invoice_ids = int(data['active_id'])
-        #~ invoice_ids = context['active_id']
         invoice_ids = context.get('active_ids',[])
-        print 'el invoice_ids es',invoice_ids
+        #~ print 'el invoice_ids es',invoice_ids
         invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
-        print 'el invoice es', invoice
+        #~ print 'el invoice es', invoice
         #get currency and rate from invoice
         currency = invoice.currency_id.name
         currency_enc = currency.encode('UTF-8', 'strict')
@@ -154,7 +142,6 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                     wsdl_client.soapproxy.config.debug = 0
                     wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                     resultado = wsdl_client.timbrar(*params)
-                    print '-----------------------------probando el resultado es',resultado
                     msg = resultado['resultados'] and resultado['resultados']['mensaje'] or ''
                     status = resultado['resultados'] and resultado['resultados']['status'] or ''
                     if status == '200':
@@ -174,7 +161,6 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                         msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
 
                         if cfdi_data['cfdi_xml']:
-                            print 'el cfdi data es',cfdi_data['cfdi_xml']
                             escribe=self.write(cr, uid, data, {'message': msg, 'file':  base64.encodestring(cfdi_data['cfdi_xml']), }, context=None)
 
                     elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
@@ -194,7 +180,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
     }
 
     _defaults= {
-        'message': 'Seleccione el botón Subir para exportar al PAC',
+        'message': 'Seleccione el botón Subir Factura para exportar al PAC',
         'file': _get_file,
     }
 

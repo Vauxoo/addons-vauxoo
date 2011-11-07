@@ -9,13 +9,14 @@
             <field name="arch" type="xml">
                 <form string="Export invoice V6">
                     <separator colspan="4" string="File"/>
-                    <field name='file' nolabel="1"/>
+                    <field name='file' nolabel="1" colspan="4"/>
                     <newline/>
                     <separator colspan="4" string="Message"/>
-                    <field name='message' nolabel="1"/>
+                    <field name='message' nolabel="1" colspan="4"/>
+                    <separator string="" colspan="4"/>
                     <newline/>
-                    <button special="cancel" string="_Close" icon="gtk-cancel" colspan="2"/>
-                    <button name="upload_ws_file" type="object" string="_Upload Invoice" icon="gtk-ok" colspan="2"/>
+                    <button special="cancel" string="_Close" icon="gtk-cancel"/>
+                    <button name="upload_ws_file" type="object" string="_Upload Invoice" icon="gtk-ok"/>
                 </form>
             </field>
         </record>

@@ -121,18 +121,16 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
         return True
 
     def _get_file(self,cr, uid, context):
-        print '_get_file, el context es',context
         atta_obj = self.pool.get('ir.attachment')
         atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('name', 'ilike', '%.xml')], context=context)
         res={}
-        print '---------atta id',atta_id
         if atta_id:
             atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
             inv_xml = base64.encodestring(atta_brw.db_datas)
 
         else:
             inv_xml = False
-            raise osv.except_osv(('Estado de Cancelación!'),('Esta factra no ha sido timbrada, por lo que no es posible cancelarse.'))
+            raise osv.except_osv(('Estado de Cancelación!'),('Esta factura no ha sido timbrada, por lo que no es posible cancelarse.'))
         return inv_xml
 
 
@@ -143,7 +141,7 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
     }
 
     _defaults= {
-        'message': 'Select cancel Invoice button for cancel to PAC',
+        'message': 'Seleccione el botón Cancelar Factura para exportar al PAC',
         'file': _get_file
     }
 wizard_cancel_invoice_pac_sf()
