@@ -21,7 +21,7 @@
             </field>
         </record>
 
-        <act_window name="Export Invoice to pac SF V6"
+        <act_window name="Export Invoice PAC SF V6"
             res_model="wizard.export.invoice.pac.sf.v6"
             src_model="account.invoice"
             view_mode="form"
