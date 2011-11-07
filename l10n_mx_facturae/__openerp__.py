@@ -35,14 +35,15 @@ Requires the following programs:
   xsltproc
     Ubuntu insall with:
         sudo apt-get install xsltproc
-  
+
   openssl
       Ubuntu insall with:
         sudo apt-get install openssl
     """,
     "website" : "http://moylop.blogspot.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document", 
+    "depends" : ["account",
+    "base_vat", "document",
             "l10n_mx_facturae_lib", "l10n_mx_partner_address",
             "l10n_mx_facturae_cer",
             "l10n_mx_invoice_datetime",
