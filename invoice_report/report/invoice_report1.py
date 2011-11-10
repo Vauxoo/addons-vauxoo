@@ -39,43 +39,53 @@ class invoice_report1(report_sxw.rml_parse):
                 'get_invoice':self._get_invoice,
                 'compute_lines':self.___compute_lines,
             })
-    def ___compute_lines(self):
-        print 'estamos dentro de compute'
+    def ___compute_lines(self,inv_id):
+        print 'estamos dentro de compute y el inv_id es:',inv_id
         result = {}
+
         dic = {}
+
         for invoice in self.invoice:
-            src = []
-            lines = []
-            if invoice.move_id:
-                for m in invoice.move_id.line_id:
-                    temp_lines = []
-                    if m.reconcile_id:
-                        temp_lines = map(lambda x: x.id, m.reconcile_id.line_id)
-                    elif m.reconcile_partial_id:
-                        temp_lines = map(lambda x: x.id, m.reconcile_partial_id.line_partial_ids)
-                    lines += [x for x in temp_lines if x not in lines]
-                    src.append(m.id)
+            if inv_id == invoice.id:
+                print 'dentro del primer for el invoice.id es',invoice.id
+                src = []
+                lines = []
+                if invoice.move_id:
+                    for m in invoice.move_id.line_id:
+                        temp_lines = []
+                        if m.reconcile_id:
+                            temp_lines = map(lambda x: x.id, m.reconcile_id.line_id)
+                        elif m.reconcile_partial_id:
+                            temp_lines = map(lambda x: x.id, m.reconcile_partial_id.line_partial_ids)
+                        lines += [x for x in temp_lines if x not in lines]
+                        src.append(m.id)
 
-            lines = filter(lambda x: x not in src, lines)
-            result[invoice.id] = lines
+                lines = filter(lambda x: x not in src, lines)
+                result[invoice.id] = lines
 
-            subq="""
-                    select name,amount,voucher_id
-                    from account_voucher_line
-                    where voucher_id in(
-                                        select id from account_voucher
-                                        where move_id in (
-                                                        select a.move_id
-                                                        from account_move_line a where id in (%s)
-                                                        )
-                                        )
-            """%( ','.join(map(str,result[invoice.id])) )
-            self.cr.execute( subq )
-            montos=self.cr.fetchall()
-            print 'el result desglosado es',invoice.id,'--',result[invoice.id],'montos',montos
-            #~ print '--------------los montos son',montos
-        print 'el result dentro de compute es',result
-        return result
+                subq="""
+                        select id--name,amount,voucher_id
+                        from account_voucher_line
+                        where voucher_id in(
+                                            select id from account_voucher
+                                            where move_id in (
+                                                            select a.move_id
+                                                            from account_move_line a where id in (%s)
+                                                            )
+                                            )
+                """%( ','.join(map(str,result[invoice.id])) )
+                self.cr.execute( subq )
+                voucher_line_ids = [ vl_id[0] for vl_id in self.cr.fetchall() ]
+                print 'los voucher ids de la factura',invoice.id,'son',voucher_line_ids
+                vou_obj = self.pool.get('account.voucher.line')
+                vou_brw= vou_obj.browse(self.cr, self.uid, voucher_line_ids)
+
+
+                #~ montos=self.cr.fetchall()
+                #~ print 'el result desglosado es',invoice.id,'--',result[invoice.id],'montos',montos
+                #~ print '--------------los montos son',montos
+        print 'el return dentro de compute es',vou_brw
+        return vou_brw
 
     def _get_invoice(self, partner_id):
         print 'partner id es',partner_id
@@ -85,7 +95,7 @@ class invoice_report1(report_sxw.rml_parse):
         print 'los ids de las facturas son',inv_ids
         #~ print 'lo browse de invoice es',inv_brw.internal_number
         self.invoice=inv_brw
-
+        print 'el inv_brw es',inv_brw
         return inv_brw
 
 

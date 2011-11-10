@@ -2,7 +2,7 @@
 <document filename="test.pdf">
   <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="57.0" y1="57.0" width="498" height="717"/>
+      <frame id="first" x1="57.0" y1="57.0" width="498" height="689"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -24,6 +24,16 @@
       <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,1" stop="1,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,2" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,2" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,3" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,3" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,3" stop="1,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Tabla2">
@@ -66,13 +76,34 @@
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="6,1" stop="6,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="6,1" stop="6,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="7,1" stop="7,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="7,1" stop="7,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="7,1" stop="7,1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="7,-1" stop="7,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,2" stop="0,2"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tabla3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Helvetica"/>
-    <paraStyle name="P2" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
-    <paraStyle name="P3" fontName="Helvetica"/>
+    <paraStyle name="P1" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
+    <paraStyle name="P2" fontName="Helvetica"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P4" fontName="Helvetica"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -84,7 +115,6 @@
     <images/>
   </stylesheet>
   <story>
-    <para style="Standard">Hola mundo</para>
     <para style="Standard">
       <font color="white"> </font>
     </para>
@@ -94,22 +124,47 @@
     <blockTable colWidths="249.0,249.0" style="Tabla1">
       <tr>
         <td>
-          <para style="P2">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[o.name]]</font></para>
+          <para style="P1">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[o.name]]</font></para>
+          <para style="P1">
+            <font face="Helvetica" size="10.0">[[ o.street]]</font>
+          </para>
+          <para style="P1">
+            <font face="Helvetica" size="10.0">[[ o.street2]]</font>
+          </para>
+          <para style="P1">
+            <font face="Helvetica" size="10.0">[[ o.zip ]]</font>
+          </para>
         </td>
         <td>
-          <para style="Table Contents">
+          <para style="P6">
             <font color="white"> </font>
           </para>
         </td>
       </tr>
       <tr>
         <td>
-          <para style="P1">
+          <para style="P7">Tel: [[o.phone or removeParentNode('para') ]]</para>
+        </td>
+        <td>
+          <para style="P6">RFC: [[o.vat or removeParentNode('para') ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P7">Contacto: </para>
+        </td>
+        <td>
+          <para style="P6">Moneda:</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P4">
             <font color="white"> </font>
           </para>
         </td>
         <td>
-          <para style="Table Contents">
+          <para style="P6">
             <font color="white"> </font>
           </para>
         </td>
@@ -118,7 +173,7 @@
     <para style="Standard">
       <font color="white"> </font>
     </para>
-    <para style="P3">
+    <para style="P2">
       <font color="white"> </font>
     </para>
     <blockTable colWidths="71.0,71.0,71.0,71.0,71.0,71.0,71.0" style="Tabla2">
@@ -147,22 +202,16 @@
       </tr>
       <tr>
         <td>
-          <para style="Table Contents"><font face="Helvetica" size="9.0">[[ repeatIn(get_invoice(o.id),'inv')]]</font> [[ inv.number ]]</para>
+          <para style="Table Contents"><font face="Helvetica" size="9.0">[[ repeatIn(get_invoice(o.id),'inv')]]</font> [[ inv.date_invoice ]]</para>
         </td>
         <td>
-          <para style="Table Contents">
-            <font color="white"> </font>
-          </para>
+          <para style="Table Contents">[[inv.date_due]]</para>
         </td>
         <td>
-          <para style="Table Contents">
-            <font color="white"> </font>
-          </para>
+          <para style="Table Contents">[[inv.name]]</para>
         </td>
         <td>
-          <para style="Table Contents">
-            <font color="white"> </font>
-          </para>
+          <para style="Table Contents">[[inv.internal_number]]</para>
         </td>
         <td>
           <para style="Table Contents">[[ inv.amount_total ]]</para>
@@ -173,8 +222,21 @@
           </para>
         </td>
         <td>
-          <para style="Table Contents">
-            <font color="white"> </font>
+          <para style="P3">
+            <font face="Helvetica" size="11.0"/>
+          </para>
+          <blockTable colWidths="66.0" style="Tabla3">
+            <tr>
+              <td>
+                <para style="P5">[[repeatIn(compute_lines(inv.id), 'm' )]] <font face="Helvetica" size="10.0">[[ m.amount ]]</font></para>
+              </td>
+            </tr>
+          </blockTable>
+          <para style="P3">
+            <font face="Helvetica" size="11.0"/>
+          </para>
+          <para style="P3">
+            <font face="Helvetica" size="11.0"/>
           </para>
         </td>
       </tr>
@@ -185,7 +247,9 @@
     <para style="Standard">
       <font color="white"> </font>
     </para>
-    <para style="Standard">[[compute_lines()]]</para>
+    <para style="P3">
+      <font face="Helvetica" size="11.0"/>
+    </para>
     <para style="Standard">
       <font color="white"> </font>
     </para>
