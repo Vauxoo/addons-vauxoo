@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_account_journal_move" model="ir.ui.view">
+            <field name="name">view.wizard.account.journal.move</field>
+            <field name="model">wizard.account.journal.move</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Obtiene rangos y diario">
+                    <field name="journal_id" colspan="4"/>
+                    <newline/>
+                    <field name="filter_type"/>
+                    <newline/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="period_start"/>
+                    <field name="period_end"/>
+
+                    <newline/>
+                    <separator colspan="4"/>
+                    <group colspan="4" col="6">
+                        <button special="cancel" string="_Cancel" icon="gtk-cancel"/>
+                        <button name="check_report" type="object" string="_Generar Reporte" icon="gtk-ok"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!--<act_window name="Banking Movements Report"
+            res_model="wizard.account.journal.move"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_wizard_acount_journal_move"/>
+-->
+        <record id="action_wizard_acount_journal_move" model="ir.actions.act_window">
+            <field name="name">Banking Movements Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.account.journal.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_account_journal_move"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            parent="account.menu_finance_legal_statement"
+            id="reports_account_journal_move_line"
+            name="Reports"/>
+        <menuitem
+            id="wizard_account_jornal_move"
+            name="Banking Movements Report"
+            parent='reports_account_journal_move_line'
+            action='action_wizard_acount_journal_move'
+        />
+
+    </data>
+</openerp>
