@@ -72,10 +72,8 @@
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,1" stop="4,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,1" stop="5,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="5,1" stop="5,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="7,1" stop="7,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#000000" start="7,1" stop="7,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="7,-1" stop="7,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Tabla4">
       <blockAlignment value="LEFT"/>
@@ -87,8 +85,8 @@
     <paraStyle name="P1" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
     <paraStyle name="P2" fontName="Helvetica"/>
     <paraStyle name="P3" fontName="Helvetica" fontSize="9.0" leading="11"/>
-    <paraStyle name="P4" fontName="Helvetica"/>
-    <paraStyle name="P5" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="12.0" leading="15"/>
+    <paraStyle name="P5" fontName="Helvetica"/>
     <paraStyle name="P6" fontName="Helvetica" fontSize="10.0" leading="13"/>
     <paraStyle name="P7" fontName="Helvetica" fontSize="10.0" leading="13"/>
     <paraStyle name="P8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
@@ -147,7 +145,7 @@
       </tr>
       <tr>
         <td>
-          <para style="P4">
+          <para style="P5">
             <font color="white"> </font>
           </para>
         </td>
@@ -208,23 +206,36 @@
           <para style="Table Contents">
             <font color="white"> </font>
           </para>
-          <blockTable colWidths="66.0" style="Tabla4">
+          <blockTable colWidths="69.0,69.0" style="Tabla4">
             <tr>
               <td>
-                <para style="Table Contents"><font face="Helvetica" size="5.0">[[repeatIn(compute_lines(inv.id),'m') ]]</font> [[m.amount]]</para>
+                <para style="Table Contents"><font face="Helvetica" size="5.0">[[repeatIn(compute_lines(inv.id),'m') ]]</font> [[m.amount]] </para>
+                <para style="Table Contents">
+                  <font color="white"> </font>
+                </para>
+              </td>
+              <td>
+                <para style="Table Contents">
+                  <font color="white"> </font>
+                </para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="Table Contents">
+                  <font color="white"> </font>
+                </para>
+              </td>
+              <td>
+                <para style="Table Contents">[[get_saldo(inv.amount_total)]]</para>
               </td>
             </tr>
           </blockTable>
           <para style="Table Contents">
             <font color="white"> </font>
           </para>
-          <para style="Table Contents">
+          <para style="P4">
             <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P3">
-            <font face="Helvetica" size="11.0"/>
           </para>
         </td>
       </tr>

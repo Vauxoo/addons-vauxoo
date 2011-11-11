@@ -38,7 +38,18 @@ class invoice_report1(report_sxw.rml_parse):
                 'time': time,
                 'get_invoice':self._get_invoice,
                 'compute_lines':self.___compute_lines,
+                'get_saldo':self._get_saldo,
             })
+
+    def _get_saldo(self,monto):
+        print '===============entro al monto y el monto es',monto
+        print '===============eel self.amount_line es',self.amount_line
+
+        saldo = monto - self.amount_line
+        print '==============y el  saldo es',saldo
+        return str(saldo)
+
+
     def ___compute_lines(self,inv_id):
         print 'estamos dentro de compute y el inv_id es:',inv_id
         result = {}
@@ -79,11 +90,15 @@ class invoice_report1(report_sxw.rml_parse):
                 print 'los voucher ids de la factura',invoice.id,'son',voucher_line_ids
                 vou_obj = self.pool.get('account.voucher.line')
                 vou_brw= vou_obj.browse(self.cr, self.uid, voucher_line_ids)
-
+                self.amount_line=0
+                for amount_line in vou_brw:
+                    self.amount_line += amount_line.amount
+                    print '------------el amount es:',amount_line.amount
 
                 #~ montos=self.cr.fetchall()
                 #~ print 'el result desglosado es',invoice.id,'--',result[invoice.id],'montos',montos
                 #~ print '--------------los montos son',montos
+        print 'la suma del monto es:',self.amount_line
         print 'el return dentro de compute es',vou_brw
         return vou_brw
 
@@ -97,22 +112,6 @@ class invoice_report1(report_sxw.rml_parse):
         self.invoice=inv_brw
         print 'el inv_brw es',inv_brw
         return inv_brw
-
-
-        #~ subquery = """SELECT period_past.id
-                        #~ FROM account_period period_past
-                        #~ INNER JOIN
-                          #~ (
-                            #~ SELECT *
-                            #~ FROM account_period
-                            #~ WHERE id = %s
-                          #~ ) period_current
-                        #~ ON period_current.fiscalyear_id = period_past.fiscalyear_id
-                         #~ AND period_current.date_start > period_past.date_start
-                         #~ AND period_current.date_stop > period_past.date_stop
-                    #~ """%( period_start )
-                #~ self.cr.execute( subquery )
-                #~ period_ids = [ period_id[0] for period_id in self.cr.fetchall() ]
 
 report_sxw.report_sxw('report.invoice.report1', 'res.partner','addons/invoice_report/report/invoice_report1.rml', parser=invoice_report1)
 
