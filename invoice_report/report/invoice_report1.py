@@ -39,6 +39,9 @@ class invoice_report1(report_sxw.rml_parse):
                 'get_invoice':self._get_invoice,
                 'compute_lines':self.___compute_lines,
                 'get_saldo':self._get_saldo,
+                'get_total_debe':self._get_total_debe,
+                'get_total_haber':self._get_total_haber,
+                'get_total_saldo':self._get_total_saldo,
             })
 
     def _get_saldo(self,monto):
@@ -47,6 +50,7 @@ class invoice_report1(report_sxw.rml_parse):
 
         saldo = monto - self.amount_line
         print '==============y el  saldo es',saldo
+        self.saldo_final += saldo
         return str(saldo)
 
 
@@ -56,6 +60,8 @@ class invoice_report1(report_sxw.rml_parse):
 
         dic = {}
 
+
+        saldo_tot=0
         for invoice in self.invoice:
             if inv_id == invoice.id:
                 print 'dentro del primer for el invoice.id es',invoice.id
@@ -95,11 +101,12 @@ class invoice_report1(report_sxw.rml_parse):
                     self.amount_line += amount_line.amount
                     print '------------el amount es:',amount_line.amount
 
-                #~ montos=self.cr.fetchall()
-                #~ print 'el result desglosado es',invoice.id,'--',result[invoice.id],'montos',montos
-                #~ print '--------------los montos son',montos
+                self.debe_tot+=invoice.amount_total
         print 'la suma del monto es:',self.amount_line
         print 'el return dentro de compute es',vou_brw
+        self.haber_tot+=self.amount_line
+        print 'el total del haber es',self.haber_tot
+        print 'el total del debe es',self.debe_tot
         return vou_brw
 
     def _get_invoice(self, partner_id):
@@ -111,7 +118,18 @@ class invoice_report1(report_sxw.rml_parse):
         #~ print 'lo browse de invoice es',inv_brw.internal_number
         self.invoice=inv_brw
         print 'el inv_brw es',inv_brw
+        self.haber_tot=0
+        self.debe_tot=0
+        self.saldo_final =0
         return inv_brw
 
+    def _get_total_debe(self):
+        return str(self.debe_tot)
+
+    def _get_total_haber(self):
+        return str(self.haber_tot)
+
+    def _get_total_saldo(self):
+        return str(self.saldo_final)
 report_sxw.report_sxw('report.invoice.report1', 'res.partner','addons/invoice_report/report/invoice_report1.rml', parser=invoice_report1)
 

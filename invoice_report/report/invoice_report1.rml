@@ -74,6 +74,21 @@
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,1" stop="5,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="5,1" stop="5,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,4" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,4" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,4" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,4" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,4" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,4" stop="5,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="6,4" stop="6,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="6,4" stop="6,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Tabla4">
       <blockAlignment value="LEFT"/>
@@ -210,9 +225,6 @@
             <tr>
               <td>
                 <para style="Table Contents"><font face="Helvetica" size="5.0">[[repeatIn(compute_lines(inv.id),'m') ]]</font> [[m.amount]] </para>
-                <para style="Table Contents">
-                  <font color="white"> </font>
-                </para>
               </td>
               <td>
                 <para style="Table Contents">
@@ -237,6 +249,35 @@
           <para style="P4">
             <font color="white"> </font>
           </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="Table Contents">Total:</para>
+        </td>
+        <td>
+          <para style="Table Contents">[[get_total_debe() ]]</para>
+        </td>
+        <td>
+          <para style="Table Contents">[[get_total_haber() ]]</para>
+        </td>
+        <td>
+          <para style="Table Contents">[[get_total_saldo() ]]</para>
         </td>
       </tr>
     </blockTable>
