@@ -10,7 +10,7 @@
             auto="True"
             menu="True"
             rml="invoice_report/report/invoice_report1.rml"
-            header="True"
+            header="False"
         />
 
     </data>
