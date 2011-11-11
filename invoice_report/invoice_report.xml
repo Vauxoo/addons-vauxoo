@@ -12,6 +12,15 @@
             rml="invoice_report/report/invoice_report1.rml"
             header="False"
         />
+         <report id="invoice_report_pagos"
+            string="Report payment V2"
+            model="res.partner"
+            name="invoice.report.pagos"
+            auto="True"
+            menu="True"
+            rml="invoice_report/report/payment_report2.rml"
+            header="False"
+        />
 
     </data>
 </openerp>
