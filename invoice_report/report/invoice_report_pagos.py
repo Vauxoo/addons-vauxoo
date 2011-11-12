@@ -39,8 +39,13 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 'get_payment': self._get_payment,
                 'get_invoice_payment': self._get_invoice_payment,
                 'get_line_payment': self._get_line_payment,
+                'get_total_pago': self._get_total_pago,
 
             })
+
+    def _get_total_pago(self):
+        print 'el get_total_pago es --------------------------------',self.tot_pago
+        return self.tot_pago
 
 
     def _get_line_payment(self,pay_id, inv_id):
@@ -60,11 +65,16 @@ class invoice_report_pagos(report_sxw.rml_parse):
         self.cr.execute( subq )
         invoice_ids = [ inv_id[0] for inv_id in self.cr.fetchall() ]
         print 'los ids de las lineas voucher son son',invoice_ids
-        inv_obj = self.pool.get('account.voucher.line')
-        inv_brw= inv_obj.browse(self.cr, self.uid, invoice_ids)[0]
-        print 'el retorno de Line paymente es',inv_brw
+        pay_obj = self.pool.get('account.voucher.line')
+        pay_brw= pay_obj.browse(self.cr, self.uid, invoice_ids)[0]
+        print 'el retorno de Line paymente es',pay_brw
+        print 'pay_brw.amount--------------es',pay_brw.amount
+        #~ for tot in pay_brw:
+        self.tot_pago += pay_brw.amount
 
-        return inv_brw.amount
+        print '===================================================dentro del for de pay_brw amnount:',pay_brw.amount
+
+        return str(pay_brw.amount)
 
     def _get_invoice_payment(self,pay_id):
         print 'dentro de gety_line pyment y el param es'
@@ -73,6 +83,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
                     from account_voucher a
                         inner join account_voucher_line b
                             on a.id=b.voucher_id
+                            and b.amount>0
                         inner join account_move_line c
                             on c.id=b.move_line_id
                         inner join account_invoice d
@@ -85,7 +96,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
         inv_obj = self.pool.get('account.invoice')
         inv_brw= inv_obj.browse(self.cr, self.uid, invoice_ids)
         print 'el retorno de paymente es',inv_brw
-
+        self.tot_pago=0
         return inv_brw
 
 
@@ -98,6 +109,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
         #~ print 'lo browse de invoice es',inv_brw.internal_number
         self.vou_brw=vou_brw
         print 'el vou_brw es',vou_brw
+        self.tot_pago=0
         return vou_brw
 
 report_sxw.report_sxw('report.invoice.report.pagos', 'res.partner','addons/invoice_report/report/payment_report2.rml', parser=invoice_report_pagos)
