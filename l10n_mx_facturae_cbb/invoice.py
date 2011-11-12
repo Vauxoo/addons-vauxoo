@@ -32,6 +32,7 @@ from tools.translate import _
 import netsvc
 import time
 import os
+import tempfile
 
 msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
 
