@@ -27,5 +27,5 @@
 
 import invoice
 import report
-import ir_sequence
+#import ir_sequence
 #import res_company
