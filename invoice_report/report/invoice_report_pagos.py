@@ -42,9 +42,20 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 'get_saldo': self._get_saldo,
                 'get_total_final_pagado': self._get_total_final_pagado,
                 'get_voucher_amount_total': self._get_voucher_amount_total,
+                'get_address': self._get_address,
 
 
             })
+
+    def _get_address (self,partner_id):
+        print 'dentro del get adrress con partner id',partner_id
+        partner_obj = self.pool.get('res.partner')
+        partner_address_obj= self.pool.get('res.partner.address')
+        address_id = partner_obj.address_get(self.cr, self.uid, partner_id, adr_pref=['default'])['default']
+        print 'el address_id es',address_id
+        self.address= partner_address_obj.browse(self.cr, self.uid, address_id)
+        print 'el  self.address es',self.address
+        return self.address
 
     def _get_voucher_amount_total(self):
         return self.total_voucher_amount
