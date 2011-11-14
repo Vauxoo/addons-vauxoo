@@ -30,25 +30,21 @@ import time
 #import pooler
 
 
-class wizard_account_journal_move(osv.osv_memory):
-    _name='wizard.account.journal.move'
+class wizard_payment_report(osv.osv_memory):
+    _name='wizard.payment.report'
     #Agregar domain al journal#domain=[('type','=','bank'
     _columns={
-        'journal_id': fields.many2one('account.journal','Journal', domain="[('type', '=', 'bank')]", required=True),
         'date_start': fields.date('Date start', required=True),
         'date_end': fields.date('Date end', required=True),
-        'filter_type': fields.selection([('date', 'Date'),('period', 'Period')],'Filter Type', required=True),
-        'period_start': fields.many2one('account.period','Period Start', required=True),
-        'period_end': fields.many2one('account.period','Period End', required=True),
+        #~ 'filter_type': fields.selection([('date', 'Date'),('period', 'Period')],'Filter Type', required=True),
+
         #~ 'period_start': fields.char('Period Start', size=64),
         #~ 'period_end': fields.char('Period End', size=64),
     }
     _defaults = {
         'date_start': time.strftime('%Y-%m-01'),
         'date_end': lambda *a: time.strftime('%Y-%m-%d'),
-        'period_start': int(time.strftime('%m')),
-        'period_end': int(time.strftime('%m')),
-        'filter_type': 'period',
+
     }
 
     def check_report(self, cr, uid, ids, context=None):
@@ -59,13 +55,13 @@ class wizard_account_journal_move(osv.osv_memory):
 
         datas = {
             'ids': context.get('active_ids',[]),
-            'model': 'wizard.account.journal.move',
+            'model': 'wizard.payment.report',
             'form': data
         }
 
         return {
             'type': 'ir.actions.report.xml',
-            'report_name': 'account.journal.move.report',
+            'report_name': 'invoice.report.pagos',
             'datas': datas,
         }
-wizard_account_journal_move()
+wizard_payment_report()
