@@ -11,6 +11,8 @@
 
                     <field name="date_start"/>
                     <field name="date_end"/>
+                    <field name="currency"/>
+
 
                     <newline/>
                     <separator colspan="4"/>

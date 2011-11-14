@@ -43,9 +43,13 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 'get_total_final_pagado': self._get_total_final_pagado,
                 'get_voucher_amount_total': self._get_voucher_amount_total,
                 'get_address': self._get_address,
+                'get_currency': self._get_currency,
 
 
             })
+    def _get_currency(self,currency_id):
+        currency_obj = self.pool.get('res.currency').browse(self.cr, self.uid, currency_id)
+        return currency_obj
 
     def _get_address (self,partner_id):
         print 'dentro del get adrress con partner id',partner_id
@@ -124,10 +128,10 @@ class invoice_report_pagos(report_sxw.rml_parse):
         return inv_brw
 
 
-    def _get_payment(self, partner_id):
-        print 'partner id es',partner_id
+    def _get_payment(self, partner_id, date_start, date_end, currency_id):
+        print '**************dentro de _get_payment el partner id es',partner_id, 'el date_start es',date_start,'date end', date_end,'y la moneda es',currency_id
         vou_obj = self.pool.get('account.voucher')
-        vou_ids = vou_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id)] )
+        vou_ids = vou_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('date', '>=', date_start), ('date', '<=', date_end), ('currency_id', '=', currency_id)] )
         vou_brw= vou_obj.browse(self.cr, self.uid, vou_ids)
         print 'los ids de los voucher son',vou_ids
         #~ print 'lo browse de invoice es',inv_brw.internal_number

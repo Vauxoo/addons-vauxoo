@@ -36,6 +36,7 @@ class wizard_payment_report(osv.osv_memory):
     _columns={
         'date_start': fields.date('Date start', required=True),
         'date_end': fields.date('Date end', required=True),
+        'currency': fields.many2one('res.currency', 'Currency', required=True),
         #~ 'filter_type': fields.selection([('date', 'Date'),('period', 'Period')],'Filter Type', required=True),
 
         #~ 'period_start': fields.char('Period Start', size=64),
