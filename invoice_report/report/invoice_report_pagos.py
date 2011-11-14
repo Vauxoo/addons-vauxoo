@@ -39,19 +39,24 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 'get_payment': self._get_payment,
                 'get_invoice_payment': self._get_invoice_payment,
                 'get_line_payment': self._get_line_payment,
-                'get_total_pago': self._get_total_pago,
+                'get_saldo': self._get_saldo,
                 'get_total_final_pagado': self._get_total_final_pagado,
+                'get_voucher_amount_total': self._get_voucher_amount_total,
 
 
             })
+
+    def _get_voucher_amount_total(self):
+        return self.total_voucher_amount
 
     def _get_total_final_pagado(self):
         print 'dentro del total final pagado y devuelve',self.total_final_pagado
         return self.total_final_pagado
 
-    def _get_total_pago(self, pago_amount):
+    def _get_saldo(self, pago_amount):
         print 'el get_total_pago es -------------------------------- ',self.tot_pago,'menos el pago_amount',pago_amount
         self.total_final_pagado += self.tot_pago
+        self.total_voucher_amount += pago_amount
         return str(self.tot_pago - pago_amount)
 
 
@@ -118,6 +123,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
         self.vou_brw=vou_brw
         print 'el vou_brw es',vou_brw
         self.total_final_pagado=0
+        self.total_voucher_amount=0
         return vou_brw
 
 report_sxw.report_sxw('report.invoice.report.pagos', 'res.partner','addons/invoice_report/report/payment_report2.rml', parser=invoice_report_pagos)
