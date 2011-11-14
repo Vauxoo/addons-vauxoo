@@ -42,16 +42,17 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 'get_total_pago': self._get_total_pago,
                 'get_total_final_pagado': self._get_total_final_pagado,
 
+
             })
 
     def _get_total_final_pagado(self):
         print 'dentro del total final pagado y devuelve',self.total_final_pagado
         return self.total_final_pagado
 
-    def _get_total_pago(self):
-        print 'el get_total_pago es --------------------------------',self.tot_pago
+    def _get_total_pago(self, pago_amount):
+        print 'el get_total_pago es -------------------------------- ',self.tot_pago,'menos el pago_amount',pago_amount
         self.total_final_pagado += self.tot_pago
-        return self.tot_pago
+        return str(self.tot_pago - pago_amount)
 
 
     def _get_line_payment(self,pay_id, inv_id):
