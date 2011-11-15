@@ -56,41 +56,24 @@ class invoice_report1(report_sxw.rml_parse):
 
     def ___compute_lines(self,inv_id):
         print 'estamos dentro de compute y el inv_id es:',inv_id
-        result = {}
-
         dic = {}
-
-
         saldo_tot=0
         for invoice in self.invoice:
             if inv_id == invoice.id:
                 print 'dentro del primer for el invoice.id es',invoice.id
-                src = []
-                lines = []
-                if invoice.move_id:
-                    for m in invoice.move_id.line_id:
-                        temp_lines = []
-                        if m.reconcile_id:
-                            temp_lines = map(lambda x: x.id, m.reconcile_id.line_id)
-                        elif m.reconcile_partial_id:
-                            temp_lines = map(lambda x: x.id, m.reconcile_partial_id.line_partial_ids)
-                        lines += [x for x in temp_lines if x not in lines]
-                        src.append(m.id)
-
-                lines = filter(lambda x: x not in src, lines)
-                result[invoice.id] = lines
 
                 subq="""
-                        select id--name,amount,voucher_id
-                        from account_voucher_line
-                        where voucher_id in(
-                                            select id from account_voucher
-                                            where move_id in (
-                                                            select a.move_id
-                                                            from account_move_line a where id in (%s)
-                                                            )
-                                            )
-                """%( result[invoice.id] and ','.join(map(str,result[invoice.id])) or '0')
+                        select b.id-- devuelve los ids de voucher_line correspondientes a esa factura
+                            from account_voucher a
+                            inner join account_voucher_line b
+                                on a.id=b.voucher_id
+                                and b.amount<>0
+                            inner join account_move_line c
+                                on c.id=b.move_line_id
+                            inner join account_invoice d
+                                on d.move_id=c.move_id
+                            where d.id=%s
+                """%( inv_id)
                 self.cr.execute( subq )
                 voucher_line_ids = [ vl_id[0] for vl_id in self.cr.fetchall() ]
                 print 'los voucher ids de la factura',invoice.id,'son',voucher_line_ids
@@ -112,7 +95,7 @@ class invoice_report1(report_sxw.rml_parse):
     def _get_invoice(self, partner_id):
         print 'partner id es',partner_id
         inv_obj = self.pool.get('account.invoice')
-        inv_ids = inv_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('state', 'not in', ['cancel', 'proforma2'])] )
+        inv_ids = inv_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('state', 'not in', ['cancel', 'proforma2', 'proforma'])] )
         inv_brw= inv_obj.browse(self.cr, self.uid, inv_ids)
         print 'los ids de las facturas son',inv_ids
         #~ print 'lo browse de invoice es',inv_brw.internal_number

@@ -110,7 +110,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
                     from account_voucher a
                         inner join account_voucher_line b
                             on a.id=b.voucher_id
-                            and b.amount>0
+                            and b.amount<>0
                         inner join account_move_line c
                             on c.id=b.move_line_id
                         inner join account_invoice d
