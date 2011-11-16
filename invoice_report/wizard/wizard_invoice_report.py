@@ -34,8 +34,8 @@ class wizard_invoice_report(osv.osv_memory):
     _name='wizard.invoice.report'
     #Agregar domain al journal#domain=[('type','=','bank'
     _columns={
-        'date_start': fields.date('Date start', required=True),
-        'date_end': fields.date('Date end', required=True),
+        'date_start': fields.datetime('Date start', required=True),
+        'date_end': fields.datetime('Date end', required=True),
         'currency': fields.many2one('res.currency', 'Currency', required=True),
         #~ 'filter_type': fields.selection([('date', 'Date'),('period', 'Period')],'Filter Type', required=True),
 
@@ -43,8 +43,8 @@ class wizard_invoice_report(osv.osv_memory):
         #~ 'period_end': fields.char('Period End', size=64),
     }
     _defaults = {
-        'date_start': time.strftime('%Y-%m-01'),
-        'date_end': lambda *a: time.strftime('%Y-%m-%d'),
+        'date_start': time.strftime('%Y-%m-01 00:00:00'),
+        'date_end': lambda *a: time.strftime('%Y-%m-%d 23:59:59'),
 
     }
 

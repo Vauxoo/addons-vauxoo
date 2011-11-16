@@ -2,7 +2,7 @@
 <document filename="test.pdf">
   <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="4.0" y1="57.0" width="603" height="733"/>
+      <frame id="first" x1="2.0" y1="57.0" width="605" height="733"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -45,29 +45,25 @@
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
-    <paraStyle name="P2" fontName="Helvetica"/>
-    <paraStyle name="P3" fontName="Helvetica" fontSize="10.0" leading="13"/>
-    <paraStyle name="P4" fontName="Helvetica" fontSize="10.0" leading="13"/>
-    <paraStyle name="P5" fontName="Helvetica" fontSize="9.0" leading="11"/>
-    <paraStyle name="P6" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT"/>
-    <paraStyle name="P7" fontName="Helvetica" fontSize="9.0" leading="11"/>
-    <paraStyle name="P8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
-    <paraStyle name="P9" fontName="Helvetica" fontSize="7.0" leading="9"/>
-    <paraStyle name="P10" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
-    <paraStyle name="P11" fontName="Helvetica" fontSize="7.0" leading="9"/>
-    <paraStyle name="P12" fontName="Helvetica" fontSize="6.0" leading="8"/>
-    <paraStyle name="P13" fontName="Helvetica" fontSize="10.0" leading="13" alignment="RIGHT"/>
-    <paraStyle name="P14" fontName="Helvetica" fontSize="4.0" leading="5"/>
-    <paraStyle name="P15" fontName="Helvetica" fontSize="2.0" leading="3"/>
-    <paraStyle name="P16" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="10.0" leading="13"/>
-    <paraStyle name="P17" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="10.0" leading="13"/>
-    <paraStyle name="P18" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
-    <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10"/>
-    <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11"/>
-    <paraStyle name="P21" fontName="Helvetica" fontSize="10.0" leading="13"/>
-    <paraStyle name="P22" fontName="Helvetica" fontSize="9.0" leading="11"/>
-    <paraStyle name="P23" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="7.0" leading="9"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="6.0" leading="8"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="10.0" leading="13" alignment="RIGHT"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="2.0" leading="3"/>
+    <paraStyle name="P10" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P11" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8"/>
+    <paraStyle name="P12" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P13" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P14" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P15" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P16" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P17" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="7.0" leading="9"/>
+    <paraStyle name="P18" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="7.0" leading="9"/>
+    <paraStyle name="P19" rightIndent="0.0" leftIndent="-3.0" fontName="Helvetica" fontSize="9.0" leading="11"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -79,179 +75,179 @@
     <images/>
   </stylesheet>
   <story>
-    <para style="P15">
+    <para style="P9">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="302.0,302.0" style="Tabla8">
+    <blockTable colWidths="303.0,303.0" style="Tabla8">
       <tr>
         <td>
-          <para style="P1">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[o.company_id.name]]</font></para>
+          <para style="P11">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[o.company_id.name]]</font></para>
         </td>
         <td>
-          <para style="P13">
+          <para style="P8">
             <font color="white"> </font>
           </para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="114.0,249.0,241.0" style="Tabla7">
+    <blockTable colWidths="114.0,249.0,242.0" style="Tabla7">
       <tr>
         <td>
-          <para style="P20">Estado de cuenta de: </para>
+          <para style="P13">Estado de cuenta de: </para>
         </td>
         <td>
-          <para style="P16">[[o.name]]</para>
-          <para style="P19">[[ get_address(o.id).street ]]</para>
-          <para style="P19">[[ get_address(o.id).street2 ]]</para>
-          <para style="P19">[[ get_address(o.id).zip ]]</para>
+          <para style="P10">[[o.name]]</para>
+          <para style="P12">[[ get_address(o.id).street ]]</para>
+          <para style="P12">[[ get_address(o.id).street2 ]]</para>
+          <para style="P12">[[ get_address(o.id).zip ]]</para>
         </td>
         <td>
-          <para style="P3">
+          <para style="P14">
             <font face="Helvetica" size="9.0">RFC: [[o.vat ]]</font>
           </para>
-          <para style="P3">
+          <para style="P14">
             <font face="Helvetica" size="9.0">Moneda: [[ get_currency(data['form']['currency']).name ]]</font>
           </para>
-          <para style="P3">
+          <para style="P14">
             <font face="Helvetica" size="9.0">Fecha Impresion:</font>
             <font face="Helvetica" size="9.0"> [[ time.strftime("%Y-%m-%d ") ]]</font>
           </para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="603.0" style="Tabla9">
+    <blockTable colWidths="605.0" style="Tabla9">
       <tr>
         <td>
-          <para style="P22">
+          <para style="P15">
             <font face="Helvetica">Periodo del [[ data['form']['date_start'] ]] al [[ data['form']['date_end'] ]] </font>
           </para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="52.0,70.0,118.0,88.0,86.0,68.0,118.0" style="Tabla3">
+    <blockTable colWidths="96.0,57.0,89.0,85.0,86.0,68.0,118.0" style="Tabla3">
       <tr>
         <td>
-          <para style="P5">Fecha</para>
+          <para style="P1">Fecha</para>
         </td>
         <td>
-          <para style="P5">Fecha venc</para>
+          <para style="P19">FechaVenc</para>
         </td>
         <td>
-          <para style="P5">Documento</para>
+          <para style="P1">Documento</para>
         </td>
         <td>
-          <para style="P6">Debe</para>
+          <para style="P2">Debe</para>
         </td>
         <td>
-          <para style="P6">Haber</para>
+          <para style="P2">Haber</para>
         </td>
         <td>
-          <para style="P6">Saldo</para>
+          <para style="P2">Saldo</para>
         </td>
         <td>
-          <para style="P5">Referencia</para>
+          <para style="P1">Referencia</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="603.0" style="Tabla2">
+    <blockTable colWidths="605.0" style="Tabla2">
       <tr>
         <td>
-          <para style="P7">===================================================================================================</para>
+          <para style="P3">===================================================================================================</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="603.0" style="Tabla5">
+    <blockTable colWidths="605.0" style="Tabla5">
       <tr>
         <td>
-          <para style="P12">[[ repeatIn(get_invoice(o.id, data['form']['date_start'], data['form']['date_end'], data['form']['currency'] ),'inv') ]]</para>
-          <blockTable colWidths="51.0,68.0,118.0,87.0,87.0,68.0,119.0" style="Tabla6">
+          <para style="P7">[[ repeatIn(get_invoice(o.id, data['form']['date_start'], data['form']['date_end'], data['form']['currency'] ),'inv') ]]</para>
+          <blockTable colWidths="92.0,57.0,89.0,85.0,87.0,68.0,120.0" style="Tabla6">
             <tr>
               <td>
-                <para style="P11">[[ inv.date_invoice ]]</para>
+                <para style="P17">[[ inv.date_invoice ]]</para>
               </td>
               <td>
-                <para style="P9">[[inv.date_due]]</para>
+                <para style="P5">[[inv.date_due]]</para>
               </td>
               <td>
-                <para style="P9">Factura del cliente -[[inv.internal_number]]</para>
+                <para style="P5">Factura del cliente -[[inv.internal_number]]</para>
               </td>
               <td>
-                <para style="P10">[[ inv.amount_total ]]</para>
+                <para style="P6">[[ inv.amount_total ]]</para>
               </td>
               <td>
-                <para style="P10">
+                <para style="P6">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P10">
+                <para style="P6">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P9">[[ inv.name ]]</para>
+                <para style="P5">[[ inv.name ]]</para>
               </td>
             </tr>
             <tr>
               <td>
-                <para style="P9">[[m.voucher_id.date]]</para>
+                <para style="P18">[[m.voucher_id.date]]</para>
               </td>
               <td>
-                <para style="P9">
+                <para style="P5">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P9">Pago del cliente [[m.voucher_id.number]]</para>
+                <para style="P5">Pago del cliente [[m.voucher_id.number]]</para>
               </td>
               <td>
-                <para style="P10">
+                <para style="P6">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P10"><font face="Helvetica" size="5.0">[[repeatIn(compute_lines(inv.id),'m') ]]</font> [[m.amount]] </para>
+                <para style="P6"><font face="Helvetica" size="5.0">[[repeatIn(compute_lines(inv.id),'m') ]]</font> [[m.amount]] </para>
               </td>
               <td>
-                <para style="P10">
+                <para style="P6">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P9">[[m.voucher_id.name]]</para>
+                <para style="P5">[[m.voucher_id.name]]</para>
               </td>
             </tr>
             <tr>
               <td>
-                <para style="P9">
+                <para style="P5">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P9">
+                <para style="P5">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P9">
+                <para style="P5">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P10">
+                <para style="P6">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P10">
+                <para style="P6">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P8">[[get_saldo(inv.amount_total)]]</para>
+                <para style="P4">[[get_saldo(inv.amount_total)]]</para>
               </td>
               <td>
-                <para style="P9">
+                <para style="P5">
                   <font color="white"> </font>
                 </para>
               </td>
@@ -264,11 +260,11 @@
       </tr>
       <tr>
         <td>
-          <para style="P7">===================================================================================================</para>
+          <para style="P3">===================================================================================================</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="53.0,119.0,69.0,91.0,85.0,67.0,119.0" style="Tabla4">
+    <blockTable colWidths="54.0,119.0,69.0,91.0,86.0,67.0,119.0" style="Tabla4">
       <tr>
         <td>
           <para style="Table Contents">
@@ -281,16 +277,16 @@
           </para>
         </td>
         <td>
-          <para style="P23">Total:</para>
+          <para style="P16">Total:</para>
         </td>
         <td>
-          <para style="P8">[[ get_total_debe()]]</para>
+          <para style="P4">[[ get_total_debe()]]</para>
         </td>
         <td>
-          <para style="P8">[[ get_total_haber()]]</para>
+          <para style="P4">[[ get_total_haber()]]</para>
         </td>
         <td>
-          <para style="P8">[[ get_total_saldo()]]</para>
+          <para style="P4">[[ get_total_saldo()]]</para>
         </td>
         <td>
           <para style="Table Contents">
