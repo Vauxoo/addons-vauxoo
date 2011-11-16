@@ -42,7 +42,23 @@ class invoice_report1(report_sxw.rml_parse):
                 'get_total_debe':self._get_total_debe,
                 'get_total_haber':self._get_total_haber,
                 'get_total_saldo':self._get_total_saldo,
+                'get_currency':self._get_currency,
+                'get_address':self._get_address,
             })
+
+    def _get_currency(self,currency_id):
+        currency_obj = self.pool.get('res.currency').browse(self.cr, self.uid, currency_id)
+        return currency_obj
+
+    def _get_address (self,partner_id):
+        print 'dentro del get adrress con partner id',partner_id
+        partner_obj = self.pool.get('res.partner')
+        partner_address_obj= self.pool.get('res.partner.address')
+        address_id = partner_obj.address_get(self.cr, self.uid, partner_id, adr_pref=['default'])['default']
+        print 'el address_id es',address_id
+        self.address= partner_address_obj.browse(self.cr, self.uid, address_id)
+        print 'el  self.address es',self.address
+        return self.address
 
     def _get_saldo(self,monto):
         print '===============entro al monto y el monto es',monto
@@ -92,10 +108,14 @@ class invoice_report1(report_sxw.rml_parse):
         print 'el total del debe es',self.debe_tot
         return vou_brw
 
-    def _get_invoice(self, partner_id):
-        print 'partner id es',partner_id
+    def _get_invoice(self, partner_id, date_start, date_end, currency_id):
+        print 'En get_invoice: partner id es',partner_id,'start',date_start,'end',date_end,'moneda',currency_id
         inv_obj = self.pool.get('account.invoice')
-        inv_ids = inv_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('state', 'not in', ['cancel', 'proforma2', 'proforma'])] )
+        inv_ids = inv_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id),
+                                                     ('state', 'not in', ['cancel', 'proforma2', 'proforma']),
+                                                     ('date_invoice', '>=', date_start),
+                                                     ('date_invoice', '<=', date_end),
+                                                     ('currency_id', '=', currency_id), ] )
         inv_brw= inv_obj.browse(self.cr, self.uid, inv_ids)
         print 'los ids de las facturas son',inv_ids
         #~ print 'lo browse de invoice es',inv_brw.internal_number
@@ -114,5 +134,5 @@ class invoice_report1(report_sxw.rml_parse):
 
     def _get_total_saldo(self):
         return str(self.saldo_final)
-report_sxw.report_sxw('report.invoice.report1', 'res.partner','addons/invoice_report/report/invoice_report1.rml', parser=invoice_report1)
+report_sxw.report_sxw('report.invoice.report1', 'res.partner','addons/invoice_report/report/invoice_report1.rml', parser=invoice_report1,  header="internal landscape")
 

@@ -141,5 +141,5 @@ class invoice_report_pagos(report_sxw.rml_parse):
         self.total_voucher_amount=0
         return vou_brw
 
-report_sxw.report_sxw('report.invoice.report.pagos', 'res.partner','addons/invoice_report/report/payment_report2.rml', parser=invoice_report_pagos)
+report_sxw.report_sxw('report.invoice.report.pagos', 'res.partner','addons/invoice_report/report/payment_report2.rml', parser=invoice_report_pagos, header="internal landscape")
 

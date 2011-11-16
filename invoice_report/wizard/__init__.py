@@ -25,3 +25,4 @@
 #
 ##############################################################################
 import wizard_payment_report
+import wizard_invoice_report

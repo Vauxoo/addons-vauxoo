@@ -38,6 +38,7 @@
     'update_xml': [
         "invoice_report.xml",
         "wizard/wizard_payment_report_view.xml",
+        "wizard/wizard_invoice_report_view.xml",
     ],
     'demo_xml': [],
     'test': [],
