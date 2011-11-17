@@ -51,12 +51,12 @@
     <paraStyle name="P12" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT"/>
     <paraStyle name="P13" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT"/>
     <paraStyle name="P14" fontName="Helvetica" fontSize="9.0" leading="11"/>
-    <paraStyle name="P15" fontName="Helvetica" fontSize="6.0" leading="8"/>
-    <paraStyle name="P16" fontName="Helvetica" fontSize="7.0" leading="9"/>
-    <paraStyle name="P17" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
-    <paraStyle name="P18" fontName="Helvetica" fontSize="7.0" leading="9"/>
-    <paraStyle name="P19" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
-    <paraStyle name="P20" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P15" fontName="Helvetica" fontSize="9.0" leading="11"/>
+    <paraStyle name="P16" fontName="Helvetica" fontSize="6.0" leading="8"/>
+    <paraStyle name="P17" fontName="Helvetica" fontSize="7.0" leading="9"/>
+    <paraStyle name="P18" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
+    <paraStyle name="P19" fontName="Helvetica" fontSize="7.0" leading="9"/>
+    <paraStyle name="P20" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -79,12 +79,12 @@
           <para style="P3">[[ get_address(o.id).city ]]</para>
         </td>
         <td>
-          <para style="P20">Moneda: [[ get_currency(data['form']['currency']).name ]]</para>
-          <para style="P20">Fecha de impresión:<font face="Helvetica"> [[ time.strftime("%Y-%m-%d ") ]]</font></para>
+          <para style="P15">Moneda: [[ get_currency(data['form']['currency']).name ]]</para>
+          <para style="P15">Fecha de impresión:<font face="Helvetica"> [[ time.strftime("%Y-%m-%d ") ]]</font></para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="42.0,70.0,182.0,72.0,78.0,144.0" style="Tabla5">
+    <blockTable colWidths="42.0,70.0,182.0,72.0,100.0,123.0" style="Tabla5">
       <tr>
         <td>
           <para style="P12">Cliente </para>
@@ -111,7 +111,7 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="41.0,548.0" style="Tabla2">
+    <blockTable colWidths="41.0,556.0" style="Tabla2">
       <tr>
         <td>
           <para style="P13">
@@ -123,7 +123,7 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="41.0,71.0,182.0,72.0,78.0,144.0" style="Tabla6">
+    <blockTable colWidths="41.0,71.0,166.0,93.0,92.0,134.0" style="Tabla6">
       <tr>
         <td>
           <para style="Table Contents">
@@ -137,37 +137,37 @@
           </para>
         </td>
         <td>
-          <blockTable colWidths="179.0,72.0,78.0,141.0" style="Tabla7">
+          <blockTable colWidths="164.0,88.0,97.0,131.0" style="Tabla7">
             <tr>
               <td>
-                <para style="P18">Pago cliente - [[pago.number]]</para>
+                <para style="P19">Pago Cliente - [[pago.number]]</para>
               </td>
               <td>
-                <para style="P19">[[pago.amount]]</para>
+                <para style="P20">[[pago.amount]]</para>
               </td>
               <td>
-                <para style="P18">
+                <para style="P19">
                   <font color="white"> </font>
                 </para>
               </td>
               <td>
-                <para style="P18">[[pago.name]]</para>
+                <para style="P19">[[pago.reference]]</para>
               </td>
             </tr>
           </blockTable>
-          <blockTable colWidths="181.0,71.0,77.0,141.0" style="Tabla8">
+          <blockTable colWidths="163.0,89.0,97.0,133.0" style="Tabla8">
             <tr>
               <td>
-                <para style="P15">[[repeatIn(get_invoice_payment(pago.id), 'inv')]] <font face="Helvetica" size="7.0">Factura del cliente - </font><font face="Helvetica" size="7.0">[[inv.internal_number]]</font></para>
+                <para style="P16">[[repeatIn(get_invoice_payment(pago.id), 'inv')]] <font face="Helvetica" size="7.0">Fact Cliente - </font><font face="Helvetica" size="7.0">[[inv.internal_number]]</font></para>
               </td>
               <td>
-                <para style="P17">[[get_line_payment(pago.id, inv.id)]]</para>
+                <para style="P18">[[get_line_payment(pago.id, inv.id)]]</para>
               </td>
               <td>
-                <para style="P17">[[inv.date_invoice]]</para>
+                <para style="P18">[[inv.date_invoice]]</para>
               </td>
               <td>
-                <para style="P16">[[inv.name]]</para>
+                <para style="P17">[[inv.origin]]</para>
               </td>
             </tr>
             <tr>
