@@ -89,6 +89,7 @@ class invoice_report1(report_sxw.rml_parse):
                             inner join account_invoice d
                                 on d.move_id=c.move_id
                             where d.id=%s
+                            and a.state='posted'
                 """%( inv_id)
                 self.cr.execute( subq )
                 voucher_line_ids = [ vl_id[0] for vl_id in self.cr.fetchall() ]

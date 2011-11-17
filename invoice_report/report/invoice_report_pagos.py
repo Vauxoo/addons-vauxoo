@@ -88,6 +88,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
                             on d.move_id=c.move_id
                     where a.id=%s
                     and d.id=%s
+                    and a.state='posted'
                 """%( pay_id, inv_id )
         self.cr.execute( subq )
         invoice_ids = [ inv_id[0] for inv_id in self.cr.fetchall() ]
@@ -117,6 +118,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
                             on d.move_id=c.move_id
                     where a.id=%s
                     and d.state not in ('cancel','proforma','proforma2')
+                    and a.state='posted'
                 """%( pay_id )
         self.cr.execute( subq )
         invoice_ids = [ inv_id[0] for inv_id in self.cr.fetchall() ]
@@ -131,7 +133,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
     def _get_payment(self, partner_id, date_start, date_end, currency_id):
         print '**************dentro de _get_payment el partner id es',partner_id, 'el date_start es',date_start,'date end', date_end,'y la moneda es',currency_id
         vou_obj = self.pool.get('account.voucher')
-        vou_ids = vou_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('date', '>=', date_start), ('date', '<=', date_end), ('currency_id', '=', currency_id)] )
+        vou_ids = vou_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('date', '>=', date_start), ('date', '<=', date_end), ('currency_id', '=', currency_id), ('state', '=', 'posted')] )
         vou_brw= vou_obj.browse(self.cr, self.uid, vou_ids)
         print 'los ids de los voucher son',vou_ids
         #~ print 'lo browse de invoice es',inv_brw.internal_number

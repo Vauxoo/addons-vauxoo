@@ -8,7 +8,7 @@
             model="res.partner"
             name="invoice.report1"
             auto="True"
-            menu="True"
+            menu="False"
             rml="invoice_report/report/invoice_report1.rml"
             header="False"
         />
@@ -17,7 +17,7 @@
             model="res.partner"
             name="invoice.report.pagos"
             auto="True"
-            menu="True"
+            menu="False"
             rml="invoice_report/report/payment_report2.rml"
             header="False"
         />
