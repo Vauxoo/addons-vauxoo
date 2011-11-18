@@ -44,7 +44,24 @@ class invoice_report1(report_sxw.rml_parse):
                 'get_total_saldo':self._get_total_saldo,
                 'get_currency':self._get_currency,
                 'get_address':self._get_address,
+                'get_mov_sin_fact':self._get_mov_sin_fact,
             })
+
+    def _get_mov_sin_fact(self, partner_id):
+        print 'dentro del get_mov sin facturas----------------------'
+        query=""" select  id from account_move_line a where partner_id= %s
+                and not exists (select '' from account_invoice b where a.move_id=b.move_id)
+                and state='valid' """%( partner_id )
+        self.cr.execute( query )
+        move_line_ids = [ ml_id[0] for ml_id in self.cr.fetchall() ]
+        print 'los movimientos line sin factura son',move_line_ids
+        mov_line_obj = self.pool.get('account.move.line')
+
+        move_line_brw= mov_line_obj.browse(self.cr, self.uid, move_line_ids)
+        print 'el move line_brw',move_line_brw
+        return move_line_brw
+
+
 
     def _get_currency(self,currency_id):
         currency_obj = self.pool.get('res.currency').browse(self.cr, self.uid, currency_id)
