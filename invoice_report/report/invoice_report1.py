@@ -45,13 +45,51 @@ class invoice_report1(report_sxw.rml_parse):
                 'get_currency':self._get_currency,
                 'get_address':self._get_address,
                 'get_mov_sin_fact':self._get_mov_sin_fact,
+                'suma_move_debit':self._suma_move_debit,
+                'get_total_move_debit':self._get_total_move_debit,
+                'suma_move_credit':self._suma_move_credit,
+                'get_total_move_credit':self._get_total_move_credit,
+                'get_saldo_total_movs':self._get_saldo_total_movs,
+                'get_grand_debit':self._get_grand_debit,
+                'get_grand_credit':self._get_grand_credit,
             })
 
-    def _get_mov_sin_fact(self, partner_id):
+    def _get_grand_credit(self, credit_move, credit):
+        print '****************************************dentro de grand credit el move',credit_move,'credit',credit
+        grand_credit = credit_move + credit
+        print 'return',grand_credit
+        return grand_credit
+
+    def _get_grand_debit(self, debit_move, debit):
+        print '****************************************dentro de grand debit el move',debit_move,'credit',debit
+        grand_debit = debit_move + debit
+        print 'return',grand_debit
+        return grand_debit
+
+    def _get_saldo_total_movs(self, debit, credit):
+        self.tot_sdo_mov = debit - credit
+        return self.tot_sdo_mov
+
+    def _get_total_move_credit(self):
+        return self.move_credit
+
+    def _suma_move_credit(self, credit):
+        self.move_credit += credit
+
+
+    def _get_total_move_debit(self):
+        return self.move_debit
+
+    def _suma_move_debit(self, debit):
+        self.move_debit += debit
+
+    def _get_mov_sin_fact(self, partner_id, date_start, date_end):
         print 'dentro del get_mov sin facturas----------------------'
         query=""" select  id from account_move_line a where partner_id= %s
                 and not exists (select '' from account_invoice b where a.move_id=b.move_id)
-                and state='valid' """%( partner_id )
+                and exists (select '' from account_move c where a.move_id = c.id and c.date between '%s' and'%s' )
+                and state='valid'
+                """%( partner_id, date_start, date_end )
         self.cr.execute( query )
         move_line_ids = [ ml_id[0] for ml_id in self.cr.fetchall() ]
         print 'los movimientos line sin factura son',move_line_ids
@@ -84,7 +122,7 @@ class invoice_report1(report_sxw.rml_parse):
         saldo = monto - self.amount_line
         print '==============y el  saldo es',saldo
         self.saldo_final += saldo
-        return str(saldo)
+        return saldo
 
 
     def ___compute_lines(self,inv_id):
@@ -139,18 +177,20 @@ class invoice_report1(report_sxw.rml_parse):
         #~ print 'lo browse de invoice es',inv_brw.internal_number
         self.invoice=inv_brw
         print 'el inv_brw es',inv_brw
-        self.haber_tot=0
-        self.debe_tot=0
-        self.saldo_final =0
+        self.haber_tot = 0
+        self.debe_tot = 0
+        self.saldo_final = 0
+        self.move_debit = 0
+        self.move_credit = 0
         return inv_brw
 
     def _get_total_debe(self):
-        return str(self.debe_tot)
+        return self.debe_tot
 
     def _get_total_haber(self):
-        return str(self.haber_tot)
+        return self.haber_tot
 
     def _get_total_saldo(self):
-        return str(self.saldo_final)
+        return self.saldo_final
 report_sxw.report_sxw('report.invoice.report1', 'res.partner','addons/invoice_report/report/invoice_report1.rml', parser=invoice_report1,  header="internal landscape")
 
