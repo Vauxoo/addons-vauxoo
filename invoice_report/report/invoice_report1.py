@@ -52,7 +52,12 @@ class invoice_report1(report_sxw.rml_parse):
                 'get_saldo_total_movs':self._get_saldo_total_movs,
                 'get_grand_debit':self._get_grand_debit,
                 'get_grand_credit':self._get_grand_credit,
+                'get_company':self._get_company,
             })
+    def _get_company(self,uid):
+        print '999999999999999999999999999999999 dentro del get_company',uid
+        usr_brw=self.pool.get('res.users').browse(self.cr, self.uid, uid)
+        return usr_brw
 
     def _get_grand_credit(self, credit_move, credit):
         print '****************************************dentro de grand credit el move',credit_move,'credit',credit

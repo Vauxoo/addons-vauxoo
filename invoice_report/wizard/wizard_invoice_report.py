@@ -36,7 +36,7 @@ class wizard_invoice_report(osv.osv_memory):
     _columns={
         'date_start': fields.datetime('Date start', required=True),
         'date_end': fields.datetime('Date end', required=True),
-        'currency': fields.many2one('res.currency', 'Currency', required=True),
+        'currency_id': fields.many2one('res.currency', 'Currency', required=True),
         #~ 'filter_type': fields.selection([('date', 'Date'),('period', 'Period')],'Filter Type', required=True),
 
         #~ 'period_start': fields.char('Period Start', size=64),
@@ -45,7 +45,7 @@ class wizard_invoice_report(osv.osv_memory):
     _defaults = {
         'date_start': time.strftime('%Y-%m-01 00:00:00'),
         'date_end': lambda *a: time.strftime('%Y-%m-%d 23:59:59'),
-
+        'currency_id': lambda self, cr, uid, ids, context=None: self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.currency_id.id,
     }
 
     def check_report(self, cr, uid, ids, context=None):
@@ -57,9 +57,9 @@ class wizard_invoice_report(osv.osv_memory):
         datas = {
             'ids': context.get('active_ids',[]),
             'model': 'wizard.invoice.report',
-            'form': data
+            'form': data,
+            'uid': uid,
         }
-
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'invoice.report1',

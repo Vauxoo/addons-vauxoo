@@ -136,7 +136,7 @@
     <blockTable colWidths="303.0,303.0" style="Tabla8">
       <tr>
         <td>
-          <para style="P14">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[o.company_id.name]]</font></para>
+          <para style="P14">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[ get_company(data['uid']).company_id.name ]]</font></para>
         </td>
         <td>
           <para style="P11">
@@ -359,7 +359,7 @@
           <para style="P1">Fecha mov</para>
         </td>
         <td>
-          <para style="P1">Cons</para>
+          <para style="P1">Conc</para>
         </td>
         <td>
           <para style="P1">Cuentas afectadas</para>
@@ -459,7 +459,7 @@
       </tr>
       <tr>
         <td>
-          <blockTable colWidths="86.0,86.0,86.0,56.0,59.0,55.0,173.0" style="Tabla12">
+          <blockTable colWidths="86.0,86.0,87.0,56.0,59.0,56.0,175.0" style="Tabla12">
             <tr>
               <td>
                 <para style="P23">
@@ -527,15 +527,6 @@
         </td>
       </tr>
     </blockTable>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
     <para style="Standard">
       <font color="white"> </font>
     </para>
