@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
         <record id="view_wizard_invoice_report" model="ir.ui.view">
             <field name="name">view.wizard.invoice.report</field>
             <field name="model">wizard.invoice.report</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Reporte de Estado de cuenta">
-
                     <field name="date_start"/>
                     <field name="date_end"/>
-                    <field name="currency"/>
-
-
+                    <field name="currency_id"/>
                     <newline/>
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
@@ -24,14 +20,6 @@
             </field>
         </record>
 
-        <!--<act_window name="Banking Movements Report"
-            res_model="wizard.account.journal.move"
-            view_mode="form"
-            target="new"
-            key2="client_action_multi"
-            id="action_wizard_acount_journal_move"/>
--->
-
         <act_window name="Reporte de Estado de Cuenta"
             res_model="wizard.invoice.report"
             src_model="res.partner"
@@ -39,32 +27,5 @@
             target="new"
             key2="client_action_multi"
             id="action_wizard_invoice_report"/>
-
-<!--
-        <record id="action_wizard_payment_report" model="ir.actions.act_window">
-            <field name="name">Reporte de pagos</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">wizard.payment.report</field>
-            <field name="src_model">res.partner</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_wizard_payment_report"/>
-            <field name="target">new</field>
-        </record>
-
-
-
-        <menuitem
-            parent="account.menu_finance_legal_statement"
-            id="reports_account_journal_move_line"
-            name="Reports"/>
-        <menuitem
-            id="wizard_account_jornal_move"
-            name="Banking Movements Report"
-            parent='reports_account_journal_move_line'
-            action='action_wizard_acount_journal_move'
-        />
--->
-
     </data>
 </openerp>

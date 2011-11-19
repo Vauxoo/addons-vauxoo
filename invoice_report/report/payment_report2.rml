@@ -74,12 +74,12 @@
     <blockTable colWidths="294.0,294.0" style="Tabla1">
       <tr>
         <td>
-          <para style="P1">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[o.company_id.name]]</font></para>
+          <para style="P1">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="10.0">[[ get_company(data['uid']).company_id.name ]]</font></para>
           <para style="P2">Reporte de cobranza del <font face="Helvetica">[[ data['form']['date_start'] ]]</font> al <font face="Helvetica">[[ data['form']['date_end'] ]]</font></para>
           <para style="P3">[[ get_address(o.id).city ]]</para>
         </td>
         <td>
-          <para style="P15">Moneda: [[ get_currency(data['form']['currency']).name ]]</para>
+          <para style="P15">Moneda: [[ get_currency(data['form']['currency_id']).name ]]</para>
           <para style="P15">Fecha de impresión:<font face="Helvetica"> [[ time.strftime("%Y-%m-%d ") ]]</font></para>
         </td>
       </tr>
@@ -132,7 +132,7 @@
         </td>
         <td>
           <para style="P5">
-            <font face="Helvetica" size="6.0">[[repeatIn(get_payment(o.id, data['form']['date_start'], data['form']['date_end'], data['form']['currency'] ),'pago')]]</font>
+            <font face="Helvetica" size="6.0">[[repeatIn(get_payment(o.id, data['form']['date_start'], data['form']['date_end'], data['form']['currency_id'] ),'pago')]]</font>
             <font face="Helvetica" size="7.0">[[pago.date]]</font>
           </para>
         </td>

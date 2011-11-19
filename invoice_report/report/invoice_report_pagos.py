@@ -44,9 +44,13 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 'get_voucher_amount_total': self._get_voucher_amount_total,
                 'get_address': self._get_address,
                 'get_currency': self._get_currency,
-
-
+                'get_company':self._get_company,
             })
+
+    def _get_company(self,uid):
+        usr_brw=self.pool.get('res.users').browse(self.cr, self.uid, uid)
+        return usr_brw
+
     def _get_currency(self,currency_id):
         currency_obj = self.pool.get('res.currency').browse(self.cr, self.uid, currency_id)
         return currency_obj
