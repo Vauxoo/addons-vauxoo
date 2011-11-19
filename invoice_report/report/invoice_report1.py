@@ -8,6 +8,7 @@
 ############################################################################
 #    Coded by: isaac (isaac@vauxoo.com)
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -29,7 +30,6 @@ import time
 import pooler
 from dateutil.relativedelta import relativedelta
 import datetime
-
 
 class invoice_report1(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -55,20 +55,15 @@ class invoice_report1(report_sxw.rml_parse):
                 'get_company':self._get_company,
             })
     def _get_company(self,uid):
-        print '999999999999999999999999999999999 dentro del get_company',uid
         usr_brw=self.pool.get('res.users').browse(self.cr, self.uid, uid)
         return usr_brw
 
     def _get_grand_credit(self, credit_move, credit):
-        print '****************************************dentro de grand credit el move',credit_move,'credit',credit
         grand_credit = credit_move + credit
-        print 'return',grand_credit
         return grand_credit
 
     def _get_grand_debit(self, debit_move, debit):
-        print '****************************************dentro de grand debit el move',debit_move,'credit',debit
         grand_debit = debit_move + debit
-        print 'return',grand_debit
         return grand_debit
 
     def _get_saldo_total_movs(self, debit, credit):
@@ -81,7 +76,6 @@ class invoice_report1(report_sxw.rml_parse):
     def _suma_move_credit(self, credit):
         self.move_credit += credit
 
-
     def _get_total_move_debit(self):
         return self.move_debit
 
@@ -89,7 +83,6 @@ class invoice_report1(report_sxw.rml_parse):
         self.move_debit += debit
 
     def _get_mov_sin_fact(self, partner_id, date_start, date_end):
-        print 'dentro del get_mov sin facturas----------------------'
         query=""" select  id from account_move_line a where partner_id= %s
                 and not exists (select '' from account_invoice b where a.move_id=b.move_id)
                 and exists (select '' from account_move c where a.move_id = c.id and c.date between '%s' and'%s' )
@@ -97,47 +90,32 @@ class invoice_report1(report_sxw.rml_parse):
                 """%( partner_id, date_start, date_end )
         self.cr.execute( query )
         move_line_ids = [ ml_id[0] for ml_id in self.cr.fetchall() ]
-        print 'los movimientos line sin factura son',move_line_ids
         mov_line_obj = self.pool.get('account.move.line')
 
         move_line_brw= mov_line_obj.browse(self.cr, self.uid, move_line_ids)
-        print 'el move line_brw',move_line_brw
         return move_line_brw
-
-
 
     def _get_currency(self,currency_id):
         currency_obj = self.pool.get('res.currency').browse(self.cr, self.uid, currency_id)
         return currency_obj
 
     def _get_address (self,partner_id):
-        print 'dentro del get adrress con partner id',partner_id
         partner_obj = self.pool.get('res.partner')
         partner_address_obj= self.pool.get('res.partner.address')
         address_id = partner_obj.address_get(self.cr, self.uid, partner_id, adr_pref=['default'])['default']
-        print 'el address_id es',address_id
         self.address= partner_address_obj.browse(self.cr, self.uid, address_id)
-        print 'el  self.address es',self.address
         return self.address
 
     def _get_saldo(self,monto):
-        print '===============entro al monto y el monto es',monto
-        print '===============eel self.amount_line es',self.amount_line
-
         saldo = monto - self.amount_line
-        print '==============y el  saldo es',saldo
         self.saldo_final += saldo
         return saldo
 
-
     def ___compute_lines(self,inv_id):
-        print 'estamos dentro de compute y el inv_id es:',inv_id
         dic = {}
         saldo_tot=0
         for invoice in self.invoice:
             if inv_id == invoice.id:
-                print 'dentro del primer for el invoice.id es',invoice.id
-
                 subq="""
                         select b.id-- devuelve los ids de voucher_line correspondientes a esa factura
                             from account_voucher a
@@ -153,24 +131,17 @@ class invoice_report1(report_sxw.rml_parse):
                 """%( inv_id)
                 self.cr.execute( subq )
                 voucher_line_ids = [ vl_id[0] for vl_id in self.cr.fetchall() ]
-                print 'los voucher ids de la factura',invoice.id,'son',voucher_line_ids
                 vou_obj = self.pool.get('account.voucher.line')
                 vou_brw= vou_obj.browse(self.cr, self.uid, voucher_line_ids)
                 self.amount_line=0
                 for amount_line in vou_brw:
                     self.amount_line += amount_line.amount
-                    print '------------el amount es:',amount_line.amount
 
                 self.debe_tot+=invoice.amount_total
-        print 'la suma del monto es:',self.amount_line
-        print 'el return dentro de compute es',vou_brw
         self.haber_tot+=self.amount_line
-        print 'el total del haber es',self.haber_tot
-        print 'el total del debe es',self.debe_tot
         return vou_brw
 
     def _get_invoice(self, partner_id, date_start, date_end, currency_id):
-        print 'En get_invoice: partner id es',partner_id,'start',date_start,'end',date_end,'moneda',currency_id
         inv_obj = self.pool.get('account.invoice')
         inv_ids = inv_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id),
                                                      ('state', 'not in', ['cancel', 'proforma2', 'proforma']),
@@ -178,10 +149,7 @@ class invoice_report1(report_sxw.rml_parse):
                                                      ('date_invoice', '<=', date_end),
                                                      ('currency_id', '=', currency_id), ] )
         inv_brw= inv_obj.browse(self.cr, self.uid, inv_ids)
-        print 'los ids de las facturas son',inv_ids
-        #~ print 'lo browse de invoice es',inv_brw.internal_number
         self.invoice=inv_brw
-        print 'el inv_brw es',inv_brw
         self.haber_tot = 0
         self.debe_tot = 0
         self.saldo_final = 0

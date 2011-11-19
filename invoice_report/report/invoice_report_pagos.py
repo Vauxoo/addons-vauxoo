@@ -8,6 +8,7 @@
 ############################################################################
 #    Coded by: isaac (isaac@vauxoo.com)
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -56,31 +57,24 @@ class invoice_report_pagos(report_sxw.rml_parse):
         return currency_obj
 
     def _get_address (self,partner_id):
-        print 'dentro del get adrress con partner id',partner_id
         partner_obj = self.pool.get('res.partner')
         partner_address_obj= self.pool.get('res.partner.address')
         address_id = partner_obj.address_get(self.cr, self.uid, partner_id, adr_pref=['default'])['default']
-        print 'el address_id es',address_id
         self.address= partner_address_obj.browse(self.cr, self.uid, address_id)
-        print 'el  self.address es',self.address
         return self.address
 
     def _get_voucher_amount_total(self):
         return self.total_voucher_amount
 
     def _get_total_final_pagado(self):
-        print 'dentro del total final pagado y devuelve',self.total_final_pagado
         return self.total_final_pagado
 
     def _get_saldo(self, pago_amount):
-        print 'el get_total_pago es -------------------------------- ',self.tot_pago,'menos el pago_amount',pago_amount
         self.total_final_pagado += self.tot_pago
         self.total_voucher_amount += pago_amount
         return str(self.tot_pago - pago_amount)
 
-
     def _get_line_payment(self,pay_id, inv_id):
-        print 'dentro de gety_line pyment y el param es'
         subq="""
                 select b.id
                     from account_voucher a
@@ -96,20 +90,13 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 """%( pay_id, inv_id )
         self.cr.execute( subq )
         invoice_ids = [ inv_id[0] for inv_id in self.cr.fetchall() ]
-        print 'los ids de las lineas voucher son son',invoice_ids
         pay_obj = self.pool.get('account.voucher.line')
         pay_brw= pay_obj.browse(self.cr, self.uid, invoice_ids)[0]
-        print 'el retorno de Line paymente es',pay_brw
-        print 'pay_brw.amount--------------es',pay_brw.amount
         #~ for tot in pay_brw:
         self.tot_pago += pay_brw.amount
-
-        print '===================================================dentro del for de pay_brw amnount:',pay_brw.amount
-
         return str(pay_brw.amount)
 
     def _get_invoice_payment(self,pay_id):
-        print 'dentro de gety_line pyment y el param es'
         subq="""
                 select d.id
                     from account_voucher a
@@ -126,23 +113,16 @@ class invoice_report_pagos(report_sxw.rml_parse):
                 """%( pay_id )
         self.cr.execute( subq )
         invoice_ids = [ inv_id[0] for inv_id in self.cr.fetchall() ]
-        print 'los ids de la factura son',invoice_ids
         inv_obj = self.pool.get('account.invoice')
         inv_brw= inv_obj.browse(self.cr, self.uid, invoice_ids)
-        print 'el retorno de paymente es',inv_brw
         self.tot_pago=0
         return inv_brw
 
-
     def _get_payment(self, partner_id, date_start, date_end, currency_id):
-        print '**************dentro de _get_payment el partner id es',partner_id, 'el date_start es',date_start,'date end', date_end,'y la moneda es',currency_id
         vou_obj = self.pool.get('account.voucher')
         vou_ids = vou_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('date', '>=', date_start), ('date', '<=', date_end), ('currency_id', '=', currency_id), ('state', '=', 'posted')] )
         vou_brw= vou_obj.browse(self.cr, self.uid, vou_ids)
-        print 'los ids de los voucher son',vou_ids
-        #~ print 'lo browse de invoice es',inv_brw.internal_number
         self.vou_brw=vou_brw
-        print 'el vou_brw es',vou_brw
         self.total_final_pagado=0
         self.total_voucher_amount=0
         return vou_brw

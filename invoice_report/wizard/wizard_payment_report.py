@@ -8,6 +8,7 @@
 ############################################################################
 #    Coded by: isaac (isaac@vauxoo.com)
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
