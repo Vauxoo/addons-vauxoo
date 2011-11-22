@@ -82,11 +82,10 @@
     <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="18.0" leading="22" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P21" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
-    <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P24" fontName="Helvetica" fontSize="8.0" leading="10"/>
-    <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
+    <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P25" fontName="Helvetica" fontSize="8.0" leading="10"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -108,7 +107,7 @@
       <blockTable colWidths="125.0,207.0,166.0" style="Tabla1">
         <tr>
           <td>
-            <para style="P23">[[ o.company_id.logo and setTag('para','image',{'width':'120.0','height':'80.0'}) ]] [[ o.company_id.logo ]]</para>
+            <para style="P24">[[ o.company_id.logo and setTag('para','image',{'width':'120.0','height':'80.0'}) ]] [[ o.company_id.logo ]]</para>
           </td>
           <td>
             <para style="P18">[[ company_address()['name'] or o.company_id.partner_id.name ]]</para>
@@ -124,10 +123,10 @@
               <font color="white"> </font>
             </para>
             <para style="P18">Ciudad: [[ company_address()['city'] or '' ]], Estado: [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] </para>
-            <para style="P26">
+            <para style="P22">
               <font color="white"> </font>
             </para>
-            <para style="P18">Localidad: [[ company_address()['city2'] or removeParentNode('para') ]]</para>
+            <para style="P18">Localidad: [[ company_address()['city2'] or '' ]]</para>
             <para style="P21">
               <font color="white"> </font>
             </para>
@@ -171,10 +170,10 @@
             <para style="terp_default_8"><font face="Helvetica">Dirección:</font> [[ o.address_invoice_id.street ]] Nro. Ext: [[ o.address_invoice_id.street3 ]] Int: [[ o.address_invoice_id.street4 ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Colonia:</font> [[ o.address_invoice_id.street2 or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Ciudad:</font> [[ o.address_invoice_id.city or '' ]] <font face="Helvetica">Estado: </font>[[ o.address_invoice_id.state_id and o.address_invoice_id.state_id.name or '' ]]</para>
-            <para style="terp_default_8"><font face="Helvetica">Localidad: </font>[[ o.address_invoice_id.city2 or removeParentNode('para') ]]</para>
+            <para style="terp_default_8"><font face="Helvetica">Localidad: </font>[[ o.address_invoice_id.city2 or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">C.P.:</font> [[ o.address_invoice_id.zip or '' ]] </para>
             <para style="terp_default_8"><font face="Helvetica">R. F. C. :</font> [[ o.partner_id.vat ]]</para>
-            <para style="P22">Teléfono(s): </para>
+            <para style="P23">Teléfono(s): </para>
             <para style="P17">[[ o.address_invoice_id.phone or removeParentNode('para') ]]</para>
             <para style="P17">[[ o.address_invoice_id.fax or removeParentNode('para') ]]</para>
             <para style="P17">[[ o.address_invoice_id.mobile or removeParentNode('para') ]]</para>
@@ -187,6 +186,7 @@
             <para style="P3">Calle: [[ subcompany_address()['street'] or '' ]] Nro. Ext: [[ subcompany_address()['street3'] or '' ]] Int: [[ subcompany_address()['street4'] or '' ]]</para>
             <para style="P3">Colonia: [[ subcompany_address()['street2'] or '' ]]</para>
             <para style="P3">Ciudad: [[ subcompany_address()['city'] or '' ]]</para>
+            <para style="P3">Localidad: [[ subcompany_address()['city2'] or '' ]]</para>
             <para style="P3">Estado: [[ subcompany_address()['state_id'] and subcompany_address()['state_id']['name'] or '' ]]</para>
             <para style="P3">CP: [[ subcompany_address()['zip'] or '' ]] </para>
           </td>
