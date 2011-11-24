@@ -31,7 +31,8 @@ class product_import_info(osv.osv):
     
     
     def _get_qtymoved(self, cr, uid, ids, field_name, arg, context):
-    #TODO metodo para calcular el la cantidad de movimientos.
+    #TODO ISAAC: Metodo para calcular el la cantidad de movimientos ya imputados a esta import info. Analizar desde cero, no contemplar lo que este escrito aqui.
+    #Recordar quitar los TODO.
         if not context:
             context = {}
         '''

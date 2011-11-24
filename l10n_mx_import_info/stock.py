@@ -47,12 +47,29 @@ class stock_move_constraint(osv.osv):
     _columns = {}
 
 
-    def _check_product_qty(self, cr, uid, ids, move, context=None):
+    def _check_product_qty(self, cr, uid, ids, context=None):
         """Check if quantity of product planified on import info document is bigger than
         this qty more qty already received with this tracking lot
         """
 #        Product qty planified.
 #        product_qty_p=[{'product_id':p.product_id.id,'qty':p.qty,'uom_id':p.uom_id.id} for p in move.tracking_id.import_id.product_info_ids if p.product_id.id==move.product_id.id]
+        product_import_info_obj = self.pool.get('product.import.info')
+        for move in self.browse(cr, uid, ids, context=context):
+            print "move.product_id.id",move.product_id.id
+            print "move.product_uom",move.product_uom.id
+            print "move.product_qty",move.product_qty
+            import_id = move.tracking_id and move.tracking_id.import_id and move.tracking_id.import_id.id or False
+            if import_id:
+                product_import_info_ids = product_import_info_obj.search(cr, uid, [
+                    ('import_id', '=', import_id),
+                    ('product_id','=', move.product_id.id)
+                ], context=context)
+                for product_import_info in product_import_info_obj.browse(cr, uid, product_import_info_ids, context=context):
+                    print "product_import_info.product_id.id",product_import_info.product_id.id
+                    print "product_import_info.product_uom",product_import_info.product_uom
+                    print "product_import_info.qty", product_import_info.qty
+                    #TODO ISAAC: Hacer la suma de la cantidad, con el factor de la unidad de medida. Tal como lo hace product, para traer su cantidad de stock_real & stock_virtual
+                    #  y validar que la cantidad de stock_move no supere la cantidad del import_info
         return True
     
     
@@ -119,7 +136,7 @@ class stock_move_constraint(osv.osv):
                )): ex = False
             if not self._check_if_product_in_track(cr, uid, ids, move, context): 
                 ex = False
-                if not self._check_product_qty(cr, uid, ids, move, context): 
+                if not self._check_product_qty(cr, uid, [move.id], context): 
                     ex = False
         return ex
 
@@ -139,7 +156,7 @@ class stock_picking(osv.osv):
     
     def action_invoice_create(self, cr, uid, ids, journal_id=False,
             group=False, type='out_invoice', context=None):
-        print "************AQUI ENTRO"
+        #print "************AQUI ENTRO"
         #Copy & paste original function -> Add new functionallity.
         """ Creates invoice based on the invoice state selected for picking.
         @param journal_id: Id of journal
