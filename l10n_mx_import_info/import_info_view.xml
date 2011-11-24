@@ -26,7 +26,7 @@
                         <field name="customs"/>
                         <field name="date"/>
                         <field name="rate"/>
-                        <field name="supplier_id"/>
+                        <field name="supplier_id" context="{'search_default_supplier':1}"/> <!--domain="[('supplier','=',True)]"-->
                         <field name="company_id" select="1" groups="base.group_multi_company" widget="selection"/>
                     </group>
                     <newline/>
