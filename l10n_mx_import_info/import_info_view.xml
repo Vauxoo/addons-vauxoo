@@ -32,7 +32,7 @@
                     <newline/>
                     <notebook colspan="4">
                         <page string="Invoices">
-                            <field name="invoice_ids" nolabel="1"/>
+                            <field name="invoice_ids" nolabel="1" domain="[('partner_id','=',supplier_id)]"/>
                         </page>
                         <page string="Track Lots">
                             <field name="lot_ids" nolabel="1" context="{'form_view_ref' : 'l10n_mx_import_info.stock_tracking_form'}"/>
