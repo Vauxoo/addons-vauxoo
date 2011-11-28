@@ -47,15 +47,40 @@ class stock_move_constraint(osv.osv):
     _columns = {}
 
 
-    def _check_product_qty(self, cr, uid, ids, move, context=None):
+    def _check_product_qty(self, cr, uid, ids, context=None):
         """Check if quantity of product planified on import info document is bigger than
         this qty more qty already received with this tracking lot
         """
 #        Product qty planified.
 #        product_qty_p=[{'product_id':p.product_id.id,'qty':p.qty,'uom_id':p.uom_id.id} for p in move.tracking_id.import_id.product_info_ids if p.product_id.id==move.product_id.id]
+        product_import_info_obj = self.pool.get('product.import.info')
+        product_uom_obj = self.pool.get('product.uom')
+        for move in self.browse(cr, uid, ids, context=context):
+            #~ print "move.product_id.id",move.product_id.id
+            #~ print "move.product_uom",move.product_uom.id
+            #~ print "move.product_qty",move.product_qty
+            #~ print "move.product_packaging",move.product_packaging
+            import_id = move.tracking_id and move.tracking_id.import_id and move.tracking_id.import_id.id or False
+            #~ print 'import_id es',import_id
+            if import_id:
+                product_import_info_ids = product_import_info_obj.search(cr, uid, [
+                    ('import_id', '=', import_id),
+                    ('product_id','=', move.product_id.id)
+                ], context=context)
+                for product_import_info in product_import_info_obj.browse(cr, uid, product_import_info_ids, context=context):
+                    #~ print "product_import_info.product_id.id",product_import_info.product_id.id
+                    #~ print "product_import_info.uom_id",product_import_info.uom_id.id
+                    #~ print "product_import_info.qty",product_import_info.qty
+                    qty_dflt_stock = product_uom_obj._compute_qty(cr, uid, move.product_uom.id, move.product_qty, move.product_id.uom_id.id)
+                    qty_dflt_import = product_uom_obj._compute_qty(cr, uid, product_import_info.uom_id.id, product_import_info.qty, product_import_info.product_id.uom_id.id)
+
+                    if qty_dflt_stock > qty_dflt_import:
+                        #~ print 'cantidad mayor',qty_dflt_stock,'>',qty_dflt_import
+                        return False
+
         return True
-    
-    
+
+
     def _check_if_product_in_track(self, cr, uid, ids, move, context=None):
         """
         check if product at least exist in import track
@@ -117,9 +142,10 @@ class stock_move_constraint(osv.osv):
                    (move.product_id.pack_control and move.location_id.usage == 'supplier') or \
                    (move.product_id.pack_control and move.location_dest_id.usage == 'customer') \
                )): ex = False
-            if not self._check_if_product_in_track(cr, uid, ids, move, context): 
+
+            if not self._check_if_product_in_track(cr, uid, ids, move, context):
                 ex = False
-                if not self._check_product_qty(cr, uid, ids, move, context): 
+            if not self._check_product_qty(cr, uid, [move.id], context):
                     ex = False
         return ex
 
@@ -127,8 +153,8 @@ class stock_move_constraint(osv.osv):
 #        print "I checked"
 #        return True
 
-    _constraints = [(_check_import_info,'You must assign a track lot with import information for this product, if it is assigned verify if you have enought products planified on this import document or at least if the product exist in the list of products in this import document, if you are trying to generate a new pack with the wizard it is not possible if the product is checked as Pack Control, check with your product manager to make the analisys of the situation',['tracking_id'])]
-    
+    _constraints = [(_check_import_info,'You must assign a track lot with import information for this product, if it is assigned verify if you have enought products planified on this import document or at least if the product exist in the list of products in this import document, if you are trying to generate a new pack with the wizard it is not possible if the product is checked as Pack Control, check with your product manager to make the analisys of the situation.\nOther error can be on product_qty field,  Product qty is bigger than product qty on import info.',['tracking_id'])]
+
 
 stock_move_constraint()
 
@@ -136,10 +162,10 @@ stock_move_constraint()
 
 class stock_picking(osv.osv):
     _inherit = "stock.picking"
-    
+
     def action_invoice_create(self, cr, uid, ids, journal_id=False,
             group=False, type='out_invoice', context=None):
-        print "************AQUI ENTRO"
+        #print "************AQUI ENTRO"
         #Copy & paste original function -> Add new functionallity.
         """ Creates invoice based on the invoice state selected for picking.
         @param journal_id: Id of journal
@@ -284,7 +310,7 @@ stock_picking()
 """
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
-    
+
     def action_invoice_create(self, cr, uid, ids, journal_id=False,
             group=False, type='out_invoice', context=None):
         invoice_obj = self.pool.get('account.invoice')
@@ -294,7 +320,7 @@ class stock_picking(osv.osv):
             invoice_id = res[picking_id]
             picking = self.browse(cr, uid, [picking_id], context=context)[0]
             "SELECT id, product_id FROM account_invoice_line"
-            
+
             #invoice_obj.write(cr, uid, [invoice_id] {
                 #'picking_id': picking_id,
                 #'tracking_id': picking.tracking_id,
