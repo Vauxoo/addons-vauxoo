@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+        <record id="view_partner_address_form_inh_cfd_01" model="ir.ui.view">
+            <field name="name">view.partner.address.form.inh.cfd.01</field>
+            <field name="model">res.partner.address</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_address_form1"/>
+            <field name="arch" type="xml">
+                <field name="street" position="after">
+                    <field name="street3"/>
+                    <field name="street4"/>
+                    <field name="city2"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_partner_address_form_inh_cfd_02" model="ir.ui.view">
+            <field name="name">view.partner.address.form.inh.cfd.02</field>
+            <field name="model">res.partner.address</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_partner_address_form2"/>
+            <field name="arch" type="xml">
+                <field name="street" position="after">
+                    <field name="street3"/>
+                    <field name="street4"/>
+                    <field name="city2"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_partner_form_inh_cfd_01">
+            <field name="name">view.partner.form.inh.cfd.02</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="sequence">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='General']/field[@name='address']/form/group/field[@name='street']" position="after">
+                    <field name="street3"/>
+                    <field name="street4"/>
+                    <field name="city2"/>
+                </xpath>
+            </field>
+        </record>
+        
+    
+    </data>
+</openerp>

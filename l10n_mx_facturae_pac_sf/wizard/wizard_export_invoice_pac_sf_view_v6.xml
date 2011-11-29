@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_export_pac_sf_form_v6" model="ir.ui.view">
+            <field name="name">view.wizard.export.pac.sf.form.v6</field>
+            <field name="model">wizard.export.invoice.pac.sf.v6</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Export invoice V6">
+                    <separator colspan="4" string="File"/>
+                    <field name='file' nolabel="1" colspan="4"/>
+                    <newline/>
+                    <separator colspan="4" string="Message"/>
+                    <field name='message' nolabel="1" colspan="4"/>
+                    <separator string="" colspan="4"/>
+                    <newline/>
+                    <button special="cancel" string="_Close" icon="gtk-cancel"/>
+                    <button name="upload_ws_file" type="object" string="_Upload Invoice" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+        <!--
+        <act_window name="Export Invoice PAC SF V6"
+            res_model="wizard.export.invoice.pac.sf.v6"
+            src_model="account.invoice"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_wizard_export_pac_sf_form"/>
+            -->
+<!--
+        <record id="action_wizard_cancel_pac_sf_form" model="ir.actions.act_window">
+            <field name="name">Cancel invoice pac SF</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="src_model">account.invoice</field>
+            <field name="res_model">wizard.cancel.invoice.pac.sf</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_wizard_cancel_pac_sf_form"/>
+            <field name="target">new</field>
+            <field name="key2">client_print_multi</field>
+        </record>
+-->
+
+
+
+
+
+    </data>
+</openerp>

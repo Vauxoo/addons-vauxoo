@@ -64,7 +64,7 @@ class product_product(osv.osv):
             ('P','Porcentaje s/Sdo. base diario'), ('C','Cuota unit.'), ('R','Retroactivo'), ('I','Incap-Enferm.'), ('N','No calcular'),
         ],'Proceso calculo', select=True, readonly=False, 
         help="Forma de pago: P=Porcentaje s/Sdo. base diario C=Cuota unit. R=Retroactivo I=Incap-Enferm. N=No calcular"),
-        'valor': fields.float('Valor', digits=(16, int(config['price_accuracy'])), help="Monto Percentil del total calculado por este concepto"),
+        'valor': fields.float('Valor', digits=(16, 2), help="Monto Percentil del total calculado por este concepto"),
         'proceso_calculo':fields.selection([
             ('N','Nomina'), ('M','Mensual'),
         ],'Proceso de Calculo', select=True, readonly=False, 
