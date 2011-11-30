@@ -40,7 +40,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "partner_address_view.xml",
+        "partner_address_view5.xml",
     ],
     "installable" : True,
     "active" : False,
