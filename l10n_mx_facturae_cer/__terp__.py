@@ -41,7 +41,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "res_company_view.xml",
+        "res_company_view5.xml",
     ],
     "installable" : True,
     "active" : False,
