@@ -53,6 +53,16 @@ _form = '''<?xml version="1.0"?>
     </group>
 </form>'''
 _fields  = {
+    'name': {
+        'string': 'Name',
+        'type': 'char',
+        'size': 64,
+    },
+    'fname': {
+        'string': 'Name',
+        'type': 'char',
+        'size': 64,
+    },
     'file': {
         'string': 'File',
         'type': 'binary',
@@ -93,7 +103,7 @@ def _get_file(self, cr, uid, data, context={}):
 
     fdata = base64.encodestring( xml_data )
     msg = "Presiona clic en el boton 'subir archivo'"
-    return {'file': fdata, 'fname': fname_invoice, 'msg': msg}
+    return {'file': fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
 
 def _upload_ws_file(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
