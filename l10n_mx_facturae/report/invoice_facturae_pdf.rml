@@ -294,15 +294,8 @@
           </td>
         </tr>
       </blockTable>
+      <para style="P23">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ format(o.comment or '') ]]</para>
-      <para style="terp_default_9">
-        <font color="white"> </font>
-      </para>
-      <para style="terp_default_9">
-        <font color="white"> </font>
-      </para>
-      <para style="P23">Vendedor:</para>
-      <para style="P23">[[o.user_id.name]]</para>
     </section>
     <para style="Standard">
       <font color="white"> </font>

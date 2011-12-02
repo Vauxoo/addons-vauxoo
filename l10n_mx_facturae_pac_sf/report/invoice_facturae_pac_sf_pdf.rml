@@ -86,7 +86,7 @@
     <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P25" fontName="Helvetica" fontSize="7.0" leading="9"/>
-    <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P26" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -353,9 +353,8 @@
           </td>
         </tr>
       </blockTable>
+      <para style="P26">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ format(o.comment) or removeParentNode('para') ]]</para>
-      <para style="P26">Vendedor:</para>
-      <para style="P26">[[o.user_id.name]]</para>
     </section>
   </story>
 </document>
