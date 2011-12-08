@@ -43,14 +43,14 @@ class wizard_open_move_line(wizard.interface):
         #result['domain'] = [('partner_id','in',partner_ids), ('account_id.type','=','receivable')]
         where_query = []
         days_due_start = context.get('days_due_start', False)
-        if days_due_start:
+        if not days_due_start is False:
             where_query.append( 'days_due >= %d'%( days_due_start ) )
 
         days_due_end = context.get('days_due_end', False)
-        if days_due_end:
+        if not days_due_end is False:
             where_query.append( 'days_due <= %d'%( days_due_end ) )
-        where_query_str = (where_query and ' WHERE ' or '') + ' AND '.join( where_query )
-
+        #where_query_str = (where_query and ' WHERE ' or '') + ' AND '.join( where_query )
+        where_query_str = (where_query and ' AND ' or '') + ' AND '.join( where_query )
         query = """SELECT l.id as id--, l.partner_id, l.company_id
             FROM account_move_line l
             INNER JOIN
@@ -59,12 +59,22 @@ class wizard_open_move_line(wizard.interface):
                    FROM account_move_line lt
                ) l2
                ON l2.id = l.id
+            INNER JOIN account_account
+               ON account_account.id = l.account_id
+            INNER JOIN res_company
+               ON account_account.company_id = res_company.id
+            INNER JOIN account_move
+               ON account_move.id = l.move_id
+            WHERE account_account.active
+                  AND (account_account.type IN ('receivable'))
+                  AND (l.reconcile_id IS NULL)
+                  AND account_move.state = 'posted'
                AND l.reconcile_id is null --and l.currency_id is null
        """+where_query_str
         cr.execute(query)
         res = cr.fetchall()
         move_ids = [r[0] for r in res]
-        result['domain'] = [('partner_id','in',partner_ids), ('account_id.type','=','receivable'), ('id','in',move_ids)]
+        result['domain'] = [('partner_id','in',partner_ids), ('id','in',move_ids)]
         return result
 
     states = {
