@@ -62,7 +62,8 @@
     <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P21" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P22" fontName="Helvetica" fontSize="8.0" leading="10"/>
+    <paraStyle name="P22" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -199,6 +200,10 @@
           </td>
           <td>
             <para style="Table Contents">[[ l.name ]]</para>
+            <para style="P22">
+              <font face="Helvetica" size="7.0">Notas:</font>
+              <font face="Helvetica" size="7.0">[[l.note or removeParentNode('para')]]</font>
+            </para>
           </td>
           <td>
             <para style="Table Contents">[[ l.product_id and l.product_id.default_code ]]</para>
@@ -289,6 +294,7 @@
           </td>
         </tr>
       </blockTable>
+      <para style="P23">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ format(o.comment or '') ]]</para>
     </section>
     <para style="Standard">

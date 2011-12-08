@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
+
         <record model="ir.ui.view" id="view_account_aged_partner_balance_vw_tree">
             <field name="name">view.account.aged.partner.balance.vw.tree</field>
             <field name="model">account.aged.partner.balance.vw</field>
@@ -25,7 +25,9 @@
                     <button name="%(wizard_open_move_line)d" string="+121 Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':121,'days_due_end': False}"/>
                     <field name="company_id"/>
                     <field name="currency_company_id"/>
+<!--
                     <field name="currency_src_id"/>
+-->
                 </tree>
             </field>
         </record>
@@ -40,6 +42,6 @@
             <field name="help"></field>
         </record>
         <menuitem action="action_account_aged_partner_balance_vw" id="menu_action_account_aged_partner_balance_vw" parent="account.menu_finance_legal_statement" sequence="100"/>
-        
+
     </data>
 </openerp>
