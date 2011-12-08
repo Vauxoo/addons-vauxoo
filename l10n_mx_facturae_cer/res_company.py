@@ -86,11 +86,19 @@ class res_company_facturae_certificate(osv.osv):
             
             #date_fmt_return='%Y-%m-%d %H:%M:%S'
             date_fmt_return='%Y-%m-%d'
-            serial = certificate_lib._get_param_serial(fname_cer_der, fname_tmp, type='DER')
-            dates = certificate_lib._get_param_dates(fname_cer_der, fname_tmp, date_fmt_return=date_fmt_return, type='DER')
-            date_start = dates.get('startdate', False)
-            date_end = dates.get('enddate', False)
-            
+            serial = False
+            try:
+                serial = certificate_lib._get_param_serial(fname_cer_der, fname_tmp, type='DER')
+            except:
+                pass
+            date_start = False
+            date_end = False
+            try:
+                dates = certificate_lib._get_param_dates(fname_cer_der, fname_tmp, date_fmt_return=date_fmt_return, type='DER')
+                date_start = dates.get('startdate', False)
+                date_end = dates.get('enddate', False)
+            except:
+                pass
             os.unlink( fname_cer_der )
             os.unlink( fname_key_der )
             os.unlink( fname_password )
