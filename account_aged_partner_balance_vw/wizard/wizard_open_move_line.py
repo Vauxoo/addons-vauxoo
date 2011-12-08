@@ -59,7 +59,7 @@ class wizard_open_move_line(wizard.interface):
                    FROM account_move_line lt
                ) l2
                ON l2.id = l.id
-               AND l.reconcile_id is null and l.currency_id is null
+               AND l.reconcile_id is null --and l.currency_id is null
        """+where_query_str
         cr.execute(query)
         res = cr.fetchall()
