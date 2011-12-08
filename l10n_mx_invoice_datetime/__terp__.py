@@ -33,7 +33,7 @@
     "description" : """
     """,
     "website" : "",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : [
         "account",
     ],

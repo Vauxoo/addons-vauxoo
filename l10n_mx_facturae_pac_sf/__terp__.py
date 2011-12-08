@@ -35,7 +35,7 @@ Ubuntu Package Depends:
     sudo apt-get install python-soappy
 """,
     "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : ["l10n_mx_facturae","l10n_mx_params_pac"],
     "init_xml" : [],
     "demo_xml" : [

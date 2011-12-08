@@ -33,7 +33,7 @@
     "description" : """Add new fields of address
     """,
     "website" : "http://vauxoo.com",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : [
             "base",
         ],

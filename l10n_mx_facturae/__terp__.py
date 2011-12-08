@@ -41,7 +41,7 @@ Requires the following programs:
         sudo apt-get install openssl
     """,
     "website" : "http://moylop.blogspot.com/",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : ["account", "base_vat", "document", 
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
         ],

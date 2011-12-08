@@ -33,7 +33,7 @@
     "description" : """
     """,
     "website" : "http://moylop.blogspot.com/",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : [
         "account",
         "l10n_mx_facturae_lib",

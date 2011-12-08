@@ -33,7 +33,7 @@
     "category" : "Localization/Mexico",
     "description" : """TThis module reads the params required for PAC.""",
     "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : ["l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],

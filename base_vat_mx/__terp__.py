@@ -33,7 +33,7 @@
 And Remove the problem, for capture RFC (VAT) of Mexico.
     """,
     "website" : "http://moylop.blogspot.com/",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : ["base_vat"],
     "init_xml" : [],
     "demo_xml" : [],
