@@ -7,6 +7,11 @@
             string="Export invoice PAC SF"
             model="account.invoice"
         />
+        <wizard id="wizard_cancel_invoice_pac_sf_v5"
+            name="wizard.cancel.invoice.pac.sf.v5"
+            string="Cancel invoice CFDI PAC SF"
+            model="account.invoice"
+        />
     
     </data>
 </openerp>
