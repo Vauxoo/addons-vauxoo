@@ -53,6 +53,16 @@ _form = '''<?xml version="1.0"?>
     </group>
 </form>'''
 _fields  = {
+    'name': {
+        'string': 'Name',
+        'type': 'char',
+        'size': 64,
+    },
+    'fname': {
+        'string': 'Name',
+        'type': 'char',
+        'size': 64,
+    },
     'file': {
         'string': 'File',
         'type': 'binary',
@@ -93,7 +103,7 @@ def _get_file(self, cr, uid, data, context={}):
 
     fdata = base64.encodestring( xml_data )
     msg = "Presiona clic en el boton 'subir archivo'"
-    return {'file': fdata, 'fname': fname_invoice, 'msg': msg}
+    return {'file': fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
 
 def _upload_ws_file(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
@@ -108,7 +118,7 @@ def _upload_ws_file(self, cr, uid, data, context={}):
     #currency_enc = ustr(currency)
     rate = invoice.currency_id.rate
     rate_str = str(rate)
-
+    file = data['form']['file']
     moneda = '''<Addenda>
         <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
     </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate_str)
@@ -168,11 +178,15 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                         'cfdi_xml': base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ),#este se necesita en uno que no es base64
                         'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
                     }
-                    invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
-                    msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                    if cfdi_data.get('cfdi_xml', False):
+                        file = base64.encodestring( cfdi_data['cfdi_xml'] or '' )
+                        invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
+                        msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                    else:
+                        msg = msg + "\nNo se pudo extraer el archivo XML del PAC"
                     #open("D:\\cfdi_b64.xml", "wb").write( resultado['resultados']['cfdiTimbrado'] or '' )
                     #open("D:\\cfdi.xml", "wb").write( base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ) )
-                elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
+                elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
                     msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
                 else:
                     msg += '\n' + resultado['mensaje'] or ''
@@ -180,7 +194,7 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                         status = 'parent_' + resultado['status']
     else:
         msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
-    return {'file': data['form']['file'], 'msg': msg}
+    return {'file': file, 'msg': msg}
 
 class wizard_export_invoice_pac_sf(wizard.interface):
     states = {

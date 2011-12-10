@@ -2,11 +2,13 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info moylop260 (moylop260@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,19 +27,17 @@
 ##############################################################################
 
 {
-    "name" : "Validation for the RFC (VAT) of Mexico",
+    "name" : "Lectura se parámetros dinamicos a enviar al PAC del Factura Electronica para Mexico (CFDI-2011) ",
     "version" : "1.0",
-    "author" : "moylop260@hotmail.com",
-    "category" : "Localization/Mexican",
-    "description" : """Add validation for the RFC (VAT) of Mexico.
-And Remove the problem, for capture RFC (VAT) of Mexico.
-    """,
-    "website" : "http://moylop.blogspot.com/",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """TThis module reads the params required for PAC.""",
+    "website" : "http://www.vauxoo.com/",
     #"license" : "AGPL-3",
-    "depends" : ["base_vat"],
+    "depends" : ["l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [],
+    "update_xml" : ["params_pac_view.xml"],
     "installable" : True,
     "active" : False,
 }

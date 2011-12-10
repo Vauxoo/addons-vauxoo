@@ -36,7 +36,7 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
 http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19084.html
     """,
     "website" : "http://moylop.blogspot.com/",
-    "license" : "AGPL-3",
+    #"license" : "AGPL-3",
     "depends" : ["account", "base_vat", "document", 
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
         ],

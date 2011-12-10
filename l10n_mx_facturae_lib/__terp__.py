@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (moylop260@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,19 +25,19 @@
 ##############################################################################
 
 {
-    "name" : "Validation for the RFC (VAT) of Mexico",
+    "name" : "l10n_mx_facturae_lib",
     "version" : "1.0",
-    "author" : "moylop260@hotmail.com",
-    "category" : "Localization/Mexican",
-    "description" : """Add validation for the RFC (VAT) of Mexico.
-And Remove the problem, for capture RFC (VAT) of Mexico.
+    "author" : "vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """
     """,
-    "website" : "http://moylop.blogspot.com/",
+    "website" : "http://www.vauxoo.com/",
     #"license" : "AGPL-3",
-    "depends" : ["base_vat"],
+    "depends" : [ "base" ],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [],
+    "update_xml" : [
+    ],
     "installable" : True,
     "active" : False,
 }
