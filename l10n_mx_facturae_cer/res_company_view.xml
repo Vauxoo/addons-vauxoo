@@ -27,6 +27,8 @@
                     <!--<field name="company_id"/>-->
                     <newline/>
                     <field name="active"/>
+                    <newline/>
+                    <button name="get_certificate_info" string="Get Certificate Info" type="object"/>
                 </form>
             </field>
         </record>

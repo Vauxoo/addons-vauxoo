@@ -88,6 +88,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
     def upload_ws_file(self, cr, uid, data, context={}):
         invoice_obj = self.pool.get('account.invoice')
         pac_params_obj = self.pool.get('params.pac')
+        #TODO: Change get file of xml from model browse of wizard
         cfd_data = base64.decodestring( self.fdata )
 
         invoice_ids = context.get('active_ids',[])
@@ -157,11 +158,13 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                             'cfdi_xml': base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ),#este se necesita en uno que no es base64
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
                         }
-                        invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
-                        msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
-
-                        if cfdi_data['cfdi_xml']:
-                            escribe=self.write(cr, uid, data, {'message': msg, 'file':  base64.encodestring(cfdi_data['cfdi_xml']), }, context=None)
+                        if cfdi_data.get('cfdi_xml', False):
+                            file = cfdi_data.get('cfdi_xml', False)
+                            invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
+                            msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                            self.write(cr, uid, data, {'message': msg, 'file':  base64.encodestring(file) }, context=None)#TODO: Write ever to final of function
+                         else:
+                             msg = msg + "\nNo se pudo extraer el archivo XML del PAC" 
 
                     elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
                         msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
@@ -173,10 +176,10 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
             msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
         self.write(cr, uid, data, {'message': msg }, context=None)
         return True
+    
     _columns = {
         'file': fields.binary('File', readonly=True),
         'message': fields.text('text'),
-
     }
 
     _defaults= {
