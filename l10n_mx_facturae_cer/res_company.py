@@ -63,6 +63,18 @@ class res_company_facturae_certificate(osv.osv):
         'date_start': lambda *a: time.strftime('%Y-%m-%d'),
     }
     
+    def get_certificate_info(self, cr, uid, ids, context=None):
+        certificate = self.browse(cr, uid, ids, context=context)[0]
+        cer_der_b64str = certificate.certificate_file
+        key_der_b64str = certificate.certificate_key_file
+        password = certificate.certificate_password
+        data = self.onchange_certificate_info(cr, uid, ids, cer_der_b64str, key_der_b64str, password, context=context)
+        #print "data['serial_number']",data['serial_number']
+        #print "data",data
+        if data['warning']:
+            osv.osv_except(data['warning']['title'], data['warning']['message'] )
+        return self.write(cr, uid, ids, data['value'], context)
+        
     def onchange_certificate_info(self, cr, uid, ids, cer_der_b64str, key_der_b64str, password, context=None):
         #print "ENTRO A onchange_certificate_info"        
         certificate_lib = self.pool.get('facturae.certificate.library')
@@ -89,6 +101,9 @@ class res_company_facturae_certificate(osv.osv):
             serial = False
             try:
                 serial = certificate_lib._get_param_serial(fname_cer_der, fname_tmp, type='DER')
+                value.update({
+                    'serial_number': serial,
+                })
             except:
                 pass
             date_start = False
@@ -97,6 +112,11 @@ class res_company_facturae_certificate(osv.osv):
                 dates = certificate_lib._get_param_dates(fname_cer_der, fname_tmp, date_fmt_return=date_fmt_return, type='DER')
                 date_start = dates.get('startdate', False)
                 date_end = dates.get('enddate', False)
+                value.update({
+                    'date_start': date_start,
+                    'date_end': date_end,
+                })
+            
             except:
                 pass
             os.unlink( fname_cer_der )
@@ -117,9 +137,6 @@ class res_company_facturae_certificate(osv.osv):
                 value.update({
                     'certificate_file_pem': cer_pem_b64,
                     'certificate_key_file_pem': key_pem_b64,
-                    'serial_number': serial,
-                    'date_start': date_start,
-                    'date_end': date_end,
                 })
         return {'value': value, 'warning': warning}
     
