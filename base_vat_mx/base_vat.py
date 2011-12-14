@@ -66,21 +66,22 @@ class res_partner(osv.osv):
         Verificar RFC México
         '''
         # we convert to 8-bit encoding, to help the regex parse only bytes
-        vat = ustr(vat).encode('iso8859-1')
-        m = self.__check_vat_mx_re.match(vat)
-        if not m:
-            #No valid format
-            return False
-        try:
-            ano = int(m.group('ano'))
-            if ano > 30:
-                ano = 1900 + ano
-            else:
-                ano = 2000 + ano
-            datetime.date(ano, int(m.group('mes')), int(m.group('dia')))
-        except ValueError:
-            return False
-        #Valid format and valid date
+        if vat:
+            vat = ustr(vat).encode('iso8859-1')
+            m = self.__check_vat_mx_re.match(vat)
+            if not m:
+                #No valid format
+                return False
+            try:
+                ano = int(m.group('ano'))
+                if ano > 30:
+                    ano = 1900 + ano
+                else:
+                    ano = 2000 + ano
+                datetime.date(ano, int(m.group('mes')), int(m.group('dia')))
+            except ValueError:
+                return False
+            #Valid format and valid date
         return True
     #check_vat = lambda *a: check_vat_mx
     
