@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="view_company_header3_form" model="ir.ui.view">
+            <field name="name">res.company.header3.form</field>
+            <field name="model">res.company</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='rml_header2']" position="after">
+                    <group>
+                        <separator colspan="4" string="Header Report"/>
+                        <field name="header_report" nolabel='1'/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

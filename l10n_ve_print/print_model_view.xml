@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <!--
+    =======================
+    PRINT MODEL
+    =======================
+    -->
+
+        <record id="view_print_model_tree" model="ir.ui.view">
+            <field name="name">print.model.tree</field>
+            <field name="model">print.model</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Prints Models">
+                    <field name="model"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_print_model_form" model="ir.ui.view">
+            <field name="name">Print Models</field>
+            <field name="model">print.model</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Print Models">
+                    <field name="model"/>
+                    <newline/>
+                    <field name="model_report_ids" nolabel="1" colspan="6" />
+                </form>
+            </field>
+        </record>
+
+    <!--
+    =======================
+    PRINT MODEL REPORTS
+    =======================
+    -->
+
+        <record id="view_print_model_reports_tree" model="ir.ui.view">
+            <field name="name">print.model.reports.tree</field>
+            <field name="model">print.model.reports</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Prints Models">
+                    <field name="report_id" />
+                    <field name="printer"/>
+                    <field name="lpr_option_id"/>
+                    <field name="allow_repeat"/>
+                    <field name="num_copies"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_print_model_reports_form" model="ir.ui.view">
+            <field name="name">Print Model Reports</field>
+            <field name="model">print.model.reports</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Print Model Reports">
+                    <separator colspan="4" string="Printed Report"/>
+                    <field name="report_id" colspan="4"/>
+                    <separator colspan="4" string="Printer"/>
+                    <field name="printer" required="1" colspan="4"/>
+                    <field name="lpr_option_id" required="1"/> 
+                    <field name="allow_repeat"/>
+                    <field name="gs_option_id" attrs="{'required':[('gs_use','=',True)]}"/> 
+                    <field name="gs_use"/>
+                    <field name="num_copies" required="1"/> 
+                    <separator colspan="4" string="State"/>
+                    <field name="state" attrs="{'required':[('depend_state','=',True)]}"/>
+                    <field name="depend_state"/>
+                    <separator colspan="4" string="Other Information"/>
+                    <field name="check_note_use"/> 
+                    <field name="python_code" colspan="6"/> 
+                </form>
+            </field>
+        </record>
+
+
+    <!--
+    =======================
+    PRINT LPR OPTION
+    =======================
+    -->
+
+        <record id="view_print_lpr_option_tree" model="ir.ui.view">
+            <field name="name">print.lpr.option_tree</field>
+            <field name="model">print.lpr.option</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Print lpr option profile">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_print_lpr_option_form" model="ir.ui.view">
+            <field name="name">print.lpr.option_form</field>
+            <field name="model">print.lpr.option</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Print lpr option profile">
+                    <field name="name"/>
+                    <field name="cpi"/>
+                    <field name="lpi"/>
+                    <field name="media"/>
+                    <field name="fit_to_page"/>
+                    <field name="orientation_requested"/>
+                </form>
+            </field>
+        </record>
+
+
+    <!--
+    =======================
+    IR PRINT
+    =======================
+    -->
+
+        <record id="view_ir_print_tree" model="ir.ui.view">
+            <field name="name">ir.print_tree</field>
+            <field name="model">ir.print</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Printed Reports XML">
+                    <field name="report_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_ir_print_form" model="ir.ui.view">
+            <field name="name">ir.print_form</field>
+            <field name="model">ir.print</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Printed Reports XML">
+                    <field name="report_id"/>
+                </form>
+            </field>
+        </record>
+
+    <!--
+    =======================
+    MENU
+    =======================
+    -->
+
+        <record model="ir.actions.act_window" id="action_print_model">
+            <field name="name">Print Models</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">print.model</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_view_print_tree">
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_print_model_tree"/> 
+            <field name="act_window_id" ref="action_print_model"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_view_print_form">
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_print_model_form"/>
+            <field name="act_window_id" ref="action_print_model"/>
+        </record>
+        <menuitem 
+            name="Print Models" 
+            id="id_print_models" 
+            parent="base.next_id_4"
+            sequence="99"/>
+        <menuitem 
+            name="Print Model" 
+            id="menu_action_view_print"
+            parent="id_print_models"
+            action="action_print_model"/>
+
+        <record model="ir.actions.act_window" id="action_printed_report">
+            <field name="name">Printed Reports XML</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.print</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_view_printed_tree">
+            <field name="sequence" eval="10"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ir_print_tree"/> 
+            <field name="act_window_id" ref="action_printed_report"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_view_printed_form">
+            <field name="sequence" eval="20"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_ir_print_form"/>
+            <field name="act_window_id" ref="action_printed_report"/>
+        </record>
+        <menuitem 
+            name="Printed Reports XML" 
+            id="menu_action_view_printed"
+            parent="id_print_models"
+            action="action_printed_report"/>
+
+
+    </data>
+</openerp>
