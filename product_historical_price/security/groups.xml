@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="product_historical_user" model="res.groups">
+            <field name="field">Product Historical User</field>
+        </record>
+
+         <record id="product_historical_manager" model="res.groups">
+            <field name="field">Product Historical Manager</field>
+        </record>
+
+    </data>
+</openerp>
