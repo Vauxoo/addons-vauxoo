@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="invoice_so" model="ir.ui.view">
+            <field name="name">account.invoice.so.form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <notebook>
+                   <page string="History" >
+                        <separator colspan="4" string="Sale Orders"/>
+                        <field name='sale_ids' nolabel='1'/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>
+    
