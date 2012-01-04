@@ -60,7 +60,6 @@
         7-  PROCESO DE AÑADIR LA IMPRESORA
             7.1- Acceder a Common UNIX Printing System (asistente de impresoras Web): http://localhost:631/ si es, desde una maquina virtual con: http://192.168.*.* 
             7.2- Anadir la Impresora que se desea administrar
-        8-  Instalar el modulo python2lpr
     """,
     "website" : "http://openerp.com.ve",
     "category" : "Generic Modules/MRP/Accounting",
