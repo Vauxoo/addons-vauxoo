@@ -68,7 +68,7 @@ class product_historical(osv.osv):
         'cost_historical': fields.function(_get_historical_cost, method=True, string=' Latest Cost', type='float',digits_compute= dp.get_precision('Cost_Historical'),
             store={'product.product': (lambda self, cr, uid, ids, c={}: ids, ['standard_price'], 50),}, 
             help="Latest Recorded Historical Cost"),
-        'list_price_historical_ids': fields.one2many('product.historic','product_id','Historical Prices'),
+        'list_price_historical_ids': fields.one2many('product.historic.price','product_id','Historical Prices'),
         'cost_historical_ids': fields.one2many('product.historic.cost','product_id','Historical Prices'),
         
     }

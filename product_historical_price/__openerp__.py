@@ -25,7 +25,7 @@
 {
     "name" : "Product Historical Price",
     "version" : "0.2",
-    "depends" : ["product","decimal_precision"],
+    "depends" : ["product","decimal_precision","account"],
     "author" : "Vauxoo",
     "description" : """
     What do this module:
