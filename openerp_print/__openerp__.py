@@ -68,6 +68,8 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/groups.xml",
+        "security/ir.model.access.csv",
         "print_model_view.xml",
         "res_company.xml",
     ],
