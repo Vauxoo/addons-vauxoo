@@ -1,9 +1,9 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_print_model_user","print.model.user","model_print_model","print_model.group_print_user",1,0,0,0
-"access_print_model_manager","print.model.manager","model_print_model","print_model.group_print_manager",1,1,1,1
-"access_print_lpr_option_user","print.lpr.option.user","model_print_lpr_option","print_model.group_print_user",1,0,0,0
-"access_print_lpr_option_manager","print.lpr.option.manager","model_print_lpr_option","print_model.group_print_manager",1,1,1,1
-"access_print_gs_option_user","print.gs.option.user","model_print_gs_option","print_model.group_print_user",1,0,0,0
-"access_print_gs_option_manager","print.gs.option.manager","model_print_gs_option","print_model.group_print_manager",1,1,1,1
-"access_print_model_reports_user","print.model.reports.user","model_print_model_reports","print_model.group_print_user",1,0,0,0
-"access_print_model_reports_manager","print.model.reports.manager","model_print_model_reports","print_model.group_print_manager",1,1,1,1
+"access_print_model_user","print.model.user","model_print_model","group_print_user",1,0,0,0
+"access_print_model_manager","print.model.manager","model_print_model","group_print_manager",1,1,1,1
+"access_print_lpr_option_user","print.lpr.option.user","model_print_lpr_option","group_print_user",1,0,0,0
+"access_print_lpr_option_manager","print.lpr.option.manager","model_print_lpr_option","group_print_manager",1,1,1,1
+"access_print_gs_option_user","print.gs.option.user","model_print_gs_option","group_print_user",1,0,0,0
+"access_print_gs_option_manager","print.gs.option.manager","model_print_gs_option","group_print_manager",1,1,1,1
+"access_print_model_reports_user","print.model.reports.user","model_print_model_reports","group_print_user",1,0,0,0
+"access_print_model_reports_manager","print.model.reports.manager","model_print_model_reports","group_print_manager",1,1,1,1
