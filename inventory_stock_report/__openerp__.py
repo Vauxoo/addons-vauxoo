@@ -45,7 +45,6 @@
                 'stock_report.xml'                           ,  
                 'wizard/stock_count_view.xml'                           ,  
                 'wizard/stock_qty_view.xml'                       ,
-                'security/ir.model.access.csv'                      ,
                 
     ]                                                               ,
     "active": False                                                 ,
