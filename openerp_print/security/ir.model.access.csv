@@ -7,3 +7,5 @@
 "access_print_gs_option_manager","print.gs.option.manager","model_print_gs_option","group_print_manager",1,1,1,1
 "access_print_model_reports_user","print.model.reports.user","model_print_model_reports","group_print_user",1,0,0,0
 "access_print_model_reports_manager","print.model.reports.manager","model_print_model_reports","group_print_manager",1,1,1,1
+"access_ir_print_user","ir.print.user","model_ir_print","group_ir_print_user",1,0,0,0
+"access_ir_print_manager","ir.print.manager","model_ir_print","group_ir_print_manager",1,1,1,1

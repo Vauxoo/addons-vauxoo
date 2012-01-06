@@ -8,5 +8,11 @@
     <record id="group_print_manager" model="res.groups">
         <field name="name">Print Model / Manager</field>
     </record>
+    <record id="group_ir_print_manager" model="res.groups">
+        <field name="name">Ir_Print Model / Manager</field>
+    </record>
+    <record id="group_ir_print_user" model="res.groups">
+        <field name="name">Ir_Print Model / User</field>
+    </record>
 </data>
 </openerp>
