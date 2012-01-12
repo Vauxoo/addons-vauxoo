@@ -210,7 +210,6 @@ class report_sxw(report_sxw.report_sxw):
         result = self.validate_report(cr, uid, report_xml.id, data['id'], context)
 
         if result['allow']:
-            print 'SE PERMITE REIMPRIMIR'
             context.update({'allow':True})
         else:
             print 'NO SE PERMITE REIMPRIMIR'
@@ -278,7 +277,7 @@ class report_sxw(report_sxw.report_sxw):
         if context.get('check_note_use',False):
             pool = pooler.get_pool(cr.dbname)
             #banco = ir_objj.browse(cr, uid, data['context']['bank_id'] , context=None) #no funiona este con GTK
-            banco = pool.get('res.bank.entity').browse(cr, uid, context['bank_id'] , context=None)
+            banco = pool.get('res.bank').browse(cr, uid, context['bank_id'] , context=None)
             self._add_header_bank(processed_rml,banco.format_h)
         elif not context.get('allow',False):
             header = self._default_company(cr,uid,context).header_report
