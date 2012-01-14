@@ -123,12 +123,11 @@ def _upload_ws_file(self, cr, uid, data, context={}):
     invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
     currency = invoice.currency_id.name
     currency_enc = currency.encode('UTF-8', 'strict')
-    rate = invoice.currency_id.rate and invoice.currency_id.rate or '1'
-    rate_str = str(rate)
+    rate = invoice.currency_id.rate or 1
     file = data['form']['file']
     moneda = '''<Addenda>
         <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
-    </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate_str)
+    </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate)
 
 
     cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
