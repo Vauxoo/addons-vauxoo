@@ -38,6 +38,8 @@ import tempfile
 import os
 import sys
 import codecs
+import xml.dom.minidom
+from datetime import datetime
 from tools.misc import ustr
 try:
     from SOAPpy import WSDL
@@ -91,21 +93,23 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
         #TODO: Change get file of xml from model browse of wizard
         cfd_data = base64.decodestring( self.fdata )
 
+        xml_res_str = xml.dom.minidom.parseString(cfd_data)
+        compr = xml_res_str.getElementsByTagName('Comprobante')[0]
+        date = compr.attributes['fecha'].value
+        date_format = datetime.strptime( date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+        context['date']=date_format
+
         invoice_ids = context.get('active_ids',[])
-        #~ print 'el invoice_ids es',invoice_ids
         invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
-        #~ print 'el invoice es', invoice
-        #get currency and rate from invoice
+
         currency = invoice.currency_id.name
         currency_enc = currency.encode('UTF-8', 'strict')
-        #currency_enc = ustr(currency)
-        rate = invoice.currency_id.rate
-        rate_str = str(rate)
+
+        rate = invoice.currency_id.rate or 1
 
         moneda = '''<Addenda>
             <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
-        </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate_str)
-
+        </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate)
 
         cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
         pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
@@ -163,8 +167,8 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                             invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
                             msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
                             self.write(cr, uid, data, {'message': msg, 'file':  base64.encodestring(file) }, context=None)#TODO: Write ever to final of function
-                         else:
-                             msg = msg + "\nNo se pudo extraer el archivo XML del PAC" 
+                        else:
+                            msg = msg + "\nNo se pudo extraer el archivo XML del PAC" 
 
                     elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
                         msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
