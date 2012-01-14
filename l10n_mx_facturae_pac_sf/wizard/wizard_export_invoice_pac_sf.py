@@ -35,6 +35,8 @@ import tempfile
 import os
 import sys
 import codecs
+import xml.dom.minidom
+from datetime import datetime
 from tools.misc import ustr
 try:
     from SOAPpy import WSDL
@@ -110,13 +112,18 @@ def _upload_ws_file(self, cr, uid, data, context={}):
     invoice_obj = pool.get('account.invoice')
     pac_params_obj = pool.get('params.pac')
     cfd_data = base64.decodestring( data['form']['file'] or '' )
+    
+    xml_res_str = xml.dom.minidom.parseString(cfd_data)
+    compr = xml_res_str.getElementsByTagName('Comprobante')[0]
+    date = compr.attributes['fecha'].value
+    date_format = datetime.strptime( date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+    context['date']=date_format
+    
     invoice_ids = data['ids']
     invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
-    #get currency and rate from invoice
     currency = invoice.currency_id.name
     currency_enc = currency.encode('UTF-8', 'strict')
-    #currency_enc = ustr(currency)
-    rate = invoice.currency_id.rate
+    rate = invoice.currency_id.rate and invoice.currency_id.rate or '1'
     rate_str = str(rate)
     file = data['form']['file']
     moneda = '''<Addenda>
@@ -126,6 +133,8 @@ def _upload_ws_file(self, cr, uid, data, context={}):
 
     cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
     pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
+    #print '-------------------la addenda desde version 5',cfd_data_adenda
+
 
     if pac_params_ids:
         pac_params = pac_params_obj.browse(cr, uid, pac_params_ids, context)[0]
