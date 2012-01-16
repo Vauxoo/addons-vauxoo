@@ -48,6 +48,8 @@ Requires the following programs:
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "pay_method_view.xml",
+        "invoice_view.xml",
 #        "l10n_mx_facturae_report.xml",
  #       "l10n_mx_facturae_wizard6.xml",
 

@@ -60,15 +60,19 @@ class account_invoice(osv.osv):
         else:
             invoice = self.browse(cr, uid, context['active_id'], context={'date':date_invoice})
             rate_obj = self.pool.get('res.currency')
-            #~ res=rate_obj._current_rate(cr, uid, [2],'rate', None, context={'date':datetime.strptime(invoice.date_invoice, '%Y-%m-%d').strftime('%Y-%m-%d') })
-            #~ print ' el res es',res
-         #   print 'es mayor'
             invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'
             
-            invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.currency_id.rate and str(invoice.currency_id.rate) or '1'
-        #print 'context:',context,'ids',ids
-        #print '-------despues del cambio',invoice_data_parents
+            invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.currency_id.rate or 1
+            invoice_data_parents[0]['Comprobante']['Moneda'] = invoice.currency_id.name or ''
+            #~ invoice_data_parents[0]['Comprobante']['metodoDePago'] = pendiente metodo de pago
+            #~ invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = pendiente 
+            #~ invoice_data_parents[0]['Comprobante']['NumCtaPago'] = pendiente 
+            invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or ''
+            
         
         return invoice_data_parents
+    _columns = {
+        'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago'),
+    }
 account_invoice()

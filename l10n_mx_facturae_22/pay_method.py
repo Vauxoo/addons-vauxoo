@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: isaac (isaac@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,10 +25,16 @@
 #
 ##############################################################################
 
-import invoice
-import pay_method
-#import wizard
-#import report
-#import ir_sequence
-#import res_company
-#import partner_address
+import time
+from tools.translate import _
+from osv import fields, osv
+import pooler
+
+
+class pay_method(osv.osv):
+    _name = 'pay.method'
+    _columns = {
+        'name': fields.char('Metodo de Pago', size = 128),
+        'description': fields.text('Descripcion'),
+    }
+pay_method()
