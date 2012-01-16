@@ -25,39 +25,15 @@
 #
 ##############################################################################
 
-{
-    "name" : "Migracion de Factura Electronica para Mexico (CFD) de 2.0 a 2.2",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
+import time
+from tools.translate import _
+from osv import fields, osv
+import pooler
 
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
-    """,
-    "website" : "www.vauxoo.com",
-    "license" : "AGPL-3",
-    "depends" : ["base","l10n_mx_facturae",
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "pay_method_view.xml",
-        "invoice_view.xml",
-        "regimen_fiscal.xml",
-        "partner_view.xml",
-#        "l10n_mx_facturae_report.xml",
- #       "l10n_mx_facturae_wizard6.xml",
+class res_partner(osv.osv):
+    _inherit = 'res.partner'
 
-#        "invoice_view.xml",
-
-    ],
-    "installable" : True,
-    "active" : False,
-}
+    _columns = {
+        'regimen_fiscal_id': fields.many2one('regimen.fiscal', 'Regimen fiscal', required = True),
+    }
+res_partner()

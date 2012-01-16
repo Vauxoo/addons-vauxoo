@@ -25,8 +25,11 @@
 #
 ##############################################################################
 
-import invoice
+
 import pay_method
+import regimen_fiscal
+import partner
+import invoice
 #import wizard
 #import report
 #import ir_sequence
