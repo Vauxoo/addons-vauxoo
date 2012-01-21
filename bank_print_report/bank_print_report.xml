@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="bank_management.check_fmt_report"
+            menu="False"
+            model="voucher.pay.support.wizard"
+            name="check_print_ext"
+            rml="bank_print_report/report/check.rml"
+            string="Print Check"
+            auto="False"
+            header="False"/>
+
+    </data>
+</openerp>

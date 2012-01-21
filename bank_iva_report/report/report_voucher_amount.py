@@ -164,6 +164,6 @@ class report_voucher_amount(report_sxw.rml_parse):
 report_sxw.report_sxw(
     'report.cash_amount.iva',
     'voucher.pay.support',
-    'addons/bank_management/check/report/report_voucher_amount.rml',
+    'addons/bank_iva_report/check/report/report_voucher_amount.rml',
     parser=report_voucher_amount,header=False
 )

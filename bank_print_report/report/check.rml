@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(178.0mm,80.0mm)"
+            leftMargin="0.0mm"
+            rightMargin="0.0mm"
+            topMargin="0.0mm"
+            bottomMargin="0.0mm" 
+            title="Test" 
+            author="Martin Simon" 
+            allowSplitting="20" 
+            showBoundary='0'>
+   
+    <pageTemplate id="first">
+      <frame id="first" x1="0.0mm" y1="0.0mm" width="110.00mm" height="70.0mm"/>
+    </pageTemplate>
+  
+  </template>
+  
+    <stylesheet>
+        <initialize>
+          <paraStyle name="all" font="Courier" size="8.0" alignment="justify"/>
+        </initialize>
+        <paraStyle name="P1" fontName="Courier" fontSize="10.0" leading="10"/>
+    </stylesheet>
+    
+  <story>
+    <para>[[repeatIn(objects,'o')]]</para>
+  </story>
+  
+</document>
+
+
+
+
+
+       
