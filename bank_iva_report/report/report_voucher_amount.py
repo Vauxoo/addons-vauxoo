@@ -38,7 +38,6 @@ class report_voucher_amount(report_sxw.rml_parse):
             'convert':self.convert,
             'debit':self.debit,
             'credit':self.credit,
-            'get_ref' : self._get_ref,
             'get_payee':self.get_payee,
             'obt_texto':self.obt_texto,
             'get_vat':self.get_vat,
@@ -95,13 +94,6 @@ class report_voucher_amount(report_sxw.rml_parse):
             credit +=move.credit
         return credit
 
-    def _get_ref(self, voucher_id, move_ids):
-        voucher_line = self.pool.get('account.voucher.line').search(self.cr, self.uid, [('partner_id','=',move_ids.partner_id.id), ('voucher_id','=',voucher_id)])
-        if voucher_line:
-            voucher = self.pool.get('account.voucher.line').browse(self.cr, self.uid, voucher_line)[0]
-            return voucher.ref
-        else:
-            return
 
     #lineas del modelo account_voucher que tienen facturas
     def get_invoice(self,voucher):
