@@ -8,24 +8,12 @@
                 <field name="type">form</field>
                 <field name="inherit_id" ref="bank_management.view_voucher_pay_support_wizard_generar_cheque"/>
                 <field name="arch" type="xml">
-                <xpath expr='//button[@name="to_pop_check"]' position='replace'>
+                <xpath expr='//label[@string=""]' position='replace'>
                     <button name="%(bank_management.check_fmt_report)d" string='Print Check' type="action" icon='gtk-print' />
                 </xpath>
                 </field>
             </record>
 
-            <record model="ir.ui.view" id="view_voucher_pay_support_wizard_gen_cheq_but_conf">
-                <field name="name">view_voucher_pay_support_wiz_transf_form_button_conf</field>
-                <field name="model">voucher.pay.support.wizard</field>
-                <field name="type">form</field>
-                <field name="inherit_id" ref="bank_management.view_voucher_pay_support_wizard_generar_cheque"/>
-                <field name="arch" type="xml">
-                <xpath expr='//button[@string="_Cancel"]' position='after'>
-                    <hpaned/>
-                    <button icon='gtk-ok' name="pop_check_printer" string="print confirmation" type="object"/> 
-                </xpath>
-                </field>
-            </record>
 
     </data>
 </openerp>
