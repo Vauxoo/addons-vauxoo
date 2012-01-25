@@ -108,7 +108,7 @@
 
  	<record id="tax9" model="account.tax.template">   
         <field name="chart_template_id" ref="vauxoo_mx_chart_template"/>   
-        <field name="name">IVA(0%) Ventas</field>
+        <field name="name">IVA-0% Ventas</field>
 		<field name="amount">0</field>
 		<field name="type">percent</field>
 		<field name="base_code_id" ref="vat_code_base_due"/>
@@ -121,7 +121,7 @@
 
  	<record id="tax10" model="account.tax.template">   
         <field name="chart_template_id" ref="vauxoo_mx_chart_template"/>   
-        <field name="name">IVA(11.0%) Compras</field>
+        <field name="name">IVA-11% Compras</field>
 		<field name="amount">0.11</field>
 		<field name="type">percent</field>
 		<field name="base_code_id" ref="vat_code_base_due"/>
@@ -134,7 +134,7 @@
 
  	<record id="tax11" model="account.tax.template">   
         <field name="chart_template_id" ref="vauxoo_mx_chart_template"/>   
-        <field name="name">IVA(11.0%) Ventas</field>
+        <field name="name">IVA-11% Ventas</field>
 		<field name="amount">0.11</field>
 		<field name="type">percent</field>
 		<field name="base_code_id" ref="vat_code_base_due"/>
@@ -147,7 +147,7 @@
 
  	<record id="tax12" model="account.tax.template">   
         <field name="chart_template_id" ref="vauxoo_mx_chart_template"/>   
-        <field name="name">IVA - 16% VENTAS</field>
+        <field name="name">IVA-16% Ventas</field>
 		<field name="amount">0.16</field>
 		<field name="type">percent</field>
 		<field name="base_code_id" ref="vat_code_base_due"/>
@@ -160,7 +160,7 @@
 
  	<record id="tax13" model="account.tax.template">   
         <field name="chart_template_id" ref="vauxoo_mx_chart_template"/>   
-        <field name="name">IVA(0%) Compras</field>
+        <field name="name">IVA-0% Compras</field>
 		<field name="amount">0</field>
 		<field name="type">percent</field>
 		<field name="base_code_id" ref="vat_code_base_due"/>
@@ -173,7 +173,7 @@
 
  	<record id="tax14" model="account.tax.template">   
         <field name="chart_template_id" ref="vauxoo_mx_chart_template"/>   
-        <field name="name">IVA - 16% COMPRAS</field>
+        <field name="name">IVA-16% Compras</field>
 		<field name="amount">0.16</field>
 		<field name="type">percent</field>
 		<field name="base_code_id" ref="vat_code_base_due"/>
@@ -183,12 +183,6 @@
 		<field name="type_tax_use">purchase</field>	
 	</record>
 
-
-
-    
-    
-    
-    
-    
+   
 </data>
 </openerp>

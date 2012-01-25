@@ -24,7 +24,7 @@
 ##############################################################################
 
 {
-    "name" : "Vauxoo Chart of account Mexico",
+    "name" : "Vauxoo Chart of Account Mexico",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Account Charts",
