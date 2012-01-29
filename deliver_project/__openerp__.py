@@ -47,10 +47,12 @@
     Sales Orders related (From your own OpenERP Instance)
     Invoices Related (From your OpenERP Instance)
     ''',
-    'category' : '',
+    'category' : 'Generic Modules/Projects & Services',
     'website' : 'http://vauxoo.com',
     'depends' : ['base'],
     'update_xml' : [
+        "report/ir_report.xml",
+        "report/module_report.xml",
     ],
     'demo' : [],
     'active' : False,
