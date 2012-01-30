@@ -29,20 +29,10 @@
 ##############################################################################
 
 
-import account
-import invoice
-import stock
-import product
 import unit_analisys
-import report_profit
-import report_profit_user
-import report_profit_partner
-import report_profit_category
-import report_profit_var
-import report_profit_invoice
-import report_profit_picking
-import stock_card
-import report
-import wizard
+#import report_profit
+#import report_profit_user
+#import report_profit_partner
+#import report_profit_category
 
 
