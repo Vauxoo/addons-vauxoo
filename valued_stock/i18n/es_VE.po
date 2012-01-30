@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-01-06 20:24+0000\n"
-"PO-Revision-Date: 2012-01-06 20:24+0000\n"
+"POT-Creation-Date: 2012-01-30 19:53+0000\n"
+"PO-Revision-Date: 2012-01-30 19:53+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: valued_stock
 #: model:ir.model,name:valued_stock.model_stock_inventory_line
 msgid "Inventory line"
-msgstr "Linea de inventario"
+msgstr "Línea de inventario"
 
 #. module: valued_stock
 #: field:stock.inventory.line,cost:0
