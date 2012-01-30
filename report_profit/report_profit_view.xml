@@ -2,6 +2,41 @@
 <openerp>
     <data>
 
+        <!--  Profit search  -->
+
+        <record id="view_report_profit_filter" model="ir.ui.view">
+            <field name="name">report.profit.search</field>
+            <field name="model">report.profit</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Profit">
+                   <group col="10" colspan="4">
+                    <filter name="out_invoice" icon="terp-document-new" string="Invoices" domain="[('type','=','out_invoice')]" help="Customer Invoices"/>
+                    <filter name="out_refund" icon="terp-gtk-media-pause" string="Refund" domain="[('type','=','out_refund')]" help="Refund Customer Invoices"/>
+                    <separator orientation="vertical"/>
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="uom_id"/>
+                    <field name="cat_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Salesman" icon="terp-personal" domain="[]"  context="{'group_by':'user_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Category" icon="terp-stock_symbol-selection" domain="[]"  context="{'group_by':'cat_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Product" icon="terp-product" domain="[]"  context="{'group_by':'product_id'}"/>
+                        <filter string="UOM" icon="terp-mrp" domain="[]"  context="{'group_by':'uom_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+
         <!--  Profit by products  -->
 
         <record id="view_profit_product_tree" model="ir.ui.view">
@@ -30,7 +65,6 @@
             </field>
         </record>
 
-        
 
         <record id="view_profit_product_form" model="ir.ui.view">
             <field name="name">report.profit.product.form</field>
@@ -55,7 +89,6 @@
                 </form>
             </field>
         </record>
-        
 
 
         <record id="action_profit_product_tree" model="ir.actions.act_window">
@@ -63,6 +96,7 @@
             <field name="res_model">report.profit</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_report_profit_filter"/>
         </record>
         <menuitem id="profit_reporting" name="Profit Reporting" parent="account.menu_finance_receivables" action="action_profit_product_tree"/>
 
