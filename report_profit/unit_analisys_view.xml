@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<!--        <record model="ir.ui.view" id="view_partner_form">-->
+<!--            <field name="name">product.uom.forminherit</field>-->
+<!--                <field name="model">product.uom</field>-->
+<!--                <field name="inherit_id" ref="product.product_uom_form_view"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                     <field name="active" position="before"/>-->
+<!--                        <field name="p_uom_id"/>-->
+<!--                </notebook>-->
+<!--            </field>-->
+<!--        </record>-->
+        <record model="ir.ui.view" id="view_product_uom_consol_form">
+            <field name="name">product.uom.consol.form</field>
+            <field name="model">product.uom.consol</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="UOM third to Consolidate">
+                    <group col="6" colspan="4">
+                       <field name="name" select="1"/> 
+                    </group>
+                    <group col="6" colspan="4">
+                       <field name="uom_line_ids" select="1" colspan="4" widget="one2many_list" nolabel="1">
+                            <tree string="Unit analysis" editable="bottom">
+                                <field name="name"/>
+                                <field name="p_uom_id"/>
+                                <field name="factor_consol"/>
+                                <!--<field name="factor_inv_data_consol"/>-->
+                                <field name="factor_inv_consol"/>
+                                <field name="rounding_consol"/>
+                            </tree>
+                            <form>
+                                <field name="name"/>
+                                <field name="p_uom_id"/>
+                                <field name="factor_consol"/>
+                                <!--<field name="factor_inv_data_consol"/>-->
+                                <field name="factor_inv_consol"/>
+                                <field name="rounding_consol"/>
+                            </form>
+                       </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_product_uom_consol_tree">
+            <field name="name">product.uom.consol.tree</field>
+            <field name="model">product.uom.consol</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <form string="UOM third to Consolidate">                    
+                       <field name="name" select="1"/>                     
+                </form>
+            </field>
+        </record>
+        <menuitem 
+            id="menu_product_uom_a_m" 
+            parent="product.next_id_16" 
+            sequence="11"
+            name="Analisys Unit."/>
+        <record id="product_cat_action_form" model="ir.actions.act_window">
+            <field name="name">Products UOMs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.uom.consol</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_product_uom_consol_form"/>
+        </record>
+        <menuitem
+            action="product_cat_action_form"
+            id="menu_config_product_uom_con"
+            name="UOM to Consolidate"
+            parent="report_profit.menu_product_uom_a_m"
+            sequence="11"
+            groups="product.group_product_manager"/>
+        <record id="product_uom_con_action_tree" model="ir.actions.act_window">
+            <field name="name">UOM Consol</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.uom.consol</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_product_uom_consol_tree"/>
+        </record>
+        <menuitem 
+            action="product_uom_con_action_tree" 
+            id="menu_product_uom_act_action" 
+            parent="report_profit.menu_product_uom_a_m" 
+            sequence="10"/>
+    </data>
+</openerp>

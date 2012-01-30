@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--  Profit by products  -->
+
+        <record id="view_profit_product_tree" model="ir.ui.view">
+            <field name="name">report.profit.product.tree</field>
+            <field name="model">report.profit</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Profit by Product" colors="red:profit&lt;0 and (type=='out_invoice');blue:type=='out_refund' and (profit&gt;0);grey:type=='out_refund' and (profit&lt;=0)">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="quantity"/>
+                    <field name="uom_id"/>
+                    <field name="price_unit"/>
+                    <field name="last_cost"/>
+                    <field name="price_subtotal" sum="Price amount"/>
+                    <field name="last_cost_subtotal" sum="Cost amount"/>
+                    <field name="profit"/>
+                    <field name="perc"/>
+                    <field name="type"/>
+                    <field name="qty_consol" sum="Consolidate amount"/>
+                    <field name="p_uom_c_id"/>
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record id="view_profit_product_form" model="ir.ui.view">
+            <field name="name">report.profit.product.form</field>
+            <field name="model">report.profit</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Profit by Product">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="quantity"/>
+                    <field name="uom_id"/>
+                    <field name="price_unit"/>
+                    <field name="last_cost"/>
+                    <field name="price_subtotal"/>
+                    <field name="last_cost_subtotal"/>
+                    <field name="type"/>
+                    <field name="qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_profit_product_tree" model="ir.actions.act_window">
+            <field name="name">Profit by Product</field>
+            <field name="res_model">report.profit</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="profit_reporting" name="Management Reporting" parent="sale.menu_sale_root"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report             
+            id="report_trial_cost" 
+            model="report.profit" 
+            name="profit.trial.cost" 
+            rml="report_profit/report/trial_cost.rml" 
+            string="Trial Profitability"
+            auto="False"
+            header="False"              
+            menu="False"/>
+
+        <report             
+            id="kardex" 
+            model="stock.card" 
+            name="kardex" 
+            rml="addons/report_profit/report/kardex.rml" 
+            string="Kardex"
+            auto="True"  
+            header="False" 
+            menu="True"/>
+
+
+        <report             
+            id="kardex_grey_lines" 
+            model="stock.card" 
+            name="kardex.grey.lines" 
+            rml="addons/report_profit/report/kardex_grey_lines.rml" 
+            string="Kardex - Prod. con Problema"
+            auto="True"
+            header="False" 
+            menu="True"/>
+
+
+    </data>
+</openerp>

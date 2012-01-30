@@ -1,0 +1,1009 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* report_profit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.12\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2010-10-20 15:07:04+0000\n"
+"PO-Revision-Date: 2010-10-20 15:07:04+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: report_profit
+#: code:addons/report_profit/report/trial_cost.py:0
+#: code:addons/report_profit/wizard/wizard_last_cost_price_sum.py:0
+#, python-format
+msgid "You have to check one box !"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,price_subtotal:0
+msgid "Subtotal Price"
+msgstr "Subtotal PVP"
+
+#. module: report_profit
+#: help:product.uom.consol.line,rounding_consol:0
+msgid "The computed quantity will be a multiple of this value. Use 1.0 for products that can not be split."
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit.picking,type:0
+msgid "Sending Goods"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,profit:0
+msgid "Profit"
+msgstr "Utilidad"
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_uxc_product_tree
+#: view:report.profit.uxc:0
+msgid "Profit by Product User and Category"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.product_uom_con_action_tree
+#: model:ir.ui.menu,name:report_profit.menu_product_uom_act_action
+msgid "UOM Consol"
+msgstr ""
+
+#. module: report_profit
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Nombre de modelo no válido en la definición de acción."
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_picking_tree
+#: model:ir.ui.menu,name:report_profit.menu_profit_picking
+msgid "Analisis de Costo2"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,stock_invoice:0
+msgid "Stock invoice"
+msgstr "Exis. Fact."
+
+#. module: report_profit
+#: selection:profit.trial.cost,init,c_sel:0
+#: selection:profit.trial.cost,init,p_sel:0
+#: selection:profit.trial.cost,init,u_sel:0
+#: selection:profit.update.costprice.sum,init,c_sel:0
+#: selection:profit.update.costprice.sum,init,p_sel:0
+#: selection:profit.update.costprice.sum,init,u_sel:0
+msgid "1"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.category,sum_last_cost:0
+#: field:report.profit.partner,sum_last_cost:0
+#: field:report.profit.pxc,sum_last_cost:0
+#: field:report.profit.upc,sum_last_cost:0
+#: field:report.profit.user,sum_last_cost:0
+#: field:report.profit.uxc,sum_last_cost:0
+#: field:report.profit.uxp,sum_last_cost:0
+msgid "Last Cost Sum"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_uxp
+msgid "Profit by Products and User and Partner"
+msgstr ""
+
+#. module: report_profit
+#: wizard_view:profit.update.costprice2,init:0
+msgid "Analyze Unit of Last Cost Price"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_category_product_tree
+#: view:report.profit.category:0
+msgid "Profit by Product and Category"
+msgstr ""
+
+#. module: report_profit
+#: help:product.uom.consol.line,factor_inv_consol:0
+msgid "The coefficient for the formula:\n"
+"coeff (base unit) = 1 (this unit). Factor = 1 / Rate."
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,last_cost_subtotal:0
+msgid "Subtotal Last Cost"
+msgstr "Subtotal Costo x Cantidad"
+
+#. module: report_profit
+#: field:report.profit.invoice,quantity:0
+msgid "Quantity"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,subtotal:0
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: report_profit
+#: model:ir.ui.menu,name:report_profit.menu_product_uom_a_m
+msgid "Analisys Unit."
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_uxc
+msgid "Profit by Products and User and Category"
+msgstr ""
+
+#. module: report_profit
+#: field:product.uom.consol.line,p_uom_c_id:0
+#: wizard_field:profit.update.costprice2,init,uom_c_id:0
+#: field:report.profit,p_uom_c_id:0
+#: field:report.profit.category,p_uom_c_id:0
+#: field:report.profit.partner,p_uom_c_id:0
+#: field:report.profit.pxc,p_uom_c_id:0
+#: field:report.profit.upc,p_uom_c_id:0
+#: field:report.profit.user,p_uom_c_id:0
+#: field:report.profit.uxc,p_uom_c_id:0
+#: field:report.profit.uxp,p_uom_c_id:0
+msgid "Consolidate Unit"
+msgstr ""
+
+#. module: report_profit
+#: field:account.invoice.line,last_price:0
+msgid "Last Price"
+msgstr ""
+
+#. module: report_profit
+#: view:report.profit.category:0
+#: view:report.profit.partner:0
+#: view:report.profit.user:0
+msgid "Quantity amount"
+msgstr ""
+
+#. module: report_profit
+#: help:product.uom.consol.line,p_uom_id:0
+msgid "Unit of Measure used for compute."
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,stock_after:0
+msgid "Stock after"
+msgstr "Existencia Previa"
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit
+msgid "Profit by Products"
+msgstr "Rentabilidad por Producto"
+
+#. module: report_profit
+#: selection:account.update.cost,init,state:0
+msgid "By Date"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "TRIAL COST"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit.picking,state:0
+msgid "Cancelled"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.report.xml,name:report_profit.report_trial_cost
+#: model:ir.actions.wizard,name:report_profit.wizard_trial_cost
+msgid "Trial Profitability"
+msgstr ""
+
+#. module: report_profit
+#: code:addons/report_profit/wizard/wizard_trial_cost.py:0
+#, python-format
+msgid "UserError"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "to:"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.invoice,move_id:0
+msgid "Move"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.ui.menu,name:report_profit.menu_config_product_uom_con
+msgid "UOM to Consolidate"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_invoice
+#: view:report.profit.invoice:0
+msgid "Move by Invoice"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_product_tree
+#: view:report.profit:0
+msgid "Profit by Product"
+msgstr "Rentabilidad por Producto"
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+#: wizard_field:profit.trial.cost,init,partner_res_id:0
+#: wizard_field:profit.update.costprice.sum,init,partner_res_id:0
+#: field:report.profit,partner_id:0
+#: field:report.profit.partner,partner_id:0
+#: field:report.profit.pxc,partner_id:0
+#: field:report.profit.upc,partner_id:0
+#: field:report.profit.uxp,partner_id:0
+msgid "Partner"
+msgstr "Cliente"
+
+#. module: report_profit
+#: field:report.profit.picking,stock_before:0
+msgid "Stock before"
+msgstr "Exist. Ant."
+
+#. module: report_profit
+#: field:report.profit.picking,date_inv:0
+msgid "Date invoice"
+msgstr "Fecha de Factura"
+
+#. module: report_profit
+#: selection:report.profit.picking,state:0
+msgid "Confirmed"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit.picking,type:0
+msgid "Getting Goods"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,invoice_qty:0
+msgid "Invoice quantity"
+msgstr "Cantidad Facturada"
+
+#. module: report_profit
+#: wizard_field:profit.trial.cost,init,period_length:0
+msgid "Period length (days)"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_upc
+msgid "Profit by Products and User,Partner and Category"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,invoice_line_id:0
+msgid "Invoice line"
+msgstr "Linea de Factura"
+
+#. module: report_profit
+#: field:report.profit.picking,state:0
+msgid "Status"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit,type:0
+msgid "Supplier Invoice"
+msgstr ""
+
+#. module: report_profit
+#: wizard_view:profit.trial.cost,init:0
+#: wizard_view:profit.update.costprice.sum,init:0
+msgid "Last Cost Price Sum"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.category,sum_qty_consol:0
+#: field:report.profit.partner,sum_qty_consol:0
+#: field:report.profit.pxc,sum_qty_consol:0
+#: field:report.profit.upc,sum_qty_consol:0
+#: field:report.profit.user,sum_qty_consol:0
+#: field:report.profit.uxc,sum_qty_consol:0
+#: field:report.profit.uxp,sum_qty_consol:0
+msgid "Consolidate qty Sum"
+msgstr ""
+
+#. module: report_profit
+#: field:product.uom.consol.line,factor_inv_data_consol:0
+msgid "Factor"
+msgstr ""
+
+#. module: report_profit
+#: field:product.uom.consol,uom_line_ids:0
+msgid "Units"
+msgstr ""
+
+#. module: report_profit
+#: wizard_view:account.update.cost,init:0
+msgid "Filter on Invoices"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_product_uom_consol_line
+msgid " Elements to control the seconds unit of measure. "
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,type:0
+#: field:report.profit.picking,type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: report_profit
+#: field:product.product,last_cost:0
+#: field:report.profit,last_cost:0
+msgid "Last Cost"
+msgstr "Último Costo"
+
+#. module: report_profit
+#: field:report.profit.invoice,stock:0
+msgid "Existencia"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit.picking,state:0
+msgid "Available"
+msgstr ""
+
+#. module: report_profit
+#: help:account.invoice.line,acc_cost:0
+msgid "The account moves cost of the invoice line"
+msgstr ""
+
+#. module: report_profit
+#: selection:account.update.cost,init,state:0
+#: selection:profit.trial.cost,init,c_sel:0
+#: selection:profit.trial.cost,init,p_sel:0
+#: selection:profit.trial.cost,init,u_sel:0
+#: selection:profit.update.costprice.sum,init,c_sel:0
+#: selection:profit.update.costprice.sum,init,p_sel:0
+#: selection:profit.update.costprice.sum,init,u_sel:0
+msgid "No Filter"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.product_cat_action_form
+msgid "Products UOMs"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.wizard,name:report_profit.wizard_profit_user_cost_price
+msgid "Profitability Analysis"
+msgstr ""
+
+#. module: report_profit
+#: selection:profit.trial.cost,init,c_sel:0
+#: selection:profit.trial.cost,init,p_sel:0
+#: selection:profit.trial.cost,init,u_sel:0
+#: selection:profit.update.costprice.sum,init,c_sel:0
+#: selection:profit.update.costprice.sum,init,p_sel:0
+#: selection:profit.update.costprice.sum,init,u_sel:0
+msgid "3"
+msgstr ""
+
+#. module: report_profit
+#: code:addons/report_profit/report/trial_cost.py:0
+#: code:addons/report_profit/wizard/wizard_last_cost_price_sum.py:0
+#, python-format
+msgid "User Error"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,quantity:0
+msgid "# of Products"
+msgstr "No. Producto"
+
+#. module: report_profit
+#: code:addons/report_profit/report/trial_cost.py:0
+#, python-format
+msgid "Incorrect Field List!"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_pxc
+msgid "Profit by Products and Partner and Category"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_partner
+msgid "Profit by Products and Partner"
+msgstr ""
+
+#. module: report_profit
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML inválido para la definición de la vista!"
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "tslc"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.module.module,shortdesc:report_profit.module_meta_information
+msgid "Report Profit"
+msgstr "Reporte de Rentabilidad"
+
+#. module: report_profit
+#: wizard_field:profit.trial.cost,init,p_check:0
+#: wizard_field:profit.update.costprice.sum,init,p_check:0
+msgid "Check partner?"
+msgstr ""
+
+#. module: report_profit
+#: selection:account.update.cost,init,state:0
+msgid "By Invoice"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_pxc_product_tree
+#: view:report.profit.pxc:0
+msgid "Profit by Product Partner and Category"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_invoice_tree
+#: model:ir.ui.menu,name:report_profit.menu_account_costo
+#: model:ir.ui.menu,name:report_profit.menu_profit_invoice
+msgid "Analisis de Costo"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,name:0
+#: field:report.profit.invoice,name:0
+msgid "Month"
+msgstr "Mes"
+
+#. module: report_profit
+#: view:product.uom.consol:0
+msgid "Unit analysis"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,invoice_price_unit:0
+msgid "Invoice price unit"
+msgstr "Prec. unit. fact."
+
+#. module: report_profit
+#: wizard_field:account.update.cost,init,date_start:0
+#: wizard_field:profit.trial.cost,init,date_start:0
+#: wizard_field:profit.update.costprice.sum,init,date_start:0
+msgid "Start Date"
+msgstr ""
+
+#. module: report_profit
+#: wizard_button:profit.trial.cost,init,print:0
+msgid "Print Trial Profitability"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_upc_product_tree
+#: view:report.profit.upc:0
+msgid "Profit by Product User Partner and Category"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+#: wizard_field:profit.trial.cost,init,cat_res_id:0
+#: wizard_field:profit.update.costprice.sum,init,cat_res_id:0
+#: field:report.profit,cat_id:0
+#: field:report.profit.category,cat_id:0
+#: field:report.profit.pxc,cat_id:0
+#: field:report.profit.upc,cat_id:0
+#: field:report.profit.uxc,cat_id:0
+msgid "Category"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit,type:0
+msgid "Customer Refund"
+msgstr ""
+
+#. module: report_profit
+#: field:product.product,last_pur_inv_date:0
+msgid "Last Purchase Invoice date"
+msgstr "Fecha última Fact. Compra"
+
+#. module: report_profit
+#: view:account.invoice:0
+msgid "Compute Cost"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_user_product_tree
+#: view:report.profit.user:0
+msgid "Profit by Product and User"
+msgstr ""
+
+#. module: report_profit
+#: wizard_button:account.update.cost,init,change:0
+#: wizard_button:profit.update.costprice.sum,init,change:0
+#: wizard_button:profit.update.costprice2,init,change:0
+msgid "Update"
+msgstr "Actualizar"
+
+#. module: report_profit
+#: wizard_view:account.update.cost,init:0
+msgid "Date Filter"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit.picking,type:0
+msgid "Internal"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit.picking,state:0
+msgid "Draft"
+msgstr ""
+
+#. module: report_profit
+#: field:product.uom.consol.line,rounding_consol:0
+msgid "Rounding Precision"
+msgstr ""
+
+#. module: report_profit
+#: field:product.product,last_pur_inv:0
+msgid "Last Purchase Invoice"
+msgstr "Última fact. Compra"
+
+#. module: report_profit
+#: model:ir.actions.wizard,name:report_profit.wizard_acc_update_cost
+#: model:ir.ui.menu,name:report_profit.menu_acc_update_cost
+msgid "Actualizar Costo"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,stk_mov_id:0
+msgid "Picking line"
+msgstr "Orden de Linea"
+
+#. module: report_profit
+#: field:product.uom.consol.line,factor_inv_consol:0
+msgid "Factor inv"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_partner_product_tree
+#: view:report.profit.partner:0
+msgid "Profit by Product and Partner"
+msgstr ""
+
+#. module: report_profit
+#: view:report.profit:0
+#: view:report.profit.category:0
+#: view:report.profit.partner:0
+#: view:report.profit.user:0
+msgid "Price amount"
+msgstr "Monto PVP"
+
+#. module: report_profit
+#: help:account.update.cost,init,invoice_ids:0
+msgid "All periods if empty"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.category,sum_price_subtotal:0
+#: field:report.profit.partner,sum_price_subtotal:0
+#: field:report.profit.pxc,sum_price_subtotal:0
+#: field:report.profit.upc,sum_price_subtotal:0
+#: field:report.profit.user,sum_price_subtotal:0
+#: field:report.profit.uxc,sum_price_subtotal:0
+#: field:report.profit.uxp,sum_price_subtotal:0
+msgid "Subtotal Price Sum"
+msgstr ""
+
+#. module: report_profit
+#: selection:profit.trial.cost,init,c_sel:0
+#: selection:profit.trial.cost,init,p_sel:0
+#: selection:profit.trial.cost,init,u_sel:0
+#: selection:profit.update.costprice.sum,init,c_sel:0
+#: selection:profit.update.costprice.sum,init,p_sel:0
+#: selection:profit.update.costprice.sum,init,u_sel:0
+msgid "2"
+msgstr ""
+
+#. module: report_profit
+#: wizard_field:profit.trial.cost,init,u_check:0
+#: wizard_field:profit.update.costprice.sum,init,u_check:0
+msgid "Check salesman?"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,user_id:0
+#: field:report.profit.upc,user_id:0
+#: field:report.profit.user,user_id:0
+#: field:report.profit.uxc,user_id:0
+#: field:report.profit.uxp,user_id:0
+msgid "User"
+msgstr "Vendedor"
+
+#. module: report_profit
+#: field:product.uom.consol.line,analysis:0
+msgid "Active"
+msgstr ""
+
+#. module: report_profit
+#: wizard_view:account.update.cost,init:0
+msgid "Select Date-Invoice"
+msgstr ""
+
+#. module: report_profit
+#: field:product.uom.consol.line,p_uom_id:0
+msgid "Unit of measure"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_picking
+#: view:report.profit.picking:0
+msgid "Move by Picking"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.module.module,description:report_profit.module_meta_information
+msgid "Report of profitability for high-risk economies\n"
+""
+msgstr "Reporte de rentabilidad para economías de alto riesgo"
+
+#. module: report_profit
+#: field:report.profit.picking,picking_qty:0
+msgid "Picking quantity"
+msgstr "Cantidad Env./Rec."
+
+#. module: report_profit
+#: help:account.update.cost,init,invoice_id:0
+msgid "Keep empty for all open fiscal year"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,name:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_category
+msgid "Profit by Products and Category"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,uom_id:0
+msgid " UoM"
+msgstr "UoM"
+
+#. module: report_profit
+#: selection:account.update.cost,init,state:0
+msgid "By Invoices"
+msgstr ""
+
+#. module: report_profit
+#: view:report.profit:0
+msgid "Consolidate amount"
+msgstr ""
+
+#. module: report_profit
+#: wizard_field:profit.trial.cost,init,c_check:0
+#: wizard_field:profit.update.costprice.sum,init,c_check:0
+msgid "Check category?"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,perc:0
+msgid "Profit Percent"
+msgstr "Porcentaje Rentabilidad"
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "Totales"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_report_profit_user
+msgid "Profit by Products and User"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,location_id:0
+msgid "Source Location"
+msgstr "Ubicacion de Origen}"
+
+#. module: report_profit
+#: wizard_field:account.update.cost,init,state:0
+msgid "Date/Period Filter"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,aml_cost_qty:0
+msgid "Cost entry quantity"
+msgstr "Cant. Cost. Cont."
+
+#. module: report_profit
+#: field:report.profit,qty_consol:0
+msgid "Consolidate qty"
+msgstr ""
+
+#. module: report_profit
+#: wizard_field:account.update.cost,init,invoice_ids:0
+msgid "Invoices"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit,price_unit:0
+msgid "Unit Price"
+msgstr "PVP Unitario"
+
+#. module: report_profit
+#: selection:report.profit.picking,state:0
+msgid "Done"
+msgstr ""
+
+#. module: report_profit
+#: wizard_field:account.update.cost,init,invoice_id:0
+#: field:report.profit.invoice,invoice_id:0
+#: field:report.profit.picking,invoice_id:0
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: report_profit
+#: wizard_button:account.update.cost,init,end:0
+#: wizard_button:profit.trial.cost,init,end:0
+#: wizard_button:profit.update.costprice.sum,init,end:0
+#: wizard_button:profit.update.costprice2,init,end:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: report_profit
+#: wizard_view:account.update.cost,init:0
+msgid "Filter by Invoice"
+msgstr ""
+
+#. module: report_profit
+#: field:product.uom.consol,name:0
+#: field:product.uom.consol.line,name:0
+msgid "Name"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,location_dest_id:0
+msgid "Dest. Location"
+msgstr "Local. Destino"
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "slc"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "tsps"
+msgstr ""
+
+#. module: report_profit
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
+
+#. module: report_profit
+#: selection:report.profit,type:0
+msgid "Customer Invoice"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "sps"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_product_uom_consol
+msgid "A third unit to consolidate the sales and purchase."
+msgstr ""
+
+#. module: report_profit
+#: help:report.profit.invoice,acc_cost:0
+#: help:report.profit.invoice,quantity:0
+msgid "Valor que adquiere el elemento para estimacion de costo de inventario"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "Printing date:"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_profit_uxp_product_tree
+#: view:report.profit.uxp:0
+msgid "Profit by Product User and Partner"
+msgstr ""
+
+#. module: report_profit
+#: wizard_view:profit.trial.cost,init:0
+#: wizard_view:profit.update.costprice.sum,init:0
+msgid "Sum By?"
+msgstr ""
+
+#. module: report_profit
+#: field:product.supplierinfo,last_inv:0
+msgid "Last Invoice"
+msgstr "Últma Factura"
+
+#. module: report_profit
+#: field:report.profit,product_id:0
+#: field:report.profit.invoice,product_id:0
+#: field:report.profit.picking,product_id:0
+msgid "Product"
+msgstr "Producto"
+
+#. module: report_profit
+#: wizard_view:profit.update.costprice2,init:0
+msgid "Update Last Cost Price"
+msgstr "Actualiza último precio de costo"
+
+#. module: report_profit
+#: selection:report.profit.picking,type:0
+msgid "Delivery"
+msgstr ""
+
+#. module: report_profit
+#: code:addons/report_profit/report/trial_cost.py:0
+#, python-format
+msgid "System Error"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit.picking,state:0
+msgid "Waiting"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,picking_id:0
+msgid "Picking"
+msgstr "Documento de recep/envio"
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "From:"
+msgstr ""
+
+#. module: report_profit
+#: wizard_field:account.update.cost,init,date_end:0
+#: wizard_field:profit.update.costprice.sum,init,date_end:0
+msgid "End Date"
+msgstr ""
+
+#. module: report_profit
+#: wizard_view:account.update.cost,init:0
+msgid "Filters"
+msgstr ""
+
+#. module: report_profit
+#: view:product.uom.consol:0
+msgid "UOM third to Consolidate"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,aml_cost_id:0
+msgid "Cost entry"
+msgstr "Costo de Entrada"
+
+#. module: report_profit
+#: field:account.invoice.line,acc_cost:0
+msgid "Costo"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "tsqc"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+msgid "sqc"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.invoice,line_id:0
+msgid "Linea"
+msgstr ""
+
+#. module: report_profit
+#: help:product.uom.consol.line,factor_consol:0
+msgid "The coefficient for the formula:\n"
+"1 (base unit) = coeff (this unit). Rate = 1 / Factor."
+msgstr ""
+
+#. module: report_profit
+#: view:report.profit:0
+#: view:report.profit.category:0
+#: view:report.profit.partner:0
+#: view:report.profit.user:0
+msgid "Cost amount"
+msgstr "Valor Costos"
+
+#. module: report_profit
+#: field:report.profit.picking,aml_cost_price_unit:0
+msgid "Cost entry price unit"
+msgstr "Costo promedio"
+
+#. module: report_profit
+#: wizard_field:profit.trial.cost,init,c_sel:0
+#: wizard_field:profit.trial.cost,init,p_sel:0
+#: wizard_field:profit.trial.cost,init,u_sel:0
+#: wizard_field:profit.update.costprice.sum,init,c_sel:0
+#: wizard_field:profit.update.costprice.sum,init,p_sel:0
+#: wizard_field:profit.update.costprice.sum,init,u_sel:0
+msgid "Sequence"
+msgstr ""
+
+#. module: report_profit
+#: rml:profit.trial.cost:0
+#: wizard_field:profit.trial.cost,init,user_res_id:0
+#: wizard_field:profit.update.costprice.sum,init,user_res_id:0
+msgid "Salesman"
+msgstr ""
+
+#. module: report_profit
+#: model:ir.actions.wizard,name:report_profit.wizard_profit_cost_price2
+#: model:ir.ui.menu,name:report_profit.menu_report_profit
+msgid "Update Cost Price2"
+msgstr "Actualiza Costos de Reposicion"
+
+#. module: report_profit
+#: field:report.profit.picking,sale_line_id:0
+msgid "Sale Line"
+msgstr "Linea de Venta"
+
+#. module: report_profit
+#: field:product.uom.consol.line,factor_consol:0
+msgid "Rate"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.invoice,acc_cost:0
+msgid "Cost"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,purchase_line_id:0
+msgid "Purchase Line"
+msgstr "Linea de Compra"
+
+#. module: report_profit
+#: field:product.supplierinfo,last_inv_date:0
+msgid "Last Invoice date"
+msgstr "Fecha Última Fact."
+
+#. module: report_profit
+#: model:ir.ui.menu,name:report_profit.profit_reporting
+msgid "Management Reporting"
+msgstr "Reporte Gerencial"
+
+#. module: report_profit
+#: code:addons/report_profit/wizard/wizard_trial_cost.py:0
+#, python-format
+msgid "You must enter a period length that cannot be 0 or below !"
+msgstr ""
+
+#. module: report_profit
+#: selection:report.profit,type:0
+msgid "Supplier Refund"
+msgstr ""
+
+#. module: report_profit
+#: field:report.profit.picking,total:0
+msgid "Total"
+msgstr ""
+
+#. module: report_profit
+#: code:addons/report_profit/wizard/wizard_last_cost_price_sum.py:0
+#, python-format
+msgid "You have to check salesman or product !"
+msgstr "Revise que todos clientes tengan un vendedor asignado o solamente se facturó productos "
+

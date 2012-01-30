@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="product_sup_last_inv_form_view">
+            <field name="name">report_profit.sup.last.inv.form.view</field>
+            <field name="type">form</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
+            <field name="arch" type="xml">
+                <field name="qty" position="after">
+                    <field name="last_inv" colspan="4"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_sup_last_inv_tree_view">
+            <field name="name">report_profit.sup.inv.tree.view</field>
+            <field name="type">tree</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="last_inv_date" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_prod_last_inv_form_view">
+            <field name="name">report_profit.last.inv.form.view</field>
+            <field name="type">form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <field name="cost_method" position="after">
+                    <field name="last_pur_inv" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="product_prod_last_inv_tree_view">
+            <field name="name">report_profit.last.inv.tree.view</field>
+            <field name="model">product.product</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="product.product_product_tree_view" />
+            <field name="arch" type="xml">
+                <field name="standard_price" position="after">
+                    <field name="last_cost" />
+                    <field name="last_pur_inv_date" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
+

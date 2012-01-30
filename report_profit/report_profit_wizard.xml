@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+		<wizard 
+			string="Update Cost Price2" 
+			model="report.profit"
+			name="profit.update.costprice2"
+			id="wizard_profit_cost_price2" 
+            menu="False"/>
+
+        <menuitem 
+            action="wizard_profit_cost_price2" 
+            id="menu_report_profit" 
+            parent="report_profit.profit_reporting" 
+            type="wizard"/>
+
+
+
+		<wizard 
+			string="Profitability Analysis" 
+			model="report.profit"
+			name="profit.update.costprice.sum"
+			id="wizard_profit_user_cost_price" 
+            menu="True"/>
+<!--
+        <menuitem 
+            action="wizard_profit_user_cost_price" 
+            id="menu_report_profit_user" 
+            parent="report_profit.profit_reporting" 
+            type="wizard"/>
+-->
+
+		<wizard 
+			string="Trial Profitability" 
+			model="report.profit"
+			name="profit.trial.cost"
+			id="wizard_trial_cost" 
+            menu="True"/>
+
+
+		<wizard 
+			string="Actualizar Costo" 
+			model="report.profit"
+			name="account.update.cost"
+			id="wizard_acc_update_cost" 
+            menu="False"/>
+
+        <menuitem 
+            action="wizard_acc_update_cost" 
+            id="menu_acc_update_cost" 
+            parent="menu_account_costo" 
+            type="wizard"/>
+
+
+	</data>
+</openerp>

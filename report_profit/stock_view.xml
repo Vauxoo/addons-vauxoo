@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="stock_move_form_cost" model="ir.ui.view">
+            <field name="name">stock.move.form.cost</field>
+            <field name="model">stock.move</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <newline/>
+                    <field name="sml_out_id" domain="[('location_dest_id','=',location_id),('location_id','=',location_dest_id)]"/>
+                    <newline/>
+                    <separator string="Moves in" colspan="4"/>
+                    <field name="in_sml_ids" nolabel="1" widget="many2many" domain="[('location_dest_id','=',location_id),('location_id','=',location_dest_id)]"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="stock_picking_form_cost" model="ir.ui.view">
+            <field name="name">stock.picking.form.cost</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="/form/notebook/page/field/form/field[@name='state']" position="after">
+                    <newline/>
+                    <group colspan="4">
+                        <field name="sml_out_id" domain="[('location_dest_id','=',location_id),('location_id','=',location_dest_id)]"/>
+                        <newline/>
+                        <separator string="Moves in" colspan="4"/>
+                        <field name="in_sml_ids" nolabel="1" widget="many2many" domain="[('location_dest_id','=',location_id),('location_id','=',location_dest_id)]"/>
+                    </group>
+                </xpath>                
+            </field>
+        </record>
+
+        
+    </data>
+</openerp>

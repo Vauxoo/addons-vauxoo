@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--  Profit by products User and Partner-->
+
+        <record id="view_profit_uxp_product_tree" model="ir.ui.view">
+            <field name="name">report.profit.uxp.product.tree</field>
+            <field name="model">report.profit.uxp</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Profit by Product User and Partner">
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record id="view_profit_uxp_product_form" model="ir.ui.view">
+            <field name="name">report.profit.uxp.product.form</field>
+            <field name="model">report.profit.uxp</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Profit by Product User and Partner">
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_profit_uxp_product_tree" model="ir.actions.act_window">
+            <field name="name">Profit by Product User and Partner</field>
+            <field name="res_model">report.profit.uxp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <!--  Profit by products User and Category-->
+
+        <record id="view_profit_uxc_product_tree" model="ir.ui.view">
+            <field name="name">report.profit.uxc.product.tree</field>
+            <field name="model">report.profit.uxc</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Profit by Product User and Category">
+                    <field name="user_id"/>
+                    <field name="cat_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record id="view_profit_uxc_product_form" model="ir.ui.view">
+            <field name="name">report.profit.uxc.product.form</field>
+            <field name="model">report.profit.uxc</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Profit by Product User and Category">
+                    <field name="user_id"/>
+                    <field name="cat_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_profit_uxc_product_tree" model="ir.actions.act_window">
+            <field name="name">Profit by Product User and Category</field>
+            <field name="res_model">report.profit.uxc</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <!--  Profit by products Partner and Category-->
+
+        <record id="view_profit_pxc_product_tree" model="ir.ui.view">
+            <field name="name">report.profit.pxc.product.tree</field>
+            <field name="model">report.profit.pxc</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Profit by Product Partner and Category">
+                    <field name="partner_id"/>
+                    <field name="cat_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record id="view_profit_pxc_product_form" model="ir.ui.view">
+            <field name="name">report.profit.pxc.product.form</field>
+            <field name="model">report.profit.pxc</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Profit by Product Partner and Category">
+                    <field name="partner_id"/>
+                    <field name="cat_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_profit_pxc_product_tree" model="ir.actions.act_window">
+            <field name="name">Profit by Product Partner and Category</field>
+            <field name="res_model">report.profit.pxc</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <!--  Profit by products User Partner and Category-->
+
+        <record id="view_profit_upc_product_tree" model="ir.ui.view">
+            <field name="name">report.profit.upc.product.tree</field>
+            <field name="model">report.profit.upc</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Profit by Product User Partner and Category">
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="cat_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record id="view_profit_upc_product_form" model="ir.ui.view">
+            <field name="name">report.profit.upc.product.form</field>
+            <field name="model">report.profit.upc</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Profit by Product User Partner and Category">
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="cat_id"/>
+                    <field name="sum_last_cost"/>
+                    <field name="sum_price_subtotal"/>
+                    <field name="sum_qty_consol"/>
+                    <field name="p_uom_c_id"/>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_profit_upc_product_tree" model="ir.actions.act_window">
+            <field name="name">Profit by Product User Partner and Category</field>
+            <field name="res_model">report.profit.upc</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+    </data>
+</openerp>

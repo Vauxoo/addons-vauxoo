@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--  Move by Picking Line -->
+
+        <record id="view_stock_card_line_tree" model="ir.ui.view">
+            <field name="name">stock.card.line.tree</field>
+            <field name="model">stock.card.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Move by Picking Line">
+                    <field name="name"/>
+                    <field name="date_inv"/>
+                    <field name="type"/>                    
+                    <field name="picking_id"/>
+                    <field name="purchase_line_id"/>
+                    <field name="sale_line_id"/>
+                    <field name="product_id"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="stock_invoice"/>
+                    <field name="stock_before"/>
+                    <field name="stk_mov_id"/>
+                    <field name="picking_qty"/>
+                    <field name="stock_after"/>
+                    <field name="invoice_qty"/>
+                    <field name="aml_cost_qty"/>
+                    <field name="invoice_price_unit"/>
+                    <field name="aml_cost_price_unit"/>
+                    <field name="subtotal"/>
+                    <field name="total"/>
+                    <field name="avg"/>
+                    <field name="state"/>
+                    <field name="aml_cost_id"/>
+                    <field name="invoice_line_id"/>
+                    <field name="invoice_id"/>
+                    <field name="parent_id"/>
+                    <field name="sequence"/>
+                    <field name="stk_bef_cor"/>
+                    <field name="stk_aft_cor"/>
+                    <field name="sml_out_id"/>
+                    <field name="aml_inv_id"/>
+                    <field name="aml_inv_price_unit"/>
+                    <field name="aml_inv_qty"/>
+                    <field name="aml_cost_cor"/>
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record id="view_stock_card_line_form" model="ir.ui.view">
+            <field name="name">stock.card.line.form</field>
+            <field name="model">stock.card.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Move by Picking Line">
+                <group col="2" colspan="6">
+                    <field name="name"/>
+                    <field name="date_inv"/>
+                    <field name="type"/>                    
+                    <field name="picking_id"/>
+                    <field name="purchase_line_id"/>
+                    <field name="sale_line_id"/>
+                    <field name="product_id"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="stock_invoice"/>
+                    <field name="stock_before"/>
+                    <field name="stk_mov_id"/>
+                    <field name="picking_qty"/>
+                    <field name="stock_after"/>
+                    <field name="invoice_qty"/>
+                    <field name="aml_cost_qty"/>
+                    <field name="invoice_price_unit"/>
+                    <field name="aml_cost_price_unit"/>
+                    <field name="subtotal"/>
+                    <field name="total"/>
+                    <field name="avg"/>
+                    <field name="state"/>
+                    <field name="aml_cost_id"/>
+                    <field name="invoice_line_id"/>
+                    <field name="invoice_id"/>
+                    <field name="parent_id"/>
+                    <field name="sequence"/>
+                    <field name="stk_bef_cor"/>
+                    <field name="stk_aft_cor"/>
+                    <field name="sml_out_id"/>
+                    <field name="aml_inv_id"/>
+                    <field name="aml_inv_price_unit"/>
+                    <field name="aml_inv_qty"/>
+                    <field name="aml_cost_cor"/>
+                </group>    
+                <group col="1" colspan="6">
+                    <field name="in_sml_ids"  nolabel="1" widget='many2many'/>
+                </group>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_stock_card_line_tree" model="ir.actions.act_window">
+            <field name="name">Stock card line</field>
+            <field name="res_model">stock.card.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem 
+            action="action_stock_card_line_tree" 
+            id="menu_stock_card_line" 
+            parent="menu_account_costo" 
+            name="Stock card line"/>
+
+
+
+
+        <!--  Move by Picking -->
+
+        <record id="view_stock_card_tree" model="ir.ui.view">
+            <field name="name">stock.card.tree</field>
+            <field name="model">stock.card</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Move by Picking">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record id="view_stock_card_form" model="ir.ui.view">
+            <field name="name">stock.card.form</field>
+            <field name="model">stock.card</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Move by Picking">
+                <group colspan="4" col="6">
+                <group col="4" colspan="2">
+                    <field name="name"/>
+                    <button name="action_confirm" string="Cargar" type="object" icon="gtk-open"/>
+<!--                    <button name="action_done" string="Calcular" type="object" icon="gtk-go-forward"/>-->
+<!--                    <button name="action_get_ready" string="Preparar" type="object" icon="gtk-go-forward"/>-->
+                </group>
+                    <newline/>
+                    <field name="sc_line" nolabel="1"/>
+                </group>
+                </form>
+            </field>
+        </record>
+        
+
+
+        <record id="action_stock_card_tree" model="ir.actions.act_window">
+            <field name="name">Stock card</field>
+            <field name="res_model">stock.card</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem 
+            action="action_stock_card_tree" 
+            id="menu_stock_card_" 
+            parent="menu_account_costo" 
+            name="Stock card"/>
+
+
+
+    </data>
+</openerp>
