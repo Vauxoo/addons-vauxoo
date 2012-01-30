@@ -92,10 +92,9 @@ def getqueue (name, queue, host, depth, printers, classes):
 
 def gethost (host=None, depth=0):
    # print "entro aqui"
-    if host:
-        cups.setServer (host)
-    else:
+    if not host:
         host = "localhost"
+    cups.setServer (host)
     c = cups.Connection ()
     printers = c.getPrinters ()
     classes = c.getClasses ()
