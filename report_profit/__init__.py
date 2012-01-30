@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: javier@vauxoo.com           
+#    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -24,4 +24,7 @@
 ################################################################################
 
 import unit_analisys
+import invoice
+import report_profit
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

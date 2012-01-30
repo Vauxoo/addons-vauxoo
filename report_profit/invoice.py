@@ -1,36 +1,31 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
-##############################################################################
+###########################################################################
+#    Module Writen to OpenERP, Open Source Management Solution
+#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    All Rights Reserved
+###############Credits######################################################
+#    Coded by: javier@vauxoo.com
+#    Planified by: Nhomar Hernandez
+#    Audited by: Vauxoo C.A.
+#############################################################################
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
-#                    Javier Duran <javier@vauxoo.com>
-# 
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
-#
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#
-##############################################################################
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 
 import time
 from osv import fields, osv
-from tools import config
+import decimal_precision as dp
 
 
 class account_invoice_line(osv.osv):
@@ -40,7 +35,7 @@ class account_invoice_line(osv.osv):
 
     def _compute_lines(self, cr, uid, ids, name, args, context=None):
         result = {}
-        for il in self.browse(cr, uid, ids, context):            
+        for il in self.browse(cr, uid, ids, context):
             am_lines = self.move_line_id_cost_get(cr, uid, [il.id])
             total = 0.0
             for m in self.pool.get('account.move.line').browse(cr, uid, am_lines, context):
@@ -75,8 +70,8 @@ class account_invoice_line(osv.osv):
 
     _description = "Last Invoice Price"
     _columns = {
-        'last_price': fields.float('Last Price', digits=(16, int(config['price_accuracy']))),
-        'acc_cost': fields.function(_compute_lines, method=True, string='Costo', digits=(16, int(config['price_accuracy'])),
+        'last_price': fields.float('Last Price', digits_compute= dp.get_precision('Account')),
+        'acc_cost': fields.function(_compute_lines, method=True, string='Costo', type="float", digits_compute=dp.get_precision('Account'),
             store={
                 'account.invoice': (_get_iline_from_invoice, ['state', 'invoice_line'], 50),
                 'account.move.line': (_get_iline_from_amline, ['debit','credit','quantity'], 50),
@@ -148,10 +143,12 @@ class account_invoice(osv.osv):
 
 
          # Update the stored value (fields.function), so we write to trigger recompute
-        self.pool.get('account.invoice').write(cr, uid, ids, {'invoice_line':[]}, context=context)    
+        self.pool.get('account.invoice').write(cr, uid, ids, {'invoice_line':[]}, context=context)
 
         return True
 
 
 account_invoice()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

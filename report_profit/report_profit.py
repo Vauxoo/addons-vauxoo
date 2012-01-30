@@ -1,32 +1,27 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
-##############################################################################
+###########################################################################
+#    Module Writen to OpenERP, Open Source Management Solution
+#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    All Rights Reserved
+###############Credits######################################################
+#    Coded by: javier@vauxoo.com
+#    Planified by: Nhomar Hernandez
+#    Audited by: Vauxoo C.A.
+#############################################################################
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
-#                    Javier Duran <javier@vauxoo.com>
-# 
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
-#
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#
-##############################################################################
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 
 from osv import fields,osv
 from tools.sql import drop_view_if_exists
@@ -75,25 +70,25 @@ class report_profit(osv.osv):
                     then
                         l.price_unit*(-1)
                     else
-                        l.price_unit 
+                        l.price_unit
                 end as price_unit,
                 case when i.type='out_refund'
                     then
                         l.last_price*(-1)
                     else
-                        l.last_price 
-                end as last_cost,                 
+                        l.last_price
+                end as last_cost,
                 case when i.type='out_refund'
                     then
                         l.price_subtotal*(-1)
                     else
-                        l.price_subtotal 
+                        l.price_subtotal
                 end as price_subtotal,
                 case when i.type='out_refund'
                     then
                         (l.quantity*l.last_price)*(-1)
                     else
-                        (l.quantity*l.last_price) 
+                        (l.quantity*l.last_price)
                 end as last_cost_subtotal,
                 case when i.type='out_refund'
                     then
@@ -111,8 +106,8 @@ class report_profit(osv.osv):
                 p.name as partner,
                 i.type as type,
                 c.p_uom_c_id as p_uom_c_id,
-                case when i.type='out_refund'     
-                    then                           
+                case when i.type='out_refund'
+                    then
                         (l.quantity*c.factor_consol)*(-1)
                     else
                         (l.quantity*c.factor_consol)
@@ -124,8 +119,8 @@ class report_profit(osv.osv):
                 right join account_invoice_line l on (i.id=l.invoice_id)
                 left join product_uom m on (m.id=l.uos_id)
                 left join product_uom_consol_line c on (m.id=c.p_uom_id)
-                left join product_template t on (t.id=l.product_id)
-                left join product_product d on (d.product_tmpl_id=l.product_id)
+                left join product_product d on (d.id=l.product_id)
+                left join product_template t on (t.id=d.product_tmpl_id)
             where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid') and l.uos_id in (
                 select
                     u.id as id

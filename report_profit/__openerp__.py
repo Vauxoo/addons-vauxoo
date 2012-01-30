@@ -5,7 +5,7 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: javier@vauxoo.com           
+#    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -26,7 +26,7 @@
 {
     "name" : "Report Profit",
     "version" : "0.2",
-    "depends" : ["base","product", "purchase"],
+    "depends" : ["base","product", "purchase", "account"],
     "author" : "Vauxoo",
     "description" : """
         Performs the equivalent of a third unit for the analysis of sales.
@@ -41,7 +41,10 @@
     "update_xml" : [
         "security/ir.model.access.csv",
         "unit_analisys_view.xml",
+        "report_profit_view.xml",
     ],
     "active": False,
     "installable": True,
 }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

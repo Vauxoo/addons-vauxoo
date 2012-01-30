@@ -25,6 +25,7 @@
                     <field name="type"/>
                     <field name="qty_consol" sum="Consolidate amount"/>
                     <field name="p_uom_c_id"/>
+                    <field name="cat_id"/>
                 </tree>
             </field>
         </record>
@@ -50,6 +51,7 @@
                     <field name="type"/>
                     <field name="qty_consol"/>
                     <field name="p_uom_c_id"/>
+                    <field name="cat_id"/>
                 </form>
             </field>
         </record>
@@ -62,7 +64,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem id="profit_reporting" name="Management Reporting" parent="sale.menu_sale_root"/>
+        <menuitem id="profit_reporting" name="Profit Reporting" parent="account.menu_finance_receivables" action="action_profit_product_tree"/>
 
     </data>
 </openerp>
