@@ -58,7 +58,8 @@ class module(osv.osv):
         {'MenuName':menu.name,
         'CompleteMenuName':menu.complete_name,
         'ActionHelp':menu.action.help,
-        'ModuleName':action.__module__}
+        'ModuleName':action.__module__
+        'XmlId':data_id.name}
         :return docStr Variable with wiki text.
         '''
         docStr=''
@@ -66,14 +67,18 @@ class module(osv.osv):
         CompleteMenuName=dict_txt.get('CompleteMenuName')
         ActionHelp=dict_txt.get('ActionHelp')
         ModuleName=dict_txt.get('ModuleName')
+        XmlId=dict_txt.get('XmlId')
         if Name:
             docStr=docStr+"===%s==="%Name
+        if XmlId:
+            docStr=docStr+"\nimage: %s.jpeg"%XmlId
         if CompleteMenuName:
             docStr=docStr+"\n''%s''"%CompleteMenuName
         if ActionHelp:
             docStr=docStr+"\n%s"%ActionHelp
         return docStr
-        
+
+
     def title_help(self,cr,uid,mod_id,module,context={}):
         '''
         {'CompleteModuleName':action.__module__
@@ -84,7 +89,7 @@ class module(osv.osv):
                                      mod_id,
                                      context=context).shortdesc,
                                      self.sub_title_help(cr,uid,module,
-                                                            context=context))
+                                                         context=context))
         return docStr
 
 
@@ -134,11 +139,13 @@ class module(osv.osv):
                     menu=menu_obj.browse(cr,uid,data_id.res_id,context=context)
                     if menu.action._table_name=='ir.actions.act_window':
                         if menu.action:
+                            print "-.-.-.-.-.-.-.-.-.-.-.-.- %s" % data_id.name
                             res_mod_dic['doc_on_module'].append("%s" % self.format_help(cr,uid,
                             {'MenuName':menu.name,
                             'CompleteMenuName':menu.complete_name,
                             'ActionHelp':menu.action.help,
-                            'ModuleName':data_id.module},
+                            'ModuleName':data_id.module,
+                            'XmlId':data_id.name},
                             context=context))
                             res_mod_dic['doc_on_module'].append(self.title_help(cr,uid,
                                                             mnames[data_id.module],data_id.module,context=context))
