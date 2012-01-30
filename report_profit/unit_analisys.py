@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
-#                    Javier Duran <javier@vauxoo.com>
-#                    Nhomar Hernandez <nhomar@vauxoo.com>
+# Copyright (c) 2010 Netquatro C.A. (http://openerp.netquatro.com/) All Rights Reserved.
+#                    Javier Duran <javier.duran@netquatro.com>
+#                    Nhomar Hernandez <nhomar.hernandez@netquatro.com>
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -48,7 +48,7 @@ class product_uom_consol_line(osv.osv):
     """
     _name = 'product.uom.consol.line'
     _description = ''' Elements to control the seconds unit of measure. '''
-    
+
     def _factor(self, cursor, user, ids, name, arg, context):
         res = {}
         for uom in self.browse(cursor, user, ids, context=context):
@@ -76,5 +76,5 @@ class product_uom_consol_line(osv.osv):
         'p_uom_id':fields.many2one('product.uom', 'Unit of measure', required=True, help="Unit of Measure used for compute."),
         'name': fields.char('Name', size=64, required=False),
     }
-                    
+
 product_uom_consol_line()

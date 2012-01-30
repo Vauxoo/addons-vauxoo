@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_product_uom_consol_user","product.uom.consol.user","model_product_uom_consol","purchase.group_purchase_user",1,0,0,0
+"access_product_uom_consol_line_user","product.uom.consol.line.user","model_product_uom_consol_line","purchase.group_purchase_user",1,0,0,0
+"access_product_uom_consol_manager","product.uom.consol.manager","model_product_uom_consol","purchase.group_purchase_manager",1,1,1,1
+"access_product_uom_consol_line_manager","product.uom.consol.line.manager","model_product_uom_consol_line","purchase.group_purchase_manager",1,1,1,1
+
+

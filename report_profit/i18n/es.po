@@ -1,0 +1,117 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* report_profit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-12-15 16:10+0000\n"
+"PO-Revision-Date: 2011-12-15 16:10+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: report_profit
+#: model:ir.ui.menu,name:report_profit.menu_product_unit_analysis
+msgid "Analisys Unit."
+msgstr "Unidad de Analisis"
+
+#. module: report_profit
+#: help:product.uom.consol.line,factor_consol:0
+msgid "The coefficient for the formula:\n"
+"1 (base unit) = coeff (this unit). Rate = 1 / Factor."
+msgstr "El coeficiente para la formula:\n"
+"1 (unidad base ) = coeff (Esta unidad). Tasa = 1 / Factor."
+
+#. module: report_profit
+#: field:product.uom.consol.line,p_uom_c_id:0
+msgid "Consolidate Unit"
+msgstr "Unidad consolidada"
+
+#. module: report_profit
+#: field:product.uom.consol,name:0
+#: field:product.uom.consol.line,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: report_profit
+#: field:product.uom.consol.line,factor_inv_consol:0
+msgid "Factor inv"
+msgstr "Factor inv"
+
+#. module: report_profit
+#: help:product.uom.consol.line,p_uom_id:0
+msgid "Unit of Measure used for compute."
+msgstr "Unidad de medida usada para el calculo."
+
+#. module: report_profit
+#: help:product.uom.consol.line,rounding_consol:0
+msgid "The computed quantity will be a multiple of this value. Use 1.0 for products that can not be split."
+msgstr "La cantidad calculada sera multiplicada por este valor. Use 1.0 para productos que no pueden ser divididos."
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_product_uom_consol
+msgid "A third unit to consolidate the sales and purchase."
+msgstr "Una tercera unidad para consolidar las ventas y compras."
+
+#. module: report_profit
+#: field:product.uom.consol,uom_line_ids:0
+msgid "Units"
+msgstr "Unidades"
+
+#. module: report_profit
+#: field:product.uom.consol.line,factor_consol:0
+msgid "Rate"
+msgstr "Tasa"
+
+#. module: report_profit
+#: view:product.uom.consol:0
+msgid "Unit analysis"
+msgstr "Unidad de Analisis"
+
+#. module: report_profit
+#: field:product.uom.consol.line,rounding_consol:0
+msgid "Rounding Precision"
+msgstr "Precision de redondeo"
+
+#. module: report_profit
+#: field:product.uom.consol.line,factor_inv_data_consol:0
+msgid "Factor"
+msgstr "Factor"
+
+#. module: report_profit
+#: field:product.uom.consol.line,analysis:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: report_profit
+#: model:ir.model,name:report_profit.model_product_uom_consol_line
+msgid " Elements to control the seconds unit of measure. "
+msgstr " Elementos para comparar la segunda unidad de medida. "
+
+#. module: report_profit
+#: field:product.uom.consol.line,p_uom_id:0
+msgid "Unit of measure"
+msgstr "Unidades de medidas"
+
+#. module: report_profit
+#: model:ir.actions.act_window,name:report_profit.action_product_unit_analysis
+msgid "Products Unit Analysis"
+msgstr "Analisis unidades de productos"
+
+#. module: report_profit
+#: help:product.uom.consol.line,factor_inv_consol:0
+msgid "The coefficient for the formula:\n"
+"coeff (base unit) = 1 (this unit). Factor = 1 / Rate."
+msgstr "El coeficiente para la formula:\n"
+"coeff (Unidad base) = 1 (esta unidad). Factor = 1 / Tasa."
+
+#. module: report_profit
+#: view:product.uom.consol:0
+msgid "UOM third to Consolidate"
+msgstr "Tercera UDM a Consolidar"
+
