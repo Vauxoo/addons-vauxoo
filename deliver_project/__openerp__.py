@@ -51,6 +51,7 @@
     'website' : 'http://vauxoo.com',
     'depends' : ['base'],
     'update_xml' : [
+        "view/module_view.xml",
         "report/ir_report.xml",
         "report/module_report.xml",
     ],
