@@ -3,7 +3,7 @@
     <data>
 
         <record id="view_product_uom_consol_filter" model="ir.ui.view">
-            <field name="name">account.wh.iva.search</field>
+            <field name="name">product.uom.consol.search</field>
             <field name="model">product.uom.consol</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
