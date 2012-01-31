@@ -88,7 +88,6 @@ def getqueue (name, queue, host, depth, printers, classes):
             getippqueue (dev, name, depth)
 
     if depth == 0:
-        print
 
 def gethost (host=None, depth=0):
    # print "entro aqui"

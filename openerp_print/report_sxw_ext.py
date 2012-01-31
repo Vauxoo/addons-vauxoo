@@ -82,11 +82,9 @@ class Printer(object):
 
     def write_print(self, file, print_report,args):
         if print_report.gs_use:
-            print "GHOSTSCRIPT"
             p = subprocess.Popen(args, stdout=subprocess.PIPE)
             q = subprocess.Popen(["lpr", '-P', print_report.printer, " ".join(self.options)], stdin=p.stdout)
         else:
-            print 'LPR'
             subprocess.Popen(["lpr", '-P', print_report.printer, "mi_archivo.pdf", " ".join(self.options),], stdin=subprocess.PIPE)
 
     def setOption(self, key, value=None):
@@ -111,9 +109,7 @@ def check_state(cr,uid,print_report,model,id_obj):
     pool = pooler.get_pool(cr.dbname)
     model_brw = pool.get(model).browse(cr, uid, id_obj,context=None)
     if model_brw.state in print_report.state.split(','):
-        print 'NO SE PUEDE IMPRIMIR POR LOS ESTADOS'
         return True
-    print 'SI SE PUEDE IMPRIMIR DE ACUERDO A LOS ESTADOS'
     return False
 
 def get_file(cr, uid, report_data):
@@ -157,7 +153,6 @@ def validate_report(cr, uid, print_report, report_data, id_obj):
     file_data =get_file(cr,uid,report_data)
     
     if not print_report.printer in [False, "none"]:
-        print 'LA IMPRESORA ES %s'%( print_report.printer,)
         if print_report.depend_state and check_state(cr,uid,print_report,print_report.model_id.model.model,id_obj) or not print_report.depend_state:
             printt_report(cr, uid, print_report, file_data)
             return True
@@ -212,7 +207,6 @@ class report_sxw(report_sxw.report_sxw):
         if result['allow']:
             context.update({'allow':True})
         else:
-            print 'NO SE PERMITE REIMPRIMIR'
             
         if result['check_note_use']:
             context.update({'check_note_use':True})
@@ -258,7 +252,6 @@ class report_sxw(report_sxw.report_sxw):
             brw = print_report_obj.browse(cr, uid, report_id[0],context)
             res.update({'brw':brw})
             if brw.allow_repeat==False:
-                print 'brw.allow_repeat', brw.allow_repeat
                 res.update({'allow':print_report_obj.check_print(cr, uid,brw.id,report_xml_id, id_obj,context)})
             else:
                 res.update({'allow':True})

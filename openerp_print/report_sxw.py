@@ -90,11 +90,9 @@ class Printer(object):
 
     def write_print(self, file, print_report,args):
         if print_report.gs_use:
-            print "GHOSTSCRIPT"
             #~ p = subprocess.Popen(args, stdout=subprocess.PIPE)
             #~ q = subprocess.Popen(["lpr", '-P', print_report.printer, " ".join(self.options)], stdin=p.stdout)
         else:
-            print 'LPR'
             #~ subprocess.Popen(["lpr", '-P', print_report.printer, "mi_archivo.pdf", " ".join(self.options),], stdin=subprocess.PIPE)
 
     def setOption(self, key, value=None):
@@ -163,10 +161,7 @@ def validate_report(cr, uid, print_report, report_data, id_obj):
     file_data =get_file(cr,uid,report_data)
     
     if not print_report.printer in [False, "none"]:
-        print 'LA IMPRESORA ES %s'%( print_report.printer,)
         if print_report.depend_state and check_state(cr,uid,print_report,print_report.model_id.model.model,id_obj) or not print_report.depend_state:
-            print 'VEFICAMOS LOS ESTADOS O NO DEPENDIA DE ESTADOS'
-            print 'SE PERMITE REIMPRIMIR'
             printt_report(cr, uid, print_report, file_data)
             return True
     return False
@@ -198,8 +193,6 @@ class report_sxw_ext(report_sxw):
     
     def __init__(self, name, table, rml=False, parser=False, 
         header=True, store=False):
-        print 'ENTRE INIT NEW°°°°°'
-        print '°°°°°°°°°|PARSER°°°°°°°°|', parser
         self.parser_instance = False
         self.localcontext={}
         #~ self.name = name
@@ -208,18 +201,13 @@ class report_sxw_ext(report_sxw):
         #~ self.store = store
         report_sxw.__init__(self, name, table, rml, parser,
             header, store)
-        print 'SALI DEL INIT°°°°°'
 
     #metodo sobreescribed al original, imprime el pdf en la impresora que se selecciono en ir.actions.report.xml      
     def create(self, cr, uid, ids, data, context=None):
         #~ print 'ENTRE AQUICREATE'
         #~ print 'NAME:',self.name 
-        print 'PARSER VIEJO',self.parser
-        print 'SELFFF', self
         #~ print 'HEADER',self.header 
         #~ print 'STORE',self.store 
-        print 'DATAAA',data
-        print 'CONTEXT', context
         pool = pooler.get_pool(cr.dbname)
         company_obj =pool.get('res.company')
         
@@ -240,7 +228,6 @@ class report_sxw_ext(report_sxw):
         report_type = report_xml.report_type
 
         result = self.validate_report(cr, uid, report_xml.id, data['id'], context)
-        print 'RESULTTTTTTTTT, CONTEXTTT', result
 
         if result['allow']:
             context.update({'allow':True})
@@ -312,20 +299,16 @@ class report_sxw_ext(report_sxw):
             return company_obj.browse(cr,uid,user.company_id.id,context)
 
     def process_header(self,cr,uid,processed_rml,context):
-        print 'CONTEXT COMPLETO', context
         if context.get('check_note_use',False):
-            print 'ENTRE CHEQUE'
             pool = pooler.get_pool(cr.dbname)
             #banco = ir_objj.browse(cr, uid, data['context']['bank_id'] , context=None) #no funiona este con GTK
             banco = pool.get('res.bank.entity').browse(cr, uid, context['bank_id'] , context=None)
             self._add_header_bank(processed_rml,banco.format_h)
         elif not context.get('allow',False):
-            print 'ENTRE ALLOW REPEAT'
             self._add_header_bank(processed_rml,self._default_company(cr,uid,context).header_report) 
 
     #metodo que sobreescribe al original, en la impresion de la cabecara del reporte
     def create_single_pdf(self, cr, uid, ids, data, report_xml, context=None):
-        print 'CONTEXT CREATE SINGLE PDF', context
         if not context:
             context={}
         logo = None
@@ -336,8 +319,6 @@ class report_sxw_ext(report_sxw):
             return False
         rml_parser = self.parser(cr, uid, self.name2, context=context)
         
-        print 'self.name2', self.name2
-        print 'RML PARSER',rml_parser
         
         objs = self.getObjects(cr, uid, ids, context)
         rml_parser.set_context(objs, data, ids, report_xml.report_type)
@@ -350,13 +331,9 @@ class report_sxw_ext(report_sxw):
         if rml_parser.logo:
             logo = base64.decodestring(rml_parser.logo)
         create_doc = self.generators[report_xml.report_type]
-        print 'RML PARSER 22222',rml_parser
-        print 'CREATE DOC°°°°', create_doc
-        print 'processed_rml', processed_rml
         #~ print 'etree.tostring(processed_rml)°°°°°°°°', etree.tostring(processed_rml)
         #~ print 'rml_parser.localcontext°°°°°°°°°°', rml_parser.localcontext
         pdf = create_doc(etree.tostring(processed_rml),rml_parser.localcontext,logo,title.encode('utf8'))
-        print 'ERRORRRRRRRRRRRR'
         return (pdf, report_xml.report_type)
 
     #metodo que sobreescribe al original, agrega el cheque como cabecera en el reporte
@@ -373,7 +350,6 @@ class report_sxw_ext(report_sxw):
     
     #metodo que sobreescribe al original, gestion de attachment
     def create_source_pdf(self, cr, uid, ids, data, report_xml, context=None):
-        print   'CONTEXT SOURCE PDF', context
         flag=False
         if not context:
             context={}
