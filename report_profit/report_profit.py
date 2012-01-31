@@ -32,7 +32,7 @@ class report_profit(osv.osv):
     _auto = False
     _order= "name desc"    
     _columns = {
-        'name': fields.date('Month', readonly=True, select=True),
+        'name': fields.date('Name', readonly=True, select=True),
         'date': fields.date('Date Invoice', readonly=True),
         'year': fields.char('Year', size=4, readonly=True),
         'month': fields.selection([('01', 'January'), ('02', 'February'), ('03', 'March'), ('04', 'April'),
@@ -59,6 +59,10 @@ class report_profit(osv.osv):
             ('out_refund','Customer Refund'),
             ('in_refund','Supplier Refund'),
             ],'Type', readonly=True, select=True),
+        'invoice_id':fields.many2one('account.invoice', 'Invoice', readonly=True, select=True),
+        'move_id': fields.many2one('account.move', 'Move', readonly=True, select=True),
+        'acc_cost': fields.float('Cost', readonly=True, help="Valor que adquiere el elemento para estimacion de costo de inventario"),
+        'line_id':fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
     }
 
     def init(self, cr):
@@ -76,6 +80,10 @@ class report_profit(osv.osv):
                 p.id as partner_id,
                 u.id as user_id,
                 l.quantity as quantity,
+                i.id as invoice_id,
+                k.id as move_id,
+                l.acc_cost as acc_cost,
+                l.id as line_id,
                 case when i.type='out_refund'
                     then
                         l.price_unit*(-1)
@@ -125,19 +133,22 @@ class report_profit(osv.osv):
                 t.categ_id as cat_id
             from account_invoice i
                 inner join res_partner p on (p.id=i.partner_id)
+                inner join account_move k on (k.id=i.move_id)
                 left join res_users u on (u.id=p.user_id)
                 right join account_invoice_line l on (i.id=l.invoice_id)
                 left join product_uom m on (m.id=l.uos_id)
                 left join product_uom_consol_line c on (m.id=c.p_uom_id)
                 left join product_product d on (d.id=l.product_id)
                 left join product_template t on (t.id=d.product_tmpl_id)
-            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid') and l.uos_id in (
+            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid') 
+                and l.uos_id in (
                 select
                     u.id as id
                 from product_uom u
                     inner join product_uom_consol_line c on (u.id=c.p_uom_id)
             )
-            group by l.id,i.date_invoice,l.product_id,p.id,u.id,l.quantity,l.price_unit,l.last_price,l.price_subtotal,l.uos_id,p.name,i.type,c.p_uom_c_id,c.factor_consol,t.categ_id
+            group by l.id,i.date_invoice,l.product_id,p.id,u.id,l.quantity,l.price_unit,l.last_price,l.price_subtotal,l.uos_id,p.name,
+            i.type,c.p_uom_c_id,c.factor_consol,t.categ_id,i.id,k.id,l.acc_cost
             order by i.date_invoice desc
             )
         """)

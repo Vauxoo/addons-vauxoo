@@ -87,6 +87,10 @@
                     <field name="qty_consol" sum="Consolidate amount"/>
                     <field name="p_uom_c_id"/>
                     <field name="cat_id"/>
+                    <field name="invoice_id"/>
+                    <field name="move_id"/>
+                    <field name="acc_cost"/>
+                    <field name="line_id"/>
                 </tree>
             </field>
         </record>
@@ -112,6 +116,10 @@
                     <field name="qty_consol"/>
                     <field name="p_uom_c_id"/>
                     <field name="cat_id"/>
+                    <field name="invoice_id"/>
+                    <field name="move_id"/>
+                    <field name="acc_cost"/>
+                    <field name="line_id"/>
                 </form>
             </field>
         </record>
