@@ -33,6 +33,12 @@ class report_profit(osv.osv):
     _order= "name desc"    
     _columns = {
         'name': fields.date('Month', readonly=True, select=True),
+        'date': fields.date('Date Invoice', readonly=True),
+        'year': fields.char('Year', size=4, readonly=True),
+        'month': fields.selection([('01', 'January'), ('02', 'February'), ('03', 'March'), ('04', 'April'),
+            ('05', 'May'), ('06', 'June'), ('07', 'July'), ('08', 'August'), ('09', 'September'),
+            ('10', 'October'), ('11', 'November'), ('12', 'December')], 'Month', readonly=True),
+        'day': fields.char('Day', size=128, readonly=True),
         'product_id':fields.many2one('product.product', 'Product', readonly=True, select=True),
         'partner_id': fields.many2one('res.partner', 'Partner', readonly=True, select=True),
         'user_id':fields.many2one('res.users', 'User', readonly=True, select=True),
@@ -62,6 +68,10 @@ class report_profit(osv.osv):
             select
                 l.id as id,
                 to_char(i.date_invoice, 'YYYY-MM-DD') as name,
+                i.date_invoice as date,
+                to_char(i.date_invoice, 'YYYY') as year,
+                to_char(i.date_invoice, 'MM') as month,
+                to_char(i.date_invoice, 'YYYY-MM-DD') as day,
                 l.product_id as product_id,
                 p.id as partner_id,
                 u.id as user_id,
@@ -127,8 +137,8 @@ class report_profit(osv.osv):
                 from product_uom u
                     inner join product_uom_consol_line c on (u.id=c.p_uom_id)
             )
-            group by l.id,to_char(i.date_invoice, 'YYYY-MM-DD'),l.product_id,p.id,u.id,l.quantity,l.price_unit,l.last_price,l.price_subtotal,l.uos_id,p.name,i.type,c.p_uom_c_id,c.factor_consol,t.categ_id
-
+            group by l.id,i.date_invoice,l.product_id,p.id,u.id,l.quantity,l.price_unit,l.last_price,l.price_subtotal,l.uos_id,p.name,i.type,c.p_uom_c_id,c.factor_consol,t.categ_id
+            order by i.date_invoice desc
             )
         """)
 report_profit()
