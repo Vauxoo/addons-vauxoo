@@ -126,31 +126,35 @@ def sf_cancel(self, cr, uid, data, context=None):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                 resultado = wsdl_client.cancelar(*params)
+                
                 status = resultado['resultados'] and resultado['resultados']['status'] or ''
+                #agregados
+                uuid_nvo = resultado['resultados'] and resultado['resultados']['uuid'] or ''
+                mensaje_nvo = resultado['resultados'] and resultado['resultados']['mensaje'] or ''
+                
                 status_uuid = resultado['resultados'] and resultado['resultados']['statusUUID'] or ''
                 msg_status={}
                 if status =='200':
                     folio_cancel = resultado['resultados'] and resultado['resultados']['uuid'] or ''
-                    mensaje_global = '- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel
-                    #~ mensaje_global = mensaje_global +'\n- El uuid cancelado es: ' + folio_cancel
-                #~ elif status =='500':
-                    #~ mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
+                    mensaje_global = '- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel+'\n\nMensaje Tecnico:\n'
+                    mensaje_tecnico = 'Status:',status,' uuid:',uuid_nvo,' Mensaje:',mensaje_nvo,'Status uuid:',status_uuid
                 else:
-                    mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente'
+                    mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente.\n\nMensaje Tecnico:\n'
+                    mensaje_tecnico = 'status:',status,' uuidnvo:',uuid_nvo,' MENSJAE:NVO',mensaje_nvo,'STATUS UUID:',status_uuid
 
                 if status_uuid == '201':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
+                    mensaje_SAT = '- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito.'
                 elif status_uuid == '202':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
+                    mensaje_SAT = '- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente.\n'
                 elif status_uuid == '203':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
+                    mensaje_SAT = '- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación.\n\n'
                 elif status_uuid == '204':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación'
+                    mensaje_SAT = '- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación.\n'
                 elif status_uuid == '205':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
+                    mensaje_SAT = '- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación.\n'
                 else:
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT desconocido'
-                mensaje_global = mensaje_global + mensaje_SAT
+                    mensaje_SAT = '- Estatus de respuesta del SAT desconocido'
+                mensaje_global = mensaje_SAT + mensaje_global  + str(mensaje_tecnico)
 
         else:
             mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'

@@ -105,7 +105,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
         currency = invoice.currency_id.name
         currency_enc = currency.encode('UTF-8', 'strict')
 
-        rate = invoice.currency_id.rate or 1
+        rate = invoice.currency_id.rate and (1/invoice.currency_id.rate) or 1
 
         moneda = '''<Addenda>
             <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
