@@ -10,6 +10,7 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page/field[@name='parent_id']" position="before">
                     <field name="discount"/>
+                    <field name="motive_discount"/>
                 </xpath>
 
             </field>
