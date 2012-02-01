@@ -77,47 +77,47 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
             cerCSD = company_brw.certificate_file#base64.encodestring(company_brw.certificate_file)
             keyCSD = company_brw.certificate_key_file#base64.encodestring(company_brw.certificate_key_file)
-            contrasenaCSD = company_brw.certificate_password
+            passcsd = company_brw.certificate_password
             uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
 
             wsdl_client = False
             wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
             if True:#if wsdl_client:
-                params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
+                params = [user, password, uuids, cerCSD, keyCSD, passcsd ]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-                resultado = wsdl_client.cancelar(*params)
-                status = resultado['resultados'] and resultado['resultados']['status'] or ''
-                status_uuid = resultado['resultados'] and resultado['resultados']['statusUUID'] or ''
+                result = wsdl_client.cancelar(*params)
+                status = result['resultados'] and result['resultados']['status'] or ''
+                status_uuid = result['resultados'] and result['resultados']['statusUUID'] or ''
                 msg_status={}
                 if status =='200':
-                    folio_cancel = resultado['resultados'] and resultado['resultados']['uuid'] or ''
-                    mensaje_global = '- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel
-                    #~ mensaje_global = mensaje_global +'\n- El uuid cancelado es: ' + folio_cancel
+                    folio_cancel = result['resultados'] and result['resultados']['uuid'] or ''
+                    msg_global = '- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel
+                    #~ msg_global = msg_global +'\n- El uuid cancelado es: ' + folio_cancel
                 #~ elif status =='500':
-                    #~ mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
+                    #~ msg_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
                 else:
-                    mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente'
+                    msg_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente'
 
                 if status_uuid == '201':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
                 elif status_uuid == '202':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
                 elif status_uuid == '203':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
                 elif status_uuid == '204':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación'
                 elif status_uuid == '205':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
                 else:
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT desconocido'
-                mensaje_global = mensaje_global + mensaje_SAT
+                    msg_sat = '\n- Estatus de respuesta del SAT desconocido'
+                msg_global = msg_global + msg_sat
 
         else:
-            mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
-        self.write(cr, uid, ids, {'message': mensaje_global }, context=None)
+            msg_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
+        self.write(cr, uid, ids, {'message': msg_global }, context=None)
         return True
 
     def _get_file(self,cr, uid, context):
