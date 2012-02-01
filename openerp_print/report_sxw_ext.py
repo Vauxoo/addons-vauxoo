@@ -337,11 +337,11 @@ class report_sxw(report_sxw.report_sxw):
                     aids = pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',aname+'.pdf'),('res_model','=',self.table),('res_id','=',obj.id)])                  
                     if aids:
                         brow_rec = pool.get('ir.attachment').browse(cr, uid, aids[0])
-                        if not brow_rec.datas:
-                            continue
-                        d = base64.decodestring(brow_rec.datas)
-                        results.append((d,'pdf'))
-                        continue
+                        #~ if not brow_rec.datas:
+                            #~ continue
+                        #~ d = base64.decodestring(brow_rec.datas)
+                        #~ results.append((d,'pdf'))
+                        #~ continue
                 result = self.create_single_pdf(cr, uid, [obj.id], data, report_xml, context)
                 if not result:
                     return False
