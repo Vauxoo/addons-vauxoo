@@ -44,6 +44,9 @@ import tools
 import warnings
 import zipfile
 import report
+import netsvc
+
+logger = netsvc.Logger()
 
 def checkBins(*bin):
     bins = list(bin)
@@ -207,6 +210,7 @@ class report_sxw(report_sxw.report_sxw):
         if result['allow']:
             context.update({'allow':True})
         else:
+            self.logger.notifyChannel("info", netsvc.LOG_INFO,"NO SE PERMITE REIMPRIMIR")
             
         if result['check_note_use']:
             context.update({'check_note_use':True})

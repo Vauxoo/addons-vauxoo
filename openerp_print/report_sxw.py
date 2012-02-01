@@ -51,6 +51,9 @@ import osv
 import tools
 import warnings
 import zipfile
+import netsvc
+
+logger = netsvc.Logger()
 
 
 def checkBins(*bin):
@@ -90,9 +93,11 @@ class Printer(object):
 
     def write_print(self, file, print_report,args):
         if print_report.gs_use:
+            self.logger.notifyChannel("info", netsvc.LOG_INFO,"GHOSTSCRIPT" )
             #~ p = subprocess.Popen(args, stdout=subprocess.PIPE)
             #~ q = subprocess.Popen(["lpr", '-P', print_report.printer, " ".join(self.options)], stdin=p.stdout)
         else:
+            self.logger.notifyChannel("info", netsvc.LOG_INFO,"LPR" )
             #~ subprocess.Popen(["lpr", '-P', print_report.printer, "mi_archivo.pdf", " ".join(self.options),], stdin=subprocess.PIPE)
 
     def setOption(self, key, value=None):
