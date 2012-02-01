@@ -4,10 +4,10 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    Info (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260   (moylop260@vauxoo.com)
-#    Coded by: Isaac López (isaac@vauxoo.com)
+#    Coded by: isaac (isaac@vauxoo.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,5 +24,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import partner
-import wizard
+import wizard_invoice_discount

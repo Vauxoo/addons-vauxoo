@@ -36,7 +36,8 @@
     "depends" : ["base","account"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["partner_view.xml"],
+    "update_xml" : ["partner_view.xml",
+                    "wizard/wizard_invoice_discount_view.xml"],
     "installable" : True,
     "active" : False,
 }
