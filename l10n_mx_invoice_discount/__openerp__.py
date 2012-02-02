@@ -33,7 +33,7 @@
     "description" : """Add field discount to a partner and wizard apply discount on invoice""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["base","account"],
+    "depends" : ["base","account","l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["partner_view.xml",
