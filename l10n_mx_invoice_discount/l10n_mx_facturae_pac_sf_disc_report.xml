@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <report id="account_invoice_facturae_pac_sf_disc_pdf"
+            name="account.invoice.facturae.pac.sf.disc.pdf"
+            string="Factura E descuento PDF PAC SF"
+            model="account.invoice"
+            header="False"
+            rml="l10n_mx_invoice_discount/report/invoice_facturae_pac_sf_disc_pdf.rml"
+            attachment_use="1"
+            attachment="object.fname_invoice and (object.fname_invoice + '') or ''"
+        />
+        
+    </data>
+</openerp>
