@@ -40,11 +40,17 @@ class wizard_invoice_discount(osv.osv_memory):
         
         if invoice.state == 'draft':
             data = {'line_ids': []}
+            sub_tot=0
             for line in invoice.invoice_line:
                 discount_dic = {
                     'discount': invoice.partner_id.discount,
                 }
+                sub_tot+= line.price_unit * line.quantity
                 invoice_line_obj.write(cr, uid, line.id, discount_dic)
+                
+            discount = invoice.partner_id.discount and sub_tot * (invoice.partner_id.discount/100) or '0'
+            global_discount_percent = invoice.partner_id.discount
+            invoice_obj.write(cr, uid, context['active_id'], {'global_discount': discount, 'global_discount_percent': global_discount_percent })
         else:
             raise osv.except_osv('Warning !', 'El estado de la factura debe ser borrador')
         return {}

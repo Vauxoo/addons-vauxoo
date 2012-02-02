@@ -51,15 +51,20 @@ class account_invoice(osv.osv):
         for line in invoice.invoice_line:
             sub_tot+=line.price_unit * line.quantity
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['cantidad']=  line.quantity or '0.0'
-            invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['descripcion']= line.name or ''
+            invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['descripcion']= line.name or ' '
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['importe']= line.price_unit * line.quantity or '0'
-            invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['noIdentificacion']= line.product_id.default_code or ''
+            invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['noIdentificacion']= line.product_id.default_code or '-'
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['unidad']= line.uos_id and line.uos_id.name or ''
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['valorUnitario']= line.price_unit or '0'
 
         invoice_data_parents[0]['Comprobante']['motivoDescuento'] = invoice.partner_id.motive_discount or ''
-        invoice_data_parents[0]['Comprobante']['descuento'] = invoice.partner_id.discount and sub_tot * (invoice.partner_id.discount/100) or '0'
+        invoice_data_parents[0]['Comprobante']['descuento'] = invoice.global_discount or '0'
         invoice_data_parents[0]['Comprobante']['subTotal']=sub_tot
-            
+        
         return invoice_data_parents
+    
+    _columns = {
+        'global_discount': fields.float('Global Discount'),
+        'global_discount_percent': fields.float('Global Discount Percent'),
+    }
 account_invoice()
