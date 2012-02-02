@@ -8,9 +8,9 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Invoice Discount">
-                    <separator colspan="4" string="File"/>
+                    <separator colspan="4" string="¿Apply discount to invoice?"/>
                         <button special="cancel" string="_Close" icon="gtk-cancel"/>
-                        <button name="apply_discount" type="object" string="_Cancel invoice" icon="gtk-ok"/>
+                        <button name="apply_discount" type="object" string="_Apply Discount" icon="gtk-ok"/>
                 </form>
             </field>
         </record>

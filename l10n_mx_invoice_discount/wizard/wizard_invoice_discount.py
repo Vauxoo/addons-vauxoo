@@ -32,8 +32,6 @@ import time
 
 class wizard_invoice_discount(osv.osv_memory):
     _name='wizard.invoice.discount'
-    #Agregar domain al journal#domain=[('type','=','bank'
-    
 
     def apply_discount(self, cr, uid, ids, context=None):
         invoice_obj = self.pool.get('account.invoice')
@@ -41,34 +39,14 @@ class wizard_invoice_discount(osv.osv_memory):
         invoice = invoice_obj.browse(cr, uid, context['active_id'])
         
         if invoice.state == 'draft':
-            #~ print 'el invoice es',invoice
-            #~ print 'el state del invoice es',invoice.state
-            #~ print 'invoice line',invoice.invoice_line
-            #~ print 'el partner es',invoice.partner_id.name,'descuento',invoice.partner_id.discount
-            #~ 
-            
             data = {'line_ids': []}
             for line in invoice.invoice_line:
-                #~ print 'descuento',line.discount
                 discount_dic = {
                     'discount': invoice.partner_id.discount,
-                    #~ 'line_id': line.id
                 }
-                #~ print 'el dic es',discount_dic
                 invoice_line_obj.write(cr, uid, line.id, discount_dic)
         else:
             raise osv.except_osv('Warning !', 'El estado de la factura debe ser borrador')
         return {}
 
-
-    #~ _columns = {
-        #~ 'file': fields.binary('File', readonly=True),
-        #~ 'message': fields.text('text'),
-#~ 
-    #~ }
-#~ 
-    #~ _defaults= {
-        #~ 'message': 'Seleccione el botón Cancelar Factura para exportar al PAC',
-        #~ 'file': _get_file
-    #~ }
 wizard_invoice_discount()
