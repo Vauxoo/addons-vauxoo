@@ -210,7 +210,7 @@ class report_sxw(report_sxw.report_sxw):
         if result['allow']:
             context.update({'allow':True})
         else:
-            self.logger.notifyChannel("info", netsvc.LOG_INFO,"NO SE PERMITE REIMPRIMIR")
+            logger.notifyChannel("info", netsvc.LOG_INFO,"NO SE PERMITE REIMPRIMIR")
             
         if result['check_note_use']:
             context.update({'check_note_use':True})
