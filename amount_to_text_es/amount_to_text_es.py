@@ -144,7 +144,10 @@ def spanish_number(val):
             l = val // mod
             r = val - (l * mod)
             if l==1:
-                ret = 'Un ' + denom_es[didx][:-2]
+                if didx>1:
+                    ret = 'Un ' + denom_es[didx][:-2]
+                else:
+                    ret = 'Un ' + denom_es[didx]
             else:
                 ret = _convert_nnn_es(l) + ' ' + denom_es[didx]
             if r==0 and didx>1:
