@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
 #    Coded by: moylop260   (moylop260@vauxoo.com)
 #    Coded by: Isaac Lopez (isaac@vauxoo.com)
@@ -70,7 +70,6 @@ class account_invoice_facturae_pac_sf_disc_pdf(report_sxw.rml_parse):
         except Exception, e:
             print "exception: %s"%( e )
             pass
-        print "*************\n**o.cfdi_cbb",o.cfdi_cbb
         return ""
         
     def _get_approval(self):
@@ -107,51 +106,13 @@ class account_invoice_facturae_pac_sf_disc_pdf(report_sxw.rml_parse):
         except:
             pass
         return []
-    
-    '''
-    def _set_taxes(self, invoice_id):
-        """
-        pool = pooler.get_pool(self.cr.dbname)
-        invoice_obj = pool.get('account.invoice')
-        invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
-        taxes = []
-        for line_tax_id in invoice.tax_line:
-            tax_name = line_tax_id.name.lower().replace('.','').replace('-','').replace(' ', '')
-            if tax_name in ['iva']:
-                tax_name = 'IVA'
-            elif 'isr' in tax_name:
-                tax_name = 'ISR'
-            elif 'ieps' in tax_name:
-                tax_name = 'IEPS'
-            tax_names.append( tax_name )
-            taxes.append({
-                'name': tax_name,
-                'rate': "%.2f"%( round( line_tax_id.amount/(invoice.amount_total-line_tax_id.amount)*100, 0) ),
-                'amount': "%.2f"%( line_tax_id.amount or 0.0),
-            })
-        """
-        self.taxes = self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']
-        #self.taxes = taxes
-        return taxes
-    '''
-    
+     
     def _split_string(self, string, length=75):
         if string:
             for i in range(0, len(string), length):
                 string = string[:i] + ' ' + string[i:]
         return string
-    """
-    def _get_amount_to_text(self, amount, lang, currency=""):
-        if currency.upper() in ('MXP', 'MXN', 'PESOS', 'PESOS MEXICANOS'):
-            sufijo = 'M. N.'
-            currency = 'PESOS'
-        else:
-            sufijo = 'M. E.'
-        #return amount_to_text(amount, lang, currency)
-        amount_text = amount_to_text(amount, currency, sufijo)
-        amount_text = amount_text and amount_text.upper() or ''
-        return amount_text
-    """
+
     def _get_company_address(self, invoice_id):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
@@ -159,8 +120,6 @@ class account_invoice_facturae_pac_sf_disc_pdf(report_sxw.rml_parse):
         address_obj = pool.get('res.partner.address')
         invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
         partner_id = invoice.company_id.parent_id and invoice.company_id.parent_id.partner_id.id or invoice.company_id.partner_id.id
-        #print "partner_id",partner_id
-        #invoice = partner_obj.browse(cr, uid, invoice_id)
         address_id = partner_obj.address_get(self.cr, self.uid, [partner_id], ['invoice'])['invoice']
         self.company_address_invoice = address_obj.browse(self.cr, self.uid, address_id)
         
@@ -170,22 +129,15 @@ class account_invoice_facturae_pac_sf_disc_pdf(report_sxw.rml_parse):
         else:
             subaddress_id = partner_obj.address_get(self.cr, self.uid, [subpartner_id], ['invoice'])['invoice']
             self.subcompany_address_invoice = address_obj.browse(self.cr, self.uid, subaddress_id)
-        #print "self.company_address_invoice",self.company_address_invoice
-        #print "self.company_address_invoice[0]",self.company_address_invoice[0]
-        #self.company_address_invoice  = self.company_address_invoice and self.company_address_invoice[0] or False
-        #print "self.company_address_invoice",self.company_address_invoice
-        #return [self.company_address_invoice]
         return ""
     
     def _company_address(self):
-        #print "self.company_address_invoice",self.company_address_invoice
         return self.company_address_invoice
     
     def _subcompany_address(self):
         return self.subcompany_address_invoice
     
     def _facturae_data_dict(self):
-        #print "self.invoice_data_dict",self.invoice_data_dict
         return self.invoice_data_dict
     
     def _get_facturae_data_dict(self, invoice_id):
@@ -193,10 +145,9 @@ class account_invoice_facturae_pac_sf_disc_pdf(report_sxw.rml_parse):
         invoice_obj = pool.get('account.invoice')
         self.invoice_data_dict = invoice_obj._get_facturae_invoice_xml_data(self.cr, self.uid, [invoice_id], context={'type_data': 'dict'})
         self._set_invoice_sequence_and_approval( invoice_id )
-        #print "self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']",self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']
+        
         try:
             self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) >0.01 ]
-            #self.taxes.extend( self.taxes_ret )
         except Exception, e:
             print "exception: %s"%( e )
             pass

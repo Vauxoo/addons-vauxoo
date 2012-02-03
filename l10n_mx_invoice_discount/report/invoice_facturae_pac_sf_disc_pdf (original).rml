@@ -232,7 +232,7 @@
             <para style="P1">[[ formatLang(l.price_unit) ]]</para>
           </td>
           <td>
-            <para style="P1">[[ formatLang(l.price_unit * l.quantity) ]]</para>
+            <para style="P1">[[ formatLang(l.price_subtotal) ]]</para>
           </td>
         </tr>
       </blockTable>
@@ -242,15 +242,7 @@
             <para style="P6">Sub Total $</para>
           </td>
           <td>
-            <para style="P1">[[ formatLang(o.amount_untaxed + o.global_discount) ]]</para>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <para style="P6">Descuento [[o.global_discount_percent]] %</para>
-          </td>
-          <td>
-            <para style="P1">[[ formatLang(o.global_discount) ]]</para>
+            <para style="P1">[[ formatLang(o.amount_untaxed) ]]</para>
           </td>
         </tr>
         <tr>
@@ -362,7 +354,7 @@
         </tr>
       </blockTable>
       <para style="P26">Vendedor: [[o.user_id.name]]</para>
-      <para style="terp_default_9">[[ format(o.comment) ]]</para>
+      <para style="terp_default_9">[[ format(o.comment) or removeParentNode('para') ]]</para>
     </section>
   </story>
 </document>

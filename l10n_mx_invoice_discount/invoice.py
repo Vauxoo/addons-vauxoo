@@ -40,6 +40,7 @@ from tools.translate import _
 import codecs
 import release
 from datetime import datetime
+import decimal_precision as dp
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
@@ -68,3 +69,10 @@ class account_invoice(osv.osv):
         'global_discount_percent': fields.float('Global Discount Percent'),
     }
 account_invoice()
+
+class account_invoice_line(osv.osv):
+    _inherit = 'account.invoice.line'
+    _columns = {
+        'discount': fields.float('Discount (%)', digits_compute= dp.get_precision('Account'), readonly = True),
+    }
+account_invoice_line()
