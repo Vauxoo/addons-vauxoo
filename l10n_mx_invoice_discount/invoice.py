@@ -63,6 +63,15 @@ class account_invoice(osv.osv):
         invoice_data_parents[0]['Comprobante']['subTotal']=sub_tot
         
         return invoice_data_parents
+        
+    def copy(self, cr, uid, id, default={}, context=None):
+        if context is None:
+            context = {}
+        default.update({
+            'global_discount':False,
+            'global_discount_percent':False,
+        })
+        return super(account_invoice, self).copy(cr, uid, id, default, context)
     
     _columns = {
         'global_discount': fields.float('Global Discount'),
