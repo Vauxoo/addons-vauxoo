@@ -73,6 +73,24 @@ class account_invoice(osv.osv):
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
     
+    def button_reset_taxes(self, cr, uid, ids, context=None):
+        invoice = self.browse(cr, uid, ids)[0]
+        invoice_line_obj = self.pool.get('account.invoice.line')
+        data = {'line_ids': []}
+        sub_tot=0
+        for line in invoice.invoice_line:
+            discount_dic = {
+                'discount': invoice.partner_id.discount,
+            }
+            sub_tot+= line.price_unit * line.quantity
+            invoice_line_obj.write(cr, uid, line.id, discount_dic)
+            
+        discount = invoice.partner_id.discount and sub_tot * (invoice.partner_id.discount/100) or '0'
+        global_discount_percent = invoice.partner_id.discount
+        self.write(cr, uid, ids, {'global_discount': discount, 'global_discount_percent': global_discount_percent })
+        super(account_invoice, self).button_reset_taxes(cr, uid, ids, context=context)
+        return True
+    
     _columns = {
         'global_discount': fields.float('Global Discount'),
         'global_discount_percent': fields.float('Global Discount Percent'),
