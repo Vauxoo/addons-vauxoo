@@ -91,10 +91,20 @@ class account_invoice(osv.osv):
         super(account_invoice, self).button_reset_taxes(cr, uid, ids, context=context)
         return True
     
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
+        partner_obj = self.pool.get('res.partner')
+        if partner_id:
+            partner_brw = partner_obj.browse(cr, uid, partner_id)
+
+        res['value']['global_discount_percent'] = partner_id and partner_brw.discount or False
+        res['value']['motive_discount'] = partner_id and partner_brw.motive_discount or False
+        return res
+    
     _columns = {
         'global_discount': fields.float('Global Discount'),
-        'global_discount_percent': fields.float('Global Discount Percent'),
-        'motive_discount': fields.char('Motive Discount', size =128),
+        'global_discount_percent': fields.float('Global Discount Percent', readonly=True, states={'draft':[('readonly',False)]} ),
+        'motive_discount': fields.char('Motive Discount', size =128, readonly=True, states={'draft':[('readonly',False)]}),
     }
 account_invoice()
 
