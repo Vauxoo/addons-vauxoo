@@ -102,15 +102,15 @@ class account_invoice(osv.osv):
         return res
     
     _columns = {
-        'global_discount': fields.float('Global Discount'),
-        'global_discount_percent': fields.float('Global Discount Percent', readonly=True, states={'draft':[('readonly',False)]} ),
-        'motive_discount': fields.char('Motive Discount', size =128, readonly=True, states={'draft':[('readonly',False)]}),
+        'global_discount': fields.float('Global Discount', readonly = True),
+        'global_discount_percent': fields.float('Global Discount Percent', readonly = True, states = {'draft':[('readonly',False)]} ),
+        'motive_discount': fields.char('Motive Discount', size = 128, readonly = True, states = {'draft':[('readonly',False)]}),
     }
 account_invoice()
 
 class account_invoice_line(osv.osv):
     _inherit = 'account.invoice.line'
     _columns = {
-        'discount': fields.float('Discount (%)', digits_compute= dp.get_precision('Account'), readonly = True),
+        'discount': fields.float('Discount (%)', digits_compute = dp.get_precision('Account'), readonly = True),
     }
 account_invoice_line()
