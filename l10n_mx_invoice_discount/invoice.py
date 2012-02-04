@@ -58,7 +58,7 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['unidad']= line.uos_id and line.uos_id.name or ''
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['valorUnitario']= line.price_unit or '0'
 
-        invoice_data_parents[0]['Comprobante']['motivoDescuento'] = invoice.partner_id.motive_discount or ''
+        invoice_data_parents[0]['Comprobante']['motivoDescuento'] = invoice.motive_discount or ''
         invoice_data_parents[0]['Comprobante']['descuento'] = invoice.global_discount or '0'
         invoice_data_parents[0]['Comprobante']['subTotal']=sub_tot
         
@@ -80,20 +80,21 @@ class account_invoice(osv.osv):
         sub_tot=0
         for line in invoice.invoice_line:
             discount_dic = {
-                'discount': invoice.partner_id.discount,
+                'discount': invoice.global_discount_percent,
             }
             sub_tot+= line.price_unit * line.quantity
             invoice_line_obj.write(cr, uid, line.id, discount_dic)
             
-        discount = invoice.partner_id.discount and sub_tot * (invoice.partner_id.discount/100) or '0'
-        global_discount_percent = invoice.partner_id.discount
-        self.write(cr, uid, ids, {'global_discount': discount, 'global_discount_percent': global_discount_percent })
+        discount = invoice.global_discount_percent and sub_tot * (invoice.global_discount_percent/100) or '0'
+        #global_discount_percent = invoice.global_discount_percent#pendiente eliminar
+        self.write(cr, uid, ids, {'global_discount': discount, 'global_discount_percent': invoice.global_discount_percent })
         super(account_invoice, self).button_reset_taxes(cr, uid, ids, context=context)
         return True
     
     _columns = {
         'global_discount': fields.float('Global Discount'),
         'global_discount_percent': fields.float('Global Discount Percent'),
+        'motive_discount': fields.char('Motive Discount', size =128),
     }
 account_invoice()
 

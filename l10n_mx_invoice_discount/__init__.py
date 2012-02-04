@@ -25,6 +25,6 @@
 #
 ##############################################################################
 import partner
-import wizard
+#import wizard
 import invoice
 import report
