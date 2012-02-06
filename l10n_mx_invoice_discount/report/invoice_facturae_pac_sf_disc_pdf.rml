@@ -242,7 +242,7 @@
             <para style="P6">Sub Total $</para>
           </td>
           <td>
-            <para style="P1">[[ formatLang(o.amount_untaxed + o.global_discount) ]]</para>
+            <para style="P1">[[ formatLang(o.amount_untaxed + o.global_discount_amount) ]]</para>
           </td>
         </tr>
         <tr>
@@ -250,7 +250,7 @@
             <para style="P6">Descuento [[o.global_discount_percent]] %</para>
           </td>
           <td>
-            <para style="P1">[[ formatLang(o.global_discount) ]]</para>
+            <para style="P1">[[ formatLang(o.global_discount_amount) ]]</para>
           </td>
         </tr>
         <tr>

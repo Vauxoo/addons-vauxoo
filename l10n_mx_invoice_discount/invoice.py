@@ -59,18 +59,19 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['valorUnitario']= line.price_unit or '0'
 
         invoice_data_parents[0]['Comprobante']['motivoDescuento'] = invoice.motive_discount or ''
-        invoice_data_parents[0]['Comprobante']['descuento'] = invoice.global_discount or '0'
+        invoice_data_parents[0]['Comprobante']['descuento'] = invoice.global_discount_amount or '0'
         invoice_data_parents[0]['Comprobante']['subTotal']=sub_tot
         return invoice_data_parents
         
     def check_tax_lines(self, cr, uid, inv, compute_taxes, ait_obj):
         invoice_line_obj = self.pool.get('account.invoice.line')
         disc_amount_line = 0
-        for line in inv.invoice_line:
-            disc_amount_line += line.price_unit * line.quantity * ( inv.global_discount_percent/100 or 1)
-        if disc_amount_line <> inv.global_discount:
-            raise osv.except_osv(_('Warning !'), _('Discount Percent different !\nClick on compute to update tax base'))
-        super(account_invoice, self).check_tax_lines(cr, uid, inv, compute_taxes, ait_obj)
+        if inv.global_discount_percent <> 0:
+            for line in inv.invoice_line:
+                disc_amount_line += line.price_unit * line.quantity * ( inv.global_discount_percent/100 or 1)
+            if disc_amount_line <> inv.global_discount_amount:
+                raise osv.except_osv(_('Warning !'), _('Discount Percent different !\nClick on compute to update tax base'))
+            super(account_invoice, self).check_tax_lines(cr, uid, inv, compute_taxes, ait_obj)
         
     def button_reset_taxes(self, cr, uid, ids, context=None):
         invoice = self.browse(cr, uid, ids)[0]
@@ -84,7 +85,7 @@ class account_invoice(osv.osv):
             invoice_line_obj.write(cr, uid, line.id, discount_dic)
             
         discount = invoice.global_discount_percent and sub_tot * (invoice.global_discount_percent and invoice.global_discount_percent/100 or 1) or '0'
-        self.write(cr, uid, ids, {'global_discount': discount, 'global_discount_percent': invoice.global_discount_percent })
+        self.write(cr, uid, ids, {'global_discount_amount': discount, 'global_discount_percent': invoice.global_discount_percent })
         super(account_invoice, self).button_reset_taxes(cr, uid, ids, context=context)
         return True
     
@@ -99,7 +100,7 @@ class account_invoice(osv.osv):
         return res
     
     _columns = {
-        'global_discount': fields.float('Global Discount', readonly = True),
+        'global_discount_amount': fields.float('Global Discount Amount', readonly = True),
         'global_discount_percent': fields.float('Global Discount Percent', readonly = True, states = {'draft':[('readonly',False)]} ),
         'motive_discount': fields.char('Motive Discount', size = 128, readonly = True, states = {'draft':[('readonly',False)]}),
     }

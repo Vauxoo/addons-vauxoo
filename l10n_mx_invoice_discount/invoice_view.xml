@@ -13,7 +13,7 @@
                     
                 <field name="global_discount_percent" colspan="2"/>
                 <field name="motive_discount" colspan="2"/>
-                <field name="global_discount" colspan="2"/>
+                <field name="global_discount_amount" colspan="2"/>
             </field>
             </field>
         </record>

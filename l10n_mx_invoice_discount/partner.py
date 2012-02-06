@@ -35,7 +35,7 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
     
     _columns = {
-        'discount': fields.float("_Discount", help = 'Discount to apply'),
+        'discount': fields.float("_Discount", help = 'Percent discount to apply, example format: 10.00 if you want to apply ten percent'),
         'motive_discount': fields.char("_Motive Discount", size = 128, help = 'Motive why partner has discount'),
     }
 res_partner()
