@@ -28,40 +28,35 @@ from osv import fields, osv
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
     
-    def _smart_unreconcile(self, cr, uid, amr_id,aml_ids=[], context=None):
-        """
-        The method takes an account_move_reconcile record,
-        and given a certain account_move_line related to it
-        it will return a new account_move_reconcile record
-        without the given account_move_line record reconciled or 
-        partially reconciled.
-            :type amr_id: int
-            :param amr_id: the id identifying the account_move_reconcile
-                            record which is gone to be broken and gather
-                            afterwards.
-            :type aml_ids: [int]
-            :param aml_ids: a list of account_move_line ids which 
-                            are going to get rid from the reconcile record
-            
-            :rtype: bool
-            :return: will return True always otherwise it will rise and error.
-        """
-
+    def _remove_move_reconcile(self, cr, uid, move_ids=[], context=None):
+        # Function remove move rencocile ids related with moves
         if context is None:
-            context={}
-        obj_amr = self.pool.get('account.move.reconcile')
-
-        if not aml_ids:
-            raise osv.except_osv(_('Error'),_('There are not account move lines to unreconcile'))
+            context ={}
+        obj_move_line = self.pool.get('account.move.line')
+        obj_move_rec = self.pool.get('account.move.reconcile')
+        unlink_ids = []
+        if not move_ids:
+            return True
+        recs = obj_move_line.read(cr, uid, move_ids, ['reconcile_id', 'reconcile_partial_id'])
+        full_recs = filter(lambda x: x['reconcile_id'], recs)
+        rec_ids = [rec['reconcile_id'][0] for rec in full_recs]
+        part_recs = filter(lambda x: x['reconcile_partial_id'], recs)
+        part_rec_ids = [rec['reconcile_partial_id'][0] for rec in part_recs]
         
-        aml_pre_ids = self.search(cr,uid,[('reconcile_id','=',amr_id)]) or self.search(cr,uid,[('reconcile_partial_id','=',amr_id)])
-        aml_rem_ids=list(set(aml_pre_ids) - set(aml_ids))
-        
-        if len(aml_rem_ids)>= 2 :
-            self._remove_move_reconcile(cr, uid, aml_pre_ids, context=context)
-            self.reconcile_partial(cr, uid,aml_rem_ids,'auto',context=context)
-        else:
-            self._remove_move_reconcile(cr, uid, aml_pre_ids,context=context)
+        for rec_brw in obj_move_rec.browse(cr,uid,rec_ids,context=context):
+            aml_ids =   list(set([rec_line.id for rec_line in rec_brw.line_id]) - \
+                        set(move_ids))
+            obj_move_rec.unlink(cr, uid, rec_brw.id)
+            if len(aml_ids) >=2:
+                obj_move_line.reconcile_partial(cr, uid, aml_ids, 'auto',context=context)
+            
+        for part_rec_brw in obj_move_rec.browse(cr,uid,part_rec_ids,context=context):
+            aml_ids =   list(set([rec_line.id for rec_line in part_rec_brw.line_partial_ids]) - \
+                        set(move_ids))
+            obj_move_rec.unlink(cr, uid, part_rec_brw.id)
+            if len(aml_ids) >=2:
+                obj_move_line.reconcile_partial(cr, uid, aml_ids, 'auto',context=context)
         return True
+
         
 account_move_line()
