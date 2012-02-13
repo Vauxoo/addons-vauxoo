@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
 ############################################################################
 #
@@ -90,7 +90,7 @@ def conv_ascii(text):
     return text
 
 #Cambiar el error
-msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
+msg2= "Contacte a su administrador y/o a info@vauxoo.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'

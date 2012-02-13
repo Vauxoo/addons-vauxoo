@@ -31,6 +31,7 @@
     "description": """
 Esta es una propuesta de catalogo de cuentas para México y la mayoria de los paises de America Latina, basado en el plan de cuentas unico Colombiano
     """,
+    "website" : "http://www.vauxoo.com/",
     "depends" : ["account", "base_vat", "account_chart"],
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml',"l10n_chart_mx_wizard.xml"],
