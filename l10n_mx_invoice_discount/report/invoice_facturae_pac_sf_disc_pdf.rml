@@ -166,7 +166,7 @@
       <blockTable colWidths="249.0,249.0" style="Tabla2">
         <tr>
           <td>
-            <para style="P5">Receptorsadfasdfasdfadf</para>
+            <para style="P5">Receptor</para>
             <para style="Table Contents"><font face="Helvetica">Nombre: </font>[[ o.partner_id.name ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Dirección:</font> [[ o.address_invoice_id.street ]] Nro. Ext: [[ o.address_invoice_id.street3 ]] Int: [[ o.address_invoice_id.street4 ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Colonia:</font> [[ o.address_invoice_id.street2 or '' ]]</para>
