@@ -28,7 +28,7 @@
                         <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow"/>
                         <button name="action_send_email" states="printable" string="Send Mail" type="workflow"/>
                         <button name="action_done" states="sent_email" string="Done" type="workflow"/>
-                        <button name="action_cancel" states="draft,confirmed" string="Cancel" type="workflow"/>
+                        <button name="action_cancel" states="draft,confirmed,signed,printable,send_mail,done" string="Cancel" type="workflow"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
                     </group>
                 </form>
