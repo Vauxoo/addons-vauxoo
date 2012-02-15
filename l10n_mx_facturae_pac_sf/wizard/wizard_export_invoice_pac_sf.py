@@ -202,7 +202,7 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                         status = 'parent_' + resultado['status']
     else:
         msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
-    return {'file': file, 'msg': msg}
+    return {'file': file, 'msg': msg, 'status': status}
 
 class wizard_export_invoice_pac_sf(wizard.interface):
     states = {
