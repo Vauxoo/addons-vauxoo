@@ -182,8 +182,30 @@ class account_invoice(osv.osv):
                             'AND account_analytic_line.move_id = account_move_line.id',
                             (ref, move_id))
         return True
-    
+
     def _attach_invoice(self, cr, uid, ids, context=None):
+        self._BEFORE_attach_invoice(cr, uid, ids, context=context)#Debe de quitarse esta modalidad
+        print "******************************aqui voy 1"
+        if not context:
+            context = {}
+        inv_type_facturae = {'out_invoice': True, 'out_refund': True, 'in_invoice': False, 'in_refund': False}
+        for inv in self.browse(cr, uid, ids):
+            if inv_type_facturae.get(inv.type, False):
+                fname, xml_data = self.pool.get('account.invoice')._get_facturae_invoice_xml_data(cr, uid, [inv.id], context=context)
+                data_attach = {
+                        'name': fname,
+                        'file_input': xml_data and base64.encodestring( xml_data ) or None,
+                        'description': 'Factura-E XML CFD',
+                        'invoice_id': inv.id,
+                        'company_id': inv.company_id.id,
+                        'type': 'cfd2010',#TODO: recibirlo en el context
+                }
+                self.pool.get('ir.attachment.facturae.mx').create(cr, uid, data_attach, context=context)
+                #self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
+                #self.create_report_pdf(cr, uid, ids, context={'fname': fname})
+        return True
+    
+    def _BEFORE_attach_invoice(self, cr, uid, ids, context=None):
         if not context:
             context = {}
         inv_type_facturae = {'out_invoice': True, 'out_refund': True, 'in_invoice': False, 'in_refund': False}
