@@ -73,15 +73,15 @@ class ir_attachment_facturae_mx(osv.osv):
         data_dict_form['ids'] = [invoice_id]
         #~ print 'el data_dict_form es',data_dict_form
         mensaje = l10n_mx_facturae_pac_sf.wizard.wizard_export_invoice_pac_sf._upload_ws_file(self,cr, uid, data_dict_form, context={'wkf':1})
-        
-        print 'despues del upload y el mensaje es:',mensaje['msg'],'el estatus es',mensaje['status']
         #~ res= {'value':{},'warning': {'title': ('Warning'), 'message': ('timbrado de Facturacion electronica')}}
-        return True
+        return mensaje
         
     def action_sign(self, cr, uid, ids, context=None):
         for attachment in self.browse(cr, uid, ids, context=context):
             if attachment.type == 'cfdi2011_pac_solfact':
-                self.sign_pac_solfact(cr, uid, [attachment.id], context=context)
+                result = self.sign_pac_solfact(cr, uid, [attachment.id], context=context)
+                file_xml = result['file']
+                self.write(cr, uid, ids, {'file_xml_sign': file_xml})
         res = super(ir_attachment_facturae_mx, self).action_sign(cr, uid, ids, context=context)
         return res
     
