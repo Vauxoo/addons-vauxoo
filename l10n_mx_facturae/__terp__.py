@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
 ############################################################################
 #
@@ -28,7 +28,7 @@
 {
     "name" : "Creacion de Factura Electronica para Mexico (CFD)",
     "version" : "1.0",
-    "author" : "moylop260@hotmail.com",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
 Requires the following programs:
@@ -40,7 +40,7 @@ Requires the following programs:
       Ubuntu insall with:
         sudo apt-get install openssl
     """,
-    "website" : "http://moylop.blogspot.com/",
+    "website" : "http://www.vauxoo.com/",
     #"license" : "AGPL-3",
     "depends" : ["account", "base_vat", "document",
             "l10n_mx_facturae_lib", "l10n_mx_partner_address",

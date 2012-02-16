@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
 ############################################################################
 #
@@ -32,7 +32,7 @@
     "category" : "Localization/Mexico",
     "description" : """Add new fields of address
     """,
-    "website" : "http://vauxoo.com",
+    "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
             "base",
