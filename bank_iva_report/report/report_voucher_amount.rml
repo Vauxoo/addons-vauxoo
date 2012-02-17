@@ -541,7 +541,7 @@
           <blockTable colWidths="476.0" style="Table15">
             <tr>
               <td>
-                <para style="P39">[[ obt_texto(voucher.amount) ]]</para>
+                <para style="P39">[[ obt_texto(formatLang(voucher.amount)) ]]</para>
               </td>
             </tr>
           </blockTable>
