@@ -288,7 +288,7 @@
               <para style="P47">[[ formatLang(l.price_unit) ]]</para>
             </td>
             <td>
-              <para style="P47">[[ formatLang(l.price_subtotal, digits=get_digits(dp='Account')) ]] </para>
+              <para style="P47">[[ formatLang(l.quantity * l.price_unit, digits=get_digits(dp='Account')) ]] </para>
             </td>
           </tr>
           <tr>
@@ -328,10 +328,10 @@
             </para>
           </td>
           <td>
-            <para style="P30">Sub Total:</para>
+            <para style="P30">Descuento [[(o.global_discount_percent) or removeParentNode('tr')]] %</para>
           </td>
           <td>
-            <para style="P47">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
+            <para style="P47">[[ o.currency_id.symbol ]][[o.global_discount_amount and formatLang( o.global_discount_amount) or '']]</para>
           </td>
         </tr>
         <tr>
@@ -341,10 +341,10 @@
             </para>
           </td>
           <td>
-            <para style="P15">Descuento [[(o.global_discount_percent) or removeParentNode('tr')]] %</para>
+            <para style="P15">Sub Total:</para>
           </td>
           <td>
-            <para style="P14">[[ o.currency_id.symbol ]][[o.global_discount_amount and formatLang( o.global_discount_amount) or '']]</para>
+            <para style="P14">[[ o.currency_id.symbol ]] [[ formatLang(o.amount_untaxed, digits=get_digits(dp='Account')) ]]</para>
           </td>
         </tr>
         <tr>
