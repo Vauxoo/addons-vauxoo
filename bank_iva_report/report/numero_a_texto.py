@@ -48,8 +48,6 @@ CENTENAS = (
 )                   
                     
 def Numero_a_Texto(number_in):
-    
-    print "pase por aquiiiiiii"
                              
     converted = ''                             
     
