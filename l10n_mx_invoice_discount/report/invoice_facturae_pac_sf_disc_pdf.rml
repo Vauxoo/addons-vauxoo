@@ -45,10 +45,7 @@
     <blockTableStyle id="Table10">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,3" stop="1,3"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,3" stop="2,3"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,0" stop="2,0"/>
     </blockTableStyle>
     <blockTableStyle id="Tabla8">
       <blockAlignment value="LEFT"/>
@@ -110,6 +107,7 @@
     <paraStyle name="P1" fontName="Helvetica" fontSize="8.0" leading="10"/>
     <paraStyle name="P2" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT"/>
     <paraStyle name="P3" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER"/>
+    <paraStyle name="Pvence" fontName="Helvetica-Bold" fontSize="10.0" leading="9" alignment="CENTER"/>
     <paraStyle name="P4" fontName="Helvetica" alignment="CENTER" textColor="#ff3333"/>
     <paraStyle name="P5" fontName="Helvetica" fontSize="2.0" leading="3" alignment="CENTER" textColor="#800000"/>
     <paraStyle name="P6" fontName="Helvetica" fontSize="12.0" leading="15" alignment="CENTER" textColor="#800000"/>
@@ -159,6 +157,10 @@
     <paraStyle name="P50" rightIndent="0.0" leftIndent="-3.0" fontName="Helvetica-Bold" fontSize="7.0" leading="9" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P51" rightIndent="0.0" leftIndent="9.0" fontName="Helvetica-Oblique" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P52" rightIndent="0.0" leftIndent="9.0" fontName="Helvetica-Oblique" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P53" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P54" fontName="Helvetica" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P55" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P56" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="7.0" leading="9" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -248,7 +250,8 @@
           <td>
             <para style="P40">Cliente No.: <font face="Helvetica" size="10.0">[[o.partner_id.ref]]</font></para>
             <para style="P40">Pedido No.: <font face="Helvetica" size="10.0">[[o.origin]]</font></para>
-            <para style="P40">Fecha de Vencimiento: <font face="Helvetica" size="10.0">[[o.date_due]]</font></para>
+            <para style="P40">Fecha de Vencimiento: </para>
+            <para style="Pvence">[[ o.date_due and formatLang(o.date_due,date=True) or '' ]]</para>
           </td>
         </tr>
       </blockTable>
@@ -328,7 +331,20 @@
             </para>
           </td>
           <td>
-            <para style="P30">Descuento [[(o.global_discount_percent) or removeParentNode('tr')]] %</para>
+            <para style="P30">Suma:</para>
+          </td>
+          <td>
+            <para style="P47">[[ o.currency_id.symbol ]][[formatLang( (o.global_discount_amount or 0.0) + (o.amount_untaxed or 0.0), digits=get_digits(dp='Account') )]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P37">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P30">Descuento: [[(o.global_discount_percent) or removeParentNode('tr')]] %</para>
           </td>
           <td>
             <para style="P47">[[ o.currency_id.symbol ]][[o.global_discount_amount and formatLang( o.global_discount_amount) or '']]</para>
@@ -425,7 +441,9 @@
           </td>
         </tr>
       </blockTable>
-      <para style="P28"/>
+      <para style="P28">
+        <font color="white"> </font>
+      </para>
       <para style="P28">“Este documento es una representación impresa de un CFD” CFD, Comprobante Fiscal Digital</para>
       <blockTable colWidths="100.0,267.0,132.0" style="Tabla6">
         <tr>
@@ -467,7 +485,7 @@
             <para style="P22">
               <font color="white"> </font>
             </para>
-            <para style="P23">[[ format(o.comment) or removeParentNode('para') ]]</para>
+            <para style="P23">[[ (o.comment and format(o.comment )) or removeParentNode('para') ]]</para>
           </td>
         </tr>
       </blockTable>
