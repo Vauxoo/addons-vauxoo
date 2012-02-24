@@ -4,10 +4,9 @@
 #
 #    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,23 +23,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CBB)",
-    "version" : "1.0",
+    'name': 'l10n_mx_facturae_email - Use to Send Customers the selected electronic invoice attachment by Email',
+    'version': '0.1',
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """
-    """,
-    "website" : "http://www.vauxoo.com/",
-    #"license" : "AGPL-3",
-    "depends" : [
-        "account",
-    ],
+    'description': """Use Email client module to send to customers
+the selected electronic invoice attachment by Email.
+""",
+    "website" : "http://www.vauxoo.com",
+    "license" : "AGPL-3",
+    "depends" : ["email_template", "l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "ir_sequence_view.xml",
+        #"email_facturae_mx_wizard.xml",
+        "wizard/email_template_send_wizard_view.xml",
+        "l10n_mx_facturae_email_demo.xml",
     ],
     "installable" : True,
     "active" : False,

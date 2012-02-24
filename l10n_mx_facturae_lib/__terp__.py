@@ -27,7 +27,7 @@
 {
     "name" : "l10n_mx_facturae_lib",
     "version" : "1.0",
-    "author" : "vauxoo",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """
     """,

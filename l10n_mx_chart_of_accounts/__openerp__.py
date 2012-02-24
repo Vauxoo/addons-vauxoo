@@ -27,7 +27,7 @@
     "name" : "Vauxoo Chart of Account Mexico",
     "version" : "1.0",
     "author" : "Vauxoo",
-    "category" : "Localization/Account Charts",
+    "category" : "Localization/Mexico",
     "description": """
 Esta es una propuesta de catalogo de cuentas para México y la mayoria de los paises de America Latina, basado en el plan de cuentas unico Colombiano
     """,
