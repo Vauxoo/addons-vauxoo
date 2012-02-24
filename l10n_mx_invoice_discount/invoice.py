@@ -59,7 +59,7 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['Conceptos'][invoice.invoice_line.index(line)]['Concepto']['valorUnitario']= line.price_unit or '0'
 
         invoice_data_parents[0]['Comprobante']['motivoDescuento'] = invoice.motive_discount or ''
-        invoice_data_parents[0]['Comprobante']['descuento'] = invoice.global_discount_amount or '0'
+        invoice_data_parents[0]['Comprobante']['descuento'] = invoice.global_discount_amount and '%.3f'%invoice.global_discount_amount or '0'
         invoice_data_parents[0]['Comprobante']['subTotal']=sub_tot
         return invoice_data_parents
         
@@ -69,8 +69,10 @@ class account_invoice(osv.osv):
         if inv.global_discount_percent <> 0:
             for line in inv.invoice_line:
                 disc_amount_line += line.price_unit * line.quantity * ( inv.global_discount_percent/100 or 1)
-            if disc_amount_line <> inv.global_discount_amount:
-                raise osv.except_osv(_('Warning !'), _('Discount Percent different !\nClick on compute to update tax base'))
+            disc_line=float('%.3f'%disc_amount_line)
+            disc_ammount=float('%.3f'%inv.global_discount_amount)
+            if disc_line <> disc_ammount:
+                raise osv.except_osv(_('Warning !'), _('Global Discount Amount was changed!\nClick on compute to update tax base'))
             super(account_invoice, self).check_tax_lines(cr, uid, inv, compute_taxes, ait_obj)
         
     def button_reset_taxes(self, cr, uid, ids, context=None):
