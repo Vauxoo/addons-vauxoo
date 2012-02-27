@@ -34,7 +34,7 @@
     "website" : "http://vauxoo.com",
     "category": 'Generic Modules/Accounting',
     "description": """
-        Este modulo agrega el costo de una insidencia segun las horas estimadas.
+        Este modulo agrega el costo de una incidencia segun las horas estimadas.
 
         Para definir el costo de la Hora, hay que crear un producto de tipo servicio y asociarlo al usuario para que asi pueda generar el costo.
 
