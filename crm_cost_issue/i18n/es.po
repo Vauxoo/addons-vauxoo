@@ -28,7 +28,12 @@ msgstr "Calculado como: Costo de Hora multiplicado poy Horas Totales de Tarea"
 #. module: crm_cost_issue
 #: field:project.task,cost_per_task:0
 msgid "Cost"
-msgstr "Cost"
+msgstr "Costo"
+
+#. module: crm_cost_issue
+#: view:project.task:0
+msgid "Total Cost"
+msgstr "Costo Total"
 
 #. module: crm_cost_issue
 #: model:ir.model,name:crm_cost_issue.model_project_task
