@@ -87,8 +87,6 @@
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P27" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
-    <paraStyle name="P28" fontName="Helvetica" alignment="RIGHT"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -234,7 +232,7 @@
             <para style="P1">[[ formatLang(l.price_unit) ]]</para>
           </td>
           <td>
-            <para style="P1">[[ formatLang(l.quantity * l.price_unit, digits=get_digits(dp='Account')) ]]</para>
+            <para style="P1">[[ exists_key('global_discount_percent') and (formatLang(l.quantity * l.price_unit, digits=get_digits(dp='Account'))) or formatLang(l.price_subtotal) ]]</para>
           </td>
         </tr>
       </blockTable>
@@ -244,7 +242,7 @@
             <para style="P8">Suma:</para>
           </td>
           <td>
-            <para style="P1">[[ o.currency_id.symbol ]][[formatLang( ( exists_key('global_discount_amount') and o.global_discount_amount or 0.0 ) + (o.amount_untaxed or 0.0), digits=get_digits(dp='Account') )]]</para>
+            <para style="P1">[[ o.currency_id.symbol ]][[formatLang( ( exists_key('global_discount_percent') and o.global_discount_amount or 0.0 ) + (o.amount_untaxed or 0.0), digits=get_digits(dp='Account') )]]</para>
           </td>
         </tr>
         <tr>
