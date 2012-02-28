@@ -7,9 +7,9 @@
             <field name="model">product.supplierinfo</field>
             <field name="inherit_id" ref="product.product_supplierinfo_form_view" />
             <field name="arch" type="xml">
-                <field name="qty" position="after">
+                <xpath expr='/form/field[@name="min_qty"]' position='after'>
                     <field name="last_inv" colspan="4"/>
-                </field>
+                </xpath>
             </field>
         </record>
         <record model="ir.ui.view" id="product_sup_last_inv_tree_view">
@@ -18,9 +18,9 @@
             <field name="model">product.supplierinfo</field>
             <field name="inherit_id" ref="product.product_supplierinfo_tree_view" />
             <field name="arch" type="xml">
-                <field name="name" position="after">
+                <xpath expr='/tree/field[@name="name"]' position='after'>
                     <field name="last_inv_date" />
-                </field>
+                </xpath>
             </field>
         </record>
         <record model="ir.ui.view" id="product_prod_last_inv_form_view">
@@ -29,9 +29,9 @@
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view" />
             <field name="arch" type="xml">
-                <field name="cost_method" position="after">
+                <xpath expr='/form/notebook/page/group/field[@name="cost_method"]' position='after'>
                     <field name="last_pur_inv" />
-                </field>
+                </xpath>
             </field>
         </record>
         <record model="ir.ui.view" id="product_prod_last_inv_tree_view">
@@ -40,10 +40,10 @@
             <field name="type">tree</field>
             <field name="inherit_id" ref="product.product_product_tree_view" />
             <field name="arch" type="xml">
-                <field name="standard_price" position="after">
+                <xpath expr='/tree/field[@name="standard_price"]' position='after'>
                     <field name="last_cost" />
                     <field name="last_pur_inv_date" />
-                </field>
+                </xpath>
             </field>
         </record>
     </data>

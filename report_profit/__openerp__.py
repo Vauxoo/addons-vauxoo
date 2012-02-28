@@ -41,6 +41,7 @@
     "update_xml" : [
         "security/ir.model.access.csv",
         "unit_analisys_view.xml",
+        "product_view.xml",
         "report_profit_view.xml",
     ],
     "active": False,

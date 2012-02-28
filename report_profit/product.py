@@ -34,7 +34,7 @@ from osv import osv
 import ir
 import pooler
 import time
-from tools import config
+import decimal_precision as dp
 
 class product_supplierinfo(osv.osv):
     _inherit = 'product.supplierinfo'
@@ -43,7 +43,7 @@ class product_supplierinfo(osv.osv):
     def _last_sup_invoice(self, cr, uid, ids, name, arg, context):
         res = {}
         for supinfo in self.browse(cr, uid, ids):
-            cr.execute("select inv.id, max(inv.date_invoice) from account_invoice as inv, account_invoice_line as line where inv.id=line.invoice_id and product_id=%s and partner_id=%s and state in ('open', 'paid') and type='in_invoice' group by inv.id", (supinfo.product_id.id, supinfo.name.id,))
+            cr.execute("select inv.id, max(inv.date_invoice) from account_invoice as inv, account_invoice_line as line where inv.id=line.invoice_id and product_id=%s and inv.partner_id=%s and state in ('open', 'paid') and type='in_invoice' group by inv.id", (supinfo.product_id.id, supinfo.name.id,))
             record = cr.fetchone()
             if record:
                 res[supinfo.id] = record[0]
@@ -65,7 +65,7 @@ class product_supplierinfo(osv.osv):
         return res
 
     _columns = {
-        'last_inv' : fields.function(_last_sup_invoice, type='many2one', obj='account.invoice', method=True, string='Last Invoice'),
+        'last_inv' : fields.function(_last_sup_invoice, type='many2one', relation='account.invoice', method=True, string='Last Invoice'),
         'last_inv_date' : fields.function(_last_sup_invoice_date, type='date', method=True, string='Last Invoice date'),
     }
 product_supplierinfo()
@@ -100,7 +100,6 @@ class product_product(osv.osv):
 
 
     def _get_last_invoice_price_func(states, what):
-        
         def _last_invoice_price(self, cr, uid, ids, name, arg, context):
             return self._product_get_price(cr, uid, ids, False, False, False, context, states, what)
         return _last_invoice_price
@@ -131,16 +130,14 @@ class product_product(osv.osv):
         states_str = ','.join(map(lambda s: "'%s'" % s, states))
         date = date_ref or time.strftime('%Y-%m-%d')
         if ids[0]:
-            print 'ids: ',ids
-            print 'self.browse(cr, uid, ids): ',self.browse(cr, uid, ids)
             for product in self.browse(cr, uid, ids):
                 sql = "select inv.id, max(inv.date_invoice) as date from account_invoice as inv, account_invoice_line as line where inv.id=line.invoice_id and product_id=%s and state in (%s) and type='%s' and date_invoice<='%s' group by inv.id order by date desc" % (product.id,states_str,what,date)
                 if supplier_id:
-                    sql = "select inv.id, max(inv.date_invoice) as date from account_invoice as inv, account_invoice_line as line where inv.id=line.invoice_id and product_id=%s and partner_id=%s and state in (%s) and type='%s' and date_invoice<='%s' group by inv.id order by date desc" % (product.id,supplier_id,states_str,what,date)
+                    sql = "select inv.id, max(inv.date_invoice) as date from account_invoice as inv, account_invoice_line as line where inv.id=line.invoice_id and product_id=%s and inv.partner_id=%s and state in (%s) and type='%s' and date_invoice<='%s' group by inv.id order by date desc" % (product.id,supplier_id,states_str,what,date)
 
                 cr.execute(sql)
                 allrecord = cr.fetchall()
-                record = allrecord and allrecord.pop(0) or False                
+                record = allrecord and allrecord.pop(0) or False
                 if invoice_id and record and record[0]==invoice_id:
                     record = allrecord and allrecord.pop(0) or False
                 if record:
@@ -158,7 +155,7 @@ class product_product(osv.osv):
     _columns = {
         'last_pur_inv' : fields.function(_pur_inv, type='many2one', obj='account.invoice', method=True, string='Last Purchase Invoice'),
         'last_pur_inv_date' : fields.function(_pur_inv_date, type='date', method=True, string='Last Purchase Invoice date'),
-        'last_cost': fields.function(_pur_inv_cost, type="float", method=True, string='Last Cost', digits=(16, int(config['price_accuracy']))),
+        'last_cost': fields.function(_pur_inv_cost, type="float", method=True, string='Last Cost', digits_compute= dp.get_precision('Account')),
     }
 
 product_product()
