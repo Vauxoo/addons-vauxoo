@@ -188,8 +188,8 @@ class ir_sequence(osv.osv):
                     approval_id = approval_id and approval_obj.browse(cr, uid, [approval_id], context=context)[0] or False
                     if not approval_id:
                         raise osv.except_osv('Error !', 'No hay una aprobacion valida de folios.')
-                    return super(ir_sequence, self).get_id(cr, uid, sequence_id=res['id'], test='id')
-            return super(ir_sequence, self).get_id(cr, uid, sequence_id=sequence_id, test=test)
+                    return super(ir_sequence, self).get_id(cr, uid, res['id'], 'id')
+            return super(ir_sequence, self).get_id(cr, uid, sequence_id, test)
 ir_sequence()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
