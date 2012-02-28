@@ -239,10 +239,10 @@
       <blockTable colWidths="414.0,84.0" style="Tabla7">
         <tr>
           <td>
-            <para style="P8">Suma:</para>
+            <para style="P8">Suma $</para>
           </td>
           <td>
-            <para style="P1">[[ o.currency_id.symbol ]][[formatLang( ( exists_key('global_discount_percent') and o.global_discount_amount or 0.0 ) + (o.amount_untaxed or 0.0), digits=get_digits(dp='Account') )]]</para>
+            <para style="P1">[[formatLang( ( exists_key('global_discount_percent') and o.global_discount_amount or 0.0 ) + (o.amount_untaxed or 0.0), digits=get_digits(dp='Account') )]]</para>
           </td>
         </tr>
         <tr>
@@ -250,7 +250,7 @@
             <para style="P8">Descuento: [[ exists_key('global_discount_percent') and o.global_discount_percent or removeParentNode('tr')]] %</para>
           </td>
           <td>
-            <para style="P1">[[ o.currency_id.symbol ]][[o.global_discount_amount and formatLang( o.global_discount_amount) or '']]</para>
+            <para style="P1">[[o.global_discount_amount and formatLang( o.global_discount_amount) or '']]</para>
           </td>
         </tr>
         <tr>
