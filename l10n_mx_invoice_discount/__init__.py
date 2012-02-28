@@ -27,4 +27,3 @@
 import partner
 #import wizard
 import invoice
-import report

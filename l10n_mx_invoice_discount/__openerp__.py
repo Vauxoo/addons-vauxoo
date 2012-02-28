@@ -38,8 +38,7 @@
     "demo_xml" : [],
     "update_xml" : ["partner_view.xml",
                     "invoice_view.xml",
-#                    "wizard/wizard_invoice_discount_view.xml",
-                    "l10n_mx_facturae_pac_sf_disc_report.xml",],
+                    ],
     "installable" : True,
     "active" : False,
 }
