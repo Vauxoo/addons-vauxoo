@@ -44,7 +44,7 @@ class res_company_facturae_certificate(osv.osv):
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
         'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
-        'certificate_password': fields.char('Certificate Password', size=64, invisible=True, required=True),
+        'certificate_password': fields.char('Certificate Password', size=64, invisible=False, required=True),
         'certificate_file_pem': fields.binary('Certificate File PEM', filters='*.pem,*.cer,*.certificate,*.cert'),
         'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
         'date_start': fields.date('Date Start', required=False),
