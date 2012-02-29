@@ -30,7 +30,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add field discount to a partner and wizard apply discount on invoice""",
+    "description" : """Add field discount to a partner and discount fields on invoice. It's apply discount in all lines when you press compute taxes button""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["base","account","l10n_mx_facturae","l10n_mx_facturae_pac_sf"],
