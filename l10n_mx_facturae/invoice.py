@@ -766,8 +766,12 @@ class account_invoice(osv.osv):
             invoice_data_parent['Comprobante'].update({
                 'anoAprobacion': folio_data['anoAprobacion'],
                 'noAprobacion': folio_data['noAprobacion'],
-                'serie': folio_data['serie'],
             })
+            serie = folio_data.get('serie', False)
+            if serie:
+                invoice_data_parent['Comprobante'].update({
+                    'serie': serie,
+                })
             #Termina seccion: Comprobante
             #Inicia seccion: Emisor
             partner_obj = self.pool.get('res.partner')
