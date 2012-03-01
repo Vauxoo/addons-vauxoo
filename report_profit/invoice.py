@@ -34,6 +34,9 @@ class account_invoice_line(osv.osv):
 
 
     def _compute_lines(self, cr, uid, ids, name, args, context=None):
+        '''
+        Returns the account cost of a product.
+        '''
         result = {}
         for il in self.browse(cr, uid, ids, context):
             am_lines = self.move_line_id_cost_get(cr, uid, [il.id])
@@ -46,6 +49,9 @@ class account_invoice_line(osv.osv):
 
 
     def _get_iline_from_amline(self, cr, uid, ids, context={}):
+        '''
+        Returns the invoice line associated with an account move line.
+        '''
         move = {}
         inv_line_ids = []
         for line in self.pool.get('account.move.line').browse(cr, uid, ids):
@@ -58,6 +64,9 @@ class account_invoice_line(osv.osv):
 
 
     def _get_iline_from_invoice(self, cr, uid, ids, context={}):
+        '''
+        Returns the invoice line of invoice.
+        '''
         move = {}
         inv_line_ids = []
         for invoice in self.pool.get('account.invoice').browse(cr, uid, ids):
@@ -81,6 +90,9 @@ class account_invoice_line(osv.osv):
 
 
     def move_line_id_cost_get(self, cr, uid, ids, *args):
+        '''
+        Returns the expense account move line of invoice.
+        '''
         res = []
         for l in self.browse(cr, uid, ids):
             if l.invoice_id.type in ('out_invoice','out_refund'):
@@ -100,6 +112,9 @@ class account_invoice_line(osv.osv):
 
 
     def move_line_id_inv_get(self, cr, uid, ids, *args):
+        '''
+        Returns the inventory account move line of invoice.
+        '''
         res = []
         aml_obj = self.pool.get('account.move.line')
         aml_ids = []
