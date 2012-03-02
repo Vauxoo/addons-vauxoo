@@ -36,7 +36,7 @@ import os
 import sys
 import codecs
 import xml.dom.minidom
-from datetime import datetime
+from datetime import datetime, timedelta
 from tools.misc import ustr
 try:
     from SOAPpy import WSDL
@@ -176,6 +176,7 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                 if status == '200' or status == '307':
                     fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
                     fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
+                    fecha_timbrado = fecha_timbrado and datetime.strptime(fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=-6) or False
                     cfdi_data = {
                         #'cfdi_cbb': base64.decodestring( resultado['resultados']['qrCode'] or '' ) or False,
                         'cfdi_cbb': resultado['resultados']['qrCode'] or False,#ya lo regresa en base64
