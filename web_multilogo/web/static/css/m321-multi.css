@@ -58,3 +58,35 @@ p#cmp_logo {
     background: url(../images/logo-bg.png) repeat-y;
     line-height: 50px;
 }
+
+#applications_menu a {
+    display: block;
+    float: left;
+    padding: 0 0 0 3px;
+    background: url(/web_multilogo/static/images/nav-items-a-m321.png) no-repeat;
+    color: #eee;
+    text-shadow: #222 0 1px 0;
+}
+
+#applications_menu span {
+    display: block;
+    float: left;
+    min-width: 60px;
+    height: 23px;
+    padding: 0 9px 0 6px;
+    background: url(/web_multilogo/static/images/nav-items-a-m321.png) 100% 0 no-repeat;
+    line-height: 22px;
+}
+
+#corner p.logout a {
+    float: left;
+    height: 34px;
+    padding: 0 10px;
+    background: url(/web_multilogo/static/images/top-logout-a-m321.png) repeat-x;
+    font-size: 1em;
+    line-height: 34px;
+    text-transform: uppercase;
+}
+#corner p.logout a:hover,#corner p.logout a:focus,#corner p.logout a:active {
+    background-image: url(/web_multilogo/static/images/top-over-a-m321.png);
+}
