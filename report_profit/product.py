@@ -41,6 +41,9 @@ class product_supplierinfo(osv.osv):
     _name = "product.supplierinfo"
 
     def _last_sup_invoice(self, cr, uid, ids, name, arg, context):
+        '''
+        Returns the last supplier invoice, which is a product.
+        '''
         res = {}
         for supinfo in self.browse(cr, uid, ids):
             cr.execute("select inv.id, max(inv.date_invoice) from account_invoice as inv, account_invoice_line as line where inv.id=line.invoice_id and product_id=%s and inv.partner_id=%s and state in ('open', 'paid') and type='in_invoice' group by inv.id", (supinfo.product_id.id, supinfo.name.id,))
@@ -52,6 +55,9 @@ class product_supplierinfo(osv.osv):
         return res
 
     def _last_sup_invoice_date(self, cr, uid, ids, name, arg, context):
+        '''
+        Returns the last supplier invoice, which is a product.
+        '''
         res = {}
         inv = self.pool.get('account.invoice')
         _last_sup_invoices = self._last_sup_invoice(cr, uid, ids, name, arg, context)
@@ -78,6 +84,10 @@ class product_product(osv.osv):
 
     def _get_last_invoice_func(states, what):
         def _last_invoice(self, cr, uid, ids, name, arg, context):
+            '''
+            Returns the last invoice, which is a product.
+            '''
+            res = {}
             res = self._product_get_invoice(cr, uid, ids, False, False, False, context, states, what)
             return res
         return _last_invoice
@@ -85,6 +95,9 @@ class product_product(osv.osv):
 
     def _get_last_invoice_date_func(states, what):
         def _last_invoice_date(self, cr, uid, ids, name, arg, context):
+            '''
+            Returns the date of last invoice, which is a product.
+            '''
             res = {}
             inv = self.pool.get('account.invoice')
             _last_invoices = self._product_get_invoice(cr, uid, ids, False, False, False, context, states, what)
@@ -106,6 +119,17 @@ class product_product(osv.osv):
 
 
     def _product_get_price(self, cr, uid, ids, invoice_id=False, supplier_id=False, date_ref=False, context={}, states=['open', 'paid'], what='in_invoice'):
+        '''
+        Returns the last cost of a product.
+
+        :param invoice_id: Id of the invoice used as a reference.
+        :param supplier_id: Id of the partner who was bought or sold the product.
+        :param date_ref: Date used as reference
+        :param states: List of states in which the invoice must be.
+        :param what: Type of invoice to which the invoice must belong
+        :return: mapping between product and last cost of a product
+        :rtype: dict
+        '''
         res = {}
         _last_invoices = self._product_get_invoice(cr, uid, ids, invoice_id, supplier_id, date_ref, context, states, what)
         lstprod=filter(lambda x:_last_invoices[x], _last_invoices.keys())
@@ -126,6 +150,17 @@ class product_product(osv.osv):
 
 
     def _product_get_invoice(self, cr, uid, ids, invoice_id=False, supplier_id=False, date_ref=False, context={}, states=['open', 'paid'], what='in_invoice'):
+        '''
+        Returns the last invoice, which is a product.
+
+        :param invoice_id: Id of the invoice used as a reference.
+        :param supplier_id: Id of the partner who was bought or sold the product.
+        :param date_ref: Date used as reference
+        :param states: List of states in which the invoice must be.
+        :param what: Type of invoice to which the invoice must belong
+        :return: mapping between product and last invoice in which is a product
+        :rtype: dict
+        '''
         res = {}
         states_str = ','.join(map(lambda s: "'%s'" % s, states))
         date = date_ref or time.strftime('%Y-%m-%d')
