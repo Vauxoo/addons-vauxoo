@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="decimal.precision" id="cost_struture">
+            <field name="name">Cost Structure</field>
+            <field name="digits">3</field>
+        </record>    
+
+
+    </data>
+</openerp> 

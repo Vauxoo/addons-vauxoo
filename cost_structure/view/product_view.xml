@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model="ir.ui.view" id="product_cost_structure">
+      <field name="name">product.normal.form</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_normal_form_view" />
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <xpath expr='/form/notebook/page[@string="Information"]' position="after">
+          <page string="Advance Options">
+            <group colspan="9" col="1">
+              <field name="cost_structure_id" />
+            </group>
+            <group colspan="6" col="4" string="Costos">
+              <field name='cost_ult' />
+              <field name='date_cost_ult' />
+              <field name='ult_om' />
+              <field name='date_ult_om' />
+              <field name='cost_prom' colspan="1" />
+              <field name='date_cost_prom' />
+              <field name='prom_om' />
+              <field name='date_prom_om' />
+              <field name='cost_suppler' />
+              <field name='date_cost_suppler' />
+              <field name='ant_om' />
+              <field name='date_ant_om' />
+              <field name='cost_ant' />
+              <field name='date_cost_ant' />
+              <!-- <field name='cost_to_price' /> -->
+              <field name='date_cost_to_price' />
+            </group>
+            <field name='method_cost_ids' nolabel="1" />
+          </page>
+        </xpath>
+        <xpath expr='/form/notebook/page[@string="Information"]' position="after">
+          <page string="Landing Information"><!-- <field name='arancel' /> --></page>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</openerp>
