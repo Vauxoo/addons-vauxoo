@@ -7,8 +7,8 @@
 		<field name="amount">0.120000</field>
 		<field name="type">percent</field>
 		<field name="type_tax_use">sale</field>
-		<field name="account_collected_id" ref="chart_2160201001"/>
-		<field name="account_paid_id" ref="chart_2160201001"/>
+		<field name="account_collected_id" ref="account_2172003"/>
+		<field name="account_paid_id" ref="account_2172003"/>
 		<field name="base_code_id" ref="vat_code_base_due"/>
 		<field name="tax_code_id" ref="vat_code_due_tva"/>
 		<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
@@ -20,8 +20,8 @@
 		<field name="amount">0.080000</field>
 		<field name="type">percent</field>
 		<field name="type_tax_use">sale</field>
-		<field name="account_collected_id" ref="chart_2160201001"/>
-		<field name="account_paid_id" ref="chart_2160201001"/>
+		<field name="account_collected_id" ref="account_2172003"/>
+		<field name="account_paid_id" ref="account_2172003"/>
 		<field name="base_code_id" ref="vat_code_base_due"/>
 		<field name="tax_code_id" ref="vat_code_due_tva"/>
 		<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
@@ -33,8 +33,8 @@
 		<field name="amount">0.220000</field>
 		<field name="type">percent</field>
 		<field name="type_tax_use">sale</field>
-		<field name="account_collected_id" ref="chart_2160201001"/>
-		<field name="account_paid_id" ref="chart_2160201001"/>
+		<field name="account_collected_id" ref="account_2172003"/>
+		<field name="account_paid_id" ref="account_2172003"/>
 		<field name="base_code_id" ref="vat_code_base_due"/>
 		<field name="tax_code_id" ref="vat_code_due_tva"/>
 		<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
@@ -46,8 +46,8 @@
 		<field name="amount">0.120000</field>
 		<field name="type">percent</field>
 		<field name="type_tax_use">purchase</field>
-		<field name="account_collected_id" ref="chart_2160220001"/>
-		<field name="account_paid_id" ref="chart_2160220001"/>
+		<field name="account_collected_id" ref="account_1151004"/>
+		<field name="account_paid_id" ref="account_1151004"/>
 		<field name="base_code_id" ref="vat_code_base_due"/>
 		<field name="tax_code_id" ref="vat_code_due_tva"/>
 		<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
@@ -59,8 +59,8 @@
 		<field name="amount">0.080000</field>
 		<field name="type">percent</field>
 		<field name="type_tax_use">purchase</field>
-		<field name="account_collected_id" ref="chart_2160220001"/>
-		<field name="account_paid_id" ref="chart_2160220001"/>
+		<field name="account_collected_id" ref="account_1151004"/>
+		<field name="account_paid_id" ref="account_1151004"/>
 		<field name="base_code_id" ref="vat_code_base_due"/>
 		<field name="tax_code_id" ref="vat_code_due_tva"/>
 		<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
@@ -72,8 +72,8 @@
 		<field name="amount">0.220000</field>
 		<field name="type">percent</field>
 		<field name="type_tax_use">purchase</field>
-		<field name="account_collected_id" ref="chart_2160220001"/>
-		<field name="account_paid_id" ref="chart_2160220001"/>
+		<field name="account_collected_id" ref="account_1151004"/>
+		<field name="account_paid_id" ref="account_1151004"/>
 		<field name="base_code_id" ref="vat_code_base_due"/>
 		<field name="tax_code_id" ref="vat_code_due_tva"/>
 		<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
