@@ -9,80 +9,32 @@
       <field name="arch" type="xml">
         <xpath expr='/form/notebook/page[@string="Information"]' position="after">
           <page string="Advance Options">
-            <group colspan="9" col="9">
-              <group colspan="9" col="1" >
-               <field name="cost_structure_id" />
-                </group>
-              <group colspan="1" col="1" string="Costos">
-                <field name='cost_ult' />
-                <field name='cost_prom' />
-                <field name='cost_suppler' />
-                <field name='cost_ant' />
-                <field name='ult_om' />
-                <field name='prom_om' />
-                <field name='ant_om' />
-<!--
-                <field name='cost_to_price' />
--->
-              </group>
-              <group colspan="1" col="1" string="Date">
-                <field name='date' nolabel="1" />
-                <field name='date2' nolabel="1" />
-                <field name='date3' nolabel="1" />
-                <field name='date4' nolabel="1" />
-                <field name='date5' nolabel="1" />
-                <field name='date6' nolabel="1" />
-                <field name='date7' nolabel="1" />
-                <field name='date8' nolabel="1" />
-              </group>
-              <group colspan="1" col="1" string="Price Unit">
-                <field name='unit_price' nolabel="1" />
-                <field name='unit_price2' nolabel="1" />
-                <field name='unit_price3' nolabel="1" />
-                <field name='unit_price4' nolabel="1" />
-                <field name='unit_price5' nolabel="1" />
-              </group>
-              <group colspan="1" col="1" string="Date">
-                <field name='date9' nolabel="1" />
-                <field name='date10' nolabel="1" />
-                <field name='date11' nolabel="1" />
-                <field name='date12' nolabel="1" />
-                <field name='date13' nolabel="1" />
-                <group colspan="2">
-                  <field name='date_prom_end' string="Date Period" />
-                  <field name='date_prom_begin' nolabel="1" />
-                </group>
-                <group col="1">
-                  <field name='min_margin' />
-                </group>
-              </group>
-              <group colspan="1" col="1" string="Margin">
-                <field name='margin1' nolabel="1" />
-                <field name='margin2' nolabel="1" />
-                <field name='margin3' nolabel="1" />
-                <field name='margin4' nolabel="1" />
-                <field name='margin5' nolabel="1" />
-              </group>
-              <group colspan="1" col="1" string="Reference Price">
-                <field name='price_referen' nolabel="1" />
-                <field name='price_referen2' nolabel="1" />
-                <field name='price_referen3' nolabel="1" />
-                <field name='price_referen4' nolabel="1" />
-                <field name='price_referen5' nolabel="1" />
-              </group>
-              <group colspan="1" col="1" string="Margin">
-                <field name='margin6' nolabel="1" />
-                <field name='margin7' nolabel="1" />
-                <field name='margin8' nolabel="1" />
-                <field name='margin9' nolabel="1" />
-                <field name='margin10' nolabel="1" />
-                <group col="2">
-                  <field name='amount' />
-                  <field name='arancel' />
-                </group>
-              </group>
+            <group colspan="9" col="1">
+              <field name="cost_structure_id" />
             </group>
+            <group colspan="6" col="4" string="Costos">
+              <field name='cost_ult' />
+              <field name='date_cost_ult' />
+              <field name='ult_om' />
+              <field name='date_ult_om' />
+              <field name='cost_prom' colspan="1" />
+              <field name='date_cost_prom' />
+              <field name='prom_om' />
+              <field name='date_prom_om' />
+              <field name='cost_suppler' />
+              <field name='date_cost_suppler' />
+              <field name='ant_om' />
+              <field name='date_ant_om' />
+              <field name='cost_ant' />
+              <field name='date_cost_ant' />
+              <!-- <field name='cost_to_price' /> -->
+              <field name='date_cost_to_price' />
+            </group>
+            <field name='method_cost_ids' nolabel="1" />
           </page>
+        </xpath>
+        <xpath expr='/form/notebook/page[@string="Information"]' position="after">
+          <page string="Landing Information"><!-- <field name='arancel' /> --></page>
         </xpath>
       </field>
     </record>

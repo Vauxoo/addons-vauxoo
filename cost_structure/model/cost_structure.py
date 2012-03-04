@@ -30,64 +30,92 @@ from tools import config
 import netsvc
 import decimal_precision as dp
 
+#~ class decorador_ll(osv.osv):
+    #~ _name = 'decorador.decorador'
+    #~ _columns = {}
+    #~ 
+    #~ def __init__(self, name, value, exc_type='warning'):
+        #~ self.name = name
+        #~ self.exc_type = exc_type
+        #~ self.value = value
+        #~ self.args = (exc_type, name)
+        #~ 
+    #~ def __call__(self, *args):
+        #~ print self,args
+        #~ newargs=self.mapping(args, self.f)
+        #~ print "args",args
+        #~ self.f (newargs[0],2,1,3,5)
+        #~ 
+    #~ def mapping(self, algo, orm):
+        #~ print orm.__name__
+        #~ if "write":
+            #~ "logicamapeado"
+        #~ if "create":
+            #~ "logica de mapeado"
+        #~ return algo
+#~ decorador_ll()
+
 
 class cost_structure(osv.osv):
+    
+    
     _name = 'cost.structure'
     _columns = {
     'product_id':fields.many2one('product.product','Product',help="Product Selecet from list product"),
     'description':fields.char('Description',size=128,help="Product Description"),
-    'type':fields.selection([('v', 'V'),('C', 'C')], 'Type', help="Product type"),
+    'type':fields.selection([('v', 'Venta'),('C', 'Compra')], 'Type', help="Product type"),
     'serial':fields.boolean('Serial',help="Product Serial"),
     'date_reg':fields.date('Registr Date',help="Date to registre"),
     'cost_ult':fields.float('Ult Cost',digits_compute=dp.get_precision('Cost Structure'), help="Last Cost"),
     'cost_prom':fields.float('Prom Cost',digits_compute=dp.get_precision('Cost Structure'),help="Avarage Cost"),
     'cost_suppler':fields.float('Supplier Cost',digits_compute=dp.get_precision('Cost Structure'),help="Supplier Cost"),
     'cost_ant':fields.float('Ant Cost',digits_compute=dp.get_precision('Cost Structure'),help="Last Cost"),
-    'ult_om':fields.float('Ult OM',digits_compute=dp.get_precision('Cost Structure')),
-    'prom_om':fields.float('Prom OM',digits_compute=dp.get_precision('Cost Structure')),
-    'ant_om':fields.float('Ant OM',digits_compute=dp.get_precision('Cost Structure')),
-    'date':fields.date('Date'),
-    'date2':fields.date('Date'),
-    'date3':fields.date('Date'),
-    'date4':fields.date('Date'),
-    'date5':fields.date('Date'),
-    'date6':fields.date('Date'),
-    'date7':fields.date('Date'),
-    'date8':fields.date('Date'),
-    'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
-    'unit_price2':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
-    'unit_price3':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
-    'unit_price4':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
-    'unit_price5':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
-    'date9':fields.date('Date'),
-    'date10':fields.date('Date'),
-    'date11':fields.date('Date'),
-    'date12':fields.date('Date'),
-    'date13':fields.date('Date'),
-    'date_prom_begin':fields.date('Date Prom',help="Compute Date Prom"),
-    'date_prom_end':fields.date('Date End',help="Compute Date Prom with end"),
-    'margin1':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin2':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin3':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin4':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin5':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
+    'ult_om':fields.many2one('product.uom','Ult UOM',),
+    'prom_om':fields.many2one('product.uom','Prom UOM',),
+    'ant_om':fields.many2one('product.uom','Ant UOM',),
+    'date_cost_ult':fields.date('Date',help="Date of last change to last cost"),
+    'date_ult_om':fields.date('Date',help="Date of last change to last UOM"),
+    'date_cost_prom':fields.date('Date',help="Date of last change to avarage cost"),
+    'date_prom_om':fields.date('Date',help="Date of last change to avarage UOM"),
+    'date_cost_suppler':fields.date('Date',help="Date of last change to Supplier cost"),
+    'date_ant_om':fields.date('Date',help="Date of last change to ant UOM"),
+    'date_cost_ant':fields.date('Date',help="Date of last change to ant cost"),
+    'date_cost_to_price':fields.date('Date',help="Date of last change to selection cost"),
     'min_margin':fields.float('% Margin',digits_compute=dp.get_precision('Cost Structure'),help="Porcent Margin Min"),
-    'price_referen':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
-    'price_referen2':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
-    'price_referen3':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
-    'price_referen4':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
-    'price_referen5':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
-    'margin6':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin7':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin8':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin9':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin10':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
-    'margin11':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
     'amount':fields.float('Amount',digits_compute=dp.get_precision('Cost Structure'),help="Amount"),
-    'arancel':fields.float('% Arancel',digits_compute=dp.get_precision('Cost Structure'),help="Porcent Arancel"),
     'cost_to_price':fields.selection([('cost_ult', 'Ultimo Costo'),('cost_prom', 'Costo Promedio'),('cost_suppler', 'Costo Proveedor'),('cost_ant', 'Costo Anterior')], 'Type Cost', help="Product type"),
+    'method_cost_ids':fields.one2many('method.price','cost_structure_id','Cost Method'),
     }
-    
     _rec_name = 'product_id'
     
 cost_structure()
+
+class method_price(osv.osv):
+    
+    def name_get(self,cr, uid, ids, context):
+        if not len(ids):
+            return []
+        reads = self.browse(cr, uid, ids, context)
+        res = []
+        for r in reads:
+            name = 'Price %d %s' % (r.sequence,repr(round(r.unit_price,3)))
+            res.append((r.id, name))
+        return res
+
+    _name = 'method.price'
+    _columns = {
+    'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
+    'sequence':fields.integer('Sequence'),
+    'product_id':fields.related('cost_structure_id','product_id',relation='product.product',type='many2one',string="Product"),
+    'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
+    'date':fields.date('Date'),
+    'date_prom_begin':fields.date('Date Prom',help="Compute Date Prom"),
+    'date_prom_end':fields.date('Date End',help="Compute Date Prom with end"),
+    'margin':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
+    'arancel':fields.float('% Arancel',digits_compute=dp.get_precision('Cost Structure'),help="Porcent Arancel"),
+    'min_margin':fields.float('% Margin',digits_compute=dp.get_precision('Cost Structure'),help="Porcent Margin Min"),
+    'price_referen':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
+    'margin_reference':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
+    }
+    _rec_name = 'unit_price'
+method_price()

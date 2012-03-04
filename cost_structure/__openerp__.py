@@ -25,7 +25,7 @@
 {
     "name" : "Cost Structure",
     "version" : "0.1",
-    "depends" : ["stock"],
+    "depends" : ["stock",'product','sale','purchase'],
     "author" : "Vauxoo",
     "description" : """
     """,
@@ -37,6 +37,7 @@
     "update_xml" : [
     'view/cost_structure.xml',
     'view/product_view.xml',
+    'view/sale_view.xml',
     
     
     
