@@ -49,3 +49,12 @@ background: url(/web_multilogo/static/images/header-background-company-m321.png)
     text-align: center;
 }
 
+
+p#cmp_logo {
+    float: left;
+    width: 143px;
+    margin: 0 10px 0 0;
+    padding: 0 0 0 0px;
+    background: url(../images/logo-bg.png) repeat-y;
+    line-height: 50px;
+}
