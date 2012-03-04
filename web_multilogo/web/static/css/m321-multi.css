@@ -1,0 +1,51 @@
+#top {
+background: url(/web_multilogo/static/images/header-background-company-m321.png) top left repeat-x;
+}
+#secondary {
+    border-right: 1px solid #3c3c3c;
+    /* hack to "fix" weird space under bar */
+    border-bottom: 1px solid #5a5858;
+    background: #885926;
+    padding: 0;
+    vertical-align: top;
+    /* Takes smallest possible width */
+    width: 1px;
+}
+
+#sidenav-a li > span {
+    display: block;
+    height: 20px;
+    padding: 0 5px;
+    font-size: 1.1em;
+    background: url(/web_multilogo/static/images/sidenav-link-a-m321.png) 0 100% repeat-x;
+    line-height: 20px;
+    text-decoration: none !important;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+#main_nav {
+    background: url(/web_multilogo/static/images/nav-bg-a-m321.png) repeat-x;
+    width: 100%;
+}
+
+#ajax_loading {
+    background: url("(/web_multilogo/static/images/nav-bg-a-m321.png") repeat-x scroll 0 0 transparent;
+    font-size: 1em;
+    height: 20px;
+    line-height: 20px;
+    padding: 0 10px;
+    position: absolute;
+    position: fixed;
+    font-weight: bold;
+    -moz-border-radius: 0 0 16px 16px;
+    border-radius: 0 0 16px 16px;
+    z-index: 100;
+    color: #FFFFFF;
+    display: none;
+    top: 0;
+    left: 50%;
+    width: 300px;
+    text-align: center;
+}
+
