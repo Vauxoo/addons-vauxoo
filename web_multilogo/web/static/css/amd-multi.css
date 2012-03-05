@@ -90,3 +90,7 @@ p#cmp_logo {
 #corner p.logout a:hover,#corner p.logout a:focus,#corner p.logout a:active {
     background-image: url(/web_multilogo/static/images/amd/top-over-a.png);
 }
+
+#logo_company{
+background-image: none;
+}

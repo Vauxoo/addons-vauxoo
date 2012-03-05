@@ -48,9 +48,9 @@ class HeaderTemplateEditor(openobject.templating.TemplateEditor):
 
 
         output = output[:corner] + """
-            <p id="livechat_status" class="logout">
-               <a href="http://vauxoo.com">
-                 ${rpc.session.db}
+            <p id="logo_company" class="logout">
+               <a id="link_multi" class="web_multi"  href="http://vauxoo.com">
+                 <img src="/web_multilogo/static/images/${rpc.session.db}/logo.png"/>
                </a>
             </p>
         """ + output[corner:]
