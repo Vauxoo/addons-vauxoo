@@ -1,5 +1,5 @@
 #top {
-background: url(/web_multilogo/static/images/header-background-company-m321.png) top left repeat-x;
+background: url(/web_multilogo/static/images/activa/header-background-company.png) top left repeat-x;
 }
 #secondary {
     border-right: 1px solid #3c3c3c;
@@ -17,7 +17,7 @@ background: url(/web_multilogo/static/images/header-background-company-m321.png)
     height: 20px;
     padding: 0 5px;
     font-size: 1.1em;
-    background: url(/web_multilogo/static/images/sidenav-link-a-m321.png) 0 100% repeat-x;
+    background: url(/web_multilogo/static/images/activa/sidenav-link-a.png) 0 100% repeat-x;
     line-height: 20px;
     text-decoration: none !important;
     cursor: pointer;
@@ -25,12 +25,12 @@ background: url(/web_multilogo/static/images/header-background-company-m321.png)
 }
 
 #main_nav {
-    background: url(/web_multilogo/static/images/nav-bg-a-m321.png) repeat-x;
+    background: url(/web_multilogo/static/images/activa/nav-bg-a.png) repeat-x;
     width: 100%;
 }
 
 #ajax_loading {
-    background: url("(/web_multilogo/static/images/nav-bg-a-m321.png") repeat-x scroll 0 0 transparent;
+    background: url("(/web_multilogo/static/images/activa/nav-bg-a.png") repeat-x scroll 0 0 transparent;
     font-size: 1em;
     height: 20px;
     line-height: 20px;
@@ -55,7 +55,7 @@ p#cmp_logo {
     width: 143px;
     margin: 0 10px 0 0;
     padding: 0 0 0 0px;
-    background: url(../images/logo-bg.png) repeat-y;
+    background: url(../images/activa/logo-bg.png) repeat-y;
     line-height: 50px;
 }
 
@@ -63,7 +63,7 @@ p#cmp_logo {
     display: block;
     float: left;
     padding: 0 0 0 3px;
-    background: url(/web_multilogo/static/images/nav-items-a-m321.png) no-repeat;
+    background: url(/web_multilogo/static/images/activa/nav-items-a.png) no-repeat;
     color: #eee;
     text-shadow: #222 0 1px 0;
 }
@@ -74,7 +74,7 @@ p#cmp_logo {
     min-width: 60px;
     height: 23px;
     padding: 0 9px 0 6px;
-    background: url(/web_multilogo/static/images/nav-items-a-m321.png) 100% 0 no-repeat;
+    background: url(/web_multilogo/static/images/activa/nav-items-a.png) 100% 0 no-repeat;
     line-height: 22px;
 }
 
@@ -82,11 +82,11 @@ p#cmp_logo {
     float: left;
     height: 34px;
     padding: 0 10px;
-    background: url(/web_multilogo/static/images/top-logout-a-m321.png) repeat-x;
+    background: url(/web_multilogo/static/images/activa/top-logout-a.png) repeat-x;
     font-size: 1em;
     line-height: 34px;
     text-transform: uppercase;
 }
 #corner p.logout a:hover,#corner p.logout a:focus,#corner p.logout a:active {
-    background-image: url(/web_multilogo/static/images/top-over-a-m321.png);
+    background-image: url(/web_multilogo/static/images/activa/top-over-a.png);
 }

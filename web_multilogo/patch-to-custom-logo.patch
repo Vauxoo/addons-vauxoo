@@ -1,0 +1,18 @@
+=== modified file 'addons/openerp/controllers/templates/header.mako'
+--- addons/openerp/controllers/templates/header.mako	2011-02-17 13:59:18 +0000
++++ addons/openerp/controllers/templates/header.mako	2012-03-04 21:21:57 +0000
+@@ -25,7 +25,12 @@
+ <td id="top" colspan="3">
+     <p id="cmp_logo">
+         <a href="/" target="_top">
+-            <img alt="OpenERP" id="company_logo" src="/openerp/static/images/openerp_small.png"/>
++    % if not logged:
++            <img alt="OpenERP" id="company_logo" src="/openerp/static/images/openerp_small.png"/>
++    % endif
++    % if logged:
++            <img alt="OpenERP" id="company_logo" src="/openerp/static/images/openerp_small.png"/>
++    % endif
+         </a>
+     </p>
+     % if logged:
+
