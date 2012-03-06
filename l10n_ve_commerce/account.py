@@ -33,7 +33,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         acc_tpl_obj = self.pool.get('account.chart.template')
         ids = acc_tpl_obj.search(cr, uid, [],order='create_date desc', context=context)
         if ids:
-            return ids
+            return ids[0]
         return False
 
     def _get_default_accounts(self, cr, uid, context=None):
