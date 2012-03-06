@@ -43,6 +43,7 @@
         "unit_analisys_view.xml",
         "product_view.xml",
         "report_profit_view.xml",
+        'data/report_profit_data.xml',
     ],
     "active": False,
     "installable": True,
