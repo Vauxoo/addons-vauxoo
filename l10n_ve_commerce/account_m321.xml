@@ -737,7 +737,7 @@
     </record>
     <record model="account.account.template" id="account_2161">
       <field name="code">2161</field>
-      <field name="name">APORTES EMPLEADOS</field>
+      <field name="name">ACUMULACIONES LABORALES</field>
       <field ref="account_216" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">view</field>
@@ -745,7 +745,7 @@
     </record>
     <record model="account.account.template" id="account_2171">
       <field name="code">2171</field>
-      <field name="name">CONTRIBUCIONES PATRONAL</field>
+      <field name="name">CONTRIBUCIONES</field>
       <field ref="account_217" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">view</field>
@@ -929,7 +929,7 @@
     </record>
     <record model="account.account.template" id="account_6111">
       <field name="code">6111</field>
-      <field name="name">COSTO DE VENTAS</field>
+      <field name="name">COSTO DE VENTA</field>
       <field ref="account_611" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">view</field>
@@ -1065,7 +1065,7 @@
     </record>
     <record model="account.account.template" id="account_1113001">
       <field name="code">1113001</field>
-      <field name="name">BANCO MERCANTIL</field>
+      <field name="name">BANCO MERCANTIL AGENCIA CUBO NEGRO</field>
       <field ref="account_1113" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">liquidity</field>
@@ -1073,7 +1073,7 @@
     </record>
     <record model="account.account.template" id="account_1113002">
       <field name="code">1113002</field>
-      <field name="name">BANCO BANESCO AGENCIA C.C.C.T.</field>
+      <field name="name">BANCO BANESCO</field>
       <field ref="account_1113" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">liquidity</field>
@@ -1082,14 +1082,6 @@
     <record model="account.account.template" id="account_1113003">
       <field name="code">1113003</field>
       <field name="name">BANCO PROVINCIAL</field>
-      <field ref="account_1113" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">liquidity</field>
-      <field ref="account_type_cash" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_1113004">
-      <field name="code">1113004</field>
-      <field name="name">BANCO DE VENEZUELA</field>
       <field ref="account_1113" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">liquidity</field>
@@ -1105,7 +1097,7 @@
     </record>
     <record model="account.account.template" id="account_1113006">
       <field name="code">1113006</field>
-      <field name="name">BANCO BANESCO AGENCIA SILENCIO</field>
+      <field name="name">BANCO MERCANTIL AGENCIA LA URBINA</field>
       <field ref="account_1113" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">liquidity</field>
@@ -1162,6 +1154,14 @@
     <record model="account.account.template" id="account_1114001">
       <field name="code">1114001</field>
       <field name="name">BANCO MERCANTIL COMMERCEBANK</field>
+      <field ref="account_1114" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">liquidity</field>
+      <field ref="account_type_cash" name="user_type"/>
+    </record>
+    <record model="account.account.template" id="account_1114003">
+      <field name="code">1114003</field>
+      <field name="name">BANCO POPULAR (MIAMI)</field>
       <field ref="account_1114" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">liquidity</field>
@@ -1257,7 +1257,7 @@
     </record>
     <record model="account.account.template" id="account_1125001">
       <field name="code">1125001</field>
-      <field name="name">CUENTAS POR COBRAR EMPLEADOS</field>
+      <field name="name">CUENTAS POR COBRAR CLIENTES</field>
       <field ref="account_1125" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">receivable</field>
@@ -1311,14 +1311,6 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
-    <record model="account.account.template" id="account_1125009">
-      <field name="code">1125009</field>
-      <field name="name">ANTICIPO DE NOMINA</field>
-      <field ref="account_1125" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
     <record model="account.account.template" id="account_1127001">
       <field name="code">1127001</field>
       <field name="name">ACCESORIOS AMD COMPUTADORAS,C.A.</field>
@@ -1329,7 +1321,7 @@
     </record>
     <record model="account.account.template" id="account_1127002">
       <field name="code">1127002</field>
-      <field name="name">COMERCIALIZADORA M321,C.A.</field>
+      <field name="name">AMD COMPUTER SHOP,C.A.</field>
       <field ref="account_1127" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1337,7 +1329,7 @@
     </record>
     <record model="account.account.template" id="account_1127003">
       <field name="code">1127003</field>
-      <field name="name">COMPUTACION ACTIVA AMD, C.A.</field>
+      <field name="name">COMPUTACI&#211;N ACTIVA AMD, C.A.</field>
       <field ref="account_1127" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1361,7 +1353,7 @@
     </record>
     <record model="account.account.template" id="account_1127006">
       <field name="code">1127006</field>
-      <field name="name">MULTISERVICIOS DEL SURA VII,C.A.</field>
+      <field name="name">MULTISERVICIOS DEL SURA VII, C.A.</field>
       <field ref="account_1127" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1383,13 +1375,37 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
+    <record model="account.account.template" id="account_1127009">
+      <field name="code">1127009</field>
+      <field name="name">GRUPO AMD ELECTRONICO SHOP 2011, C.A.</field>
+      <field ref="account_1127" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
+    <record model="account.account.template" id="account_1127010">
+      <field name="code">1127010</field>
+      <field name="name">DATA PC SHOP, C.A.</field>
+      <field ref="account_1127" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
+    <record model="account.account.template" id="account_1127011">
+      <field name="code">1127011</field>
+      <field name="name">MADAME BOUTTOCK, C.A.</field>
+      <field ref="account_1127" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
     <record model="account.account.template" id="account_1128001">
       <field name="code">1128001</field>
-      <field name="name">CUENTAS POR COBRAR SOCIOS</field>
+      <field name="name">CUENTAS POR PAGAR SOCIOS</field>
       <field ref="account_1128" name="parent_id"/>
       <field name="reconcile" eval="True"/>
-      <field name="type">receivable</field>
-      <field ref="account_type_receivable" name="user_type"/>
+      <field name="type">payable</field>
+      <field ref="account_type_payable" name="user_type"/>
     </record>
     <record model="account.account.template" id="account_1129001">
       <field name="code">1129001</field>
@@ -1431,14 +1447,6 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
-    <record model="account.account.template" id="account_1129008">
-      <field name="code">1129008</field>
-      <field name="name">CHEQUES DEVUELTOS</field>
-      <field ref="account_1129" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
     <record model="account.account.template" id="account_1129009">
       <field name="code">1129009</field>
       <field name="name">OTRAS CUENTAS X COBRAR OTROS DEUDORES</field>
@@ -1446,14 +1454,6 @@
       <field name="reconcile" eval="True"/>
       <field name="type">receivable</field>
       <field ref="account_type_receivable" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_1129010">
-      <field name="code">1129010</field>
-      <field name="name">RECLAMO AL BANCO</field>
-      <field ref="account_1129" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">liquidity</field>
-      <field ref="account_type_cash" name="user_type"/>
     </record>
     <record model="account.account.template" id="account_1131001">
       <field name="code">1131001</field>
@@ -1490,14 +1490,6 @@
     <record model="account.account.template" id="account_1134001">
       <field name="code">1134001</field>
       <field name="name">MERCANCIA EN TRANSITOS</field>
-      <field ref="account_1134" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_1134002">
-      <field name="code">1134002</field>
-      <field name="name">MERCANCIA EN TRANSITO</field>
       <field ref="account_1134" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1583,17 +1575,17 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
-    <record model="account.account.template" id="account_1151007">
-      <field name="code">1151007</field>
-      <field name="name">IMPUESTO MUNICIPAL PAGADO EN EXCESO</field>
-      <field ref="account_1151" name="parent_id"/>
+    <record model="account.account.template" id="account_1211001">
+      <field name="code">1211001</field>
+      <field name="name">TERRENO COSTO ORIGINAL</field>
+      <field ref="account_1211" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
-    <record model="account.account.template" id="account_1211001">
-      <field name="code">1211001</field>
-      <field name="name">TERRENO COSTO ORIGINAL</field>
+    <record model="account.account.template" id="account_1211003">
+      <field name="code">1211003</field>
+      <field name="name">MEJORAS EN BIENES ARRENDADOS</field>
       <field ref="account_1211" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1647,6 +1639,14 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
+    <record model="account.account.template" id="account_1212003">
+      <field name="code">1212003</field>
+      <field name="name">MEJORAS EN BIENES ARRENDADOS</field>
+      <field ref="account_1212" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
     <record model="account.account.template" id="account_1212006">
       <field name="code">1212006</field>
       <field name="name">INMUEBLES COSTO ORIGINAL</field>
@@ -1674,14 +1674,6 @@
     <record model="account.account.template" id="account_1212011">
       <field name="code">1212011</field>
       <field name="name">MUEBLES Y ENSERES COSTO ORIGINAL</field>
-      <field ref="account_1212" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_1212013">
-      <field name="code">1212013</field>
-      <field name="name">LICENCIA &amp; SOFTWARE COSTO ORIGINAL</field>
       <field ref="account_1212" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1817,7 +1809,7 @@
     </record>
     <record model="account.account.template" id="account_2121002">
       <field name="code">2121002</field>
-      <field name="name">STARTEC GROUP USA, INC</field>
+      <field name="name">STARREC GROUP USA,INC</field>
       <field ref="account_2121" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1831,41 +1823,9 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
-    <record model="account.account.template" id="account_2121004">
-      <field name="code">2121004</field>
-      <field name="name">PANAMERICAN BUSINESS SOLUC.</field>
-      <field ref="account_2121" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_2121005">
-      <field name="code">2121005</field>
-      <field name="name">WEIFANG LALY GENERATING E.</field>
-      <field ref="account_2121" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_2121006">
-      <field name="code">2121006</field>
-      <field name="name">WILTEL CORP</field>
-      <field ref="account_2121" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
     <record model="account.account.template" id="account_2122001">
       <field name="code">2122001</field>
       <field name="name">CUENTAS POR PAGAR PROVEEDORES</field>
-      <field ref="account_2122" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">payable</field>
-      <field ref="account_type_payable" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_2122005">
-      <field name="code">2122005</field>
-      <field name="name">OTRAS CUENTAS POR PAGAR</field>
       <field ref="account_2122" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">payable</field>
@@ -1881,7 +1841,7 @@
     </record>
     <record model="account.account.template" id="account_2123002">
       <field name="code">2123002</field>
-      <field name="name">COMERCIALIZADORA M321,C.A.</field>
+      <field name="name">AMD COMPUTER SHOP, C.A.</field>
       <field ref="account_2123" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1889,7 +1849,7 @@
     </record>
     <record model="account.account.template" id="account_2123003">
       <field name="code">2123003</field>
-      <field name="name">COMPUTACION ACTIVA AMD, C.A.</field>
+      <field name="name">COMPUTACI&#211;N ACTIVA AMD, C.A.</field>
       <field ref="account_2123" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -1922,6 +1882,38 @@
     <record model="account.account.template" id="account_2123007">
       <field name="code">2123007</field>
       <field name="name">COPACABANA OFFICE COPY, C.A.</field>
+      <field ref="account_2123" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
+    <record model="account.account.template" id="account_2123008">
+      <field name="code">2123008</field>
+      <field name="name">INVERSIONES PARKER ELECTRONICS 2011, C.A.</field>
+      <field ref="account_2123" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
+    <record model="account.account.template" id="account_2123009">
+      <field name="code">2123009</field>
+      <field name="name">GRUPO AMD ELECTRONIC SHOP 2011, C.A.</field>
+      <field ref="account_2123" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
+    <record model="account.account.template" id="account_2123010">
+      <field name="code">2123010</field>
+      <field name="name">DATA PC SHOP, C.A.</field>
+      <field ref="account_2123" name="parent_id"/>
+      <field name="reconcile" eval="True"/>
+      <field name="type">other</field>
+      <field ref="account_type_asset" name="user_type"/>
+    </record>
+    <record model="account.account.template" id="account_2123011">
+      <field name="code">2123011</field>
+      <field name="name">MADAME BOUTTOCK, C.A.</field>
       <field ref="account_2123" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2033,7 +2025,7 @@
     </record>
     <record model="account.account.template" id="account_2172003">
       <field name="code">2172003</field>
-      <field name="name">I.V.A DEBITO FISCAL</field>
+      <field name="name">IVA RETENIDO</field>
       <field ref="account_2172" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2041,7 +2033,7 @@
     </record>
     <record model="account.account.template" id="account_2172004">
       <field name="code">2172004</field>
-      <field name="name">I.V.A.RETENIDO EN COMPRAS</field>
+      <field name="name">I.V.A. DEBITO FISCAL</field>
       <field ref="account_2172" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2113,7 +2105,7 @@
     </record>
     <record model="account.account.template" id="account_2175006">
       <field name="code">2175006</field>
-      <field name="name">PRIMA POR EFECIENCIA</field>
+      <field name="name">PATENTE MUNICIPAL</field>
       <field ref="account_2175" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2169,19 +2161,11 @@
     </record>
     <record model="account.account.template" id="account_2175013">
       <field name="code">2175013</field>
-      <field name="name">CONDOMINIOS</field>
+      <field name="name">BONO VACACIONAL</field>
       <field ref="account_2175" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_2175014">
-      <field name="code">2175014</field>
-      <field name="name">IMPUESTOS MUNICIPALES POR PAGAR</field>
-      <field ref="account_2175" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">payable</field>
-      <field ref="account_type_payable" name="user_type"/>
     </record>
     <record model="account.account.template" id="account_2175015">
       <field name="code">2175015</field>
@@ -2218,14 +2202,6 @@
     <record model="account.account.template" id="account_2175020">
       <field name="code">2175020</field>
       <field name="name">ADELANTO DE CLIENTES</field>
-      <field ref="account_2175" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
-    <record model="account.account.template" id="account_2175021">
-      <field name="code">2175021</field>
-      <field name="name">PATENTE INDUSTRIA Y COMERCIO</field>
       <field ref="account_2175" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2287,14 +2263,6 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
-    <record model="account.account.template" id="account_2201112">
-      <field name="code">2201112</field>
-      <field name="name">CREDITO DIFERIDO</field>
-      <field ref="account_n" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
     <record model="account.account.template" id="account_2511001">
       <field name="code">2511001</field>
       <field name="name">PASIVOS FINANCIEROS A LARGO PLAZO</field>
@@ -2337,7 +2305,7 @@
     </record>
     <record model="account.account.template" id="account_3111001">
       <field name="code">3111001</field>
-      <field name="name">CAPITAL SOCIAL</field>
+      <field name="name">CAPITAL SOCIAL PAGADO</field>
       <field ref="account_3111" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2457,7 +2425,7 @@
     </record>
     <record model="account.account.template" id="account_3311002">
       <field name="code">3311002</field>
-      <field name="name">RESERVA P/FUTURO AUMENTO DE CAPITAL</field>
+      <field name="name">ACTUALIZACION DE VALOR</field>
       <field ref="account_3311" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2513,7 +2481,7 @@
     </record>
     <record model="account.account.template" id="account_5111001">
       <field name="code">5111001</field>
-      <field name="name">VENTAS NACIONALES</field>
+      <field name="name">VENTAS NACIONALES AL MAYOR</field>
       <field ref="account_5111" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -2879,14 +2847,6 @@
       <field name="type">other</field>
       <field ref="account_type_asset" name="user_type"/>
     </record>
-    <record model="account.account.template" id="account_7131031">
-      <field name="code">7131031</field>
-      <field name="name">HONORARIOS POR PARTIPACION JUNTA DIRECTIVA</field>
-      <field ref="account_7131" name="parent_id"/>
-      <field name="reconcile" eval="True"/>
-      <field name="type">other</field>
-      <field ref="account_type_asset" name="user_type"/>
-    </record>
     <record model="account.account.template" id="account_7131033">
       <field name="code">7131033</field>
       <field name="name">PRIMA POR RENDIMIENTO</field>
@@ -2937,7 +2897,7 @@
     </record>
     <record model="account.account.template" id="account_7151004">
       <field name="code">7151004</field>
-      <field name="name">MANTENIMIENTO DE VEHICULOS</field>
+      <field name="name">COMBUSTIBLES Y LUBRICANTES</field>
       <field ref="account_7151" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -3337,7 +3297,7 @@
     </record>
     <record model="account.account.template" id="account_9111004">
       <field name="code">9111004</field>
-      <field name="name">INTERESES POR FINANCIAMIENTOS</field>
+      <field name="name">INTERESES POR FINANCIAMINETOS</field>
       <field ref="account_9111" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
