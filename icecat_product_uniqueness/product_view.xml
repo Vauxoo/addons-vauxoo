@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <record model="ir.ui.view" id="inherited_product_product_tree">
-            <field name="name">product.product.tree.inherit</field>
-            <field name="model">product.product</field>
-            <field name="inherit_id" ref="product.product_product_tree_view" />
-            <field name="arch" type="xml">  
-                <data>
-                    <field name="default_code" position="replace">
-                        <field name="ean13" />
-                    </field>
-                </data>
-            </field>
-        </record>
     <record model="ir.ui.view" id="inherited_product_search_form">
             <field name="name">product.product.search.form.inherit</field>
             <field name="model">product.product</field>

@@ -8,6 +8,18 @@
             <field name="arch" type="xml">
                 <data>
                     <field name="name" position="before">
+                        <field name="upc" />
+                    </field>
+                </data>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="inherited2_product_product_tree_view">
+            <field name="name">product.product.tree.inherit2.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view" />
+            <field name="arch" type="xml">
+                <data>
+                    <field name="name" position="before">
                         <field name="manufacturer_pref" />
                     </field>
                 </data>
