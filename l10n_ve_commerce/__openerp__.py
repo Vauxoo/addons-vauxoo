@@ -37,7 +37,7 @@ You will need accounting knowledge to understad sone concepts.
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',
                     'account_user_types.xml',
-                    'charts/account_chart_amd.xml',
+                    'charts/account_chart_amd_computer.xml',
                     'charts/account_chart_activa.xml',
                     'charts/account_chart_m321.xml',
                     'account_account.xml',
