@@ -26,6 +26,7 @@
 import time
 from osv import fields, osv
 import decimal_precision as dp
+from operator import itemgetter
 
 
 class account_invoice_line(osv.osv):
@@ -138,6 +139,43 @@ class account_invoice_line(osv.osv):
 
         return res
 
+
+    def _update_last_cost(self, cr, uid, ids=False, context=None):
+        """
+        Function called by the scheduler to update the last purchase cost of invoice line
+
+        @param self: The object pointer
+        @param cr: the current row, from the database cursor,
+        @param uid: the current user’s ID for security checks,
+        @param context: A standard dictionary for contextual values
+        """
+
+        prod_obj = self.pool.get('product.product')
+        line_inv_obj = self.pool.get('account.invoice.line')
+        if not ids:
+            cr.execute("SELECT l.id FROM account_invoice_line l "\
+                        "INNER JOIN account_invoice i ON (i.id=l.invoice_id) "\
+                        "WHERE i.state IN ('open', 'paid') ")
+            ids = map(itemgetter(0), cr.fetchall())
+        sql = """
+            SELECT id FROM report_profit"""
+        cr.execute(sql)
+        res = cr.fetchall()
+        for line in line_inv_obj.browse(cr, uid, map(lambda x:x[0],res)):
+            if line.invoice_id.state in ('open', 'paid'):
+                inv_id = line.invoice_id.parent_id and line.invoice_id.parent_id.id or line.invoice_id.id
+                prod_price = prod_obj._product_get_price(cr, uid, [line.product_id.id], inv_id, False, line.invoice_id.date_invoice, context, ('open', 'paid'), 'in_invoice')
+                if (not prod_price[line.product_id.id]) and line.product_id.seller_ids:
+                    supinfo_ids = []
+                    for sup in line.product_id.seller_ids:
+                        supinfo_ids.append(sup.id)
+                    cr.execute('select max(price) from pricelist_partnerinfo where suppinfo_id in %s',(tuple(ids),))
+                    record = cr.fetchone()
+                    prod_price[line.product_id.id] = record and record[0] or 0.0
+
+                line_inv_obj.write(cr, uid,line.id, {'last_price':prod_price[line.product_id.id]}, context=context)
+
+        return True
 
 account_invoice_line()
 

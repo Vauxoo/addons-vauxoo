@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Sequences type for account.retencion.islr --> 
+
+
+        <record id="seq_type_stock_valued" model="ir.sequence.type">
+            <field name="name">Notas Valorizadas</field>
+            <field name="code">stock.valued</field>
+        </record>
+
+        <!-- Sequences for account.retencion.islr --> 
+
+
+        <record id="seq_account_stock_valued" model="ir.sequence">
+            <field name="name">Notas Entregas Valorizadas</field>
+            <field name="code">stock.valued</field>
+            <field name="prefix">%(year)s-%(month)s-</field>
+            <field name="padding">8</field>
+            <field name="number_increment">1</field>
+        </record>
+
+
+    </data>
+</openerp>

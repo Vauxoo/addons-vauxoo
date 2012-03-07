@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+
+
+	<!-- 
+	=====================================================
+	Picking Extension
+	=====================================================
+	-->  
+
+        <record id="picking_ext_view_form_loc_ve" model="ir.ui.view">
+            <field name="name">picking_extended.res.picking.form.view.loc_ve</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <notebook>
+                    <page string="Loc. Venezuela" position="inside">
+                    <group col="2" colspan="2">
+                        <separator string="Nota Entrega" colspan="2"/>
+                        <field name="number"/>
+                    </group>
+                </page>
+                </notebook>
+            </field>
+        </record>
+
+
+  </data>
+</openerp>
