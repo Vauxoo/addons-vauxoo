@@ -23,7 +23,7 @@
     http://wiki.openerp.org.ve/index.php?title=0591
     """,
     "license" : "GPL-3",
-    "depends" : ["base", "account", "stock", "sale"],
+    "depends" : ["stock_valued"],
     "init_xml" : [],
     "update_xml" : [
         'stock_valued_sequence.xml',
