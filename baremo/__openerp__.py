@@ -1,0 +1,43 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2011 Vauxoo (<http://www.vauxoo.com>). All Rights Reserved
+#    hbto@vauxoo.com / humbertoarocha@gmail.com
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+{
+    "name" : "Baremo Para calculo de Comisiones",
+    "version" : "1",
+    "depends" : ["base","decimal_precision"],
+    "author" : "Vauxoo",
+    "description" : """
+    Crea un modelo para el calculo de comisiones.
+                    """,
+    "website" : "http://openerp.netquatro.com",
+    "category" : "Generic Modules",
+    "init_xml" : [
+    ],
+    "demo_xml" : [
+    ],
+    "update_xml" : [
+        "view/baremo_view.xml",
+        "view/company_view.xml",
+        "data/baremo_data.xml",
+    ],
+    "active": False,
+    "installable": True,
+}
