@@ -30,7 +30,7 @@ class BaseTemplateEditor(openobject.templating.TemplateEditor):
         end_head = output.index('</head>')
 
         output = output[:end_head] + """
-	<link rel="stylesheet" type="text/css" href="/web_multilogo/static/css/multi.css"/>
+	<link rel="stylesheet" type="text/css" href="/web_multilogo/static/css/${rpc.session.db}-multi.css"/>
         """ + output[end_head:]
 
         return output
@@ -48,9 +48,9 @@ class HeaderTemplateEditor(openobject.templating.TemplateEditor):
 
 
         output = output[:corner] + """
-            <p id="livechat_status" class="logout">
-               <a href="http://vauxoo.com">
-                 <img src="/web_livechat/static/images/available.png"/>
+            <p id="logo_company" class="logout">
+               <a id="link_multi" class="web_multi"  href="http://vauxoo.com">
+                 <img src="/web_multilogo/static/images/${rpc.session.db}/logo.png"/>
                </a>
             </p>
         """ + output[corner:]

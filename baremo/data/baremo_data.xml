@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="commission_decimal_precision" model="decimal.precision">
+            <field name="name">Commission</field>
+            <field name="digits">2</field>
+        </record>
+    </data>
+</openerp>
