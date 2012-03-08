@@ -32,9 +32,12 @@
     'description' : 'M321 needed models and views customizations1',
     'category' : 'Custom',
     'website' : 'http://vauxoo.com',
-    'depends' : ['base', 'product_icecat'],
+    'depends' : ['base','stock', 'product_icecat'],
     'update_xml' : [
+        'security/pay_picking_security.xml',
+        'security/ir.model.access.csv',
         'product_view.xml',
+        'stock_view.xml',
     ],
     'demo' : [],
     'active' : False,

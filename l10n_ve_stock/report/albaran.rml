@@ -380,7 +380,7 @@
         </tr>
         <tr>
           <td>
-            <para style="P24">[[ format(l.note) or removeParentNode('tr') ]]</para>
+            <para style="P24">[[ l.note or removeParentNode('tr') ]]</para>
             <para style="P24">
               <font color="white"> </font>
             </para>
@@ -419,7 +419,7 @@
           <blockTable colWidths="287.0,153.0" style="Table_format_Table_Line_total">
             <tr>
               <td>
-                <para style="P22">Nota: [[ format(o.note) or removeParentNode('para') ]]</para>
+                <para style="P22">Nota: [[ o.note or removeParentNode('para') ]]</para>
                 <para style="P22">
                   <font color="white"> </font>
                 </para>
