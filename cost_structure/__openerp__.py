@@ -35,6 +35,8 @@
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
+    'security/cost_structure_security.xml',
+    'security/ir.model.access.csv',
     'view/cost_structure.xml',
     'view/product_view.xml',
     'view/sale_view.xml',
