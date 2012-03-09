@@ -72,4 +72,6 @@ class inherited_product(osv.osv):
         }
 
     _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc'])]
+
+
 inherited_product()
