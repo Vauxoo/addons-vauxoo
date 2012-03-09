@@ -38,14 +38,14 @@ class purchase_order(osv.osv):
     def wkf_confirm_order(self, cr, uid, ids, context = None):
         product_supp_obj = self.pool.get('product.supplierinfo')
         company_id = self.pool.get('res.users').browse(cr, uid, uid).company_id.id
-
+        product_obj = self.pool.get('product.product')
         if super(purchase_order, self).wkf_confirm_order(cr, uid, ids, context = context):
             for po in self.browse(cr, uid, ids, context = context):
                 partner_id = po.partner_id.id
                 for line in po.order_line:
                     product_id = line.product_id.id
                     if not product_supp_obj.search(cr, uid, [('product_id', '=', product_id), ('name', '=', partner_id)]):
-                        product_supp_obj.create(cr, uid, {'name': partner_id, 'min_qty': 1.0, 'delay': 1, 'sequence': 10, 'product_id': product_id, 'company_id': company_id, 'product_uom': line.product_id.uom_id.id }) 
+                        product_obj.write(cr,uid,[product_id],{'seller_ids':[(0,0,{'name': partner_id, 'min_qty': 1.0, 'delay': 1, 'sequence': 10, 'product_id': product_id, 'c    ompany_id': company_id, 'product_uom': line.product_id.uom_id.id })]})
             return True
         else:
             return False
