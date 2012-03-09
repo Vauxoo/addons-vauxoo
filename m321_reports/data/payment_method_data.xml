@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
-  <data>
+  <data noupdate="1" >
   
     <record id="pm_check" model="payment.method">
         <field name="name">Check</field>
