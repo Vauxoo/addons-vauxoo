@@ -27,5 +27,17 @@
         </record>
 
 
+        <record id="picking_add_button_not_ent" model="ir.ui.view">
+            <field name="name">picking.add.button.not.ent</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/group/group/field[@name='stock_journal_id']" position="after">
+                    <button name="%(action_pick_out)d" type='action' string='Nota de Entrega' states='assigned,confirmed,done' icon="gtk-execute" attrs="{'invisible':[('type','!=','out')]}"/>
+                </xpath>
+            </field>
+        </record>
+
   </data>
 </openerp>

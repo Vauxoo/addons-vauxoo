@@ -25,7 +25,7 @@
 {
     "name" : "M321 Reports Instalator",
     "version" : "0.1",
-    "depends" : ["account","account_accountant","invoice_multicompany_report"],
+    "depends" : ["account","account_accountant"],
     "author" : "Vauxoo",
     "description" : """
         This module installs the basic reports and formats for the M321 Companies
