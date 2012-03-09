@@ -10,13 +10,13 @@
                 <blockTable colWidths="14.0mm,14.0mm,19.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
-                            <para style="IZQUIERDA">[[get_date(o,1)]]</para>
+                            <para style="IZQUIERDAMAY">[[get_date(o,1)]]</para>
                         </td>
                         <td>
-                            <para style="IZQUIERDA">[[get_date(o,0)]]</para>
+                            <para style="IZQUIERDAMAY">[[get_date(o,0)]]</para>
                         </td>
                         <td>
-                            <para style="IZQUIERDA">[[get_date(o,2)]]</para>
+                            <para style="IZQUIERDAMAY">[[get_date(o,2)]]</para>
                         </td>
                     </tr>
                 </blockTable>
@@ -69,7 +69,38 @@
                             <para style="IZQUIERDA">[[o.payment_method_id.name ]]</para>
                       </td>
                       <td>
-                            <para style="IZQUIERDA">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
+                            <para style="IZQUIERDAMAY">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
+                      </td>
+                    </tr>
+
+                </blockTable>
+            </place>
+            
+            <place x="80.0mm"     y="17.0mm"    width="80.0mm"  height="20.0mm">
+                <blockTable colWidths="10.0mm,70.0mm" style="TABLA_SIN">
+
+                    <tr>
+                      <td>
+                            <para style="IZQUIERDAMAY">[[get_wh(o)]]</para>
+                      </td>
+                      <td>
+                            <para style="DERECHA">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
+                      </td>
+                    </tr>
+
+                </blockTable>
+            </place>
+
+
+            <place x="40.0mm"     y="17.0mm"    width="159.0mm"  height="20.0mm">
+                <blockTable colWidths="130.0mm,26.0mm" style="TABLA_SIN">
+
+                    <tr>
+                      <td>
+                            <para style="IZQUIERDA"></para>
+                      </td>
+                      <td>
+                            <para style="DERECHAMAY">[[ formatLang(o.amount_tax,digits=2)]]</para>
                       </td>
                     </tr>
 
@@ -80,7 +111,7 @@
                 <blockTable colWidths="30.0mm" style="TABLA_SIN">
                     <tr>
                       <td>
-                            <para style="IZQUIERDA">[[ formatLang(o.amount_total,digits=2)]]</para>
+                            <para style="IZQUIERDAMAY">[[ formatLang(o.amount_total,digits=2)]]</para>
                       </td>
                     </tr>
                 </blockTable>
@@ -105,7 +136,11 @@
     <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
     <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
     <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
-    
+
+    <paraStyle name="DERECHAMAY" alignment="RIGHT" fontSize="12.0" leading="14" spaceBefore="0" textColor="black"/>
+    <paraStyle name="IZQUIERDAMAY" alignment="LEFT" fontSize="12.0" leading="14" spaceBefore="0" textColor="black"/>
+    <paraStyle name="CENTROMAY" alignment="CENTER" fontSize="12.0" leading="14" spaceBefore="0" textColor="black"/>
+
   </stylesheet>
   <images/>
   <story>
