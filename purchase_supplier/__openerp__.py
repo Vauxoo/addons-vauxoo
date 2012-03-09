@@ -28,9 +28,10 @@
     'name':'Purchase - supplier',
     'version':'1.0',
     'depends':["base","account","purchase"],
-    "author" : "Tiny",
+    'author' : 'Vauxoo',
     "description": """Purchse supplier, whe you validate a purchase, the partner is converted in product supplier
     """,
+    'category' : 'Purchases',
     'website': 'http://www.vauxoo.com',
     'init_xml': [
     ],
