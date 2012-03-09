@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
   <template pageSize="(209.0mm,280.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary='0'>
+    
+    
     <pageTemplate id="first">
         <pageGraphics>
     <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
             <setFont name="Courier-Bold" size="12.0"/>
 
-            <place x="37.0mm"     y="225.0mm"    width="47.0mm"  height="10.0mm">  
+            <place x="37.0mm"     y="221.0mm"    width="47.0mm"  height="10.0mm">  
                 <blockTable colWidths="14.0mm,14.0mm,19.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
@@ -22,20 +24,20 @@
                 </blockTable>
             </place>
 
-            <place x="40.0mm"     y="210.5mm"    width="190.0mm"  height="10.0mm">  
+            <place x="40.0mm"     y="206.0mm"    width="190.0mm"  height="10.0mm">  
                 <blockTable colWidths="130.0mm,35.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
                             <para style="IZQUIERDA">[[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para>
                         </td>
                         <td>
-                            <para style="IZQUIERDA">[[ o.partner_id.vat  and (' RIF.:%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para>
+                            <para style="IZQUIERDA">[[ o.partner_id.vat  and ('%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para>
                         </td>
                     </tr>
                 </blockTable>
             </place>
 
-            <place x="30.0mm"     y="200.5mm"    width="170.0mm"  height="10.0mm">  
+            <place x="30.0mm"     y="200.0mm"    width="170.0mm"  height="10.0mm">  
                 <blockTable colWidths="170.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
@@ -45,7 +47,7 @@
                 </blockTable>
             </place>
 
-            <place x="30.0mm"     y="192.5mm"    width="190.0mm"  height="10.0mm">  
+            <place x="25.0mm"     y="187.0mm"    width="190.0mm"  height="10.0mm">  
                 <blockTable colWidths="67.0mm,55.0mm,67.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
@@ -61,15 +63,15 @@
                 </blockTable>
             </place>
 
-            <place x="40.0mm"     y="27.0mm"    width="185.0mm"  height="20.0mm">
-                <blockTable colWidths="140.0mm,45.0mm" style="TABLA_SIN">
+            <place x="40.0mm"     y="26.0mm"    width="185.0mm"  height="20.0mm">
+                <blockTable colWidths="140.0mm,21.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
                             <para style="IZQUIERDA">[[o.payment_method_id.name ]]</para>
                       </td>
                       <td>
-                            <para style="IZQUIERDAMAY">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
+                            <para style="DERECHAMAY">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
                       </td>
                     </tr>
 
@@ -77,11 +79,11 @@
             </place>
             
             <place x="80.0mm"     y="17.0mm"    width="80.0mm"  height="20.0mm">
-                <blockTable colWidths="10.0mm,70.0mm" style="TABLA_SIN">
+                <blockTable colWidths="27.0mm,53.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
-                            <para style="IZQUIERDAMAY">[[get_wh(o)]]</para>
+                            <para style="DERECHAMAY">[[get_wh(o)]]</para>
                       </td>
                       <td>
                             <para style="DERECHA">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
@@ -92,7 +94,7 @@
             </place>
 
             <place x="40.0mm"     y="17.0mm"    width="185.0mm"  height="20.0mm">
-                <blockTable colWidths="130.0mm,33.0mm" style="TABLA_SIN">
+                <blockTable colWidths="130.0mm,31.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
@@ -107,14 +109,14 @@
             </place>
 
             <place x="40.0mm"     y="7.5mm"    width="185.0mm"  height="20.0mm">
-                <blockTable colWidths="140.0mm,45.0mm" style="TABLA_SIN">
+                <blockTable colWidths="140.0mm,21.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
                             <para style="IZQUIERDA"></para>
                       </td>
                       <td>
-                            <para style="IZQUIERDAMAY">[[ formatLang(o.amount_total,digits=2)]]</para>
+                            <para style="DERECHAMAY">[[ formatLang(o.amount_total,digits=2)]]</para>
                       </td>
                     </tr>
 
@@ -123,7 +125,7 @@
 
       </pageGraphics>
       
-    <frame id="first" x1="12.0mm" y1="48.0mm" width="189.0mm" height="137.0mm"/>
+    <frame id="first" x1="14.0mm" y1="48.0mm" width="189.0mm" height="137.0mm"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -156,7 +158,7 @@
       <blockTable colWidths="31.0mm,100.0mm,10.5mm,17.0mm,30.0mm" style="TABLA_SIN">
         <tr>
           <td>
-            <para style="IZQUIERDA">[[l.product_id and (l.product_id.code and ('[%s]'%(l.product_id.code.upper())) or '') or '']]</para>
+            <para style="IZQUIERDA">[[l.product_id and (l.product_id.code and ('%s'%(l.product_id.code.upper())) or '') or '']]</para>
           </td>
           <td>
             <para style="IZQUIERDA">[[l.product_id and  l.product_id.name.upper() or l.name.upper() ]]</para>
@@ -176,4 +178,6 @@
     </section>
 
   </story>
+
+
 </document>

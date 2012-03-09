@@ -86,7 +86,6 @@ class cm321_report(report_sxw.rml_parse):
     def _get_wh(self,obj):
         wh_ids = obj.tax_line
         aux=[]
-        print wh_ids
         for wh in wh_ids:
             aux.append(wh.tax_id.amount*100)
         return aux[0]
