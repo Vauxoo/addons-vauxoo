@@ -36,7 +36,10 @@
     "depends" : ["l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["params_pac_view.xml"],
+    "update_xml" : [
+        "security/ir.model.access.csv",
+        "params_pac_view.xml"
+    ],
     "installable" : True,
     "active" : False,
 }
