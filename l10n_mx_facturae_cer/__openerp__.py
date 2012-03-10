@@ -41,6 +41,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "res_company_view.xml",
     ],
     "installable" : True,
