@@ -8,7 +8,7 @@
         name="m321_reports.m321_ca_report"
         rml="m321_reports/report/computacion_activa_report.rml"
         header="False"
-        menu="False" />
+        menu="True" />
 
         <report id="m321_cs_report"
         string="Print Report Computer Shop"
@@ -16,7 +16,7 @@
         name="m321_reports.m321_cs_report"
         rml="m321_reports/report/amd_computer_shop_report.rml"
         header="False" 
-        menu="False" />
+        menu="True" />
 
         <report id="m321_c_report"
         string="Print Report AMD Computadoras"
@@ -24,11 +24,11 @@
         name="m321_reports.m321_c_report"
         rml="m321_reports/report/amd_computadoras_report.rml"
         header="False"
-        menu="False"/>
+        menu="True"/>
 
         <report id="cm321_report"
         string="Print Report Comercializadora M321"
-        menu="False"
+        menu="True"
         model="account.invoice"
         name="m321_reports.cm321_report"
         rml="m321_reports/report/comercializadora_m321_report.rml"

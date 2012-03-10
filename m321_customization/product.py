@@ -71,9 +71,6 @@ class inherited_product(osv.osv):
             'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
         }
 
-    _sql_constraints = [ ('upc_name_uniq', 'UNIQUE(upc)',
-                _('The product UPC must be unique per company.!')), ]
-
     _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc'])]
 
 

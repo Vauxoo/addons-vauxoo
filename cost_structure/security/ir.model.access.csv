@@ -1,0 +1,9 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+
+
+"cost_structure_user","cost.structure","model_cost_structure","cost_structure.group_cost_structure_user",1,0,0,0
+"cost_structure_manager","cost.structure","model_cost_structure","cost_structure.group_cost_structure_manager",1,1,1,1
+
+"method_price_user","method.price","model_method_price","cost_structure.group_method_price_user",1,0,0,0
+"method_price_manager","method.price","model_method_price","cost_structure.group_method_price_manager",1,1,1,1
+

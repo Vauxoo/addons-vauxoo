@@ -33,7 +33,62 @@ class cm321_report(report_sxw.rml_parse):
         if context is None:
             context = {}
         super(cm321_report, self).__init__(cr, uid, name, context=context)
-        self.localcontext.update({  })
+        self.localcontext.update({
+        'get_discount': self._get_discount,
+        'get_wh': self._get_wh,
+        })
+        
+    def _get_discount(self,obj):
+        aux = 100
+        aux2 = 0.0
+        ppv = self.pool.get('product.pricelist.version')
+        date_invoice= str(obj.date_invoice)
+        if obj.type == 'out_invoice':
+            price_list = obj.partner_id.property_product_pricelist
+            if price_list.active:
+                ppv_ids = price_list.version_id
+                for ppv in ppv_ids:
+                    if ppv.date_start and ppv.date_end:
+                        date_start=str(ppv.date_start)
+                        date_end=str(ppv.date_end)
+                        if  ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
+                            ppli = ppv.items_id
+                            for ppl in ppli:
+                                if ppl.sequence < aux:
+                                    aux = ppl.sequence
+                                    aux2 = ppl.price_discount
+                            return aux2*100
+                        else:
+                            return aux2
+                    else:
+                        return aux2
+        else:
+            price_list = obj.partner_id.property_product_pricelist_purchase
+            if price_list.active:
+                ppv_ids = price_list.version_id
+                for ppv in ppv_ids:
+                    if ppv.date_start and ppv.date_end:
+                        date_start=str(ppv.date_start)
+                        date_end=str(ppv.date_end)
+                        if  ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
+                            ppli = ppv.items_id
+                            for ppl in ppli:
+                                if ppl.sequence < aux:
+                                    aux = ppl.sequence
+                                    aux2 = ppl.price_discount
+                            return aux2*100
+                        else:
+                            return aux2
+                    else:
+                        return aux2
+        return aux2
+
+    def _get_wh(self,obj):
+        wh_ids = obj.tax_line
+        aux=[]
+        for wh in wh_ids:
+            aux.append(wh.tax_id.amount*100)
+        return aux[0]
 
 report_sxw.report_sxw(
   'report.m321_reports.cm321_report',
