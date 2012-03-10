@@ -40,6 +40,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "ir_sequence_view.xml",
     ],
     "installable" : True,
