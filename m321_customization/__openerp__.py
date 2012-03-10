@@ -38,6 +38,7 @@
         'security/ir.model.access.csv',
         'product_view.xml',
         'stock_view.xml',
+        'wizard/cancel_order_view.xml',
     ],
     'demo' : [],
     'active' : False,
