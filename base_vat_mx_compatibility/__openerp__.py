@@ -34,7 +34,7 @@ only the country code will be validated.
 
     """,
     'author': 'OpenERP SA',
-    'depends': ['account'],
+    'depends': ['base_vat'],
     'website': 'http://www.openerp.com',
     'data': [],
     'installable': True,
