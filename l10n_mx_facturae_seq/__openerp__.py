@@ -40,6 +40,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/l10n_mx_facturae_seq_security.xml",
         "security/ir.model.access.csv",
         "ir_sequence_view.xml",
     ],
