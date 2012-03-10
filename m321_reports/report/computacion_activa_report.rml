@@ -6,14 +6,14 @@
     <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
             <setFont name="Courier-Bold" size="12.0"/>
 
-            <place x="37.0mm"     y="222.0mm"    width="47.0mm"  height="10.0mm">  
+            <place x="37.0mm"     y="221.0mm"    width="47.0mm"  height="10.0mm">  
                 <blockTable colWidths="14.0mm,14.0mm,19.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
-                            <para style="IZQUIERDAMAY">[[get_date(o,1)]]</para>
+                            <para style="IZQUIERDAMAY">[[get_date(o,0)]]</para>
                         </td>
                         <td>
-                            <para style="IZQUIERDAMAY">[[get_date(o,0)]]</para>
+                            <para style="IZQUIERDAMAY">[[get_date(o,1)]]</para>
                         </td>
                         <td>
                             <para style="IZQUIERDAMAY">[[get_date(o,2)]]</para>
@@ -22,11 +22,11 @@
                 </blockTable>
             </place>
 
-            <place x="40.0mm"     y="205mm"    width="165.0mm"  height="10.0mm">  
-                <blockTable colWidths="130.0mm,35.0mm" style="TABLA_SIN">
+            <place x="40.0mm"     y="206.0mm"    width="190.0mm"  height="10.0mm">  
+                <blockTable colWidths="130.0mm,32.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
-                            <para style="IZQUIERDA">[[o.partner_id.name and ('%s'%(o.partner_id.name.upper())) or '' ]]</para>
+                            <para style="IZQUIERDA">[[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para>
                         </td>
                         <td>
                             <para style="IZQUIERDA">[[ o.partner_id.vat  and ('%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para>
@@ -35,7 +35,7 @@
                 </blockTable>
             </place>
 
-            <place x="30.0mm"     y="198mm"    width="170.0mm"  height="10.0mm">  
+            <place x="30.0mm"     y="199.0mm"    width="170.0mm"  height="10.0mm">  
                 <blockTable colWidths="170.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
@@ -45,7 +45,7 @@
                 </blockTable>
             </place>
 
-            <place x="30.0mm"     y="189.0mm"    width="190.0mm"  height="10.0mm">  
+            <place x="25.0mm"     y="187.0mm"    width="190.0mm"  height="10.0mm">  
                 <blockTable colWidths="67.0mm,55.0mm,67.0mm" style="TABLA_SIN">
                     <tr>
                         <td>
@@ -61,8 +61,8 @@
                 </blockTable>
             </place>
 
-            <place x="40.0mm"     y="25.0mm"    width="185.0mm"  height="20.0mm">
-                <blockTable colWidths="130.0mm,30.0mm" style="TABLA_SIN">
+            <place x="40.0mm"     y="26.0mm"    width="185.0mm"  height="20.0mm">
+                <blockTable colWidths="140.0mm,21.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
@@ -76,15 +76,12 @@
                 </blockTable>
             </place>
             
-            
-            
-            
-            <place x="80.0mm"     y="17.0mm"    width="80.0mm"  height="20.0mm">
-                <blockTable colWidths="10.0mm,70.0mm" style="TABLA_SIN">
+            <place x="68.0mm"     y="17.0mm"    width="95.0mm"  height="20.0mm">
+                <blockTable colWidths="27.0mm,68.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
-                            <para style="IZQUIERDAMAY">[[get_wh(o)]]</para>
+                            <para style="DERECHAMAY">[[get_wh(o)]]</para>
                       </td>
                       <td>
                             <para style="DERECHA">[[ formatLang(o.amount_untaxed,digits=2)]]</para>
@@ -94,9 +91,8 @@
                 </blockTable>
             </place>
 
-
             <place x="40.0mm"     y="17.0mm"    width="185.0mm"  height="20.0mm">
-                <blockTable colWidths="130.0mm,30.0mm" style="TABLA_SIN">
+                <blockTable colWidths="130.0mm,31.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
@@ -109,9 +105,9 @@
 
                 </blockTable>
             </place>
-            
+
             <place x="40.0mm"     y="7.5mm"    width="185.0mm"  height="20.0mm">
-                <blockTable colWidths="130.0mm,30.0mm" style="TABLA_SIN">
+                <blockTable colWidths="140.0mm,21.0mm" style="TABLA_SIN">
 
                     <tr>
                       <td>
