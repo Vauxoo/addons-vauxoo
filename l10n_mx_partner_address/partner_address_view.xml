@@ -9,9 +9,9 @@
             <field name="inherit_id" ref="base.view_partner_address_form1"/>
             <field name="arch" type="xml">
                 <field name="street" position="after">
-                    <field name="street3"/>
-                    <field name="street4"/>
-                    <field name="city2"/>
+                    <field name="street3" groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="street4" groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="city2" groups="l10n_mx_partner_address.group_address_mx"/>
                 </field>
             </field>
         </record>
@@ -22,9 +22,9 @@
             <field name="inherit_id" ref="base.view_partner_address_form2"/>
             <field name="arch" type="xml">
                 <field name="street" position="after">
-                    <field name="street3"/>
-                    <field name="street4"/>
-                    <field name="city2"/>
+                    <field name="street3" groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="street4" groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="city2" groups="l10n_mx_partner_address.group_address_mx"/>
                 </field>
             </field>
         </record>
@@ -36,9 +36,9 @@
             <field name="sequence">20</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='General']/field[@name='address']/form/group/field[@name='street']" position="after">
-                    <field name="street3"/>
-                    <field name="street4"/>
-                    <field name="city2"/>
+                    <field name="street3" groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="street4" groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="city2" groups="l10n_mx_partner_address.group_address_mx"/>
                 </xpath>
             </field>
         </record>
