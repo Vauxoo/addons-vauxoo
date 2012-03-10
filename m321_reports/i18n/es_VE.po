@@ -7,12 +7,12 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-09-20 16:22+0000\n"
-"PO-Revision-Date: 2011-09-20 16:22+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2012-03-09 19:28-0400\n"
+"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: m321_reports
@@ -142,7 +142,7 @@ msgstr "Modelo"
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "V.A.T.:"
-msgstr "R.I.F.:"
+msgstr "I.V.A.:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -206,10 +206,12 @@ msgstr "Factura"
 
 #. module: m321_reports
 #: model:ir.module.module,description:m321_reports.module_meta_information
-msgid "\n"
+msgid ""
+"\n"
 "        This module installs the basic reports and formats for the M321 Companies\n"
 "                    "
-msgstr "\n"
+msgstr ""
+"\n"
 "        Este modulo instala los reportes basicos para las compañias de M321\n"
 "                    "
 
