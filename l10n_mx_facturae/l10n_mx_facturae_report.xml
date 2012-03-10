@@ -10,7 +10,7 @@
             rml="l10n_mx_facturae/report/invoice_facturae_pdf.rml"
             attachment_use="1"
             attachment="object.fname_invoice and (object.fname_invoice + '') or ''"
-            groups="l10n_mx_facturae.group_facturae_mx_manager,l10n_mx_facturae.group_facturae_mx_user"
+            groups="l10n_mx_facturae.group_facturae_mx_cfd_user"
         />
         
     </data>
