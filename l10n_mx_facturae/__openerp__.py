@@ -56,6 +56,7 @@ Requires the following programs:
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',
         "l10n_mx_facturae_report.xml",
         "l10n_mx_facturae_wizard6.xml",

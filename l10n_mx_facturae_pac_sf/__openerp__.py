@@ -40,6 +40,7 @@ Ubuntu Package Depends:
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/l10n_mx_facturae_pac_sf_security.xml",
         "l10n_mx_facturae_pac_sf_demo.xml",
         "invoice_wizard.xml",
         "l10n_mx_facturae_pac_sf_report.xml",
