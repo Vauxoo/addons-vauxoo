@@ -19,24 +19,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-from report import report_sxw
-from osv import osv
-from tools.translate import _
-from report import pyPdf
-
-class sale_vauxoo_report(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(sale_vauxoo_report, self).__init__(cr, uid, name, context=context)
-        self.localcontext.update({
-            'time': time,
-            'hello': self._hello,
-        })
-    def _hello(self,p):
-        print "estoy en hello"
-        return "Hello World %s"
-report_sxw.report_sxw(
-'report.sale_order_vauxoo',
-'sale.order',
-'addons/sale_order_report/report/vauxoo.rml',
-parser=sale_vauxoo_report)
+import account_invoice_multicompany
