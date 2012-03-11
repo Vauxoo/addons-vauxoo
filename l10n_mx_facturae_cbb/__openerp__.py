@@ -48,7 +48,7 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        'security/ir.model.access.csv',
+        'security/l10n_mx_facturae_cbb_security.xml',
         "l10n_mx_facturae_report.xml",
         #"ir_sequence_view.xml",
         #"res_company_view.xml",
