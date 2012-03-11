@@ -46,6 +46,9 @@ class cancel_orders(osv.osv_memory):
         sale_obj = self.pool.get('sale.order')
         picking_obj = self.pool.get('stock.picking')
         invoice_obj = self.pool.get('account.invoice')
+        journal_obj = self.pool.get('account.journal')
+        journal_ids = journal_obj.search(cr,uid,[],context=context)
+        [journal_obj.write(cr,uid,[i.id],{'update_posted':True},context=context) for i in journal_obj.browse(cr,uid,journal_ids,context=context) if hasattr(i, "update_posted") if i.type in ('sale','sale_refund') ]
         wz_brw = self.browse(cr,uid,ids and ids[0],context=context)
         sale_brw =  sale_obj.browse(cr,uid,sale_obj.search(cr,uid,[],context=context),context=context) 
         sale_ids = [i.id for i in sale_brw if i.state == 'progress' and i.invoice_ids for d in i.invoice_ids if d.state !='paid'] 

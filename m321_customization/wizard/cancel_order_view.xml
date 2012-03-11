@@ -16,8 +16,8 @@
             <field name='model'>cancel.orders</field>
             <field name='type'>form</field>
             <field name='arch' type='xml'>
-                <form >
-                    <group colspan="1" col="1" >
+                <form string="Cancel Sale Orders">
+                    <group string="Cancel Sale Orders" colspan="1" col="1" >
                         <group col="1">
                         <field name='sure'/>
                     <field name='are_sure'/>
