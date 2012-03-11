@@ -77,11 +77,6 @@ class sale_order_line(osv.osv):
             price = uom_obj._compute_price(cr, uid, product_uom, price, to_uom_id=False)
             
             e = uom_obj._compute_qty(cr, uid, product_uom, qty, to_uom_id=product_uom)
-            print "price",price
-            #~ if uom_brw.uom_type == 'bigger':
-                #~ price = price_brw.unit_price * uom_brw.factor_inv
-            #~ elif uom_brw.uom_type == 'smaller':
-                #~ price = price_brw.unit_price / uom_brw.factor_inv
             res['value'].update({'price_unit': price})
             dicc.update({'price_unit':True})
         return res
@@ -95,5 +90,19 @@ class sale_order_line(osv.osv):
     
 sale_order_line()
 
+class sale_order(osv.osv):
+   
+    
+    _inherit = 'sale.order'
+    
+    def price_unit_confirm(self,cr,uid,ids,context=None):
+        if context is None:
+            context = {}
+        
+        
+        return False
+    
+    
+sale_order()
 
 
