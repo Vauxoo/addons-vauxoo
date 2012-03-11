@@ -747,11 +747,12 @@ class account_invoice(osv.osv):
                 'version': "2.0",
             })
             number_work = invoice.number or invoice.internal_number
+            date_invoice_tz = invoice.date_invoice and tools.server_to_local_timestamp(invoice.date_invoice, tools.DEFAULT_SERVER_DATETIME_FORMAT, tools.DEFAULT_SERVER_DATETIME_FORMAT, 'America/Mexico_City') or False
             invoice_data_parent['Comprobante'].update({
                 'folio': number_work,
-                'fecha': invoice.date_invoice and \
+                'fecha': date_invoice_tz and \
                     #time.strftime('%d/%m/%y', time.strptime(invoice.date_invoice, '%Y-%m-%d')) \
-                    time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
+                    time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(date_invoice_tz, '%Y-%m-%d %H:%M:%S'))
                     or '',
                 'tipoDeComprobante': tipoComprobante,
                 'formaDePago': u'Pago en una sola exhibición',
