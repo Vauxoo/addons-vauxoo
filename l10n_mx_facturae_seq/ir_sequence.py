@@ -184,6 +184,7 @@ class ir_sequence(osv.osv):
             if res:
                 sequence = self.browse(cr, uid, res['id'], context=context)
                 if sequence.approval_ids:
+                    approval_obj = self.pool.get('ir.sequence.approval')
                     approval_id = self._get_current_approval(cr, uid, [sequence.id], field_names=None, arg=False, context=context)[sequence.id]
                     approval_id = approval_id and approval_obj.browse(cr, uid, [approval_id], context=context)[0] or False
                     if not approval_id:
