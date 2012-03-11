@@ -64,8 +64,7 @@
     <paraStyle name="P21" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P24" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
-    <paraStyle name="P25" fontName="Helvetica" alignment="RIGHT"/>
+    <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -135,7 +134,7 @@
               <font color="white"> </font>
             </para>
             <para style="Table Contents">[[ company_address()['city'] or '' ]], [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] a</para>
-            <para style="Table Contents">[[ formatLang(o.date_invoice, date_time=True) ]]</para>
+            <para style="P24">[[ formatLang( o.date_invoice_tz or False, date_time=True) ]]</para>
             <para style="Table Contents">Serie: [[ get_approval() and get_approval().serie or '' ]]</para>
             <para style="Table Contents">Aprobación: [[ get_approval() and get_approval().approval_number or '' ]]</para>
             <para style="Table Contents">Año Aprobación:[[ get_approval() and get_approval().approval_year or '' ]]</para>

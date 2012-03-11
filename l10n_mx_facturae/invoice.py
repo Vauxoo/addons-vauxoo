@@ -325,7 +325,7 @@ class account_invoice(osv.osv):
         if id:
             invoice = self.browse(cr, uid, id, context=context)
             #certificate_id = invoice.company_id.certificate_id
-            context.update( {'date_work': invoice.date_invoice} )
+            context.update( {'date_work': invoice.date_invoice_tz} )
             certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
             certificate_id = certificate_id and self.pool.get('res.company.facturae.certificate').browse(cr, uid, [certificate_id], context=context)[0] or False
             
@@ -441,7 +441,7 @@ class account_invoice(osv.osv):
                 invoice_comprobante_data['serie'] or '',
                 invoice_comprobante_data['folio'] or '',
                 str( invoice_comprobante_data['anoAprobacion'] ) + str( invoice_comprobante_data['noAprobacion'] ),
-                time.strftime('%d/%m/%Y %H:%M:%S', time.strptime( facturae_data['date_invoice'], '%Y-%m-%d %H:%M:%S')),#invoice_comprobante_data['fecha'].replace('T', ' '),
+                time.strftime('%d/%m/%Y %H:%M:%S', time.strptime( facturae_data['date_invoice_tz'], '%Y-%m-%d %H:%M:%S')),#invoice_comprobante_data['fecha'].replace('T', ' '),
                 "%.2f"%( round( float(invoice_comprobante_data['total'] or 0.0) * rate, 2) ),
                 "%.2f"%( round( float(invoice_comprobante_data['Impuestos']['totalImpuestosTrasladados'] or 0.0) * rate, 2) ),
                 facturae_state,
@@ -749,9 +749,9 @@ class account_invoice(osv.osv):
             number_work = invoice.number or invoice.internal_number
             invoice_data_parent['Comprobante'].update({
                 'folio': number_work,
-                'fecha': invoice.date_invoice and \
+                'fecha': invoice.date_invoice_tz and \
                     #time.strftime('%d/%m/%y', time.strptime(invoice.date_invoice, '%Y-%m-%d')) \
-                    time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
+                    time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice_tz, '%Y-%m-%d %H:%M:%S'))
                     or '',
                 'tipoDeComprobante': tipoComprobante,
                 'formaDePago': u'Pago en una sola exhibición',
@@ -938,9 +938,10 @@ class account_invoice(osv.osv):
             invoice_data_parent['invoice_id'] = invoice.id
             invoice_data_parent['type'] = invoice.type
             invoice_data_parent['date_invoice'] = invoice.date_invoice
+            invoice_data_parent['date_invoice_tz'] = invoice.date_invoice_tz
             invoice_data_parent['currency_id'] = invoice.currency_id.id
             
-            date_ctx = {'date': invoice.date_invoice and time.strftime('%Y-%m-%d', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S')) or False}
+            date_ctx = {'date': invoice.date_invoice_tz and time.strftime('%Y-%m-%d', time.strptime(invoice.date_invoice_tz, '%Y-%m-%d %H:%M:%S')) or False}
             #rate = self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id, invoice.company_id.currency_id.id, 1, round=False, context=date_ctx, account=None, account_invert=False)
             #rate = 1.0/self.pool.get('res.currency')._current_rate(cr, uid, [invoice.currency_id.id], name=False, arg=[], context=date_ctx)[invoice.currency_id.id]
             currency = self.pool.get('res.currency').browse(cr, uid, [invoice.currency_id.id], context=date_ctx)[0]
