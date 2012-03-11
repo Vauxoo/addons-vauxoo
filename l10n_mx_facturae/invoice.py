@@ -438,7 +438,7 @@ class account_invoice(osv.osv):
             
             facturae_data_txt_list = [
                 invoice_comprobante_data['Receptor']['rfc'] or '',
-                invoice_comprobante_data['serie'] or '',
+                invoice_comprobante_data.get('serie', False) or '',
                 invoice_comprobante_data['folio'] or '',
                 str( invoice_comprobante_data['anoAprobacion'] ) + str( invoice_comprobante_data['noAprobacion'] ),
                 time.strftime('%d/%m/%Y %H:%M:%S', time.strptime( facturae_data['date_invoice_tz'], '%Y-%m-%d %H:%M:%S')),#invoice_comprobante_data['fecha'].replace('T', ' '),
