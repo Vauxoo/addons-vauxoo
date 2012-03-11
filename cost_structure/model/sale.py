@@ -98,7 +98,6 @@ class sale_order(osv.osv):
     def price_unit_confirm(self,cr,uid,ids,context=None):
         if context is None:
             context = {}
-        print jkhkjhk
         
         
         return False
