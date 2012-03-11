@@ -98,9 +98,19 @@ class sale_order(osv.osv):
     def price_unit_confirm(self,cr,uid,ids,context=None):
         if context is None:
             context = {}
+        product = []
+        cost_obj = self.pool.get('cost.structure')
+        sale_brw = self.browse(cr,uid,ids and ids[0],context=context)
+        print "product",product 
+        for line in sale_brw.order_line:
+            cost_structure_id = line.price_structure_id and line.price_structure_id.cost_structure_id.id
+            if len(cost_obj.browse(cr,uid,cost_structure_id,context=context).method_cost_ids) == len([i.id for i in cost_obj.browse(cr,uid,cost_structure_id,context=context).method_cost_ids if line.price_unit < i.unit_price]):
+                product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
         
-        
-        return False
+        if len(product) > 0:
+            raise osv.except_osv(_('Error'), _('\n'.join(product)))
+       
+        return True
     
     
 sale_order()
