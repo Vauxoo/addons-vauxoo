@@ -82,7 +82,6 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         except Exception, e:
             print "exception: %s"%( e )
             pass
-        print "*************\n**o.cfdi_cbb",o.cfdi_cbb
         return ""
         
     def _get_approval(self):
