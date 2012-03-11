@@ -52,6 +52,7 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
             'exists_key': self._exists_key,
+            'tools': tools,
         })
         self.taxes = []
         

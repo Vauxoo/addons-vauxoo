@@ -134,7 +134,7 @@
               <font color="white"> </font>
             </para>
             <para style="Table Contents">[[ company_address()['city'] or '' ]], [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] a</para>
-            <para style="P24">[[ formatLang(o.date_invoice and tools.server_to_local_timestamp(o.date_invoice, tools.DEFAULT_SERVER_DATETIME_FORMAT, tools.DEFAULT_SERVER_DATETIME_FORMAT, 'America/Mexico_City') or False, date_time=True) ]]</para>
+            <para style="P24">[[ formatLang( format_date_tz(o.date_invoice) or False, date_time=True) ]]</para>
             <para style="Table Contents">Serie: [[ get_approval() and get_approval().serie or '' ]]</para>
             <para style="Table Contents">Aprobación: [[ get_approval() and get_approval().approval_number or '' ]]</para>
             <para style="Table Contents">Año Aprobación:[[ get_approval() and get_approval().approval_year or '' ]]</para>
