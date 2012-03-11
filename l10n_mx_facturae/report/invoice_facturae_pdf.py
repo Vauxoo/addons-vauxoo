@@ -56,12 +56,15 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         self.taxes = []
     
     def _exists_key(self, key):
+        return self.invoice._columns.has_key(key)
+        """
         try:
             str= 'self.invoice.'+key
             if eval(str):
                 return True
         except:
             return False
+        """
     
     def _set_global_data(self, o):
         try:

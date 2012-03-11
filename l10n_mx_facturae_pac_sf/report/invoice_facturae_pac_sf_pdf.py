@@ -52,17 +52,19 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
             'exists_key': self._exists_key,
-            'tools': tools,
         })
         self.taxes = []
         
     def _exists_key(self, key):
+        return self.invoice._columns.has_key(key)
+        """
         try:
             str= 'self.invoice.'+key
             if eval(str):
                 return True
         except:
             return False
+        """
     
     def _set_global_data(self, o):
         try:
