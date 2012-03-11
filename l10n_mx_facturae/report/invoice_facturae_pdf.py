@@ -52,16 +52,8 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
             'exists_key': self._exists_key,
-            #'tools': tools,
-            'format_date_tz': self._format_date_tz,
         })
         self.taxes = []
-    
-    def _format_date_tz(self, date, tz='America/Mexico_City'):
-        if not date:
-            return False
-        format = tools.DEFAULT_SERVER_DATETIME_FORMAT
-        return tools.server_to_local_timestamp(date, format, format, tz)
     
     def _exists_key(self, key):
         try:
