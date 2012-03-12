@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_pick_out_start" model="ir.ui.view">
+            <field name="name">picking.valued.start</field>
+            <field name="model">picking.valued</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Generacion del Nro de la Nota de Entrega" >
+                    <group colspan="4" col="4">
+                        <separator string="Esta seguro de generar una Nota de entrega ?, este es un documento legal que deberá ser impreso en forma libre." colspan="4"/>
+                        <field name="type"/>
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="sure"/>
+                    </group>
+                    <label string="Este proceso generara el correlativo automaticamente para el numero de la nota de entrega"/>
+                    <separator colspan="4"/>
+                     <group colspan="4" col="5">
+                            <button icon="gtk-cancel" special="cancel" string="_Cancel"/>
+                            <button icon="gtk-ok" name="action_start" string="Next" type="object"/>
+                     </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pick_out" model="ir.actions.act_window">
+            <field name="name">Make Pickinig Out</field>
+            <field name="res_model">picking.valued</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pick_out_start"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <record id="view_pick_out_trans" model="ir.ui.view">
+            <field name="name">picking.valued.trans</field>
+            <field name="model">picking.valued</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Generacion del Nro de la Nota de Entrega" >
+                    <group colspan="4" col="4">
+                        <separator string="Esta seguro de generarlo ?" colspan="4"/>
+                        <field name="note" attrs="{'required':[('type','=','despacho')]}"/>
+                        <field name="type" invisible="1"/>
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="sure2"/>
+                    </group>
+                    <separator colspan="4"/>
+                     <group colspan="4" col="5">
+                            <button icon="gtk-cancel" special="cancel" string="_Cancel"/>
+                            <button icon="gtk-ok" name="action_trans" string="Next" type="object"/>
+                     </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pick_trans" model="ir.actions.act_window">
+            <field name="name">Set Number</field>
+            <field name="res_model">picking.valued</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pick_out_trans"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <record id="view_pick_out_note" model="ir.ui.view">
+            <field name="name">picking.valued.note</field>
+            <field name="model">picking.valued</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="VERIFICAR NOTA DE ENTREGA" >
+                    <group colspan="4" col="4">
+                        <separator string="NOTA DE ENTREGA CON NOTA ?" colspan="4"/>
+                        <field name="note2"/>
+                        <field name="type" invisible="1"/>
+                        <field name="note" invisible="1"/>
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="sure3"/>
+                    </group>
+                    <separator colspan="4"/>
+                     <group colspan="4" col="5">
+                            <button icon="gtk-cancel" special="cancel" string="_Cancel"/>
+                            <button icon="gtk-ok" name="action_number" string="Next" type="object"/>
+                     </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pick_note" model="ir.actions.act_window">
+            <field name="name">Confirm Note</field>
+            <field name="res_model">picking.valued</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pick_out_note"/>
+            <field name="target">new</field>
+        </record>
+
+
+        <record id="view_pick_out_reason" model="ir.ui.view">
+            <field name="name">picking.valued.reason</field>
+            <field name="model">picking.valued</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Razon de la nota de entrega sin valor" >
+                    <group colspan="4" col="4">
+                        <separator string="Elija un motivo por el cual genera una Nota de Entrega Sin Precios?" colspan="4"/>
+                        <field name="reason"/>
+                        <field name="type" invisible="1"/>
+                        <field name="note" invisible="1"/>
+                    </group>
+                    <group colspan="4" col="4">
+                        <field name="sure4"/>
+                    </group>
+                    <separator colspan="4"/>
+                     <group colspan="4" col="5">
+                            <button icon="gtk-cancel" special="cancel" string="_Cancel"/>
+                            <button icon="gtk-ok" name="action_number" string="Next" type="object"/>
+                     </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pick_reason" model="ir.actions.act_window">
+            <field name="name">Confirm Note</field>
+            <field name="res_model">picking.valued</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pick_out_reason"/>
+            <field name="target">new</field>
+        </record>
+
+
+
+        <record id="view_pick_out_end" model="ir.ui.view">
+            <field name="name">picking.valued.note</field>
+            <field name="model">picking.valued</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Correlativo Generado" >
+                    <label string="El numero de la orden fue creado con exito !" colspan="4"/>
+                    <field name="nro" colspan="4" nolabel="1"/>
+                    <separator colspan="4"/>
+                     <group colspan="4" col="5">
+                            <button icon="gtk-cancel" special="cancel" string="_Cancel"/>
+                            <button name="%(stock_valued.reprml)d" string='Print' icon='gtk-print' type="action"/> 
+                     </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_pick_end" model="ir.actions.act_window">
+            <field name="name">Show Number</field>
+            <field name="res_model">picking.valued</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_pick_out_end"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>

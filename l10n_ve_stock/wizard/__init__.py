@@ -28,7 +28,6 @@
 #
 ##############################################################################
 
-import wizard_stock_valued
 import wiz_picking_valued
 
 
