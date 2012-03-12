@@ -43,7 +43,6 @@
         'wizard/wiz_picking_valued.xml',
         'stock_valued_view.xml',
         'stock_valued_report.xml',
-        'stock_valued_wizard.xml',
                    ],
     "active": False,
     "installable": True,
