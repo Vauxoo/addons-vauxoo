@@ -21,6 +21,22 @@
           TODO: <field name="cost_structure_id" domain="[('product_id','=',product_id)]" widget="selection" />
 -->
         </xpath>
+        
+        
+        <xpath expr='//field[@name="order_line"]' position="before">
+          <group colspan="9" col="9">
+         
+         
+          <field name="status_price" attrs="{'invisible': [('status_bool', '=', False)]}" nolabel="1" />
+          <field name="status_bool" invisible="1" />
+          
+          </group>
+          
+        </xpath>
+        
+        
+        
+        
       </field>
     </record>
   </data>
