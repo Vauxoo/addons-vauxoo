@@ -32,7 +32,7 @@ from osv import fields, osv
 class stock_picking(osv.osv):
     _inherit = "stock.picking"
     _columns = {
-        'number': fields.char('Numero Orden Entrega', size=32, readonly=True, help="Nro. de la Orden de Entrega"),
+        'number': fields.char('Delivery Order Number', size=32, readonly=True, help="Delivery Order Reference"),
             }
 
 stock_picking()

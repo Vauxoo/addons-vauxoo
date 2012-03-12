@@ -1,0 +1,399 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_ve_stock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-03-12 22:05+0000\n"
+"PO-Revision-Date: 2012-03-12 22:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_ve_stock
+#: model:ir.model,name:l10n_ve_stock.model_picking_valued
+msgid "picking.valued"
+msgstr "picking.valued"
+
+#. module: l10n_ve_stock
+#: view:stock.picking:0
+msgid "Loc. Venezuela"
+msgstr "Loc. Venezuela"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "“contribuyente formal”"
+msgstr "“contribuyente formal”"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Esta seguro de generarlo ?"
+msgstr "Esta seguro de generarlo ?"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Origen:"
+msgstr "Origen:"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "RIF :"
+msgstr "RIF :"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Next"
+msgstr "Next"
+
+#. module: l10n_ve_stock
+#: field:picking.valued,note:0
+#: field:picking.valued,note2:0
+msgid "Note"
+msgstr "Note"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Direccion Entrega:"
+msgstr "Direccion Entrega:"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Estado:"
+msgstr "Estado:"
+
+#. module: l10n_ve_stock
+#: model:ir.actions.report.xml,name:l10n_ve_stock.guia_despacho
+msgid "Guia de Despacho"
+msgstr "Guia de Despacho"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Calle1:"
+msgstr "Calle1:"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Correlativo Generado"
+msgstr "Correlativo Generado"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Fecha :"
+msgstr "Fecha :"
+
+#. module: l10n_ve_stock
+#: model:ir.model,name:l10n_ve_stock.model_stock_picking
+msgid "Packing List"
+msgstr "Albarán"
+
+#. module: l10n_ve_stock
+#: field:picking.valued,sure:0
+#: field:picking.valued,sure2:0
+#: field:picking.valued,sure3:0
+#: field:picking.valued,sure4:0
+msgid "Are you sure?"
+msgstr "Esta seguro?"
+
+#. module: l10n_ve_stock
+#: field:stock.move,price_net:0
+msgid "Net"
+msgstr "Neto"
+
+#. module: l10n_ve_stock
+#: field:res.partner,alb_val:0
+msgid "Albarán valorado"
+msgstr "Albarán valorado"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Esta seguro de generar una Nota de entrega ?, este es un documento legal que deberá ser impreso en forma libre."
+msgstr "Esta seguro de generar una Nota de entrega ?, este es un documento legal que deberá ser impreso en forma libre."
+
+#. module: l10n_ve_stock
+#: field:picking.valued,type:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "_Cancel"
+msgstr "_Cancelar"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "CP:"
+msgstr "CP:"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Tel. :"
+msgstr "Tel. :"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Pais:"
+msgstr "Pais:"
+
+#. module: l10n_ve_stock
+#: field:picking.valued,reason:0
+msgid "Reason"
+msgstr "Motivo"
+
+#. module: l10n_ve_stock
+#: model:ir.module.module,shortdesc:l10n_ve_stock.module_meta_information
+msgid "Formatos Nota de Entrega y Guia Despacho"
+msgstr "Formatos Nota de Entrega y Guia Despacho"
+
+#. module: l10n_ve_stock
+#: field:picking.valued,nro:0
+msgid "Number"
+msgstr "Número"
+
+#. module: l10n_ve_stock
+#: model:ir.actions.wizard,name:l10n_ve_stock.wizard_nota_entrega
+#: view:stock.picking:0
+msgid "Nota de Entrega"
+msgstr "Nota de Entrega"
+
+#. module: l10n_ve_stock
+#: code:addons/l10n_ve_stock/wizard/wiz_picking_valued.py:93
+#: code:addons/l10n_ve_stock/wizard/wiz_picking_valued.py:112
+#, python-format
+msgid "Alert !"
+msgstr "Atención !"
+
+#. module: l10n_ve_stock
+#: code:addons/l10n_ve_stock/wizard/wiz_picking_valued.py:93
+#: code:addons/l10n_ve_stock/wizard/wiz_picking_valued.py:112
+#, python-format
+msgid "Check the box!!!"
+msgstr "Marque la caja!!!"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Guia de Despacho :"
+msgstr "Guia de Despacho :"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Generacion del Nro de la Nota de Entrega"
+msgstr "Generacion del Nro de la Nota de Entrega"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "F. Vencimiento :"
+msgstr "F. Vencimiento :"
+
+#. module: l10n_ve_stock
+#: field:stock.picking,tracking:0
+msgid "Tracking"
+msgstr "Tracking"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,reason:0
+msgid "Traslado almacenes o bodegas de otros"
+msgstr "Traslado almacenes o bodegas de otros"
+
+#. module: l10n_ve_stock
+#: model:ir.actions.act_window,name:l10n_ve_stock.action_pick_end
+msgid "Show Number"
+msgstr "Mostrar Nro."
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Este proceso generara el correlativo automaticamente para el numero de la nota de entrega"
+msgstr "Este proceso generara el correlativo automaticamente para el numero de la nota de entrega"
+
+#. module: l10n_ve_stock
+#: model:ir.actions.act_window,name:l10n_ve_stock.action_pick_trans
+msgid "Set Number"
+msgstr "Establecer nro."
+
+#. module: l10n_ve_stock
+#: view:stock.picking:0
+msgid "Nota Entrega"
+msgstr "Nota Entrega"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,reason:0
+msgid "Reparación"
+msgstr "Reparación"
+
+#. module: l10n_ve_stock
+#: field:stock.picking,amount_tax:0
+msgid "Taxes"
+msgstr "Taxes"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Ref. Cliente:"
+msgstr "Ref. Cliente:"
+
+#. module: l10n_ve_stock
+#: model:ir.module.module,description:l10n_ve_stock.module_meta_information
+msgid "\n"
+"    Notas de entrega\n"
+"    Guías de despacho según decreto \n"
+"    0591\n"
+"    Referencia Legal:\n"
+"    http://wiki.openerp.org.ve/index.php?title=0591\n"
+"    "
+msgstr "\n"
+"    Notas de entrega\n"
+"    Guías de despacho según decreto \n"
+"    0591\n"
+"    Referencia Legal:\n"
+"    http://wiki.openerp.org.ve/index.php?title=0591\n"
+"    "
+
+#. module: l10n_ve_stock
+#: help:stock.picking,number:0
+msgid "Delivery Order Reference"
+msgstr "Referencia de la orden de entrega"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "NOTA DE ENTREGA CON NOTA ?"
+msgstr "NOTA DE ENTREGA CON NOTA ?"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Calle2:"
+msgstr "Calle2:"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Nota:"
+msgstr "Nota:"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "“sin derecho a credito fiscal”"
+msgstr "“sin derecho a credito fiscal”"
+
+#. module: l10n_ve_stock
+#: field:stock.picking,number:0
+msgid "Delivery Order Number"
+msgstr "Nro de la Orden de Entrega"
+
+#. module: l10n_ve_stock
+#: field:stock.move,discount:0
+msgid "Discount (%)"
+msgstr "Discount (%)"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Ciudad:"
+msgstr "Ciudad:"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "El numero de la orden fue creado con exito !"
+msgstr "El numero de la orden fue creado con exito !"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,reason:0
+msgid "Traslado almacenes o bodegas propios"
+msgstr "Traslado almacenes o bodegas propios"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Elija un motivo por el cual genera una Nota de Entrega Sin Precios?"
+msgstr "Elija un motivo por el cual genera una Nota de Entrega Sin Precios?"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "Razon de la nota de entrega sin valor"
+msgstr "Razon de la nota de entrega sin valor"
+
+#. module: l10n_ve_stock
+#: model:ir.actions.act_window,name:l10n_ve_stock.action_pick_out
+msgid "Make Pickinig Out"
+msgstr "Realizar Nota de Entrega"
+
+#. module: l10n_ve_stock
+#: field:stock.move,price_subtotal:0
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Direccion Fiscal:"
+msgstr "Direccion Fiscal:"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,reason:0
+msgid "Traslado para su distribución"
+msgstr "Traslado para su distribución"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Cant"
+msgstr "Cant"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,reason:0
+msgid "Traslado a depósito"
+msgstr "Traslado a depósito"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,type:0
+msgid "Nota de Entrega (Sin Precios)"
+msgstr "Nota de Entrega (Sin Precios)"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,type:0
+msgid "Nota de Entrega (Con Precios)"
+msgstr "Nota de Entrega (Con Precios)"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Fax :"
+msgstr "Fax :"
+
+#. module: l10n_ve_stock
+#: view:picking.valued:0
+msgid "VERIFICAR NOTA DE ENTREGA"
+msgstr "VERIFICAR NOTA DE ENTREGA"
+
+#. module: l10n_ve_stock
+#: model:ir.actions.act_window,name:l10n_ve_stock.action_pick_note
+#: model:ir.actions.act_window,name:l10n_ve_stock.action_pick_reason
+msgid "Confirm Note"
+msgstr "Confirm Note"
+
+#. module: l10n_ve_stock
+#: field:stock.picking,partner_id:0
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: l10n_ve_stock
+#: selection:picking.valued,reason:0
+msgid "Otros"
+msgstr "Otros"
+
+#. module: l10n_ve_stock
+#: field:stock.picking,amount_total:0
+msgid "Total"
+msgstr "Total"
+
+#. module: l10n_ve_stock
+#: report:stock.guia_ve:0
+msgid "Codigo Descripcion"
+msgstr "Codigo Descripcion"
+
+#. module: l10n_ve_stock
+#: field:stock.picking,amount_untaxed:0
+msgid "Untaxed Amount"
+msgstr "Untaxed Amount"
+
