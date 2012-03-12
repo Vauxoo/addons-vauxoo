@@ -97,7 +97,7 @@ msgstr "Descripción"
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "Payment condition:"
-msgstr "Condiciones de Pago:"
+msgstr "Método de Pago:"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
@@ -177,7 +177,7 @@ msgstr "Transporte:"
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0
 msgid "Code"
-msgstr "Codigo"
+msgstr "Código"
 
 #. module: m321_reports
 #: report:m321_reports.cm321_report:0

@@ -50,7 +50,7 @@ class sale_order_line(osv.osv):
         
         if dicc.get('price_unit',False):
             dicc = {}
-            res['value'].pop('price_unit')
+            res['value'].get('price_unit') and res['value'].pop('price_unit')
             res.update({'stop':True})
         
         if 'price_unit' in res.get('value'):
@@ -77,11 +77,6 @@ class sale_order_line(osv.osv):
             price = uom_obj._compute_price(cr, uid, product_uom, price, to_uom_id=False)
             
             e = uom_obj._compute_qty(cr, uid, product_uom, qty, to_uom_id=product_uom)
-            print "price",price
-            #~ if uom_brw.uom_type == 'bigger':
-                #~ price = price_brw.unit_price * uom_brw.factor_inv
-            #~ elif uom_brw.uom_type == 'smaller':
-                #~ price = price_brw.unit_price / uom_brw.factor_inv
             res['value'].update({'price_unit': price})
             dicc.update({'price_unit':True})
         return res
@@ -95,5 +90,69 @@ class sale_order_line(osv.osv):
     
 sale_order_line()
 
+class sale_order(osv.osv):
+   
+   
+    
+    _inherit = 'sale.order'
+    
+        
+    def _price_status(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        if len(ids) == 0:
+            return {}
+        res = {}
+        product = []
+        cost_obj = self.pool.get('cost.structure')
+        for order in self.browse(cr,uid,ids,context=context):
+            for line in order.order_line:
+                cost_structure_id = line and line.price_structure_id and line.price_structure_id.cost_structure_id and line.price_structure_id.cost_structure_id.id or False
+                if cost_structure_id and len(cost_obj.browse(cr,uid,cost_structure_id,context=context).method_cost_ids) == len([i.id for i in cost_obj.browse(cr,uid,cost_structure_id,context=context).method_cost_ids if line.price_unit < i.unit_price]):
+                    product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
+                    res[order.id] = {'status_bool':True}
+                
+            
+            if product:
+                res[order.id] = '\n'.join(product)            
+            else:
+                res[order.id] = {'status_bool':False}
+                product = []
+                res[order.id] = '\n'.join(product)  
+                
+        return res
+        
+        
+    _columns = {
+    
+        'status_price':fields.function(_price_status, method=True,type="text", store=True, string='Status Price'),
+        'status_bool':fields.function(_price_status, method=True,type="boolean", string='Status Price'),
+        
+        
+    }
+    
+    _defaults = {
+    'status_bool':False
+    
+    
+    }
+    def price_unit_confirm(self,cr,uid,ids,context=None):
+        if context is None:
+            context = {}
+        product = []
+        cost_obj = self.pool.get('cost.structure')
+        sale_brw = self.browse(cr,uid,ids and ids[0],context=context)
+        for line in sale_brw.order_line:
+            cost_structure_id = line and line.price_structure_id and line.price_structure_id.cost_structure_id and line.price_structure_id.cost_structure_id.id or False
+            if cost_structure_id and len(cost_obj.browse(cr,uid,cost_structure_id,context=context).method_cost_ids) == len([i.id for i in cost_obj.browse(cr,uid,cost_structure_id,context=context).method_cost_ids if line.price_unit < i.unit_price]):
+                product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
+        
+        if len(product) > 0:
+            raise osv.except_osv(_('Error'), _('\n'.join(product)))
+       
+        return True
+    
+    
+sale_order()
 
 

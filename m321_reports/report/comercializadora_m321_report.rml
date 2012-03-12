@@ -5,103 +5,87 @@
         <pageGraphics>
     <!-- Aqui esta la definicion de la fuente de todo lo que aparece en los drawstrings -->
             <setFont name="Courier-Bold" size="12.0"/>
-            <drawRightString x="115.0mm" y="265.5mm"><pageNumber/></drawRightString>
-            <place x="52.0mm"     y="250.0mm"    width="82.0mm"  height="25.0mm">  
-                <blockTable colWidths="50.0mm,32.0mm" style="TABLA_SIN_AUX">
+            <place x="52.0mm"     y="250.0mm"    width="82.0mm"  height="21.0mm">  
+                <blockTable colWidths="82.0mm" style="TABLA_SIN_AUX">
                     <tr>
-                        <td><para style="IZQUIERDA">Invoice:</para></td>
-                        <td><para style="IZQUIERDA">[[o.number]]</para></td>
-                    </tr>
-                    <tr>
-                        <td><para style="IZQUIERDA">Page:</para></td>
-                        <td><para style="IZQUIERDA"> </para></td>
-                    </tr>
-                    <tr>
-                        <td><para style="IZQUIERDA">Issue Date</para></td>
-                        <td><para style="IZQUIERDA">[[formatLang(o.date_invoice,date=True) ]]</para></td>
-                    </tr>
-                    <tr>
-                        <td><para style="IZQUIERDA">Expiration Date:</para></td>
-                        <td><para style="IZQUIERDA">[[o.date_due and o.date_due or '' ]]</para></td>
+                        <td>
+                            <para style="DERECHA"> [[ (o.type=='out_refund' and o.number and ('NOTA DE CREDITO: %s'%(o.number)) or removeParentNode('para'))]]</para>
+                            <para style="DERECHA"> [[ (o.type=='out_refund' and o.parent_id and ('FACT. ORIGEN.: %s'%(o.parent_id.number)) or removeParentNode('para'))]]</para>
+                            <para style="DERECHA"> [[ (o.type=='out_invoice' and o.parent_id and o.number and ('NOTA DE DEBITO: %s'%(o.number)) or removeParentNode('para'))]]</para>
+                            <para style="DERECHA"> [[ (o.type=='out_invoice' and o.parent_id and ('FACT. ORIGEN.: %s'%(o.parent_id.number)) or removeParentNode('para'))]]</para>
+                            <para style="DERECHA">[[(o.type=='out_invoice' and (not o.parent_id) or removeParentNode('para')) and (o.number and 'FACTURA No. %s'%(o.number) or ' ') or removeParentNode('para') ]]</para>
+                            <para style="DERECHA_P">[[o.type=='out_invoice' and format((o.payment_term and ('CONDICION DE PAGO: %s'%(o.payment_term.name))) or 'CONDICION DE PAGO:CONTADO') ]]</para>
+                            <para style="DERECHA_P">FECHA DE EMISION: [[ o.date_invoice and formatLang(o.date_invoice,date=True) or '' ]]</para>
+                            <para style="DERECHA_P">FECHA DE VENCIMIENTO: [[ o.date_due and formatLang(o.date_due,date=True) or '' ]]</para>
+                        </td>
                     </tr>
                 </blockTable>
             </place>
 
             <place x="5.0mm"     y="191.0mm"    width="149.0mm"  height="40.0mm">  
-                <blockTable colWidths="85.0mm,63.0mm" style="TABLA_ARRIBA">
-                    <tr>
-                        <td><para style="IZQUIERDA">Customer: [[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para></td>
-                        <td><para style="IZQUIERDA"></para></td>
-                    </tr>
-                    <tr>
-                        <td><para style="IZQUIERDA">[[ o.partner_id.vat  and (' V.A.T.:%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para></td>
-                        <td><para style="IZQUIERDA">N.I.T:</para></td>
-                    </tr>
-                </blockTable>
-                <blockTable colWidths="148.0mm" style='TABLA_MEDIO'>
-                    <tr>
-                        <td><para style="IZQUIERDA">Address: [[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city and ('%s - '%(o.partner_id.address[0].city.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para></td>
-                    </tr>
-                </blockTable>
-                <blockTable colWidths="85.0mm,63.0mm" style="TABLA_ABAJO">
-                    <tr>
-                        <td><para style="IZQUIERDA">Phone: [[ o.partner_id.phone]]</para></td>
-                        <td><para style="IZQUIERDA">Fax: [[ o.partner_id.fax and o.partner_id.fax or '']]</para></td>
-                    </tr>
+                <blockTable colWidths="149.0mm" style="TABLA_SIN_AUX">
+                    <tr><td>
+                        <para style="CUSTOMER">RAZON SOCIAL: [[o.partner_id.name and  ('%s'%(o.partner_id.name.upper())) or '' ]]</para>
+                        <para style="CUSTOMER">[[ o.partner_id.vat  and (' RIF.:%s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or '' ]]</para>
+                        <para style="CUSTOMER">DIRECCION FISCAL: [[ o.partner_id.address and ('%s, '%(o.partner_id.address[0].street)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].street2 and ('%s - '%(o.partner_id.address[0].street2)) or  '' ]] [[ o.partner_id.address and o.partner_id.address[0].zip and ('%s - '%(o.partner_id.address[0].zip)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].city_id and ('%s - '%(o.partner_id.address[0].city_id.name)) or '' ]] [[ o.partner_id.address and o.partner_id.address[0].state_id and ('%s - '%(o.partner_id.address[0].state_id.name))  or '']] [[ o.partner_id.address and o.partner_id.address[0].country_id and ('%s.'%(o.partner_id.address[0].country_id.name))  or '']]</para>
+                        <para style="CUSTOMER">[[ o.address_invoice_id.fax and ('FAX: %s'%(o.address_invoice_id.fax)) or '' ]] [[ o.address_invoice_id.phone and ('TELF.: %s'%(o.address_invoice_id.phone)) or '']] [[ o.sale_ids and o.sale_ids[0].partner_order_id.mobile and ('CEL.: %s'%(o.sale_ids[0].partner_order_id.mobile)) or '']] [[ o.sale_ids and o.sale_ids[0].partner_order_id.email and ('EMAIL.: %s'%(o.sale_ids[0].partner_order_id.email)) or '']]</para>
+                    </td></tr>
                      <tr>
-                        <td><para style="IZQUIERDA">Shipping: </para></td>
-                        <td><para style="IZQUIERDA"></para></td>
+                        <td><para style="CUSTOMER">Shipping: </para></td>
                     </tr>
                 </blockTable>                
             </place>
 
             <place x="155.0mm"     y="202.0mm"    width="54.0mm"  height="29.0mm">
                 <blockTable colWidths="54.0mm" style="TABLA_SIN_AUX">
-                    <tr><td><para style="IZQUIERDA">Payment condition: [[o.payment_method_id.name ]]</para></td></tr>
-                    <tr><td><para style="IZQUIERDA">Salesman: [[o.user_id.name]]</para></td></tr>
-                    <tr><td><para style="IZQUIERDA"> </para></td></tr>
+                    <tr><td><para style="PAGO">Payment condition: [[o.payment_method_id.name ]]</para></td></tr>
+                    <tr><td><para style="PAGO">Salesman: [[o.user_id.name]]</para></td></tr>
+                    <tr><td><para style="PAGO"> </para></td></tr>
                 </blockTable>
             </place>
 
-            <place x="124.0mm"     y="22.0mm"    width="83.0mm"  height="35.0mm">
+            <place x="124.0mm"     y="22.0mm"    width="83.0mm"  height="37.0mm">
                 <blockTable colWidths="50.0mm,33.0mm" style="TABLA_CON_TOTAL">
                     <tr>
-                      <td><para style="IZQUIERDA">Sub-Total</para></td>
-                      <td><para style="DERECHA">[[ formatLang(o.amount_untaxed,digits=2)]]</para></td>
+                      <td><para style="CUADRO_IZQ">Sub-Total</para></td>
+                      <td><para style="CUADRO_DERE">[[ formatLang(o.amount_untaxed,digits=2)]]</para></td>
                     </tr>
                     <tr>
-                      <td><para style="IZQUIERDA">% Discount:</para></td>
-                      <td><para style="DERECHA">[[get_discount(o)]]</para></td>
+                      <td><para style="CUADRO_IZQ">%Discount:</para></td>
+                      <td><para style="CUADRO_DERE">0.00</para></td>
+<!--
+                      <td><para style="DERECHA">[[get_discount(o) and get_discount(o) or 0.00]]</para></td>
+-->
                     </tr>
                     <tr>
-                      <td><para style="IZQUIERDA">%Surcharge:</para></td>
-                      <td><para style="DERECHA">0.00</para></td>
+                      <td><para style="CUADRO_IZQ">%Surcharge:</para></td>
+                      <td><para style="CUADRO_DERE">0.00</para></td>
                     </tr>
                     <tr>
-                      <td><para style="IZQUIERDA">V.A.T.: [[get_wh(o)]]%</para></td>
-                      <td><para style="DERECHA">[[formatLang(o.amount_tax,digits=2)]]</para></td>
+                      <td><para style="CUADRO_IZQ">V.A.T.: [[get_wh(o)]]%</para></td>
+                      <td><para style="CUADRO_DERE">[[formatLang(o.amount_tax,digits=2)]]</para></td>
                     </tr>
                     <tr>
-                      <td><para style="IZQUIERDA">Others: </para></td>
-                      <td><para style="DERECHA">0.00</para></td>
+                      <td><para style="CUADRO_IZQ">Others: </para></td>
+                      <td><para style="CUADRO_DERE">0.00</para></td>
                     </tr>
                     <tr>
-                      <td><para style="IZQUIERDA">Total:</para></td>
-                      <td><para style="DERECHA">[[ formatLang(o.amount_total,digits=2)]]</para></td>
+                      <td><para style="CUADRO_IZQ">Total:</para></td>
+                      <td><para style="CUADRO_DERE">[[ formatLang(o.amount_total,digits=2)]]</para></td>
                     </tr>
 
                 </blockTable>
             </place>
 
-            <place x="5.0mm"     y="22.0mm"    width="119.0mm"  height="35.0mm">  
-                <blockTable colWidths="119.0mm" style="TABLA_CON" rowHeights="30.8mm">
+            <place x="5.0mm"     y="22.0mm"    width="119.0mm"  height="37.0mm">  
+                <blockTable colWidths="119.0mm" style="TABLA_CON" rowHeights="27.7mm">
                     <tr>
                         <td>
-                            <para style="IZQUIERDA">Cheques a Nombre de: </para>
-                            <para style="CENTRO_BOLD">[[user.company_id.name]]</para>
-                            <para style="IZQUIERDA">Cuentas Bancarias:</para>
-                            <para style="IZQUIERDA">[[user.company_id.rml_footer1]]</para>
-                            <para style="IZQUIERDA">[[user.company_id.rml_footer2]]</para>
+                            <para style="CHEQUES">Cheques a Nombre de: </para>
+                            <para style="CHEQUES_BOLD">[[user.company_id.name]]</para>
+                            <para style="CHEQUES">Cuentas Bancarias:</para>
+                            <para style="CHEQUES">[[user.company_id.rml_footer1]]</para>
+                            <para style="CHEQUES">[[user.company_id.rml_footer2]]</para>
                         </td>
                     </tr>
                 </blockTable>
@@ -113,6 +97,15 @@
     </pageTemplate>
   </template>
   <stylesheet>
+
+    <blockTableStyle id="TABLA_TOT">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    <lineStyle kind="GRID" colorName="black" start="1,0" stop="-1,-1" />
+<!--
+      <lineStyle kind="LINEABOVE" colorName="black" start="0,0" stop="-1,0" thickness="0.25"/>
+-->
+    </blockTableStyle>
 
     <blockTableStyle id="TABLA_SIN">
       <blockAlignment value="LEFT"/>
@@ -161,13 +154,26 @@
       <lineStyle kind="GRID" colorName="black"/>
     </blockTableStyle>
 
+    <blockTableStyle id="TABLA_SIN">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+<!--
+      <lineStyle kind="GRID" colorName="black" start="2,0" stop="-1,-1" />
+-->
+    </blockTableStyle>
+
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-
-    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="7.0" leading="9" spaceBefore="0" textColor="black"/>
-    <paraStyle name="CENTRO_BOLD" alignment="CENTER" fontName="Courier-Bold" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
-    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="7.0" leading="8" textColor="black"/>
+    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="8.0" leading="11" spaceBefore="2" spaceafter="0" textColor="black"/>
+    <paraStyle name="DERECHA_P" alignment="RIGHT" fontName="Courier" fontSize="8.0" textColor="black" spaceBefore="0" spaceafter="0" />
+    <paraStyle name="CHEQUES_BOLD" alignment="CENTER" fontName="Courier-Bold" fontSize="10.0" leading="9" spaceBefore="0" textColor="black"/>
+    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="8" textColor="black"/>
+    <paraStyle name="CUADRO_DERE" alignment="RIGHT" fontName="Courier" fontSize="8.0" leading="7.0" textColor="black"/>
+    <paraStyle name="CHEQUES" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="10.0" textColor="black"/>
+    <paraStyle name="CUADRO_IZQ" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="7.0" textColor="black"/>
+    <paraStyle name="CUSTOMER" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="11.0" spaceBefore="2" textColor="black"/>
+    <paraStyle name="PAGO" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="11.0" spaceBefore="2" textColor="black"/>
     <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
     <paraStyle name="CENTRO_GARA" alignment="CENTER" fontName="Courier" fontSize="7.0" leading="7" spaceBefore="0" textColor="black"/>
     
@@ -188,11 +194,12 @@
           <td><para style="CENTRO_GARA">Total</para></td>
         </tr>
         <tr>[[ repeatIn(o.invoice_line,'l') ]]
+          <td><para style="IZQUIERDA">[[ l.product_id.upc and l.product_id.upc or (l.product_id.ean13 and l.product_id.ean13 or '') ]]</para></td>
+
+          <!--            Aqui va el Modelo del producto -->
           <td>
             <para style="IZQUIERDA">[[l.product_id and (l.product_id.code and ('%s'%(l.product_id.code.upper())) or '') or '']]</para>
           </td>
-          <!--            Aqui va el Modelo del producto -->
-          <td><para style="IZQUIERDA"></para></td>
           <td><para style="IZQUIERDA">[[l.product_id and l.product_id.name.upper() or l.name.upper() ]]</para></td>
           <!--aqui va la garantia -->
           <td><para style="DERECHA">[[l.product_id.warranty and ('%s'%(l.product_id.warranty)) or '']]</para></td>
@@ -201,6 +208,59 @@
           <td><para style="DERECHA">[[ l.price_subtotal and formatLang(l.price_subtotal)  or '']]</para></td>
         </tr>
       </blockTable>
+    
+
+<!--
+    <blockTable colWidths="155.0mm,25.0mm,25.0mm" style="TABLA_TOT">
+      <tr>
+        <td><para style="DERECHA"> </para>
+        </td>
+        <td>
+            <para style="DERECHA">SUBTOTAL</para>
+        </td>
+        <td>
+            <para style="DERECHA">[[ formatLang(o.amount_untaxed) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+   
+    <section>
+      <para style="DERECHA">[[ repeatIn(o.tax_line,'t') ]]</para>
+      <blockTable colWidths="45.0mm,110.0mm,25.0mm,25.0mm" style="TABLA_SIN">
+        <tr>
+          <td><para style="DERECHA"> </para></td>
+          <td><para style="DERECHA">[[ t.name ]]</para></td>
+          <td><para style="DERECHA">[[ formatLang(t.base) ]]</para></td>
+          <td><para style="DERECHA">[[ (t.tax_code_id and t.tax_code_id.notprintable) and removeParentNode('blockTable') or '' ]][[ formatLang(t.amount) ]]</para></td>
+        </tr>
+      </blockTable>
+    </section>
+-->
+
+<!--
+    <blockTable colWidths="165.0mm,30.0mm" style="TABLA_SIN">
+      <tr>
+        <td>
+            <para style="DERECHA">TOTAL A PAGAR [[ '(%s)'%o.currency_id.code ]] </para>
+        </td>
+        <td>
+            <para style="DERECHA">[[ formatLang(o.amount_total) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+-->
+
+    <blockTable colWidths="204.0mm" style="TABLA_SIN">
+      <tr><td><para style="IZQUIERDA"> </para></td></tr>
+      <tr>
+        <td>
+    <para style="IZQUIERDA">[[ o.type=='out_invoice' and (o.origin and ('ORIGEN:%s'%(o.origin)) or '') or removeParentNode('para') ]] </para>
+        </td>
+        </tr>
+    </blockTable>
+
+
+    
     </section>
 
   </story>
