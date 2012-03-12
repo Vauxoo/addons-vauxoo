@@ -49,16 +49,6 @@
             </place>
 
             <!--TABLA DE DATOS VARIOS-->
-            <place x="150mm"     y="10mm"    width="80.0mm"  height="28.0mm">
-                    <blockTable colWidths="45mm" style="TERMS-INV">
-                        <tr>
-                            <td><para style="ITEMSCENTER">[[ o.user_id.name  ]]</para></td>
-                        </tr>
-                        <tr>
-                            <td><para style="TERMS-INV">ASESOR DE VENTAS</para></td>
-                        </tr>
-                    </blockTable>
-            </place>
             <place x="5mm"     y="7mm"    width="205.0mm"  height="8.0mm">
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
             <para style="ITEMSCENTER">[[ o.user_id.company_id.rml_footer2 or removeParentNode('para')  ]] - Twitter: @vauxoo Contactos: [[ o.user_id.company_id.partner_id.address[0].email or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].phone or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].fax or  '' ]] - [[ o.user_id.company_id.partner_id.address[0].mobile or  '' ]]</para>
@@ -275,7 +265,7 @@
                 </tr>
                 <tr>
                     <td><para></para></td>
-                    <td><para style="ITEMSRIGHT">IMP. (IVA 12%)</para></td>
+                    <td><para style="ITEMSRIGHT">IVA:</para></td>
                     <td><para style="ITEMSCENTER">[[ formatLang(o.amount_tax) ]]</para></td>
                 </tr>
                 <tr>
