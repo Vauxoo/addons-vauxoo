@@ -34,11 +34,13 @@
     'website' : 'http://vauxoo.com',
     'depends' : ['base','stock', 'product_icecat','account_cancel'],
     'update_xml' : [
+        'data/security_groups.xml',
         'security/pay_picking_security.xml',
         'security/ir.model.access.csv',
         'product_view.xml',
         'stock_view.xml',
         'wizard/cancel_order_view.xml',
+        'wizard/supplier_asigner_view.xml',
     ],
     'demo' : [],
     'active' : False,
