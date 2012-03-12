@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
-    <menuitem name = "Cost  Structure" 
-            id ="cost_menu" sequence ='50' icon = 'STOCK_FLOPPY'
-  />
     <record model='ir.ui.view' id='metho_cost_form'>
       <field name='name'>Method</field>
       <field name='model'>method.price</field>
@@ -115,7 +112,7 @@
       <field name='vies_mode'>tree,form</field>
     </record>
     <menuitem name = "Cost  and Prices" 
-            id ="cost_price" sequence ='50' parent = 'cost_menu'
+            id ="cost_price" sequence ='50' parent = 'base.menu_sale_config_sales'
   action = 'cost_action'
   />
   </data>
