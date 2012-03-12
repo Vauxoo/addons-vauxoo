@@ -9,7 +9,7 @@
             header="False"
             rml="l10n_mx_facturae_pac_sf/report/invoice_facturae_pac_sf_pdf.rml"
             attachment_use="1"
-            attachment="object.fname_invoice and (object.fname_invoice + '') or ''"
+            attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"
             groups="l10n_mx_facturae_pac_sf.group_facturae_mx_cfdi_pac_sf_user"
         />
         
