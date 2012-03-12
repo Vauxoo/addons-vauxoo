@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
-            <menuitem 
-            name = "Cancel Orders" 
-            id ="cancel_order_wz"
-            sequence ='50'
-            parent = 'base.menu_sales'
-            action = 'cancel_orders_action'
-            />
 
 
         <record model='ir.ui.view' id='cancel_orders_form_view'>
@@ -38,6 +30,14 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
+        
+            <menuitem 
+            name = "Cancel Orders" 
+            id ="cancel_order_wz"
+            sequence ='50'
+            parent = 'base.menu_sales'
+            action = 'cancel_orders_action'
+            />
        
     </data>
 </openerp>
