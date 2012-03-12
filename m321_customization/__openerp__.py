@@ -34,7 +34,6 @@
     'website' : 'http://vauxoo.com',
     'depends' : ['base','stock', 'product_icecat','account_cancel'],
     'update_xml' : [
-        'data/security_groups.xml',
         'security/pay_picking_security.xml',
         'security/ir.model.access.csv',
         'product_view.xml',
