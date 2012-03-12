@@ -173,7 +173,7 @@
             <para style="terp_default_8"><font face="Helvetica">Ciudad:</font> [[ o.address_invoice_id.city or '' ]] <font face="Helvetica">Estado: </font>[[ o.address_invoice_id.state_id and o.address_invoice_id.state_id.name or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Localidad: </font>[[ o.address_invoice_id.city2 or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">C.P.:</font> [[ o.address_invoice_id.zip or '' ]] </para>
-            <para style="terp_default_8"><font face="Helvetica">R. F. C. :</font> [[ o.company_id.partner_id._columns.has_key('vat_split') and o.company_id.partner_id.vat_split or o.company_id.partner_id.vat ]]</para>
+            <para style="terp_default_8"><font face="Helvetica">R. F. C. :</font> [[ o.partner_id._columns.has_key('vat_split') and o.partner_id.vat_split or o.partner_id.vat ]]</para>
             <para style="P25">Teléfono(s): </para>
             <para style="P19">[[ o.address_invoice_id.phone or removeParentNode('para') ]]</para>
             <para style="P19">[[ o.address_invoice_id.fax or removeParentNode('para') ]]</para>

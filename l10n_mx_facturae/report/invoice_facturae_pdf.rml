@@ -65,7 +65,6 @@
     <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -152,7 +151,7 @@
             <para style="terp_default_8"><font face="Helvetica">Ciudad:</font> [[ o.address_invoice_id.city or '' ]] <font face="Helvetica">Estado: </font>[[ o.address_invoice_id.state_id and o.address_invoice_id.state_id.name or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Localidad: </font>[[ o.address_invoice_id.city2 or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">C.P.:</font> [[ o.address_invoice_id.zip or '' ]] </para>
-            <para style="terp_default_8"><font face="Helvetica">R. F. C. :</font> [[ o.company_id.partner_id._columns.has_key('vat_split') and o.company_id.partner_id.vat_split or o.company_id.partner_id.vat ]]</para>
+            <para style="terp_default_8"><font face="Helvetica">R. F. C. :</font> [[ o.partner_id._columns.has_key('vat_split') and o.partner_id.vat_split or o.partner_id.vat ]]</para>
             <para style="P22">Teléfono(s): </para>
             <para style="P16">[[ o.address_invoice_id.phone or removeParentNode('para') ]]</para>
             <para style="P16">[[ o.address_invoice_id.fax or removeParentNode('para') ]]</para>
