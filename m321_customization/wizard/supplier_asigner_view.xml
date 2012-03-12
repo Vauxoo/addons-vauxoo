@@ -14,7 +14,7 @@
                         <field name='sure'/>
                     <field name='are_sure'/>
                <button name="assigner_supplier"
-                   string="Asigner"
+                   string="Assign"
                    type="object" icon="terp-stock_effects-object-colorize" />
            </group>
            </group>
