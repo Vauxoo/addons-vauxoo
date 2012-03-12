@@ -26,13 +26,13 @@
                         <field name="customs"/>
                         <field name="date"/>
                         <field name="rate"/>
-                        <field name="supplier_id"/>
+                        <field name="supplier_id" context="{'search_default_supplier':1}"/> <!--domain="[('supplier','=',True)]"-->
                         <field name="company_id" select="1" groups="base.group_multi_company" widget="selection"/>
                     </group>
                     <newline/>
                     <notebook colspan="4">
                         <page string="Invoices">
-                            <field name="invoice_ids" nolabel="1"/>
+                            <field name="invoice_ids" nolabel="1" domain="[('partner_id','=',supplier_id)]"/>
                         </page>
                         <page string="Track Lots">
                             <field name="lot_ids" nolabel="1" context="{'form_view_ref' : 'l10n_mx_import_info.stock_tracking_form'}"/>

@@ -1,14 +1,14 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: Angelica Barrios angelicaisabelb@gmail.com
-#              Humberto Arocha humberto@openerp.com.ve
+#              Humberto Arocha hbto@vauxoo.com
 #    Planified by: Humberto Arocha
 #    Finance by: LUBCAN COL S.A.S http://www.lubcancol.com
-#    Audited by: Humberto Arocha humberto@openerp.com.ve
+#    Audited by: Humberto Arocha hbto@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -31,11 +31,11 @@
                  'stock'                                            ,
                  'product'                                          ,
                 ]                                                   ,
-    "author" : "OpenERP Venezuela"                                  ,
+    "author" : "Vauxoo"                                  ,
     "description" : """
     Modulo para el Reporte de la Hoha de Conteo de Inventario
                     """                                             ,
-    "website" : "http://wiki.openerp.org.ve/"                       ,
+    "website" : "http://www.vauxoo.com/"                       ,
     "category" : "Generic Modules"                                  ,
     "init_xml" : [
     ]                                                               ,

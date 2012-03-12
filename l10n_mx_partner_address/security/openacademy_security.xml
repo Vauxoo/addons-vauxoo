@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="res.groups" id="group_address_mx">
+            <field name="name">Address MX</field>
+        </record>
+        
+    </data>
+</openerp>

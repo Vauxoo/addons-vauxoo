@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
@@ -35,6 +35,8 @@ import tempfile
 import os
 import sys
 import codecs
+import xml.dom.minidom
+from datetime import datetime, timedelta
 from tools.misc import ustr
 try:
     from SOAPpy import WSDL
@@ -53,6 +55,16 @@ _form = '''<?xml version="1.0"?>
     </group>
 </form>'''
 _fields  = {
+    'name': {
+        'string': 'Name',
+        'type': 'char',
+        'size': 64,
+    },
+    'fname': {
+        'string': 'Name',
+        'type': 'char',
+        'size': 64,
+    },
     'file': {
         'string': 'File',
         'type': 'binary',
@@ -93,29 +105,35 @@ def _get_file(self, cr, uid, data, context={}):
 
     fdata = base64.encodestring( xml_data )
     msg = "Presiona clic en el boton 'subir archivo'"
-    return {'file': fdata, 'fname': fname_invoice, 'msg': msg}
+    return {'file': fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
 
 def _upload_ws_file(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')
     pac_params_obj = pool.get('params.pac')
     cfd_data = base64.decodestring( data['form']['file'] or '' )
+    
+    xml_res_str = xml.dom.minidom.parseString(cfd_data)
+    compr = xml_res_str.getElementsByTagName('Comprobante')[0]
+    date = compr.attributes['fecha'].value
+    date_format = datetime.strptime( date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
+    context['date']=date_format
+    
     invoice_ids = data['ids']
     invoice = invoice_obj.browse(cr, uid, invoice_ids, context=context)[0]
-    #get currency and rate from invoice
     currency = invoice.currency_id.name
     currency_enc = currency.encode('UTF-8', 'strict')
-    #currency_enc = ustr(currency)
-    rate = invoice.currency_id.rate
-    rate_str = str(rate)
-
+    rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
+    file = data['form']['file']
     moneda = '''<Addenda>
         <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
-    </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate_str)
+    </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate)
 
 
     cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
     pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
+    #print '-------------------la addenda desde version 5',cfd_data_adenda
+
 
     if pac_params_ids:
         pac_params = pac_params_obj.browse(cr, uid, pac_params_ids, context)[0]
@@ -152,12 +170,13 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-                resultado = wsdl_client.timbrar(*params)
-                msg = resultado['resultados']['mensaje']
-                status = resultado['resultados']['status']
+                resultado = wsdl_client.timbrar(*params)               
+                msg = resultado['resultados'] and resultado['resultados']['mensaje'] or ''
+                status = resultado['resultados'] and resultado['resultados']['status'] or ''
                 if status == '200' or status == '307':
                     fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
                     fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
+                    fecha_timbrado = fecha_timbrado and datetime.strptime(fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=-6) or False
                     cfdi_data = {
                         #'cfdi_cbb': base64.decodestring( resultado['resultados']['qrCode'] or '' ) or False,
                         'cfdi_cbb': resultado['resultados']['qrCode'] or False,#ya lo regresa en base64
@@ -168,15 +187,23 @@ def _upload_ws_file(self, cr, uid, data, context={}):
                         'cfdi_xml': base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ),#este se necesita en uno que no es base64
                         'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
                     }
-                    invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
-                    msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                    if cfdi_data.get('cfdi_xml', False):
+                        file = base64.encodestring( cfdi_data['cfdi_xml'] or '' )
+                        invoice_obj.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
+                        msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                    else:
+                        msg = msg + "\nNo se pudo extraer el archivo XML del PAC"
                     #open("D:\\cfdi_b64.xml", "wb").write( resultado['resultados']['cfdiTimbrado'] or '' )
                     #open("D:\\cfdi.xml", "wb").write( base64.decodestring( resultado['resultados']['cfdiTimbrado'] or '' ) )
-                elif status == '500':#documento no es un cfd version 2, probablemente ya es un CFD version 3
-                    msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema."
+                elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
+                    msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
+                else:
+                    msg += '\n' + resultado['mensaje'] or ''
+                    if not status:
+                        status = 'parent_' + resultado['status']
     else:
         msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
-    return {'file': data['form']['file'], 'msg': msg}
+    return {'file': file, 'msg': msg}
 
 class wizard_export_invoice_pac_sf(wizard.interface):
     states = {

@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Coded by: isaac (isaac@vauxoo.com)
@@ -77,49 +77,72 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
             cerCSD = company_brw.certificate_file#base64.encodestring(company_brw.certificate_file)
             keyCSD = company_brw.certificate_key_file#base64.encodestring(company_brw.certificate_key_file)
-            contrasenaCSD = company_brw.certificate_password
+            passcsd = company_brw.certificate_password
             uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
 
             wsdl_client = False
             wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
             if True:#if wsdl_client:
-                params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
+                params = [user, password, uuids, cerCSD, keyCSD, passcsd ]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-                resultado = wsdl_client.cancelar(*params)
-
-                status = resultado['resultados']['status']
-                status_uuid = resultado['resultados']['statusUUID']
+                result = wsdl_client.cancelar(*params)
+                status = result['resultados'] and result['resultados']['status'] or ''
+                status_uuid = result['resultados'] and result['resultados']['statusUUID'] or ''
                 msg_status={}
                 if status =='200':
-                    mensaje_global = '- El proceso de cancelación se ha completado correctamente'
-                elif status =='500':
-                    mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
-                folio_cancel = resultado['resultados']['uuid']
-                mensaje_global = mensaje_global +'\n- El uuid cancelado es: ' + folio_cancel
+                    folio_cancel = result['resultados'] and result['resultados']['uuid'] or ''
+                    msg_global = '- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel
+                    #~ msg_global = msg_global +'\n- El uuid cancelado es: ' + folio_cancel
+                #~ elif status =='500':
+                    #~ msg_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
+                else:
+                    msg_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente'
 
                 if status_uuid == '201':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
                 elif status_uuid == '202':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
                 elif status_uuid == '203':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
                 elif status_uuid == '204':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación'
                 elif status_uuid == '205':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
                 else:
-                    mensaje_SAT = '- Etatus uuid desconocido'
-                mensaje_global = mensaje_global + mensaje_SAT
+                    msg_sat = '\n- Estatus de respuesta del SAT desconocido'
+                msg_global = msg_global + msg_sat
 
-                #~ print 'mensaje final es: ',mensaje_global.decode(encoding='UTF-8', errors='strict')
-                raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
         else:
-            mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
-            raise osv.except_osv(('Estado de Cancelacion!'),(mensaje_global.decode(encoding='UTF-8', errors='strict')))
-        return {}
+            msg_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
+        self.write(cr, uid, ids, {'message': msg_global }, context=None)
+        return True
 
+    def _get_file(self,cr, uid, context):
+        atta_obj = self.pool.get('ir.attachment')
+        atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('name', 'ilike', '%.xml')], context=context)
+        res={}
+        if atta_id:
+            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
+            inv_xml = base64.encodestring(atta_brw.db_datas)
+
+        else:
+            inv_xml = False
+            raise osv.except_osv(('Estado de Cancelación!'),('Esta factura no ha sido timbrada, por lo que no es posible cancelarse.'))
+        return inv_xml
+
+
+    _columns = {
+        'file': fields.binary('File', readonly=True),
+        'message': fields.text('text'),
+
+    }
+
+    _defaults= {
+        'message': 'Seleccione el botón Cancelar Factura para exportar al PAC',
+        'file': _get_file
+    }
 wizard_cancel_invoice_pac_sf()
 

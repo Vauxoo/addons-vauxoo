@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -66,21 +66,22 @@ class res_partner(osv.osv):
         Verificar RFC México
         '''
         # we convert to 8-bit encoding, to help the regex parse only bytes
-        vat = ustr(vat).encode('iso8859-1')
-        m = self.__check_vat_mx_re.match(vat)
-        if not m:
-            #No valid format
-            return False
-        try:
-            ano = int(m.group('ano'))
-            if ano > 30:
-                ano = 1900 + ano
-            else:
-                ano = 2000 + ano
-            datetime.date(ano, int(m.group('mes')), int(m.group('dia')))
-        except ValueError:
-            return False
-        #Valid format and valid date
+        if vat:
+            vat = ustr(vat).encode('iso8859-1')
+            m = self.__check_vat_mx_re.match(vat)
+            if not m:
+                #No valid format
+                return False
+            try:
+                ano = int(m.group('ano'))
+                if ano > 30:
+                    ano = 1900 + ano
+                else:
+                    ano = 2000 + ano
+                datetime.date(ano, int(m.group('mes')), int(m.group('dia')))
+            except ValueError:
+                return False
+            #Valid format and valid date
         return True
     #check_vat = lambda *a: check_vat_mx
     
@@ -103,7 +104,7 @@ class res_partner(osv.osv):
         '''
         Verificar RFC México
         '''
-        #[IMP] base_vat: check_vat_mx by moylop260@hotmail.com, tested with 242,665 real RFC's
+        #[IMP] base_vat: check_vat_mx by moylop260@vauxoo.com, tested with 242,665 real RFC's
         import time
         import re
         map_initials = "[A-Z|&]"*4

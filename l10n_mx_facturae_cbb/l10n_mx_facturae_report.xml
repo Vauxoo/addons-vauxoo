@@ -2,14 +2,15 @@
 <openerp>
     <data>
     
-        <report id="account_invoice_facturae_pdf"
-            name="account.invoice.facturae.pdf"
-            string="Factura Electronica PDF"
+        <report id="account_invoice_facturae_pdf2"
+            name="account.invoice.facturae.pdf2"
+            string="Factura Electronica CBB PDF"
             model="account.invoice"
             header="False"
             rml="l10n_mx_facturae_cbb/report/invoice_facturae_pdf.rml"
             attachment_use="1"
-            attachment="object.fname_invoice and (object.fname_invoice + '') or ''"
+            attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"
+            groups="l10n_mx_facturae_cbb.group_facturae_mx_cbb_user"
         />
         
     </data>

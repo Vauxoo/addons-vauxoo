@@ -8,9 +8,15 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Cancel invoice">
-                    <!--<field name='message'/>-->
-                    <button special="cancel" string="_Close" icon="gtk-cancel"/>
-                    <button name="sf_cancel" type="object" string="_Cancel invoice" icon="gtk-ok"/>
+                    <separator colspan="4" string="File"/>
+                        <field name='file' nolabel="1" colspan="4"/>
+                        <newline/>
+                        <separator colspan="4" string="Message"/>
+                        <field name='message' nolabel="1" colspan="4"/>
+                        <separator string="" colspan="4"/>
+                        <newline/>
+                        <button special="cancel" string="_Close" icon="gtk-cancel"/>
+                        <button name="sf_cancel" type="object" string="_Cancel invoice" icon="gtk-ok"/>
                 </form>
             </field>
         </record>

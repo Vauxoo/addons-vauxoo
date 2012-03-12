@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="res.groups" id="group_facturae_mx_manager">
+            <field name="name">FacturaE MX / Manager</field>
+        </record>
+        <record model="res.groups" id="group_facturae_mx_user">
+            <field name="name">FacturaE MX / User</field>
+        </record>
+        <record model="res.groups" id="group_facturae_mx_cfd_user">
+            <field name="name">FacturaE MX CFD / User</field>
+        </record>
+        
+    </data>
+</openerp>

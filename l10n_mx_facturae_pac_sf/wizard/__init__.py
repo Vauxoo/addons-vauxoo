@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
@@ -25,5 +25,8 @@
 #
 ##############################################################################
 
+#~ import wizard_export_invoice_pac_sf
+#import wizard_cancel_invoice_pac_sf
 import wizard_export_invoice_pac_sf
-import wizard_cancel_invoice_pac_sf
+import wizard_cancel_invoice_pac_sf_v5
+#~ import wizard_export_invoice_pac_sf_v6

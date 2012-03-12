@@ -1,13 +1,14 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
 #    All Rights Reserved
+#    info Vauxoo info@vauxoo.com
 ###############Credits######################################################
-#    Coded by: nhomar@openerp.com.ve,
+#    Coded by: nhomar@vauxoo.com,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Cli-Per
-#    Audited by: Alejandro Negrin alejandro@openerpmexico.com
+#    Audited by: Alejandro Negrin anegrin@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -26,14 +27,14 @@
     "name" : "OpenERP Hr Concepts",
     "version" : "0.1",
     "depends" : ["base","hr","product","account"],
-    "author" : "OpenERP Venezuela",
+    "author" : "Vauxoo",
     "description" : """
     What do this module:
     Create model to improve RRHH payment on OpenERP.
     Load all concepts related to RRHH in mexico.
                     """,
-    "website" : "http://openerp.com.ve",
-    "category" : "Localisation/Hr",
+    "website" : "http://www.vauxoo.com",
+    "category" : "Localization/Hr",
     "init_xml" : [
     ],
     "demo_xml" : [
