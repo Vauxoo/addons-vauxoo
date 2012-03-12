@@ -5,13 +5,9 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha           <humberto@openerp.com.ve>
-#              Angelica Barrios          <angelicaisabelb@gmail.com>
-#              María Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
-#              Javier Duran              <javier@vauxoo.com>
+#    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
-#    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
-#    Audited by: Humberto Arocha humberto@openerp.com.ve
+#    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -25,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##############################################################################
+################################################################################
 
 from osv import fields, osv
 import tools
@@ -179,3 +175,5 @@ class picking_valued(osv.osv_memory):
 
 
 picking_valued()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

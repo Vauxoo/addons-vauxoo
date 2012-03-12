@@ -1,20 +1,33 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
-##############################################################################
+###########################################################################
+#    Module Writen to OpenERP, Open Source Management Solution
+#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    All Rights Reserved
+###############Credits######################################################
+#    Coded by: javier@vauxoo.com
+#    Planified by: Nhomar Hernandez
+#    Audited by: Vauxoo C.A.
+#############################################################################
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-#    OpenERP, Open Source Management Solution
-#    Copyright (c) 2008 ACYSOS S.L. (http://acysos.com) All Rights Reserved.
-#                       Pedro Tarrafeta <pedro@acysos.com>
-#    Copyright (c) 2008 Pablo Rocandio. All Rights Reserved.
-#    $Id$
-#    Modificado para cumplir con legislacion Venezolana por
-#    Netquatro, C.A. <openerp@netquatro.com>
-##############################################################################
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
 
 {
     "name" : "Formatos Nota de Entrega y Guia Despacho",
     "version" : "0.3",
-    "author" : "Pablo Rocandio y ACYSOS, S.L., Ajustado para Venezuela Netquatro, C.A.",
-    "category" : "Localisation/Venezuela",
+    "author" : "Vauxoo",
+    "category" : "Localization",
     "description": """
     Notas de entrega
     Guías de despacho según decreto 
@@ -34,9 +47,9 @@
                    ],
     "active": False,
     "installable": True,
-    "website": "http://openerp.netquatro.com",
+    "website": "http://vauxoo.com",
 }
 
 
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
