@@ -217,7 +217,7 @@ class account_invoice(osv.osv):
             if sequence_id:
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
-            fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
+            fname += (invoice.company_id.partner_id and (invoice.company_id.partner_id._columns.has_key('vat_split') and invoice.company_id.partner_id.vat_split or invoice.company_id.partner_id.vat) or '')
             fname += '.'
             number_work = invoice.number or invoice.internal_number
             try:
@@ -793,7 +793,8 @@ class account_invoice(osv.osv):
             invoice_data = invoice_data_parent['Comprobante']
             invoice_data['Emisor'] = {}
             invoice_data['Emisor'].update({
-                'rfc': (partner_parent.vat or '').replace('-', ' ').replace(' ',''),
+                
+                'rfc': ((partner_parent._columns.has_key('vat_split') and partner_parent.vat_split or partner_parent.vat) or '').replace('-', ' ').replace(' ',''),
                 'nombre': address_invoice_parent.name or partner_parent.name or '',
                 #Obtener domicilio dinamicamente
                 #virtual_invoice.append( (invoice.company_id and invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '').replac
@@ -827,7 +828,7 @@ class account_invoice(osv.osv):
                 raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(invoice.partner_id.name, msg2))
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
-                'rfc': (invoice.partner_id.vat or '').replace('-', ' ').replace(' ',''),
+                'rfc': ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ',''),
                 'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',

@@ -52,7 +52,7 @@ class account_invoice(osv.osv):
             if sequence_id:
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
-            fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
+            fname += (invoice.company_id.partner_id and (partner_parent._columns.has_key('vat_split') and partner_parent.vat_split or partner_parent.vat) or '')
             fname += '.'
             try:
                 int(invoice.number)
