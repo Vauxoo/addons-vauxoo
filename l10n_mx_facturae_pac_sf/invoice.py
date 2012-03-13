@@ -134,9 +134,7 @@ class account_invoice(osv.osv):
         date = compr.attributes['fecha'].value
         date_format = datetime.strptime( date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
         context['date']=date_format
-        
         invoice_ids = inv_ids
-        print 'el idnvoice_ids es',invoice_ids
         invoice = self.browse(cr, uid, invoice_ids, context=context)[0]
         currency = invoice.currency_id.name
         currency_enc = currency.encode('UTF-8', 'strict')
@@ -165,7 +163,6 @@ class account_invoice(osv.osv):
                 #~ password = 'timbrado.SF.16672' originales
 
                 wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
-                print 'el wsdl es',wsdl_client
                 if True:#if wsdl_client:
 
                     file_globals = self._get_file_globals(cr, uid, invoice_ids, context=context)
@@ -212,5 +209,91 @@ class account_invoice(osv.osv):
         else:
             msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
         return {'file': file, 'msg': msg}
+        
+        
+    def _get_file_cancel(self, cr, uid, inv_ids,context = {}):
+        inv_ids = inv_ids[0]
+        atta_obj = self.pool.get('ir.attachment')
+        atta_id = atta_obj.search(cr, uid, [('res_id', '=', inv_ids), ('name', 'ilike', '%.xml')], context=context)
+        res={}
+        if atta_id:
+            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
+            inv_xml = atta_brw.datas or False
+        else:
+            inv_xml = False
+            raise osv.except_osv(('Estado de Cancelación!'),('Esta factura no ha sido timbrada, por lo que no es posible cancelarse.'))
+        return {'file': inv_xml}
+        
+    def sf_cancel(self, cr, uid, inv_ids, context=None):
+        context_id=inv_ids[0]
+        company_obj = self.pool.get('res.company.facturae.certificate')
+        pac_params_obj = self.pool.get('params.pac')
+
+        invoice_brw = self.browse(cr, uid, context_id, context)
+        company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
+        pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_cancelar')],context=context)
+
+        if pac_params_srch:
+            pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
+            user = pac_params_brw.user
+            password = pac_params_brw.password
+            wsdl_url = pac_params_brw.url_webservice
+            namespace = pac_params_brw.namespace
+            #---------constantes
+            #~ user = 'testing@solucionfactible.com'
+            #~ password = 'timbrado.SF.16672'
+            #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
+            #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
+            
+            wsdl_client = False
+            wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
+            if True:#if wsdl_client:
+                file_globals = self._get_file_globals(cr, uid, [context_id], context=context)
+                fname_cer_no_pem = file_globals['fname_cer']
+                cerCSD = fname_cer_no_pem and base64.encodestring( open(fname_cer_no_pem, "r" ).read() ) or ''
+                fname_key_no_pem = file_globals['fname_key']
+                keyCSD = fname_key_no_pem and base64.encodestring( open(fname_key_no_pem, "r" ).read() ) or ''
+                zip = False#Validar si es un comprimido zip, con la extension del archivo
+                contrasenaCSD = file_globals.get('password', '')
+                uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
+                
+                params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
+                wsdl_client.soapproxy.config.dumpSOAPOut = 0
+                wsdl_client.soapproxy.config.dumpSOAPIn = 0
+                wsdl_client.soapproxy.config.debug = 0
+                wsdl_client.soapproxy.config.dict_encoding='UTF-8'
+                result = wsdl_client.cancelar(*params)
+                
+                status = result['resultados'] and result['resultados']['status'] or ''
+                #agregados
+                uuid_nvo = result['resultados'] and result['resultados']['uuid'] or ''
+                msg_nvo = result['resultados'] and result['resultados']['mensaje'] or ''
+                
+                status_uuid = result['resultados'] and result['resultados']['statusUUID'] or ''
+                msg_status={}
+                if status =='200':
+                    folio_cancel = result['resultados'] and result['resultados']['uuid'] or ''
+                    msg_global = '\n- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel+'\n\nMensaje Técnico:\n'
+                    msg_tecnical = 'Status:',status,' uuid:',uuid_nvo,' msg:',msg_nvo,'Status uuid:',status_uuid
+                else:
+                    msg_global = '\n- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente.\n\nMensaje Técnico:\n'
+                    msg_tecnical = 'status:',status,' uuidnvo:',uuid_nvo,' MENSJAE:NVO',msg_nvo,'STATUS UUID:',status_uuid
+
+                if status_uuid == '201':
+                    msg_SAT = '- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito.'
+                elif status_uuid == '202':
+                    msg_SAT = '- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente.'
+                elif status_uuid == '203':
+                    msg_SAT = '- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación.'
+                elif status_uuid == '204':
+                    msg_SAT = '- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación.'
+                elif status_uuid == '205':
+                    msg_SAT = '- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación.'
+                else:
+                    msg_SAT = '- Estatus de respuesta del SAT desconocido'
+                msg_global = msg_SAT + msg_global  + str(msg_tecnical)
+        else:
+            msg_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
+        return {'message': msg_global }
         
 account_invoice()
