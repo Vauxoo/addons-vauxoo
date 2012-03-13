@@ -14,7 +14,6 @@
           <field name='margin_reference' />
           <field name='date_prom_begin' />
           <field name='date_prom_end' />
-           <field name='product_id' invisible="1" />
         </form>
       </field>
     </record>
@@ -31,7 +30,6 @@
           <field name='margin_reference' />
           <field name='date_prom_begin' />
           <field name='date_prom_end' />
-           <field name='product_id' invisible="1" />
         </tree>
       </field>
     </record>
@@ -43,7 +41,6 @@
         <form string="Cost and Price">
           <group colspan="7">
             <group colspan="6">
-              <field name='product_id' />
               <field name='type' colspan="1" />
               <field name='serial' />
               <field name='date_reg' />
@@ -80,7 +77,6 @@
                 <field name='min_margin' />
                 <field name='date_prom_begin' />
                 <field name='date_prom_end' />
-                 <field name='product_id' readonly="1" />
               </tree>
             </field>
           </group>
@@ -93,7 +89,6 @@
       <field name='type'>tree</field>
       <field name='arch' type='xml'>
         <tree string="Cost and Price">
-          <field name='product_id' />
           <field name='cost_ult' />
           <!-- <field name='unit_price'/> <field name='cost_to_price'/> -->
         </tree>
