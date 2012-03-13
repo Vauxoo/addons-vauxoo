@@ -59,8 +59,11 @@ class invoice_commission_line(osv.osv):
         for ail_brw in self.browse(cr,uid,ids):
             if ail_brw.product_id:
                 product_cost = ail_brw.product_id.standard_price
-                product_pu = ail_brw.price_unit
-                res[ail_brw.id]=((product_pu-product_cost)/product_cost)*100
+                if product_cost != 0.0:
+                    product_pu = ail_brw.price_unit
+                    res[ail_brw.id]=((product_pu-product_cost)/product_cost)*100
+                else:
+                    raise wizard.except_wizard(_("User Error"), _("The product standard price can't be 0.0!"))
             else:
                 res[ail_brw.id]=0.0
         print 'get_gain'

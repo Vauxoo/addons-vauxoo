@@ -60,8 +60,11 @@ class sale_commission_line(osv.osv):
         for sol_brw in self.browse(cr,uid,ids):
             if sol_brw.product_id:
                 product_cost = sol_brw.product_id.standard_price
-                product_pu = sol_brw.price_unit
-                res[sol_brw.id]=((product_pu-product_cost)/product_cost)*100
+                if product_cost != 0.0:
+                    product_pu = sol_brw.price_unit
+                    res[sol_brw.id]=((product_pu-product_cost)/product_cost)*100
+                else:
+                    raise wizard.except_wizard(_("User Error"), _("The product standard price can't be 0.0!"))
             else:
                 res[sol_brw.id]=0.0
         print 'get_gain'
