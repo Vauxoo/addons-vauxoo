@@ -34,6 +34,8 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/baremo_security.xml",
+        "security/ir.model.access.csv",
         "view/baremo_view.xml",
         "view/company_view.xml",
         "data/baremo_data.xml",

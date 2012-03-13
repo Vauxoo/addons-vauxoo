@@ -47,9 +47,7 @@ class baremo_book(osv.osv):
         spn_ids = spn_obj.search(cr, uid, [('bar_id','=',bid)])
         
         if not spn_ids:
-            raise osv.except_osv(_('Be Aware !'), 
-            _('''There are no time spans  established for the\nBareme: %s\nbeing used.\nPlease Fill this one before using it
-            '''%(self.browse(cr, uid, bid,context).name.upper())))
+            raise osv.except_osv(_('Be Aware !'),_('There are no time spans  established for the\nBareme: %s\nbeing used.\nPlease Fill this one before using it'%(self.browse(cr, uid, bid,context).name.upper())))
         
         timespan_number = 0.0
         rate_number = 0.0
