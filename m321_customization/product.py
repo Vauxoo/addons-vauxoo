@@ -67,8 +67,24 @@ class inherited_product(osv.osv):
         else:
             return True
 
+
+    def _stock_available(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        if len(ids) == 0:
+            return res
+        for product in self.browse(cr,uid,ids,context=context):
+            if product.virtual_available > 0:
+                res[product.id] = 'Available'
+            else:
+                res[product.id] = ''
+                
+        return res
+
     _columns = {
             'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
+           'available_boolean':fields.function(_stock_available, method=True,type="text", store=True, string='Available Stock'),
         }
 
     _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc'])]
