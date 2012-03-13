@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    
+      <record id="inherit_sale_view_search" model="ir.ui.view">
+      <field name="name">sale.view.inherit.form</field>
+      <field name="model">sale.order</field>
+      <field name="type">search</field>
+      <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+      <field name="arch" type="xml">
+        <xpath expr='/search/filter[@string="Quotations"]' position="before">
+            <filter icon="terp-go-month" string="   Today   "
+                                name="today"
+                                domain="[('date_order','=',(datetime.date.today()-relativedelta()).strftime('%%d-%%m-%%Y'))]"
+                                help="Sale order for today"/>
+        </xpath>
+      </field>
+    </record>
+
+
+    </data>
+</openerp>

@@ -37,6 +37,8 @@
         'security/pay_picking_security.xml',
         'security/ir.model.access.csv',
         'product_view.xml',
+        'invoice_view.xml',
+        'sale_view.xml',
         'stock_view.xml',
         'wizard/cancel_order_view.xml',
         'wizard/supplier_asigner_view.xml',
