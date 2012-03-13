@@ -60,86 +60,28 @@ class wizard_facturae_ftp(osv.osv_memory):
     def invoice_ftp(self, cr, uid, ids, context=None):
         ftp_id=False
         data=self.read(cr,uid,ids)[0]
-        context_id=context.get('active_ids',[])
-        ftp_obj=self.pool.get('ftp.server')
-        ftp_id=ftp_obj.search(cr,uid,[('name','!=',False)],context=None)
-        if not ftp_id:
-            raise osv.except_osv(('Error Servidor ftp!'),('No Existe Servidor ftp Configurado'))
-        ftp=ftp_obj.browse(cr,uid,ftp_id,context)[0]
-        ftp_servidor = ftp.name
-        ftp_usuario  = ftp.ftp_user
-        ftp_clave    = ftp.ftp_pwd
-        ftp_raiz     = ftp.ftp_raiz
         atta_obj = self.pool.get('ir.attachment')
-        atta_id_xml = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('datas_fname', 'ilike', '%.xml')], context=context)
-        atta_id_pdf = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('datas_fname', 'ilike', '%.pdf')], context=context)
-        archivos=[]
-        if atta_id_xml:
-            atta_brw = atta_obj.browse(cr, uid, atta_id_xml, context)[0]
-            inv_xml = base64.encodestring(atta_brw.db_datas)
-            xml=self.binary2file(cr,uid,ids,inv_xml,"",".xml")
-            xml_name=atta_brw.datas_fname
-            archivos.append({'fichero_origen':xml,'nombre':xml_name})
-        else:
-            raise osv.except_osv(('Error xml!'),('Esta factura no ha sido timbrada, por lo que no es posible subir a ftp. No existe .xml'))
-        if atta_id_pdf:
-            atta_brw = atta_obj.browse(cr, uid, atta_id_pdf, context)[0]
-            inv_pdf = base64.encodestring(atta_brw.db_datas)
-            pdf=str(self.binary2file(cr,uid,ids,inv_pdf,"",".pdf"))
-            pdf_name=atta_brw.datas_fname
-            archivos.append({'fichero_origen':pdf,'nombre':pdf_name})
-        else:
-            raise osv.except_osv(('Error pdf!'),('Esta factura no ha sido timbrada, por lo que no es posible subir a ftp. No existe .xml'))
-        for a in archivos:
-            try:
-                s = ftplib.FTP(ftp_servidor, ftp_usuario, ftp_clave)
-                f = open((a['fichero_origen']), 'rb')
-                s.cwd(ftp_raiz)
-                s.storbinary('STOR ' + (a['nombre']), f)
-                f.close()
-                s.quit()
-            except:
-                raise osv.except_osv(('Error Configuracion ftp!'),('Revisar Informacion de Servidor ftp'))
+        atta_obj.file_ftp(cr,uid,data['files'],context)
+        print data,"dataaa"
         return {}
 
 
-    def _get_file_xml(self,cr, uid, context):
+    def _get_files(self,cr, uid, context):
         atta_obj = self.pool.get('ir.attachment')
-        atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('name', 'ilike', '%.xml')], context=context)
+        atta_ids = atta_obj.search(cr, uid, [('res_id', 'in', context['active_ids'])], context=context)
         res={}
-        if atta_id:
-            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
-            inv_xml = base64.encodestring(atta_brw.db_datas)
-
+        if atta_ids:
+            return atta_ids
         else:
-            inv_xml = False
             raise osv.except_osv(('Estado de ftp!'),('Esta factura no ha sido timbrada, por lo que no es posible subir a ftp. No existe .xml'))
-        return inv_xml
-
-    def _get_file_pdf(self,cr, uid, context):
-        atta_obj = self.pool.get('ir.attachment')
-        atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('name', 'ilike', '%')], context=context)
-        res={}
-        if atta_id:
-            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
-            inv_xml = base64.encodestring(atta_brw.db_datas)
-
-        else:
-            inv_xml = False
-            raise osv.except_osv(('Estado de ftp!'),('Esta factura no ha sido timbrada, por lo que no es posible subir a ftp. No existe .pdf'))
-        return inv_xml
+        return true
 
     _columns = {
-        'file_xml': fields.binary('File xml', readonly=True),
-        'file_pdf': fields.binary('File pdf', readonly=True),
-        'message': fields.text('text'),
-
+        'files': fields.many2many('ir.attachment','ftp_wizard_attachment_rel', 'wizard_id', 'attachment_id', 'Attachments'),
     }
 
     _defaults= {
-        'message': 'Seleccione el botón ftp',
-        'file_xml': _get_file_xml,
-        'file_pdf': _get_file_pdf,
+        'files': _get_files,
     }
 wizard_facturae_ftp()
 

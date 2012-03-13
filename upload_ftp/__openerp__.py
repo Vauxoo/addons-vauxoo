@@ -26,17 +26,17 @@
 ##############################################################################
 
 {
-    "name" : "ftp para xml y pdf de Factura electronica",
+    "name" : "Upload ftp",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module supports ftp, xml and pdf electonic invoice """,
+    "description" : """This module upload files attachment to ftp""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae"],
+    "depends" : ["base"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard/wizard_facturae_ftp_view.xml"],
+    "update_xml" : ["upload_ftp_view.xml"],
     "installable" : True,
     "active" : False,
 }

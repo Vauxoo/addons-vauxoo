@@ -35,14 +35,16 @@
                 <field name="res_model">ftp.server</field>
                 <field name="view_type">form</field>
                 <field name="view_mode">tree,form</field>
-                <field name="limit">1</field>
+                <field name="limit">80</field>
             </record>
+        
+        <menuitem id="ftp_server_menu" name="ftp Server" parent="base.menu_administration" sequence="1"/>
 
         <menuitem
-            parent="account.menu_configuration_misc" 
-            id="ftp_server" 
+            id="ftp_server_view" 
             name="ftp server" 
-            action="action_ftp_server_form" />
+            action="action_ftp_server_form" 
+            parent="ftp_server_menu"/>
 
 
 

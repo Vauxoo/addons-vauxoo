@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name" : "ftp para xml y pdf de Factura electronica",
+    "name" : "ftp para xml y pdf de Factura electronica V5",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
@@ -36,7 +36,7 @@
     "depends" : ["l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard/wizard_facturae_ftp_view.xml"],
+    "update_xml" : ["wizard_facturae_ftp.xml"],
     "installable" : True,
     "active" : False,
 }
