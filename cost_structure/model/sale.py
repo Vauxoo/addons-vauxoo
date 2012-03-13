@@ -68,6 +68,7 @@ class sale_order_line(osv.osv):
         res = {'value':{}}
         global dicc
         dicc = {}
+        
         if price_method and product_uom:
             price_obj = self.pool.get('method.price')
             uom_obj = self.pool.get('product.uom')
@@ -84,7 +85,7 @@ class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
     _columns = {
    
-    'price_structure_id':fields.many2one('method.price','Select Price'),
+        'price_structure_id':fields.many2one('method.price','Select Price'),
     
     }
     
@@ -149,7 +150,7 @@ class sale_order(osv.osv):
                 product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
         
             elif not property_cost_structure:
-                raise osv.except_osv(_('Error'), _('The product has not a cost structure'))
+                product.append(u'The product %s has not a cost structure'%line.product_id.name)
                     
         if len(product) > 0:
             raise osv.except_osv(_('Error'), _('\n'.join(product)))
