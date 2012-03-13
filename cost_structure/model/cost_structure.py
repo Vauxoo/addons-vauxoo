@@ -61,7 +61,6 @@ class cost_structure(osv.osv):
     
     _name = 'cost.structure'
     _columns = {
-    'product_id':fields.many2one('product.product','Product',help="Product Selecet from list product"),
     'description':fields.char('Description',size=128,help="Product Description"),
     'type':fields.selection([('v', 'Venta'),('C', 'Compra')], 'Type', help="Product type"),
     'serial':fields.boolean('Serial',help="Product Serial"),
@@ -85,8 +84,18 @@ class cost_structure(osv.osv):
     'amount':fields.float('Amount',digits_compute=dp.get_precision('Cost Structure'),help="Amount"),
     'cost_to_price':fields.selection([('cost_ult', 'Ultimo Costo'),('cost_prom', 'Costo Promedio'),('cost_suppler', 'Costo Proveedor'),('cost_ant', 'Costo Anterior')], 'Type Cost', help="Product type"),
     'method_cost_ids':fields.one2many('method.price','cost_structure_id','Cost Method'),
+    'company_id':fields.many2one('res.company','Company'),
+    
     }
-    _rec_name = 'product_id'
+    _rec_name = 'description'
+    
+    _defaults = {
+    'company_id':lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid,'cost.structure', context=c),
+    
+    
+    
+    }
+    
     
 cost_structure()
 
@@ -106,7 +115,6 @@ class method_price(osv.osv):
     _columns = {
     'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
     'sequence':fields.integer('Sequence'),
-    'product_id':fields.related('cost_structure_id','product_id',relation='product.product',type='many2one',string="Product"),
     'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
     'date':fields.date('Date'),
     'date_prom_begin':fields.date('Date Prom',help="Compute Date Prom"),

@@ -10,7 +10,7 @@
         <xpath expr='/form/notebook/page[@string="Information"]' position="after">
           <page string="Advance Options">
             <group colspan="9" col="1">
-              <field name="cost_structure_id" />
+              <field name="property_cost_structure" />
             </group>
             <group colspan="6" col="4" string="Costos">
               <field name='cost_ult' />
