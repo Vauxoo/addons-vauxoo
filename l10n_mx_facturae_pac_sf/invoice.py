@@ -78,4 +78,33 @@ class account_invoice(osv.osv):
             'cfdi_folio_fiscal': False,
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
+        
+    def _get_file(self, cr, uid, inv_ids , context={}):
+        if not context:
+            context = {}
+        #context.update( {'date': data['form']['date']} )
+        #~ ids = data['ids']
+        #~ id = ids[0]
+        id = inv_ids[0]
+        invoice = self.browse(cr, uid, [id], context=context)[0]
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+        aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',id)])
+        xml_data = ""
+        if aids:
+            brow_rec = self.pool.get('ir.attachment').browse(cr, uid, aids[0])
+            if brow_rec.datas:
+                xml_data = base64.decodestring(brow_rec.datas)
+        else:
+            fname, xml_data = self._get_facturae_invoice_xml_data(cr, uid, inv_ids, context=context)
+            self.pool.get('ir.attachment').create(cr, uid, {
+                    'name': fname_invoice,
+                    'datas': base64.encodestring(xml_data),
+                    'datas_fname': fname_invoice,
+                    'res_model': 'account.invoice',
+                    'res_id': invoice.id,
+                }, context=context)
+        fdata = base64.encodestring( xml_data )
+        msg = "Presiona clic en el boton 'subir archivo'"
+        return {'file': fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
+        
 account_invoice()

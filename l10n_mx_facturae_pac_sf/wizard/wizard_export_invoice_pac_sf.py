@@ -77,7 +77,7 @@ _fields  = {
         'readonly': True,
     },
 }
-def _get_file(self, cr, uid, data, context={}):
+def __get_file(self, cr, uid, data, context={}):
     if not context:
         context = {}
     #context.update( {'date': data['form']['date']} )
@@ -107,6 +107,16 @@ def _get_file(self, cr, uid, data, context={}):
     msg = "Presiona clic en el boton 'subir archivo'"
     return {'file': fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
 
+def _get_invoice_id(self, cr, uid, data, context={}):
+    res = {}
+    print 'dentro del get_invoice_id en wizard y el data es',data,'y los ids son',data['ids']
+    #l10n_mx_facturae_pac_sf.invoice._get_file(self,cr, uid, {'ids':20, 'datas':data}, context=context)
+    pool = pooler.get_pool(cr.dbname)
+    invoice_obj = pool.get('account.invoice')
+    res = invoice_obj._get_file(cr, uid, data['ids'])
+    print 'en el wizard el res es',res
+    return res
+    
 def _upload_ws_file(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')
@@ -204,11 +214,13 @@ def _upload_ws_file(self, cr, uid, data, context={}):
     else:
         msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
     return {'file': file, 'msg': msg}
+    
+    
 
 class wizard_export_invoice_pac_sf(wizard.interface):
     states = {
         'init': {
-            'actions': [ _get_file ],
+            'actions': [ _get_invoice_id ],
             'result': {'type': 'state', 'state':'show_view'},
         },
 
