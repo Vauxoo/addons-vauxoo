@@ -37,6 +37,7 @@ class account_invoice(osv.osv):
         'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32),
         'cfdi_cadena_original': fields.text('CFD-I Cadena Original'),
         'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado'),
+        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion'),
         'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64),
     }
     
@@ -76,6 +77,13 @@ class account_invoice(osv.osv):
             'cfdi_cadena_original':False,
             'cfdi_fecha_timbrado': False,
             'cfdi_folio_fiscal': False,
+            'cfdi_fecha_cancelacion': False,
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
+        
+    def action_cancel_draft(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {
+            'cfdi_fecha_cancelacion': False,
+        })
+        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
 account_invoice()

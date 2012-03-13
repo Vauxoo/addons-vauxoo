@@ -53,7 +53,6 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
     def sf_cancel(self, cr, uid, ids, context=None):
         data = self.read(cr, uid, ids)[0]
         context_id=context.get('active_ids',[])
-
         invoice_obj = self.pool.get('account.invoice')
         company_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
@@ -102,7 +101,8 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
                     msg_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente'
 
                 if status_uuid == '201':
-                    msg_sat = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
+                    msg_sat = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito.'
+                    invoice_obj.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':time.strftime('%d-%m-%Y %H:%M:%S')})
                 elif status_uuid == '202':
                     msg_sat = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
                 elif status_uuid == '203':
