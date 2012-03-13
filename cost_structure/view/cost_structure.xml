@@ -7,8 +7,9 @@
       <field name='type'>form</field>
       <field name='arch' type='xml'>
         <form string="Method">
+            <field name='unit_price' />
           <field name='sequence' />
-          <field name='unit_price' />
+          <field name='cost_structure_id' />
           <field name='date' />
           <field name='price_referen' />
           <field name='margin_reference' />
@@ -23,8 +24,9 @@
       <field name='type'>tree</field>
       <field name='arch' type='xml'>
         <tree string="Method">
-          <field name='sequence' />
           <field name='unit_price' />
+          <field name='sequence' />
+          <field name='cost_structure_id' />
           <field name='date' />
           <field name='price_referen' />
           <field name='margin_reference' />

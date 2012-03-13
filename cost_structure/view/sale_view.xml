@@ -16,7 +16,7 @@
         </xpath>
         <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]/field[@name="product_id"]' position="after">
           
-          <field name="price_structure_id" domain="[('product_id','=',product_id)]" on_change="price_unit(price_structure_id,product_uom,product_uom_qty)" context="{'price_structure_id':price_structure_id}"/>
+          <field name="price_structure_id" on_change="price_unit(price_structure_id,product_uom,product_uom_qty)" context="{'price_structure_id':price_structure_id}"/>
 <!--
           TODO: <field name="cost_structure_id" domain="[('product_id','=',product_id)]" widget="selection" />
 -->

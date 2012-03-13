@@ -124,6 +124,14 @@ class method_price(osv.osv):
     'min_margin':fields.float('% Margin',digits_compute=dp.get_precision('Cost Structure'),help="Porcent Margin Min"),
     'price_referen':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
     'margin_reference':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
+    'company_id':fields.many2one('res.company','Company'),
     }
+    
     _rec_name = 'unit_price'
+    
+    _defaults = {
+    'company_id':lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid,'cost.structure', context=c),
+    
+    }
+    
 method_price()
