@@ -142,7 +142,8 @@ class account_invoice(osv.osv):
         moneda = '''<Addenda>
             <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
         </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate)
-
+        file = False
+        msg = ''
 
         cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
         pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
