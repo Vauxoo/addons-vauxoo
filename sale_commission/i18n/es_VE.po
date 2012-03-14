@@ -1,0 +1,61 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* sale_commission
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.3\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2012-03-14 15:38+0000\n"
+"PO-Revision-Date: 2012-03-14 11:13-0400\n"
+"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: sale_commission
+#: sql_constraint:sale.order:0
+msgid "Order Reference must be unique !"
+msgstr "¡La referencia del pedido debe ser única!"
+
+#. module: sale_commission
+#: model:ir.model,name:sale_commission.model_sale_order
+msgid "Sale Order"
+msgstr "Pedido de venta"
+
+#. module: sale_commission
+#: view:sale.order:0
+#: field:sale.order,commission:0
+#: field:sale.order.line,commission:0
+msgid "Commission"
+msgstr "Comision"
+
+#. module: sale_commission
+#: field:sale.order.line,gain:0
+msgid "Gain"
+msgstr "Ganancia"
+
+#. module: sale_commission
+#: sql_constraint:sale.order:0
+msgid "The purchase order must be unique per Customer!"
+msgstr "La orden de venta debe ser unica por Cliente"
+
+#. module: sale_commission
+#: code:addons/sale_commission/sale_commission.py:67
+#, python-format
+msgid "The product standard price can't be 0.0!"
+msgstr "El precio estandar de un producto no puede ser 0.0"
+
+#. module: sale_commission
+#: model:ir.model,name:sale_commission.model_sale_order_line
+msgid "Sale Order line"
+msgstr "Línea pedido de venta"
+
+#. module: sale_commission
+#: code:addons/sale_commission/sale_commission.py:67
+#, python-format
+msgid "User Error"
+msgstr "Error de Usuario"
+
