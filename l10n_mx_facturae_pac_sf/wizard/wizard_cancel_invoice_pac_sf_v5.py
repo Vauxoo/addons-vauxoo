@@ -144,6 +144,7 @@ def sf_cancel(self, cr, uid, data, context=None):
 
                 if status_uuid == '201':
                     msg_SAT = '- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito.'
+                    invoice_obj.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':time.strftime('%d-%m-%Y %H:%M:%S')})
                 elif status_uuid == '202':
                     msg_SAT = '- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente.'
                 elif status_uuid == '203':
