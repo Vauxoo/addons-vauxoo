@@ -10,7 +10,7 @@
                 <form string="ftp server">
                     <field name='name' />
                     <field name='ftp_user'/>
-                    <field name='ftp_raiz'/>
+                    <field name='ftp_source'/>
                     <field name='ftp_pwd' password="True"/>
                 </form>
             </field>
@@ -24,7 +24,7 @@
                 <tree string="ftp server">
                     <field name='name' />
                     <field name='ftp_user'/>
-                    <field name='ftp_raiz'/>
+                    <field name='ftp_source'/>
                     <field name='ftp_pwd' password="True"/>
                 </tree>
             </field>

@@ -40,7 +40,6 @@ from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 
 from tools import config
 
-#TODO: Cambiar TODAS las variables y mensajes a ingles, salvo que sea muy tecnicamente necesario que esten en espaniol
 
 class ir_attachment(osv.osv):
     _inherit = 'ir.attachment'
@@ -60,29 +59,28 @@ class ir_attachment(osv.osv):
         if not ftp_id:
             raise osv.except_osv(('Error Servidor ftp!'),('No Existe Servidor ftp Configurado'))
         ftp=ftp_obj.browse(cr,uid,ftp_id,context)[0]
-        ftp_servidor = ftp.name
-        ftp_usuario  = ftp.ftp_user
-        ftp_clave    = ftp.ftp_pwd
-        ftp_raiz     = ftp.ftp_raiz
-        #atta_obj = pooler.get_pool(cr.dbname).get('ir.attachment')
-        archivos=[]
+        ftp_server = ftp.name
+        ftp_user  = ftp.ftp_user
+        ftp_pwd    = ftp.ftp_pwd
+        ftp_source     = ftp.ftp_source
+        list_files=[]
         for id_file in ids:
             if id_file:
                 atta_brw = self.browse(cr, uid, [id_file], context)[0]
                 file_binary = base64.encodestring(atta_brw.db_datas)
                 file=self.binary2file(cr,uid,id_file,file_binary,"ftp","")
                 file_name=atta_brw.datas_fname
-                archivos.append({'fichero_origen':file,'nombre':file_name})
-        for a in archivos:
+                list_files.append({'source_file':file,'name':file_name})
+        for a in list_files:
             try:
-                s = ftplib.FTP(ftp_servidor, ftp_usuario, ftp_clave)
-                f = open((a['fichero_origen']), 'rb')
-                s.cwd(ftp_raiz)
-                s.storbinary('STOR ' + (a['nombre'].replace('/', '_')), f)
+                s = ftplib.FTP(ftp_server, ftp_user, ftp_pwd)
+                f = open((a['source_file']), 'rb')
+                s.cwd(ftp_source)
+                s.storbinary('STOR ' + (a['name'].replace('/', '_')), f)
                 f.close()
                 s.quit()
             except:
-                raise osv.except_osv(('Error Configuracion ftp!'),('Revisar Informacion de Servidor ftp'))
+                raise osv.except_osv(('Error ftp Configuration!'),('Check ftp Server Information'))
         return True
 ir_attachment()
 
@@ -90,9 +88,9 @@ class ftp_server(osv.osv):
     _name='ftp.server'
     
     _columns={
-        'name':fields.char('ftp servidor',size=128,required=True),
-        'ftp_user':fields.char('ftp suario',size=128,required=True),
-        'ftp_pwd':fields.char('ftp clave',size=128,required=True),
-        'ftp_raiz':fields.char('ftp raiz',size=128,required=True,help='llenar con siguiente Formato "/done"'),
+        'name':fields.char('ftp server',size=128,required=True),
+        'ftp_user':fields.char('ftp user',size=128,required=True),
+        'ftp_pwd':fields.char('ftp pwd',size=128,required=True),
+        'ftp_source':fields.char('ftp source',size=128,required=True,help='Format example "/done"'),
     }
 ftp_server()

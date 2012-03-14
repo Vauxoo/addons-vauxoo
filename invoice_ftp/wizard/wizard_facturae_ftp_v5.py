@@ -63,8 +63,7 @@ def invoice_ftp(self, cr, uid, data,context={}):
 
 def _get_files(self, cr, uid, data, context):
     atta_obj = pooler.get_pool(cr.dbname).get('ir.attachment')
-    #TODO: Agregar el model al search de attachment (ver si openerp5, manda el model en la data)
-    atta_ids=atta_obj.search(cr, uid, [('res_id', 'in', data['ids'])], context=context)
+    atta_ids=atta_obj.search(cr, uid, [('res_id', 'in', data['ids']),('res_model','=', data['model'])], context=context)
     res={}
     if atta_ids:
         data['form']['files'] =atta_ids

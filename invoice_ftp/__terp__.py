@@ -26,18 +26,17 @@
 ##############################################################################
 
 {
-#TODO: Cambiar el nombre de modulo y description. Este modulo fue pensado para xml & pdf, pero ahora aplica para todos los adjuntos de account.invoice (Hacerlo con "bzr rename")
-    "name" : "ftp para xml y pdf de Factura electronica",
+    "name" : "attachment of invoice to ftp V5",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module supports ftp, xml and pdf electonic invoice """,
+    "description" : """This module supports attachment of invoice to ftp """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["l10n_mx_facturae","upload_ftp"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard/wizard_facturae_ftp_view.xml"],
+    "update_xml" : ["wizard_facturae_ftp.xml"],
     "installable" : True,
     "active" : False,
 }
