@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Coded by: isaac (isaac@vauxoo.com)
@@ -39,7 +39,7 @@ import os
 import sys
 import codecs
 import xml.dom.minidom
-from datetime import datetime
+from datetime import datetime, timedelta
 from tools.misc import ustr
 try:
     from SOAPpy import WSDL
@@ -152,6 +152,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
                     if status == '200':
                         fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
                         fecha_timbrado = fecha_timbrado and time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
+                        fecha_timbrado = fecha_timbrado and datetime.strptime(fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(hours=-6) or False
                         cfdi_data = {
                             #'cfdi_cbb': base64.decodestring( resultado['resultados']['qrCode'] or '' ) or False,
                             'cfdi_cbb': resultado['resultados']['qrCode'] or False,#ya lo regresa en base64

@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
@@ -51,8 +51,20 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
             'get_taxes': self._get_taxes,
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
+            'exists_key': self._exists_key,
         })
         self.taxes = []
+        
+    def _exists_key(self, key):
+        return self.invoice._columns.has_key(key)
+        """
+        try:
+            str= 'self.invoice.'+key
+            if eval(str):
+                return True
+        except:
+            return False
+        """
     
     def _set_global_data(self, o):
         try:
@@ -70,7 +82,6 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         except Exception, e:
             print "exception: %s"%( e )
             pass
-        print "*************\n**o.cfdi_cbb",o.cfdi_cbb
         return ""
         
     def _get_approval(self):
@@ -159,6 +170,7 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         address_obj = pool.get('res.partner.address')
         invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
         partner_id = invoice.company_id.parent_id and invoice.company_id.parent_id.partner_id.id or invoice.company_id.partner_id.id
+        self.invoice = invoice
         #print "partner_id",partner_id
         #invoice = partner_obj.browse(cr, uid, invoice_id)
         address_id = partner_obj.address_get(self.cr, self.uid, [partner_id], ['invoice'])['invoice']

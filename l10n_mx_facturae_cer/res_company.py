@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -44,7 +44,7 @@ class res_company_facturae_certificate(osv.osv):
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
         'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
-        'certificate_password': fields.char('Certificate Password', size=64, invisible=True, required=True),
+        'certificate_password': fields.char('Certificate Password', size=64, invisible=False, required=True),
         'certificate_file_pem': fields.binary('Certificate File PEM', filters='*.pem,*.cer,*.certificate,*.cert'),
         'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
         'date_start': fields.date('Date Start', required=False),

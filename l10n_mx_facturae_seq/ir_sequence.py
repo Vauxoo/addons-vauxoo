@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -137,7 +137,6 @@ class ir_sequence(osv.osv):
     def get_id(self, cr, uid, sequence_id, test='id=%s', context=None):
         if context is None:
             context = {}
-        approval_obj = self.pool.get('ir.sequence.approval')
         if release.version < '6':
             #inicia copy & paste, de una seccion de la funcion original
             if test not in ('id=%s', 'code=%s'):
@@ -148,6 +147,7 @@ class ir_sequence(osv.osv):
             if res:
                 sequence = self.browse(cr, uid, res['id'], context=context)
                 if sequence.approval_ids:
+                    approval_obj = self.pool.get('ir.sequence.approval')
                     approval_id = self._get_current_approval(cr, uid, [sequence.id], field_names=None, arg=False, context=context)[sequence.id]
                     approval_id = approval_id and approval_obj.browse(cr, uid, [approval_id], context=context)[0] or False
                     if not approval_id:
@@ -184,12 +184,13 @@ class ir_sequence(osv.osv):
             if res:
                 sequence = self.browse(cr, uid, res['id'], context=context)
                 if sequence.approval_ids:
+                    approval_obj = self.pool.get('ir.sequence.approval')
                     approval_id = self._get_current_approval(cr, uid, [sequence.id], field_names=None, arg=False, context=context)[sequence.id]
                     approval_id = approval_id and approval_obj.browse(cr, uid, [approval_id], context=context)[0] or False
                     if not approval_id:
                         raise osv.except_osv('Error !', 'No hay una aprobacion valida de folios.')
-                    return super(ir_sequence, self).get_id(cr, uid, sequence_id=res['id'], test='id')
-            return super(ir_sequence, self).get_id(cr, uid, sequence_id=sequence_id, test=test)
+                    return super(ir_sequence, self).get_id(cr, uid, res['id'], 'id')
+            return super(ir_sequence, self).get_id(cr, uid, sequence_id, test)
 ir_sequence()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

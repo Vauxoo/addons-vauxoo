@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ import time
 import os
 import tempfile
 
-msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
+msg2= "Contacte a su administrador y/o a info@vauxoo.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
@@ -52,7 +52,7 @@ class account_invoice(osv.osv):
             if sequence_id:
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
-            fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
+            fname += (invoice.company_id.partner_id and (partner_parent._columns.has_key('vat_split') and partner_parent.vat_split or partner_parent.vat) or '')
             fname += '.'
             try:
                 int(invoice.number)

@@ -10,7 +10,7 @@
             <field name="inherit_id" ref="base.sequence_view"/>
             <field name="arch" type="xml">
                 <page string="Sequence" position="after">
-                    <page string="Aprobaciones SAT">
+                    <page string="Aprobaciones SAT" groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager">
                         <field name="approval_id"/>
                         <field name="approval_ids" nolabel="1" colspan="4">
                             <tree string="Aprobaciones">

@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -27,10 +27,10 @@
 {
     "name" : "Report Account Aged Partner Balance view",
     "version" : "1.0",
-    "author" : "moylop260@hotmail.com",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """This module creates a sql view for Account Aged Partner Balance today.""",
-    "website" : "http://moylop.blogspot.com/",
+    "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["account"],
     "init_xml" : [],

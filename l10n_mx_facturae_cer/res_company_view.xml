@@ -55,7 +55,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                  <page string="Configuration" position="after">
-                    <page string="Certificados SAT">
+                    <page string="Certificados SAT" groups="l10n_mx_facturae_cer.group_facturae_mx_cer_manager">
                         <!--<field name="cif_file" widget='image'/>-->
                         <newline/>
                         <separator colspan="4" string="For configurate sequence, access to sequence of Sale Journal."/>

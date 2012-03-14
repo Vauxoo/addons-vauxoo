@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -104,7 +104,7 @@ class res_partner(osv.osv):
         '''
         Verificar RFC México
         '''
-        #[IMP] base_vat: check_vat_mx by moylop260@hotmail.com, tested with 242,665 real RFC's
+        #[IMP] base_vat: check_vat_mx by moylop260@vauxoo.com, tested with 242,665 real RFC's
         import time
         import re
         map_initials = "[A-Z|&]"*4

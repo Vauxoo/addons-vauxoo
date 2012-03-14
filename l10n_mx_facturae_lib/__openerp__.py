@@ -27,7 +27,7 @@
 {
     "name" : "l10n_mx_facturae_lib",
     "version" : "1.0",
-    "author" : "vauxoo",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """
     """,
@@ -37,6 +37,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/ir.model.access.csv",
     ],
     "installable" : True,
     "active" : False,
