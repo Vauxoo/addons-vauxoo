@@ -16,7 +16,7 @@
                     <separator string="" colspan="4"/>
                     <newline/>
                     <button special="cancel" string="_Close" icon="gtk-cancel"/>
-                    <button name="upload_ws_file" type="object" string="_Upload Invoice" icon="gtk-ok"/>
+                    <button name="upload_to_pac" type="object" string="_Upload Invoice" icon="gtk-ok"/>
                 </form>
             </field>
         </record>
