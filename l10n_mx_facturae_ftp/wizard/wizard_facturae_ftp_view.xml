@@ -12,7 +12,7 @@
                         <field name='files' nolabel="1" colspan="4"/>
                         <newline/>
                         <button special="cancel" string="_Close" icon="gtk-cancel"/>
-                        <button name="invoice_ftp" type="object" string="ftp" icon="gtk-ok"/>
+                        <button name="invoice_ftp" type="object" string="_Upload to FTP" icon="gtk-ok"/>
                 </form>
             </field>
         </record>
@@ -24,11 +24,6 @@
             target="new"
             key2="client_action_multi"
             id="action_wizard_facturae_ftp_form"/>
-
-
-
-
-
 
     </data>
 </openerp>

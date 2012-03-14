@@ -28,7 +28,6 @@ from osv import fields, osv
 import wizard
 import netsvc
 import pooler
-import time
 import base64
 import StringIO
 import csv
@@ -37,13 +36,6 @@ import os
 import sys
 import codecs
 import ftplib
-from tools.misc import ustr
-try:
-    from SOAPpy import WSDL
-except:
-    print "Package SOAPpy missed"
-    pass
-import time
 
 _form = """<?xml version="1.0"?>
 <form string="Invoice To ftp">
@@ -71,6 +63,7 @@ def invoice_ftp(self, cr, uid, data,context={}):
 
 def _get_files(self, cr, uid, data, context):
     atta_obj = pooler.get_pool(cr.dbname).get('ir.attachment')
+    #TODO: Agregar el model al search de attachment (ver si openerp5, manda el model en la data)
     atta_ids=atta_obj.search(cr, uid, [('res_id', 'in', data['ids'])], context=context)
     res={}
     if atta_ids:
@@ -97,7 +90,5 @@ class wizard_facturae_ftp(wizard.interface):
             },
         },
     }
-
-
 wizard_facturae_ftp('wizard.facturae.ftp')
 

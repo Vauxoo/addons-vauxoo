@@ -35,47 +35,26 @@ import csv
 import tempfile
 import os
 import sys
-import codecs
 import ftplib
-from tools.misc import ustr
-try:
-    from SOAPpy import WSDL
-except:
-    print "Package SOAPpy missed"
-    pass
 import time
 
 
 class wizard_facturae_ftp(osv.osv_memory):
     _name='wizard.facturae.ftp'
-
-    def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
-        (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
-        f = open( fname, 'wb' )
-        f.write( base64.decodestring( binary_data ) )
-        f.close()
-        os.close( fileno )
-        return fname
-
+    
     def invoice_ftp(self, cr, uid, ids, context=None):
         ftp_id=False
-        data=self.read(cr,uid,ids)[0]
+        data = self.read(cr,uid,ids)[0]
         atta_obj = self.pool.get('ir.attachment')
-        atta_obj.file_ftp(cr,uid,data['files'],context)
-        print data,"dataaa"
+        atta_obj.file_ftp(cr, uid, data['files'], context=context)
         return {}
 
 
-    def _get_files(self,cr, uid, context):
+    def _get_files(self, cr, uid, context):
         atta_obj = self.pool.get('ir.attachment')
-        atta_ids = atta_obj.search(cr, uid, [('res_id', 'in', context['active_ids'])], context=context)
-        res={}
-        if atta_ids:
-            return atta_ids
-        else:
-            raise osv.except_osv(('Estado de ftp!'),('Esta factura no ha sido timbrada, por lo que no es posible subir a ftp. No existe .xml'))
-        return true
-
+        atta_ids = atta_obj.search(cr, uid, [('res_id', 'in', context['active_ids']), ('res_model','=', context['active_model'])], context=context)
+        return atta_ids
+        
     _columns = {
         'files': fields.many2many('ir.attachment','ftp_wizard_attachment_rel', 'wizard_id', 'attachment_id', 'Attachments'),
     }
@@ -84,4 +63,3 @@ class wizard_facturae_ftp(osv.osv_memory):
         'files': _get_files,
     }
 wizard_facturae_ftp()
-

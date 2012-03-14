@@ -26,6 +26,7 @@
 ##############################################################################
 
 {
+#TODO: Cambiar el nombre de modulo y description. Este modulo fue pensado para xml & pdf, pero ahora aplica para todos los adjuntos de account.invoice (Hacerlo con "bzr rename")
     "name" : "ftp para xml y pdf de Factura electronica",
     "version" : "1.0",
     "author" : "Vauxoo",

@@ -40,6 +40,8 @@ from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 
 from tools import config
 
+#TODO: Cambiar TODAS las variables y mensajes a ingles, salvo que sea muy tecnicamente necesario que esten en espaniol
+
 class ir_attachment(osv.osv):
     _inherit = 'ir.attachment'
     
@@ -76,7 +78,7 @@ class ir_attachment(osv.osv):
                 s = ftplib.FTP(ftp_servidor, ftp_usuario, ftp_clave)
                 f = open((a['fichero_origen']), 'rb')
                 s.cwd(ftp_raiz)
-                s.storbinary('STOR ' + (a['nombre']), f)
+                s.storbinary('STOR ' + (a['nombre'].replace('/', '_')), f)
                 f.close()
                 s.quit()
             except:
