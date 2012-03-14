@@ -7,7 +7,18 @@
       <field name="inherit_id" ref="sale.view_order_form" />
       <field name="type">form</field>
       <field name="arch" type="xml">
+    
+    <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]/field[@name="product_id"]' position="replace">
+    <field colspan="4"
+    context="search_default_available=1,partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
+    name="product_id"
+    on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order, product_packaging, parent.fiscal_position, False)"
+    />
+    </xpath>
+    
+    
         <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]/field[@name="product_uom_qty"]' position="replace">
+    
      <field
                 context="price_structure_id=price_structure_id,partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
                 name="product_uom_qty"
