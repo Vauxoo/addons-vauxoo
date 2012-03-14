@@ -56,7 +56,7 @@ Requires the following programs:
     "demo_xml" : [],
     "update_xml" : [
         #'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
+        #"l10n_mx_facturae_report.xml",
         "l10n_mx_facturae_wizard.xml",
         #"ir_sequence_view.xml",
         #"res_company_view.xml",
