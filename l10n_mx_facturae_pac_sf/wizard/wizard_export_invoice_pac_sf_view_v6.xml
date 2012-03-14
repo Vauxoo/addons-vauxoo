@@ -29,23 +29,5 @@
             key2="client_action_multi"
             id="action_wizard_export_pac_sf_form"/>
             
-<!--
-        <record id="action_wizard_cancel_pac_sf_form" model="ir.actions.act_window">
-            <field name="name">Cancel invoice pac SF</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="src_model">account.invoice</field>
-            <field name="res_model">wizard.cancel.invoice.pac.sf</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_wizard_cancel_pac_sf_form"/>
-            <field name="target">new</field>
-            <field name="key2">client_print_multi</field>
-        </record>
--->
-
-
-
-
-
     </data>
 </openerp>

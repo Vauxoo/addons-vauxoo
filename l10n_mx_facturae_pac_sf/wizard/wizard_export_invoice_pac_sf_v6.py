@@ -47,23 +47,18 @@ import time
 class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
     _name='wizard.export.invoice.pac.sf.v6'
 
-
     def _get_invoice_id(self, cr, uid, data, context = {}):
         res = {}
-        #~ print 'el data en _get_invoice_ides',data,' y el context es',context
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._get_file(cr, uid, data['active_ids']) 
-        #~ print 'el res recibido en el wizar 6 es',res
         file_xml = res['file']
-        #~ print '-------y el file_xml es',file_xml
         return file_xml
         
-    def upload_to_pac(self, cr, uid, data, context ={}):
-        #~ print 'dentro de upload_to_pac el data es',data,'y eon contex es',context
+    def upload_to_pac(self, cr, uid, ids, context ={}):
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._upload_ws_file(cr, uid, context['active_ids'])
-        self.write(cr, uid, data, {'message': res['msg'] }, context=None)
+        self.write(cr, uid, ids, {'message': res['msg'] }, context=None)
         return True
   
     _columns = {
