@@ -39,6 +39,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/report_profit_security.xml",
         "security/ir.model.access.csv",
         "unit_analisys_view.xml",
         "product_view.xml",
