@@ -34,6 +34,26 @@ import decimal_precision as dp
 class product_product(osv.osv):
     
     _inherit = 'product.product'
+    
+    def _check_cost_structure(self,cr,uid,ids,context=None):
+        if context is None:
+            context = {}
+        cost_obj = self.pool.get('cost.structure')
+        property_obj = self.pool.get('ir.property')
+        product_brw = self.browse(cr,uid,ids,context=context)
+        proper_ids = property_obj.search(cr,uid,[('name','=','property_cost_structure'),('res_id','=','product.product,%s'%ids[0])],context=context)
+        if proper_ids:
+            return False
+        
+        return True
+        
+    
+    
+    
+    
+    
+    
+    
     _columns = {
     'property_cost_structure': fields.property(
     'cost.structure',
@@ -62,6 +82,8 @@ class product_product(osv.osv):
     'method_cost_ids': fields.related('property_cost_structure', 'method_cost_ids', relation='method.price', type='one2many', string='Method Cost'),
     
     }
+    
+    _constraints =  [(_check_cost_structure, 'ERROR The product already has a cost structure', ['Cost Structure'])]
     
 product_product()
 
