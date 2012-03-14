@@ -20,7 +20,7 @@
                 </form>
             </field>
         </record>
-        <!--
+        
         <act_window name="Export Invoice PAC SF V6"
             res_model="wizard.export.invoice.pac.sf.v6"
             src_model="account.invoice"
@@ -28,7 +28,7 @@
             target="new"
             key2="client_action_multi"
             id="action_wizard_export_pac_sf_form"/>
-            -->
+            
 <!--
         <record id="action_wizard_cancel_pac_sf_form" model="ir.actions.act_window">
             <field name="name">Cancel invoice pac SF</field>

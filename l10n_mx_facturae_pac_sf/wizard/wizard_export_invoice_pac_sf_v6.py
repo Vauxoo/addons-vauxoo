@@ -52,7 +52,18 @@ import time
 class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
     _name='wizard.export.invoice.pac.sf.v6'
 
+
+    def _get_invoice_id(self, cr, uid, data, context = {}):
+        res = {}
+        invoice_obj = self.pool.get('account.invoice')
+        res = invoice_obj._get_file(cr, uid, data['active_ids']) 
+        print 'el res recibido en el wizar 6 es',res
+        a=res['file']
+        print '-------y el a es',a
+        return a
+
     def _get_file(self, cr, uid, data, context={}):
+        print 'dentro del get_file en el wizard 6y el dat es',data
         if not context:
             context = {}
         #context.update( {'date': data['form']['date']} )
@@ -189,7 +200,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
 
     _defaults= {
         'message': 'Seleccione el botón Subir Factura para exportar al PAC',
-        'file': _get_file,
+        'file': _get_invoice_id,
     }
 
 wizard_export_invoice_pac_sf_v6()
