@@ -60,7 +60,8 @@ class ir_attachment_facturae_mx(osv.osv):
                 ('confirmed', 'Confirmed'),#Generate XML
                 ('signed', 'Signed'),#Generate XML Sign
                 ('printable', 'Printable Format Generated'),#Generate PDF
-                ('sent_email', 'Sent Email'),
+                ('sent_customer', 'Sent Customer'),
+                ('sent_backup', 'Sent Backup'),
                 ('done', 'Done'),
                 ('cancel', 'Cancelled'),
             ], 'State', readonly=True, required=True),
@@ -79,8 +80,11 @@ class ir_attachment_facturae_mx(osv.osv):
     def action_printable(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'printable'})
 
-    def action_send_email(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'sent_email'})
+    def action_send_customer(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'sent_customer'})
+    
+    def action_send_backup(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'sent_backup'})
 
     def action_done(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'done'})

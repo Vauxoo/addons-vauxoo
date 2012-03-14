@@ -26,9 +26,10 @@
                         <button name="action_confirm" states="draft" string="Confirm" type="workflow"/>
                         <button name="action_sign" states="confirmed" string="Sign" type="workflow"/>
                         <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow"/>
-                        <button name="action_send_email" states="printable" string="Send Mail" type="workflow"/>
-                        <button name="action_done" states="sent_email" string="Done" type="workflow"/>
-                        <button name="action_cancel" states="draft,confirmed,signed,printable,send_mail,done" string="Cancel" type="workflow"/>
+                        <button name="action_send_backup" states="printable" string="Send to Backup" type="workflow"/>
+                        <button name="action_send_customer" states="sent_backup" string="Send to Customer" type="workflow"/>
+                        <button name="action_done" states="sent_customer" string="Done" type="workflow"/>
+                        <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
                     </group>
                 </form>
@@ -47,6 +48,17 @@
                 </tree>
             </field>
         </record>
-        
+        <record id="action_menu_ir_attachment_facturae_mx" model="ir.actions.act_window">
+            <field name="name">Wizard.ir.attachment.facturae.mx</field>
+            <field name="res_model">ir.attachment.facturae.mx</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <!--
+        <menuitem id="menu_ir_attachment_facturae_mx"
+            name="Attacment FacturaE WKF" 
+            parent="account.menu_finance_invoice"
+            action="menu_action_ir_attachment_facturae_mx"
+        />-->
     </data>
 </openerp>
