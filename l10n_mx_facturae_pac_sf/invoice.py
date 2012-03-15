@@ -116,12 +116,6 @@ class account_invoice(osv.osv):
         })
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
     """
-    
-    def action_cancel_draft(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {
-             'cfdi_fecha_cancelacion': False,
-        })
-        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
         
     def _get_file(self, cr, uid, inv_ids , context={}):
         if not context:
