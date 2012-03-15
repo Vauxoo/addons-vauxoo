@@ -12,7 +12,9 @@ class sale_order(osv.osv):
 
 
     def _check_commision(self, cr, uid, ids, field_name, arg, context):
+        result ={}
         for i in ids:
+            print i
             result[i]=10
         return result
 

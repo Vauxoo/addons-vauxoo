@@ -49,8 +49,8 @@
                                     <button icon="STOCK_OK" name="decide" states="decide" string="Realmente esto es lo que deseo" type="object"/>
                                     <button icon="STOCK_OK" name="going_back" states="decide" string="Todavia No! Me falta algo" type="object"/>
                                     <button icon="STOCK_OK" name="delete" states="open,decide" string="Comenzar de Nuevo" type="object"/>
-                                    <button icon="gtk-print" name="606" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
-                                    <button icon="gtk-print" name="606" states="done" string="Imprimir Comisiones" type="action"/>
+                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
+                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
                                 </group>
                             </group>
                         </page>
@@ -76,7 +76,7 @@
                         <page string="Comisiones x Producto">
                             <field name="comm_line_ids" nolabel="1" mode="tree,graph" widget="one2many_list" colspan="4"/>
                         </page>
-<!--
+
                         <page string="Facturas Afectadas">
                             <field name="comm_invoice_ids" nolabel="1">
                                 <tree string="Este es un listado de todas las facturas afectadas en este calculo de comisiones">
@@ -84,8 +84,8 @@
                                 </tree>
                             </field>
                         </page>
--->
-<!--
+
+
                         <page string="Trans. Afectadas">
                             <field name="comm_voucher_ids" nolabel="1">
                                 <tree string="Este es un listado de todas las operaciones mercantiles involucradas en este calculo de comisiones">
@@ -94,8 +94,8 @@
                                 </tree>
                             </field>
                         </page>
--->
-<!--
+
+
                         <page string="Transacciones sin Factura">
                             <field colspan="6" name="uninvoiced_ids" nolabel="1">
                                 <tree string="Esta es una lista de las transacciones bancarias que se deben asociar a una factura para dar completo procesamiento al pago en cuestion">
@@ -103,8 +103,8 @@
                                 </tree>
                             </field>
                         </page>
--->
-<!--
+
+
                         <page string="Fact. con Ret. en Duda">
                             <field name="comm_retention_ids" nolabel="1">
                                 <tree string="En la lista se muestra cual posiblemente sea el problema. [Si]: posible problema [No]: No es el problema">
@@ -119,8 +119,8 @@
 
                             <field colspan="6" name="ret_notes" nolabel="1"/>
                         </page>
--->
-<!--
+
+
                         <page string="Prod. sin Lista de Precio">
                             <field name="noprice_ids" nolabel="1">
                                 <tree string="Por favor, dirijase al producto en cuestion y en la seccion Precio Historico inserte una fecha y precio de venta">
@@ -130,8 +130,8 @@
                                 </tree>
                             </field>
                         </page>
--->
-<!--
+
+
                         <page string="Articulos sin asociar">
                             <field name="sale_noids" nolabel="1">
                                 <tree string="Aqui no deberia aparecer producto alguno, el problema presente aqui se ha suscitado al momento de facturar">
@@ -139,7 +139,7 @@
                                 </tree>
                             </field>
                         </page>
--->
+
                     </notebook>
 
                 </form>

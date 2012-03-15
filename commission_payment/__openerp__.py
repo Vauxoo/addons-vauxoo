@@ -23,15 +23,13 @@
 {
 	"name" : "Cálculo de Pago de Comisiones por producto pagado",
 	"version" : "1",
-	"author" : "Netquatro",
+	"author" : "Vauxoo",
 	"category" : "Generic Modules/Others",
-	"website": "http://wiki.openerp.org.ve/",
+	"website": "www.vauxoo.com/",
 	"description": '''
 Cálculo de Pago de Comisiones por producto pagado
 ''',
-	"depends" : ['account',
-                'decimal_precision', 
-                'baremo', 
+	"depends" : ['baremo', 
                 'account_voucher',],
 	"init_xml" : [],
 	"update_xml" : ['commission_report.xml','commission_view.xml'],

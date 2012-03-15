@@ -307,16 +307,16 @@
                                 <para style="ITEMSCENTER">[[ lines.price_unit ]]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.dcto_item ]]</para>
+                                <para style="ITEMSCENTER">[[ lines.rate_item ]]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.baremo_dcto]]</para>
+                                <para style="ITEMSCENTER">[[ lines.rate_number]]</para>
                             </td>
                             <td>
                                 <para style="ITEMSCENTER">[[ lines.days ]]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.baremo_days ]]</para>
+                                <para style="ITEMSCENTER">[[ lines.timespan ]]</para>
                             </td>
                             <td>
                                 <para style="ITEMSCENTER">[[ lines.baremo_comm ]]</para>
@@ -467,13 +467,13 @@
                         </td>
                         <td>
                             <section>
-                                <para> [[repeatIn(baremo.disc_ids,'dcto')]]</para>
-                                <para style="ITEMSCENTER"> [[dcto.porc_disc]] </para>
+                                <para> [[repeatIn(baremo.rate_ids,'dcto')]]</para>
+                                <para style="ITEMSCENTER"> [[dcto.porc_rate]] </para>
                             </section>
                         </td>
                         <td>
                             <section>
-                                <para> [[repeatIn(baremo.disc_ids,'dcto')]]</para>
+                                <para> [[repeatIn(baremo.rate_ids,'dcto')]]</para>
                                 <para style="ITEMSCENTER"> [[dcto.porc_com]] </para>
                             </section>
                         </td>
@@ -545,16 +545,16 @@
                 <para style="ITEMSCENTER">[[ lines.price_unit ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.dcto_item ]]</para>
+                <para style="ITEMSCENTER">[[ lines.rate_item ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.baremo_dcto]]</para>
+                <para style="ITEMSCENTER">[[ lines.rate_number]]</para>
             </td>
             <td>
                 <para style="ITEMSCENTER">[[ lines.days ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.baremo_days ]]</para>
+                <para style="ITEMSCENTER">[[ lines.timespan ]]</para>
             </td>
             <td>
                 <para style="ITEMSCENTER">[[ lines.baremo_comm ]]</para>
