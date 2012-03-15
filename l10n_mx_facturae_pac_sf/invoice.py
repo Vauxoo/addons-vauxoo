@@ -59,6 +59,7 @@ class account_invoice(osv.osv):
         'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32),
         'cfdi_cadena_original': fields.text('CFD-I Cadena Original'),
         'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado'),
+        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion'),
         'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64),
     }
     
@@ -98,8 +99,23 @@ class account_invoice(osv.osv):
             'cfdi_cadena_original':False,
             'cfdi_fecha_timbrado': False,
             'cfdi_folio_fiscal': False,
+            'cfdi_fecha_cancelacion': False,
         })
         return super(account_invoice, self).copy(cr, uid, id, default, context)
+    """
+    TODO: reset to draft considerated to delete these fields?
+    def action_cancel_draft(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {
+            'cfdi_cbb': False,
+            'cfdi_sello':False,
+            'cfdi_no_certificado':False,
+            'cfdi_cadena_original':False,
+            'cfdi_fecha_timbrado': False,
+            'cfdi_folio_fiscal': False,
+            'cfdi_fecha_cancelacion': False,
+        })
+        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
+    """
         
     def _get_file(self, cr, uid, inv_ids , context={}):
         if not context:
@@ -282,6 +298,7 @@ class account_invoice(osv.osv):
 
                 if status_uuid == '201':
                     msg_SAT = '- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito.'
+                    invoice_obj.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':time.strftime('%d-%m-%Y %H:%M:%S')})
                 elif status_uuid == '202':
                     msg_SAT = '- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente.'
                 elif status_uuid == '203':

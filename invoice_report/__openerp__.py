@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    Info (info@vauxoo.com)
 ############################################################################
+#    Coded by: isaac (isaac@vauxoo.com)
 #    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,25 +26,22 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """
+    "name": "Invoice Reports",
+    "version": "1.1",
+    "author": "Vauxoo",
+    "category": 'Localization modules',
+    "description": """
     """,
-    "website" : "http://www.vauxoo.com/",
-    #"license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "l10n_mx_facturae_lib",
+    'website': 'http://www.vauxoo.com',
+    'init_xml': [],
+    "depends" : ["account"],
+    'update_xml': [
+        "invoice_report.xml",
+        "wizard/wizard_payment_report_view.xml",
+        "wizard/wizard_invoice_report_view.xml",
     ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/l10n_mx_facturae_cer_security.xml",
-        "security/ir.model.access.csv",
-        "res_company_view5.xml",
-    ],
-    "installable" : True,
-    "active" : False,
+    'demo_xml': [],
+    'test': [],
+    'installable': True,
+    'active': False,
 }
