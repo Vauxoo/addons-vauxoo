@@ -57,7 +57,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         return months_selection
         
     _columns = {
-        'month':fields.selection(_get_month_selection, 'Mes'),
+        'month':fields.selection(_get_month_selection, 'Mes', type="integer"),
         'year':fields.integer('Ano'),
         'date_start':fields.datetime('Fecha Inicial'),
         'date_end':fields.datetime('Fecha Final'),
@@ -99,7 +99,10 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         if not context:
             context = {}
         invoice_obj = self.pool.get('account.invoice')
-        invoice_ids = data['invoice_ids']
+        if data['invoice_ids']:
+            invoice_ids = []
+        else:
+            invoice_ids = data['invoice_ids']
         date_start = data['date_start']
         date_end = data['date_end']
         #context.update( {'date': date_start.strftime("%Y-%m-%d")} )
@@ -112,6 +115,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
                 ( 'number', '<>', False )
             ], order='date_invoice', context=context)
         )
+        self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)
         return True
         
     def get_invoices_month(self, cr, uid, ids, context=None):
@@ -121,7 +125,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         invoice_obj = self.pool.get('account.invoice')
         invoice_ids = data['invoice_ids']
         year = data['year']
-        month = data['month']
+        month = int(data['month'])
         date_start = mx.DateTime.Date(year, month, 1, 0, 0, 0)
         #date_end = mx.DateTime.Date(year,month,-1, 23, 59, 60)
         #date_end = mx.DateTime.Date(year, month + 1, 1, 0, 0, 0)
