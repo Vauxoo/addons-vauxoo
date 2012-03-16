@@ -11,6 +11,7 @@
           <page string="Advance Options">
             <group colspan="9" col="1">
               <field name="property_cost_structure" />
+              <field name="status_bool" invisible="1" />
             </group>
             <group colspan="6" col="4" string="Costos">
               <field name='cost_ult' />
