@@ -35,14 +35,29 @@ class product_product(osv.osv):
     
     _inherit = 'product.product'
     
+    def _structur_cost_status(self, cr, uid, ids, field_name, arg, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        if not ids:
+            return res
+        for product in self.browse(cr,uid,ids,context=context):
+            if product.property_cost_structure:
+                res[product.id] = True
+        
+        return res
+        
+        
+    
+    
     def _check_cost_structure(self,cr,uid,ids,context=None):
         if context is None:
             context = {}
         cost_obj = self.pool.get('cost.structure')
         property_obj = self.pool.get('ir.property')
-        product_brw = self.browse(cr,uid,ids,context=context)
-        proper_ids = property_obj.search(cr,uid,[('name','=','property_cost_structure'),('res_id','=','product.product,%s'%ids[0])],context=context)
-        if proper_ids:
+        product_brw = self.browse(cr,uid,ids[0],context=context)
+        
+        if hasattr(product_brw, "status_bool") and product_brw.status_bool:
             return False
         
         return True
@@ -80,7 +95,7 @@ class product_product(osv.osv):
     'date_cost_ant': fields.related('property_cost_structure', 'date_cost_ant', type='date', string='Date'),
     'date_cost_to_price': fields.related('property_cost_structure', 'date_cost_to_price', type='date', string='Date'),
     'method_cost_ids': fields.related('property_cost_structure', 'method_cost_ids', relation='method.price', type='one2many', string='Method Cost'),
-    
+    'status_bool':fields.function(_structur_cost_status, method=True,type="boolean",store=True, string='Status Price'),
     }
     
     _constraints =  [(_check_cost_structure, 'ERROR The product already has a cost structure', ['Cost Structure'])]
