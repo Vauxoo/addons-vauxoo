@@ -7,6 +7,7 @@
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: isaac (isaac@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
@@ -25,30 +26,52 @@
 #
 ##############################################################################
 
-{
-    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Solucion Factible",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
-Ubuntu Package Depends:
-    sudo apt-get install python-soappy
-""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae","l10n_mx_params_pac"],
-    "init_xml" : [],
-    "demo_xml" : [
-        "l10n_mx_facturae_pac_sf_demo.xml"
-    ],
-    "update_xml" : [
-        "security/l10n_mx_facturae_pac_sf_security.xml",
-        "l10n_mx_facturae_pac_sf_demo.xml",
-        #"invoice_wizard.xml",
-        "l10n_mx_facturae_pac_sf_report.xml",
-        "wizard/wizard_cancel_invoice_pac_sf_view.xml",
-        "wizard/wizard_export_invoice_pac_sf_view_v6.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from osv import fields, osv
+import wizard
+import netsvc
+import pooler
+import time
+import base64
+import StringIO
+import csv
+import tempfile
+import os
+import sys
+import codecs
+from tools.misc import ustr
+try:
+    from SOAPpy import WSDL
+except:
+    print "Package SOAPpy missed"
+    pass
+import time
+
+
+class wizard_cancel_invoice_pac_sf(osv.osv_memory):
+    _name='wizard.cancel.invoice.pac.sf'
+
+    def _get_cancel_invoice_id(self, cr, uid, data, context = {}):
+        res = {}
+        invoice_obj = self.pool.get('account.invoice')
+        res = invoice_obj._get_file_cancel(cr, uid, data['active_ids'])
+        return res['file']
+
+    def upload_cancel_to_pac(self, cr, uid, ids, context ={}):
+        res = {}
+        invoice_obj = self.pool.get('account.invoice')
+        res = invoice_obj.sf_cancel(cr, uid, context['active_ids'], context=None)
+        self.write(cr, uid, ids, {'message': res['message'] }, context=None)
+        return True
+
+
+    _columns = {
+        'file': fields.binary('File', readonly=True),
+        'message': fields.text('text'),
+    }
+
+    _defaults= {
+        'message': 'Seleccione el botón Cancelar Factura enviar la cancelacion al PAC',
+        'file': _get_cancel_invoice_id,
+    }
+wizard_cancel_invoice_pac_sf()
+
