@@ -112,6 +112,12 @@ class sale_order(osv.osv):
                 if property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if line.price_unit < i.unit_price]):
                     product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
                     res[order.id] = {'status_bool':True}
+                
+                elif property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if line.price_unit > i.unit_price]):
+                    product.append(u'Intenta vender el producto %s a un precio mayor al estimado para su venta'%line.product_id.name)
+                    res[order.id] = {'status_bool':True}
+                
+                
                 elif not property_cost_structure:
                     product.append(u'El producto %s no tiene una estructura de costo'%line.product_id.name)
                     res[order.id] = {'status_bool':True}
@@ -149,6 +155,10 @@ class sale_order(osv.osv):
             if property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if line.price_unit < i.unit_price]):
                 product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
         
+            elif property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if line.price_unit > i.unit_price]):
+                product.append(u'Intenta vender el producto %s a un precio mayor al estimado para su venta'%line.product_id.name)
+
+
             elif not property_cost_structure:
                 product.append(u'The product %s has not a cost structure'%line.product_id.name)
                     

@@ -31,7 +31,7 @@
               <!-- <field name='cost_to_price' /> -->
               <field name='date_cost_to_price' />
             </group>
-            <field name='method_cost_ids' nolabel="1" />
+            <field name='method_cost_ids' nolabel="1" editable="bottom"/>
           </page>
         </xpath>
         <xpath expr='/form/notebook/page[@string="Information"]' position="after">
