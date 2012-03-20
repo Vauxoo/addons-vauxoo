@@ -33,7 +33,7 @@ from tools.sql import drop_view_if_exists
 import time
 import datetime
 from mx.DateTime import *
-from tools import config
+import decimal_precision as dp
 
 
 class report_profit_picking(osv.osv):
@@ -436,20 +436,20 @@ class report_profit_picking(osv.osv):
             ],'Status', readonly=True, select=True),
         'aml_cost_id': fields.function(_get_aml_cost, method=True, type='many2one', relation='account.move.line', string='Cost entry'),
         'invoice_line_id': fields.function(_get_invoice_line, method=True, type='many2one', relation='account.invoice.line', string='Invoice line'),
-        'invoice_qty': fields.function(_get_invoice_qty, method=True, type='float', string='Invoice quantity', digits=(16, int(config['price_accuracy']))),
-        'aml_cost_qty': fields.function(_get_aml_cost_qty, method=True, type='float', string='Cost entry quantity', digits=(16, int(config['price_accuracy']))),
-        'invoice_price_unit': fields.function(_get_invoice_price, method=True, type='float', string='Invoice price unit', digits=(16, int(config['price_accuracy']))),
-        'aml_cost_price_unit': fields.function(_get_aml_cost_price, method=True, type='float', string='Cost entry price unit', digits=(16, int(config['price_accuracy']))), 
+        'invoice_qty': fields.function(_get_invoice_qty, method=True, type='float', string='Invoice quantity', digits_compute=dp.get_precision('Account')),
+        'aml_cost_qty': fields.function(_get_aml_cost_qty, method=True, type='float', string='Cost entry quantity', digits_compute=dp.get_precision('Account')),
+        'invoice_price_unit': fields.function(_get_invoice_price, method=True, type='float', string='Invoice price unit', digits_compute=dp.get_precision('Account')),
+        'aml_cost_price_unit': fields.function(_get_aml_cost_price, method=True, type='float', string='Cost entry price unit', digits_compute=dp.get_precision('Account')), 
         'invoice_id': fields.function(_get_invoice, method=True, type='many2one', relation='account.invoice', string='Invoice'),
-        'stock_before': fields.function(_get_prod_stock_before, method=True, type='float', string='Stock before', digits=(16, int(config['price_accuracy']))),
-        'stock_after': fields.function(_get_prod_stock_after, method=True, type='float', string='Stock after', digits=(16, int(config['price_accuracy']))),
+        'stock_before': fields.function(_get_prod_stock_before, method=True, type='float', string='Stock before', digits_compute=dp.get_precision('Account')),
+        'stock_after': fields.function(_get_prod_stock_after, method=True, type='float', string='Stock after', digits_compute=dp.get_precision('Account')),
         'date_inv': fields.function(_get_date_invoice, method=True, type='char', string='Date invoice', size=20),
-        'stock_invoice': fields.function(_get_stock_invoice, method=True, type='float', string='Stock invoice', digits=(16, int(config['price_accuracy']))),
-        'subtotal': fields.function(_compute_subtotal, method=True, type='float', string='Subtotal', digits=(16, int(config['price_accuracy']))),
-        'total': fields.function(_compute_total, method=True, type='float', string='Total', digits=(16, int(config['price_accuracy']))),
+        'stock_invoice': fields.function(_get_stock_invoice, method=True, type='float', string='Stock invoice', digits_compute=dp.get_precision('Account')),
+        'subtotal': fields.function(_compute_subtotal, method=True, type='float', string='Subtotal', digits_compute=dp.get_precision('Account')),
+        'total': fields.function(_compute_total, method=True, type='float', string='Total', digits_compute=dp.get_precision('Account')),
         'aml_inv_id': fields.function(_get_aml_inv, method=True, type='many2one', relation='account.move.line', string='Inv entry'),
-        'aml_inv_price_unit': fields.function(_get_aml_inv_price, method=True, type='float', string='Inv entry price unit', digits=(16, int(config['price_accuracy']))),        
-        'aml_inv_qty': fields.function(_get_aml_inv_qty, method=True, type='float', string='Inv entry quantity', digits=(16, int(config['price_accuracy']))),        
+        'aml_inv_price_unit': fields.function(_get_aml_inv_price, method=True, type='float', string='Inv entry price unit', digits_compute=dp.get_precision('Account')),        
+        'aml_inv_qty': fields.function(_get_aml_inv_qty, method=True, type='float', string='Inv entry quantity', digits_compute=dp.get_precision('Account')),        
     }
 
     def init(self, cr):

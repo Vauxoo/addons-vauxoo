@@ -34,7 +34,7 @@ from tools.sql import drop_view_if_exists
 import time
 import datetime
 from mx.DateTime import *
-from tools import config
+import decimal_precision as dp
 
 
 
@@ -1134,7 +1134,7 @@ class stock_card_line(osv.osv):
         'location_id':fields.many2one('stock.location', 'Source Location', readonly=True, select=True),
         'location_dest_id':fields.many2one('stock.location', 'Dest. Location', readonly=True, select=True),                
         'stk_mov_id':fields.many2one('stock.move', 'Picking line', readonly=True, select=True),
-        'picking_qty': fields.float('Picking quantity', digits=(16, int(config['price_accuracy'])), readonly=True),        
+        'picking_qty': fields.float('Picking quantity', digits_compute= dp.get_precision('Account'), readonly=True),        
         'type': fields.selection([
             ('out', 'Sending Goods'),
             ('in', 'Getting Goods'),
@@ -1151,22 +1151,22 @@ class stock_card_line(osv.osv):
             ],'Status', readonly=True, select=True),
         'aml_cost_id': fields.many2one('account.move.line', string='Cost entry', readonly=True, select=True),
         'invoice_line_id': fields.many2one('account.invoice.line', string='Invoice line', readonly=True, select=True),
-        'invoice_qty': fields.float(string='Invoice quantity', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'aml_cost_qty': fields.float(string='Cost entry quantity', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'invoice_price_unit': fields.float(string='Invoice price unit', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'aml_cost_price_unit': fields.float(string='Cost entry price unit', digits=(16, int(config['price_accuracy'])), readonly=True), 
+        'invoice_qty': fields.float(string='Invoice quantity', digits_compute= dp.get_precision('Account'), readonly=True),
+        'aml_cost_qty': fields.float(string='Cost entry quantity', digits_compute= dp.get_precision('Account'), readonly=True),
+        'invoice_price_unit': fields.float(string='Invoice price unit', digits_compute= dp.get_precision('Account'), readonly=True),
+        'aml_cost_price_unit': fields.float(string='Cost entry price unit', digits_compute= dp.get_precision('Account'), readonly=True), 
         'invoice_id': fields.many2one('account.invoice', string='Invoice', readonly=True, select=True),
-        'stock_before': fields.float(string='Stock before', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'stock_after': fields.float(string='Stock after', digits=(16, int(config['price_accuracy'])), readonly=True),
+        'stock_before': fields.float(string='Stock before', digits_compute= dp.get_precision('Account'), readonly=True),
+        'stock_after': fields.float(string='Stock after', digits_compute= dp.get_precision('Account'), readonly=True),
         'date_inv': fields.char(string='Date invoice', size=20, readonly=True, select=True),
-        'stock_invoice': fields.float(string='Stock invoice', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'subtotal': fields.float(string='Subtotal', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'total': fields.float(string='Total', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'avg': fields.float(string='Price Avg', digits=(16, int(config['price_accuracy'])), readonly=True),
+        'stock_invoice': fields.float(string='Stock invoice', digits_compute= dp.get_precision('Account'), readonly=True),
+        'subtotal': fields.float(string='Subtotal', digits_compute= dp.get_precision('Account'), readonly=True),
+        'total': fields.float(string='Total', digits_compute= dp.get_precision('Account'), readonly=True),
+        'avg': fields.float(string='Price Avg', digits_compute= dp.get_precision('Account'), readonly=True),
         'parent_id':fields.many2one('stock.card.line', 'Parent', readonly=True, select=True),
         'sequence': fields.integer('Sequence', readonly=True),
-        'stk_bef_cor': fields.float(string='Stock before cal', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'stk_aft_cor': fields.float(string='Stock after cal', digits=(16, int(config['price_accuracy'])), readonly=True),
+        'stk_bef_cor': fields.float(string='Stock before cal', digits_compute= dp.get_precision('Account'), readonly=True),
+        'stk_aft_cor': fields.float(string='Stock after cal', digits_compute= dp.get_precision('Account'), readonly=True),
         'sml_out_id': fields.function(_get_scl_out, method=True, type='many2one', relation='stock.card.line', 
             store={
                 'stock.card.line': (_get_scl_from_scl, None, 50),
@@ -1174,9 +1174,9 @@ class stock_card_line(osv.osv):
             }, string='Out sml', select=True, ),
         'in_sml_ids':fields.one2many('stock.card.line', 'sml_out_id', 'Input sml'),
         'aml_inv_id': fields.many2one('account.move.line', string='Inv entry', readonly=True, select=True),
-        'aml_inv_price_unit': fields.float(string='Inv entry price unit', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'aml_inv_qty': fields.float(string='Inv entry quantity', digits=(16, int(config['price_accuracy'])), readonly=True),
-        'aml_cost_cor': fields.float(string='Cost entry cal', digits=(16, int(config['price_accuracy'])), readonly=True),        
+        'aml_inv_price_unit': fields.float(string='Inv entry price unit', digits_compute= dp.get_precision('Account'), readonly=True),
+        'aml_inv_qty': fields.float(string='Inv entry quantity', digits_compute= dp.get_precision('Account'), readonly=True),
+        'aml_cost_cor': fields.float(string='Cost entry cal', digits_compute= dp.get_precision('Account'), readonly=True),        
         
     }
 

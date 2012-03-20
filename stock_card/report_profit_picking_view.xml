@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+        <menuitem id="menu_account_costo" name="Analisis de Costo" parent="account.menu_finance"/>
         <!--  Move by Picking -->
 
         <record id="view_profit_picking_tree" model="ir.ui.view">
