@@ -285,7 +285,7 @@ class report_profit_picking(osv.osv):
         for line in self.browse(cr, uid, ids, context=context):
             res.setdefault(line.id, 0.0)
             if line.date_inv:
-                startf = datetime.datetime.fromtimestamp(time.mktime(time.strptime(line.date_inv,"%Y-%m-%d:%H:%M:%S")))             
+                startf = datetime.datetime.fromtimestamp(time.mktime(time.strptime(line.date_inv,"%Y-%m-%d:%H:%M:%S")))
                 start = DateTime(int(startf.year),1,1)
                 end = startf - datetime.timedelta(seconds=1)
                 d1 = start.strftime('%Y-%m-%d %H:%M:%S')
@@ -389,14 +389,14 @@ class report_profit_picking(osv.osv):
     def aml_cost_get(self, cr, uid, il_id):    
         res = []
         il_obj = self.pool.get('account.invoice.line')
-        res = il_obj.move_line_id_cost_get(cr, uid, il_id)    
+        res = il_obj.move_line_id_cost_get(cr, uid, il_id)
         return res
 
 
-    def aml_internal_get(self, cr, uid, sm_id):    
+    def aml_internal_get(self, cr, uid, sm_id):
         res = []
         sm_obj = self.pool.get('stock.move')
-        res = sm_obj.move_line_get(cr, uid, sm_id)    
+        res = sm_obj.move_line_get(cr, uid, sm_id)
         return res
 
     
@@ -412,20 +412,26 @@ class report_profit_picking(osv.osv):
     _auto = False
     _columns = {
         'name': fields.char('Date', size=20, readonly=True, select=True),
+        'date': fields.date('Date Invoice', readonly=True),
+        'year': fields.char('Year', size=4, readonly=True),
+        'month': fields.selection([('01', 'January'), ('02', 'February'), ('03', 'March'), ('04', 'April'),
+            ('05', 'May'), ('06', 'June'), ('07', 'July'), ('08', 'August'), ('09', 'September'),
+            ('10', 'October'), ('11', 'November'), ('12', 'December')], 'Month', readonly=True),
+        'day': fields.char('Day', size=128, readonly=True),
         'picking_id':fields.many2one('stock.picking', 'Picking', readonly=True, select=True),
         'purchase_line_id': fields.many2one('purchase.order.line', 'Purchase Line', readonly=True, select=True),
         'sale_line_id': fields.many2one('sale.order.line', 'Sale Line', readonly=True, select=True),
         'product_id':fields.many2one('product.product', 'Product', readonly=True, select=True),
         'location_id':fields.many2one('stock.location', 'Source Location', readonly=True, select=True),
-        'location_dest_id':fields.many2one('stock.location', 'Dest. Location', readonly=True, select=True),                
+        'location_dest_id':fields.many2one('stock.location', 'Dest. Location', readonly=True, select=True),
         'stk_mov_id':fields.many2one('stock.move', 'Picking line', readonly=True, select=True),
-        'picking_qty': fields.float('Picking quantity', readonly=True),        
+        'picking_qty': fields.float('Picking quantity', readonly=True),
         'type': fields.selection([
             ('out', 'Sending Goods'),
             ('in', 'Getting Goods'),
             ('internal', 'Internal'),
             ('delivery', 'Delivery')
-            ],'Type', readonly=True, select=True),        
+            ],'Type', readonly=True, select=True),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('waiting', 'Waiting'),
@@ -439,7 +445,7 @@ class report_profit_picking(osv.osv):
         'invoice_qty': fields.function(_get_invoice_qty, method=True, type='float', string='Invoice quantity', digits_compute=dp.get_precision('Account')),
         'aml_cost_qty': fields.function(_get_aml_cost_qty, method=True, type='float', string='Cost entry quantity', digits_compute=dp.get_precision('Account')),
         'invoice_price_unit': fields.function(_get_invoice_price, method=True, type='float', string='Invoice price unit', digits_compute=dp.get_precision('Account')),
-        'aml_cost_price_unit': fields.function(_get_aml_cost_price, method=True, type='float', string='Cost entry price unit', digits_compute=dp.get_precision('Account')), 
+        'aml_cost_price_unit': fields.function(_get_aml_cost_price, method=True, type='float', string='Cost entry price unit', digits_compute=dp.get_precision('Account')),
         'invoice_id': fields.function(_get_invoice, method=True, type='many2one', relation='account.invoice', string='Invoice'),
         'stock_before': fields.function(_get_prod_stock_before, method=True, type='float', string='Stock before', digits_compute=dp.get_precision('Account')),
         'stock_after': fields.function(_get_prod_stock_after, method=True, type='float', string='Stock after', digits_compute=dp.get_precision('Account')),
@@ -448,8 +454,8 @@ class report_profit_picking(osv.osv):
         'subtotal': fields.function(_compute_subtotal, method=True, type='float', string='Subtotal', digits_compute=dp.get_precision('Account')),
         'total': fields.function(_compute_total, method=True, type='float', string='Total', digits_compute=dp.get_precision('Account')),
         'aml_inv_id': fields.function(_get_aml_inv, method=True, type='many2one', relation='account.move.line', string='Inv entry'),
-        'aml_inv_price_unit': fields.function(_get_aml_inv_price, method=True, type='float', string='Inv entry price unit', digits_compute=dp.get_precision('Account')),        
-        'aml_inv_qty': fields.function(_get_aml_inv_qty, method=True, type='float', string='Inv entry quantity', digits_compute=dp.get_precision('Account')),        
+        'aml_inv_price_unit': fields.function(_get_aml_inv_price, method=True, type='float', string='Inv entry price unit', digits_compute=dp.get_precision('Account')),
+        'aml_inv_qty': fields.function(_get_aml_inv_qty, method=True, type='float', string='Inv entry quantity', digits_compute=dp.get_precision('Account')),
     }
 
     def init(self, cr):
@@ -457,21 +463,26 @@ class report_profit_picking(osv.osv):
         cr.execute("""
             create or replace view report_profit_picking as (
             select
-                sm.id as id,                
-                to_char(sm.date_planned, 'YYYY-MM-DD:HH24:MI:SS') as name,
+                sm.id as id,
+                to_char(sm.date, 'YYYY-MM-DD:HH24:MI:SS') as name,
+                sm.date as date,
+                to_char(sm.date, 'YYYY') as year,
+                to_char(sm.date, 'MM') as month,
+                to_char(sm.date, 'YYYY-MM-DD') as day,
                 sm.picking_id as picking_id,
-                sp.type as type,                
+                sp.type as type,
                 sm.purchase_line_id as purchase_line_id,
                 sm.sale_line_id as sale_line_id,
                 sm.product_id as product_id,
                 sm.location_id as location_id,
-                sm.location_dest_id as location_dest_id,                
+                sm.location_dest_id as location_dest_id,
                 sm.id as stk_mov_id,
                 sm.product_qty as picking_qty,
                 sm.state as state
             from stock_picking sp
                 right join stock_move sm on (sp.id=sm.picking_id)
-                left join product_template pt on (pt.id=sm.product_id)
+                left join product_product d on (d.id=sm.product_id)
+                left join product_template pt on (pt.id=d.product_tmpl_id)
             where sm.state='done' and pt.type!='service'
             order by name
             )
