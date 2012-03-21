@@ -2,8 +2,9 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo S.A
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: Fernando Irene Garcia (fernando@vauxoo.com)
 ############################################################################
@@ -25,7 +26,7 @@
 {
     "name" : "Invoice Workflow Security",
     "version" : "0.1",
-    "author" : "Vauxoo S.A",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "license" : "AGPL-3",
     "description": """ Este modulo genera por medio de data xml 2 grupos:
