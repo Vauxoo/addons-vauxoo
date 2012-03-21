@@ -48,7 +48,7 @@ class report_profit_picking(osv.osv):
         for rpp in self.browse(cr, uid, ids, context):
             result[rpp.id] = ()
             il_ids = []
-            if rpp.purchase_line_id and rpp.purchase_line_id.id:
+            if getattr(rpp, 'purchase_line_id', False) and rpp.purchase_line_id.id:
                 loc_ids = loc_obj.search(cr, uid, [('name', '=', 'Stock')])
                 supp_loc_ids = loc_obj.search(cr, uid, [('name', '=', 'Suppliers')])
                 lst_inv = []
@@ -61,7 +61,7 @@ class report_profit_picking(osv.osv):
                     raise osv.except_osv('Error', 'No hay una ubicacion proveedor definida')
 
                 
-                if rpp.purchase_line_id.order_id.invoice_id and \
+                if getattr(rpp.purchase_line_id.order_id, 'invoice_id', False) and \
                     rpp.purchase_line_id.order_id.invoice_id.id:
                     inv = rpp.purchase_line_id.order_id.invoice_id
 
