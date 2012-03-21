@@ -24,6 +24,7 @@
 ################################################################################
 
 import unit_analisys
+import account
 import invoice
 import product
 import report_profit

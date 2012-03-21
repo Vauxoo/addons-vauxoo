@@ -2,6 +2,58 @@
 <openerp>
     <data>
         <menuitem id="menu_account_costo" name="Analisis de Costo" parent="account.menu_finance"/>
+
+        <!--  Profit search  -->
+
+        <record id="view_report_profit_picking_filter" model="ir.ui.view">
+            <field name="name">report.profit.picking.search</field>
+            <field name="model">report.profit.picking</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Profit Picking">
+                   <group col="10" colspan="4">
+                    <filter icon="terp-go-year" string="  Year  "
+                        name="year"
+                        domain="[('date','&lt;=', time.strftime('%%Y-%%m-%%d')),('date','&gt;=',time.strftime('%%Y-01-01'))]"
+                        help="Send or received product in current year"/>
+                    <filter icon="terp-go-month" string="   Month   "
+                        name="month"
+                        domain="[('date','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
+                        help="Send or received product in current month"/>
+                    <filter icon="terp-go-month"
+                         string="    Month-1    "
+                         separator="1"
+                         domain="[('date','&lt;=', (datetime.date.today() - relativedelta(day=31, months=1)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(datetime.date.today() - relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]"
+                         help="Send or received product in last month"/>
+                    <separator orientation="vertical"/>
+                    <filter name="out_picking" icon="terp-document-new" string="Sending Goods" domain="[('type','=','out')]" help="Out Product"/>
+                    <filter name="in_picking" icon="terp-gtk-media-pause" string="Getting Goods" domain="[('type','=','in')]" help="In Product"/>
+                    <filter name="internal_picking" icon="terp-gtk-media-pause" string="Internal" domain="[('type','=','internal')]" help="Internal"/>
+                    <separator orientation="vertical"/>
+                    <field name="product_id"/>
+                    <field name="picking_id"/>
+                    <field name="stk_mov_id"/>
+                    <field name="aml_cost_id"/>
+                    <field name="aml_inv_id"/>
+                    <field name="invoice_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Extended Filters..." groups="base.group_extended">
+                        <field name="date"/>
+                    </group>
+                    <newline/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Picking" icon="terp-partner" name="Picking" domain="[]" context="{'group_by':'picking_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Product" icon="terp-personal" name="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                        <separator orientation="vertical"/>
+                       <filter string="Day" icon="terp-go-today" context="{'group_by':'day'}" help="Day of received or send product"/>
+                       <filter string="Month" name="order_month" icon="terp-go-month" context="{'group_by':'month'}" help="Month of received or send product"/>
+                       <filter string="Year" icon="terp-go-year" context="{'group_by':'year'}" help="Year of received or send product"/>
+                    </group>
+               </search>
+            </field>
+        </record>
         <!--  Move by Picking -->
 
         <record id="view_profit_picking_tree" model="ir.ui.view">
@@ -11,8 +63,12 @@
             <field name="arch" type="xml">
                 <tree string="Move by Picking">
                     <field name="name"/>
+                    <field name="date" invisible="1"/>
+                    <field name="year" invisible="1"/>
+                    <field name="day" invisible="1"/>
+                    <field name="month" invisible="1"/>
                     <field name="date_inv"/>
-                    <field name="type"/>                    
+                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -36,7 +92,7 @@
                     <field name="invoice_id"/>
                     <field name="aml_inv_id"/>
                     <field name="aml_inv_price_unit"/>
-                    <field name="aml_inv_qty"/>                    
+                    <field name="aml_inv_qty"/>
                 </tree>
             </field>
         </record>
@@ -51,7 +107,7 @@
                 <form string="Move by Picking">
                     <field name="name"/>
                     <field name="date_inv"/>
-                    <field name="type"/>                    
+                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -87,6 +143,9 @@
             <field name="res_model">report.profit.picking</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_report_profit_picking_filter"/>
+            <field name="context">{'search_default_year':1,'search_default_Picking':1,'group_by_no_leaf':0,'group_by':[]}</field>
+            <field name="help">This report performs the stock move.</field>
         </record>
         
         <menuitem 

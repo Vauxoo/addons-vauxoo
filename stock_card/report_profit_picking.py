@@ -412,7 +412,7 @@ class report_profit_picking(osv.osv):
     _auto = False
     _columns = {
         'name': fields.char('Date', size=20, readonly=True, select=True),
-        'date': fields.date('Date Invoice', readonly=True),
+        'date': fields.date('Date Done', readonly=True),
         'year': fields.char('Year', size=4, readonly=True),
         'month': fields.selection([('01', 'January'), ('02', 'February'), ('03', 'March'), ('04', 'April'),
             ('05', 'May'), ('06', 'June'), ('07', 'July'), ('08', 'August'), ('09', 'September'),
