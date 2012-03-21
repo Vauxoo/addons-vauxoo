@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="res.groups" id="group_invoice_cancel">
+            <field name="name">invoice_cancel</field>
+        </record>
+        <record model="res.groups" id="group_invoice_reset_draft">
+            <field name="name">invoice_reset_draft</field>
+        </record>
+            
+    </data>
+</openerp>
