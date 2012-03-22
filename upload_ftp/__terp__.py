@@ -25,17 +25,17 @@
 ##############################################################################
 
 {
-    "name" : "attachment of invoice to ftp V5",
+    "name" : "Upload ftp",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module supports attachment of invoice to ftp """,
+    "description" : """This module upload files attachment to ftp""",
     "website" : "http://www.vauxoo.com/",
     #~ "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae","upload_ftp"],
+    "depends" : ["base"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard_facturae_ftp.xml"],
+    "update_xml" : ["upload_ftp_view.xml"],
     "installable" : True,
     "active" : False,
 }

@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: el_rodo_1 (rodo@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -30,7 +29,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module supports ftp, xml and pdf electonic invoice """,
+    "description" : """This module supports ftp, xml and pdf electronic invoice """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["l10n_mx_facturae_pac_sf","upload_ftp",],
