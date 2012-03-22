@@ -11,7 +11,7 @@
                 <tree string="Move by Picking Line">
                     <field name="name"/>
                     <field name="date_inv"/>
-                    <field name="type"/>                    
+                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -58,7 +58,7 @@
                 <group col="2" colspan="6">
                     <field name="name"/>
                     <field name="date_inv"/>
-                    <field name="type"/>                    
+                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -108,9 +108,9 @@
         </record>
         
         <menuitem 
-            action="action_stock_card_line_tree" 
-            id="menu_stock_card_line" 
-            parent="menu_account_costo" 
+            action="action_stock_card_line_tree"
+            id="menu_stock_card_line"
+            parent="menu_account_costo"
             name="Stock card line"/>
 
 
@@ -161,9 +161,9 @@
         </record>
         
         <menuitem 
-            action="action_stock_card_tree" 
-            id="menu_stock_card_" 
-            parent="menu_account_costo" 
+            action="action_stock_card_tree"
+            id="menu_stock_card_"
+            parent="menu_account_costo"
             name="Stock card"/>
 
 

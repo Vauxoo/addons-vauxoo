@@ -26,7 +26,7 @@
 {
     "name" : "Stock Card",
     "version" : "0.2",
-    "depends" : ["base","product", "purchase", "account", "stock"],
+    "depends" : ["base","product", "purchase", "account", "stock", "report_profit"],
     "author" : "Vauxoo",
     "description" : """
         Kardex.
