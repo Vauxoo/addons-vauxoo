@@ -61,9 +61,9 @@ class report_profit_picking(osv.osv):
                     raise osv.except_osv('Error', 'No hay una ubicacion proveedor definida')
 
                 
-                if getattr(rpp.purchase_line_id.order_id, 'invoice_id', False) and \
-                    rpp.purchase_line_id.order_id.invoice_id.id:
-                    inv = rpp.purchase_line_id.order_id.invoice_id
+                if getattr(rpp.purchase_line_id.order_id, 'invoice_ids', False):
+                    inv_id = self.purchase_invoice_get(cr, uid, rpp.purchase_line_id.order_id.id, rpp.product_id.id)[0]
+                    inv = self.pool.get('account.invoice').browse(cr, uid, inv_id, context=context)
 
                     if inv.id not in lst_inv:
                         lst_inv.append(inv.id)
@@ -404,6 +404,21 @@ class report_profit_picking(osv.osv):
         res = []
         il_obj = self.pool.get('account.invoice.line')
         res = il_obj.move_line_id_inv_get(cr, uid, il_id)
+        return res
+
+    def purchase_invoice_get(self, cr, uid, purchase_id, product_id):
+        res = []
+        cr.execute("""
+                SELECT i.id
+                FROM account_invoice i
+                INNER JOIN purchase_invoice_rel r
+                ON i.id=r.invoice_id
+                INNER JOIN account_invoice_line l
+                ON i.id=l.invoice_id
+                WHERE r.purchase_id=%s
+                AND l.product_id=%s
+        """, (purchase_id,product_id))
+        res = map(lambda x: x[0], cr.fetchall())
         return res
     
         
