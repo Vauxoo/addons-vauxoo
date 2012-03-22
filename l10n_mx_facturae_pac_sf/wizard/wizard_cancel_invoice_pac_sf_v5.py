@@ -64,6 +64,7 @@ _fields = {
    'message': {
         'string': 'Message',
         'type': 'text',
+        'readonly': True,
    },
 }
 

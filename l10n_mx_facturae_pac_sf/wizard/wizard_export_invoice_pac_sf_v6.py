@@ -63,7 +63,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
   
     _columns = {
         'file': fields.binary('File', readonly=True),
-        'message': fields.text('text'),
+        'message': fields.text('text', readonly=True),
     }
 
     _defaults= {

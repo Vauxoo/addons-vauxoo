@@ -66,7 +66,7 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
     _columns = {
         'file': fields.binary('File', readonly=True),
-        'message': fields.text('text'),
+        'message': fields.text('text', readonly=True),
     }
 
     _defaults= {

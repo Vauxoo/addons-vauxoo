@@ -64,7 +64,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         'invoice_ids':fields.many2many('account.invoice', 'invoice_facturae_txt_rel', 'invoice_id', 'facturae_id', 'Facturas', domain="[('type', 'in', ['out_invoice', 'out_refund'] )]"),
         'facturae':fields.binary('Facturae File', readonly=True),
         'facturae_fname':fields.char('File Name', size=64),
-        'note':fields.text('Log'),
+        'note':fields.text('Log', readonly=True),
     }
     
     def _get_facturae_fname(self, cr, uid, context=None):
