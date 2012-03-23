@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<wizard id="wizard_facturae_ftp"
+			name="wizard.facturae.ftp"
+			string="Invoice To ftp"
+			model="account.invoice"/>
+
+
+    </data>
+</openerp>

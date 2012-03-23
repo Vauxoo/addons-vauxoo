@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="True">
+
+        <record model="email_template.account" id="email_template_account_facturae_mx">
+            <field name="name">FacturaE</field>
+            <field name="auto_delete" eval="0"/>
+            <field name="user" ref="base.user_admin"/>
+            <field name="email_id">tuemail@gmail.com</field>
+            <field name="smtpserver">smtp.gmail.com</field>
+            <field name="smtpport">587</field>
+            <field name="smtpuname">tuemail@gmail.com</field>
+            <field name="smtppass">pass</field>
+            <field name="smtptls">True</field>
+            <field name="smtpsss">False</field>
+            <field name="send_pref">text</field>
+            <field name="state">draft</field>
+        </record>
+        <!--<field name="company" ref="base.main_company"/>-->
+        
+        
+        <record model="email.template" id="email_template_template_facturae_mx">
+            <field name="name">FacturaE</field>
+            <field name="object_name" ref="account.model_account_invoice"/>
+            <field name="from_account" ref="email_template_account_facturae_mx"/>
+            <field name="def_to">${object.address_invoice_id.email}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="def_subject">Factura ${object.fname_invoice}</field>
+            <field name="def_body_text">Factura: "${object.fname_invoice}". Favor de validarla ante el SAT, para corroborar su correcta creación.</field>
+            <field name="model_int_name">account.invoice</field>
+        </record>
+        <!--<field name="model_int_name" use="id" ref="account.model_account_invoice"/>-->
+        <!--<field name="model_int_name" model="res.company" use="name" search="[('id', '=', 1)]"/>-->
+        <!--<field name="model_int_name" ref=""/>-->
+
+    </data>
+</openerp>

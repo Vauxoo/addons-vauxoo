@@ -18,8 +18,8 @@
     "name" : "Customs Information on lots",
     "version" : "0.1",
     "author" : "Vauxoo",
-    "category" : "Localisation",
-    "website": "http://vauxoo.com",
+    "category" : "Localization/Mexico",
+    "website": "http://www.vauxoo.com",
     "description": """
 Make relation between information of import with goverment.
 With this module you will be able to make a relation between invoice and Information of importing transaction.

@@ -1,13 +1,14 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) Vauxoo (<http://www.vauxoo.com>).
 #    All Rights Reserved
+#    Info Vauxoo (info@vauxoo.com)
 ###############Credits######################################################
-#    Coded by: nhomar@openerp.com.ve,
+#    Coded by: nhomar@vauxoo.com,
 #    Planified by: Nhomar Hernandez
 #    Finance by: 
-#    Audited by: Alejandro Negrin alejandro@openerpmexico.com
+#    Audited by: Alejandro Negrin anegrin@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -27,12 +28,12 @@
     "name" : "Mexican States",
     "version" : "0.1",
     "depends" : ["base"],
-    "author" : "Netquatro",
+    "author" : "Vauxoo",
     "description" : """
     What do this module:
     Load all Mexican States
                     """,
-    "website" : "http://openerpmexico.com",
+    "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
     "init_xml" : [
     ],

@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
@@ -42,6 +42,7 @@ Ubuntu Package Depends:
         "l10n_mx_facturae_pac_sf_demo.xml"
     ],
     "update_xml" : [
+        "security/l10n_mx_facturae_pac_sf_security.xml",
         "invoice_wizard.xml",
         "l10n_mx_facturae_pac_sf_report.xml",
         #"wizard/wizard_cancel_invoice_pac_sf_view.xml",

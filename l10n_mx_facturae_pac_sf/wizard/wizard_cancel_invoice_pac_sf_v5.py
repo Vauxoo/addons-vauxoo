@@ -4,7 +4,7 @@
 #
 #    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@vauxoo.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Coded by: isaac (isaac@vauxoo.com)
@@ -64,117 +64,28 @@ _fields = {
    'message': {
         'string': 'Message',
         'type': 'text',
+        'readonly': True,
    },
 }
 
-def sf_cancel(self, cr, uid, data, context=None):
-        pool = pooler.get_pool(cr.dbname)
-        #data = self.read(cr, uid, ids)[0]
-        context_id=context.get('active_ids',[])
+def _get_cancel_invoice_id(self, cr, uid, data, context = {}):
+    res = {}
+    pool = pooler.get_pool(cr.dbname)
+    invoice_obj = pool.get('account.invoice')
+    res = invoice_obj._get_file_cancel(cr, uid, data['ids'])
+    return res
 
-        invoice_obj = pool.get('account.invoice')
-        company_obj = pool.get('res.company.facturae.certificate')
-        pac_params_obj = pool.get('params.pac')
-
-        invoice_brw = invoice_obj.browse(cr, uid, context_id, context)[0]
-        company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
-        pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_cancelar')],context=context)
-
-        if pac_params_srch:
-            pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
-
-            user = pac_params_brw.user
-            password = pac_params_brw.password
-            wsdl_url = pac_params_brw.url_webservice
-            namespace = pac_params_brw.namespace
-            #---------constantes
-            #~ user = 'testing@solucionfactible.com'
-            #~ password = 'timbrado.SF.16672'
-            #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
-            #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
-            
-            #print "company_brw",company_brw
-            #print "company_brw.certificate_file",company_brw.certificate_file
-            """
-            context.update( {'date_work': invoice_brw.date_invoice} )
-            certificate_id = pool.get('res.company')._get_current_certificate(cr, uid, [invoice_brw.company_id.id], context=context)[invoice_brw.company_id.id]
-            certificate = certificate_id and pool.get('res.company.facturae.certificate').browse(cr, uid, [certificate_id], context=context)[0] or False
-            
-            cerCSD = certificate.certificate_file 
-            
-            #cerCSD = company_brw.certificate_file#base64.encodestring(company_brw.certificate_file)
-            keyCSD = certificate.certificate_key_file#base64.encodestring(company_brw.certificate_key_file)
-            contrasenaCSD = certificate.certificate_password
-            """
-            
-            wsdl_client = False
-            wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
-            if True:#if wsdl_client:
-                file_globals = invoice_obj._get_file_globals(cr, uid, context_id, context=context)
-                fname_cer_no_pem = file_globals['fname_cer']
-                cerCSD = fname_cer_no_pem and base64.encodestring( open(fname_cer_no_pem, "r" ).read() ) or ''
-                fname_key_no_pem = file_globals['fname_key']
-                keyCSD = fname_key_no_pem and base64.encodestring( open(fname_key_no_pem, "r" ).read() ) or ''
-                #cfdi = base64.encodestring( cfd_data_adenda.replace(codecs.BOM_UTF8,'') )
-                zip = False#Validar si es un comprimido zip, con la extension del archivo
-                contrasenaCSD = file_globals.get('password', '')
-                uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
-                
-                params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
-                wsdl_client.soapproxy.config.dumpSOAPOut = 0
-                wsdl_client.soapproxy.config.dumpSOAPIn = 0
-                wsdl_client.soapproxy.config.debug = 0
-                wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-                resultado = wsdl_client.cancelar(*params)
-                status = resultado['resultados'] and resultado['resultados']['status'] or ''
-                status_uuid = resultado['resultados'] and resultado['resultados']['statusUUID'] or ''
-                msg_status={}
-                if status =='200':
-                    folio_cancel = resultado['resultados'] and resultado['resultados']['uuid'] or ''
-                    mensaje_global = '- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel
-                    #~ mensaje_global = mensaje_global +'\n- El uuid cancelado es: ' + folio_cancel
-                #~ elif status =='500':
-                    #~ mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación'
-                else:
-                    mensaje_global = '- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente'
-
-                if status_uuid == '201':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito'
-                elif status_uuid == '202':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente'
-                elif status_uuid == '203':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación'
-                elif status_uuid == '204':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación'
-                elif status_uuid == '205':
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación'
-                else:
-                    mensaje_SAT = '\n- Estatus de respuesta del SAT desconocido'
-                mensaje_global = mensaje_global + mensaje_SAT
-
-        else:
-            mensaje_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
-        #self.write(cr, uid, ids, {'message': mensaje_global }, context=None)
-        return {'message': mensaje_global }
-
-def _get_file(self, cr, uid, data, context):
-        pool = pooler.get_pool(cr.dbname)
-        atta_obj = pool.get('ir.attachment')
-        atta_id = atta_obj.search(cr, uid, [('res_id', '=', context['active_id']), ('name', 'ilike', '%.xml')], context=context)
-        res={}
-        if atta_id:
-            atta_brw = atta_obj.browse(cr, uid, atta_id, context)[0]
-            inv_xml = atta_brw.datas or False
-
-        else:
-            inv_xml = False
-            raise osv.except_osv(('Estado de Cancelación!'),('Esta factura no ha sido timbrada, por lo que no es posible cancelarse.'))
-        return {'file': inv_xml}
+def _upload_cancel_to_pac(self, cr, uid, data, context ={}):
+    res = {}
+    pool = pooler.get_pool(cr.dbname)
+    invoice_obj = pool.get('account.invoice')
+    res = invoice_obj.sf_cancel(cr, uid, data['ids'], context=None)
+    return res
 
 class wizard_cancel_invoice_pac_sf_v5(wizard.interface):
     states = {
         'init': {
-            'actions': [ _get_file ],
+            'actions': [ _get_cancel_invoice_id ],
             'result': {'type': 'state', 'state':'show_view'},
         },
 
@@ -189,7 +100,7 @@ class wizard_cancel_invoice_pac_sf_v5(wizard.interface):
         },
 
         'sf_cancel': {
-            'actions': [ sf_cancel ],
+            'actions': [ _upload_cancel_to_pac ],
             'result': {'type': 'state', 'state':'show_view'},
         },
     }

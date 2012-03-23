@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -73,11 +73,11 @@ def conv_ascii(text):
     """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
         'ô', 'û', 'Á', 'É', 'Í', 'Ú', 'Ó', 'À', 'È', 'Ì', 'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', \
-        'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' '
+        'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' ', 'Ã'
     ]
     new_chars = ['a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', \
         'o', 'u', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', \
-        'O', 'U', 'n', 'N', 'c', 'C', 'a', 'o', 'o', ' '
+        'O', 'U', 'n', 'N', 'c', 'C', 'a', 'o', 'o', ' ', 'A'
     ]
     for old, new in zip(old_chars, new_chars):
         try:
@@ -90,7 +90,7 @@ def conv_ascii(text):
     return text
 
 #Cambiar el error
-msg2= "Contacte a su administrador y/o a moylop260@hotmail.com"
+msg2= "Contacte a su administrador y/o a info@vauxoo.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
@@ -217,7 +217,7 @@ class account_invoice(osv.osv):
             if sequence_id:
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
-            fname += (invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '')
+            fname += (invoice.company_id.partner_id and (invoice.company_id.partner_id._columns.has_key('vat_split') and invoice.company_id.partner_id.vat_split or invoice.company_id.partner_id.vat) or '')
             fname += '.'
             number_work = invoice.number or invoice.internal_number
             try:
@@ -325,7 +325,7 @@ class account_invoice(osv.osv):
         if id:
             invoice = self.browse(cr, uid, id, context=context)
             #certificate_id = invoice.company_id.certificate_id
-            context.update( {'date_work': invoice.date_invoice} )
+            context.update( {'date_work': invoice.date_invoice_tz} )
             certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
             certificate_id = certificate_id and self.pool.get('res.company.facturae.certificate').browse(cr, uid, [certificate_id], context=context)[0] or False
             
@@ -438,10 +438,10 @@ class account_invoice(osv.osv):
             
             facturae_data_txt_list = [
                 invoice_comprobante_data['Receptor']['rfc'] or '',
-                invoice_comprobante_data['serie'] or '',
+                invoice_comprobante_data.get('serie', False) or '',
                 invoice_comprobante_data['folio'] or '',
                 str( invoice_comprobante_data['anoAprobacion'] ) + str( invoice_comprobante_data['noAprobacion'] ),
-                time.strftime('%d/%m/%Y %H:%M:%S', time.strptime( facturae_data['date_invoice'], '%Y-%m-%d %H:%M:%S')),#invoice_comprobante_data['fecha'].replace('T', ' '),
+                time.strftime('%d/%m/%Y %H:%M:%S', time.strptime( facturae_data['date_invoice_tz'], '%Y-%m-%d %H:%M:%S')),#invoice_comprobante_data['fecha'].replace('T', ' '),
                 "%.2f"%( round( float(invoice_comprobante_data['total'] or 0.0) * rate, 2) ),
                 "%.2f"%( round( float(invoice_comprobante_data['Impuestos']['totalImpuestosTrasladados'] or 0.0) * rate, 2) ),
                 facturae_state,
@@ -531,9 +531,9 @@ class account_invoice(osv.osv):
                         #'noCertificado': "30001000000100000800",
                     }
                 else:
-                    raise osv.except_osv('Warning !', 'La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !'%(sequence_id, msg2))
+                    raise osv.except_osv(u'Warning !', u'La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !'%(sequence_id, msg2))
             else:
-                raise osv.except_osv('Warning !', 'No se encontro un sequence de configuracion. %s !'%(msg2))
+                raise osv.except_osv(u'Warning !', u'No se encontro un sequence de configuracion. %s !'%(msg2))
         return folio_data
     
     def _dict_iteritems_sort(self, data_dict):#cr=False, uid=False, ids=[], context={}):
@@ -749,9 +749,9 @@ class account_invoice(osv.osv):
             number_work = invoice.number or invoice.internal_number
             invoice_data_parent['Comprobante'].update({
                 'folio': number_work,
-                'fecha': invoice.date_invoice and \
+                'fecha': invoice.date_invoice_tz and \
                     #time.strftime('%d/%m/%y', time.strptime(invoice.date_invoice, '%Y-%m-%d')) \
-                    time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
+                    time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice_tz, '%Y-%m-%d %H:%M:%S'))
                     or '',
                 'tipoDeComprobante': tipoComprobante,
                 'formaDePago': u'Pago en una sola exhibición',
@@ -766,8 +766,12 @@ class account_invoice(osv.osv):
             invoice_data_parent['Comprobante'].update({
                 'anoAprobacion': folio_data['anoAprobacion'],
                 'noAprobacion': folio_data['noAprobacion'],
-                'serie': folio_data['serie'],
             })
+            serie = folio_data.get('serie', False)
+            if serie:
+                invoice_data_parent['Comprobante'].update({
+                    'serie': serie,
+                })
             #Termina seccion: Comprobante
             #Inicia seccion: Emisor
             partner_obj = self.pool.get('res.partner')
@@ -789,7 +793,8 @@ class account_invoice(osv.osv):
             invoice_data = invoice_data_parent['Comprobante']
             invoice_data['Emisor'] = {}
             invoice_data['Emisor'].update({
-                'rfc': (partner_parent.vat or '').replace('-', ' ').replace(' ',''),
+                
+                'rfc': ((partner_parent._columns.has_key('vat_split') and partner_parent.vat_split or partner_parent.vat) or '').replace('-', ' ').replace(' ',''),
                 'nombre': address_invoice_parent.name or partner_parent.name or '',
                 #Obtener domicilio dinamicamente
                 #virtual_invoice.append( (invoice.company_id and invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '').replac
@@ -823,7 +828,7 @@ class account_invoice(osv.osv):
                 raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(invoice.partner_id.name, msg2))
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
-                'rfc': (invoice.partner_id.vat or '').replace('-', ' ').replace(' ',''),
+                'rfc': ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ',''),
                 'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
@@ -934,9 +939,10 @@ class account_invoice(osv.osv):
             invoice_data_parent['invoice_id'] = invoice.id
             invoice_data_parent['type'] = invoice.type
             invoice_data_parent['date_invoice'] = invoice.date_invoice
+            invoice_data_parent['date_invoice_tz'] = invoice.date_invoice_tz
             invoice_data_parent['currency_id'] = invoice.currency_id.id
             
-            date_ctx = {'date': invoice.date_invoice and time.strftime('%Y-%m-%d', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S')) or False}
+            date_ctx = {'date': invoice.date_invoice_tz and time.strftime('%Y-%m-%d', time.strptime(invoice.date_invoice_tz, '%Y-%m-%d %H:%M:%S')) or False}
             #rate = self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id, invoice.company_id.currency_id.id, 1, round=False, context=date_ctx, account=None, account_invert=False)
             #rate = 1.0/self.pool.get('res.currency')._current_rate(cr, uid, [invoice.currency_id.id], name=False, arg=[], context=date_ctx)[invoice.currency_id.id]
             currency = self.pool.get('res.currency').browse(cr, uid, [invoice.currency_id.id], context=date_ctx)[0]
