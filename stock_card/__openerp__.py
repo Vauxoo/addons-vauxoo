@@ -42,6 +42,7 @@
         "stock_view.xml",
         "report_profit_picking_view.xml",
         "stock_card_view.xml",
+        "stock_card_report.xml",
     ],
     "active": False,
     "installable": True,

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report             
+            id="kardex" 
+            model="stock.card" 
+            name="kardex" 
+            rml="addons/stock_card/report/kardex.rml" 
+            string="Kardex"
+            auto="True"  
+            header="False" 
+            menu="True"/>
+
+
+        <report             
+            id="kardex_grey_lines" 
+            model="stock.card" 
+            name="kardex.grey.lines" 
+            rml="addons/stock_card/report/kardex_grey_lines.rml" 
+            string="Kardex - Prod. con Problema"
+            auto="True"
+            header="False" 
+            menu="True"/>
+
+
+    </data>
+</openerp>
