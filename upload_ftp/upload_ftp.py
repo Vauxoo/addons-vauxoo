@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -37,7 +37,7 @@ from tools.translate import _
 import pooler
 import mx.DateTime
 from mx.DateTime import RelativeDateTime, now, DateTime, localtime
-
+import release
 from tools import config
 
 
@@ -53,23 +53,26 @@ class ir_attachment(osv.osv):
         return fname
     
     def file_ftp(self, cr, uid, ids,context={}):
-        ftp_id=False
-        ftp_obj=pooler.get_pool(cr.dbname).get('ftp.server')
-        ftp_id=ftp_obj.search(cr,uid,[('name','!=',False)],context=None)
+        ftp_id = False
+        ftp_obj = pooler.get_pool(cr.dbname).get('ftp.server')
+        ftp_id = ftp_obj.search(cr,uid,[('name','!=',False)],context=None)
         if not ftp_id:
             raise osv.except_osv(('Error Servidor ftp!'),('No Existe Servidor ftp Configurado'))
         ftp=ftp_obj.browse(cr,uid,ftp_id,context)[0]
         ftp_server = ftp.name
-        ftp_user  = ftp.ftp_user
-        ftp_pwd    = ftp.ftp_pwd
-        ftp_source     = ftp.ftp_source
-        list_files=[]
+        ftp_user = ftp.ftp_user
+        ftp_pwd = ftp.ftp_pwd
+        ftp_source = ftp.ftp_source
+        list_files = []
         for id_file in ids:
             if id_file:
                 atta_brw = self.browse(cr, uid, [id_file], context)[0]
-                file_binary = base64.encodestring(atta_brw.db_datas)
-                file=self.binary2file(cr,uid,id_file,file_binary,"ftp","")
-                file_name=atta_brw.datas_fname
+                if release.version < '6':
+                    file_binary = atta_brw.datas
+                else:
+                    file_binary = base64.encodestring(atta_brw.db_datas)
+                file = self.binary2file(cr,uid,id_file,file_binary,"ftp","")
+                file_name = atta_brw.datas_fname
                 list_files.append({'source_file':file,'name':file_name})
         for a in list_files:
             try:

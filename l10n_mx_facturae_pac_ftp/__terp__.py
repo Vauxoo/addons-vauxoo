@@ -25,17 +25,17 @@
 ##############################################################################
 
 {
-    "name" : "attachment of invoice to ftp V5",
+    "name" : "envio automatico al ftp de xml y pdf",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module supports attachment of invoice to ftp """,
+    "description" : """This module supports ftp, xml and pdf electronic invoice """,
     "website" : "http://www.vauxoo.com/",
     #~ "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae","upload_ftp"],
+    "depends" : ["l10n_mx_facturae_pac_sf","upload_ftp",],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard_facturae_ftp.xml"],
+    "update_xml" : [],
     "installable" : True,
     "active" : False,
 }

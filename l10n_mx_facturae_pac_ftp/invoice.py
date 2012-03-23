@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -36,7 +36,7 @@ class account_invoice(osv.osv):
         super(account_invoice, self).cfdi_data_write(cr, uid, ids, cfdi_data, context)
         attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids):
-            report_name = 'account.invoice.facturae.pdf'
+            report_name = 'account.invoice.facturae.pac.sf.pdf'
             service = netsvc.LocalService("report."+report_name)
             (result,format) = service.create(cr, uid, [invoice.id], {}, {})
             attachment_ids = attachment_obj.search(cr, uid, [('res_model','=','account.invoice'),('res_id', '=', invoice.id)])
