@@ -70,7 +70,7 @@ class ir_attachment(osv.osv):
                 if release.version < '6':
                     file_binary = atta_brw.datas
                 else:
-                    file_binary = atta_brw.db_datas
+                    file_binary = base64.encodestring(atta_brw.db_datas)
                 file = self.binary2file(cr,uid,id_file,file_binary,"ftp","")
                 file_name = atta_brw.datas_fname
                 list_files.append({'source_file':file,'name':file_name})
