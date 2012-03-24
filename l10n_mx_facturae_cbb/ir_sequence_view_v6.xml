@@ -11,6 +11,8 @@
                 <xpath expr="/form/notebook/page/field/form/field[@name='number_end']" position="after">
                     <separator colspan="4" string="Codigo de Barras Bidimensional (CBB)"/>
                     <field name="cbb_image" colspan="4" widget="image" nolabel="1"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
                 </xpath>
             </field>
         </record>
