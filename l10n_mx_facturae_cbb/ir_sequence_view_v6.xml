@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="ir_sequence_form_inh_l10n_mx_facturae_cbb_01" model="ir.ui.view">
+            <field name="name">ir.sequence.form.inh.l10n_mx_facturae_cbb_01</field>
+            <field name="model">ir.sequence</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="l10n_mx_facturae_seq.ir_sequence_form_inh_l10n_mx_facturae"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field/form/field[@name='number_end']" position="after">
+                    <separator colspan="4" string="Codigo de Barras Bidimensional (CBB)"/>
+                    <field name="cbb_image" colspan="4" widget="image" nolabel="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>
