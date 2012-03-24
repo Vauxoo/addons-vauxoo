@@ -29,7 +29,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """
+    "description" : """Add library for manage certificate's for facturaE MX
     """,
     "website" : "http://www.vauxoo.com/",
     #"license" : "AGPL-3",
