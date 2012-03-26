@@ -67,12 +67,14 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['Moneda'] = invoice.currency_id.name or ''
             #~ invoice_data_parents[0]['Comprobante']['NumCtaPago'] = pendiente 
             invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or ''
-            invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {'Regimen':invoice.partner_id.regimen_fiscal_id.name or ''}
+            invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {'Regimen':invoice.company_id.partner_id.regimen_fiscal_id.name or ''}
             invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = 'Leon Gto' or ''
         
         return invoice_data_parents
     _columns = {
         'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', required = True, readonly=True, states={'draft':[('readonly',False)]}),
+        #~ 'acc_payment': fields.char ('NumCtaPago', size = 128, required = True, readonly=True, states={'draft':[('readonly',False)]}),
+        
         
     }
 account_invoice()
