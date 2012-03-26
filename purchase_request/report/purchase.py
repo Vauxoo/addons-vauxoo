@@ -46,25 +46,19 @@ class purchase_request(report_sxw.rml_parse):
         addr_obj = self.pool.get('res.partner.address')
         res = 'NO HAY DIRECCION FISCAL DEFINIDA'
         addr_ids = addr_obj.search(self.cr,self.uid,[('partner_id','=',idp), ('type','=','invoice')])
-        addr_inv={}
-        lista=""
         if addr_ids: #si es de tipo invoice la direccion              
             addr = addr_obj.browse(self.cr,self.uid, addr_ids[0])
-        var =    (addr.street and ('%s '%addr.street.title()) or '')    + \
-                (addr.street2 and ('%s '%addr.street2.title()) or '')      +\
+        var = (addr.street and ('%s, '%addr.street.title()) or '')    + \
+              (addr.street2 and ('%s, '%addr.street2.title()) or '')      +\
              (addr.zip and ('Codigo Postal: %s, '%addr.zip) or '')        +\
-             (addr.state_id and ('%s, '%addr.state_id.name.title()) or '')+ \
-             (addr.city and ('%s, '%addr.city.name.title()) or '')+ \
-             (addr.country_id and ('%s '%addr.country_id.name.title()) or '')+ \
+             (addr.state_id and ('%s, '%addr.state_id.name.title().strip()) or '')+ \
+             (addr.city_id and ('%s, '%addr.city_id.name.title().strip()) or '')+ \
+             (addr.country_id and ('%s '%addr.country_id.name.title().strip()) or '') + \
              (addr.phone and ('\nTelf:%s, '%addr.phone) or '')          +\
              (addr.mobile and ('Cel:%s, '%addr.mobile) or '')         +\
              (addr.fax and ('Fax:%s'%addr.fax) or '')
-            
         if addr_ids:
-            addr_inv['invoice'] = var
-            lista= var
-        if addr_inv:
-            respuesta=lista
+            respuesta= var
         else:
             respuesta=res
         return respuesta          
@@ -79,12 +73,12 @@ class purchase_request(report_sxw.rml_parse):
         if addr_ids: #si es de tipo invoice la direccion
             addr = addr_obj.browse(self.cr,self.uid, addr_ids[0])
             var =    \
-            (addr.street and ('%s '%addr.street.title()) or '')    + \
-            (addr.street2 and ('%s '%addr.street2.title()) or '')      +\
+            (addr.street and ('%s, '%addr.street.title()) or '')    + \
+            (addr.street2 and ('%s, '%addr.street2.title()) or '')      +\
             (addr.zip and ('Codigo Postal: %s, '%addr.zip) or '')        +\
-            (addr.city and ('%s, '%addr.city.name.title()) or '')+ \
-            (addr.state_id and ('%s, '%addr.state_id.name.title()) or '')+ \
-            (addr.country_id and ('%s, '%addr.country_id.name.title()) or '')+ \
+            (addr.city_id and ('%s, '%addr.city_id.name.title().strip()) or '')+ \
+            (addr.state_id and ('%s, '%addr.state_id.name.title().strip()) or '')+ \
+            (addr.country_id and ('%s, '%addr.country_id.name.title().strip()) or '')+ \
             (addr.fax and ('\nFax.: %s,'%addr.fax) or '')+\
             (addr.email and (' Email.: %s'%addr.email) or '')+\
             (addr.partner_id.website and ('\n Puede conseguir mas informacion acerca de nosotros en: %s > Contacto > Contactenos '%addr.partner_id.website) or '')

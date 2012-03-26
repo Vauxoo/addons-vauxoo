@@ -60,12 +60,13 @@
                 <td>
                     <para style="NAMEPROVE"><b>[[ o.partner_id.name ]]</b></para>
                     <para style="RIFPROVE"><b>[[ (o.partner_id.vat and ('RIF.: %s-%s-%s'%(o.partner_id.vat[2:3],o.partner_id.vat[3:11],o.partner_id.vat[11:12])) or removeParentNode('para')) ]]</b></para>
-                    <para style="DIRPROVE">Direccion: [[ o.partner_address_id.street  and ('%s,'%o.partner_address_id.street) or removeParentNode('para')]] [[ (o.partner_address_id.street2 and ('%s,'%o.partner_address_id.street2) or '')]] [[ o.partner_address_id.state_id and ('%s,'%o.partner_address_id.state_id.name)  or '']] [[ o.partner_address_id.city and ('%s,'%o.partner_address_id.city) or '' ]] [[ o.partner_address_id.city and ('%s,'%o.partner_address_id.city.name) or '' ]] [[ o.partner_address_id.phone  and ('\nTelf:%s'%o.partner_address_id.phone) or '']] [[ o.partner_address_id.mobile    and (',Cel:%s'%o.partner_address_id.mobile) or '']] [[ o.partner_address_id.fax    and (',Fax:%s'%o.partner_address_id.fax) or '']]</para>
+                    <para style="ITEMSLEFT">Dirección: [[ get_partner_addr(o.partner_id.id) or '' ]]</para>
                     <para style="DIRPROVE">Contacto: [[ o.partner_ref  and ('%s'%o.partner_ref.title()) or removeParentNode('para')]]</para>
                 </td>
                 <td>
                     <para style="NAMEPROVE">[[ o.company_id.partner_id.name ]] </para>
-                    <para style="ITEMSLEFT">[[ get_partner_addr(o.company_id.partner_id.id) or '' ]]</para>
+                    <para style="RIFPROVE"><b>[[ (o.company_id.partner_id.vat and ('RIF.: %s-%s-%s'%(o.company_id.partner_id.vat[2:3],o.company_id.partner_id.vat[3:11],o.company_id.partner_id.vat[11:12])) or removeParentNode('para')) ]]</b></para>
+                    <para style="ITEMSLEFT">Dirección: [[ get_partner_addr(o.company_id.partner_id.id) or '' ]]</para>
                 </td>
             </tr>
         </blockTable>
