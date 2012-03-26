@@ -28,12 +28,10 @@
 #
 ##############################################################################
 
-import wizard_last_cost_price2
-import wizard_last_cost_price_sum
 import wizard_trial_cost
-import wizard_update_cost
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
 

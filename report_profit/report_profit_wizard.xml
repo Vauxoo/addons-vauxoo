@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <wizard 
+            string="Trial Profitability"
+            model="report.profit"
+            name="profit.trial.cost"
+            id="wizard_trial_cost"
+            menu="True"/>
+
+
+    </data>
+</openerp>
