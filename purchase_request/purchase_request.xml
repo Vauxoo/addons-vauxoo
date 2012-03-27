@@ -3,7 +3,7 @@
     <data>
         <report             
             id="purchase.report_purchase_quotation_vauxoo"
-            menu="True"  
+            menu="False"  
             model="purchase.order" 
             name="purchase.request.vauxoo" 
             rml="addons/purchase_request/report/order_vauxoo.rml"

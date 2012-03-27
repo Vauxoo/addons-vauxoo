@@ -103,23 +103,6 @@
         </blockTable>
             </place>
         
-        <image x="39.0mm" y="53.0mm" height="15mm" width="40mm">[[o.validator and o.validator.digital_signature or removeParentNode('image')]]</image>
-        <place x="12.0mm" y="43.0mm" width="90.0mm"  height="20.0mm">
-            <blockTable>
-                <tr>
-                    <td><para style="SIGNATURE">[[ o.validator.digital_signature and 'Realizado por: %s'%('_ '*21) or removeParentNode('para') ]]</para></td>
-                </tr>
-            </blockTable>
-        </place>
-        <place x="33.0mm" y="39.0mm" width="50.0mm"  height="20.0mm">
-            <blockTable>
-                <tr>
-                    <td><para style="NAME_SIGNATURE">[[ o.validator.digital_signature and o.validator.name or removeParentNode('para') ]]</para></td>
-                </tr>
-            </blockTable>
-        </place>
-        
-        
         <place x="12.0mm"     y="-19mm"    width="232.0mm"  height="70.0mm">
             <!--TABLA DE NOTAS IMPORTANTES-->               
             <blockTable colWidths="192mm" style="ITEMSTITLE">
@@ -231,13 +214,12 @@
     
 <!--TABLA DE ITEMS-->   
     <section>          
-        <blockTable colWidths="15mm,25mm,102mm,17mm,13mm,20mm" repeatRows="1" style="TERMS">
+        <blockTable colWidths="15mm,25mm,102mm,30mm,20mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
                 <td><para style="ITEMSTITLE">CANT.</para></td>
                 <td><para style="ITEMSTITLE">UNIDAD</para></td>
                 <td><para style="ITEMSTITLE">[CODIGO] DESCRIPCION</para></td>
                 <td><para style="ITEMSTITLE">P/UNIT.</para></td>
-                <td><para style="ITEMSTITLE">DESC.</para></td>
                 <td><para style="ITEMSTITLE">SUBTOTAL</para></td>
             </tr>
         
@@ -250,7 +232,6 @@
                 <td><para style="ITEMSLEFT">[[ line.name ]]</para>
                 <para style="ITEMSLEFTITALIC">[[ line.notes and line.notes or removeParentNode('para') ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(line.price_unit ) ]]</para></td>
-                <td><para style="ITEMSRIGHT">[[ formatLang(line.discount ) ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(line.price_subtotal ) ]]</para></td>
             </tr>
         </blockTable>
