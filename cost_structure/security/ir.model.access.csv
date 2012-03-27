@@ -2,6 +2,8 @@
 
 
 "cost_structure_user","cost.structure","model_cost_structure","cost_structure.group_cost_structure_user",1,0,0,0
+"reportcost_user","report.cost","model_report_cost","cost_structure.group_report_cost_user",1,0,0,0
+"reportcost_manager","report.cost","model_report_cost","cost_structure.group_report_cost_manager",1,1,1,1
 "cost_structure_manager","cost.structure","model_cost_structure","cost_structure.group_cost_structure_manager",1,1,1,1
 "cost_structure_manager2","cost.structure","model_cost_structure","base.group_sale_manager",1,1,1,1
 

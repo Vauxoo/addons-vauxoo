@@ -5,6 +5,15 @@
     <record id="group_cost_structure_user" model="res.groups">
         <field name="name">Cost Structure / User</field>
     </record>
+    
+    <record id="group_report_cost_user" model="res.groups">
+        <field name="name">Report Cost / User</field>
+    </record>
+
+    <record id="group_report_cost_manager" model="res.groups">
+        <field name="name">Report Cost / Manager</field>
+    </record>
+
 
     <record id="group_cost_structure_manager" model="res.groups">
         <field name="name">Cost Structure / Manager</field>
