@@ -42,7 +42,6 @@
                 ],
     "init_xml" : [],
     "update_xml" : [
-        "wizard/purchase_report_multicompany.xml",
         "purchase_report.xml",
         "purchase_report_view.xml",
     ],
