@@ -37,10 +37,14 @@
                     Add new field for Payment Terms in purchase order
                     Changed in purchase order fields to required
                     ''',
-    "depends" : ["purchase",],
+    "depends" : ["purchase",
+                 "report_multicompany",
+                ],
     "init_xml" : [],
     "update_xml" : [
+        "wizard/purchase_report_multicompany.xml",
         "purchase_report.xml",
+        "purchase_report_view.xml",
     ],
     "active": False,
     "installable": True
