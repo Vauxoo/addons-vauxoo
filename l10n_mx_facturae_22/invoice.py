@@ -66,6 +66,10 @@ class account_invoice(osv.osv):
                 address = city +' '+ state +', '+ country
             else:
                 raise osv.except_osv(('Domicilio Incompleto!'),('Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)'))
+            
+            if not invoice.company_id.partner_id.regimen_fiscal_id.name:
+                raise osv.except_osv(('Regimen Fiscal Faltante!'),('El Regimen Fiscal de la compañia emisora del comprobante fiscal es un dato requerido'))
+                
             invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'
             invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
