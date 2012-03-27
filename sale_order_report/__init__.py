@@ -2,5 +2,4 @@
 import res_company
 import wizard
 import report
-import incoterm
 import order

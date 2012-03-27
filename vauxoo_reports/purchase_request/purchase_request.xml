@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report             
+            id="purchase.report_purchase_quotation_vauxoo"
+            menu="False"  
+            model="purchase.order" 
+            name="purchase.request.vauxoo" 
+            rml="addons/purchase_request/report/order_vauxoo.rml"
+            string="Sol. Presupuesto - Vauxoo Vzla"
+            auto="False" 
+            header="False" />
+    </data>
+</openerp>

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 {
-    "name" : "Sale report for AMD Consorcium",
+    "name" : "Sale report for Vauxoo",
     "version" : "0.1",
-    "depends" : ["sale", "incoterm_ext"],
+    "depends" : ["sale"],
     "author" : "Vauxoo",
     "description" : """
     What do this module:
@@ -15,10 +15,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
-        "wizard/sale_order_multicompany.xml",
-        "sale_multicompany_report_view.xml",
-        "sale_order_report.xml",
-        "sale_order_view.xml",
+        "incoterm_view.xml",
     ],
     "active": False,
     "installable": True,
