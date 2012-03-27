@@ -63,6 +63,8 @@ class report_profit(osv.osv):
         'move_id': fields.many2one('account.move', 'Move', readonly=True, select=True),
         'acc_cost': fields.float('Cost', readonly=True, help="Valor que adquiere el elemento para estimacion de costo de inventario"),
         'line_id':fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
+    
+    
     }
 
     def init(self, cr):

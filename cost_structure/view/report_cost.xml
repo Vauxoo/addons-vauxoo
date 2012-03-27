@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model='ir.ui.view' id='repor_cost_form'>
+      <field name='name'>Rerport</field>
+      <field name='model'>report.cost</field>
+      <field name='type'>form</field>
+      <field name='arch' type='xml'>
+        <form string="Report">
+          <field name='date' />
+          <field name='product_id' />
+          <field name='last_cost' sum="Cost" />
+          <field name='price_unit' sum="Price" />
+          <field name='uom_id' />
+          <field name='type_inv' />
+        </form>
+      </field>
+    </record>
+    <record model='ir.ui.view' id='repor_cost_tree'>
+      <field name='name'>Report</field>
+      <field name='model'>report.cost</field>
+      <field name='type'>tree</field>
+      <field name='arch' type='xml'>
+        <tree string="Method">
+          <field name='date' />
+          <field name='product_id' />
+          <field name='last_cost' sum="Cost" />
+          <field name='price_unit' sum="Price" />
+          <field name='uom_id' />
+          <field name='type_inv' />
+        </tree>
+      </field>
+    </record>
+    <record model='ir.actions.act_window' id='repor_cost_action'>
+      <field name='name'>Report Cost</field>
+      <field name='res_model'>report.cost</field>
+      <field name='view_type'>form</field>
+      <field name='vies_mode'>tree,form</field>
+    </record>
+    <menuitem name = "Report Cost" 
+            id ="report_cost" sequence ='50' parent = 'account.menu_finance'
+  action = 'repor_cost_action'
+  />
+  </data>
+</openerp>

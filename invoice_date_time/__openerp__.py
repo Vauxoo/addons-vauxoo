@@ -23,29 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Cost Structure",
+    "name" : "Date Time to Invoice",
     "version" : "0.1",
-    "depends" : ["stock",'product','sale','purchase'],
+    "depends" : ["account"],
     "author" : "Vauxoo",
     "description" : """
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : ['data/data_load.xml'],
+    "init_xml" : [],
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
-    'security/cost_structure_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/compute_cost_view.xml',
-    'view/cost_structure.xml',
-    'view/report_cost.xml',
-    'view/product_view.xml',
-    'view/sale_view.xml',
-    'workflow/sale_workflow.xml',
-    
-    
-    
     
     ],
     "active": False,

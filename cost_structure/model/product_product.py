@@ -29,7 +29,7 @@ from tools.translate import _
 from tools import config
 import netsvc
 import decimal_precision as dp
-
+from tools.sql import drop_view_if_exists
 
 class product_product(osv.osv):
     
@@ -62,9 +62,9 @@ class product_product(osv.osv):
     'cost_prom': fields.related('property_cost_structure', 'cost_prom', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Average Cost'),
     'cost_suppler': fields.related('property_cost_structure', 'cost_suppler', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Supplier Cost'),
     'cost_ant': fields.related('property_cost_structure', 'cost_ant', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Ant Cost'),
-    'ult_om': fields.related('property_cost_structure', 'ult_om', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Ult Cost'),
-    'prom_om': fields.related('property_cost_structure', 'prom_om', type='float', digits_compute=dp.get_precision('Cost Structure'), string='UOM Prom'),
-    'ant_om': fields.related('property_cost_structure', 'ant_om', type='float', digits_compute=dp.get_precision('Cost Structure'), string='UOM Ant'),
+    'ult_om': fields.related('property_cost_structure', 'ult_om', relation='product.uom', type='many2one', string='Ult UOM'),
+    'prom_om': fields.related('property_cost_structure', 'prom_om',relation='product.uom', type='many2one', string='UOM Prom'),
+    'ant_om': fields.related('property_cost_structure', 'ant_om', relation='product.uom', type='many2one', string='UOM Ant'),
     'cost_to_price': fields.related('property_cost_structure', 'cost_to_price', type='selection', string='Average Cost'),
     'date_cost_ult': fields.related('property_cost_structure', 'date_cost_ult', type='date', string='Date'),
     'date_ult_om': fields.related('property_cost_structure', 'date_ult_om', type='date', string='Date'),
@@ -118,7 +118,74 @@ class product_product(osv.osv):
 product_product()
 
 
-
+class report_cost(osv.osv):
+    _name = "report.cost"
+    _auto = False
+    _order= "date desc"    
+    _columns = {
+        'date': fields.date('Date Invoice', readonly=True),
+        'product_id':fields.many2one('product.product', 'Product', readonly=True, select=True),
+        'quantity': fields.float('# of Products', readonly=True),
+        'price_unit': fields.float('Unit Price', readonly=True),
+        'last_cost': fields.float('Last Cost', readonly=True),
+        'price_subtotal': fields.float('Subtotal Price', readonly=True),
+        'uom_id': fields.many2one('product.uom', ' UoM', readonly=True),
+        'type_inv': fields.selection([
+            ('out_invoice','Customer Invoice'),
+            ('in_invoice','Supplier Invoice'),
+            ('out_refund','Customer Refund'),
+            ('in_refund','Supplier Refund'),
+            ],'Type', readonly=True, select=True),
+        'invoice_id':fields.many2one('account.invoice', 'Invoice', readonly=True, select=True),
+        'line_id':fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
+    }
+    
+    _rec_name = 'date'
+    
+    
+    def init(self,cr):
+        drop_view_if_exists(cr,'report_cost')
+        cr.execute('''
+            create or replace view report_cost as (
+            select
+                invo.date_invoice as date,
+                line.id as id,
+                line.product_id as product_id,
+                invo.type as type_inv,
+                case when invo.type='out_refund'
+                    then
+                        0.0
+                    else
+                        case when invo.type='in_invoice'
+                            then
+                                line.price_unit
+                            else
+                                case when invo.type='in_refund'
+                                    then
+                                        line.price_unit*(-1)
+                                    else
+                                        0.0
+                                end 
+                        end    
+                end as last_cost,
+                line.uos_id as uom_id,
+                case when invo.type='out_refund'
+                    then
+                        line.price_unit*(-1)
+                    else
+                        case when invo.type='in_invoice'
+                            then 
+                                0.0
+                            else
+                                line.price_unit
+                        end
+                end as price_unit
+            from account_invoice invo
+                inner join account_invoice_line line on (invo.id=line.invoice_id)
+            where invo.state in ('open','paid')
+        )''')
+     
+report_cost()
 
 
 

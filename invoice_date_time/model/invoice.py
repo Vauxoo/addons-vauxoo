@@ -22,32 +22,21 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-{
-    "name" : "Cost Structure",
-    "version" : "0.1",
-    "depends" : ["stock",'product','sale','purchase'],
-    "author" : "Vauxoo",
-    "description" : """
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : ['data/data_load.xml'],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'security/cost_structure_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/compute_cost_view.xml',
-    'view/cost_structure.xml',
-    'view/report_cost.xml',
-    'view/product_view.xml',
-    'view/sale_view.xml',
-    'workflow/sale_workflow.xml',
+
+from osv import fields, osv
+import tools
+from tools.translate import _
+from tools import config
+import netsvc
+import decimal_precision as dp
+
+class account_invoice(osv.osv):
     
     
+    _inherit = 'account.invoice'
+    _columns = {
+    'date_invoice':fields.datetime('Invoice Date'),
+    }
     
     
-    ],
-    "active": False,
-    "installable": True,
-}
+account_invoice()
