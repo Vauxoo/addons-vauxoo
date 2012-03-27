@@ -35,5 +35,6 @@ class invoice_multicompany_report(osv.osv):
   _inherit = 'res.company'
   _columns = {
     'purchase_report_id':fields.many2one('ir.actions.report.xml', 'Purchase Report', required=False, domain="[('model','=','purchase.order')]"),
+    'purchase_request_id':fields.many2one('ir.actions.report.xml', 'Purchase Request', required=False, domain="[('model','=','purchase.order')]"),
   }
 invoice_multicompany_report()

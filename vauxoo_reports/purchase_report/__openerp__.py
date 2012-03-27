@@ -38,12 +38,11 @@
                     Changed in purchase order fields to required
                     ''',
     "depends" : ["purchase",
-                 "report_multicompany",
+                 "purchase_multi_report",
                 ],
     "init_xml" : [],
     "update_xml" : [
         "purchase_report.xml",
-        "purchase_report_view.xml",
     ],
     "active": False,
     "installable": True

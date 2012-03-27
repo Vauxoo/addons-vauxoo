@@ -36,12 +36,10 @@
                     Request Order customisation for Vnzla,
                     ''',
     "depends" : ["purchase",
-                 "purchase_report"],
+                 "purchase_multi_report"],
     "init_xml" : [],
     "update_xml" : [
-        "wizard/purchase_request_multicompany.xml",
         "purchase_request.xml",
-        "purchase_request_view.xml",
     ],
     "active": False,
     "installable": True

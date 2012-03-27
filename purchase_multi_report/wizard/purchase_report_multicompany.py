@@ -48,7 +48,11 @@ class print_purchase_report(osv.osv_memory):
         return self.__get_company_object(cr, uid).partner_id.name
 
     def _get_report(self, cr, uid, context=None):
-        report = self.__get_company_object(cr, uid).purchase_report_id
+        purch_order =  self.pool.get("purchase.order").browse(cr, uid, context['active_ids'][0])
+        if purch_order.state == 'approved':
+            report = self.__get_company_object(cr, uid).purchase_report_id
+        else:
+            report = self.__get_company_object(cr, uid).purchase_request_id
         if not report:
             rep_id = self.pool.get("ir.actions.report.xml").search(cr, uid, [('model', '=', 'purchase.order'),], order="id")[0]
             report = self.pool.get("ir.actions.report.xml").browse(cr, uid, rep_id)
@@ -58,7 +62,11 @@ class print_purchase_report(osv.osv_memory):
         return base64.encodestring(result)
 
     def _get_report_name(self, cr, uid, context):
-        report = self.__get_company_object(cr, uid).purchase_report_id
+        purch_order =  self.pool.get("purchase.order").browse(cr, uid, context['active_ids'][0])
+        if purch_order.state == 'approved':
+            report = self.__get_company_object(cr, uid).purchase_report_id
+        else:
+            report = self.__get_company_object(cr, uid).purchase_request_id
         if not report:
             rep_id = self.pool.get("ir.actions.report.xml").search(cr, uid, [('model', '=', 'purchase.order'),], order="id")[0]
             report = self.pool.get("ir.actions.report.xml").browse(cr, uid, rep_id)

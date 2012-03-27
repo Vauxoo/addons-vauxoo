@@ -11,6 +11,7 @@
       <field name="arch" type="xml">
         <xpath expr="/form/notebook/page[@string='Reports']" position="inside">
           <field name="purchase_report_id"/> 
+          <field name="purchase_request_id"/> 
         </xpath>
       </field>
     </record>
@@ -27,7 +28,7 @@
         </xpath> 
         <!-- se agrega el boton Print en la posicion despues del state para que no descuadre la vista-->
         <xpath expr="//field[@name='state']" position="after">
-           <button name="%(purchase_report.purchase_multicompany_report)d" string="Print" type="action" icon="gtk-print" groups="l10n_ve_fiscal_requirements.group_fiscal_ve"/>
+           <button name="%(purchase_multi_report.purchase_multicompany_report)d" string="Print" type="action" icon="gtk-print" groups="l10n_ve_fiscal_requirements.group_fiscal_ve"/>
            <button name="%(purchase.report_purchase_order)d" string="Print" states="approved" type="action" icon="gtk-print" groups="l10n_ve_fiscal_requirements.groups_original_fields"/>
         </xpath>
       </field>
