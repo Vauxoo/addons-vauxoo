@@ -39,7 +39,8 @@
                  "purchase_report"],
     "init_xml" : [],
     "update_xml" : [
-        "purchase_report.xml",
+        "purchase_request.xml",
+        "purchase_request_view.xml",
     ],
     "active": False,
     "installable": True
