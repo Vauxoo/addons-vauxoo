@@ -34,6 +34,6 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
 
     _columns = {
-        'regimen_fiscal_id': fields.many2one('regimen.fiscal', 'Regimen fiscal', required = True),
+        'regimen_fiscal_id': fields.many2one('regimen.fiscal', 'Regimen fiscal',),
     }
 res_partner()

@@ -58,22 +58,27 @@ class account_invoice(osv.osv):
           #  print 'es menor'
             return invoice_data_parents
         else:
-
             invoice = self.browse(cr, uid, ids, context={'date':date_invoice})[0]
-            rate_obj = self.pool.get('res.currency')
+            city = invoice_data_parents[0]['Comprobante']['Emisor']['DomicilioFiscal']['municipio']
+            state = invoice_data_parents[0]['Comprobante']['Emisor']['DomicilioFiscal']['estado']
+            country = invoice_data_parents[0]['Comprobante']['Emisor']['DomicilioFiscal']['pais']
+            if city and state and country:
+                address = city +' '+ state +', '+ country
+            else:
+                raise osv.except_osv(('Domicilio Incompleto!'),('Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)'))
             invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'
-            invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.currency_id.rate or 1
+            invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
             invoice_data_parents[0]['Comprobante']['Moneda'] = invoice.currency_id.name or ''
-            #~ invoice_data_parents[0]['Comprobante']['NumCtaPago'] = pendiente 
-            invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or ''
+            invoice_data_parents[0]['Comprobante']['NumCtaPago'] = invoice.acc_payment or 'No identificado'
+            invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
             invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {'Regimen':invoice.company_id.partner_id.regimen_fiscal_id.name or ''}
-            invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = 'Leon Gto' or ''
+            invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = address
         
         return invoice_data_parents
     _columns = {
-        'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', required = True, readonly=True, states={'draft':[('readonly',False)]}),
-        #~ 'acc_payment': fields.char ('NumCtaPago', size = 128, required = True, readonly=True, states={'draft':[('readonly',False)]}),
+        'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', readonly=True, states={'draft':[('readonly',False)]}),
+        'acc_payment': fields.char ('NumCtaPago', size = 128, readonly=True, states={'draft':[('readonly',False)]}),
         
         
     }

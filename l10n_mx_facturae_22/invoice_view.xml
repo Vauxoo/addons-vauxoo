@@ -13,6 +13,7 @@
                 <xpath expr="/form/group/field[@string='period_id']" position="after">
 -->                 <newline/>
                       <field name="pay_method_id" colspan="2"/>
+                      <field name="acc_payment" colspan="2"/>
 <!--
                 </xpath>
 -->         </field>
