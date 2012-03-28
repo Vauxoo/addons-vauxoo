@@ -39,6 +39,8 @@
 	"init_xml" : [],
 	"update_xml" : [
 		"report_multicompany_view.xml",
+                "view/payment_method_view.xml",
+                "view/account_invoice_view.xml",
 
 	],
 	"active": False,
