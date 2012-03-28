@@ -35,8 +35,9 @@
 	               Agrega un tab en la Compañia que va a contener los reportes personalizados. 
                     ''',
 	"depends" : ["base",
+                     "account",
 	             ],
-	"init_xml" : [],
+	"init_xml" : ["data/payment_method_data.xml"],
 	"update_xml" : [
 		"report_multicompany_view.xml",
                 "view/payment_method_view.xml",
