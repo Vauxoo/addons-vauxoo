@@ -39,6 +39,7 @@
 	             ],
 	"init_xml" : ["data/payment_method_data.xml"],
 	"update_xml" : [
+                "security/ir.model.access.csv",
 		"report_multicompany_view.xml",
                 "view/payment_method_view.xml",
                 "view/account_invoice_view.xml",
