@@ -1,16 +1,10 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
-#    All Rights Reserved
-###############Credits######################################################
-#    Coded by: María Gabriela Quilarque  <gabriela@openerp.com.ve>
-#              Luis Escobar <luis@vauxoo.com> 
-#    Planified by: Nhomar Hernandez
-#    Finance by: Vauxoo, C.A. http://vauxoo.com 
-#    Audited by: María Gabriela Quilarque  <gabriela@openerp.com.ve>
-#############################################################################
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    author.name@company.com
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -23,6 +17,22 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
 ##############################################################################
-import payment_method
-import invoice 
+
+from osv import osv
+from osv import fields
+from tools.translate import _
+
+class payment_method(osv.osv):
+    """
+    payment_method
+    """
+    
+    _name = 'payment.method'
+    
+    _columns = {
+        'name':fields.char('Payment method', size=64, required=False, translate=True),
+        }
+
+payment_method()
