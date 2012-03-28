@@ -28,7 +28,7 @@
 #
 ##############################################################################
 
-import wizard_trial_cost
+import wiz_trial_cost
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

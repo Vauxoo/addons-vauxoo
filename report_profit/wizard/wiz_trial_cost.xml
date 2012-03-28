@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_trial_cost_form" model="ir.ui.view">
+            <field name="name">trial.cost.form</field>
+            <field name="model">trial.cost</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Last Cost Price Sum">
+                    <separator string="Sum By?" colspan="4"/>
+                    <field name="date_start" />
+                    <field name="period_length"/>
+                    <newline/>
+                    <group colspan="2" col="4">
+                        <group col="3" colspan="2">
+                            <field name="u_check" />
+                            <field name="user_res_id" nolabel="1" attrs="{'readonly':[('u_check','!=',True)]}"/>
+                            <field name="p_check" />
+                            <field name="partner_res_id" nolabel="1" attrs="{'readonly':[('p_check','!=',True)]}"/>
+                            <field name="c_check" />
+                            <field name="cat_res_id" nolabel="1" attrs="{'readonly':[('c_check','!=',True)]}"/>
+                        </group>
+                    </group>
+                    <separator colspan="4"/>
+                     <group colspan="4" col="5">
+                            <button icon="gtk-cancel" special="cancel" string="_Cancel"/>
+                            <button icon="gtk-print" name="action_print" string="Print Trial Profitability" type="object"/>
+                     </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_trial_cost" model="ir.actions.act_window">
+            <field name="name">trial profitability</field>
+            <field name="res_model">trial.cost</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_trial_cost_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            name="trial profitability"
+            action="action_trial_cost"
+            id="menu_trial_cost"
+            parent="account.menu_finance_receivables"
+            groups="base.group_extended"/>
+
+
+    </data>
+</openerp>

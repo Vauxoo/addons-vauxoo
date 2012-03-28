@@ -46,7 +46,7 @@
         "report_profit_view.xml",
         'data/report_profit_data.xml',
         'report_profit_report.xml',
-        'report_profit_wizard.xml'
+        'wizard/wiz_trial_cost.xml'
     ],
     "active": False,
     "installable": True,
