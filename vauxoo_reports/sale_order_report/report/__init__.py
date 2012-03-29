@@ -19,8 +19,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import amd_computadoras_sale_report
-import amd_computer_shop_sale_report
-import computacion_activa_sale_report
-import comercializadora_m321_sale_report
+import vauxoo
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

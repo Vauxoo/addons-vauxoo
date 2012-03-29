@@ -2,38 +2,6 @@
 <openerp>
     <data>
 
-        <report id="sale.m321_c_report"
-        string="Print Report AMD Computadoras"
-        model="sale.order"
-        name="sale_m321_c_report"
-        rml="sale_order_report/report/amd_computadoras_sale_report.rml"
-        header="False"
-        menu="False"/>
-
-        <report id="sale.m321_cs_report"
-        string="Print Report Computer Shop"
-        model="sale.order"
-        name="sale_m321_cs_report"
-        rml="sale_order_report/report/amd_computer_shop_sale_report.rml"
-        header="False" 
-        menu="False" />
-
-        <report id="sale.cm321_report"
-        string="Print Report Comercializadora M321"
-        menu="False"
-        model="sale.order"
-        name="sale_cm321_report"
-        rml="sale_order_report/report/comercializadora_m321_sale_report.rml"
-        header="False"/>
-
-        <report id="sale.m321_ca_report"
-        string="Print Report Computacion Activa"
-        model="sale.order"
-        name="sale_m321_ca_report"
-        rml="sale_order_report/report/computacion_activa_sale_report.rml"
-        header="False"
-        menu="False" />
-
         <report id="sale.vauxoo_report"
         string="Print Report Vauxoo"
         model="sale.order"
