@@ -30,7 +30,7 @@
     "category": "Generic Modules/Inventory Control",
     "description": """Add amount information to pickings.""",
     "license" : "GPL-3",
-    "depends" : ["base", "account", "stock", "sale"],
+    "depends" : ["base", "account", "stock", "sale","purchase"],
     "init_xml" : [],
     "update_xml" : [
         'security/ir.model.access.csv',
