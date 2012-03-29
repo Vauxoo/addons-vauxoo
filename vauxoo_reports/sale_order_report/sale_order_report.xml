@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-        <report id="sale.vauxoo_report"
+        <report id="sale_vauxoo_report"
         string="Print Report Vauxoo"
         model="sale.order"
         name="sale_order_vauxoo"
