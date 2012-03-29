@@ -25,7 +25,7 @@
 {
     "name" : "Account Invoice Multicompany Report",
     "version" : "0.1",
-    "depends" : ["account"],
+    "depends" : ["account","multireport_base"],
     "author" : "Vauxoo",
     "description" : """
         Adds a "Report" field on the Company model and a "Print Invoice" button on the customer invoices view which calls
