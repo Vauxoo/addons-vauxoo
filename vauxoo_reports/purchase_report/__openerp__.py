@@ -29,7 +29,7 @@
 {
     "name" : "Report Order customisation Vnzla",
     "version" : "0.2",
-    "author" : "Openerp Venezuela",
+    "author" : "Vauxoo",
     "category" : "Generic Modules/Others",
     "website": "http://wiki.openerp.org.ve/",
     "description": '''

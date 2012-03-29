@@ -29,7 +29,7 @@
 {
     "name" : "Request Order customisation Vnzla",
     "version" : "0.3",
-    "author" : "Openerp Venezuela",
+    "author" : "Vauxoo",
     "category" : "Generic Modules/Others",
     "website": "http://wiki.openerp.org.ve/",
     "description": '''
