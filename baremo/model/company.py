@@ -25,6 +25,6 @@ from osv import fields
 class res_company(osv.osv):
     _inherit = "res.company"
     _columns = {
-        'bar_id':fields.many2one('baremo.book', 'Bareme',required=True),
+        'bar_id':fields.many2one('baremo.book', 'Bareme'),
     }
 res_company()
