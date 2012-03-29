@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: Vauxoo C.A.           
@@ -30,7 +30,7 @@
                  'stock'                                            ,
                  'product'                                          ,
                 ]                                                   ,
-    "author" : "OpenERP Venezuela"                                  ,
+    "author" : "Vauxoo"                                  ,
     "description" : """
                 - Reporte de la Hoja de Conteo de Inventario.
                 - Reporte del Total de Invenatrio.

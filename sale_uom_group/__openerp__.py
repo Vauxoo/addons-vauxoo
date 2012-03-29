@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: Javier Duran <javieredm@gmail.com>,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
-#    Audited by: Humberto Arocha humberto@openerp.com.ve
+#    Audited by: Humberto Arocha humberto@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
     What do this module:
     Add multi product uom sum of order line.
                     """                                                                                     ,
-    "website" : "http://openerp.com.ve"                                                                     ,
+    "website" : "http://vauxoo.com"                                                                     ,
     "category" : "Generic Modules/MRP"                                                                      ,
     "init_xml" : [
     ]                                                                                                       ,

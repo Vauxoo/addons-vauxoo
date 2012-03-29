@@ -2,16 +2,16 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Humberto Arocha           <humberto@openerp.com.ve>
+#    Coded by: Humberto Arocha           <humberto@vauxoo.com>
 #              Angelica Barrios          <angélicaisabelb@gmail.com>
 #              María Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
 #              Javier Duran              <javier@vauxoo.com>             
 #    Planified by: Nhomar Hernande
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
-#    Audited by: Humberto Arocha humberto@openerp.com.ve
+#    Audited by: Humberto Arocha humberto@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
