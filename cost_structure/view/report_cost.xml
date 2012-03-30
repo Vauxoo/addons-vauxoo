@@ -38,7 +38,7 @@
       <field name='vies_mode'>tree,form</field>
     </record>
     <menuitem name = "Report Cost" 
-            id ="report_cost" sequence ='50' parent = 'account.menu_finance'
+            id ="report_cost" sequence ='50' parent = 'compute_cost_wz'
   action = 'repor_cost_action'
   />
   </data>
