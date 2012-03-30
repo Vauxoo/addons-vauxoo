@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<openerp>
+  <data noupdate="1" >
+  
+    <record id="pm_check" model="payment.method">
+        <field name="name">Check</field>
+    </record>
+
+    <record id="pm_cash" model="payment.method">
+        <field name="name">Cash</field>
+    </record>
+
+    <record id="pm_deposit" model="payment.method">
+        <field name="name">Deposit</field>
+    </record>
+
+    <record id="pm_transfer" model="payment.method">
+        <field name="name">Transfer</field>
+    </record>
+
+  </data>
+</openerp>

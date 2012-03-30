@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
-# Copyright (c) 2011 OpenERP Venezuela (http://openerp.com.ve)
+# Copyright (c) 2011 Vauxoo (http://vauxoo.com)
 # All Rights Reserved.
-# Programmed by: Israel Fermín Montilla  <israel@openerp.com.ve>
+# Programmed by: Israel Fermín Montilla  <israel@vauxoo.com>
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential

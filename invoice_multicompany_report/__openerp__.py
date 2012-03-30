@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 ############################################################################
 #    Module Writen to OpenERP, Open Source Management Solution             #
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
+#    Copyright (C) Vauxoo (<http://vauxoo.com>).            #
 #    All Rights Reserved                                                   #
 ###############Credits######################################################
-#    Coded by: author NAME LASTNAME <email@openerp.com.ve>                 #
+#    Coded by: author NAME LASTNAME <email@vauxoo.com>                 #
 #    Planified by: Nhomar Hernandez                                        #
 #    Finance by: COMPANY NAME <EMAIL-COMPANY>                              #
-#    Audited by: Humberto Arocha humberto@openerp.com.ve                   #
+#    Audited by: Humberto Arocha humberto@vauxoo.com                   #
 ############################################################################
 #    This program is free software: you can redistribute it and/or modify  #
 #    it under the terms of the GNU General Public License as published by  #
@@ -25,7 +25,7 @@
 {
     "name" : "Account Invoice Multicompany Report",
     "version" : "0.1",
-    "depends" : ["account"],
+    "depends" : ["account","multireport_base"],
     "author" : "Vauxoo",
     "description" : """
         Adds a "Report" field on the Company model and a "Print Invoice" button on the customer invoices view which calls
