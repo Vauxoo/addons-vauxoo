@@ -28,3 +28,4 @@
 import product
 import stock
 import wizard
+import invoice

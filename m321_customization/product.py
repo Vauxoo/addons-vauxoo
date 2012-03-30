@@ -88,7 +88,8 @@ class inherited_product(osv.osv):
 
     _columns = {
             'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
-           'available_boolean':fields.function(_stock_available, method=True,type="text", store=True, string='Available Stock'),
+            'available_boolean':fields.function(_stock_available, method=True,type="text", store=True, string='Available Stock'),
+            'profit_code':fields.char("Code from profit", size=20, help="Code from profit database"),
         }
 
     _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc'])]
