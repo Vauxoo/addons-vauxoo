@@ -58,10 +58,21 @@
             <menuitem 
             name = "Compute Costs" 
             id ="compute_cost_wz"
+            icon = 'STOCK_FLOPPY'
+            parent = 'account.menu_finance'
             sequence ='50'
-            parent = 'base.menu_sales'
+            />
+            
+            
+            <menuitem 
+            name = "Compute Costs" 
+            id ="compute_cost_wz2"
+            sequence ='50'
+            parent = 'compute_cost_wz'
             action = 'compute_costs_action'
             />
+            
+            
        
     </data>
 </openerp>
