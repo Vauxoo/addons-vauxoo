@@ -25,7 +25,17 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-import product
-import stock
-import wizard
-import invoice
+from osv import osv
+from osv import fields
+from tools.translate import _
+
+class inherited_invoice(osv.osv):
+    """
+    M321 Customizations for account.invoice model
+    """
+    _inherit = "account.invoice"
+    _columns = {
+            'profit_code': fields.integer("Code from profit", help="Invoice code from profit")
+        }
+
+inherited_invoice()
