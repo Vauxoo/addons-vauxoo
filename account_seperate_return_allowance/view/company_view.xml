@@ -16,6 +16,11 @@
                             <field name="make_allowance_aml" />
                             <field name="property_account_allowance_global" />
                         </group>
+                        <separator string="Property Account Return" colspan='4'/>
+                        <group col="6" colspan="4">
+                            <field name="make_return_aml" />
+                            <field name="property_account_return_global" />
+                        </group>
                     </group>
                 </page>
                 </xpath>

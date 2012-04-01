@@ -42,36 +42,47 @@ class account_invoice(osv.osv):
         acc_id=self.pool.get('res.company').browse(cr,uid, [company.id])[0].property_account_allowance_global.id
         return (company.make_allowance_aml,acc_id)
 
-    def get_account_allowance(self, cr, uid, l):
+    def get_account_aml(self, cr, uid, l):
         '''
         Get the account id to put on counter part.
         Improve this method to allow do it more smart.
         '''
         #TODO: make recursive load account from parents categ_id
+        type_inv==l.invoice_id.type
         cv = self.config_verification(cr, uid)
         if cv[0]:
-            if l.product_id.property_account_allowance:
-                return l.product_id.property_account_allowance.id
-            elif l.product_id.product_tmpl_id.categ_id.property_account_allowance:
-                return l.product_id.product_tmpl_id.categ_id.property_account_allowance.id
-            else:
-                return cv[1]
+            if type_inv=='out_invoice':
+                if l.product_id.property_account_allowance:
+                    return l.product_id.property_account_allowance.id
+                elif l.product_id.product_tmpl_id.categ_id.property_account_allowance:
+                    return l.product_id.product_tmpl_id.categ_id.property_account_allowance.id
+                else:
+                    return cv[1]
+            if type_inv=='out_refund':
+                if l.product_id.property_account_return:
+                    return l.product_id.property_account_return.id
+                elif l.product_id.product_tmpl_id.categ_id.property_account_return:
+                    return l.product_id.product_tmpl_id.categ_id.property_account_return.id
+                else:
+                    return cv[1]
 
-    def get_dict_lines(self,cr,uid,l,context=None):
+    def get_dict_allowance(self,cr,uid,l,context=None):
         '''
+        Allowance:
         Get list of lines to make the aml for allowance accounts.
         This method is experimental given this situation:
         NO Analityc analisis for this ammount.
         NO Multicurrency feature.
         Overwrite this method or propose a merge proposal to improve this behaviour.
         '''
-        acc_id=self.get_account_allowance(cr, uid, l)
-        amount_line_allowance = l.quantity*l.price_unit - l.price_subtotal
-        if acc_id and  amount_line_allowance > 1e-8:
+        acc_id=self.get_account_aml(cr, uid, l)
+        type_inv==l.invoice_id.type
+        amount_line = l.quantity*l.price_unit - l.price_subtotal
+        if acc_id and  amount_line > 1e-8:
             line = {'name': _('Discount %s' % l.name[:64]), 
                    'ref': _('Discount %s' % l.name[:64]), 
                    'credit': False, 
-                   'debit': amount_line_allowance, 
+                   'debit': amount_line, 
                    'product_id': l.product_id.id,
                     #'amount_currency': 0, #TODO: apply multicurrency?
                     #'currency_id': False, #TODO: apply multicurrency?
@@ -85,7 +96,7 @@ class account_invoice(osv.osv):
             #TODO: Should i make a line.copy() and a line.update()?
             counter_line = {'name': _('Discount %s' % l.name[:64]), 
                    'ref': _('Discount %s' % l.name[:64]), 
-                   'credit': amount_line_allowance, 
+                   'credit': amount_line, 
                    'debit': False, 
                    'product_id': l.product_id.id,
                     #'amount_currency': 0, #TODO: apply multicurrency?
@@ -110,11 +121,20 @@ class account_invoice(osv.osv):
         :return: the (possibly updated) final move_lines to create for this invoice
         """
         context={}
-        move_lines = super(account_invoice, self).finalize_invoice_move_lines(cr, uid, invoice_browse, move_lines)
-        for l in invoice_browse.invoice_line:
-            if l.product_id:
-                lines=self.get_dict_lines(cr,uid, l,context=context)
-                [move_lines.append(y) for y in lines]
+        type_inv=invoice_browse.type
+        
+        if type_inv=='out_invoice':
+            move_lines = super(account_invoice, self).finalize_invoice_move_lines(cr, uid, invoice_browse, move_lines)
+            for l in invoice_browse.invoice_line:
+                if l.product_id:
+                    lines=self.get_dict_allowance(cr,uid, l,context=context)
+                    [move_lines.append(y) for y in lines]
+        elif type_inv=='out_refund':
+            #Do what returns must to doc
+            for l in invoice_browse.invoice_line:
+                if l.product_id:
+                    lines=self.get_dict_return(cr,uid, l,context=context)
+                    [move_lines.append(y) for y in lines]
         return move_lines
         
         

@@ -49,5 +49,21 @@ class res_company(osv.osv):
             help="""This Account is used to make move line for globals discounts 
             on sale invoices and represent this amount as a counter part on debit 
             for an income."""),
+        'make_return_aml':fields.boolean('Make Return on Separate Account', 
+                                            required=False,
+        help="""True, the refund for Sale Invoice will be expresed on this account
+         or in the account defined on product or category of product, allowing 
+         credit returns in a different account complying with accounting global standars.."""),
+        'property_account_return_global': fields.property(
+            'account.account',
+            type='many2one',
+            relation='account.account',
+            string="Invoice allowance global account",
+            method=True,
+            view_load=True,
+            domain="[('type', '=', 'other')]",
+            help="""This Account is used to make move line for globals return 
+            on out invoices and represent this amount as a counter part on credit 
+            for an income."""),
     }
 res_company()

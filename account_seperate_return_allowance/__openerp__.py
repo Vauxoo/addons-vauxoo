@@ -73,6 +73,11 @@
     account receivable            D            |
     discount account on productS           D   | [Account Configured on Journal.]
     ===========================================|
+    
+    For Accounting Especifications of return behaviour:
+    
+    http://www.principlesofaccounting.com/chapter5/chapter5.html#return
+
     """,
     "website" : "http://vauxoo.com",
     "category" : "Accounting",
