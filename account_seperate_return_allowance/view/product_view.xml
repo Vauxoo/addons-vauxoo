@@ -12,8 +12,10 @@
                 <group col="4" colspan="4">
                     <separator string="Property Account" colspan='4'/>
                     <group col="6" colspan="4">
-                        <field name="property_account_allowance" />
-                        <field name="property_account_return" />
+                        <field name="property_account_allowance" 
+                        domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
+                        <field name="property_account_return" 
+                        domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
                     </group>
                 </group>
                 </xpath>
@@ -30,8 +32,10 @@
                 <group col="4" colspan="4">
                     <separator string="Property Account" colspan='4'/>
                     <group col="6" colspan="4">
-                        <field name="property_account_allowance" />
-                        <field name="property_account_return" />
+                        <field name="property_account_allowance" 
+                        domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
+                        <field name="property_account_return" 
+                        domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
                     </group>
                 </group>
                 </xpath>
