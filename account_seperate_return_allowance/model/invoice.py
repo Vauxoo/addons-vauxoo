@@ -66,8 +66,8 @@ class account_invoice(osv.osv):
         Overwrite this method or propose a merge proposal to improve this behaviour.
         '''
         acc_id=self.get_account_allowance(cr, uid, l)
-        if acc_id:
-            amount_line_allowance = l.quantity*l.price_unit - l.price_subtotal
+        amount_line_allowance = l.quantity*l.price_unit - l.price_subtotal
+        if acc_id and  amount_line_allowance > 1e-8:
             line = {'name': _('Discount %s' % l.name[:64]), 
                    'ref': _('Discount %s' % l.name[:64]), 
                    'credit': False, 
@@ -78,7 +78,7 @@ class account_invoice(osv.osv):
                     #'tax_code_id': 21, #TODO: Apply some tax?
                     #'analytic_lines': [], #TODO: apply analityc expenses?
                     #'analytic_account_id': False, #TODO: apply analityc expenses?
-                    'product_uom_id': l.product_id.id, 
+                    'product_uom_id': l.uos_id.id, 
                     'quantity': l.quantity, 
                     'partner_id': l.invoice_id.partner_id.id, 
                     'account_id': acc_id}
@@ -93,7 +93,7 @@ class account_invoice(osv.osv):
                     #'tax_code_id': 21, #TODO: Apply some tax?
                     #'analytic_lines': [], #TODO: apply analityc expenses?
                     #'analytic_account_id': False, #TODO: apply analityc expenses?
-                    'product_uom_id': l.product_id.id, 
+                    'product_uom_id': l.uos_id.id, 
                     'quantity': l.quantity, 
                     'partner_id': l.invoice_id.partner_id.id, 
                     'account_id': l.invoice_id.account_id.id}
