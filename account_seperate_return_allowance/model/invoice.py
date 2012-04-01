@@ -52,8 +52,8 @@ class account_invoice(osv.osv):
         if cv[0]:
             if l.product_id.property_account_allowance:
                 return l.product_id.property_account_allowance.id
-            elif l.product_id.product_tmpl_id.property_account_allowance:
-                return l.product_id.product_tmpl_id.property_account_allowance.id
+            elif l.product_id.product_tmpl_id.categ_id.property_account_allowance:
+                return l.product_id.product_tmpl_id.categ_id.property_account_allowance.id
             else:
                 return cv[1]
 
@@ -112,7 +112,6 @@ class account_invoice(osv.osv):
         context={}
         move_lines = super(account_invoice, self).finalize_invoice_move_lines(cr, uid, invoice_browse, move_lines)
         for l in invoice_browse.invoice_line:
-            print l
             if l.product_id:
                 lines=self.get_dict_lines(cr,uid, l,context=context)
                 [move_lines.append(y) for y in lines]
