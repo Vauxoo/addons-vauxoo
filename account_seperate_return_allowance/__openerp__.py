@@ -22,6 +22,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+#TODO: Installer to load automagically allowance accounts
 {
     "name" : "Account Separate Return Allowance",
     "version" : "0.5",
@@ -80,6 +81,7 @@
     "test": [ ],
     "update_xml" : [
     "view/product_view.xml",
+    "view/company_view.xml",
     ],
     "active": False,
     "installable": True,
