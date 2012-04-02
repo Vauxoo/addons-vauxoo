@@ -54,6 +54,7 @@
         "view/module_view.xml",
         "report/ir_report.xml",
         "report/module_report.xml",
+        "account_view.xml",
     ],
     'demo' : [],
     'active' : False,

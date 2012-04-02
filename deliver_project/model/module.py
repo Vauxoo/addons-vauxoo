@@ -158,13 +158,13 @@ class module(osv.osv):
                 self.__logger.warning('Unknown error while browsing %s[%s]',
                             data_id.model, data_id.res_id, exc_info=True)
                 pass
-        res_mod_dic['doc_on_module']=list(set(res_mod_dic['doc_on_module']))
+        #res_mod_dic['doc_on_module']=list(set(res_mod_dic['doc_on_module']))
         for key, value in res.iteritems():
             for k, v in res[key].iteritems() :
                 #TODO Make Generic or with regEx
                 #Putting title on the begining.
                  txt = "\n".join(sorted(v[:len(v)-2]))
-                 res[key][k] = "%s\n%s" % (v.pop(len(v)-2),txt)
+                 res[key][k] = txt
         return res
         
     _columns={
