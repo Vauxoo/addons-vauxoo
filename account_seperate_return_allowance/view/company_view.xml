@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+      
+          <record id="res_company_allowance_form_view" model="ir.ui.view">
+            <field name="name">res.company.allowance.form</field>
+            <field name="model">res.company</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Configuration']" position="before">
+                <page string="Allowance Configuration">
+                    <group col="4" colspan="4">
+                        <separator string="Property Account Allowance" colspan='4'/>
+                        <group col="6" colspan="4">
+                            <field name="make_allowance_aml" />
+                            <field name="property_account_allowance_global" 
+                            domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
+                        </group>
+                        <separator string="Property Account Return" colspan='4'/>
+                        <group col="6" colspan="4">
+                            <field name="make_return_aml" />
+                            <field name="property_account_return_global" 
+                            domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
+                        </group>
+                    </group>
+                </page>
+                </xpath>
+             </field>
+        </record>
+
+  </data>
+</openerp>
