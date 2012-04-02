@@ -40,7 +40,8 @@ class account_invoice(osv.osv):
         '''
         company=self.pool.get('res.users').browse(cr,uid,[uid],context=None)[0].company_id
         acc_id=self.pool.get('res.company').browse(cr,uid, [company.id])[0].property_account_allowance_global.id
-        return (company.make_allowance_aml,acc_id)
+        acc_id_return=self.pool.get('res.company').browse(cr,uid, [company.id])[0].property_account_return_global.id
+        return (company.make_allowance_aml,acc_id,acc_id_return)
 
     def get_account_aml(self, cr, uid, l):
         '''
@@ -59,13 +60,18 @@ class account_invoice(osv.osv):
                 else:
                     return cv[1]
             if type_inv=='out_refund':
-                if l.product_id.property_account_return:
-                    return l.product_id.property_account_return.id
-                elif l.product_id.product_tmpl_id.categ_id.property_account_return:
-                    return l.product_id.product_tmpl_id.categ_id.property_account_return.id
+                if l.product_id:
+                    if l.product_id.property_account_return:
+                        return l.product_id.property_account_return.id
+                    elif l.product_id.product_tmpl_id.categ_id.property_account_return:
+                        return l.product_id.product_tmpl_id.categ_id.property_account_return.id
+                    else:
+                        return cv[2]
                 else:
-                    return cv[1]
-
+                    #It is considered an allowance? if YES change per cv[1]
+                    return cv[2]
+                    
+                    
     def get_dict_allowance(self,cr,uid,l,context=None):
         '''
         Allowance:
@@ -130,12 +136,49 @@ class account_invoice(osv.osv):
                     lines=self.get_dict_allowance(cr,uid, l,context=context)
                     [move_lines.append(y) for y in lines]
         elif type_inv=='out_refund':
+            tax_accounts = [acc_tax_id.account_id.id for acc_tax_id in invoice_browse.tax_line]
+            receivable=[y for y in  move_lines if y[2].get('account_id')==invoice_browse.account_id.id or y[2].get('account_id') in tax_accounts]
+            new = []
             #Do what returns must to doc
+            #Ensure i take the correct line. No tax
+            to_modify=[aml for aml in move_lines if aml[2].get('account_id') \
+                       not in tax_accounts]
+            #It is not the receivable account
+            to_modify=[aml for aml in to_modify if aml[2].get('account_id') \
+                       not in [invoice_browse.account_id.id]]
             for l in invoice_browse.invoice_line:
                 if l.product_id:
-                    lines=self.get_dict_return(cr,uid, l,context=context)
-                    [move_lines.append(y) for y in lines]
+                #If it is commercial.
+                    if to_modify:
+                        #Look for the new account
+                        new_acc_id=self.get_account_aml(cr, uid, l)
+                        #Build the new entry line
+                        new_entry=to_modify.pop(0)[2].copy()
+                        new_entry.update({'account_id':new_acc_id})
+                        #Add the new entry to new s
+                        entry=[(0,0,new_entry)]
+                        new=new+entry
+                if not l.product_id:
+                #If it is Allowance or it doen't have product_id in the line
+                    if to_modify:
+                        #Look for the new account
+                        new_acc_id=self.get_account_aml(cr, uid, l)
+                        #Build the new entry line
+                        new_entry=to_modify.pop(0)[2].copy()
+                        new_entry.update({'account_id':new_acc_id})
+                        #Add the new entry to new s
+                        entry=[(0,0,new_entry)]
+                        new=new+entry
+            #join everything
+            if new:
+                #Verify What is the tax account and receivable and sum to new entry
+                print "Receivables",str([aml for aml in move_lines if aml[2].get('account_id') in [invoice_browse.account_id.id]])
+                print "Taxes",str([aml for aml in move_lines if aml[2].get('account_id')  in tax_accounts])
+                move_lines=new+ \
+                        [aml for aml in move_lines if aml[2].get('account_id') \
+                               in [invoice_browse.account_id.id]] +\
+                        [aml for aml in move_lines if aml[2].get('account_id') \
+                               in tax_accounts]
+                print move_lines
         return move_lines
-        
-        
 account_invoice()
