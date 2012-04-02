@@ -48,7 +48,7 @@ class account_invoice(osv.osv):
         Improve this method to allow do it more smart.
         '''
         #TODO: make recursive load account from parents categ_id
-        type_inv==l.invoice_id.type
+        type_inv=l.invoice_id.type
         cv = self.config_verification(cr, uid)
         if cv[0]:
             if type_inv=='out_invoice':
@@ -76,7 +76,7 @@ class account_invoice(osv.osv):
         Overwrite this method or propose a merge proposal to improve this behaviour.
         '''
         acc_id=self.get_account_aml(cr, uid, l)
-        type_inv==l.invoice_id.type
+        type_inv=l.invoice_id.type
         amount_line = l.quantity*l.price_unit - l.price_subtotal
         if acc_id and  amount_line > 1e-8:
             line = {'name': _('Discount %s' % l.name[:64]), 
