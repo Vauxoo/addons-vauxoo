@@ -87,6 +87,7 @@
     "update_xml" : [
     "view/product_view.xml",
     "view/company_view.xml",
+    "view/invoice_view.xml",
     ],
     "active": False,
     "installable": True,

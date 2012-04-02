@@ -132,8 +132,9 @@ class account_invoice(osv.osv):
         if type_inv=='out_invoice':
             move_lines = super(account_invoice, self).finalize_invoice_move_lines(cr, uid, invoice_browse, move_lines)
             for l in invoice_browse.invoice_line:
-                if l.product_id:
+                if l.product_id and l.allowance:
                     lines=self.get_dict_allowance(cr,uid, l,context=context)
+                    #TODO: Here I need to correct the amount on all aml too!
                     [move_lines.append(y) for y in lines]
         elif type_inv=='out_refund':
             tax_accounts = [acc_tax_id.account_id.id for acc_tax_id in invoice_browse.tax_line]
@@ -172,8 +173,6 @@ class account_invoice(osv.osv):
             #join everything
             if new:
                 #Verify What is the tax account and receivable and sum to new entry
-                print "Receivables",str([aml for aml in move_lines if aml[2].get('account_id') in [invoice_browse.account_id.id]])
-                print "Taxes",str([aml for aml in move_lines if aml[2].get('account_id')  in tax_accounts])
                 move_lines=new+ \
                         [aml for aml in move_lines if aml[2].get('account_id') \
                                in [invoice_browse.account_id.id]] +\
@@ -182,3 +181,18 @@ class account_invoice(osv.osv):
                 print move_lines
         return move_lines
 account_invoice()
+
+class account_invoice_line(osv.osv):
+    """
+    account_invoice_line
+    """
+    
+    _inherit = 'account.invoice.line'
+    _columns = {
+        'allowance':fields.boolean('Allowance or Trade Discount', required=False, help='''True: The discount applied 
+will be considered an allowance.
+False: discount on line will be considered a Trade Discount.
+From an accounting point of view it will be considered in a different manner.
+        '''), 
+    }
+account_invoice_line()
