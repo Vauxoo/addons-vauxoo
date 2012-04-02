@@ -2,7 +2,7 @@
 {
     "name" : "OpenAcademy Module",
     "version" : "0.1",
-    "depends" :["base",],
+    "depends" :["base","board"],
     "author" : "Vauxoo",
     "description" : """
     What it does!
