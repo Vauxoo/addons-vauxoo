@@ -1,0 +1,17 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_stock_card_user","stock.card.user","model_stock_card","stock_card.group_stock_card_user",1,0,0,0
+"access_stock_card_manager","stock.card.manager","model_stock_card","stock_card.group_stock_card_manager",1,1,1,1
+"access_stock_card_line_user","stock.card.line.user","model_stock_card_line","stock_card.group_stock_card_user",1,0,0,0
+"access_stock_card_line_manager","stock.card.line.manager","model_stock_card_line","stock_card.group_stock_card_manager",1,1,1,1
+"access_stock_card_product_user","stock.card.product.user","model_stock_card_product","stock_card.group_stock_card_user",1,0,0,0
+"access_stock_card_product_manager","stock.card.product.manager","model_stock_card_product","stock_card.group_stock_card_manager",1,1,1,1
+"access_stock_card_account_user","stock.card.account.user","model_stock_card_account","stock_card.group_stock_card_user",1,0,0,0
+"access_stock_card_account_manager","stock.card.account.manager","model_stock_card_account","stock_card.group_stock_card_manager",1,1,1,1
+"access_stock_card_account_lines_user","stock.card.account.lines.user","model_stock_card_account_lines","stock_card.group_stock_card_user",1,0,0,0
+"access_stock_card_account_lines_manager","stock.card.account.lines.manager","model_stock_card_account_lines","stock_card.group_stock_card_manager",1,1,1,1
+"access_stock_card_product_move_cost_user","stock.card.product.move.cost.user","model_stock_card_product_move_cost","stock_card.group_stock_card_user",1,0,0,0
+"access_stock_card_product_move_cost_manager","stock.card.product.move.cost.manager","model_stock_card_product_move_cost","stock_card.group_stock_card_manager",1,1,1,1
+"access_stock_card_product_move_inv_user","stock.card.product.move.inv.user","model_stock_card_product_move_inv","stock_card.group_stock_card_user",1,0,0,0
+"access_stock_card_product_move_inv_manager","stock.card.product.move.inv.manager","model_stock_card_product_move_inv","stock_card.group_stock_card_manager",1,1,1,1
+"access_report_profit_picking_user","report.profit.picking.user","model_report_profit_picking","stock_card.group_stock_card_user",1,0,0,0
+"access_report_profit_picking_manager","report.profit.picking.manager","model_report_profit_picking","stock_card.group_stock_card_manager",1,1,1,1

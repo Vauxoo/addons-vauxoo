@@ -39,6 +39,8 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/stock_card_security.xml",
+        "security/ir.model.access.csv",
         "stock_view.xml",
         "report_profit_picking_view.xml",
         "stock_card_view.xml",
