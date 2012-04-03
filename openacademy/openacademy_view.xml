@@ -2,7 +2,7 @@
 <openerp>
     <data>
         <!--Menu Item-->
-        <menuitem id="openacademy_menu" name="Trainings" />
+        <menuitem id="openacademy_menu" name="Trainings" groups="res_groups_openacademyuser"/>
         <menuitem id="openacademy_menu_data" name="Master Data" parent="openacademy_menu" sequence="15"/>
     <record model="ir.ui.view" id="course_search_view">
         <field name="name">course.search</field>
