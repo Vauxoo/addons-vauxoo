@@ -9,10 +9,10 @@
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
                 <field name="supplier" position="after">
-                    <field name="is_instructor"/>
+                    <field name="is_instructor" groups="openacademy.res_groups_openacademyuser"/>
                 </field>
                 <xpath expr="/form/notebook/page[@string='Notes']" position="after">
-                    <page string="Sessions">
+                    <page string="Sessions" groups="openacademy.res_groups_openacademyuser">
                         <field name="session_ids" nolabel="1" colspan="4"/>
                     </page>
                 </xpath>
