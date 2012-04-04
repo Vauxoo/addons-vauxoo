@@ -10,6 +10,9 @@
         <field name="name">Picking Pay / Manager</field>
     </record>
 
+    <record id="group_profit_info" model="res.groups">
+        <field name="name">useability / Profit Info</field>
+    </record>
 
 </data>
 </openerp>
