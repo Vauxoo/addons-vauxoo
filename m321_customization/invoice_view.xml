@@ -17,6 +17,23 @@
       </field>
     </record>
 
+    <!-- 
+    =====================================================
+    Net discount is added
+    =====================================================
+    -->
+
+       <record model="ir.ui.view" id="view_invoice_line_form_islr">
+            <field name="name">account_invoice_line_concept_islr</field>
+            <field name="model">account.invoice.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+                <field name="discount" position="after">
+                    <field name="net_discount"  required="0" readonly="1"/>
+                </field>
+            </field>
+        </record>
 
     </data>
 </openerp>
