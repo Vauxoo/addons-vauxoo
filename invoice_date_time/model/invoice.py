@@ -35,7 +35,7 @@ class account_invoice(osv.osv):
     
     _inherit = 'account.invoice'
     _columns = {
-    'date_invoice':fields.datetime('Invoice Date'),
+    'date_invoice':fields.datetime('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
     }
     
     

@@ -31,6 +31,9 @@ import netsvc
 import decimal_precision as dp
 from DateTime import DateTime
 import time
+
+invo_cost = {}
+
 class compute_cost(osv.osv_memory):
 
     
@@ -39,23 +42,75 @@ class compute_cost(osv.osv_memory):
         'product_ids':fields.many2many('product.product','product_rel','product1','product2','Product',help="Select the product to compute cost"),
         'product':fields.boolean('Product',help="To select compute by product"),
         'categ':fields.boolean('Category',help="To select compute by category"),
+        'bolfili':fields.boolean('Boolean FIFO LIFO'),
         'categ_ids':fields.many2many('product.category','categ_rel','categ1','categ2','Product Category',help="Select the category to compute cost"),
         'fiscalyear_id':fields.many2one('account.fiscalyear','Fiscal Year',help="Fiscal Year to search invoice between indicated period"),
         'period_id':fields.many2one('account.period','Period',help="Period to search invoice between indicated period"),
         'all':fields.boolean('ALL',help="To compute cost for all products"),
+        'fifo':fields.boolean('FIFO',help="To compute cost FIFO for products"),
+        'lifo':fields.boolean('LIFO'),
+        
     }
     
     
-    def list_cost(self,cicle,ids_inv):
+    def compute_cost_fifo(self,cr,uid,dic_comp,dic_vent,dic_nc_com,dic_nc_vent,context={}):
+        invoice_obj = self.pool.get('account.invoice')
+        rec_com = {}
+        rec_vent = {}
+        [ rec_com.update({invoice_obj.browse(cr,uid,e[-1],context=context).parent_id.id:e[0]}) for i in dic_nc_com for e in dic_nc_com.get(i)]
+        [ rec_vent.update({invoice_obj.browse(cr,uid,h[-1],context=context).parent_id.id:h[0]}) for g in dic_nc_vent for h in dic_nc_vent.get(g)]
+        
+        #~ for com in dic_comp:
+            
+        print "rec_com",rec_com 
+        print "rec_ven",rec_vent 
+        
+        
+        return True
+    
+    
+    def compute_actual_cost(self,cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent,context={}):
+        product_obj = self.pool.get('product.product')
+        aux = {}
+        for i in dic_comp:
+            if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
+                #~ [a[3] for a in dic_comp.get(i)]
+                #~ [a[0] for a in dic_nc_com.get(i)]
+                #~ [a[0] for a in dic_nc_vent.get(i)]
+                #~ [a[0] for a in dic_vent.get(i)]
+                #~ TODO
+                qty = (sum([a[3] for a in dic_comp.get(i)])) - (dic_nc_com.get(i,False) and len(dic_nc_com.get(i)) > 0 and sum([a[0] for a in dic_nc_com.get(i)] or 0)) + (dic_nc_vent.get(i,False) and len(dic_nc_vent.get(i)) > 0 and sum([a[0] for a in dic_nc_vent.get(i)]) or 0) - (dic_vent.get(i,False) and len(dic_vent.get(i)) > 0 and sum([a[0] for a in dic_vent.get(i)]) or 0)
+                price = (sum([a[2] for a in dic_comp.get(i)])) - (dic_nc_com.get(i,False) and len(dic_nc_com.get(i)) > 0 and sum([a[1] for a in dic_nc_com.get(i)] or 0)) + (dic_nc_vent.get(i,False) and len(dic_nc_vent.get(i)) > 0 and sum([a[1] for a in dic_nc_vent.get(i)])) - (dic_vent.get(i,False) and len(dic_vent.get(i)) > 0 and sum([a[1] for a in dic_vent.get(i)]) or 0)
+                if qty > 0 :
+                    cost = price / qty
+                    aux.update({i:[price,qty,cost and cost,dic_comp[i] and dic_comp[i][0] and dic_comp[i][0][4] or [] ]})
+                    product_brw = product_obj.browse(cr,uid,i,context=context)
+                    
+                    if product_brw.property_cost_structure and product_brw.cost_ult > 0:
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':time.strftime('%Y-%m-%e').replace(' ','') , 'cost_ant':product_brw.cost_ult ,'date_cost_ant':product_brw.date_cost_ult ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': time.strftime('%Y-%m-%e').replace(' ','') , 'ant_om':product_brw.ult_om and product_brw.ult_om.id or [],'date_ant_om':product_brw.date_ult_om },context=context)
+                    else:
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':time.strftime('%Y-%m-%e').replace(' ',''),'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': time.strftime('%Y-%m-%e').replace(' ','') },context=context)
+        return aux
+        
+        
+    def list_cost(self,cr,uid,cicle,ids_inv):
+        global invo_cost
         lista = []
+        invoice_obj = self.pool.get('account.invoice')
         for d in cicle:
+            invo_brw = invoice_obj.browse(cr,uid,d[0],context={})
+            if invo_brw.type is 'out_refund' and invo_brw.parent_id and invo_brw.parent_id.id in invo_cost:
+                lista.append((d[3], d[3] * invo_cost.get(invo_brw.parent_id.id), invo_cost.get(invo_brw.parent_id.id) or 0, d[4],d[0] ))
+                return lista
             for date in ids_inv:
                 date1 = DateTime(date)
                 date2 = DateTime(d[5])
                 if date2 >= date1:
                     cost = ids_inv[date]
                     break
-            lista.append((d[3], d[3] * cost, cost and cost or 0, d[4] ))
+            lista.append((d[3], d[3] * cost, cost and cost or 0, d[4],d[0] ))
+            if invo_brw.type is 'out_invoice':
+                invo_cost.update({d[0]:cost})
         return lista
     
     #~ TODO EL mismo algoritmo para LIFO,
@@ -63,30 +118,33 @@ class compute_cost(osv.osv_memory):
     #~ meter el concepto de ajuste de inventario
     #~  meter concepto de produccion
     
-    def compute_cost(self,cr,uid,ids,context=None,products=False,period=False):
+    def compute_cost(self,cr,uid,ids,context=None,products=False,period=False,fifo=False,lifo=False):
         '''
         Method to compute coste from porduct invoice from a wizard or called from other method
         
         @param products IDS list of products to compute cost from invoices
         @param period ids of period to give range to compute cost 
         @param ids ids of wizard for method call 
-        
+        @param fifo booblean to compute cost method fifo
+        @param lifo booblean to compute cost method lifo
         '''
         if context is None:
             context = {}
         invo_obj = self.pool.get('account.invoice')
-        product_obj = self.pool.get('product.product')
+        global invo_cost
         cost_obj = self.pool.get('cost.structure')
         wz_brw = products or ids and self.browse(cr,uid,ids and ids[0],context=context)
         product_True = products or wz_brw.product
         period_id =  products and period or wz_brw and wz_brw.period_id.id
         products = period and products or wz_brw and wz_brw.product_ids
+        fifo_true = fifo or wz_brw.fifo
+        lifo_true = lifo or wz_brw.lifo
         if product_True:
             dic_comp = {}
             dic_vent = {}
             dic_nc_com = {}
             dic_nc_vent = {}
-            aux = {}
+            
             [(dic_comp.update({i.id:[]}),dic_vent.update({i.id:[]})   , dic_nc_com.update({i.id:[]})    , dic_nc_vent.update({i.id:[]})) for i in products]
             
             #~  Select quantity and cost of product from supplier invoice
@@ -94,7 +152,6 @@ class compute_cost(osv.osv_memory):
             
             if invo_com_ids:
                 [dic_comp[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice))  for invo in invo_obj.browse(cr,uid,invo_com_ids,context=context) for line in invo.invoice_line if line and line.product_id and line.product_id.id in dic_comp and type(dic_comp[line.product_id.id]) is list ]
-           
            
             #~ Select quantity and cost of product from customer invoice
             invo_ven_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_vent.keys())),('type','=','out_invoice'),('period_id','=',period_id)],order='date_invoice')
@@ -116,48 +173,33 @@ class compute_cost(osv.osv_memory):
             print "dic_vent",dic_vent
             print "dic_nc_com",dic_nc_com
             print "dic_nc_vent",dic_nc_vent
+            
             for i in dic_comp:
                 if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
                     ids_inv = {} 
                     [ids_inv.update({h[5]:h[1]}) for h in dic_comp[i]]
                     if dic_vent.get(i,False) and len(dic_vent.get(i,[])) > 0 :
-                        lista = self.list_cost(dic_vent.get(i),ids_inv)
+                        lista = self.list_cost(cr,uid,dic_vent.get(i),ids_inv)
                         dic_vent.update({i:lista}) 
                 
                     if dic_nc_vent.get(i,False) and len(dic_nc_vent.get(i,[])) > 0 :
-                        lista = self.list_cost(dic_nc_vent[i],ids_inv)
+                        lista = self.list_cost(cr,uid,dic_nc_vent[i],ids_inv)
                         dic_nc_vent.update({i:lista}) 
-                
+                    
                     if dic_nc_com.get(i,False) and len(dic_nc_com.get(i,[])) > 0 :
-                        lista = self.list_cost(dic_nc_com[i],ids_inv)
+                        lista = self.list_cost(cr,uid,dic_nc_com[i],ids_inv)
                         dic_nc_com.update({i:lista}) 
-                
-            for i in dic_comp:
-                print "ii",i
-                if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
-                     #~ [a[3] for a in dic_comp.get(i)]
-                     #~ [a[0] for a in dic_nc_com.get(i)]
-                     #~ [a[0] for a in dic_nc_vent.get(i)]
-                     #~ [a[0] for a in dic_vent.get(i)]
-                    #~ TODO
-                    
-                    
-                    
-                    qty = (sum([a[3] for a in dic_comp.get(i)])) - (dic_nc_com.get(i,False) and len(dic_nc_com.get(i)) > 0 and sum([a[0] for a in dic_nc_com.get(i)] or 0)) + (dic_nc_vent.get(i,False) and len(dic_nc_vent.get(i)) > 0 and sum([a[0] for a in dic_nc_vent.get(i)]) or 0) - (dic_vent.get(i,False) and len(dic_vent.get(i)) > 0 and sum([a[0] for a in dic_vent.get(i)]) or 0)
-                    
-                    
-                    price = (sum([a[2] for a in dic_comp.get(i)])) - (dic_nc_com.get(i,False) and len(dic_nc_com.get(i)) > 0 and sum([a[1] for a in dic_nc_com.get(i)] or 0)) + (dic_nc_vent.get(i,False) and len(dic_nc_vent.get(i)) > 0 and sum([a[1] for a in dic_nc_vent.get(i)])) - (dic_vent.get(i,False) and len(dic_vent.get(i)) > 0 and sum([a[1] for a in dic_vent.get(i)]) or 0)
-                    if qty > 0 :
-                        cost = price / qty
-                        aux.update({i:[price,qty,cost and cost,dic_comp[i] and dic_comp[i][0] and dic_comp[i][0][4] or [] ]})
-                        product_brw = product_obj.browse(cr,uid,i,context=context)
-                        
-                        if product_brw.property_cost_structure and product_brw.cost_ult > 0:
-                            product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':time.strftime('%Y-%m-%e') , 'cost_ant':product_brw.cost_ult ,'date_cost_ant':product_brw.date_cost_ult ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': time.strftime('%Y-%m-%e') , 'ant_om':product_brw.ult_om and product_brw.ult_om.id or [],'date_ant_om':product_brw.date_ult_om },context=context)
-                        else:
-                            product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':time.strftime('%Y-%m-%e'),'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': time.strftime('%Y-%m-%e') },context=context)
-            dic_comp = aux
-            print "dic_comp",dic_comp
+            invo_cost = {}
+            if fifo_true or lifo_true:
+                fifo = self.compute_cost_fifo(cr,uid,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
+            cost = self.compute_actual_cost(cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
+            print "cost",cost
 
         return True
 compute_cost()
+
+
+    
+
+
+

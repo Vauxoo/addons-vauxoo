@@ -9,7 +9,17 @@
             <field name='arch' type='xml'>
                 <form string="Compute Costs">
                     <group string="Compute Costs" colspan="9" height="800" width="600" col="2" >
+                        <group colspan="6" col="2">
+                                                <group col="1">
+                        <field name="fifo" />
+                        </group>
+                                                <group col="1">
+                        <field name="lifo" />
+                        </group>
+                        </group>
+                        
                         <group col="1">
+                        
                         <group col="1">
                     <field name='product'/>
                 </group>
@@ -27,9 +37,17 @@
                             <field name='fiscalyear_id' domain="[('state','=','draft')]" required="1"/> 
                             <field name='period_id' domain="[('state','=','draft'),('fiscalyear_id','=',fiscalyear_id)]" required="1"/> 
                 </group>
+                       
+                
+                       
                         <group col="1">
                     <field name='all'/>
                 </group>
+                
+                
+             
+                
+                
                         <group col="2">
                <button string="Cancel"
                    special="cancel"
