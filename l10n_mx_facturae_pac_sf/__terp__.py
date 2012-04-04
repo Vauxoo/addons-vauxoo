@@ -39,7 +39,7 @@ Ubuntu Package Depends:
     "depends" : ["l10n_mx_facturae","l10n_mx_params_pac"],
     "init_xml" : [],
     "demo_xml" : [
-        "l10n_mx_facturae_pac_sf_demo.xml"
+        "demo/l10n_mx_facturae_pac_sf_demo.xml"
     ],
     "update_xml" : [
         "security/l10n_mx_facturae_pac_sf_security.xml",
