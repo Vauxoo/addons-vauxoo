@@ -126,7 +126,7 @@
       <blockTable colWidths="130.0mm,25.0mm,20mm,25.0mm" style="TABLA_SIN_LIN">
         <tr>
           <td>
-            <para style="IZQUIERDA">[[l.product_id and (l.product_id.code and ('[%s]'%(l.product_id.code.upper())) or '') or '']] [[l.product_id and  l.product_id.name.upper() or l.name.upper() ]]</para>
+            <para style="IZQUIERDA">[[l.product_id and (l.product_id.code and ('[%s]'%(l.product_id.code.upper())) or '') or '']] [[ l.name and l.name.upper() or '']]</para>
           </td>
           <td>
             <para style="DERECHA">[[ formatLang(l.quantity,digits=0)]] [[ (l.uos_id and l.uos_id.name.upper()[:3]) or '' ]]</para>
