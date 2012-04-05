@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data>
+    <data noupdate="1">
         
         <record id="params_pac_sf_cancelar_test" model="params.pac">
             <field name="method_type">pac_sf_cancelar</field>

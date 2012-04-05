@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_wizard_invoice_report" model="ir.ui.view">
+            <field name="name">view.wizard.invoice.report</field>
+            <field name="model">wizard.invoice.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Reporte de Estado de cuenta">
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="currency_id"/>
+                    <newline/>
+                    <separator colspan="4"/>
+                    <group colspan="4" col="6">
+                        <button special="cancel" string="_Cancel" icon="gtk-cancel"/>
+                        <button name="check_report" type="object" string="_Generar Reporte" icon="gtk-ok"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Reporte de Estado de Cuenta"
+            res_model="wizard.invoice.report"
+            src_model="res.partner"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_wizard_invoice_report"/>
+    </data>
+</openerp>

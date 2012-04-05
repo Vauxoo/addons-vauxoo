@@ -259,7 +259,7 @@ msgid "CFDI, Comprobante Fiscal Digital por Internet"
 msgstr "CFDI, Comprobante Fiscal Digital por Internet"
 
 #. module: l10n_mx_facturae_pac_sf
-#: model:ir.actions.wizard,name:l10n_mx_facturae_pac_sf.wizard_export_invoice_pac_sf
+#: model:ir.actions.wizard,name:l10n_mx_facturae_pac_sf.wizard_export_invoice_pac_sf_v5
 msgid "Export invoice PAC SF"
 msgstr "Exportar Factura PAC SF"
 

@@ -52,16 +52,16 @@ class account_invoice(osv.osv):
             if sequence_id:
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
-            fname += (invoice.company_id.partner_id and (partner_parent._columns.has_key('vat_split') and partner_parent.vat_split or partner_parent.vat) or '')
+            fname += (invoice.company_id.partner_id and (invoice.company_id.partner_id._columns.has_key('vat_split') and invoice.company_id.partner_id.vat_split or invoice.company_id.partner_id.vat) or '')
             fname += '.'
+            number_work = invoice.number or invoice.internal_number
             try:
-                int(invoice.number)
-                context.update({ 'number_work': invoice.number or False })
+                context.update({ 'number_work': int( number_work ) or False })
                 fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
                 fname += '.'
             except:
                 pass
-            fname += invoice.number or ''
+            fname += number_work or ''
             res[invoice.id] = fname
         return res
     

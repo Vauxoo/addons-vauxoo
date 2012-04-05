@@ -30,7 +30,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """
+    "description" : """Add hour & minute to field date_invoice
     """,
     "website" : "http://www.vauxoo.com/",
     #"license" : "AGPL-3",

@@ -26,11 +26,11 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
+    "name" : "l10n_mx_facturae_cer",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """ This module allows add certificates required for Factura Electronica" 
+    "description" : """This module allows add certificates required for Factura-E MX
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

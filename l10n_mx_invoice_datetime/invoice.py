@@ -32,6 +32,7 @@ from tools.translate import _
 import netsvc
 import time
 import os
+import release
 
 class account_payment_term(osv.osv):
     _inherit = "account.payment.term"
@@ -53,10 +54,15 @@ class account_invoice(osv.osv):
         if not context:
             context = {}
         res = {}
-        dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
-        tz = context.get('tz_invoice_mx', 'America/Mexico_City')
-        for invoice in self.browse(cr, uid, ids, context=context):
-            res[invoice.id] = invoice.date_invoice and tools.server_to_local_timestamp(invoice.date_invoice, dt_format, dt_format, tz) or False
+        if release.version >= '6':
+            dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
+            tz = context.get('tz_invoice_mx', 'America/Mexico_City')
+            for invoice in self.browse(cr, uid, ids, context=context):
+                res[invoice.id] = invoice.date_invoice and tools.server_to_local_timestamp(invoice.date_invoice, dt_format, dt_format, tz) or False
+        elif release.version < '6':
+            #TODO: tz change for openerp5
+            for invoice in self.browse(cr, uid, ids, context=context):
+                res[invoice.id] = invoice.date_invoice
         return res
     
     _columns = {

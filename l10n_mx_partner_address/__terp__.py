@@ -40,6 +40,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/openacademy_security.xml",
         "partner_address_view5.xml",
     ],
     "installable" : True,

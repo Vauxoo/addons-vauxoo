@@ -73,11 +73,11 @@ def conv_ascii(text):
     """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
         'ô', 'û', 'Á', 'É', 'Í', 'Ú', 'Ó', 'À', 'È', 'Ì', 'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', \
-        'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' '
+        'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' ', 'Ã'
     ]
     new_chars = ['a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', \
         'o', 'u', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', 'O', 'U', 'A', 'E', 'I', \
-        'O', 'U', 'n', 'N', 'c', 'C', 'a', 'o', 'o', ' '
+        'O', 'U', 'n', 'N', 'c', 'C', 'a', 'o', 'o', ' ', 'A'
     ]
     for old, new in zip(old_chars, new_chars):
         try:
@@ -531,9 +531,9 @@ class account_invoice(osv.osv):
                         #'noCertificado': "30001000000100000800",
                     }
                 else:
-                    raise osv.except_osv('Warning !', 'La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !'%(sequence_id, msg2))
+                    raise osv.except_osv(u'Warning !', u'La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !'%(sequence_id, msg2))
             else:
-                raise osv.except_osv('Warning !', 'No se encontro un sequence de configuracion. %s !'%(msg2))
+                raise osv.except_osv(u'Warning !', u'No se encontro un sequence de configuracion. %s !'%(msg2))
         return folio_data
     
     def _dict_iteritems_sort(self, data_dict):#cr=False, uid=False, ids=[], context={}):

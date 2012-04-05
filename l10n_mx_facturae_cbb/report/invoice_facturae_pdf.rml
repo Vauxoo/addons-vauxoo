@@ -127,7 +127,7 @@
               <font color="white"> </font>
             </para>
             <para style="Table Contents">[[ company_address()['city'] or '' ]], [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] a</para>
-            <para style="Table Contents">[[ formatLang(o.date_invoice_tz, date_time=True) ]]</para>
+            <para style="Table Contents">[[ o.date_invoice_tz or '' ]]</para>
           </td>
         </tr>
       </blockTable>
