@@ -48,7 +48,7 @@ class compute_cost(osv.osv_memory):
         'period_id':fields.many2one('account.period','Period',help="Period to search invoice between indicated period"),
         'all':fields.boolean('ALL',help="To compute cost for all products"),
         'fifo':fields.boolean('FIFO',help="To compute cost FIFO for products"),
-        'lifo':fields.boolean('LIFO'),
+        'lifo':fields.boolean('LIFO',help="To compute cost LIFO for products"),
         
     }
     
@@ -57,17 +57,14 @@ class compute_cost(osv.osv_memory):
         invoice_obj = self.pool.get('account.invoice')
         rec_com = {}
         rec_vent = {}
-        [ rec_com.update({invoice_obj.browse(cr,uid,e[-1],context=context).parent_id.id:e[0]}) for i in dic_nc_com for e in dic_nc_com.get(i)]
-        [ rec_vent.update({invoice_obj.browse(cr,uid,h[-1],context=context).parent_id.id:h[0]}) for g in dic_nc_vent for h in dic_nc_vent.get(g)]
+        [rec_com.update({invoice_obj.browse(cr,uid,e[-1],context=context).parent_id.id:e[0]}) for i in dic_nc_com for e in dic_nc_com.get(i)]
+        [rec_vent.update({invoice_obj.browse(cr,uid,h[-1],context=context).parent_id.id:h[0]}) for g in dic_nc_vent for h in dic_nc_vent.get(g)]
         
-        #~ for com in dic_comp:
-            
+        
         print "rec_com",rec_com 
         print "rec_ven",rec_vent 
         
-        
         return True
-    
     
     def compute_actual_cost(self,cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent,context={}):
         product_obj = self.pool.get('product.product')
@@ -139,6 +136,7 @@ class compute_cost(osv.osv_memory):
         products = period and products or wz_brw and wz_brw.product_ids
         fifo_true = fifo or wz_brw.fifo
         lifo_true = lifo or wz_brw.lifo
+        company_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0].company_id.id
         if product_True:
             dic_comp = {}
             dic_vent = {}
@@ -148,26 +146,59 @@ class compute_cost(osv.osv_memory):
             [(dic_comp.update({i.id:[]}),dic_vent.update({i.id:[]})   , dic_nc_com.update({i.id:[]})    , dic_nc_vent.update({i.id:[]})) for i in products]
             
             #~  Select quantity and cost of product from supplier invoice
-            invo_com_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_comp.keys())),('type','=','in_invoice'),('period_id','=',period_id)],order='date_invoice')
+            invo_com_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_comp.keys())),
+                                                    ('type','=','in_invoice'),
+                                                    ('period_id','=',period_id),
+                                                    ('company_id','=',company_id)],
+                                                    order='date_invoice')
             
             if invo_com_ids:
-                [dic_comp[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice))  for invo in invo_obj.browse(cr,uid,invo_com_ids,context=context) for line in invo.invoice_line if line and line.product_id and line.product_id.id in dic_comp and type(dic_comp[line.product_id.id]) is list ]
+                [dic_comp[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice)) \
+                for invo in invo_obj.browse(cr,uid,invo_com_ids,context=context) for line in invo.invoice_line if line and \
+                line.product_id and \
+                line.product_id.id in dic_comp and \
+                type(dic_comp[line.product_id.id]) is list ]
            
             #~ Select quantity and cost of product from customer invoice
-            invo_ven_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_vent.keys())),('type','=','out_invoice'),('period_id','=',period_id)],order='date_invoice')
+            invo_ven_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_vent.keys())),
+                                                    ('type','=','out_invoice'),
+                                                    ('period_id','=',period_id),
+                                                    ('company_id','=',company_id)],
+                                                    order='date_invoice')
             
             if invo_ven_ids:
-                [dic_vent[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice))  for invo in invo_obj.browse(cr,uid,invo_ven_ids,context=context) for line in invo.invoice_line if line and line.product_id and line.product_id.id in dic_vent and type(dic_vent[line.product_id.id]) is list ]
+                [dic_vent[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice)) \
+                for invo in invo_obj.browse(cr,uid,invo_ven_ids,context=context) for line in invo.invoice_line if line and \
+                line.product_id and \
+                line.product_id.id in dic_vent and \
+                type(dic_vent[line.product_id.id]) is list ]
           
             #~ Select quantity and cost of product from credit note for a supplier invoice 
-            invo_nc_com_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_nc_com.keys())),('type','=','in_refund'),('period_id','=',period_id)],order='date_invoice')
+            invo_nc_com_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_nc_com.keys())),
+                                                        ('type','=','in_refund'),
+                                                        ('period_id','=',period_id),
+                                                        ('company_id','=',company_id)],
+                                                        order='date_invoice')
             if invo_nc_com_ids:
-                [dic_nc_com[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice))  for invo in invo_obj.browse(cr,uid,invo_nc_com_ids,context=context) for line in invo.invoice_line if line and line.product_id and line.product_id.id in dic_nc_com and type(dic_nc_com[line.product_id.id]) is list ]
+                [dic_nc_com[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice)) \
+                for invo in invo_obj.browse(cr,uid,invo_nc_com_ids,context=context) for line in invo.invoice_line if line and \
+                line.product_id and \
+                line.product_id.id in dic_nc_com and \
+                type(dic_nc_com[line.product_id.id]) is list ]
                 
             
-            invo_nc_ven_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_nc_vent.keys())),('type','=','out_refund'),('period_id','=',period_id)],order='date_invoice')
+            invo_nc_ven_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_nc_vent.keys())),
+                                                        ('type','=','out_refund'),
+                                                        ('period_id','=',period_id),
+                                                        ('company_id','=',company_id)],
+                                                        order='date_invoice')
             if invo_nc_ven_ids:
-                [dic_nc_vent[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice))  for invo in invo_obj.browse(cr,uid,invo_nc_ven_ids,context=context) for line in invo.invoice_line if line and line.product_id and line.product_id.id in dic_nc_vent and type(dic_nc_vent[line.product_id.id]) is list ]
+                print 
+                [dic_nc_vent[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice)) \
+                for invo in invo_obj.browse(cr,uid,invo_nc_ven_ids,context=context) for line in invo.invoice_line if line and \
+                line.product_id and \
+                line.product_id.id in dic_nc_vent and \
+                type(dic_nc_vent[line.product_id.id]) is list ]
            
             print "dic_comp",dic_comp
             print "dic_vent",dic_vent
@@ -199,7 +230,8 @@ class compute_cost(osv.osv_memory):
 compute_cost()
 
 
-    
+    # nombre del modulo account_anglo_saxon_cost_structure 
 
-
+#~ acttion_cancel asiento (acount_move)
+#~ action_move_create (account_invoice)
 
