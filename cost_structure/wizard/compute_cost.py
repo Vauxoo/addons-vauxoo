@@ -71,13 +71,21 @@ class compute_cost(osv.osv_memory):
         aux = {}
         for i in dic_comp:
             if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
-                #~ [a[3] for a in dic_comp.get(i)]
-                #~ [a[0] for a in dic_nc_com.get(i)]
-                #~ [a[0] for a in dic_nc_vent.get(i)]
-                #~ [a[0] for a in dic_vent.get(i)]
+                print [a[2] for a in dic_comp.get(i)]
+                print [a[1] for a in dic_nc_com.get(i)]
+                print [a[1] for a in dic_nc_vent.get(i)]
+                print [a[1] for a in dic_vent.get(i)]
                 #~ TODO
-                qty = (sum([a[3] for a in dic_comp.get(i)])) - (dic_nc_com.get(i,False) and len(dic_nc_com.get(i)) > 0 and sum([a[0] for a in dic_nc_com.get(i)] or 0)) + (dic_nc_vent.get(i,False) and len(dic_nc_vent.get(i)) > 0 and sum([a[0] for a in dic_nc_vent.get(i)]) or 0) - (dic_vent.get(i,False) and len(dic_vent.get(i)) > 0 and sum([a[0] for a in dic_vent.get(i)]) or 0)
-                price = (sum([a[2] for a in dic_comp.get(i)])) - (dic_nc_com.get(i,False) and len(dic_nc_com.get(i)) > 0 and sum([a[1] for a in dic_nc_com.get(i)] or 0)) + (dic_nc_vent.get(i,False) and len(dic_nc_vent.get(i)) > 0 and sum([a[1] for a in dic_nc_vent.get(i)])) - (dic_vent.get(i,False) and len(dic_vent.get(i)) > 0 and sum([a[1] for a in dic_vent.get(i)]) or 0)
+                qty = (sum([a[3] for a in dic_comp.get(i)])) - \
+                      (sum([a[0] for a in dic_nc_com.get(i)])) + \
+                      (sum([a[0] for a in dic_nc_vent.get(i)])) - \
+                      (sum([a[0] for a in dic_vent.get(i)]))
+                      
+                price = (sum([a[2] for a in dic_comp.get(i)])) - \
+                        (sum([a[1] for a in dic_nc_com.get(i)])) + \
+                        (sum([a[1] for a in dic_nc_vent.get(i)])) - \
+                        (sum([a[1] for a in dic_vent.get(i)]))
+                
                 if qty > 0 :
                     cost = price / qty
                     aux.update({i:[price,qty,cost and cost,dic_comp[i] and dic_comp[i][0] and dic_comp[i][0][4] or [] ]})
@@ -94,6 +102,9 @@ class compute_cost(osv.osv_memory):
         global invo_cost
         lista = []
         invoice_obj = self.pool.get('account.invoice')
+        product_obj = self.pool.get('product.product')
+        #~ product_brw = product_obj.browse(cr,uid,[ i for i in ids_inv],context={})
+        #~ print "product_brw",product_brw 
         for d in cicle:
             invo_brw = invoice_obj.browse(cr,uid,d[0],context={})
             if invo_brw.type is 'out_refund' and invo_brw.parent_id and invo_brw.parent_id.id in invo_cost:
