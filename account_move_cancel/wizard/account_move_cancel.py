@@ -32,7 +32,6 @@ import decimal_precision as dp
 from DateTime import DateTime
 import time
 
-invo_cost = {}
 
 class account_move_cancel(osv.osv_memory):
 
@@ -53,19 +52,38 @@ class account_move_cancel(osv.osv_memory):
         if context is None:
             context = {}
         invo_obj = self.pool.get('account.invoice')
+        iva_obj = self.pool.get('account.wh.iva')
+        islr_obj = self.pool.get('islr.wh.doc')
         journal_obj = self.pool.get('account.journal')
-        move_ids = invoice_ids and [i.move_id.id for i in invo_obj.browse(cr,uid,invoice_ids,context=context) if i.move_id ] or [i.move_id.id for i in self.browse(cr,uid,ids,context=context)[0].invoice_ids if i.move_id ]
-        invo_ids = invoice_ids or [i.id for i in self.browse(cr,uid,ids,context=context)[0].invoice_ids if i.move_id ]
-        
+        invo_ids = []
+        iva_ids = []
+        islr_ids = []
+        if not invoice_ids:
+            invo_brw = self.browse(cr,uid,ids,context=context)
+            for invo in invo_brw[0].invoice_ids:
+                invo_ids.append(invo.id)
+                invo.islr_wh_doc_id and islr_ids.append(invo.islr_wh_doc_id.id)
+                invo.wh_iva_id and iva_ids.append(invo.wh_iva_id.id)
+                if invo.payment_ids:
+                    raise osv.except_osv(_('Invalid action !'),_("Impossible invoice cancel %s because is paid '%s'!")% (invo.name))
+
+        else:
+            invo_brw = self.browse(cr,uid,invoice_ids,context=context)
+            for invo in invo_brw:
+                invo_ids.append(invo.id)
+                invo.islr_wh_doc_id and islr_ids.append(invo.islr_wh_doc_id.id)
+                invo.wh_iva_id and iva_ids.append(invo.wh_iva_id.id)
+                if invo.payment_ids:
+                    raise osv.except_osv(_('Invalid action !'),_("Impossible invoice cancel %s because is paid '%s'!")% (invo.name))
+            
         journal_ids = journal_obj.search(cr,uid,[],context=context)
         hasattr(journal_obj.browse(cr,uid,journal_ids[0],context=context),'update_posted') and \
                                     journal_obj.write(cr,uid,journal_ids,{'update_posted':True},context=context)
-        account_move_obj = self.pool.get('account.move')
-        if move_ids:
-            invo_obj.write(cr,uid,invo_ids,{'move_id':False},context=context)
-            account_move_obj.button_cancel(cr, uid, move_ids, context=context)
-            account_move_obj.unlink(cr, uid, move_ids, context=context)
-            invo_obj.action_move_create(cr, uid, invo_ids, ())
+        if invo_ids:
+            iva_ids and iva_obj.action_cancel(cr,uid,iva_ids,())
+            islr_ids and islr_obj.action_cancel(cr,uid,islr_ids,())
+            invo_obj.action_cancel(cr,uid,invo_ids,())
+            invo_obj.action_cancel_draft(cr,uid,invo_ids,())
             
             
         return True
