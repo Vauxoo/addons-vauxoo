@@ -848,7 +848,8 @@ class account_invoice(osv.osv):
             for line in invoice.invoice_line:
                 #price_type = invoice._columns.has_key('price_type') and invoice.price_type or 'tax_excluded'
                 #if price_type == 'tax_included':
-                price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con modulo TaxIncluded
+#                price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con modulo TaxIncluded
+                price_unit = line.quantity <> 0 and line.price_subtotal/line.quantity or 0.0
                 concepto = {
                     'cantidad': "%.2f"%( line.quantity or 0.0),
                     'descripcion': line.name or '',
