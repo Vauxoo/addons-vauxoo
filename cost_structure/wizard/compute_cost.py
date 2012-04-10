@@ -59,11 +59,42 @@ class compute_cost(osv.osv_memory):
         rec_vent = {}
         [rec_com.update({invoice_obj.browse(cr,uid,e[-1],context=context).parent_id.id:e[0]}) for i in dic_nc_com for e in dic_nc_com.get(i)]
         [rec_vent.update({invoice_obj.browse(cr,uid,h[-1],context=context).parent_id.id:h[0]}) for g in dic_nc_vent for h in dic_nc_vent.get(g)]
-        
-        
-        print "rec_com",rec_com 
-        print "rec_ven",rec_vent 
-        
+        cont = 0
+        cont_qty = 0
+        price = 0
+        for i in dic_comp:
+            aux = (d for d in dic_comp.get(i,False))
+            try:
+                fifo = aux and aux.next()
+            except:
+                raise osv.except_osv(_('Invalid action !'),_("Impossible to calculate FIFO not have invoices in this period  "))
+            qty_aux = fifo and fifo[0] in rec_com.keys() and fifo[3] - rec_com.get(fifo[0],False) or fifo[3]
+            cost_aux = fifo and fifo[1]
+            
+            for d in dic_vent.get(i):
+                #~ print "dic_comp[i]",dic_comp[i]
+                print "d[0]",d[0]
+                print "d[-1]",d[-1]
+                print "rec_vent.keys()",rec_vent.keys()
+                cont = d[-1] in rec_vent.keys() and (cont + d[0]) - rec_vent.get(d[-1],False) or cont + d[0]
+                
+                if cont <= qty_aux:
+                    price = (d[0] * cost_aux) + price
+                else:
+                    rest = cont - d[0]
+                    rest = qty_aux - cont
+                    price = rest > 0 and (rest * cost_aux) + price
+                    fifo = aux.next()
+                    cont_qty = cont + cont_qty
+                    cont = 0
+                    qty_aux = fifo and fifo[0] in rec_com.keys() and fifo[3] - rec_com.get(fifo[0],False) or fifo[3]
+                    cost_aux = fifo and fifo[1]
+        if price and cont_qty or cont:
+            print "price",price
+            print "cont_qty",(cont_qty > 0  and cont_qty or cont > 0 and cont)
+            
+            cost = price / (cont_qty > 0  and cont_qty or cont > 0 and cont)
+            print "costcostcostcost",cost
         return True
     
     def compute_actual_cost(self,cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent,context={}):
@@ -71,11 +102,10 @@ class compute_cost(osv.osv_memory):
         aux = {}
         for i in dic_comp:
             if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
-                print [a[2] for a in dic_comp.get(i)]
-                print [a[1] for a in dic_nc_com.get(i)]
-                print [a[1] for a in dic_nc_vent.get(i)]
-                print [a[1] for a in dic_vent.get(i)]
-                #~ TODO
+                #~ print [a[2] for a in dic_comp.get(i)]
+                #~ print [a[1] for a in dic_nc_com.get(i)]
+                #~ print [a[1] for a in dic_nc_vent.get(i)]
+                #~ print [a[1] for a in dic_vent.get(i)]
                 qty = (sum([a[3] for a in dic_comp.get(i)])) - \
                       (sum([a[0] for a in dic_nc_com.get(i)])) + \
                       (sum([a[0] for a in dic_nc_vent.get(i)])) - \
@@ -116,7 +146,12 @@ class compute_cost(osv.osv_memory):
                 if date2 >= date1:
                     cost = ids_inv[date]
                     break
-            lista.append((d[3], d[3] * cost, cost and cost or 0, d[4],d[0] ))
+            try:
+                lista.append((d[3], d[3] * cost, cost and cost or 0, d[4],d[0] ))
+            except:
+                raise osv.except_osv(_('Invalid action !'),_("Impossible to calculate the actual cost, because the invoice '%s' \
+                                                             does not have a valid date format, to place its cost at \
+                                                             the time of sale ")% (invo_brw.name))
             if invo_brw.type is 'out_invoice':
                 invo_cost.update({d[0]:cost})
         return lista
@@ -204,17 +239,18 @@ class compute_cost(osv.osv_memory):
                                                         ('company_id','=',company_id)],
                                                         order='date_invoice')
             if invo_nc_ven_ids:
-                print 
                 [dic_nc_vent[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_invoice)) \
                 for invo in invo_obj.browse(cr,uid,invo_nc_ven_ids,context=context) for line in invo.invoice_line if line and \
                 line.product_id and \
                 line.product_id.id in dic_nc_vent and \
                 type(dic_nc_vent[line.product_id.id]) is list ]
            
-            print "dic_comp",dic_comp
-            print "dic_vent",dic_vent
-            print "dic_nc_com",dic_nc_com
-            print "dic_nc_vent",dic_nc_vent
+            
+            print "dic_comp1",dic_comp
+            print "dic_vent1",dic_vent
+            print "dic_nc_com1",dic_nc_com
+            print "dic_nc_vent1",dic_nc_vent
+            
             
             for i in dic_comp:
                 if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
@@ -230,10 +266,16 @@ class compute_cost(osv.osv_memory):
                     
                     if dic_nc_com.get(i,False) and len(dic_nc_com.get(i,[])) > 0 :
                         lista = self.list_cost(cr,uid,dic_nc_com[i],ids_inv)
-                        dic_nc_com.update({i:lista}) 
+                        dic_nc_com.update({i:lista})
+                        
             invo_cost = {}
             if fifo_true or lifo_true:
                 fifo = self.compute_cost_fifo(cr,uid,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
+            
+            #~ print "dic_comp",dic_comp
+            #~ print "dic_vent",dic_vent
+            #~ print "dic_nc_com",dic_nc_com
+            #~ print "dic_nc_vent",dic_nc_vent
             cost = self.compute_actual_cost(cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
             print "cost",cost
 
