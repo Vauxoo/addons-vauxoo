@@ -35,8 +35,6 @@ import base64
 from tools.misc import currency
 from tools.translate import _
 import pooler
-import mx.DateTime
-from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 import release
 from tools import config
 

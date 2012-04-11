@@ -29,12 +29,12 @@
 import pooler
 import wizard
 import base64
-import mx.DateTime
-#from mx.DateTime import now
 import netsvc
 from tools.translate import _
 import time
 from osv import osv, fields
+import datetime
+from dateutil.relativedelta import relativedelta
 
 class wizard_invoice_facturae_txt_v6(osv.osv_memory):
     _name = 'wizard.invoice.facturae.txt.v6'
@@ -85,7 +85,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
     _defaults = {
         'month':lambda*a: int(time.strftime("%m"))-1,
         'year':lambda*a: int(time.strftime("%Y")),
-        'date_start':lambda*a: (mx.DateTime.DateFrom( time.strftime('%Y-%m-01 00:00:00') ) - mx.DateTime.RelativeDate(months=1)).strftime('%Y-%m-%d %H:%M:%S'),
+        'date_start':lambda*a: (datetime.datetime.strptime(time.strftime('%Y-%m-01 00:00:00'), '%Y-%m-%d 00:00:00' ) - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M:%S'),
         'date_end':lambda*a: time.strftime('%Y-%m-%d 23:59:59'),
         'facturae_fname':_get_facturae_fname,
         'facturae':_get_facturae,
@@ -126,10 +126,8 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         invoice_ids = data['invoice_ids']
         year = data['year']
         month = int(data['month'])
-        date_start = mx.DateTime.Date(year, month, 1, 0, 0, 0)
-        #date_end = mx.DateTime.Date(year,month,-1, 23, 59, 60)
-        #date_end = mx.DateTime.Date(year, month + 1, 1, 0, 0, 0)
-        date_end = date_start + mx.DateTime.RelativeDate(months=1)
+        date_start = datetime.datetime(year, month, 1, 0, 0, 0)
+        date_end = date_start + relativedelta(months=1)
         context.update( {'date': date_start.strftime("%Y-%m-%d")} )
         invoice_ids.extend(  
             invoice_obj.search(cr, uid, [
