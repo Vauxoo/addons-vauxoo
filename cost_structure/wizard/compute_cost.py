@@ -73,9 +73,6 @@ class compute_cost(osv.osv_memory):
             
             for d in dic_vent.get(i):
                 #~ print "dic_comp[i]",dic_comp[i]
-                print "d[0]",d[0]
-                print "d[-1]",d[-1]
-                print "rec_vent.keys()",rec_vent.keys()
                 cont = d[-1] in rec_vent.keys() and (cont + d[0]) - rec_vent.get(d[-1],False) or cont + d[0]
                 
                 if cont <= qty_aux:
@@ -89,9 +86,8 @@ class compute_cost(osv.osv_memory):
                     cont = 0
                     qty_aux = fifo and fifo[0] in rec_com.keys() and fifo[3] - rec_com.get(fifo[0],False) or fifo[3]
                     cost_aux = fifo and fifo[1]
+        cont_qty = cont + cont_qty
         if price and cont_qty or cont:
-            print "price",price
-            print "cont_qty",(cont_qty > 0  and cont_qty or cont > 0 and cont)
             
             cost = price / (cont_qty > 0  and cont_qty or cont > 0 and cont)
             print "costcostcostcost",cost
@@ -101,6 +97,7 @@ class compute_cost(osv.osv_memory):
         product_obj = self.pool.get('product.product')
         aux = {}
         for i in dic_comp:
+            product_brw = product_obj.browse(cr,uid,i,context=context)
             if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
                 #~ print [a[2] for a in dic_comp.get(i)]
                 #~ print [a[1] for a in dic_nc_com.get(i)]
@@ -110,16 +107,17 @@ class compute_cost(osv.osv_memory):
                       (sum([a[0] for a in dic_nc_com.get(i)])) + \
                       (sum([a[0] for a in dic_nc_vent.get(i)])) - \
                       (sum([a[0] for a in dic_vent.get(i)]))
-                      
+                #~ qty = (product_brw.cost_ult and product_brw.qty_ult and product_brw.qty_ult or 0 ) + qty      
+                
                 price = (sum([a[2] for a in dic_comp.get(i)])) - \
                         (sum([a[1] for a in dic_nc_com.get(i)])) + \
                         (sum([a[1] for a in dic_nc_vent.get(i)])) - \
                         (sum([a[1] for a in dic_vent.get(i)]))
-                
+                #~ price = (product_brw.cost_ult and product_brw.qty_ult and product_brw.qty_ult or 0 )
                 if qty > 0 :
                     cost = price / qty
                     aux.update({i:[price,qty,cost and cost,dic_comp[i] and dic_comp[i][0] and dic_comp[i][0][4] or [] ]})
-                    product_brw = product_obj.browse(cr,uid,i,context=context)
+                    
                     
                     if product_brw.property_cost_structure and product_brw.cost_ult > 0:
                         product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':time.strftime('%Y-%m-%e').replace(' ','') , 'cost_ant':product_brw.cost_ult ,'date_cost_ant':product_brw.date_cost_ult ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': time.strftime('%Y-%m-%e').replace(' ','') , 'ant_om':product_brw.ult_om and product_brw.ult_om.id or [],'date_ant_om':product_brw.date_ult_om },context=context)
