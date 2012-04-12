@@ -25,7 +25,7 @@
 {
     "name" : "Account Move Cancel",
     "version" : "0.1",
-    "depends" : ["account",'account_cancel'],
+    "depends" : ["account",'account_cancel','l10n_ve_withholding_iva','l10n_ve_withholding'],
     "author" : "Vauxoo",
     "description" : """
     """,
@@ -36,7 +36,7 @@
     "test": [ ],
     "update_xml" : [
     'wizard/account_move_cancel_view.xml',
-    
+    'workflow/account_workflow.xml', 
     
     
     

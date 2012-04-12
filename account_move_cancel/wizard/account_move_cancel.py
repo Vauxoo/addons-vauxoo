@@ -53,11 +53,13 @@ class account_move_cancel(osv.osv_memory):
             context = {}
         invo_obj = self.pool.get('account.invoice')
         iva_obj = self.pool.get('account.wh.iva')
+        
         islr_obj = self.pool.get('islr.wh.doc')
         journal_obj = self.pool.get('account.journal')
         invo_ids = []
         iva_ids = []
         islr_ids = []
+        wf_service = netsvc.LocalService("workflow")
         if not invoice_ids:
             invo_brw = self.browse(cr,uid,ids,context=context)
             for invo in invo_brw[0].invoice_ids:
@@ -80,7 +82,12 @@ class account_move_cancel(osv.osv_memory):
         hasattr(journal_obj.browse(cr,uid,journal_ids[0],context=context),'update_posted') and \
                                     journal_obj.write(cr,uid,journal_ids,{'update_posted':True},context=context)
         if invo_ids:
-            iva_ids and iva_obj.action_cancel(cr,uid,iva_ids,())
+            if iva_ids:
+                iva_obj.action_cancel(cr,uid,iva_ids,())
+                len(iva_ids) == 1 and wf_service.trg_validate(uid, 'account.wh.iva', iva_ids[0], 'set_to_draft', cr) or \
+                        [ wf_service.trg_validate(uid, 'account.wh.iva', i, 'set_to_draft', cr) for i in iva_ids ]
+                invo_obj.write(cr,uid,invo_ids,{'cancel_true':True},context=context)
+            
             islr_ids and islr_obj.action_cancel(cr,uid,islr_ids,())
             invo_obj.action_cancel(cr,uid,invo_ids,())
             invo_obj.action_cancel_draft(cr,uid,invo_ids,())

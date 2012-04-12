@@ -125,7 +125,6 @@ class compute_cost(osv.osv_memory):
                         product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':time.strftime('%Y-%m-%e').replace(' ',''),'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': time.strftime('%Y-%m-%e').replace(' ','') },context=context)
         return aux
         
-        
     def list_cost(self,cr,uid,cicle,ids_inv):
         global invo_cost
         lista = []
