@@ -17,7 +17,7 @@
             
       </pageGraphics>
       
-    <frame id="first" x1="10.0mm" y1="108.0mm" width="195.00mm" height="160.0mm"/>
+    <frame id="first" x1="10.0mm" y1="12.0mm" width="195.00mm" height="260.0mm"/>
     </pageTemplate>
   </template>
   <stylesheet>
