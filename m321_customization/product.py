@@ -71,6 +71,20 @@ class inherited_product(osv.osv):
         else:
             return True
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        
+        if default is None:
+            default = {}
+        
+        if context is None :
+            context = {}
+            
+        default = default.copy()
+        default.update({'upc':False,'ean13':False,
+        })
+        
+        return super(inherited_product, self).copy(cr, uid, id, default, context)
+
 
     def _stock_available(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:

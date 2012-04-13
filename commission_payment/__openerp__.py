@@ -21,18 +21,23 @@
 ##############################################################################
 
 {
-	"name" : "Cálculo de Pago de Comisiones por producto pagado",
-	"version" : "1",
-	"author" : "Vauxoo",
-	"category" : "Generic Modules/Others",
-	"website": "www.vauxoo.com/",
-	"description": '''
+    "name" : "Cálculo de Pago de Comisiones por producto pagado",
+    "version" : "1",
+    "author" : "Vauxoo",
+    "category" : "Generic Modules/Others",
+    "website": "www.vauxoo.com/",
+    "description": '''
 Cálculo de Pago de Comisiones por producto pagado
 ''',
-	"depends" : ['baremo', 
+    "depends" : ['baremo', 
                 'account_voucher',],
-	"init_xml" : [],
-	"update_xml" : ['commission_report.xml','commission_view.xml'],
-	"active": False,
-	"installable": True
+    "init_xml" : [],
+    "update_xml" : [
+        'security/commission_payment_security.xml',
+        'security/ir.model.access.csv',
+        'commission_report.xml',
+        'commission_view.xml'
+    ],
+    "active": False,
+    "installable": True
 }

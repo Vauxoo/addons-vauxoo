@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: javier@vauxoo.com
+#    Coded by: Vauxoo C.A.           
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -22,32 +22,25 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
 {
-    "name" : "Stock Card",
-    "version" : "0.2",
-    "depends" : ["base","product", "purchase", "account", "stock", "report_profit"],
+    "name" : "Account Move Cancel",
+    "version" : "0.1",
+    "depends" : ["account",'account_cancel','l10n_ve_withholding_iva','l10n_ve_withholding'],
     "author" : "Vauxoo",
     "description" : """
-        Kardex.
-
- """,
+    """,
     "website" : "http://vauxoo.com",
-    "category" : "Localization",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
+    "category" : "Generic Modules",
+    "init_xml" : [],
+    "demo_xml" : [],
+    "test": [ ],
     "update_xml" : [
-        "security/stock_card_security.xml",
-        "security/ir.model.access.csv",
-        "stock_view.xml",
-        "report_profit_picking_view.xml",
-        "stock_card_view.xml",
-        "stock_card_report.xml",
+    'wizard/account_move_cancel_view.xml',
+    'workflow/account_workflow.xml', 
+    
+    
+    
     ],
     "active": False,
     "installable": True,
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
