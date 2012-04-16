@@ -23,51 +23,37 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-import time
 from osv import fields, osv
-import decimal_precision as dp
+import tools
 from tools.translate import _
+from tools import config
 import netsvc
+import decimal_precision as dp
+from DateTime import DateTime
+import time
 
-class account_invoice(osv.osv):
-    _inherit = 'account.invoice'
 
+class ledger_report(osv.osv_memory):
+
+    
+    _name = 'ledger.report'
     _columns = {
-        'cancel_true':fields.boolean('Invoice Cancel',help="Field that indicates whether the invoice was canceled earlier, to generate actions automatically")
-    
+        'partner_ids':fields.many2many('res.partner','partner_rel','partner1','partner2','Partners',help="Select the Partner"),
+        'fiscalyear_id':fields.many2one('account.fiscalyear','Fiscal Year',help="Fiscal Year "),
+        'period_id':fields.many2one('account.period','Period',help="Period"),
+        'company_id':fields.many2one('res.company','Company'),
+        'type_filter':fields.selection([('date','Date'),('period','Period'),('none','None')],'Filter'),
+        'date_begin':fields.date('Date Begin',help="Date to begin filter"),
+        'date_end':fields.date('Date End',help="Date to end filter"),
+        
+        
+        
     }
     
-    _defaults = {
-    'cancel_true':False,
-    
-    }
-    
-    def action_number(self, cr, uid, ids, context=None):
-        '''
-        Modified to witholding vat validate 
-        '''
-        wf_service = netsvc.LocalService("workflow")
-        res = super(account_invoice, self).action_number(cr, uid, ids, context=context)
-        iva_line_obj = self.pool.get('account.wh.iva.line')
-        iva_obj = self.pool.get('account.wh.iva')
-        invo_brw = self.browse(cr,uid,ids,context=context)[0]
-        if invo_brw.cancel_true:
-            iva_line_obj.load_taxes(cr, uid, [i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
-            wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_confirmed', cr)
-            wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_done', cr)
-
-        return res
-    
-    
-    def check_iva_islr(self, cr, uid, ids, context=None):
+    def generate_report(self,cr,uid,ids,context=None):
         if context is None:
-            context={}
-        invo_brw = self.browse(cr,uid,ids[0],context=context)
-        if invo_brw.islr_wh_doc_id and invo_brw.wh_iva_id:
-            return False
+            context = {}
+            
         return True
-
-
-account_invoice()
-
+ledger_report()
 
