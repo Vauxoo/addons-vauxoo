@@ -83,7 +83,7 @@
 
                         <para style="IZQDA4">COMPAÑIA: [[o.company_id.name and  ('%s'%(o.company_id.name.upper())) or '' ]]</para>
                         <para style="IZQDA4">[[ o.company_id.partner_id.vat  and (' RIF.:%s-%s-%s'%(o.company_id.partner_id.vat[2:3],o.company_id.partner_id.vat[3:11],o.company_id.partner_id.vat[11:12])) or '' ]]</para>
-                        <para style="IZQDA4">USUARIO: [[ user.name ]]</para>
+                        <para style="IZQDA4">USUARIO: [[ get_user_create(o.id) ]]</para>
                     </td>
                   </tr>
                 </blockTable>
@@ -168,7 +168,6 @@
       <tr><td><para></para></td><td><para></para></td></tr>
       <tr>
         <td>
-    <para style="IZQUIERDA">[[ (o.type=='out_invoice' and o.origin) and ('ORIGEN: %s'%(o.origin)) or removeParentNode('para') ]] </para>
         </td>
       </tr>
     </blockTable>
