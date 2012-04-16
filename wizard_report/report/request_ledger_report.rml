@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Luis Escobar" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+    
+      <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6ff" start="0,0" stop="0,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEABOVE" colorName="#e6e6ff" start="0,0" stop="0,0"  thickness="0.5"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6ff" start="0,-1" stop="0,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"  thickness="0.5"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEBEFORE" colorName="#999999" start="2,0" stop="2,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEABOVE" colorName="#999999" start="2,0" stop="2,0"  thickness="0.5"/>
+      <lineStyle kind="LINEBELOW" colorName="#999999" start="2,-1" stop="2,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEBEFORE" colorName="#666666" start="3,0" stop="3,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEAFTER" colorName="#666666" start="3,0" stop="3,-1"  thickness="0.5"/>
+      <lineStyle kind="LINEABOVE" colorName="#666666" start="3,0" stop="3,0"  thickness="0.5"/>
+      <lineStyle kind="LINEBELOW" colorName="#666666" start="3,-1" stop="3,-1"  thickness="0.5"/>
+      <blockBackground colorName="#cccccc" start="0,0" stop="0,-1"/>
+      <blockBackground colorName="#b3b3b3" start="1,0" stop="1,-1"/>
+      <blockBackground colorName="#808080" start="2,0" stop="2,-1"/>
+      <blockBackground colorName="#4c4c4c" start="3,0" stop="3,-1"/>
+    </blockTableStyle>
+    <paraStyle name="P1" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" textColor="black"/>
+    
+       <blockTable colWidths="145.0,  87.0,  80.0,  170.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P1">Algo</para>
+        </td>
+      </tr>
+    </blockTable>
+   
+</document>
+

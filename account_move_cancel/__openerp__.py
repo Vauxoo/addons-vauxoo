@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
+#    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: Vauxoo C.A.           
@@ -22,21 +22,25 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-
-from osv import fields, osv
-import tools
-from tools.translate import _
-from tools import config
-import netsvc
-import decimal_precision as dp
-
-class account_invoice(osv.osv):
+{
+    "name" : "Account Move Cancel",
+    "version" : "0.1",
+    "depends" : ["account",'account_cancel','l10n_ve_withholding_iva','l10n_ve_withholding'],
+    "author" : "Vauxoo",
+    "description" : """
+    """,
+    "website" : "http://vauxoo.com",
+    "category" : "Generic Modules",
+    "init_xml" : [],
+    "demo_xml" : [],
+    "test": [ ],
+    "update_xml" : [
+    'wizard/account_move_cancel_view.xml',
+    'workflow/account_workflow.xml', 
     
     
-    _inherit = 'account.invoice'
-    _columns = {
-    'date_invoice':fields.datetime('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
-    }
     
-    
-account_invoice()
+    ],
+    "active": False,
+    "installable": True,
+}

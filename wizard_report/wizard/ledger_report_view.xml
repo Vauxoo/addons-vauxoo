@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model='ir.ui.view' id='ledger_report_form_view'>
+      <field name='name'>Ledger Report</field>
+      <field name='model'>ledger.report</field>
+      <field name='type'>form</field>
+      <field name='arch' type='xml'>
+        <form string="Compute Costs">
+          <group col="2" colspan="1">
+          <group col="1" colspan="1">
+            <field name='company_id'/>
+            <field name='fiscalyear_id' required="1" />
+            <field name='type_filter' />
+            <field name='date_begin' attrs="{'invisible':[('type_filter','!=','date')]}"/>
+            <field name='date_end' attrs="{'invisible':[('type_filter','!=','date')]}"/>
+            
+            <field name='period_id'  attrs="{'invisible':[('type_filter','!=','period')]}" />
+            
+            
+            </group>
+            <field name='partner_ids' editable="buttom" nolabel="1">
+              <tree>
+                <field name="name" />
+              </tree>
+            </field>
+            <button string="Cancel" special="cancel" icon="terp-stock_effects-object-colorize" />
+            <button name="%(report_ledger_request)d" string="Generate Report" type="action" icon="gtk-print" />
+          </group>
+        </form>
+      </field>
+    </record>
+   
+   
+
+   
+    <record id="ledger_report_action" model="ir.actions.act_window">
+      <field name="name">Ledger Report</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">ledger.report</field>
+      <field name="src_model">account.account</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="usage">menu</field>
+      <field name="target">new</field>
+    </record>
+   
+   
+   
+  </data>
+</openerp>

@@ -23,20 +23,51 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
+import time
 from osv import fields, osv
-import tools
-from tools.translate import _
-from tools import config
-import netsvc
 import decimal_precision as dp
+from tools.translate import _
+import netsvc
 
 class account_invoice(osv.osv):
-    
-    
     _inherit = 'account.invoice'
+
     _columns = {
-    'date_invoice':fields.datetime('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
+        'cancel_true':fields.boolean('Invoice Cancel',help="Field that indicates whether the invoice was canceled earlier, to generate actions automatically")
+    
     }
     
+    _defaults = {
+    'cancel_true':False,
     
+    }
+    
+    def action_number(self, cr, uid, ids, context=None):
+        '''
+        Modified to witholding vat validate 
+        '''
+        wf_service = netsvc.LocalService("workflow")
+        res = super(account_invoice, self).action_number(cr, uid, ids, context=context)
+        iva_line_obj = self.pool.get('account.wh.iva.line')
+        iva_obj = self.pool.get('account.wh.iva')
+        invo_brw = self.browse(cr,uid,ids,context=context)[0]
+        if invo_brw.cancel_true:
+            iva_line_obj.load_taxes(cr, uid, [i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
+            wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_confirmed', cr)
+            wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_done', cr)
+
+        return res
+    
+    
+    def check_iva_islr(self, cr, uid, ids, context=None):
+        if context is None:
+            context={}
+        invo_brw = self.browse(cr,uid,ids[0],context=context)
+        if invo_brw.islr_wh_doc_id and invo_brw.wh_iva_id:
+            return False
+        return True
+
+
 account_invoice()
+
+

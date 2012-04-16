@@ -45,7 +45,24 @@ class inherited_product(osv.osv):
         for index in range(len(li)):
             if (index + 1) % 2 != 0:
                 yield li[index]
-
+    
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        
+        if default is None:
+            default = {}
+        
+        if context is None :
+            context = {}
+            
+        default = default.copy()
+        default.update({'upc':False,
+        })
+        
+        return super(inherited_product, self).copy(cr, uid, id, default, context)
+    
+    
+    
     def _find_next_ten_multi(self, value):
         while (value % 10 != 0):
             value += 1

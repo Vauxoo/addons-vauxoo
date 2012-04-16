@@ -29,14 +29,31 @@ from tools.translate import _
 from tools import config
 import netsvc
 import decimal_precision as dp
+from DateTime import DateTime
+import time
 
-class account_invoice(osv.osv):
+
+class ledger_report(osv.osv_memory):
+
     
-    
-    _inherit = 'account.invoice'
+    _name = 'ledger.report'
     _columns = {
-    'date_invoice':fields.datetime('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
+        'partner_ids':fields.many2many('res.partner','partner_rel','partner1','partner2','Partners',help="Select the Partner"),
+        'fiscalyear_id':fields.many2one('account.fiscalyear','Fiscal Year',help="Fiscal Year "),
+        'period_id':fields.many2one('account.period','Period',help="Period"),
+        'company_id':fields.many2one('res.company','Company'),
+        'type_filter':fields.selection([('date','Date'),('period','Period'),('none','None')],'Filter'),
+        'date_begin':fields.date('Date Begin',help="Date to begin filter"),
+        'date_end':fields.date('Date End',help="Date to end filter"),
+        
+        
+        
     }
     
-    
-account_invoice()
+    def generate_report(self,cr,uid,ids,context=None):
+        if context is None:
+            context = {}
+            
+        return True
+ledger_report()
+

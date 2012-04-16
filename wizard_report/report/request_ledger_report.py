@@ -5,9 +5,13 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+#    Coded by: Humberto Arocha           <humberto@openerp.com.ve>
+#              Angelica Barrios          <angelicaisabelb@gmail.com>
+#              María Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
+#              Javier Duran              <javier@vauxoo.com>             
 #    Planified by: Nhomar Hernandez
-#    Audited by: Vauxoo C.A.
+#    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
+#    Audited by: Humberto Arocha humberto@openerp.com.ve
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -21,22 +25,34 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##############################################################################
 
-from osv import fields, osv
-import tools
+import time
+from report import report_sxw
+from osv import osv
+import pooler
+import datetime
+from mx.DateTime import *
 from tools.translate import _
-from tools import config
-import netsvc
-import decimal_precision as dp
 
-class account_invoice(osv.osv):
-    
-    
-    _inherit = 'account.invoice'
-    _columns = {
-    'date_invoice':fields.datetime('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
-    }
-    
-    
-account_invoice()
+
+class ledger_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(ledger_report, self).__init__(cr, uid, name, context)  
+        print "algooo"
+        self.localcontext.update({
+            'get_begin':self._get_begin,
+        })
+
+
+    def _get_begin(self):
+        return True
+
+
+report_sxw.report_sxw(
+    'report.report.ledger',
+    'ledger.report',
+    'addons/wizard_report/report/request_ledger_report.rml',
+    parser=ledger_report,
+    header = False
+)      

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+          <report
+            id="report_ledger_request" 
+            model="ledger.report" 
+            name="report.ledger" 
+            rml="wizard_report/report/request_ledger_report.rml"
+            string="Request Ledger Report"
+            auto="False"
+            menu="False"
+            header="False" />
+            
+    </data>
+</openerp>
