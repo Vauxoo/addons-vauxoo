@@ -25,9 +25,10 @@
 {
     "name" : "Account Move Cancel",
     "version" : "0.1",
-    "depends" : ["account",'account_cancel','l10n_ve_withholding_iva','l10n_ve_withholding'],
+    "depends" : ["account",'account_cancel','l10n_ve_withholding_iva'],
     "author" : "Vauxoo",
     "description" : """
+    Cancel Invoices and witholding
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
@@ -37,6 +38,7 @@
     "update_xml" : [
     'wizard/account_move_cancel_view.xml',
     'workflow/account_workflow.xml', 
+    'view/invoice_view.xml', 
     
     
     

@@ -48,7 +48,6 @@ class account_move_cancel(osv.osv_memory):
             @param invoice_ids, ids list of invoices to method apply
             @param ids, ids of wizard if called from this
         '''
-        
         if context is None:
             context = {}
         invo_obj = self.pool.get('account.invoice')
@@ -59,39 +58,80 @@ class account_move_cancel(osv.osv_memory):
         invo_ids = []
         iva_ids = []
         islr_ids = []
+        journal_ids = []
         wf_service = netsvc.LocalService("workflow")
         if not invoice_ids:
             invo_brw = self.browse(cr,uid,ids,context=context)
-            for invo in invo_brw[0].invoice_ids:
-                invo_ids.append(invo.id)
-                invo.islr_wh_doc_id and islr_ids.append(invo.islr_wh_doc_id.id)
-                invo.wh_iva_id and iva_ids.append(invo.wh_iva_id.id)
-                if invo.payment_ids:
-                    raise osv.except_osv(_('Invalid action !'),_("Impossible invoice cancel %s because is paid '%s'!")% (invo.name))
-
-        else:
-            invo_brw = self.browse(cr,uid,invoice_ids,context=context)
+            invo_brw = invo_brw[0].invoice_ids
             for invo in invo_brw:
                 invo_ids.append(invo.id)
-                invo.islr_wh_doc_id and islr_ids.append(invo.islr_wh_doc_id.id)
-                invo.wh_iva_id and iva_ids.append(invo.wh_iva_id.id)
-                if invo.payment_ids:
-                    raise osv.except_osv(_('Invalid action !'),_("Impossible invoice cancel %s because is paid '%s'!")% (invo.name))
+                hasattr(invo,'islr_wh_doc_id') and invo.islr_wh_doc_id and islr_ids.append(invo.islr_wh_doc_id.id)
+                hasattr(invo,'wh_iva_id') and invo.wh_iva_id and iva_ids.append(invo.wh_iva_id.id)
+                invo.journal_id and journal_ids.append(invo.journal_id.id)
+                
+                hasattr(invo,'islr_wh_doc_id') and invo.islr_wh_doc_id and invo.islr_wh_doc_id.journal_id and \
+                journal_ids.append(invo.islr_wh_doc_id.journal_id.id)
+
+                hasattr(invo,'wh_iva_id') and invo.wh_iva_id and invo.wh_iva_id.journal_id and \
+                journal_ids.append(invo.wh_iva_id.journal_id.id)
+
+
+
+        else:
+            invo_brw = invo_obj.browse(cr,uid,invoice_ids,context=context)
+            for invo in invo_brw:
+                invo_ids.append(invo.id)
+                hasattr(invo,'islr_wh_doc_id') and invo.islr_wh_doc_id and  islr_ids.append(invo.islr_wh_doc_id.id)
+                hasattr(invo,'wh_iva_id') and invo.wh_iva_id and iva_ids.append(invo.wh_iva_id.id)
+                invo.journal_id and journal_ids.append(invo.journal_id.id)
             
-        journal_ids = journal_obj.search(cr,uid,[],context=context)
+                hasattr(invo,'islr_wh_doc_id') and invo.islr_wh_doc_id and invo.islr_wh_doc_id.journal_id and \
+                journal_ids.append(invo.islr_wh_doc_id.journal_id.id)
+
+                hasattr(invo,'wh_iva_id') and invo.wh_iva_id and invo.wh_iva_id.journal_id and \
+                journal_ids.append(invo.wh_iva_id.journal_id.id)
+        
+        
         hasattr(journal_obj.browse(cr,uid,journal_ids[0],context=context),'update_posted') and \
                                     journal_obj.write(cr,uid,journal_ids,{'update_posted':True},context=context)
         if invo_ids:
             if iva_ids:
-                iva_obj.action_cancel(cr,uid,iva_ids,())
+
+                
+                [cr.execute("update wkf_instance set state='active' where res_id =%s"%i) for i in iva_ids ]
+                 
+                len(iva_ids) == 1 and wf_service.trg_validate(uid, 'account.wh.iva', iva_ids[0], 'cancel', cr) or \
+                        [ wf_service.trg_validate(uid, 'account.wh.iva', i, 'cancel', cr) for i in iva_ids ]
+               
+               
                 len(iva_ids) == 1 and wf_service.trg_validate(uid, 'account.wh.iva', iva_ids[0], 'set_to_draft', cr) or \
                         [ wf_service.trg_validate(uid, 'account.wh.iva', i, 'set_to_draft', cr) for i in iva_ids ]
-                invo_obj.write(cr,uid,invo_ids,{'cancel_true':True},context=context)
+               
             
-            islr_ids and islr_obj.action_cancel(cr,uid,islr_ids,())
+            if islr_ids:
+                
+                
+                [cr.execute("update wkf_instance set state='active' where res_id =%s"%i) for i in islr_ids ]
+                
+                len(islr_ids) == 1 and wf_service.trg_validate(uid, 'islr.wh.doc', islr_ids[0], 'act_cancel', cr) or \
+                [wf_service.trg_validate(uid, 'islr.wh.doc', i, 'act_cancel', cr) for i in islr_ids]
+                
+                
+                len(islr_ids) == 1 and wf_service.trg_validate(uid, 'islr.wh.doc', islr_ids[0], 'act_draft', cr) or \
+                [wf_service.trg_validate(uid, 'islr.wh.doc', i, 'act_draft', cr) for i in islr_ids]
+            
+            
+            
+            names = [invo.name for invo in invo_brw if invo.payment_ids ]
+            
+            if names:
+                raise osv.except_osv(_('Invalid action !'),_("Impossible invoices cancel %s  because is paid!"%(' '.join(names))) )
+            
             invo_obj.action_cancel(cr,uid,invo_ids,())
             invo_obj.action_cancel_draft(cr,uid,invo_ids,())
-            
+            invo_obj.write(cr,uid,invo_ids,{'cancel_true':True},context=context)
+            hasattr(journal_obj.browse(cr,uid,journal_ids[0],context=context),'update_posted') and \
+                                    journal_obj.write(cr,uid,journal_ids,{'update_posted':False},context=context)
             
         return True
        

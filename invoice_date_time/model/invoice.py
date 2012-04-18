@@ -29,14 +29,18 @@ from tools.translate import _
 from tools import config
 import netsvc
 import decimal_precision as dp
+from DateTime import DateTime
 
 class account_invoice(osv.osv):
     
-    
     _inherit = 'account.invoice'
     _columns = {
-    'date_invoice':fields.datetime('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
+    'date_compute':fields.datetime('Invoice Date', help="Date to compute the product cost in the invoice"),
     }
     
+    _defaults = {
+    'date_compute': DateTime().strftime('%Y/%m/%d %H:%M:%S')
+    
+    }
     
 account_invoice()

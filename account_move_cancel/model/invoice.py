@@ -52,12 +52,28 @@ class account_invoice(osv.osv):
         iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr,uid,ids,context=context)[0]
         if invo_brw.cancel_true:
-            iva_line_obj.load_taxes(cr, uid, [i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
-            wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_confirmed', cr)
-            wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_done', cr)
+
+            if invo_brw.wh_iva_id:
+                iva_line_obj.load_taxes(cr, uid, [i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
+                wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_confirmed', cr)
+                wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_done', cr)
+
+            if invo_brw.islr_wh_doc_id:
+                print "islr"
+                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_progress', cr)
+                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_done', cr)
 
         return res
     
+    def cancel_invoices_momentarily(self,cr,uid,ids,context=None):
+        
+        if context is None:
+            context = {}
+        wizard_obj = self.pool.get('account.move.cancel')
+        wizard_obj.cancel_account_move(cr,uid,ids,context=context,invoice_ids=ids)
+        
+    
+        return True 
     
     def check_iva_islr(self, cr, uid, ids, context=None):
         if context is None:
