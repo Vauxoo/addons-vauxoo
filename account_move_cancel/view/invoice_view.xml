@@ -10,7 +10,7 @@
             <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='invoice_cancel']" position="replace">
-                    <button name="cancel_invoices_momentarily" type='object' string='Cancel' states="draft,proforma2,sale,open" icon="gtk-cancel" />
+                    <button name="invoice_cancel" type='object' string='Cancel' states="draft,proforma2,sale,open" icon="gtk-cancel" />
                 </xpath>
             </field>
         </record>
@@ -24,7 +24,7 @@
             <field name="inherit_id" ref="account_cancel.invoice_supplier_cancel_form_inherit"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='invoice_cancel']" position="replace">
-                    <button name="cancel_invoices_momentarily" type='object' string='Cancel' states="draft,proforma2,sale,open" icon="gtk-cancel" />
+                    <button name="invoice_cancel" type='object' string='Cancel' states="draft,proforma2,sale,open" icon="gtk-cancel" />
                 </xpath>
             </field>
         </record>
