@@ -75,8 +75,6 @@ class account_move_cancel(osv.osv_memory):
                 hasattr(invo,'wh_iva_id') and invo.wh_iva_id and invo.wh_iva_id.journal_id and \
                 journal_ids.append(invo.wh_iva_id.journal_id.id)
 
-
-
         else:
             invo_brw = invo_obj.browse(cr,uid,invoice_ids,context=context)
             for invo in invo_brw:
@@ -110,7 +108,6 @@ class account_move_cancel(osv.osv_memory):
             
             if islr_ids:
                 
-                
                 [cr.execute("update wkf_instance set state='active' where res_id =%s"%i) for i in islr_ids ]
                 
                 len(islr_ids) == 1 and wf_service.trg_validate(uid, 'islr.wh.doc', islr_ids[0], 'act_cancel', cr) or \
@@ -121,11 +118,10 @@ class account_move_cancel(osv.osv_memory):
                 [wf_service.trg_validate(uid, 'islr.wh.doc', i, 'act_draft', cr) for i in islr_ids]
             
             
-            
             names = [invo.name for invo in invo_brw if invo.payment_ids ]
             
             if names:
-                raise osv.except_osv(_('Invalid action !'),_("Impossible invoices cancel %s  because is paid!"%(' '.join(names))) )
+                raise osv.except_osv(_('Invalid action !'),_("Impossible invoice(s) cancel %s  because is/are paid!"%(' '.join(names))) )
             
             invo_obj.action_cancel(cr,uid,invo_ids,())
             invo_obj.action_cancel_draft(cr,uid,invo_ids,())
