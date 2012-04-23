@@ -93,9 +93,8 @@ class account_move_cancel(osv.osv_memory):
         hasattr(journal_obj.browse(cr,uid,journal_ids[0],context=context),'update_posted') and \
                                     journal_obj.write(cr,uid,journal_ids,{'update_posted':True},context=context)
         if invo_ids:
-            if iva_ids:
+            if iva_ids and context.get('iva'):
 
-                
                 [cr.execute("update wkf_instance set state='active' where res_id =%s"%i) for i in iva_ids ]
                  
                 len(iva_ids) == 1 and wf_service.trg_validate(uid, 'account.wh.iva', iva_ids[0], 'cancel', cr) or \
@@ -106,8 +105,7 @@ class account_move_cancel(osv.osv_memory):
                         [ wf_service.trg_validate(uid, 'account.wh.iva', i, 'set_to_draft', cr) for i in iva_ids ]
                
             
-            if islr_ids:
-                
+            if islr_ids and context.get('islr'):
                 [cr.execute("update wkf_instance set state='active' where res_id =%s"%i) for i in islr_ids ]
                 
                 len(islr_ids) == 1 and wf_service.trg_validate(uid, 'islr.wh.doc', islr_ids[0], 'act_cancel', cr) or \

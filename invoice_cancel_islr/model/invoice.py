@@ -43,7 +43,6 @@ class account_invoice(osv.osv):
         iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr,uid,ids,context=context)[0]
         if invo_brw.cancel_true:
-            print "islr"
             if invo_brw.islr_wh_doc_id:
                 wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_progress', cr)
                 wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_done', cr)
@@ -57,6 +56,7 @@ class account_invoice(osv.osv):
         
         if context is None:
             context = {}
+        context.update({'islr':True})
         res = super(account_invoice, self).invoice_cancel(cr, uid, ids, context=context)
     
         return res 

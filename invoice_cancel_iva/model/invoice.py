@@ -44,7 +44,6 @@ class account_invoice(osv.osv):
         iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr,uid,ids,context=context)[0]
         if invo_brw.cancel_true:
-            print "iva"
             if invo_brw.wh_iva_id:
                 iva_line_obj.load_taxes(cr, uid, [i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
                 wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_confirmed', cr)
@@ -57,7 +56,7 @@ class account_invoice(osv.osv):
         
         if context is None:
             context = {}
-            
+        context.update({'iva':True})
         res = super(account_invoice, self).invoice_cancel(cr, uid, ids, context=context)
         
         return res 

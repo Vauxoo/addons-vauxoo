@@ -77,23 +77,7 @@ class account_invoice(osv.osv):
     
         return True 
     
-    def check_iva(self, cr, uid, ids, context=None):
-        if context is None:
-            context={}
-        invo_brw = self.browse(cr,uid,ids[0],context=context)
-        if invo_brw.wh_iva_id:
-            return False
-        return True
 
-
-
-    def check_islr(self, cr, uid, ids, context=None):
-        if context is None:
-            context={}
-        invo_brw = self.browse(cr,uid,ids[0],context=context)
-        if invo_brw.islr_wh_doc_id:
-            return False
-        return True
 
 
 
