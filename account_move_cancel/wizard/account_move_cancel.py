@@ -116,7 +116,7 @@ class account_move_cancel(osv.osv_memory):
                 [wf_service.trg_validate(uid, 'islr.wh.doc', i, 'act_draft', cr) for i in islr_ids]
             
             
-            names = [invo.name for invo in invo_brw if invo.payment_ids ]
+            names = [invo.nro_ctrl for invo in invo_brw if invo.payment_ids ]
             
             if names:
                 raise osv.except_osv(_('Invalid action !'),_("Impossible invoice(s) cancel %s  because is/are paid!"%(' '.join(names))) )

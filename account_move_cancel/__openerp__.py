@@ -28,7 +28,9 @@
     "depends" : ["account",'account_cancel'],
     "author" : "Vauxoo",
     "description" : """
-    Cancel Invoices and witholding
+    Cancels multiple invoices from a wizard and is called from other modules for direct 
+    billing cancellations and cancel your withholding, withholding automatically validating 
+    and maintaining the seat number that generated in its initial stage
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
