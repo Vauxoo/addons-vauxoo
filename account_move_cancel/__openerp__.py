@@ -38,6 +38,8 @@
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
+    'security/invoice_cancel_security.xml',
+    'security/ir.model.access.csv',
     'wizard/account_move_cancel_view.xml',
     'view/invoice_view.xml', 
     
