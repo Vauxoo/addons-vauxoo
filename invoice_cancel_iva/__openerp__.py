@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Account Move Cancel",
+    "name" : "Invoice Cancel with withholding vat",
     "version" : "0.1",
-    "depends" : ["account",'account_cancel'],
+    "depends" : ['account','account_move_cancel','l10n_ve_withholding_iva'],
     "author" : "Vauxoo",
     "description" : """
-    Cancel Invoices and witholding
+    Cancel invoice with withholding income to pay cancel generate for the withholding
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
@@ -36,8 +36,7 @@
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
-    'wizard/account_move_cancel_view.xml',
-    'view/invoice_view.xml', 
+    'workflow/account_workflow.xml', 
     
     
     

@@ -28,7 +28,6 @@
     "depends" : ["account",'account_cancel'],
     "author" : "Vauxoo",
     "description" : """
-    Cancel Invoices and witholding
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
@@ -37,7 +36,7 @@
     "test": [ ],
     "update_xml" : [
     'wizard/account_move_cancel_view.xml',
-    'view/invoice_view.xml', 
+    
     
     
     
