@@ -28,7 +28,9 @@
     "depends" : ['account','account_move_cancel','l10n_ve_withholding_iva'],
     "author" : "Vauxoo",
     "description" : """
-    Cancel invoice with withholding income to pay cancel generate for the withholding
+    Cancels invoices with vat withholding, will be passed to draft and calls 
+    mediande vailadadas workflow automatically, keeping the same document that 
+    generated initially wittholding
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",

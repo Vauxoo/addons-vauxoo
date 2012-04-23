@@ -28,7 +28,8 @@
     "depends" : ["account",'account_move_cancel','l10n_ve_withholding_islr'],
     "author" : "Vauxoo",
     "description" : """
-    Invoice Cancel with withholding income
+    Cancels invoices with income withholding, will be passed to draft and 
+    calls mediande vailadadas workflow automatically, keeping the same document that generated initially wittholding
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
@@ -37,7 +38,6 @@
     "test": [ ],
     "update_xml" : [
     'workflow/account_workflow.xml', 
-    
     
     
     ],
