@@ -370,7 +370,7 @@
       <tr>
         <td>
           <para style="terp_default_Centre_7">[[ get_account(data)]]</para>
-          <para style="terp_default_Centre_7">Rif: [[ get_rif(data) ]]</para>
+          <para style="terp_default_Centre_7">Rif: [[ get_rif(data)[2:] ]]</para>
         </td>
         <td>
           <para style="terp_default_Centre_7">[[ get_fiscalyear(data) or '' ]]</para>
@@ -379,7 +379,7 @@
           <para style="terp_default_Centre_7">[[', '.join([ lt or '' for lt in get_journal(data) ]) ]]</para>
         </td>
         <td>
-          <para style="terp_default_Centre_7">[[ (data['form']['display_account']=='bal_all' and _('Company')) or (data['form']['display_account']=='bal_movement' and ('With movements')) or ('With balance is not equal to 0')]]</para>
+          <para style="terp_default_Centre_7">[[ (data['form']['display_account']=='bal_all' and ('All')) or (data['form']['display_account']=='bal_movement' and ('With movements')) or ('With balance is not equal to 0')]]</para>
         </td>
         <td>
           <para style="terp_default_Centre_7">[[ get_filter(data)=='No Filter' and get_filter(data) or removeParentNode('para') ]]</para>

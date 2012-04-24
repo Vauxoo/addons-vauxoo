@@ -305,21 +305,20 @@ class ledger_report(report_sxw.rml_parse, common_report_header.common_report_hea
         return super(ledger_report ,self)._get_account(data)
 
     def _get_rif(self, data):
-        print "All", _('All')
         return self.pool.get('account.account').browse(self.cr, self.uid, data['form']['id']).company_id.partner_id.vat
 
     def _get_sortby(self, data):
         if self.sortby == 'sort_date':
-            return 'Date'
+            return _('Date')
         elif self.sortby == 'sort_journal_partner':
-            return 'Journal & Partner'
-        return 'Date'
+            return _('Journal & Partner')
+        return _('Date')
 
 #report_sxw.report_sxw('report.account.general.ledger_landscape', 'account.account', 'addons/account/report/account_general_ledger_landscape.rml', parser=general_ledger, header='internal landscape')
 report_sxw.report_sxw(
     'report.report.ledger',
     'account.account',
-    'addons/wizard_report/report/request_ledger_report.rml',
+    'addons/ledger_report_partner/report/request_ledger_report.rml',
     parser=ledger_report,
     header = False
 )

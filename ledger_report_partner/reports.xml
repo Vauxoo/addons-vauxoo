@@ -5,7 +5,7 @@
             id="report_ledger_request" 
             model="account.account" 
             name="report.ledger" 
-            rml="wizard_report/report/request_ledger_report.rml"
+            rml="ledger_report_partner/report/request_ledger_report.rml"
             string="Request Ledger Report"
             auto="False"
             menu="False"
