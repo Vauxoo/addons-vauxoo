@@ -34,26 +34,26 @@ import time
 
 
 class ledger_report(osv.osv_memory):
-
-    
-    _name = 'ledger.report'
+    _inherit = "account.report.general.ledger"
+    _name = "ledger.report"
     _columns = {
-        'partner_ids':fields.many2many('res.partner','partner_rel','partner1','partner2','Partners',help="Select the Partner"),
-        'fiscalyear_id':fields.many2one('account.fiscalyear','Fiscal Year',help="Fiscal Year "),
-        'period_id':fields.many2one('account.period','Period',help="Period"),
-        'company_id':fields.many2one('res.company','Company'),
-        'type_filter':fields.selection([('date','Date'),('period','Period'),('none','None')],'Filter'),
-        'date_begin':fields.date('Date Begin',help="Date to begin filter"),
-        'date_end':fields.date('Date End',help="Date to end filter"),
-        
-        
-        
+        'partner_id':fields.many2one('res.partner','Partner',help="Select the Partner",required=True),
     }
     
-    def generate_report(self,cr,uid,ids,context=None):
+    _defaults = {
+        'initial_balance': True,
+        'amount_currency': False,
+    }
+
+    def _print_report(self, cr, uid, ids, data, context=None):
         if context is None:
             context = {}
-            
-        return True
+        data = self.pre_print_report(cr, uid, ids, data, context=context)
+        data['form'].update(self.read(cr, uid, ids, ['landscape',  'initial_balance', 'amount_currency', 'sortby','partner_id'])[0])
+        if not data['form']['fiscalyear_id']:# GTK client problem onchange does not consider in save record
+            data['form'].update({'initial_balance': False})
+        return { 'type': 'ir.actions.report.xml', 'report_name': 'report.ledger', 'datas': data}
+
+
 ledger_report()
 
