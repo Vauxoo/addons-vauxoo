@@ -42,30 +42,6 @@ class account_invoice(osv.osv):
     
     }
     
-    def action_number(self, cr, uid, ids, context=None):
-        '''
-        Modified to witholding vat validate 
-        '''
-        wf_service = netsvc.LocalService("workflow")
-        res = super(account_invoice, self).action_number(cr, uid, ids, context=context)
-        iva_line_obj = self.pool.get('account.wh.iva.line')
-        iva_obj = self.pool.get('account.wh.iva')
-        invo_brw = self.browse(cr,uid,ids,context=context)[0]
-        if invo_brw.cancel_true:
-
-            if invo_brw.wh_iva_id:
-                iva_line_obj.load_taxes(cr, uid, [i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
-                wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_confirmed', cr)
-                wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_done', cr)
-
-            if invo_brw.islr_wh_doc_id:
-                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_progress', cr)
-                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_done', cr)
-                
-                
-                
-
-        return res
     
     def invoice_cancel(self,cr,uid,ids,context=None):
         
