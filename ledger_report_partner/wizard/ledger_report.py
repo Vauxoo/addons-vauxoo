@@ -29,7 +29,6 @@ from tools.translate import _
 from tools import config
 import netsvc
 import decimal_precision as dp
-from DateTime import DateTime
 import time
 
 
