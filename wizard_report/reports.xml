@@ -3,7 +3,7 @@
     <data>
           <report
             id="report_ledger_request" 
-            model="ledger.report" 
+            model="account.account" 
             name="report.ledger" 
             rml="wizard_report/report/request_ledger_report.rml"
             string="Request Ledger Report"
