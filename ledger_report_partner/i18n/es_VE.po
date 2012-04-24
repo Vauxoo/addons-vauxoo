@@ -18,12 +18,12 @@ msgstr ""
 #. module: ledger_report_partner
 #: field:ledger.report,partner_id:0
 msgid "Partners"
-msgstr "Partners"
+msgstr "Empresas"
 
 #. module: ledger_report_partner
 #: field:ledger.report,partner_id:0
 msgid "Partner"
-msgstr "Partner"
+msgstr "Empresa"
 
 #. module: ledger_report_partner
 #: model:ir.actions.report.xml,name:ledger_report_partner.report_ledger_request
@@ -59,7 +59,7 @@ msgstr "Libro Mayor"
 #. module: ledger_report_partner
 #: selection:ledger.report,sortby:0
 msgid "Journal & Partner"
-msgstr "Diario y Partner"
+msgstr "Diario y Empresa"
 
 #. module: ledger_report_partner
 #: report:report.ledger:0
@@ -189,7 +189,7 @@ msgstr "Contabilidad. Informe común"
 #. module: ledger_report_partner
 #: model:ir.actions.act_window,name:ledger_report_partner.action_ledger_report_menu
 msgid "Ledger Report"
-msgstr "Libro Mayor por Partners"
+msgstr "Libro Mayor por Empresa"
 
 #. module: ledger_report_partner
 #: field:ledger.report,chart_account_id:0
@@ -204,7 +204,7 @@ msgstr "Saldo"
 #. module: ledger_report_partner
 #: help:ledger.report,partner_id:0
 msgid "Select the Partner"
-msgstr "Seleccione el Partner"
+msgstr "Seleccione la Empresa"
 
 #. module: ledger_report_partner
 #: selection:ledger.report,display_account:0
