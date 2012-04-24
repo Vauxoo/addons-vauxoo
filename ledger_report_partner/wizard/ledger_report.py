@@ -36,7 +36,7 @@ class ledger_report(osv.osv_memory):
     _inherit = "account.report.general.ledger"
     _name = "ledger.report"
     _columns = {
-        'partner_id':fields.many2one('res.partner','Partner',help="Select the Partner",required=True),
+        'partner_id':fields.many2one('res.partner','Partner',help="Select the Partner"),
     }
     
     _defaults = {
@@ -51,7 +51,10 @@ class ledger_report(osv.osv_memory):
         data['form'].update(self.read(cr, uid, ids, ['landscape',  'initial_balance', 'amount_currency', 'sortby','partner_id'])[0])
         if not data['form']['fiscalyear_id']:# GTK client problem onchange does not consider in save record
             data['form'].update({'initial_balance': False})
-        return { 'type': 'ir.actions.report.xml', 'report_name': 'report.ledger', 'datas': data}
+        res = data['form']['partner_id'] and ({ 'type': 'ir.actions.report.xml', 'report_name': 'report.ledger', 'datas': data}) or \
+                                       ({ 'type': 'ir.actions.report.xml', 'report_name': 'report.ledger_partner_field', 'datas': data}) 
+        print res
+        return res
 
 
 ledger_report()

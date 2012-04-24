@@ -10,6 +10,16 @@
             auto="False"
             menu="False"
             header="False" />
+          <report
+            id="report_ledger_request_partner_field" 
+            model="account.account" 
+            name="report.ledger_partner_field" 
+            rml="ledger_report_partner/report/request_ledger_report_partner_field.rml"
+            string="Request Ledger Report"
+            auto="False"
+            menu="False"
+            header="False" />
+            
             
     </data>
 </openerp>

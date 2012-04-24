@@ -322,5 +322,12 @@ report_sxw.report_sxw(
     parser=ledger_report,
     header = False
 )
+report_sxw.report_sxw(
+    'report.report.ledger_partner_field',
+    'account.account',
+    'addons/ledger_report_partner/report/request_ledger_report_partner_field.rml',
+    parser=ledger_report,
+    header = False
+)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
