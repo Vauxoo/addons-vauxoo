@@ -33,6 +33,20 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
     
+    def action_cancel_draft(self, cr, uid, ids, *args):
+        
+        wf_service = netsvc.LocalService("workflow")
+        res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
+        for i in self.browse(cr,uid,ids,context={}):
+            if i.islr_wh_doc_id:
+                wf_service.trg_validate(uid, 'islr.wh.doc',i.islr_wh_doc_id.id, 'act_draft', cr)
+        return res
+    
+    
+    
+    
+    
+    
     def action_number(self, cr, uid, ids, context=None):
         '''
         Modified to witholding vat validate 
@@ -44,7 +58,9 @@ class account_invoice(osv.osv):
         invo_brw = self.browse(cr,uid,ids,context=context)[0]
         if invo_brw.cancel_true:
             if invo_brw.islr_wh_doc_id:
+                
                 wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_progress', cr)
+                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_confirmed', cr)
                 wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_done', cr)
                 
                 
