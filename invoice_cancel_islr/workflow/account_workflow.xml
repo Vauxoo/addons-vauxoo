@@ -13,13 +13,6 @@
             <field name="signal"></field>
         </record>
 
-        <record id="l10n_ve_withholding_islr.trans_draft_progress" model="workflow.transition">
-            <field name="act_from" ref="l10n_ve_withholding_islr.act_draft"/>
-            <field name="act_to" ref="l10n_ve_withholding_islr.act_progress"/>
-            <field name="condition">check_state_draft()</field>
-            <field name="signal">act_progress</field>
-        </record>
-
         <record id="l10n_ve_withholding_islr.trans_cancel_draft" model="workflow.transition">
             <field name="act_from" ref="l10n_ve_withholding_islr.act_cancel"/>
             <field name="act_to" ref="l10n_ve_withholding_islr.act_draft"/>

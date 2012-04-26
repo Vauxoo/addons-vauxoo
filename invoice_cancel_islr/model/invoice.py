@@ -32,21 +32,19 @@ import netsvc
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
-    
-    def action_cancel_draft(self, cr, uid, ids, *args):
-        
-        wf_service = netsvc.LocalService("workflow")
-        res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
-        for i in self.browse(cr,uid,ids,context={}):
-            if i.islr_wh_doc_id:
-                wf_service.trg_validate(uid, 'islr.wh.doc',i.islr_wh_doc_id.id, 'act_draft', cr)
-        return res
-    
-    
-    
-    
-    
-    
+    #~ 
+    #~ def action_cancel_draft(self, cr, uid, ids, *args):
+        #~ 
+        #~ wf_service = netsvc.LocalService("workflow")
+        #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
+        #~ for i in self.browse(cr,uid,ids,context={}):
+            #~ if i.islr_wh_doc_id:
+                #~ wf_service.trg_validate(uid, 'islr.wh.doc',i.islr_wh_doc_id.id, 'act_draft', cr)
+        #~ return res
+
+
+
+
     def action_number(self, cr, uid, ids, context=None):
         '''
         Modified to witholding vat validate 
@@ -56,15 +54,18 @@ class account_invoice(osv.osv):
         iva_line_obj = self.pool.get('account.wh.iva.line')
         iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr,uid,ids,context=context)[0]
+        state = [('draft','act_draft'),('progress','act_progress'),('confirmed','act_confirmed'),('done','act_done')]
         if invo_brw.cancel_true:
             if invo_brw.islr_wh_doc_id:
-                
-                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_progress', cr)
-                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_confirmed', cr)
-                wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, 'act_done', cr)
-                
-                
-                
+                for i in state:
+                    
+                    if invo_brw.islr_wh_doc_id.prev_state == 'cancel':
+                        break
+                    
+                    wf_service.trg_validate(uid, 'islr.wh.doc',invo_brw.islr_wh_doc_id.id, i[1] , cr)
+                    
+                    if i[0] == invo_brw.islr_wh_doc_id.prev_state:
+                        break
 
         return res
     
@@ -72,7 +73,11 @@ class account_invoice(osv.osv):
         
         if context is None:
             context = {}
+        islr_obj = self.pool.get('islr.wh.doc')
         context.update({'islr':True})
+        invo_brw = self.browse(cr,uid,ids,context=context)[0]
+        if invo_brw.islr_wh_doc_id:
+             islr_obj.write(cr,uid,[invo_brw.islr_wh_doc_id.id],{'prev_state':invo_brw.islr_wh_doc_id.state},context=context)
         res = super(account_invoice, self).invoice_cancel(cr, uid, ids, context=context)
     
         return res 

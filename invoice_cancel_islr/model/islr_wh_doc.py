@@ -32,15 +32,16 @@ import netsvc
 class islr_wh_doc(osv.osv):
     _inherit = 'islr.wh.doc'
 
+    _columns = {
+    'prev_state':fields.char('Previos State',12,help="Field to keep the previous state of the invoice at the time of canceling")
+    
+    }
+    
     
     def check_state_draft(self, cr, uid, ids, context=None):
         '''
         Modified to witholding vat validate 
         '''
-        islr_brw = self.browse(cr,uid,ids,context=context)[0]
-        if islr_brw.invoice_id.state in ['draft','cancel']:
-            return False
-
         return True
     
     def check_state_cancel(self, cr, uid, ids, context=None):

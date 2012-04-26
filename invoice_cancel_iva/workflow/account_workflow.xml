@@ -13,12 +13,6 @@
         </record>
         
         
-         <record id="l10n_ve_withholding_iva.trans_draft_done" model="workflow.transition">
-            <field name="act_from" ref="l10n_ve_withholding_iva.act_draft"/>
-            <field name="act_to" ref="l10n_ve_withholding_iva.act_confirmed"/>
-            <field name="condition">check_vat_wh() and check_wh_taxes() and write_wh_invoices() and check_state_draft()</field> 
-            <field name="signal">wh_iva_confirmed</field>
-        </record>
         
         <record id="l10n_ve_withholding_iva.trans_cancel_draft" model="workflow.transition">
             <field name="act_from" ref="l10n_ve_withholding_iva.act_cancel"/>

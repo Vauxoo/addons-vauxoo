@@ -34,14 +34,14 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
         
-    def action_cancel_draft(self, cr, uid, ids, *args):
-
-        wf_service = netsvc.LocalService("workflow")
-        res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
-        for i in self.browse(cr,uid,ids,context={}):
-            if i.wh_iva_id:
-                wf_service.trg_validate(uid, 'account.wh.iva',i.wh_iva_id.id, 'set_to_draft', cr)
-        return res   
+    #~ def action_cancel_draft(self, cr, uid, ids, *args):
+#~ 
+        #~ wf_service = netsvc.LocalService("workflow")
+        #~ res = super(account_invoice, self).action_cancel_draft(cr, uid, ids, ())
+        #~ for i in self.browse(cr,uid,ids,context={}):
+            #~ if i.wh_iva_id:
+                #~ wf_service.trg_validate(uid, 'account.wh.iva',i.wh_iva_id.id, 'set_to_draft', cr)
+        #~ return res   
         
         
         
@@ -54,12 +54,17 @@ class account_invoice(osv.osv):
         iva_line_obj = self.pool.get('account.wh.iva.line')
         iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr,uid,ids,context=context)[0]
+        state = [('draft','set_to_draft'),('confirmed','wh_iva_confirmed'),('done','wh_iva_done')]
         if invo_brw.cancel_true:
             if invo_brw.wh_iva_id:
                 iva_line_obj.load_taxes(cr, uid, [i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
-                wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_confirmed', cr)
-                wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, 'wh_iva_done', cr)
-                
+                for d in state:
+                    if invo_brw.wh_iva_id.prev_state == 'cancel':
+                        break
+                    
+                    wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, d[1], cr)
+                    if d[0] == invo_brw.wh_iva_id.prev_state:
+                        break
 
         return res
     
@@ -68,6 +73,11 @@ class account_invoice(osv.osv):
         if context is None:
             context = {}
         context.update({'iva':True})
+        iva_obj = self.pool.get('account.wh.iva')
+        invo_brw = self.browse(cr,uid,ids,context=context)[0]
+        if invo_brw.wh_iva_id:
+             iva_obj.write(cr,uid,[invo_brw.wh_iva_id.id],{'prev_state':invo_brw.wh_iva_id.state},context=context)
+        
         res = super(account_invoice, self).invoice_cancel(cr, uid, ids, context=context)
         
         return res 
