@@ -54,6 +54,15 @@ class compute_cost(osv.osv_memory):
     
     
     def compute_cost_fifo(self,cr,uid,dic_comp,dic_vent,dic_nc_com,dic_nc_vent,context={}):
+        '''
+        Method that performs the actual FIFO cost, receiving the dictionaries of every movement,
+        to perform the calculations for caesarean
+        @param dic_comp Dictionary with all moves of purchase order of the products
+        @param dic_vent Dictionary with all moves of sale order of the products
+        @param dic_nc_com Dictionary with all moves of N/C purchase order of the products
+        @param dic_nc_vent Dictionary with all moves of N/C sale order of the products
+        These dictionaries are composed of lists of tuples, where quecada tuple is a line in their respective invoice
+        '''
         invoice_obj = self.pool.get('account.invoice')
         rec_com = {}
         rec_vent = {}
@@ -72,7 +81,6 @@ class compute_cost(osv.osv_memory):
             cost_aux = fifo and fifo[1]
             
             for d in dic_vent.get(i):
-                #~ print "dic_comp[i]",dic_comp[i]
                 cont = d[-1] in rec_vent.keys() and (cont + d[0]) - rec_vent.get(d[-1],False) or cont + d[0]
                 
                 if cont <= qty_aux:
@@ -93,27 +101,30 @@ class compute_cost(osv.osv_memory):
         return True
     
     def compute_actual_cost(self,cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent,context={}):
+        '''
+        Method that performs the actual average cost, receiving the dictionaries of every movement,
+        to perform the calculations for caesarean
+        @param dic_comp Dictionary with all moves of purchase order of the products
+        @param dic_vent Dictionary with all moves of sale order of the products
+        @param dic_nc_com Dictionary with all moves of N/C purchase order of the products
+        @param dic_nc_vent Dictionary with all moves of N/C sale order of the products
+        These dictionaries are composed of lists of tuples, where quecada tuple is a line in their respective invoice
+        '''
         product_obj = self.pool.get('product.product')
         aux = {}
         dat = DateTime()
         for i in dic_comp:
             product_brw = product_obj.browse(cr,uid,i,context=context)
             if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
-                #~ print [a[2] for a in dic_comp.get(i)]
-                #~ print [a[1] for a in dic_nc_com.get(i)]
-                #~ print [a[1] for a in dic_nc_vent.get(i)]
-                #~ print [a[1] for a in dic_vent.get(i)]
                 qty = (sum([a[3] for a in dic_comp.get(i)])) - \
                       (sum([a[0] for a in dic_nc_com.get(i)])) + \
                       (sum([a[0] for a in dic_nc_vent.get(i)])) - \
                       (sum([a[0] for a in dic_vent.get(i)]))
-                #~ qty = (product_brw.cost_ult and product_brw.qty_ult and product_brw.qty_ult or 0 ) + qty      
                 
                 price = (sum([a[2] for a in dic_comp.get(i)])) - \
                         (sum([a[1] for a in dic_nc_com.get(i)])) + \
                         (sum([a[1] for a in dic_nc_vent.get(i)])) - \
                         (sum([a[1] for a in dic_vent.get(i)]))
-                #~ price = (product_brw.cost_ult and product_brw.qty_ult and product_brw.qty_ult or 0 )
                 if qty > 0 :
                     cost = price / qty
                     aux.update({i:[price,qty,cost and cost,dic_comp[i] and dic_comp[i][0] and dic_comp[i][0][4] or [] ]})
@@ -126,12 +137,15 @@ class compute_cost(osv.osv_memory):
         return aux
         
     def list_cost(self,cr,uid,cicle,ids_inv):
+        '''
+        Method that allocates the cost of each sale or note of credit history looking product movement
+        @param cicle Dictionary that contains the ID of the product and its line that generated the movement, to know their numbers and only assign the corresponding cost
+        @param ids_inv Dictionary consisting of the date of purchase and cost to find its corresponding cost based on their date
+        '''
         global invo_cost
         lista = []
         invoice_obj = self.pool.get('account.invoice')
         product_obj = self.pool.get('product.product')
-        #~ product_brw = product_obj.browse(cr,uid,[ i for i in ids_inv],context={})
-        #~ print "product_brw",product_brw 
         for d in cicle:
             invo_brw = invoice_obj.browse(cr,uid,d[0],context={})
             if invo_brw.type is 'out_refund' and invo_brw.parent_id and invo_brw.parent_id.id in invo_cost:
@@ -153,10 +167,6 @@ class compute_cost(osv.osv_memory):
                 invo_cost.update({d[0]:cost})
         return lista
     
-    #~ TODO EL mismo algoritmo para LIFO,
-    #~  ""  "" FIFO, 
-    #~ meter el concepto de ajuste de inventario
-    #~  meter concepto de produccion
     
     def compute_cost(self,cr,uid,ids,context=None,products=False,period=False,fifo=False,lifo=False):
         '''
@@ -178,11 +188,14 @@ class compute_cost(osv.osv_memory):
         product_True = products or wz_brw.product
         period_id =  products and period or wz_brw and wz_brw.period_id.id
         products = period and products or wz_brw and wz_brw.product_ids
+        if wz_brw.all:
+            products = product_obj.search(cr,uid,[],context=context)
+            products = product_obj.browse(cr,uid,products,context=context)
         fifo_true = fifo or wz_brw.fifo
         lifo_true = lifo or wz_brw.lifo
         company_id = self.pool.get('res.users').browse(cr,uid,[uid],context=context)[0].company_id.id
         
-        if product_True:
+        if product_True or wz_brw.all:
             dic_comp = {}
             dic_vent = {}
             dic_nc_com = {}
@@ -192,10 +205,9 @@ class compute_cost(osv.osv_memory):
             product_brw = product_obj.browse(cr,uid,dic_comp.keys(),context=context)
             [dic_comp[i.id].append((0,i.cost_ult,(i.cost_ult * i.qty_ult ), i.qty_ult, i.ult_om and i.ult_om.id,i.date_cost_ult)) \
                 for i in product_brw if i.cost_ult > 0 ]
-            print "dic_compdic_comp",dic_comp
             products_date = [i.date_cost_ult for i in product_brw if i.cost_ult > 0]
             products_date.sort(reverse=True)
-            print "products_brw",products_date 
+            
             #~  Select quantity and cost of product from supplier invoice
            
            
@@ -296,12 +308,6 @@ class compute_cost(osv.osv_memory):
                 type(dic_nc_vent[line.product_id.id]) is list ]
            
             
-            print "dic_comp1",dic_comp
-            print "dic_vent1",dic_vent
-            print "dic_nc_com1",dic_nc_com
-            print "dic_nc_vent1",dic_nc_vent
-            
-            
             for i in dic_comp:
                 if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
                     ids_inv = {} 
@@ -322,19 +328,10 @@ class compute_cost(osv.osv_memory):
             if fifo_true or lifo_true:
                 fifo = self.compute_cost_fifo(cr,uid,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
             
-            #~ print "dic_comp",dic_comp
-            #~ print "dic_vent",dic_vent
-            #~ print "dic_nc_com",dic_nc_com
-            #~ print "dic_nc_vent",dic_nc_vent
             cost = self.compute_actual_cost(cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
-            print "cost",cost
 
         return True
 compute_cost()
 
 
     # nombre del modulo account_anglo_saxon_cost_structure 
-
-#~ acttion_cancel asiento (acount_move)
-#~ action_move_create (account_invoice)
-
