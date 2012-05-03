@@ -160,9 +160,10 @@ class compute_cost(osv.osv_memory):
             try:
                 lista.append((d[3], d[3] * cost, cost and cost or 0, d[4],d[0] ))
             except:
-                raise osv.except_osv(_('Invalid action !'),_("Impossible to calculate the actual cost, because the invoice '%s' \
-                                                             does not have a valid date format, to place its cost at \
-                                                             the time of sale ")% (invo_brw.name))
+                pass
+                #~ raise osv.except_osv(_('Invalid action !'),_("Impossible to calculate the actual cost, because the invoice '%s' \
+                                                             #~ does not have a valid date format, to place its cost at \
+                                                             #~ the time of sale ")% (invo_brw.id))
             if invo_brw.type is 'out_invoice':
                 invo_cost.update({d[0]:cost})
         return lista
@@ -207,9 +208,7 @@ class compute_cost(osv.osv_memory):
                 for i in product_brw if i.cost_ult > 0 ]
             products_date = [i.date_cost_ult for i in product_brw if i.cost_ult > 0]
             products_date.sort(reverse=True)
-            
             #~  Select quantity and cost of product from supplier invoice
-           
            
             if products_date:
                 invo_com_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_comp.keys())),
@@ -246,7 +245,6 @@ class compute_cost(osv.osv_memory):
            
            
             else:
-                
                 invo_com_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','in', tuple(dic_comp.keys())),
                                                         ('type','=','in_invoice'),
                                                         ('period_id','=',period_id),
@@ -273,8 +271,6 @@ class compute_cost(osv.osv_memory):
                                                         ('period_id','=',period_id),
                                                         ('company_id','=',company_id)],
                                                         order='date_invoice')
-           
-           
            
             if invo_com_ids:
                 [dic_comp[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_compute)) \
@@ -329,7 +325,7 @@ class compute_cost(osv.osv_memory):
                 fifo = self.compute_cost_fifo(cr,uid,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
             
             cost = self.compute_actual_cost(cr,uid,ids,dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
-
+            print "cost",cost
         return True
 compute_cost()
 

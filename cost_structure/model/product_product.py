@@ -58,7 +58,7 @@ class product_product(osv.osv):
     method=True,
     view_load=True,
     help="For the current product, this cost and price strucuture will define how the behavior of the price and cost computation "),
-    'cost_ult': fields.related('property_cost_structure', 'cost_ult', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Last Cost'),
+    'cost_ult': fields.related('property_cost_structure', 'cost_ult', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Last Cost',help="Last Cost"),
     'qty_ult': fields.related('property_cost_structure', 'qty_ult', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Last Qty'),
     'cost_prom': fields.related('property_cost_structure', 'cost_prom', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Average Cost'),
     'cost_suppler': fields.related('property_cost_structure', 'cost_suppler', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Supplier Cost'),
