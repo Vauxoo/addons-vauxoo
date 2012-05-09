@@ -30,31 +30,6 @@ from tools import config
 import netsvc
 import decimal_precision as dp
 
-#~ class decorador_ll(osv.osv):
-    #~ _name = 'decorador.decorador'
-    #~ _columns = {}
-    #~ 
-    #~ def __init__(self, name, value, exc_type='warning'):
-        #~ self.name = name
-        #~ self.exc_type = exc_type
-        #~ self.value = value
-        #~ self.args = (exc_type, name)
-        #~ 
-    #~ def __call__(self, *args):
-        #~ print self,args
-        #~ newargs=self.mapping(args, self.f)
-        #~ print "args",args
-        #~ self.f (newargs[0],2,1,3,5)
-        #~ 
-    #~ def mapping(self, algo, orm):
-        #~ print orm.__name__
-        #~ if "write":
-            #~ "logicamapeado"
-        #~ if "create":
-            #~ "logica de mapeado"
-        #~ return algo
-#~ decorador_ll()
-
 
 class cost_structure(osv.osv):
     
@@ -62,18 +37,18 @@ class cost_structure(osv.osv):
     _name = 'cost.structure'
     _columns = {
     'description':fields.char('Description',size=128,help="Product Description"),
-    'type':fields.selection([('v', 'Venta'),('C', 'Compra')], 'Type', help="Product type"),
-    'serial':fields.boolean('Serial',help="Product Serial"),
-    'date_reg':fields.datetime('Registr Date',help="Date to registre"),
-    'cost_ult':fields.float('Ult Cost',digits_compute=dp.get_precision('Cost Structure'), help="Last Cost"),
-    'qty_ult':fields.float('Last Qty',digits_compute=dp.get_precision('Cost Structure'), help="Last Qty"),
-    'cost_prom':fields.float('Prom Cost',digits_compute=dp.get_precision('Cost Structure'),help="Avarage Cost"),
+    'type':fields.selection([('v', 'Venta'),('C', 'Compra')], 'Type', help="Structure cost type for this Product"),
+    'serial':fields.boolean('Serial',help="If Product have a Serial"),
+    'date_reg':fields.datetime('Registr Date',help="Date of registre creation"),
+    'cost_ult':fields.float('Ult Cost',digits_compute=dp.get_precision('Cost Structure'), help="Actual cost compute for this product"),
+    'qty_ult':fields.float('Last Qty',digits_compute=dp.get_precision('Cost Structure'), help="Last Qty with compute the actual cost"),
+    'cost_prom':fields.float('Prom Cost',digits_compute=dp.get_precision('Cost Structure'),help="Avarage Cost for this product"),
     'cost_suppler':fields.float('Supplier Cost',digits_compute=dp.get_precision('Cost Structure'),help="Supplier Cost"),
-    'cost_ant':fields.float('Ant Cost',digits_compute=dp.get_precision('Cost Structure'),help="Ant Cost"),
-    'qty_ant':fields.float('Ant Qty',digits_compute=dp.get_precision('Cost Structure'),help="Last Qty"),
-    'ult_om':fields.many2one('product.uom','Ult UOM',),
-    'prom_om':fields.many2one('product.uom','Prom UOM',),
-    'ant_om':fields.many2one('product.uom','Ant UOM',),
+    'cost_ant':fields.float('Ant Cost',digits_compute=dp.get_precision('Cost Structure'),help="Cost above, I had this product before the new calculation"),
+    'qty_ant':fields.float('Ant Qty',digits_compute=dp.get_precision('Cost Structure'),help="Quantity above, I had this product before the new calculation"),
+    'ult_om':fields.many2one('product.uom','Measuring unit of this product obtained in the invoice from cost compute',),
+    'prom_om':fields.many2one('product.uom','Measuring unit average in move all',),
+    'ant_om':fields.many2one('product.uom','Measuring unit above of this product obtained in the invoice from cost compute',),
     'date_cost_ult':fields.datetime('Date',help="Date of last change to last cost"),
     'date_ult_om':fields.datetime('Date',help="Date of last change to last UOM"),
     'date_cost_prom':fields.datetime('Date',help="Date of last change to avarage cost"),
@@ -116,9 +91,9 @@ class method_price(osv.osv):
     _name = 'method.price'
     _columns = {
     'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
-    'sequence':fields.integer('Sequence'),
-    'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit"),
-    'date':fields.date('Date'),
+    'sequence':fields.integer('Sequence',help="Sequence that determines the type of sales price, dependediendo customer type (Type 1, Type 2 ...)"),
+    'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit to sale"),
+    'date':fields.date('Creation date'),
     'date_prom_begin':fields.date('Date Prom',help="Compute Date Prom"),
     'date_prom_end':fields.date('Date End',help="Compute Date Prom with end"),
     'margin':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
