@@ -25,7 +25,7 @@
 {
     "name" : "Cost assigned in the account move",
     "version" : "0.1",
-    "depends" : ["account",'account_cancel'],
+    "depends" : ["account"],
     "author" : "Vauxoo",
     "description" : """
     This module allows you to modify the control number of the invoice and the internal number is 
@@ -36,6 +36,8 @@
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
+    'security/change_number_security.xml',
+    'security/ir.model.access.csv',
     'wizard/change_number_view.xml',
     'view/invoice_view.xml'
     ],
