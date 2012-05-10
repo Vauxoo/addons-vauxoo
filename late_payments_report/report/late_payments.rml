@@ -171,7 +171,7 @@
             <para style="terp_default_Bold_9">Balance : </para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ formatLang((reduce(lambda x, y: x +((y['debit'] - y['credit']) * (y['account_id']['type'] == 'payable' and -1 or 1)), getLines(o), 0))) ]]</para>
+            <para style="terp_default_Right_9">[[ formatLang((reduce(lambda x, y: x +((y['debit'] - y['credit']) * (y['account_id']['type'] == 'payable' and -1 or 1)), getLines(o), 0) or removeParentNode('section'))) ]]</para>
           </td>
           <td>
           </td>
@@ -179,7 +179,6 @@
           </td>
         </tr>
       </blockTable>
-      <para style="terp_default_9">Total amount due: [[ formatLang((reduce(lambda x, y: x + ((y['debit'] - y['credit']) * (y['account_id']['type'] == 'payable' and -1 or 1)), getLines(o), 0))) ]] [[ company.currency_id.name ]].</para>
     <spacer length="2mm"/>
     </section>
     <section>
