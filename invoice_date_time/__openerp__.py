@@ -28,6 +28,7 @@
     "depends" : ["account"],
     "author" : "Vauxoo",
     "description" : """
+    Module that adds a datetime field in the invoice to be chronology of creation for the calculation of cost
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",

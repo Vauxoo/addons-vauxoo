@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) Vauxoo (<http://vauxoo.com>).
+#    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: Vauxoo C.A.           
@@ -22,35 +22,22 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-{
-    "name" : "Cost Structure",
-    "version" : "0.1",
-    "depends" : ["stock",'product','sale','purchase','invoice_date_time'],
-    "author" : "Vauxoo",
-    "description" : """
-    Module that performs a calculation of average cost in products, 
-    this module performs a search of all movements made by you for goods 
-    and are assigned to cost structure
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : ['data/data_load.xml'],
-    "demo_xml" : [],
-    "test": [ ],
-    "update_xml" : [
-    'security/cost_structure_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/compute_cost_view.xml',
-    'view/cost_structure.xml',
-    'view/report_cost.xml',
-    'view/product_view.xml',
-    'view/sale_view.xml',
-    'workflow/sale_workflow.xml',
+
+from osv import fields, osv
+from tools.translate import _
+
+
+class account_invoice_line(osv.osv):
     
+    _inherit = 'account.invoice.line'
+    _columns = {
+   
+        'aux_financial': fields.float('Total Financial aux',help="Total financial at the time of the calculation of cost through the validation of this invoice" ),
+        'aux_qty': fields.float('Total Qty',help="Current Number of calculating the time cost to this bill"),
     
+    }
     
-    
-    ],
-    "active": False,
-    "installable": True,
-}
+account_invoice_line()
+
+
+
