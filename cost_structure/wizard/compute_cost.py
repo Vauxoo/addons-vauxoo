@@ -342,7 +342,9 @@ class compute_cost(osv.osv_memory):
             if invo_com_ids:
                 
                 
-                [dic_comp[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal, line.quantity, line.uos_id and line.uos_id.id,invo.date_compute)) \
+                [dic_comp[line.product_id.id].append((invo.id,line.price_unit,line.price_subtotal,
+                                                      line.quantity, line.uos_id and \
+                                                      line.uos_id.id,invo.date_compute,line.aux_financial,line.aux_qty)) \
                 for invo in invo_obj.browse(cr,uid,invo_com_ids,context=context) for line in invo.invoice_line if line and \
                 line.product_id and \
                 line.product_id.id in dic_comp and \
@@ -386,9 +388,6 @@ class compute_cost(osv.osv_memory):
                         lista = self.list_cost(cr,uid,dic_vent.get(i),ids_inv)
                         dic_nc_vent.update({i:lista}) 
                         
-                    if dic_vent.get(i,False) and len(dic_vent.get(i,[])) > 0 :
-                        lista = self.list_cost_actual_sale(cr,uid,dic_vent.get(i),dic_comp,dic_vent,dic_nc_com,dic_nc_vent)
-                        dic_vent.update({i:lista}) 
                         
             invo_cost = {}
             if fifo_true or lifo_true:
