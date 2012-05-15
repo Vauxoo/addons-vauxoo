@@ -26,11 +26,11 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
+    "name" : "l10n_mx_invoice_amount_to_text",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """
+    "description" : """Add amount to text - Spanish
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

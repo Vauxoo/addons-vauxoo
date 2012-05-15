@@ -170,8 +170,8 @@ class account_invoice(osv.osv):
             password = pac_params.password
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
-
-            msg = 'no se pudo subir el archivo'
+            if 'testing' in wsdl_url:
+                msg += u'CUIDADO FIRMADO EN PRUEBAS!!!!\n\n'
             if cfd_data_adenda:
 
                 #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  originales
@@ -196,7 +196,7 @@ class account_invoice(osv.osv):
                     wsdl_client.soapproxy.config.debug = 0
                     wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                     resultado = wsdl_client.timbrar(*params)               
-                    msg = resultado['resultados'] and resultado['resultados']['mensaje'] or ''
+                    msg += resultado['resultados'] and resultado['resultados']['mensaje'] or ''
                     status = resultado['resultados'] and resultado['resultados']['status'] or ''
                     if status == '200' or status == '307':
                         fecha_timbrado = resultado['resultados']['fechaTimbrado'] or False
@@ -298,7 +298,7 @@ class account_invoice(osv.osv):
 
                 if status_uuid == '201':
                     msg_SAT = '- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito.'
-                    self.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':time.strftime('%d-%m-%Y %H:%M:%S')})
+                    self.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':time.strftime('%Y-%m-%d %H:%M:%S')})
                 elif status_uuid == '202':
                     msg_SAT = '- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente.'
                 elif status_uuid == '203':

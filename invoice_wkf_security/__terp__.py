@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Fernando Irene Garcia (fernando@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,23 +23,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "l10n_mx_invoice_datetime",
-    "version" : "1.0",
+    "name" : "Invoice Workflow Security",
+    "version" : "0.1",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add hour & minute to field date_invoice
-    """,
-    "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : [
-        "account",
-    ],
+    "description": """ Este modulo genera por medio de data xml 2 grupos:
+                        1) invoice_cancel
+                        2) invoice_reset_draft
+                       Asignados a los botones cancel y set_to_draft respectivamente. """,
+    "depends" : ["base", "account"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
-    ],
-    "installable" : True,
-    "active" : False,
+    "update_xml" : ['security/invoice_wkf_security_data.xml', 'invoice_wkf_security_view_v5.xml'],
+    "active": False,
+    "test":[],
+    "installable": True,
 }

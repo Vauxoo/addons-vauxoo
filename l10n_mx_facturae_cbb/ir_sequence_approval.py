@@ -25,22 +25,16 @@
 #
 ##############################################################################
 
-{
-    "name" : "l10n_mx_invoice_datetime",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Add hour & minute to field date_invoice
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from osv import osv
+from osv import fields
+
+class ir_sequence_approval(osv.osv):
+    _inherit = 'ir.sequence.approval'
+    
+    _columns = {
+        'date_start': fields.date('Fecha de Aprobación', size=32, required=True),
+        'date_end': fields.date('Fecha de Vigencia', size=32, required=True),
+        'cbb_image': fields.binary('Imagen de Código de Barras Bidimensional'),
+    }
+ir_sequence_approval()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
