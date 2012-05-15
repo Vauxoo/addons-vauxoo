@@ -8,19 +8,10 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base_vat.view_partner_form"/>
             <field name="arch" type="xml">
-            
-            <field name="vat" position="after">
-<!--
-                <xpath expr="/form/group/group/field[@string='lang']" position="after">
--->
+                <field name="property_payment_term" position="after">
                     <field name="regimen_fiscal_id" colspan="2"/>
-<!--
-                </xpath>
--->
+                </field>
             </field>
-            </field>
-            
         </record>
-
     </data>
 </openerp>
