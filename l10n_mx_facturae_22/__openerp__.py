@@ -52,6 +52,7 @@ Requires the following programs:
         "invoice_view.xml",
         "regimen_fiscal.xml",
         "partner_view.xml",
+        "regimen_fiscal_data.xml",
 #        "l10n_mx_facturae_report.xml",
  #       "l10n_mx_facturae_wizard6.xml",
 

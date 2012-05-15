@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <form string="Regimen Fiscal">
                     <field name="name"/>
+                    <newline/>
                     <field name="description"/>
                     
                 </form>
