@@ -27,6 +27,61 @@ from osv import fields, osv
 from tools.translate import _
 
 
+class account_invoice(osv.osv):
+    
+    _inherit = 'account.invoice'
+    
+    def default_get(self, cr, uid, fields, context=None):
+        """ Get default values
+        Give date and time of invoice creation
+        """
+        if context is None:
+            context = {}
+        res = super(account_invoice, self).default_get(cr, uid, fields, context=context)
+        res.update({'date_compute':datetime.datetime.today().strftime('%Y/%m/%d %H:%M:%S')})
+
+
+        return res
+        
+    _columns = {
+    'date_compute':fields.datetime('Invoice Date', help="Date to compute the product cost in the invoice"),
+    }
+    
+    
+    def action_number(self, cr, uid, ids, context=None):
+        '''
+        Modified to witholding vat validate 
+        '''
+        res = super(account_invoice,self).action_number(cr, uid, ids, context=context)
+        invoice_brw = self.browse(cr,uid,ids,context=context)[0]
+        cost_comp_obj = self.pool.get('compute.cost')
+        product_obj = self.pool.get('product.product')
+        product_ids = product_obj.search(cr,uid,[],context=context)
+        cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
+                            invoice_brw.period_id and \
+                            invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_compute)
+        print "cost",cost
+        #~ Hacer un write por linea y escribir el resultado en cost en las variables aux
+        return res
+    
+    def action_cancel(self, cr, uid, ids, *args):
+        
+        context = {}
+        context.update({'invoice_cancel':True})
+        res = super(account_invoice,self).action_cancel(cr, uid, ids, *args)
+        invoice_brw = self.browse(cr,uid,ids,context=context)[0]
+        cost_comp_obj = self.pool.get('compute.cost')
+        product_obj = self.pool.get('product.product')
+        product_ids = product_obj.search(cr,uid,[],context=context)
+        cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
+                            invoice_brw.period_id and \
+                            invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_compute)
+        print "cost",cost
+        #~ print kjhgfd
+        return res 
+account_invoice()
+
+
 class account_invoice_line(osv.osv):
     
     _inherit = 'account.invoice.line'
