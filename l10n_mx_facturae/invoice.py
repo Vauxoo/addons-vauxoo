@@ -369,7 +369,8 @@ class account_invoice(osv.osv):
                     else:
                         file_globals['fname_xslt'] = os.path.join( tools.config["root_path"], certificate_id.fname_xslt )
                 else:
-                    file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
+                    #~ file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
+                    file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_2.xslt' ) #para cfd 2.2
                 
                 file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
                 
