@@ -38,6 +38,7 @@ class invoice_commission_line(osv.osv):
         res={}
         for ail_brw in self.browse(cr,uid,ids):
             bar_id = ail_brw.company_id.bar_id and ail_brw.company_id.bar_id.id or False
+            print '******* bar_id ******',bar_id
             if not bar_id:
                 # TODO: raise exception, levantar excepcion.
                 # de momento esta asi como se muestra, enviando

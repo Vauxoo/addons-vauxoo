@@ -39,6 +39,7 @@ class sale_commission_line(osv.osv):
         res={}
         for sol_brw in self.browse(cr,uid,ids):
             bar_id = sol_brw.company_id.bar_id and sol_brw.company_id.bar_id.id or False
+            print '--------------- bar_id -------------',bar_id
             if not bar_id:
                 # TODO: raise exception, levantar excepcion.
                 # de momento esta asi como se muestra, enviando

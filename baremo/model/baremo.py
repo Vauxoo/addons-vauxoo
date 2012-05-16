@@ -36,6 +36,7 @@ class baremo_book(osv.osv):
     def _calc_comm(self, cr, uid, ids, bid, rate=0.0, timespan=0.0, context=None):
         '''Calculates the commission given these parameters
         '''
+        print 'bid',bid
         spn_obj = self.pool.get('baremo.span')
         bar_rat_obj = self.pool.get('baremo.rate')
         if context is None:
@@ -44,10 +45,10 @@ class baremo_book(osv.osv):
         is_discount = context.get('is_discount',False)
         
         res = {}
-        spn_ids = spn_obj.search(cr, uid, [('bar_id','=',bid)])
+        spn_ids = spn_obj.search(cr, uid, [('bar_id','=',1)])
         
         if not spn_ids:
-            raise osv.except_osv(_('Be Aware !'),_('There are no time spans  established for the\nBareme: %s\nbeing used.\nPlease Fill this one before using it'%(self.browse(cr, uid, bid,context).name.upper())))
+            raise osv.except_osv(_('Be Aware !'),_('There are no time spans  established for the\nBareme: %s\nbeing used.\nPlease Fill this one before using it'%(self.browse(cr, uid, bid,context).name)))
         
         timespan_number = 0.0
         rate_number = 0.0
@@ -66,7 +67,7 @@ class baremo_book(osv.osv):
                         in Bareme: %s\n
                         being used.\n
                         Please Fill this one before using it
-                        '''%(spn_brw.bar_id.name.upper(),spn_brw.name.upper())))
+                        '''%(spn_brw.bar_id.name.upper(),spn_brw.name)))
                 if not is_discount:
                     rat_ids = rat_ids[::-1]
                     
@@ -89,6 +90,7 @@ class baremo_book(osv.osv):
             context = {}
         rate = context.get('comm_rate', 0.0)
         timespan = context.get('comm_timespan', 0.0)
+        print 'rate',rate
         return self._calc_comm(cr, uid, id, rate, timespan, context)
 
     _name = 'baremo.book'
