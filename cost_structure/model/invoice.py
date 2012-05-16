@@ -45,6 +45,7 @@ class account_invoice(osv.osv):
         
     _columns = {
     'date_compute':fields.datetime('Invoice Date', help="Date to compute the product cost in the invoice"),
+    'cancel_check':fields.boolean('Cancel', help="Fenield to indicate if invoice was canceled "),
     }
     
     
@@ -56,10 +57,11 @@ class account_invoice(osv.osv):
         invoice_brw = self.browse(cr,uid,ids,context=context)[0]
         cost_comp_obj = self.pool.get('compute.cost')
         product_obj = self.pool.get('product.product')
-        product_ids = product_obj.search(cr,uid,[],context=context)
-        cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
-                            invoice_brw.period_id and \
-                            invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_compute)
+        if invoice_brw.type in ['in_invoice','in_refund','out_refund']:
+            product_ids = product_obj.search(cr,uid,[],context=context)
+            cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
+                                invoice_brw.period_id and \
+                                invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_compute)
         print "cost",cost
         #~ Hacer un write por linea y escribir el resultado en cost en las variables aux
         return res
