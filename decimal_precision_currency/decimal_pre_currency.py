@@ -39,6 +39,17 @@ class res_currency_rate(osv.osv):
 
 res_currency_rate()
 
+class res_currency(osv.osv):
+
+    _inherit = "res.currency"
+    _columns= {
+        'rate': fields.function(_current_rate, method=True, string='Current Rate', digits_compute= dp.get_precision('Currency'), help='The rate of the currency to the currency of rate 1'),
+        'rounding': fields.float('Rounding factor', digits_compute= dp.get_precision('Currency')),
+
+    }
+
+res_currency()
+
 
 
 
