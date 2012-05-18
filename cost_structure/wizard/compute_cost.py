@@ -253,7 +253,6 @@ class compute_cost(osv.osv_memory):
                 return lista
 
             if invo_brw.type == 'out_refund' and invo_brw.parent_id and invo_brw.parent_id.id not in invo_cost:
-                print "paseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee11111111111111111"
                 #~ purchase_id = invoice_line_obj.search(cr,uid,[('invoice_id.date_invoice','<',invo_brw.parent_id.date_invoice),('invoice_id.type','=','in_invoice'),('product_id','=',product_id)],order='invoice_id.date_invoice',context=context)
                 #~ invo_brw2 = purchase_id and invoice_line_obj.browse(cr,uid,purchase_id[-1],context=context)
                 cr.execute('''
@@ -269,7 +268,7 @@ class compute_cost(osv.osv_memory):
                 #~ for algo in xml_lines:
                     #~ print "algoooooooooo",algo
                 #~ print gfd
-                invo_brw2 invoice_line_obj.write(cr,uid,d[6],{'aux_financial':(invo_brw2.aux_financial/invo_brw2.aux_qty)},context=context)
+                invo_brw2 and invoice_line_obj.write(cr,uid,d[6],{'aux_financial':(invo_brw2.aux_financial/invo_brw2.aux_qty)},context=context)
                 #~ print "paseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
                 return lista
 
