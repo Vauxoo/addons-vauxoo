@@ -41,6 +41,25 @@ res_currency_rate()
 
 class res_currency(osv.osv):
 
+    def _current_rate(self, cr, uid, ids, name, arg, context=None):
+        if context is None:
+            context = {}
+        res = {}
+        if 'date' in context:
+            date = context['date']
+        else:
+            date = time.strftime('%Y-%m-%d')
+        date = date or time.strftime('%Y-%m-%d')
+        for id in ids:
+            cr.execute("SELECT currency_id, rate FROM res_currency_rate WHERE currency_id = %s AND name <= %s ORDER BY name desc LIMIT 1" ,(id, date))
+            if cr.rowcount:
+                id, rate = cr.fetchall()[0]
+                res[id] = rate
+            else:
+                res[id] = 0
+        return res
+
+
     _inherit = "res.currency"
     _columns= {
         'rate': fields.function(_current_rate, method=True, string='Current Rate', digits_compute= dp.get_precision('Currency'), help='The rate of the currency to the currency of rate 1'),
