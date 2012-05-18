@@ -37,7 +37,6 @@ class inherited_invoice(osv.osv):
     _inherit = "account.invoice"
     _columns = {
             'profit_code': fields.integer("Code from profit", help="Invoice code from profit"),
-	    'date_invoice': fields.datetime("Date Invoice"),
         }
 
 inherited_invoice()
