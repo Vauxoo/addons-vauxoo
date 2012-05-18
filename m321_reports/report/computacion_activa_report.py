@@ -47,7 +47,7 @@ class m321_ca_report(report_sxw.rml_parse):
         if aux == 1:
             return res[1]
         if aux == 2:
-            return res[2]
+            return res[2][0:4]
             
     def _get_wh(self,obj):
         wh_ids = obj.tax_line
