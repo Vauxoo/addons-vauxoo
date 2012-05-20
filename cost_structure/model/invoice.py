@@ -48,6 +48,9 @@ class account_invoice(osv.osv):
     'cancel_check':fields.boolean('Cancel', help="Fenield to indicate if invoice was canceled "),
     }
     
+    _defaults = {
+    'cancel_check': False
+    }
     
     def action_number(self, cr, uid, ids, context=None):
         '''
