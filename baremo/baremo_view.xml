@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+<menuitem name="Salesman Commission" id="salesman_commission" sequence="10"/>
+    
+    <record model="ir.ui.view" id="view_baremo_form">
+        <field name="name">baremo.book.form</field>
+        <field name="model">baremo.book</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Baremos">
+                <field name="name"/>
+                <field name="bar_ids" mode='form' nolabel='True' colspan='6'>
+                    <form string='Dias de Emision y Sus Descuentos'>
+                        <field name='name'/>
+                        <field name='number'/>
+                        <field name='disc_ids' mode='tree' nolabel='True' colspan='6'>
+                            <tree string='Descuentos y Sus Comisiones'>
+                                <field name='porc_disc' />
+                                <field name='porc_com' />
+                            </tree>
+                        </field>
+                    </form>
+                </field>
+                <field name='notes' nolabel='True' colspan='6'/>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_baremo_tree">
+        <field name="name">baremo.book.tree</field>
+        <field name="model">baremo.book</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Baremos">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="commision_baremo_act">
+        <field name="name">Baremos</field>
+        <field name="res_model">baremo.book</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
+    <menuitem 
+    parent="salesman_commission" 
+    id="menu_baremos"
+    name="Baremos"/>
+    <menuitem 
+    parent="menu_baremos" 
+    id="menu_baremos_tree"
+    action="commision_baremo_act"/>
+    </data>
+</openerp>

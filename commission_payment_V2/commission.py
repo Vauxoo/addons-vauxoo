@@ -1,3 +1,25 @@
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2011 Vauxoo (<http://www.vauxoo.com>). All Rights Reserved
+#    hbto@vauxoo.com / humbertoarocha@gmail.com
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
 from osv import osv, fields
 import pooler
 import time
@@ -51,7 +73,7 @@ class commission_payment(osv.osv):
         'ret_notes': lambda *a: 'Las Facturas que se mencionan ya tienen un pago registrado, pero presentan problemas con una o mas de las retenciones que se indican en el cuadro, se ha tratado bajo los medios existentes de identificar cuales son los porcentajes de retenciones pero no ha sido posible, para generar la comision sobre el pago de las mismas, es necesario el conocimiento de estos valores, por lo que le increpamos a que contacte a sus asociados para obtener esta informacion, su falta no afectara el calculo de la comision pero retardara su ejecucion. Si considera que ha habido un error por favor hable sobre el tema con el personal Administrativo y de Sistemas para determinar las causas del mismo y encontrar una solucion. De otra forma haga caso omiso de este mensaje y su contenido',
     }
 
-    def prepare(self, cr, user, ids, context={}):
+    def prepare(self, cr, uid, ids, context=None):
         """
         Este metodo recorre los elementos de account_voucher y verifica al menos 
         tres (3) caracteristicas primordiales para continuar con los vouchers:
@@ -68,14 +90,14 @@ class commission_payment(osv.osv):
         
         
         @param cr: cursor to database
-        @param user: id of current user
+        @param uid: id of current user
         @param ids: list of record ids to be process
         @param context: context arguments, like lang, time zone
         
         @return: return a result
         """
         
-        self.write(cr, user, ids, {
+        self.write(cr, uid, ids, {
                 'state': 'open',
             })
         
@@ -99,6 +121,8 @@ class commission_payment(osv.osv):
         comm_invoice_ids = self.pool.get ('commission.invoice')
         comm_retention_ids = self.pool.get ('commission.retention')
         
+        list_price = 0.0
+        
         ## Retenciones
         # de IVA
         ret_iva_lines = self.pool.get ('account.wh.iva.line')
@@ -108,11 +132,11 @@ class commission_payment(osv.osv):
         ret_im_lines = self.pool.get ('account.wh.munici.line')
         
         #commissions = self.pool.get('commission.payment')
-        commissions = self.browse(cr, user, ids, context=None)
+        commissions = self.browse(cr, uid, ids, context=None)
         
         for commission in commissions:
             # Desvincular lineas existentes, si las hubiere
-            self.unlink(cr, user, ids, context=None)            
+            self._unlink(cr, uid, ids, context=None)            
             
             date_start = commission.date_start
             date_stop = commission.date_stop
@@ -129,38 +153,39 @@ class commission_payment(osv.osv):
             if not voucher_ids:
                 # En esta busqueda restringimos que el voucher se haya contabilizado y que 
                 # sea un cobro bancario y este dentro de la fecha estipulada
-                voucher_ids = vouchers.search(cr, user, [('state', '=', 'posted'), ('type', '=', 'receipt'),('date', '>=', date_start),('date', '<=', date_stop)])
+                voucher_ids = vouchers.search(cr, uid, [('state', '=', 'posted'), ('type', '=', 'receipt'),('date', '>=', date_start),('date', '<=', date_stop)])
                 
                 commission.write({
                                 'voucher_ids': [(6, commission.id, voucher_ids)],
                                 },context=None) 
-                                
+            
             for vid in voucher_ids:
-                    pay = vouchers.read(cr,user,vid,['name', 'date', 'amount', 'line_cr_ids','move_ids'],context=None)
-                    if len(pay['move_ids'])!=0 and len(pay['line_cr_ids'])!=0:
+                    pay = vouchers.read(cr,uid,vid,['name', 'date', 'amount', 'line_cr_ids','move_ids'],context=None)
+                    print 'pay: ',pay
+                    if pay['move_ids'] and pay['line_cr_ids']:
                         # Con la negacion de esta condicion se termina de realizar la revision de las lineas de pago que cumplen con las tres
                         # condiciones estipuladas inicialmente, ahora se debe proseguir con la revision de las lineas de pago
-                        print 'entre al if 1'
+                        
                         for pid in pay['line_cr_ids']:
-                            print 'entre al for 1',pid
-                            payment_brw = payments.browse(cr, user, pid, context=None)
+                            payment_brw = payments.browse(cr, uid, pid, context=None)
+                            print 'payment_brw',payment_brw.id
                             pay_line_vendor = payment_brw.partner_id.user_id and payment_brw.partner_id.user_id.id or False
+                            
                             if pay_line_vendor in user_ids:
-                                print 'entre al if 2'
                                 # Leer cada una de las lineas de los vouchers
-                                pay_line = payments.read(cr,user,pid,['name', 'invoice_id', 'amount', 'account_id', 'paid_comm'],context=None)
-                                
+                                pay_line = payments.read(cr,uid,pid,['name', 'invoice_id', 'amount', 'account_id', 'paid_comm'],context=None)
+                                print 'pay_line ',pay_line
                                 
                                 # Verificar si esta linea tiene factura y la comision del pago no se ha pagado
-                                if (pay_line['invoice_id']!=False and pay_line['paid_comm']==False):
-                                    print 'entre al if 3'
+                                if pay_line['invoice_id'] and not pay_line['paid_comm']:
+                                    print 'ENTRO EN DOS (2)'
                                     # Si esta aqui dentro es porque esta linea tiene una id valida de una factura.
                                     inv_id = pay_line['invoice_id'][0]
-                                    inv = invoices.read(cr,user,inv_id,['number', 'amount_untaxed', 'amount_total', 'invoice_line', 'date_invoice', 'partner_id'],context=None)
+                                    inv = invoices.read(cr,uid,inv_id,['number', 'amount_untaxed', 'amount_total', 'invoice_line', 'date_invoice', 'partner_id'],context=None)
                                     
                                     # Obtener % IVA 
-                                    perc_iva = round(((  inv['amount_total'] /  inv['amount_untaxed'])-1)*100,0)
-                                    #~ print 'perc_iva: ',perc_iva,'\n'
+                                    perc_IVA = round(((  inv['amount_total'] /  inv['amount_untaxed'])-1)*100,0)
+                                    print 'perc_IVA: ',perc_IVA,'\n'
                                     
                                     # Obtener el Valor de Porcentaje Retencion de esta factura
                                     
@@ -172,136 +197,114 @@ class commission_payment(osv.osv):
                                     no_ret_im = True
                                     
                                     if abs(inv['amount_total'] - pay_line['amount'])<= 1.0:
-                                        print 'entre al if 4'
-                                        perc_ret_iva = 0.0
-                                        perc_ret_islr = 0.0
-                                        perc_ret_im = 0.0
+                                        perc_Ret_IVA = 0.0
+                                        perc_Ret_ISLR = 0.0
+                                        perc_Ret_IM = 0.0
                                         no_ret_iva = False
                                         no_ret_islr = False
                                         no_ret_im = False
-                                    elif abs((inv['amount_untaxed']*(1+(perc_iva/100)*(1-75.0/100))) - pay_line['amount'])<= 1.0:
-                                        print 'entre al elif 1'
-                                        perc_ret_iva = 75.0
-                                        perc_ret_islr = 0.0
-                                        perc_ret_im = 0.0
+                                    elif abs((inv['amount_untaxed']*(1+(perc_IVA/100)*(1-75.0/100))) - pay_line['amount'])<= 1.0:
+                                        perc_Ret_IVA = 75.0
+                                        perc_Ret_ISLR = 0.0
+                                        perc_Ret_IM = 0.0
                                         no_ret_iva = False
                                         no_ret_islr = False
                                         no_ret_im = False
-                                    elif ret_iva_lines.search(cr, user, [('invoice_id', '=', inv_id)]):                                
-                                        print 'entre al elif 2'
-                                        lines_ret_iva = ret_iva_lines.search(cr, user, [('invoice_id', '=', inv_id)])
+                                    elif ret_iva_lines.search(cr, uid, [('invoice_id', '=', inv_id)]):                                
+                                        lines_ret_iva = ret_iva_lines.search(cr, uid, [('invoice_id', '=', inv_id)])
                                         for line in lines_ret_iva:
-                                            print 'entre al for 2'
-                                            perc_ret_iva = ret_iva_lines.browse(cr, user, line, context=None).wh_iva_rate
+                                            perc_Ret_IVA = ret_iva_lines.browse(cr, uid, line, context=None).wh_iva_rate
                                         no_ret_iva = False
 
-                                    if no_ret_islr == True and ret_islr_lines.search(cr, user, [('invoice_id', '=', inv_id)]):
-                                        print 'entre al if 5'
-                                        lines_ret_islr = ret_islr_lines.search(cr, user, [('invoice_id', '=', inv_id)])
-                                        perc_ret_islr = 0
+                                    if no_ret_islr == True and ret_islr_lines.search(cr, uid, [('invoice_id', '=', inv_id)]):
+                                        lines_ret_islr = ret_islr_lines.search(cr, uid, [('invoice_id', '=', inv_id)])
+                                        perc_Ret_ISLR = 0
                                         for line in lines_ret_islr:
-                                            print 'entre al for 3'
-                                            perc_ret_islr += ret_islr_lines.browse(cr, user, line, context=None).retencion_islr
+                                            perc_Ret_ISLR += ret_islr_lines.browse(cr, uid, line, context=None).retencion_islr
                                         no_ret_islr = False
                                         
-                                    if no_ret_im == True and ret_im_lines.search(cr, user, [('invoice_id', '=', inv_id)]):
-                                        print 'entre al if 6'
-                                        lines_ret_im = ret_im_lines.search(cr, user, [('invoice_id', '=', inv_id)])
-                                        perc_ret_im = 0
+                                    if no_ret_im == True and ret_im_lines.search(cr, uid, [('invoice_id', '=', inv_id)]):
+                                        lines_ret_im = ret_im_lines.search(cr, uid, [('invoice_id', '=', inv_id)])
+                                        perc_Ret_IM = 0
                                         for line in lines_ret_im:
-                                            print 'entre al for 4'
-                                            perc_ret_im += ret_im_lines.browse(cr, user, line, context=None).wh_loc_rate
+                                            perc_Ret_IM += ret_im_lines.browse(cr, uid, line, context=None).wh_loc_rate
                                         no_ret_im = False
                                     
-                                    # Tratando de obtener la perc_ret_iva cuando se tiene el valor de impuesto municipal 
+                                    # Tratando de obtener la perc_Ret_IVA cuando se tiene el valor de impuesto municipal 
                                     # y considerando que el islr es cero, como en el caso de las empresas que solo cargan un impuesto social
                                     
                                     if no_ret_im == False and no_ret_iva == True:
-                                        print 'entre al if 7'
                                         for valor in [0, 75.0, 100.0]:
-                                            print 'entre al for 5'
-                                            if abs((inv['amount_untaxed']*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_im/100.0))) - pay_line['amount'])<= 1.0:
-                                                print 'entre al if 8'
-                                                perc_ret_iva = valor
+                                            if abs((inv['amount_untaxed']*(1+(perc_IVA/100)*(1-valor/100.0)-(perc_Ret_IM/100.0))) - pay_line['amount'])<= 1.0:
+                                                perc_Ret_IVA = valor
                                                 no_ret_iva = False
                                     
-                                    # Tratando de obtener la perc_ret_iva cuando se tiene el valor de impuesto slr 
+                                    # Tratando de obtener la perc_Ret_IVA cuando se tiene el valor de impuesto slr 
                                     # y considerando que el im es cero, como en el caso de las empresas que solo cargan el islr y no el im
                                     
                                     if no_ret_islr == False and no_ret_iva == True:
-                                        print 'entre al if 9'
                                         for valor in [0, 75.0, 100.0]:
-                                            print 'entre al for 6'
-                                            if abs((inv['amount_untaxed']*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_islr/100.0))) - pay_line['amount'])<= 1.0:
-                                                perc_ret_iva = valor
+                                            if abs((inv['amount_untaxed']*(1+(perc_IVA/100)*(1-valor/100.0)-(perc_Ret_ISLR/100.0))) - pay_line['amount'])<= 1.0:
+                                                perc_Ret_IVA = valor
                                                 no_ret_iva = False
                                     
-                                    # Tratando de obtener la perc_ret_iva cuando se tienen tanto el islr como el im
+                                    # Tratando de obtener la perc_Ret_IVA cuando se tienen tanto el islr como el im
                                     
                                     if no_ret_islr == False and no_ret_im == False and no_ret_iva == True:
-                                        print 'entre al if 10'
                                         for valor in [0, 75.0, 100.0]:
-                                            print 'entre al for 7'
-                                            if abs((inv['amount_untaxed']*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_im/100.0)-(perc_ret_islr/100.0))) - pay_line['amount'])<= 1.0:
-                                                print 'entre al if 11'
-                                                perc_ret_iva = valor
+                                            if abs((inv['amount_untaxed']*(1+(perc_IVA/100)*(1-valor/100.0)-(perc_Ret_IM/100.0)-(perc_Ret_ISLR/100.0))) - pay_line['amount'])<= 1.0:
+                                                perc_Ret_IVA = valor
                                                 no_ret_iva = False
                                     
-                                    # Tratando de obtener el islr cuando se tienen tanto el perc_ret_iva como el im
+                                    # Tratando de obtener el islr cuando se tienen tanto el perc_Ret_IVA como el im
                                     if no_ret_islr == True and no_ret_im == False and no_ret_iva == False:
                                         for valor in [0, 2.0, 3.0, 5.0]:
-                                            if abs((inv['amount_untaxed']*(1+(perc_iva/100)*(1-perc_ret_iva/100.0)-(perc_ret_im/100.0)-(valor/100.0))) - pay_line['amount'])<= 1.0:
-                                                perc_ret_islr = valor
+                                            if abs((inv['amount_untaxed']*(1+(perc_IVA/100)*(1-perc_Ret_IVA/100.0)-(perc_Ret_IM/100.0)-(valor/100.0))) - pay_line['amount'])<= 1.0:
+                                                perc_Ret_ISLR = valor
                                                 no_ret_islr = False
                                                                     
                                     # Obtener el vendedor del partner
-                                    saleman = partner_ids.read(cr,user,inv['partner_id'][0],['user_id'],context=None)['user_id']
-                                    
+                                    saleman = partner_ids.read(cr,uid,inv['partner_id'][0],['user_id'],context=None)['user_id']
+                                    print 'SALEMAN (4) ', saleman
                                     # si ha sido posible calcular u obtener todas las retenciones por los medios convencionales
                                     # entonces se puede proceder con el calculo de retencion de las lineas, de lo contrario se 
                                     # genera una bitacora para que se obtengan las retenciones faltantes para proceder nuevament
                                     # con la preparacion de las comisiones.
+                                    #~ if saleman:
                                     if no_ret_islr == False and no_ret_im == False and no_ret_iva == False:
-                                        
+                                        print 'DENTRO DEL CALCULO PARA LAS RETENCIONES'
                                         # Revision de cada linea de factura (productos)
                                         for l_id in inv['invoice_line']:
                                             
                                             #Obtener valores de las lineas
-                                            inv_lin = invoice_lines.read(cr,user,l_id,['name', 'price_unit', 'price_subtotal', 'quantity', 'product_id'],context=None)
+                                            inv_lin = invoice_lines.read(cr,uid,l_id,['name', 'price_unit', 'price_subtotal', 'quantity', 'product_id'],context=None)
                                             
                                             #~ print 'Producto: ', inv_lin['name'], '\n'
                                             
                                             # Verificar si tiene producto asociado
                                             if inv_lin['product_id']:
-                                                
                                                 # Si esta aqui es porque hay un producto asociado
                                                 prod_id = inv_lin['product_id'][0]
-                                                print 'prod_id',prod_id
+                                                
                                                 # se obtienen las listas de precio, vienen ordenadas por defecto, de acuerdo al objeto
                                                 # product.historic de mayor a menor fecha
-                                                price_ids = prod_prices.search(cr, user, [('product_id', '=', prod_id)])
-                                                print 'price_ids',price_ids
+                                                price_ids = prod_prices.search(cr, uid, [('product_id', '=', prod_id)])
+                                                
                                                 # Buscar Precio Historico de Venta de este 
                                                 # producto @ la fecha de facturacion
                                                 no_price = True
-                                                
                                                 for price_id in price_ids:
-                                                    print "inv['date_invoice']",inv['date_invoice'] 
-                                                    print "prod_prices.browse(cr, user, price_id, context=None).name",prod_prices.browse(cr, user, price_id, context=None).name
-                                                    if inv['date_invoice'] >= prod_prices.browse(cr, user, price_id, context=None).name:
-                                                        print 'entreeeeeee en el if '
-                                                        list_price = prod_prices.browse(cr, user, price_id, context=None).price
-                                                        list_date = prod_prices.browse(cr, user, price_id, context=None).name
+                                                    if inv['date_invoice'] >= prod_prices.browse(cr, uid, price_id, context=None).name:
+                                                        list_price = prod_prices.browse(cr, uid, price_id, context=None).price
+                                                        list_date = prod_prices.browse(cr, uid, price_id, context=None).name
                                                         no_price = False
                                                         #~ print '[date_invoice : list_price : list_date]: [', inv['date_invoice'],' : ', list_price,' : ', list_date,'] \n' 
                                                         break
-                                                print 'no_price',no_price
-                                                if no_price == False:
-                                                    print 'entreeeeeeeee aquiiiiiiiii'
+                                                if no_price:
                                                     # Determinar cuanto fue el descuento en este producto en aquel momento de la venta
                                                     #~ if (inv_lin['price_subtotal']/inv_lin['quantity'])< inv_lin['price_unit']:
                                                     if abs((inv_lin['price_subtotal']/inv_lin['quantity']) - inv_lin['price_unit']) > 0.05:
-                                                        # con esto se asegura que no se esta pasando por alto el descuento en linea
+                                                        #~ # con esto se asegura que no se esta pasando por alto el descuento en linea
                                                         price_unit = round((inv_lin['price_subtotal']/inv_lin['quantity']),2)
                                                     else:
                                                         price_unit = inv_lin['price_unit']
@@ -309,7 +312,6 @@ class commission_payment(osv.osv):
                                                         dcto= round((list_price - price_unit)*100/list_price,1)
                                                     rate_item= 10.0/100
                                                     
-                                                                                                    
                                                     # Determinar dias entre la emision de la factura del producto y el pago del mismo
                                                     pay_date = mx.DateTime.strptime(pay['date'], '%Y-%m-%d')
                                                     inv_date = mx.DateTime.strptime(inv['date_invoice'], '%Y-%m-%d')
@@ -321,42 +323,10 @@ class commission_payment(osv.osv):
                                                     
                                                     # Esta busqueda devuelve los dias ordenadados de menor a mayor dia, de acuerdo
                                                     # con lo estipulado que se ordenaria en el modulo baremo
-                                                    bar_day_ids = commission.bar_id.bar_ids 
+                                                    bid = 1
+                                                    print 'bid',bid
+                                                    comm_res = self.pool.get('baremo.book')._calc_comm(cr, uid, bid, rate_item, emission_days)
                                                     
-                                                    no_days = True
-                                                    no_dcto = True
-                                                    for day_id in bar_day_ids:
-                                                        # Se busca que el baremo tenga un rango que cubra a emision_days
-                                                        if emission_days <= day_id.number:
-                                                            bar_day = day_id.number
-                                                            no_days = False
-                                                            no_dcto = True
-                                                            for dcto_id in day_id.disc_ids:
-                                                                # Se busca que el baremo tenga un rango para el valor de descuento en producto
-                                                                if (dcto - dcto_id.porc_disc) <= 0.01:
-                                                                    bar_dcto_disc = dcto_id.porc_disc
-                                                                    if bar_dcto_disc == 0.0:
-                                                                        # cuando el descuento en baremo es cero (0) no aparece reflejado,
-                                                                        # forzamos a que sea un cero (0) string.
-                                                                        bar_dcto_disc = 0.0
-                                                                    bar_dcto_comm = dcto_id.porc_com
-                                                                    no_dcto = False
-                                                                    break
-                                                            break
-                                                    
-                                                    if no_days == False and no_dcto == True:
-                                                            bar_dcto_comm = 0.0
-                                                            bar_dcto_disc  = 0.0
-                                                    
-                                                    # Si emission_days no es cubierto por ningun rango del baremo
-                                                    # diremos entonces que la comision es cero (0) %
-                                                    elif no_days == True and no_dcto == True:
-                                                        # Diremos que los dias de baremo es menos uno (-1) cuando los dias de emision
-                                                        # no esten dentro del rango del baremo
-                                                        bar_day= 'N/A'
-                                                        bar_dcto_disc  = 0.0
-                                                        bar_dcto_comm = 0.0
-
                                                     #############################################
                                                     # CALCULO DE COMISION POR LINEA DE PRODUCTO #
                                                     #############################################
@@ -369,15 +339,14 @@ class commission_payment(osv.osv):
                                                     ## 
                                                     
                                                     PenBxLinea = pay_line['amount']*(inv_lin['price_subtotal']/inv['amount_untaxed'])
-                                                    Fact_Sup = 1 - perc_ret_islr/100 - perc_ret_im/100
-                                                    Fact_Inf = 1 + (perc_iva/100) * (1 - perc_ret_iva/100) - perc_ret_islr/100 - perc_ret_im/100
+                                                    #~ Fact_Sup = 1 - perc_Ret_ISLR/100 - perc_Ret_IM/100
+                                                    #~ Fact_Inf = 1 + (perc_IVA/100) * (1 - perc_Ret_IVA/100) - perc_Ret_ISLR/100 - perc_Ret_IM/100
                                                     
-                                                    comm_line =  PenBxLinea * Fact_Sup * (bar_dcto_comm / 100) / Fact_Inf
+                                                    #~ comm_line =  PenBxLinea * Fact_Sup * (bar_dcto_comm / 100) / Fact_Inf
+                                                    comm_line =  PenBxLinea * (comm_res['rate_comm'] / 100)
+                                                    #~ comm_line =  PenBxLinea * (bar_dcto_comm / 100)
                                                     # Generar las lineas de comision por cada producto
-                                                    
-                                                    print 'holaaaaaaaaaaaaaa'
-                                                    
-                                                    aux= {
+                                                    comm_line_ids.create(cr, uid,{
                                                         'commission_id': commission.id,
                                                         'voucher_id': vid,
                                                         'name':  pay['name'] and pay['name'] or '/', 
@@ -391,65 +360,30 @@ class commission_payment(osv.osv):
                                                         'saleman_id': saleman[0] ,
                                                         'pay_inv': pay_line['amount'], 
                                                         'inv_date': inv['date_invoice'],
-                                                        'days': emission_days,
+                                                        'days': emission_days and emission_days or 0.0,
                                                         'inv_subtotal': inv['amount_untaxed'],
                                                         'item': inv_lin['name'],
-                                                        'price_unit':  price_unit, 
+                                                        #~ 'price_unit':  price_unit, 
                                                         'price_subtotal':  inv_lin['price_subtotal'], 
-                                                        'price_list':  list_price, 
-                                                        'price_date': list_date ,
-                                                        'perc_ret_islr' : perc_ret_islr,
-                                                        'perc_ret_im' : perc_ret_im,
-                                                        'perc_ret_iva' : perc_ret_iva,
-                                                        'perc_iva' : perc_iva,
-                                                        'rate_item': rate_item, 
-                                                        'rate_number': bar_dcto_disc,
-                                                        'timespan': bar_day,
-                                                        'baremo_comm': bar_dcto_comm,
-                                                        'commission': comm_line,
-                                                    }
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    comm_line_ids.create(cr, user,{
-                                                        'commission_id': commission.id,
-                                                        'voucher_id': vid,
-                                                        'name':  pay['name'] and pay['name'] or '/', 
-                                                        'pay_date': pay['date'], 
-                                                        'pay_off': pay['amount'], 
-                                                        'concept': pid  ,
-                                                        'invoice_id': pay_line['invoice_id'][0] ,
-                                                        'invoice_num':  inv['number'],
-                                                        'partner_id': inv['partner_id'][0] ,
-                                                        'saleman_name': saleman[1] ,
-                                                        'saleman_id': saleman[0] ,
-                                                        'pay_inv': pay_line['amount'], 
-                                                        'inv_date': inv['date_invoice'],
-                                                        'days': emission_days,
-                                                        'inv_subtotal': inv['amount_untaxed'],
-                                                        'item': inv_lin['name'],
-                                                        'price_unit':  price_unit, 
-                                                        'price_subtotal':  inv_lin['price_subtotal'], 
-                                                        'price_list':  list_price, 
-                                                        'price_date': list_date ,
-                                                        'perc_ret_islr' : perc_ret_islr,
-                                                        'perc_ret_im' : perc_ret_im,
-                                                        'perc_ret_iva' : perc_ret_iva,
-                                                        'perc_iva' : perc_iva,
-                                                        'rate_item': rate_item, 
-                                                        'rate_number': bar_dcto_disc,
-                                                        'timespan': bar_day,
-                                                        'baremo_comm': bar_dcto_comm,
-                                                        'commission': comm_line,
-                                                    },context=None)
-
+                                                        #~ 'price_list':  list_price, 
+                                                        #~ 'price_date': list_date ,
+                                                        #~ 'perc_Ret_ISLR' : perc_Ret_ISLR,
+                                                        #~ 'perc_Ret_IM' : perc_Ret_IM,
+                                                        #~ 'perc_Ret_IVA' : perc_Ret_IVA,
+                                                        #~ 'perc_IVA' : perc_IVA,
+                                                        'rate_item': rate_item and rate_item or 0.0, 
+                                                        'rate_number': comm_res['rate_number'] and comm_res['rate_number'] or 0.0,
+                                                        'timespan': comm_res['timespan'] and comm_res['timespan']  or 0.0,
+                                                        'baremo_comm': comm_res['rate_comm'] and comm_res['rate_comm'] or 0.0,
+                                                        'commission': comm_line and comm_line or 0.0,
+                                                    },context=None) 
+                                                    print 'CREANDO LINEAS DE COMISIONES (5)'
                                                 else:
                                                     # Se genera un lista de tuplas con las lineas, productos y sus correspondientes fechas
                                                     # en las cuales no aparece precio de lista, luego al final se escriben los
                                                     # valores en la correspondiente bitacora para su inspeccion.
                                                     #~ print 'No hubo precio de lista para la fecha estipulada, hay que generar el precio en este producto \n'
-                                                    noprice_ids.create(cr, user,{
+                                                    noprice_ids.create(cr, uid,{
                                                         'commission_id': commission.id,
                                                         'product_id': prod_id,
                                                         'date': inv['date_invoice'],
@@ -460,15 +394,16 @@ class commission_payment(osv.osv):
                                                 # sobre esta parte no llego a un acuerdo de si se podria permitir al operador cambiar las lineas
                                                 # de la factura puesto que es un asunto muy delicado.
                                                 pass
-                                                sale_noids.create(cr, user,{
+                                                sale_noids.create(cr, uid,{
                                                     'commission_id' :   commission.id,
                                                     'inv_line_id'   :   l_id,
                                                 },context=None)  
                                     else:
+                                        print 'ENTRO EN EL CREATE (3)'
                                         # generar campo y vista donde se han de cargar las facturas que tienen problemas
                                         # se debe grabar los tres campos de las retenciones y el numero de la factura para 
                                         # tener detalles concisos y porcion de voucher de pago de la factura en cuestion
-                                        comm_retention_ids.create(cr, user,{
+                                        comm_retention_ids.create(cr, uid,{
                                             'commission_id' :   commission.id,
                                             'invoice_id': pay_line['invoice_id'][0],
                                             'voucher_id':vid,
@@ -483,8 +418,8 @@ class commission_payment(osv.osv):
                                     # asociada para su correccion si aplica. tampoco se ha pagado la comision del mismo
                                     # solo se incluiran pagos que sean de cuentas cobrables, puesto que las de otra naturaleza,
                                     # no tienen sentido mostrarlas aqui.
-                                    if accounts.read(cr, user, pay_line['account_id'][0],['type'], context=None)['type']== 'receivable':
-                                        uninvoiced_pays.create(cr, user,{
+                                    if accounts.read(cr, uid, pay_line['account_id'][0],['type'], context=None)['type']== 'receivable':
+                                        uninvoiced_pays.create(cr, uid,{
                                             'commission_id' :   commission.id,
                                             'payment_id'    :   pid,
                                         },context=None)
@@ -495,62 +430,59 @@ class commission_payment(osv.osv):
         # habiendo recorrido todos los vouchers, mostrado todos los elementos que necesitan correccion
         # se procede a agrupar las comisiones por vendedor para mayor facilidad de uso
         
-        # comm_line_ids.unlink(cr, user, [line_ids.id for line_ids in commission.comm_line_ids])
+        # comm_line_ids.unlink(cr, uid, [line_ids.id for line_ids in commission.comm_line_ids])
         
         # recargando las lineas que se han creado
-        commissions = self.browse(cr, user, ids, context=None)
+        commissions = self.browse(cr, uid, ids, context=None)
         saleman_ids = self.pool.get ('commission.saleman')
         comm_voucher_ids = self.pool.get ('commission.voucher')
         comm_retention_ids = self.pool.get ('commission.retention')
         #~ print 'antes de calcular totales\n'
         
         for commission in commissions:
-            
-            print 'for commission',commission.comm_line_ids
-            # recoge todos los vendedores y suma el total de sus comisiones
+            #~ # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
-            # ordena en un arbol todas las lineas de comisiones de producto
+            #~ # ordena en un arbol todas las lineas de comisiones de producto
             criba = {}
             for comm_line in commission.comm_line_ids:
-                print 'entre al for'
+#~ 
                 vendor_id = comm_line.saleman_id.id
                 voucher_id = comm_line.voucher_id.id
                 invoice_id = comm_line.invoice_id.id
                 comm_line_id = comm_line.id
-                
+                #~ 
                 if not vendor_id in sale_comm.keys():
                     sale_comm[vendor_id]=[comm_line.saleman_name, 0.0]
                 sale_comm[vendor_id][1] += comm_line.commission
-                
+                #~ 
                 if not vendor_id in criba.keys():
                      criba[vendor_id] = {}
-                     
-                if not voucher_id in criba[vendor_id].keys():
-                     criba[vendor_id][voucher_id] = [comm_line.pay_date,{}]
-                     
-                if not invoice_id in criba[vendor_id][voucher_id][1].keys():
-                     criba[vendor_id][voucher_id][1][invoice_id] = {}
-                     
-                if len(criba[vendor_id][voucher_id][1][invoice_id])==0:
-                     criba[vendor_id][voucher_id][1][invoice_id]=[[], comm_line.pay_inv, comm_line.perc_ret_iva, comm_line.perc_ret_islr, comm_line.perc_ret_im]
-                
-                criba[vendor_id][voucher_id][1][invoice_id][0].append(comm_line_id)
-
-            ## escribir el total para cada vendedor encontrado
+                     #~ 
+                #~ if not voucher_id in criba[vendor_id].keys():
+                     #~ criba[vendor_id][voucher_id] = [comm_line.pay_date,{}]
+                     #~ 
+                #~ if not invoice_id in criba[vendor_id][voucher_id][1].keys():
+                     #~ criba[vendor_id][voucher_id][1][invoice_id] = {}
+                     #~ 
+                #~ if len(criba[vendor_id][voucher_id][1][invoice_id])==0:
+                     #~ criba[vendor_id][voucher_id][1][invoice_id]=[[], comm_line.pay_inv, comm_line.perc_Ret_IVA, comm_line.perc_Ret_ISLR, comm_line.perc_Ret_IM]
+                #~ 
+                #~ criba[vendor_id][voucher_id][1][invoice_id][0].append(comm_line_id)
+#~ 
+            #~ ## escribir el total para cada vendedor encontrado
             total_comm = 0
             for vendor_key in criba.keys():
-                print 'fooooooooor'
-                vendor_id = saleman_ids.create(cr, user,{
+                vendor_id = saleman_ids.create(cr, uid,{
                     'commission_id': commission.id,
                     'saleman_id': vendor_key,
                     'saleman_name':  sale_comm[vendor_key][0],
                     'comm_total': sale_comm[vendor_key][1],
                 }, context=None)
-
+#~ 
                 total_comm += sale_comm[vendor_key][1]
-
+#~ 
                 for voucher_key in criba[vendor_key].keys():
-                    voucher_id = comm_voucher_ids.create(cr, user,{
+                    voucher_id = comm_voucher_ids.create(cr, uid,{
                         'commission_id': commission.id,
                         'comm_sale_id': vendor_id,
                         'voucher_id':  voucher_key,
@@ -558,7 +490,7 @@ class commission_payment(osv.osv):
                     }, context=None)
                         
                     for inv_key in criba[vendor_key][voucher_key][1].keys():
-                        invoice_id = comm_invoice_ids.create(cr, user,{
+                        invoice_id = comm_invoice_ids.create(cr, uid,{
                             'commission_id': commission.id,
                             'comm_voucher_id': voucher_id,
                             'invoice_id':  inv_key,
@@ -569,47 +501,49 @@ class commission_payment(osv.osv):
                         }, context=None)
                         
                         for id in criba[vendor_key][voucher_key][1][inv_key][0]:
-                            comm_line_ids.write(cr, user, id, {
+                            comm_line_ids.write(cr, uid, id, {
                                 'comm_invoice_id': invoice_id,
                             }, context=None)
-            
-            self.write(cr, user, ids, {
+            #~ 
+            self.write(cr, uid, ids, {
                 'total_comm': total_comm,
             })
-        result = None
+        #~ 
+        result = True
         return result
 
-    def pre_process(self, cr, user, ids, context={}):
-        commissions = self.browse(cr, user, ids, context=None)
+    def pre_process(self, cr, uid, ids, context={}):
+        commissions = self.browse(cr, uid, ids, context=None)
         for commission in commissions:
-            self.prepare(cr, user, ids, context=None)
+            self.prepare(cr, uid, ids, context=None)
             
             if commission.comm_line_ids:
-                self.write(cr, user, ids, {
+                self.write(cr, uid, ids, {
                         'state': 'decide',
                     })
             else:
                 raise osv.except_osv(_('Atencion !'), _('No Existen Lineas de Comision x Producto que procesar !!!'))
             
-            if not commission.noprice_ids:
-                self.write(cr, user, ids, {
-                        'state': 'decide',
-                    })
-            else:
-                raise osv.except_osv(_('Atencion !'), _('Debe primero solucionar el asunto de los Productos sin Listas de Precio \npara las fechas especificadas antes de continuar'))
-            
+            #~ if not commission.noprice_ids:
+                #~ self.write(cr, uid, ids, {
+                        #~ 'state': 'decide',
+                    #~ })
+            #~ else:
+                #~ raise osv.except_osv(_('Atencion !'), _('Debe primero solucionar el asunto de los Productos sin Listas de Precio \npara las fechas especificadas antes de continuar'))
+            #~ 
     
-    def delete(self, cr, user, ids, context={}):
-        commissions = self.browse(cr, user, ids, context=None)
+    def delete(self, cr, uid, ids, context={}):
+        commissions = self.browse(cr, uid, ids, context=None)
         
         for commission in commissions:
-            self.unlink(cr, user, ids, context=None)
-            self.write(cr, user, ids, {
+            self._unlink(cr, uid, ids, context=None)
+            self.write(cr, uid, ids, {
                         'state': 'draft',
                         'total_comm':None,
                     })
-    
-    def unlink(self, cr, user, ids, context={}):
+        return True
+        
+    def _unlink(self, cr, uid, ids, context={}):
         
         uninvoiced_pays = self.pool.get ('commission.uninvoiced')
         sale_noids = self.pool.get ('commission.sale.noid')
@@ -621,46 +555,46 @@ class commission_payment(osv.osv):
         comm_invoice_ids = self.pool.get ('commission.invoice')
         comm_retention_ids = self.pool.get ('commission.retention')
                 
-        commissions = self.browse(cr, user, ids, context=None)
+        commissions = self.browse(cr, uid, ids, context=None)
         
         for commission in commissions:
             ###
             # Desvincular todos los elementos que esten conectados a este calculo de comisiones
             # * Desvinculando los pagos sin facturas
-            uninvoiced_pays.unlink(cr, user, [line.id for line in commission.uninvoiced_ids])
+            #~ uninvoiced_pays.unlink(cr, uid, [line.id for line in commission.uninvoiced_ids])
             # * Desvinculando los articulos sin id
-            sale_noids.unlink(cr, user, [line.id for line in commission.sale_noids])
+            #~ sale_noids.unlink(cr, uid, [line.id for line in commission.sale_noids])
             # * Desvinculando los productos sin fecha
-            noprice_ids.unlink(cr, user, [line.id for line in commission.noprice_ids])
+            #~ noprice_ids.unlink(cr, uid, [line.id for line in commission.noprice_ids])
             # * Desvinculando las lineas de comisiones
-            comm_line_ids.unlink(cr, user, [line.id for line in commission.comm_line_ids])
+            comm_line_ids.unlink(cr, uid, [line.id for line in commission.comm_line_ids])
             # * Desvinculando los totales por vendedor
-            saleman_ids.unlink(cr, user, [line.id for line in commission.saleman_ids])
+            saleman_ids.unlink(cr, uid, [line.id for line in commission.saleman_ids])
             # * Desvinculando los vendedores
-            #~ users_ids.unlink(cr, user, [line.id for line in commission.users_ids])
+            #~ users_ids.unlink(cr, uid, [line.id for line in commission.users_ids])
             # * Desvinculando los vouchers afectados
-            comm_voucher_ids.unlink(cr, user, [line.id for line in commission.comm_voucher_ids])
+            #~ comm_voucher_ids.unlink(cr, uid, [line.id for line in commission.comm_voucher_ids])
             # * Desvinculando los vouchers afectados
-            comm_invoice_ids.unlink(cr, user, [line.id for line in commission.comm_invoice_ids])
+            #~ comm_invoice_ids.unlink(cr, uid, [line.id for line in commission.comm_invoice_ids])
             # * Desvinculando las facturas con problemas de retenciones
-            comm_retention_ids.unlink(cr, user, [line.id for line in commission.comm_retention_ids])
+            #~ comm_retention_ids.unlink(cr, uid, [line.id for line in commission.comm_retention_ids])
             ###
             
-    def decide(self, cr, user, ids, context={}):
-        commissions = self.browse(cr, user, ids, context=None)
+    def decide(self, cr, uid, ids, context={}):
+        commissions = self.browse(cr, uid, ids, context=None)
         avl = self.pool.get('account.voucher.line')
         # escribir en el avl el estado buleano de paid_comm a True para indicar que ya esta comision se esta pagando
         for commission in commissions:
-            avl.write(cr, user, [line.concept.id for line in commission.comm_line_ids],{
+            avl.write(cr, uid, [line.concept.id for line in commission.comm_line_ids],{
                 'paid_comm': True,
             })
             
-        self.write(cr, user, ids, {
+        self.write(cr, uid, ids, {
             'state': 'done',
         })
     
-    def going_back(self, cr, user, ids, context={}):
-        self.write(cr, user, ids, {
+    def going_back(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {
                 'state': 'open',
             })
             
@@ -757,10 +691,11 @@ class commission_lines(osv.osv):
         'price_list': fields.float('Precio Lista', digits_compute=dp.get_precision('Commission')),
         'price_date': fields.date('Fecha Lista'),
         
-        'perc_ret_islr': fields.float('Ret ISLR (%)', digits_compute=dp.get_precision('Commission')),
-        'perc_ret_im': fields.float('Ret IM (%)', digits_compute=dp.get_precision('Commission')),
-        'perc_ret_iva': fields.float('Ret IVA (%)', digits_compute=dp.get_precision('Commission')),
-        'perc_iva': fields.float('IVA (%)', digits_compute=dp.get_precision('Commission')),
+        
+        #~ 'perc_Ret_ISLR': fields.float('Ret ISLR (%)', digits_compute=dp.get_precision('Commission')),
+        #~ 'perc_Ret_IM': fields.float('Ret IM (%)', digits_compute=dp.get_precision('Commission')),
+        #~ 'perc_Ret_IVA': fields.float('Ret IVA (%)', digits_compute=dp.get_precision('Commission')),
+        #~ 'perc_IVA': fields.float('IVA (%)', digits_compute=dp.get_precision('Commission')),
         
         'rate_item':fields.float('Dcto. (%)', digits_compute=dp.get_precision('Commission')),
         
@@ -769,7 +704,6 @@ class commission_lines(osv.osv):
         'baremo_comm':fields.float('Baremo %Comm.', digits_compute=dp.get_precision('Commission')),
         'commission':fields.float('Comm. / Item', digits_compute=dp.get_precision('Commission')),
     }
-    
     _defaults = {
         'name': lambda *a: None,
     }

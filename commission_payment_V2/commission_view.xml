@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <openerp>
     <data>
-<!-- Salesman Commission Main Menu-->
- <menuitem name="Pago de Comisiones" id="menu_commission_payment"  parent="baremo.salesman_commission" sequence="12"/>
+        
+        
+    <menuitem
+        id="commission" 
+        name="Salesmen Commissions" 
+        parent="base.menu_base_partner" 
+        groups="base.group_sale_manager"
+        sequence="10"
+        />
+
         <!-- View FORM Creation for the object salesman.commission.payment-->
         <record model="ir.ui.view" id="commission_payment_form">
             <field name="name">commission.payment.form</field>
@@ -33,24 +41,23 @@
                                 </tree>
                             </field>
                             
-                            <group col="3" colspan="2">
-                                <group col="1" colspan="1">
-                                    <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
-                                </group>
+                            <group col="2" colspan="2">
                                 <hpaned/>
                                 <group col="1" colspan="1">
+                                    <button icon="STOCK_OK" name="prepare" states="draft,open" string="Preparar" type="object"/>
                                     <button icon="STOCK_OK" name="pre_process" states="open" string="Creo que esto es lo que quiero" type="object"/>
                                     <button icon="STOCK_OK" name="decide" states="decide" string="Realmente esto es lo que deseo" type="object"/>
                                     <button icon="STOCK_OK" name="going_back" states="decide" string="Todavia No! Me falta algo" type="object"/>
                                     <button icon="STOCK_OK" name="delete" states="open,decide" string="Comenzar de Nuevo" type="object"/>
-                                    <button icon="gtk-print" name="606" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
-                                    <button icon="gtk-print" name="606" states="done" string="Imprimir Comisiones" type="action"/>
+                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
+                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
                                 </group>
                             </group>
                         </page>
                         
                         <page string="Vouchers">
-                            <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/><field domain="[('state', '=', 'posted'), ('type', '=', 'bank_rec_voucher'),('date', '&gt;=', date_start),('date', '&lt;=', date_stop)]" name="voucher_ids" nolabel="1">
+                            <label align="0.0" string="Seleccione los vouchers sobre los cuales desea calcular comisiones. Deje en blanco para que se autorellene con los parametros introducidos en Datos. Si selecciona un Voucher solo se haran los calculos sobre este unicamente. Puede editarse mientras este en Estado: INICIAL y EN PROCESO"/>
+                            <field domain="[('state', '=', 'posted'), ('type', '=', 'bank_rec_voucher'),('date', '&gt;=', date_start),('date', '&lt;=', date_stop)]" name="voucher_ids" nolabel="1">
                                 <tree>
                                     <field name="name"/>
                                     <field name="date"/>
@@ -69,6 +76,7 @@
                         <page string="Comisiones x Producto">
                             <field name="comm_line_ids" nolabel="1" mode="tree,graph" widget="one2many_list" colspan="4"/>
                         </page>
+
                         <page string="Facturas Afectadas">
                             <field name="comm_invoice_ids" nolabel="1">
                                 <tree string="Este es un listado de todas las facturas afectadas en este calculo de comisiones">
@@ -76,6 +84,8 @@
                                 </tree>
                             </field>
                         </page>
+
+
                         <page string="Trans. Afectadas">
                             <field name="comm_voucher_ids" nolabel="1">
                                 <tree string="Este es un listado de todas las operaciones mercantiles involucradas en este calculo de comisiones">
@@ -84,6 +94,8 @@
                                 </tree>
                             </field>
                         </page>
+
+
                         <page string="Transacciones sin Factura">
                             <field colspan="6" name="uninvoiced_ids" nolabel="1">
                                 <tree string="Esta es una lista de las transacciones bancarias que se deben asociar a una factura para dar completo procesamiento al pago en cuestion">
@@ -91,6 +103,8 @@
                                 </tree>
                             </field>
                         </page>
+
+
                         <page string="Fact. con Ret. en Duda">
                             <field name="comm_retention_ids" nolabel="1">
                                 <tree string="En la lista se muestra cual posiblemente sea el problema. [Si]: posible problema [No]: No es el problema">
@@ -102,8 +116,11 @@
                                     <field name="ret_im"/>
                                 </tree>
                             </field>
+
                             <field colspan="6" name="ret_notes" nolabel="1"/>
                         </page>
+
+
                         <page string="Prod. sin Lista de Precio">
                             <field name="noprice_ids" nolabel="1">
                                 <tree string="Por favor, dirijase al producto en cuestion y en la seccion Precio Historico inserte una fecha y precio de venta">
@@ -113,6 +130,8 @@
                                 </tree>
                             </field>
                         </page>
+
+
                         <page string="Articulos sin asociar">
                             <field name="sale_noids" nolabel="1">
                                 <tree string="Aqui no deberia aparecer producto alguno, el problema presente aqui se ha suscitado al momento de facturar">
@@ -120,6 +139,7 @@
                                 </tree>
                             </field>
                         </page>
+
                     </notebook>
 
                 </form>
@@ -153,28 +173,13 @@
 
         <!-- Creating a menu to use the action sales_commission_payment_all_act -->
 
-        <menuitem 
-            name="Todas las comisiones"
+        <menuitem
+            name="Commissions"
             id="commission_all_mi" 
             action="commission_payment_all_act"
             icon="terp-project"
-            parent="menu_commission_payment" />
+            parent="commission"/>
 
-         Creating a menu to open the View FORM of the object salesman.commission.payment 
-        <record model="ir.actions.act_window" id="commission_payment_new_act">
-            <field name="name">Crear Nueva Comision</field>
-            <field name="res_model">commission.payment</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form,tree</field>
-        </record>
-
-         Creating a menu to use the action sales_commission_payment_new_act 
-        <menuitem 
-            name="Crear Nueva Comision"
-            id="commission_payment_new_mi" 
-            action="commission_payment_new_act" 
-            parent="commission_all_mi"/>
-            
         <record model="ir.ui.view" id="commission_saleman_graph">
             <field name="name">commission.saleman.graph</field>
             <field name="model">commission.saleman</field>
@@ -228,8 +233,8 @@
             <field name="model">commission.lines</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Aqui se muestran todos los productos y sus respectivas comisiones">
-                                        <field name="name"/>
+                <tree string="Commissions by products">
+                    <field name="name"/>
                     <field name="pay_date"/>
                     <field name="pay_off"/>
                     <field name="concept"/>
@@ -249,10 +254,12 @@
                     <field name="rate_number"/>
                     <field name="timespan"/>
                     <field name="baremo_comm"/>
-                    <field name="perc_iva"/>
+<!--
+                    <field name="perc_IVA"/>
                     <field name="perc_Ret_IVA"/>
-                    <field name="perc_ret_im"/>
-                    <field name="perc_ret_islr"/>
+                    <field name="perc_Ret_IM"/>
+                    <field name="perc_Ret_ISLR"/>
+-->
                     <field name="commission"/>
                 </tree>
             </field>
@@ -263,12 +270,26 @@
             <field name="model">commission.lines</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Pago de Comisiones">
+                <form string="Commission Lines">
                     <field name="saleman_id"/>
                     <field name="item"/>
                     <field name="commission"/>
                 </form>
             </field>
         </record>
+
+        <record model="ir.actions.act_window" id="commission_lines_act">
+            <field name="name">Commission Lines</field>
+            <field name="res_model">commission.lines</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem 
+            name="Commission Lines"
+            id="commission_lines_mi" 
+            action="commission_lines_act" 
+            parent="commission"/>
+
     </data>
 </openerp>
