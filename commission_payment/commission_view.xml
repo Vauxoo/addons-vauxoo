@@ -250,7 +250,7 @@
                     <field name="timespan"/>
                     <field name="baremo_comm"/>
                     <field name="perc_iva"/>
-                    <field name="perc_Ret_IVA"/>
+                    <field name="perc_ret_iva"/>
                     <field name="perc_ret_im"/>
                     <field name="perc_ret_islr"/>
                     <field name="commission"/>
