@@ -68,14 +68,14 @@ class product_product(osv.osv):
     'prom_om': fields.related('property_cost_structure', 'prom_om',relation='product.uom', type='many2one', string='UOM Prom'),
     'ant_om': fields.related('property_cost_structure', 'ant_om', relation='product.uom', type='many2one', string='UOM Ant'),
     'cost_to_price': fields.related('property_cost_structure', 'cost_to_price', type='selection', string='Average Cost'),
-    'date_cost_ult': fields.related('property_cost_structure', 'date_cost_ult', type='date', string='Date'),
-    'date_ult_om': fields.related('property_cost_structure', 'date_ult_om', type='date', string='Date'),
-    'date_cost_prom': fields.related('property_cost_structure', 'date_cost_prom', type='date', string='Date'),
-    'date_prom_om': fields.related('property_cost_structure', 'date_prom_om', type='date', string='Date'),
-    'date_cost_suppler': fields.related('property_cost_structure', 'date_cost_suppler', type='date', string='Date'),
-    'date_ant_om': fields.related('property_cost_structure', 'date_ant_om', type='date', string='Date'),
-    'date_cost_ant': fields.related('property_cost_structure', 'date_cost_ant', type='date', string='Date'),
-    'date_cost_to_price': fields.related('property_cost_structure', 'date_cost_to_price', type='date', string='Date'),
+    'date_cost_ult': fields.related('property_cost_structure', 'date_cost_ult', type='datetime', string='Date'),
+    'date_ult_om': fields.related('property_cost_structure', 'date_ult_om', type='datetime', string='Date'),
+    'date_cost_prom': fields.related('property_cost_structure', 'date_cost_prom', type='datetime', string='Date'),
+    'date_prom_om': fields.related('property_cost_structure', 'date_prom_om', type='datetime', string='Date'),
+    'date_cost_suppler': fields.related('property_cost_structure', 'date_cost_suppler', type='datetime', string='Date'),
+    'date_ant_om': fields.related('property_cost_structure', 'date_ant_om', type='datetime', string='Date'),
+    'date_cost_ant': fields.related('property_cost_structure', 'date_cost_ant', type='datetime', string='Date'),
+    'date_cost_to_price': fields.related('property_cost_structure', 'date_cost_to_price', type='datetime', string='Date'),
     'method_cost_ids': fields.related('property_cost_structure', 'method_cost_ids',relation='method.price', type='one2many', string='Method Cost',),
     'status_bool':fields.function(_structur_cost_status, method=True,type="boolean",store=True, string='Status Price'),
     }
@@ -87,7 +87,7 @@ class product_product(osv.osv):
             raise osv.except_osv(_('Error'), _('The product already has a cost structure'))
         
         method_obj = self.pool.get('method.price')
-        
+        method_id = []
         if vals.get('property_cost_structure',False):
             if vals.get('method_cost_ids',False):
                 for i in vals.get('method_cost_ids'):
@@ -95,8 +95,10 @@ class product_product(osv.osv):
                         pass
                     else:
                         i[2].update({'cost_structure_id':vals.get('property_cost_structure',False) or []})
-                        method_obj.create(cr,uid,i[2],context=context)
-                'method_cost_ids' in vals  and vals.pop('method_cost_ids')
+                        print "i[2]",i[2]
+                        method_id =method_obj.create(cr,uid,i[2],context=context)
+                
+                method_id and 'method_cost_ids' in vals  and vals.pop('method_cost_ids')
             else:
                 'method_cost_ids' in vals and not vals['method_cost_ids'] and vals.pop('method_cost_ids')
         
@@ -107,8 +109,10 @@ class product_product(osv.osv):
                         pass
                     else:
                         i[2].update({'cost_structure_id':product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id or []})
-                        method_obj.create(cr,uid,i[2],context=context)
-                'method_cost_ids' in vals  and vals.pop('method_cost_ids')
+                        print "i[2]2222",i[2]
+                        method_id = method_obj.create(cr,uid,i[2],context=context)
+                
+                method_id and 'method_cost_ids' in vals  and vals.pop('method_cost_ids')
                         
             
             else:

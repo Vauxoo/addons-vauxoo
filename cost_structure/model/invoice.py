@@ -78,10 +78,11 @@ class account_invoice(osv.osv):
         cost_comp_obj = self.pool.get('compute.cost')
         product_obj = self.pool.get('product.product')
         product_ids = product_obj.search(cr,uid,[],context=context)
-        cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
+        if invoice_brw.type != 'out_invoice':
+            cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
                             invoice_brw.period_id and \
                             invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_invoice)
-        print "cost",cost
+            print "cost",cost
         return res 
 account_invoice()
 

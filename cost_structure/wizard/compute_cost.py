@@ -138,11 +138,12 @@ class compute_cost(osv.osv_memory):
         for i in dic_comp:
             product_brw = product_obj.browse(cr,uid,i,context=context)
             if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
+                print "dic_vent.get(i)",dic_vent.get(i)
                 qty = (sum([a[3] for a in dic_comp.get(i)])) - \
                       (sum([a[3] for a in dic_nc_com.get(i)])) + \
                       (sum([a[0] for a in dic_nc_vent.get(i)])) - \
                       (sum([a[1] for a in dic_vent.get(i)]))
-                
+                print "qty",qty
                 price = (sum([a[2] for a in dic_comp.get(i)])) - \
                         (sum([a[2] for a in dic_nc_com.get(i)])) + \
                         (sum([a[1] for a in dic_nc_vent.get(i)])) - \
@@ -264,7 +265,7 @@ class compute_cost(osv.osv_memory):
                  for invo in invo_obj.browse(cr,uid,inv_ids[-1],context=context) for line in invo.invoice_line if line and \
                 line.product_id and \
                 line.product_id.id == product_id ]
-                lista and invoice_line_obj.write(cr,uid,d[6],{'aux_financial':lista and lista[2]},context=context)
+                #~ lista and invoice_line_obj.write(cr,uid,d[6],{'aux_financial':lista and lista[2]},context=context)
                 return lista
 
             for date in ids_inv:
@@ -324,11 +325,11 @@ class compute_cost(osv.osv_memory):
             
             [(dic_comp.update({i.id:[]}),dic_vent.update({i.id:[]})   , dic_nc_com.update({i.id:[]})    , dic_nc_vent.update({i.id:[]})) for i in products]
             product_brw = product_obj.browse(cr,uid,dic_comp.keys(),context=context)
-            
-            products_date = date and [date] or [i.date_cost_ult for i in product_brw if i.cost_ult > 0]
+            date_aux = [i.date_cost_ult for i in product_brw if i.cost_ult > 0]
+            date_aux.sort(reverse=True)
+            products_date = date_aux and date and DateTime(date) < DateTime(date_aux[-1]) and [date] or date_aux and DateTime(date_aux[-1]) < DateTime(date) and [date_aux[-1]] or [date]
             products_date.sort(reverse=True)
             #~  Select quantity and cost of product from supplier invoice
-           
             if not context.get('invoice_cancel'):
                 [dic_comp[i.id].append((False,i.cost_ult,(i.cost_ult * i.qty_ult ), i.qty_ult, i.ult_om and i.ult_om.id,i.date_cost_ult,False,0,0 )) \
                     for i in product_brw if i.cost_ult > 0 and DateTime(products_date[-1]) >= DateTime(i.date_cost_ult) ]
@@ -363,13 +364,14 @@ class compute_cost(osv.osv_memory):
                 if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
                     ids_inv = {} 
                     if context.get('invoice_cancel'):
-                        
-                        dic_comp[i] and dic_comp[i][0] and (dic_comp[i][0][7] - dic_comp[i][0][2]) > 0 and dic_comp[i].insert(0,(False,
+                        print "dic_comp[i]",dic_comp[i]
+                        dic_comp[i] and dic_comp[i][0] and (dic_comp[i][0][7] - dic_comp[i][0][2]) >= 0 and dic_comp[i].insert(0,(False,
                                     ( (dic_comp[i][0][7] - dic_comp[i][0][2] )/ ( (dic_comp[i][0][8] - dic_comp[i][0][3]) > 0 and (dic_comp[i][0][8] - dic_comp[i][0][3]) or 1)   )   ,
                                      (dic_comp[i][0][7] - dic_comp[i][0][2]),
                                      (dic_comp[i][0][8] - dic_comp[i][0][3]) , 
-                                     dic_comp[i][0][4] , dic_comp[i][0][5],False, 0, 0  ))
-                        invo_line_obj.write(cr,uid,[dic_comp[i][1][6]],{'aux_financial':(dic_comp[i][1][7] - dic_comp[i][1][2]),'aux_qty':(dic_comp[i][1][8] - dic_comp[i][1][3])},context=context)
+                                      dic_comp[i][0][4] , dic_comp[i][0][5],False, 0, 0  ))
+                        
+                        len(dic_comp[i]) > 1 and  invo_line_obj.write(cr,uid,[dic_comp[i][1][6]],{'aux_financial':(dic_comp[i][1][7] - dic_comp[i][1][2]),'aux_qty':(dic_comp[i][1][8] - dic_comp[i][1][3])},context=context)
                         invo_obj.write(cr,uid,[dic_comp[i][1][0]],{'cancel_check':True},context=context)
                         dic_comp[i] and dic_comp[i][0] and dic_comp[i].pop(1)
 
@@ -380,6 +382,7 @@ class compute_cost(osv.osv_memory):
                                           dic_comp[i][0][5],0.0,0.0  ))
                     
                     if dic_comp[i][0][0] is not False and not dic_comp[i][0][9] and dic_comp[i][0][7] <= 0:
+                        print "algo q se metio a los golpes"
                         inv_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','=', i),
                                                     ('type','=','in_invoice'),
                                                     ('company_id','=',company_id),
@@ -395,7 +398,7 @@ class compute_cost(osv.osv_memory):
                 line.product_id.id == i ]
                         
                     
-                    
+                    print "dic_comp[i]",dic_comp[i]
                     [ids_inv.update({h[5]:h[1]}) for h in dic_comp[i]]
                     
                     
