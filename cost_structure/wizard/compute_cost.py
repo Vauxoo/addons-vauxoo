@@ -138,12 +138,10 @@ class compute_cost(osv.osv_memory):
         for i in dic_comp:
             product_brw = product_obj.browse(cr,uid,i,context=context)
             if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
-                print "dic_vent.get(i)",dic_vent.get(i)
                 qty = (sum([a[3] for a in dic_comp.get(i)])) - \
                       (sum([a[3] for a in dic_nc_com.get(i)])) + \
                       (sum([a[0] for a in dic_nc_vent.get(i)])) - \
                       (sum([a[1] for a in dic_vent.get(i)]))
-                print "qty",qty
                 price = (sum([a[2] for a in dic_comp.get(i)])) - \
                         (sum([a[2] for a in dic_nc_com.get(i)])) + \
                         (sum([a[1] for a in dic_nc_vent.get(i)])) - \
@@ -154,12 +152,12 @@ class compute_cost(osv.osv_memory):
                     aux.update({i:[price,qty,cost and cost,dic_comp[i] and dic_comp[i][0] and dic_comp[i][0][4] or [] ]})
                     
                     if context.get('invoice_cancel',False):
-                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M:%S') ,'qty_ult':aux.get(i) and aux.get(i)[1] ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M:%S') },context=context)
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M') ,'qty_ult':aux.get(i) and aux.get(i)[1] ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M') },context=context)
                    
                     if product_brw.property_cost_structure and product_brw.cost_ult > 0:
-                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M:%S') ,'qty_ult':aux.get(i) and aux.get(i)[1]  , 'cost_ant':product_brw.cost_ult ,'qty_ant':product_brw.qty_ult ,'date_cost_ant':product_brw.date_cost_ult ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M:%S') , 'ant_om':product_brw.ult_om and product_brw.ult_om.id or [],'date_ant_om':product_brw.date_ult_om },context=context)
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M') ,'qty_ult':aux.get(i) and aux.get(i)[1]  , 'cost_ant':product_brw.cost_ult ,'qty_ant':product_brw.qty_ult ,'date_cost_ant':product_brw.date_cost_ult ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M') , 'ant_om':product_brw.ult_om and product_brw.ult_om.id or [],'date_ant_om':product_brw.date_ult_om },context=context)
                     else:
-                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M:%S'),'qty_ult':aux.get(i) and aux.get(i)[1]  ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M:%S') },context=context)
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M'),'qty_ult':aux.get(i) and aux.get(i)[1]  ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M') },context=context)
         return aux
         
     def update_dictionary(self,cr,uid,ids,dict,inv_ids,purchase,context=None):
@@ -242,7 +240,6 @@ class compute_cost(osv.osv_memory):
         '''
         lista = []
         global invo_cost
-        print "entre"
         for d in cicle:
             invoice_obj = self.pool.get('account.invoice')
             invoice_line_obj = self.pool.get('account.invoice.line')
@@ -364,7 +361,6 @@ class compute_cost(osv.osv_memory):
                 if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
                     ids_inv = {} 
                     if context.get('invoice_cancel'):
-                        print "dic_comp[i]",dic_comp[i]
                         dic_comp[i] and dic_comp[i][0] and (dic_comp[i][0][7] - dic_comp[i][0][2]) >= 0 and dic_comp[i].insert(0,(False,
                                     ( (dic_comp[i][0][7] - dic_comp[i][0][2] )/ ( (dic_comp[i][0][8] - dic_comp[i][0][3]) > 0 and (dic_comp[i][0][8] - dic_comp[i][0][3]) or 1)   )   ,
                                      (dic_comp[i][0][7] - dic_comp[i][0][2]),
@@ -382,7 +378,6 @@ class compute_cost(osv.osv_memory):
                                           dic_comp[i][0][5],0.0,0.0  ))
                     
                     if dic_comp[i][0][0] is not False and not dic_comp[i][0][9] and dic_comp[i][0][7] <= 0:
-                        print "algo q se metio a los golpes"
                         inv_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','=', i),
                                                     ('type','=','in_invoice'),
                                                     ('company_id','=',company_id),
@@ -398,7 +393,6 @@ class compute_cost(osv.osv_memory):
                 line.product_id.id == i ]
                         
                     
-                    print "dic_comp[i]",dic_comp[i]
                     [ids_inv.update({h[5]:h[1]}) for h in dic_comp[i]]
                     
                     
