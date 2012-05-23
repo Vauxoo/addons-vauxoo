@@ -30,7 +30,6 @@ from tools import config
 import netsvc
 import decimal_precision as dp
 
-dicc = {}
 
 class sale_order_line(osv.osv):
     
@@ -40,25 +39,14 @@ class sale_order_line(osv.osv):
         global dicc
         if context is None:
             context ={}
-        module = self.pool.get('ir.module.module')
+        product_obj = self.pool.get('product.product')
+        product_brw = product and product_obj.browse(cr,uid,product,context=context)
         res = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
             uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
             lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag)
         
-        if dicc.get('stop',False):
-            res['value'].get('price_unit',False) and res['value'].pop('price_unit')
-        
-        if dicc.get('price_unit',False):
-            dicc = {}
-            res['value'].get('price_unit') and res['value'].pop('price_unit')
-            res.update({'stop':True})
-        
-        if 'price_unit' in res.get('value'):
-            dicc = {}
-            
-        else:
-            dicc.update({'stop':True})
-        
+        res.get('value',False) and res.get('value',False).update({'cost_structure_id':product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id })
+        res.get('value',False) and 'price_unit' in res.get('value',False)  and res['value'].pop('price_unit') 
         return res
     
     
@@ -66,8 +54,6 @@ class sale_order_line(osv.osv):
         if context is None:
             context = {}
         res = {'value':{}}
-        global dicc
-        dicc = {}
         
         if price_method and product_uom:
             price_obj = self.pool.get('method.price')
@@ -79,13 +65,12 @@ class sale_order_line(osv.osv):
             
             e = uom_obj._compute_qty(cr, uid, product_uom, qty, to_uom_id=product_uom)
             res['value'].update({'price_unit': price})
-            dicc.update({'price_unit':True})
         return res
     
     _inherit = 'sale.order.line'
     _columns = {
-   
         'price_structure_id':fields.many2one('method.price','Select Price'),
+        'cost_structure_id': fields.related('product_id','cost_structure_id',relation='cost.structure',type='many2one',store=False,string='Cost Structure'),
     
     }
     
