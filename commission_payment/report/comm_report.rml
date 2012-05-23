@@ -225,13 +225,13 @@
                             <para style="ITEMSLEFT">[[ inv.invoice_id.partner_id.name ]]</para>
                         </td>
                         <td>
-                            <para style="ITEMSCENTER">[[ inv.ret_iva ]]</para>
+                            <para style="ITEMSCENTER">[[ inv.ret_iva or '0.00' ]]</para>
                         </td>
                         <td>
-                            <para style="ITEMSCENTER">[[ inv.ret_im ]]</para>
+                            <para style="ITEMSCENTER">[[ inv.ret_im or '0.00' ]]</para>
                         </td>
                         <td>
-                            <para style="ITEMSCENTER">[[ inv.ret_islr ]]</para>
+                            <para style="ITEMSCENTER">[[ inv.ret_islr or '0.00' ]]</para>
                         </td>
                         <td>
                             <para style="ITEMSCENTER">[[ inv.invoice_id.date_invoice ]]</para>
@@ -307,25 +307,25 @@
                                 <para style="ITEMSCENTER">[[ lines.price_unit ]]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.dcto_item ]]</para>
+                                <para style="ITEMSCENTER">[[ lines.rate_item or '0.00']]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.baremo_dcto]]</para>
+                                <para style="ITEMSCENTER">[[ lines.rate_number or '0.00']]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.days ]]</para>
+                                <para style="ITEMSCENTER">[[ lines.days or '0' ]]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.baremo_days ]]</para>
+                                <para style="ITEMSCENTER">[[ lines.timespan or '0.00' ]]</para>
                             </td>
                             <td>
-                                <para style="ITEMSCENTER">[[ lines.baremo_comm ]]</para>
+                                <para style="ITEMSCENTER">[[ lines.baremo_comm or '0.00' ]]</para>
                             </td>
                             <td>
                                 <para style="ITEMSRIGHT">[[ lines.price_subtotal ]]</para>
                             </td>
                             <td>
-                                <para style="ITEMSRIGHT">[[ lines.commission ]]</para>
+                                <para style="ITEMSRIGHT">[[ lines.commission or '0.00' ]]</para>
                             </td>
                         </tr>
                     </blockTable>            
@@ -348,7 +348,7 @@
                     <para style="BLACKRIGHT">TOTAL COMISIÓN A PAGAR A [[ vendor.saleman_name ]]</para>
                 </td>
                 <td>
-                    <para style="BLACKRIGHT">[[ vendor.comm_total ]]</para>
+                    <para style="BLACKRIGHT">[[ vendor.comm_total or '0.00' ]]</para>
                 </td>
             </tr>
             </blockTable>
@@ -468,13 +468,13 @@
                         <td>
                             <section>
                                 <para> [[repeatIn(baremo.disc_ids,'dcto')]]</para>
-                                <para style="ITEMSCENTER"> [[dcto.porc_disc]] </para>
+                                <para style="ITEMSCENTER"> [[dcto.porc_disc or '0.00']] </para>
                             </section>
                         </td>
                         <td>
                             <section>
                                 <para> [[repeatIn(baremo.disc_ids,'dcto')]]</para>
-                                <para style="ITEMSCENTER"> [[dcto.porc_com]] </para>
+                                <para style="ITEMSCENTER"> [[dcto.porc_com or '0.00']] </para>
                             </section>
                         </td>
                     </tr>
@@ -493,7 +493,7 @@
                     <para style="BLACKRIGHT"> TOTAL COMISIONES PAGADAS </para>
                 </td>
                 <td>
-                    <para style="BLACKRIGHT">[[ o.total_comm ]]</para>
+                    <para style="BLACKRIGHT">[[ o.total_comm or '0.00' ]]</para>
                 </td>
             </tr>
 		</blockTable>
@@ -539,31 +539,31 @@
                 <para style="ITEMSLEFT">[[ lines.item ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.price_list ]]</para>
+                <para style="ITEMSCENTER">[[ lines.price_list or '0.00' ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.price_unit ]]</para>
+                <para style="ITEMSCENTER">[[ lines.price_unit or '0.00' ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.dcto_item ]]</para>
+                <para style="ITEMSCENTER">[[ lines.rate_item or '0.00' ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.baremo_dcto]]</para>
+                <para style="ITEMSCENTER">[[ lines.rate_number or '0.00']]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.days ]]</para>
+                <para style="ITEMSCENTER">[[ lines.days or '0.00' ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.baremo_days ]]</para>
+                <para style="ITEMSCENTER">[[ lines.timespan or '0.00' ]]</para>
             </td>
             <td>
-                <para style="ITEMSCENTER">[[ lines.baremo_comm ]]</para>
+                <para style="ITEMSCENTER">[[ lines.baremo_comm or '0.00']]</para>
             </td>
             <td>
-                <para style="ITEMSRIGHT">[[ lines.price_subtotal ]]</para>
+                <para style="ITEMSRIGHT">[[ lines.price_subtotal or '0.00' ]]</para>
             </td>
             <td>
-                <para style="ITEMSRIGHT">[[ lines.commission ]]</para>
+                <para style="ITEMSRIGHT">[[ lines.commission or '0.00' ]]</para>
             </td>
         </tr>
     </blockTable> 

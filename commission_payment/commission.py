@@ -307,7 +307,7 @@ class commission_payment(osv.osv):
                                                         price_unit = inv_lin['price_unit']
                                                     if list_price:
                                                         dcto= round((list_price - price_unit)*100/list_price,1)
-                                                    rate_item= 10.0/100
+                                                    rate_item=dcto 
                                                     
                                                                                                     
                                                     # Determinar dias entre la emision de la factura del producto y el pago del mismo
@@ -576,7 +576,7 @@ class commission_payment(osv.osv):
             self.write(cr, user, ids, {
                 'total_comm': total_comm,
             })
-        result = None
+        result = True
         return result
 
     def pre_process(self, cr, user, ids, context={}):
@@ -597,7 +597,7 @@ class commission_payment(osv.osv):
                     })
             else:
                 raise osv.except_osv(_('Atencion !'), _('Debe primero solucionar el asunto de los Productos sin Listas de Precio \npara las fechas especificadas antes de continuar'))
-            
+        return True            
     
     def delete(self, cr, user, ids, context={}):
         commissions = self.browse(cr, user, ids, context=None)
@@ -608,6 +608,7 @@ class commission_payment(osv.osv):
                         'state': 'draft',
                         'total_comm':None,
                     })
+        return True
     
     def unlink(self, cr, user, ids, context={}):
         
@@ -663,6 +664,7 @@ class commission_payment(osv.osv):
         self.write(cr, user, ids, {
                 'state': 'open',
             })
+        return True
             
 commission_payment()
 

@@ -43,8 +43,8 @@
                                     <button icon="STOCK_OK" name="decide" states="decide" string="Realmente esto es lo que deseo" type="object"/>
                                     <button icon="STOCK_OK" name="going_back" states="decide" string="Todavia No! Me falta algo" type="object"/>
                                     <button icon="STOCK_OK" name="delete" states="open,decide" string="Comenzar de Nuevo" type="object"/>
-                                    <button icon="gtk-print" name="606" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
-                                    <button icon="gtk-print" name="606" states="done" string="Imprimir Comisiones" type="action"/>
+                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="decide" string="Imprimir Borrador Comisiones" type="action"/>
+                                    <button icon="gtk-print" name="%(report_commission_payment)d" states="done" string="Imprimir Comisiones" type="action"/>
                                 </group>
                             </group>
                         </page>
