@@ -81,6 +81,12 @@
             <blockValign value="TOP"/>
             <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5"/>
         </blockTableStyle>
+        
+        <blockTableStyle id="ASESOR">
+            <blockBackground colorName="#4d80b2" start="1,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+            <lineStyle kind="OUTLINE" colorName="#4d80b2" thickness="0.5" start="1,0" stop="-1,-1"/>
+        </blockTableStyle>
 
         <blockTableStyle id="BOTTOM">
             <blockValign value="TOP"/>
@@ -201,7 +207,7 @@
                 <td>
                     <para style="ITEMSLEFT">[[o.partner_id.name and o.partner_id.name or '']] [[ o.partner_invoice_id.partner_id.vat and ('%s %s'%('RIF.:',o.partner_invoice_id.partner_id.vat[2:])) or "No Hay Suficiente Informacion para Facturar" ]]</para>
                     <para style="ITEMSLEFT">DIRECCION: [[get_addr(o.partner_invoice_id.partner_id.id,'invoice').upper() or '']]</para>
-                    <para style="ITEMSLEFT"> [[ o.partner_invoice_id.name and ('%s %s'%('Contacto:',o.partner_invoice_id.name)) or or removeParentNode('para') ]]</para>
+                    <para style="ITEMSLEFT"> [[ o.partner_invoice_id.name and ('%s %s'%('Contacto:',o.partner_invoice_id.name)) or removeParentNode('para') ]]</para>
                 </td>
                 <td>
                     <para style="ITEMSLEFT">[[get_addr(o.partner_shipping_id.partner_id.id,'delivery').upper() or '']]</para>
@@ -270,7 +276,7 @@
                 </tr>
                 <tr>
                     <td><para></para></td>
-                    <td><para style="ITEMSRIGHT">IVA:</para></td>
+                    <td><para style="ITEMSRIGHT">IVA [['%s %s %s'%('(',get_imp(o),'%)')]]:</para></td>
                     <td><para style="ITEMSCENTER">[[ formatLang(o.amount_tax) ]]</para></td>
                 </tr>
                 <tr>
@@ -320,5 +326,18 @@
             </tr>
         </blockTable>
         <spacer length="24"/>
+        <blockTable colWidths="160mm,50mm" repeatRows="1" style="ASESOR">
+            <tr>
+                <td><para></para></td>
+                <td><para style="ITEMSCENTER">ASESOR DE VENTAS</para></td>
+            </tr>
+            <tr>
+                <td><para></para></td>
+                <td>
+                    <para style="ITEMSCENTER">[[o.user_id and o.user_id.name or '']]</para>
+                </td>
+
+            </tr>
+        </blockTable>
   </story>
 </document>

@@ -29,37 +29,45 @@ class sale_vauxoo_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(sale_vauxoo_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
-            'time': time,
-            'hello': self._hello,
             'get_addr': self._get_addr,
             'get_delay': self._get_delay,
             'get_rif': self._get_rif,
+            'get_imp': self._get_imp,
             
         })
     
+    def _get_imp(self, obj):
+        aux3={} 
+            
+        for l in obj.order_line:
+            print 'nombre de linea', l.name
+            for tax in l.tax_id:
+                print 'nombre de impuesto', tax.name
+                if aux3.get(tax.name,False):
+                    aux3[tax.name]+= l.price_subtotal*tax.amount 
+                else:
+                    aux3[tax.name] = l.price_subtotal*tax.amount 
+        
+        print 'aux3',aux3
+        
+        return True
+    
     def _get_delay(self, obj):
-        
         aux=[]
-        
         for aux2 in obj.order_line:
             if aux2.delay > 0:
                 aux.append(True)
             else:
                 aux.append(False)
-        print any(aux)
         return any(aux)
          
     def _get_rif(self,obj):
         rif = obj.user_id.company_id.partner_id.vat[2]+'-'+obj.user_id.company_id.partner_id.vat[3:]
-        print 'rif',rif
         return rif 
         
-    
-    
     def _get_addr(self, idp=None,type_r=None):
         if not idp:
             return []
-        print type_r
         addr_obj = self.pool.get('res.partner.address')
         res = ''
         addr_ids = addr_obj.search(self.cr,self.uid,[('partner_id','=',idp),('type','=',type_r)])
@@ -75,10 +83,6 @@ class sale_vauxoo_report(report_sxw.rml_parse):
             respuesta=res
         return respuesta     
     
-    
-    def _hello(self,p):
-        print "estoy en hello"
-        return "Hello World %s"
 report_sxw.report_sxw(
 'report.sale_order_vauxoo',
 'sale.order',
