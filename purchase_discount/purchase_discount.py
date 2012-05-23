@@ -67,7 +67,7 @@ class purchase_order_line(osv.osv):
         return res
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty, uom,
-            partner_id, date_order=False, fiscal_position=False):
+            partner_id, date_order=False, fiscal_position=False, date_planned=False, name=False, price_unit=False, notes=False):
         """Copied from purchase/purchase.py and modified to take discount"""
         if not pricelist:
             raise osv.except_osv(_('No Pricelist !'), _('You have to select a pricelist in the purchase form !\nPlease set one before choosing a product.'))
