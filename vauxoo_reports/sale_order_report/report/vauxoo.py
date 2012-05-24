@@ -37,20 +37,19 @@ class sale_vauxoo_report(report_sxw.rml_parse):
         })
     
     def _get_imp(self, obj):
-        aux3={} 
-            
+        dict_imp={} 
+        lista=[]
         for l in obj.order_line:
-            print 'nombre de linea', l.name
             for tax in l.tax_id:
-                print 'nombre de impuesto', tax.name
-                if aux3.get(tax.name,False):
-                    aux3[tax.name]+= l.price_subtotal*tax.amount 
+                if dict_imp.get(tax.name,False):
+                    dict_imp[tax.name]+= l.price_subtotal*tax.amount 
                 else:
-                    aux3[tax.name] = l.price_subtotal*tax.amount 
-        
-        print 'aux3',aux3
-        
-        return True
+                    if tax.name != 'EXENTO':
+                        dict_imp[tax.name] = l.price_subtotal*tax.amount 
+        for i in dict_imp.keys():
+            lista.append((i,dict_imp[i]))
+        print 'listaaa',lista
+        return lista
     
     def _get_delay(self, obj):
         aux=[]
@@ -70,7 +69,12 @@ class sale_vauxoo_report(report_sxw.rml_parse):
             return []
         addr_obj = self.pool.get('res.partner.address')
         res = ''
+        
         addr_ids = addr_obj.search(self.cr,self.uid,[('partner_id','=',idp),('type','=',type_r)])
+        
+        if not addr_ids:
+            addr_ids = addr_obj.search(self.cr,self.uid,[('partner_id','=',idp),('type','=','invoice')])
+        
         addr_inv={}
         lista=""
 
