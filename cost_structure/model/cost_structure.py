@@ -68,16 +68,27 @@ class cost_structure(osv.osv):
     
     _defaults = {
     'company_id':lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid,'cost.structure', context=c),
+     }
+     
     
     
-    
-    }
+   
     
     
 cost_structure()
 
 class method_price(osv.osv):
     
+    def default_get(self,cr,uid,fields,context=None):
+        if context is None:
+            context = {}
+        res = super(method_price, self).default_get(cr, uid, fields, context=context)
+        if context.get('property_cost_structure',False):
+            res.update({'reference_cost_structure_id':context.get('property_cost_structure',False)})
+        
+        return res
+
+
     def name_get(self,cr, uid, ids, context):
         if not len(ids):
             return []
@@ -91,6 +102,7 @@ class method_price(osv.osv):
     _name = 'method.price'
     _columns = {
     'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
+    'reference_cost_structure_id':fields.many2one('cost.structure','Cost Structure2'),
     'sequence':fields.integer('Sequence',help="Sequence that determines the type of sales price, dependediendo customer type (Type 1, Type 2 ...)"),
     'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit to sale"),
     'date':fields.date('Creation date'),
@@ -111,4 +123,15 @@ class method_price(osv.osv):
     
     }
     
+    def onchange_marginprice(self,cr,uid,ids,unit_price,margin_reference,cost_structure_id,context=None):
+        if context is None:
+            context = {}
+        res = {'value':{}}
+        cost_obj = self.pool.get('cost.structure')
+        if cost_structure_id:
+            cost_brw = cost_obj.browse(cr,uid,cost_structure_id,context=context)
+            margin_reference and cost_brw.cost_ult and res['value'].update({'unit_price':(((float(margin_reference)/100) * cost_brw.cost_ult) + cost_brw.cost_ult)})
+            unit_price and cost_brw.cost_ult and res['value'].update({'margin_reference':((unit_price - cost_brw.cost_ult)/cost_brw.cost_ult)*100})
+        return res
+        
 method_price()

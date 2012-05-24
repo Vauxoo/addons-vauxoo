@@ -84,6 +84,7 @@ class account_invoice(osv.osv):
                             #~ invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_invoice)
             #~ print "cost",cost
         #~ return res 
+        
 account_invoice()
 
 

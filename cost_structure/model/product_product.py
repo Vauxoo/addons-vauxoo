@@ -80,6 +80,7 @@ class product_product(osv.osv):
     'status_bool':fields.function(_structur_cost_status, method=True,type="boolean",store=True, string='Status Price'),
     }
     
+    
     def write(self,cr,uid,ids,vals,context=None):
 
         product_brw = self.browse(cr,uid,ids and ids[0],context=context)
