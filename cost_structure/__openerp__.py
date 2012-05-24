@@ -25,9 +25,12 @@
 {
     "name" : "Cost Structure",
     "version" : "0.1",
-    "depends" : ["stock",'product','sale','purchase'],
+    "depends" : ['account',"stock",'product','sale','purchase'],
     "author" : "Vauxoo",
     "description" : """
+    Module that performs a calculation of average cost in products, 
+    this module performs a search of all movements made by you for goods 
+    and are assigned to cost structure
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",

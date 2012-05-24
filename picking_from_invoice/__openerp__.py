@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Date Time to Invoice",
+    "name" : "Picking from invoice generator",
     "version" : "0.1",
-    "depends" : ["account"],
+    "depends" : ["account",'stock'],
     "author" : "Vauxoo",
     "description" : """
-    Module that adds a datetime field in the invoice to be chronology of creation for the calculation of cost
+    Generate multiple picking in and picking out from invoices selected
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
@@ -36,6 +36,7 @@
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
+    'wizard/picking_from_invoice_view.xml',
     
     ],
     "active": False,
