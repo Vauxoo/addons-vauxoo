@@ -31,7 +31,7 @@ import netsvc
 import decimal_precision as dp
 from DateTime import DateTime
 import time
-
+import datetime
 invo_cost = {}
 
 class compute_cost(osv.osv_memory):
@@ -102,7 +102,7 @@ class compute_cost(osv.osv_memory):
     
     def search_invoice(self,cr,uid,ids,dict,type,period,company,date,context=None):
         '''
-        Return a list of invoices that have products sended in the dict 
+        Return a list of invoices ids that have products sended in the dict 
         #~ ('period_id','=',period),
         '''
         if context is None:
@@ -133,6 +133,7 @@ class compute_cost(osv.osv_memory):
         These dictionaries are composed of lists of tuples, where quecada tuple is a line in their respective invoice
         '''
         product_obj = self.pool.get('product.product')
+        invoice_obj = self.pool.get('account.invoice')
         aux = {}
         dat = DateTime()
         for i in dic_comp:
@@ -150,14 +151,18 @@ class compute_cost(osv.osv_memory):
                 if qty > 0 :
                     cost = price / qty
                     aux.update({i:[price,qty,cost and cost,dic_comp[i] and dic_comp[i][0] and dic_comp[i][0][4] or [] ]})
-                    
+                    date = dic_comp.get(i)[-1] and dic_comp.get(i)[-1][0] and \
+                           invoice_obj.browse(cr,uid,dic_comp.get(i)[-1][0],context=context).date_invoice
+                    date = date and date.split('-') or False
+                    date = date and datetime.datetime(int(date[0]), int(date[1]), int(date[2][0:2])) or False
+                    date = date and date + datetime.timedelta(seconds=1) or dat.strftime('%Y/%m/%d %H:%M')
                     if context.get('invoice_cancel',False):
-                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M') ,'qty_ult':aux.get(i) and aux.get(i)[1] ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M') },context=context)
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':date ,'qty_ult':aux.get(i) and aux.get(i)[1] ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': date },context=context)
                    
                     if product_brw.property_cost_structure and product_brw.cost_ult > 0:
-                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M') ,'qty_ult':aux.get(i) and aux.get(i)[1]  , 'cost_ant':product_brw.cost_ult ,'qty_ant':product_brw.qty_ult ,'date_cost_ant':product_brw.date_cost_ult ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M') , 'ant_om':product_brw.ult_om and product_brw.ult_om.id or [],'date_ant_om':product_brw.date_ult_om },context=context)
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':date ,'qty_ult':aux.get(i) and aux.get(i)[1]  , 'cost_ant':product_brw.cost_ult ,'qty_ant':product_brw.qty_ult ,'date_cost_ant':product_brw.date_cost_ult ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': date , 'ant_om':product_brw.ult_om and product_brw.ult_om.id or [],'date_ant_om':product_brw.date_ult_om },context=context)
                     else:
-                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':dat.strftime('%Y/%m/%d %H:%M'),'qty_ult':aux.get(i) and aux.get(i)[1]  ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': dat.strftime('%Y/%m/%d %H:%M') },context=context)
+                        product_obj.write(cr,uid,[product_brw.id],{'cost_ult':cost,'date_cost_ult':date,'qty_ult':aux.get(i) and aux.get(i)[1]  ,'ult_om':aux.get(i)[-1] or [] ,'date_ult_om': date },context=context)
         return aux
         
     def update_dictionary(self,cr,uid,ids,dict,inv_ids,purchase,context=None):
@@ -251,15 +256,14 @@ class compute_cost(osv.osv_memory):
                 return lista
 
             if invo_brw.type == 'out_refund' and invo_brw.parent_id and invo_brw.parent_id.id not in invo_cost:
-                
-                inv_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','=', product_id),
+                inv_ids = invoice_obj.search(cr,uid,[('invoice_line.product_id','=', product_id),
                                                     ('type','=','in_invoice'),
                                                     ('company_id','=',company_id),
                                                     ('date_invoice','<',invo_brw.parent_id.date_invoice)],
                                                     order='date_invoice')
                         
                 inv_ids and [lista.append((d[3],(d[3] * (line.aux_financial/line.aux_qty) ) , (line.aux_financial/line.aux_qty), d[4] ,d[0],d[5])) \
-                 for invo in invo_obj.browse(cr,uid,inv_ids[-1],context=context) for line in invo.invoice_line if line and \
+                 for invo in invoice_obj.browse(cr,uid,[inv_ids[-1]],context=context) for line in invo.invoice_line if line and \
                 line.product_id and \
                 line.product_id.id == product_id ]
                 #~ lista and invoice_line_obj.write(cr,uid,d[6],{'aux_financial':lista and lista[2]},context=context)
@@ -388,13 +392,11 @@ class compute_cost(osv.osv_memory):
                                                       line.aux_qty, line.uos_id and \
                                                       line.uos_id.id,invo.date_invoice,line.id,line.aux_financial,line.aux_qty,invo.cancel_check)) \
                 
-                for invo in invo_obj.browse(cr,uid,inv_ids[-1],context=context) for line in invo.invoice_line if line and \
+                for invo in invo_obj.browse(cr,uid,[inv_ids[-1]],context=context) for line in invo.invoice_line if line and \
                 line.product_id and \
                 line.product_id.id == i ]
                         
-                    
                     [ids_inv.update({h[5]:h[1]}) for h in dic_comp[i]]
-                    
                     
                     if dic_vent.get(i,False) and len(dic_vent.get(i,[])) > 0 :
                         lista = self.list_cost(cr,uid,dic_vent.get(i),ids_inv,i,company_id)

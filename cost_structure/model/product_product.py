@@ -91,12 +91,12 @@ class product_product(osv.osv):
         if vals.get('property_cost_structure',False):
             if vals.get('method_cost_ids',False):
                 for i in vals.get('method_cost_ids'):
-                    if i[2].get('cost_structure_id',False):
+                    if i[2] and i[2].get('cost_structure_id',False):
                         pass
                     else:
-                        i[2].update({'cost_structure_id':vals.get('property_cost_structure',False) or []})
+                        i[2] and i[2].update({'cost_structure_id':vals.get('property_cost_structure',False) or []})
                         print "i[2]",i[2]
-                        method_id =method_obj.create(cr,uid,i[2],context=context)
+                        method_id = i[2] and method_obj.create(cr,uid,i[2],context=context)
                 
                 method_id and 'method_cost_ids' in vals  and vals.pop('method_cost_ids')
             else:
@@ -105,12 +105,11 @@ class product_product(osv.osv):
         else:
             if vals.get('method_cost_ids',False):
                 for i in vals.get('method_cost_ids'):
-                    if i[2].get('cost_structure_id',False):
+                    if i[2] and i[2].get('cost_structure_id',False):
                         pass
                     else:
-                        i[2].update({'cost_structure_id':product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id or []})
-                        print "i[2]2222",i[2]
-                        method_id = method_obj.create(cr,uid,i[2],context=context)
+                        i[2] and i[2].update({'cost_structure_id':product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id or []})
+                        method_id = i[2] and method_obj.create(cr,uid,i[2],context=context)
                 
                 method_id and 'method_cost_ids' in vals  and vals.pop('method_cost_ids')
                         
