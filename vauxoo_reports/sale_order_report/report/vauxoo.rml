@@ -276,7 +276,7 @@
                 </tr>
                 <tr>
                     <td><para></para></td>
-                    <td><para style="ITEMSRIGHT">IVA [['%s %s %s'%('(',get_imp(o),'%)')]]:</para></td>
+                    <td><para style="ITEMSRIGHT">IVA(12%):</para></td>
                     <td><para style="ITEMSCENTER">[[ formatLang(o.amount_tax) ]]</para></td>
                 </tr>
                 <tr>
