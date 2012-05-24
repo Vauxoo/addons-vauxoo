@@ -123,7 +123,6 @@
 
         <blockTableStyle id="TOTAL">
             <blockValign value="TOP"/>
-            <blockSpan start="0,0" stop="0,2"/>
             <lineStyle kind="GRID" colorName="#4d80b2" start="1,0" stop="-1,-1" thickness="0.5" />
         </blockTableStyle>
 
@@ -268,17 +267,23 @@
         </blockTable>
     </section>
 <!--TABLA DE TOTALES-->
+
         <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
                 <tr>
                     <td><para></para></td>
                     <td><para style="ITEMSRIGHT">SUBTOTAL</para></td>
                     <td><para style="ITEMSCENTER">[[ formatLang(o.amount_untaxed ) ]]</para></td>
                 </tr>
+        </blockTable>
+        <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
                 <tr>
+                    [[repeatIn(get_imp(o),'list')]]
                     <td><para></para></td>
-                    <td><para style="ITEMSRIGHT">IVA [['%s %s %s'%('(',get_imp(o),'%)')]]:</para></td>
-                    <td><para style="ITEMSCENTER">[[ formatLang(o.amount_tax) ]]</para></td>
+                    <td><para style="ITEMSCENTER">[[ list[0] ]]:</para></td>
+                    <td><para style="ITEMSRIGHT">[[ list[1] ]]</para></td>
                 </tr>
+        </blockTable>
+        <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
                 <tr>
                     <td><para></para></td>
                     <td><para style="ITEMSRIGHT">TOTAL</para></td>
