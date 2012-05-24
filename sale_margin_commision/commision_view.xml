@@ -8,12 +8,10 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <field name="amount_total" position="after">
+            <xpath expr="/form/notebook/page/group/field[@name='amount_total']" position="after">
                 <field name="commision"/>
-            <field name="amount_total" position="after">
-                <field name="margin"/>
-            </field>
-            </field>
+                <!-- <field name="margin"/> -->
+            </xpath>
         </field>
     </record>
     </data>
