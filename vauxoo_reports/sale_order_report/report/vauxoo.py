@@ -46,12 +46,9 @@ class sale_vauxoo_report(report_sxw.rml_parse):
                 else:
                     if tax.name != 'EXENTO':
                         dict_imp[tax.name] = l.price_subtotal*tax.amount 
-                    else:
-                        dict_imp['(0.0%)'] = 0.0*tax.amount 
-                        
         for i in dict_imp.keys():
             lista.append((i,dict_imp[i]))
-        
+        print 'listaaa',lista
         return lista
     
     def _get_delay(self, obj):
