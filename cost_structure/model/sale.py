@@ -70,7 +70,7 @@ class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
     _columns = {
         'price_structure_id':fields.many2one('method.price','Select Price'),
-        'cost_structure_id': fields.related('product_id','cost_structure_id',relation='cost.structure',type='many2one',store=False,string='Cost Structure'),
+        'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
     
     }
     

@@ -31,7 +31,19 @@
               <!-- <field name='cost_to_price' /> -->
 <!--            <field name='date_cost_to_price' />-->
             </group>
-            <field name='method_cost_ids' nolabel="1" editable="bottom"/>
+            <field name='method_cost_ids' nolabel="1" context="{'method_cost_ids':method_cost_ids,'property_cost_structure':property_cost_structure}">
+            <tree editable="bottom" >
+                <field name='unit_price' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />
+              <field name='sequence' />
+              <field name='cost_structure_id' invisible="1" />
+              <field name='reference_cost_structure_id' invisible="1" />
+              <field name='date' />
+              <field name='price_referen' />
+              <field name='margin_reference' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />
+              <field name='date_prom_begin' />
+              <field name='date_prom_end' />
+            </tree>
+            </field>
           </page>
         </xpath>
         <xpath expr='/form/notebook/page[@string="Information"]' position="after">
