@@ -36,7 +36,7 @@
                 <blockTable colWidths="105mm" rowHeights="35.0mm" style="BOTTOM">
                     <tr>
                         <td>
-                            <para style="COMPANYNAME">[[ o.user_id.company_id.partner_id.name or removeParentNode('para') ]], RIF: [[ get_rif(o) or removeParentNode('para') ]]</para>
+                            <para style="COMPANYNAME">[[ o.user_id.company_id.partner_id.name or removeParentNode('para') ]], RIF: [[ get_rif(o.user_id.company_id.partner_id) or removeParentNode('para') ]]</para>
                             <para style="COMPANYNAME">[[get_addr(o.user_id.company_id.partner_id.id,'invoice').upper() or '']]</para>
                         </td>
                     </tr>
@@ -204,7 +204,7 @@
         <blockTable colWidths="70mm,70mm,30mm,40mm" style="ITEMS">
             <tr>
                 <td>
-                    <para style="ITEMSLEFT">[[o.partner_id.name and o.partner_id.name or '']] [[ o.partner_invoice_id.partner_id.vat and ('%s %s'%('RIF.:',o.partner_invoice_id.partner_id.vat[2:])) or "No Hay Suficiente Informacion para Facturar" ]]</para>
+                    <para style="ITEMSLEFT">[[o.partner_id.name and o.partner_id.name or '']] [[ o.partner_invoice_id.partner_id.vat and ('%s %s'%('RIF.:',get_rif(o.partner_invoice_id.partner_id))) or "No Hay Suficiente Informacion para Facturar" ]]</para>
                     <para style="ITEMSLEFT">DIRECCION: [[get_addr(o.partner_invoice_id.partner_id.id,'invoice').upper() or '']]</para>
                     <para style="ITEMSLEFT"> [[ o.partner_invoice_id.name and ('%s %s'%('Contacto:',o.partner_invoice_id.name)) or removeParentNode('para') ]]</para>
                 </td>
@@ -272,14 +272,15 @@
                 <tr>
                     <td><para></para></td>
                     <td><para style="ITEMSRIGHT">SUBTOTAL</para></td>
-                    <td><para style="ITEMSCENTER">[[ formatLang(o.amount_untaxed ) ]]</para></td>
+                    <td><para style="ITEMSRIGHT">[[ formatLang(o.amount_untaxed ) ]]</para></td>
                 </tr>
         </blockTable>
         <blockTable colWidths="170mm,20mm,20mm"  style="TOTAL">
+                [[get_imp(o) or removeParentNode('blockTable')]]
                 <tr>
                     [[repeatIn(get_imp(o),'list')]]
                     <td><para></para></td>
-                    <td><para style="ITEMSCENTER">[[ list[0] ]]:</para></td>
+                    <td><para style="ITEMSCENTER">[[ list[0] ]]</para></td>
                     <td><para style="ITEMSRIGHT">[[ list[1] ]]</para></td>
                 </tr>
         </blockTable>
@@ -287,7 +288,7 @@
                 <tr>
                     <td><para></para></td>
                     <td><para style="ITEMSRIGHT">TOTAL</para></td>
-                    <td><para style="ITEMSCENTER">[[ formatLang(o.amount_total, digits=2, date=False, date_time=False, grouping=True, monetary=True) ]]</para></td>
+                    <td><para style="ITEMSRIGHT">[[ formatLang(o.amount_total, digits=2, date=False, date_time=False, grouping=True, monetary=True) ]]</para></td>
                 </tr>
         </blockTable>
   <spacer length="1mm"/>
@@ -308,7 +309,7 @@
             <tr noRowsplits="1">
                 <td>
                     <para style="ITEMSSMALL">[[ o.payment_term.name and ('%s'%('(1) TÉRMINOS DE PAGO')) or removeParentNode('tr')]] </para>
-                    <para style="ITEMSSMALL">[[ o.payment_term.name and (('%s %s'%(o.payment_term.name,': ')))]] [[ o.payment_term.note or '']]</para>
+                    <para style="ITEMSSMALL">[[ o.payment_term.name and (('%s'%(o.payment_term.name)))]] [[ o.payment_term.note and (('%s %s'%(':',o.payment_term.note ))) or '']] </para>
                 </td>
             </tr>
             <tr noRowsplits="1">  
@@ -319,14 +320,14 @@
             </tr>
             <tr noRowsplits="1">
                 <td>
-                    <para style="ITEMSSMALL">[[get_delay(o) and ('%s'%('(3) PLAZO DE ENTREGA')) or removeParentNode('tr')]]</para>
-                    <para style="ITEMSSMALL">De acuerdo al plan de trabajo / Cronograma acordado y mostrado en cada línea, a partir de la confirmación de la orden de compra por los telefonos.: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].phone or '' ]]  / FAX: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].fax or '' ]]; EMAIL: [[ o.user_id.company_id.partner_id.address and o.user_id.company_id.partner_id.address[0].email or '' ]] LOS PLAZOS PUEDEN VARIAR DE ACUERDO A ETAPAS DE DESARROLLO.</para>
+                    <para style="ITEMSSMALL">[[ get_delay(o) and ('%s'%('(3) PLAZO DE ENTREGA')) or removeParentNode('tr')]]</para>
+                    <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer1 or removeParentNode('para')]]</para>
                 </td>
             </tr>
             <tr noRowsplits="1">
                 <td>
-                    <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer1 and ('%s'%('(4) PRECIOS')) or removeParentNode('tr')]]</para>
-                    <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer1 or removeParentNode('para')  ]]</para>
+                    <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer2 and ('%s'%('(4) PRECIOS')) or removeParentNode('tr')]]</para>
+                    <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer2 or removeParentNode('para')  ]]</para>
                 </td>
             </tr>
         </blockTable>

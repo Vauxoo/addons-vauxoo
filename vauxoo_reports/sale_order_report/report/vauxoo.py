@@ -33,7 +33,6 @@ class sale_vauxoo_report(report_sxw.rml_parse):
             'get_delay': self._get_delay,
             'get_rif': self._get_rif,
             'get_imp': self._get_imp,
-            
         })
     
     def _get_imp(self, obj):
@@ -48,8 +47,12 @@ class sale_vauxoo_report(report_sxw.rml_parse):
                         dict_imp[tax.name] = l.price_subtotal*tax.amount 
         for i in dict_imp.keys():
             lista.append((i,dict_imp[i]))
-        print 'listaaa',lista
-        return lista
+        
+        if len(lista) > 0:
+            return lista
+        else:
+            return False
+        
     
     def _get_delay(self, obj):
         aux=[]
@@ -60,8 +63,8 @@ class sale_vauxoo_report(report_sxw.rml_parse):
                 aux.append(False)
         return any(aux)
          
-    def _get_rif(self,obj):
-        rif = obj.user_id.company_id.partner_id.vat[2]+'-'+obj.user_id.company_id.partner_id.vat[3:]
+    def _get_rif(self,partner):
+        rif = partner.vat[2]+'-'+partner.vat[3:-2]+'-'+partner.vat[-1]
         return rif 
         
     def _get_addr(self, idp=None,type_r=None):
