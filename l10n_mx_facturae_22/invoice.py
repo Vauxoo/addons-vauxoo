@@ -80,10 +80,22 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = address
         
         return invoice_data_parents
+    
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
+        partner_bank_obj = self.pool.get('res.partner.bank')
+
+        if partner_id:
+            invoice_currency_id = self.browse(cr, uid, ids)[0].currency_id
+            acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', invoice_currency_id.id)], limit = 1)
+            if not acc_partner_bank_ids:
+                acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', False)], limit = 1)
+            acc_partner_bank = partner_bank_obj.browse(cr, uid, acc_partner_bank_ids)[0]
+        res['value']['acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
+        return res
+    
     _columns = {
         'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', readonly=True, states={'draft':[('readonly',False)]}),
-        'acc_payment': fields.char ('NumCtaPago', size = 128, readonly=True, states={'draft':[('readonly',False)]}),
-        
-        
+        'acc_payment': fields.many2one ('res.partner.bank', 'Numero de cuenta', readonly=True, states={'draft':[('readonly',False)]},help = 'Es la cuenta con la que el cliente pagará la factura, si no se sabe con cual cuenta se va pagar dejarlo vacío y en el xml aparecerá "No Definido".'),
     }
 account_invoice()

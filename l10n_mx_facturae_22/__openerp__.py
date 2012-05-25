@@ -42,7 +42,7 @@ Requires the following programs:
     """,
     "website" : "www.vauxoo.com",
     "license" : "AGPL-3",
-    "depends" : ["base","l10n_mx_facturae",
+    "depends" : ["base","l10n_mx_facturae","l10n_mx_res_partner_bank_currency",
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
         ],
     "init_xml" : [],
