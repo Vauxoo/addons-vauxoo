@@ -50,7 +50,7 @@ class account_invoice(osv.osv):
         Modified to witholding vat validate 
         '''
         wf_service = netsvc.LocalService("workflow")
-        res = super(account_invoice, self).action_number(cr, uid, ids, context=context)
+        res = super(account_invoice, self).action_number(cr, uid, ids)
         iva_line_obj = self.pool.get('account.wh.iva.line')
         iva_obj = self.pool.get('account.wh.iva')
         invo_brw = self.browse(cr,uid,ids,context=context)[0]
