@@ -74,7 +74,7 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'
             invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
             invoice_data_parents[0]['Comprobante']['Moneda'] = invoice.currency_id.name or ''
-            invoice_data_parents[0]['Comprobante']['NumCtaPago'] = invoice.acc_payment or 'No identificado'
+            invoice_data_parents[0]['Comprobante']['NumCtaPago'] = invoice.acc_payment.acc_number or 'No identificado'
             invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
             invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {'Regimen':invoice.company_id.partner_id.regimen_fiscal_id.name or ''}
             invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = address
