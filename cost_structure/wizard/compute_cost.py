@@ -268,8 +268,10 @@ class compute_cost(osv.osv_memory):
                 line.product_id.id == product_id ]
                 #~ lista and invoice_line_obj.write(cr,uid,d[6],{'aux_financial':lista and lista[2]},context=context)
                 return lista
-
-            for date in ids_inv:
+            
+            order_date = ids_inv.keys()
+            order_date.sort(reverse=True)
+            for date in order_date:
                 date1 = DateTime(date)
                 date2 = DateTime(d[5])
                 if date2 >= date1:

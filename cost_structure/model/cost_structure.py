@@ -122,6 +122,9 @@ class method_price(osv.osv):
     'company_id':lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid,'cost.structure', context=c),
     
     }
+    _order='sequence'
+    
+    
     
     def onchange_marginprice(self,cr,uid,ids,unit_price,margin_reference,cost_structure_id,context=None):
         if context is None:

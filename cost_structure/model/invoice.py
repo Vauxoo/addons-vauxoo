@@ -25,8 +25,9 @@
 
 from osv import fields, osv
 from tools.translate import _
-import datetime
-
+from datetime import datetime
+from DateTime import DateTime
+import time
 class account_invoice(osv.osv):
     
     _inherit = 'account.invoice'
@@ -68,7 +69,18 @@ class account_invoice(osv.osv):
             #~ print "cost",cost
         #~ Hacer un write por linea y escribir el resultado en cost en las variables aux
         #~ return res
+   
     
+    def action_move_create(self, cr, uid, ids, *args):
+        
+        for inv in self.browse(cr, uid, ids):
+            if not inv.date_invoice:
+                self.write(cr, uid, [inv.id], {'date_invoice':time.strftime('%Y-%m-%d %H:%M:%S')})
+        res = super(account_invoice,self).action_move_create(cr, uid, ids, *args)
+        
+        
+        return res
+        
     #~ def action_cancel(self, cr, uid, ids, *args):
         #~ 
         #~ context = {}
