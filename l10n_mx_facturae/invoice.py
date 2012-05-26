@@ -265,6 +265,12 @@ class account_invoice(osv.osv):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
     
+    def action_date_assign(self, cr, uid, ids, *args):
+        invoice = self.browse(cr, uid, ids)[0]
+        rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
+        self.write(cr, uid, ids, {'rate': rate})
+        return super(account_invoice, self).action_date_assign(cr, uid, ids, args)
+    
     def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
         res = {}
         attachment_obj = self.pool.get('ir.attachment')
@@ -291,6 +297,7 @@ class account_invoice(osv.osv):
         'cadena_original': fields.text('Cadena Original', size=512),
         'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
         'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML'),
+        'rate': fields.float('Tipo de cambio', readonly = True),
     }
     
     _defaults = {
