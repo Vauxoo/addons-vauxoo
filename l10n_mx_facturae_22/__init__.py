@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 moylop260 - http://moylop.blogspot.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info moylop260 (moylop260@hotmail.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: moylop260 (moylop260@hotmail.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@openerp.com.ve
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: isaac (isaac@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,13 +25,7 @@
 #
 ##############################################################################
 
-
 import pay_method
 import regimen_fiscal
 import partner
 import invoice
-#import wizard
-#import report
-#import ir_sequence
-#import res_company
-#import partner_address

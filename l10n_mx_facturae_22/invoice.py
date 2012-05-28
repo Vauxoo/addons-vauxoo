@@ -85,6 +85,7 @@ class account_invoice(osv.osv):
         res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
         partner_bank_obj = self.pool.get('res.partner.bank')
         invoice_currency_id=self._get_currency(cr,uid)
+
         
         if partner_id:
             if ids:
