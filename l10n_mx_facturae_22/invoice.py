@@ -93,6 +93,9 @@ class account_invoice(osv.osv):
             acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', invoice_currency_id)], limit = 1)
             if not acc_partner_bank_ids:
                 acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', False)], limit = 1)
+            if not acc_partner_bank_ids:
+                res['value']['acc_payment'] = False
+                return res
             acc_partner_bank = partner_bank_obj.browse(cr, uid, acc_partner_bank_ids)[0]
         res['value']['acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
         return res
