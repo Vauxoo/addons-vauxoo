@@ -25,4 +25,22 @@
 #
 ##############################################################################
 
-import invoice
+{
+    "name" : "l10n_mx_invoice_datetime",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """
+    """,
+    "website" : "http://www.vauxoo.com/",
+    #"license" : "AGPL-3",
+    "depends" : [
+        "account",
+    ],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+    ],
+    "installable" : True,
+    "active" : False,
+}
