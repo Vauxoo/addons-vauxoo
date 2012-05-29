@@ -27,20 +27,13 @@
 
 from osv import osv
 from osv import fields
-#from tools import amount_to_text
 import tools
 import time
 from xml.dom import minidom
 import os
 import base64
-#import libxml2
-#import libxslt
-#import zipfile
-#import StringIO
-#import OpenSSL
 import hashlib
 import tempfile
-import os
 import netsvc
 from tools.translate import _
 import codecs
@@ -54,7 +47,7 @@ class account_invoice(osv.osv):
         invoice_data_parents = super(account_invoice,self)._get_facturae_invoice_dict_data(cr,uid,ids,context)
 
         date_invoice = datetime.strptime( invoice_data_parents[0]['date_invoice'], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
-        if date_invoice < '2012-01-01':
+        if date_invoice < '2012-07-01':
           #  print 'es menor'
             return invoice_data_parents
         else:
@@ -100,6 +93,14 @@ class account_invoice(osv.osv):
         res['value']['acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
         return res
     
+    def _get_file_globals(self, cr, uid, ids, context={}):
+        
+        file_global= super(account_invoice, self)._get_file_globals(cr, uid, ids)
+        date_invoice = self.browse(cr, uid,ids)[0].date_invoice
+        if date_invoice >= '2012-07-01 00:00:00':
+            file_global['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_2.xslt' ) #para cfd 2.2
+        return file_global
+        
     _columns = {
         'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}, change_default=True),
         'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', readonly=True, states={'draft':[('readonly',False)]}),
