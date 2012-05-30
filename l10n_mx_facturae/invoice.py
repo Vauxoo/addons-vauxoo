@@ -268,12 +268,13 @@ class account_invoice(osv.osv):
 
     def action_date_assign(self, cr, uid, ids, *args):
         context={}
-        invoice = self.browse(cr, uid, ids)[0]
-        date_format = invoice.date_invoice and datetime.strptime( invoice.date_invoice, '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') or time.strftime('%Y-%m-%d %H:%M:%S')
-        context['date']=date_format
-        invoice = self.browse(cr, uid, ids,context)[0]
-        rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
-        self.write(cr, uid, ids, {'rate': rate})
+        for id in ids:
+            invoice = self.browse(cr, uid, [id])[0]
+            date_format = invoice.date_invoice or False
+            context['date']=date_format
+            invoice = self.browse(cr, uid, [id], context)[0]
+            rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
+            self.write(cr, uid, [id], {'rate': rate})
         return super(account_invoice, self).action_date_assign(cr, uid, ids, args)
             
     def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
