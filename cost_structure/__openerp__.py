@@ -25,7 +25,7 @@
 {
     "name" : "Cost Structure",
     "version" : "0.1",
-    "depends" : ['account',"stock",'product','sale','purchase'],
+    "depends" : ['account',"stock",'product','sale','purchase','invoice_date_time'],
     "author" : "Vauxoo",
     "description" : """
     Module that performs a calculation of average cost in products, 

@@ -45,7 +45,6 @@ class account_invoice(osv.osv):
         #~ return res
         
     _columns = {
-    'date_invoice':fields.datetime('Invoice Date', help="Date to compute the product cost in the invoice"),
     'cancel_check':fields.boolean('Cancel', help="Fenield to indicate if invoice was canceled "),
     }
     
@@ -53,49 +52,39 @@ class account_invoice(osv.osv):
     'cancel_check': False
     }
     
-    #~ def action_number(self, cr, uid, ids, context=None):
-        #~ '''
-        #~ Modified to witholding vat validate 
-        #~ '''
-        #~ res = super(account_invoice,self).action_number(cr, uid, ids, context=context)
-        #~ invoice_brw = self.browse(cr,uid,ids,context=context)[0]
-        #~ cost_comp_obj = self.pool.get('compute.cost')
-        #~ product_obj = self.pool.get('product.product')
-        #~ if invoice_brw.type in ['in_invoice','in_refund','out_refund']:
-            #~ product_ids = product_obj.search(cr,uid,[],context=context)
-            #~ cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
-                                #~ invoice_brw.period_id and \
-                                #~ invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_invoice)
-            #~ print "cost",cost
-        #~ Hacer un write por linea y escribir el resultado en cost en las variables aux
-        #~ return res
+#    def action_number(self, cr, uid, ids, context=None):
+#        '''
+#        Modified to witholding vat validate 
+ #       '''
+ #       res = super(account_invoice,self).action_number(cr, uid, ids, context=context)
+ #       invoice_brw = self.browse(cr,uid,ids,context=context)[0]
+ #       cost_comp_obj = self.pool.get('compute.cost')
+ #       product_obj = self.pool.get('product.product')
+ #       if invoice_brw.type in ['in_invoice','in_refund','out_refund']:
+ #           product_ids = product_obj.search(cr,uid,[],context=context)
+ #           cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
+ #                               invoice_brw.period_id and \
+ #                               invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_invoice)
+ #           print "cost",cost
+ #       return res
    
     
-    def action_move_create(self, cr, uid, ids, *args):
         
-        for inv in self.browse(cr, uid, ids):
-            if not inv.date_invoice:
-                self.write(cr, uid, [inv.id], {'date_invoice':time.strftime('%Y-%m-%d %H:%M:%S')})
-        res = super(account_invoice,self).action_move_create(cr, uid, ids, *args)
-        
-        
-        return res
-        
-    #~ def action_cancel(self, cr, uid, ids, *args):
-        #~ 
-        #~ context = {}
-        #~ context.update({'invoice_cancel':True})
-        #~ res = super(account_invoice,self).action_cancel(cr, uid, ids, *args)
-        #~ invoice_brw = self.browse(cr,uid,ids,context=context)[0]
-        #~ cost_comp_obj = self.pool.get('compute.cost')
-        #~ product_obj = self.pool.get('product.product')
-        #~ product_ids = product_obj.search(cr,uid,[],context=context)
-        #~ if invoice_brw.type != 'out_invoice':
-            #~ cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
-                            #~ invoice_brw.period_id and \
-                            #~ invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_invoice)
-            #~ print "cost",cost
-        #~ return res 
+#    def action_cancel(self, cr, uid, ids, *args):
+#        
+#        context = {}
+#        context.update({'invoice_cancel':True})
+#        res = super(account_invoice,self).action_cancel(cr, uid, ids, *args)
+#        invoice_brw = self.browse(cr,uid,ids,context=context)[0]
+#        cost_comp_obj = self.pool.get('compute.cost')
+#        product_obj = self.pool.get('product.product')
+#        product_ids = product_obj.search(cr,uid,[],context=context)
+#        if invoice_brw.type != 'out_invoice':
+#            cost = cost_comp_obj.compute_cost(cr,uid,ids,context=context,products=product_ids,period=invoice_brw and  \
+#                            invoice_brw.period_id and \
+#                            invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_invoice)
+ #           print "cost",cost
+  #      return res 
         
 account_invoice()
 
