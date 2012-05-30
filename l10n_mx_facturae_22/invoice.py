@@ -65,7 +65,7 @@ class account_invoice(osv.osv):
                 
             invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'
-            invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
+            invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.rate or 1
             invoice_data_parents[0]['Comprobante']['Moneda'] = invoice.currency_id.name or ''
             invoice_data_parents[0]['Comprobante']['NumCtaPago'] = invoice.acc_payment.acc_number or 'No identificado'
             invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
@@ -73,23 +73,16 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = address
         
         return invoice_data_parents
-        
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
-        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
+    
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False, currency_id=False):
+        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id, currency_id)
         partner_bank_obj = self.pool.get('res.partner.bank')
-        invoice_currency_id=self._get_currency(cr,uid)
-
-        
+        acc_partner_bank = False
         if partner_id:
-            if ids:
-                invoice_currency_id = self.browse(cr, uid, ids)[0].currency_id.id
-            acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', invoice_currency_id)], limit = 1)
+            acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', currency_id)], limit = 1)
             if not acc_partner_bank_ids:
                 acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', False)], limit = 1)
-            if not acc_partner_bank_ids:
-                res['value']['acc_payment'] = False
-                return res
-            acc_partner_bank = partner_bank_obj.browse(cr, uid, acc_partner_bank_ids)[0]
+            acc_partner_bank = acc_partner_bank_ids and partner_bank_obj.browse(cr, uid, acc_partner_bank_ids)[0] or False
         res['value']['acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
         return res
     
