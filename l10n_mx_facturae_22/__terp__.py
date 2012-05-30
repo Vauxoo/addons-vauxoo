@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
@@ -30,27 +30,21 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
-
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
+    "description" : """Upgrade CFD 2.0 to CFD 2.2
     """,
     "website" : "www.vauxoo.com",
-    #"license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae",
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
+    "depends" : ["l10n_mx_facturae","l10n_mx_res_partner_bank_currency",
         ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        #~ "l10n_mx_facturae_report.xml",
-        #~ "l10n_mx_facturae_wizard.xml",
+        "security/l10n_mx_facturae_22.xml",
+        "security/ir.model.access.csv",
+        "pay_method_view.xml",
         "invoice_view.xml",
+        "regimen_fiscal.xml",
+        "partner_view.xml",
+        "regimen_fiscal_data.xml",
     ],
     "installable" : True,
     "active" : False,
