@@ -2,7 +2,7 @@
 ##############################################################################
 # Copyright (c) 2011 OpenERP Venezuela (http://openerp.com.ve)
 # All Rights Reserved.
-# Programmed by: Israel Fermín Montilla  <israel@openerp.com.ve>
+# Programmed by: Luis Escobar  <p.com.ve>
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -25,8 +25,36 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-import product
-import stock
-import wizard
-import invoice
-import sale
+from osv import osv
+from osv import fields
+from tools.translate import _
+import decimal_precision as dp
+
+
+class inherited_sale_order(osv.osv):
+    _inherit = "sale.order"
+
+    def default_get(self, cr, uid, fields, context=None):
+        """
+             To get default values for the object.
+
+             @param self: The object pointer.
+             @param cr: A database cursor
+             @param uid: ID of the user currently logged in
+             @param fields: List of fields for which we want default values
+             @param context: A standard dictionary
+
+             @return: A dictionary which of fields with values.
+
+        """
+        res = super(inherited_sale_order, self).default_get(cr, uid, fields, context=context)
+        print "default", res
+        res.get('order_policy',False) and res.update({'order_policy':'picking'})
+        return res
+
+    _defaults = {
+        'order_policy': 'picking'
+    }
+
+inherited_sale_order()
+
