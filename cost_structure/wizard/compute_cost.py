@@ -162,7 +162,7 @@ class compute_cost(osv.osv_memory):
                     time = date and date[2].split(' ')
                     time = time and time[1].split(":")
                     date = date and time and datetime.datetime(int(date[0]), int(date[1]), int(date[2][0:2]),int(time[0]),int(time[1]),int(time[2])) or False
-                    date = date and date + datetime.timedelta(seconds=1) or dat.strftime('%Y/%m/%d %H:%M')
+                    date = date and date + datetime.timedelta(seconds=1) or dat.strftime('%Y/%m/%d %H:%M:%S')
                     
                     if context.get('not_write',False):
                         pass
