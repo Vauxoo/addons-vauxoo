@@ -1,0 +1,34 @@
+=== modified file 'account/account_invoice_view.xml'
+--- account/account_invoice_view.xml	2010-07-23 12:28:16 +0000
++++ account/account_invoice_view.xml	2012-05-31 16:32:26 +0000
+@@ -242,7 +242,7 @@
+                         <field name="journal_id" select="2" groups="base.group_user"/>
+                         <field name="type" readonly="1" select="2"/>
+                         <field name="number" select="1"/>
+-                        <field name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term)" select="1" groups="base.group_user"/>
++                        <field name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term,partner_bank,company_id,currency_id)" select="1" groups="base.group_user"/>
+                         <field domain="[('partner_id','=',partner_id)]" name="address_invoice_id"/>
+                         <field name="currency_id" on_change="onchange_currency_id(currency_id)" select="2"/>
+                         <field name="date_invoice" select="1"/>
+
+=== modified file 'account/invoice.py'
+--- account/invoice.py	2012-02-15 11:30:39 +0000
++++ account/invoice.py	2012-05-31 18:01:00 +0000
+@@ -342,7 +342,7 @@
+ #       return [{}]
+ 
+     def onchange_partner_id(self, cr, uid, ids, type, partner_id,
+-            date_invoice=False, payment_term=False, partner_bank=False):
++            date_invoice=False, payment_term=False, partner_bank=False, company_id=False, currency_id=False):
+         invoice_addr_id = False
+         contact_addr_id = False
+         partner_payment_term = False
+@@ -382,6 +382,7 @@
+         if partner_bank != bank_id:
+             to_update = self.onchange_partner_bank(cr, uid, ids, bank_id)
+             result['value'].update(to_update['value'])
++        result['value']['currency_id'] = currency_id
+         return result
+ 
+     def onchange_currency_id(self, cr, uid, ids, curr_id):
+
