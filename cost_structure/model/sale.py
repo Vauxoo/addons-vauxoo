@@ -33,21 +33,21 @@ import decimal_precision as dp
 
 class sale_order_line(osv.osv):
     
-    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,context=None):
-        global dicc
-        if context is None:
-            context ={}
-        product_obj = self.pool.get('product.product')
-        product_brw = product and product_obj.browse(cr,uid,product,context=context)
-        res = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
-            uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-            lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag)
-        
-        res.get('value',False) and product_brw and product_brw.property_cost_structure and res.get('value',False).update({'cost_structure_id':product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id })
-        res.get('value',False) and 'price_unit' in res.get('value',False)  and res['value'].pop('price_unit') 
-        return res
+#    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+#            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+#            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,context=None):
+#        global dicc
+#        if context is None:
+#            context ={}
+#        product_obj = self.pool.get('product.product')
+#        product_brw = product and product_obj.browse(cr,uid,product,context=context)
+#        res = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
+#            uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
+#            lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag)
+#        
+#        res.get('value',False) and product_brw and product_brw.property_cost_structure and res.get('value',False).update({'cost_structure_id':product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id })
+#        res.get('value',False) and 'price_unit' in res.get('value',False)  and res['value'].pop('price_unit') 
+#        return res
     
     
     def price_unit(self,cr,uid,ids,price_method,product_uom,qty,context=None):
