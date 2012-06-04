@@ -64,7 +64,7 @@ class sale_vauxoo_report(report_sxw.rml_parse):
         return any(aux)
          
     def _get_rif(self,partner):
-        rif = partner.vat[2]+'-'+partner.vat[3:-2]+'-'+partner.vat[-1]
+        rif = partner.vat[2]+'-'+partner.vat[3:-1]+'-'+partner.vat[-1]
         return rif 
         
     def _get_addr(self, idp=None,type_r=None):
