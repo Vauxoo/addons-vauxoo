@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+        <record id="update_price_list_form" model="ir.ui.view">
+              <field name="name">Price List update</field>
+              <field name="model">update.price.list</field>
+              <field name="type">form</field>
+              <field name="arch" type="xml">
+                <form string="Price List by Product">
+                    <separator colspan="4" string="Update List Price"/>
+                    <field name="price_list_id" widget="selection" attrs="{'required':[('all','=',False)]}"/>
+                    <separator colspan="4"/>
+                     <field name="all" />
+                     <field name="sure" />
+                    <group col="2" colspan="4">
+                         <button icon="gtk-cancel" special="cancel" string="Close"/>
+                         <button name="update_price_list" string="Update" type="object" />
+                    </group>                
+                    </form>
+              </field>
+        </record>
+
+
+ <record id="update_price_list_action" model="ir.actions.act_window">
+            <field name="name">Price List update</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">update.price.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+            <menuitem 
+            name = "Update Price List" 
+            id ="update_price_list_wz"
+            icon = 'STOCK_FLOPPY'
+            parent = 'account.menu_finance'
+            sequence ='50'
+            />
+            
+            
+            <menuitem 
+            name = "Update Price List" 
+            id ="update_price_list_wz2"
+            sequence ='50'
+            parent = 'update_price_list_wz'
+            action = 'update_price_list_action'
+            />
+            
+
+
+
+</data>
+</openerp>
