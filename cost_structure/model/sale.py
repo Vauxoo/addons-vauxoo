@@ -137,10 +137,10 @@ class sale_order(osv.osv):
         sale_brw = self.browse(cr,uid,ids and ids[0],context=context)
         for line in sale_brw.order_line:
             property_cost_structure = line and line.product_id and line.product_id.property_cost_structure and line.product_id.property_cost_structure.id or False
-            if property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if line.price_unit < i.unit_price]):
+            if property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if round(line.price_unit,2) < round(i.unit_price,2)]):
                 product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
         
-            elif property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if line.price_unit > i.unit_price]):
+            elif property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if round(line.price_unit,2) > round(i.unit_price,2)]):
                 product.append(u'Intenta vender el producto %s a un precio mayor al estimado para su venta'%line.product_id.name)
 
 

@@ -9,6 +9,7 @@
                 <data>
                     <field name="name" position="before">
                           <field name="available_boolean" invisible="1"/>
+                          <field name="available_bool" invisible="1"/>
                         <field name="upc" />
                     </field>
                 </data>
@@ -49,6 +50,7 @@
                 <data>
                     <field name="ean13" position="after">
                          <field name="available_boolean" invisible="1"/>
+                         <field name="available_bool" invisible="1"/>
                         <field name="upc" />
                     </field>
                 </data>
@@ -63,7 +65,7 @@
       <field name="inherit_id" ref="product.product_search_form_view"/>
       <field name="arch" type="xml">
         <xpath expr='/search/filter[@string="Services"]' position="before">
-          <filter icon="terp-check" name="available" string="Available" domain="[('available_boolean','=','Available')]" help="Assigned Delivery Orders"/>
+          <filter icon="terp-check" name="available" string="Available" domain="[('available_boolean','=',True)]" help="Assigned Delivery Orders"/>
         </xpath>
       </field>
     </record>

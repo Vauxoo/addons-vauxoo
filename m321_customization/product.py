@@ -61,6 +61,28 @@ class inherited_product(osv.osv):
         
         return super(inherited_product, self).copy(cr, uid, id, default, context)
     
+    def _stock_available(self, cr, uid, ids, field_name, arg, context):
+        if context is None:
+            context = {}
+        if not len(ids):
+            return []      
+        res = {}
+        true = [] 
+        false = [] 
+        stock_move_obj = self.pool.get('stock.move')
+        for id in self.browse(cr,uid,ids,context=context):
+            res.update({id.id:True})
+            if id.virtual_available > 0.0:
+                true.append(id.id)
+                res[id.id]= True
+            else:
+                false.append(id.id)
+                res[id.id]= False
+        print "algoo %s"%true
+        true and cr.execute('update product_product set available_boolean=True where id in %s'%(tuple(true),))
+        false and cr.execute('update product_product set available_boolean=False where id in %s'%(tuple(false),))
+        return res
+                    
     
     
     def _find_next_ten_multi(self, value):
@@ -102,27 +124,13 @@ class inherited_product(osv.osv):
         
         return super(inherited_product, self).copy(cr, uid, id, default, context)
 
-
-    def _stock_available(self, cr, uid, ids, field_name, arg, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        if len(ids) == 0:
-            return res
-        for product in self.browse(cr,uid,ids,context=context):
-            if product.virtual_available > 0:
-                self.write(cr,uid,[product.id],{'available_boolean':'Available'})
-                res[product.id] = 'Available'
-            else:
-                res[product.id] = ''
-                self.write(cr,uid,[product.id],{'available_boolean':''})
-                
-        return res
+        
+        
 
     _columns = {
             'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
-            'available_boolean':fields.text('Available Stock'),
-            'available_bool':fields.function(_stock_available, method=True,store=False,type="text",string='Available Stock'),
+            'available_boolean':fields.boolean('Available Stock'),
+            'available_bool':fields.function(_stock_available, method=True,store=False,type="boolean", string='Available Stock'),
             'profit_code':fields.char("Code from profit", size=20, help="Code from profit database"),
         }
 
