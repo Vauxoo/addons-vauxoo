@@ -78,9 +78,8 @@ class inherited_product(osv.osv):
             else:
                 false.append(id.id)
                 res[id.id]= False
-        print "algoo %s"%true
-        true and cr.execute('update product_product set available_boolean=True where id in %s'%(tuple(true),))
-        false and cr.execute('update product_product set available_boolean=False where id in %s'%(tuple(false),))
+        true and len(true) > 1 and cr.execute('update product_product set available_boolean=True where id in %s'%(tuple(true),))
+        false and len(false) > 1 and cr.execute('update product_product set available_boolean=False where id in %s'%(tuple(false),))
         return res
                     
     
