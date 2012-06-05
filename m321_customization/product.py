@@ -111,15 +111,18 @@ class inherited_product(osv.osv):
             return res
         for product in self.browse(cr,uid,ids,context=context):
             if product.virtual_available > 0:
+                self.write(cr,uid,[product.id],{'available_boolean':'Available'})
                 res[product.id] = 'Available'
             else:
                 res[product.id] = ''
+                self.write(cr,uid,[product.id],{'available_boolean':''})
                 
         return res
 
     _columns = {
             'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
-            'available_boolean':fields.function(_stock_available, method=True,type="text", store=True, string='Available Stock'),
+            'available_boolean':fields.text('Available Stock'),
+            'available_bool':fields.function(_stock_available, method=True,store=False,type="text",string='Available Stock'),
             'profit_code':fields.char("Code from profit", size=20, help="Code from profit database"),
         }
 

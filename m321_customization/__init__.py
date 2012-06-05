@@ -30,3 +30,4 @@ import stock
 import wizard
 import invoice
 import sale
+import ir_sequence
