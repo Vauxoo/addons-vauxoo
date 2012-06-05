@@ -77,7 +77,7 @@ class update_price_list(osv.osv_memory):
                                                                                                                                 'unit_price': price_dict.get(price), 
                                                                                                                                 'sequence':number[1]
                                                                                                                                 })]},context=context)
-                                number and int(number[1]) == 1 and product_obj.write(cr,uid,[product_id],{'list_price':price_dict.get(price)},context=context)
+                                number and len(number) > 1 and number[1].isdigit() and int(number[1]) == 1 and product_obj.write(cr,uid,[product_id],{'list_price':price_dict.get(price)},context=context)
                         #~ --------------------------------------------------------------------#~ 
                 
             else:    
@@ -99,7 +99,7 @@ class update_price_list(osv.osv_memory):
                                                                                                                                     'sequence':number[1]
                                                                                                                                     })]},context=context)
                                                                                                                                     
-                        number and int(number[1]) == 1 and product_obj.write(cr,uid,[product_id],{'list_price':price_dict.get(wz_brw.price_list_id.id)},context=context) 
+                        number and len(number) > 1 and number[1].isdigit() and int(number[1]) == 1 and product_obj.write(cr,uid,[product_id],{'list_price':price_dict.get(wz_brw.price_list_id.id)},context=context) 
                                                                                                                                     
                                                                                                                                     
 
