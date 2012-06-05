@@ -70,13 +70,14 @@ class update_price_list(osv.osv_memory):
                             if price_dict and price_dict.get(price,'False') or False:
                                 [dicti.update({i.sequence:i.id}) for i in product_brw.method_cost_ids]
                                 number = price_brw and price_brw.name.split(' ')
-                                number and int(number[1]) in dicti.keys() and method_obj.write(cr,uid,[property_id],{'method_cost_ids': [(1,dicti.get(int(number[1])), {'reference_cost_structure_id':property_id  , 
+                                number and len(number) > 1 and number[1].isdigit() and int(number[1]) in dicti.keys() and method_obj.write(cr,uid,[property_id],{'method_cost_ids': [(1,dicti.get(int(number[1])), {'reference_cost_structure_id':property_id  , 
                                                                                                                                             'unit_price': price_dict.get(price), 
                                                                                                                                             })]},context=context) or \
                                 product_obj.write(cr,uid,[product_id],{'method_cost_ids': [(0,0, {'reference_cost_structure_id': property_id, 
                                                                                                                                 'unit_price': price_dict.get(price), 
                                                                                                                                 'sequence':number[1]
                                                                                                                                 })]},context=context)
+                                number and int(number[1]) == 1 and product_obj.write(cr,uid,[product_id],{'list_price':price_dict.get(price)},context=context)
                         #~ --------------------------------------------------------------------#~ 
                 
             else:    
@@ -88,7 +89,7 @@ class update_price_list(osv.osv_memory):
                     if price_dict and price_dict.get(wz_brw.price_list_id.id,'False') or False:
                         [dicti.update({i.sequence:i.id}) for i in product_brw.method_cost_ids]
                         number = price_brw and price_brw.name.split(' ')
-                        number and int(number[1]) in dicti.keys() and method_obj.write(cr,uid,[property_id],{'method_cost_ids': [(1,dicti.get(int(number[1])), {'reference_cost_structure_id':property_id  , 
+                        number and len(number) > 1 and  number[1].isdigit() and int(number[1]) in dicti.keys() and method_obj.write(cr,uid,[property_id],{'method_cost_ids': [(1,dicti.get(int(number[1])), {'reference_cost_structure_id':property_id  , 
                                                                                                                                     'unit_price': price_dict.get(wz_brw.price_list_id.id), 
                                                                                                                                     })]},context=context) or \
                         product_obj.write(cr,uid,[product_id],{'method_cost_ids': [(0,0, {'reference_cost_structure_id': product_brw and \
@@ -97,6 +98,8 @@ class update_price_list(osv.osv_memory):
                                                                                                                                     'unit_price': price_dict.get(wz_brw.price_list_id.id), 
                                                                                                                                     'sequence':number[1]
                                                                                                                                     })]},context=context)
+                                                                                                                                    
+                        number and int(number[1]) == 1 and product_obj.write(cr,uid,[product_id],{'list_price':price_dict.get(wz_brw.price_list_id.id)},context=context) 
                                                                                                                                     
                                                                                                                                     
 

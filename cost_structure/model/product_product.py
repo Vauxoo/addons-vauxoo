@@ -81,6 +81,7 @@ class product_product(osv.osv):
     }
     
     
+    
     def write(self,cr,uid,ids,vals,context=None):
 
         product_brw = self.browse(cr,uid,ids and ids[0],context=context)
