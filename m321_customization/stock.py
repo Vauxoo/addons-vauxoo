@@ -88,3 +88,25 @@ class inherited_stock(osv.osv):
         return True
         
 inherited_stock()
+
+
+
+class stock_move(osv.osv):
+    
+    
+    _inherit = 'stock.move'
+    _columns = {
+        'id_sale':fields.many2one('sale.order','Sale Order'),
+    
+    }
+    
+stock_move()
+
+
+
+
+
+
+
+
+

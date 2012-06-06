@@ -103,7 +103,7 @@ class update_price_list(osv.osv_memory):
                                                                                                                                     
                                                                                                                                     
 
-        return True
+        return  {'type': 'ir.actions.act_window_close'}
 
 update_price_list()
 

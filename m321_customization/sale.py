@@ -48,7 +48,6 @@ class inherited_sale_order(osv.osv):
 
         """
         res = super(inherited_sale_order, self).default_get(cr, uid, fields, context=context)
-        print "default", res
         res.get('order_policy',False) and res.update({'order_policy':'picking'})
         return res
 
@@ -57,4 +56,33 @@ class inherited_sale_order(osv.osv):
     }
 
 inherited_sale_order()
+
+
+class sale_order_line(osv.osv):
+    
+    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,context=None):
+        if context is None:
+            context ={}
+        product_obj = self.pool.get('product.product')
+        res = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
+            uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
+            lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag)
+        
+        future_stock = product and self.pool.get('stock.move').search(cr,uid,[('product_id','=',product),
+                                                                              ('state','in',('assigned','confirmed','waiting')),
+                                                                              ('picking_id.type','=','in')],context=context)
+        future_stock and res.get('value',False) and res.get('value',False).update({'stock_move_ids':future_stock })
+        
+        return res
+    
+    
+    _inherit = 'sale.order.line'
+    _columns = {
+        'stock_move_ids':fields.one2many('stock.move','id_sale','Future Stock',readonly=True,help="Stock move future to reference of salesman for knowing that product is available"),
+    
+    }
+    
+sale_order_line()
 
