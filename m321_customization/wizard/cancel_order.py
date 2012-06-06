@@ -51,7 +51,7 @@ class cancel_orders(osv.osv_memory):
         [journal_obj.write(cr,uid,[i.id],{'update_posted':True},context=context) for i in journal_obj.browse(cr,uid,journal_ids,context=context) if hasattr(i, "update_posted") if i.type in ('sale','sale_refund') ]
         wz_brw = self.browse(cr,uid,ids and ids[0],context=context)
         sale_brw =  sale_obj.browse(cr,uid,sale_obj.search(cr,uid,[],context=context),context=context) 
-        sale_ids = [i.id for i in sale_brw if i.state == 'progress' and i.invoice_ids for d in i.invoice_ids if d.state !='paid'] 
+        sale_ids = [i.id for i in sale_brw if i.state == 'progress' and i.invoice_ids for d in i.invoice_ids if d.state not in ('paid','open')] 
         if wz_brw.sure and wz_brw.are_sure:
             picking_obj.action_cancel(cr, uid,[d.id for i in sale_obj.browse(cr,uid,sale_ids,context=context) for d in i.picking_ids], context=context) 
             invoice_obj.action_cancel(cr, uid,[d.id for i in sale_obj.browse(cr,uid,sale_ids,context=context) for d in i.invoice_ids],) 
