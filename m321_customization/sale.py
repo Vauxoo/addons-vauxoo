@@ -54,7 +54,25 @@ class inherited_sale_order(osv.osv):
     _defaults = {
         'order_policy': 'picking'
     }
-
+    
+    def qty_confirm(self,cr,uid,ids,context=None):
+        if context is None:
+            context = {}
+        product = []
+        sale_brw = ids and self.browse(cr,uid,ids[0],context=context)
+        for line in sale_brw.order_line:
+            virtual = line.product_id.qty_available
+            real = line.product_id.virtual_available
+            if virtual == real and line.product_uom_qty > virtual or line.product_uom_qty > virtual:
+                raise osv.except_osv(_('Error'), _('The quantity in the line of the product %s is minor that quantity available '%line.product_id.name))
+            
+            elif virtual > real and line.product_uom_qty > real and line.product_uom_qty < virtual and not line.check_confirm:
+                raise osv.except_osv(_('Error'), _('The amount you want to sell is not available in the real stock, but if a shipment next, if you want to make this sale select Stock future sales line'))
+                
+        return True
+    
+    
+    
 inherited_sale_order()
 
 
@@ -81,6 +99,7 @@ class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
     _columns = {
         'stock_move_ids':fields.one2many('stock.move','id_sale','Future Stock',readonly=True,help="Stock move future to reference of salesman for knowing that product is available"),
+        'check_confirm':fields.boolean("Future Stock'",help="This field indicates if the salesman is in accordance with sale a product   that is not available but if in a future stock"),
     
     }
     
