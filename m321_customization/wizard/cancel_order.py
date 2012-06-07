@@ -28,6 +28,7 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import datetime
 
 class cancel_orders(osv.osv_memory):
     """
@@ -50,7 +51,10 @@ class cancel_orders(osv.osv_memory):
         journal_ids = journal_obj.search(cr,uid,[],context=context)
         [journal_obj.write(cr,uid,[i.id],{'update_posted':True},context=context) for i in journal_obj.browse(cr,uid,journal_ids,context=context) if hasattr(i, "update_posted") if i.type in ('sale','sale_refund') ]
         wz_brw = self.browse(cr,uid,ids and ids[0],context=context)
-        sale_brw =  sale_obj.browse(cr,uid,sale_obj.search(cr,uid,[('state','=','progress')],context=context),context=context) 
+        date = datetime.datetime.today()
+        date = date and date - datetime.timedelta(days=2)
+        date = date and date.strftime('%Y/%m/%d')
+        sale_brw =  sale_obj.browse(cr,uid,sale_obj.search(cr,uid,[('state','=','progress'),('date_order','<',date)],context=context),context=context) 
         sale_ids = [i.id for i in sale_brw if i.state == 'progress' and i.invoice_ids for d in i.invoice_ids if d.state not in ('paid','open')] 
         if wz_brw.sure and wz_brw.are_sure:
             picking_obj.action_cancel(cr, uid,[d.id for i in sale_obj.browse(cr,uid,sale_ids,context=context) for d in i.picking_ids], context=context) 
