@@ -11,6 +11,7 @@
                 <form string="Cancel Sale Orders">
                     <group string="Cancel Sale Orders" colspan="3" col="2" >
                         <group  col="1">
+                        <field name='n_days'/>
                         <field name='sure'/>
                     <field name='are_sure'/>
                    <group col="2">

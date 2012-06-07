@@ -39,7 +39,12 @@ class cancel_orders(osv.osv_memory):
     _columns = {
             'sure': fields.boolean("Sure?", help="Check if are sure"),
             'are_sure': fields.boolean("Are Sure?", help="Check if really are sure"),
+            'n_days':fields.integer('Number Days',help="Number of day to cancel sales orders by defaults 2")
         }
+    _defaults = {
+     'n_days':2
+    
+    } 
 
     def cancel_orders(self,cr,uid,ids,context=None):
         if context is None:
@@ -50,9 +55,9 @@ class cancel_orders(osv.osv_memory):
         journal_obj = self.pool.get('account.journal')
         journal_ids = journal_obj.search(cr,uid,[],context=context)
         [journal_obj.write(cr,uid,[i.id],{'update_posted':True},context=context) for i in journal_obj.browse(cr,uid,journal_ids,context=context) if hasattr(i, "update_posted") if i.type in ('sale','sale_refund') ]
-        wz_brw = self.browse(cr,uid,ids and ids[0],context=context)
+        wz_brw = ids and self.browse(cr,uid,ids[0],context=context)
         date = datetime.datetime.today()
-        date = date and date - datetime.timedelta(days=2)
+        date = date and date - datetime.timedelta(days= wz_brw and wz_brw.n_days or 2)
         date = date and date.strftime('%Y/%m/%d')
         sale_brw =  sale_obj.browse(cr,uid,sale_obj.search(cr,uid,[('state','=','progress'),('date_order','<',date)],context=context),context=context) 
         sale_ids = [i.id for i in sale_brw if i.state == 'progress' and i.invoice_ids for d in i.invoice_ids if d.state not in ('paid','open')] 
