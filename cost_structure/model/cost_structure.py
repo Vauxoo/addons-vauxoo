@@ -80,6 +80,10 @@ cost_structure()
 class method_price(osv.osv):
     
     def default_get(self,cr,uid,fields,context=None):
+        '''
+        Default_get overwritten the method to select the cost structure and then generate the calculation of the margin from the cost structure
+        
+        '''
         if context is None:
             context = {}
         res = super(method_price, self).default_get(cr, uid, fields, context=context)
@@ -95,7 +99,7 @@ class method_price(osv.osv):
         reads = self.browse(cr, uid, ids, context)
         res = []
         for r in reads:
-            name = 'Price %d %s' % (r.sequence,repr(round(r.unit_price,3)))
+            name = 'Price %d %s' % (r.sequence,repr(round(r.unit_price,2)))
             res.append((r.id, name))
         return res
 
@@ -127,6 +131,9 @@ class method_price(osv.osv):
     
     
     def onchange_marginprice(self,cr,uid,ids,unit_price,margin_reference,cost_structure_id,context=None):
+        '''
+        Compute margin of gain to cost return price or percent gain
+        '''
         if context is None:
             context = {}
         res = {'value':{}}
