@@ -32,17 +32,6 @@ class account_invoice(osv.osv):
     
     _inherit = 'account.invoice'
     
-    #~ def default_get(self, cr, uid, fields, context=None):
-        #~ """ Get default values
-        #~ Give date and time of invoice creation
-        #~ """
-        #~ if context is None:
-            #~ context = {}
-        #~ res = super(account_invoice, self).default_get(cr, uid, fields, context=context)
-        #~ res.update({'date_invoice':datetime.datetime.today().strftime('%Y/%m/%d %H:%M:%S')})
-#~ 
-#~ 
-        #~ return res
         
     _columns = {
     'cancel_check':fields.boolean('Cancel', help="Fenield to indicate if invoice was canceled "),
@@ -54,7 +43,7 @@ class account_invoice(osv.osv):
     
 #    def action_number(self, cr, uid, ids, context=None):
 #        '''
-#        Modified to witholding vat validate 
+#        Modified to compute cost for product in the moment proccess order
  #       '''
  #       res = super(account_invoice,self).action_number(cr, uid, ids, context=context)
  #       invoice_brw = self.browse(cr,uid,ids,context=context)[0]
@@ -71,7 +60,9 @@ class account_invoice(osv.osv):
     
         
 #    def action_cancel(self, cr, uid, ids, *args):
-#        
+#        '''
+#        Modified to compute cost for product in the moment cancel order
+#        '''
 #        context = {}
 #        context.update({'invoice_cancel':True})
 #        res = super(account_invoice,self).action_cancel(cr, uid, ids, *args)
@@ -95,7 +86,7 @@ class account_invoice_line(osv.osv):
     _columns = {
    
         'aux_financial': fields.float('Total Financial aux',help="Total financial at the time of the calculation of cost through the validation of this invoice" ),
-        'aux_qty': fields.float('Total Qty',help="Current Number of calculating the time cost to this bill"),
+        'aux_qty': fields.float('Total Qty',help="Current Number of calculating the time cost to this invoice"),
     
     }
     

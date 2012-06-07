@@ -33,10 +33,14 @@ import decimal_precision as dp
 
 class sale_order_line(osv.osv):
     
-    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,        
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,context=None):
-        global dicc
+        '''
+        Overridden the method of product line sales, to replace the unit price calculation and selection of the cost structure 
+        that handles the product, and later to filter the prices for the product selected
+        '''
+            
         if context is None:
             context ={}
         product_obj = self.pool.get('product.product')
@@ -51,6 +55,9 @@ class sale_order_line(osv.osv):
     
     
     def price_unit(self,cr,uid,ids,price_method,product_uom,qty,context=None):
+        '''
+        Calculating the amount of model _compute_price method product.uom
+        '''
         if context is None:
             context = {}
         res = {'value':{}}
@@ -84,6 +91,10 @@ class sale_order(osv.osv):
     
         
     def _price_status(self, cr, uid, ids, field_name, arg, context=None):
+        '''
+        Check That the products sold are not sold at a price less than or greater than the price rago allocated in the product. 
+        Failure to comply with this will print a message informing the product that is not complying with this requirement
+        '''
         if context is None:
             context = {}
         if len(ids) == 0:
@@ -131,6 +142,9 @@ class sale_order(osv.osv):
     
     }
     def price_unit_confirm(self,cr,uid,ids,context=None):
+        '''
+        Workflow condition does not allow the sale process if at least one product is being sold in the price range set out in its cost structure
+        '''
         if context is None:
             context = {}
         product = []

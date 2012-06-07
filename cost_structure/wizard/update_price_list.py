@@ -43,12 +43,14 @@ class update_price_list(osv.osv_memory):
     }
     
     def update_price_list(self,cr,uid,ids,context=None):
+        '''
+        Method that creates or updates the list price on products, performing a calculation selected 
+        price if the price sequence already exists this will be updated, so will not be created
+        '''
+        
         if context is None:
             context = {}
         qty=1
-        #~ sale_price_digits = self.get_digits(dp='Sale Price')
-        #~ pool = pooler.get_pool(self.cr.dbname)
-        #~ print 'pricelist_id',pricelist_id
         product_obj = self.pool.get('product.product')
         method_obj =  self.pool.get('cost.structure')
         price_obj = self.pool.get('product.pricelist')

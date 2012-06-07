@@ -35,7 +35,10 @@ class product_product(osv.osv):
     
     _inherit = 'product.product'
     
-    def _structur_cost_status(self, cr, uid, ids, field_name, arg, context=None):
+    def _structure_cost_status(self, cr, uid, ids, field_name, arg, context=None):
+        '''
+        Variable indicating if the product already has a cost structure
+        '''
         if context is None:
             context = {}
         res = {}
@@ -77,13 +80,15 @@ class product_product(osv.osv):
     'date_cost_ant': fields.related('property_cost_structure', 'date_cost_ant', type='datetime', string='Date'),
     'date_cost_to_price': fields.related('property_cost_structure', 'date_cost_to_price', type='datetime', string='Date'),
     'method_cost_ids': fields.related('property_cost_structure', 'method_cost_ids',relation='method.price', type='one2many', string='Method Cost',),
-    'status_bool':fields.function(_structur_cost_status, method=True,type="boolean",store=True, string='Status Price'),
+    'status_bool':fields.function(_structure_cost_status, method=True,type="boolean",store=True, string='Status Price'),
     }
     
     
     
     def write(self,cr,uid,ids,vals,context=None):
-
+        '''
+        Overwritten the write method to manipulate the cost structure independently and make decisions when registering or modifying a cost structure
+        '''
         product_brw = self.browse(cr,uid,ids and ids[0],context=context)
         if product_brw.property_cost_structure and 'property_cost_structure' in vals:
             raise osv.except_osv(_('Error'), _('The product already has a cost structure'))
@@ -122,6 +127,11 @@ class product_product(osv.osv):
         
 
     def price_get(self, cr, uid, ids, ptype='list_price', context=None):
+        '''
+        Price_get overridden the method, the estimated cost to make the model for taking the money
+        if the selected price list takes the cost of the product for its calculation
+        '''
+        
         if context is None:
             context = {}
 

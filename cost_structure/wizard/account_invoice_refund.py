@@ -39,7 +39,10 @@ class account_invoice_refund(osv.osv_memory):
 
 
     def compute_refund(self, cr, uid, ids, mode='refund', context=None):
+        '''
+        Compute_refund overwritten the method to assign the date with time, which then will be used to calculate the time of
         
+        '''
         
         invo_obj = self.pool.get('account.invoice')
         res = super(account_invoice_refund,self).compute_refund(cr, uid, ids, mode=mode, context=context)
