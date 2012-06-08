@@ -1,0 +1,87 @@
+=== modificado archivo sale_mrp/sale_mrp.py
+--- sale_mrp/sale_mrp.py	2011-06-09 18:24:44 +0000
++++ sale_mrp/sale_mrp.py	2011-10-16 20:34:22 +0000
+@@ -25,28 +25,12 @@
+ class mrp_production(osv.osv):
+     _inherit = 'mrp.production'
+ 
+-    def _ref_calc(self, cr, uid, ids, field_names=None, arg=False, context=None):
++    def _get_sale_ref(self, cr, uid, ids, field_names=None, arg=False, context=None):
+         """ Finds reference of sales order for production order.
+         @param field_names: Names of fields.
+         @param arg: User defined arguments
+         @return: Dictionary of values.
+         """
+-        res = {}
+-        if not field_names:
+-            field_names = []
+-        for id in ids:
+-            res[id] = {}.fromkeys(field_names, False)
+-        for f in field_names:
+-            field_name = False
+-            if f == 'sale_name':
+-                field_name = 'name'
+-            if f == 'sale_ref':
+-                field_name = 'client_order_ref'
+-            for key, value in self._get_sale_ref(cr, uid, ids, field_name).items():
+-                res[key][f] = value
+-        return res
+-
+-    def _get_sale_ref(self, cr, uid, ids, field_name=False):
+         move_obj = self.pool.get('stock.move')
+ 
+         def get_parent_move(move_id):
+@@ -58,20 +42,30 @@
+         res = {}
+         productions = self.browse(cr, uid, ids)
+         for production in productions:
+-            res[production.id] = False
++            res[production.id] = {}
+             if production.move_prod_id:
+                 parent_move_line = get_parent_move(production.move_prod_id.id)
+                 if parent_move_line:
+                     move = move_obj.browse(cr, uid, parent_move_line)
+-                    if field_name == 'name':
+-                        res[production.id] = move.sale_line_id and move.sale_line_id.order_id.name or False
+-                    if field_name == 'client_order_ref':
+-                        res[production.id] = move.sale_line_id and move.sale_line_id.order_id.client_order_ref or False
++                    for field_name in field_names:
++                        if field_name == 'sale_name':
++                            res[production.id][field_name] = move.sale_line_id and move.sale_line_id.order_id.name or False
++                        if field_name == 'sale_ref':
++                            res[production.id][field_name] = move.sale_line_id and move.sale_line_id.order_id.client_order_ref or False
++                        if field_name == 'sale_id':
++                            res[production.id][field_name] = move.sale_line_id and move.sale_line_id.order_id.id or False
++                        if field_name == 'sale_line_id':
++                            res[production.id][field_name] = move.sale_line_id and move.sale_line_id.id or False
++                        if field_name == 'partner_id':
++                            res[production.id][field_name] = move.sale_line_id and move.sale_line_id.order_id.partner_id.id or False
+         return res
+ 
+     _columns = {
+-        'sale_name': fields.function(_ref_calc, method=True, multi='sale_name', type='char', string='Sales Name', help='Indicate the name of sales order.'),
+-        'sale_ref': fields.function(_ref_calc, method=True, multi='sale_name', type='char', string='Sales Reference', help='Indicate the Customer Reference from sales order.'),
++        'sale_name': fields.function(_get_sale_ref, method=True, multi='sale_name', type='char', size=64, string='Sales Name', help='Indicate the name of sales order.', store=True),
++        'sale_ref': fields.function(_get_sale_ref, method=True, multi='sale_name', type='char', size=64, string='Sales Reference', help='Indicate the Customer Reference from sales order.', store=True),
++        'sale_id': fields.function(_get_sale_ref, method=True, multi='sale_name', type='many2one', relation='sale.order', string='Sale Order', help='', store=True),
++        'sale_line_id': fields.function(_get_sale_ref, method=True, multi='sale_name', type='many2one', relation='sale.order.line', string='Sale Line', help='', store=True),
++        'partner_id':  fields.function(_get_sale_ref, method=True, multi='sale_name', type='many2one', relation='res.partner', string='Partner', help='', store=True),
+     }
+ 
+ mrp_production()
+
+=== modificado archivo sale_mrp/sale_mrp_view.xml
+--- sale_mrp/sale_mrp_view.xml	2011-06-09 18:24:44 +0000
++++ sale_mrp/sale_mrp_view.xml	2011-06-09 18:26:02 +0000
+@@ -11,6 +11,9 @@
+                 <xpath expr="/form/notebook/page/field[@name='move_prod_id']" position="after">
+                     <field name="sale_name" groups="base.group_extended"/>
+                     <field name="sale_ref" groups="base.group_extended"/>
++                    <field name="sale_id" groups="base.group_extended"/>
++                    <field name="sale_line_id" groups="base.group_extended"/>
++                    <field name="partner_id" groups="base.group_extended"/>
+                 </xpath>
+             </field>
+         </record>
+
+
