@@ -36,7 +36,7 @@
                     <field name="categ_id" position="before">
                         <field name="upc" />
                     </field>
-                    <field name="default_code" position="replace">
+                    <field name="default_code" position="after">
                         <field name="manufacturer_pref" />
                     </field>
                 </data>
