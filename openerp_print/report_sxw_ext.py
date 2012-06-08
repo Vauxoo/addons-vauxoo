@@ -88,7 +88,7 @@ class Printer(object):
             p = subprocess.Popen(args, stdout=subprocess.PIPE)
             q = subprocess.Popen(["lpr", '-P', print_report.printer, " ".join(self.options)], stdin=p.stdout)
         else:
-            subprocess.Popen(["lpr", '-P', print_report.printer, "mi_archivo.pdf", " ".join(self.options),], stdin=subprocess.PIPE)
+            subprocess.Popen(["lpr", '-P', print_report.printer, "/tmp/mi_archivo.pdf", " ".join(self.options),], stdin=subprocess.PIPE)
 
     def setOption(self, key, value=None):
         if value is None:
@@ -116,7 +116,7 @@ def check_state(cr,uid,print_report,model,id_obj):
     return False
 
 def get_file(cr, uid, report_data):
-    file_print = open('mi_archivo.pdf','wb+')
+    file_print = open('/tmp/mi_archivo.pdf','wb+')
     file_print.write(report_data)
     file_print.close
     return file_print
@@ -140,7 +140,7 @@ def get_lpr_options(cr,uid,print_report):
             '-q'                    , 
             '-dBATCH'               , 
             '-dNOPAUSE'             , 
-            'mi_archivo.pdf'        ,
+            '/tmp/mi_archivo.pdf'   ,
             ]
     p = Printer(printerOptions)
     return (p,args)
