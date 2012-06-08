@@ -14,7 +14,6 @@
                 <xpath expr="/form/notebook/page/group/field[@name='amount_total']" position="after">
                         <button colspan="1"
                             name="%(sale_multicompany_report)d"
-                            states="draft,confirmed"
                             string="Print With Attachments"
                             type="action"
                             icon="terp-document-new"/>
