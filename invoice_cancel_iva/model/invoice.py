@@ -62,7 +62,12 @@ class account_invoice(osv.osv):
                     if invo_brw.wh_iva_id.prev_state == 'cancel':
                         break
                     
+                    
+                    if not all([False for line in invo_brw.wh_iva_id.wh_lines if not line.invoice_id.move_id ]):
+                        raise osv.except_osv(_('Error'), _('One of the bills involved in the vat retention has not been validated, because it does not have an associated retention'))
                     wf_service.trg_validate(uid, 'account.wh.iva',invo_brw.wh_iva_id.id, d[1], cr)
+                    
+                    
                     if d[0] == invo_brw.wh_iva_id.prev_state:
                         break
 
