@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<document filename="base_report.pdf">
+  <template pageSize="(210.0mm,297.0mm)" title="Test" author="Miguel Delgado" allowSplitting="20" showBoundary="0">
+    <pageTemplate id="first">
+      <frame id="first"     x1="10.0mm"     y1="15mm"    width="190mm"  height="250mm"/>
+      <pageGraphics>
+           <image x="140mm" y="264mm" height="60.0" >[[ user.company_id.logo or removeParentNode('image') ]]</image>
+    </pageGraphics>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="CABECERA">
+      <blockBackground colorName="#ffffff" start="0,0" stop="-1,0" />
+    </blockTableStyle>
+    
+    <blockTableStyle id="DATOSCOMPANIA">
+      <blockSpan start="0,0" stop="-1,0" />
+      <blockBackground colorName="#e5e2e5" start="0,0" stop="-1,0" />
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1" thickness="0.5" />
+    </blockTableStyle>
+    
+    <paraStyle name="P1" fontName="Helvetica" fontSize="7.0" leading="8" alignment="CENTER" />
+    <paraStyle name="P2" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="black" />
+    <paraStyle name="P3" alignment="CENTER" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="P4" alignment="LEFT" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="black" />
+    <paraStyle name="P5" alignment="LEFT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="P6" alignment="RIGHT" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="black" />
+    <paraStyle name="P7" alignment="RIGHT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+
+    <initialize>
+      <paraStyle 
+      name="all" 
+      alignment="CENTER" fontName="Helvetica" 
+      fontSize="6.0" leading="8" 
+      spaceBefore="3.0"/>
+    </initialize>
+    
+  </stylesheet>
+
+  <images/>
+  <story>
+    <section>
+      <para style="P3">[[get_issue_by_project(objects,data['form']),'i']]</para>
+<!--
+      <blockTable rowHeights="7mm,7mm,7mm" colWidths="63mm,63mm,63mm" style="DATOSCOMPANIA">
+        <tr>
+          <td vAlign="middle">
+            <para style="P1">DATOS DEL VENDEDOR</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P1" />
+          </td>
+          <td vAlign="middle">
+            <para style="P1" />
+          </td>
+        </tr>
+        <tr>
+          <td vAlign="middle">
+            <para style="P1">NOMBRE</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P1">TELFONO / FAX / CELULAR</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P1">CORREO</para>
+          </td>
+        </tr>
+        <tr>
+          <td vAlign="middle">
+            <para style="P1">[[user.name and user.name or '']]</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P1">[[user.address_id.phone and user.address_id.phone or removeParentNode('para')]]</para>
+            <para style="P1">[[user.address_id.fax and user.address_id.fax or removeParentNode('para')]]</para>
+            <para style="P1">[[user.address_id.mobile and user.address_id.mobile or removeParentNode('para')]]</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P1">[[user.user_email and user.user_email or '']]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <blockTable colWidths="33.0mm,120.0mm,15.0mm,20.0mm,1.0mm" style="DATOSPRODUCTOS">
+        [[ (user.company_id.partner_id.id== 1) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,20.0mm",'style':'DATOSPRODUCTOS_CA2'}) or  (user.company_id.partner_id.id== 1) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,120.0mm,15.0mm,20.0mm,1.0mm",'style':'DATOSPRODUCTOS_CA'}) ]] 
+        [[(user.company_id.partner_id.id== 1356) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,20.0mm",'style':'DATOSPRODUCTOS_M321_2'}) or (user.company_id.partner_id.id== 1356) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,1.0mm",'style':'DATOSPRODUCTOS_M321'})]] 
+        [[ (user.company_id.partner_id.id== 1343) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,20.0mm",'style':'DATOSPRODUCTOS_AMD2'}) or (user.company_id.partner_id.id== 1343) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,1.0mm",'style':'DATOSPRODUCTOS_AMD2'})]]
+        <tr>
+          <td vAlign="middle">
+            <para style="P3">CODIGO</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P3">[[c.get('name')]]</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P3">ALMACEN</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P3">PRECIO UNO</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P3">[[ (data['form']['check_store'] == True) and 'PRECIO DOS' or '' ]]</para>
+          </td>
+        </tr>
+        <tr>
+          [[repeatIn(c['products'], 'p')]]
+          <td vAlign="middle">
+            <para style="P5">[[p.get('upc') and ('UPC: %s'%(p.get('upc'))) or removeParentNode('para')]]</para>
+            <para style="P5">[[p.get('ean13') and ('EAN13: %s'%(p.get('ean13'))) or removeParentNode('para')]]</para>
+            <para style="P5">[[p.get('reference') and ('REF.: %s'%(p.get('reference'))) or removeParentNode('para')]]</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P5">[[p.get('name') and p.get('name') or '']]</para>
+          </td>
+           <td vAlign="middle">
+            <para style="P3">[[p.get('qty') and p.get('qty') or '']]</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P3">[[p.get('price') and p.get('price') or '']]</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P3">[[(data['form']['check_store'] == True) and  p.get('price2') and p.get('price2') or '']]</para>
+          </td>
+        </tr>
+      </blockTable>
+-->
+    </section>
+  </story>
+</document>
