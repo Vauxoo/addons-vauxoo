@@ -52,9 +52,9 @@ class account_invoice(osv.osv):
             return invoice_data_parents
         else:
             invoice = self.browse(cr, uid, ids, context={'date':date_invoice})[0]
-            city = invoice_data_parents[0]['Comprobante']['Emisor']['DomicilioFiscal']['municipio']
-            state = invoice_data_parents[0]['Comprobante']['Emisor']['DomicilioFiscal']['estado']
-            country = invoice_data_parents[0]['Comprobante']['Emisor']['DomicilioFiscal']['pais']
+            city = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('DomicilioFiscal',{}).get('municipio', {}) or False
+            state = invoice_data_parents and invoice_data_parents[0]get('Comprobante',{}).get('Emisor', {}).get('DomicilioFiscal',{}).get('estado', {}) or False
+            country = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('DomicilioFiscal',{}).get('pais', {}) or False
             if city and state and country:
                 address = city +' '+ state +', '+ country
             else:
