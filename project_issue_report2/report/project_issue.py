@@ -60,30 +60,23 @@ class project_issue(report_sxw.rml_parse):
         parts = pool.get('res.partner').name_get(self.cr, self.uid, part_ids)
         proys= pool.get('project.project').browse(self.cr, self.uid, proj_ids)
         for part in parts:
-            print 'nombreeeeeeee',part[1]
             for proy in proys:
                 project = []
                 pi= pool.get('project.issue').search(self.cr, self.uid, [('project_id', '=', proy.id)])
-                print 'proy',proy
-                print 'pi',pi
-                for pro_isu in pool.get('project.project').browse(self.cr, self.uid, pi):
-                    print 'pro_isu',pro_isu
-                    val = {
-                        'name':proy.name,
-                        'issue':self._get_issue(form,issue)
-                    }
-                    if val:
-                        project.append(val)
-                        val={}
+                for pro_isu in pool.get('project.issue').browse(self.cr, self.uid, pi):
+                    project.append({
+                    'name':proy.name,
+                    'issue':self._get_issue(form,pro_isu)
+                    })
+
                 res.append({'name':part[1],'project':project})
+        
         print 'res',res
         return res
     
     def _get_issue(self,form,issue):
         res=[]
-        
         if not form.get('task'):
-            print '1'
             res.append({
                 'id':issue.id,
                 'date':issue.create_date,
@@ -95,7 +88,6 @@ class project_issue(report_sxw.rml_parse):
                 'category':issue.categ_id.name,
             })
         else:
-            print '2'
             res.append({
                 'id':issue.id,
                 'date':issue.create_date,
