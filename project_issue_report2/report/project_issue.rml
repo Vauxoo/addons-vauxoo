@@ -1,22 +1,43 @@
 <?xml version="1.0"?>
 <document filename="base_report.pdf">
-  <template pageSize="(210.0mm,297.0mm)" title="Test" author="Miguel Delgado" allowSplitting="20" showBoundary="0">
+  <template pageSize="(297.0mm,210.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary="0">
     <pageTemplate id="first">
-      <frame id="first"     x1="10.0mm"     y1="15mm"    width="190mm"  height="250mm"/>
-      <pageGraphics>
-           <image x="140mm" y="264mm" height="60.0" >[[ user.company_id.logo or removeParentNode('image') ]]</image>
-    </pageGraphics>
+      <frame id="first" x1="4.5mm" y1="15mm" width="288mm" height="190mm" />
+      <pageGraphics />
     </pageTemplate>
   </template>
   <stylesheet>
     <blockTableStyle id="CABECERA">
       <blockBackground colorName="#ffffff" start="0,0" stop="-1,0" />
     </blockTableStyle>
-    
     <blockTableStyle id="DATOSCOMPANIA">
       <blockSpan start="0,0" stop="-1,0" />
-      <blockBackground colorName="#e5e2e5" start="0,0" stop="-1,0" />
+      <blockBackground colorName="#333333" start="0,0" stop="-1,0" />
       <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,-1" thickness="0.5" />
+    </blockTableStyle>
+    <blockTableStyle id="DATOSCOMPANIA2" />
+    <blockTableStyle id="DATOSCOMPANIA3">
+      <blockSpan start="0,0" stop="-1,0" />
+      <blockSpan start="1,0" stop="-1,0" />
+      <blockBackground colorName="#5F5F5F" start="0,0" stop="-1,0" />
+      <blockBackground colorName="##B3B3B3" start="0,1" stop="-1,1" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,1" thickness="0.5" />
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,2" stop="-1,-1" thickness="0.5" />
+      <lineStyle kind="BOX" colorName="#000000" thickness="0.5" />
+    
+    </blockTableStyle>
+    
+    <blockTableStyle id="DATOSCOMPANIA4">
+      <blockSpan start="0,0" stop="-1,0" />
+      <blockSpan start="1,0" stop="-1,0" />
+      <blockBackground colorName="#5F5F5F" start="0,0" stop="-1,0" />
+      <blockBackground colorName="##B3B3B3" start="0,1" stop="-1,1" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,1" thickness="0.5" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="-1,1" thickness="0.5" />
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="-1,-2" thickness="0.5" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="-1,-2" thickness="0.5" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,2" stop="-1,-1" thickness="0.5" />
+      
     </blockTableStyle>
     
     <paraStyle name="P1" fontName="Helvetica" fontSize="7.0" leading="8" alignment="CENTER" />
@@ -26,102 +47,255 @@
     <paraStyle name="P5" alignment="LEFT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
     <paraStyle name="P6" alignment="RIGHT" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="black" />
     <paraStyle name="P7" alignment="RIGHT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
-
-    <initialize>
-      <paraStyle 
-      name="all" 
-      alignment="CENTER" fontName="Helvetica" 
-      fontSize="6.0" leading="8" 
-      spaceBefore="3.0"/>
-    </initialize>
+    <paraStyle name="P8" alignment="RIGHT" fontName="Helvetica" fontSize="12.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="P9" alignment="CENTER" fontName="Helvetica" fontSize="20.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="PARTNER" alignment="LEFT" fontName="Helvetica-Bold" fontSize="9.0" leading="8" spaceBefore="3.0" textColor="#FFFFFF" />
+    <paraStyle name="REF" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="#FFFFFF" />
+    <paraStyle name="PRODC" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="PRODR" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="PRODL" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" />
     
+    
+    <paraStyle name="draft" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#FFA500" />
+    <paraStyle name="open" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#FFA500" />
+    <paraStyle name="pending" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#0000FF" />
+    <paraStyle name="done" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#00FF00" />
+    <paraStyle name="cancel" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#FF0000" />
+    
+    
+    
+    <initialize>
+      <paraStyle name="all" alignment="CENTER" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    </initialize>
   </stylesheet>
-
-  <images/>
+  <images />
   <story>
+    <spacer length="7mm" />
+    <para style="P9">REPORTE DE INCIDENCIAS</para>
+    <spacer length="10mm" />
     <section>
-      <para style="P3">[[get_issue_by_project(objects,data['form']),'i']]</para>
-<!--
-      <blockTable rowHeights="7mm,7mm,7mm" colWidths="63mm,63mm,63mm" style="DATOSCOMPANIA">
+      <para>[[repeatIn(get_issue_by_project(objects,data['form']),'ip')]]</para>
+      <blockTable colWidths="35mm,33mm,33mm,127mm,15mm,15mm,15mm,15mm" style="DATOSCOMPANIA">
         <tr>
           <td vAlign="middle">
-            <para style="P1">DATOS DEL VENDEDOR</para>
+            <para style="PARTNER">[[ip.get('name') and ('EMPRESA: %s'%(ip.get('name'))) or removeParentNode('para')]]</para>
           </td>
           <td vAlign="middle">
-            <para style="P1" />
+            <para style="P3" />
           </td>
           <td vAlign="middle">
-            <para style="P1" />
-          </td>
-        </tr>
-        <tr>
-          <td vAlign="middle">
-            <para style="P1">NOMBRE</para>
+            <para style="P3" />
           </td>
           <td vAlign="middle">
-            <para style="P1">TELFONO / FAX / CELULAR</para>
+            <para style="P3" />
           </td>
           <td vAlign="middle">
-            <para style="P1">CORREO</para>
-          </td>
-        </tr>
-        <tr>
-          <td vAlign="middle">
-            <para style="P1">[[user.name and user.name or '']]</para>
+            <para style="P3" />
           </td>
           <td vAlign="middle">
-            <para style="P1">[[user.address_id.phone and user.address_id.phone or removeParentNode('para')]]</para>
-            <para style="P1">[[user.address_id.fax and user.address_id.fax or removeParentNode('para')]]</para>
-            <para style="P1">[[user.address_id.mobile and user.address_id.mobile or removeParentNode('para')]]</para>
+            <para style="P3" />
           </td>
           <td vAlign="middle">
-            <para style="P1">[[user.user_email and user.user_email or '']]</para>
+            <para style="P3" />
+          </td>
+          <td vAlign="middle">
+            <para style="P3" />
           </td>
         </tr>
       </blockTable>
-      <blockTable colWidths="33.0mm,120.0mm,15.0mm,20.0mm,1.0mm" style="DATOSPRODUCTOS">
-        [[ (user.company_id.partner_id.id== 1) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,20.0mm",'style':'DATOSPRODUCTOS_CA2'}) or  (user.company_id.partner_id.id== 1) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,120.0mm,15.0mm,20.0mm,1.0mm",'style':'DATOSPRODUCTOS_CA'}) ]] 
-        [[(user.company_id.partner_id.id== 1356) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,20.0mm",'style':'DATOSPRODUCTOS_M321_2'}) or (user.company_id.partner_id.id== 1356) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,1.0mm",'style':'DATOSPRODUCTOS_M321'})]] 
-        [[ (user.company_id.partner_id.id== 1343) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,20.0mm",'style':'DATOSPRODUCTOS_AMD2'}) or (user.company_id.partner_id.id== 1343) and (data['form']['check_store'] == True) and setTag('blockTable','blockTable',{'colWidths':"33.0mm,100.0mm,15.0mm,20.0mm,1.0mm",'style':'DATOSPRODUCTOS_AMD2'})]]
+      <blockTable colWidths="288mm">
         <tr>
+          
           <td vAlign="middle">
-            <para style="P3">CODIGO</para>
-          </td>
-          <td vAlign="middle">
-            <para style="P3">[[c.get('name')]]</para>
-          </td>
-          <td vAlign="middle">
-            <para style="P3">ALMACEN</para>
-          </td>
-          <td vAlign="middle">
-            <para style="P3">PRECIO UNO</para>
-          </td>
-          <td vAlign="middle">
-            <para style="P3">[[ (data['form']['check_store'] == True) and 'PRECIO DOS' or '' ]]</para>
+            <blockTable colWidths="10.5mm,35.5mm,131.5mm,15.0mm,35.5mm,25.5mm,15.5mm,15.5mm" style="DATOSCOMPANIA3">
+              <tr>
+                <td vAlign="middle">
+                  <para style="REF">PROYECTO.: [[p.get('name') and p.get('name') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODL" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+              </tr>
+              <tr>
+                <td vAlign="middle">
+                  <para style="REF">INCIDENCIA</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODL" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC" />
+                </td>
+              </tr>
+              [[repeatIn(ip['project'], 'p')]]
+              <tr>
+                <td vAlign="middle">
+                  <para style="PRODL">ID</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODL">FECHA CREACION</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC">NOMBRE</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC">PRIORIDAD</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC">REPORTADO POR</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC">PROGRESO</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC">ESTADO</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="PRODC">CATEGORIA</para>
+                </td>
+              </tr>
+            </blockTable>
           </td>
         </tr>
         <tr>
-          [[repeatIn(c['products'], 'p')]]
+          
           <td vAlign="middle">
-            <para style="P5">[[p.get('upc') and ('UPC: %s'%(p.get('upc'))) or removeParentNode('para')]]</para>
-            <para style="P5">[[p.get('ean13') and ('EAN13: %s'%(p.get('ean13'))) or removeParentNode('para')]]</para>
-            <para style="P5">[[p.get('reference') and ('REF.: %s'%(p.get('reference'))) or removeParentNode('para')]]</para>
-          </td>
-          <td vAlign="middle">
-            <para style="P5">[[p.get('name') and p.get('name') or '']]</para>
-          </td>
-           <td vAlign="middle">
-            <para style="P3">[[p.get('qty') and p.get('qty') or '']]</para>
-          </td>
-          <td vAlign="middle">
-            <para style="P3">[[p.get('price') and p.get('price') or '']]</para>
-          </td>
-          <td vAlign="middle">
-            <para style="P3">[[(data['form']['check_store'] == True) and  p.get('price2') and p.get('price2') or '']]</para>
+         
+            <blockTable colWidths="10.5mm,35.5mm,131.5mm,15.0mm,35.5mm,25.5mm,15.5mm,15.5mm" style="DATOSCOMPANIA2">
+            [[repeatIn(ip['project'], 'p')]]
+            
+              <tr>
+              
+                <para style="P3">[[repeatIn(p['issue'], 'i')]]</para>
+                <td vAlign="middle">
+                  <para style="P5">[[i.get('id') and i.get('id') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="P3">[[i.get('date') and i.get('date') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="P5">[[i.get('name') and i.get('name') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="P3">[[i.get('priority') and i.get('priority') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="P7">[[i.get('responsable') and i.get('responsable') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="P3">[[i.get('progress') and i.get('progress') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="P3">[[i.get('state') and i.get('state') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="P3">[[i.get('category') and i.get('category') or '']]</para>
+                </td>
+              </tr>
+              
+              <tr>
+              
+                <td vAlign="middle">
+                <para style="P3">[[repeatIn(i['task'], 't')]]</para>
+                  <blockTable colWidths="36mm,35mm,90mm,54mm,16mm,16mm,16mm,16mm" style="DATOSCOMPANIA4">
+                    <tr>
+                      <td vAlign="middle">
+                        <para style="REF">TAREA</para>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td vAlign="middle">
+                        <para style="PRODL">FECHA DE CREACION</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODL">FECHA PREVISTA</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">NOMBRE</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">RESPONSABLE</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">HORA ESTIMADA</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">HORAS RESTANTES</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">COSTO</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">ESTADO</para>
+                      </td>
+                    </tr>
+                    <tr>
+                      
+                      <td vAlign="middle">
+                        <para style="P5">[[t.get('create_date') and t.get('create_date') or '-']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P5">[[t.get('date_deadline') and t.get('date_deadline') or '-']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P3">[[t.get('name') and t.get('name') or '-']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P7">[[t.get('asigned_to') and t.get('asigned_to') or '-']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P7">[[t.get('planned_hours') and t.get('planned_hours') or '-']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P7">[[t.get('remaining_hours') and t.get('remaining_hours') or '-']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P7">[[t.get('cost') and t.get('cost') or '-']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P7">[[t.get('state') and t.get('state') or '-']]</para>
+                      </td>
+                    </tr>
+                  </blockTable>
+                </td>
+              </tr>
+            </blockTable>
           </td>
         </tr>
       </blockTable>
--->
     </section>
   </story>
 </document>

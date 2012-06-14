@@ -48,12 +48,9 @@ class project_issue(report_sxw.rml_parse):
         res=[]
         proj_ids=[]
         part_ids=[]
-        print form
         for issue in issues:
-            
             if issue and issue.partner_id and issue.partner_id.id not in part_ids:
                 part_ids.append(issue.partner_id.id)
-            
             if issue and issue.project_id and issue.project_id.id not in proj_ids:
                 proj_ids.append(issue.project_id.id)
         
@@ -64,14 +61,13 @@ class project_issue(report_sxw.rml_parse):
                 project = []
                 pi= pool.get('project.issue').search(self.cr, self.uid, [('project_id', '=', proy.id)])
                 for pro_isu in pool.get('project.issue').browse(self.cr, self.uid, pi):
-                    project.append({
-                    'name':proy.name,
-                    'issue':self._get_issue(form,pro_isu)
-                    })
-
+                    if pro_isu in issues:
+                        project.append({
+                        'name':proy.name,
+                        'issue':self._get_issue(form,pro_isu)
+                        })
                 res.append({'name':part[1],'project':project})
         
-        print 'res',res
         return res
     
     def _get_issue(self,form,issue):
@@ -97,7 +93,7 @@ class project_issue(report_sxw.rml_parse):
                 'progress':issue.progress,
                 'state':issue.state,
                 'category':issue.categ_id.name,
-                'task':self._get_task(issue.task_id)
+                'task':issue.task_id and self._get_task(issue.task_id) or []
             })
         
         return res
@@ -105,19 +101,17 @@ class project_issue(report_sxw.rml_parse):
     def _get_task(self,task_id):
         pool = pooler.get_pool(self.cr.dbname)
         res=[]
-        print 'task_id',task_id
         task = pool.get('project.task').browse(self.cr, self.uid, task_id.id)
-        print 'task',task.work_ids
-        for work in task.work_ids:
-            
-            res.append({
-                'date':work.date,
-                'name':work.name,
-                'hours':work.hours,
-                'user':work.user_id.name,
-                'company':work.company_id.name,
-            })
-        
+        res.append({
+        'create_date':task.create_date,
+        'date_deadline':task.date_deadline,
+        'name':task.name,
+        'asigned_to':task.user_id.name,
+        'planned_hours':task.planned_hours,
+        'remaining_hours':task.remaining_hours,
+        'cost':'0',
+        'state':task.state,
+        })
         return res
 
 report_sxw.report_sxw(
