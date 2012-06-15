@@ -1,0 +1,324 @@
+<?xml version="1.0"?>
+<document filename="base_report.pdf">
+  <template pageSize="(297.0mm,210.0mm)" title="Test" author="Martin Simon" allowSplitting="20" showBoundary="0">
+    <pageTemplate id="first">
+      <frame id="first" x1="4.5mm" y1="5mm" width="288mm" height="205mm" />
+      <pageGraphics />
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="LOGO">
+      <blockValign value="MIDDLE" />
+    </blockTableStyle>
+    <blockTableStyle id="GENERAL">
+      <blockValign value="MIDDLE" />
+      <blockSpan start="0,0" stop="-1,0" />
+      <blockBackground colorName="#5F5F5F" start="0,1" stop="0,0" />
+    </blockTableStyle>
+    <blockTableStyle id="CABECERA">
+      <blockValign value="MIDDLE" />
+      <blockSpan start="0,0" stop="-1,0" />
+      <blockBackground colorName="#2B547C" start="0,0" stop="-1,0" />
+      <lineStyle kind="BOX" colorName="#000000" start="0,2" stop="-1,-1" thickness="0.5" />
+    </blockTableStyle>
+    <blockTableStyle id="PROYECTO">
+      <blockValign value="MIDDLE" />
+      <blockSpan start="0,0" stop="-1,0" />
+      <blockSpan start="0,1" stop="-1,1" />
+      <blockBackground colorName="#4d80b2" start="0,0" stop="-1,0" />
+      <blockBackground colorName="#6094C6" start="0,1" stop="-1,1" />
+    </blockTableStyle>
+    <blockTableStyle id="INCIDENCIA">
+      <blockValign value="MIDDLE" />
+      <blockBackground colorName="#E5E3E3" start="0,0" stop="-1,0" />
+      <lineStyle kind="GRID" colorName="#000000" start="0,0" stop="-1,0" thickness="0.5" />
+    </blockTableStyle>
+    <blockTableStyle id="TAREA">
+      <blockValign value="MIDDLE" />
+      <blockSpan start="0,0" stop="-1,0" />
+      <blockBackground colorName="#89B5E0" start="0,0" stop="-1,0" />
+      <blockBackground colorName="#E5E3E3" start="0,1" stop="-1,1" />
+      <lineStyle kind="BOX" colorName="#000000" start="0,0" stop="-1,0" thickness="0.5" />
+      <lineStyle kind="GRID" colorName="#000000" start="0,1" stop="-1,1" thickness="0.5" />
+    </blockTableStyle>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="7.0" leading="8" alignment="CENTER" />
+    <paraStyle name="P2" alignment="CENTER" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="-3.0" textColor="black" />
+    <paraStyle name="P3" alignment="CENTER" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="P4" alignment="LEFT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="-3.0" textColor="black" />
+    <paraStyle name="P5" alignment="LEFT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="P6" alignment="RIGHT" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="black" />
+    <paraStyle name="P7" alignment="RIGHT" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="P8" alignment="RIGHT" fontName="Helvetica" fontSize="9.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="P9" alignment="CENTER" fontName="Helvetica-Oblique" fontSize="20.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="PARTNER" alignment="LEFT" fontName="Helvetica-Bold" fontSize="9.0" leading="18" spaceBefore="3.0" textColor="#FFFFFF" />
+    <paraStyle name="REF" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="#FFFFFF" />
+    <paraStyle name="INCIDENCIA_CABECERA" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="#000000" />
+    <paraStyle name="TAREA_CABECERA" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" textColor="#000000" />
+    <paraStyle name="PRODC" alignment="CENTER" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="PRODR" alignment="RIGHT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="PRODL" alignment="LEFT" fontName="Helvetica-Bold" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    <paraStyle name="draft" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#FFA500" />
+    <paraStyle name="open" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#FFA500" />
+    <paraStyle name="pending" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#0000FF" />
+    <paraStyle name="done" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#00FF00" />
+    <paraStyle name="cancel" alignment="CENTER" fontName="Helvetica" fontSize="8.0" leading="8" spaceBefore="-3.0" textColor="#FF0000" />
+    <initialize>
+      <paraStyle name="all" alignment="CENTER" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="3.0" />
+    </initialize>
+  </stylesheet>
+  <images />
+  <story>
+    <para>[[ setLang(user.company_id.partner_id.lang)]]</para>
+    <blockTable colWidths="70mm,150mm,68mm" style="LOGO">
+      <tr>
+        <td>
+          <image height="26mm" width="69.0mm">[[user.company_id.logo and user.company_id.logo or removeParentNode('image')]]</image>
+        </td>
+        <td vAlign="top">
+          <para style="P9">REPORTE DE INCIDENCIAS</para>
+        </td>
+        
+        <td >
+          <para style="P8">FECHA: [[ time.strftime('%d/%m/%Y') ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <section>
+      [[repeatIn(get_issue_by_project(objects,data['form']),'ip')]]
+      <blockTable colWidths="35mm,33mm,33mm,127mm,15mm,15mm,15mm,15mm" style="CABECERA">
+        <tr>
+          <td vAlign="middle">
+            <para style="PARTNER">[[ip.get('name') and ('EMPRESA: %s'%(ip.get('name'))) or removeParentNode('para')]]</para>
+          </td>
+          <td vAlign="middle">
+            <para style="P3" />
+          </td>
+          <td vAlign="middle">
+            <para style="P3" />
+          </td>
+          <td vAlign="middle">
+            <para style="P3" />
+          </td>
+          <td vAlign="middle">
+            <para style="P3" />
+          </td>
+          <td vAlign="middle">
+            <para style="P3" />
+          </td>
+          <td vAlign="middle">
+            <para style="P3" />
+          </td>
+          <td vAlign="middle" />
+        </tr>
+      </blockTable>
+      <spacer length="1mm" />
+      <blockTable colWidths="288mm" style="GENERAL">
+        <tr vAlign="middle">
+          [[repeatIn(ip['project'], 'p')]]
+          <td>
+            <blockTable colWidths="35mm,33mm,33mm,123mm,15mm,15mm,15mm,15mm" style="PROYECTO">
+              <tr>
+                <td vAlign="middle">
+                  <para style="REF">PROYECTO.: [[p.get('name') and p.get('name') or '']]</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+              </tr>
+              <tr>
+                <td vAlign="middle">
+                  <para style="INCIDENCIA_CABECERA">INCIDENCIAS</para>
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+                <td vAlign="middle">
+                  <para style="REF" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <blockTable colWidths="15mm,33mm,110mm,28mm,38mm,15mm,15mm,25mm" style="INCIDENCIA">
+                    <tr>
+                      <td vAlign="middle">
+                        <para style="PRODL">ID</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODL">FECHA CREACION</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODL">NOMBRE</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">PRIORIDAD</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">REPORTADO POR</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">PROGRESO</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">ESTADO</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="PRODC">CATEGORIA</para>
+                      </td>
+                    </tr>
+                    <tr vAlign="middle">
+                      [[repeatIn(p['issue'], 'iss')]]
+                      <td vAlign="middle">
+                        <para style="P4">[[iss.get('id') and iss.get('id') or '']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P4">[[iss.get('date') and formatLang(iss.get('date'),date_time=True) or '']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P4">[[iss.get('name') and iss.get('name') or '']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P2">[[iss.get('priority') and iss.get('priority') or '']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P2">[[iss.get('responsable') and iss.get('responsable') or '']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P2">[[iss.get('progress') and iss.get('progress') or '0']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P2">[[iss.get('state') and iss.get('state') or '']]</para>
+                      </td>
+                      <td vAlign="middle">
+                        <para style="P2">[[iss.get('category') and iss.get('category') or '']]</para>
+                      </td>
+                    </tr>
+                    <tr>
+                      [[iss.get('task') and iss.get('task') or removeParentNode('tr')]]
+                      <td>
+                        <blockTable colWidths="30mm,34mm,95mm,30mm,28mm,28mm,15mm,15mm" style="TAREA">
+                          <tr>
+                            <td vAlign="middle">
+                              <para style="TAREA_CABECERA">TAREAS</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="REF" />
+                            </td>
+                            <td vAlign="middle">
+                              <para style="REF" />
+                            </td>
+                            <td vAlign="middle">
+                              <para style="REF" />
+                            </td>
+                            <td vAlign="middle">
+                              <para style="REF" />
+                            </td>
+                            <td vAlign="middle">
+                              <para style="REF" />
+                            </td>
+                            <td vAlign="middle">
+                              <para style="REF" />
+                            </td>
+                            <td vAlign="middle">
+                              <para style="REF" />
+                            </td>
+                          </tr>
+                          <tr>
+                            <td vAlign="middle">
+                              <para style="PRODL">FECHA CREACION</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="PRODL">FECHA PREVISTA</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="PRODL">NOMBRE</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="PRODC">RESPONSABLE</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="PRODC">HORAS ESTIM.</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="PRODC">HORAS REST.</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="PRODC">COSTO</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="PRODC">ESTADO</para>
+                            </td>
+                          </tr>
+                          <tr>
+                            [[repeatIn(iss['task'], 'tsk')]]
+                            <td vAlign="middle">
+                              <para style="P4">[[tsk.get('create_date') and formatLang(tsk.get('create_date'),date_time=True) or '']]</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="P4">[[tsk.get('date_deadline') and formatLang(tsk.get('date_deadline'),dadate_timete=True) or '']]</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="P4">[[tsk.get('name') and tsk.get('name') or '']]</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="P2">[[tsk.get('asigned_to') and tsk.get('asigned_to') or '']]</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="P2">[[tsk.get('planned_hours') and tsk.get('planned_hours') or '']]</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="P2">[[tsk.get('remaining_hours') and tsk.get('remaining_hours') or '']]</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="P2">[[tsk.get('cost') and tsk.get('cost') or '']]</para>
+                            </td>
+                            <td vAlign="middle">
+                              <para style="P2">[[tsk.get('state') and tsk.get('state') or '']]</para>
+                            </td>
+                          </tr>
+                        </blockTable>
+                      </td>
+                    </tr>
+                  </blockTable>
+                </td>
+              </tr>
+            </blockTable>
+          </td>
+        </tr>
+      </blockTable>
+      <spacer length="2mm" />
+    </section>
+  </story>
+</document>
