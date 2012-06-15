@@ -48,69 +48,101 @@ class project_issue(report_sxw.rml_parse):
         res=[]
         proj_ids=[]
         part_ids=[]
+        aux = []
         for issue in issues:
+            aux.append(issue.id)
             if issue and issue.partner_id and issue.partner_id.id not in part_ids:
                 part_ids.append(issue.partner_id.id)
             if issue and issue.project_id and issue.project_id.id not in proj_ids:
                 proj_ids.append(issue.project_id.id)
         
         parts = pool.get('res.partner').name_get(self.cr, self.uid, part_ids)
-        proys= pool.get('project.project').browse(self.cr, self.uid, proj_ids)
+        project = []
         for part in parts:
-            for proy in proys:
-                project = []
-                pi= pool.get('project.issue').search(self.cr, self.uid, [('project_id', '=', proy.id)])
-                for pro_isu in pool.get('project.issue').browse(self.cr, self.uid, pi):
-                    if pro_isu in issues:
-                        project.append({
-                        'name':proy.name,
-                        'issue':self._get_issue(form,pro_isu)
-                        })
-                res.append({'name':part[1],'project':project})
-        
+            res.append({
+              'name':part[1],
+              'project':self._get_project(form,aux,proj_ids,part[0])})
         return res
     
-    def _get_issue(self,form,issue):
+    def _get_project(self,form,issues,proj_ids,partner):
+        pool = pooler.get_pool(self.cr.dbname)
         res=[]
-        if not form.get('task'):
-            res.append({
-                'id':issue.id,
-                'date':issue.create_date,
-                'name':issue.name,
-                'priority':issue.priority,
-                'responsable':issue.partner_address_id.name,
-                'progress':issue.progress,
-                'state':issue.state,
-                'category':issue.categ_id.name,
-            })
-        else:
-            res.append({
-                'id':issue.id,
-                'date':issue.create_date,
-                'name':issue.name,
-                'priority':issue.priority,
-                'responsable':issue.partner_address_id.name,
-                'progress':issue.progress,
-                'state':issue.state,
-                'category':issue.categ_id.name,
-                'task':issue.task_id and self._get_task(issue.task_id) or []
-            })
+        aux=[]
+        pi_ids= pool.get('project.issue').search(self.cr, self.uid, [('partner_id', '=', partner)])
+        for issue in pool.get('project.issue').browse(self.cr, self.uid, pi_ids):
+            issue and issue.project_id and aux.append( issue.project_id.id)
         
+        for proy in pool.get('project.project').browse(self.cr, self.uid, list(set(aux))):
+            
+            if proy.id in proj_ids :
+                val={
+                'name':proy.name,
+                'issue':self._get_issue(form,issues,proy,partner)
+                }
+                
+                res.append(val)
+        return res
+    
+    def _get_issue(self,form,issues,project,partner):
+        res=[]
+        state=''
+        priority=''
+        pool = pooler.get_pool(self.cr.dbname)
+        pi_ids= pool.get('project.issue').search(self.cr, self.uid, [('project_id', '=', project.id),('partner_id', '=', partner)])
+        for pro_isu in pool.get('project.issue').browse(self.cr, self.uid, pi_ids):
+            if pro_isu.id in issues:
+                x = pool.get('project.issue').fields_get(self.cr, self.uid,['state','priority'])
+                for i in x.get('state',{}).get('selection',[]):
+                    if i[0] == pro_isu.state:
+                        state = i[1]
+                        
+                for i in x.get('priority',{}).get('selection',[]):
+                    if i[0] == pro_isu.priority:
+                        priority = i[1]
+                
+                if not form.get('task'):
+                    res.append( {
+                        'id':pro_isu.id,
+                        'date':pro_isu.create_date,
+                        'name':pro_isu.name,
+                        'priority':priority,
+                        'responsable':pro_isu.partner_address_id.name,
+                        'progress':pro_isu.progress,
+                        'state':state,
+                        'category':pro_isu.categ_id.name,
+                        'task':False
+                    })
+                else:
+                    res.append( {
+                        'id':pro_isu.id,
+                        'date':pro_isu.create_date,
+                        'name':pro_isu.name,
+                        'priority':priority,
+                        'responsable':pro_isu.partner_address_id.name,
+                        'progress':pro_isu.progress,
+                        'state':state,
+                        'category':pro_isu.categ_id.name,
+                        'task':pro_isu.task_id and self._get_task(pro_isu.task_id) or []
+                    })
         return res
         
     def _get_task(self,task_id):
         pool = pooler.get_pool(self.cr.dbname)
         res=[]
         task = pool.get('project.task').browse(self.cr, self.uid, task_id.id)
+        x = pool.get('project.task').fields_get(self.cr, self.uid,['state'])
+        for i in x.get('state',{}).get('selection',[]):
+            if i[0] == task.state:
+                state = i[1]
         res.append({
         'create_date':task.create_date,
         'date_deadline':task.date_deadline,
         'name':task.name,
         'asigned_to':task.user_id.name,
-        'planned_hours':task.planned_hours,
-        'remaining_hours':task.remaining_hours,
+        'planned_hours':task.planned_hours and task.planned_hours or '0.0',
+        'remaining_hours':task.remaining_hours and task.remaining_hours or '0.0',
         'cost':'0',
-        'state':task.state,
+        'state':state,
         })
         return res
 
