@@ -91,7 +91,7 @@ class account_invoice(osv.osv):
         file_global= super(account_invoice, self)._get_file_globals(cr, uid, ids)
         date_invoice = self.browse(cr, uid,ids)[0].date_invoice
         if date_invoice >= '2012-07-01 00:00:00':
-            file_global['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_2.xslt' ) #para cfd 2.2
+            file_global['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_2_l.xslt' ) #para cfd 2.2
         return file_global
         
     _columns = {
