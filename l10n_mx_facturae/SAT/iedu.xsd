@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:iedu="http://www.sat.gob.mx/iedu" targetNamespace="http://www.sat.gob.mx/iedu" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="instEducativas">
+		<xs:annotation>
+			<xs:documentation>Complemento concepto para la expedición de comprobantes fiscales por parte de Instituciones Educativas Privadas, para los efectos del artículo primero y cuarto del decreto por el que se otorga un estímulo fiscal a las personas físicas en relación con los pagos por servicios educativos </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="version" use="required" fixed="1.0">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido con valor prefijado a 1.0 que indica la versión del estándar bajo el que se encuentra expresado el complemento concepto al comprobante.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="nombreAlumno" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para indicar el nombre del Alumno </xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string"/>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="CURP" type="iedu:tCURP" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para indicar la CURP del alumno de la institución educativa</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="nivelEducativo" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para indicar el nivel educativo que cursa el alumno</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Preescolar"/>
+						<xs:enumeration value="Primaria"/>
+						<xs:enumeration value="Secundaria"/>
+						<xs:enumeration value="Profesional técnico"/>
+						<xs:enumeration value="Bachillerato o su equivalente"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="autRVOE" use="required">
+				<xs:annotation>
+					<xs:documentation>Atributo requerido para especificar la autorización o reconocimiento de validez oficial de estudios en los términos de la Ley General de Educación que tenga la institución educativa privada donde se realiza el pago</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="rfcPago" type="iedu:tRFC" use="optional">
+				<xs:annotation>
+					<xs:documentation>Atributo opcional para indicar el RFC de quien realiza el pago cuando sea diferente a quien recibe el servicio</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="tRFC">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para la expresión de RFC's de contribuyentes. Cabe hacer la mención que debido a las reglas definidas por el estándar XML en el caso de que un RFC dado incluya un caracter ampersand, dicho caracter deberá ser expresado mediante la secuencia de escape especificado como parte del estándar. En la definición del tipo se expresa una longitud mínima y máxima, sin embargo la longitud puede ser redefinida como una extensión según se determina el uso particular</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="12"/>
+			<xs:maxLength value="13"/>
+			<xs:whiteSpace value="collapse"/>
+			<xs:pattern value="[A-Z,Ñ,&amp;]{3,4}[0-9]{2}[0-1][0-9][0-3][0-9][A-Z,0-9]?[A-Z,0-9]?[0-9,A-Z]?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="tCURP">
+		<xs:annotation>
+			<xs:documentation>Tipo definido para la expresión de una CURP. </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:whiteSpace value="collapse"/>
+			<xs:length value="18"/>
+			<xs:pattern value="[A-Z][A,E,I,O,U,X][A-Z]{2}[0-9]{2}[0-1][0-9][0-3][0-9][M,H][A-Z]{2}[B,C,D,F,G,H,J,K,L,M,N,Ñ,P,Q,R,S,T,V,W,X,Y,Z]{3}[0-9,A-Z][0-9]"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
