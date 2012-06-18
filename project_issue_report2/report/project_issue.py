@@ -89,6 +89,7 @@ class project_issue(report_sxw.rml_parse):
         priority=''
         pool = pooler.get_pool(self.cr.dbname)
         pi_ids= pool.get('project.issue').search(self.cr, self.uid, [('project_id', '=', project.id),('partner_id', '=', partner)])
+        hours=0.0
         for pro_isu in pool.get('project.issue').browse(self.cr, self.uid, pi_ids):
             if pro_isu.id in issues:
                 x = pool.get('project.issue').fields_get(self.cr, self.uid,['state','priority'])
@@ -100,6 +101,9 @@ class project_issue(report_sxw.rml_parse):
                     if i[0] == pro_isu.priority:
                         priority = i[1]
                 
+                hours1= pro_isu.task_id.total_hours or 0
+                hours= hours + hours1
+                
                 if not form.get('task'):
                     res.append( {
                         'id':pro_isu.id,
@@ -110,6 +114,8 @@ class project_issue(report_sxw.rml_parse):
                         'progress':pro_isu.progress,
                         'state':state,
                         'category':pro_isu.categ_id.name,
+                        'hours': pro_isu.task_id and pro_isu.task_id.total_hours or 0.0,
+                        'total_hours': hours,
                         'task':False
                     })
                 else:
@@ -122,10 +128,13 @@ class project_issue(report_sxw.rml_parse):
                         'progress':pro_isu.progress,
                         'state':state,
                         'category':pro_isu.categ_id.name,
+                        'hours': pro_isu.task_id and pro_isu.task_id.total_hours or 0.0,
+                        'total_hours': hours,
                         'task':pro_isu.task_id and self._get_task(pro_isu.task_id) or []
                     })
         return res
         
+       
     def _get_task(self,task_id):
         pool = pooler.get_pool(self.cr.dbname)
         res=[]
