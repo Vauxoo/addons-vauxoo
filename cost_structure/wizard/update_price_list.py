@@ -75,7 +75,7 @@ class update_price_list(osv.osv_memory):
                                 number and len(number) > 1 and number[1].isdigit() and int(number[1]) in dicti.keys() and method_obj.write(cr,uid,[property_id],{'method_cost_ids': [(1,dicti.get(int(number[1])), {'reference_cost_structure_id':property_id  , 
                                                                                                                                             'unit_price': price_dict.get(price), 
                                                                                                                                             })]},context=context) or \
-                                product_obj.write(cr,uid,[product_id],{'method_cost_ids': [(0,0, {'reference_cost_structure_id': property_id, 
+                                number and len(number) > 1 and number[1].isdigit() and product_obj.write(cr,uid,[product_id],{'method_cost_ids': [(0,0, {'reference_cost_structure_id': property_id, 
                                                                                                                                 'unit_price': price_dict.get(price), 
                                                                                                                                 'sequence':number[1]
                                                                                                                                 })]},context=context)
@@ -94,7 +94,7 @@ class update_price_list(osv.osv_memory):
                         number and len(number) > 1 and  number[1].isdigit() and int(number[1]) in dicti.keys() and method_obj.write(cr,uid,[property_id],{'method_cost_ids': [(1,dicti.get(int(number[1])), {'reference_cost_structure_id':property_id  , 
                                                                                                                                     'unit_price': price_dict.get(wz_brw.price_list_id.id), 
                                                                                                                                     })]},context=context) or \
-                        product_obj.write(cr,uid,[product_id],{'method_cost_ids': [(0,0, {'reference_cost_structure_id': product_brw and \
+                        number and len(number) > 1 and number[1].isdigit() and  product_obj.write(cr,uid,[product_id],{'method_cost_ids': [(0,0, {'reference_cost_structure_id': product_brw and \
                                                                                                                                     product_brw.property_cost_structure and \
                                                                                                                                     product_brw.property_cost_structure.id , 
                                                                                                                                     'unit_price': price_dict.get(wz_brw.price_list_id.id), 
