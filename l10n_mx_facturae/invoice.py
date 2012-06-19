@@ -389,7 +389,6 @@ class account_invoice(osv.osv):
                         # Para cada uno verificamos la existencia del archivo que requerimos
                         real_path = ""
                         for my_path in all_paths:
-                            print my_path
                             file_globals['fname_xslt'] = os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
                             if os.path.isfile(file_globals.get('fname_xslt', ' ')):
                                 # Si el archivo esta en este Path lo guardamos en real_path
