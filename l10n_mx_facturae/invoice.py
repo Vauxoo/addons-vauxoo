@@ -382,9 +382,27 @@ class account_invoice(osv.osv):
                     else:
                         file_globals['fname_xslt'] = os.path.join( tools.config["root_path"], certificate_id.fname_xslt )
                 else:
-                    file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
-                
-                file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
+                    # Se busca el caracter "," en el addons_path
+                    if "," in tools.config["addons_path"]:
+                        # Si existe la coma tenemos varios paths en esa variable y debemos identificar todos
+                        all_paths = tools.config["addons_path"].split(",")
+                        # Para cada uno verificamos la existencia del archivo que requerimos
+                        real_path = ""
+                        for my_path in all_paths:
+                            print my_path
+                            file_globals['fname_xslt'] = os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
+                            if os.path.isfile(file_globals.get('fname_xslt', ' ')):
+                                # Si el archivo esta en este Path lo guardamos en real_path
+                                real_path = my_path
+                                break
+                    else:
+                        file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
+
+                if realpath != "":
+                    file_globals['fname_repmensual_xslt'] = os.path.join( real_path, 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
+                else:
+                    file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
+
                 
                 if not file_globals.get('fname_xslt', False):
                     raise osv.except_osv('Warning !', 'No se ha definido fname_xslt. !')
