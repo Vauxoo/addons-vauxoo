@@ -71,7 +71,7 @@ class sale_order_line(osv.osv):
             price = uom_obj._compute_price(cr, uid, product_uom, price, to_uom_id=False)
             
             e = uom_obj._compute_qty(cr, uid, product_uom, qty, to_uom_id=product_uom)
-            res['value'].update({'price_unit': price})
+            res['value'].update({'price_unit': round(price,2)})
         return res
     
     _inherit = 'sale.order.line'
