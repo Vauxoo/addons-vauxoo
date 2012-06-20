@@ -17,7 +17,7 @@
                             <para style="DERECHA3"> [[ (o.type=='out_invoice' and o.parent_id and ('FACT. ORIGEN.: %s'%(o.parent_id.number)) or removeParentNode('para'))]]</para>
                             <para style="DERECHA3">[[(o.type=='out_invoice' and (not o.parent_id) or removeParentNode('para')) and (o.number and 'FACTURA No. %s'%(o.number) or ' ') or removeParentNode('para') ]]</para>
                             <para style="DERECHAPEQUECA">[[o.type=='out_invoice' and format((o.payment_term and ('CONDICION DE PAGO: %s'%(o.payment_term.name))) or 'CONDICION DE PAGO:CONTADO') ]]</para>
-                            <para style="DERECHAPEQUECA">FECHA DE EMISION: [[ formatLang(o.date_invoice,date=True) ]]</para>
+                            <para style="DERECHAPEQUECA">FECHA DE EMISION: [[ formatLang(o.date_invoice,date_time=True) ]]</para>
                         </td>
                     </tr>
                 </blockTable>
@@ -70,23 +70,23 @@
       <paraStyle name="all" alignment="justify"/>
     </initialize>
 
-    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier" fontSize="10.0" leading="7" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="DERECHA3" alignment="RIGHT" fontName="Courier" fontSize="12.0" leading="12" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="DERA" alignment="RIGHT" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQDA2" alignment="LEFT" fontName="Courier" fontSize="11.0" leading="10" spaceBefore="5.0" textColor="black"/>
-    <paraStyle name="IZQDA3" alignment="LEFT" fontName="Courier" fontSize="12.0" leading="12" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="9" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQUIERDA2" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQUIERDAPEQUE" alignment="LEFT" fontName="Courier" fontSize="7.0" leading="8" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQUIERDAPEQUECA" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="DERECHAPEQUECA" alignment="RIGHT" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQUIERDAPEQUE2" alignment="JUSTIFY"  fontName="Courier" fontSize="7.0" leading="7" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQ-GRANDE" alignment="LEFT" fontName="Courier" fontSize="14.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="DERECHA-N" alignment="RIGHT" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="CENTRO-N" alignment="CENTER" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
-    <paraStyle name="IZQUIERDA-N" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="DERECHA" alignment="RIGHT" fontName="Courier-Bold" fontSize="10.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="DERECHA3" alignment="RIGHT" fontName="Courier-Bold" fontSize="12.0" leading="12" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="DERA" alignment="RIGHT" fontName="Courier-Bold" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier-Bold" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQDA" alignment="LEFT" fontName="Courier-Bold" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQDA2" alignment="LEFT" fontName="Courier-Bold" fontSize="11.0" leading="10" spaceBefore="5.0" textColor="black"/>
+    <paraStyle name="IZQDA3" alignment="LEFT" fontName="Courier-Bold" fontSize="12.0" leading="12" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier-Bold" fontSize="10.0" leading="9" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDA2" alignment="LEFT" fontName="Courier-Bold" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDAPEQUE" alignment="LEFT" fontName="Courier-Bold" fontSize="7.0" leading="8" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDAPEQUECA" alignment="LEFT" fontName="Courier-Bold" fontSize="8.0" leading="9" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="DERECHAPEQUECA" alignment="RIGHT" fontName="Courier-Bold" fontSize="8.0" leading="9" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDAPEQUE2" alignment="JUSTIFY"  fontName="Courier-Bold" fontSize="7.0" leading="7" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQ-GRANDE" alignment="LEFT" fontName="Courier-Bold" fontSize="14.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="DERECHA-N" alignment="RIGHT" fontName="Courier-Bold" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="CENTRO-N" alignment="CENTER" fontName="Courier-Bold" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
+    <paraStyle name="IZQUIERDA-N" alignment="LEFT" fontName="Courier-Bold" fontSize="10.0" leading="10" spaceBefore="1.0" textColor="black"/>
     
   </stylesheet>
   <images/>
