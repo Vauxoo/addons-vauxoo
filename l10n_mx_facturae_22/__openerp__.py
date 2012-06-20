@@ -30,11 +30,11 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Upgrade CFD 2.0 to CFD 2.2
+    "description" : """Upgrade CFD 2.0 to CFD 2.2. If you are working with OpenERP version < 6.1 you need install the module: l10n_mx_res_partner_bank_currency
     """,
     "website" : "www.vauxoo.com",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae","l10n_mx_res_partner_bank_currency",
+    "depends" : ["l10n_mx_facturae",
         ],
     "init_xml" : [],
     "demo_xml" : [],
