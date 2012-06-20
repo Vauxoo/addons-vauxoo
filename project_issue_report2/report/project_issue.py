@@ -133,7 +133,6 @@ class project_issue(report_sxw.rml_parse):
                         'task':pro_isu.task_id and self._get_task(pro_isu.task_id) or []
                     })
         return res
-        
        
     def _get_task(self,task_id):
         pool = pooler.get_pool(self.cr.dbname)
