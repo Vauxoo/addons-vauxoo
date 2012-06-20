@@ -122,7 +122,7 @@
                 <blockTable colWidths="283mm" style="INCIDENCIA_TITULO">
                     <tr><td><para style="INCIDENCIA_CABECERA">INCIDENCIAS</para></td></tr>
                 </blockTable>
-                <blockTable colWidths="10mm,27mm,111mm,28mm,38mm,15mm,15mm,25mm,14mm" style="INCIDENCIA">
+                <blockTable colWidths="10mm,27mm,111mm,23mm,38mm,15mm,15mm,30mm,14mm" style="INCIDENCIA">
                     <tr>
                       <td vAlign="middle"><para style="PRODL">ID</para></td>
                       <td vAlign="middle"><para style="PRODL">FECHA CREACION</para></td>
@@ -135,8 +135,7 @@
                       <td vAlign="middle"><para style="PRODC">HORAS</para></td>
                     </tr>
                 </blockTable>
-                <section>
-                    <blockTable colWidths="10mm,27mm,111mm,28mm,38mm,15mm,15mm,25mm,14mm" style="INCIDENCIA">
+                    <blockTable colWidths="10mm,27mm,111mm,23mm,38mm,15mm,15mm,30mm,14mm" style="INCIDENCIA" repeatRows="2">
                         <tr>[[repeatIn(p['issue'], 'iss')]]
                           <td vAlign="middle"><para style="P4">[[iss.get('id') and iss.get('id') or '']]</para></td>
                           <td vAlign="middle"><para style="P4">[[iss.get('date') and formatLang(iss.get('date'),date_time=True) or '']]</para></td>
@@ -160,14 +159,11 @@
                             <td><para style="TOTAL_HOURS2">[[ iss.get('total_hours') and iss.get('total_hours') or '0.0' ]]</para></td>
                         </tr>
                     </blockTable>
-                </section>
             </td>
         </tr>
       </blockTable>
       </section>
-
-
-        <spacer length="6mm" />
+        <spacer length="4mm" />
     </section>
   </story>
 </document>
