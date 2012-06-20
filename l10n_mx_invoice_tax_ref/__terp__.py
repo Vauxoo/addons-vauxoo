@@ -33,7 +33,6 @@
     "description" : """ This module add tax_percent to account_invoice_tax
     """,
     "website" : "http://www.vauxoo.com/",
-    #"license" : "AGPL-3",
     "depends" : [
         "account",
     ],
