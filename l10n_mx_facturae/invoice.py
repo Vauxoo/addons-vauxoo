@@ -376,31 +376,24 @@ class account_invoice(osv.osv):
                 
                 file_globals['password'] = certificate_id.certificate_password
                 
+                real_path = None
+                
                 if certificate_id.fname_xslt:
                     if ( certificate_id.fname_xslt[0] == os.sep or certificate_id.fname_xslt[1] == ':' ):
                         file_globals['fname_xslt'] = certificate_id.fname_xslt
                     else:
                         file_globals['fname_xslt'] = os.path.join( tools.config["root_path"], certificate_id.fname_xslt )
                 else:
-                    # Se busca el caracter "," en el addons_path
-                    if "," in tools.config["addons_path"]:
-                        # Si existe la coma tenemos varios paths en esa variable y debemos identificar todos
-                        all_paths = tools.config["addons_path"].split(",")
-                        # Para cada uno verificamos la existencia del archivo que requerimos
-                        real_path = ""
-                        for my_path in all_paths:
-                            file_globals['fname_xslt'] = os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
-                            if os.path.isfile(file_globals.get('fname_xslt', ' ')):
-                                # Si el archivo esta en este Path lo guardamos en real_path
-                                real_path = my_path
-                                break
-                    else:
-                        file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
-
-                if realpath != "":
-                    file_globals['fname_repmensual_xslt'] = os.path.join( real_path, 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
-                else:
-                    file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
+                    #Search char "," for addons_path, now is multi-path
+                    all_paths = tools.config["addons_path"].split(",")
+                    for my_path in all_paths:
+                        file_globals['fname_xslt'] = os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
+                        if os.path.isfile(file_globals.get('fname_xslt', ' ')):
+                            #If file is in path, save it on real_path
+                            real_path = my_path
+                            break
+    
+                file_globals['fname_repmensual_xslt'] = real_path and os.path.join( real_path, 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' ) or ''
 
                 
                 if not file_globals.get('fname_xslt', False):
