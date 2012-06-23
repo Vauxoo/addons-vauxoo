@@ -1,0 +1,20 @@
+=== modified file 'account/account_invoice.py'
+--- account/account_invoice.py	2012-03-29 15:43:31 +0000
++++ account/account_invoice.py	2012-06-23 02:07:43 +0000
+@@ -1585,6 +1585,7 @@
+                 val['manual'] = False
+                 val['sequence'] = tax['sequence']
+                 val['base'] = tax['price_unit'] * line['quantity']
++                val['tax_id']=tax['id']
+ 
+                 if inv.type in ('out_invoice','in_invoice'):
+                     val['base_code_id'] = tax['base_code_id']
+@@ -1599,7 +1600,7 @@
+                     val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
+                     val['account_id'] = tax['account_paid_id'] or line.account_id.id
+ 
+-                key = (val['tax_code_id'], val['base_code_id'], val['account_id'])
++                key = (val['tax_id'], val['tax_code_id'], val['base_code_id'], val['account_id'])
+                 if not key in tax_grouped:
+                     tax_grouped[key] = val
+                 else:
