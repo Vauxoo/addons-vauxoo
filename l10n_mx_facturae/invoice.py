@@ -376,8 +376,6 @@ class account_invoice(osv.osv):
                 
                 file_globals['password'] = certificate_id.certificate_password
                 
-                real_path = None
-                
                 if certificate_id.fname_xslt:
                     if ( certificate_id.fname_xslt[0] == os.sep or certificate_id.fname_xslt[1] == ':' ):
                         file_globals['fname_xslt'] = certificate_id.fname_xslt
@@ -387,15 +385,10 @@ class account_invoice(osv.osv):
                     #Search char "," for addons_path, now is multi-path
                     all_paths = tools.config["addons_path"].split(",")
                     for my_path in all_paths:
-                        file_globals['fname_xslt'] = os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
-                        if os.path.isfile(file_globals.get('fname_xslt', ' ')):
-                            #If file is in path, save it on real_path
-                            real_path = my_path
+                        if os.path.isdir( os.path.join( my_path, 'l10n_mx_facturae', 'SAT' ) ):
+                            #If dir is in path, save it on real_path
+                            file_globals['fname_xslt'] = my_path and os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' ) or ''
                             break
-    
-                file_globals['fname_repmensual_xslt'] = real_path and os.path.join( real_path, 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' ) or ''
-
-                
                 if not file_globals.get('fname_xslt', False):
                     raise osv.except_osv('Warning !', 'No se ha definido fname_xslt. !')
                 
