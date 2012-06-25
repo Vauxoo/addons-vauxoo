@@ -54,6 +54,20 @@
       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,1" stop="3,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
     </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
     <blockTableStyle id="Tabla4">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
@@ -87,8 +101,11 @@
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P27" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
-    <paraStyle name="P28" fontName="Helvetica" alignment="RIGHT"/>
+    <paraStyle name="P27" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P29" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="CENTER"/>
+    <paraStyle name="P30" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
+    <paraStyle name="P31" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER" textColor="#000000"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -350,7 +367,23 @@
           </td>
         </tr>
       </blockTable>
-      <para style="P12">
+      <blockTable colWidths="157.0,172.0,170.0" style="Table1">
+        <tr>
+          <td>
+            <para style="P29">Regimen Fiscal </para>
+            <para style="P30">[[o.company_id.partner_id.regimen_fiscal_id.name]]</para>
+          </td>
+          <td>
+            <para style="P29">Forma de pago: </para>
+            <para style="P31">[[o.pay_method_id.name or 'No identificado']]</para>
+          </td>
+          <td>
+            <para style="P29">últimos 4 dígitos de la cuenta bancaria:</para>
+            <para style="P30">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="Standard">
         <font color="white"> </font>
       </para>
       <blockTable colWidths="100.0,282.0,117.0" style="Tabla4">
