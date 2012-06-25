@@ -6,8 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: isaac (isaac@vauxoo.com)
+#    Coded by: Luis Torres (luis@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
