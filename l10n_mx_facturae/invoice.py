@@ -565,6 +565,8 @@ class account_invoice(osv.osv):
             if ko in keys:
                 key_item_sort.append( [ko, data_dict[ko]] )
                 keys.pop( keys.index( ko ) )
+        if keys == ['rfc', 'nombre', 'RegimenFiscal', 'DomicilioFiscal', 'ExpedidoEn']:
+            keys = ['rfc', 'nombre', 'DomicilioFiscal', 'ExpedidoEn','RegimenFiscal']
         for key_too in keys:
             key_item_sort.append( [key_too, data_dict[key_too]] )
         return key_item_sort
