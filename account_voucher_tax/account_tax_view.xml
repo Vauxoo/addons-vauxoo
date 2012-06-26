@@ -22,9 +22,9 @@
                 <field name="inherit_id" ref="account.view_tax_form"/>
                 <field name="arch" type="xml">
                     <separator string="Tax Declaration: Invoices" position="before">
-                        <field name="account_collected_voucher_id" />
+                        <field name="account_collected_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
                         <newline/>
-                        <field name="account_paid_voucher_id" />
+                        <field name="account_paid_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
                     </separator>
                 </field>
         </record>

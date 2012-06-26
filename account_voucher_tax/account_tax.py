@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: Rodo (rodo@vauxoo.com),Moy (moylop260@vauxoo.com)
+#    Coded by: Rodo (rodo@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,12 +25,6 @@
 ##############################################################################
 from osv import osv, fields
 
-#TODO List:
-#   *Hay que modificar la venta, para que tome en el descripción el product_code & product_name del cliente, en su pedido de venta.
-#   *index to product_code
-#   *Agregar contraint (analizando todas las variantes)
-#   *Hacerlo multi-company (company_id & defaults)
-#   *Agregar su security.csv
 
 class account_tax(osv.osv):
      _inherit = "account.tax"
