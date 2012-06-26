@@ -24,15 +24,12 @@
 #
 ##############################################################################
 
-import pooler
-import wizard
-import netsvc
 from osv import fields, osv
 
 class account_invoice_tax(osv.osv):
     _inherit = 'account.invoice.tax'
     _columns = {
-        'tax_id': fields.many2one('account.tax', 'Tax', required=True, ondelete='set null', help="Tax"),
+        'tax_id': fields.many2one('account.tax', 'Tax', help="Tax"),
     }
 
 account_invoice_tax()
