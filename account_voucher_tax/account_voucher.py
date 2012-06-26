@@ -35,7 +35,7 @@ class account_voucher(osv.osv):
         invoice_obj = self.pool.get('account.invoice')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
         for voucher in self.browse(cr,uid,[voucher_id],context=context):
-            lineas=[]
+            lines=[]
             for line in voucher.line_ids:
                 if line.amount>0:
                     invoice_id=invoice_obj.search(cr,uid,[('number','=',line.name)],context=context)
@@ -45,13 +45,13 @@ class account_voucher(osv.osv):
                                 account=tax.tax_id.account_collected_voucher_id.id
                                 if invoice.type=='out_invoice':
                                     account=tax.tax_id.account_paid_voucher_id.id
-                                monto_credit=(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
-                                monto_debit=0.0
+                                credit_amount=(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
+                                debit_amount=0.0
                                 if tax.tax_id.amount<0:
-                                    monto_credit=0.0
-                                    monto_debit=-1.0*(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
+                                    credit_amount=0.0
+                                    debit_amount=-1.0*(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
                                 
-                                lineas.append({
+                                lines.append({
                                     'journal_id': voucher.journal_id.id,
                                     'period_id': voucher.period_id.id,
                                     'name': tax.name or '/',
@@ -60,12 +60,12 @@ class account_voucher(osv.osv):
                                     'partner_id': voucher.partner_id.id,
                                     'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
                                     'quantity': 1,
-                                    'credit': monto_credit,
-                                    'debit': monto_debit,
+                                    'credit': credit_amount,
+                                    'debit': debit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                     'date': voucher.date
                                 })
-                                lineas.append({
+                                lines.append({
                                     'journal_id': voucher.journal_id.id,
                                     'period_id': voucher.period_id.id,
                                     'name': tax.name or '/',
@@ -74,12 +74,12 @@ class account_voucher(osv.osv):
                                     'partner_id': voucher.partner_id.id,
                                     'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
                                     'quantity': 1,
-                                    'credit': monto_debit,
-                                    'debit': monto_credit,
+                                    'credit': debit_amount,
+                                    'debit': credit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                     'date': voucher.date
                                 })
-            for move_line in lineas:
+            for move_line in lines:
                 move_line_obj.create(cr,uid,move_line,context=context)
         return res
 account_voucher()
