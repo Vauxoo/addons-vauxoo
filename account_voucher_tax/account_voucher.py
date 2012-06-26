@@ -45,11 +45,11 @@ class account_voucher(osv.osv):
                                 account=tax.tax_id.account_collected_voucher_id.id
                                 if invoice.type=='out_invoice':
                                     account=tax.tax_id.account_paid_voucher_id.id
-                                monto_credit=tax.tax_id.amount*tax.base
+                                monto_credit=(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
                                 monto_debit=0.0
                                 if tax.tax_id.amount<0:
                                     monto_credit=0.0
-                                    monto_debit=(tax.tax_id.amount*tax.base)*-1.0
+                                    monto_debit=-1.0*(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
                                 
                                 lineas.append({
                                     'journal_id': voucher.journal_id.id,
