@@ -51,8 +51,7 @@ class account_voucher(osv.osv):
                                 if tax.tax_id.amount<0:
                                     credit_amount=0.0
                                     debit_amount=-1.0*(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
-                                move_ids.append(line.move_line_id.id)
-                                lines.append({
+                                move_line={
                                     'journal_id': voucher.journal_id.id,
                                     'period_id': voucher.period_id.id,
                                     'name': tax.name or '/',
@@ -65,9 +64,9 @@ class account_voucher(osv.osv):
                                     'debit': debit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                     'date': voucher.date,
-                                    'reconcile':1,
-                                })
-                                lines.append({
+                                }
+                                move_ids.append(move_line_obj.create(cr,uid,move_line,context=context))
+                                move_line={
                                     'journal_id': voucher.journal_id.id,
                                     'period_id': voucher.period_id.id,
                                     'name': tax.name or '/',
@@ -80,16 +79,17 @@ class account_voucher(osv.osv):
                                     'debit': credit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                     'date': voucher.date,
-                                    'reconcile':0,
-                                })
-            for move_line in lines:
-                move_id=move_line_obj.create(cr,uid,move_line,context=context)
-                if move_line['reconcile']:
-                    move_ids.append(int(move_id))
-                    print move_ids,"movessss"
-                    print move_line,"todooo"
-                    self.pool.get('account.move.line').reconcile(cr, uid, move_ids, 'manual', writeoff_acc_id=move_line['account_id'], writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
-        print res,"jejejeje"
+                                }
+                                move_id=move_line_obj.create(cr,uid,move_line,context=context)
+                                for mov_line in invoice.move_id.line_id:
+                                    print mov_line.account_id.id,"cuentaa"
+                                    if mov_line.account_id.id==tax.account_id.id:
+                                        move_ids.append(mov_line.id)
+                                        print mov_line.id,"esta si"
+                                if line.amount==line.amount_original:
+                                    self.pool.get('account.move.line').reconcile(cr, uid, move_ids, 'manual', writeoff_acc_id=move_line['account_id'], writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
+                                else:
+                                    self.pool.get('account.move.line').reconcile_partial(cr, uid, move_ids, 'manual', context)
         return res
 account_voucher()
 
