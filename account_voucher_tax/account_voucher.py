@@ -38,19 +38,20 @@ class account_voucher(osv.osv):
             lines=[]
             for line in voucher.line_ids:
                 if line.amount>0:
-                    invoice_id=invoice_obj.search(cr,uid,[('move_id','=',line.move_line_id.move_id.id)],context=context)
-                    for invoice in invoice_obj.browse(cr,uid,invoice_id,context=context):
+                    invoice_ids=invoice_obj.search(cr,uid,[('move_id','=',line.move_line_id.move_id.id)],context=context)
+                    for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
                         for tax in invoice.tax_line:
                             if tax.tax_id.tax_voucher_ok:
                                 move_ids=[]
                                 account=tax.tax_id.account_collected_voucher_id.id
-                                if invoice.type=='out_invoice':
-                                    account=tax.tax_id.account_paid_voucher_id.id
                                 credit_amount=(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
                                 debit_amount=0.0
                                 if tax.tax_id.amount<0:
                                     credit_amount=0.0
                                     debit_amount=-1.0*(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
+                                if invoice.type=='out_invoice':## considerar que hacer con refund
+                                    account=tax.tax_id.account_paid_voucher_id.id
+                                    credit_amount, debit_amount=debit_amount, credit_amount
                                 print move_id,"achissssss"
                                 move_line={
                                     'journal_id': voucher.journal_id.id,
