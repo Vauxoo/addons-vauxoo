@@ -36,9 +36,10 @@ class account_voucher(osv.osv):
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
         for voucher in self.browse(cr,uid,[voucher_id],context=context):
             lines=[]
+            move_ids=[]
             for line in voucher.line_ids:
                 if line.amount>0:
-                    invoice_id=invoice_obj.search(cr,uid,[('number','=',line.name)],context=context)
+                    invoice_id=invoice_obj.search(cr,uid,[('move_id','=',line.move_line_id.move_id.id)],context=context)
                     for invoice in invoice_obj.browse(cr,uid,invoice_id,context=context):
                         for tax in invoice.tax_line:
                             if tax.tax_id.tax_voucher_ok:
@@ -50,7 +51,7 @@ class account_voucher(osv.osv):
                                 if tax.tax_id.amount<0:
                                     credit_amount=0.0
                                     debit_amount=-1.0*(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)
-                                
+                                move_ids.append(line.move_line_id.id)
                                 lines.append({
                                     'journal_id': voucher.journal_id.id,
                                     'period_id': voucher.period_id.id,
@@ -63,7 +64,8 @@ class account_voucher(osv.osv):
                                     'credit': credit_amount,
                                     'debit': debit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
-                                    'date': voucher.date
+                                    'date': voucher.date,
+                                    'reconcile':1,
                                 })
                                 lines.append({
                                     'journal_id': voucher.journal_id.id,
@@ -77,11 +79,35 @@ class account_voucher(osv.osv):
                                     'credit': debit_amount,
                                     'debit': credit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
-                                    'date': voucher.date
+                                    'date': voucher.date,
+                                    'reconcile':0,
                                 })
             for move_line in lines:
-                move_line_obj.create(cr,uid,move_line,context=context)
+                move_id=move_line_obj.create(cr,uid,move_line,context=context)
+                if move_line['reconcile']:
+                    move_ids.append(int(move_id))
+                    print move_ids,"movessss"
+                    print move_line,"todooo"
+                    self.pool.get('account.move.line').reconcile(cr, uid, move_ids, 'manual', writeoff_acc_id=move_line['account_id'], writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
+        print res,"jejejeje"
         return res
 account_voucher()
 
+class account_move_line(osv.osv):
+    _inherit = 'account.move.line'
+    
+    def reconcile_partial(self, cr, uid, ids, type='auto', context=None, writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False):
+        res=super(account_move_line, self).reconcile_partial(cr, uid, ids, type='auto', context=None, writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False)
+        print res,"resssspuesta"
+        return res
+account_move_line()
 
+
+class account_invoice(osv.osv):
+    _inherit = 'account.invoice'
+    
+    def pay_and_reconcile(self, cr, uid, ids, pay_amount, pay_account_id, period_id, pay_journal_id, writeoff_acc_id, writeoff_period_id, writeoff_journal_id, context=None, name=''):
+        res=super(account_invoice, self).pay_and_reconcile(self, cr, uid, ids, pay_amount, pay_account_id, period_id, pay_journal_id, writeoff_acc_id, writeoff_period_id, writeoff_journal_id, context=None, name='')
+        print res,"resssspuestaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        return res
+account_invoice()
