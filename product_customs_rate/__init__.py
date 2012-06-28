@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 # Copyright (c) 2011 Cubic ERP - Teradata SAC. (http://cubicerp.com).
-#
+# Modified by juan@vauxoo.com
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
 # consequences resulting from its eventual inadequacies and bugs
@@ -27,7 +27,7 @@
 #
 ##############################################################################
 
-import product_arancel
+import product_customs_rate
 import product
 
 
