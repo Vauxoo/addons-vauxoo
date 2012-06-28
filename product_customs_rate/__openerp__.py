@@ -3,7 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2011 Cubic ERP - Teradata SAC (<http://cubicerp.com>).
-#
+#    Modified by juan@vauxoo.com
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -19,12 +19,12 @@
 #
 ##############################################################################
 {
-    "name": "Arancel Management",
+    "name": "Customs Rate Management",
     "version": "1.0",
     "description": """
-Management of Arancel
+Management of Customs Rate
 
-Gestión de Aranceles (Nandina y subpartida nacional)
+Gestión de Customs Rate (Nandina y subpartida nacional)
 
     """,
     "author": "Cubic ERP",
