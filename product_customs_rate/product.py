@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#     Copyright (C) 2011 Cubic ERP - Teradata SAC (<http://cubicerp.com>).
-#
+#    Copyright (C) 2011 Cubic ERP - Teradata SAC (<http://cubicerp.com>).
+#    Modified by juan@vauxoo.com
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
@@ -25,7 +25,7 @@ class product_template(osv.osv):
     _name = 'product.template'
     _inherit = 'product.template'
     _columns = {
-		'arancel_id' : fields.many2one('product.arancel','Arancel',domain=[('type','=','normal')]),
+		'customs_rate_id' : fields.many2one('product.customs.rate','Customs Rate',domain=[('type','=','normal')]),
     }
 
 product_template()
