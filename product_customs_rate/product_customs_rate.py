@@ -21,7 +21,7 @@
 
 from osv import osv, fields
 
-class product_arancel(osv.osv):
+class product_customs_rate(osv.osv):
 
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
@@ -56,16 +56,16 @@ class product_arancel(osv.osv):
         res = self.name_get(cr, uid, ids, context=context)
         return dict(res)
 
-    _name = 'product.arancel'
-    _description = 'Arancel of customs'
+    _name = 'product.customs.rate'
+    _description = 'Customs Rate of customs'
     _columns = {
         'code' : fields.char('Code', size=64),
         'name': fields.char('Name', size=2048, required=True, translate=True, select=True),
         'complete_name': fields.function(_name_get_fnc, method=True, type="char", string='Name'),
-        'parent_id': fields.many2one('product.arancel','Parent Arancel', select=True, domain=[('type','=','view')]),
-        'child_ids': fields.one2many('product.arancel', 'parent_id', string='Child Arancel'),
-        'type': fields.selection([('view','View'), ('normal','Normal')], 'Arancel Type'),
-        'tax_ids' : fields.many2many('account.tax','product_arancel_tax','arancel_id','tax_id','Taxes')
+        'parent_id': fields.many2one('product.customs.rate','Parent Customs Rate', select=True, domain=[('type','=','view')]),
+        'child_ids': fields.one2many('product.customs.rate', 'parent_id', string='Child Customs Rate'),
+        'type': fields.selection([('view','View'), ('normal','Normal')], 'Customs Rate Type'),
+        'tax_ids' : fields.many2many('account.tax','product_customs_rate_tax','customs_rate_id','tax_id','Taxes')
 
     }
 
@@ -73,7 +73,7 @@ class product_arancel(osv.osv):
     def _check_recursion(self, cr, uid, ids, context=None):
         level = 100
         while len(ids):
-            cr.execute('select distinct parent_id from product_arancel where id IN %s',(tuple(ids),))
+            cr.execute('select distinct parent_id from product_customs_rate where id IN %s',(tuple(ids),))
             ids = filter(None, map(lambda x:x[0], cr.fetchall()))
             if not level:
                 return False
@@ -81,10 +81,10 @@ class product_arancel(osv.osv):
         return True
 
     _constraints = [
-        (_check_recursion, 'Error ! You can not create recursive arancel.', ['parent_id'])
+        (_check_recursion, 'Error ! You can not create recursive Customs Rate.', ['parent_id'])
     ]
     def child_get(self, cr, uid, ids):
         return [ids]
 
-product_arancel()
+product_customs_rate()
 
