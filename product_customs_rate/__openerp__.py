@@ -31,15 +31,15 @@ Gestión de Customs Rate (Nandina y subpartida nacional)
     "website": "http://cubicERP.com",
     "category": "Finance",
     "depends": [
-			"product",
-			],
-	"data":[
-			"product_view.xml"
-			],
+            "product",
+            ],
+    "data":[
+            "product_view.xml"
+            ],
     "demo_xml": [
-			],
+            ],
     "update_xml": [
-			],
+            ],
     "active": False,
     "installable": True,
     "certificate" : "",
