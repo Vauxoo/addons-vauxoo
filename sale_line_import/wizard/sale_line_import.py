@@ -27,19 +27,19 @@ class wizard_import(osv.osv_memory):
         list_prod=data[0].index('product_id')
         datas=[]
         for dat in data[1:]:
+            dat.append(order_id)
+            print data[0]
+            print dat
             prod_name=dat[list_prod]
             prod_id=self.pool.get('product.product').search(cr,uid,[('name','=',prod_name)],limit=1)
             
             lines=self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id[0],
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
                                         lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False)
-            print lines.keys()
-            print lines.values()
-            dat.append(order_id)
+            for lin in range(len(lines.keys())):
+                if lines.keys()[lin] not in data[0]:
+                    print lines.keys()[lin]
             datas.append(dat)
-        print datas,'imprimo datas'
-#        self.pool.get('sale.order.line').import_data(cr, uid, data[0], datas, 'init', '')
+        self.pool.get('sale.order.line').import_data(cr, uid, data[0], datas, 'init', '')
         return True
-    
-    
 wizard_import()
