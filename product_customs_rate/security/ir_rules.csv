@@ -1,4 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_product_account_user,product.product.account.user,product.model_product_product,group_account_user,1,0,0,0
-access_%s_user (model_),id con puntos,module.model_%s (model_),,1,0,0,0
-access_%s_manager (model_),id con puntos,module.model_%s (model_),,1,1,1,1
