@@ -1,63 +1,16 @@
-<?xml version="1.0"?>
-<openerp>
-	<data noupdate="0">
+<?xml version="1.0" encoding="utf-8"?>
+<openerp><data>
 
 <!--
  Users Groups
 -->
-    <record model="res.groups" id="group_action_draft">
-        <field name="name">Vinculacion_Button_Action_Borrador</field>
+    <record model="res.groups" id="group_customs_rate_manager">
+        <field name="name">Customs Rate / Manager</field>
     </record>
    
-    <record model="res.groups" id="group_action_proceso">
-        <field name="name">Vinculacion_Button_Action_Proceso</field>
+    <record model="res.groups" id="group_customs_rate_user">
+        <field name="name">Customs Rate / User</field>
     </record>
    
-    <record model="res.groups" id="group_action_autorizar">
-        <field name="name">Vinculacion_Button_Action_Autorizar</field>
-    </record>
-	
-	 <record model="res.groups" id="group_action_realizar">
-        <field name="name">Vinculacion_Button_Action_Realizar</field>
-    </record>
-   
-    <record model="res.groups" id="group_action_cancel">
-        <field name="name">Vinculacion_Button_Action_Cancelar</field>
-    </record>
-	
-	  <record model="res.groups" id="group_action_reporte_draft">
-        <field name="name">Vinculacion_Button_Action_Borrador_Reporte</field>
-    </record>
-	
-	<record model="res.groups" id="group_action_reporte_realizar">
-        <field name="name">Vinculacion_Button_Action_Realizar_Reporte</field>
-    </record>
-	
-	<record model="res.groups" id="group_action_reporte_cancel">
-        <field name="name">Vinculacion_Button_Action_Cancelar_Reporte</field>
-    </record>
-	
-	<record model="res.groups" id="menu_todas_visitas">
-        <field name="name">menu_todas_visitas</field>
-    </record>
-	
-	<record model="res.groups" id="menu_visitas_canceladas">
-        <field name="name">menu_visitas_canceladas</field>
-    </record>
-	
-	<record model="res.groups" id="menu_reportes_cancelados">
-        <field name="name">menu_reportes_cancelados</field>
-    </record>
-	
-	<record model="res.groups" id="menu_reportes_borrador">
-        <field name="name">menu_reportes_borrador</field>
-    </record>
-	
-	<record model="res.groups" id="menu_todos_reportes">
-        <field name="name">menu_todos_reportes</field>
-    </record>
-	
-	
- </data>
-</openerp>
+</data></openerp>
 
