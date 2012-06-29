@@ -54,7 +54,7 @@
             </field>
         </record>
                 
-        <menuitem name='Customs Rate' id = 'product_customs_rate_menu' parent='account.next_id_27' sequence='200'	action="product_customs_rate_list_action"/>
+        <menuitem name='Customs Rate' id = 'product_customs_rate_menu' parent='account.next_id_27' sequence='200' action="product_customs_rate_list_action"/>
         <menuitem name='Customs Rate' id = 'product_customs_rate_menu' parent='product.prod_config_main' sequence='250'	action="product_customs_rate_list_action"/>
         
     </data>

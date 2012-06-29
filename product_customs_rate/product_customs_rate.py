@@ -57,7 +57,7 @@ class product_customs_rate(osv.osv):
         return dict(res)
 
     _name = 'product.customs.rate'
-    _description = 'Customs Rate of customs'
+    _description = 'Customs Rate'
     _columns = {
         'code' : fields.char('Code', size=64),
         'name': fields.char('Name', size=2048, required=True, translate=True, select=True),
