@@ -29,7 +29,7 @@
           <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <xpath expr='/form/group/field[@name="name"]' position="before">
+                <xpath expr='/form/group/field[@name="assigned_to"]' position="before">
                 <field name="product_backlog_id"/>
                 <field name="sprint_id"/>
 
