@@ -122,7 +122,7 @@
                 <blockTable colWidths="283mm" style="INCIDENCIA_TITULO">
                     <tr><td><para style="INCIDENCIA_CABECERA">INCIDENCIAS</para></td></tr>
                 </blockTable>
-                <blockTable colWidths="10mm,27mm,111mm,23mm,38mm,15mm,15mm,30mm,14mm" style="INCIDENCIA">
+                <blockTable colWidths="10mm,27mm,100mm,20mm,38mm,15mm,15mm,30mm,14mm,14mm" style="INCIDENCIA">
                     <tr>
                       <td vAlign="middle"><para style="PRODL">ID</para></td>
                       <td vAlign="middle"><para style="PRODL">FECHA CREACION</para></td>
@@ -132,10 +132,11 @@
                       <td vAlign="middle"><para style="PRODC">PROGRESO</para></td>
                       <td vAlign="middle"><para style="PRODC">ESTADO</para></td>
                       <td vAlign="middle"><para style="PRODC">CATEGORIA</para></td>
+                      <td vAlign="middle"><para style="PRODC">HORAS EST.</para></td>
                       <td vAlign="middle"><para style="PRODC">HORAS</para></td>
                     </tr>
                 </blockTable>
-                    <blockTable colWidths="10mm,27mm,111mm,23mm,38mm,15mm,15mm,30mm,14mm" style="INCIDENCIA" repeatRows="2">
+                    <blockTable colWidths="10mm,27mm,100mm,20mm,38mm,15mm,15mm,30mm,14mm,14mm" style="INCIDENCIA" repeatRows="2">
                         <tr>[[repeatIn(p['issue'], 'iss')]]
                           <td vAlign="middle"><para style="P4">[[iss.get('id') and iss.get('id') or '']]</para></td>
                           <td vAlign="middle"><para style="P4">[[iss.get('date') and formatLang(iss.get('date'),date_time=True) or '']]</para></td>
@@ -145,6 +146,7 @@
                           <td vAlign="middle"><para style="P2">[[iss.get('progress') and iss.get('progress') or '0']]%</para></td>
                           <td vAlign="middle"><para style="P2">[[iss.get('state') and iss.get('state') or '']]</para></td>
                           <td vAlign="middle"><para style="P2">[[iss.get('category') and iss.get('category') or '']]</para></td>
+                          <td vAlign="middle"><para style="HOURS">[[iss.get('hours_es') and iss.get('hours_es') or '0.0']]</para></td>
                           <td vAlign="middle"><para style="HOURS">[[iss.get('hours') and iss.get('hours') or '0.0']]</para></td>
                         </tr>
                         <tr>

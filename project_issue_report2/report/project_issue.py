@@ -115,6 +115,7 @@ class project_issue(report_sxw.rml_parse):
                         'state':state,
                         'category':pro_isu.categ_id.name,
                         'hours': pro_isu.task_id and pro_isu.task_id.total_hours or 0.0,
+                        'hours_es': pro_isu.task_id and pro_isu.planned_hours or 0.0,
                         'total_hours': hours,
                         'task':False
                     })
@@ -129,6 +130,7 @@ class project_issue(report_sxw.rml_parse):
                         'state':state,
                         'category':pro_isu.categ_id.name,
                         'hours': pro_isu.task_id and pro_isu.task_id.total_hours or 0.0,
+                        'hours_es': pro_isu.task_id and pro_isu.planned_hours or 0.0,
                         'total_hours': hours,
                         'task':pro_isu.task_id and self._get_task(pro_isu.task_id) or []
                     })
