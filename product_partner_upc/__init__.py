@@ -1,1 +1,0 @@
-import product_partner_upc
