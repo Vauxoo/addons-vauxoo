@@ -15,7 +15,7 @@ class wizard_import(osv.osv_memory):
         'msg' : fields.text('Mensajes')
     }
     def send_error(self,cr,uid,ids,context={}):
-        print 'error'
+        self.write(cr,uid,ids,{'msg':'No se encontro Referencia %s'%(context.get('ref',False))})
         return {}
     
     def send_lines(self,cr,uid,ids,context={}):
@@ -39,7 +39,7 @@ class wizard_import(osv.osv_memory):
 
             lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id[0],
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
-                                        lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or self.send_error(cr,uid,ids,context={})
+                                        lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or self.send_error(cr,uid,ids,context={'ref':prod_name})
                                         
             for lin in range(len(lines.keys())):
                 if lines.keys()[lin] not in data[0]:
