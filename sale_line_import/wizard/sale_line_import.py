@@ -11,7 +11,8 @@ import cStringIO
 class wizard_import(osv.osv_memory):
     _name='wizard.import'
     _columns={
-        'name' : fields.binary('File')
+        'name' : fields.binary('File'),
+        'msg' : fields.text('Mensajes')
     }
     def send_error(self,cr,uid,ids,context={}):
         print 'error'
