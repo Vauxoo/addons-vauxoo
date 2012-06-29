@@ -38,7 +38,7 @@ class wizard_import(osv.osv_memory):
     _name='wizard.import'
     _columns={
         'name' : fields.binary('File'),
-        'msg' : fields.text('Mensajes')
+        'msg' : fields.text('Mensajes',readonly=True)
     }
     def send_error(self,cr,uid,ids,context={}):
         
@@ -59,20 +59,15 @@ class wizard_import(osv.osv_memory):
         list_prod_qty=data[0].index('price_unit')
         msg=''
         for dat in data[1:]:
-            print dat,'dat'
             datas=[]
             data2=list(data[0])
             dat.append(order_id)
             prod_name=dat[list_prod]
             prod_id=self.pool.get('product.product').search(cr,uid,[('name','=',prod_name)],limit=1)
-
             lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id[0],
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
                                         lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or {}
-            print lines,'imrpimo lines'
-                                        
             if not lines: msg+='No se encontro Referencia %s \n'% (prod_name)
-                                        
             for lin in range(len(lines.keys())):
                 if lines.keys()[lin] not in data[0]:
                     if lines.keys()[lin] in ('tax_id','product_uom','product_packaging'):
@@ -85,8 +80,6 @@ class wizard_import(osv.osv_memory):
                         data2.append(lines.keys()[lin])
                         dat.append(lines[lines.keys()[lin]])
                 else:
-#                    print dat[data[0].index(lines.keys()[lin])] 
- #                   print lines[lines.keys()[lin]]
                     if str(dat[data[0].index(lines.keys()[lin])]) <> str(lines[lines.keys()[lin]]):
                         msg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],lines[lines.keys()[lin]],dat[data[0].index(lines.keys()[lin])],prod_name)
                         dat[data[0].index(lines.keys()[lin])] = lines[lines.keys()[lin]]
