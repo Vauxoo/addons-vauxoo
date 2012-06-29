@@ -39,6 +39,7 @@ Gestión de Customs Rate (Nandina y subpartida nacional)
     ],
     "update_xml": [
         'security/ir.model.access.csv',
+        'security/product_customs_rate_security.xml',
         'product_view.xml',
     ],
     "active": False,
