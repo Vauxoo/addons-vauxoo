@@ -8,6 +8,7 @@ from sys import argv
 import xlrd
 import xmlrpclib
 from datetime import datetime
+from ustr_test import ustr
 
 def loadProjectsTasks(fileName,HOST,PORT,DB,USER,PASS):
     ISSUES_PAGE = 0
@@ -26,7 +27,7 @@ def loadProjectsTasks(fileName,HOST,PORT,DB,USER,PASS):
     
     def clean(cadena):
         if isinstance(cadena, str):
-            return cadena and cadena.encode('ascii', 'ignore').strip() or None
+            return cadena and ustr(cadena).strip() or None
         return cadena
     
     def cleanDict(d):
@@ -75,7 +76,7 @@ def loadProjectsTasks(fileName,HOST,PORT,DB,USER,PASS):
                 user_mail['user_email'] = None
             addr = issue[7] and (int(issue[7])==3 and ID_ADDR or int(issue[7])) or None
             values_issue = {
-                'name' : issue[1].encode('ascii','ignore'),
+                'name' : ustr(issue[1]),
                 'categ_id': int(issue[3]),
                 'project_id': int(issue[2]),
                 'assigned_to': issue[4] and int(issue[4]) or None,
@@ -83,7 +84,7 @@ def loadProjectsTasks(fileName,HOST,PORT,DB,USER,PASS):
                 'partner_id': int(issue[6]),
                 'partner_address_id': addr,
                 'state':  'open',
-                'description': issue[8].encode('ascii','ignore'),
+                'description': ustr(issue[8]),
                 'email_from': issue[4] and user_mail['user_email'] or None,
                 'active': True,
             }
@@ -117,7 +118,7 @@ def loadProjectsTasks(fileName,HOST,PORT,DB,USER,PASS):
                             if task_works:
                                 for work in task_works:
                                     values_works = {
-                                        'name': work[1].encode('ascii','ignore'),
+                                        'name': ustr(work[1]),
                                         'hours' : work[2],
                                         'date' : datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
                                         'user_id': values_issue['assigned_to'],
