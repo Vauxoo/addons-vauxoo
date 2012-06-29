@@ -49,6 +49,7 @@
                 <xpath expr='/tree/field[@name="id"]' position="before">
                 <field name="product_backlog_id"/>
                 <field name="sprint_id"/>
+                <field name="task_id"/>
 
                 </xpath>
                
