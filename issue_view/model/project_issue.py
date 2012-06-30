@@ -33,12 +33,13 @@ import tools
 class project_issue(osv.osv):
 
     _inherit = 'project.issue'
-
     
     _columns = {
         'task_id': fields.many2one('project.task', 'Task', domain="[('project_id','=',project_id)]"),
         'product_backlog_id': fields.related('task_id', 'product_backlog_id',relation='project.scrum.product.backlog', type='many2one', string='Backlog',store=True),
         'sprint_id': fields.related('task_id', 'sprint_id',relation='project.scrum.sprint', type='many2one', string='Sprint',store=True),
+        'planned_hours_issue': fields.related('task_id', 'planned_hours', type='float', string='Planned Hours',store=True,
+            store={'res.partner': (lambda self, cr, uid, ids, c={}: ids,['name'],10)}),
     }
-    
+
 project_issue()
