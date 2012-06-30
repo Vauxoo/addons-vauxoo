@@ -51,15 +51,15 @@ class wizard_import(osv.osv_memory):
         data = list(csv.reader(input, quotechar='"' or '"', delimiter=','))
         data[0].append('order_id.id')
         list_prod=data[0].index('product_id')
-        list_prod_qty=data[0].index('price_unit')
         msg=''
         for dat in data[1:]:
             datas=[]
             data2=list(data[0])
             dat.append(order_id)
             prod_name=dat[list_prod]
-            prod_id=self.pool.get('product.product').search(cr,uid,[('name','=',prod_name)],limit=1)
-            lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id[0],
+            prod_name_search=self.pool.get('product.product').name_search(cr,uid,prod_name)
+            prod_id = prod_name_search and prod_name_search[0][0] or False
+            lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id,
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
                                         lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or {}
             if not lines: msg+='No Se Encontro Referencia: %s \n'% (prod_name)
