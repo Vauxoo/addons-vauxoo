@@ -81,7 +81,10 @@ class wizard_import(osv.osv_memory):
             datas.append(dat)
             print data2
             print datas
-            lines and self.pool.get('sale.order.line').import_data(cr, uid, data2, datas, 'init', '') or False
+            try:
+                lines and self.pool.get('sale.order.line').import_data(cr, uid, data2, datas, 'init', '') or False
+            except Exception, e:
+                return False
             data2=[]
         self.write(cr,uid,ids,{'msg':msg})
         return True
