@@ -29,8 +29,8 @@ Management of Customs Rate
 Gestión de Customs Rate (Nandina y subpartida nacional)
 
     """,
-    "author": "Cubic ERP",
-    "website": "http://cubicERP.com",
+    "author": "Cubic ERP & Vauxoo",
+    "website": "http://cubicERP.com & http://vauxoo.com",
     "category": "Finance",
     "depends": [
             "product",
