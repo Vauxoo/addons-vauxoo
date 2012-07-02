@@ -45,6 +45,7 @@ import netsvc
 from tools.translate import _
 import codecs
 import release
+from datetime import datetime, timedelta
 
 def exec_command_pipe(name, *args):
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
@@ -264,7 +265,18 @@ class account_invoice(osv.osv):
     def action_cancel(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
-    
+
+    def action_date_assign(self, cr, uid, ids, *args):
+        context={}
+        for id in ids:
+            invoice = self.browse(cr, uid, [id])[0]
+            date_format = invoice.date_invoice or False
+            context['date']=date_format
+            invoice = self.browse(cr, uid, [id], context)[0]
+            rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
+            self.write(cr, uid, [id], {'rate': rate})
+        return super(account_invoice, self).action_date_assign(cr, uid, ids, args)
+            
     def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
         res = {}
         attachment_obj = self.pool.get('ir.attachment')
@@ -291,6 +303,7 @@ class account_invoice(osv.osv):
         'cadena_original': fields.text('Cadena Original', size=512),
         'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
         'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML'),
+        'rate': fields.float('Tipo de cambio', readonly = True),
     }
     
     _defaults = {
@@ -369,10 +382,13 @@ class account_invoice(osv.osv):
                     else:
                         file_globals['fname_xslt'] = os.path.join( tools.config["root_path"], certificate_id.fname_xslt )
                 else:
-                    file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
-                
-                file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
-                
+                    #Search char "," for addons_path, now is multi-path
+                    all_paths = tools.config["addons_path"].split(",")
+                    for my_path in all_paths:
+                        if os.path.isdir( os.path.join( my_path, 'l10n_mx_facturae', 'SAT' ) ):
+                            #If dir is in path, save it on real_path
+                            file_globals['fname_xslt'] = my_path and os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' ) or ''
+                            break
                 if not file_globals.get('fname_xslt', False):
                     raise osv.except_osv('Warning !', 'No se ha definido fname_xslt. !')
                 
@@ -549,6 +565,8 @@ class account_invoice(osv.osv):
             if ko in keys:
                 key_item_sort.append( [ko, data_dict[ko]] )
                 keys.pop( keys.index( ko ) )
+        if keys == ['rfc', 'nombre', 'RegimenFiscal', 'DomicilioFiscal', 'ExpedidoEn']:
+            keys = ['rfc', 'nombre', 'DomicilioFiscal', 'ExpedidoEn','RegimenFiscal']
         for key_too in keys:
             key_item_sort.append( [key_too, data_dict[key_too]] )
         return key_item_sort

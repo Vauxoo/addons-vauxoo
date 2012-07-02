@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: isaac (isaac@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,20 +26,18 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_invoice_tax_ref",
+    "name" : "Agregado de moneda a res.partner.bank",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """ This module add tax_percent to account_invoice_tax
+    "description" : """This module add currency to model res.partner.bank
     """,
-    "website" : "http://www.vauxoo.com/",
-    "depends" : [
-        "account",
-    ],
+    "website" : "www.vauxoo.com",
+    "license" : "AGPL-3",
+    "depends" : ["base",],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
-    ],
+    "update_xml" : ["res_bank_view.xml",],
     "installable" : True,
     "active" : False,
 }

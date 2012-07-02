@@ -32,7 +32,6 @@
 the selected electronic invoice attachment by Email.
 """,
     "website" : "http://www.vauxoo.com",
-    "license" : "AGPL-3",
     "depends" : ["email_template", "l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [],

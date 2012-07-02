@@ -28,7 +28,6 @@
     "version" : "0.1",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "license" : "AGPL-3",
     "description": """ Este modulo genera por medio de data xml 2 grupos:
                         1) invoice_cancel
                         2) invoice_reset_draft
