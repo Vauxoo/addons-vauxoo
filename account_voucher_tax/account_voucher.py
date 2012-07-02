@@ -30,8 +30,6 @@ class account_voucher(osv.osv):
     _inherit = 'account.voucher'
     
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
-        print company_currency,"moneda base"
-        print current_currency,"moneda base"
         move_obj = self.pool.get('account.move')
         move_line_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
@@ -94,32 +92,11 @@ class account_voucher(osv.osv):
                                     move_line['amount_currency']=currency_obj.compute(cr, uid, company_currency, current_currency,credit_amount, context=context)
                                 move_line_obj.create(cr,uid,move_line,context=context)
                                 for mov_line in invoice.move_id.line_id:
-                                    print mov_line.account_id.id,"cuentaa"
                                     if mov_line.account_id.id==tax.account_id.id:
                                         move_ids.append(mov_line.id)
-                                        print mov_line.id,"esta si"
                                 if line.amount==line.amount_original:
                                     self.pool.get('account.move.line').reconcile(cr, uid, move_ids, 'manual', writeoff_acc_id=tax.account_id.id, writeoff_period_id=voucher.period_id.id, writeoff_journal_id=voucher.journal_id.id)
                                 else:
                                     self.pool.get('account.move.line').reconcile_partial(cr, uid, move_ids, 'manual', context)
         return res
 account_voucher()
-
-class account_move_line(osv.osv):
-    _inherit = 'account.move.line'
-    
-    def reconcile_partial(self, cr, uid, ids, type='auto', context=None, writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False):
-        res=super(account_move_line, self).reconcile_partial(cr, uid, ids, type='auto', context=None, writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False)
-        print res,"resssspuesta"
-        return res
-account_move_line()
-
-
-class account_invoice(osv.osv):
-    _inherit = 'account.invoice'
-    
-    def pay_and_reconcile(self, cr, uid, ids, pay_amount, pay_account_id, period_id, pay_journal_id, writeoff_acc_id, writeoff_period_id, writeoff_journal_id, context=None, name=''):
-        res=super(account_invoice, self).pay_and_reconcile(self, cr, uid, ids, pay_amount, pay_account_id, period_id, pay_journal_id, writeoff_acc_id, writeoff_period_id, writeoff_journal_id, context=None, name='')
-        print res,"resssspuestaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        return res
-account_invoice()
