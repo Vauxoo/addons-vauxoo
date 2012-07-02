@@ -321,7 +321,7 @@
       <blockTable colWidths="157.0,175.0,166.0" style="Tabla5">
         <tr>
           <td>
-            <para style="P10">Regimen Fiscal </para>
+            <para style="P10">Régimen Fiscal </para>
             <para style="P11">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
           </td>
           <td>
