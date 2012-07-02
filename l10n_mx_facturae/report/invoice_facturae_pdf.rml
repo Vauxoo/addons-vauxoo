@@ -329,7 +329,7 @@
             <para style="P12">[[o.pay_method_id.name or 'No identificado']]</para>
           </td>
           <td>
-            <para style="P10">últimos 4 dígitos de la cuenta bancaria:</para>
+            <para style="P10">Últimos 4 dígitos de la cuenta bancaria:</para>
             <para style="P12">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
           </td>
         </tr>
