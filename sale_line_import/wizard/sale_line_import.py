@@ -41,7 +41,6 @@ class wizard_import(osv.osv_memory):
         'msg' : fields.text('Mensajes',readonly=True)
     }
     def send_lines(self,cr,uid,ids,context={}):
-        print context
         order_id=context.get('active_id',False)
         order=self.pool.get('sale.order').browse(cr,uid,order_id)
         form = self.read(cr,uid,ids,[])
@@ -79,7 +78,6 @@ class wizard_import(osv.osv_memory):
                     val_str_2=lines[lines.keys()[lin]]
                     if lines.keys()[lin]=='product_uom':
                         val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
-                        print val_str,val_str_2
                     if lines.keys()[lin]=='price_unit':
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
                         val_str_2=float(lines[lines.keys()[lin]])
@@ -87,13 +85,14 @@ class wizard_import(osv.osv_memory):
                         msg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],lines[lines.keys()[lin]],dat[data[0].index(lines.keys()[lin])],prod_name)
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
-            print data2
-            print datas
             try:
                 lines and self.pool.get('sale.order.line').import_data(cr, uid, data2, datas, 'init', '') or False
             except Exception, e:
                 return False
             data2=[]
-        self.write(cr,uid,ids,{'msg':msg})
-        return True
+        if msg:
+            self.write(cr,uid,ids,{'msg':msg})
+            return True
+        else:
+            return {}
 wizard_import()
