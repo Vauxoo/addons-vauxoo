@@ -368,11 +368,11 @@
       <blockTable colWidths="157.0,172.0,170.0" style="Table1">
         <tr>
           <td>
-            <para style="P12">Regimen Fiscal </para>
+            <para style="P12">Régimen Fiscal </para>
             <para style="P13">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
           </td>
           <td>
-            <para style="P12">Método de pago: </para>
+            <para style="P12">Método de Pago: </para>
             <para style="P14">[[o.pay_method_id and o.pay_method_id.name or 'No identificado']]</para>
           </td>
           <td>
