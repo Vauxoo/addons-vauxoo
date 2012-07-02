@@ -47,16 +47,14 @@ class account_voucher(osv.osv):
                             if tax.tax_id.tax_voucher_ok:
                                 move_ids=[]
                                 account=tax.tax_id.account_collected_voucher_id.id
-                                credit_amount=((tax.tax_id.amount*tax.base)*(line.amount/line.amount_original))/invoice.currency_id.rate
+                                credit_amount=currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, ((tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)), context=context)
                                 debit_amount=0.0
                                 if tax.tax_id.amount<0:
                                     credit_amount=0.0
-                                    debit_amount=(-1.0*(tax.tax_id.amount*tax.base)*(line.amount/line.amount_original))/invoice.currency_id.rate
+                                    debit_amount=(-1.0*currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, ((tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)), context=context))
                                 if invoice.type=='out_invoice':## considerar que hacer con refund
                                     account=tax.tax_id.account_paid_voucher_id.id
                                     credit_amount, debit_amount=debit_amount, credit_amount
-                                amount2 = self._convert_amount(cr, uid, credit_amount, voucher.id, context=context)
-                                print amount2,"parece que asi se hace,,,,"
                                 move_line={
                                     'journal_id': voucher.journal_id.id,
                                     'period_id': voucher.period_id.id,
@@ -65,17 +63,16 @@ class account_voucher(osv.osv):
                                     'move_id': int(move_id),
                                     'partner_id': voucher.partner_id.id,
                                     'company_id':company_currency,
-                                    'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
+                                    'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
                                     'quantity': 1,
                                     'credit': credit_amount,
                                     'debit': debit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                     'date': voucher.date,
+                                    
                                     }
                                 if company_currency!=current_currency:
-                                    amount_currency = currency_obj.compute(cr, uid, company_currency, line.move_line_id.currency_id.id, credit_amount, context=context)
-                                    print amount_currency,"monto"
-                                    move_line['amount_currency'] = credit_amount/voucher.payment_rate
+                                    move_line['amount_currency']=currency_obj.compute(cr, uid, company_currency, current_currency,credit_amount, context=context)
                                 move_ids.append(move_line_obj.create(cr,uid,move_line,context=context))
                                 move_line={
                                     'journal_id': voucher.journal_id.id,
@@ -86,14 +83,15 @@ class account_voucher(osv.osv):
                                     'partner_id': voucher.partner_id.id,
                                     'company_id':company_currency,
                                     #'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
-                                    'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
+                                    'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
                                     'quantity': 1,
                                     'credit': debit_amount,
                                     'debit': credit_amount,
                                     'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                     'date': voucher.date,
-
                                     }
+                                if company_currency!=current_currency:
+                                    move_line['amount_currency']=currency_obj.compute(cr, uid, company_currency, current_currency,credit_amount, context=context)
                                 move_line_obj.create(cr,uid,move_line,context=context)
                                 for mov_line in invoice.move_id.line_id:
                                     print mov_line.account_id.id,"cuentaa"
