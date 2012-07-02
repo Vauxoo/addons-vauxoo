@@ -75,9 +75,17 @@ class wizard_import(osv.osv_memory):
                         data2.append(lines.keys()[lin])
                         dat.append(lines[lines.keys()[lin]])
                 else:
-                    if str(dat[data[0].index(lines.keys()[lin])]) <> str(lines[lines.keys()[lin]]):
+                    val_str=dat[data[0].index(lines.keys()[lin])]
+                    val_str_2=lines[lines.keys()[lin]]
+                    if lines.keys()[lin]=='product_uom':
+                        val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
+                        print val_str,val_str_2
+                    if lines.keys()[lin]=='price_unit':
+                        val_str=float(dat[data[0].index(lines.keys()[lin])])
+                        val_str_2=float(lines[lines.keys()[lin]])
+                    if val_str <> val_str_2:
                         msg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],lines[lines.keys()[lin]],dat[data[0].index(lines.keys()[lin])],prod_name)
-                        dat[data[0].index(lines.keys()[lin])] = lines[lines.keys()[lin]]
+                        dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
             print data2
             print datas
