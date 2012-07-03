@@ -87,11 +87,16 @@ class account_invoice(osv.osv):
         return res
     
     def _get_file_globals(self, cr, uid, ids, context={}):
-        
         file_global= super(account_invoice, self)._get_file_globals(cr, uid, ids)
         date_invoice = self.browse(cr, uid,ids)[0].date_invoice
         if date_invoice >= '2012-07-01 00:00:00':
-            file_global['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_2_l.xslt' ) #para cfd 2.2
+            #Search char "," for addons_path, now is multi-path
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir( os.path.join( my_path, 'l10n_mx_facturae', 'SAT' ) ):
+                    #If dir is in path, save it on real_path
+                    file_global['fname_xslt'] = my_path and os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_2_l.xslt' ) or ''
+                    break
         return file_global
         
     _columns = {
