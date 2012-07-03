@@ -105,7 +105,7 @@ class commission_payment(osv.osv):
         # de ISLR
         ret_islr_lines = self.pool.get ('islr.wh.doc.line')
         # de IM
-        ret_im_lines = self.pool.get ('account.wh.munici.line')
+        mun_obj = self.pool.get ('account.wh.munici.line')
         
         #commissions = self.pool.get('commission.payment')
         commissions = self.browse(cr, user, ids, context=None)
@@ -157,110 +157,44 @@ class commission_payment(osv.osv):
                                     # Si esta aqui dentro es porque esta linea tiene una id valida de una factura.
                                     inv_brw = payment_brw.invoice_id
                                     
-                                    # Obtener % IVA 
-                                    perc_iva = round((( inv_brw.amount_total /  inv_brw.amount_untaxed)-1)*100,0)
-                                    #~ #~ print 'perc_iva: ',perc_iva,'\n'
+                                    #~ DETERMINACION DE RETENIBILIDAD DE IVA EN FACTURA  (perc_ret_iva)
+                                    #~ ============================================================================
+                                    #~ ============================================================================
+                                    #~ Determinar si la factura tiene o tendra una retencion de IVA (perc_ret_iva)
+                                    wh_lines = inv_brw.wh_iva_id and inv_brw.wh_iva_id.wh_lines and [line.wh_iva_rate for line in inv_brw.wh_iva_id.wh_lines if inv_brw.id == line.invoice_id.id] or []
                                     
-                                    # Obtener el Valor de Porcentaje Retencion de esta factura
+                                    perc_ret_iva = wh_lines and wh_lines[0] or \
+                                        (inv_brw.partner_id.wh_iva_agent and inv_brw.company_id.partner_id.wh_iva_rate or 0.00)
+                                    #~ ============================================================================
+                                    #~ ============================================================================
                                     
-                                    # Las maneras faciles son las dos primeras que el cliente no retenga y la factura sea solo de productos
-                                    # por lo que las retenciones de islr y im no aplican
-                                    # o que el cliente retenga el 100% (algo poco visto) y sea una factura de productos
+                                    #~ DETERMINACION DE RETENIBILIDAD MUNICIPAL EN FACTURA  (perc_ret_im)
+                                    #~ ============================================================================
+                                    #~ ============================================================================
+                                    #~ Determinar si la factura tiene o tendra una retencion MUNICIPAL (perc_ret_im)
+                                    #~ Se intentara buscar una retencion municipal para la factura,
+                                    #~ si no se logra conseguir se asume que si existen retenciones municpales
+                                    #~ para el cliente entonces este mismo cliente aplicara la misma tasa de retencion
+                                    #~ que ha aplicado previamente, se seleccionara la mayor tasa
+                                    
+                                    mun_ids = mun_obj.search(cr,user,[('invoice_id','=',inv_brw.id)]) or mun_obj.search(cr,user,[('invoice_id.partner_id','=',inv_brw.partner_id.id)])
+                                    
+                                    perc_ret_im = mun_ids and \
+                                            [mun_brw.wh_loc_rate for mun_brw in mun_obj.browse(cr,user,mun_ids)] and \
+                                            max([mun_brw.wh_loc_rate for mun_brw in mun_obj.browse(cr,user,mun_ids)]) or 0.0
+
+                                    #~ ============================================================================
+                                    #~ ============================================================================
+
                                     no_ret_iva = True
                                     no_ret_islr = True
                                     no_ret_im = True
-                                    
-                                    if abs(inv_brw.amount_total - payment_brw.amount)<= 1.0:
-                                        #~ print 'entre al if 4'
-                                        perc_ret_iva = 0.0
-                                        perc_ret_islr = 0.0
-                                        perc_ret_im = 0.0
-                                        no_ret_iva = False
-                                        no_ret_islr = False
-                                        no_ret_im = False
-                                    elif abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-75.0/100))) - payment_brw.amount)<= 1.0:
-                                        #~ print 'entre al elif 1'
-                                        perc_ret_iva = 75.0
-                                        perc_ret_islr = 0.0
-                                        perc_ret_im = 0.0
-                                        no_ret_iva = False
-                                        no_ret_islr = False
-                                        no_ret_im = False
-                                    elif ret_iva_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)]):                                
-                                        #~ print 'entre al elif 2'
-                                        lines_ret_iva = ret_iva_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)])
-                                        for line in lines_ret_iva:
-                                            #~ print 'entre al for 2'
-                                            perc_ret_iva = ret_iva_lines.browse(cr, user, line, context=None).wh_iva_rate
-                                        no_ret_iva = False
-
-                                    if no_ret_islr == True and ret_islr_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)]):
-                                        #~ print 'entre al if 5'
-                                        lines_ret_islr = ret_islr_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)])
-                                        perc_ret_islr = 0
-                                        for line in lines_ret_islr:
-                                            #~ print 'entre al for 3'
-                                            perc_ret_islr += ret_islr_lines.browse(cr, user, line, context=None).retencion_islr
-                                        no_ret_islr = False
-                                        
-                                    if no_ret_im == True and ret_im_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)]):
-                                        #~ print 'entre al if 6'
-                                        lines_ret_im = ret_im_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)])
-                                        perc_ret_im = 0
-                                        for line in lines_ret_im:
-                                            #~ print 'entre al for 4'
-                                            perc_ret_im += ret_im_lines.browse(cr, user, line, context=None).wh_loc_rate
-                                        no_ret_im = False
-                                    
-                                    # Tratando de obtener la perc_ret_iva cuando se tiene el valor de impuesto municipal 
-                                    # y considerando que el islr es cero, como en el caso de las empresas que solo cargan un impuesto social
-                                    
-                                    if no_ret_im == False and no_ret_iva == True:
-                                        #~ print 'entre al if 7'
-                                        for valor in [0, 75.0, 100.0]:
-                                            #~ print 'entre al for 5'
-                                            if abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_im/100.0))) - payment_brw.amount)<= 1.0:
-                                                #~ print 'entre al if 8'
-                                                perc_ret_iva = valor
-                                                no_ret_iva = False
-                                    
-                                    # Tratando de obtener la perc_ret_iva cuando se tiene el valor de impuesto slr 
-                                    # y considerando que el im es cero, como en el caso de las empresas que solo cargan el islr y no el im
-                                    
-                                    if no_ret_islr == False and no_ret_iva == True:
-                                        #~ print 'entre al if 9'
-                                        for valor in [0, 75.0, 100.0]:
-                                            #~ print 'entre al for 6'
-                                            if abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_islr/100.0))) - payment_brw.amount)<= 1.0:
-                                                perc_ret_iva = valor
-                                                no_ret_iva = False
-                                    
-                                    # Tratando de obtener la perc_ret_iva cuando se tienen tanto el islr como el im
-                                    
-                                    if no_ret_islr == False and no_ret_im == False and no_ret_iva == True:
-                                        #~ print 'entre al if 10'
-                                        for valor in [0, 75.0, 100.0]:
-                                            #~ print 'entre al for 7'
-                                            if abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_im/100.0)-(perc_ret_islr/100.0))) - payment_brw.amount)<= 1.0:
-                                                #~ print 'entre al if 11'
-                                                perc_ret_iva = valor
-                                                no_ret_iva = False
-                                    
-                                    # Tratando de obtener el islr cuando se tienen tanto el perc_ret_iva como el im
-                                    if no_ret_islr == True and no_ret_im == False and no_ret_iva == False:
-                                        for valor in [0, 2.0, 3.0, 5.0]:
-                                            if abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-perc_ret_iva/100.0)-(perc_ret_im/100.0)-(valor/100.0))) - payment_brw.amount)<= 1.0:
-                                                perc_ret_islr = valor
-                                                no_ret_islr = False
                                                                     
                                     # Obtener el vendedor del partner
                                     saleman = inv_brw.partner_id.user_id
-                                    
-                                    # si ha sido posible calcular u obtener todas las retenciones por los medios convencionales
-                                    # entonces se puede proceder con el calculo de retencion de las lineas, de lo contrario se 
-                                    # genera una bitacora para que se obtengan las retenciones faltantes para proceder nuevament
-                                    # con la preparacion de las comisiones.
-                                    if no_ret_islr == False and no_ret_im == False and no_ret_iva == False:
+
+                                    # se procede con la preparacion de las comisiones.
+                                    if True:
                                         
                                         # Revision de cada linea de factura (productos)
                                         for inv_lin in inv_brw.invoice_line:
@@ -269,7 +203,27 @@ class commission_payment(osv.osv):
                                             
                                             # Verificar si tiene producto asociado
                                             if inv_lin.product_id:
+                                                #~ DETERMINAR EL PORCENTAJE DE IVA EN LA LINEA (perc_iva)
+                                                #~ ====================================================================
+                                                #~ ====================================================================
+                                                #~ Determinar si la linea de la factura tiene
+                                                #~ un impuesto retenible (perc_iva)
+                                                #~ se asume que si hay mas de una tasa de iva se usara la mayor
+                                                perc_iva = inv_lin.invoice_line_tax_id and [tax.amount for tax in inv_lin.invoice_line_tax_id] and 100*max([tax.amount for tax in inv_lin.invoice_line_tax_id]) or 0.0
+                                                #~ ====================================================================
+                                                #~ ====================================================================
                                                 
+                                                #~ DETERMINAR EL PORCENTAJE DE RET ISLR EN LA LINEA (perc_ret_islr)
+                                                #~ ====================================================================
+                                                #~ ====================================================================
+                                                #~ Determinar si la linea de la factura tiene
+                                                #~ un concepto retenible (perc_ret_islr)
+                                                #~ se asume que el cliente siempre le retiene a un Juridico Domiciliado
+                                                #~ en este caso esta empresa, la cual calcula la comision
+                                                perc_ret_islr = inv_lin.concept_id and inv_lin.concept_id.withholdable and \
+                                                [tax.wh_perc for tax in inv_lin.concept_id.rate_ids if tax.residence and not tax.nature] and max([tax.wh_perc for tax in inv_lin.concept_id.rate_ids if tax.residence and not tax.nature]) or 0.0
+                                                #~ ====================================================================
+                                                #~ ====================================================================
                                                 # Si esta aqui es porque hay un producto asociado
                                                 prod_id = inv_lin.product_id.id
                                                 #~ print 'prod_id',prod_id
@@ -358,13 +312,6 @@ class commission_payment(osv.osv):
                                                     # CALCULO DE COMISION POR LINEA DE PRODUCTO #
                                                     #############################################
                                                     
-                                                    ## TODO: ESTE VALOR DEBE DESAPARECER DE AQUI
-                                                    #  este valor se debe sustituir por un valor que viene de la factura
-                                                    #  son solo demostrativos y no deberian quedar aqui luego de enviar
-                                                    #  este modulo a produccion.
-                                                    #
-                                                    ## 
-                                                    
                                                     PenBxLinea = payment_brw.amount*(inv_lin.price_subtotal/inv_brw.amount_untaxed)
                                                     Fact_Sup = 1 - perc_ret_islr/100 - perc_ret_im/100
                                                     Fact_Inf = 1 + (perc_iva/100) * (1 - perc_ret_iva/100) - perc_ret_islr/100 - perc_ret_im/100
@@ -425,6 +372,7 @@ class commission_payment(osv.osv):
                                                     'inv_line_id'   :   inv_lin.id,
                                                 },context=None)  
                                     else:
+                                        #~ TODO: REVISAR QUE HACEMOS CON ESTA PARTE DEL CODIGO
                                         # generar campo y vista donde se han de cargar las facturas que tienen problemas
                                         # se debe grabar los tres campos de las retenciones y el numero de la factura para 
                                         # tener detalles concisos y porcion de voucher de pago de la factura en cuestion
