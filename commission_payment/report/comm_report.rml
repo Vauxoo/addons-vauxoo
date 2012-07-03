@@ -353,46 +353,6 @@
             </tr>
             </blockTable>
 
-        <nextFrame/>
-        
-            <blockTable colWidths="260mm" style="ITEMS">
-                <tr>
-                    <td>
-                        <para style="ITEMSLEFT"> [[o.ret_notes.upper()]] </para>
-                    </td>
-                </tr>
-            </blockTable>    
-<spacer length="5mm"/>
-            <blockTable colWidths="40mm,220mm" style="GREYITEMS">
-                <tr>
-                    <td>
-                        <para style="BLACKCENTER"> FECHA </para>
-                    </td>
-                    <td>
-                        <para style="BLACKLEFT"> TRANSACCION </para>
-                    </td>
-                </tr>
-            </blockTable>    
-            <blockTable colWidths="40mm,160mm,20mm,20mm,20mm" style="GREYITEMS">
-                <tr>
-                    <td>
-                        <para style="BLACKCENTER"> DOCUMENTO </para>
-                    </td>
-                    <td>
-                        <para style="BLACKLEFT"> EMPRESA </para>
-                    </td>
-                    <td>
-                        <para style="BLACKLEFT"> RET IVA </para>
-                    </td>
-                    <td>
-                        <para style="BLACKLEFT"> RET ISLR </para>
-                    </td>
-                    <td>
-                        <para style="BLACKLEFT"> RET IM </para>
-                    </td>
-                </tr>
-            </blockTable>    
-
             <section>
                 
                 <para> [[repeatIn(o.comm_retention_ids,'retention')]]</para>
@@ -583,4 +543,3 @@
 		</blockTable>    
   </story>
 </document>
-
