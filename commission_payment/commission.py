@@ -141,25 +141,25 @@ class commission_payment(osv.osv):
                     if len(voucher_brw.move_ids)!=0 and len(voucher_brw.line_cr_ids)!=0:
                         # Con la negacion de esta condicion se termina de realizar la revision de las lineas de pago que cumplen con las tres
                         # condiciones estipuladas inicialmente, ahora se debe proseguir con la revision de las lineas de pago
-                        print 'entre al if 1'
+                        #~ print 'entre al if 1'
                         
                         # Leer cada una de las lineas de los vouchers
                         
                         for payment_brw in voucher_brw.line_cr_ids:
-                            print 'entre al for 1',payment_brw.id
+                            #~ print 'entre al for 1',payment_brw.id
                             pay_line_vendor = payment_brw.partner_id.user_id and payment_brw.partner_id.user_id.id or False
                             if pay_line_vendor in user_ids:
-                                print 'entre al if 2'
+                                #~ print 'entre al if 2'
                                 
                                 # Verificar si esta linea tiene factura y la comision del pago no se ha pagado
                                 if payment_brw.invoice_id and not payment_brw.paid_comm:
-                                    print 'entre al if 3'
+                                    #~ print 'entre al if 3'
                                     # Si esta aqui dentro es porque esta linea tiene una id valida de una factura.
                                     inv_brw = payment_brw.invoice_id
                                     
                                     # Obtener % IVA 
                                     perc_iva = round((( inv_brw.amount_total /  inv_brw.amount_untaxed)-1)*100,0)
-                                    #~ print 'perc_iva: ',perc_iva,'\n'
+                                    #~ #~ print 'perc_iva: ',perc_iva,'\n'
                                     
                                     # Obtener el Valor de Porcentaje Retencion de esta factura
                                     
@@ -171,7 +171,7 @@ class commission_payment(osv.osv):
                                     no_ret_im = True
                                     
                                     if abs(inv_brw.amount_total - payment_brw.amount)<= 1.0:
-                                        print 'entre al if 4'
+                                        #~ print 'entre al if 4'
                                         perc_ret_iva = 0.0
                                         perc_ret_islr = 0.0
                                         perc_ret_im = 0.0
@@ -179,7 +179,7 @@ class commission_payment(osv.osv):
                                         no_ret_islr = False
                                         no_ret_im = False
                                     elif abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-75.0/100))) - payment_brw.amount)<= 1.0:
-                                        print 'entre al elif 1'
+                                        #~ print 'entre al elif 1'
                                         perc_ret_iva = 75.0
                                         perc_ret_islr = 0.0
                                         perc_ret_im = 0.0
@@ -187,28 +187,28 @@ class commission_payment(osv.osv):
                                         no_ret_islr = False
                                         no_ret_im = False
                                     elif ret_iva_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)]):                                
-                                        print 'entre al elif 2'
+                                        #~ print 'entre al elif 2'
                                         lines_ret_iva = ret_iva_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)])
                                         for line in lines_ret_iva:
-                                            print 'entre al for 2'
+                                            #~ print 'entre al for 2'
                                             perc_ret_iva = ret_iva_lines.browse(cr, user, line, context=None).wh_iva_rate
                                         no_ret_iva = False
 
                                     if no_ret_islr == True and ret_islr_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)]):
-                                        print 'entre al if 5'
+                                        #~ print 'entre al if 5'
                                         lines_ret_islr = ret_islr_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)])
                                         perc_ret_islr = 0
                                         for line in lines_ret_islr:
-                                            print 'entre al for 3'
+                                            #~ print 'entre al for 3'
                                             perc_ret_islr += ret_islr_lines.browse(cr, user, line, context=None).retencion_islr
                                         no_ret_islr = False
                                         
                                     if no_ret_im == True and ret_im_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)]):
-                                        print 'entre al if 6'
+                                        #~ print 'entre al if 6'
                                         lines_ret_im = ret_im_lines.search(cr, user, [('invoice_id', '=', inv_brw.id)])
                                         perc_ret_im = 0
                                         for line in lines_ret_im:
-                                            print 'entre al for 4'
+                                            #~ print 'entre al for 4'
                                             perc_ret_im += ret_im_lines.browse(cr, user, line, context=None).wh_loc_rate
                                         no_ret_im = False
                                     
@@ -216,11 +216,11 @@ class commission_payment(osv.osv):
                                     # y considerando que el islr es cero, como en el caso de las empresas que solo cargan un impuesto social
                                     
                                     if no_ret_im == False and no_ret_iva == True:
-                                        print 'entre al if 7'
+                                        #~ print 'entre al if 7'
                                         for valor in [0, 75.0, 100.0]:
-                                            print 'entre al for 5'
+                                            #~ print 'entre al for 5'
                                             if abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_im/100.0))) - payment_brw.amount)<= 1.0:
-                                                print 'entre al if 8'
+                                                #~ print 'entre al if 8'
                                                 perc_ret_iva = valor
                                                 no_ret_iva = False
                                     
@@ -228,9 +228,9 @@ class commission_payment(osv.osv):
                                     # y considerando que el im es cero, como en el caso de las empresas que solo cargan el islr y no el im
                                     
                                     if no_ret_islr == False and no_ret_iva == True:
-                                        print 'entre al if 9'
+                                        #~ print 'entre al if 9'
                                         for valor in [0, 75.0, 100.0]:
-                                            print 'entre al for 6'
+                                            #~ print 'entre al for 6'
                                             if abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_islr/100.0))) - payment_brw.amount)<= 1.0:
                                                 perc_ret_iva = valor
                                                 no_ret_iva = False
@@ -238,11 +238,11 @@ class commission_payment(osv.osv):
                                     # Tratando de obtener la perc_ret_iva cuando se tienen tanto el islr como el im
                                     
                                     if no_ret_islr == False and no_ret_im == False and no_ret_iva == True:
-                                        print 'entre al if 10'
+                                        #~ print 'entre al if 10'
                                         for valor in [0, 75.0, 100.0]:
-                                            print 'entre al for 7'
+                                            #~ print 'entre al for 7'
                                             if abs((inv_brw.amount_untaxed*(1+(perc_iva/100)*(1-valor/100.0)-(perc_ret_im/100.0)-(perc_ret_islr/100.0))) - payment_brw.amount)<= 1.0:
-                                                print 'entre al if 11'
+                                                #~ print 'entre al if 11'
                                                 perc_ret_iva = valor
                                                 no_ret_iva = False
                                     
@@ -265,36 +265,36 @@ class commission_payment(osv.osv):
                                         # Revision de cada linea de factura (productos)
                                         for inv_lin in inv_brw.invoice_line:
                                             
-                                            #~ print 'Producto: ', inv_lin.name, '\n'
+                                            #~ #~ print 'Producto: ', inv_lin.name, '\n'
                                             
                                             # Verificar si tiene producto asociado
                                             if inv_lin.product_id:
                                                 
                                                 # Si esta aqui es porque hay un producto asociado
                                                 prod_id = inv_lin.product_id.id
-                                                print 'prod_id',prod_id
+                                                #~ print 'prod_id',prod_id
                                                 # se obtienen las listas de precio, vienen ordenadas por defecto, de acuerdo al objeto
                                                 # product.historic de mayor a menor fecha
                                                 price_ids = prod_prices.search(cr, user, [('product_id', '=', prod_id)])
-                                                print 'price_ids',price_ids
+                                                #~ print 'price_ids',price_ids
                                                 # Buscar Precio Historico de Venta de este 
                                                 # producto @ la fecha de facturacion
                                                 no_price = True
                                                 
                                                 for price_id in price_ids:
-                                                    print "inv_brw.date_invoice",inv_brw.date_invoice 
+                                                    #~ print "inv_brw.date_invoice",inv_brw.date_invoice 
                                                     prod_prices_brw = prod_prices.browse(cr, user, price_id, context=None)
-                                                    print "prod_prices_brw.name",prod_prices_brw.name
+                                                    #~ print "prod_prices_brw.name",prod_prices_brw.name
                                                     if inv_brw.date_invoice >= prod_prices_brw.name:
-                                                        print 'entreeeeeee en el if '
+                                                        #~ print 'entreeeeeee en el if '
                                                         list_price = prod_prices_brw.price
                                                         list_date = prod_prices_brw.name
                                                         no_price = False
-                                                        #~ print '[date_invoice : list_price : list_date]: [', inv_brw.date_invoice,' : ', list_price,' : ', list_date,'] \n' 
+                                                        #~ #~ print '[date_invoice : list_price : list_date]: [', inv_brw.date_invoice,' : ', list_price,' : ', list_date,'] \n' 
                                                         break
-                                                print 'no_price',no_price
+                                                #~ print 'no_price',no_price
                                                 if no_price == False:
-                                                    print 'entreeeeeeeee aquiiiiiiiii'
+                                                    #~ print 'entreeeeeeeee aquiiiiiiiii'
                                                     # Determinar cuanto fue el descuento en este producto en aquel momento de la venta
                                                     #~ if (inv_lin.price_subtotal/inv_lin.quantity)< inv_lin.price_unit:
                                                     if abs((inv_lin.price_subtotal/inv_lin.quantity) - inv_lin.price_unit) > 0.05:
@@ -408,7 +408,7 @@ class commission_payment(osv.osv):
                                                     # Se genera un lista de tuplas con las lineas, productos y sus correspondientes fechas
                                                     # en las cuales no aparece precio de lista, luego al final se escriben los
                                                     # valores en la correspondiente bitacora para su inspeccion.
-                                                    #~ print 'No hubo precio de lista para la fecha estipulada, hay que generar el precio en este producto \n'
+                                                    #~ #~ print 'No hubo precio de lista para la fecha estipulada, hay que generar el precio en este producto \n'
                                                     noprice_ids.create(cr, user,{
                                                         'commission_id': commission.id,
                                                         'product_id': prod_id,
@@ -462,17 +462,17 @@ class commission_payment(osv.osv):
         saleman_ids = self.pool.get ('commission.saleman')
         comm_voucher_ids = self.pool.get ('commission.voucher')
         comm_retention_ids = self.pool.get ('commission.retention')
-        #~ print 'antes de calcular totales\n'
+        #~ #~ print 'antes de calcular totales\n'
         
         for commission in commissions:
             
-            print 'for commission',commission.comm_line_ids
+            #~ print 'for commission',commission.comm_line_ids
             # recoge todos los vendedores y suma el total de sus comisiones
             sale_comm = {}
             # ordena en un arbol todas las lineas de comisiones de producto
             criba = {}
             for comm_line in commission.comm_line_ids:
-                print 'entre al for'
+                #~ print 'entre al for'
                 vendor_id = comm_line.saleman_id.id
                 voucher_id = comm_line.voucher_id.id
                 invoice_id = comm_line.invoice_id.id
@@ -499,7 +499,7 @@ class commission_payment(osv.osv):
             ## escribir el total para cada vendedor encontrado
             total_comm = 0
             for vendor_key in criba.keys():
-                print 'fooooooooor'
+                #~ print 'fooooooooor'
                 vendor_id = saleman_ids.create(cr, user,{
                     'commission_id': commission.id,
                     'saleman_id': vendor_key,
