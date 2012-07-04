@@ -34,6 +34,7 @@
                 <tree string="Customs Rate List" toolbar="1">
                     <field name="name"/>
                     <field name="code"/>
+                    <field name="active"/>
                 </tree>
             </field>
         </record>
@@ -48,6 +49,7 @@
                     <field name="code"/>
                     <field name="parent_id"/>
                     <field name="type"/>
+                    <field name="active"/>
                     <separator string="Taxes Mapping" colspan="4"/>
                     <field colspan="4" name="tax_ids" nolabel="1" attrs="{'readonly':[('type','=','view')]}"/>
                 </form>

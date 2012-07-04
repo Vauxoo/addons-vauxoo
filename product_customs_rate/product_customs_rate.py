@@ -63,14 +63,18 @@ class product_customs_rate(osv.osv):
     _columns = {
         'code' : fields.char('Code', size=64),
         'name': fields.char('Name', size=2048, required=True, translate=True, select=True),
+        'active': fields.boolean('Active'),
         'complete_name': fields.function(_name_get_fnc, method=True, type="char", string='Name'),
         'parent_id': fields.many2one('product.customs.rate','Parent Customs Rate', select=True, domain=[('type','=','view')]),
         'child_ids': fields.one2many('product.customs.rate', 'parent_id', string='Child Customs Rate'),
-        'type': fields.selection([('view','View'), ('normal','Normal')], 'Customs Rate Type'),
+        'type': fields.selection([('view','View'), ('normal','Normal')], 'Customs Rate Type',required=True),
         'tax_ids' : fields.many2many('account.tax','product_customs_rate_tax','customs_rate_id','tax_id','Taxes')
 
     }
-
+    _defaults = {
+        'active': 1,
+        'type': 'normal',
+    }  
     _order = "code"
     def _check_recursion(self, cr, uid, ids, context=None):
         level = 100
