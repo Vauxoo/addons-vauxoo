@@ -268,12 +268,16 @@ class account_invoice(osv.osv):
 
     def action_date_assign(self, cr, uid, ids, *args):
         context={}
+        currency_mxn_ids=self.pool.get('res.currency').search(cr, uid, [('name','=','MXN')], limit=1, context=context)
+        currency_mxn_id= currency_mxn_ids and currency_mxn_ids[0] or False
+        if not currency_mxn_id:
+            raise osv.except_osv(_('Error !'),_('No hay moneda MXN.'))
         for id in ids:
             invoice = self.browse(cr, uid, [id])[0]
             date_format = invoice.date_invoice or False
             context['date']=date_format
             invoice = self.browse(cr, uid, [id], context)[0]
-            rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
+            rate=self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id,currency_mxn_id, 1,)
             self.write(cr, uid, [id], {'rate': rate})
         return super(account_invoice, self).action_date_assign(cr, uid, ids, args)
             
