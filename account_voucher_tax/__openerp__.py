@@ -32,10 +32,13 @@
     "description" : """This module shows the tax actually paid/cashed in the move of payment""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account","account_voucher"],
+    "depends" : ["account","account_voucher","account_invoice_tax"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["account_tax_view.xml"],
+    "test": [
+        'test/account_voucher_taxes.yml',
+    ],
     "installable" : True,
     "active" : False,
 }
