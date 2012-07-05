@@ -44,21 +44,35 @@
 
 
 -
-  I create the first voucher of payment with tax and values 6182.80 EUR, journal EUR
+  I create the first voucher of payment with values 240 USD, journal USD, 
 -
-  !record {model: account.voucher, id: account_voucher_tax_1, view: False}:
-    account_id: 19
+  !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_sale_receipt_form}:
+    account_id: account.cash
     amount: 6182.80
     company_id: base.main_company
     journal_id: account.bank_journal
+    name: 'First payment: with tax'
     partner_id: base.res_partner_c2c
     period_id: account.period_7
-    date: !eval time.strftime("%Y-%m-%d")
+    date: !eval time.strftime("%Y-03-01")
     type: 'payment'
-    line_dr_ids:
-      - account_id: 19
-        amount: 6182.80
-        name: Voucher Axelor
+
+
+-
+  lines>
+-
+  !python {model: account.voucher}: |
+    import netsvc, time
+    vals = {}
+    voucher_id = self.browse(cr, uid, ref('account_voucher_tax1'))
+    data = []
+    for item in voucher_id.line_cr_ids:
+        if item.amount_unreconciled == 6182.80:
+            data += [(item.id, 6182.80)]
+    for line_id, amount in data:
+        self.pool.get('account.voucher.line').write(cr, uid, [line_id], {'amount': amount})
+    assert (voucher_id.state=='draft'), "Voucher is not in draft state"
+
 
 
 
