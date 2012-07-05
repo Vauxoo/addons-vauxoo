@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_partner_bank_form_inh_xml22">
+            <field name="name">view.partner.bank.form.inh.xml22</field>
+            <field name="type">form</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+                <field name="bank" position="after">
+                    <field name="currency_id" colspan="2"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_partner_form_inh_xml22">
+            <field name="name">view.partner.form.inh.xml22</field>
+            <field name="type">form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="sequence">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Accounting']/field[@name='bank_ids']/form/field[@name='bank']" position="after">
+                        <field name="currency_id" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

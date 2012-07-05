@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Luis Torres (luis@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,21 +24,24 @@
 #
 ##############################################################################
 
-{
-    "name" : "l10n_mx_invoice_tax_ref",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """ This module add tax_percent to account_invoice_tax
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "depends" : [
-        "account",
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from osv import fields, osv
+from tools.translate import _
+
+class res_partner_bank(osv.osv):
+    _inherit = 'res.partner.bank'
+    
+    def _get_take_digits(self, cr, uid, ids, field, args, context=None):
+        result = {}
+        res=''
+        n=-1
+        for last in self.browse(cr, uid, ids, context=context):
+            for digit in last.acc_number[::-1]:
+                if(digit.isdigit()==True) and len(res)<4:
+                    res = digit+res
+            result[last.id]=res
+        return result
+    
+    _columns = {
+        'last_acc_number': fields.function(_get_take_digits,method=True, type='char', string="Ultimos 4 digitos"),
+    }
+res_partner_bank()

@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Luis Torres (luis@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,20 +25,18 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_invoice_tax_ref",
+    "name" : "Tomar los 4 ultimos digitos de la cuenta en res.partner.bank",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """ This module add tax_percent to account_invoice_tax
+    "description" : """Take the last 4 digits of the account in res.partner.bank
     """,
-    "website" : "http://www.vauxoo.com/",
-    "depends" : [
-        "account",
-    ],
+    "website" : "www.vauxoo.com",
+    #"license" : "AGPL-3",
+    "depends" : ["base",],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
-    ],
+    "update_xml" : ['last_digits_view.xml'],
     "installable" : True,
     "active" : False,
 }

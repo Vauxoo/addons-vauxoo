@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_last_digits_form_inh">
+            <field name="name">view.last.digits.form.inh</field>
+            <field name="type">form</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+                <field name="acc_number" position="after">
+                    <field name="last_acc_number"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_partner_form_inh">
+            <field name="name">view.partner.form.inh.xml22</field>
+            <field name="type">form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="sequence">20</field>
+            <field name="arch" type="xml">
+                <field name="acc_number" position="after">
+                    <field name="last_acc_number"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
