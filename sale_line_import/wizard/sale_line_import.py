@@ -51,7 +51,8 @@ class wizard_import(osv.osv_memory):
         data[0].append('order_id.id')
         list_prod=data[0].index('product_id')
         msg=''
-        productos=[]
+        not_products=[]
+        products_price=[]
         system_products_uom=[]
         system_prices_unit=[]
         lines_products_uom=[]
@@ -67,8 +68,9 @@ class wizard_import(osv.osv_memory):
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
                                         lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or {}
             if not lines:
-                productos.append(prod_name)
+                not_products.append(prod_name)
             for lin in range(len(lines.keys())):
+                products_price.append(prod_name)
                 if lines.keys()[lin] not in data[0]:
                     if lines.keys()[lin] in ('tax_id','product_uom','product_packaging'):
                         field_val=str(lines.keys()[lin])
@@ -102,11 +104,13 @@ class wizard_import(osv.osv_memory):
             data2=[]
         print "priducts_units",system_prices_unit
         print "lines_prices_unit",lines_prices_unit
+        print "products_price",products_price
         #print "priducts_uoms",system_products_uom
         
-        msg+='Advertencia de diferencia de precios, Archivo importado VS Sistema, en los siguientes productos'
+        msg+='Advertencia de diferencia de precios, Archivo importado VS Sistema, en los siguientes productos \n'
+        
         msg+='No Se Encontro Referencia:\n'
-        for p in productos:
+        for p in not_products:
             msg+='%s \n'% (p)
         if msg:
             self.write(cr,uid,ids,{'msg':msg})
