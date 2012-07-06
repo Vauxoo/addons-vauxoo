@@ -80,7 +80,6 @@ class wizard_import(osv.osv_memory):
                     val_str_2=lines[lines.keys()[lin]]
                     if lines.keys()[lin]=='product_uom':
                         val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
-                        print val_str_2
                     if lines.keys()[lin]=='price_unit':
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
                         val_str_2=float(lines[lines.keys()[lin]])
@@ -93,6 +92,7 @@ class wizard_import(osv.osv_memory):
             except Exception, e:
                 return False
             data2=[]
+        msg+='  Configuracion OpenERP  , CSV , En Producto \n'
         msg+='No Se Encontro Referencia:\n'
         for p in productos:
             msg+='%s \n'% (p)
