@@ -2,7 +2,14 @@
 <openerp>
     <data>
 <!-- Salesman Commission Main Menu-->
- <menuitem name="Pago de Comisiones" id="menu_commission_payment"  parent="baremo.salesman_commission" sequence="12"/>
+ 
+     <menuitem
+        id="commission" 
+        name="Salesmen Commissions" 
+        parent="baremo.commission"
+        groups="group_comm_payment_manager"
+        sequence="10"
+        />
         <!-- View FORM Creation for the object salesman.commission.payment-->
         <record model="ir.ui.view" id="commission_payment_form">
             <field name="name">commission.payment.form</field>
@@ -158,9 +165,11 @@
             id="commission_all_mi" 
             action="commission_payment_all_act"
             icon="terp-project"
-            parent="menu_commission_payment" />
+            parent="commission" />
 
+<!--
          Creating a menu to open the View FORM of the object salesman.commission.payment 
+-->
         <record model="ir.actions.act_window" id="commission_payment_new_act">
             <field name="name">Crear Nueva Comision</field>
             <field name="res_model">commission.payment</field>
@@ -168,7 +177,9 @@
             <field name="view_mode">form,tree</field>
         </record>
 
+<!--
          Creating a menu to use the action sales_commission_payment_new_act 
+-->
         <menuitem 
             name="Crear Nueva Comision"
             id="commission_payment_new_mi" 

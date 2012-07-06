@@ -33,7 +33,10 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/baremo_security.xml",
+        "security/ir.model.access.csv",
         "baremo_view.xml",
+
     ],
     "active": False,
     "installable": True,

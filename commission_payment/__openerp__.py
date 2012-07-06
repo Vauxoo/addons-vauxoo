@@ -39,7 +39,12 @@ Cálculo de Pago de Comisiones por producto pagado
 ''',
 	"depends" : ['account', 'account_voucher', 'product_historical_price', 'baremo'],
 	"init_xml" : [],
-	"update_xml" : ['commission_report.xml','commission_view.xml',],
+	"update_xml" : [
+        'security/commission_payment_security.xml',
+        'security/ir.model.access.csv',
+        'commission_report.xml',
+        'commission_view.xml',
+    ],
 	"active": False,
 	"installable": True
 }
