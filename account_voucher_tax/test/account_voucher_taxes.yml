@@ -41,12 +41,16 @@
   I change the state of invoice to open by clicking Validate button
 -
   !workflow {model: account.invoice, action: invoice_open, ref: account_invoice_supplier_tax0}
-
+-
+  I check that the invoice state is now "Open"
+-
+  !assert {model: account.invoice, id: account_invoice_supplier_tax0}:
+    - state == 'open'
 
 -
-  I create the first voucher of payment with values 240 USD, journal USD, 
+  I create the first voucher of payment with values 6182.80
 -
-  !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_sale_receipt_form}:
+  !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_vendor_payment_form}:
     account_id: account.cash
     amount: 6182.80
     company_id: base.main_company
@@ -54,24 +58,25 @@
     name: 'First payment: with tax'
     partner_id: base.res_partner_c2c
     period_id: account.period_7
-    date: !eval time.strftime("%Y-03-01")
+    date: !eval time.strftime("%Y-%m-%d")
     type: 'payment'
 
-
 -
-  lines>
+  Line of vocuher
 -
   !python {model: account.voucher}: |
-    import netsvc, time
-    vals = {}
-    voucher_id = self.browse(cr, uid, ref('account_voucher_tax1'))
-    data = []
-    for item in voucher_id.line_cr_ids:
-        if item.amount_unreconciled == 6182.80:
-            data += [(item.id, 6182.80)]
-    for line_id, amount in data:
-        self.pool.get('account.voucher.line').write(cr, uid, [line_id], {'amount': amount})
-    assert (voucher_id.state=='draft'), "Voucher is not in draft state"
+    voucher_id = self.search(cr, uid, [('id', '=', ref('account_voucher_tax1'))])
+    voucher = self.browse(cr, uid, voucher_id[0])
+    l=[0,0]
+    res=self.onchange_journal(cr, uid, [voucher.id], journal_id=ref('account.bank_journal'), line_ids=[], tax_id=False, partner_id=voucher.partner_id.id, date=voucher.date, amount=6182.80, ttype='payment', company_id=voucher.company_id.id, context=None)
+    onchange_journal_value=res.get('value', {}) or {}
+    lines=onchange_journal_value.pop('line_dr_ids')[0]
+    l.append(lines)
+    onchange_journal_value['line_dr_ids']=[tuple(l)]
+    self.write(cr,uid, [voucher.id], onchange_journal_value)
+-
+  !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_tax1}
+-
 
 
 
