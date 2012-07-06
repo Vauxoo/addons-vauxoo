@@ -52,6 +52,10 @@ class wizard_import(osv.osv_memory):
         list_prod=data[0].index('product_id')
         msg=''
         productos=[]
+        system_products_uom=[]
+        system_prices_unit=[]
+        lines_products_uom=[]
+        lines_prices_unit=[]
         for dat in data[1:]:
             datas=[]
             data2=list(data[0])
@@ -80,11 +84,15 @@ class wizard_import(osv.osv_memory):
                     val_str_2=lines[lines.keys()[lin]]
                     if lines.keys()[lin]=='product_uom':
                         val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
+                        system_products_uom.append(val_str_2)
                     if lines.keys()[lin]=='price_unit':
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
+                        lines_prices_unit.append(val_str)
                         val_str_2=float(lines[lines.keys()[lin]])
+                        system_prices_unit.append(val_str_2)
                     if val_str <> val_str_2:
                         msg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],val_str_2,dat[data[0].index(lines.keys()[lin])],prod_name)
+                        
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
             try:
@@ -92,7 +100,11 @@ class wizard_import(osv.osv_memory):
             except Exception, e:
                 return False
             data2=[]
-        msg+='  Configuracion OpenERP  , CSV , En Producto \n'
+        print "priducts_units",system_prices_unit
+        print "lines_prices_unit",lines_prices_unit
+        #print "priducts_uoms",system_products_uom
+        
+        msg+='Advertencia de diferencia de precios, Archivo importado VS Sistema, en los siguientes productos'
         msg+='No Se Encontro Referencia:\n'
         for p in productos:
             msg+='%s \n'% (p)
