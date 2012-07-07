@@ -36,20 +36,20 @@
 -
   I create the first voucher of payment with values 3091.4
 -
-  !record {model: account.voucher, id: account_voucher_tax2, view: account_voucher.view_vendor_payment_form}:
+  !record {model: account.voucher, id: account_voucher_tax2, view: False}:
     company_id: base.main_company
     account_id: account.cash
     amount: 3091.4
     currency_id: base.EUR
     journal_id: account.bank_journal
-    name: 'First payment: with tax'
+    name: 'First Partial payment: with tax'
     partner_id: base.res_partner_c2c
     period_id: account.period_7
     date: !eval time.strftime("%Y-%m-%d")
     type: 'payment'
 
 -
-  Line of vocuher
+  Line of voucher
 -
   !python {model: account.voucher}: |
     voucher_id = self.search(cr, uid, [('id', '=', ref('account_voucher_tax2'))])
@@ -61,6 +61,7 @@
     lines_format.append(lines)
     onchange_journal_value['line_dr_ids']=[tuple(lines_format)]
     self.write(cr,uid, [voucher.id], onchange_journal_value)
+    assert (voucher.amount==3091.4) , "check amount"
 -
   !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_tax2}
 -
@@ -68,20 +69,20 @@
 -
   I create the second voucher of payment with values 3091.4
 -
-  !record {model: account.voucher, id: account_voucher_tax3, view: account_voucher.view_vendor_payment_form}:
+  !record {model: account.voucher, id: account_voucher_tax3, view: False}:
     company_id: base.main_company
     account_id: account.cash
     currency_id: base.EUR
     amount: 3091.4
     journal_id: account.bank_journal
-    name: 'First payment: with tax'
+    name: 'Second Partial payment: with tax'
     partner_id: base.res_partner_c2c
     period_id: account.period_7
     date: !eval time.strftime("%Y-%m-%d")
     type: 'payment'
 
 -
-  Line of vocuher
+  Line of voucher
 -
   !python {model: account.voucher}: |
     voucher_id = self.search(cr, uid, [('id', '=', ref('account_voucher_tax3'))])
@@ -93,6 +94,7 @@
     lines_format.append(lines)
     onchange_journal_value['line_dr_ids']=[tuple(lines_format)]
     self.write(cr,uid, [voucher.id], onchange_journal_value)
+    assert (voucher.amount==3091.4) , "check amount"
 -
   !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_tax3}
 -
