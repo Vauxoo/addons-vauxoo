@@ -31,7 +31,7 @@
     "category" : "Localization/Mexico",
     "description" : """This module add relation tax in account_invoice_tax
      -You will need to apply the patch patch/account_invoice.patch, 
-      that is located in this module """,
+      that is located in this module ( use:patch -b file.py  file.patch )""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["account"],
