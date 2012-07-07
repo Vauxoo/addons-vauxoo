@@ -52,8 +52,8 @@
 -
   !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_vendor_payment_form}:
     account_id: account.cash
-    amount: 6182.80
     company_id: base.main_company
+    amount: 6182.80
     journal_id: account.bank_journal
     name: 'First payment: with tax'
     partner_id: base.res_partner_c2c
