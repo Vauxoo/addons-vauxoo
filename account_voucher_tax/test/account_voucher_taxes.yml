@@ -67,12 +67,12 @@
   !python {model: account.voucher}: |
     voucher_id = self.search(cr, uid, [('id', '=', ref('account_voucher_tax1'))])
     voucher = self.browse(cr, uid, voucher_id[0])
-    l=[0,0]
     res=self.onchange_journal(cr, uid, [voucher.id], journal_id=ref('account.bank_journal'), line_ids=[], tax_id=False, partner_id=voucher.partner_id.id, date=voucher.date, amount=6182.80, ttype='payment', company_id=voucher.company_id.id, context=None)
     onchange_journal_value=res.get('value', {}) or {}
     lines=onchange_journal_value.pop('line_dr_ids')[0]
-    l.append(lines)
-    onchange_journal_value['line_dr_ids']=[tuple(l)]
+    lines_format=[0,0]
+    lines_format.append(lines)
+    onchange_journal_value['line_dr_ids']=[tuple(lines_format)]
     self.write(cr,uid, [voucher.id], onchange_journal_value)
 -
   !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_tax1}
