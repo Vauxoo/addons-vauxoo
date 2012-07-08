@@ -1,0 +1,11 @@
+--- account/account_invoice.py	2012-03-29 15:43:31 +0000
++++ account/account_invoice.py	2012-06-26 16:09:15 +0000
+@@ -1585,6 +1585,7 @@
+                 val['manual'] = False
+                 val['sequence'] = tax['sequence']
+                 val['base'] = tax['price_unit'] * line['quantity']
++                val['tax_id']=tax['id']
+ 
+                 if inv.type in ('out_invoice','in_invoice'):
+                     val['base_code_id'] = tax['base_code_id']
+
