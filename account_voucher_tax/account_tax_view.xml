@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_tax_voucher" model="ir.ui.view">
+                <field name="name">view.account.tax.voucher</field>
+                <field name="model">account.tax</field>
+                <field name="type">form</field>      
+                <field name="inherit_id" ref="account.view_tax_form"/>
+                <field name="arch" type="xml">
+                    <field name="active" position="after">
+                        <field name="tax_voucher_ok" />
+                    </field>
+                </field>
+        </record>
+
+
+        <record id="view_account_tax_voucher_account" model="ir.ui.view">
+                <field name="name">view.account.tax.voucher.account</field>
+                <field name="model">account.tax</field>
+                <field name="type">form</field>      
+                <field name="inherit_id" ref="account.view_tax_form"/>
+                <field name="arch" type="xml">
+                    <separator string="Tax Declaration: Invoices" position="before">
+                        <field name="account_collected_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
+                        <newline/>
+                        <field name="account_paid_voucher_id" attrs="{'required':[('tax_voucher_ok','=',True)]}"/>
+                    </separator>
+                </field>
+        </record>
+
+    </data>
+</openerp>

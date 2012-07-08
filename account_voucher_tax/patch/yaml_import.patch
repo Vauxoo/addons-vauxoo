@@ -1,0 +1,21 @@
+=== modified file 'openerp/tools/yaml_import.py'
+--- openerp/tools/yaml_import.py	2012-06-25 14:40:13 +0000
++++ openerp/tools/yaml_import.py	2012-07-05 22:36:58 +0000
+@@ -310,12 +310,13 @@
+     def process_record(self, node):
+         import openerp.osv as osv
+         record, fields = node.items()[0]
++        module_str = self.module
+         model = self.get_model(record.model)
+-
+         view_id = record.view
+         if view_id and (view_id is not True):
+-            view_id = self.pool.get('ir.model.data').get_object_reference(self.cr, 1, self.module, record.view)[1]
+-
++            if '.' in view_id:
++                module_str,view_id = view_id.split('.')
++            view_id = self.pool.get('ir.model.data').get_object_reference(self.cr, 1, module_str, view_id)[1]
+         if model.is_transient():
+             record_dict=self.create_osv_memory_record(record, fields)
+         else:
+
