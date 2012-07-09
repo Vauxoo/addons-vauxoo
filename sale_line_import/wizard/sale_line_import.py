@@ -49,19 +49,29 @@ class wizard_import(osv.osv_memory):
         input.seek(0)
         data = list(csv.reader(input, quotechar='"' or '"', delimiter=','))
         data[0].append('order_id.id')
-        list_prod=data[0].index('product_id')
+        try:
+            list_prod=data[0].index('product_id')
+        except: 
+            list_prod=[]
         msg=''
+        print list_prod,'imprimo list'
         for dat in data[1:]:
             datas=[]
             data2=list(data[0])
             dat.append(order_id)
             prod_name=dat[list_prod]
-            prod_name_search=self.pool.get('product.product').name_search(cr,uid,prod_name)
+            print prod_name,'imprimo prod_name'
+            prod_name_search=prod_name and self.pool.get('product.product').name_search(cr,uid,prod_name) or False
+            print prod_name_search,'prod_name_search'
             prod_id = prod_name_search and prod_name_search[0][0] or False
+            print prod_id,'imprimo prod_id'
             lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id,
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
                                         lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or {}
-            if not lines: msg+='No Se Encontro Referencia: %s \n'% (prod_name)
+            print lines,'imrpimo lines'
+            if not lines and prod_name: msg+='No Se Encontro Referencia: %s \n'% (prod_name)
+            if not prod_name:
+                self.pool.get('sale.order.line').import_data(cr, uid, data2, [dat], 'init', '')
             for lin in range(len(lines.keys())):
                 if lines.keys()[lin] not in data[0]:
                     if lines.keys()[lin] in ('tax_id','product_uom','product_packaging'):
@@ -77,7 +87,9 @@ class wizard_import(osv.osv_memory):
                     val_str=dat[data[0].index(lines.keys()[lin])]
                     val_str_2=lines[lines.keys()[lin]]
                     if lines.keys()[lin]=='product_uom':
+                        print val_str_2,'imprimo val_str_2'
                         val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
+                        print val_str_2,'imprimo2 val_str_2'
                     if lines.keys()[lin]=='price_unit':
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
                         val_str_2=float(lines[lines.keys()[lin]])
