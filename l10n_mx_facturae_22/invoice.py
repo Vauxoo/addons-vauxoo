@@ -74,16 +74,23 @@ class account_invoice(osv.osv):
         
         return invoice_data_parents
     
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False, currency_id=False):
-        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id, currency_id)
-        partner_bank_obj = self.pool.get('res.partner.bank')
-        acc_partner_bank = False
-        if partner_id:
-            acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', currency_id)], limit = 1)
-            if not acc_partner_bank_ids:
-                acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', False)], limit = 1) or partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id)], limit = 1)
-            acc_partner_bank = acc_partner_bank_ids and partner_bank_obj.browse(cr, uid, acc_partner_bank_ids)[0] or False
-        res['value']['acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
+        #Here you need an additional parameter "currency_id" but add this new parameter to a function inheritance It's complicated, because it would have to apply a patch on each function called
+        #Temporary solution: only processed this new feature when the record is saved
+        id = ids and ids[0] or False
+        if id:
+            currency_data = self.read(cr, uid, [id], ['currency_id'])
+            currency_id = currency_data[0]['currency_id'][0]
+            partner_bank_obj = self.pool.get('res.partner.bank')
+            acc_partner_bank = False
+            if partner_id:
+                if partner_bank_obj._columns.has_key('currency_id'):#OpenERP>=6.1 has this field. OpenERP<=6.0 needs install module extra.
+                    acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', currency_id)], limit = 1)
+                    if not acc_partner_bank_ids:
+                        acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id), ('currency_id', '=', False)], limit = 1) or partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id)], limit = 1)
+                    acc_partner_bank = acc_partner_bank_ids and partner_bank_obj.browse(cr, uid, acc_partner_bank_ids)[0] or False
+            res['value']['acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
         return res
     
     def _get_file_globals(self, cr, uid, ids, context={}):
