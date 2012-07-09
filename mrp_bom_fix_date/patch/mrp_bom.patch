@@ -1,0 +1,19 @@
+=== modified file 'mrp/mrp.py'
+--- mrp/mrp.py	2012-06-01 14:32:49 +0000
++++ mrp/mrp.py	2012-07-09 22:55:42 +0000
+@@ -278,7 +278,13 @@
+         @param properties: List of related properties.
+         @return: False or BoM id.
+         """
+-        cr.execute('select id from mrp_bom where product_id=%s and bom_id is null order by sequence', (product_id,))
++        cr.execute(""" select id
++            from mrp_bom where product_id=%s 
++            and bom_id is null 
++            and active=True
++            and (date_start is null or date_start <= current_date)
++            and (date_stop is null or date_stop >= current_date)
++            order by sequence """, (product_id,))
+         ids = map(lambda x: x[0], cr.fetchall())
+         max_prop = 0
+         result = False
+
