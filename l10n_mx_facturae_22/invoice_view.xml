@@ -6,11 +6,9 @@
             <field name="name">view.account.invoice.form.inh.xml22</field>
             <field name="type">form</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="inherit_id" ref="l10n_mx_facturae_22_payment_method.view_account_invoice_form_inh_payment_method_22"/>
             <field name="arch" type="xml">
-                <field name="fiscal_position" position="after">
-                    <newline/>
-                        <field name="pay_method_id" colspan="2" groups="l10n_mx_facturae_22_payment_method.group_payment_method_manager,l10n_mx_facturae_22_payment_method.group_payment_method_user"/>
+                <field name="pay_method_id" position="after">
                         <field name="acc_payment" colspan="2" domain = "[('partner_id', '=', partner_id)]" groups="l10n_mx_facturae_22_regimen_fiscal.group_regimen_fiscal_manager,l10n_mx_facturae_22_regimen_fiscal.group_regimen_fiscal_user"/>
                 </field>
             </field>

@@ -42,6 +42,7 @@
         "security/ir.model.access.csv",
         "pay_method_view_v5.xml",
         "partner_view.xml",
+        "invoice_view_v5.xml",
     ],
     "installable" : True,
     "active" : False,
