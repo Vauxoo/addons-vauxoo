@@ -83,9 +83,10 @@ class wizard_import(osv.osv_memory):
                     if lines.keys()[lin]=='product_uom':
                         val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
                         products_uom=[]
+                        #producto
+                        products_uom.append(prod_name)
                         #campo
                         products_uom.append(lines.keys()[lin])
-                        products_uom.append(prod_name)
                         #csv
                         val_str=dat[data[0].index(lines.keys()[lin])]
                         products_uom.append(val_str)
@@ -94,6 +95,7 @@ class wizard_import(osv.osv_memory):
                         news_products.append(products_uom)
                     if lines.keys()[lin]=='price_unit':
                         product_price=[]
+                        #producto
                         product_price.append(prod_name)
                         #csv
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
@@ -104,7 +106,9 @@ class wizard_import(osv.osv_memory):
                         new_products_prices.append(product_price)
                     if lines.keys()[lin]=='name':
                         product_name=[]
+                        #producto
                         product_name.append(prod_name)
+                        #campo
                         product_name.append(lines.keys()[lin])
                         #csv
                         val_str=dat[data[0].index(lines.keys()[lin])]
@@ -114,7 +118,7 @@ class wizard_import(osv.osv_memory):
                         product_name.append(val_str_2)
                         news_products.append(product_name)
                     if val_str <> val_str_2:
-                        msg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],val_str_2,dat[data[0].index(lines.keys()[lin])],prod_name)
+                        #msg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],val_str_2,dat[data[0].index(lines.keys()[lin])],prod_name)
                         
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
@@ -133,6 +137,7 @@ class wizard_import(osv.osv_memory):
         for p in new_products_prices:
             p2=(','.join(map(str,p)))
             msg+='%s \n'% (p2)
+        msg+='\n'
         msg+='Advertencia de diferencias en otros campos, archivo importado VS Sistema, en los siguientes productos y campos \n'
         for p in news_products:
             p2=(','.join(map(str,p)))
