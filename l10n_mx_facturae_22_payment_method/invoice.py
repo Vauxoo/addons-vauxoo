@@ -50,7 +50,7 @@ class account_invoice(osv.osv):
             partner_obj = self.pool.get('res.partner')
             partner = partner_obj.browse(cr, uid, partner_id)
             pay_method_id = partner and partner.pay_method_id and partner.pay_method_id.id or False
-            res['value']['pay_method_id'] = pay_method_id 
+        res['value']['pay_method_id'] = pay_method_id
         return res
 
     _columns = {
