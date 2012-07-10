@@ -42,7 +42,6 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "pay_method_view.xml",
         "invoice_view.xml",
     ],
     "installable" : True,

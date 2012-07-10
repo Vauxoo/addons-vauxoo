@@ -41,7 +41,6 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "pay_method_view_v5.xml",
         "invoice_view_v5.xml",
     ],
     "installable" : True,
