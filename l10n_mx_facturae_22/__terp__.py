@@ -38,13 +38,9 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "security/l10n_mx_facturae_22.xml",
-        "security/ir.model.access.csv",
         "pay_method_view_v5.xml",
         "invoice_view_v5.xml",
-        "regimen_fiscal_v5.xml",
         "partner_view.xml",
-        "regimen_fiscal_data.xml",
     ],
     "installable" : True,
     "active" : False,

@@ -26,6 +26,5 @@
 ##############################################################################
 
 import pay_method
-import regimen_fiscal
 import partner
 import invoice

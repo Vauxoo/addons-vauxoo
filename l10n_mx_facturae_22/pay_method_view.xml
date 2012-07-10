@@ -34,8 +34,7 @@
         </record>
         
         <menuitem
-            parent="account.menu_finance_accounting" id="menu_CFD_22" name="Configuracion CFD 2.2" 
-            groups="l10n_mx_facturae_22.group_facturae_22_catalogos_manager"/>
+            parent="account.menu_finance_accounting" id="menu_CFD_22" name="Configuracion CFD 2.2"/>
         <menuitem
             id="cfd_22_metodos_pago" name="Metodos de Pago" parent='menu_CFD_22'
             action='action_pay_method'

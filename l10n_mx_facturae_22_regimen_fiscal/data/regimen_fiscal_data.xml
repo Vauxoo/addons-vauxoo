@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data>
+    <data noupdate="1">
         <record id="regimen_fiscal_personasmoralesdelrgimengeneral0" model="regimen.fiscal">
             <field name="name">Personas morales del régimen general</field>
             <field name="description">Es para las sociedades mercantiles, asociaciones civiles de profesionales que: 
