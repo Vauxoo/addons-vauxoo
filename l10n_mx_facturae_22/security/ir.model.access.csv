@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_catalog_regimen_fiscal,facturae22_catalog_regimen_fiscal_manager,model_regimen_fiscal,,1,1,1,1
-access_catalog_pay_method,facturae22_catalog_pay_method_manager,model_pay_method,,1,1,1,1
