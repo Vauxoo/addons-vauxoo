@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
@@ -25,26 +25,15 @@
 #
 ##############################################################################
 
-{
-    "name" : "Migracion de Factura Electronica para Mexico (CFD) de 2.0 a 2.2",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Upgrade CFD 2.0 to CFD 2.2. If you are working with OpenERP version < 6.1 you need install the module: l10n_mx_res_partner_bank_currency
-    """,
-    "website" : "www.vauxoo.com",
-    "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae",
-                "partner_bank_last_digits",
-                "l10n_mx_facturae_22_regimen_fiscal",
-                "l10n_mx_facturae_22_payment_method",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "pay_method_view.xml",
-        "invoice_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+import time
+from tools.translate import _
+from osv import fields, osv
+import pooler
+
+class res_partner(osv.osv):
+    _inherit = 'res.partner'
+
+    _columns = {
+        'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', help = 'Indica la forma en que se pagó o se pagará la factura, donde las opciones pueden ser: cheque, transferencia bancaria, depósito en cuenta bancaria, tarjeta de crédito, efectivo etc. Si no se sabe como va ser pagada la factura, dejarlo vacío y en el xml aparecerá “No identificado”.'),
+    }
+res_partner()
