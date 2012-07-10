@@ -33,7 +33,7 @@
     "description" : """Add "Payment Method" to partner and invoice, it's used by l10n_mx_facturae_22 module
     """,
     "website" : "www.vauxoo.com",
-    "depends" : ["l10n_mx_facturae","partner_bank_last_digits",
+    "depends" : ["base",
         ],
     "init_xml" : [],
     "demo_xml" : [],
