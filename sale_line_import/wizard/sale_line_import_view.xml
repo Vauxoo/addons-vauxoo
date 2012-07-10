@@ -7,12 +7,12 @@
             <field name="model">wizard.import</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-              <form string="Importar Lineas">
-            <field name="name" colspan="4" nolabel="1"/>
-                        <newline/>
-            <field name="msg" colspan="4" nolabel="1"/>
-                        <button special="cancel" string="Cancelar" icon="gtk-cancel"/>
-                        <button name="send_lines" string="Aceptar" type="object" icon="gtk-yes" attrs="{'invisible':[('msg','!=',False)]}"/>
+            <form string="Importar Lineas">
+                <field name="name" colspan="4" nolabel="1"/>
+                <newline/>
+                <field name="msg" colspan="4" nolabel="1" width="750" height="500"/>
+                    <button special="cancel" string="Cancelar" icon="gtk-cancel"/>
+                    <button name="send_lines" string="Aceptar" type="object" icon="gtk-yes" attrs="{'invisible':[('msg','!=',False)]}"/>
              </form>
             </field>
         </record>
