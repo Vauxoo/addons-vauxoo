@@ -51,6 +51,7 @@ class wizard_import(osv.osv_memory):
         data[0].append('order_id.id')
         list_prod=data[0].index('product_id')
         msg=''
+        pmsg=''
         not_products=[]
         new_products_prices=[]
         news_products=[]
@@ -118,7 +119,8 @@ class wizard_import(osv.osv_memory):
                         product_name.append(val_str_2)
                         news_products.append(product_name)
                     if val_str <> val_str_2:
-                        #msg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],val_str_2,dat[data[0].index(lines.keys()[lin])],prod_name)
+                        if not lines.keys()[lin]=='price_unit':
+                            pmsg+='%s :Configuracion OpenERP %s, CSV %s, En Producto %s \n' % (lines.keys()[lin],val_str_2,dat[data[0].index(lines.keys()[lin])],prod_name)
                         
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
@@ -128,20 +130,18 @@ class wizard_import(osv.osv_memory):
                 return False
             data2=[]
         
-        print "new_products",news_products
+        #print "new_products",news_products
         msg+='No Se Encontro Referencia:\n'
         for p in not_products:
             msg+='%s \n'% (p)
-            
+        msg+='\n'
         msg+='Advertencia de diferencia de precios, Archivo importado VS Sistema, en los siguientes productos \n'
         for p in new_products_prices:
             p2=(','.join(map(str,p)))
             msg+='%s \n'% (p2)
         msg+='\n'
         msg+='Advertencia de diferencias en otros campos, archivo importado VS Sistema, en los siguientes productos y campos \n'
-        for p in news_products:
-            p2=(','.join(map(str,p)))
-            msg+='%s \n'% (p2)
+        msg+='%s '%(pmsg)
         if msg:
             self.write(cr,uid,ids,{'msg':msg})
             return True
