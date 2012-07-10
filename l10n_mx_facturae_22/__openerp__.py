@@ -41,7 +41,6 @@
     "update_xml" : [
         "pay_method_view.xml",
         "invoice_view.xml",
-        "partner_view.xml",
     ],
     "installable" : True,
     "active" : False,

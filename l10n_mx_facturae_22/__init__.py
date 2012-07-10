@@ -26,5 +26,4 @@
 ##############################################################################
 
 import pay_method
-import partner
 import invoice
