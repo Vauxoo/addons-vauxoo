@@ -40,7 +40,7 @@
     "update_xml" : [
         "security/regimen_fiscal.xml",
         "security/ir.model.access.csv",
-        "regimen_fiscal.xml",
+        "regimen_fiscal_v5.xml",
         "partner_view.xml",
         "data/regimen_fiscal_data.xml",
     ],

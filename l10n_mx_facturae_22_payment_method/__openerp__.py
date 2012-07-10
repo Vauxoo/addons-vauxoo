@@ -42,6 +42,7 @@
         "security/payment_method.xml",
         "security/ir.model.access.csv",
         "pay_method_view.xml",
+        "partner_view.xml",
     ],
     "installable" : True,
     "active" : False,
