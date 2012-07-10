@@ -104,6 +104,7 @@ class wizard_import(osv.osv_memory):
                         new_products_prices.append(product_price)
                     if lines.keys()[lin]=='name':
                         product_name=[]
+                        product_name.append(prod_name)
                         product_name.append(lines.keys()[lin])
                         #csv
                         val_str=dat[data[0].index(lines.keys()[lin])]
