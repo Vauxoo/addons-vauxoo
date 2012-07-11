@@ -84,32 +84,21 @@ class wizard_import(osv.osv_memory):
                         val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
                         #csv
                         val_str=dat[data[0].index(lines.keys()[lin])]
-                        #open
-                        products_uom.append(val_str_2)
                     if lines.keys()[lin]=='price_unit':
                         product_price=[]
                         #producto
                         product_price.append(prod_name)
                         #csv
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
-                        product_price.append(val_str)
                         #open
                         val_str_2=float(lines[lines.keys()[lin]])
-                        product_price.append(val_str_2)
-                        new_products_prices.append(product_price)
-                    if lines.keys()[lin]=='name':
-                        #csv
-                        val_str=dat[data[0].index(lines.keys()[lin])]
-                        #open
-                        val_str_2=lines[lines.keys()[lin]]
-                    if lines.keys()[lin]=='delay':
-                        #csv
-                        val_str=dat[data[0].index(lines.keys()[lin])]
-                        #open
-                        val_str_2=lines[lines.keys()[lin]]
+                        if val_str <> val_str_2:
+                            product_price.append(val_str_2)
+                            product_price.append(val_str)
+                            new_products_prices.append(product_price)
                     if val_str <> val_str_2:
                         if not lines.keys()[lin]=='price_unit':
-                            pmsg+='%s , Campo: %s, CSV: %s, OPEN: %s \n' % (prod_name,lines.keys()[lin],dat[data[0].index(lines.keys()[lin])],val_str_2)
+                            pmsg+='%s , Campo: %s, CSV: %s, OPEN: %s \n' % (prod_name,lines.keys()[lin],float(dat[data[0].index(lines.keys()[lin])]),val_str_2)
                         
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
