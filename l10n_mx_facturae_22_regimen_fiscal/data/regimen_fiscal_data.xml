@@ -71,7 +71,35 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/perm
 http://www.sat.gob.mx/6_405.html
 última modificación : 
 24/agosto/2009, 12:03, información vigente
-</field>
+
+            </field>
         </record>
+    </data>
+
+    
+    <data>
+        <record id="regimen_fiscal_personafisicaconactividadempresarial0" model="regimen.fiscal">
+            <field name="name">Persona física con actividad empresarial</field>
+            <field name="description">Es el régimen conforme al cual pueden pagar sus impuestos todas las personas físicas que se dediquen a las siguientes actividades
+
+- Comerciales.
+
+- Industriales, que consisten en la extracción, conservación o transformación de materias primas, acabado de productos y la elaboración de satisfactores;
+
+- Agrícolas, que comprenden las actividades de siembra, cultivo, cosecha y la primera enajenación de los productos obtenidos, que no hayan sido objeto de transformación industrial;
+
+- Ganaderas, que son las consistentes en la cría y engorda de ganado, aves de corral y animales, así como la primera enajenación de sus productos, que no hayan sido objeto de transformación industrial;
+
+- De pesca, que incluyen la cría, cultivo, fomento y cuidado de la reproducción de toda clase de especies marinas y de agua dulce, incluida la acuacultura, así como la captura y extracción de las mismas y la primera enajenación de sus productos, que no hayan sido objeto de transformación industrial;
+
+- Silvícolas, que son las de cultivo de los bosques o montes, así como la cría, conservación, restauración, fomento y aprovechamiento de la vegetación de los mismos y la primera enajenación de sus productos, que no hayan sido objeto de transformación industrial.
+
+
+http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/empresarial/11_428.html
+última modificación : 
+12/septiembre/2005, 15:58, información vigente
+            </field>
+        </record>
+
     </data>
 </openerp>
