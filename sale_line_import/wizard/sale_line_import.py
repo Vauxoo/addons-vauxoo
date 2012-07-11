@@ -25,13 +25,12 @@
 ##############################################################################
 
 import time
-
 from osv import osv, fields
 from tools.translate import _
 import base64
-
 import csv
 import cStringIO
+import tools
 
 
 class wizard_import(osv.osv_memory):
@@ -49,7 +48,10 @@ class wizard_import(osv.osv_memory):
         input.seek(0)
         data = list(csv.reader(input, quotechar='"' or '"', delimiter=','))
         data[0].append('order_id.id')
-        list_prod=data[0].index('product_id')
+        try:
+            list_prod=data[0].index('product_id')
+        except: 
+            list_prod=[]
         msg=''
         pmsg=''
         not_products=[]
@@ -64,8 +66,12 @@ class wizard_import(osv.osv_memory):
             lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id,
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
                                         lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or {}
-            if not lines:
+            if not lines  and prod_name:
                 not_products.append(prod_name)
+            if not prod_name:
+                print "data2",data2
+                print "dat",dat
+                self.pool.get('sale.order.line').import_data(cr, uid, data2, [dat], 'init', '')
             for lin in range(len(lines.keys())):
                 if lines.keys()[lin] not in data[0]:
                     if lines.keys()[lin] in ('tax_id','product_uom','product_packaging'):
@@ -88,18 +94,18 @@ class wizard_import(osv.osv_memory):
                         product_price.append(prod_name)
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
                         val_str_2=float(lines[lines.keys()[lin]])
-                        if val_str <> val_str_2:
+                        if tools.ustr(val_str) <> tools.ustr(val_str_2):
                             product_price.append(val_str)
                             product_price.append(val_str_2)                            
                             new_products_prices.append(product_price)
                     try:
                         val_str = float(val_str)
-                        val_str2 = float(val_str2)
+                        val_str_2 = float(val_str_2)
                     except:
                         pass
-                    if str(val_str) <> str(val_str_2):
+                    if tools.ustr(val_str) <> tools.ustr(val_str_2):
                         if not lines.keys()[lin]=='price_unit':
-                            pmsg+='%s , Campo: %s, CSV: %s, OPEN: %s \n' % (prod_name,lines.keys()[lin],dat[data[0].index(lines.keys()[lin])],val_str_2)
+                            pmsg+='%s , Campo: %s, CSV: %s, OPEN: %s \n' % (tools.ustr(prod_name),lines.keys()[lin],tools.ustr(dat[data[0].index(lines.keys()[lin])]),tools.ustr(val_str_2))
                         
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
@@ -111,7 +117,7 @@ class wizard_import(osv.osv_memory):
         
         msg+='No Se Encontro Referencia:\n'
         for p in not_products:
-            msg+='%s \n'% (p)
+            msg+='%s \n'% (tools.ustr(p))
         msg+='\n'
         msg+='Advertencia de diferencia de precios, Archivo importado VS Sistema, en los siguientes productos: \n'
         for p in new_products_prices:
