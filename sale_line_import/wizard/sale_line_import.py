@@ -82,15 +82,11 @@ class wizard_import(osv.osv_memory):
                     val_str_2=lines[lines.keys()[lin]]
                     if lines.keys()[lin]=='product_uom':
                         val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
-                        #csv
                         val_str=dat[data[0].index(lines.keys()[lin])]
                     if lines.keys()[lin]=='price_unit':
                         product_price=[]
-                        #producto
                         product_price.append(prod_name)
-                        #csv
                         val_str=float(dat[data[0].index(lines.keys()[lin])])
-                        #open
                         val_str_2=float(lines[lines.keys()[lin]])
                         if val_str <> val_str_2:
                             product_price.append(val_str_2)
