@@ -96,9 +96,9 @@ class wizard_import(osv.osv_memory):
                             product_price.append(val_str_2)
                             product_price.append(val_str)
                             new_products_prices.append(product_price)
-                    if val_str <> val_str_2:
+                    if str(val_str) <> str(val_str_2):
                         if not lines.keys()[lin]=='price_unit':
-                            pmsg+='%s , Campo: %s, CSV: %s, OPEN: %s \n' % (prod_name,lines.keys()[lin],float(dat[data[0].index(lines.keys()[lin])]),val_str_2)
+                            pmsg+='%s , Campo: %s, CSV: %s, OPEN: %s \n' % (prod_name,lines.keys()[lin],dat[data[0].index(lines.keys()[lin])],val_str_2)
                         
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
