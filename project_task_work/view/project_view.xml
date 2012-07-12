@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="view_project_task_work_ext_tree" model="ir.ui.view">
+            <field name="name">project.task.work.ext.tree</field>
+            <field name="model">project.task.work</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Project Task Work" editable="bottom">
+                    <field name="project_id"/>
+                    <field name="issue_id"/>
+                    <field name="task_id"/>
+                    <field name="name"/>
+                    <field name="hours"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+<!--
+
+        <record id="view_wh_src_filter" model="ir.ui.view">
+            <field name="name">account.wh.src.search</field>
+            <field name="model">account.wh.src</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Withholding Local">
+                   <group col="10" colspan="4">
+                        <filter name="wh_src_draft" icon="terp-gtk-media-pause" string="Draft" domain="[('state','=','draft')]" help="Draft Withholding Local"/>
+                        <filter name="wh_src_confirmed" icon="terp-gtk-media-pause" string="Confirmed" domain="[('state','=','confirmed')]" help="Draft Withholding Local"/>
+                        <filter name="wh_src_done" icon="terp-check" string="Done" domain="[('state','=','done')]" help="Done Withholding Local"/>
+                        <filter name="wh_src_cancel" icon="terp-dialog-close" string="Cancel" domain="[('state','=','cancel')]" help="Cancel Withholding Local"/>
+                        <separator orientation="vertical"/>
+                        <field name="code"/>
+                        <field name="number"/>
+                        <field name="partner_id"/>
+                        <field name="journal_id"  widget="selection" string="Journal"/>
+                        <field name="date_ret"/>
+                    </group>
+                    <newline/>
+                    <group expand="1" string="Group By...">
+                        <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="State" icon="terp-stock_effects-object-colorize" domain="[]"  context="{'group_by':'state'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Accounting Date of Withhold" icon="terp-go-month" domain="[]"  context="{'group_by':'date_ret'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+-->
+
+        <record model="ir.actions.act_window" id="action_project_task_work_ext">
+            <field name="name">Project Task Work</field>
+            <field name="res_model">project.task.work</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+<!--
+            <field name="search_view_id" ref="view_wh_src_filter"/>
+-->
+            <field name="help">FILL THIS FIELD</field>
+        </record>
+
+        <menuitem
+            id="menu_action_project_task_work_ext"
+            name="Project Task Work"
+            parent="project.menu_project_management"
+            action="action_project_task_work_ext"/>
+
+    </data>
+</openerp>
