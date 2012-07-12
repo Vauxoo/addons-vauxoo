@@ -33,7 +33,7 @@ Gestión de Customs Rate (Nandina y subpartida nacional)
     "website": "http://cubicERP.com & http://vauxoo.com",
     "category": "Finance",
     "depends": [
-            "product",
+            "product","account"
             ],
     "data":[
     ],
