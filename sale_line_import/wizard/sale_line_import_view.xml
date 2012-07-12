@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+	
+	<record id="view_sale_line_import" model="ir.ui.view">
+            <field name="name">Importar Lineas</field>
+            <field name="model">wizard.import</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+              <form string="Importar Lineas">
+			<field name="name" colspan="4" nolabel="1"/>
+                        <newline/>
+			<field name="msg" colspan="4" nolabel="1"/>
+                        <button special="cancel" string="Cancelar" icon="gtk-cancel"/>
+                        <button name="send_lines" string="Aceptar" type="object" icon="gtk-yes" attrs="{'invisible':[('msg','!=',False)]}"/>
+             </form>
+            </field>
+        </record>
+
+           <record id="action_sale_line_import" model="ir.actions.act_window">
+            <field name="name">Importar Lineas</field>
+            <field name="res_model">wizard.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_sale_line_import"/>
+            <field name="target">new</field>
+        </record>
+			
+	<act_window name="Importar Lineas"
+            res_model="wizard.import"
+            src_model="sale.order"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_sale_line_import"/>
+	    </data>
+</openerp>
