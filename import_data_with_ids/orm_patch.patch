@@ -1,0 +1,34 @@
+=== modified file 'openerp/osv/orm.py'
+--- openerp/osv/orm.py	2012-02-23 17:58:51 +0000
++++ openerp/osv/orm.py	2012-07-12 22:42:36 +0000
+@@ -1251,7 +1251,7 @@
+             context = {}
+         fields = map(fix_import_export_id_paths, fields)
+         ir_model_data_obj = self.pool.get('ir.model.data')
+-
++        ids_record=[]
+         # mode: id (XML id) or .id (database id) or False for name_get
+         def _get_id(model_name, id, current_module=False, mode='id'):
+             if mode=='.id':
+@@ -1415,9 +1415,10 @@
+                 return -1, res, 'Line ' + str(position) +' : ' + '!\n'.join(warning), ''
+ 
+             try:
+-                ir_model_data_obj._update(cr, uid, self._name,
++                record_line_id=ir_model_data_obj._update(cr, uid, self._name,
+                      current_module, res, mode=mode, xml_id=xml_id,
+                      noupdate=noupdate, res_id=res_id, context=context)
++                ids_record.append(record_line_id)
+             except Exception, e:
+                 return -1, res, 'Line ' + str(position) + ' : ' + tools.ustr(e), ''
+ 
+@@ -1433,7 +1434,7 @@
+ 
+         if context.get('defer_parent_store_computation'):
+             self._parent_store_compute(cr)
+-        return position, 0, 0, 0
++        return position, 0, 0, 0, ids_record
+ 
+     def get_invalid_fields(self, cr, uid):
+         return list(self._invalids)
+
