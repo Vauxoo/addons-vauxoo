@@ -46,7 +46,7 @@ class project_task_work(osv.osv):
             'task_id',
             'project_id',
             type='many2one',
-            relation='project.issue',
+            relation='project.project',
             readonly=True,
             store = False,
             string = 'Project',
@@ -58,11 +58,12 @@ class project_task_work(osv.osv):
                                     required = True, 
                                     string = 'State'),
         'issue_id':fields.function(
-                _get_issue,
-                method = True,
-                type = 'many2one',
-                string = 'Project issue',
-                store = {})
+            _get_issue,
+            method = True,
+            type = 'many2one',
+            relation='project.issue',
+            string = 'Project issue',
+            store = {})
     }
     
     _defaults = {
