@@ -27,6 +27,7 @@
 import time
 from osv import osv, fields
 from tools.translate import _
+from tools import config
 import base64
 import csv
 import cStringIO
@@ -37,7 +38,7 @@ class wizard_import(osv.osv_memory):
     _name='wizard.import'
     _columns={
         'name' : fields.binary('File'),
-        'msg' : fields.text('Mensajes',readonly=True)
+        'msg' : fields.text('Messages',readonly=True)
     }
     def send_lines(self,cr,uid,ids,context={}):
         order_id=context.get('active_id',False)
@@ -69,8 +70,6 @@ class wizard_import(osv.osv_memory):
             if not lines  and prod_name:
                 not_products.append(prod_name)
             if not prod_name:
-                print "data2",data2
-                print "dat",dat
                 self.pool.get('sale.order.line').import_data(cr, uid, data2, [dat], 'init', '')
             for lin in range(len(lines.keys())):
                 if lines.keys()[lin] not in data[0]:
@@ -96,7 +95,7 @@ class wizard_import(osv.osv_memory):
                         val_str_2=float(lines[lines.keys()[lin]])
                         if tools.ustr(val_str) <> tools.ustr(val_str_2):
                             product_price.append(val_str)
-                            product_price.append(val_str_2)                            
+                            product_price.append(val_str_2)
                             new_products_prices.append(product_price)
                     try:
                         val_str = float(val_str)
@@ -105,7 +104,7 @@ class wizard_import(osv.osv_memory):
                         pass
                     if tools.ustr(val_str) <> tools.ustr(val_str_2):
                         if not lines.keys()[lin]=='price_unit':
-                            pmsg+='%s , Campo: %s, CSV: %s, OPEN: %s \n' % (tools.ustr(prod_name),lines.keys()[lin],tools.ustr(dat[data[0].index(lines.keys()[lin])]),tools.ustr(val_str_2))
+                            pmsg+=_('%s , Field: %s, CSV: %s, OPEN: %s \n') % (tools.ustr(prod_name),lines.keys()[lin],tools.ustr(dat[data[0].index(lines.keys()[lin])]),tools.ustr(val_str_2))
                         
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
@@ -115,17 +114,19 @@ class wizard_import(osv.osv_memory):
                 return False
             data2=[]
         
-        msg+='No Se Encontro Referencia:\n'
-        for p in not_products:
-            msg+='%s \n'% (tools.ustr(p))
+        msg+=_('Do not you find reference:')
         msg+='\n'
-        msg+='Advertencia de diferencia de precios, Archivo importado VS Sistema, en los siguientes productos: \n'
+        for p in not_products:
+            msg+=_('%s \n')% (tools.ustr(p))
+        msg+='\n'
+        msg+=_('Warning of price difference, CSV VS System in the following products:')
+        msg+='\n'
         for p in new_products_prices:
             p2=(','.join(map(str,p)))
-            msg+=' %s \n'% (p2)
+            msg+= _('%s \n')%(p2)
         msg+='\n'
-        msg+='Advertencia de diferencias en otros campos, Archivo importado VS Sistema, en los siguientes productos y campos: \n'
-        msg+='%s '%(pmsg)
+        msg+=_('Warning differences in other fields, CSV VS System in the following products and fields:')
+        msg+='\n %s '%(pmsg)
         if msg:
             self.write(cr,uid,ids,{'msg':msg})
             return True
