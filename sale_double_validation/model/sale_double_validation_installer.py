@@ -41,9 +41,7 @@ class sale_double_validation_installer(osv.osv_memory):
 
     def execute(self, cr, uid, ids, context=None):
         data = self.read(cr, uid, ids, context=context)
-        if not data:
-            return {}
-        group_id = data[0]['group_id']
+        group_id = data and data[0]['group_id'] or False
         data_pool = self.pool.get('ir.model.data')
         transition_obj = self.pool.get('workflow.transition')
         waiting = data_pool._get_id(cr, uid, 'sale', 'trans_draft_router')
