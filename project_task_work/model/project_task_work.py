@@ -38,8 +38,23 @@ class project_task_work(osv.osv):
         for ptw_brw in ptw_brws:
             pi_ids = ptw_brw.task_id and pi_obj.search(cr, uid, [('task_id','=',ptw_brw.task_id.id)]) or []
             
-            res[ptw_brw.id] = pi_ids and pi_ids[0] or []
+            res[ptw_brw.id] = pi_ids and pi_ids[0] or None
         return res
+
+    def _get_work_in_task(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+        res=[]
+        pt_obj = self.pool.get('project.task')
+        for pt_brw in pt_obj.browse(cr, uid, ids, context=context):
+            res+=[work_brw.id for work_brw in pt_brw.work_ids]
+        return list(set(res))
+        
+    def _get_work_in_issue(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+        res=[]
+        pi_obj = self.pool.get('project.issue')
+        pt_ids = [pi_brw.task_id.id for pi_brw in pi_obj.browse(cr, uid, ids, context=context) if pi_brw.task_id]
+        return self.pool.get('project.task.work')._get_work_in_task(cr, uid, pt_ids, context=context)
 
     _columns = {
         'project_id':fields.related(
@@ -48,7 +63,7 @@ class project_task_work(osv.osv):
             type='many2one',
             relation='project.project',
             readonly=True,
-            store = False,
+            store = True,
             string = 'Project',
         ),
         'state':fields.selection([  ('done','Collected'),
@@ -63,7 +78,20 @@ class project_task_work(osv.osv):
             type = 'many2one',
             relation='project.issue',
             string = 'Project issue',
-            store = {})
+            store = {
+                'project.issue':(_get_work_in_issue,['task_id'],15),
+                'project.task':(_get_work_in_task,[],30),
+                'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
+                }),
+        'partner_id':fields.related(
+            'issue_id',
+            'partner_id',
+            type='many2one',
+            relation='res.partner',
+            readonly=True,
+            store = True,
+            string = 'Partner',
+        ),
     }
     
     _defaults = {
