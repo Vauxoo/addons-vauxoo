@@ -70,7 +70,12 @@ class project_task_work(osv.osv):
         res = {}
         for ptw_brw in self.browse(cr, uid, ids, context=context):
             
-            res[ptw_brw.id] = ptw_brw.task_id and ptw_brw.task_id.issue_id and ptw_brw.task_id.issue_id.project_id and ptw_brw.task_id.issue_id.project_id.id or None 
+            res[ptw_brw.id] = \
+                ptw_brw.task_id and \
+                    (ptw_brw.task_id.issue_id and ptw_brw.task_id.issue_id.project_id and \
+                    ptw_brw.task_id.issue_id.project_id.id \
+                    or ptw_brw.task_id.project_id and ptw_brw.task_id.project_id.id)\
+                or None 
             
         return res
 
@@ -102,7 +107,6 @@ class project_task_work(osv.osv):
         pt_ids = [pi_brw.task_id.id for pi_brw in pi_obj.browse(cr, uid, ids, context=context) if pi_brw.task_id]
         return self.pool.get('project.task.work')._get_work_in_task(cr, uid, pt_ids, context=context)
 
-
     _columns = {
         'project_id':fields.function(
             _get_project,
@@ -127,7 +131,7 @@ class project_task_work(osv.osv):
             relation='project.issue',
             string = 'Project Issue',
             store = {
-                #~ 'project.issue':(_get_work_in_issue,['task_id','project_id'],15),
+                'project.issue':(_get_work_in_issue,[],15),
                 'project.task':(_get_work_in_task,[],30),
                 'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
                 }),
