@@ -27,8 +27,52 @@ import time
 from osv import fields, osv
 from tools.translate import _
 
+class project_task(osv.osv):
+    _inherit = 'project.task'
+    
+    def _get_issue(self, cr, uid, ids, fieldname, arg, context=None):
+        print 'CAMBIO LA TAREA EN EL ISSUE'
+        if context is None: context = {}
+        res = {}
+        pi_obj = self.pool.get('project.issue')
+        
+        for id in ids:
+            pi_ids = pi_obj.search(cr, uid, [('task_id','=',id)]) or []
+            res[id] = pi_ids and pi_ids[0] or None
+            
+        return res
+
+    def _get_task_in_issue(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+        pi_obj = self.pool.get('project.issue')
+        return [pi_brw.task_id.id for pi_brw in pi_obj.browse(cr, uid, ids, context=context) if pi_brw.task_id]
+        
+
+    _columns = {
+        'issue_id':fields.function(
+            _get_issue,
+            method = True,
+            type = 'many2one',
+            relation='project.issue',
+            string = 'Project issue',
+            store = {
+                'project.issue':(_get_task_in_issue,['task_id'],15),
+                'project.task':(lambda self, cr, uid, ids,c={}: ids,[],45),
+                }),
+    }
+project_task()
+
 class project_task_work(osv.osv):
     _inherit = 'project.task.work'
+
+    def _get_project(self, cr, uid, ids, fieldname, arg, context=None):
+        if context is None: context = {}
+        res = {}
+        for ptw_brw in self.browse(cr, uid, ids, context=context):
+            
+            res[ptw_brw.id] = ptw_brw.task_id and ptw_brw.task_id.issue_id and ptw_brw.task_id.issue_id.project_id and ptw_brw.task_id.issue_id.project_id.id or None 
+            
+        return res
 
     def _get_issue(self, cr, uid, ids, fieldname, arg, context=None):
         if context is None: context = {}
@@ -42,6 +86,7 @@ class project_task_work(osv.osv):
         return res
 
     def _get_work_in_task(self, cr, uid, ids, context=None):
+        print 'ENTRO A BUSCAR A TRABAJO EN TAREAS'
         if context is None: context = {}
         res=[]
         pt_obj = self.pool.get('project.task')
@@ -50,22 +95,25 @@ class project_task_work(osv.osv):
         return list(set(res))
         
     def _get_work_in_issue(self, cr, uid, ids, context=None):
+        print 'ENTRO A BUSCAR TRABAJOS EN  EL ISSUE'
         if context is None: context = {}
         res=[]
         pi_obj = self.pool.get('project.issue')
         pt_ids = [pi_brw.task_id.id for pi_brw in pi_obj.browse(cr, uid, ids, context=context) if pi_brw.task_id]
         return self.pool.get('project.task.work')._get_work_in_task(cr, uid, pt_ids, context=context)
 
+
     _columns = {
-        'project_id':fields.related(
-            'task_id',
-            'project_id',
-            type='many2one',
+        'project_id':fields.function(
+            _get_project,
+            method = True,
+            type = 'many2one',
             relation='project.project',
-            readonly=True,
-            store = True,
             string = 'Project',
-        ),
+            store = {
+                'project.issue':(_get_work_in_issue,['task_id','project_id'],15),
+                'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
+                }),
         'state':fields.selection([  ('done','Collected'),
                                     ('draft', 'Uncollected'),
                                     ('cancel', 'Cancel'),], 
@@ -77,9 +125,9 @@ class project_task_work(osv.osv):
             method = True,
             type = 'many2one',
             relation='project.issue',
-            string = 'Project issue',
+            string = 'Project Issue',
             store = {
-                'project.issue':(_get_work_in_issue,['task_id'],15),
+                #~ 'project.issue':(_get_work_in_issue,['task_id','project_id'],15),
                 'project.task':(_get_work_in_task,[],30),
                 'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
                 }),
