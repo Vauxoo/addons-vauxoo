@@ -42,6 +42,7 @@
     ], 
     "update_xml" : [
         'view/project_view.xml',
+        'view/report.xml',
     ],
     "active": False,
     "installable": True

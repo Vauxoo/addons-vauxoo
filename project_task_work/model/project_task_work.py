@@ -99,7 +99,11 @@ class project_task_work(osv.osv):
                 ptw_brw.task_id and \
                     (ptw_brw.task_id.issue_id and ptw_brw.task_id.issue_id.partner_id and \
                     ptw_brw.task_id.issue_id.partner_id.id \
-                    or ptw_brw.task_id.partner_id and ptw_brw.task_id.partner_id.id)\
+                    or ptw_brw.task_id.project_id and \
+                        ptw_brw.task_id.project_id.partner_id and \
+                        ptw_brw.task_id.project_id.partner_id.id \
+                    or ptw_brw.task_id.partner_id and ptw_brw.task_id.partner_id.id\
+                    )\
                 or None 
             
         return res
