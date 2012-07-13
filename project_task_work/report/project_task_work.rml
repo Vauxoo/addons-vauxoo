@@ -20,6 +20,11 @@
             <image x="10.0mm" y="195.0mm" width="60mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
             <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
             <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
+            
+<!--
+            <image x="10.0mm" y="-180.0mm" width="850mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
+-->
+            
         </pageGraphics>
       <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="185.0mm"/>
     </pageTemplate>
@@ -101,11 +106,11 @@
   <story>
 <!--TABLA DE ITEMS   
 -->
-    <section>
     <para>[[ repeatIn(get_lines(objects),'o') ]]</para>
+    <section>
     
-        <section>
         <para>[[ repeatIn(o,'p') ]]</para>
+        <section>
         <blockTable colWidths="260mm" style="TERMSTABLE">
             <tr>
                 <td><para style="ITEMSTITLELEFT">[[ o[p]['o'] and o[p]['o'].name and o[p]['o'].name.upper() or 'UNDEFINED PARTNER']]</para></td>
@@ -169,7 +174,12 @@
             </tr>
         </blockTable>
 
+<!--
                     <spacer length="5mm"/> 
+-->
+
+        <nextFrame/>
+        
         </section>
     </section>
   </story>
