@@ -31,8 +31,6 @@ import cStringIO
 import netsvc
 from tools.translate import _
 import tools
-import time
-import tempfile
 import os
 from osv import osv, fields
 
@@ -49,14 +47,11 @@ class wizard_import(osv.osv_memory):
             context = {}
         form = self.read(cr,uid,ids,[])
         order_id=context.get('active_id',False)
-        print "ids",ids
-        print "sale",order_id
         fdata = form and base64.decodestring( form[0]['name'] ) or False
         msg = self.pool.get('sale.order').import_data_line(cr, uid, order_id, fdata, context=context) 
         if msg:
             self.write(cr,uid,ids,{'msg':msg})
             return True
-        #print "res",res
         return {}
 
 wizard_import()
