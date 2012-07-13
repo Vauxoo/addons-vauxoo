@@ -90,6 +90,20 @@ class project_task_work(osv.osv):
             res[ptw_brw.id] = pi_ids and pi_ids[0] or None
         return res
 
+    def _get_partner(self, cr, uid, ids, fieldname, arg, context=None):
+        if context is None: context = {}
+        res = {}
+        for ptw_brw in self.browse(cr, uid, ids, context=context):
+            
+            res[ptw_brw.id] = \
+                ptw_brw.task_id and \
+                    (ptw_brw.task_id.issue_id and ptw_brw.task_id.issue_id.partner_id and \
+                    ptw_brw.task_id.issue_id.partner_id.id \
+                    or ptw_brw.task_id.partner_id and ptw_brw.task_id.partner_id.id)\
+                or None 
+            
+        return res
+
     def _get_work_in_task(self, cr, uid, ids, context=None):
         print 'ENTRO A BUSCAR A TRABAJO EN TAREAS'
         if context is None: context = {}
@@ -117,7 +131,8 @@ class project_task_work(osv.osv):
             store = {
                 'project.issue':(_get_work_in_issue,['task_id','project_id'],15),
                 'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
-                }),
+            }
+        ),
         'state':fields.selection([  ('done','Collected'),
                                     ('draft', 'Uncollected'),
                                     ('cancel', 'Cancel'),], 
@@ -134,16 +149,21 @@ class project_task_work(osv.osv):
                 'project.issue':(_get_work_in_issue,[],15),
                 'project.task':(_get_work_in_task,[],30),
                 'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
-                }),
-        'partner_id':fields.related(
-            'issue_id',
-            'partner_id',
-            type='many2one',
-            relation='res.partner',
-            readonly=True,
-            store = True,
-            string = 'Partner',
+            }
         ),
+        'partner_id':fields.function(
+            _get_partner,
+            method = True,
+            type = 'many2one',
+            relation='res.partner',
+            string = 'Partner',
+            store = {
+                'project.issue':(_get_work_in_issue,[],15),
+                'project.task':(_get_work_in_task,[],30),
+                'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
+            }
+        ),
+
     }
     
     _defaults = {
