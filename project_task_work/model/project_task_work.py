@@ -31,7 +31,6 @@ class project_task(osv.osv):
     _inherit = 'project.task'
     
     def _get_issue(self, cr, uid, ids, fieldname, arg, context=None):
-        print 'CAMBIO LA TAREA EN EL ISSUE'
         if context is None: context = {}
         res = {}
         pi_obj = self.pool.get('project.issue')
@@ -109,7 +108,6 @@ class project_task_work(osv.osv):
         return res
 
     def _get_work_in_task(self, cr, uid, ids, context=None):
-        print 'ENTRO A BUSCAR A TRABAJO EN TAREAS'
         if context is None: context = {}
         res=[]
         pt_obj = self.pool.get('project.task')
@@ -118,7 +116,6 @@ class project_task_work(osv.osv):
         return list(set(res))
         
     def _get_work_in_issue(self, cr, uid, ids, context=None):
-        print 'ENTRO A BUSCAR TRABAJOS EN  EL ISSUE'
         if context is None: context = {}
         res=[]
         pi_obj = self.pool.get('project.issue')

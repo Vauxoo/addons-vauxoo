@@ -33,11 +33,34 @@ class project_task_work_report(report_sxw.rml_parse):
         super(project_task_work_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
-            'int': int,
-            'get_invoice_by_partner': self._get_invoice_by_partner,
-            'get_total_by_comercial': self._get_total_by_comercial,
+            'get_lines': self._get_lines,
         })
 
+    def _get_lines(self, ptw_brws):
+        res = {}
+        
+        for ptw in ptw_brws:
+            
+            prt, p = ptw.partner_id  or False, ptw.partner_id and ptw.partner_id.id or False
+            pjt, j = ptw.project_id  or False, ptw.project_id and ptw.project_id.id or False
+            iss, i = ptw.issue_id  or False, ptw.issue_id and ptw.issue_id.id or False
+            
+                        
+            #~ Llenar los partners en el diccionario
+            if not res.get(p):
+                res[p] = {'o':prt,'d':{}}
+
+            #~ Llenar los proyectos en el diccionario
+            if not res[p]['d'].get(j):
+                res[p]['d'][j] = {'o':pjt,'d':{}}
+
+            #~ Llenar las incidencias en el diccionario
+            if res[p]['d'][j]['d'].get(i):
+                res[p]['d'][j]['d'][i]['d'].append(ptw)
+            else:
+                res[p]['d'][j]['d'][i] = {'o':iss,'d':[ptw]}
+        return (res,)
+        
     def _get_aml(self,ids):
         aml_obj= self.pool.get('account.move.line')
         res = 0.0
