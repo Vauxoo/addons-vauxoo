@@ -42,22 +42,41 @@
         <menuitem action="action_pac"   id="menu_pac" parent="menu_pacs"/>
 -->
 
+        <record id="view_params_pac_search" model="ir.ui.view">
+            <field name="name">view.params.pac.search</field>
+            <field name="model">params.pac</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Parameters PAC">
+                    <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
+                    <field name="method_type"/>
+                    <field name="company_id"/>
+                    <field name="active"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Sequence" icon="terp-personal" domain="[]"  context="{'group_by':'sequence'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
 
         <record id="view_params_pac_form" model="ir.ui.view">
             <field name="name">view.params.pac.form</field>
             <field name="model">params.pac</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Parametros PAC">
+                <form string="Parameters PAC">
                     <field name="name"/>
                     <field name="method_type"/>
                     <field name="url_webservice"/>
                     <field name="namespace"/>
                     <field name="user"/>
                     <field name="password" password="True"/>
-
-
-
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    <field name="active"/>
+                    <field name="sequence"/>
                 </form>
             </field>
         </record>
@@ -66,21 +85,21 @@
             <field name="model">params.pac</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Parametros PAC">
+                <tree string="Parameters PAC">
                     <field name="name"/>
-
                     <field name="method_type"/>
+                    <field name="company_id"/>
+                    <field name="active"/>
+                    <field name="sequence"/>
                     <field name="url_webservice"/>
                     <field name="namespace"/>
                     <field name="user"/>
-
-
 
                 </tree>
             </field>
         </record>
         <record id="action_params_pac" model="ir.actions.act_window">
-            <field name="name">Parametros del PAC</field>
+            <field name="name">Parameters PAC</field>
             <field name="res_model">params.pac</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
