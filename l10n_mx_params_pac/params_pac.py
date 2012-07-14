@@ -46,7 +46,7 @@ class params_pac(osv.osv):
         'user': fields.char('User', size=128),
         'password': fields.char('Password', size=128),
         'method_type': fields.selection(_get_method_type_selection,"Type of method", type='char', size=64, required=True),
-        'company_id': fields.many2one('res.company', 'Company'),
+        'company_id': fields.many2one('res.company', 'Company', required=True),
         'active': fields.boolean('Active'),
         'sequence': fields.integer('Sequence'),
 
