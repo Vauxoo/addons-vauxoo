@@ -99,7 +99,7 @@
             </field>
         </record>
         <record id="action_params_pac" model="ir.actions.act_window">
-            <field name="name">Parameters del PAC</field>
+            <field name="name">Parameters PAC</field>
             <field name="res_model">params.pac</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
