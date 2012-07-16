@@ -44,6 +44,7 @@
         "pay_method_view.xml",
         "partner_view.xml",
         "invoice_view.xml",
+        "data/payment_method_data.xml",
     ],
     "installable" : True,
     "active" : False,
