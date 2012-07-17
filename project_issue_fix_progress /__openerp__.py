@@ -24,7 +24,7 @@
 {
     "name" : "Manage the amount of progress in parallel",
     "version" : "1.0",
-    "depends" : ["project"],
+    "depends" : ["project","project_issue"],
     "author" : "Vauxoo",
     "description" : """Manage the amount of progress in parallel, among other related fields.
     """,
