@@ -27,13 +27,13 @@
 
 class project_task(osv.osv):
     _inherit='project.task'
+    
     def write(self, cr, uid, ids, vals, context=None):
         res = super(project_task, self).write(cr, uid, ids, vals, context)
         try:
             issue_obj = self.pool.get('project.issue')
             issue_ids = issue_obj.search(cr, uid, [('task_id','in',[ids])], context=context)
             issue_datas = issue_obj.read(cr, uid, issue_ids, ['task_id'], context=context)
-            print issue_datas,'imprimo datas'
             for issue_data in issue_datas:
                 issue_obj.write(cr,uid,issue_ids,{'task_id':False})
                 issue_obj.write(cr,uid,issue_ids,{'task_id':issue_data['task_id'][0]})
