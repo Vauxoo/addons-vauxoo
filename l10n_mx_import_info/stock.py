@@ -18,6 +18,7 @@ import time
 from osv import osv
 from osv import fields
 from tools.translate import _
+import release
 
 
 class stock_tracking(osv.osv):
@@ -193,17 +194,27 @@ class stock_picking(osv.osv):
 
             if not inv_type:
                 inv_type = self._get_invoice_type(picking)
+            if release.version>=6.1:
+                if inv_type in ('out_invoice', 'out_refund'):
+                    account_id = partner.property_account_receivable.id
+                    payment_term_id = picking.sale_id.payment_term.id
+                else:
+                    account_id = partner.property_account_payable.id
 
-            if inv_type in ('out_invoice', 'out_refund'):
-                account_id = partner.property_account_receivable.id
-                payment_term_id = self._get_payment_term(cr, uid, picking)
+                address_contact_id, address_invoice_id = \
+                        self.pool.get('res.partner').address_get(cr, uid, [partner.id], ['contact', 'invoice']).values()
+                address = address_obj.browse(cr, uid, address_contact_id, context=context)
             else:
-                account_id = partner.property_account_payable.id
+                if inv_type in ('out_invoice', 'out_refund'):
+                    account_id = partner.property_account_receivable.id
+                    payment_term_id = self._get_payment_term(cr, uid, picking)
+                else:
+                    account_id = partner.property_account_payable.id
 
-            address_contact_id, address_invoice_id = \
-                    self._get_address_invoice(cr, uid, picking).values()
-            address = address_obj.browse(cr, uid, address_contact_id, context=context)
-
+                address_contact_id, address_invoice_id = \
+                        self._get_address_invoice(cr, uid, picking).values()
+                address = address_obj.browse(cr, uid, address_contact_id, context=context)
+            
             comment = self._get_comment_invoice(cr, uid, picking)
             if group and partner.id in invoices_group:
                 invoice_id = invoices_group[partner.id]
@@ -223,7 +234,7 @@ class stock_picking(osv.osv):
                     'type': inv_type,
                     'account_id': account_id,
                     'partner_id': address.partner_id.id,
-                    'address_invoice_id': address_invoice_id,
+                    'address_invoice_id': address_invoice_id ,
                     'address_contact_id': address_contact_id,
                     'comment': comment,
                     'payment_term': payment_term_id,
