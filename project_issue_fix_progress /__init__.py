@@ -6,7 +6,7 @@
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: julio (julio@vauxoo.com)
-#    Modify : carlos(juan@vauxoo.com)
+#    Modify by: carlos(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
