@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_sale_uncommitted_product_form" model="ir.ui.view">
+            <field name="name">sale.uncommitted.product.form</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="priority">26</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Sales Order']/group/field[@name='state']" position="after">
+                    <button name="order_commit" type='object' states="draft" string="Commit Order" icon="gtk-go-forward"/>
+                </xpath>
+                <xpath expr="/form/notebook/page[@string='Sales Order']/group/button[@name='cancel']" position="replace">
+                    <button name="cancel" states="committed" string="Cancel Order" icon="gtk-cancel"/>
+                </xpath>
+                <xpath expr="/form/notebook/page[@string='Sales Order']/group/button[@name='order_confirm']" position="replace">
+                    <button name="order_confirm" states="committed" string="Confirm Order" icon="gtk-apply"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

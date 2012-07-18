@@ -23,28 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-{
-    "name" : "Sale of Uncommitted Products",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "website": "http://www.vauxoo.com",
-    "description": '''
+from osv import fields, osv
+from tools.translate import _
 
-''',
-    "depends" : [
-                "sale",
-                "product",
-                "stock",
-                ],
-    "init_xml" : [],
-    "demo_xml" : [
+class sale_order(osv.osv):
+    _inherit = "sale.order"
 
-    ], 
-    "update_xml" : [
-        'view/product_view.xml',
-        'view/sale_view.xml',
-    ],
-    "active": False,
-    "installable": True
-}
+    _columns = {
+        'state': fields.selection([
+            ('draft', 'Quotation'),
+            ('committed', 'Committed'),
+            ('waiting_date', 'Waiting Schedule'),
+            ('manual', 'Manual In Progress'),
+            ('progress', 'In Progress'),
+            ('shipping_except', 'Shipping Exception'),
+            ('invoice_except', 'Invoice Exception'),
+            ('done', 'Done'),
+            ('cancel', 'Cancelled')
+            ], 'Order State', readonly=True, help="Gives the state of the quotation or sales order. \nThe exception state is automatically set when a cancel operation occurs in the invoice validation (Invoice Exception) or in the picking list process (Shipping Exception). \nThe 'Waiting Schedule' state is set when the invoice is confirmed but waiting for the scheduler to run on the date 'Ordered Date'.", select=True),
+    }
+    def order_commit(self, cr, uid, ids, context=None):
+        print 'COMMMITTED IDS, ', ids
+        self.write(cr, uid, ids, {'state': 'committed'}, context=context)
+        return True
+sale_order()

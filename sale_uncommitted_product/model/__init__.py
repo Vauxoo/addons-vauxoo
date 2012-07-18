@@ -23,28 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-{
-    "name" : "Sale of Uncommitted Products",
-    "version" : "0.1",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "website": "http://www.vauxoo.com",
-    "description": '''
-
-''',
-    "depends" : [
-                "sale",
-                "product",
-                "stock",
-                ],
-    "init_xml" : [],
-    "demo_xml" : [
-
-    ], 
-    "update_xml" : [
-        'view/product_view.xml',
-        'view/sale_view.xml',
-    ],
-    "active": False,
-    "installable": True
-}
+import product
+import sale

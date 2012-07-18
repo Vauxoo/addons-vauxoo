@@ -13,6 +13,9 @@
                     <field name="incoming_qty" groups="base.group_extended"/>
                     <field name="outgoing_qty" groups="base.group_extended"/>
                 </xpath>
+                <xpath expr="/tree/field[@name='virtual_available']" position="after">
+                    <field name="qty_committed" groups="base.group_extended"/>
+                </xpath>
             </field>
         </record>
 
