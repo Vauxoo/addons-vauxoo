@@ -54,7 +54,8 @@ class product_product(osv.osv):
         
         for id in ids:
             res[id]=0.0
-            sol_ids = sol_obj.search(cr, uid, [('order_id','!=',False),('order_id.state','=','committed'),('product_id','=',id)], context=context)
+            #~ TODO: Cambiar por una sentencia sql para no tener que pasar el usuario 1
+            sol_ids = sol_obj.search(cr, 1, [('order_id','!=',False),('order_id.state','=','committed'),('product_id','=',id)], context=context)
             if not sol_ids: continue
                 
             res[id] = self._get_product_committed_amount(cr, uid, sol_ids, context=context)
