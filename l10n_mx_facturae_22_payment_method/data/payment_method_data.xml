@@ -3,8 +3,7 @@
     <data noupdate="1">
         <record id="pay_method_efectivo" model="pay.method">
             <field name="name">Efectivo</field>
-            <field name="description">Efectivo
-            </field>
+            <field name="description">Efectivo</field>
         </record>
     </data>
     <data>
