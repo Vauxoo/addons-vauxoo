@@ -42,7 +42,7 @@ class sale_order(osv.osv):
             ('cancel', 'Cancelled')
             ], 'Order State', readonly=True, help="Gives the state of the quotation or sales order. \nThe exception state is automatically set when a cancel operation occurs in the invoice validation (Invoice Exception) or in the picking list process (Shipping Exception). \nThe 'Waiting Schedule' state is set when the invoice is confirmed but waiting for the scheduler to run on the date 'Ordered Date'.", select=True),
     }
-    def order_commit(self, cr, uid, ids, context=None):
+    def action_commit(self, cr, uid, ids, context=None):
         print 'COMMMITTED IDS, ', ids
         self.write(cr, uid, ids, {'state': 'committed'}, context=context)
         return True

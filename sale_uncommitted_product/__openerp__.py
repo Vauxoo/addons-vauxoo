@@ -44,6 +44,7 @@
     "update_xml" : [
         'view/product_view.xml',
         'view/sale_view.xml',
+        'workflow/sale_workflow.xml',
     ],
     "active": False,
     "installable": True

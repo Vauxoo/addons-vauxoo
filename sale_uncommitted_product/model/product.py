@@ -47,22 +47,37 @@ class product_product(osv.osv):
         committed sale orders.
         @return: Dictionary of values
         """
-
-        if context is None: context = {}
-        res = {}
+        
         sol_obj = self.pool.get('sale.order.line')
         
+        if not field_names:
+            field_names = []
+        if context is None: context = {}
+
+        res = {}
+        
         for id in ids:
-            res[id]=0.0
+            res[id] = {}.fromkeys(field_names, 0.0)
+            
+        for id in ids:
             #~ TODO: Cambiar por una sentencia sql para no tener que pasar el usuario 1
             sol_ids = sol_obj.search(cr, 1, [('order_id','!=',False),('order_id.state','=','committed'),('product_id','=',id)], context=context)
-            if not sol_ids: continue
-                
-            res[id] = self._get_product_committed_amount(cr, uid, sol_ids, context=context)
+
+            amount = 0.0
+            if sol_ids and field_names:
+                amount = self._get_product_committed_amount(cr, uid, sol_ids, context=context)
+            
+            for f in field_names:
+                if f == 'qty_committed':
+                    res[id][f] = amount
+                elif f == 'qty_uncommitted':
+                    prd_brw = self.browse(cr, uid, id, context = context)
+                    res[id][f] = prd_brw.qty_available + prd_brw.outgoing_qty - amount
         return res
 
     _columns = {
-        'qty_committed': fields.function(_product_committed, method=True, type='float', string='Sale Committed', help="Current quantities of committed products in Committe Sale Orders.", digits_compute=dp.get_precision('Product UoM')),
+        'qty_committed': fields.function(_product_committed, method=True, type='float', string='Sale Committed', multi='committed', help="Current quantities of committed products in Committe Sale Orders.", digits_compute=dp.get_precision('Product UoM')),
+        'qty_uncommitted': fields.function(_product_committed, method=True, type='float', string='Uncommitted', multi='committed', help="Current quantities of committed products in Committe Sale Orders.", digits_compute=dp.get_precision('Product UoM')),
     }
 
 product_product()
