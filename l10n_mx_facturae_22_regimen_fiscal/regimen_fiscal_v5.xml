@@ -35,7 +35,7 @@
         </record>
         
         <menuitem
-            id="cfd_22_regimen_fiscal" name="Régimen Fiscal" parent='account.menu_finance_accounting'
+            id="cfd_22_regimen_fiscal" name="Régimen Fiscal" parent='base.menu_partner_address_form'
             action='action_regimen_fiscal'
         />
     </data>
