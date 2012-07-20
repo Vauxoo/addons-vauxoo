@@ -55,8 +55,12 @@ class sale_order(osv.osv):
             datas=[]
             data2=list(data[0])
             dat.append(ids)
-            prod_name=dat[list_prod]
-            prod_name_search=self.pool.get('product.product').name_search(cr,uid,prod_name)
+            try:
+                prod_name=dat[list_prod]
+            except:
+                prod_name=False
+            context.update({'partner_id':order.partner_id.id})
+            prod_name_search=prod_name and self.pool.get('product.product').name_search(cr,uid,prod_name,context=context) or False
             prod_id = prod_name_search and prod_name_search[0][0] or False
             lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id,
                                         qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
@@ -103,7 +107,7 @@ class sale_order(osv.osv):
                         dat[data[0].index(lines.keys()[lin])] = val_str_2
             datas.append(dat)
             try:
-                lines and self.pool.get('sale.order.line').import_data(cr, uid, data2, datas, 'init', '') or False
+                lines and self.pool.get('sale.order.line').import_data(cr, uid, data2, datas, 'init', '',context=context) or False
             except Exception, e:
                 return False
             data2=[]
@@ -121,6 +125,8 @@ class sale_order(osv.osv):
         msg+='\n'
         msg+=_('Warning differences in other fields, CSV VS System in the following products and fields:')
         msg+='\n %s '%(pmsg)
+        msg2=tools.ustr(pmsg)
+        msg=tools.ustr(msg)+'%s '%(msg2)
         return msg
         
 sale_order()
