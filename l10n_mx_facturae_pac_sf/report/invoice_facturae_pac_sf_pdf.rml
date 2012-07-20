@@ -87,8 +87,10 @@
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P27" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
-    <paraStyle name="P28" fontName="Helvetica" alignment="RIGHT"/>
+    <paraStyle name="P27" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P30" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -369,14 +371,17 @@
             <para style="P14">
               <font color="white"> </font>
             </para>
-            <para style="P12">Cadena Original del complemento de certificación digital del SAT:</para>
-            <para style="P14">[[ split_string( o.cfdi_cadena_original or '' ) ]]</para>
           </td>
           <td>
             <para style="P4">[[ o.cfdi_cbb and setTag('para','image',{'width':'6cm','height':'6cm'}) ]] [[ o.cfdi_cbb ]]</para>
           </td>
         </tr>
       </blockTable>
+      <para style="P12">Cadena Original del complemento de certificación digital del SAT:</para>
+      <para style="P29">[[ split_string( o.cfdi_cadena_original or '' ) ]]</para>
+      <para style="P5">
+        <font color="white"> </font>
+      </para>
       <para style="P5">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ (o.comment and format(o.comment )) or removeParentNode('para') ]]</para>
     </section>

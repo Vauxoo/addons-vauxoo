@@ -65,6 +65,9 @@
     <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P27" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -302,11 +305,6 @@
             <para style="P2">[[ o.company_id.cif_file and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ o.company_id.cif_file ]]</para>
           </td>
           <td>
-            <para style="P10">Cadena original :</para>
-            <para style="P10">[[ split_string( o.cadena_original ) ]]</para>
-            <para style="P10">
-              <font color="white"> </font>
-            </para>
             <para style="P10">Serie del Certificado :</para>
             <para style="P10">[[ o.no_certificado or '' ]]</para>
             <para style="P10">
@@ -317,6 +315,11 @@
           </td>
         </tr>
       </blockTable>
+      <para style="P10">Cadena original :</para>
+      <para style="P11">[[ split_string( o.cadena_original ) ]]</para>
+      <para style="P14">
+        <font color="white"> </font>
+      </para>
       <para style="P14">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ format(o.comment or '') ]]</para>
     </section>
