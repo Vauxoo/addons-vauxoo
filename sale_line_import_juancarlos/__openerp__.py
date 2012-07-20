@@ -27,10 +27,10 @@
 {
     "name": "Sale Line Import",
     "version": "1.1",
-    "author": "OpenERP SA",
+    "author" : "Vauxoo",
     "category": "Generic Modules/Product",
-    "website": "http://www.openerp.com",
-    "description": """
+    "website" : "http://www.vauxoo.com/",
+    "description": """Import a CSV file to lines of Sale Order
     """,
     'author': 'OpenERP SA',
     'website': 'http://www.openerp.com',
