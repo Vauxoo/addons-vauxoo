@@ -212,6 +212,8 @@ class account_invoice(osv.osv):
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
                         }
                         if cfdi_data.get('cfdi_xml', False):
+                            url_pac = '</cfdi:Comprobante><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->'
+                            cfdi_data['cfdi_xml'] = cfdi_data['cfdi_xml'].replace('</cfdi:Comprobante>', url_pac)
                             file = base64.encodestring( cfdi_data['cfdi_xml'] or '' )
                             self.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
                             msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
