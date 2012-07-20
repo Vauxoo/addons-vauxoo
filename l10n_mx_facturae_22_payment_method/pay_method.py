@@ -34,7 +34,7 @@ import pooler
 class pay_method(osv.osv):
     _name = 'pay.method'
     _columns = {
-        'name': fields.char('Metodo de Pago', size = 128),
-        'description': fields.text('Descripcion'),
+        'name': fields.char('Método de Pago', size = 128),
+        'description': fields.text('Descripción'),
     }
 pay_method()
