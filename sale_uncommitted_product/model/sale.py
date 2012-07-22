@@ -47,4 +47,9 @@ class sale_order(osv.osv):
     def action_commit(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'committed',  'date_committed': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
         return True
+
+    def check_committed(self, cr, uid, ids, context=None):
+        print 'CHECK_COMMITTED'
+        return True
+
 sale_order()
