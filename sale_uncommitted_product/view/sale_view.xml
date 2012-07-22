@@ -18,6 +18,9 @@
                 <xpath expr="/form/notebook/page[@string='Sales Order']/group/button[@name='order_confirm']" position="replace">
                     <button name="order_confirm" states="committed" string="Confirm Order" icon="gtk-apply"/>
                 </xpath>
+                <field name='date_confirm' position='before'>
+                    <field name='date_committed'/>
+                </field>
             </field>
         </record>
 
