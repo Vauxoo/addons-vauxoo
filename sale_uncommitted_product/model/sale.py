@@ -48,8 +48,42 @@ class sale_order(osv.osv):
         self.write(cr, uid, ids, {'state': 'committed',  'date_committed': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
         return True
 
+    def _check_so(self, cr, uid, id, context=None):
+        if context is None: context = {}
+        
+        uom_obj = self.pool.get('product.uom')
+        pp_obj  = self.pool.get('product.product')
+        
+        note ='\n'
+        check = True
+        res = {}
+        for sol_brw in self.browse(cr, uid, id, context=context).order_line:
+            if sol_brw.product_id:
+                from_uom_id = sol_brw.product_uom
+                to_uom_id = sol_brw.product_id.uom_id
+                qty = sol_brw.product_uom_qty
+                amount = uom_obj._compute_qty_obj(cr, uid, from_uom_id, qty, to_uom_id, context=context)
+                if res.get(sol_brw.product_id.id):
+                    res[sol_brw.product_id.id]+=amount
+                else:
+                    res[sol_brw.product_id.id]=amount
+        for p_id in res:
+            pp_brw = pp_obj.browse(cr, uid, p_id, context=context)
+            if res[p_id] > pp_brw.qty_uncommitted:
+                check=False
+                note += _('\n[%s] %s - requested: %s, available: %s')%(pp_brw.default_code or 'N/D', pp_brw.name, res[p_id], pp_brw.qty_uncommitted)
+        
+        return {'note':note, 'check':check}
+        
+
+
     def check_committed(self, cr, uid, ids, context=None):
-        print 'CHECK_COMMITTED'
+        if context is None: context = {}
+        for id in ids:
+            res = self._check_so(cr, uid, id, context=context)
+            if not res['check']:
+                note = _('Sale Order No.: %s\nHas exceeded the uncommited quantity for:\n')%(self.browse(cr,uid,id,context=context).name)
+                raise osv.except_osv(_('Exceeded Committed Products in Sale Order'),note+res['note'])
         return True
 
 sale_order()
