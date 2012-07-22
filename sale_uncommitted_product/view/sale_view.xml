@@ -11,6 +11,7 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='Sales Order']/group/field[@name='state']" position="after">
                     <button name="order_commit" states="draft" string="Commit Order" icon="gtk-go-forward"/>
+                    <button name="force_order_commit" states="draft" string="Force Commit Order" icon="gtk-go-forward"/>
                 </xpath>
                 <xpath expr="/form/notebook/page[@string='Sales Order']/group/button[@name='cancel']" position="replace">
                     <button name="cancel" states="committed" string="Cancel Order" icon="gtk-cancel"/>
