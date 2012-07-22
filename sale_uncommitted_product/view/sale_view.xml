@@ -21,5 +21,19 @@
             </field>
         </record>
 
+        <record id="view_sale_uncommitted_product_search" model="ir.ui.view">
+            <field name="name">sale.uncommitted.product.search</field>
+            <field name="model">sale.order</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="priority">26</field>
+            <field name="arch" type="xml">
+                <xpath expr="/search/filter[@string='Quotations']" position="after">
+                    <filter icon="gtk-media-pause" string="Commitments" domain="[('state','=','committed')]" help="Sales Order that have been committed to the Customers"/>
+                    <filter icon="gtk-cancel" string="Cancel" domain="[('state','=','cancel')]" help="Sales Order that have been cancelled"/>
+                </xpath>
+            </field>
+        </record>
+
     </data>
 </openerp>
