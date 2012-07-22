@@ -30,7 +30,7 @@ class sale_order(osv.osv):
     _inherit = "sale.order"
 
     _columns = {
-        'date_committed':fields.datetime('Commitment Date', help='Date when Sale Order was committed to the Customer'),
+        'date_committed':fields.datetime('Commitment Date', help='Date when Sale Order was committed to the Customer',readonly=True),
         'state': fields.selection([
             ('draft', 'Quotation'),
             ('committed', 'Committed'),
