@@ -25,6 +25,7 @@
 
 from osv import fields, osv
 from tools.translate import _
+import time
 
 class sale_order(osv.osv):
     _inherit = "sale.order"
