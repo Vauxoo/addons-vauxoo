@@ -32,6 +32,8 @@
     "website" : "http://www.vauxoo.com/",
     "description": """Import a CSV file to lines of Sale Order
     """,
+    'author': 'OpenERP SA',
+    'website': 'http://www.openerp.com',
     'depends': ['sale'],
     'init_xml': [],
     'update_xml': ['wizard/sale_line_import_view.xml'],
