@@ -25,4 +25,3 @@
 
 import product
 import sale
-import sale_double_validation_installer
