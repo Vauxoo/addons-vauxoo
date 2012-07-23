@@ -32,6 +32,7 @@
                 </form>
             </field>
         </record>
+        
         <record id="view_res_company_facturae_certificate_tree" model="ir.ui.view">
             <field name="name">view.res.company.facturae.certificate.tree</field>
             <field name="model">res.company.facturae.certificate</field>
@@ -46,6 +47,19 @@
                 </tree>
             </field>
         </record>
+        
+		<record id="action_res_company_facturae_certificate_tree" model="ir.actions.act_window">
+			<field name="name">FacturaE Certificate</field>
+			<field name="res_model">res.company.facturae.certificate</field>
+			<field name="type">ir.actions.act_window</field>        
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		       
+        
+        <menuitem action="action_res_company_facturae_certificate_tree" id="menu_res_company_facturae_certificate" 
+			name="FacturaE Certificate" sequence="50" parent="base.menu_administration"
+            groups="l10n_mx_facturae_cer.group_facturae_mx_cer_manager"/>
         
         <!--Version OpenERP-->
         <record model="ir.ui.view" id="view_res_company_form_inh_l10n_mx_facturae">
