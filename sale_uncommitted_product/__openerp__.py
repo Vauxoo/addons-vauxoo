@@ -47,6 +47,7 @@
         'view/sale_view.xml',
         'view/sale_double_validation_installer.xml',
         'workflow/sale_workflow.xml',
+        'security/groups.xml',
     ],
     "active": False,
     "installable": True
