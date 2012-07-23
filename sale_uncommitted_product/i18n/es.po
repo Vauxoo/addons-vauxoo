@@ -7,34 +7,34 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-07-23 20:04+0000\n"
-"PO-Revision-Date: 2012-07-23 20:04+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2012-07-23 15:54-0400\n"
+"Last-Translator: Humberto Arocha <hbto@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: sale_uncommitted_product
 #: view:sale.double.validation.installer:0
 msgid "Define the group which will approve the Sale Orders."
-msgstr "Define the group which will approve the Sale Orders."
+msgstr "Definir el gropo que aprobará las Ordenes de Ventas"
 
 #. module: sale_uncommitted_product
 #: field:product.product,qty_committed:0
 msgid "Sale Committed"
-msgstr "Sale Committed"
+msgstr "Comprometido en Venta"
 
 #. module: sale_uncommitted_product
 #: view:sale.order:0
 msgid "Commitments"
-msgstr "Commitments"
+msgstr "Compromisos"
 
 #. module: sale_uncommitted_product
 #: code:addons/sale_uncommitted_product/model/sale.py:86
 #, python-format
 msgid "Exceeded Committed Products in Sale Order"
-msgstr "Exceeded Committed Products in Sale Order"
+msgstr "Productos comprometidos excedidos en la Orden de Venta"
 
 #. module: sale_uncommitted_product
 #: model:ir.model,name:sale_uncommitted_product.model_sale_double_validation_installer
@@ -43,10 +43,12 @@ msgstr "sale.double.validation.installer"
 
 #. module: sale_uncommitted_product
 #: help:sale.double.validation.installer,commit_group_id:0
-msgid "Setting this field to a group will only allow to that group to make Commitment Sale Orders checking if complying with contraints. \n"
+msgid ""
+"Setting this field to a group will only allow to that group to make Commitment Sale Orders checking if complying with contraints. \n"
 "        Leave blank to allow any group to commit to"
-msgstr "Setting this field to a group will only allow to that group to make Commitment Sale Orders checking if complying with contraints. \n"
-"        Leave blank to allow any group to commit to"
+msgstr ""
+"Al configurar este campo a un grupo le permitirá a ese grupo generar Compromisos de Ordenes de Ventas si cumplen las restricciones.\n"
+"        Deje en blanco el campo para que cualquier grupo pueda generar compromisos."
 
 #. module: sale_uncommitted_product
 #: model:ir.model,name:sale_uncommitted_product.model_product_product
@@ -56,17 +58,17 @@ msgstr "Producto"
 #. module: sale_uncommitted_product
 #: field:sale.double.validation.installer,force_commit_group_id:0
 msgid "Force Commit Group"
-msgstr "Force Commit Group"
+msgstr "Grupo Forzar Compromisos"
 
 #. module: sale_uncommitted_product
 #: field:sale.double.validation.installer,progress:0
 msgid "Configuration Progress"
-msgstr "Configuration Progress"
+msgstr "Progreso de la Configuración"
 
 #. module: sale_uncommitted_product
 #: view:sale.double.validation.installer:0
 msgid "title"
-msgstr "title"
+msgstr "Título"
 
 #. module: sale_uncommitted_product
 #: view:sale.double.validation.installer:0
@@ -81,15 +83,17 @@ msgstr "Confirmar pedido"
 #. module: sale_uncommitted_product
 #: view:sale.order:0
 msgid "Force Commit Order"
-msgstr "Force Commit Order"
+msgstr "Forzar Comprometer Orden"
 
 #. module: sale_uncommitted_product
 #: code:addons/sale_uncommitted_product/model/sale.py:74
 #, python-format
-msgid "\n"
+msgid ""
+"\n"
 "[%s] %s - requested: %s, available: %s"
-msgstr "\n"
-"[%s] %s - requested: %s, available: %s"
+msgstr ""
+"\n"
+"[%s] %s - solicitado: %s, disponible: %s"
 
 #. module: sale_uncommitted_product
 #: view:sale.order:0
@@ -98,15 +102,17 @@ msgstr "Cancelar pedido"
 
 #. module: sale_uncommitted_product
 #: help:sale.double.validation.installer,force_commit_group_id:0
-msgid "Setting this field to a group will only allow to that group to make Commitment Sale Orders without checking if complying with contraints. \n"
+msgid ""
+"Setting this field to a group will only allow to that group to make Commitment Sale Orders without checking if complying with contraints. \n"
 "        Leave blank to allow any group to force to"
-msgstr "Setting this field to a group will only allow to that group to make Commitment Sale Orders without checking if complying with contraints. \n"
-"        Leave blank to allow any group to force to"
+msgstr ""
+"Al configurar este campo a un grupo le permitirá a ese grupo generar Compromisos de Ordenes de Ventas __SIN__ verificar si se cumplen las restricciones.\n"
+"        Deje en blanco el campo para que cualquier grupo pueda forzar la generación"
 
 #. module: sale_uncommitted_product
 #: model:ir.actions.act_window,name:sale_uncommitted_product.action_config_sale_approval_group
 msgid "Configure Approval Group for Sale "
-msgstr "Configure Approval Group for Sale "
+msgstr "Configurar Grupo de Aprobación para la Orden de Venta"
 
 #. module: sale_uncommitted_product
 #: model:ir.model,name:sale_uncommitted_product.model_sale_order
@@ -116,17 +122,17 @@ msgstr "Pedido de venta"
 #. module: sale_uncommitted_product
 #: code:addons/sale_uncommitted_product/model/sale.py:85
 #, python-format
-msgid "Sale Order No.: %s\n"
+msgid ""
+"Sale Order No.: %s\n"
 "Has exceeded the uncommited quantity for:\n"
-""
-msgstr "Sale Order No.: %s\n"
-"Has exceeded the uncommited quantity for:\n"
-""
+msgstr ""
+"La Orden de Venta No.: %s\n"
+"Ha excedido la(s) cantidad(es) no comprometida(s) para:\n"
 
 #. module: sale_uncommitted_product
 #: help:sale.order,date_committed:0
 msgid "Date when Sale Order was committed to the Customer"
-msgstr "Date when Sale Order was committed to the Customer"
+msgstr "Fecha cuando la Orden de Venta fue comprometida al Cliente"
 
 #. module: sale_uncommitted_product
 #: sql_constraint:sale.order:0
@@ -136,39 +142,41 @@ msgstr "¡La referencia del pedido debe ser única!"
 #. module: sale_uncommitted_product
 #: view:sale.double.validation.installer:0
 msgid "Sale Application Configuration"
-msgstr "Sale Application Configuration"
+msgstr "Configuración de la Aplicación de Venta"
 
 #. module: sale_uncommitted_product
 #: help:sale.double.validation.installer,group_id:0
-msgid "Setting this field to a group will only allow to that group to approve Sale Orders. \n"
+msgid ""
+"Setting this field to a group will only allow to that group to approve Sale Orders. \n"
 "        Leave blank to allow any group to approve to"
-msgstr "Setting this field to a group will only allow to that group to approve Sale Orders. \n"
-"        Leave blank to allow any group to approve to"
+msgstr ""
+"Al configurar este campo a un grupo le permitirá a ese grupo aprobar las Órdenes de Ventas.\n"
+"        Deje en blanco el campo para que cualquier grupo las apruebe."
 
 #. module: sale_uncommitted_product
 #: field:sale.order,date_committed:0
 msgid "Commitment Date"
-msgstr "Commitment Date"
+msgstr "Fecha de Compromiso"
 
 #. module: sale_uncommitted_product
 #: field:sale.double.validation.installer,config_logo:0
 msgid "Image"
-msgstr "Image"
+msgstr "Imagen"
 
 #. module: sale_uncommitted_product
 #: field:sale.double.validation.installer,group_id:0
 msgid "Approval Group"
-msgstr "Approval Group"
+msgstr "Grupo de Aprobación"
 
 #. module: sale_uncommitted_product
 #: view:sale.order:0
 msgid "Commit Order"
-msgstr "Commit Order"
+msgstr "Comprometer Orden"
 
 #. module: sale_uncommitted_product
 #: field:product.product,qty_uncommitted:0
 msgid "Uncommitted"
-msgstr "Uncommitted"
+msgstr "No comprometido"
 
 #. module: sale_uncommitted_product
 #: constraint:product.product:0
@@ -183,21 +191,21 @@ msgstr "La orden de venta debe ser unica por Cliente"
 #. module: sale_uncommitted_product
 #: field:sale.double.validation.installer,commit_group_id:0
 msgid "Commit Group"
-msgstr "Commit Group"
+msgstr "Grupo de Compromiso"
 
 #. module: sale_uncommitted_product
 #: view:sale.order:0
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Cancelar"
 
 #. module: sale_uncommitted_product
 #: help:product.product,qty_committed:0
 #: help:product.product,qty_uncommitted:0
 msgid "Current quantities of committed products in Committe Sale Orders."
-msgstr "Current quantities of committed products in Committe Sale Orders."
+msgstr "Cantidades actuales de productos comprometidos en Orden de Ventas Comprometidas."
 
 #. module: sale_uncommitted_product
 #: view:sale.double.validation.installer:0
 msgid "Configure Approval Group for Sale Orders"
-msgstr "Configure Approval Group for Sale Orders"
+msgstr "Configurar Grupo de Aprobación de Órdenes de Ventas"
 
