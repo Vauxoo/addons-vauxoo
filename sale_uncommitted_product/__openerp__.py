@@ -33,6 +33,7 @@
 
 ''',
     "depends" : [
+                "base",
                 "sale",
                 "product",
                 "stock",
@@ -44,6 +45,7 @@
     "update_xml" : [
         'view/product_view.xml',
         'view/sale_view.xml',
+        'view/sale_double_validation_installer.xml',
         'workflow/sale_workflow.xml',
     ],
     "active": False,
