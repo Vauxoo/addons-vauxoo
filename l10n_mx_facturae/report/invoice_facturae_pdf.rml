@@ -343,11 +343,6 @@
             <para style="P2">[[ o.company_id.cif_file and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ o.company_id.cif_file ]]</para>
           </td>
           <td>
-            <para style="P13">Cadena original :</para>
-            <para style="P13">[[ split_string( o.cadena_original ) ]]</para>
-            <para style="P13">
-              <font color="white"> </font>
-            </para>
             <para style="P13">Serie del Certificado :</para>
             <para style="P13">[[ o.no_certificado or '' ]]</para>
             <para style="P13">
@@ -358,6 +353,8 @@
           </td>
         </tr>
       </blockTable>
+      <para style="P13">Cadena original :</para>
+      <para style="P13">[[ split_string( o.cadena_original ) ]]</para>
       <para style="P17">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ format(o.comment or '') ]]</para>
     </section>
