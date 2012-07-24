@@ -6,8 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -31,7 +30,7 @@
     "author" : "Vauxoo",
     "category" : "Generic Modules",
     "description" : """
-        Add fields description for purchase, sale && invoice in company
+        Add fields description for purchase, sale & invoice in company
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
