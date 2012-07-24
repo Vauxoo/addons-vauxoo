@@ -46,7 +46,9 @@ class account_invoice(osv.osv):
     def _get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
         invoice_data_parents = super(account_invoice,self)._get_facturae_invoice_dict_data(cr,uid,ids,context)
 
-        date_invoice = datetime.strptime( invoice_data_parents[0]['date_invoice'], '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d')
+        date_invoice = invoice_data_parents[0].get('date_invoice',{}) and datetime.strptime( invoice_data_parents[0].get('date_invoice',{}), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') or False
+        if not date_invoice:
+            raise osv.except_osv(('Fecha de Factura vacía'),('No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía.'))
         if date_invoice < '2012-07-01':
           #  print 'es menor'
             return invoice_data_parents
