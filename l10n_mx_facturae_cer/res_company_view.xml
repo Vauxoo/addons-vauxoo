@@ -24,7 +24,7 @@
                     <field name="date_end"/>
                     <separator string="Extra Information" colspan="4"/>
                     <field name="fname_xslt"/>
-                    <field name="company_id"/>
+                    <field name="company_id" widget="selection"/>
                     <newline/>
                     <field name="active"/>
                     <newline/>
