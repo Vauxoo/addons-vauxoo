@@ -24,7 +24,8 @@
                     <field name="date_end"/>
                     <separator string="Extra Information" colspan="4"/>
                     <field name="fname_xslt"/>
-                    <field name="company_id" widget="selection"/>
+                    <newline/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     <newline/>
                     <field name="active"/>
                     <newline/>
@@ -60,6 +61,26 @@
 				id="menu_res_company_facturae_certificate" sequence="50" 
 				parent="base.menu_res_company_global"
 				groups="l10n_mx_facturae_cer.group_facturae_mx_cer_manager"/>
+				
+		
+		<record id="view_res_company_facturae_certificate_search" model="ir.ui.view">
+            <field name="name">view.res.company.facturae.certificate.search</field>
+            <field name="model">res.company.facturae.certificate</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Certificates">
+                    <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
+                    <field name="serial_number"/>
+                    <field name="company_id"/>
+                    <field name="active"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+                        <separator orientation="vertical"/>
+                    </group>
+                </search>
+            </field>
+        </record>
 				
 		 <!--<field colspan="4" name="order_line" nolabel="1" widget="one2many_list">-->
 
@@ -110,6 +131,7 @@
 								<field name="date_start"/>
 								<field name="date_end"/>
 								<field name="active"/>
+								<field name="company_id"/>
 							</tree>
 						</field>
                     </page>
