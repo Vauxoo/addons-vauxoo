@@ -42,6 +42,7 @@ class res_company_facturae_certificate(osv.osv):
     
     _columns = {
         'company_id': fields.many2one('res.company', 'Company', required=True),
+        #'company_ids': fields.one2many('res.company', 'company_id', 'Companies'),
         'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
         'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
         'certificate_password': fields.char('Certificate Password', size=64, invisible=False, required=True),
