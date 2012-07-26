@@ -36,6 +36,7 @@ class ir_sequence_approval(osv.osv):
     _rec_name = 'approval_number'
     
     _columns = {
+		'company_id': fields.many2one('res.company', 'Company', required=True),	
         'approval_number': fields.char(u'Numero de Aprobacion', size=64, required=True),
         'serie': fields.char(u'Serie de Folios', size=12, required=False, help="Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para notas de credito)"),
         'approval_year': fields.char(u'Anio de Aprobacion', size=32, required=True),
@@ -46,6 +47,7 @@ class ir_sequence_approval(osv.osv):
     
     _defaults = {
         #'serie': lambda *a: '0',
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.account', context=c),
     }
     
     _sql_constraints = [

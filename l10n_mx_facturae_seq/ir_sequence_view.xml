@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+		
+		<record id="view_facturae_ir_sequence_approval_form" model="ir.ui.view">
+            <field name="name">view.facturae.ir.sequence.approval.form</field>
+            <field name="model">ir.sequence.approval</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+				  <form string="Aprobaciones">
+						<field name="approval_number"/>
+						<field name="serie"/>
+						<field name="approval_year"/>
+						<field name="number_start"/>
+						<field name="number_end"/>
+						 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                  </form>
+            </field>
+        </record>
+        
+         <record id="view_facturae_ir_sequence_approval_tree" model="ir.ui.view">
+            <field name="name">view.facturae.ir.sequence.approval.tree</field>
+            <field name="model">ir.sequence.approval</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+				<tree string="Aprobaciones">
+					<field name="approval_number"/>
+					<field name="serie"/>
+					<field name="approval_year"/>
+					<field name="number_start"/>
+					<field name="number_end"/>
+                 </tree>
+             </field>
+        </record>
+        
+         <record id="action_facturae_sequence_tree" model="ir.actions.act_window">
+            <field name="name">FacturaE MX Sequence Approval</field>
+            <field name="res_model">ir.sequence.approval</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_facturae_ir_sequence_approval_tree"/>
+        </record>
+      
+        <menuitem action="action_facturae_sequence_tree" 
+				id="menu_facturae_sequence" sequence="50" 
+				parent="base.next_id_5"
+				groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager"/>
         
         <!--Version OpenERP-->
         <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
@@ -12,7 +56,7 @@
                 <page string="Sequence" position="after">
                     <page string="Aprobaciones SAT" groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager">
                         <field name="approval_id"/>
-                        <field name="approval_ids" nolabel="1" colspan="4">
+                        <field name="approval_ids" nolabel="1" colspan="4"  widget="one2many_list">
                             <tree string="Aprobaciones">
                                 <field name="approval_number"/>
                                 <field name="serie"/>
@@ -32,7 +76,6 @@
                 </page>
             </field>
         </record>
-        
         
         <!--TinyERP Compatibility
         <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
