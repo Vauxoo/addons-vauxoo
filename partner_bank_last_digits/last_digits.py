@@ -42,6 +42,6 @@ class res_partner_bank(osv.osv):
         return result
     
     _columns = {
-        'last_acc_number': fields.function(_get_take_digits,method=True, type='char', string="Ultimos 4 digitos"),
+        'last_acc_number': fields.function(_get_take_digits,method=True, type='char', string="Ultimos 4 digitos", size=4, store=True ),
     }
 res_partner_bank()
