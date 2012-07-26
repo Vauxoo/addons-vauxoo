@@ -368,10 +368,7 @@
           </td>
         </tr>
       </blockTable>
-      <para style="P12">
-        <font color="white"> </font>
-      </para>
-      <blockTable colWidths="157.0,175.0,166.0" style="Table1">
+      <blockTable colWidths="155.0,174.0,170.0" style="Table1">
         <tr>
           <td>
             <para style="P10_enc">Régimen Fiscal:</para>
