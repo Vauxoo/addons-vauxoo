@@ -28,20 +28,6 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Tabla5">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
-    </blockTableStyle>
     <blockTableStyle id="Tabla4">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
@@ -64,26 +50,24 @@
     <paraStyle name="P7" fontName="Helvetica" textColor="#ff3333"/>
     <paraStyle name="P8" fontName="Helvetica" fontSize="12.0" leading="15" textColor="#800000"/>
     <paraStyle name="P9" fontName="Helvetica" fontSize="2.0" leading="3" textColor="#800000"/>
-    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="CENTER"/>
-    <paraStyle name="P11" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
-    <paraStyle name="P12" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER" textColor="#000000"/>
-    <paraStyle name="P13" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P14" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P11" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P12" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P13" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P14" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P15" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P16" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P17" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P18" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P21" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="18.0" leading="22" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-    <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
-    <paraStyle name="P27" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P29" fontName="Helvetica" fontSize="2.0" leading="3"/>
+    <paraStyle name="P16" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P17" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P18" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="18.0" leading="22" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P21" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
+    <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
+    <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P27" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -100,46 +84,46 @@
   </stylesheet>
   <story>
     <section>
-      <para style="P19">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="9.0">[[ set_global_data(o) ]]</font></para>
-      <para style="P22">[[ o.company_id.parent_id and o.company_id.parent_id.partner_id.name or o.company_id.partner_id.name ]]</para>
+      <para style="P15">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="9.0">[[ set_global_data(o) ]]</font></para>
+      <para style="P18">[[ o.company_id.parent_id and o.company_id.parent_id.partner_id.name or o.company_id.partner_id.name ]]</para>
       <blockTable colWidths="125.0,207.0,166.0" style="Tabla1">
         <tr>
           <td>
-            <para style="P27">[[ o.company_id.logo and setTag('para','image',{'width':'120.0','height':'80.0'}) ]] [[ o.company_id.logo ]]</para>
+            <para style="P23">[[ o.company_id.logo and setTag('para','image',{'width':'120.0','height':'80.0'}) ]] [[ o.company_id.logo ]]</para>
           </td>
           <td>
-            <para style="P21">[[ company_address()['name'] or o.company_id.partner_id.name ]]</para>
-            <para style="P24">
+            <para style="P17">[[ company_address()['name'] or o.company_id.partner_id.name ]]</para>
+            <para style="P20">
               <font color="white"> </font>
             </para>
-            <para style="P21">Calle: [[ company_address()['street'] or '' ]] Nro. Ext: [[ company_address()['street3'] or '' ]] Int: [[ company_address()['street4'] or '' ]]</para>
-            <para style="P24">
+            <para style="P17">Calle: [[ company_address()['street'] or '' ]] Nro. Ext: [[ company_address()['street3'] or '' ]] Int: [[ company_address()['street4'] or '' ]]</para>
+            <para style="P20">
               <font color="white"> </font>
             </para>
-            <para style="P21">Colonia: [[ company_address()['street2'] or '' ]]</para>
-            <para style="P24">
+            <para style="P17">Colonia: [[ company_address()['street2'] or '' ]]</para>
+            <para style="P20">
               <font color="white"> </font>
             </para>
-            <para style="P21">Ciudad: [[ company_address()['city'] or '' ]] Estado: [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]]</para>
-            <para style="P25">
+            <para style="P17">Ciudad: [[ company_address()['city'] or '' ]] Estado: [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]]</para>
+            <para style="P21">
               <font color="white"> </font>
             </para>
-            <para style="P21">Localidad: [[ company_address()['city2'] or '' ]]</para>
-            <para style="P24">
+            <para style="P17">Localidad: [[ company_address()['city2'] or '' ]]</para>
+            <para style="P20">
               <font color="white"> </font>
             </para>
-            <para style="P21">CP: [[ company_address()['zip'] or '' ]]</para>
-            <para style="P24">
+            <para style="P17">CP: [[ company_address()['zip'] or '' ]]</para>
+            <para style="P20">
               <font color="white"> </font>
             </para>
-            <para style="P21">RFC: [[ o.company_id.partner_id._columns.has_key('vat_split') and o.company_id.partner_id.vat_split or o.company_id.partner_id.vat ]]</para>
-            <para style="P24">
+            <para style="P17">RFC: [[ o.company_id.partner_id._columns.has_key('vat_split') and o.company_id.partner_id.vat_split or o.company_id.partner_id.vat ]]</para>
+            <para style="P20">
               <font color="white"> </font>
             </para>
-            <para style="P23">Teléfono(s): </para>
-            <para style="P23">[[ company_address()['phone'] or removeParentNode('para') ]]</para>
-            <para style="P23">[[ company_address()['fax'] or removeParentNode('para') ]]</para>
-            <para style="P23">[[ company_address()['mobile'] or removeParentNode('para') ]]</para>
+            <para style="P19">Teléfono(s): </para>
+            <para style="P19">[[ company_address()['phone'] or removeParentNode('para') ]]</para>
+            <para style="P19">[[ company_address()['fax'] or removeParentNode('para') ]]</para>
+            <para style="P19">[[ company_address()['mobile'] or removeParentNode('para') ]]</para>
           </td>
           <td>
             <para style="P7">
@@ -153,7 +137,7 @@
               <font color="white"> </font>
             </para>
             <para style="Table Contents">[[ company_address()['city'] or '' ]], [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] a</para>
-            <para style="P28">[[ o.date_invoice_tz or '' ]]</para>
+            <para style="P24">[[ o.date_invoice_tz or '' ]]</para>
             <para style="Table Contents">Serie: [[ get_approval() and get_approval().serie or '' ]]</para>
             <para style="Table Contents">Aprobación: [[ get_approval() and get_approval().approval_number or '' ]]</para>
             <para style="Table Contents">Año Aprobación:[[ get_approval() and get_approval().approval_year or '' ]]</para>
@@ -171,10 +155,10 @@
             <para style="terp_default_8"><font face="Helvetica">Localidad: </font>[[ o.address_invoice_id.city2 or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">C.P.:</font> [[ o.address_invoice_id.zip or '' ]] </para>
             <para style="terp_default_8"><font face="Helvetica">R. F. C. :</font> [[ o.partner_id._columns.has_key('vat_split') and o.partner_id.vat_split or o.partner_id.vat ]]</para>
-            <para style="P26">Teléfono(s): </para>
-            <para style="P20">[[ o.address_invoice_id.phone or removeParentNode('para') ]]</para>
-            <para style="P20">[[ o.address_invoice_id.fax or removeParentNode('para') ]]</para>
-            <para style="P20">[[ o.address_invoice_id.mobile or removeParentNode('para') ]]</para>
+            <para style="P22">Teléfono(s): </para>
+            <para style="P16">[[ o.address_invoice_id.phone or removeParentNode('para') ]]</para>
+            <para style="P16">[[ o.address_invoice_id.fax or removeParentNode('para') ]]</para>
+            <para style="P16">[[ o.address_invoice_id.mobile or removeParentNode('para') ]]</para>
           </td>
           <td>
             <para style="Table Contents">Condición de pago: [[ format(o.payment_term and (o.payment_term.note or o.payment_term.name) or removeParentNode('para') ) ]]</para>
@@ -299,8 +283,8 @@
         </tr>
         <tr>
           <td>
-            <para style="P16">IMPORTE CON LETRA:</para>
-            <para style="P14">[[ o.amount_to_text ]]</para>
+            <para style="P13">IMPORTE CON LETRA:</para>
+            <para style="P11">[[ o.amount_to_text ]]</para>
           </td>
           <td>
             <para style="P1">
@@ -309,53 +293,34 @@
           </td>
         </tr>
       </blockTable>
-      <para style="P13">PAGO EN UNA SOLA EXHIBICIÓN</para>
-      <para style="P13">
+      <para style="P10">PAGO EN UNA SOLA EXHIBICIÓN</para>
+      <para style="P10">
         <font color="white"> </font>
       </para>
-      <para style="P13">“Este documento es una representacion impresa de un CFD” </para>
-      <para style="P13">CFD, Comprobante Fiscal Digital</para>
-      <para style="P18">
-        <font color="white"> </font>
-      </para>
-      <blockTable colWidths="157.0,175.0,166.0" style="Tabla5">
-        <tr>
-          <td>
-            <para style="P10">Régimen Fiscal </para>
-            <para style="P11">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
-          </td>
-          <td>
-            <para style="P10">Método de Pago: </para>
-            <para style="P12">[[o.pay_method_id.name or 'No identificado']]</para>
-          </td>
-          <td>
-            <para style="P10">Últimos 4 dígitos de la cuenta bancaria:</para>
-            <para style="P12">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
-          </td>
-        </tr>
-      </blockTable>
-      <para style="P29">
-        <font color="white"> </font>
-      </para>
+      <para style="P10">“Este documento es una representacion impresa de un CFD” </para>
+      <para style="P10">CFD, Comprobante Fiscal Digital</para>
       <blockTable colWidths="101.0,397.0" style="Tabla4">
         <tr>
           <td>
             <para style="P2">[[ o.company_id.cif_file and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ o.company_id.cif_file ]]</para>
           </td>
           <td>
-            <para style="P13">Serie del Certificado :</para>
-            <para style="P13">[[ o.no_certificado or '' ]]</para>
-            <para style="P13">
+            <para style="P10">Serie del Certificado :</para>
+            <para style="P10">[[ o.no_certificado or '' ]]</para>
+            <para style="P10">
               <font color="white"> </font>
             </para>
-            <para style="P13">Sello digital :</para>
-            <para style="P15">[[ split_string( o.sello ) ]]</para>
+            <para style="P10">Sello digital :</para>
+            <para style="P12">[[ split_string( o.sello ) ]]</para>
           </td>
         </tr>
       </blockTable>
-      <para style="P13">Cadena original :</para>
-      <para style="P13">[[ split_string( o.cadena_original ) ]]</para>
-      <para style="P17">Vendedor: [[o.user_id.name]]</para>
+      <para style="P10">Cadena original :</para>
+      <para style="P11">[[ split_string( o.cadena_original ) ]]</para>
+      <para style="P14">
+        <font color="white"> </font>
+      </para>
+      <para style="P14">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ format(o.comment or '') ]]</para>
     </section>
     <para style="Standard">
