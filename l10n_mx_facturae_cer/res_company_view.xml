@@ -45,6 +45,7 @@
                     <field name="date_start"/>
                     <field name="date_end"/>
                     <field name="active"/>
+                    <field name="company_id"/>
                 </tree>
             </field>
         </record>
