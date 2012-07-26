@@ -58,7 +58,7 @@ class sale_order(osv.osv):
         check = True
         res = {}
         for sol_brw in self.browse(cr, uid, id, context=context).order_line:
-            if sol_brw.product_id:
+            if sol_brw.product_id and sol_brw.product_id.type!="service":
                 from_uom_id = sol_brw.product_uom
                 to_uom_id = sol_brw.product_id.uom_id
                 qty = sol_brw.product_uom_qty
