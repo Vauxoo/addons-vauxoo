@@ -24,6 +24,20 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
     <blockTableStyle id="Tabla7">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
@@ -71,6 +85,8 @@
     <paraStyle name="P8" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
     <paraStyle name="P9" fontName="Helvetica" textColor="#ff3333"/>
     <paraStyle name="P10" fontName="Helvetica" fontSize="12.0" leading="15" textColor="#800000"/>
+    <paraStyle name="P10_enc" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="CENTER"/>
+    <paraStyle name="P11_txt" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
     <paraStyle name="P11" fontName="Helvetica" fontSize="2.0" leading="3" textColor="#800000"/>
     <paraStyle name="P12" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P13" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
@@ -355,6 +371,22 @@
       <para style="P12">
         <font color="white"> </font>
       </para>
+      <blockTable colWidths="157.0,175.0,166.0" style="Table1">
+        <tr>
+          <td>
+            <para style="P10_enc">Régimen Fiscal:</para>
+            <para style="P11_txt">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
+          </td>
+          <td>
+            <para style="P10_enc">Método de Pago: </para>
+            <para style="P11_txt">[[o.pay_method_id.name or 'No identificado']]</para>
+          </td>
+          <td>
+            <para style="P10_enc">Últimos 4 dígitos de la cuenta bancaria:</para>
+            <para style="P11_txt">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
+          </td>
+        </tr>
+      </blockTable>
       <blockTable colWidths="100.0,282.0,117.0" style="Tabla4">
         <tr>
           <td>

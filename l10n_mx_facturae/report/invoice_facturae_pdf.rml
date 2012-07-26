@@ -67,7 +67,8 @@
     <paraStyle name="P10" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P11" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P12" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P12_b" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10_enc" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="CENTER"/>
+    <paraStyle name="P11_txt" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
     <paraStyle name="P13" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P14" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P15" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
@@ -317,16 +318,16 @@
       <blockTable colWidths="157.0,175.0,166.0" style="Table1">
         <tr>
           <td>
-            <para style="P12_b">Régimen Fiscal </para>
-            <para style="P12">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
+            <para style="P10_enc">Régimen Fiscal </para>
+            <para style="P11_txt">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
           </td>
           <td>
-            <para style="P12_b">Método de Pago: </para>
-            <para style="P12">[[o.pay_method_id.name or 'No identificado']]</para>
+            <para style="P10_enc">Método de Pago: </para>
+            <para style="P11_txt">[[o.pay_method_id.name or 'No identificado']]</para>
           </td>
           <td>
-            <para style="P12_b">Últimos 4 dígitos de la cuenta bancaria:</para>
-            <para style="P12">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
+            <para style="P10_enc">Últimos 4 dígitos de la cuenta bancaria:</para>
+            <para style="P11_txt">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
           </td>
         </tr>
       </blockTable>
