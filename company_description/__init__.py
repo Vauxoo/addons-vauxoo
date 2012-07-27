@@ -1,1 +1,1 @@
-import company_view
+import company
