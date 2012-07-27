@@ -6,9 +6,9 @@
             <field name="name">view.partner.form.inh.xml22</field>
             <field name="type">form</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base_vat.view_partner_form"/>
+            <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <field name="property_payment_term" position="after">
+                <field name="lang" position="after">
                     <field name="regimen_fiscal_id" colspan="2"/>
                 </field>
             </field>
