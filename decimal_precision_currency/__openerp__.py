@@ -25,7 +25,7 @@
 {
     "name" : "Decimal Precision to Rate Currency",
     "version" : "0.1",
-    "depends" : ["base"],
+    "depends" : ["base","decimal_precision"],
     "author" : "Vauxoo",
     "description" : """
                     This module, add decimal  precision format to Rate Currency, for the conversion  between currencies is accurate.
@@ -37,6 +37,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "decimal_pre_currency_view.xml",
         "data/decimal_precision_currency.xml",
     ],
     "active": False,
