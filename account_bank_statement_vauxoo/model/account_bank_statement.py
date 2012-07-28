@@ -37,6 +37,7 @@ class account_bank_statement(osv.osv):
     _inherit = 'account.bank.statement'
     _columns = {
         'bs_line_ids':fields.one2many('bank.statement.imported.lines', 'bank_statement_id', 'Statement', required=False),
+        'fname':fields.char('File Name Imported',128,required=False),
     }
 
     def file_verify_cr(self, cr, uid, ids, context={}):
@@ -81,6 +82,28 @@ class account_bank_statement(osv.osv):
     def delete_lines_file(self, cr, uid, ids, context = None):
         bs=self.browse(cr,uid,ids,context=context)[0]
         bs.bs_line_ids and [self.write(cr, uid, ids, {'bs_line_ids':[(2,i.id)]}) for i in bs.bs_line_ids]
+        self.write(cr, uid, ids, {'fname':''},context=context)
+        return True
+
+    def create_aml_tmp(self, cr, uid, ids, context=None):
+        am_obj=self.pool.get('account.move')
+        aml_obj=self.pool.get('account.move.line')
+        st=self.browse(cr,uid,ids,context=context)[0]
+        am_id=am_obj.create(cr, uid, {'name':'From File',
+                                 'period_id':self.browse(cr,uid,ids,context=context)[0].period_id.id,
+                                 'journal_id':self.browse(cr,uid,ids,context=context)[0].journal_id.id,
+                                 'date':self.browse(cr,uid,ids,context=context)[0].date,
+                                 'narration':'''Account move created with importation from file %s
+                                 ''' % (st.fname),
+                                }, context=context)
+        for bsl in st.bs_line_ids:
+            acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
+            am_obj.write(cr,uid,am_id,{'move_lines':[(0,0,{'move_id':am_id,
+                                                           'credit':bsl.debit, 
+                                                           'debit':bsl.credit,
+                                                           'account_id':acc_id,})]},
+                                                           context=context)
+        self.log(cr, uid, st.id, _('Account Move Temporary is created %s ') % (am_id))
         return True
 
     def read_file(self, cr, uid, ids, context=None):
@@ -99,7 +122,8 @@ class account_bank_statement(osv.osv):
                 sheet = doc.sheet_by_index(0)
                 context.update({'xls_sheet':sheet})
                 if self.file_verify_cr(cr, uid, ids, context=context):
-                    self.write_file(cr, uid, ids, context=context)
+                    if self.write_file(cr, uid, ids, context=context):
+                        self.write(cr, uid, ids, {'fname':file_xls_brw[0].datas_fname},context=context)
             else:
                 raise osv.except_osv(_('Warning'), _('File Must be an XLS file ! \
                 Please verify save as correctly in excel your exported file from bank statement'))
@@ -125,9 +149,11 @@ class bank_statement_imported_lines(osv.osv):
         'credit': fields.float('Credit', digits_compute=dp.get_precision('Account'), required=True),
         'office':fields.char('Office', size=16, required=False, readonly=False),
         'bank_statement_id':fields.many2one('account.bank.statement', 'Bank Statement', required=True),
+        'company_id':fields.many2one('res.company','Company',required=False),
     }
 
     _defaults = {
         'name': lambda *a: None,
+        'company_id':  lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.account', context=c),
     }
 bank_statement_imported_lines()

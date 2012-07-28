@@ -14,7 +14,22 @@
             <data>
               <xpath expr="/form/notebook/page[@name='statement_line_ids']" position="after">
                 <page  string="Bank Imported Lines" name="imported_lines">
-                    <field name="bs_line_ids" nolabel="1" mode="tree,form">
+                    <group colspan="2">
+                        <button name="read_file" string="Import From Attachment" 
+                            type="object" colspan="2" icon="gtk-ok"
+                            help="Import from First attached document with xls name, and structure documented."/>
+                        <button name="create_aml_tmp" string="Create Account Move From File"
+                            type="object" colspan="2" icon="gtk-jump-to" 
+                            help="Create Temporary Account Move with lines exactly as bank Statement FIrst Iteration."/>
+                    </group>
+                    <group colspan="2">
+                        <field name="fname" readonly="True"/>
+                        <button name="delete_lines_file" string="Delete Imported From Attachment" 
+                            type="object" colspan="2" icon="gtk-cancel"
+                            help="Delete all lines Imported"/>
+                    </group>
+                    <newline/>
+                    <field name="bs_line_ids" nolabel="1" mode="tree,form" colspan="6">
                         <form>
                             <field name="office"/>
                             <field name="date"/>
@@ -27,13 +42,11 @@
                             <field name="office"/>
                             <field name="date"/>
                             <field name="numdocument"/>
-                            <field name="debit"/>
-                            <field name="credit"/>
+                            <field name="debit" sum="Total Debit"/>
+                            <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
                         </tree>
                     </field>
-                    <button name="read_file" string="Import From Attachment" type="object" colspan="6"/>
-                    <button name="delete_lines_file" string="Delete Imported From Attachment" type="object" colspan="6"/>
                 </page>
               </xpath>
             </data>
