@@ -26,7 +26,7 @@
 {
     "name" : "Decimal Precision to Rate Tax",
     "version" : "0.1",
-    "depends" : ["base","decimal_precision"],
+    "depends" : ["base","decimal_precision","account"],
     "author" : "Vauxoo",
     "description" : """
                     This module, add decimal  precision format to Rate Tax.
