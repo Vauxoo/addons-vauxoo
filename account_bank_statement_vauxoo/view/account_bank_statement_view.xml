@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    
+    <!-- add Valuta Date and Globalisation id to bank statement line -->
+    
+        <record id="view_bank_statement_form_add_fields" model="ir.ui.view">
+          <field name="name">view.bank.statement.form.add.fields</field>
+          <field name="model">account.bank.statement</field>
+          <field name="inherit_id" ref="account.view_bank_statement_form"/>
+          <field name="type">form</field>
+          <field name="arch" type="xml">
+            <data>
+              <xpath expr="/form/notebook/page[@name='statement_line_ids']" position="after">
+                <page  string="Bank Imported Lines" name="imported_lines">
+                    <field name="bs_line_ids" nolabel="1" mode="tree,form">
+                        <form>
+                            <field name="office"/>
+                            <field name="date"/>
+                            <field name="numdocument"/>
+                            <field name="debit"/>
+                            <field name="credit"/>
+                            <field name="name"/>
+                        </form>
+                        <tree>
+                            <field name="office"/>
+                            <field name="date"/>
+                            <field name="numdocument"/>
+                            <field name="debit"/>
+                            <field name="credit"/>
+                            <field name="name"/>
+                        </tree>
+                    </field>
+                    <button name="read_file" string="Import From Attachment" type="object" colspan="6"/>
+                    <button name="delete_lines_file" string="Delete Imported From Attachment" type="object" colspan="6"/>
+                </page>
+              </xpath>
+            </data>
+          </field>
+        </record>
+    </data>
+</openerp>
