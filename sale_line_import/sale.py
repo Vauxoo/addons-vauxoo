@@ -37,7 +37,7 @@ import tools
 class sale_order(osv.osv):
     _inherit='sale.order'
     
-    def import_data_line(self, cr, uid, ids, fdata, context={}):
+    def import_data_line(self, cr, uid, ids, fdata, favalidate, context={}):
         order=self.pool.get('sale.order').browse(cr,uid,ids)
         input=cStringIO.StringIO(fdata)
         input.seek(0)
@@ -103,8 +103,10 @@ class sale_order(osv.osv):
                     if val_str <> val_str_2:
                         if not lines.keys()[lin]=='price_unit':
                             pmsg+=_('%s , Field: %s, CSV: %s, OPEN: %s \n') % (tools.ustr(prod_name),lines.keys()[lin],tools.ustr(dat[data[0].index(lines.keys()[lin])]),tools.ustr(val_str_2))
-                        
-                        dat[data[0].index(lines.keys()[lin])] = val_str_2
+                        if favalidate:
+                            dat[data[0].index(lines.keys()[lin])] = val_str_2
+                        else:
+                            dat[data[0].index(lines.keys()[lin])] = val_str or val_str_2
             datas.append(dat)
             try:
                 lines and self.pool.get('sale.order.line').import_data(cr, uid, data2, datas, 'init', '',context=context) or False
