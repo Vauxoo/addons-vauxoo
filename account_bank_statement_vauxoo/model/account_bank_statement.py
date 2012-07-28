@@ -118,6 +118,7 @@ class account_bank_statement(osv.osv):
         am_obj=self.pool.get('account.move')
         aml_obj=self.pool.get('account.move.line')
         p_obj=self.pool.get('account.period')
+        a_obj=self.pool.get('account.account')
         st=self.browse(cr,uid,ids,context=context)[0]
         company_id=st.company_id.id
         period_w=self.browse(cr,uid,ids,context=context)[0].period_id
@@ -140,6 +141,14 @@ class account_bank_statement(osv.osv):
 
         for bsl in st.bs_line_ids:
             acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
+            p_obj=self.pool.get('ir.config_parameter')
+            rec=p_obj.search(cr,uid,[('key','=','receivable_bs_default')])
+            r=eval(p_obj.browse(cr,uid,rec)[0].value)
+            pay=p_obj.search(cr,uid,[('key','=','payable_bs_default')])
+            p=eval(p_obj.browse(cr,uid,pay)[0].value)
+            payrec=bsl.debit and p or r
+            aid=a_obj.search(cr,uid,payrec,context=context)
+            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
             aml_obj.create(cr,uid,{'move_id':am_id,
                                    'name':bsl.name,
                                    'date':bsl.date,
@@ -155,6 +164,7 @@ class account_bank_statement(osv.osv):
                                    'debit':bsl.debit,
                                    'stff_id':bsl.id,
                                    'account_id':payrec_id,},
+                                  context=context)
 
         self.log(cr, uid, st.id, _('Account Move Temporary For this Statement \
                                     Id Was Created is created %s ') % (st.id))
