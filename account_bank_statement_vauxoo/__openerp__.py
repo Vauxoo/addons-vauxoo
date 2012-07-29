@@ -45,6 +45,7 @@
     ],
     "update_xml" : [
         "view/account_bank_statement_view.xml",
+        "data/data.xml",
     ],
     "active": False,
     "images": [],

@@ -14,26 +14,56 @@
             <data>
               <xpath expr="/form/notebook/page[@name='statement_line_ids']" position="after">
                 <page  string="Bank Imported Lines" name="imported_lines">
-                    <field name="bs_line_ids" nolabel="1" mode="tree,form">
+                    <group colspan="2">
+                        <button name="read_file" string="Import From Attachment" 
+                            type="object" colspan="2" icon="gtk-ok"
+                            help="Import from First attached document with xls name, and structure documented."/>
+                        <newline/>
+                        <button name="create_aml_tmp" string="Create Account Move From File"
+                            type="object" colspan="2" icon="gtk-jump-to" 
+                            attrs="{'invisible':['|',('from_to_file','=','()'),('from_to_file','=','')]}"
+                            help="Create Temporary Account Move with lines exactly as bank Statement FIrst Iteration."/>
+                    </group>
+                    <group colspan="2">
+                        <field name="fname" readonly="True"/>
+                        <newline/>
+                        <field name="from_to_file" readonly="True"/>
+                        <newline/>
+                        <button name="delete_lines_file" string="Delete Imported From Attachment" 
+                            type="object" colspan="2" icon="gtk-cancel"
+                            attrs="{'invisible':['|',('from_to_file','=','()'),('from_to_file','=','')]}"
+                            help="Delete all lines Imported"/>
+                        <newline/>
+                        <button name="set_date_period" string="Set date From File"
+                            type="object" colspan="2"  icon="gtk-execute"
+                            attrs="{'invisible':['|',('from_to_file','=','()'),('from_to_file','=','')]}"
+                            help="Set date from file, with this button we will read the file and set date and period to be right with the file information"/>
+                    </group>
+                    <newline/>
+                    <field name="bs_line_ids" nolabel="1" mode="tree,form" colspan="6">
                         <form>
-                            <field name="office"/>
-                            <field name="date"/>
-                            <field name="numdocument"/>
-                            <field name="debit"/>
-                            <field name="credit"/>
-                            <field name="name"/>
+                            <group colspan="4">
+                             <field name="office"/>
+                             <field name="date"/>
+                             <field name="numdocument"/>
+                             <field name="debit"/>
+                             <field name="credit"/>
+                             <field name="name"/>
+                            </group>
+                            <newline/>
+                            <separator string="Temporal Move Line"/>
+                            <newline/>
+                            <field name="aml_ids" nolabel="1"/>
                         </form>
                         <tree>
                             <field name="office"/>
                             <field name="date"/>
                             <field name="numdocument"/>
-                            <field name="debit"/>
-                            <field name="credit"/>
+                            <field name="debit" sum="Total Debit"/>
+                            <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
                         </tree>
                     </field>
-                    <button name="read_file" string="Import From Attachment" type="object" colspan="6"/>
-                    <button name="delete_lines_file" string="Delete Imported From Attachment" type="object" colspan="6"/>
                 </page>
               </xpath>
             </data>
