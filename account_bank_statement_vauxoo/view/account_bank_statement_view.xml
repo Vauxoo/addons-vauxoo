@@ -54,6 +54,8 @@
                             <separator string="Temporal Move Line"/>
                             <newline/>
                             <field name="aml_ids" nolabel="1"/>
+                            <newline/>
+                            <button type="object" string="Set Invoice" name="button_confirm_bank" icon="terp-stock_effects-object-colorize"/>
                         </form>
                         <tree>
                             <field name="office"/>
@@ -62,6 +64,10 @@
                             <field name="debit" sum="Total Debit"/>
                             <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
+                            <button type="object" 
+                                string="Set Invoice" 
+                                name="button_setinvoice" 
+                                icon="terp-stock_effects-object-colorize"/>
                         </tree>
                     </field>
                 </page>

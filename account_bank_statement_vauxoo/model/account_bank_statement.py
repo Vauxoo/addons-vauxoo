@@ -68,18 +68,18 @@ class account_bank_statement(osv.osv):
 
     def xlrd_to_date(self,cv):
         from1900to1970 = datetime(1970,1,1) - datetime(1900,1,1) + timedelta(days=2)
-        print cv
         value = date.fromtimestamp( int(cv) * 86400) - from1900to1970
-        print value
         return value
-
+    def button_setinvoice(self, cr, uid, ids, context=None):
+        print 'LKJHLSAKjdh'
+        return True
     def write_file(self, cr, uid, ids, context={}):
         sheet=context.get('xls_sheet')
         for i in range(sheet.nrows - 1):
             if i:
                 l = {'office':int(sheet.cell_value(i,0)),
                 'date':self.xlrd_to_date(sheet.cell_value(i,1)),
-                'numdocument':sheet.cell_value(i,2),
+                'numdocument':str(sheet.cell_value(i,2)).split('.')[0],
                 'debit':sheet.cell_value(i,3) and float(sheet.cell_value(i,3).replace(',','')),
                 'credit':sheet.cell_value(i,4) and float(sheet.cell_value(i,4).replace(',','')),
                 'name':sheet.cell_value(i,5),
@@ -114,11 +114,33 @@ class account_bank_statement(osv.osv):
         date_range=dates and (dates[0],dates[-1]) or () 
         return date_range
 
+    def set_counterpart(self, cr, uid, ids, context=None):
+        bsl=self.pool.get('bank.statement.imported.lines').browse(cr,uid,context.get('bsl_id',[]),context=context)
+        a_obj=self.pool.get('account.account')
+        p_obj=self.pool.get('ir.config_parameter')
+        rec=p_obj.search(cr,uid,[('key','=','receivable_bs_default')])
+        r=eval(p_obj.browse(cr,uid,rec)[0].value)
+        pay=p_obj.search(cr,uid,[('key','=','payable_bs_default')])
+        p=eval(p_obj.browse(cr,uid,pay)[0].value)
+        payrec=bsl.debit and p or r
+        aid=a_obj.search(cr,uid,payrec,context=context)
+        payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+        #TODO: Algorithm select Rules
+        #MULTA POR CHEQUE DEVUELTO  53160
+        #USD    PAGO ALQUILER   53111
+        #USD    ADELANTO VIAJE A NEW YORK   53210
+        #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO ICETEL 
+        #COMPAÑIA NACIONAL DE FUERZA Y LUZ      PAGO CNFL   
+        #ACUEDUCTOS Y ALCANTARILLADOS       PAGO AYA        
+        #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO AMNET  
+        #MOTRIX     PAGO MENSAJERIA 
+        #CAJA COSTARISCENSE DEL SEGURO SOCIAL       PAGO CCSS   
+        return payrec_id
+
     def create_aml_tmp(self, cr, uid, ids, context=None):
         am_obj=self.pool.get('account.move')
         aml_obj=self.pool.get('account.move.line')
         p_obj=self.pool.get('account.period')
-        a_obj=self.pool.get('account.account')
         st=self.browse(cr,uid,ids,context=context)[0]
         company_id=st.company_id.id
         period_w=self.browse(cr,uid,ids,context=context)[0].period_id
@@ -141,14 +163,7 @@ class account_bank_statement(osv.osv):
 
         for bsl in st.bs_line_ids:
             acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
-            p_obj=self.pool.get('ir.config_parameter')
-            rec=p_obj.search(cr,uid,[('key','=','receivable_bs_default')])
-            r=eval(p_obj.browse(cr,uid,rec)[0].value)
-            pay=p_obj.search(cr,uid,[('key','=','payable_bs_default')])
-            p=eval(p_obj.browse(cr,uid,pay)[0].value)
-            payrec=bsl.debit and p or r
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+            payrec_id=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
             aml_obj.create(cr,uid,{'move_id':am_id,
                                    'name':bsl.name,
                                    'date':bsl.date,
@@ -181,11 +196,11 @@ class account_bank_statement(osv.osv):
         if len(file_xls_ids)==1:
             checkfilename=file_xls_brw[0].datas_fname and file_xls_brw[0].datas_fname.endswith('.xls')
             if checkfilename:
-                f=NamedTemporaryFile(delete=False)
+                fname_='/tmp/%s' % (file_xls_brw[0].datas_fname)
+                f=open(fname_,'w')
                 f.write(base64.b64decode(file_xls_brw[0].datas))
-                print f.name
-                doc=xlrd.open_workbook(f.name)
-                print doc
+                f.close()
+                doc=xlrd.open_workbook(fname_)
                 sheet = doc.sheet_by_index(0)
                 context.update({'xls_sheet':sheet})
                 if self.file_verify_cr(cr, uid, ids, context=context):
