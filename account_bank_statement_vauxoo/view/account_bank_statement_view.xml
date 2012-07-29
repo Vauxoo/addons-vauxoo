@@ -64,6 +64,7 @@
                             <field name="debit" sum="Total Debit"/>
                             <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
+                            <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
                             <button type="object" 
                                 string="Set Invoice" 
                                 name="button_setinvoice" 

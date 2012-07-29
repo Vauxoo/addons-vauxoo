@@ -119,6 +119,7 @@ class account_bank_statement(osv.osv):
         bsl=self.pool.get('bank.statement.imported.lines').browse(cr,uid,context.get('bsl_id',[]),context=context)
         a_obj=self.pool.get('account.account')
         p_obj=self.pool.get('ir.config_parameter')
+        #default algorithm
         rec=p_obj.search(cr,uid,[('key','=','receivable_bs_default')])
         r=eval(p_obj.browse(cr,uid,rec)[0].value)
         pay=p_obj.search(cr,uid,[('key','=','payable_bs_default')])
@@ -126,11 +127,33 @@ class account_bank_statement(osv.osv):
         payrec=bsl.debit and p or r
         aid=a_obj.search(cr,uid,payrec,context=context)
         payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        #TODO: Algorithm select Rules
-        #MULTA POR CHEQUE DEVUELTO  53160
-        #USD    PAGO ALQUILER   53111
-        #USD    ADELANTO VIAJE A NEW YORK   53210
+        ######
+        #Not Default ones.
+        ######
+        rec=p_obj.search(cr,uid,[('key','ilike','bs_default'),
+                                 ('key','<>','receivable_bs_default'),
+                                 ('key','<>','payable_bs_default')])
+        #EXPRESIONS
+        if "MULTA POR CHEQUE DEVUELTO" in bsl.name or "COMISION CAJEROS MASTER CARD CTA CTE" in bsl.name:
+            #MULTA POR CHEQUE DEVUELTO  53160
+            payrec=[('code','=','53160')]
+            aid=a_obj.search(cr,uid,payrec,context=context)
+            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+            print 'MULTA POR CHEQUE DEVUELTO'
+        if "ADELANTO VIAJE A NEW YORK" in bsl.name.strip():
+            #USD    ADELANTO VIAJE A NEW YORK   53210
+            payrec=[('code','=','53210')]
+            aid=a_obj.search(cr,uid,payrec,context=context)
+            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+            print 'ADELANTO DE VIAJE A NEW YORK'
+        if "PAGO ALQUILER" in bsl.name:
+            #USD    PAGO ALQUILER   53111
+            payrec=[('code','=','53111')]
+            aid=a_obj.search(cr,uid,payrec,context=context)
+            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+            print 'PAGO ALQUILER'
         #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO ICETEL 
+        #TODO: Algorithm select Rules
         #COMPAÑIA NACIONAL DE FUERZA Y LUZ      PAGO CNFL   
         #ACUEDUCTOS Y ALCANTARILLADOS       PAGO AYA        
         #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO AMNET  
@@ -205,6 +228,8 @@ class account_bank_statement(osv.osv):
                                    'amount_currency':bsl.debit and bsl.debit or bsl.credit,
                                    'account_id':payrec_id,},
                                   context=context)
+            print dir(bsl)
+            bsl.write({'counterpart_id':payrec_id})
 
         self.log(cr, uid, st.id, _('Account Move Temporary For this Statement \
                                     Id Was Created is created %s ') % (st.id))
@@ -258,7 +283,8 @@ class bank_statement_imported_lines(osv.osv):
         'bank_statement_id':fields.many2one('account.bank.statement', 'Bank Statement', required=True),
         'company_id':fields.many2one('res.company','Company',required=False),
         'aml_ids':fields.one2many('account.move.line', 'stff_id', 'Account Move Lines'),
-
+        'counterpart_id':fields.many2one('account.account','Account Counterpart', required=False,
+            help="This will be the account to make the account move line as counterpart.")
     }
 
     _defaults = {
