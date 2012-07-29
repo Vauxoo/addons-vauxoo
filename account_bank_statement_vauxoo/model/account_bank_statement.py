@@ -70,9 +70,10 @@ class account_bank_statement(osv.osv):
         from1900to1970 = datetime(1970,1,1) - datetime(1900,1,1) + timedelta(days=2)
         value = date.fromtimestamp( int(cv) * 86400) - from1900to1970
         return value
+
     def button_setinvoice(self, cr, uid, ids, context=None):
-        print 'LKJHLSAKjdh'
         return True
+
     def write_file(self, cr, uid, ids, context={}):
         sheet=context.get('xls_sheet')
         for i in range(sheet.nrows - 1):
@@ -144,9 +145,10 @@ class account_bank_statement(osv.osv):
         st=self.browse(cr,uid,ids,context=context)[0]
         company_id=st.company_id.id
         period_w=self.browse(cr,uid,ids,context=context)[0].period_id
-        am_id=am_obj.create(cr, uid, {'name':'From File',
+        journal=self.browse(cr,uid,ids,context=context)[0].journal_id
+        am_id=am_obj.create(cr, uid, {'ref':'From File %s %s' % (st.fname,st.from_to_file),
                                  'period_id':period_w.id,
-                                 'journal_id':self.browse(cr,uid,ids,context=context)[0].journal_id.id,
+                                 'journal_id':journal.id,
                                  'date':self.browse(cr,uid,ids,context=context)[0].date,
                                  'narration':'''Account move created with importation from file %s
                                  ''' % (st.fname),
@@ -164,7 +166,8 @@ class account_bank_statement(osv.osv):
         for bsl in st.bs_line_ids:
             acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
             payrec_id=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
-            aml_obj.create(cr,uid,{'move_id':am_id,
+            if not journal.currency or journal.currency.id == journal.company_id.currency_id.id:
+                aml_obj.create(cr,uid,{'move_id':am_id,
                                    'name':bsl.name,
                                    'date':bsl.date,
                                    'credit':bsl.debit,
@@ -172,12 +175,34 @@ class account_bank_statement(osv.osv):
                                    'stff_id':bsl.id,
                                    'account_id':acc_id,},
                                   context=context)
-            aml_obj.create(cr,uid,{'move_id':am_id,
+                aml_obj.create(cr,uid,{'move_id':am_id,
                                    'name':bsl.name,
                                    'date':bsl.date,
                                    'credit':bsl.credit,
                                    'debit':bsl.debit,
                                    'stff_id':bsl.id,
+                                   'account_id':payrec_id,},
+                                  context=context)
+            elif journal.currency.id != journal.company_id.currency_id.id:
+                amount=bsl.debit and bsl.debit or bsl.credit
+                curobj=self.pool.get('res.currency')
+                amount=curobj.compute(cr, uid, journal.currency.id, journal.company_id.currency_id.id, amount, context=context)
+                aml_obj.create(cr,uid,{'move_id':am_id,
+                                   'name':bsl.name,
+                                   'date':bsl.date,
+                                   'credit':bsl.debit and amount or 0.00,
+                                   'debit':bsl.credit and amount or 0.00,
+                                   'stff_id':bsl.id,
+                                   'amount_currency':bsl.debit and bsl.debit or bsl.credit,
+                                   'account_id':acc_id,},
+                                  context=context)
+                aml_obj.create(cr,uid,{'move_id':am_id,
+                                   'name':bsl.name,
+                                   'date':bsl.date,
+                                   'credit':bsl.credit and amount or 0.00,
+                                   'debit':bsl.debit and amount or 0.00,
+                                   'stff_id':bsl.id,
+                                   'amount_currency':bsl.debit and bsl.debit or bsl.credit,
                                    'account_id':payrec_id,},
                                   context=context)
 
