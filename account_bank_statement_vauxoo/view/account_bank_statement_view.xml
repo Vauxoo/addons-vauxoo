@@ -49,6 +49,9 @@
                              <field name="debit"/>
                              <field name="credit"/>
                              <field name="name"/>
+                             <field name="bank_statement_id" invisible="1"/>
+                             <field name="partnercounterpart_id"/>
+                             <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
                             </group>
                             <newline/>
                             <separator string="Temporal Move Line"/>
@@ -64,6 +67,8 @@
                             <field name="debit" sum="Total Debit"/>
                             <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
+                            <field name="bank_statement_id" invisible="1"/>
+                            <field name="partnercounterpart_id"/>
                             <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
                             <button type="object" 
                                 string="Set Invoice" 
