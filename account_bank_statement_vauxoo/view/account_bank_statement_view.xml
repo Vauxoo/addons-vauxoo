@@ -41,7 +41,7 @@
                     </group>
                     <newline/>
                     <field name="bs_line_ids" nolabel="1" mode="tree,form" colspan="6">
-                        <form>
+                        <form string="Move line from Bank.">
                             <group colspan="4">
                              <field name="office"/>
                              <field name="date"/>
@@ -65,7 +65,7 @@
                              <field name="state"/>
                             </group>
                         </form>
-                        <tree>
+                        <tree colors="red:state == 'draft';blue:state == 'done'">
                             <field name="office"/>
                             <field name="date"/>
                             <field name="numdocument"/>
