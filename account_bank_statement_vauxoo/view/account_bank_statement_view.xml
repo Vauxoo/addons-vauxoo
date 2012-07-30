@@ -23,11 +23,6 @@
                             type="object" colspan="2" icon="gtk-jump-to" 
                             attrs="{'invisible':['|',('from_to_file','=','()'),('from_to_file','=','')]}"
                             help="Create Temporary Account Move with lines exactly as bank Statement FIrst Iteration."/>
-                    </group>
-                    <group colspan="2">
-                        <field name="fname" readonly="True"/>
-                        <newline/>
-                        <field name="from_to_file" readonly="True"/>
                         <newline/>
                         <button name="delete_lines_file" string="Delete Imported From Attachment" 
                             type="object" colspan="2" icon="gtk-cancel"
@@ -38,6 +33,13 @@
                             type="object" colspan="2"  icon="gtk-execute"
                             attrs="{'invisible':['|',('from_to_file','=','()'),('from_to_file','=','')]}"
                             help="Set date from file, with this button we will read the file and set date and period to be right with the file information"/>
+                    </group>
+                    <group colspan="2">
+                        <field name="fname" readonly="True"/>
+                        <newline/>
+                        <field name="from_to_file" readonly="True"/>
+                        <newline/>
+                        <field name="move" readonly="True"/>
                     </group>
                     <newline/>
                     <field name="bs_line_ids" nolabel="1" mode="tree,form" colspan="6">

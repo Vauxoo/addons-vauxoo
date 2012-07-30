@@ -52,9 +52,10 @@ class account_bank_statement(osv.osv):
 
     _columns = {
         'bs_line_ids':fields.one2many('bank.statement.imported.lines', 'bank_statement_id', 'Statement', required=False),
-        'fname':fields.char('File Name Imported',128,required=False),
-        'from_to_file':fields.function(_fromto, string='Date Range on file', type='char'),
-        'lines_toreview':fields.function(_linestoreview, string='Lines to Review', type='integer'),
+        'fname':fields.char('File Name Imported',128,required=False,help="Name of file imported, to be able to do that add as attach    ment an xls file with the corect format directly imported from Banco Nacional"),
+        'from_to_file':fields.function(_fromto, string='Date Range on file', type='char',help="Date range read on xls file imported from your attachments"),
+        'lines_toreview':fields.function(_linestoreview, string='Lines to Review', type='integer', help="Quantity of lines to verify from file."),
+        'move':fields.many2one('account.move','Move Temp to conciliate',readonly=True, help="This account move is the used to make the conciliation throught the bank statement imported with excel"),
     }
 
     def file_verify_cr(self, cr, uid, ids, context={}):
@@ -158,6 +159,12 @@ class account_bank_statement(osv.osv):
             aid=a_obj.search(cr,uid,payrec,context=context)
             payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
             print 'PAGO ALQUILER'
+        if "17-10-11 COMPRA DE ANAKELES" in bsl.name or "TRASLADO A DOLARES":
+            #USD    PAGO ALQUILER   53111
+            payrec=[('code','=','11100')]
+            aid=a_obj.search(cr,uid,payrec,context=context)
+            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+            print 'PAGO ALQUILER'
         #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO ICETEL 
         #TODO: Algorithm select Rules
         return payrec_id
@@ -181,7 +188,7 @@ class account_bank_statement(osv.osv):
             partner_id=p_obj.search(cr,uid,[('name','ilike','MOTRIX')])
         if 'PAGO CCSS' in bsl.name:
             partner_id=p_obj.search(cr,uid,[('name','ilike','Costarricense del Seguro Social')])
-        if 'CAJERO AUT' in bsl.name:
+        if 'CAJERO AUT' in bsl.name or ' ATM ' in bsl.name:
             partner_id=p_obj.search(cr,uid,[('name','ilike','Caja Chica')])
         return partner_id[0]
 
@@ -192,15 +199,20 @@ class account_bank_statement(osv.osv):
         partner_obj=self.pool.get('res.partner')
         st=self.browse(cr,uid,ids,context=context)[0]
         company_id=st.company_id.id
-        period_w=self.browse(cr,uid,ids,context=context)[0].period_id
-        journal=self.browse(cr,uid,ids,context=context)[0].journal_id
+        actual=self.browse(cr,uid,ids,context=context)[0]
+        period_w=actual.period_id
+        journal=actual.journal_id
+        if actual.bs_line_ids and actual.bs_line_ids[0].aml_ids:
+            raise osv.except_osv(_("Warning"),_("You can not re-create account move's, modify manually on lines where you need do something or delete lines and start again (remember delete the account move related)"))
+
         am_id=am_obj.create(cr, uid, {'ref':'From File %s %s' % (st.fname,st.from_to_file),
                                  'period_id':period_w.id,
                                  'journal_id':journal.id,
-                                 'date':self.browse(cr,uid,ids,context=context)[0].date,
+                                 'date':actual.date,
                                  'narration':'''Account move created with importation from file %s
                                  ''' % (st.fname),
                                 }, context=context)
+        self.write(cr,uid,ids,{'move':am_id},context=context)
         range_dates = self._get_date_range(cr,uid,ids,context=context)
         ini_period=p_obj.find(cr,uid,range_dates[0],context={'company_id':company_id})
         end_period=p_obj.find(cr,uid,range_dates[1],context={'company_id':company_id})
