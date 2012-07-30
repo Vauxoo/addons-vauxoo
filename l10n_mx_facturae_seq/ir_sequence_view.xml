@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-		
-		<record id="view_facturae_ir_sequence_approval_form" model="ir.ui.view">
+        
+        <record id="view_facturae_ir_sequence_approval_form" model="ir.ui.view">
             <field name="name">view.facturae.ir.sequence.approval.form</field>
             <field name="model">ir.sequence.approval</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-				  <form string="Aprobaciones">
-						<field name="approval_number"/>
-						<field name="serie"/>
-						<field name="approval_year"/>
-						<field name="number_start"/>
-						<field name="number_end"/>
-						<field name="company_id" widget="selection" groups="base.group_multi_company"/>
-                  </form>
+                <form string="Aprobaciones">
+                    <field name="approval_number"/>
+                    <field name="serie"/>
+                    <field name="approval_year"/>
+                    <field name="number_start"/>
+                    <field name="number_end"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                </form>
             </field>
         </record>
         
@@ -23,13 +23,13 @@
             <field name="model">ir.sequence.approval</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-				<tree string="Aprobaciones">
-					<field name="approval_number"/>
-					<field name="serie"/>
-					<field name="approval_year"/>
-					<field name="number_start"/>
-					<field name="number_end"/>
-					<field name="company_id"/>
+                <tree string="Aprobaciones">
+                    <field name="approval_number"/>
+                    <field name="serie"/>
+                    <field name="approval_year"/>
+                    <field name="number_start"/>
+                    <field name="number_end"/>
+                    <field name="company_id"/>
                  </tree>
              </field>
         </record>
@@ -43,20 +43,20 @@
         </record>
       
         <menuitem action="action_facturae_sequence_tree" 
-				id="menu_facturae_sequence" sequence="50" 
-				parent="base.next_id_5"
-				groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager"/>
-				
-		<record id="view_facturae_sequence_search" model="ir.ui.view">
+                id="menu_facturae_sequence" sequence="50" 
+                parent="base.next_id_5"
+                groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager"/>
+                
+        <record id="view_facturae_sequence_search" model="ir.ui.view">
             <field name="name">view.facturae.sequence.search</field>
             <field name="model">ir.sequence.approval</field>
             <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Aprobaciones">
                     <field name="approval_number"/>
-					<field name="serie"/>
-					<field name="approval_year"/>
-					<field name="company_id"/>
+                    <field name="serie"/>
+                    <field name="approval_year"/>
+                    <field name="company_id"/>
                     <newline/>
                     <group expand="0" string="Group By...">
                         <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
