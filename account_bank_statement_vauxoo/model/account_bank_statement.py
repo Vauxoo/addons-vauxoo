@@ -42,11 +42,19 @@ class account_bank_statement(osv.osv):
         for st in statements:
             result[st.id]=str(self._get_date_range(cr,uid,ids,context=context))
         return result
+    
+    def _linestoreview(self,cr,uid,ids,field,arg,context=None):
+        statements=self.browse(cr,uid,ids,context=context)
+        result={}
+        for st in statements:
+            result[st.id]=len([i for i in st.bs_line_ids if i.state!='done'])
+        return result
 
     _columns = {
         'bs_line_ids':fields.one2many('bank.statement.imported.lines', 'bank_statement_id', 'Statement', required=False),
         'fname':fields.char('File Name Imported',128,required=False),
         'from_to_file':fields.function(_fromto, string='Date Range on file', type='char'),
+        'lines_toreview':fields.function(_linestoreview, string='Lines to Review', type='integer'),
     }
 
     def file_verify_cr(self, cr, uid, ids, context={}):

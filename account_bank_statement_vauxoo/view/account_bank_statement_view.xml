@@ -12,7 +12,7 @@
           <field name="type">form</field>
           <field name="arch" type="xml">
             <data>
-              <xpath expr="/form/notebook/page[@name='statement_line_ids']" position="after">
+              <xpath expr="/form/notebook/page[@name='statement_line_ids']" position="before">
                 <page  string="Bank Imported Lines" name="imported_lines">
                     <group colspan="2">
                         <button name="read_file" string="Import From Attachment" 
@@ -81,8 +81,34 @@
                              <field name="state"/>
                         </tree>
                     </field>
-                </page>
+                </page> 
               </xpath>
+            </data>
+          </field>
+        </record>
+        <record id="view_bank_statement_tree_add_fields" model="ir.ui.view">
+          <field name="name">view.bank.statement.tree.add.fields</field>
+          <field name="model">account.bank.statement</field>
+          <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+          <field name="type">tree</field>
+          <field name="arch" type="xml">
+            <data>
+                <xpath expr="/tree/field[@name='balance_end_real']" position="after">
+                    <field name="lines_toreview"/>
+                </xpath>
+            </data>
+          </field>
+        </record>
+        <record id="view_bank_statement_search_add_fields" model="ir.ui.view">
+          <field name="name">view.bank.statement.search.add.fields</field>
+          <field name="model">account.bank.statement</field>
+          <field name="inherit_id" ref="account.view_bank_statement_search"/>
+          <field name="type">search</field>
+          <field name="arch" type="xml">
+            <data>
+                <xpath expr="//filter[@string='Confirmed']" position="after">
+                    <filter string="To Review" name="to_verify" domain="[('lines_toreview','>',0),('fname','!=','')]" icon="STOCK_INFO"/>
+                </xpath>
             </data>
           </field>
         </record>
