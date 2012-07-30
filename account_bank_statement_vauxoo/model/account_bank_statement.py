@@ -71,8 +71,6 @@ class account_bank_statement(osv.osv):
         value = date.fromtimestamp( int(cv) * 86400) - from1900to1970
         return value
 
-    def button_setinvoice(self, cr, uid, ids, context=None):
-        return True
 
     def write_file(self, cr, uid, ids, context={}):
         sheet=context.get('xls_sheet')
@@ -403,12 +401,28 @@ class bank_statement_imported_lines(osv.osv):
             help="This will be the account to make the account move line as counterpart."),
         'partnercounterpart_id':fields.many2one('res.partner','Partner Counterpart', required=False,
             help="This will be the partner to make written on the account move line as counterpart., if you change this value, the account payable or receivable will be automatic selected on Account Move Lines related, specially usefull when you pay several things in the same invoice, Petty cash for example, just select your partner petty cash"),
+        'state':fields.selection([
+            ('draft','Draft'),
+            ('done','Done')
+            ],'State',help='If this bank statement line is confirmed or not, to help useability issues',
+            readonly=True,select=True),
     }
 
     _defaults = {
         'name': lambda *a: None,
         'company_id':  lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.account', context=c),
+        'state':'draft',
     }
+    
+    def button_validate(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'done'}, context=context)
+    
+    def button_cancel(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def button_setinvoice(self, cr, uid, ids, context=None):
+        return True
+
 bank_statement_imported_lines()
 
 class account_move_line(osv.osv):

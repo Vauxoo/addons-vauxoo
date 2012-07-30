@@ -58,7 +58,12 @@
                             <newline/>
                             <field name="aml_ids" nolabel="1"/>
                             <newline/>
-                            <button type="object" string="Set Invoice" name="button_confirm_bank" icon="terp-stock_effects-object-colorize"/>
+                            <group colspan="4">
+                             <button type="object" string="Set Invoice" name="button_setinvoice" states="draft" icon="STOCK_FILE"/>
+                             <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
+                             <button type="object" string="Set to Review" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
+                             <field name="state"/>
+                            </group>
                         </form>
                         <tree>
                             <field name="office"/>
@@ -70,10 +75,10 @@
                             <field name="bank_statement_id" invisible="1"/>
                             <field name="partnercounterpart_id"/>
                             <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
-                            <button type="object" 
-                                string="Set Invoice" 
-                                name="button_setinvoice" 
-                                icon="terp-stock_effects-object-colorize"/>
+                             <button type="object" string="Set Invoice" name="button_setinvoice" states="draft" icon="STOCK_FILE"/>
+                             <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
+                             <button type="object" string="Set to Review" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
+                             <field name="state"/>
                         </tree>
                     </field>
                 </page>
