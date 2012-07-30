@@ -12,7 +12,7 @@
           <field name="type">form</field>
           <field name="arch" type="xml">
             <data>
-              <xpath expr="/form/notebook/page[@name='statement_line_ids']" position="after">
+              <xpath expr="/form/notebook/page[@name='statement_line_ids']" position="before">
                 <page  string="Bank Imported Lines" name="imported_lines">
                     <group colspan="2">
                         <button name="read_file" string="Import From Attachment" 
@@ -41,7 +41,7 @@
                     </group>
                     <newline/>
                     <field name="bs_line_ids" nolabel="1" mode="tree,form" colspan="6">
-                        <form>
+                        <form string="Move line from Bank.">
                             <group colspan="4">
                              <field name="office"/>
                              <field name="date"/>
@@ -58,6 +58,8 @@
                             <newline/>
                             <field name="aml_ids" nolabel="1"/>
                             <newline/>
+                            <field name="invoice_ids" nolabel="1" domain="[('residual','>',0.000001)]"/>
+                            <newline/>
                             <group colspan="4">
                              <button type="object" string="Set Invoice" name="button_setinvoice" states="draft" icon="STOCK_FILE"/>
                              <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
@@ -65,13 +67,14 @@
                              <field name="state"/>
                             </group>
                         </form>
-                        <tree>
+                        <tree colors="red:state == 'draft';blue:state == 'done'">
                             <field name="office"/>
                             <field name="date"/>
                             <field name="numdocument"/>
                             <field name="debit" sum="Total Debit"/>
                             <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
+                            <field name="invoice_ids"/>
                             <field name="bank_statement_id" invisible="1"/>
                             <field name="partnercounterpart_id"/>
                             <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
@@ -79,10 +82,37 @@
                              <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
                              <button type="object" string="Set to Review" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
                              <field name="state"/>
+
                         </tree>
                     </field>
-                </page>
+                </page> 
               </xpath>
+            </data>
+          </field>
+        </record>
+        <record id="view_bank_statement_tree_add_fields" model="ir.ui.view">
+          <field name="name">view.bank.statement.tree.add.fields</field>
+          <field name="model">account.bank.statement</field>
+          <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+          <field name="type">tree</field>
+          <field name="arch" type="xml">
+            <data>
+                <xpath expr="/tree/field[@name='balance_end_real']" position="after">
+                    <field name="lines_toreview"/>
+                </xpath>
+            </data>
+          </field>
+        </record>
+        <record id="view_bank_statement_search_add_fields" model="ir.ui.view">
+          <field name="name">view.bank.statement.search.add.fields</field>
+          <field name="model">account.bank.statement</field>
+          <field name="inherit_id" ref="account.view_bank_statement_search"/>
+          <field name="type">search</field>
+          <field name="arch" type="xml">
+            <data>
+                <xpath expr="//filter[@string='Confirmed']" position="after">
+                    <filter string="To Review" name="to_verify" domain="[('lines_toreview','>',0),('fname','!=','')]" icon="STOCK_INFO"/>
+                </xpath>
             </data>
           </field>
         </record>
