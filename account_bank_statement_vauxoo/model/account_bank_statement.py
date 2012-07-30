@@ -71,8 +71,6 @@ class account_bank_statement(osv.osv):
         value = date.fromtimestamp( int(cv) * 86400) - from1900to1970
         return value
 
-    def button_setinvoice(self, cr, uid, ids, context=None):
-        return True
 
     def write_file(self, cr, uid, ids, context={}):
         sheet=context.get('xls_sheet')
@@ -154,12 +152,30 @@ class account_bank_statement(osv.osv):
             print 'PAGO ALQUILER'
         #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO ICETEL 
         #TODO: Algorithm select Rules
+        return payrec_id
+
+    def get_partnercounterpart_id(self,cr,uid,bsl_id,context={}):
+        bsl=self.pool.get('bank.statement.imported.lines').browse(cr,uid,context.get('bsl_id',[]),context=context)
+        p_obj=self.pool.get('res.partner')
         #COMPAÑIA NACIONAL DE FUERZA Y LUZ      PAGO CNFL   
         #ACUEDUCTOS Y ALCANTARILLADOS       PAGO AYA        
         #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO AMNET  
         #MOTRIX     PAGO MENSAJERIA 
-        #CAJA COSTARISCENSE DEL SEGURO SOCIAL       PAGO CCSS   
-        return payrec_id
+        #CAJA COSTARISCENSE DEL SEGURO SOCIAL       PAGO CCSS   i
+        partner_id=[False]
+        if 'PAGO CNFL' in bsl.name:
+            partner_id=p_obj.search(cr,uid,[('name','ilike','NACIONAL DE FUERZA Y LUZ')])
+        if 'PAGO AYA' in bsl.name:
+            partner_id=p_obj.search(cr,uid,[('name','ilike','ACUEDUCTOS Y ALCANTARILLADOS')])
+        if 'PAGO AMNET' in bsl.name or 'PAGO ICETEL' in bsl.name:
+            partner_id=p_obj.search(cr,uid,[('name','ilike','Instituto Costarricense de Electricidad y Telecomunicacion')])
+        if 'PAGO MENSAJERIA' in bsl.name:
+            partner_id=p_obj.search(cr,uid,[('name','ilike','MOTRIX')])
+        if 'PAGO CCSS' in bsl.name:
+            partner_id=p_obj.search(cr,uid,[('name','ilike','Costarricense del Seguro Social')])
+        if 'CAJERO AUT' in bsl.name:
+            partner_id=p_obj.search(cr,uid,[('name','ilike','Caja Chica')])
+        return partner_id[0]
 
     def create_aml_tmp(self, cr, uid, ids, context=None):
         am_obj=self.pool.get('account.move')
@@ -189,6 +205,102 @@ class account_bank_statement(osv.osv):
         for bsl in st.bs_line_ids:
             acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
             payrec_id=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
+        return partner_id
+
+    def create_aml_tmp(self, cr, uid, ids, context=None):
+        am_obj=self.pool.get('account.move')
+        aml_obj=self.pool.get('account.move.line')
+        p_obj=self.pool.get('account.period')
+        st=self.browse(cr,uid,ids,context=context)[0]
+        company_id=st.company_id.id
+        period_w=self.browse(cr,uid,ids,context=context)[0].period_id
+        journal=self.browse(cr,uid,ids,context=context)[0].journal_id
+        am_id=am_obj.create(cr, uid, {'ref':'From File %s %s' % (st.fname,st.from_to_file),
+                                 'period_id':period_w.id,
+                                 'journal_id':journal.id,
+                                 'date':self.browse(cr,uid,ids,context=context)[0].date,
+                                 'narration':'''Account move created with importation from file %s
+                                 ''' % (st.fname),
+                                }, context=context)
+        range_dates = self._get_date_range(cr,uid,ids,context=context)
+        ini_period=p_obj.find(cr,uid,range_dates[0],context={'company_id':company_id})
+        end_period=p_obj.find(cr,uid,range_dates[1],context={'company_id':company_id})
+        if ini_period <> end_period:
+            raise osv.except_osv(_("Warning"),_("You can not make a bank reconcilation for bank moves with dates on different periods"))
+
+        if ini_period <> end_period <> [period_w.id]:
+            raise osv.except_osv(_("Warning"),_("You can not make a bank reconcilation in a period different to the period indicated on files, please select correct period it should be %s " % (ini_period and ini_period[0])))
+            
+
+        for bsl in st.bs_line_ids:
+            acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
+            payrec_id=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
+        return partner_id
+
+    def create_aml_tmp(self, cr, uid, ids, context=None):
+        am_obj=self.pool.get('account.move')
+        aml_obj=self.pool.get('account.move.line')
+        p_obj=self.pool.get('account.period')
+        st=self.browse(cr,uid,ids,context=context)[0]
+        company_id=st.company_id.id
+        period_w=self.browse(cr,uid,ids,context=context)[0].period_id
+        journal=self.browse(cr,uid,ids,context=context)[0].journal_id
+        am_id=am_obj.create(cr, uid, {'ref':'From File %s %s' % (st.fname,st.from_to_file),
+                                 'period_id':period_w.id,
+                                 'journal_id':journal.id,
+                                 'date':self.browse(cr,uid,ids,context=context)[0].date,
+                                 'narration':'''Account move created with importation from file %s
+                                 ''' % (st.fname),
+                                }, context=context)
+        range_dates = self._get_date_range(cr,uid,ids,context=context)
+        ini_period=p_obj.find(cr,uid,range_dates[0],context={'company_id':company_id})
+        end_period=p_obj.find(cr,uid,range_dates[1],context={'company_id':company_id})
+        if ini_period <> end_period:
+            raise osv.except_osv(_("Warning"),_("You can not make a bank reconcilation for bank moves with dates on different periods"))
+
+        if ini_period <> end_period <> [period_w.id]:
+            raise osv.except_osv(_("Warning"),_("You can not make a bank reconcilation in a period different to the period indicated on files, please select correct period it should be %s " % (ini_period and ini_period[0])))
+            
+
+        for bsl in st.bs_line_ids:
+            acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
+            payrec_id=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
+        return partner_id
+
+    def create_aml_tmp(self, cr, uid, ids, context=None):
+        am_obj=self.pool.get('account.move')
+        aml_obj=self.pool.get('account.move.line')
+        p_obj=self.pool.get('account.period')
+        partner_obj=self.pool.get('res.partner')
+        st=self.browse(cr,uid,ids,context=context)[0]
+        company_id=st.company_id.id
+        period_w=self.browse(cr,uid,ids,context=context)[0].period_id
+        journal=self.browse(cr,uid,ids,context=context)[0].journal_id
+        am_id=am_obj.create(cr, uid, {'ref':'From File %s %s' % (st.fname,st.from_to_file),
+                                 'period_id':period_w.id,
+                                 'journal_id':journal.id,
+                                 'date':self.browse(cr,uid,ids,context=context)[0].date,
+                                 'narration':'''Account move created with importation from file %s
+                                 ''' % (st.fname),
+                                }, context=context)
+        range_dates = self._get_date_range(cr,uid,ids,context=context)
+        ini_period=p_obj.find(cr,uid,range_dates[0],context={'company_id':company_id})
+        end_period=p_obj.find(cr,uid,range_dates[1],context={'company_id':company_id})
+        if ini_period <> end_period:
+            raise osv.except_osv(_("Warning"),_("You can not make a bank reconcilation for bank moves with dates on different periods"))
+
+        if ini_period <> end_period <> [period_w.id]:
+            raise osv.except_osv(_("Warning"),_("You can not make a bank reconcilation in a period different to the period indicated on files, please select correct period it should be %s " % (ini_period and ini_period[0])))
+            
+
+        for bsl in st.bs_line_ids:
+            acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
+            payrec_id=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
+            pcp_id=self.get_partnercounterpart_id(cr,uid,ids,context={'bsl_id':bsl.id})
+            if bsl.debit:
+                payrec_id=pcp_id and partner_obj.browse(cr,uid,pcp_id,context=context).property_account_payable.id or payrec_id
+            if bsl.credit:
+                payrec_id=pcp_id and partner_obj.browse(cr,uid,pcp_id,context=context).property_account_receivable.id or payrec_id
             if not journal.currency or journal.currency.id == journal.company_id.currency_id.id:
                 aml_obj.create(cr,uid,{'move_id':am_id,
                                    'name':bsl.name,
@@ -204,6 +316,7 @@ class account_bank_statement(osv.osv):
                                    'credit':bsl.credit,
                                    'debit':bsl.debit,
                                    'stff_id':bsl.id,
+                                   'partner_id':pcp_id,
                                    'account_id':payrec_id,},
                                   context=context)
             elif journal.currency.id != journal.company_id.currency_id.id:
@@ -224,12 +337,13 @@ class account_bank_statement(osv.osv):
                                    'date':bsl.date,
                                    'credit':bsl.credit and amount or 0.00,
                                    'debit':bsl.debit and amount or 0.00,
+                                   'partner_id':pcp_id,
                                    'stff_id':bsl.id,
                                    'amount_currency':bsl.debit and bsl.debit or bsl.credit,
                                    'account_id':payrec_id,},
                                   context=context)
-            print dir(bsl)
-            bsl.write({'counterpart_id':payrec_id})
+            bsl.write({'counterpart_id':payrec_id,
+                       'partnercounterpart_id':pcp_id and pcp_id or False})
 
         self.log(cr, uid, st.id, _('Account Move Temporary For this Statement \
                                     Id Was Created is created %s ') % (st.id))
@@ -284,13 +398,31 @@ class bank_statement_imported_lines(osv.osv):
         'company_id':fields.many2one('res.company','Company',required=False),
         'aml_ids':fields.one2many('account.move.line', 'stff_id', 'Account Move Lines'),
         'counterpart_id':fields.many2one('account.account','Account Counterpart', required=False,
-            help="This will be the account to make the account move line as counterpart.")
+            help="This will be the account to make the account move line as counterpart."),
+        'partnercounterpart_id':fields.many2one('res.partner','Partner Counterpart', required=False,
+            help="This will be the partner to make written on the account move line as counterpart., if you change this value, the account payable or receivable will be automatic selected on Account Move Lines related, specially usefull when you pay several things in the same invoice, Petty cash for example, just select your partner petty cash"),
+        'state':fields.selection([
+            ('draft','Draft'),
+            ('done','Done')
+            ],'State',help='If this bank statement line is confirmed or not, to help useability issues',
+            readonly=True,select=True),
     }
 
     _defaults = {
         'name': lambda *a: None,
         'company_id':  lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.account', context=c),
+        'state':'draft',
     }
+    
+    def button_validate(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'done'}, context=context)
+    
+    def button_cancel(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def button_setinvoice(self, cr, uid, ids, context=None):
+        return True
+
 bank_statement_imported_lines()
 
 class account_move_line(osv.osv):
