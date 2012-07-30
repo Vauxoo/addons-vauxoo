@@ -414,6 +414,9 @@ class bank_statement_imported_lines(osv.osv):
             ('done','Done')
             ],'State',help='If this bank statement line is confirmed or not, to help useability issues',
             readonly=True,select=True),
+        'invoice_ids':fields.many2many('account.invoice','bs_invoice_rel','st_id_id','invoice_id','Invoices',
+            help="Invoices to be reconciled with this line",
+            ),#TODO: Resolve: We should use date as filter, is a question of POV
     }
 
     _defaults = {

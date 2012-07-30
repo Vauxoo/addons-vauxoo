@@ -58,6 +58,8 @@
                             <newline/>
                             <field name="aml_ids" nolabel="1"/>
                             <newline/>
+                            <field name="invoice_ids" nolabel="1" domain="[('residual','>',0.000001),counterpart_id and ('account_id','=',counterpart_id) or (1,'=',1),partnercounterpart_id and ('partner_id','=',counterpart_id)     or (1,'=',1)]"/>
+                            <newline/>
                             <group colspan="4">
                              <button type="object" string="Set Invoice" name="button_setinvoice" states="draft" icon="STOCK_FILE"/>
                              <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
@@ -72,6 +74,7 @@
                             <field name="debit" sum="Total Debit"/>
                             <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
+                            <field name="invoice_ids"/>
                             <field name="bank_statement_id" invisible="1"/>
                             <field name="partnercounterpart_id"/>
                             <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
@@ -79,6 +82,7 @@
                              <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
                              <button type="object" string="Set to Review" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
                              <field name="state"/>
+
                         </tree>
                     </field>
                 </page> 
