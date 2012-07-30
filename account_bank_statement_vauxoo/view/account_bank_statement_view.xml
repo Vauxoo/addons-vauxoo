@@ -58,6 +58,8 @@
                             <newline/>
                             <field name="aml_ids" nolabel="1"/>
                             <newline/>
+                            <separator string="Invoices to be reconciled"/>
+                            <newline/>
                             <field name="invoice_ids" nolabel="1" domain="[('residual','>',0.000001)]"/>
                             <newline/>
                             <group colspan="4">
