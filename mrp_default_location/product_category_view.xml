@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_category_location_property_form" model="ir.ui.view">
+            <field name="name">product.category.location.property.form.inherit</field>
+            <field name="model">product.category</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <form position="inside">
+                    <group col="2" colspan="2">
+                        <separator string="Location Properties" colspan="2"/>
+                          <field name="location_src_id"/>
+                          <field name="location_dest_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>
