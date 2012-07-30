@@ -161,7 +161,7 @@ class account_bank_statement(osv.osv):
             print 'PAGO ALQUILER'
         if "17-10-11 COMPRA DE ANAKELES" in bsl.name or "TRASLADO A DOLARES":
             #USD    PAGO ALQUILER   53111
-            payrec=[('code','=','11100')]
+            payrec=[('code','=','11103')]
             aid=a_obj.search(cr,uid,payrec,context=context)
             payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
             print 'PAGO ALQUILER'
