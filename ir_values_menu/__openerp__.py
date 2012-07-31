@@ -39,7 +39,9 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        'ir_values_view.xml'
+        'security/ir.model.access.csv',
+        'security/ir.rule.csv',
+        'ir_values_view.xml',
     ],
     "installable" : True,
     "active" : False,
