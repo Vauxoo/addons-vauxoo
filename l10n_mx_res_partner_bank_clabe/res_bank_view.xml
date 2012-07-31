@@ -32,9 +32,9 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="sequence">20</field>
             <field name="arch" type="xml">
-                <field name="bank" position="after">
-                      <field name="clabe" colspan="2"/>
-                </field>
+                 <xpath expr="/form/notebook/page[@string='Accounting']/field[@name='bank_ids']/form/group[@name='bank']/field[@name='bank']" position="after">
+                        <field name="clabe" colspan="2"/>
+                </xpath>
             </field>
         </record>
         
@@ -42,12 +42,12 @@
             <field name="name">view.partner.clabe.tree.inh.xml22</field>
             <field name="type">tree</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_bank_tree"/>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
             <field name="sequence">20</field>
             <field name="arch" type="xml">
-                <field name="bank_name" position="after">
-                      <field name="clabe" colspan="2"/>
-                </field>
+                <xpath expr="/form/notebook/page[@string='Accounting']/field[@name='bank_ids']/tree/field[@name='owner_name']" position="after">
+                        <field name="clabe" colspan="2"/>
+                </xpath>
             </field>
         </record>
     </data>
