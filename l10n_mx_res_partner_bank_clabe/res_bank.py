@@ -31,6 +31,6 @@ class res_partner_bank(osv.osv):
     _inherit = 'res.partner.bank'
 
     _columns = {
-        'clabe': fields.char('Clave Interbancaria',size=64, required=False),
+        'clabe': fields.char('Clabe Interbancaria',size=64, required=False),
     }
 res_partner_bank()
