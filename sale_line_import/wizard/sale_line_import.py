@@ -39,7 +39,8 @@ class wizard_import(osv.osv_memory):
     _name='wizard.import'
     _columns={
         'name' : fields.binary('File'),
-        'msg' : fields.text('Messages',readonly=True)
+        'msg' : fields.text('Messages',readonly=True),
+        'validate' : fields.boolean('Validate?')
     }
     
     def send_lines(self, cr, uid, ids, context=None):
@@ -48,7 +49,8 @@ class wizard_import(osv.osv_memory):
         form = self.read(cr,uid,ids,[])
         order_id=context.get('active_id',False)
         fdata = form and base64.decodestring( form[0]['name'] ) or False
-        msg = self.pool.get('sale.order').import_data_line(cr, uid, order_id, fdata, context=context) 
+        fvalidate = form and form[0]['validate'] or False
+        msg = self.pool.get('sale.order').import_data_line(cr, uid, order_id, fdata, fvalidate, context=context) 
         if msg:
             self.write(cr,uid,ids,{'msg':msg})
             return True
