@@ -304,7 +304,7 @@ class commission_payment(osv.osv):
                                                     elif no_days == True and no_dcto == True:
                                                         # Diremos que los dias de baremo es menos uno (-1) cuando los dias de emision
                                                         # no esten dentro del rango del baremo
-                                                        bar_day= 'N/A'
+                                                        bar_day= '0.0'
                                                         bar_dcto_disc  = 0.0
                                                         bar_dcto_comm = 0.0
 
