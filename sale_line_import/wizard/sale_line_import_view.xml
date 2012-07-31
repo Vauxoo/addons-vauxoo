@@ -36,6 +36,7 @@
             view_mode="form"
             target="new"
             key2="client_action_multi"
-            id="action_sale_line_import"/>
+            id="action_sale_line_import"
+            groups="group_wizard_import_line"/>
         </data>
 </openerp>
