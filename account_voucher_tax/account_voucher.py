@@ -35,6 +35,8 @@ class account_voucher(osv.osv):
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
+        print self.account_move_get(cr, uid, voucher_id, context=context),"aqui estasss"
+        new_move=move_obj.create(cr, uid, self.account_move_get(cr, uid, voucher_id, context=context), context=context)
         for voucher in self.browse(cr,uid,[voucher_id],context=context):
             lines=[]
             for line in voucher.line_ids:
@@ -45,11 +47,23 @@ class account_voucher(osv.osv):
                             if tax.tax_id.tax_voucher_ok:
                                 move_ids=[]
                                 account=tax.tax_id.account_collected_voucher_id.id
-                                credit_amount=currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, ((tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)), context=context)
+                                credit_amount= float('%.*f' % (2,((tax.tax_id.amount*tax.base)*(line.amount/line.amount_original))))
+                                if credit_amount:
+                                    if abs(float('%.*f' % (2,credit_amount))-(tax.tax_id.amount*tax.base))<=.02:
+                                        credit_amount=credit_amount-abs(float('%.*f' % (2,credit_amount))-(tax.tax_id.amount*tax.base))
+                                    if abs(float('%.*f' % (2,credit_amount))+ ((tax.tax_id.amount*tax.base)*(1-line.amount/line.amount_original))-(tax.tax_id.amount*tax.base))<.02:
+                                        credit_amount=credit_amount-abs(float('%.*f' % (2,credit_amount))+ ((tax.tax_id.amount*tax.base)*(1-line.amount/line.amount_original))-(tax.tax_id.amount*tax.base))
+                                credit_amount=currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
                                 debit_amount=0.0
                                 if tax.tax_id.amount<0:
                                     credit_amount=0.0
-                                    debit_amount=(-1.0*currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, ((tax.tax_id.amount*tax.base)*(line.amount/line.amount_original)), context=context))
+                                    debit_amount=float('%.*f' % (2,((tax.tax_id.amount*tax.base)*(line.amount/line.amount_original))))
+                                    if debit_amount: 
+                                        if abs(float('%.*f' % (2,debit_amount))-(tax.tax_id.amount*tax.base))<=.02:
+                                            debit_amount=debit_amount-abs(float('%.*f' % (2,debit_amount))-(tax.tax_id.amount*tax.base))
+                                        if abs(float('%.*f' % (2,debit_amount))+ ((tax.tax_id.amount*tax.base)*(1-line.amount/line.amount_original))-(tax.tax_id.amount*tax.base))<.02:
+                                            debit_amount=debit_amount-abs(float('%.*f' % (2,debit_amount))+ ((tax.tax_id.amount*tax.base)*(1-line.amount/line.amount_original))-(tax.tax_id.amount*tax.base))
+                                        debit_amount=(-1.0*currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, float('%.*f' % (2,debit_amount)), round=False, context=context))
                                 if invoice.type=='out_invoice':## considerar que hacer con refund
                                     account=tax.tax_id.account_paid_voucher_id.id
                                     credit_amount, debit_amount=debit_amount, credit_amount
@@ -58,7 +72,7 @@ class account_voucher(osv.osv):
                                     'period_id': voucher.period_id.id,
                                     'name': tax.name or '/',
                                     'account_id': tax.account_id.id,
-                                    'move_id': int(move_id),
+                                    'move_id': int(new_move),
                                     'partner_id': voucher.partner_id.id,
                                     'company_id':company_currency,
                                     'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
@@ -70,14 +84,14 @@ class account_voucher(osv.osv):
                                     
                                     }
                                 if company_currency!=current_currency:
-                                    move_line['amount_currency']=currency_obj.compute(cr, uid, company_currency, current_currency,credit_amount, context=context)
+                                    move_line['amount_currency']=currency_obj.compute(cr, uid, company_currency, current_currency,credit_amount, round=False, context=context)
                                 move_ids.append(move_line_obj.create(cr,uid,move_line,context=context))
                                 move_line={
                                     'journal_id': voucher.journal_id.id,
                                     'period_id': voucher.period_id.id,
                                     'name': tax.name or '/',
                                     'account_id': account,
-                                    'move_id': int(move_id),
+                                    'move_id': int(new_move),
                                     'partner_id': voucher.partner_id.id,
                                     'company_id':company_currency,
                                     #'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
@@ -89,7 +103,7 @@ class account_voucher(osv.osv):
                                     'date': voucher.date,
                                     }
                                 if company_currency!=current_currency:
-                                    move_line['amount_currency']=currency_obj.compute(cr, uid, company_currency, current_currency,credit_amount, context=context)
+                                    move_line['amount_currency']=currency_obj.compute(cr, uid, company_currency, current_currency,credit_amount, round=False, context=context)
                                 move_line_obj.create(cr,uid,move_line,context=context)
                                 for mov_line in invoice.move_id.line_id:
                                     if mov_line.account_id.id==tax.account_id.id:
