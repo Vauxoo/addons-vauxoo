@@ -7,7 +7,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Overdue Payments']" position="after">
+                <xpath expr="/form/notebook/page[@string='Bank Accounts']" position="after">
                     <page string="Descriptions">
                            <separator string="Invoice Description"/>
                            <field colspan="4" name="description_invoice" nolabel="1"/>
