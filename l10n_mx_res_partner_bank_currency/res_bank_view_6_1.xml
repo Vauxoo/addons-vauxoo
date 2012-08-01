@@ -20,9 +20,9 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="sequence">20</field>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Accounting']/field[@name='bank_ids']/form/field[@name='bank']" position="after">
-                        <field name="currency2_id" colspan="2"/>
-                </xpath>
+             <field name="partner_id" position="after">
+                    <field name="currency2_id" colspan="2"/>
+                </field>
             </field>
         </record>
     </data>
