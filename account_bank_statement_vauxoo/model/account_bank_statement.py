@@ -146,25 +146,24 @@ class account_bank_statement(osv.osv):
             payrec=[('code','=','53160')]
             aid=a_obj.search(cr,uid,payrec,context=context)
             payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-            print 'MULTA POR CHEQUE DEVUELTO'
         if "ADELANTO VIAJE A NEW YORK" in bsl.name.strip():
             #USD    ADELANTO VIAJE A NEW YORK   53210
             payrec=[('code','=','53210')]
             aid=a_obj.search(cr,uid,payrec,context=context)
             payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-            print 'ADELANTO DE VIAJE A NEW YORK'
         if "PAGO ALQUILER" in bsl.name:
             #USD    PAGO ALQUILER   53111
             payrec=[('code','=','53111')]
             aid=a_obj.search(cr,uid,payrec,context=context)
             payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-            print 'PAGO ALQUILER'
-        if "17-10-11 COMPRA DE ANAKELES" in bsl.name or "TRASLADO A DOLARES" in bsl.name:
-            #USD    PAGO ALQUILER   53111
+        if "17-10-11 COMPRA DE ANAKELES" in bsl.name or \
+                "TRASLADO A DOLARES" in bsl.name or \
+                "AJUSTE PARA PAGO DE ALQUILER" in bsl.name or \
+                "PARA REMODELACION Y ANAKELES" in bsl.name:
+            #TRASLADO INTERBANCARIO
             payrec=[('code','=','11103')]
             aid=a_obj.search(cr,uid,payrec,context=context)
             payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-            print 'PAGO ALQUILER'
         #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO ICETEL 
         #TODO: Algorithm select Rules
         return payrec_id
