@@ -658,6 +658,7 @@ class account_invoice(osv.osv):
         cert_str = self._get_certificate_str( context['fname_cer'] )
         if not cert_str:
             raise osv.except_osv('Error en Certificado!', 'No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s'%(msg2))
+        cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
         
@@ -670,6 +671,7 @@ class account_invoice(osv.osv):
         data_xml = doc_xml.toxml('UTF-8')
         data_xml = codecs.BOM_UTF8 + data_xml
         fname_xml = (data_dict['Comprobante']['Emisor']['rfc'] or '') + '.' + ( data_dict['Comprobante'].get('serie', '') or '') + '.' + ( data_dict['Comprobante'].get('folio', '') or '') + '.xml'
+        data_xml = data_xml.replace ('<?xml version="1.0" encoding="UTF-8"?>','<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, data_xml
     
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
@@ -848,9 +850,13 @@ class account_invoice(osv.osv):
             #Inicia seccion: Receptor
             if not invoice.partner_id.vat:
                 raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(invoice.partner_id.name, msg2))
+            if invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat[0:2] <> 'MX':
+                rfc = 'XAXX010101000'
+            else:
+                rfc = ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ','')
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
-                'rfc': ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ',''),
+                'rfc': rfc,
                 'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
