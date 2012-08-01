@@ -268,12 +268,16 @@ class account_invoice(osv.osv):
 
     def action_date_assign(self, cr, uid, ids, *args):
         context={}
+        currency_mxn_ids=self.pool.get('res.currency').search(cr, uid, [('name','=','MXN')], limit=1, context=context)
+        currency_mxn_id= currency_mxn_ids and currency_mxn_ids[0] or False
+        if not currency_mxn_id:
+            raise osv.except_osv(_('Error !'),_('No hay moneda MXN.'))
         for id in ids:
             invoice = self.browse(cr, uid, [id])[0]
             date_format = invoice.date_invoice or False
             context['date']=date_format
             invoice = self.browse(cr, uid, [id], context)[0]
-            rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
+            rate=self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id,currency_mxn_id, 1,)
             self.write(cr, uid, [id], {'rate': rate})
         return super(account_invoice, self).action_date_assign(cr, uid, ids, args)
             
@@ -654,6 +658,7 @@ class account_invoice(osv.osv):
         cert_str = self._get_certificate_str( context['fname_cer'] )
         if not cert_str:
             raise osv.except_osv('Error en Certificado!', 'No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s'%(msg2))
+        cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
         
@@ -666,6 +671,7 @@ class account_invoice(osv.osv):
         data_xml = doc_xml.toxml('UTF-8')
         data_xml = codecs.BOM_UTF8 + data_xml
         fname_xml = (data_dict['Comprobante']['Emisor']['rfc'] or '') + '.' + ( data_dict['Comprobante'].get('serie', '') or '') + '.' + ( data_dict['Comprobante'].get('folio', '') or '') + '.xml'
+        data_xml = data_xml.replace ('<?xml version="1.0" encoding="UTF-8"?>','<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, data_xml
     
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
@@ -844,9 +850,13 @@ class account_invoice(osv.osv):
             #Inicia seccion: Receptor
             if not invoice.partner_id.vat:
                 raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(invoice.partner_id.name, msg2))
+            if invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat[0:2] <> 'MX':
+                rfc = 'XAXX010101000'
+            else:
+                rfc = ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ','')
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
-                'rfc': ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ',''),
+                'rfc': rfc,
                 'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',

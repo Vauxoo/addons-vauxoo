@@ -46,7 +46,8 @@ class account_invoice_tax(osv.osv):
             tax_percent = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
             if 'iva' in tax_name:
                 tax_name = 'IVA'
-                tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
+                if tax_percent > 0:
+                    tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
             elif 'isr' in tax_name:
                 tax_name = 'ISR'
             elif 'ieps' in tax_name:

@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#    Coded by: Juan Carlos Funes (juan@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,22 +24,13 @@
 #
 ##############################################################################
 
-{
-    "name" : "Reading dynamic parameters to be sent to PAC for Mexico Electronic Invoice (CFDI-2011) ",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module reads the params required for PAC.""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/ir.model.access.csv",
-        "params_pac_view.xml",
-        "security/params_pac_security.xml"
-    ],
-    "installable" : True,
-    "active" : False,
-}
+from osv import fields, osv
+from tools.translate import _
+
+class res_partner_bank(osv.osv):
+    _inherit = 'res.partner.bank'
+
+    _columns = {
+        'clabe': fields.char('Clabe Interbancaria',size=64, required=False),
+    }
+res_partner_bank()

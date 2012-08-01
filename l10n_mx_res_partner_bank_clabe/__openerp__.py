@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#    Coded by: Juan Carlos Funes (juan@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,21 +25,18 @@
 ##############################################################################
 
 {
-    "name" : "Reading dynamic parameters to be sent to PAC for Mexico Electronic Invoice (CFDI-2011) ",
+    "name" : "Agregado de campo clabe interbancaria a res.partner.bank",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module reads the params required for PAC.""",
-    "website" : "http://www.vauxoo.com/",
+    "description" : """This module add field clabe interbancaria to model res.partner.bank
+    """,
+    "website" : "www.vauxoo.com",
     "license" : "AGPL-3",
-    "depends" : ["base"],
+    "depends" : ["base","account"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
-        "security/ir.model.access.csv",
-        "params_pac_view.xml",
-        "security/params_pac_security.xml"
-    ],
+    "update_xml" : ["res_bank_view.xml",],
     "installable" : True,
     "active" : False,
 }
