@@ -68,7 +68,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                <xpath expr='/form[@string="Account Tax"]/group/field[@name="company_id"]' position="after">
-                    <field name='acc_tax_tagetory_id' widget="selection"/>
+                    <field name='tax_tagetory_id' widget="selection"/>
                 </xpath>
             </field>
         </record>
