@@ -16,7 +16,7 @@
 -
 +        
 +        p_decimal=dp.get_precision('Product UoM')
-+        round_move = p_decimal(cr) and p_decimal(cr)[1]
++        round_move = p_decimal(cr) and p_decimal(cr)[1] or 3
 +                
          produced_qty = 0
          for produced_product in production.move_created_ids2:
