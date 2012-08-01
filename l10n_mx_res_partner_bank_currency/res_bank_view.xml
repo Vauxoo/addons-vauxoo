@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="base.view_partner_bank_form"/>
             <field name="arch" type="xml">
                 <field name="bank" position="after">
-                    <field name="currency_id" colspan="2"/>
+                    <field name="currency2_id" colspan="2"/>
                 </field>
             </field>
         </record>
@@ -21,7 +21,7 @@
             <field name="sequence">20</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='Accounting']/field[@name='bank_ids']/form/field[@name='bank']" position="after">
-                        <field name="currency_id" colspan="2"/>
+                        <field name="currency2_id" colspan="2"/>
                 </xpath>
             </field>
         </record>

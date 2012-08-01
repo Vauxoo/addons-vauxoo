@@ -32,6 +32,6 @@ class res_partner_bank(osv.osv):
     _inherit = 'res.partner.bank'
 
     _columns = {
-        'currency_id': fields.many2one('res.currency', 'Currency',),
+        'currency2_id': fields.many2one('res.currency', 'Currency',),
     }
 res_partner_bank()
