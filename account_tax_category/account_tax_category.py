@@ -26,6 +26,7 @@ class account_tax_category(osv.osv):
     _name='account.tax.category'
     
     _columns = {
+        'company_id': fields.many2one('res.company', 'Company', required=True),
         'name': fields.char('Name', size=64, required=True),
         'code': fields.char('Code', size=32, required=True),
         'active': fields.boolean('Active'),
@@ -36,7 +37,7 @@ class account_tax_category(osv.osv):
     
     _defaults = {
     'active': 1,
-        #'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.account', context=c),
+    'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.tax.category', context=c),
     }
     
 account_tax_category()

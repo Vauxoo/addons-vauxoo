@@ -23,7 +23,7 @@
 {
     "name" : "Add category to taxes",
     "version" : "1.0",
-    "depends" : ["account"],
+    "depends" : ["account","base"],
     "author" : "Vauxoo",
     "license" : "AGPL-3",
     "description" : """This module add to the taxes category
