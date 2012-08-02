@@ -7,12 +7,12 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Categories">
-                    <separator string="Categories" colspan="2"/>
-                    <field name="name" colspan="4"/>
-                    <field name="code" colspan="4"/>
+                    <separator string="Categories" colspan="4"/>
+                    <field name="name" colspan="2"/>
+                    <field name="code" colspan="2"/>
                     <newline/>
-                    <field name="active" colspan="4"/>
-                    <field name="sign" colspan="4"/>
+                    <field name="active" colspan="2"/>
+                    <field name="sign" colspan="2"/>
                     <newline/>
                     <field name="company_id" widget="selection"/>
                 </form>
