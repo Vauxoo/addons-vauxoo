@@ -31,7 +31,7 @@ class account_tax_category(osv.osv):
         'code': fields.char('Code', size=32, required=True),
         'active': fields.boolean('Active'),
         'sign': fields.integer('Sign'),
-        'category_ids': fields.one2many('account.tax', 'tax_tagetory_id', 'Category'),
+        'category_ids': fields.one2many('account.tax', 'tax_category_id', 'Category'),
         
     }
     
@@ -46,7 +46,7 @@ class account_tax(osv.osv):
     _inherit = 'account.tax'
 
     _columns = {
-        'tax_tagetory_id': fields.many2one('account.tax.category','Tax Category',required=False),
+        'tax_category_id': fields.many2one('account.tax.category','Tax Category',required=False),
     }
 
 account_tax()
