@@ -316,6 +316,24 @@ class bank_statement_imported_lines(osv.osv):
     _name = 'bank.statement.imported.lines'
     _description = 'Imported lines for banks files'
     
+    
+    def _balance(self, cr, uid,ids,field_name,args,context=None):
+        res = {}
+        
+        for i in ids:
+            debit = 0.0
+            amt_unt = 0.0
+            bsil_brw = self.browse(cr,uid,i,context=context)
+            counterpart_id = bsil_brw.counterpart_id
+            for aml in bsil_brw.aml_ids:
+                if aml.account_id == counterpart_id:
+                    debit += aml.debit
+            for inv in bsil_brw.invoice_ids:
+                if inv.account_id == counterpart_id:
+                    amt_unt += inv.amount_untaxed
+            res[i]=debit-amt_unt
+        return res
+    
     _columns = {
         'name':fields.char('Description', size=255, required=True, readonly=False),
         'date': fields.date('Date', required=True),
@@ -338,6 +356,7 @@ class bank_statement_imported_lines(osv.osv):
         'invoice_ids':fields.many2many('account.invoice','bs_invoice_rel','st_id_id','invoice_id','Invoices',
             help="Invoices to be reconciled with this line",
             ),#TODO: Resolve: We should use date as filter, is a question of POV
+        'balance':fields.function(_balance,method=True,digits_compute=dp.get_precision('Account'),type='float',string='Balance',store=False),
     }
 
     _defaults = {
@@ -345,15 +364,49 @@ class bank_statement_imported_lines(osv.osv):
         'company_id':  lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.account', context=c),
         'state':'draft',
     }
+
+    def prepare(self, cr, uid, ids, context=None):
+        if context is None:
+            context={}
+        res=[]
+        account_move_line_obj = self.pool.get('account.move.line')
+        abs_brw = self.browse(cr, uid,ids,context=context)[0]
+        invoices = self.pool.get('account.invoice').browse(cr,uid,abs_brw.invoice_ids,context=context)
+        
+        for line in abs_brw.aml_ids:
+            if line.account_id == abs_brw.counterpart_id:
+                aml = line.id
+        
+        for invoice in invoices:
+            if  invoice.id.account_id == abs_brw.counterpart_id:
+                res = self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id.id),('account_id','=',invoice.id.account_id.id)]) 
+                res.append(aml)
+                #~ aux = account_move_line_obj.reconcile(cr, uid,res, 'manual', line.account_id.id,line.period_id.id, line.journal_id.id, context=context)
+        return res
     
     def button_validate(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'done'}, context=context)
     
     def button_cancel(self, cr, uid, ids, context=None):
+        if context is None:
+            context={}
+        account_move_line_obj = self.pool.get('account.move.line')
+        res = self.prepare(cr, uid, ids, context=context)
+        account_move_line_obj._remove_move_reconcile(cr, uid, res, context=context)
         return self.write(cr, uid, ids, {'state':'draft'}, context=context)
 
     def button_setinvoice(self, cr, uid, ids, context=None):
+        if context is None:
+            context={}
+        print 'entreeeeeeeee',ids
+        account_move_line_obj = self.pool.get('account.move.line')
+        abs_brw = self.browse(cr, uid,ids,context=context)[0]
+        res = self.prepare(cr, uid, ids, context=context)
+        account_move_line_obj.reconcile_partial(cr, uid, res, 'manual', context=context)
+        if abs_brw.balance > 0.0:
+            self.button_validate(cr, uid, ids, context=context)
         return True
+                
 
 bank_statement_imported_lines()
 

@@ -54,6 +54,7 @@
                              <field name="bank_statement_id" invisible="1"/>
                              <field name="partnercounterpart_id"/>
                              <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
+                             <field name="balance"/>
                             </group>
                             <newline/>
                             <separator string="Temporal Move Line"/>
@@ -79,6 +80,7 @@
                             <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
                             <field name="invoice_ids"/>
+                            <field name="balance"/>
                             <field name="bank_statement_id" invisible="1"/>
                             <field name="partnercounterpart_id"/>
                             <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
@@ -86,7 +88,7 @@
                              <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
                              <button type="object" string="Set to Review" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
                              <field name="state"/>
-
+                             
                         </tree>
                     </field>
                 </page> 
