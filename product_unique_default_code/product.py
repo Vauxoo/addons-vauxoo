@@ -31,6 +31,17 @@ from datetime import datetime
 class product_product(osv.osv):
     _inherit = "product.product"
     
+    def copy(self, cr, uid, id, default=None, context=None):
+        
+        if not default:
+            default = {}
+        
+        product_default_code = self.browse(cr,uid,id,context=context)
+        
+        default['default_code'] = product_default_code.default_code and product_default_code.default_code + ' (Copy)' or False
+
+        return super(product_product, self).copy(cr,uid,id,default=default,context=context)
+    
     _sql_constraints = [
         ('default_code_uniq', 'unique (default_code)', 'The code of Product must be unique !'),
     ]
