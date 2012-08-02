@@ -47,7 +47,7 @@ class ir_sequence_approval(osv.osv):
     
     _defaults = {
         #'serie': lambda *a: '0',
-        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'account.account', context=c),
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'ir.sequence.approval', context=c),
     }
     
     _sql_constraints = [
