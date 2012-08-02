@@ -36,14 +36,11 @@ class account_voucher(osv.osv):
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
-        print res,"ressssss"
-        print line_total,"totaaal"
         new_move=move_obj.create(cr, uid, self.account_move_get(cr, uid, voucher_id, context=context), context=context)
         for voucher in self.browse(cr,uid,[voucher_id],context=context):
             lines=[]
             for line in voucher.line_ids:
                 factor=line.amount_original and line.amount/line.amount_original or 0.0
-                print factor,"facorrrrrrrr"
                 if line.amount>0:
                     invoice_ids=invoice_obj.search(cr,uid,[('move_id','=',line.move_line_id.move_id.id)],context=context)
                     for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
@@ -57,9 +54,9 @@ class account_voucher(osv.osv):
                                         credit_amount=credit_amount-abs(float('%.*f' % (2,credit_amount))-(tax.tax_id.amount*tax.base))
                                     if abs(float('%.*f' % (2,credit_amount))+ ((tax.tax_id.amount*tax.base)*(1-factor))-(tax.tax_id.amount*tax.base))<.02:
                                         credit_amount=credit_amount-abs(float('%.*f' % (2,credit_amount))+ ((tax.tax_id.amount*tax.base)*(1-factor))-(tax.tax_id.amount*tax.base))
-                                context['date']=invoice.date_invoice
+                                if company_currency==current_currency:
+                                    context['date']=invoice.date_invoice
                                 credit_amount=currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
-                                print credit_amount,"por eso sale de mas"
                                 debit_amount=0.0
                                 if tax.tax_id.amount<0:
                                     credit_amount=0.0
@@ -70,7 +67,7 @@ class account_voucher(osv.osv):
                                         if abs(float('%.*f' % (2,debit_amount))+ ((tax.tax_id.amount*tax.base)*(1-factor))-(tax.tax_id.amount*tax.base))<.02:
                                             debit_amount=debit_amount-abs(float('%.*f' % (2,debit_amount))+ ((tax.tax_id.amount*tax.base)*(1-factor))-(tax.tax_id.amount*tax.base))
                                         debit_amount=(-1.0*currency_obj.compute(cr, uid, line.move_line_id.currency_id.id,company_currency, float('%.*f' % (2,debit_amount)), round=False, context=context))
-                                if invoice.type=='out_invoice':## considerar que hacer con refund
+                                if invoice.type=='out_invoice':## TODO refund
                                     account=tax.tax_id.account_paid_voucher_id.id
                                     credit_amount, debit_amount=debit_amount, credit_amount
                                 move_line={
@@ -100,7 +97,6 @@ class account_voucher(osv.osv):
                                     'move_id': int(new_move),
                                     'partner_id': voucher.partner_id.id,
                                     'company_id':company_currency,
-                                    #'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
                                     'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
                                     'quantity': 1,
                                     'credit': debit_amount,
@@ -131,10 +127,10 @@ class account_voucher(osv.osv):
                                             account=account_income_id
                                             if invoice.type=='out_invoice':
                                                 debit=0.0
-                                                credit=(credit_amount-tax.tax_amount)
+                                                credit=(debit_amount-tax.tax_amount)
                                                 dif=1
                                             else:
-                                                debit=(debit_amount-tax.tax_amount)
+                                                debit=(credit_amount-tax.tax_amount)
                                                 credit=0.0
                                                 dif=1
                                         if dif:
