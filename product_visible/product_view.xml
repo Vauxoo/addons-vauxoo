@@ -35,6 +35,22 @@
             </field>
         </record>
         
-        
+        <record model="ir.ui.view" id="product_product_tree_inh_visible_view">
+            <field name="name">product.product.tree.inh.visible.view</field>
+            <field name="type">tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="lst_price" position="replace">
+                    <field name="lst_price" groups="product_visible.group_product_visible"/>
+                </field>
+                <field name="price" position="replace">
+                    <field name="price" invisible="not context.get('pricelist',False)" groups="product_visible.group_product_visible"/>
+                </field>
+                <field name="standard_price" position="replace">
+                    <field name="standard_price" groups="product_visible.group_product_visible"/>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
