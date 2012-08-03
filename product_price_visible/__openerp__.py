@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name" : "Agregado de moneda a res.partner.bank",
+    "name" : "Product Price Visible",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Product",
