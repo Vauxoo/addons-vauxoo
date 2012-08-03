@@ -38,7 +38,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-            "security/product_visible.xml",
+            "security/product_price_visible.xml",
             #~ "security/ir.model.access.csv",
             "product_view.xml",],
     "installable" : True,

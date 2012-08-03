@@ -8,10 +8,10 @@
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
                 <field name="list_price" position="replace">
-                    <field name="list_price" groups="product_visible.group_product_visible"/>
+                    <field name="list_price" groups="product_price_visible.group_product_visible"/>
                 </field>
                 <field name="cost_method" position="replace">
-                    <field name="cost_method" groups="product_visible.group_product_visible"/>
+                    <field name="cost_method" groups="product_price_visible.group_product_visible"/>
                 </field>
             </field>
         </record>
@@ -26,10 +26,10 @@
 <!--
                     <label string="Cost Price :" align="1.0"/>
 -->
-                    <group col="2" colspan="1" groups="product_visible.group_product_visible">
-                        <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}" nolabel="1" groups="product_visible.group_product_visible"/>
+                    <group col="2" colspan="1" groups="product_price_visible.group_product_visible">
+                        <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}" nolabel="1" groups="product_price_visible.group_product_visible"/>
                         <button name="%(stock.action_view_change_standard_price)d" string="Update"
-                            type="action" icon="gtk-execute" attrs="{'invisible':[('cost_method','&lt;&gt;','average')]}" groups="product_visible.group_product_visible"/>
+                            type="action" icon="gtk-execute" attrs="{'invisible':[('cost_method','&lt;&gt;','average')]}" groups="product_price_visible.group_product_visible"/>
                     </group>
                 </field>
             </field>
@@ -42,13 +42,13 @@
             <field name="inherit_id" ref="product.product_product_tree_view"/>
             <field name="arch" type="xml">
                 <field name="lst_price" position="replace">
-                    <field name="lst_price" groups="product_visible.group_product_visible"/>
+                    <field name="lst_price" groups="product_price_visible.group_product_visible"/>
                 </field>
                 <field name="price" position="replace">
-                    <field name="price" invisible="not context.get('pricelist',False)" groups="product_visible.group_product_visible"/>
+                    <field name="price" invisible="not context.get('pricelist',False)" groups="product_price_visible.group_product_visible"/>
                 </field>
                 <field name="standard_price" position="replace">
-                    <field name="standard_price" groups="product_visible.group_product_visible"/>
+                    <field name="standard_price" groups="product_price_visible.group_product_visible"/>
                 </field>
             </field>
         </record>

@@ -2,7 +2,7 @@
 <openerp>
     <data>
         <record model="res.groups" id="group_product_visible">
-            <field name="name">Product visible</field>
+            <field name="name">Product Price Visible</field>
         </record>
     </data>
 </openerp>
