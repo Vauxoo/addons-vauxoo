@@ -57,7 +57,25 @@ class account_bank_statement(osv.osv):
         'lines_toreview':fields.function(_linestoreview, string='Lines to Review', type='integer', help="Quantity of lines to verify from file."),
         'move':fields.many2one('account.move','Move Temp to conciliate',readonly=True, help="This account move is the used to make the conciliation throught the bank statement imported with excel"),
     }
-
+    
+    def button_confirm_bank(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        res=[]
+        context.update({"button_confirm":True})
+        bsli_obj=self.pool.get('bank.statement.imported.lines')
+        for st in self.browse(cr, uid, ids, context=context):
+            bs_line_ids =[a.id for a in st.bs_line_ids]
+            for bsil in bsli_obj.browse(cr,uid,bs_line_ids,context=context):
+                #~ if bsil.state!="done":
+                res.append(bsli_obj.button_setinvoice(cr, uid, [bsil.id], context=context))
+                continue 
+        if all(res):
+            return self.write(cr, uid,[st.id], {'state':'confirm'}, context=context)
+        else:
+            return True
+    
+    
     def file_verify_cr(self, cr, uid, ids, context={}):
         '''
         Verification of format Files.
@@ -333,7 +351,6 @@ class bank_statement_imported_lines(osv.osv):
                     amt_unt += inv.amount_total
             res[i]=debit-amt_unt
         return res
-    
     _columns = {
         'name':fields.char('Description', size=255, required=True, readonly=False),
         'date': fields.date('Date', required=True),
@@ -369,22 +386,27 @@ class bank_statement_imported_lines(osv.osv):
         if context is None:
             context={}
         res=[]
+        aml=False
         account_move_line_obj = self.pool.get('account.move.line')
         abs_brw = self.browse(cr, uid,ids,context=context)[0]
         invoice_ids =[a.id for a in abs_brw.invoice_ids]
         invoices = self.pool.get('account.invoice').browse(cr,uid,invoice_ids,context=context)
         
         for line in abs_brw.aml_ids:
-            if line.account_id == abs_brw.counterpart_id:
-                aml = line.id
-       
-        for invoice in invoices:
-            if  invoice.account_id.id == abs_brw.counterpart_id.id:
-                res = self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
-                res.append(aml)
-                #~ aux = account_move_line_obj.reconcile(cr, uid,res, 'manual', line.account_id.id,line.period_id.id, line.journal_id.id, context=context)
+            if context.get('button_confirm'):
+                if line.account_id == abs_brw.counterpart_id and not line.reconcile_partial_id and not line.reconcile_id: 
+                    aml = line.id
+            else:
+                if line.account_id == abs_brw.counterpart_id: 
+                    aml = line.id
+        if aml:
+            for invoice in invoices:
+                if  invoice.account_id.id == abs_brw.counterpart_id.id:
+                    res = self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
+                    res.append(aml)
         return res
     
+        
     def button_validate(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'done'}, context=context)
     
@@ -408,8 +430,9 @@ class bank_statement_imported_lines(osv.osv):
             account_move_line_obj.reconcile_partial(cr, uid, res, 'manual', context=context)
             if abs_brw.balance >= 0.0:
                 self.button_validate(cr, uid, ids, context=context)
-        return True
-                
+                return True
+            else:
+                return False
 
 bank_statement_imported_lines()
 
