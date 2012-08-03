@@ -141,29 +141,29 @@ class account_bank_statement(osv.osv):
                                  ('key','<>','receivable_bs_default'),
                                  ('key','<>','payable_bs_default')])
         #EXPRESIONS
-        if "MULTA POR CHEQUE DEVUELTO" in bsl.name or "COMISION CAJEROS MASTER CARD CTA CTE" in bsl.name:
-            #MULTA POR CHEQUE DEVUELTO  53160
-            payrec=[('code','=','53160')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        if "ADELANTO VIAJE A NEW YORK" in bsl.name.strip():
-            #USD    ADELANTO VIAJE A NEW YORK   53210
-            payrec=[('code','=','53210')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        if "PAGO ALQUILER" in bsl.name:
-            #USD    PAGO ALQUILER   53111
-            payrec=[('code','=','53111')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        if "17-10-11 COMPRA DE ANAKELES" in bsl.name or \
-                "TRASLADO A DOLARES" in bsl.name or \
-                "AJUSTE PARA PAGO DE ALQUILER" in bsl.name or \
-                "PARA REMODELACION Y ANAKELES" in bsl.name:
-            #TRASLADO INTERBANCARIO
-            payrec=[('code','=','11103')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+        #~ if "MULTA POR CHEQUE DEVUELTO" in bsl.name or "COMISION CAJEROS MASTER CARD CTA CTE" in bsl.name:
+            #~ #MULTA POR CHEQUE DEVUELTO  53160
+            #~ payrec=[('code','=','53160')]
+            #~ aid=a_obj.search(cr,uid,payrec,context=context)
+            #~ payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+        #~ if "ADELANTO VIAJE A NEW YORK" in bsl.name.strip():
+            #~ #USD    ADELANTO VIAJE A NEW YORK   53210
+            #~ payrec=[('code','=','53210')]
+            #~ aid=a_obj.search(cr,uid,payrec,context=context)
+            #~ payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+        #~ if "PAGO ALQUILER" in bsl.name:
+            #~ #USD    PAGO ALQUILER   53111
+            #~ payrec=[('code','=','53111')]
+            #~ aid=a_obj.search(cr,uid,payrec,context=context)
+            #~ payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
+        #~ if "17-10-11 COMPRA DE ANAKELES" in bsl.name or \
+                #~ "TRASLADO A DOLARES" in bsl.name or \
+                #~ "AJUSTE PARA PAGO DE ALQUILER" in bsl.name or \
+                #~ "PARA REMODELACION Y ANAKELES" in bsl.name:
+            #~ #TRASLADO INTERBANCARIO
+            #~ payrec=[('code','=','11103')]
+            #~ aid=a_obj.search(cr,uid,payrec,context=context)
+            #~ payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
         #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO ICETEL 
         #TODO: Algorithm select Rules
         return payrec_id
@@ -177,18 +177,18 @@ class account_bank_statement(osv.osv):
         #MOTRIX     PAGO MENSAJERIA 
         #CAJA COSTARISCENSE DEL SEGURO SOCIAL       PAGO CCSS   i
         partner_id=[False]
-        if 'PAGO CNFL' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','NACIONAL DE FUERZA Y LUZ')])
-        if 'PAGO AYA' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','ACUEDUCTOS Y ALCANTARILLADOS')])
-        if 'PAGO AMNET' in bsl.name or 'PAGO ICETEL' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Instituto Costarricense de Electricidad y Telecomunicacion')])
-        if 'PAGO MENSAJERIA' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','MOTRIX')])
-        if 'PAGO CCSS' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Costarricense del Seguro Social')])
-        if 'CAJERO AUT' in bsl.name or ' ATM ' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Caja Chica')])
+        #~ if 'PAGO CNFL' in bsl.name:
+            #~ partner_id=p_obj.search(cr,uid,[('name','ilike','NACIONAL DE FUERZA Y LUZ')])
+        #~ if 'PAGO AYA' in bsl.name:
+            #~ partner_id=p_obj.search(cr,uid,[('name','ilike','ACUEDUCTOS Y ALCANTARILLADOS')])
+        #~ if 'PAGO AMNET' in bsl.name or 'PAGO ICETEL' in bsl.name:
+            #~ partner_id=p_obj.search(cr,uid,[('name','ilike','Instituto Costarricense de Electricidad y Telecomunicacion')])
+        #~ if 'PAGO MENSAJERIA' in bsl.name:
+            #~ partner_id=p_obj.search(cr,uid,[('name','ilike','MOTRIX')])
+        #~ if 'PAGO CCSS' in bsl.name:
+            #~ partner_id=p_obj.search(cr,uid,[('name','ilike','Costarricense del Seguro Social')])
+        #~ if 'CAJERO AUT' in bsl.name or ' ATM ' in bsl.name:
+            #~ partner_id=p_obj.search(cr,uid,[('name','ilike','Caja Chica')])
         return partner_id[0]
 
     def create_aml_tmp(self, cr, uid, ids, context=None):
@@ -371,15 +371,16 @@ class bank_statement_imported_lines(osv.osv):
         res=[]
         account_move_line_obj = self.pool.get('account.move.line')
         abs_brw = self.browse(cr, uid,ids,context=context)[0]
-        invoices = self.pool.get('account.invoice').browse(cr,uid,abs_brw.invoice_ids,context=context)
+        invoice_ids =[a.id for a in abs_brw.invoice_ids]
+        invoices = self.pool.get('account.invoice').browse(cr,uid,invoice_ids,context=context)
         
         for line in abs_brw.aml_ids:
             if line.account_id == abs_brw.counterpart_id:
                 aml = line.id
-        
+       
         for invoice in invoices:
-            if  invoice.id.account_id == abs_brw.counterpart_id:
-                res = self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id.id),('account_id','=',invoice.id.account_id.id)]) 
+            if  invoice.account_id.id == abs_brw.counterpart_id.id:
+                res = self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
                 res.append(aml)
                 #~ aux = account_move_line_obj.reconcile(cr, uid,res, 'manual', line.account_id.id,line.period_id.id, line.journal_id.id, context=context)
         return res
@@ -392,8 +393,10 @@ class bank_statement_imported_lines(osv.osv):
             context={}
         account_move_line_obj = self.pool.get('account.move.line')
         res = self.prepare(cr, uid, ids, context=context)
-        account_move_line_obj._remove_move_reconcile(cr, uid, res, context=context)
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+        if res:
+            account_move_line_obj._remove_move_reconcile(cr, uid, res, context=context)
+            return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+        return True
 
     def button_setinvoice(self, cr, uid, ids, context=None):
         if context is None:
@@ -401,9 +404,10 @@ class bank_statement_imported_lines(osv.osv):
         account_move_line_obj = self.pool.get('account.move.line')
         abs_brw = self.browse(cr, uid,ids,context=context)[0]
         res = self.prepare(cr, uid, ids, context=context)
-        account_move_line_obj.reconcile_partial(cr, uid, res, 'manual', context=context)
-        if abs_brw.balance >= 0.0:
-            self.button_validate(cr, uid, ids, context=context)
+        if res:
+            account_move_line_obj.reconcile_partial(cr, uid, res, 'manual', context=context)
+            if abs_brw.balance >= 0.0:
+                self.button_validate(cr, uid, ids, context=context)
         return True
                 
 
