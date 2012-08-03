@@ -44,7 +44,11 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/bank_statement_security.xml",
+        "security/ir.model.access.csv",
         "view/account_bank_statement_view.xml",
+        "view/account_invoice_view.xml",
+        "data/data.xml",
     ],
     "active": False,
     "images": [],

@@ -1,0 +1,62 @@
+=== modified file 'mrp/mrp.py'
+--- mrp/mrp.py	2012-06-01 14:32:49 +0000
++++ mrp/mrp.py	2012-08-01 20:07:48 +0000
+@@ -26,6 +26,7 @@
+ import netsvc
+ import time
+ import tools
++from tools import float_round, float_is_zero, float_compare
+ 
+ 
+ #----------------------------------------------------------
+@@ -692,7 +693,10 @@
+         """
+         stock_mov_obj = self.pool.get('stock.move')
+         production = self.browse(cr, uid, production_id, context=context)
+-
++        
++        p_decimal=dp.get_precision('Product UoM')
++        round_move = p_decimal(cr) and p_decimal(cr)[1] or 3
++                
+         produced_qty = 0
+         for produced_product in production.move_created_ids2:
+             if (produced_product.scrapped) or (produced_product.product_id.id <> production.product_id.id):
+@@ -715,19 +719,23 @@
+ 
+                 # total qty of consumed product we need after this consumption
+                 total_consume = ((production_qty + produced_qty) * scheduled.product_qty / production.product_qty)
++                total_consume = float_round(total_consume, precision_digits=round_move)
+ 
+                 # qty available for consume and produce
+                 qty_avail = scheduled.product_qty - consumed_data.get(scheduled.product_id.id, 0.0)
+-
++                qty_avail2 = float_round(qty_avail, precision_digits=round_move)
++                
+                 if qty_avail <= 0.0:
+                     # there will be nothing to consume for this raw material
+                     continue
+ 
+                 raw_product = [move for move in production.move_lines if move.product_id.id==scheduled.product_id.id]
++
+                 if raw_product:
+                     # qtys we have to consume
+                     qty = total_consume - consumed_data.get(scheduled.product_id.id, 0.0)
+-
++                    qty = float_round(qty, precision_digits=round_move)
++                    
+                     if qty > qty_avail:
+                         # if qtys we have to consume is more than qtys available to consume
+                         prod_name = scheduled.product_id.name_get()[0][1]
+@@ -756,7 +764,10 @@
+                 produced_qty = produced_products.get(produce_product.product_id.id, 0)
+                 subproduct_factor = self._get_subproduct_factor(cr, uid, production.id, produce_product.id, context=context)
+                 rest_qty = (subproduct_factor * production.product_qty) - produced_qty
+-
++                
++                rest_qty = float_round(rest_qty, precision_digits=round_move)
++                production_qty = float_round(production_qty, precision_digits=round_move)
++                
+                 if rest_qty < production_qty:
+                     prod_name = produce_product.product_id.name_get()[0][1]
+                     raise osv.except_osv(_('Warning!'), _('You are going to produce total %s quantities of "%s".\nBut you can only produce up to total %s quantities.') % (production_qty, prod_name, rest_qty))
+
