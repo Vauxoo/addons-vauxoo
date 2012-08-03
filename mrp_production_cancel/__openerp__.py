@@ -32,6 +32,7 @@
         Add Button Cancel in Order Production when Producton is done
     """,
     'update_xml':[
+        'security/production_cancel_security.xml',
         'mrp_view.xml',
         'mrp_workflow.xml',
     ],

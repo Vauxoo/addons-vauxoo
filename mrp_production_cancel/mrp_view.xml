@@ -10,7 +10,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='button_cancel']" position="replace">
-			<button name="button_cancel" states="draft,ready,in_production,picking_except,done" string="Cancel" icon="gtk-stop"/>
+			<button name="button_cancel" states="draft,ready,in_production,picking_except,done" string="Cancel" icon="gtk-stop" groups = "base.group_production_cancel"/>
                     </xpath>
 	    </field>
         </record>
