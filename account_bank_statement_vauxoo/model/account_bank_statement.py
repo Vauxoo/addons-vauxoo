@@ -399,7 +399,8 @@ class bank_statement_imported_lines(osv.osv):
             if aml:
                 for invoice in abs_brw.invoice_ids:
                     if  invoice.account_id.id == abs_brw.counterpart_id.id:
-                        res+=self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
+                        res+=account_move_line_obj.search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
+                res.append(aml)
         return res
 
     def button_validate(self, cr, uid, ids, context=None):
