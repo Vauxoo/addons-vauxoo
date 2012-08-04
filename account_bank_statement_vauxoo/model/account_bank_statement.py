@@ -388,28 +388,23 @@ class bank_statement_imported_lines(osv.osv):
         res=[]
         aml=False
         account_move_line_obj = self.pool.get('account.move.line')
-        abs_brw = self.browse(cr, uid,ids,context=context)[0]
-        invoice_ids =[a.id for a in abs_brw.invoice_ids]
-        invoices = self.pool.get('account.invoice').browse(cr,uid,invoice_ids,context=context)
-        
-        for line in abs_brw.aml_ids:
-            if context.get('button_confirm'):
-                if line.account_id == abs_brw.counterpart_id and not line.reconcile_partial_id and not line.reconcile_id: 
-                    aml = line.id
-            else:
-                if line.account_id == abs_brw.counterpart_id: 
-                    aml = line.id
-        if aml:
-            for invoice in invoices:
-                if  invoice.account_id.id == abs_brw.counterpart_id.id:
-                    res = self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
-                    res.append(aml)
+        for abs_brw in self.browse(cr, uid,ids,context=context):
+            for line in abs_brw.aml_ids:
+                if context.get('button_confirm'):
+                    if line.account_id == abs_brw.counterpart_id and not line.reconcile_partial_id and not line.reconcile_id: 
+                        aml = line.id
+                else:
+                    if line.account_id == abs_brw.counterpart_id: 
+                        aml = line.id
+            if aml:
+                for invoice in abs_brw.invoice_ids:
+                    if  invoice.account_id.id == abs_brw.counterpart_id.id:
+                        res+=self.pool.get('account.move.line').search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
         return res
-    
-        
+
     def button_validate(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'done'}, context=context)
-    
+
     def button_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context={}
@@ -423,16 +418,17 @@ class bank_statement_imported_lines(osv.osv):
     def button_setinvoice(self, cr, uid, ids, context=None):
         if context is None:
             context={}
+        res = []
         account_move_line_obj = self.pool.get('account.move.line')
-        abs_brw = self.browse(cr, uid,ids,context=context)[0]
-        res = self.prepare(cr, uid, ids, context=context)
+        for abs_brw in self.browse(cr, uid,ids,context=context):
+            print ids
+            res+=self.prepare(cr, uid, ids, context=context)
+        print 'Antes de Conciliar %s ' % res
         if res:
             account_move_line_obj.reconcile_partial(cr, uid, res, 'manual', context=context)
             if abs_brw.balance >= 0.0:
                 self.button_validate(cr, uid, ids, context=context)
-                return True
-            else:
-                return False
+        return {}
 
 bank_statement_imported_lines()
 
