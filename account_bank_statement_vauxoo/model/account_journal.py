@@ -38,6 +38,19 @@ use an specific account in this field you can canfigure this account"""),
         help="""In banks you probable wants send account move lines to an extra account
 to be able to record account move lines due to bank comisions and bank debit notes, 
 in this field you configure this account."""),
+        'concept_ids':fields.one2many('account.journal.bs.config', 'bsl_id', 'Concept Lines', required=False),
     }
 
 account_journal()
+
+class account_journal_bs_config(osv.osv):
+    _name='account.journal.bs.config'
+    _columns = {
+    'bsl_id':fields.many2one('account.journal', 'Journal', required=False),
+    'partner_id':fields.many2one('res.partner', 'Partner', required=False),
+    'account_id':fields.many2one('account.account', 'Account', required=False),
+    'expresion':fields.char('Text To be Compared', size=128, required=True, readonly=False),
+    'name':fields.char('Cancept Label', size=128, required=True, readonly=False),
+    }
+
+account_journal_bs_config
