@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_account_journal_bs_form_inherit">
+            <field name="name">account.journal.form.inherit</field>
+            <field name="model">account.journal</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                    <xpath expr='//field[@name="default_credit_account_id"]' position="after">
+                        <field name='default_interim_account_id'/>
+                        <field name='default_income_account_id'/>
+                        <field name='default_expense_account_id'/>
+                    </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
