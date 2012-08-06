@@ -43,7 +43,7 @@ class product_product(osv.osv):
         return super(product_product, self).copy(cr,uid,id,default=default,context=context)
     
     _sql_constraints = [
-        ('default_code_uniq', 'unique (default_code)', 'The code of Product must be unique !'),
+        ('default_code_company_id_unique', 'unique (default_code, company_id)', 'The code of Product must be unique per company !'),
     ]
     
 product_product()
