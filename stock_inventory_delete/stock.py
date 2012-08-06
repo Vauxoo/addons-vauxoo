@@ -27,7 +27,7 @@ from osv import osv, fields
 from tools.translate import _
 
 class stock_picking(osv.osv):
-    _inherit = 'stock.picking'
+    _inherit = 'stock.inventory'
     
     def unlink(self, cr, uid, ids, context=None):
         stock_picking = self.read(cr, uid, ids, ['state'], context=context)
