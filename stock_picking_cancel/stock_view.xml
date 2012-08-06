@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_picking_inherit_picking_cancel_form" model="ir.ui.view">
+            <field name="name">view.picking.inherit.picking.cancel.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Products']/group/button[@name='button_cancel']" position="replace">
+                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
+                </xpath>
+                <xpath expr="/form/notebook/page[@string='Products']/group/field[@name='state']" position="after">
+                    <button name="button_draft" states="cancel" string="_Draft" type="object" icon="gtk-go-forward"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_picking_inherit_picking_in_cancel_form">
+            <field name="name">view.picking.inherit.picking.in.cancel.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='General Information']/group/button[@name='button_cancel']" position="replace">
+                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
+                </xpath>
+                <xpath expr="/form/notebook/page[@string='General Information']/group/field[@name='state']" position="after">
+                    <button name="button_draft" states="cancel" string="_Draft" icon="gtk-go-forward"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_picking_inherit_picking_out_cancel_form">
+            <field name="name">view.picking.inherit.picking.out.cancel.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Products']/group/button[@name='button_cancel']" position="replace">
+                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
+                </xpath>
+                <xpath expr="/form/notebook/page[@string='Products']/group/field[@name='state']" position="after">
+                    <button name="button_draft" states="cancel" string="_Draft" icon="gtk-go-forward"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
