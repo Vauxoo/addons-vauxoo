@@ -30,9 +30,9 @@ class stock_picking(osv.osv):
     _inherit = 'stock.inventory'
     
     def unlink(self, cr, uid, ids, context=None):
-        stock_picking = self.read(cr, uid, ids, ['state'], context=context)
+        stock_inventory = self.read(cr, uid, ids, ['state'], context=context)
         unlink_ids = []
-        for s in stock_picking:
+        for s in stock_inventory:
             if s['state'] in ['draft']:
                 unlink_ids.append(s['id'])
             else:
