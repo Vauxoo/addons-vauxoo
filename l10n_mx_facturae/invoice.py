@@ -219,12 +219,12 @@ class account_invoice(osv.osv):
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
             fname += (invoice.company_id.partner_id and (invoice.company_id.partner_id._columns.has_key('vat_split') and invoice.company_id.partner_id.vat_split or invoice.company_id.partner_id.vat) or '')
-            fname += '.'
+            fname += '_'
             number_work = invoice.number or invoice.internal_number
             try:
                 context.update({ 'number_work': int( number_work ) or False })
                 fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
-                fname += '.'
+                fname += '_'
             except:
                 pass
             fname += number_work or ''

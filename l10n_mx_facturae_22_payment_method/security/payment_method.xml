@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="res.groups" id="group_payment_method_manager">
+            <field name="name">Payment Method / Manager</field>
+        </record>
+        <record model="res.groups" id="group_payment_method_user">
+            <field name="name">Payment Method / User</field>
+        </record>        
+    </data>
+</openerp>
