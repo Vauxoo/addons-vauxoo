@@ -36,5 +36,18 @@ class account_invoice(osv.osv):
             partner_invoice_description=self.pool.get('res.partner').browse(cr,uid,partner_id).description_invoice
             res['value'].update({'comment':partner_invoice_description})
         return res
-
 account_invoice()
+
+class stock_invoice_onshipping(osv.osv_memory):
+    _inherit = 'stock.invoice.onshipping'
+    
+    def create_invoice(self, cr, uid, ids, context=None):
+        if not context:
+            context={}
+        res = super(stock_invoice_onshipping,self).create_invoice(cr, uid, ids, context=context)
+        pick_ids=context['active_ids']
+        for pick_id in pick_ids:
+            invoice_description=self.pool.get('account.invoice').browse(cr,uid,res[pick_id]).partner_id.description_invoice
+            self.pool.get('account.invoice').write(cr, uid, res[pick_id], {'comment': invoice_description})
+        return res
+stock_invoice_onshipping()
