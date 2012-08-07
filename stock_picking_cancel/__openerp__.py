@@ -35,6 +35,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/picking_security.xml",
         "stock_workflow.xml",
         "stock_view.xml",
     ],

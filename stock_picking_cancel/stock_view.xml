@@ -11,7 +11,7 @@
                     <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
                 </xpath>
                 <xpath expr="/form/notebook/page[@string='Products']/group/field[@name='state']" position="after">
-                    <button name="button_draft" states="cancel" string="_Draft" type="object" icon="gtk-go-forward"/>
+                    <button name="action_cancel_draft" states="cancel" string="_Draft" type="object" icon="gtk-go-forward"/>
                 </xpath>
             </field>
         </record>
@@ -25,7 +25,7 @@
                     <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
                 </xpath>
                 <xpath expr="/form/notebook/page[@string='General Information']/group/field[@name='state']" position="after">
-                    <button name="button_draft" states="cancel" string="_Draft" icon="gtk-go-forward"/>
+                    <button name="action_cancel_draft" states="cancel" string="_Draft" type="object" icon="gtk-go-forward"/>
                 </xpath>
             </field>
         </record>
@@ -39,7 +39,7 @@
                     <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
                 </xpath>
                 <xpath expr="/form/notebook/page[@string='Products']/group/field[@name='state']" position="after">
-                    <button name="button_draft" states="cancel" string="_Draft" icon="gtk-go-forward"/>
+                    <button name="action_cancel_draft" states="cancel" string="_Draft" type="object"  icon="gtk-go-forward"/>
                 </xpath>
             </field>
         </record>
