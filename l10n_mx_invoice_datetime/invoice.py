@@ -83,3 +83,13 @@ class account_invoice(osv.osv):
                 self.write(cr, uid, [inv.id], {'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
 account_invoice()
+
+class account_invoice_refund(osv.osv_memory):
+    _inherit = 'account.invoice.refund'
+    _columns = {
+        'date': fields.datetime('Operation date', help='This date will be used as the invoice date for Refund Invoice and Period will be chosen accordingly!'),     
+    }
+    _defaults = {
+        'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+    }
+account_invoice_refund()
