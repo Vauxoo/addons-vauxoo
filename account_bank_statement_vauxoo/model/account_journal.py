@@ -23,6 +23,8 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import netsvc
+import logging
 
 class account_journal(osv.osv):
     _inherit = 'account.journal'
@@ -45,12 +47,49 @@ account_journal()
 
 class account_journal_bs_config(osv.osv):
     _name='account.journal.bs.config'
+    _order='sequence asc'
+    logger = netsvc.Logger()
+    
     _columns = {
+    'sequence': fields.integer('Label'),
     'bsl_id':fields.many2one('account.journal', 'Journal', required=False),
     'partner_id':fields.many2one('res.partner', 'Partner', required=False),
     'account_id':fields.many2one('account.account', 'Account', required=False),
     'expresion':fields.char('Text To be Compared', size=128, required=True, readonly=False),
     'name':fields.char('Cancept Label', size=128, required=True, readonly=False),
     }
+    _defaults = {
+        'sequence': 10,
+    }
+    def _check_expresion(self, cr, user, ids, context=None):
+        """
+        A user defined constraints listed in {_constraints} 
+        @param cr: cursor to database
+        @param user: id of current user
+        @param ids: list of record ids on which constraints executes
+        
+        @return: return True if all constraints satisfied, False otherwise
+        """
+        try:
+            exp_=self.browse(cr,user,ids,context=context)[0].expresion
+            exp=eval(exp_)
+            self.logger.notifyChannel('Chain. '+str(exp), netsvc.LOG_DEBUG,
+                                      'Succefully Validated')
+            if type(exp) is list:
+                return True
+            else:
+                self.logger.notifyChannel('Chain. '+str(exp_), netsvc.LOG_ERROR,
+                                      'Fail With You must use a list')
+                return False
+        except Exception, var:
+            self.logger.notifyChannel('Chain. '+str(exp_), netsvc.LOG_ERROR,
+                                      'Fail With %s' % var)
+            return False
 
+    _constraints = [
+        (_check_expresion, '''Error: La expresion no es lista
+        debe quedar algo así:
+        ["cadenaA","cadenaB","CadenaC"]
+        o es inválida''', ['expresion']),
+    ]
 account_journal_bs_config

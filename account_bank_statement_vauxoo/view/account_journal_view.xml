@@ -14,12 +14,14 @@
                                     <form string="Concept">
                                         <group col="8" colspan="4">
                                             <field name="expresion"/>
+                                            <field name="sequence"/>
                                             <field name="name"/>
                                             <field name="partner_id"/>
                                             <field name="account_id"/>
                                         </group>
                                     </form>
                                     <tree string="Concepts" mode="tree,form" editable="bottom">
+                                        <field name="sequence"/>
                                         <field name="expresion"/>
                                         <field name="name"/>
                                         <field name="partner_id"/>
