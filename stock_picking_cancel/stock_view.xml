@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='Products']/group/button[@name='button_cancel']" position="replace">
-                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
+                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel" groups="base.group_picking_cancel"/>
                 </xpath>
                 <xpath expr="/form/notebook/page[@string='Products']/group/field[@name='state']" position="after">
                     <button name="action_cancel_draft" states="cancel" string="_Draft" type="object" icon="gtk-go-forward"/>
@@ -22,7 +22,7 @@
             <field name="inherit_id" ref="stock.view_picking_in_form"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='General Information']/group/button[@name='button_cancel']" position="replace">
-                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
+                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel" groups="base.group_picking_cancel"/>
                 </xpath>
                 <xpath expr="/form/notebook/page[@string='General Information']/group/field[@name='state']" position="after">
                     <button name="action_cancel_draft" states="cancel" string="_Draft" type="object" icon="gtk-go-forward"/>
@@ -36,7 +36,7 @@
             <field name="inherit_id" ref="stock.view_picking_out_form"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='Products']/group/button[@name='button_cancel']" position="replace">
-                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel"/>
+                    <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel" groups="base.group_picking_cancel"/>
                 </xpath>
                 <xpath expr="/form/notebook/page[@string='Products']/group/field[@name='state']" position="after">
                     <button name="action_cancel_draft" states="cancel" string="_Draft" type="object"  icon="gtk-go-forward"/>
