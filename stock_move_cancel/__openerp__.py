@@ -32,7 +32,7 @@
         Allow cancel move in state done
     """,
     'update_xml':[
-#        'security/move_cancel_security.xml',
+        'security/move_cancel_security.xml',
         'stock_view.xml',
     ],
     'active': False,

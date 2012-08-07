@@ -9,7 +9,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                     <xpath expr="/form/group/button[@name='action_cancel']" position="replace">
- 			<button name="action_cancel" states="assigned,confirmed,done" string="_Cancel" type="object" icon="gtk-cancel"/>
+ 			<button name="action_cancel" states="assigned,confirmed,done" string="_Cancel" type="object" icon="gtk-cancel" groups="base.group_moves_cancel"/>
                     </xpath>
 	    </field>
         </record>
@@ -21,7 +21,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                     <xpath expr="/form/group/button[@name='action_cancel']" position="replace">
- 			<button name="action_cancel" states="assigned,confirmed,done" string="_Cancel" type="object" icon="gtk-cancel"/>
+ 			<button name="action_cancel" states="assigned,confirmed,done" string="_Cancel" type="object" icon="gtk-cancel" groups="base.group_moves_cancel"/>
                     </xpath>
 	    </field>
         </record>
