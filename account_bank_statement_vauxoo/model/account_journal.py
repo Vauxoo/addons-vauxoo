@@ -40,7 +40,11 @@ use an specific account in this field you can canfigure this account"""),
         help="""In banks you probable wants send account move lines to an extra account
 to be able to record account move lines due to bank comisions and bank debit notes, 
 in this field you configure this account."""),
-        'concept_ids':fields.one2many('account.journal.bs.config', 'bsl_id', 'Concept Lines', required=False),
+        'concept_ids':fields.one2many('account.journal.bs.config', 'bsl_id', 
+                                      'Concept Lines', required=False),
+        'moveper_line':fields.boolean('One Move per Line', required=False, 
+            help="""Do you want one move per line or one move per bank statement, 
+            True: One Per Line False: One Per bank statement"""),
     }
 
 account_journal()

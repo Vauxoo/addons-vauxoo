@@ -178,30 +178,6 @@ class account_bank_statement(osv.osv):
                             b.partner_id and b.partner_id.id)
         return (payrec_id,False)
 
-        
-    def get_partnercounterpart_id(self,cr,uid,bsl_id,context={}):
-        bsl=self.pool.get('bank.statement.imported.lines').browse(cr,uid,context.get('bsl_id',[]),context=context)
-        p_obj=self.pool.get('res.partner')
-        #COMPAÑIA NACIONAL DE FUERZA Y LUZ      PAGO CNFL   
-        #ACUEDUCTOS Y ALCANTARILLADOS       PAGO AYA        
-        #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO AMNET  
-        #MOTRIX     PAGO MENSAJERIA 
-        #CAJA COSTARISCENSE DEL SEGURO SOCIAL       PAGO CCSS   i
-        partner_id=[False]
-        if 'PAGO CNFL' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','NACIONAL DE FUERZA Y LUZ')])
-        if 'PAGO AYA' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','ACUEDUCTOS Y ALCANTARILLADOS')])
-        if 'PAGO AMNET' in bsl.name or 'PAGO ICETEL' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Instituto Costarricense de Electricidad y Telecomunicacion')])
-        if 'PAGO MENSAJERIA' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','MOTRIX')])
-        if 'PAGO CCSS' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Costarricense del Seguro Social')])
-        if 'CAJERO AUT' in bsl.name or ' ATM ' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Caja Chica')])
-        return partner_id[0]
-
     def create_aml_tmp(self, cr, uid, ids, context=None):
         am_obj=self.pool.get('account.move')
         aml_obj=self.pool.get('account.move.line')

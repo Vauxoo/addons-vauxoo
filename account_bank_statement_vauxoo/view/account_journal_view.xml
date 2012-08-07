@@ -10,7 +10,7 @@
                     <xpath expr="/form/notebook/page[@string='General Information']" position="after">
                             <page string="Concepts for Banks Statements">
                                 <separator string="Concepts to automate Import Banks Statements in this journal" colspan="4"/>
-                                <field name='concept_ids' nolabel='1'>
+                                <field name='concept_ids' nolabel='1' colspan="4">
                                     <form string="Concept">
                                         <group col="8" colspan="4">
                                             <field name="expresion"/>
@@ -28,6 +28,8 @@
                                         <field name="account_id"/>
                                     </tree>
                                 </field>
+                                <newline/>
+                                <field name="moveper_line" colspan="4"/>
                             </page>
                     </xpath>
                     <xpath expr='//field[@name="default_credit_account_id"]' position="after">
