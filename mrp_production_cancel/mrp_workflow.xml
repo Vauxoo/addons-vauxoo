@@ -12,6 +12,9 @@
             <field name="signal">button_cancel</field>
         </record>
 
+        <record id="mrp.prod_trans_picking_ready" model="workflow.transition">
+            <field name="signal">subflow.done</field>
+        </record>
 
     </data>
 </openerp>

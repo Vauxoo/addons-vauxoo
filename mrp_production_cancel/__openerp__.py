@@ -27,7 +27,7 @@
     'name': 'MRP Production Cancel',
     "version" : "1.1",
     'author': 'Vauxoo',
-    'depends': ['mrp'],
+    'depends': ['mrp','stock_picking_cancel'],
     'description': """
         Add Button Cancel in Order Production when Producton is done
     """,
