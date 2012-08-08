@@ -76,7 +76,6 @@ class sale_order(osv.osv):
         if not context:
             context={}
         res = super(sale_order,self).action_invoice_create(cr, uid, ids, grouped=False, states=['confirmed', 'done', 'exception'], date_inv = date_inv, context=context)
-        print 'res',res
         invoice_description=self.pool.get('account.invoice').browse(cr,uid,res).partner_id.description_invoice
         if invoice_description:
             self.pool.get('account.invoice').write(cr, uid, res, {'comment': invoice_description})
