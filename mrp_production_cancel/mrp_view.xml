@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<openerp>
+<data>
+
+        <record model="ir.ui.view" id="view_mrp_production_inherit2">
+            <field name="name">view.mrp.production.inherit2</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                    <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='button_cancel']" position="replace">
+			<button name="button_cancel" states="draft,ready,in_production,picking_except,done" string="Cancel" icon="gtk-stop" groups = "base.group_production_cancel"/>
+                    </xpath>
+	    </field>
+        </record>
+
+    </data>
+</openerp>
