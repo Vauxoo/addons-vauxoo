@@ -139,8 +139,11 @@ class account_bank_statement(osv.osv):
         dates=sorted([d.date for d in lines])
         date_range=dates and (dates[0],dates[-1]) or () 
         return date_range
-
     def set_counterpart(self, cr, uid, ids, context=None):
+        '''
+        Return account_id to set the line in bank statement
+        TODO: Make better doc
+        '''
         bsl=self.pool.get('bank.statement.imported.lines').browse(cr,uid,context.get('bsl_id',[]),context=context)
         a_obj=self.pool.get('account.account')
         p_obj=self.pool.get('ir.config_parameter')
@@ -158,56 +161,22 @@ class account_bank_statement(osv.osv):
         rec=p_obj.search(cr,uid,[('key','ilike','bs_default'),
                                  ('key','<>','receivable_bs_default'),
                                  ('key','<>','payable_bs_default')])
-        #EXPRESIONS
-        if "MULTA POR CHEQUE DEVUELTO" in bsl.name or "COMISION CAJEROS MASTER CARD CTA CTE" in bsl.name:
-            #MULTA POR CHEQUE DEVUELTO  53160
-            payrec=[('code','=','53160')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        if "ADELANTO VIAJE A NEW YORK" in bsl.name.strip():
-            #USD    ADELANTO VIAJE A NEW YORK   53210
-            payrec=[('code','=','53210')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        if "PAGO ALQUILER" in bsl.name:
-            #USD    PAGO ALQUILER   53111
-            payrec=[('code','=','53111')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        if "17-10-11 COMPRA DE ANAKELES" in bsl.name or \
-                "TRASLADO A DOLARES" in bsl.name or \
-                "AJUSTE PARA PAGO DE ALQUILER" in bsl.name or \
-                "PARA REMODELACION Y ANAKELES" in bsl.name:
-            #TRASLADO INTERBANCARIO
-            payrec=[('code','=','11103')]
-            aid=a_obj.search(cr,uid,payrec,context=context)
-            payrec_id=a_obj.browse(cr,uid,aid,context=context)[0].id
-        #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO ICETEL 
-        #TODO: Algorithm select Rules
-        return payrec_id
-
-    def get_partnercounterpart_id(self,cr,uid,bsl_id,context={}):
-        bsl=self.pool.get('bank.statement.imported.lines').browse(cr,uid,context.get('bsl_id',[]),context=context)
-        p_obj=self.pool.get('res.partner')
-        #COMPAÑIA NACIONAL DE FUERZA Y LUZ      PAGO CNFL   
-        #ACUEDUCTOS Y ALCANTARILLADOS       PAGO AYA        
-        #INSTITUTO COSTARICENSE ELECTRICIDAD        PAGO AMNET  
-        #MOTRIX     PAGO MENSAJERIA 
-        #CAJA COSTARISCENSE DEL SEGURO SOCIAL       PAGO CCSS   i
-        partner_id=[False]
-        if 'PAGO CNFL' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','NACIONAL DE FUERZA Y LUZ')])
-        if 'PAGO AYA' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','ACUEDUCTOS Y ALCANTARILLADOS')])
-        if 'PAGO AMNET' in bsl.name or 'PAGO ICETEL' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Instituto Costarricense de Electricidad y Telecomunicacion')])
-        if 'PAGO MENSAJERIA' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','MOTRIX')])
-        if 'PAGO CCSS' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Costarricense del Seguro Social')])
-        if 'CAJERO AUT' in bsl.name or ' ATM ' in bsl.name:
-            partner_id=p_obj.search(cr,uid,[('name','ilike','Caja Chica')])
-        return partner_id[0]
+        ############################################################
+        #Reviewing date on journals
+        ############################################################
+        concept_ids=bsl.bank_statement_id.journal_id.concept_ids
+        try:
+            concepts=[(c.sequence,eval(c.expresion),c.partner_id.id,c.account_id.id) for c in concept_ids]
+            print concepts
+        except Exception,var:
+            print var
+        for b in bsl.bank_statement_id.journal_id.concept_ids:
+            Exp=eval(b.expresion)
+            for e in Exp:
+                if e in bsl.name:
+                    return (b.account_id and b.account_id.id or payrec_id,
+                            b.partner_id and b.partner_id.id)
+        return (payrec_id,False)
 
     def create_aml_tmp(self, cr, uid, ids, context=None):
         am_obj=self.pool.get('account.move')
@@ -242,8 +211,9 @@ class account_bank_statement(osv.osv):
 
         for bsl in st.bs_line_ids:
             acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
-            payrec_id=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
-            pcp_id=self.get_partnercounterpart_id(cr,uid,ids,context={'bsl_id':bsl.id})
+            prev=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
+            payrec_id=prev[0]
+            pcp_id=prev[1]
             if bsl.debit:
                 payrec_id=pcp_id and partner_obj.browse(cr,uid,pcp_id,context=context).property_account_payable.id or payrec_id
             if bsl.credit:
