@@ -32,18 +32,10 @@ class account_invoice(osv.osv):
     def action_move_create(self, cr, uid, ids, context=None):
         if not context:
             context={}
-        for lin in self.browse(cr,uid,ids):
-            for lins in lin.invoice_line:
-                if lins.account_id.type<>'other':
+        for invoice in self.browse(cr, uid, ids, context=context):
+            for line in invoice.invoice_line:
+                if line.account_id.type<>'other':
                     raise osv.except_osv(_('Error!'),_("Can not be used different types of accounts to 'other' in the lines of the invoice!"))
         res = super(account_invoice,self).action_move_create(cr, uid, ids, context=context)
         return res
 account_invoice()
-
-class account_invoice_line(osv.osv):
-    _inherit='account.invoice.line'
-    
-    _columns={
-        'account_id': fields.many2one('account.account', 'Account', required=True, readonly=True, domain=[('type','=','other')], states={'draft':[('readonly',False)]}, help="The partner account used for this invoice."),
-    }
-account_invoice_line()
