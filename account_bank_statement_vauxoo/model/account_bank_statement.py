@@ -80,7 +80,7 @@ class account_bank_statement(osv.osv):
         '''
         Verification of format Files.
         For CR Banco Nacional
-        #Oficina	FechaMovimiento	NumDocumento	Debito	Credito	Descripcion
+        #Oficina    FechaMovimiento NumDocumento    Debito  Credito Descripcion
         '''
         sheet=context.get('xls_sheet')
         if sheet:
@@ -352,25 +352,90 @@ class bank_statement_imported_lines(osv.osv):
         'state':'draft',
     }
 
+
+
+    #def explode_aml(self,cr,uid,ids,,context=None):
+        #if context is None:
+            #context={} 
+
+
+
+
+
+
+
     def prepare(self, cr, uid, ids, context=None):
         if context is None:
             context={}
         res=[]
         aml=False
+        amount = {}
+        total = 0
+        invoice_obj = self.pool.get('account.invoice')
         account_move_line_obj = self.pool.get('account.move.line')
         for abs_brw in self.browse(cr, uid,ids,context=context):
             for line in abs_brw.aml_ids:
                 if context.get('button_confirm'):
                     if line.account_id == abs_brw.counterpart_id and not line.reconcile_partial_id and not line.reconcile_id: 
-                        aml = line.id
+                        aml = line
+                        
                 else:
                     if line.account_id == abs_brw.counterpart_id: 
-                        aml = line.id
+                        aml = line
             if aml:
+                print 'entre amls'
                 for invoice in abs_brw.invoice_ids:
                     if  invoice.account_id.id == abs_brw.counterpart_id.id:
                         res+=account_move_line_obj.search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
-                res.append(aml)
+                
+                
+                invoice_ids = [i.id for i in abs_brw.invoice_ids ]
+                
+                invoice_ids = invoice_obj.search(cr,uid,[('id','in',invoice_ids)],order='date_invoice asc',context=context)
+                
+                print 'aml.debit',aml.debit
+                print 'aml.credit',aml.credit
+                
+                
+                
+                if aml.debit:
+                    print 'debito'
+                    total = aml.debit
+                    for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
+                        
+                        if total > invoice.amount_total:
+                            total = total - invoice.amount_total
+                            res.append((account_move_line_obj.copy(cr,uid,aml.id,{'debit':invoice.amount_total}),invoice.id))
+                        
+                        elif total > 0 and invoice.amount_total > total:
+                            res.append((account_move_line_obj.copy(cr,uid,aml.id,{'debit':total}),invoice.id))
+                            total = 0
+                        
+                        #TODO Revisar que hacer cuando no cuadra el total
+                        #elif total == 0:
+                            #self.write(cr,uid,ids,{'invoice_ids':[(3,invoice.id)]},context=context)
+                        
+                
+                elif aml.credit:
+                    print 'credito'
+                    total = aml.credit
+                    for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
+                        
+                        if total > invoice.amount_total:
+                            total = total - invoice.amount_total
+                            res.append((account_move_line_obj.copy(cr,uid,aml.id,{'credit':invoice.amount_total}),invoice.id))
+                        
+                        elif total > 0 and invoice.amount_total > total:
+                            res.append((account_move_line_obj.copy(cr,uid,aml.id,{'credit':total}),invoice.id))
+                            total = 0
+                            
+                        #elif total == 0:
+                            #self.write(cr,uid,ids,{'invoice_ids':[(3,invoice.id)]},context=context)
+                
+                elif total > 0:
+                    account_move_line_obj.copy(cr,uid,aml.id,{'%s'%aml.debit and 'debit' or aml.credit and 'credit':total})
+                account_move_line_obj.unlink(cr,uid,[aml.id],context=context)
+                #res.append(aml.id)
         return res
 
     def button_validate(self, cr, uid, ids, context=None):
