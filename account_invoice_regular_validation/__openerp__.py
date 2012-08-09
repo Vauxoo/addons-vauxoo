@@ -39,7 +39,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        #"company_view.xml",
+        "account_invoice_view.xml",
     ],
     "installable" : True,
     "active" : False,

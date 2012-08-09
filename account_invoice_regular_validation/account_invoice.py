@@ -39,3 +39,11 @@ class account_invoice(osv.osv):
         res = super(account_invoice,self).action_move_create(cr, uid, ids, context=context)
         return res
 account_invoice()
+
+class account_invoice_line(osv.osv):
+    _inherit='account.invoice.line'
+    
+    _columns={
+        'account_id': fields.many2one('account.account', 'Account', required=True, readonly=True, domain=[('type','=','other')], states={'draft':[('readonly',False)]}, help="The partner account used for this invoice."),
+    }
+account_invoice_line()
