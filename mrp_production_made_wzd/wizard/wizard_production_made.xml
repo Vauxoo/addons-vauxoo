@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_wizard_production_make_form">
+            <field name="name">view.wizard.production.make.form</field>
+            <field name="model">wizard.production.make</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Production Make">
+                    <field name="product_id" />
+                    <field name="date_planned" />
+                    <newline/>
+                    <field name="product_qty"  string="Qty"/>
+                    <field name="product_uom"  string="UOM"/>
+                    <field colspan="2" name="move_created_ids" nolabel="1" widget="one2many_list"
+                        mode="tree,form" height="275" domain="[('state','&lt;&gt;', ('done', 'cancel'))]">
+                        <tree string="Products to Finish">
+                            <field name="product_id" />
+                            <field name="product_qty"  string="Qty"/>
+                            <field name="product_uom"  string="UOM"/>
+                            <field name="state" invisible="1"/>
+                        </tree>
+                    </field>
+                    <button type="special" special="cancel" string="_Cancel" icon="gtk-cancel"/>
+                    <button type="object" string="Add Production" name="action_add_production" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+        <record id="act_mrp_product_produce_wizard" model="ir.actions.act_window">
+            <field name="name">Production Make</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.production.make</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>    
+        <menuitem id="menu_action_mrp_product_produce_wizard_form" name="Add Many Manufacturing Orders" parent="mrp.menu_mrp_manufacturing" action="act_mrp_product_produce_wizard"/>
+    </data>
+</openerp>
