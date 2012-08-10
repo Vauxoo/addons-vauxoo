@@ -25,7 +25,7 @@
 ##############################################################################
 from osv import osv
 
-class stock_picking(osv.osv_memory):
+class stock_picking(osv.osv):
     _inherit = 'stock.picking'
     
     def action_invoice_create(self, cursor, user, ids, journal_id=False,
