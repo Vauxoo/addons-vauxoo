@@ -432,7 +432,7 @@ class bank_statement_imported_lines(osv.osv):
                         
                         if total > aml_id[aml.debit and 'credit' or 'debit']:
                             total = total - aml_id[aml.debit and 'credit' or 'debit']
-                            res.append((account_move_line_obj.copy(cr,uid,aml.id,{'%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):aml_id[aml.debit and 'credit' or 'debit']),
+                            res.append((account_move_line_obj.copy(cr,uid,aml.id,{'%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):aml_id[aml.debit and 'credit' or 'debit']}),
                                         False,False,aml_id.id))
                         
                         elif total > 0 and aml_id[aml.debit and 'credit' or 'debit'] >= total:
@@ -456,6 +456,9 @@ class bank_statement_imported_lines(osv.osv):
                     res.append(account_move_line_obj.search(cr,uid,[('invoice','in',invoice_ids),('account_id','=',invoice.account_id.id)]))
                     aml and res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
                     break
+                
+                res and [res[0].append(i.id) for i in abs_brw.acc_move_line_ids ] 
+                
                 #res.append(aml.id)
         return res
 
