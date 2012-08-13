@@ -408,14 +408,11 @@ class bank_statement_imported_lines(osv.osv):
                 aml_ids = aml_ids and account_move_line_obj.search(cr,uid,[('id','in',aml_ids)],order='date asc',context=context)
                 
                 
-                
-                if aml.debit or aml.credit and  not context.get('cancel',False):
+                if aml.debit and not context.get('cancel',False) or aml.credit and not context.get('cancel',False):
                     
                     total = aml.debit or aml.credit
                     for aml_id in account_move_line_obj.browse(cr,uid,aml_ids,context=context):
-                        
-                        if aml_id.date_maturity and aml_id.date_maturity < abs_brw.date:
-                        
+                        if aml_id.date_maturity and aml_id.date_maturity < abs_brw.date or True:
                             if total > aml_id[aml.debit and 'credit' or 'debit']:
                                 total = total - aml_id[aml.debit and 'credit' or 'debit']
                                 res.append((account_move_line_obj.copy(cr,uid,aml.id,{'%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):aml_id[aml.debit and 'credit' or 'debit']}),
@@ -432,14 +429,13 @@ class bank_statement_imported_lines(osv.osv):
                         
                 if total > 0:
                     account_move_line_obj.copy(cr,uid,aml.id,{'%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):total})
-                
                 res and account_move_line_obj.unlink(cr,uid,[aml.id],context=context)
 
             if context.get('cancel',False) and aml:
                 invoice_ids = [i.id for i in abs_brw.invoice_ids]
                 for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
                     res.append(account_move_line_obj.search(cr,uid,[('invoice','in',invoice_ids),('account_id','=',invoice.account_id.id)]))
-                    aml and res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
+                    res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
                     break
                 
                 res and [res[0].append(i.id) for i in abs_brw.acc_move_line_ids ] 
@@ -455,20 +451,12 @@ class bank_statement_imported_lines(osv.osv):
         account_move_line_obj = self.pool.get('account.move.line')
         for abs_brw in self.browse(cr, uid,ids,context=context):
             for line in abs_brw.aml_ids:
-                if context.get('button_confirm'):
-                    if line.account_id == abs_brw.counterpart_id and not line.reconcile_partial_id and not line.reconcile_id and not line.reconcile_id and not line.reconcile_partial_id : 
-                        aml = line
-                        
-                else:
-                    if line.account_id == abs_brw.counterpart_id and not line.reconcile_id and not line.reconcile_partial_id: 
-                        aml = line
                 
                 total = total + line[type]
                 #total = total + eval('line.%s'%type)
                 
                 line[type] and aml_id.append(line.id)
                 #eval('line.%s'%type) and aml_id.append(line.id)
-        
         
         account_move_line_obj.copy(cr,uid,aml_id[0],{type:total})
         account_move_line_obj.unlink(cr,uid,aml_id,context=context)
@@ -489,6 +477,7 @@ class bank_statement_imported_lines(osv.osv):
         res = self.prepare(cr, uid, ids, context=context)
         if res:
             account_move_line_obj._remove_move_reconcile(cr, uid, res[0], context=context)
+            print 'res',res
             self.begin_move(cr,uid,ids,res[1],context=context)
             return self.write(cr, uid, ids, {'state':'draft'}, context=context)
             
