@@ -34,12 +34,13 @@
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["mrp",
+    "depends" : ["mrp_default_location"
         ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "wizard/wizard_production_made.xml"
+        "wizard/wizard_production_make.xml",
+        "wizard/mrp_view.xml",
     ],
     "installable" : True,
     "active" : False,
