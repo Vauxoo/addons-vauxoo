@@ -11,7 +11,7 @@
                     <newline/>
                     <field name="location_src_id"/>
                     <field name="location_dest_id"/>
-                    <field name="products_ids" />
+                    <field name="products_ids" nolabel="1" colspan="4"/>
                     <button type="special" special="cancel" string="_Cancel" icon="gtk-cancel"/>
                     <button type="object" string="Add Production" name="action_add_production" icon="gtk-ok"/>
                 </form>

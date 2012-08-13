@@ -27,7 +27,6 @@ from osv import osv, fields
 import decimal_precision as dp
 import time
 from tools.translate import _
-import netsvc
 
 class wizard_production_make(osv.osv_memory):
     _name='wizard.production.make'
@@ -50,6 +49,7 @@ class wizard_production_make(osv.osv_memory):
         product_obj=self.pool.get('product.product')
         new_production_obj=self.pool.get('wizard.production.make')
         products=new_production_obj.browse(cr, uid, ids, context=context)[0]
+        list_orders=[]
         for product in products.products_ids:
             data_product=product_obj.browse(cr, uid, product.id, context=context).uom_id.id
             if not product.categ_id.location_src_id.id and not products.location_src_id.id: 
@@ -72,9 +72,15 @@ class wizard_production_make(osv.osv_memory):
                 'location_src_id':location_src,
                 'location_dest_id':location_dest,
                 })
-            wf_service = netsvc.LocalService("workflow")
-            wf_service.trg_validate(uid, 'mrp.production', production_id, 'button_confirm', cr)
-        return {}
+            list_orders.append(production_id)
+        return {
+                'name': 'Customer Invoices',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'mrp.production',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', list_orders)],
+                }
         
 wizard_production_make()
         
