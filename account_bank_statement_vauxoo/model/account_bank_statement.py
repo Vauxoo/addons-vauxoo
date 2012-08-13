@@ -210,6 +210,15 @@ class account_bank_statement(osv.osv):
             
 
         for bsl in st.bs_line_ids:
+            
+            am_id=am_obj.create(cr, uid, {'ref':'From File %s %s' % (st.fname,st.from_to_file),
+                                 'period_id':period_w.id,
+                                 'journal_id':journal.id,
+                                 'date':actual.date,
+                                 'narration':'''Account move created with importation from file %s
+                                 ''' % (st.fname),
+                                }, context=context)
+            
             acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
             prev=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
             payrec_id=prev[0]
@@ -259,7 +268,7 @@ class account_bank_statement(osv.osv):
                                    'amount_currency':bsl.debit and bsl.debit or bsl.credit,
                                    'account_id':payrec_id,},
                                   context=context)
-            bsl.write({'counterpart_id':payrec_id,
+            bsl.write({'move_id':am_id,'counterpart_id':payrec_id,
                        'partnercounterpart_id':pcp_id and pcp_id or False})
 
         self.log(cr, uid, st.id, _('Account Move Temporary For this Statement \
@@ -332,6 +341,7 @@ class bank_statement_imported_lines(osv.osv):
         'date': fields.date('Date', required=True),
         'numdocument':fields.char('Num Document', size=64, required=True, readonly=False),
         'debit': fields.float('Debit', digits_compute=dp.get_precision('Account'), required=True),
+        'move_id':fields.many2one('account.move','Account Move'),
         'credit': fields.float('Credit', digits_compute=dp.get_precision('Account'), required=True),
         'office':fields.char('Office', size=16, required=False, readonly=False),
         'bank_statement_id':fields.many2one('account.bank.statement', 'Bank Statement', required=True),
