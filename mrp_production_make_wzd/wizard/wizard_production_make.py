@@ -33,12 +33,11 @@ class wizard_production_make(osv.osv_memory):
     
     _columns = {
         'products_ids': fields.many2many('product.product','production_make','product_id','production_make_id','Products'),
-        'product_qty': fields.float('Product Qty', digits_compute=dp.get_precision('Product UoM'), required=True, states={'draft':[('readonly',False)]}, readonly=True),
         'date_planned': fields.datetime('Scheduled date', required=True, select=1),
         'location_src_id': fields.many2one('stock.location', 'Raw Materials Location',
-            readonly=True, states={'draft':[('readonly',False)]}, help="Location where the system will look for components."),
+            readonly=False, help="Location where the system will look for components."),
         'location_dest_id': fields.many2one('stock.location', 'Finished Products Location',
-            readonly=True, states={'draft':[('readonly',False)]}, help="Location where the system will stock the finished products."),
+            readonly=False, help="Location where the system will stock the finished products."),
     }
     _defaults = {
         'date_planned': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'), 
@@ -47,32 +46,26 @@ class wizard_production_make(osv.osv_memory):
     def action_add_production(self, cr, uid, ids, context=None):
         production_obj=self.pool.get('mrp.production')
         product_obj=self.pool.get('product.product')
-        new_production_obj=self.pool.get('wizard.production.make')
-        products=new_production_obj.browse(cr, uid, ids, context=context)[0]
+        wiz_product=self.browse(cr, uid, ids, context=context)
         list_orders=[]
-        for product in products.products_ids:
-            data_product=product_obj.browse(cr, uid, product.id, context=context).uom_id.id
-            if not product.categ_id.location_src_id.id and not products.location_src_id.id: 
-                raise osv.except_osv(_('Error!'),_("Not set a location of raw material for the product: "+product.name))
-            if not product.categ_id.location_dest_id.id and not products.location_dest_id.id: 
-                raise osv.except_osv(_('Error!'),_("Not set a location of finished products for the product: "+product.name))
-            if product.categ_id.location_src_id.id:
-                location_src=product.categ_id.location_src_id.id
-            else:
-                location_src=products.location_src_id.id
-            if product.categ_id.location_dest_id.id:
-                location_dest=product.categ_id.location_dest_id.id
-            else:
-                location_dest=products.location_dest_id.id
-            production_id=production_obj.create(cr, uid, {
-                'product_id': product.id,
-                'product_qty': '1.0',
-                'product_uom': data_product,
-                'date_planned': products.date_planned ,
-                'location_src_id':location_src,
-                'location_dest_id':location_dest,
-                })
-            list_orders.append(production_id)
+        for products in  wiz_product:
+            for product in products.products_ids:
+                data_product=product_obj.browse(cr, uid, product.id, context=context).uom_id.id
+                if not product.categ_id.location_src_id.id and not products.location_src_id.id: 
+                    raise osv.except_osv(_('Error!'),_("Not set a location of raw material for the product: "+product.name))
+                if not product.categ_id.location_dest_id.id and not products.location_dest_id.id: 
+                    raise osv.except_osv(_('Error!'),_("Not set a location of finished products for the product: "+product.name))
+                location_src = product.categ_id.location_src_id.id or products.location_src_id.id
+                location_dest=product.categ_id.location_dest_id.id or products.location_dest_id.id
+                production_id=production_obj.create(cr, uid, {
+                    'product_id': product.id,
+                    'product_qty': '1.0',
+                    'product_uom': data_product,
+                    'date_planned': products.date_planned ,
+                    'location_src_id':location_src,
+                    'location_dest_id':location_dest,
+                    })
+                list_orders.append(production_id)
         return {
                 'name': 'Customer Invoices',
                 'view_type': 'form',

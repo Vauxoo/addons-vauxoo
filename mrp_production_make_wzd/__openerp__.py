@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name" : "Picking Sale Ref",
+    "name" : "Production Make Wzd",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Generic Modules",
