@@ -376,9 +376,6 @@ class bank_statement_imported_lines(osv.osv):
             #context={} 
 
 
-
-
-   
     def prepare(self, cr, uid, ids, context=None):
         if context is None:
             context={}
@@ -434,7 +431,14 @@ class bank_statement_imported_lines(osv.osv):
             if context.get('cancel',False) and aml:
                 invoice_ids = [i.id for i in abs_brw.invoice_ids]
                 for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
-                    res.append(account_move_line_obj.search(cr,uid,[('invoice','in',invoice_ids),('account_id','=',invoice.account_id.id)]))
+                    if abs_brw.move_id:
+                        res.append(account_move_line_obj.search(cr,uid,[('move_id','=',abs_brw.move_id.id),
+                                                                        ('account_id','=',invoice.account_id.id)]))
+                        
+                    else:
+                        res.append(account_move_line_obj.search(cr,uid,[('invoice','in',invoice_ids),
+                                                                    ('account_id','=',invoice.account_id.id),
+                                                                    ])) 
                     res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
                     break
                 
@@ -451,7 +455,6 @@ class bank_statement_imported_lines(osv.osv):
         account_move_line_obj = self.pool.get('account.move.line')
         for abs_brw in self.browse(cr, uid,ids,context=context):
             for line in abs_brw.aml_ids:
-                
                 total = total + line[type]
                 #total = total + eval('line.%s'%type)
                 
@@ -475,9 +478,8 @@ class bank_statement_imported_lines(osv.osv):
         
         context.update({'cancel':True})
         res = self.prepare(cr, uid, ids, context=context)
-        if res:
+        if res and res[0]:
             account_move_line_obj._remove_move_reconcile(cr, uid, res[0], context=context)
-            print 'res',res
             self.begin_move(cr,uid,ids,res[1],context=context)
             return self.write(cr, uid, ids, {'state':'draft'}, context=context)
             
