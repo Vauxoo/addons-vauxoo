@@ -464,7 +464,7 @@ class bank_statement_imported_lines(osv.osv):
                 line[type] and aml_id.append(line.id)
                 #eval('line.%s'%type) and aml_id.append(line.id)
         
-        account_move_line_obj.copy(cr,uid,aml_id[0],{type:total})
+        account_move_line_obj.copy(cr,uid,aml_id[0],{type:total,'partner_id':[]})
         account_move_line_obj.unlink(cr,uid,aml_id,context=context)
 
         return True
