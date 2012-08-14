@@ -65,7 +65,9 @@
                             <field name="credit" sum="Total Credit"/>
                             <field name="name"/>
                             <field name="invoice_ids"/>
+<!--
                             <field name="balance"/>
+-->
                             <field name="bank_statement_id" invisible="1"/>
                             <field name="partnercounterpart_id"/>
                             <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
