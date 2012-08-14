@@ -37,7 +37,7 @@
                             <field name="invoice_ids" nolabel="1" domain="[('residual','>',0.000001),('account_id','=',counterpart_id)]"/>
                             </page>
                             <page string="Account Move Line">
-                            <field name="acc_move_line_ids" nolabel="1" domain="[(credit > 0 and 'credit' or 'debit','=',0.0000 ),('reconcile_id','=',False),('account_id','=',counterpart_id),('invoice','=',False)]"/>
+                            <field name="acc_move_line_ids" nolabel="1" domain="[(credit > 0 and 'credit' or 'debit','=',0.0000 ),('reconcile_id','=',False),('account_id','=',counterpart_id)]"/>
                             </page>
                             </notebook>
                             <newline/>
