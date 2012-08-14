@@ -438,9 +438,9 @@ class bank_statement_imported_lines(osv.osv):
                     else:
                         res.append(account_move_line_obj.search(cr,uid,[('invoice','in',invoice_ids),
                                                                     ('account_id','=',invoice.account_id.id),
-                                                                    ('move_id','=',False)
                                                                     ])) 
                     res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
+                    print 'res',res
                     break
                 
                 res and [res[0].append(i.id) for i in abs_brw.acc_move_line_ids ] 
