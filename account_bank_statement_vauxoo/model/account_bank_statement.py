@@ -410,6 +410,7 @@ class bank_statement_imported_lines(osv.osv):
                     total = aml.debit or aml.credit
                     for aml_id in account_move_line_obj.browse(cr,uid,aml_ids,context=context):
                         if aml_id.date_maturity and aml_id.date_maturity < abs_brw.date or True:
+                            partner_id = aml_id.partner_id and aml_id.partner_id.id
                             if total > aml_id[aml.debit and 'credit' or 'debit']:
                                 total = total - aml_id[aml.debit and 'credit' or 'debit']
                                 res.append((account_move_line_obj.copy(cr,uid,aml.id,{'partner_id':aml_id.partner_id and aml_id.partner_id.id,
@@ -427,7 +428,8 @@ class bank_statement_imported_lines(osv.osv):
                         
                         
                 if total > 0 and res:
-                    account_move_line_obj.copy(cr,uid,aml.id,{'%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):total})
+                    account_move_line_obj.copy(cr,uid,aml.id,{'partner_id':partner_id ,
+                                                              '%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):total})
                 res and account_move_line_obj.unlink(cr,uid,[aml.id],context=context)
 
             if context.get('cancel',False) and aml:
