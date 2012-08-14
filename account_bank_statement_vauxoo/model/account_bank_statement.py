@@ -80,7 +80,7 @@ class account_bank_statement(osv.osv):
         '''
         Verification of format Files.
         For CR Banco Nacional
-        #Oficina	FechaMovimiento	NumDocumento	Debito	Credito	Descripcion
+        #Oficina    FechaMovimiento NumDocumento    Debito  Credito Descripcion
         '''
         sheet=context.get('xls_sheet')
         if sheet:
@@ -210,6 +210,15 @@ class account_bank_statement(osv.osv):
             
 
         for bsl in st.bs_line_ids:
+            
+            am_id=am_obj.create(cr, uid, {'ref':'From File %s %s' % (st.fname,st.from_to_file),
+                                 'period_id':period_w.id,
+                                 'journal_id':journal.id,
+                                 'date':actual.date,
+                                 'narration':'''Account move created with importation from file %s
+                                 ''' % (st.fname),
+                                }, context=context)
+            
             acc_id=bsl.debit and  st.journal_id.default_credit_account_id.id or st.journal_id.default_debit_account_id.id
             prev=self.set_counterpart(cr, uid, ids, context={'bsl_id':bsl.id})
             payrec_id=prev[0]
@@ -259,7 +268,7 @@ class account_bank_statement(osv.osv):
                                    'amount_currency':bsl.debit and bsl.debit or bsl.credit,
                                    'account_id':payrec_id,},
                                   context=context)
-            bsl.write({'counterpart_id':payrec_id,
+            bsl.write({'move_id':am_id,'counterpart_id':payrec_id,
                        'partnercounterpart_id':pcp_id and pcp_id or False})
 
         self.log(cr, uid, st.id, _('Account Move Temporary For this Statement \
@@ -305,30 +314,38 @@ class bank_statement_imported_lines(osv.osv):
     _description = 'Imported lines for banks files'
     
     
-    def _balance(self, cr, uid,ids,field_name,args,context=None):
-        res = {}
-        
-        for i in ids:
-            debit = 0.0
-            amt_unt = 0.0
-            bsil_brw = self.browse(cr,uid,i,context=context)
-            counterpart_id = bsil_brw.counterpart_id
-            for aml in bsil_brw.aml_ids:
-                if aml.account_id == counterpart_id:
-                    debit += aml.debit
-            for inv in bsil_brw.invoice_ids:
-                if inv.account_id == counterpart_id:
-                    amt_unt += inv.amount_total
-            res[i]=debit-amt_unt
-        return res
+    #def _balance(self, cr, uid,ids,field_name,args,context=None):
+        #res = {}
+        #
+        #for i in ids:
+            #debit = 0.0
+            #amt_unt = 0.0
+            #bsil_brw = self.browse(cr,uid,i,context=context)
+            #counterpart_id = bsil_brw.counterpart_id
+            #for aml in bsil_brw.aml_ids:
+                #if aml.account_id == counterpart_id:
+                    #debit += aml.debit or aml.credit
+            #for inv in bsil_brw.invoice_ids:
+                #if inv.account_id == counterpart_id:
+                    #amt_unt += inv.amount_total
+            #for amls in bsil_brw.acc_move_line_ids:
+                #if amls.account_id == counterpart_id:
+                    #amt_unt+=amls[aml.debit and 'credit' or 'debit']
+                #
+            #res[i]=debit-amt_unt
+        #return res
+    
+    
     _columns = {
         'name':fields.char('Description', size=255, required=True, readonly=False),
         'date': fields.date('Date', required=True),
         'numdocument':fields.char('Num Document', size=64, required=True, readonly=False),
         'debit': fields.float('Debit', digits_compute=dp.get_precision('Account'), required=True),
+        'move_id':fields.many2one('account.move','Account Move'),
         'credit': fields.float('Credit', digits_compute=dp.get_precision('Account'), required=True),
         'office':fields.char('Office', size=16, required=False, readonly=False),
         'bank_statement_id':fields.many2one('account.bank.statement', 'Bank Statement', required=True),
+        'acc_move_line_ids':fields.many2many('account.move.line','account_move_line_rel','aml_ids','aml_id'),
         'company_id':fields.many2one('res.company','Company',required=False),
         'aml_ids':fields.one2many('account.move.line', 'stff_id', 'Account Move Lines'),
         'counterpart_id':fields.many2one('account.account','Account Counterpart', required=False,
@@ -343,7 +360,7 @@ class bank_statement_imported_lines(osv.osv):
         'invoice_ids':fields.many2many('account.invoice','bs_invoice_rel','st_id_id','invoice_id','Invoices',
             help="Invoices to be reconciled with this line",
             ),#TODO: Resolve: We should use date as filter, is a question of POV
-        'balance':fields.function(_balance,method=True,digits_compute=dp.get_precision('Account'),type='float',string='Balance',store=False),
+        #'balance':fields.function(_balance,method=True,digits_compute=dp.get_precision('Account'),type='float',string='Balance',store=False),
     }
 
     _defaults = {
@@ -352,26 +369,108 @@ class bank_statement_imported_lines(osv.osv):
         'state':'draft',
     }
 
+
+
+    #def explode_aml(self,cr,uid,ids,,context=None):
+        #if context is None:
+            #context={} 
+
+
     def prepare(self, cr, uid, ids, context=None):
         if context is None:
             context={}
         res=[]
         aml=False
+        amount = {}
+        total = 0
+        invoice_obj = self.pool.get('account.invoice')
         account_move_line_obj = self.pool.get('account.move.line')
         for abs_brw in self.browse(cr, uid,ids,context=context):
             for line in abs_brw.aml_ids:
                 if context.get('button_confirm'):
                     if line.account_id == abs_brw.counterpart_id and not line.reconcile_partial_id and not line.reconcile_id: 
-                        aml = line.id
+                        aml = line
+                        
+                        
                 else:
-                    if line.account_id == abs_brw.counterpart_id: 
-                        aml = line.id
+                    if line.account_id == abs_brw.counterpart_id : 
+                        aml = line
             if aml:
-                for invoice in abs_brw.invoice_ids:
-                    if  invoice.account_id.id == abs_brw.counterpart_id.id:
-                        res+=account_move_line_obj.search(cr,uid,[('invoice','=',invoice.id),('account_id','=',invoice.account_id.id)]) 
-                res.append(aml)
+                
+                aml_ids = [line.id for i in abs_brw.invoice_ids if i.state=='open' \
+                                   for line in i.move_id.line_id if i.account_id.id == line.account_id.id]
+                
+                aml_ids+=[i.id for i in abs_brw.acc_move_line_ids ]
+                
+                aml_ids = aml_ids and account_move_line_obj.search(cr,uid,[('id','in',aml_ids)],order='date asc',context=context)
+                
+                
+                if aml.debit and not context.get('cancel',False) or aml.credit and not context.get('cancel',False):
+                    
+                    total = aml.debit or aml.credit
+                    for aml_id in account_move_line_obj.browse(cr,uid,aml_ids,context=context):
+                        if aml_id.date_maturity and aml_id.date_maturity < abs_brw.date or True:
+                            partner_id = aml_id.partner_id and aml_id.partner_id.id
+                            if total > aml_id[aml.debit and 'credit' or 'debit']:
+                                total = total - aml_id[aml.debit and 'credit' or 'debit']
+                                res.append((account_move_line_obj.copy(cr,uid,aml.id,{'partner_id':aml_id.partner_id and aml_id.partner_id.id,
+                                                                                      '%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):aml_id[aml.debit and 'credit' or 'debit']}),
+                                            aml_id.id))
+                            
+                            elif total > 0 and aml_id[aml.debit and 'credit' or 'debit'] >= total:
+                                res.append((account_move_line_obj.copy(cr,uid,aml.id,{'partner_id':aml_id.partner_id and aml_id.partner_id.id,
+                                                                                      '%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):total}),
+                                            aml_id.id))
+                                total = 0
+                            
+                            elif total<=0:
+                                break
+                        
+                        
+                if total > 0 and res:
+                    account_move_line_obj.copy(cr,uid,aml.id,{'partner_id':partner_id ,
+                                                              '%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):total})
+                res and account_move_line_obj.unlink(cr,uid,[aml.id],context=context)
+
+            if context.get('cancel',False) and aml:
+                invoice_ids = [i.id for i in abs_brw.invoice_ids]
+                for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
+                    if abs_brw.move_id:
+                        res.append(account_move_line_obj.search(cr,uid,[('move_id','=',abs_brw.move_id.id),
+                                                                        ('account_id','=',invoice.account_id.id)]))
+                        
+                    else:
+                        res.append(account_move_line_obj.search(cr,uid,[('invoice','in',invoice_ids),
+                                                                    ('account_id','=',invoice.account_id.id),
+                                                                    ])) 
+                    res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
+                    print 'res',res
+                    break
+                
+                res and [res[0].append(i.id) for i in abs_brw.acc_move_line_ids ] 
+                
+                #res.append(aml.id)
         return res
+
+    def begin_move(self,cr,uid,ids,type,context=None):
+        if context is None:
+            context={} 
+        total = 0
+        aml_id = []
+        account_move_line_obj = self.pool.get('account.move.line')
+        for abs_brw in self.browse(cr, uid,ids,context=context):
+            for line in abs_brw.aml_ids:
+                total = total + line[type]
+                #total = total + eval('line.%s'%type)
+                
+                line[type] and aml_id.append(line.id)
+                #eval('line.%s'%type) and aml_id.append(line.id)
+        
+        account_move_line_obj.copy(cr,uid,aml_id[0],{type:total,'partner_id':[]})
+        account_move_line_obj.unlink(cr,uid,aml_id,context=context)
+
+        return True
+
 
     def button_validate(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'done'}, context=context)
@@ -380,24 +479,33 @@ class bank_statement_imported_lines(osv.osv):
         if context is None:
             context={}
         account_move_line_obj = self.pool.get('account.move.line')
+        
+        
+        context.update({'cancel':True})
         res = self.prepare(cr, uid, ids, context=context)
-        if res:
-            account_move_line_obj._remove_move_reconcile(cr, uid, res, context=context)
+        if res and res[0]:
+            account_move_line_obj._remove_move_reconcile(cr, uid, res[0], context=context)
+            self.begin_move(cr,uid,ids,res[1],context=context)
             return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+            
         return True
 
     def button_setinvoice(self, cr, uid, ids, context=None):
         if context is None:
             context={}
         res = []
+        recon = []
         account_move_line_obj = self.pool.get('account.move.line')
+        
         for abs_brw in self.browse(cr, uid,ids,context=context):
-            print ids
-            res+=self.prepare(cr, uid, ids, context=context)
-        print 'Antes de Conciliar %s ' % res
-        if res:
-            account_move_line_obj.reconcile_partial(cr, uid, res, 'manual', context=context)
-            if abs_brw.balance >= 0.0:
+            res=self.prepare(cr, uid, ids, context=context)
+        
+            if res:
+                for reconcile in res:
+                    recon = []
+                    recon.append(reconcile[0])
+                    recon.append(reconcile[1])
+                    account_move_line_obj.reconcile_partial(cr, uid, recon, 'manual', context=context)
                 self.button_validate(cr, uid, ids, context=context)
         return {}
 
