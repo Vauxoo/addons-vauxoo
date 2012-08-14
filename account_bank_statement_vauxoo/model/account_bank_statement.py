@@ -426,7 +426,7 @@ class bank_statement_imported_lines(osv.osv):
                                 break
                         
                         
-                if total > 0:
+                if total > 0 and res:
                     account_move_line_obj.copy(cr,uid,aml.id,{'%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):total})
                 res and account_move_line_obj.unlink(cr,uid,[aml.id],context=context)
 
