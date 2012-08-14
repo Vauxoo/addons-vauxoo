@@ -504,8 +504,7 @@ class bank_statement_imported_lines(osv.osv):
                     recon.append(reconcile[0])
                     recon.append(reconcile[1])
                     account_move_line_obj.reconcile_partial(cr, uid, recon, 'manual', context=context)
-                if abs_brw.balance <= 0.0:
-                    self.button_validate(cr, uid, ids, context=context)
+                self.button_validate(cr, uid, ids, context=context)
         return {}
 
 bank_statement_imported_lines()

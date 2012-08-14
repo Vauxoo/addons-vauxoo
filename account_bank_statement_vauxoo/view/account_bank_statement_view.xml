@@ -35,14 +35,16 @@
                             <field name="invoice_ids" nolabel="1" domain="[('residual','>',0.000001),('account_id','=',counterpart_id)]"/>
                             </page>
                             <page string="Account Move Line">
-                            <field name="acc_move_line_ids" nolabel="1" domain="[(credit > 0 and 'credit' or 'debit','=',0.0000 ),('reconcile_id','=',False),('reconcile_partial_id','=',False),('account_id','=',counterpart_id),('invoice','=',False)]"/>
+                            <field name="acc_move_line_ids" nolabel="1" domain="[(credit > 0 and 'credit' or 'debit','=',0.0000 ),('reconcile_id','=',False),('account_id','=',counterpart_id),('invoice','=',False)]"/>
                             </page>
                             </notebook>
                             <newline/>
                             <group colspan="4">
+<!--
                              <button type="object" string="Set Invoice" name="button_setinvoice" states="draft" icon="STOCK_FILE"/>
-                             <button type="object" string="Validate" name="button_validate" states="draft" icon="gtk-go-forward"/>
-                             <button type="object" string="Set to Review" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
+-->
+                             <button type="object" string="Validate" name="button_setinvoice" states="draft" icon="gtk-go-forward"/>
+                             <button type="object" string="Cancel" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
                              <field name="state"/>
                             </group>
                 </form>
@@ -69,7 +71,7 @@
                              <button type="object" string="Set Invoice" name="button_setinvoice" states="draft" icon="STOCK_FILE"/>
 -->
                              <button type="object" string="Validate" name="button_setinvoice" states="draft" icon="gtk-go-forward"/>
-                             <button type="object" string="Set to Review" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
+                             <button type="object" string="Cancel" states="done" name="button_cancel" icon="STOCK_DIALOG_WARNING"/>
                              <field name="state"/>
                 </tree>
             </field>
