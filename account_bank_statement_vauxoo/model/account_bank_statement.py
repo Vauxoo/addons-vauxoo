@@ -314,26 +314,26 @@ class bank_statement_imported_lines(osv.osv):
     _description = 'Imported lines for banks files'
     
     
-    def _balance(self, cr, uid,ids,field_name,args,context=None):
-        res = {}
-        
-        for i in ids:
-            debit = 0.0
-            amt_unt = 0.0
-            bsil_brw = self.browse(cr,uid,i,context=context)
-            counterpart_id = bsil_brw.counterpart_id
-            for aml in bsil_brw.aml_ids:
-                if aml.account_id == counterpart_id:
-                    debit += aml.debit or aml.credit
-            for inv in bsil_brw.invoice_ids:
-                if inv.account_id == counterpart_id:
-                    amt_unt += inv.amount_total
-            for amls in bsil_brw.acc_move_line_ids:
-                if amls.account_id == counterpart_id:
-                    amt_unt+=amls[aml.debit and 'credit' or 'debit']
-                
-            res[i]=debit-amt_unt
-        return res
+    #def _balance(self, cr, uid,ids,field_name,args,context=None):
+        #res = {}
+        #
+        #for i in ids:
+            #debit = 0.0
+            #amt_unt = 0.0
+            #bsil_brw = self.browse(cr,uid,i,context=context)
+            #counterpart_id = bsil_brw.counterpart_id
+            #for aml in bsil_brw.aml_ids:
+                #if aml.account_id == counterpart_id:
+                    #debit += aml.debit or aml.credit
+            #for inv in bsil_brw.invoice_ids:
+                #if inv.account_id == counterpart_id:
+                    #amt_unt += inv.amount_total
+            #for amls in bsil_brw.acc_move_line_ids:
+                #if amls.account_id == counterpart_id:
+                    #amt_unt+=amls[aml.debit and 'credit' or 'debit']
+                #
+            #res[i]=debit-amt_unt
+        #return res
     
     
     _columns = {
@@ -360,7 +360,7 @@ class bank_statement_imported_lines(osv.osv):
         'invoice_ids':fields.many2many('account.invoice','bs_invoice_rel','st_id_id','invoice_id','Invoices',
             help="Invoices to be reconciled with this line",
             ),#TODO: Resolve: We should use date as filter, is a question of POV
-        'balance':fields.function(_balance,method=True,digits_compute=dp.get_precision('Account'),type='float',string='Balance',store=False),
+        #'balance':fields.function(_balance,method=True,digits_compute=dp.get_precision('Account'),type='float',string='Balance',store=False),
     }
 
     _defaults = {

@@ -14,19 +14,21 @@
                              <field name="office"/>
                              <field name="date"/>
                              <field name="numdocument"/>
-                             <field name="debit"/>
-                             <field name="credit"/>
+                             <field name="debit" readonly="1"/>
+                             <field name="credit" readonly="1"/>
                              <field name="name"/>
                              <field name="bank_statement_id" invisible="1"/>
-                             <field name="move_id"/>
+                             <field name="move_id" readonly="1"/>
                              <field name="partnercounterpart_id"/>
                              <field name="counterpart_id" domain="[('type','in',['receivable','payable','other'])]"/>
+<!--
                              <field name="balance"/>
+-->
                             </group>
                             <newline/>
                             <separator string="Temporal Move Line"/>
                             <newline/>
-                            <field name="aml_ids" nolabel="1"/>
+                            <field name="aml_ids" readonly="1" nolabel="1"/>
                             <newline/>
                             <separator string="Invoices to be reconciled"/>
                             <newline/>
