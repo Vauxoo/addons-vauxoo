@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='Purchase Order']/group/button[@name='action_cancel']" position="replace">
-                                <button name="action_cancel" states="approved,except_picking,except_invoice,wait,done" string="Cancel Purchase Order" type="object" icon="gtk-cancel"/>
+                                <button name="action_cancel" states="approved,except_picking,except_invoice,wait,done" string="Cancel Purchase Order" type="object" icon="gtk-cancel" groups="base.group_purchase_cancel"/>
                 </xpath>
             </field>
         </record>
