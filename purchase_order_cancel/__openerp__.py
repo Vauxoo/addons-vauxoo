@@ -30,7 +30,7 @@
     "author" : "Vauxoo",
     "category": "Generic Modules/Account",
     "website" : "http://www.vauxoo.com/",
-    "description": """ Added button to cancel purchase in state donde
+    "description": """ Add button to cancel purchase in state done
     """,
     'depends': ['purchase'],
     'init_xml': [],
