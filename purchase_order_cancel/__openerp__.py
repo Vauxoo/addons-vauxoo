@@ -35,6 +35,7 @@
     'depends': ['purchase'],
     'init_xml': [],
     'update_xml': [
+        'security/purchase_security.xml',
         'purchase_view.xml',
         'purchase_workflow.xml',
         ],
