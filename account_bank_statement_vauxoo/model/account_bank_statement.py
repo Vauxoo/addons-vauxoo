@@ -341,6 +341,7 @@ class bank_statement_imported_lines(osv.osv):
         'date': fields.date('Date', required=True),
         'numdocument':fields.char('Num Document', size=64, required=True, readonly=False),
         'debit': fields.float('Debit', digits_compute=dp.get_precision('Account'), required=True),
+        'invo_move_line':fields.boolean('Chek',help='Chek if invoice and account move line exist'),
         'move_id':fields.many2one('account.move','Account Move'),
         'credit': fields.float('Credit', digits_compute=dp.get_precision('Account'), required=True),
         'office':fields.char('Office', size=16, required=False, readonly=False),
@@ -375,7 +376,34 @@ class bank_statement_imported_lines(osv.osv):
         #if context is None:
             #context={} 
 
-
+    def change_account(self,cr,uid,ids,context=None):
+        if context is None:
+            context={} 
+        acc_journal = []
+        bank_line_brw = self.browse(cr,uid,ids,context=context)
+        account_move_line_obj = self.pool.get('account.move.line')
+        for line in bank_line_brw: 
+        
+            if line.invoice_ids or line.acc_move_line_ids:
+                raise osv.except_osv(_("Warning"),_("You can not change account because this bank statement have documents"))
+        
+            if line.state != 'done':
+                
+                for aml in line.aml_ids:
+                    acc_journal.append(line.bank_statement_id.journal_id and \
+                                                                line.bank_statement_id.journal_id.default_debit_account_id and \
+                                                                line.bank_statement_id.journal_id.default_debit_account_id.id)
+                    
+                    
+                    acc_journal.append(line.bank_statement_id.journal_id and \
+                                                                line.bank_statement_id.journal_id.default_credit_account_id and \
+                                                                line.bank_statement_id.journal_id.default_credit_account_id.id)
+                                                                
+                    if aml.account_id and aml.account_id.id  not in acc_journal: 
+                        account_move_line_obj.copy(cr,uid,aml.id,{'account_id':line.counterpart_id and line.counterpart_id.id })
+                        account_move_line_obj.unlink(cr,uid,[aml.id],context=context)
+                                         
+                    
     def prepare(self, cr, uid, ids, context=None):
         if context is None:
             context={}
@@ -471,19 +499,40 @@ class bank_statement_imported_lines(osv.osv):
 
         return True
 
+    def invoice_or_move_line(self,cr,uid,ids,invoice_ids,acc_move_line_ids,context=None):
+        if context is None:
+            context={} 
+        
+        res = {'value':{}}
+        if invoice_ids and invoice_ids[0][2] or acc_move_line_ids and acc_move_line_ids[0][2]:
+            res['value'].update({'invo_move_line':True})
+              
+        else:
+            res['value'].update({'invo_move_line':False})
+            
+        return res
 
     def button_validate(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'done'}, context=context)
+
+
+    
+
 
     def button_cancel(self, cr, uid, ids, context=None):
         if context is None:
             context={}
         account_move_line_obj = self.pool.get('account.move.line')
+        account_move_obj = self.pool.get('account.move')
         
         
         context.update({'cancel':True})
+        for abs_brw in self.browse(cr,uid,ids,context=context):
+            account_move_obj.button_cancel(cr, uid, [abs_brw.move_id and abs_brw.move_id.id], context=context)
+            
         res = self.prepare(cr, uid, ids, context=context)
         if res and res[0]:
+            
             account_move_line_obj._remove_move_reconcile(cr, uid, res[0], context=context)
             self.begin_move(cr,uid,ids,res[1],context=context)
             return self.write(cr, uid, ids, {'state':'draft'}, context=context)
@@ -496,6 +545,7 @@ class bank_statement_imported_lines(osv.osv):
         res = []
         recon = []
         account_move_line_obj = self.pool.get('account.move.line')
+        account_move = self.pool.get('account.move')
         
         for abs_brw in self.browse(cr, uid,ids,context=context):
             res=self.prepare(cr, uid, ids, context=context)
@@ -507,6 +557,7 @@ class bank_statement_imported_lines(osv.osv):
                     recon.append(reconcile[1])
                     account_move_line_obj.reconcile_partial(cr, uid, recon, 'manual', context=context)
                 self.button_validate(cr, uid, ids, context=context)
+                account_move.button_validate(cr,uid,[abs_brw.move_id and abs_brw.move_id.id ],context=context)
         return {}
 
 bank_statement_imported_lines()
