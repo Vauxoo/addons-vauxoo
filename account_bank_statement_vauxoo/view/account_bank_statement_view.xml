@@ -21,7 +21,7 @@
                              <field name="bank_statement_id" invisible="1"/>
                              <field name="move_id" readonly="1"/>
                              <field name="partnercounterpart_id" attrs="{'readonly':['|',('invo_move_line','!=',False),('state','=','done')]}"/>
-                             <field name="counterpart_id"   attrs="{'readonly':[('invo_move_line','!=',False)]}" domain="[('type','in',['receivable','payable','other'])]"/>
+                             <field name="counterpart_id"   attrs="{'readonly':['|',('invo_move_line','!=',False),('state','=','done')]}" domain="[('type','in',['receivable','payable','other'])]"/>
                              <button type="object" string="Change account" name="change_account" icon="gtk-go-forward" attrs="{'readonly':['|',('invo_move_line','!=',False),('state','=','done')]}" states='draft'/>
 <!--
                              <field name="balance"/>

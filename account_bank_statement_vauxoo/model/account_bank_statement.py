@@ -426,7 +426,8 @@ class bank_statement_imported_lines(osv.osv):
             if aml:
                 
                 aml_ids = [line.id for i in abs_brw.invoice_ids if i.state=='open' \
-                                   for line in i.move_id.line_id if i.account_id.id == line.account_id.id]
+                                   for line in i.move_id.line_id if i.account_id.id == line.account_id.id and not \
+                                                                    line.reconcile_id]
                 
                 aml_ids+=[i.id for i in abs_brw.acc_move_line_ids ]
                 
@@ -439,13 +440,13 @@ class bank_statement_imported_lines(osv.osv):
                     for aml_id in account_move_line_obj.browse(cr,uid,aml_ids,context=context):
                         if aml_id.date_maturity and aml_id.date_maturity < abs_brw.date or True:
                             partner_id = aml_id.partner_id and aml_id.partner_id.id
-                            if total > aml_id[aml.debit and 'credit' or 'debit']:
-                                total = total - aml_id[aml.debit and 'credit' or 'debit']
+                            if total > (aml_id.reconcile_partial_id and aml_id.invoice and aml_id.invoice.residual or aml_id[aml.debit and 'credit' or 'debit']):
+                                total = total - (aml_id.reconcile_partial_id and aml_id.invoice and aml_id.invoice.residual or aml_id[aml.debit and 'credit' or 'debit'])
                                 res.append((account_move_line_obj.copy(cr,uid,aml.id,{'partner_id':aml_id.partner_id and aml_id.partner_id.id,
-                                                                                      '%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):aml_id[aml.debit and 'credit' or 'debit']}),
+                                                                                      '%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):(aml_id.reconcile_partial_id and aml_id.invoice and aml_id.invoice.residual or aml_id[aml.debit and 'credit' or 'debit'])}),
                                             aml_id.id))
                             
-                            elif total > 0 and aml_id[aml.debit and 'credit' or 'debit'] >= total:
+                            elif total > 0 and (aml_id.reconcile_partial_id and aml_id.invoice and aml_id.invoice.residual or aml_id[aml.debit and 'credit' or 'debit']) >= total:
                                 res.append((account_move_line_obj.copy(cr,uid,aml.id,{'partner_id':aml_id.partner_id and aml_id.partner_id.id,
                                                                                       '%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'):total}),
                                             aml_id.id))
