@@ -20,9 +20,9 @@
                              <field name="name" attrs="{'readonly':['|',('invoice_ids','!=',False),('acc_move_line_ids','!=',False),('state','=','done')]}"/>
                              <field name="bank_statement_id" invisible="1"/>
                              <field name="move_id" readonly="1"/>
-                             <field name="partnercounterpart_id" attrs="{'readonly':[('invo_move_line','!=',False)]}"/>
+                             <field name="partnercounterpart_id" attrs="{'readonly':['|',('invo_move_line','!=',False),('state','=','done')]}"/>
                              <field name="counterpart_id"   attrs="{'readonly':[('invo_move_line','!=',False)]}" domain="[('type','in',['receivable','payable','other'])]"/>
-                             <button type="object" string="Change account" name="change_account" icon="gtk-go-forward" attrs="{'readonly':[('invo_move_line','!=',False)]}" states='draft'/>
+                             <button type="object" string="Change account" name="change_account" icon="gtk-go-forward" attrs="{'readonly':['|',('invo_move_line','!=',False),('state','=','done')]}" states='draft'/>
 <!--
                              <field name="balance"/>
 -->
@@ -36,10 +36,10 @@
                             <newline/>
                             <notebook>
                             <page string='Invoices'>
-                            <field name="invoice_ids" on_change="invoice_or_move_line(invoice_ids,acc_move_line_ids)" nolabel="1" domain="[('residual','>',0.000001),('account_id','=',counterpart_id)]"/>
+                            <field name="invoice_ids" attrs="{'readonly':[('state','=','done')]}" on_change="invoice_or_move_line(invoice_ids,acc_move_line_ids)" nolabel="1" domain="[('residual','>',0.000001),('account_id','=',counterpart_id)]"/>
                             </page>
                             <page string="Account Move Line">
-                            <field name="acc_move_line_ids" nolabel="1"  on_change="invoice_or_move_line(invoice_ids,acc_move_line_ids)" domain="[(credit > 0 and 'credit' or 'debit','=',0.0000 ),('reconcile_id','=',False),('account_id','=',counterpart_id)]"/>
+                            <field name="acc_move_line_ids" nolabel="1" attrs="{'readonly':[('state','=','done')]}" on_change="invoice_or_move_line(invoice_ids,acc_move_line_ids)" domain="[(credit > 0 and 'credit' or 'debit','=',0.0000 ),('reconcile_id','=',False),('account_id','=',counterpart_id)]"/>
                             </page>
                             </notebook>
                             <newline/>
