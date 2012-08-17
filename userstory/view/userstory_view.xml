@@ -22,13 +22,12 @@
 							<separator string="Acceptability Criteria" colspan='4'/>
 
 							<field name="accep_crit_ids" colspan="4" nolabel="1" mode="tree,form">
-								<form>
-									<separator string="Name" colspan='4'/>									
-									<field name="name" colspan="4" nolabel="1"/>
+								<form string="Acceptability Criteria">
+									<separator string="Name" colspan='4'/>									<field name="name" colspan="4" nolabel="1"/>
 									<separator string="Stage" colspan='4'/>
 									<field name="stage" colspan="4" nolabel="1"/>
 								</form>
-								<tree>
+								<tree string="Acceptability Criteria">
 									<field name="name"/>
 									<field name="stage"/>
 								</tree>
