@@ -33,11 +33,11 @@ class user_story(osv.osv):
 	_name = 'user.story'
 		
 	_columns = {
-		'name':fields.char('User story', size=64, required=True, readonly=False),
+		'name':fields.char('Title', size=64, required=True, readonly=False),
 		'owner':fields.char('Owner', size=64, required=True, readonly=False),
 		'planned_hours': fields.float('Planned Hours'),
 		'project_id':fields.many2one('project.project', 'Project', required=True),
-		'title':fields.char('Title', size=255, required=True, readonly=False),
+		'description':fields.text('Description'),
 		'accep_crit_ids':fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
 		'info': fields.text('Other Info'),
 		'task_ids':fields.many2many('project.task', 'userstory_task_rel', 'userstory_id', 'task_id', 'Task'),
