@@ -164,7 +164,7 @@ class project_task_work(osv.osv):
                 'project.task.work':(lambda self, cr, uid, ids,c={}: ids,[],45),
             }
         ),
-
+        'name': fields.text('Work summary'),
     }
     
     _defaults = {
