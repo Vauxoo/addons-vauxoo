@@ -34,6 +34,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "report/ir_report.xml",
         "view/userstory_view.xml",
     ],
     "active": False,
