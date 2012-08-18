@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report id="report_user_story"
+                string="User Story"
+                model="user.story"
+                name="user.story.report"
+                report_type="sxw"
+                file="user_story/report/user_story_report.sxw"
+                header="False"
+                />
+    </data>
+</openerp>
