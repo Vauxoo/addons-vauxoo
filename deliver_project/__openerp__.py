@@ -61,7 +61,6 @@
     'test': [],
     'installable': True,
     'active': False,
-    'certificate': '',
 }
 
 

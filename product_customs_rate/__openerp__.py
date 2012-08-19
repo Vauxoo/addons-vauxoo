@@ -46,6 +46,5 @@ Gestión de Customs Rate (Nandina y subpartida nacional)
     ],
     "active": False,
     "installable": True,
-    "certificate" : False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
