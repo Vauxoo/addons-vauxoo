@@ -58,7 +58,7 @@ class acceptability_criteria(osv.osv):
 	
 	_columns = {
 		'name':fields.char('Title', size=64, required=True, readonly=False),
-		'stage': fields.text('Stage', required=True),
+		'scenario': fields.text('Stage', required=True),
 		'accep_crit_id':fields.many2one('user.story', 'User Story', required=True),
 
 	}
