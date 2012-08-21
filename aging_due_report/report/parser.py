@@ -106,6 +106,7 @@ class aging_parser(report_sxw.rml_parse):
                 #~ N/C
                 #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
                 #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
+                refund_brws = []
                 #~ refund_brws = refund_ids and inv_obj.browse(self.cr,self.uid,refund_ids) or []
                 #~ aml_gen = (refund_brw.move_id.line_id for refund_brw in refund_brws)
                 pay_refund_ids = []
