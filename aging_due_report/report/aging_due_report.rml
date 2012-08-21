@@ -4,7 +4,7 @@
     <pageTemplate id="first">
         <pageGraphics>
             <setFont name="Helvetica-Oblique" size="8.0"/>
-            <image file="company_logo.jpg" x="10.0mm" y="195.0mm" width="60mm" />
+            <image x="10.0mm" y="195.0mm"  width="89.994mm" height="24.342mm">[[company.logo and company.logo or removeParentNode('image')]]</image>
             <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
             <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
         </pageGraphics>
@@ -19,12 +19,20 @@
 		</blockTableStyle>     
 
 		<blockTableStyle id="TERMS">
-            <blockBackground colorName="#4bacc6ff" start="0,0" stop="-1,0"/>
+            <blockBackground colorName="#a41d35ff" start="0,0" stop="-1,0"/>
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
-			<lineStyle kind="GRID" colorName="#4bacc6ff" start="0,1" stop="-1,-1" thickness="0.5"/>
-			<lineStyle kind="OUTLINE" colorName="#4bacc6ff" thickness="0.5"/>
-		</blockTableStyle>          
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="#a41d35ff" thickness="0.5"/>
+		</blockTableStyle>
+        
+		<blockTableStyle id="TERMSTABLEGREY">
+            <blockBackground colorName="#a3a5a8ff" start="0,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
+			<lineStyle kind="GRID" colorName="white" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="white" thickness="0.5"/>
+		</blockTableStyle>  
 
 		<blockTableStyle id="ITEMSTITLE">
             <blockBackground colorName="black" start="0,0" stop="5,0"/>

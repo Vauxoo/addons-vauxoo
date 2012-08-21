@@ -4,7 +4,8 @@
     <pageTemplate id="first">
         <pageGraphics>
             <setFont name="Helvetica-Oblique" size="8.0"/>
-            <image file="company_logo.jpg" x="10.0mm" y="195.0mm" width="60mm" />
+            <image x="10.0mm" y="195.0mm"  width="89.994mm" height="24.342mm">[[company.logo and company.logo or removeParentNode('image')]]</image>
+            <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
             <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
         </pageGraphics>
       <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="185.0mm"/>
@@ -18,12 +19,20 @@
 		</blockTableStyle>     
 
 		<blockTableStyle id="TERMS">
-            <blockBackground colorName="#4bacc6ff" start="0,0" stop="-1,0"/>
+            <blockBackground colorName="#a41d35ff" start="0,0" stop="-1,0"/>
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
-			<lineStyle kind="GRID" colorName="#4bacc6ff" start="0,1" stop="-1,-1" thickness="0.5"/>
-			<lineStyle kind="OUTLINE" colorName="#4bacc6ff" thickness="0.5"/>
-		</blockTableStyle>          
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="#a41d35ff" thickness="0.5"/>
+		</blockTableStyle>
+        
+		<blockTableStyle id="TERMSTABLEGREY">
+            <blockBackground colorName="lightgrey" start="0,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,0" stop="-1,0" thickness="0.5"/>
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="#a41d35ff" thickness="0.5"/>
+		</blockTableStyle>  
 
 		<blockTableStyle id="ITEMSTITLE">
             <blockBackground colorName="black" start="0,0" stop="5,0"/>
@@ -72,7 +81,7 @@
     <section>
     <para>[[repeatIn(get_invoice_by_partner(objects),'o')]]</para>
     <para>[[ setLang(o.lang) ]]</para>
-        <blockTable colWidths="20mm,100mm,80mm,60mm" style="TOTAL">
+        <blockTable colWidths="20mm,100mm,80mm,60mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSLEFT">[['%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]]</para></td>
@@ -116,7 +125,7 @@
             </tr>
         </blockTable>
 <!--TABLA DE TOTALES-->       
-        <blockTable colWidths="120mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm"  style="TOTAL">
+        <blockTable colWidths="120mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
                 <tr>
                     <td><para style="ITEMSRIGHT">TOTAL</para></td>
                     <td><para style="ITEMSRIGHT">[[ formatLang(o.get('inv_total')) or '0.00']]</para></td>
@@ -132,13 +141,13 @@
     </section>
     <section>
         <para>[[repeatIn(get_total_by_comercial(objects),'p')]]</para>
-        <blockTable colWidths="240mm,20mm" style="TOTAL">
+        <blockTable colWidths="240mm,20mm" style="TERMSTABLEGREY">
             <tr noRowsplits="1">
                 <td><para style="ITEMSRIGHT">TOTAL ESTE REPORTE</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(p['total']) or '0.00']]</para></td>
             </tr>
         </blockTable>
-        <blockTable colWidths="240mm,20mm" style="TOTAL">
+        <blockTable colWidths="240mm,20mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSRIGHT">[[repeatIn(p.get('vendor'),'vnd')]][[ vnd.get('usr_brw') and vnd.get('usr_brw').name or 'SIN ASESOR' ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(vnd.get('total')) or '0.00' ]]</para></td>

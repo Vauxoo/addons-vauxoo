@@ -9,9 +9,11 @@
                 <spacer length="5mm"/>
             </place>            
             <setFont name="Helvetica-BoldOblique" size="8.0"/>
-
-            <image file="company_logo.jpg" x="20.0mm" y="245.0mm" width="89.994mm" height="24.342mm"/>
+            <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
+            <image x="20.0mm" y="245.0mm" width="89.994mm" height="24.342mm">[[company.logo and company.logo or removeParentNode('image')]]</image>
+<!--
             <image file="company_footer.jpg" x="146.66mm" y="0.0mm" width="73.38mm" height="103.01mm"/>
+-->
 
         </pageGraphics>
       <frame id="first"     x1="20.0mm"     y1="20mm"    width="180mm"  height="225.0mm"/>
@@ -25,18 +27,26 @@
 		</blockTableStyle>     
 
 		<blockTableStyle id="TERMS">
-            <blockBackground colorName="#4bacc6ff" start="0,0" stop="-1,0"/>
+            <blockBackground colorName="#a41d35ff" start="0,0" stop="-1,0"/>
             <blockValign value="TOP"/>
 			<lineStyle kind="GRID" colorName="white" start="0,0" stop="-1,0" thickness="0.5"/>
-			<lineStyle kind="GRID" colorName="#4bacc6ff" start="0,1" stop="-1,-1" thickness="0.5"/>
-			<lineStyle kind="OUTLINE" colorName="#4bacc6ff" thickness="0.5"/>
-		</blockTableStyle>          
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="#a41d35ff" thickness="0.5"/>
+		</blockTableStyle>
+        
+		<blockTableStyle id="TERMSTABLEGREY">
+            <blockBackground colorName="lightgrey" start="0,0" stop="-1,0"/>
+            <blockValign value="TOP"/>
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,0" stop="-1,0" thickness="0.5"/>
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,1" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="#a41d35ff" thickness="0.5"/>
+		</blockTableStyle>  
 
 		<blockTableStyle id="ITEMSTITLETABLE">
             <blockBackground colorName="white" start="0,0" stop="-1,-1"/>
             <blockValign value="TOP"/>
-			<lineStyle kind="GRID" colorName="#4bacc6ff" start="0,0" stop="-1,-1" thickness="0.5"/>
-			<lineStyle kind="OUTLINE" colorName="#4bacc6ff" thickness="0.5"/>
+			<lineStyle kind="GRID" colorName="#a41d35ff" start="0,0" stop="-1,-1" thickness="0.5"/>
+			<lineStyle kind="OUTLINE" colorName="#a41d35ff" thickness="0.5"/>
 		</blockTableStyle>          
 
 		<blockTableStyle id="ITEMS">
@@ -152,8 +162,8 @@
         </section>
 
         </section>
-<!--TABLA DE TOTALES-->       
-        <blockTable colWidths="20mm,20mm,20mm,60mm,20mm,20mm,20mm"  style="TOTAL">
+<!--TABLA DE TOTALES-->
+        <blockTable colWidths="20mm,20mm,20mm,60mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
                 <tr>
                     <td><para style="ITEMSLEFT">F: FACTURA</para></td>
                     <td><para style="ITEMSLEFT">C: N/CRED.</para></td>
