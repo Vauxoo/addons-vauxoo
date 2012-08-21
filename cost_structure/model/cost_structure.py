@@ -118,6 +118,7 @@ class method_price(osv.osv):
     'price_referen':fields.float('Price Reference',digits_compute=dp.get_precision('Cost Structure'),help="Price Reference"),
     'margin_reference':fields.float('Margin',digits_compute=dp.get_precision('Cost Structure'),help="Price Margin"),
     'company_id':fields.many2one('res.company','Company'),
+    'default_cost':fields.boolean('Default Cost to report',help='This field define cost by default to report cost'),
     }
     
     _rec_name = 'unit_price'

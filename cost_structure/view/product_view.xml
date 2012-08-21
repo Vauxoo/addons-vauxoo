@@ -42,6 +42,7 @@
               <field name='margin_reference' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />
               <field name='date_prom_begin' />
               <field name='date_prom_end' />
+              <field name='default_cost' />
             </tree>
             </field>
           </page>

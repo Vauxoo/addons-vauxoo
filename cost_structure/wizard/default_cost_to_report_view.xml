@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+        <record id="default_price_list_form" model="ir.ui.view">
+              <field name="name">Price List update</field>
+              <field name="model">default.price.to.report</field>
+              <field name="type">form</field>
+              <field name="arch" type="xml">
+                <form string="Default price to Report">
+                
+                <field name="list_price" widget="selection" />
+                <field name="sure" />
+                <button icon="gtk-cancel" special="cancel" string="Close"/>
+                <button name="default_price" string="Default Price to Report" type="object" />
+<!--
+                    <separator colspan="4" string="Update List Price"/>
+                    <field name="price_list_id" widget="selection" attrs="{'required':[('all','=',False)]}"/>
+                    <separator colspan="4"/>
+                     <field name="all" />
+                     <field name="sure" />
+                    <group col="2" colspan="4">
+                         <button icon="gtk-cancel" special="cancel" string="Close"/>
+                         <button name="update_price_list" string="Update" type="object" />
+                    </group>                
+-->
+                    </form>
+              </field>
+        </record>
+
+
+
+<!--
+<act_window id="action_product_price_list2"
+            key2="client_print_multi"
+            name="Price List by Sequence"
+            res_model="wizard.price.list.sequence.report"
+            src_model="product.product"
+            view_mode="form" target="new" view_type="form" />
+-->
+
+
+<act_window name="Default price to Report"
+            key2="client_action_multi"
+            res_model="default.price.to.report"
+            src_model="product.product"
+            view_mode="form"
+            view_type="form" 
+            target="new"
+            id="default_price_list_action"/>
+
+<!--
+
+
+ <record id="default_price_list_action" model="ir.actions.act_window">
+            <field name="name">Default price to Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">default.price.to.report</field>
+            <field name="src_model">product.product</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+-->
+        
+
+
+
+
+</data>
+</openerp>
