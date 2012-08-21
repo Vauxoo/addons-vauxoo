@@ -104,12 +104,13 @@ class aging_parser(report_sxw.rml_parse):
                 #~  TODO: SRC
                 
                 #~ N/C
-                refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
-                refund_brws = refund_ids and inv_obj.browse(self.cr,self.uid,refund_ids) or []
-                aml_gen = (refund_brw.move_id.line_id for refund_brw in refund_brws)
+                #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
+                #~ refund_ids = inv_obj.search(self.cr,self.uid,[('parent_id','=',inv_brw.id),('type','=','out_refund'),('state','not in',('draft','cancel')),('move_id','!=',False)])
+                #~ refund_brws = refund_ids and inv_obj.browse(self.cr,self.uid,refund_ids) or []
+                #~ aml_gen = (refund_brw.move_id.line_id for refund_brw in refund_brws)
                 pay_refund_ids = []
-                for aml_brws in aml_gen:
-                    pay_refund_ids += [aml.id for aml in aml_brws if aml.account_id.id == inv_brw.account_id.id]
+                #~ for aml_brws in aml_gen:
+                    #~ pay_refund_ids += [aml.id for aml in aml_brws if aml.account_id.id == inv_brw.account_id.id]
                 
                 #~  TODO: N/D
                 #~  ACUMULACION DE LOS NOPAGOS, OBTENCION DEL PAGO
