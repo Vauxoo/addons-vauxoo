@@ -9,7 +9,6 @@
                 <data>
                     <field name="name" position="before">
                           <field name="available_boolean" invisible="1"/>
-                          <field name="available_bool" invisible="1"/>
                         <field name="upc" />
                     </field>
                 </data>
@@ -50,7 +49,6 @@
                 <data>
                     <field name="ean13" position="after">
                          <field name="available_boolean" invisible="1"/>
-                         <field name="available_bool" invisible="1"/>
                         <field name="upc" />
                     </field>
                 </data>

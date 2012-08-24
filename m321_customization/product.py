@@ -67,21 +67,28 @@ class inherited_product(osv.osv):
         if not len(ids):
             return []      
         res = {}
-        true = [] 
-        false = [] 
-        stock_move_obj = self.pool.get('stock.move')
+        
         for id in self.browse(cr,uid,ids,context=context):
-            res.update({id.id:True})
             if id.virtual_available > 0.0:
-                true.append(id.id)
                 res[id.id]= True
             else:
-                false.append(id.id)
                 res[id.id]= False
-        true and len(true) > 1 and cr.execute('update product_product set available_boolean=True where id in %s'%(tuple(true),))
-        false and len(false) > 1 and cr.execute('update product_product set available_boolean=False where id in %s'%(tuple(false),))
         return res
-                    
+    
+    def _get_stock(self, cr, uid, ids, context):
+        
+        if context is None:
+            context = {}
+        
+        if not len(ids):
+            return []    
+        product = []
+        stock_move_obj = self.pool.get('stock.move')
+        
+        for stock in stock_move_obj.browse(cr,uid,ids,context=context):
+            stock.product_id and product.append(stock.product_id.id )
+        return product 
+
     
     
     def _find_next_ten_multi(self, value):
@@ -128,8 +135,9 @@ class inherited_product(osv.osv):
 
     _columns = {
             'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
-            'available_boolean':fields.boolean('Available Stock'),
-            'available_bool':fields.function(_stock_available, method=True,store=False,type="boolean", string='Available Stock'),
+            'available_boolean':fields.function(_stock_available, method=True,store={
+                                                                                'stock.move':(_get_stock,['product_qty','state'],5),
+                                                                                'product.product':(lambda self, cr, uid, ids, c={}: ids, ['qty_available','virtual_available'],5)},type="boolean", string='Available Stock'),
             'profit_code':fields.char("Code from profit", size=20, help="Code from profit database"),
         }
 
