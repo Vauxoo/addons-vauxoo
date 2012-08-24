@@ -33,8 +33,8 @@ class user_story(osv.osv):
 	_name = 'user.story'
 		
 	_columns = {
-		'name':fields.char('Title', size=64, required=True, readonly=False),
-		'owner':fields.char('Owner', size=64, required=True, readonly=False),
+		'name':fields.char('Title', size=255, required=True, readonly=False),
+		'owner':fields.char('Owner', size=255, required=True, readonly=False),
 		'planned_hours': fields.float('Planned Hours'),
 		'project_id':fields.many2one('project.project', 'Project', required=True),
 		'description':fields.text('Description'),
@@ -57,7 +57,7 @@ class acceptability_criteria(osv.osv):
 	_name = 'acceptability.criteria'
 	
 	_columns = {
-		'name':fields.char('Title', size=64, required=True, readonly=False),
+		'name':fields.char('Title', size=255, required=True, readonly=False),
         'scenario': fields.text('Scenario', required=True),
 		'accep_crit_id':fields.many2one('user.story', 'User Story', required=True),
 
