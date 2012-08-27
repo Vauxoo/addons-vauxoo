@@ -36,8 +36,7 @@
                     """,
     "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [
-                  ],
+    "init_xml" : ['data/data_load.xml'],
     "demo_xml" : [    ],
     "update_xml" : [
     'security/percent_imex_security.xml',

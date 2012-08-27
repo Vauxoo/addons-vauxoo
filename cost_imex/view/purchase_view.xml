@@ -22,7 +22,7 @@
               </group>
               </group>
               <group col="4" colspan="9">
-                <field name="percent_imex_ids" readonly="1" nolabel="1" />
+                <field name="percent_imex_ids" domain="[('percent_lines','!=',False)]" readonly="1" nolabel="1" />
               </group>
            <group>
            <button name="compute_import_taxes" string="Execute" type="object" icon="gtk-print" />
@@ -36,7 +36,7 @@
             <field name="percent_special" />
 </group>
                 <group col="9" colspan="9">
-                <field name="percent_imex_s_ids" nolabel="1">
+                <field name="percent_imex_s_ids" domain="[('percent_lines','=',False)]" nolabel="1">
                 <tree string='Compute Percent' editable="bottom" > 
                 <field name="line_purchase_id" />
                 <field name="cost_unit_total" groups='cost_imex.group_percent_special_tax_manager'/>
