@@ -42,7 +42,7 @@ class user_story(osv.osv):
 		'info': fields.text('Other Info'),
 		'task_ids':fields.many2many('project.task', 'userstory_task_rel', 'userstory_id', 'task_id', 'Task'),
 		'date': fields.date('Date'),
-        'user_id':fields.many2one('res.users', 'Project'),
+        'user_id':fields.many2one('res.users', 'Create User'),
 	}
 	_defaults = {
 		'name': lambda *a: None,
