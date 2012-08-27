@@ -40,6 +40,7 @@ class user_story(osv.osv):
 		'description':fields.text('Description'),
 		'accep_crit_ids':fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
 		'info': fields.text('Other Info'),
+		'asumption': fields.text('Other Info'),
 		'task_ids':fields.many2many('project.task', 'userstory_task_rel', 'userstory_id', 'task_id', 'Task'),
 		'date': fields.date('Date'),
         'user_id':fields.many2one('res.users', 'Create User'),

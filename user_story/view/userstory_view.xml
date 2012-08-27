@@ -12,7 +12,7 @@
           <field name="date" />
           <field name="owner" />
           <field name="project_id" />
-          <field name="planned_hours" />
+          <field name="planned_hours"/>
           <field name="user_id" />
           <notebook colspan="4">
             <page string="Description">
@@ -33,7 +33,9 @@
               </field>
             </page>
             <page string="Other Info">
-              <field name="info" colspan="4" nolabel="1" />
+              <field name="info" colspan="4" nolabel="1" /> 
+              <separator string="Asumptions" colspan='4' />
+              <field name="asumption" colspan="4" nolabel="1" />
             </page>
             <page string="Link">
               <separator string="Tasks" colspan='4' />
@@ -51,7 +53,7 @@
         <tree string="User Story">
           <field name="name" />
           <field name="owner" />
-          <field name="planned_hours" />
+          <field name="planned_hours" sum="Total hours"/>
           <field name="project_id" />
           <field name="user_id" />
         </tree>
