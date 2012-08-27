@@ -14,6 +14,7 @@
 					<field name="owner" />
 					<field name="project_id" />
 					<field name="planned_hours" />
+					<field name="user_id" />
 										
 					<notebook colspan="4">
 						<page string="Description">
@@ -95,7 +96,7 @@
 			parent="project_scrum.menu_scrum" 
 			id="menu_action_user_story" 
 			action="action_user_story"
-            groups="user_story.group_user_story_manager"
+            groups="user_story.group_user_story_manager,user_story.group_user_story_user"
             />
 		
 	</data>

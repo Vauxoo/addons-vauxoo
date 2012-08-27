@@ -42,11 +42,13 @@ class user_story(osv.osv):
 		'info': fields.text('Other Info'),
 		'task_ids':fields.many2many('project.task', 'userstory_task_rel', 'userstory_id', 'task_id', 'Task'),
 		'date': fields.date('Date'),
+        'user_id':fields.many2one('res.users', 'Project'),
 	}
 	_defaults = {
 		'name': lambda *a: None,
 		'date': lambda *a: time.strftime('%Y-%m-%d'),
-	}
+        'user_id': lambda self,cr,uid,ctx: uid,
+    }
 user_story()
 
 class acceptability_criteria(osv.osv):
