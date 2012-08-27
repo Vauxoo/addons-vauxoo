@@ -6,8 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,25 +24,4 @@
 #
 ##############################################################################
 
-{
-    "name" : "l10n_mx_company_cif",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module add image field to company for CIF (RFC)
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "base",
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "wizard/installer.xml",
-        "res_company_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+import installer

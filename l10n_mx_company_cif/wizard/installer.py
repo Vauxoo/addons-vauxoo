@@ -6,8 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,26 +23,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import osv
+from osv import fields
 
-{
-    "name" : "l10n_mx_company_cif",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module add image field to company for CIF (RFC)
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "base",
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "wizard/installer.xml",
-        "res_company_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+class cif_config(osv.osv_memory):
+    _name='cif.config'
+    
+    #~ def execute(self, cr, uid, ids, context=None):
+        #~ company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
+    #~ 
+    #~ def _write_company(self, cr, uid, cif_file,company_id,context=None):
+        #~ self.pool.get('res.company').write(cr, uid, company_id,{
+            #~ 'cif_file': cif_file,
+            #~ },context=context)
+            
+    _columns={
+        'cif_file': fields.binary('CIF',help="Fiscal Identification Card"),
+        #~ 'company_id': fields.many2one('res.company',u'Company',help="Select company to assing vat and/or cif"),
+    }
+
+cif_config()

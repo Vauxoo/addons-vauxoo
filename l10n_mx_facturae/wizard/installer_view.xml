@@ -34,6 +34,9 @@
             </field>
         </record>
 
+<!--
+Configurar Factura Electronica
+-->
     <record id="invoice_elec_config_view" model="ir.ui.view">
         <field name="name">Configure Electronic Invoice</field>
         <field name="model">facturae.config</field>
@@ -48,8 +51,7 @@
             <attribute name="string">Configure your data for Electronic Invoice</attribute>
               </separator>
               <xpath expr="//label[@string='description']" position="attributes">
-                  <attribute name="string">
-Through the following wizard you can configure the data to run and generate electronic invoices in your company according to existing legislation in Mexico.
+                  <attribute name="string">Through the following wizard you can configure the data to run and generate electronic invoices in your company according to existing legislation in Mexico.
                   </attribute>
               </xpath>
             <xpath expr='//separator[@string="vsep"]' position='attributes'>

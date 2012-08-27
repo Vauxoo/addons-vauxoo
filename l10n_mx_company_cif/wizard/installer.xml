@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+    <record id="cif_config_view" model="ir.ui.view">
+        <field name="name">Configure CIF for Electronic Invoice</field>
+        <field name="model">cif.config</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <data>
+                <field name="cif_file" widget='image'/>
+            </data>
+        </field>
+    </record>
+    
+    <record id="action_cif_config_view" model="ir.actions.act_window">
+        <field name="name">Configure CIF for Electronic Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cif.config</field>
+        <field name="view_id" ref="cif_config_view"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    
+    <record id="config_wizard_cif_invoice_electronic" model="ir.actions.todo.category">
+        <field name="name">Configure CIF for Electronic Invoice</field>
+        <field name="sequence">5</field>
+    </record>
+    <record model="ir.actions.todo" id="config_auto_invoice_electronic_cif">
+        <field name="action_id" ref="action_cif_config_view"/>
+        <field name="category_id" ref="config_wizard_cif_invoice_electronic"/>
+        <field name="type">automatic</field>
+    </record>
+    
+  </data>
+</openerp>
