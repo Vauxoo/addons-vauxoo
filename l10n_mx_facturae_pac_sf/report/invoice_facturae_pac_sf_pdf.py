@@ -110,6 +110,7 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         return sequence, approval
     
     def _get_taxes(self):
+        print self.taxes,"******************************"
         return self.taxes
     
     def _get_taxes_ret(self):
@@ -205,9 +206,13 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         invoice_obj = pool.get('account.invoice')
         self.invoice_data_dict = invoice_obj._get_facturae_invoice_xml_data(self.cr, self.uid, [invoice_id], context={'type_data': 'dict'})
         self._set_invoice_sequence_and_approval( invoice_id )
-        #print "self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']",self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']
         try:
-            self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) >0.01 ]
+            #~ print self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'],"++++++++++++"
+            #~ self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) > 0.01 ]
+            
+            for t in invoice_obj.browse(self.cr, self.uid, [invoice_id], context={})[0].tax_line:
+                self.taxes.append({'tasa': t.tax_id.amount, 'impuesto': t.tax_id.name, 'importe': t.amount})
+            
             #self.taxes.extend( self.taxes_ret )
         except Exception, e:
             print "exception: %s"%( e )
