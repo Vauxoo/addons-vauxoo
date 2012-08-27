@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_user_story_user","user.story.user","model_user_story","user_story.group_user_story_user",1,0,0,0
+"access_user_story_manager","user.story.manager","model_user_story","user_story.group_user_story_manager",1,1,1,1
+"access_acceptability_criteria_user","acceptability.criteria.user","model_acceptability_criteria","user_story.group_user_story_user",1,0,0,0
+"access_acceptability_criteria_manager","acceptability.criteria.manager","model_acceptability_criteria","user_story.group_user_story_manager",1,1,1,1
+

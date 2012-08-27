@@ -47,6 +47,8 @@
     ],
     "update_xml" : [
         "report/ir_report.xml",
+        "security/userstory_security.xml",
+        "security/ir.model.access.csv",
         "view/userstory_view.xml",
     ],
     "active": False,
