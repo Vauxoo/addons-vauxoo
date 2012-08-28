@@ -40,13 +40,13 @@ class account_invoice_tax(osv.osv):
         if not context:
             context = {}
         res = {}
+        print self.browse(cr, uid, ids, context=context)[0].tax_id.id
         for invoice_tax in self.browse(cr, uid, ids, context=context):
-            if invoice_tax.tax_id:
-                res[invoice_tax.id]['name2'] = invoice_tax.tax_id.name
+            res[invoice_tax.id] = {}
+            if invoice_tax.tax_id.id:
+                res[invoice_tax.id]['name2'] = (invoice_tax.tax_id.tax_category_id and invoice_tax.tax_id.tax_category_id.name or invoice_tax.tax_id.name).upper()
                 res[invoice_tax.id]['tax_percent'] = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
             else:
-                print "algo anda mallllllllllllllllllllllllllllll"
-                res[invoice_tax.id] = {}
                 tax_name = invoice_tax.name.lower().replace('.','').replace(' ', '').replace('-', '')
                 tax_percent = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
                 if 'iva' in tax_name:

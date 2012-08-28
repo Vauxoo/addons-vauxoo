@@ -110,7 +110,6 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         return sequence, approval
     
     def _get_taxes(self):
-        print self.taxes,"******************************"
         return self.taxes
     
     def _get_taxes_ret(self):
@@ -208,11 +207,15 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         self._set_invoice_sequence_and_approval( invoice_id )
         try:
             #~ print self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'],"++++++++++++"
-            #~ self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) > 0.01 ]
-            
-            for t in invoice_obj.browse(self.cr, self.uid, [invoice_id], context={})[0].tax_line:
-                self.taxes.append({'tasa': t.tax_id.amount, 'impuesto': t.tax_id.name, 'importe': t.amount})
-            
+            if invoice_obj.browse(self.cr, self.uid, [invoice_id], context={})[0].tax_line[0].tax_id:
+                for t in invoice_obj.browse(self.cr, self.uid, [invoice_id], context={})[0].tax_line:
+                    amount=abs(t.tax_id.amount * 100)
+                    if amount==0.0:
+                        amount='0.0'
+                    self.taxes.append({'tasa':amount, 'impuesto': t.tax_id.tax_category_id and t.tax_id.tax_category_id.name or t.name2 or t.tax_id.name, 'importe': abs (t.amount)})
+            else:
+                self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) > 0.01 ]
+
             #self.taxes.extend( self.taxes_ret )
         except Exception, e:
             print "exception: %s"%( e )
