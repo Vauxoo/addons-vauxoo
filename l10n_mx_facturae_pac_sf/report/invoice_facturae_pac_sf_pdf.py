@@ -207,15 +207,7 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         self.invoice_data_dict = invoice_obj._get_facturae_invoice_xml_data(self.cr, self.uid, [invoice_id], context={'type_data': 'dict'})
         self._set_invoice_sequence_and_approval( invoice_id )
         try:
-            if 'tax_id' in invoice_tax._columns:
-                for t in invoice_obj.browse(self.cr, self.uid, [invoice_id], context={})[0].tax_line:
-                    amount=abs(t.tax_id.amount * 100)
-                    if amount==0.0:
-                        amount='0.0'
-                    self.taxes.append({'tasa':amount, 'impuesto': t.tax_id.tax_category_id and t.tax_id.tax_category_id.name or t.name2 or t.tax_id.name, 'importe': abs (t.amount)})
-            else:
-                self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) > 0.01 ]
-
+            self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if (float( traslado['Traslado']['tasa'] ) >= 0.00 and traslado['Traslado']['impuesto']!='IEPS') or (traslado['Traslado']['impuesto']=='IEPS' and float(traslado['Traslado']['tasa']) > 0.01)]
             #self.taxes.extend( self.taxes_ret )
         except Exception, e:
             print "exception: %s"%( e )
@@ -227,6 +219,7 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
             tax_ret_amount = float( retencion['Retencion']['importe'] )
             tasa = tax_ret_amount and amount_untaxed and tax_ret_amount * 100 / amount_untaxed or 0.0
             retencion['Retencion'].update({'tasa':  tasa})
+            print retencion,"reteeeeeee"
             self.taxes_ret.append( retencion['Retencion'] )
         return ""
     

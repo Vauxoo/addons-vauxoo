@@ -105,7 +105,6 @@
     <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P30" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P31" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -290,11 +289,22 @@
           <td>
             <para style="P10">
               <font face="Helvetica" size="6.0">[[ repeatIn( get_taxes(), 'tax' ) ]]</font>
-              <font face="Helvetica">[[ tax['impuesto'] ]] ([[ tax['tasa'] ]]%) $</font>
+              <font face="Helvetica">[[ tax['impuesto'] ]] ([[ round( float( tax['tasa'] ) ) or '0.0' ]]%) $</font>
             </para>
           </td>
           <td>
             <para style="P1">[[ formatLang( float( tax['importe'] ) ) ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P10">
+              <font face="Helvetica" size="6.0">[[ repeatIn( get_taxes_ret(), 'tax_ret' ) ]]</font>
+              <font face="Helvetica">[[ tax_ret['impuesto'] ]] ([[ round( float( tax_ret['tasa'] ),2 ) ]]%) $</font>
+            </para>
+          </td>
+          <td>
+            <para style="P1">[[ formatLang( float( tax_ret['importe'] ) ) ]]</para>
           </td>
         </tr>
         <tr>
