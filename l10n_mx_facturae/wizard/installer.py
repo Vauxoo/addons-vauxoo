@@ -133,6 +133,38 @@ class invoicee_certificate_config(osv.osv_memory):
         wiz_data = self.read(cr, uid, ids[0])
         if wiz_data['certificate_file'] and wiz_data['certificate_key_file'] and wiz_data['certificate_password']:
             self._assign_certificate(cr, uid, ids,company_id,wiz_data['certificate_file'],wiz_data['certificate_key_file'],wiz_data['certificate_password'],context)
+   
+    def action_add_production(self, cr, uid, ids, context=None):
+        production_obj=self.pool.get('mrp.production')
+        product_obj=self.pool.get('product.product')
+        wiz_product=self.browse(cr, uid, ids, context=context)
+        list_orders=[]
+        for products in  wiz_product:
+            for product in products.products_ids:
+                data_product=product_obj.browse(cr, uid, product.id, context=context).uom_id.id
+                if not product.categ_id.location_src_id.id and not products.location_src_id.id: 
+                    raise osv.except_osv(_('Error!'),_("Not set a location of raw material for the product: "+product.name))
+                if not product.categ_id.location_dest_id.id and not products.location_dest_id.id: 
+                    raise osv.except_osv(_('Error!'),_("Not set a location of finished products for the product: "+product.name))
+                location_src = product.categ_id.location_src_id.id or products.location_src_id.id
+                location_dest=product.categ_id.location_dest_id.id or products.location_dest_id.id
+                production_id=production_obj.create(cr, uid, {
+                    'product_id': product.id,
+                    'product_qty': '1.0',
+                    'product_uom': data_product,
+                    'date_planned': products.date_planned ,
+                    'location_src_id':location_src,
+                    'location_dest_id':location_dest,
+                    })
+                list_orders.append(production_id)
+        return {
+                'name': 'Manufacturing Orders',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'mrp.production',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', list_orders)],
+                }
 
     _columns = {
         'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),

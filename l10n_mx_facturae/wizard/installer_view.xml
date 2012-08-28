@@ -124,6 +124,7 @@ Set here the files provided by the SAT to generate data required for electronic 
                 <newline/>
                 <field name="certificate_password" password="True"/>
                 <newline/>
+                <button type="object" string="Add Production" name="action_add_production" icon="gtk-ok"/>
             </group>
           </data>
         </field>
