@@ -203,11 +203,12 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
     def _get_facturae_data_dict(self, invoice_id):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
+        invoice_tax = pool.get('account.invoice.tax')
         self.invoice_data_dict = invoice_obj._get_facturae_invoice_xml_data(self.cr, self.uid, [invoice_id], context={'type_data': 'dict'})
         self._set_invoice_sequence_and_approval( invoice_id )
         try:
-            #~ print self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'],"++++++++++++"
-            if invoice_obj.browse(self.cr, self.uid, [invoice_id], context={})[0].tax_line[0].tax_id:
+            print invoice_tax._columns
+            if 'tax_id' in invoice_tax._columns:
                 for t in invoice_obj.browse(self.cr, self.uid, [invoice_id], context={})[0].tax_line:
                     amount=abs(t.tax_id.amount * 100)
                     if amount==0.0:
