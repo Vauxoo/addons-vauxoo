@@ -40,7 +40,6 @@ class account_invoice_tax(osv.osv):
         if not context:
             context = {}
         res = {}
-        print self.browse(cr, uid, ids, context=context)[0].tax_id.id
         for invoice_tax in self.browse(cr, uid, ids, context=context):
             res[invoice_tax.id] = {}
             if 'tax_id' in self._columns:
