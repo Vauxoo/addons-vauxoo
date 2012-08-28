@@ -41,8 +41,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "wizard/installer.xml",
         "res_company_view.xml",
+        "wizard/installer.xml",
     ],
     "installable" : True,
     "active" : False,

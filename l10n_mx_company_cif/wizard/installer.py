@@ -27,19 +27,22 @@ from osv import osv
 from osv import fields
 
 class cif_config(osv.osv_memory):
-    _name='cif.config'
-    
-    #~ def execute(self, cr, uid, ids, context=None):
-        #~ company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
-    #~ 
-    #~ def _write_company(self, cr, uid, cif_file,company_id,context=None):
-        #~ self.pool.get('res.company').write(cr, uid, company_id,{
-            #~ 'cif_file': cif_file,
-            #~ },context=context)
+    _name = 'cif.config'
+    _inherit = 'res.config'
+        
+    def _write_company(self, cr, uid, cif_file,company_id,context=None):
+        self.pool.get('res.company').write(cr, uid, company_id,{
+            'cif_file': cif_file,
+            },context=context)
+            
+    def execute(self, cr, uid, ids, context=None):
+        company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
+        wiz_data = self.read(cr, uid, ids[0])
+        if wiz_data['cif_file']:
+            self._write_company(cr, uid, wiz_data["cif_file"],company_id,context)
             
     _columns={
         'cif_file': fields.binary('CIF',help="Fiscal Identification Card"),
-        #~ 'company_id': fields.many2one('res.company',u'Company',help="Select company to assing vat and/or cif"),
     }
 
 cif_config()
