@@ -42,6 +42,7 @@
     "update_xml" : [
         "security/l10n_mx_facturae_seq_security.xml",
         "security/ir.model.access.csv",
+        "wizard/installer.xml",
         "ir_sequence_view.xml",
     ],
     "installable" : True,

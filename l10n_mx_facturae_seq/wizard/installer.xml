@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+         <record id="secuence_form_config_action" model="ir.actions.act_window">
+            <field name="name">Configure Secuences to Electronic Invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.sequence</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ir_sequence_form_inh_l10n_mx_facturae"/>
+            <field name="help">Configure yours certificates for Electronic Invoice.</field>
+        </record>
+        
+         <!--      register configuration wizard -->
+        <record id="config_wizard_certificates_installer" model="ir.actions.todo">
+            <field name="action_id" ref="secuence_form_config_action"/>
+            <field name="category_id" ref="base.category_sales_management_config"/>
+            <field name="sequence">20</field>
+        </record>
+  </data>
+</openerp>
