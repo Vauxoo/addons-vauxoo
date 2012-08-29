@@ -219,7 +219,6 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
             tax_ret_amount = float( retencion['Retencion']['importe'] )
             tasa = tax_ret_amount and amount_untaxed and tax_ret_amount * 100 / amount_untaxed or 0.0
             retencion['Retencion'].update({'tasa':  tasa})
-            print retencion,"reteeeeeee"
             self.taxes_ret.append( retencion['Retencion'] )
         return ""
     
