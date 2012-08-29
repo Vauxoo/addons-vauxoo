@@ -8,6 +8,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Aprobaciones">
+                    <field name="sequence_id"/>
                     <field name="approval_number"/>
                     <field name="serie"/>
                     <field name="approval_year"/>
@@ -24,6 +25,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Aprobaciones">
+                    <field name="sequence_id"/>
                     <field name="approval_number"/>
                     <field name="serie"/>
                     <field name="approval_year"/>
@@ -60,6 +62,8 @@
                     <newline/>
                     <group expand="0" string="Group By...">
                         <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+                        <filter string="Sequence" icon="terp-partner" domain="[]" context="{'group_by':'sequence_id'}"/>
+                        <filter string="Serie" icon="terp-partner" domain="[]" context="{'group_by':'serie'}"/>
                         <separator orientation="vertical"/>
                     </group>
                 </search>
