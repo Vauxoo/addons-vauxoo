@@ -47,129 +47,15 @@ class facturae_config(osv.osv_memory):
                 'vat': vat,
             },context=context)
 
-    def _write_company(self, cr, uid, cif_file,company_id,context=None):
-        self.pool.get('res.company').write(cr, uid, company_id,{
-            'cif_file': cif_file,
-            },context=context)
-
-    def _create_sequence(self,cr,uid,ids,context=None):
-        for seq in self.pool.get('sequence.approval.config').browse(cr,uid,ids,context=context):
-            seq_app = {
-                'approval_number': seq.approval_number,
-                'serie': seq.serie,
-                'approval_year': seq.approval_year,
-                'number_start': seq.number_start,
-                'number_end': seq.number_end,
-            }
-            self.pool.get('ir.sequence').write(cr,uid,seq.journal_id.sequence_id.id,{
-                'prefix':seq.serie,
-                'approval_ids':[(0,0, seq_app)],
-                'journal_id': seq.journal_id.id,
-            },context=context)
-
     def execute(self, cr, uid, ids, context=None):
         company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
         wiz_data = self.read(cr, uid, ids[0])
         if wiz_data['vat']:
             self._assign_vat(cr, uid, wiz_data["vat"],company_id,context)
-        if wiz_data['cif_file']:
-            self._write_company(cr, uid, wiz_data["cif_file"],company_id,context)
-        if wiz_data['sequences_app']:
-            self._create_sequence(cr, uid, wiz_data['sequences_app'],context)
-
+            
     _columns = {
-        'cif_file': fields.binary('CIF',help="Fiscal Identification Card"),
         'vat': fields.char('VAT', 64, help='Federal Register of Causes'),
         'company_id': fields.many2one('res.company',u'Company',help="Select company to assing vat and/or cif"),
-        'sequences_app': fields.one2many('sequence.approval.config', 'sequence_app_id', 'Sequences for Company assigned for SAT'),
     }
 
 facturae_config()
-
-class sequence_detail(osv.osv_memory):
-    _name = 'sequence.approval.config'
-    _columns = {
-        'approval_number': fields.char(u'No. Appv', size=64,help="Approval Number, which the authority designates a range of pages requested."),
-        'serie': fields.char(u'Serie', size=12,),
-        'approval_year': fields.char(u'Year of Approbal', size=32,help="Year that were approved series"),
-        'number_start': fields.integer(u'From'),
-        'number_end': fields.integer(u'To'),
-        'journal_id': fields.many2one('account.journal',u'Journal',help="Journal to define the sequence approved for the SAT"),
-        'sequence_app_id': fields.many2one("facturae.config", "Sequences"),
-    }
-sequence_detail()
-
-class invoicee_certificate_config(osv.osv_memory):
-    _name = 'invoicee.certificate.config'
-    _inherit = 'res.config'
-
-    def default_get(self, cr, uid, fields_list=None, context=None):
-        defaults = super(invoicee_certificate_config, self).default_get(cr, uid, fields_list=fields_list, context=context)
-        logo = open(addons.get_module_resource('l10n_mx_facturae', 'images', 'charro.jpg'), 'rb')
-        defaults['config_logo'] = base64.encodestring(logo.read())
-        return defaults
-
-    def _assign_certificate(self,cr,uid,ids,company_id,cert_file,cert_key,cert_pass,context=None):
-        facte_cert = self.pool.get('res.company.facturae.certificate')
-        data_facte = facte_cert.onchange_certificate_info(cr, uid, ids, cert_file, cert_key, cert_pass, context=context)
-    
-        if data_facte['warning']:
-            osv.osv_except(data['warning']['title'], data['warning']['message'] )
-        else:
-            facte_cert.create(cr,uid,{
-                'certificate_file':cert_file,
-                'certificate_key_file':cert_key,
-                'certificate_password':cert_pass,
-                'date_end':data_facte['value']['date_end'],
-                'date_start':data_facte['value']['date_start'],
-                'certificate_file_pem':data_facte['value']['certificate_file_pem'],
-                'certificate_key_file_pem':data_facte['value']['certificate_key_file_pem'],
-                'serial_number':data_facte['value']['serial_number'],
-                'company_id':company_id,
-            },context)
-        
-    def execute(self, cr, uid, ids, context=None):
-        company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
-        wiz_data = self.read(cr, uid, ids[0])
-        if wiz_data['certificate_file'] and wiz_data['certificate_key_file'] and wiz_data['certificate_password']:
-            self._assign_certificate(cr, uid, ids,company_id,wiz_data['certificate_file'],wiz_data['certificate_key_file'],wiz_data['certificate_password'],context)
-   
-    def action_add_production(self, cr, uid, ids, context=None):
-        production_obj=self.pool.get('mrp.production')
-        product_obj=self.pool.get('product.product')
-        wiz_product=self.browse(cr, uid, ids, context=context)
-        list_orders=[]
-        for products in  wiz_product:
-            for product in products.products_ids:
-                data_product=product_obj.browse(cr, uid, product.id, context=context).uom_id.id
-                if not product.categ_id.location_src_id.id and not products.location_src_id.id: 
-                    raise osv.except_osv(_('Error!'),_("Not set a location of raw material for the product: "+product.name))
-                if not product.categ_id.location_dest_id.id and not products.location_dest_id.id: 
-                    raise osv.except_osv(_('Error!'),_("Not set a location of finished products for the product: "+product.name))
-                location_src = product.categ_id.location_src_id.id or products.location_src_id.id
-                location_dest=product.categ_id.location_dest_id.id or products.location_dest_id.id
-                production_id=production_obj.create(cr, uid, {
-                    'product_id': product.id,
-                    'product_qty': '1.0',
-                    'product_uom': data_product,
-                    'date_planned': products.date_planned ,
-                    'location_src_id':location_src,
-                    'location_dest_id':location_dest,
-                    })
-                list_orders.append(production_id)
-        return {
-                'name': 'Manufacturing Orders',
-                'view_type': 'form',
-                'view_mode': 'tree,form',
-                'res_model': 'mrp.production',
-                'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', list_orders)],
-                }
-
-    _columns = {
-        'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
-        'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
-        'certificate_password': fields.char('Certificate Password', size=64, invisible=False, required=True),
-    }
-    
-invoicee_certificate_config()
