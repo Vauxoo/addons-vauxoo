@@ -7,8 +7,8 @@
             <field name="res_model">ir.sequence</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="ir_sequence_form_inh_l10n_mx_facturae"/>
-            <field name="help">Configure yours certificates for Electronic Invoice.</field>
+            <field name="view_id" ref="base.sequence_view"/>
+            <field name="help">Configure yours Secuences for Electronic Invoice.</field>
         </record>
         
          <!--      register configuration wizard -->
