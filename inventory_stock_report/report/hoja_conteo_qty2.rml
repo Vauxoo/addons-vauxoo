@@ -232,10 +232,10 @@
             <para style="P12">[[s and s.uom_id.name or '-']]</para>
           </td>
           <td>
-            <para style="P12">[[ get_qty_available(s)[0] ]]</para>
+            <para style="P12">[[ get_qty_available(s)[0] or get_stock_mayor_cero(o) and removeParentNode('blockTable') or '0.0'  ]]</para> 
           </td>
           <td>
-            <para style="P12">[[ get_qty_available(s)[1] ]]</para>
+            <para style="P12">[[ get_qty_available(s)[1] or '0.0' ]]</para>
           </td>
         </tr>
       </blockTable>

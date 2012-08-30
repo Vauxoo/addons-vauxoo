@@ -55,6 +55,7 @@ class stock_total(osv.osv_memory):
         'vendible': fields.boolean("Vendible")                                  ,
         'comprable': fields.boolean("Comprable")                                ,
         'alquilable': fields.boolean("Alquilable")                              ,
+        'stockmayorcero': fields.boolean("Stock Mayor a Cero")                  ,
     }
 
 stock_total()

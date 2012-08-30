@@ -13,6 +13,7 @@
                             <field name="categoria"  widget="selection"/>
 		                    <field name="estado" />
 		                    <field name="suministro" />
+		                    <field name="stockmayorcero" />
                       </group>
                       <group string="Destinado a ser" colspan="3" col="5">
 					   

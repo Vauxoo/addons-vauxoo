@@ -43,6 +43,7 @@ class rep_conteo_stock2(report_sxw.rml_parse):
             'get_destinado':self.get_destinado          ,
             'get_suministro':self.get_suministro        ,
             'get_qty_available':self.get_qty_available  ,
+            'get_stock_mayor_cero':self.get_stock_mayor_cero  ,
             'get_code':self.get_code                    ,
         })
 
@@ -77,6 +78,9 @@ class rep_conteo_stock2(report_sxw.rml_parse):
         else:
             cabeza.append("Todas los Estados")
         return cabeza
+
+    def get_stock_mayor_cero(self, stock=None):
+        return stock.stockmayorcero
     
     def get_destinado(self, stock=None):
         product= self.pool.get('product.template')
