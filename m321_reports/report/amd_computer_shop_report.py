@@ -47,7 +47,7 @@ class m321_cs_report(report_sxw.rml_parse):
         if aux == 1:
             return res[1]
         if aux == 2:
-            return res[2]
+            return res[2][0:4]
             
     def _get_wh(self,obj):
         wh_ids = obj.tax_line
@@ -65,3 +65,4 @@ report_sxw.report_sxw(
   # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
   # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
   #   pero podria ser cualquier modulo.
+  # 3 report."modulo"."clase"

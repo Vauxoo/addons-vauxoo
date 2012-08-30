@@ -35,6 +35,7 @@ class cm321_report(report_sxw.rml_parse):
         super(cm321_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
         'get_discount': self._get_discount,
+        'get_date': self._get_date,
         'get_wh': self._get_wh,
         })
         
@@ -82,6 +83,17 @@ class cm321_report(report_sxw.rml_parse):
                     else:
                         return aux2
         return aux2
+    
+    def _get_date(self,obj,aux):
+        aux2= obj.date_invoice
+        DMY=str(aux2)
+        res= DMY.split('/')
+        if aux == 0:
+            return res[0]
+        if aux == 1:
+            return res[1]
+        if aux == 2:
+            return res[2][0:4]
 
     def _get_wh(self,obj):
         wh_ids = obj.tax_line

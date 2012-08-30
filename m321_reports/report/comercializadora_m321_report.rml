@@ -15,8 +15,8 @@
                             <para style="DERECHA"> [[ (o.type=='out_invoice' and o.parent_id and ('FACT. ORIGEN.: %s'%(o.parent_id.number)) or removeParentNode('para'))]]</para>
                             <para style="DERECHA">[[(o.type=='out_invoice' and (not o.parent_id) or removeParentNode('para')) and (o.number and 'FACTURA No. %s'%(o.number) or ' ') or removeParentNode('para') ]]</para>
                             <para style="DERECHA_P">[[o.type=='out_invoice' and format((o.payment_term and ('CONDICION DE PAGO: %s'%(o.payment_term.name))) or 'CONDICION DE PAGO:CONTADO') ]]</para>
-                            <para style="DERECHA_P">FECHA DE EMISION: [[ o.date_invoice and formatLang(o.date_invoice,date=True) or '' ]]</para>
-                            <para style="DERECHA_P">FECHA DE VENCIMIENTO: [[ o.date_due and formatLang(o.date_due,date=True) or '' ]]</para>
+                            <para style="DERECHA_P">FECHA DE EMISION: [[ get_date(o,0) ]]/[[ get_date(o,1) ]]/[[ get_date(o,2) ]]</para>
+                            <para style="DERECHA_P">FECHA DE VENCIMIENTO: [[ get_date(o,0) ]]/[[ get_date(o,1) ]]/[[ get_date(o,2) ]]</para>
                         </td>
                     </tr>
                 </blockTable>
@@ -70,8 +70,8 @@
                       <td><para style="CUADRO_DERE">0.00</para></td>
                     </tr>
                     <tr>
-                      <td><para style="CUADRO_IZQ">Total:</para></td>
-                      <td><para style="CUADRO_DERE">[[ formatLang(o.amount_total,digits=2)]]</para></td>
+                      <td><para style="CUADRO_IZQ_BOLD">Total:</para></td>
+                      <td><para style="CUADRO_DERE_BOLD">[[ formatLang(o.amount_total,digits=2)]]</para></td>
                     </tr>
 
                 </blockTable>
@@ -170,8 +170,10 @@
     <paraStyle name="CHEQUES_BOLD" alignment="CENTER" fontName="Courier-Bold" fontSize="10.0" leading="9" spaceBefore="0" textColor="black"/>
     <paraStyle name="IZQUIERDA" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="8" textColor="black"/>
     <paraStyle name="CUADRO_DERE" alignment="RIGHT" fontName="Courier" fontSize="8.0" leading="7.0" textColor="black"/>
+    <paraStyle name="CUADRO_DERE_BOLD" alignment="RIGHT" fontName="Courier-Bold" fontSize="8.0" leading="7.0" textColor="black"/>
     <paraStyle name="CHEQUES" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="10.0" textColor="black"/>
     <paraStyle name="CUADRO_IZQ" alignment="LEFT" fontName="Courier" fontSize="8.0" leading="7.0" textColor="black"/>
+    <paraStyle name="CUADRO_IZQ_BOLD" alignment="LEFT" fontName="Courier-Bold" fontSize="8.0" leading="7.0" textColor="black"/>
     <paraStyle name="CUSTOMER" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="11.0" spaceBefore="2" textColor="black"/>
     <paraStyle name="PAGO" alignment="LEFT" fontName="Courier" fontSize="10.0" leading="11.0" spaceBefore="2" textColor="black"/>
     <paraStyle name="CENTRO" alignment="CENTER" fontName="Courier" fontSize="8.0" leading="9" spaceBefore="0" textColor="black"/>
