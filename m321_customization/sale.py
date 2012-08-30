@@ -67,7 +67,7 @@ class inherited_sale_order(osv.osv):
                 raise osv.except_osv(_('Error'), _('The quantity in the line of the product %s is minor that quantity available '%line.product_id.name))
             
             elif virtual > real and line.product_uom_qty > real and line.product_uom_qty < virtual and not line.check_confirm:
-                raise osv.except_osv(_('Error'), _('The amount you want to sell is not available in the real stock, but if a shipment next, if you want to make this sale select Stock future sales line'))
+                raise osv.except_osv(_('Error'), _('The amount you want to sell is not available in the real stock of product %s, but if a shipment next, if you want to make this sale select Stock future sales line'%line.product_id.name))
                 
         return True
     
