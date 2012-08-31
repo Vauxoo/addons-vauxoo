@@ -90,6 +90,44 @@ class inherited_product(osv.osv):
         return product 
 
     
+    def _get_sale(self, cr, uid, ids, context):
+        
+        if context is None:
+            context = {}
+        
+        if not len(ids):
+            return []    
+        product = []
+                
+        for sale in self.pool.get('sale.order').browse(cr,uid,ids,context=context):
+            for line in sale.order_line:
+                sale.product_id and product.append(sale.product_id.id )
+        return product 
+
+    
+    def _get_purchase(self, cr, uid, ids, context):
+        
+        if context is None:
+            context = {}
+        
+        if not len(ids):
+            return []    
+        product = []
+                
+        for purchase in self.pool.get('purchase.order').browse(cr,uid,ids,context=context):
+            for line in purchase.order_line:
+                purchase.product_id and product.append(purchase.product_id.id )
+        return product 
+
+    def _search_virtual_available(self, cr, uid, obj, name, args, context):
+        product_ids = self.search(cr,uid,[],context=context)
+        product_ids = product_ids and [i.id for i in self.browse(cr,uid,product_ids,context=context) if i .virtual_available > 0]
+        if product_ids:
+            return [('id','in',product_ids)]
+        else:
+            return [('id', '=', '0')]
+
+    
     
     def _find_next_ten_multi(self, value):
         while (value % 10 != 0):
@@ -135,9 +173,7 @@ class inherited_product(osv.osv):
 
     _columns = {
             'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
-            'available_boolean':fields.function(_stock_available, method=True,store={
-                                                                                'stock.move':(_get_stock,['product_qty','state'],5),
-                                                                                'product.product':(lambda self, cr, uid, ids, c={}: ids, ['qty_available','virtual_available'],5)},type="boolean", string='Available Stock'),
+            'available_boolean':fields.function(_stock_available,type='boolean', method=True,fnct_search=_search_virtual_available),
             'profit_code':fields.char("Code from profit", size=20, help="Code from profit database"),
         }
 
