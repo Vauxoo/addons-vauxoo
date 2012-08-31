@@ -108,7 +108,7 @@ class method_price(osv.osv):
     'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
     'reference_cost_structure_id':fields.many2one('cost.structure','Cost Structure2'),
     'sequence':fields.integer('Sequence',help="Sequence that determines the type of sales price, dependediendo customer type (Type 1, Type 2 ...)"),
-    'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Cost Structure'),help="Price Unit to sale"),
+    'unit_price':fields.float('Price Unit',digits_compute=dp.get_precision('Sale Price'),help="Price Unit to sale"),
     'date':fields.date('Creation date'),
     'date_prom_begin':fields.date('Date Prom',help="Compute Date Prom"),
     'date_prom_end':fields.date('Date End',help="Compute Date Prom with end"),
