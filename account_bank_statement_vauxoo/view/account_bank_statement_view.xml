@@ -82,6 +82,33 @@
                 </tree>
             </field>
         </record>
+        
+         <record id="view_bank_statement_lines_search" model="ir.ui.view">
+          <field name="name">view.bank.statement.line.search</field>
+          <field name="model">bank.statement.imported.lines</field>
+          <field name="type">search</field>
+          <field name="arch" type="xml">
+            <search string="Bank Statements Lines">
+                <filter string='Partner' icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'partnercounterpart_id'}"/>
+                       <separator orientation="vertical"/>
+                       <filter string='Account' icon="terp-mrp" domain="[]" context="{'group_by':'counterpart_id'}" />
+                       <separator orientation="vertical"/>
+                       <filter string='Office' icon="call-start" domain="[]" context="{'group_by':'office'}" />
+                       <separator orientation="vertical"/>
+                       <filter string='Date' icon="terp-accessories-archiver" domain="[]" context="{'group_by':'date'}" />
+                   <field name="partnercounterpart_id" string="Partner" />
+                   <field name="counterpart_id" string="Account"/>
+                   <field name="office" string="Office" />
+                   <field name="numdocument" string="N Document" />
+                   <field name="name" string="Name" />
+                  
+                </search>
+          </field>
+        </record>
+        
+        
+        
+        
         <record id="view_bank_statement_form_add_fields" model="ir.ui.view">
           <field name="name">view.bank.statement.form.add.fields</field>
           <field name="model">account.bank.statement</field>
@@ -152,5 +179,18 @@
             </data>
           </field>
         </record>
+
+<record id="bank_statement_imported_lines_action" model="ir.actions.act_window">
+            <field name="name">Bank Statements Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bank.statement.imported.lines</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+<menuitem name="Bank Statements Lines" action="bank_statement_imported_lines_action" id="menu_bank_imported_statement_line" parent="account.menu_finance_bank_and_cash" sequence="8" />
+
+
     </data>
 </openerp>
+
