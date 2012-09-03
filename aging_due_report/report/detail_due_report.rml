@@ -81,7 +81,7 @@
     <section>
     <para>[[repeatIn(get_invoice_by_partner(objects),'o')]]</para>
     <para>[[ setLang(o.lang) ]]</para>
-        <blockTable colWidths="20mm,100mm,80mm,60mm" style="TERMSTABLEGREY">
+        <blockTable colWidths="35mm,97mm,80mm,60mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSLEFT">[['%s-%s-%s'%(o.get('rp_brw').vat[2],o.get('rp_brw').vat[3:-1],o.get('rp_brw').vat[-1])]]</para></td>
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').name]]</para></td>
@@ -89,7 +89,7 @@
                 <td><para style="ITEMSLEFT">[[o.get('rp_brw').user_id.name]]</para></td>
             </tr>
         </blockTable>
-        <blockTable colWidths="20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
+        <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
                 <td><para style="ITEMSTITLELEFT">FACTURA</para></td>
                 <td><para style="ITEMSTITLELEFT">F/EMISION</para></td>
@@ -125,7 +125,7 @@
             </tr>
         </blockTable>
 <!--TABLA DE TOTALES-->       
-        <blockTable colWidths="120mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
+        <blockTable colWidths="132mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
                 <tr>
                     <td><para style="ITEMSRIGHT">TOTAL</para></td>
                     <td><para style="ITEMSRIGHT">[[ formatLang(o.get('inv_total')) or '0.00']]</para></td>
@@ -141,13 +141,13 @@
     </section>
     <section>
         <para>[[repeatIn(get_total_by_comercial(objects),'p')]]</para>
-        <blockTable colWidths="240mm,20mm" style="TERMSTABLEGREY">
+        <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
             <tr noRowsplits="1">
                 <td><para style="ITEMSRIGHT">TOTAL ESTE REPORTE</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(p['total']) or '0.00']]</para></td>
             </tr>
         </blockTable>
-        <blockTable colWidths="240mm,20mm" style="TERMSTABLEGREY">
+        <blockTable colWidths="252mm,20mm" style="TERMSTABLEGREY">
             <tr>
                 <td><para style="ITEMSRIGHT">[[repeatIn(p.get('vendor'),'vnd')]][[ vnd.get('usr_brw') and vnd.get('usr_brw').name or 'SIN ASESOR' ]]</para></td>
                 <td><para style="ITEMSRIGHT">[[ formatLang(vnd.get('total')) or '0.00' ]]</para></td>

@@ -106,7 +106,7 @@
 <!--
         TABLA DE CABECERA
 -->
-        <blockTable colWidths="20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
+        <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="TERMS">
             <tr noRowsplits="1">
                 <td><para style="ITEMSTITLELEFT">DOCUMENTO</para></td>
                 <td><para style="ITEMSTITLELEFT">F/EMISION</para></td>
@@ -125,10 +125,10 @@
         <section>
             
         <para>[[repeatIn(o['inv_ids'],'inv')]]</para>
-        <blockTable colWidths="20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="ITEMSTITLETABLE">
+        <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="ITEMSTITLETABLE">
             <tr>
                 <td>
-                    <para style="ITEMSLEFT">F: [[ int(inv['inv_brw'].number or 0)]]</para>
+                    <para style="ITEMSLEFT">F: [[ inv['inv_brw'].number or 0]]</para>
                 </td>
                 <td><para style="ITEMSLEFT">[[ formatLang(inv['inv_brw'].date_invoice,date=True) ]]</para></td>
                 <td><para style="ITEMSLEFT">[[ formatLang(inv['inv_brw'].date_due,date=True) ]]</para></td>
@@ -146,7 +146,7 @@
         <section>
 
         <para>[[repeatIn(inv['refund_brws'],'ref_brw')]]</para>
-        <blockTable colWidths="20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="ITEMSTITLETABLE">
+        <blockTable colWidths="35mm,20mm,20mm,17mm,20mm,20mm,20mm,20mm,20mm" repeatRows="1" style="ITEMSTITLETABLE">
             <tr>
                 <td><para style="ITEMSLIGHTLEFT">C: [[ int(ref_brw.number or 0) ]]</para></td>
                 <td><para style="ITEMSLIGHTLEFT">[[ formatLang(ref_brw.date_invoice,date=True) ]]</para></td>
@@ -163,7 +163,7 @@
 
         </section>
 <!--TABLA DE TOTALES-->
-        <blockTable colWidths="20mm,20mm,20mm,60mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
+        <blockTable colWidths="35mm,20mm,20mm,57mm,20mm,20mm,20mm"  style="TERMSTABLEGREY">
                 <tr>
                     <td><para style="ITEMSLEFT">F: FACTURA</para></td>
                     <td><para style="ITEMSLEFT">C: N/CRED.</para></td>
