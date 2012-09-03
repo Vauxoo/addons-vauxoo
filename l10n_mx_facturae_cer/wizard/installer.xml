@@ -4,11 +4,10 @@
          <record id="certificates_form_config_action" model="ir.actions.act_window">
             <field name="name">Configure Certificates to Electronic Invoice</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">res.company</field>
+            <field name="res_model">res.company.facturae.certificate</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="base.view_company_form"/>
-            <field name="context">{'res_id': user.company_id.id}</field>
+            <field name="view_id" ref="view_res_company_facturae_certificate_form"/>
             <field name="help">Configure yours certificates for Electronic Invoice.</field>
         </record>
         

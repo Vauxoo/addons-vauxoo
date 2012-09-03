@@ -61,6 +61,7 @@ class res_company_facturae_certificate(osv.osv):
         'active': lambda *a: True,
         #'fname_xslt': lambda *a: os.path.join('addons', 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt'),
         'date_start': lambda *a: time.strftime('%Y-%m-%d'),
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'res.company.facturae.certificate', context=c),
     }
     
     def get_certificate_info(self, cr, uid, ids, context=None):
