@@ -15,6 +15,7 @@
           <field name='margin_reference' />
           <field name='date_prom_begin' />
           <field name='date_prom_end' />
+          <field name='default_cost' />
         </form>
       </field>
     </record>
@@ -32,6 +33,7 @@
           <field name='margin_reference' />
           <field name='date_prom_begin' />
           <field name='date_prom_end' />
+          <field name='default_cost' />
         </tree>
       </field>
     </record>
@@ -80,6 +82,7 @@
                 <field name='min_margin' />
                 <field name='date_prom_begin' />
                 <field name='date_prom_end' />
+                <field name='default_cost' />
               </tree>
             </field>
           </group>

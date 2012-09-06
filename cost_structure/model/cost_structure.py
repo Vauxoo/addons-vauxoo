@@ -103,6 +103,7 @@ class method_price(osv.osv):
             res.append((r.id, name))
         return res
 
+
     _name = 'method.price'
     _columns = {
     'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
@@ -130,7 +131,6 @@ class method_price(osv.osv):
     _order='sequence'
     
     
-    
     def onchange_marginprice(self,cr,uid,ids,unit_price,margin_reference,cost_structure_id,context=None):
         '''
         Compute margin of gain to cost return price or percent gain
@@ -145,4 +145,5 @@ class method_price(osv.osv):
             unit_price and cost_brw.cost_ult and res['value'].update({'margin_reference':((unit_price - cost_brw.cost_ult)/cost_brw.cost_ult)*100})
         return res
         
+
 method_price()

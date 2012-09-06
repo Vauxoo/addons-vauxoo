@@ -50,8 +50,22 @@ class product_product(osv.osv):
                 res[product.id] = True
         
         return res
-        
-    
+    def _check_default_cost(self,cr,uid,ids,context=None):
+        '''
+        Ochange to verified one price default by product
+        '''
+        if context is None:
+            context = {}
+        i = 0
+        for product in self.browse(cr,uid,ids,context=context):
+            for price in product.method_cost_ids:
+                print 'pricedefault',price.default_cost
+                if price.default_cost:
+                    i+=1
+                if i >1:
+                    return False
+        return True
+
     _columns = {
     'property_cost_structure': fields.property(
     'cost.structure',
@@ -83,7 +97,7 @@ class product_product(osv.osv):
     'status_bool':fields.function(_structure_cost_status, method=True,type="boolean",store=True, string='Status Price'),
     }
     
-    
+    _constraints =  [(_check_default_cost, 'ERROR, The product can only a default price', ['default_cost'])]    
     
     def write(self,cr,uid,ids,vals,context=None):
         '''
