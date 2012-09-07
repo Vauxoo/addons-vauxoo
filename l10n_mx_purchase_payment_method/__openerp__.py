@@ -27,7 +27,7 @@
     'name': 'Purchase Management',
     "version" : "1.1",
     'author': 'OpenERP SA',
-    'depends': ['l10n_mx_facturae_22_payment_method','purchase'],
+    'depends': ['l10n_mx_facturae_22_payment_method','purchase','l10n_mx_facturae_22'],
     'description': """
 This module add in purchase view fieds to bank
     """,
