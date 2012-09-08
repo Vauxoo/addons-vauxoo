@@ -23,7 +23,6 @@
 import time
 from tools.translate import _
 from osv import fields, osv
-import pooler
 
 class mrp_bom(osv.osv):
     _inherit = 'mrp.bom'
