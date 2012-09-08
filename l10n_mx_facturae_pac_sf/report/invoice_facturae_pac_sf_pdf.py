@@ -78,7 +78,7 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
             print "exception: %s"%( e )
             pass
         try:
-            self._get_facturae_data_dict(o.id)
+            self._get_facturae_data_dict(o)
         except Exception, e:
             print "exception: %s"%( e )
             pass
@@ -200,6 +200,12 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
         #print "self.invoice_data_dict",self.invoice_data_dict
         return self.invoice_data_dict
     
+    def _get_facturae_data_dict(self, invoice):
+        self._set_invoice_sequence_and_approval( invoice.id )
+        self.taxes = [tax for tax in invoice.tax_line if tax.tax_percent >= 0.0]
+        self.taxes_ret = [tax for tax in invoice.tax_line if tax.tax_percent < 0.0]
+        return ""
+    """
     def _get_facturae_data_dict(self, invoice_id):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
@@ -221,7 +227,7 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
             retencion['Retencion'].update({'tasa':  tasa})
             self.taxes_ret.append( retencion['Retencion'] )
         return ""
-    
+    """
 report_sxw.report_sxw(
     'report.account.invoice.facturae.pac.sf.pdf',
     'account.invoice',
