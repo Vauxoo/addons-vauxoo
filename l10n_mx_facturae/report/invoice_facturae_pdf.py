@@ -206,8 +206,8 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
     def _get_facturae_data_dict(self, invoice):
         self._set_invoice_sequence_and_approval( invoice.id )
         #invoice_obj = pool.get('account.invoice')
-        self.taxes = [tax for tax in invoice.tax_line if tax.tax_percent > 0.01]
-        self.taxes_ret = [tax for tax in invoice.tax_line if tax.tax_percent <= 0.01]
+        self.taxes = [tax for tax in invoice.tax_line if tax.tax_percent >= 0.0]
+        self.taxes_ret = [tax for tax in invoice.tax_line if tax.tax_percent < 0.0]
         return ""
         """
         pool = pooler.get_pool(self.cr.dbname)

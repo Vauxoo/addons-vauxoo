@@ -203,11 +203,11 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
     def _get_facturae_data_dict(self, invoice_id):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
+        invoice_tax = pool.get('account.invoice.tax')
         self.invoice_data_dict = invoice_obj._get_facturae_invoice_xml_data(self.cr, self.uid, [invoice_id], context={'type_data': 'dict'})
         self._set_invoice_sequence_and_approval( invoice_id )
-        #print "self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']",self.invoice_data_dict['Comprobante']['Impuestos']['Traslados']
         try:
-            self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if float( traslado['Traslado']['tasa'] ) >0.01 ]
+            self.taxes = [ traslado['Traslado'] for traslado in self.invoice_data_dict['Comprobante']['Impuestos']['Traslados'] if (float( traslado['Traslado']['tasa'] ) >= 0.00 and traslado['Traslado']['impuesto']!='IEPS') or (traslado['Traslado']['impuesto']=='IEPS' and float(traslado['Traslado']['tasa']) > 0.01)]
             #self.taxes.extend( self.taxes_ret )
         except Exception, e:
             print "exception: %s"%( e )
