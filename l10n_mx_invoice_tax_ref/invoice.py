@@ -42,23 +42,21 @@ class account_invoice_tax(osv.osv):
         res = {}
         for invoice_tax in self.browse(cr, uid, ids, context=context):
             res[invoice_tax.id] = {}
-            if 'tax_id' in self._columns:
-                res[invoice_tax.id]['name2'] = (invoice_tax.tax_id.tax_category_id and invoice_tax.tax_id.tax_category_id.name or invoice_tax.tax_id.name).upper()
-                res[invoice_tax.id]['tax_percent'] = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
-            else:
-                tax_name = invoice_tax.name.lower().replace('.','').replace(' ', '').replace('-', '')
-                tax_percent = invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0
-                if 'iva' in tax_name:
-                    tax_name = 'IVA'
-                    if tax_percent > 0:
-                        tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
-                elif 'isr' in tax_name:
-                    tax_name = 'ISR'
-                elif 'ieps' in tax_name:
-                    tax_name = 'IEPS'
-                res[invoice_tax.id]['name2'] = tax_name
-                res[invoice_tax.id]['tax_percent'] = tax_percent
-                #res[invoice_tax.id]['amount'] = invoice_tax.amount
+            tax = 'tax_id' in self._columns and invoice_tax.tax_id or False#If patch apply and module account_invoice_tax install
+            tax_name = (tax and tax.tax_category_id and tax.tax_category_id.code or invoice_tax.name).upper().replace('.','').replace(' ', '').replace('-', '')
+            tax_percent = (tax and tax.amount*100.0 or False)#validate? type='percent'
+            tax_percent = tax_percent or ( invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0 )
+            if 'IVA' in tax_name:
+                tax_name = 'IVA'
+                if not tax and tax_percent > 0:
+                    tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
+            elif 'ISR' in tax_name:
+                tax_name = 'ISR'
+            elif 'IEPS' in tax_name:
+                tax_name = 'IEPS'
+            res[invoice_tax.id]['name2'] = tax_name
+            res[invoice_tax.id]['tax_percent'] = tax_percent
+            #res[invoice_tax.id]['amount'] = invoice_tax.amount
         return res
     
     _columns = {
