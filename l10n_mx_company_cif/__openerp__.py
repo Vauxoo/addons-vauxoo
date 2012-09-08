@@ -42,6 +42,7 @@
     "demo_xml" : [],
     "update_xml" : [
         "res_company_view.xml",
+        "wizard/installer.xml",
     ],
     "installable" : True,
     "active" : False,

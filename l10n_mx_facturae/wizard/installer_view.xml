@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+<!--
+Configurar Factura Electronica
+-->
+    <record id="invoice_elec_config_view" model="ir.ui.view">
+        <field name="name">Configure Electronic Invoice</field>
+        <field name="model">facturae.config</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.res_config_view_base"/>
+        <field name="arch" type="xml">
+          <data>
+            <form position="attributes">
+              <attribute name="string">Electronic Invoice Configuration</attribute>
+            </form>
+            <separator string="title" position="attributes">
+            <attribute name="string">Configure your data for Electronic Invoice</attribute>
+              </separator>
+              <xpath expr="//label[@string='description']" position="attributes">
+                  <attribute name="string">Through the following wizard you can configure the data to run and generate electronic invoices in your company according to existing legislation in Mexico.
+                  </attribute>
+              </xpath>
+            <xpath expr='//separator[@string="vsep"]' position='attributes'>
+                  <attribute name='rowspan'>5</attribute>
+                  <attribute name='string'></attribute>
+              </xpath>
+            <group string="res_config_contents" position="replace">
+                   <group colspan="4" col="8">
+                    <group colspan="4" col="2">
+                        <field name="vat"/>
+                    </group>
+                    <separator orientation="vertical"/>
+                   </group>
+            </group>
+          </data>
+        </field>
+    </record>
+<!--
+Acción
+-->
+    <record id="action_config_invoice_electronic" model="ir.actions.act_window">
+        <field name="name">Configure Electronic Invoice</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">facturae.config</field>
+        <field name="view_id" ref="invoice_elec_config_view"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <!-- register configuration wizard -->
+    <record id="config_wizard_step_invoice_electronic" model="ir.actions.todo.category">
+        <field name="name">Electronic Invoice</field>
+        <field name="sequence">5</field>
+    </record>
+    
+    <record model="ir.actions.todo" id="config_auto_invoice_electronic">
+        <field name="action_id" ref="action_config_invoice_electronic"/>
+        <field name="category_id" ref="config_wizard_step_invoice_electronic"/>
+        <field name="type">automatic</field>
+    </record>    
+  </data>
+</openerp>
+

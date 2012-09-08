@@ -6,8 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,8 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import osv
+from osv import fields
 
-import res_company
-import invoice
-import wizard
+class cif_config(osv.osv_memory):
+    _name = 'cif.config'
+    _inherit = 'res.config'
+        
+    def _write_company(self, cr, uid, cif_file,company_id,context=None):
+        self.pool.get('res.company').write(cr, uid, company_id,{
+            'cif_file': cif_file,
+            },context=context)
+            
+    def execute(self, cr, uid, ids, context=None):
+        company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
+        wiz_data = self.read(cr, uid, ids[0])
+        if wiz_data['cif_file']:
+            self._write_company(cr, uid, wiz_data["cif_file"],company_id,context)
+            
+    _columns={
+        'cif_file': fields.binary('CIF',help="Fiscal Identification Card"),
+    }
 
+cif_config()
