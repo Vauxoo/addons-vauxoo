@@ -28,7 +28,7 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
     
     _columns = {
-        'acreedor': fields.char("_Acreedor", 128),
+        'acreedor': fields.boolean("_Acreedor",),
     }
 res_partner()
 
