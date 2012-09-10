@@ -34,7 +34,7 @@
     "demo_xml" : [],
     "test": [],
     "update_xml" : [
-    'data/account_tax_category.xml'
+    'data/account_tax_category_data.xml'
 
     ],
     "active": False,
