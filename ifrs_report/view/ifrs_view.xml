@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="0">
+
+		<!-- VISTAS -->
+
+		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
+		  <field name="name">ifrs.ifrs.tree</field>
+		  <field name="model">ifrs.ifrs</field>
+		  <field name="type">tree</field>
+		  <field name="arch" type="xml">
+			<tree string="International Financial Reporting Standards">
+			  <field name="name" />
+			  <field name="company_id" />
+			  <field name="title" />
+			  <field name="state" />
+			</tree>
+		  </field>
+		</record>
+
+		<record model="ir.ui.view" id="view_ifrs_ifrs_form">
+		  <field name="name">ifrs.ifrs.form</field>
+		  <field name="model">ifrs.ifrs</field>
+		  <field name="type">form</field>
+		  <field name="arch" type="xml">
+			<form string="International Financial Reporting Standards">
+			  <field name="name" />
+			  <field name="company_id" />
+			  <field name="title" />
+
+			  <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
+				<tree string="IFRS Lines">
+				  <field name="name" />
+				  <field name="sequence" />
+				  <field name="cons_ids" />
+				</tree>
+				<form string="IFRS Lines">
+				  <field name="name" />
+				  <field name="sequence" />
+				  <notebook colspan='6'>
+					<page string='Consolidated Accounts'>
+						<field name="cons_ids" nolabel='1'/>
+					</page>
+				  </notebook>
+				</form>
+			  </field>
+
+
+
+			  <field name="state" />
+			</form>
+		  </field>
+		</record>
+
+		<!-- ACCIONES -->
+
+		<record model="ir.actions.act_window" id="action_ifrs_ifrs_form">
+		  <field name="name">IFRS</field>
+		  <field name="res_model">ifrs.ifrs</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- MENUS -->
+
+		<menuitem
+			id="menu_ifrs_ifrs"
+			name="IFRS"
+		/>
+
+		<!-- SUB-MENU -->
+
+		<menuitem
+			id="sub_menu_ifrs_ifrs"
+			name="IFRS"
+			parent="menu_ifrs_ifrs"
+			action="action_ifrs_ifrs_form"
+		/>
+
+	</data>
+</openerp>

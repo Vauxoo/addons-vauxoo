@@ -31,8 +31,42 @@ class ifrs_ifrs(osv.osv):
 
 	_name = 'ifrs.ifrs'
 	_columns = {
-	'name' : fields.char('Name', 128, requiered = True ),
-	'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade' ),
+	'name' : fields.char('Name', 128, required = True ),
+	'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
+	'title' : fields.text('Title', required = True ),
+	'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ), # requiered? #  //parent left and parent right...
+	'state': fields.selection( [
+		('draft','Draft'),
+		('ready', 'Ready'),
+		('done','Done'),
+		('cancel','Cancel') ],
+		'State', required=True )
+	}
+
+	_defaults = {
+		'state' : 'draft',
 	}
 
 ifrs_ifrs()
+
+class ifrs_lines(osv.osv):
+
+	_name = 'ifrs.lines'
+	_columns = {
+	'sequence' : fields.integer( 'Sequence', required = True ), # HAY QUE HACER ALGO ADEMAS?
+	'name' : fields.char( 'Name', 128, required = True ),
+	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS' ), # required= True
+
+	'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
+
+
+
+	# amount : campo funcional, tipo float
+	# type, selecctionm abstract, REQUIRED = true
+		# abstract -> solo nombre
+		# detail -> con datos
+		# total -> totalizador...
+	# total_ids, m2m, para hacer totalizaciones, que se relaciona con la misma clase... y que es funcional al mismo tiepo, porque es la suma # many2many(obj, rel, field1, field2, ...)
+	}
+
+ifrs_lines()
