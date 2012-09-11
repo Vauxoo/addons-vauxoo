@@ -41,8 +41,8 @@ class stock_picking(osv.osv):
             invoice_id = picking_id__invoice_id_dict[ picking_id ]
             purchase_id = self.browse(cursor, user, picking_id, context=context).purchase_id.id
             purchase_order_id=purchase_obj.browse(cursor, user, purchase_id, context=context)
-            acc_payment_id=purchase_order_id.acc_payment.id
-            payment_method_id=purchase_order_id.pay_method_id.id
+            acc_payment_id=purchase_order_id.acc_payment and purchase_order_id.acc_payment.id or False
+            payment_method_id=purchase_order_id.pay_method_id and purchase_order_id.pay_method_id.id or False
             invoice_obj.write(cursor, user, [invoice_id], {'acc_payment': acc_payment_id}, context=context)
             invoice_obj.write(cursor, user, [invoice_id], {'pay_method_id': payment_method_id}, context=context)
         return picking_id__invoice_id_dict

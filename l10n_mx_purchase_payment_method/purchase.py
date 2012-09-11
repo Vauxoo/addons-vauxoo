@@ -32,8 +32,8 @@ class purchase_order(osv.osv):
         invoice_obj = self.pool.get('account.invoice')
         res=super(purchase_order,self).action_invoice_create( cr, uid, ids, context=context)
         purchase_order_id=self.browse(cr, uid, ids, context=context)[0]
-        acc_payment_id=purchase_order_id.acc_payment.id
-        payment_method_id=purchase_order_id.pay_method_id.id
+        acc_payment_id=purchase_order_id.acc_payment and purchase_order_id.acc_payment.id or False
+        payment_method_id=purchase_order_id.pay_method_id and purchase_order_id.pay_method_id.id or False
         invoice_obj.write(cr, uid, [res], {'acc_payment': acc_payment_id}, context=context)
         invoice_obj.write(cr, uid, [res], {'pay_method_id': payment_method_id}, context=context)
         return res
