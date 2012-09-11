@@ -35,6 +35,7 @@
     "website" : "http://www.vauxoo.com/",
     "depends" : [
         "account",
+         "account_tax_category",
     ],
     "init_xml" : [],
     "demo_xml" : [],

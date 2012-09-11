@@ -35,32 +35,28 @@ import os
 
 class account_invoice_tax(osv.osv):
     _inherit= "account.invoice.tax"
-    
+
     def _get_tax_data(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
         res = {}
         for invoice_tax in self.browse(cr, uid, ids, context=context):
             res[invoice_tax.id] = {}
-            tax = 'tax_id' in self._columns and invoice_tax.tax_id or False#If patch apply and module account_invoice_tax install
-            tax_name = (tax and tax.tax_category_id and tax.tax_category_id.code or invoice_tax.name).upper().replace('.','').replace(' ', '').replace('-', '')
-            tax_percent = (tax and tax.amount*100.0 or False)#validate? type='percent'
-            tax_percent = tax_percent or ( invoice_tax.amount and invoice_tax.base and invoice_tax.amount*100.0 / abs( invoice_tax.base ) or 0.0 )
-            if 'IVA' in tax_name:
-                tax_name = 'IVA'
-                if not tax and tax_percent > 0:
-                    tax_percent = round(tax_percent, 0)#Hay problemas de decimales al calcular el iva, y hasta ahora el iva no tiene decimales
-            elif 'ISR' in tax_name:
-                tax_name = 'ISR'
-            elif 'IEPS' in tax_name:
-                tax_name = 'IEPS'
-            res[invoice_tax.id]['name2'] = tax_name
+            code = invoice_tax.tax_id.tax_category_id.code.replace('.','').replace(' ', '').replace('-', '')
+            type_tax = invoice_tax.tax_id.type
+            if type_tax=='percent':
+                tax_percent = invoice_tax.tax_id.amount
+                if tax_percent > 0:
+                    tax_percent = tax_percent 
+            else:
+                break
+            res[invoice_tax.id]['name2'] = code
             res[invoice_tax.id]['tax_percent'] = tax_percent
             #res[invoice_tax.id]['amount'] = invoice_tax.amount
         return res
     
     _columns = {
-        'name2': fields.function(_get_tax_data, method=True, type='char', size=64, string='Name2', multi='tax_percent', store=True),
+        'name2': fields.function(_get_tax_data, method=True, type='char', size=64, string='Tax code', multi='tax_percent', store=True),
         'tax_percent': fields.function(_get_tax_data, method=True, type='float', string='Tax Percent', multi='tax_percent', store=True),
     }
 account_invoice_tax()

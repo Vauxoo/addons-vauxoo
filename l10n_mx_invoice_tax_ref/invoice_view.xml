@@ -11,6 +11,7 @@
             <field name="arch" type="xml">
                <xpath expr='/form[@string="Manual Invoice Taxes"]/field[@name="name"]' position="after">
                     <field name='name2'/>
+                    <field name='tax_percent'/>
                 </xpath>
             </field>
         </record>
