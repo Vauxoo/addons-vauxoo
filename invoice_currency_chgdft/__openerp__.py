@@ -8,6 +8,7 @@
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Coded by: isaac (isaac@vauxoo.com)
+#    Coded by: rodo (rodo@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,19 +27,15 @@
 ##############################################################################
 
 {
-    "name" : "Migracion de Factura Electronica para Mexico (CFD) de 2.0 a 2.2",
+    "name" : "invoice_currency_change_default",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Upgrade CFD 2.0 to CFD 2.2 If you are working with OpenERP version < 6.1 you need install the module: l10n_mx_res_partner_bank_currency
+    "description" : """This module overwrithe currency in invoice to set change default=True
     """,
     "website" : "www.vauxoo.com",
-    "depends" : ["l10n_mx_facturae",
-                "partner_bank_last_digits",
-                "l10n_mx_facturae_22_regimen_fiscal",
-                "l10n_mx_facturae_22_payment_method",
-                "invoice_currency_chgdft",
-                "l10n_mx_invoice_acc_payment",
+    "license" : "AGPL-3",
+    "depends" : ["account",
         ],
     "init_xml" : [],
     "demo_xml" : [],
