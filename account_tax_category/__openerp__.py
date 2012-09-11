@@ -37,9 +37,6 @@
     'security/account_tax_category_security.xml',
     'security/ir.model.access.csv',
     'account_tax_category_view.xml',
-    'data/account_tax_category.xml'
-   
-    
     ],
     "active": False,
     "installable": True,
