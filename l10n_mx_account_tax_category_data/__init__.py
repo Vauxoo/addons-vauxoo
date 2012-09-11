@@ -20,25 +20,4 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-{
-    "name" : "Add category to taxes",
-    "version" : "1.0",
-    "depends" : ["account"],
-    "author" : "Vauxoo",
-    "license" : "AGPL-3",
-    "description" : """This module add to the taxes category
-    """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "test": [],
-    "update_xml" : [
-    'security/account_tax_category_security.xml',
-    'security/ir.model.access.csv',
-    'account_tax_category_view.xml',
-    ],
-    "active": False,
-    "installable": True,
-}
 
