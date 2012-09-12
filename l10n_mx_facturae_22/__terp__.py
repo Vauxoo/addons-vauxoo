@@ -37,12 +37,12 @@
                 "partner_bank_last_digits",
                 "l10n_mx_facturae_22_regimen_fiscal",
                 "l10n_mx_facturae_22_payment_method",
+                "invoice_currency_chgdft",
+                "l10n_mx_invoice_acc_payment",
         ],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
-        "invoice_view_v5.xml",
-    ],
+    "update_xml" : [],
     "installable" : True,
     "active" : False,
 }

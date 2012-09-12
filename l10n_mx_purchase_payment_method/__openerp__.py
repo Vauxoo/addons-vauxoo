@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: isaac (isaac@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,26 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Migracion de Factura Electronica para Mexico (CFD) de 2.0 a 2.2",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Upgrade CFD 2.0 to CFD 2.2. If you are working with OpenERP version < 6.1 you need install the module: l10n_mx_res_partner_bank_currency
+    'name': 'Purchase Management',
+    "version" : "1.1",
+    'author': 'Vauxoo',
+    'category' : "Localization/Mexico",
+    'depends': ['l10n_mx_facturae_22_payment_method','purchase','l10n_mx_invoice_acc_payment'],
+    'description': """
+This module add in purchase view fieds to bank
     """,
-    "website" : "www.vauxoo.com",
-    "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae",
-                "partner_bank_last_digits",
-                "l10n_mx_facturae_22_regimen_fiscal",
-                "l10n_mx_facturae_22_payment_method",
-                "invoice_currency_chgdft",
-                "l10n_mx_invoice_acc_payment",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [],
-    "installable" : True,
-    "active" : False,
+    'update_xml':['purchase_view.xml'],
+    'active':False,
+    'installable':True
 }
