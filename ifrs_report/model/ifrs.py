@@ -34,13 +34,19 @@ class ifrs_ifrs(osv.osv):
 	'name' : fields.char('Name', 128, required = True ),
 	'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
 	'title' : fields.text('Title', required = True ),
-	'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ), # requiered? #  //parent left and parent right...
+	'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
+	### NOTAK; PREGUNTA ¿necesita campo required?
+	### NOTAK; HACER parent left and aprent right...
+
 	'state': fields.selection( [
 		('draft','Draft'),
 		('ready', 'Ready'),
 		('done','Done'),
 		('cancel','Cancel') ],
 		'State', required=True )
+
+	### NOTAK; HACER agregar campo año fiscal, modelo = account.fiscal.year / probar
+	#'fiscal_year' : fields.one2many('account.fiscalyear', 'fiscalyear_id', 'Fiscal Year' ),
 	}
 
 	_defaults = {
@@ -52,21 +58,54 @@ ifrs_ifrs()
 class ifrs_lines(osv.osv):
 
 	_name = 'ifrs.lines'
+
+	''' _consolidated_accounts_sum: suma los account_balance '''
+	def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context ):
+		result = {}
+
+		print result
+		for ifl in self.browse( cr, uid, ids, context ):
+			res = 0
+			if ifl.type == 'abtract':
+				pass
+			elif ifl.type == 'detail':
+				for a in ifl.cons_ids:
+					res += a.balance
+			elif ifl.type == 'total':
+				for ifrs_l in ifl.total_ids:
+					res += ifrs_l.amount
+			result.update( { ifl.id : res } )
+
+		print result
+		return result
+
+	### NOTAK; HACER probar si se muere con el tipo de ifrs TOTAL
+
 	_columns = {
-	'sequence' : fields.integer( 'Sequence', required = True ), # HAY QUE HACER ALGO ADEMAS?
+	'sequence' : fields.integer( 'Sequence', required = True ),
+	### NOTAK; PREGUNTAR ¿Hay que hacer algo mas?
+
 	'name' : fields.char( 'Name', 128, required = True ),
-	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS' ), # required= True
+	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS' ),
+	### NOTAK; PREGUNTAR required = True?
 
 	'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
 
+	'type': fields.selection( [
+		('abstract','Abstract'),
+		('detail', 'Detail'),
+		('total','Total') ] ,
+		'Type', required = True ),
 
+	''' TYPE: abstract solo muestra el nombre de la cuenta, Detail muestra las cantidades, Total es un totalizador, suma las cuentas que se le son indicadas '''
 
-	# amount : campo funcional, tipo float
-	# type, selecctionm abstract, REQUIRED = true
-		# abstract -> solo nombre
-		# detail -> con datos
-		# total -> totalizador...
-	# total_ids, m2m, para hacer totalizaciones, que se relaciona con la misma clase... y que es funcional al mismo tiepo, porque es la suma # many2many(obj, rel, field1, field2, ...)
+	'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount'),
+
+	'total_ids' : fields.many2many('ifrs.lines', 'ifrs_ifrs_rel', 'ifk1_id', 'ifk2_id', string='Total'),
+	}
+
+	_defaults = {
+		'type' : 'abstract',
 	}
 
 ifrs_lines()
