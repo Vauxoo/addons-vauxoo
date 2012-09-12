@@ -35,8 +35,6 @@ class ifrs_ifrs(osv.osv):
 	'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
 	'title' : fields.text('Title', required = True ),
 	'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
-	### NOTAK; PREGUNTA ¿necesita campo required?
-	### NOTAK; HACER parent left and aprent right...
 
 	'state': fields.selection( [
 		('draft','Draft'),
@@ -45,7 +43,6 @@ class ifrs_ifrs(osv.osv):
 		('cancel','Cancel') ],
 		'State', required=True ),
 
-	### probando....
 	'fiscal_year' : fields.many2one('account.fiscalyear', 'Fiscal Year', required = True ),
 	}
 
@@ -58,8 +55,7 @@ ifrs_ifrs()
 class ifrs_lines(osv.osv):
 
 	_name = 'ifrs.lines'
-
-	#~ _parent_store = True
+	_parent_store = True
 
 	def _get_sum( self, cr, uid, id, context = None ):
 		if context is None: context = {}
@@ -85,7 +81,6 @@ class ifrs_lines(osv.osv):
 
 	_columns = {
 	'sequence' : fields.integer( 'Sequence', required = True ),
-	### NOTAK; PREGUNTAR ¿Hay que hacer algo mas?
 
 	'name' : fields.char( 'Name', 128, required = True ),
 
@@ -97,16 +92,22 @@ class ifrs_lines(osv.osv):
 
 	'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
 
-	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS' ),
-	### NOTAK; PREGUNTAR required = True?
-
+	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
 	'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount'),
 
-	'total_ids' : fields.many2many('ifrs.lines', 'ifrs_ifrs_rel', 'ifk1_id', 'ifk2_id', string='Total'),
+	'total_ids' : fields.many2many('ifrs.lines', 'ifrs_lines_rel', 'fk1_id', 'fk2_id', string='Total'),
+
+	'parent_id' : fields.many2one('ifrs.lines','Parent', ondelete ='set null'),
+	'parent_right' : fields.integer('Parent Right', select=1 ),
+	'parent_left' : fields.integer('Parent Left', select=1 ),
+
 	}
 
 	_defaults = {
 		'type' : 'abstract',
 	}
+
+	_sql_constraints = [('sequence_ifrs_id_unique','unique(sequence,ifrs_id)', 'The sequence already have been set in another IFRS line')]
+
 
 ifrs_lines()
