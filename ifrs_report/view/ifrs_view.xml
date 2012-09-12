@@ -9,8 +9,6 @@ HACER
 	Toca hacer que cuando sea de tipo detail solo muestra la pestaña consolided accounts,
 	cuando es tipo Total, solo muestra total,
 	y cuando es abstract, no muestra ninguna pestaña, no se relaciona con ninguna cuenta, es solo un titulo
-
-	NOTAK; personalmente lo haria difierete, haria un una subclase, y tendria la info de la linea abstract a aprte en otro modelo
 -->
 
 		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
@@ -22,6 +20,7 @@ HACER
 			  <field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
+			  <field name="fiscal_year" />
 			  <field name="state" />
 			</tree>
 		  </field>
@@ -36,6 +35,7 @@ HACER
 			<field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
+			  <field name="fiscal_year" />
 
 			  <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
 				<tree string="IFRS Lines">
