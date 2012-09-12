@@ -1,0 +1,126 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_bom_cost
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.15\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2011-04-01 19:54:18+0000\n"
+"PO-Revision-Date: 2011-04-01 19:54:18+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_bom_cost
+#: model:ir.module.module,description:mrp_bom_cost.module_meta_information
+msgid "\n"
+"    What do this module:\n"
+"    Add cost managment feature to manage of production in mrp.bom Object.\n"
+"    -- Sum all elements on Bill of Material\n"
+"    -- If the element on bom child has only a Product Id the cost is taken from product.\n"
+"    -- If the element has bom children elements the process of calc is the same of parent.\n"
+"\n"
+"    Validate that the Unit to produce is in the same category of Unit for the product Id to avoid inconsistencies around unit conversion.\n"
+"    \n"
+"    Add field of type assets in product.template establishing if product is assets\n"
+"    Add menu Product Assets, Product for Sale\n"
+"    \n"
+"    Add field of type assets in mrp.bom establishing if bom is assets\n"
+"    Add menu Bom Assets, Bom for Sales\n"
+"                    "
+msgstr "\n"
+"    Qué hace este modulo:\n"
+"    Añade la función de administración de costos para la gestión de producción en mrp.bom Objetos'.\n"
+"    -- Suma todos los elementos que se encuentran en la Lista de Materiales\n"
+"    -- Si el elemento de la LdM solo tiene un producto id, el costo es tomado del mismo producto.\n"
+"    -- Si el elemento de la LdM tiene elementos hijos el proceso de caculo es el mismo que se realiza con el padre.\n"
+"\n"
+"    Valida que la Unidad a Producir esta en la misma categoria que la Unidad del producto Id para evitar incoherencias en torno a la conversion de unidades.\n"
+"                    "
+
+#. module: mrp_bom_cost
+#: field:mrp.bom,cost_u:0
+msgid "Unit Cost"
+msgstr "Costo Unico"
+
+#. module: mrp_bom_cost
+#: help:product.template,product_active:0
+msgid "Determine if the product is of type active."
+msgstr "Determina si el producto es de tipo Bienes/Repuestos."
+
+#. module: mrp_bom_cost
+#: model:ir.actions.act_window,name:mrp_bom_cost.product_normal_action_sales
+#: model:ir.ui.menu,name:mrp_bom_cost.menu_products_sales
+msgid "Products for Sales"
+msgstr "Productos Comerciales"
+
+#. module: mrp_bom_cost
+#: field:mrp.bom,bom_assets:0
+#: field:product.template,product_active:0
+msgid "Assets"
+msgstr "Bienes/Repuestos"
+
+#. module: mrp_bom_cost
+#: model:ir.actions.act_window,name:mrp_bom_cost.mrp_bom_form_action_new_for_sales
+#: model:ir.ui.menu,name:mrp_bom_cost.menu_mrp_bom_form_action_new_for_sales
+msgid "New Bill of Materials for Sales"
+msgstr "Nueva Lista de Materiales Comercial"
+
+#. module: mrp_bom_cost
+#: field:mrp.bom,category_id:0
+msgid "unknown"
+msgstr "desconocido"
+
+#. module: mrp_bom_cost
+#: model:ir.actions.act_window,name:mrp_bom_cost.mrp_bom_form_action_assets
+#: model:ir.ui.menu,name:mrp_bom_cost.menu_mrp_bom_form_action_assets
+msgid "Bill of Materials Assets"
+msgstr "Lista de Materiales(LdM) Bienes/Repuestos"
+
+#. module: mrp_bom_cost
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML inválido para la definición de la vista!"
+
+#. module: mrp_bom_cost
+#: model:ir.actions.act_window,name:mrp_bom_cost.mrp_bom_form_action_for_sales
+#: model:ir.ui.menu,name:mrp_bom_cost.menu_mrp_bom_form_action_for_sales
+msgid "Bill of Materials for Sales"
+msgstr "Lista de Materiales(LdM) Comercial"
+
+#. module: mrp_bom_cost
+#: help:mrp.bom,bom_assets:0
+msgid "Determine if the bom is of type assets."
+msgstr "Determina si la LdM es de tipo Bienes/Repuestos"
+
+#. module: mrp_bom_cost
+#: model:ir.actions.act_window,name:mrp_bom_cost.product_normal_action_assets
+#: model:ir.ui.menu,name:mrp_bom_cost.menu_products_assets
+msgid "Products Assets"
+msgstr "Productos de tipo Bienes/Repuestos"
+
+#. module: mrp_bom_cost
+#: field:mrp.bom,cost_t:0
+msgid "Cost"
+msgstr "Costo"
+
+#. module: mrp_bom_cost
+#: model:ir.actions.act_window,name:mrp_bom_cost.mrp_bom_form_action_new_assets
+#: model:ir.ui.menu,name:mrp_bom_cost.menu_mrp_bom_form_action_new_assets
+msgid "New Bill of Materials Assets"
+msgstr "Nueva Lista de Materiales Bienes/Repuestos"
+
+#. module: mrp_bom_cost
+#: constraint:ir.actions.act_window:0
+msgid "Invalid model name in the action definition."
+msgstr "Nombre de modelo no válido en la definición de acción."
+
+#. module: mrp_bom_cost
+#: model:ir.module.module,shortdesc:mrp_bom_cost.module_meta_information
+msgid "mrp Advanced"
+msgstr "mrp Avanzado"
+
