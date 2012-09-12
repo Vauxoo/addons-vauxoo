@@ -58,9 +58,6 @@ class ifrs_ifrs(osv.osv):
 ifrs_ifrs()
 
 
-
-'amount': fields.function(_function_call, method=True, type='float', string='Label', store=True),
-
 class ifrs_lines(osv.osv):
 
 	_name = 'ifrs.lines'

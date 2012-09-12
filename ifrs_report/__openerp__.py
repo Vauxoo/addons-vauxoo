@@ -35,6 +35,7 @@
     "demo_xml" : [],
     "update_xml" : [
         'view/ifrs_view.xml',
+        'report/report_ifrs.xml',
     ],
     "active": False,
     "installable": True
