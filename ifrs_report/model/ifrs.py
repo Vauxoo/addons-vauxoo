@@ -45,10 +45,10 @@ class ifrs_ifrs(osv.osv):
 		('ready', 'Ready'),
 		('done','Done'),
 		('cancel','Cancel') ],
-		'State', required=True )
+		'State', required=True ),
 
-	### NOTAK; HACER agregar campo año fiscal, modelo = account.fiscal.year / probar
-	#'fiscal_year' : fields.one2many('account.fiscalyear', 'fiscalyear_id', 'Fiscal Year' ),
+	### probando....
+	'fiscal_year' : fields.many2one('account.fiscalyear', 'Fiscal Year', required = True ),
 	}
 
 	_defaults = {
@@ -62,7 +62,8 @@ class ifrs_lines(osv.osv):
 
 	_name = 'ifrs.lines'
 
-	#~ Calcular suma
+	#~ _parent_store = True
+
 	def _get_sum( self, cr, uid, id, context = None ):
 		if context is None: context = {}
 		res = 0
@@ -78,7 +79,6 @@ class ifrs_lines(osv.osv):
 				res += self._get_sum( cr, uid, c.id, context = context )
 		return res
 
-	#~ Generalidad para calcular totales..
 	def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
 		if context is None: context = {}
 		res = {}
@@ -86,17 +86,11 @@ class ifrs_lines(osv.osv):
 			res[id] = self._get_sum( cr, uid, id, context = context )
 		return res
 
-	### NOTAK; HACER probar si se muere con el tipo de ifrs TOTAL
-
 	_columns = {
 	'sequence' : fields.integer( 'Sequence', required = True ),
 	### NOTAK; PREGUNTAR ¿Hay que hacer algo mas?
 
 	'name' : fields.char( 'Name', 128, required = True ),
-	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS' ),
-	### NOTAK; PREGUNTAR required = True?
-
-	'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
 
 	'type': fields.selection( [
 		('abstract','Abstract'),
@@ -104,10 +98,12 @@ class ifrs_lines(osv.osv):
 		('total','Total') ] ,
 		'Type', required = True ),
 
-	#~ ''' TYPE: abstract solo muestra el nombre de la cuenta, Detail muestra las cantidades, Total es un totalizador, suma las cuentas que se le son indicadas '''
+	'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
+
+	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS' ),
+	### NOTAK; PREGUNTAR required = True?
 
 	'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount'),
-	#~ 'amount' : fields.float('Amount'),
 
 	'total_ids' : fields.many2many('ifrs.lines', 'ifrs_ifrs_rel', 'ifk1_id', 'ifk2_id', string='Total'),
 	}
