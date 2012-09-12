@@ -4,6 +4,15 @@
 
 		<!-- VISTAS -->
 
+<!--
+HACER
+	Toca hacer que cuando sea de tipo detail solo muestra la pestaña consolided accounts,
+	cuando es tipo Total, solo muestra total,
+	y cuando es abstract, no muestra ninguna pestaña, no se relaciona con ninguna cuenta, es solo un titulo
+
+	NOTAK; personalmente lo haria difierete, haria un una subclase, y tendria la info de la linea abstract a aprte en otro modelo
+-->
+
 		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
 		  <field name="name">ifrs.ifrs.tree</field>
 		  <field name="model">ifrs.ifrs</field>
@@ -24,24 +33,35 @@
 		  <field name="type">form</field>
 		  <field name="arch" type="xml">
 			<form string="International Financial Reporting Standards">
-			  <field name="name" />
+			<field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
 
 			  <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
 				<tree string="IFRS Lines">
-				  <field name="name" />
 				  <field name="sequence" />
+				  <field name="name" />
+				  <field name="type" />
 				  <field name="cons_ids" />
+				  <field name="total_ids" />
+				  <field name="amount" />
 				</tree>
 				<form string="IFRS Lines">
-				  <field name="name" />
 				  <field name="sequence" />
+				  <field name="name" />
+				  <field name="type" />
+				  <field name="amount" />
 				  <notebook colspan='6'>
 					<page string='Consolidated Accounts'>
 						<field name="cons_ids" nolabel='1'/>
 					</page>
 				  </notebook>
+				  <notebook colspan='6'>
+					<page string='Total'>
+						<field name="total_ids" nolabel='1'/>
+					</page>
+				  </notebook>
+
 				</form>
 			  </field>
 
