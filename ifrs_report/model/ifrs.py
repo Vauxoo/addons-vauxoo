@@ -29,6 +29,8 @@ from osv import fields
 
 class ifrs_ifrs(osv.osv):
 
+	
+
 	_name = 'ifrs.ifrs'
 	_columns = {
 	'name' : fields.char('Name', 128, required = True ),
@@ -54,6 +56,10 @@ class ifrs_ifrs(osv.osv):
 	}
 
 ifrs_ifrs()
+
+
+
+'amount': fields.function(_function_call, method=True, type='float', string='Label', store=True),
 
 class ifrs_lines(osv.osv):
 
