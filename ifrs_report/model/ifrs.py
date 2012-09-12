@@ -59,25 +59,29 @@ class ifrs_lines(osv.osv):
 
 	_name = 'ifrs.lines'
 
-	''' _consolidated_accounts_sum: suma los account_balance '''
-	def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context ):
-		result = {}
+	#~ Calcular suma
+	def _get_sum( self, cr, uid, id, context = None ):
+		if context is None: context = {}
+		res = 0
+		brw = self.browse( cr, uid, id, context = context )
 
-		print result
-		for ifl in self.browse( cr, uid, ids, context ):
-			res = 0
-			if ifl.type == 'abtract':
-				pass
-			elif ifl.type == 'detail':
-				for a in ifl.cons_ids:
-					res += a.balance
-			elif ifl.type == 'total':
-				for ifrs_l in ifl.total_ids:
-					res += ifrs_l.amount
-			result.update( { ifl.id : res } )
+		if brw.type == 'abtract':
+			pass
+		elif brw.type == 'detail':
+			for a in brw.cons_ids:
+				res += a.balance
+		elif brw.type == 'total':
+			for c in brw.total_ids:
+				res += self._get_sum( cr, uid, c.id, context = context )
+		return res
 
-		print result
-		return result
+	#~ Generalidad para calcular totales..
+	def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
+		if context is None: context = {}
+		res = {}
+		for id in ids:
+			res[id] = self._get_sum( cr, uid, id, context = context )
+		return res
 
 	### NOTAK; HACER probar si se muere con el tipo de ifrs TOTAL
 
@@ -97,9 +101,10 @@ class ifrs_lines(osv.osv):
 		('total','Total') ] ,
 		'Type', required = True ),
 
-	''' TYPE: abstract solo muestra el nombre de la cuenta, Detail muestra las cantidades, Total es un totalizador, suma las cuentas que se le son indicadas '''
+	#~ ''' TYPE: abstract solo muestra el nombre de la cuenta, Detail muestra las cantidades, Total es un totalizador, suma las cuentas que se le son indicadas '''
 
 	'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount'),
+	#~ 'amount' : fields.float('Amount'),
 
 	'total_ids' : fields.many2many('ifrs.lines', 'ifrs_ifrs_rel', 'ifk1_id', 'ifk2_id', string='Total'),
 	}
