@@ -29,7 +29,7 @@ from osv import osv, fields
 class res_partner_address(osv.osv):
     _inherit = 'res.partner.address'
     _columns = {
-        'code' : fields.char('Code', size=64)
+        'code' : fields.char('Code', size=64, help='En caso de que la dirección sea de una sucursal, se puede agregar el código de ésta.')
     }
     
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
