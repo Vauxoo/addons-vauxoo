@@ -5,6 +5,7 @@
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: nhomar@openerp.com.ve,
+#    Coded by: rodo@vauxoo.com,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
 #    Audited by: Humberto Arocha humberto@openerp.com.ve
@@ -25,6 +26,7 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import decimal_precision as dp
 
 class mrp_bom(osv.osv):
     _inherit = 'mrp.bom'
@@ -64,11 +66,22 @@ class mrp_bom(osv.osv):
         for i in self.browse(cr,uid,ids):
             res[i.id] = (i.product_id.uom_id.category_id.id,i.product_id.uom_id.category_id.name)
         return res
+        
+        
+    def _get_category_prod(self, cr, uid, ids, field_name, arg, context):
+        '''
+        funcion para obtener la categoria del producto
+        '''
+        res={}
+        for i in self.browse(cr,uid,ids):
+            res[i.id] = (i.product_id.product_tmpl_id.categ_id.id,i.product_id.product_tmpl_id.categ_id.name)
+        return res
 
     _columns = {
-        'cost_t': fields.function(_calc_cost, method=True, type='float', string='Cost', store=False),
-        'cost_u': fields.function(_calc_cost_u, method=True, type='float', string='Unit Cost', store=False),
-        'category_id': fields.function(_get_category, method=True, type='many2one',relation='product.uom.categ'),
+        'cost_t': fields.function(_calc_cost, method=True, type='float', digits_compute= dp.get_precision('Cost_Bom'), string='Cost', store=False),
+        'cost_u': fields.function(_calc_cost_u, method=True, type='float',digits_compute= dp.get_precision('Cost_Bom'), string='Unit Cost', store=False),
+        'category_id': fields.function(_get_category, method=True, type='many2one',relation='product.uom.categ',string='Category Uom'),
+        'category_prod_id': fields.function(_get_category_prod, method=True, type='many2one',relation='product.category',string='Category'),
         #~ 'bom_assets':fields.boolean('Assets', help="Determine if the bom is of type assets."),
     }
     

@@ -50,6 +50,7 @@
     ],
     "update_xml" : [
         "mrp_po_view.xml",
+        "data/decimal_precision_cost_bom.xml",
     ],
     "active": False,
     "installable": True,
