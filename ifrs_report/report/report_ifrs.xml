@@ -5,10 +5,10 @@
 			id="ifrs_reporte" 
 			string="Print IFRS"
 			model="ifrs.ifrs" 
-			name="ifrs.report"
+			name="ifrs"
 			rml="ifrs_report/report/ifrs_cash_flow_indirect.rml"
 			header="False"
-			auto = "True" 
+			auto = "False" 
 			/> <!-- No sera necesario importar el parser -->
     </data>
 </openerp>
