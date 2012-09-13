@@ -32,18 +32,21 @@ class mrp_consume(osv.osv_memory):
     _columns={
         'consume_line_ids' : fields.one2many('mrp.consume.line','wizard_id','Consume')
     }
-
+    def action_consume(self,cr,uid,ids,context={}):
+        for production in self.browse(cr,uid,ids,context=context):
+            for raw_product in production.consume_line_ids:
+                print raw_product,'imprimo raw_product'
+                raw_product.move_id.action_consume(raw_product.quantity, raw_product.location_id.id, context=context)
+        return {}
+    
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = super(mrp_consume, self).default_get(cr, uid, fields, context=context)
-        print fields,'imprimo fields'
         mrp_ids = context.get('active_ids', [])
         if not mrp_ids or (not context.get('active_model') == 'mrp.production') \
             or len(mrp_ids) != 1:
-            # Partial Picking Processing may only be done for one picking at a time
             return res
         mrp_id, = mrp_ids
-        print mrp_id,'imprimo mrp_id'
         if 'consume_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
             moves = [self._partial_move_for(cr, uid, m) for m in mrp.move_lines if m.state not in ('done','cancel')]
@@ -53,7 +56,7 @@ class mrp_consume(osv.osv_memory):
     def _partial_move_for(self, cr, uid, move):
         partial_move = {
             'product_id' : move.product_id.id,
-            'quantity' : move.state in ('assigned','draft') and move.product_qty or 0,
+            'quantity' : move.product_qty,
             'product_uom' : move.product_uom.id,
             'prodlot_id' : move.prodlot_id.id,
             'move_id' : move.id,
@@ -72,6 +75,7 @@ class mrp_consume_line(osv.osv_memory):
         'product_uom': fields.many2one('product.uom', 'Unit of Measure', required=True,),
         'location_id': fields.many2one('stock.location', 'Location', required=True),
         'location_dest_id': fields.many2one('stock.location', 'Dest. Location', required=True),
+        'move_id' : fields.many2one('stock.move', "Move", ondelete='CASCADE'),
         'wizard_id' : fields.many2one('mrp.consume', string="Wizard"),
     }
 
