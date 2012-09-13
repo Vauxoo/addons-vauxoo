@@ -28,8 +28,19 @@ from tools.translate import _
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
+    
+    def _check_boolean(self,cr,uid,ids,field_name,args,context={}):
+        res = {}
+        for production in self.browse(cr,uid,ids,context=context):
+            moves = [move for move in production.move_lines]
+            if len(moves)==0:
+                res[production.id]=True
+            else:
+                res[production.id]=False
+        return res
+            
     _columns = {
-        'consumed' : fields.boolean('consumed?',readonly=True,help="indicates if product to consume have been consumed or canceled")
+        'consumed' : fields.function(_check_boolean,string='consumed?',type='boolean',help="indicates if product to consume have been consumed or canceled")
     }
 mrp_production()
 
