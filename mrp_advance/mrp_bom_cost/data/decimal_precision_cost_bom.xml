@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Decimal Precision -->
+        <record forcecreate="True" id="decimal_precision_cost_bom" model="decimal.precision">
+            <field name="name">Cost_Bom</field>
+            <field name="digits">3</field>
+        </record>
+	</data>
+</openerp>

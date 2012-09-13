@@ -123,6 +123,18 @@
             </field>
         </record>
 
+            <record model="ir.ui.view" id="view_mrp_bom_category_prod_form_cost1">
+            <field name="name">mrp.bom.category_prod.form.cost_t1</field>
+            <field name="model">mrp.bom</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <field name="product_uos" position="after">
+                    <field name="category_prod_id"/>
+                </field>                
+            </field>
+        </record>
+
             <record model="ir.ui.view" id="view_mrp_bom_form_cost2">
             <field name="name">mrp.bom.form.cost_t2</field>
             <field name="model">mrp.bom</field>
@@ -159,6 +171,35 @@
                 </field>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="view_mrp_bom_tree_line_form">
+            <field name="name">mrp.bom.tree.line.cost_t</field>
+            <field name="model">mrp.bom</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Components']/field[@name='bom_lines']/tree/field[@name='date_start']" position="before">
+                    <field name="cost_t"/>
+                    <field name="cost_u"/>
+                    <field name="category_prod_id"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_mrp_bom_form_line_form">
+            <field name="name">mrp.bom.form.line.cost_t</field>
+            <field name="model">mrp.bom</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Components']/field[@name='bom_lines']/form/group/field[@name='type']" position="before">
+                    <field name="cost_t"/>
+                    <field name="cost_u"/>
+                    <field name="category_prod_id"/>
+                </xpath>
+            </field>
+        </record>
+
+
         
     </data>
 </openerp>
