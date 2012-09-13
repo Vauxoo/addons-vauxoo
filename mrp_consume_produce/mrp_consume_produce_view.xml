@@ -11,6 +11,9 @@
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
 			<button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" invisible="1"/>
                     </xpath>
+                    <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="after">
+			<button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action"/>
+                    </xpath>
 	    </field>
         </record>
 

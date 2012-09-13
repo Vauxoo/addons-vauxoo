@@ -7,13 +7,10 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Consume">
-			<field name="consume_line_ids" mode="tree">
+			<field name="consume_line_ids" mode="tree" nolabel="1">
 				<tree string="Consume" editable="bottom">
 					<field name="product_id"/>
 					<field name="quantity"/>
-					<field name="product_uom"/>
-					<field name="location_id"/>
-					<field name="location_dest_id"/>
 				</tree>
 			</field>
 			<group colspan="4">
