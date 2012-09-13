@@ -23,5 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import wizard
-import mrp
+from osv import osv,fields
+from tools.translate import _
+
+class mrp_production(osv.osv):
+    _inherit='mrp.production'
+    _columns = {
+        'consumed' : fields.boolean('consumed?',readonly=True,help="indicates if product to consume have been consumed or canceled")
+    }
+mrp_production()
+

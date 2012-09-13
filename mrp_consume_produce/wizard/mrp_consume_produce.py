@@ -35,7 +35,6 @@ class mrp_consume(osv.osv_memory):
     def action_consume(self,cr,uid,ids,context={}):
         for production in self.browse(cr,uid,ids,context=context):
             for raw_product in production.consume_line_ids:
-                print raw_product,'imprimo raw_product'
                 raw_product.move_id.action_consume(raw_product.quantity, raw_product.location_id.id, context=context)
         return {}
     
