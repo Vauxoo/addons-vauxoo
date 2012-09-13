@@ -42,5 +42,13 @@ class mrp_production(osv.osv):
     _columns = {
         'consumed' : fields.function(_check_boolean,string='consumed?',type='boolean',help="indicates if product to consume have been consumed or canceled")
     }
+    
+    def action_finished_consume(self,cr,uid,ids,context={}):
+        stock_move = self.pool.get('stock.move')
+        for production in self.browse(cr,uid,ids,context=context):
+            for moves in production.move_lines:
+                print moves,'imprimo moves'
+                stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
+        return True
 mrp_production()
 

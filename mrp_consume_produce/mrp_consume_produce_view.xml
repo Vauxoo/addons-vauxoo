@@ -17,6 +17,9 @@
                     <xpath expr="/form/group/field[@name='origin']" position="after">
 			<field name="consumed"/>
                     </xpath>
+                    <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(create_consume_action)d']" position="after">
+			<button name="action_finished_consume" states="in_production" string="Finished Consumed" icon="gtk-convert" type="object"/>
+                    </xpath>
 	    </field>
         </record>
 
