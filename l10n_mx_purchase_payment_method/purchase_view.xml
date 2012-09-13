@@ -7,12 +7,9 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Delivery &amp; Invoicing']/field[@name='date_approve']" position="after">
-                    <group colspan="4" col="2">
-                        <separator string="Bank" colspan="2"/>
-                        <field name="acc_payment"/>
-                        <field name="pay_method_id" widget="selection" string="Payment Method"/>
-                    </group>
+                <xpath expr="/form/notebook/page[@string='Purchase Order']/field[@name='partner_address_id']" position="after">
+                    <field name="acc_payment"/>
+                    <field name="pay_method_id" widget="selection" string="Payment Method"/>
                 </xpath>
             </field>
         </record>
