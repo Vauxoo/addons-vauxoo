@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="mrp_consume_produce_form" model="ir.ui.view">
+            <field name="name">mrp.consume.produce.form</field>
+            <field name="model">mrp.consume</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Consume">
+			<field name="consume_line_ids" mode="tree">
+				<tree string="Consume" editable="bottom">
+					<field name="product_id"/>
+					<field name="quantity"/>
+					<field name="product_uom"/>
+					<field name="location_id"/>
+					<field name="location_dest_id"/>
+				</tree>
+			</field>
+			<group colspan="4">
+				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
+				<button string="Consume" icon="gtk-ok" name="action_consume" type="object"/>
+			</group>
+                </form>
+            </field>
+        </record>
+
+	<act_window id="consume_wizard"
+		name="Consume"
+		src_model="mrp.production"
+		res_model="mrp.consume"
+		view_mode="form"
+		target="new"
+		key2="client_action_multi"
+		/>
+
+       <record id="create_consume_action" model="ir.actions.act_window">
+            <field name="name">Consume</field>
+            <field name="res_model">mrp.consume</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>
+
