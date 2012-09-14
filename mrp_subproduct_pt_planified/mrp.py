@@ -28,35 +28,44 @@ from osv import osv,fields
 class mrp_production(osv.osv):
     _inherit='mrp.production'
     
-    _columns = {
-        'sub_pt_planified_ids' : fields.one2many('mrp.pt.planified','production_id','Products Planified'),
-    }
-    
     def action_compute(self, cr, uid, ids, properties=[], context=None):
-        mrp_pt = self.pool.get('mrp.sub.pt.planified')
-        for production in self.browse(cr,uid,ids,context=context):
-            
-            mrp_pt.unlink(cr,uid,map(lambda x:x.id, production.sub_pt_planified_ids ))
-            
-            val = {
-                'product_id' : production.bom_id and production.bom_id.product_id.id or False,
-                'quantity' : production.bom_id and production.bom_id.product_qty or 0.0,
-                'production_id' : production.id
-            }
-            mrp_pt.create(cr,uid,val)
+        mrp_pt = self.pool.get('mrp.pt.planified')
+        bom_obj = self.pool.get('mrp.bom')
         res = super(mrp_production, self).action_compute(cr,uid,ids,properties=properties,context=context)
+        for production in self.browse(cr,uid,ids,context=context):
+            bom_point = production.bom_id
+            bom_id = production.bom_id.id
+            if not bom_point:
+                bom_id = bom_obj._bom_find(cr, uid, production.product_id.id, production.product_uom.id, properties)
+                    
+            if not bom_id:
+                raise osv.except_osv(_('Error'), _("Couldn't find a bill of material for this product."))
+            
+            for subpro in bom_obj.browse(cr,uid,[bom_id]):
+                for pro in subpro.sub_products:
+                    val = {
+                        'product_id' : pro.product_id and pro.product_id.id or False,
+                        'quantity' : pro.product_qty,
+                        'product_uom' : pro.product_uom.id,
+                        'production_id' : production.id
+                    }
+                    mrp_pt.create(cr,uid,val)
+
+            for bom in bom_obj.browse(cr,uid,[bom_id]):
+                for bom_line in bom.bom_lines:
+                    if bom_line.type == 'phantom' and not bom_line.bom_lines:
+                        newbom = bom_obj._bom_find(cr, uid, bom_line.product_id.id, bom_line.product_uom.id, properties)
+                        if newbom:
+                            bom2 = bom_obj.browse(cr, uid, newbom, context=context)
+                            for sub_product in bom2.sub_products:
+                                val = {
+                                    'product_id' : sub_product.product_id and sub_product.product_id.id or False,
+                                    'quantity' : sub_product.product_qty,
+                                    'product_uom' : sub_product.product_uom.id,
+                                    'production_id' : production.id
+                                }
+                                mrp_pt.create(cr,uid,val)
+                            
         return res
 mrp_production()
-
-class mrp_sub_pt_planified(osv.osv):
-    _name='mrp.sub.pt.planified'
-    _rec_name='product_id'
-    
-    _columns = {
-        'product_id' : fields.many2one('product.product','Product'),
-        'quantity' : fields.float('quantity'),
-        'production_id' : fields.many2one('mrp.production','production')
-    }
-    
-mrp_sub_pt_planified()
 

@@ -32,10 +32,9 @@
     "website" : "http://www.vauxoo.com/",
     "description": """ Add o2m to subproducts produced
     """,
-    'depends': ['mrp_subproduct'],
+    'depends': ['mrp_subproduct','mrp_pt_planified'],
     'init_xml': [],
     'update_xml': [
-        'mrp_view.xml',
         ],
     'demo_xml': [],
     'test': [],
