@@ -20,6 +20,9 @@
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(create_consume_action)d']" position="after">
 			<button name="action_finished_consume" string="Finished Consumed" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}"/>
                     </xpath>
+                    <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
+			<button name="%(create_produce_action)d" states="in_production" string="Produce" icon="gtk-ok" type="action"/>
+                    </xpath>
 	    </field>
         </record>
 

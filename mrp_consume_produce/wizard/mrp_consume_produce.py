@@ -65,6 +65,32 @@ class mrp_consume(osv.osv_memory):
         return partial_move
 mrp_consume()
 
+class mrp_produce(osv.osv_memory):
+    _name='mrp.produce'
+    _columns={
+        'produce_line_ids' : fields.one2many('mrp.consume.line','wizard2_id','Consume')
+    }
+    def action_consume(self,cr,uid,ids,context={}):
+        for production in self.browse(cr,uid,ids,context=context):
+            for raw_product in production.produce_line_ids:
+                raw_product.move_id.action_consume(raw_product.quantity, raw_product.location_id.id, context=context)
+        return {}
+    
+    def default_get(self, cr, uid, fields, context=None):
+        if context is None: context = {}
+        res = super(mrp_produce, self).default_get(cr, uid, fields, context=context)
+        mrp_ids = context.get('active_ids', [])
+        if not mrp_ids or (not context.get('active_model') == 'mrp.production') \
+            or len(mrp_ids) != 1:
+            return res
+        mrp_id, = mrp_ids
+        if 'produce_line_ids' in fields:
+            mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
+            moves = [self.pool.get('mrp.consume')._partial_move_for(cr, uid, m) for m in mrp.move_created_ids if m.state not in ('done','cancel')]
+            res.update(produce_line_ids=moves)
+        return res
+mrp_produce()
+
 class mrp_consume_line(osv.osv_memory):
     _name='mrp.consume.line'
     _rec_name = 'product_id'
@@ -74,8 +100,9 @@ class mrp_consume_line(osv.osv_memory):
         'product_uom': fields.many2one('product.uom', 'Unit of Measure', required=True,),
         'location_id': fields.many2one('stock.location', 'Location', required=True),
         'location_dest_id': fields.many2one('stock.location', 'Dest. Location', required=True),
-        'move_id' : fields.many2one('stock.move', "Move", ondelete='CASCADE'),
+        'move_id' : fields.many2one('stock.move', "Move"),
         'wizard_id' : fields.many2one('mrp.consume', string="Wizard"),
+        'wizard2_id' : fields.many2one('mrp.produce', string="Wizard"),
     }
 
 mrp_consume_line()

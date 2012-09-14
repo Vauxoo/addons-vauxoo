@@ -35,8 +35,8 @@
     'depends': ['mrp'],
     'init_xml': [],
     'update_xml': [
+        'wizard/wizard_view.xml',
         'mrp_consume_produce_view.xml',
-        'wizard/wizard_view.xml'
         ],
     'demo_xml': [],
     'test': [],
