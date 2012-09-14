@@ -4,13 +4,6 @@
 
 		<!-- VISTAS -->
 
-<!--
-HACER
-	Toca hacer que cuando sea de tipo detail solo muestra la pestaña consolided accounts,
-	cuando es tipo Total, solo muestra total,
-	y cuando es abstract, no muestra ninguna pestaña, no se relaciona con ninguna cuenta, es solo un titulo
--->
-
 		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
 		  <field name="name">ifrs.ifrs.tree</field>
 		  <field name="model">ifrs.ifrs</field>
@@ -20,7 +13,7 @@ HACER
 			  <field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
-			  <field name="fiscal_year" />
+			  <field name="fiscalyear_id" />
 			  <field name="state" />
 			</tree>
 		  </field>
@@ -35,38 +28,45 @@ HACER
 			<field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
-			  <field name="fiscal_year" />
+			  <field name="fiscalyear_id" />
 
 			  <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
 				<tree string="IFRS Lines">
+				  <field name="id" />
 				  <field name="sequence" />
 				  <field name="name" />
 				  <field name="type" />
+				  <field name="parent_id" />
 				  <field name="cons_ids" />
 				  <field name="total_ids" />
 				  <field name="amount" />
 				</tree>
 				<form string="IFRS Lines">
+				  <field name="id" />
 				  <field name="sequence" />
 				  <field name="name" />
 				  <field name="type" />
+				  <field name="parent_id" />
 				  <field name="amount" />
-				  <notebook colspan='6'>
-					<page string='Consolidated Accounts'>
+				  <group colspan='6'>
+					  <group
+						colspan='6'
+						attrs="{'invisible':[('type','in',('abstract','total'))]}">
+						<separator string='Consolidated Accounts' colspan='6' />
 						<field name="cons_ids" nolabel='1'/>
-					</page>
-				  </notebook>
-				  <notebook colspan='6'>
-					<page string='Total'>
-						<field name="total_ids" nolabel='1'/>
-					</page>
-				  </notebook>
+					  </group>
+					  <group colspan='6'
+						attrs="{'invisible':[('type','in',('abstract','detail'))]}">
+						<separator string='Total' colspan='6' />
+						<field
+							name="total_ids"
+							nolabel='1'
+							domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]" />
+					  </group>
+				  </group>
 
 				</form>
 			  </field>
-
-
-
 			  <field name="state" />
 			</form>
 		  </field>
