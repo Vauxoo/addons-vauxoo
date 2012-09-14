@@ -110,7 +110,7 @@ class ifrs_lines(osv.osv):
         'sequence' : fields.integer( 'Sequence', required = True ),
         'name' : fields.char( 'Name', 128, required = True ),
         'type': fields.selection(
-            values=[
+           [
                 ('abstract','Abstract'),
                 ('detail', 'Detail'),
                 ('total','Total') ] ,
