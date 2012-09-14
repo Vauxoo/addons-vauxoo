@@ -62,28 +62,6 @@ class ifrs_lines(osv.osv):
     _inherit = 'ifrs.lines'
     _parent_store = True
 
-
-    #~ def _get_ifrls_with_total_ids_updated(self, cr, uid, ids, field_name, arg, context = None):
-        #~ if context is None: context = {}
-        #~ res = {}
-#~
-        #~ print '\n IDS de _get_total_ids_updated'
-        #~ print ids
-        #~ return res
-#~
-    #~ def _get_parent_id(self, cr, uid, ids, field_name, arg, context = None):
-        #~ if context is None: context = {}
-        #~ res = {}
-
-        #~ for ifrs_l in ids:
-            #~ for ifrsl_child in ifrs_l.total_ids
-                #~ res = {}
-                #~ if 'abstract' not in ifrsl_child.type
-                    #~ res[ifrs_l]=
-                    #~ cr.execute( 'select * from ifrs_lines_rel where parent_id=%s', (ifrs_) )
-                    #~ print cr.fetchone()
-        #~ return res
-
     def _get_sum( self, cr, uid, id, context = None ):
         if context is None: context = {}
         res = 0
@@ -106,6 +84,35 @@ class ifrs_lines(osv.osv):
             res[id] = self._get_sum( cr, uid, id, context = context )
         return res
 
+    def _determine_parent_id(self, cr, uid, ids, field_name, arg, context = None):
+        if context is None: context = {}
+        res = {}.fromkeys(ids,False)
+        print "Entre a _determine_parent_id"
+        print "ids = '%s' - field_name = '%s' " % (ids, field_name) # field_name es el nombre del campo parent_id
+        
+        #~ cr.execute('select parent_id from ifrs_lines_rel where child_id in (%s)' % tuple(ids) )
+        cr.execute('select parent_id,child_id from ifrs_lines_rel where child_id in (%s)' %', '.join([str(id) for id in ids]))
+        
+        
+        for t in cr.dictfetchall():
+            res[ int(t['child_id']) ] =  int(t['parent_id']) 
+            print "child : %s , parent : %s" % (t['child_id'], t['parent_id'])
+        print res
+        return res
+
+    def _determine_list_totalids(self, cr, uid, ids, context=None):
+        res = {}
+        if context is None: context = {}
+        print "Entre a _determine_list_parent"
+        print "ids = '%s'" % (ids) # El id del ifrs.line actual
+        
+        for ifrs_l_id in ids: #Obtengo el id del ifrs.line actual
+            ifrs_l = self.browse( cr, uid, ifrs_l_id, context = context )
+            for total_id in ifrs_l.total_ids: # Recorro los total ids
+                res[total_id.id] = True # Guardo el id del ifrs.line actual en el id de uno de los ifrs.line que posee, es decir guardo el parent_id en uno de los total_ids
+                print total_id.id
+        return res.keys() # Devuelvo las keys, y las recibe el metodo principal del parent_id, el _determine_parent_id en la variable ids
+
     _columns = {
         'sequence' : fields.integer( 'Sequence', required = True ),
         'name' : fields.char( 'Name', 128, required = True ),
@@ -120,20 +127,9 @@ class ifrs_lines(osv.osv):
         'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', store=True),
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
-
-        #~ # original
-        'parent_id' : fields.many2one('ifrs.lines','Parent', ondelete ='set null'),
-
-        #~ nueva version: campo funcional (tipo m2o), grabable y escribible
-        #~ 'parent_id' : fields.function(
-            #~ _get_parent_id,
-            #~ method=True,
-            #~ type='many2one',
-            #~ relation='ifrs.lines',
-            #~ store={
-                #~ 'ifrs_lines' : (_get_ifrls_with_total_ids_updated, ['total_ids'], 15),
-            #~ },
-            #~ string='Parent' ),
+   
+    #~ 'parent_id' : fields.many2one('ifrs.lines','Parent UNO', ondelete ='set null'),
+    'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent DOS', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
 
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
