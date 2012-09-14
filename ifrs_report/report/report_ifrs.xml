@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report 
+			id="ifrs_reporte" 
+			string="Print IFRS"
+			model="ifrs.ifrs" 
+			name="ifrs"
+			rml="ifrs_report/report/ifrs_cash_flow_indirect.rml"
+			header="False"
+			auto = "False" 
+			/> <!-- No sera necesario importar el parser -->
+    </data>
+</openerp>
