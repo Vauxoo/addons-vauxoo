@@ -154,6 +154,21 @@ class inherited_product(osv.osv):
         else:
             return True
 
+
+    def _check_upc_reference_unique(self, cr, uid, ids, context=None):
+        this_record = self.browse(cr, uid, ids)
+        
+        for product in self.browse(cr, uid, ids):
+            product_ids = self.search(cr,uid,['|',('default_code','=',product.default_code),('upc','=',product.upc)],context=context)
+            
+            if not product.default_code and not product.upc:
+                return True
+            
+            elif len(product_ids) > 1 or product.id not in product_ids:
+                return False
+            
+        return True
+
     def copy(self, cr, uid, id, default=None, context=None):
         
         if default is None:
@@ -163,7 +178,7 @@ class inherited_product(osv.osv):
             context = {}
             
         default = default.copy()
-        default.update({'upc':False,'ean13':False,
+        default.update({'upc':False,'ean13':False,'default_code':False,
         })
         
         return super(inherited_product, self).copy(cr, uid, id, default, context)
@@ -177,7 +192,6 @@ class inherited_product(osv.osv):
             'profit_code':fields.char("Code from profit", size=20, help="Code from profit database"),
         }
 
-    _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc'])]
-
+    _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc']),(_check_upc_reference_unique, 'ERROR, the upc or reference must by unique', ['upc','reference'])]
 
 inherited_product()
