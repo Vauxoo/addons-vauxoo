@@ -32,6 +32,20 @@ class mrp_production(osv.osv):
         'pt_planified_ids' : fields.one2many('mrp.pt.planified','production_id','Products Planified'),
     }
     
+    def action_compute(self, cr, uid, ids, properties=[], context=None):
+        mrp_pt = self.pool.get('mrp.pt.planified')
+        for production in self.browse(cr,uid,ids,context=context):
+            
+            mrp_pt.unlink(cr,uid,map(lambda x:x.id, production.pt_planified_ids ))
+            
+            val = {
+                'product_id' : production.bom_id and production.bom_id.product_id.id or False,
+                'quantity' : production.bom_id and production.bom_id.product_qty or 0.0,
+                'production_id' : production.id
+            }
+            mrp_pt.create(cr,uid,val)
+        res = super(mrp_production, self).action_compute(cr,uid,ids,properties=properties,context=context)
+        return res
 mrp_production()
 
 class mrp_pt_planified(osv.osv):
