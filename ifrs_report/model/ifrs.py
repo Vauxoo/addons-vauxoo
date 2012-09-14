@@ -118,7 +118,7 @@ class ifrs_lines(osv.osv):
             required = True ),
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
         'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
-        'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount'),
+        'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', store=True),
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
 
         #~ # original
