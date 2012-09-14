@@ -82,6 +82,7 @@ class mrp_bom(osv.osv):
         'cost_u': fields.function(_calc_cost_u, method=True, type='float',digits_compute= dp.get_precision('Cost_Bom'), string='Unit Cost', store=False),
         'category_id': fields.function(_get_category, method=True, type='many2one',relation='product.uom.categ',string='Category Uom'),
         'category_prod_id': fields.function(_get_category_prod, method=True, type='many2one',relation='product.category',string='Category'),
+        'product_uom_default_id': fields.related('product_id', 'uom_id', string="Uom Default", type='many2one', relation='product.uom'),
         #~ 'bom_assets':fields.boolean('Assets', help="Determine if the bom is of type assets."),
     }
     
