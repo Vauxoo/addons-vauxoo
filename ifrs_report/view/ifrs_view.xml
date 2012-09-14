@@ -13,7 +13,7 @@
 			  <field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
-			  <field name="fiscal_year" />
+			  <field name="fiscalyear_id" />
 			  <field name="state" />
 			</tree>
 		  </field>
@@ -28,21 +28,25 @@
 			<field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
-			  <field name="fiscal_year" />
+			  <field name="fiscalyear_id" />
 
 			  <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
 				<tree string="IFRS Lines">
+				  <field name="id" />
 				  <field name="sequence" />
 				  <field name="name" />
 				  <field name="type" />
+				  <field name="parent_id" />
 				  <field name="cons_ids" />
 				  <field name="total_ids" />
 				  <field name="amount" />
 				</tree>
 				<form string="IFRS Lines">
+				  <field name="id" />
 				  <field name="sequence" />
 				  <field name="name" />
 				  <field name="type" />
+				  <field name="parent_id" />
 				  <field name="amount" />
 				  <group colspan='6'>
 					  <group
@@ -63,7 +67,6 @@
 
 				</form>
 			  </field>
-
 			  <field name="state" />
 			</form>
 		  </field>
