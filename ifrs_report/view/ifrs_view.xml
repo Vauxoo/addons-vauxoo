@@ -13,6 +13,7 @@
 			  <field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
+			  <field name="fiscalyear_id" />
 			  <field name="state" />
 			</tree>
 		  </field>
@@ -24,29 +25,48 @@
 		  <field name="type">form</field>
 		  <field name="arch" type="xml">
 			<form string="International Financial Reporting Standards">
-			  <field name="name" />
+			<field name="name" />
 			  <field name="company_id" />
 			  <field name="title" />
+			  <field name="fiscalyear_id" />
 
 			  <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
 				<tree string="IFRS Lines">
-				  <field name="name" />
+				  <field name="id" />
 				  <field name="sequence" />
+				  <field name="name" />
+				  <field name="type" />
+				  <field name="parent_id" />
 				  <field name="cons_ids" />
+				  <field name="total_ids" />
+				  <field name="amount" />
 				</tree>
 				<form string="IFRS Lines">
-				  <field name="name" />
+				  <field name="id" />
 				  <field name="sequence" />
-				  <notebook colspan='6'>
-					<page string='Consolidated Accounts'>
+				  <field name="name" />
+				  <field name="type" />
+				  <field name="parent_id" />
+				  <field name="amount" />
+				  <group colspan='6'>
+					  <group
+						colspan='6'
+						attrs="{'invisible':[('type','in',('abstract','total'))]}">
+						<separator string='Consolidated Accounts' colspan='6' />
 						<field name="cons_ids" nolabel='1'/>
-					</page>
-				  </notebook>
+					  </group>
+					  <group colspan='6'
+						attrs="{'invisible':[('type','in',('abstract','detail'))]}">
+						<separator string='Total' colspan='6' />
+						<field
+							name="total_ids"
+							nolabel='1'
+							domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]" />
+					  </group>
+				  </group>
+
 				</form>
 			  </field>
-
-
-
 			  <field name="state" />
 			</form>
 		  </field>
