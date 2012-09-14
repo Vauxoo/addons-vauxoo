@@ -23,35 +23,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 {
-    "name" : "mrp Advanced",
-    "version" : "0.1",
-    "depends" : ["mrp","product","mrp_routing_cost"],
-    "author" : "Openerp Venzuela",
+    "name" : "Calcular de costo teorico MRP"                            ,
+    "version" : "0.1"                                                   ,
+    "depends" : ['mrp'                                                  ,
+                ]                                                       ,
+    "author" : "Openerp Venezuela"                                              ,
     "description" : """
     What do this module:
     Add cost managment feature to manage of production in mrp.bom Object.
-    -- Sum all elements on Bill of Material
-    -- If the element on bom child has only a Product Id the cost is taken from product.
-    -- If the element has bom children elements the process of calc is the same of parent.
-
-    Validate that the Unit to produce is in the same category of Unit for the product Id to avoid inconsistencies around unit conversion.
-    
-    Add field of type assets in product.template establishing if product is assets
-    Add menu Product Assets, Product for Sale
-    
-    Add field of type assets in mrp.bom establishing if bom is assets
-    Add menu Bom Assets, Bom for Sales
-                    """,
-    "website" : "http://openerp.com.ve",
-    "category" : "Generic Modules/MRP",
+    -- Sum all elements on routing
+    -- Add cost concept for routing
+                    """                                                 ,
+    "website" : "http://openerp.com.ve"                          ,
+    "category" : "Generic Modules/MRP"                                      ,
     "init_xml" : [
     ],
     "demo_xml" : [
     ],
     "update_xml" : [
-        "mrp_po_view.xml",
-        "data/decimal_precision_cost_bom.xml",
+    'mrp_routing_view.xml'                                                      ,
     ],
-    "active": False,
-    "installable": True,
+    "active": False                                                     ,
+    "installable": True                                                 ,
 }
