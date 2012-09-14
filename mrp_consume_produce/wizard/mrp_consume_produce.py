@@ -89,6 +89,12 @@ class mrp_produce(osv.osv_memory):
             moves = [self.pool.get('mrp.consume')._partial_move_for(cr, uid, m) for m in mrp.move_created_ids if m.state not in ('done','cancel')]
             res.update(produce_line_ids=moves)
         return res
+
+    def action_produce(self,cr,uid,ids,context={}):
+        for production in self.browse(cr,uid,ids,context=context):
+            for raw_product in production.produce_line_ids:
+                raw_product.move_id.action_consume(raw_product.quantity, raw_product.location_id.id, context=context)
+        return {}
 mrp_produce()
 
 class mrp_consume_line(osv.osv_memory):

@@ -25,6 +25,7 @@
 ##############################################################################
 from osv import osv,fields
 from tools.translate import _
+import netsvc
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
@@ -38,9 +39,17 @@ class mrp_production(osv.osv):
             else:
                 res[production.id]=False
         return res
+
+    def _check_len_move(self,cr,uid,ids,field_name,args,context={}):
+        res = {}
+        for production in self.browse(cr,uid,ids,context=context):
+            moves = [move for move in production.move_lines2 if move.state=='done']
+            res[production.id]=len(moves)
+        return res
             
     _columns = {
-        'consumed' : fields.function(_check_boolean,string='consumed?',type='boolean',help="indicates if product to consume have been consumed or canceled")
+        'consumed' : fields.function(_check_boolean, string='consumed?', type='boolean', help="indicates if product to consume have been consumed or canceled"),
+        'len_move' : fields.function(_check_len_move, string='moves', type='float')
     }
     
     def action_finished_consume(self,cr,uid,ids,context={}):
@@ -49,5 +58,18 @@ class mrp_production(osv.osv):
             for moves in production.move_lines:
                 stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
         return True
+    
+    def action_finish(self,cr,uid,ids,context={}):
+        stock_move = self.pool.get('stock.move')
+        for production in self.browse(cr,uid,ids,context=context):
+            for moves in production.move_created_ids:
+                stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
+        try:
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'mrp.production', production.id, 'button_produce_done', cr)
+        except:
+            pass
+        return True
+
 mrp_production()
 
