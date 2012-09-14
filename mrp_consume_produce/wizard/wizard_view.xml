@@ -31,6 +31,7 @@
 		view_mode="form"
 		target="new"
 		key2="client_action_multi"
+		multi="True"
 		/>
 
 
@@ -74,6 +75,7 @@
 		view_mode="form"
 		target="new"
 		key2="client_action_multi"
+		multi="True"
 		/>
 
        <record id="create_produce_action" model="ir.actions.act_window">
