@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
 
-  <template pageSize="(280.0mm,220.0mm)" title="IFRS" author="Yanina Aular" allowSplitting="20" showBoundary="0">
+  <template pageSize="(280.0mm,220.0mm)" title="IFRS" author="Yanina Aular" allowSplitting="20" showBoundary="1">
     <pageTemplate id="first">
         <pageGraphics>
             
-            <place x="10.0mm"     y="180.0mm"    width="260.0mm"  height="30.0mm">
+            <place x="10.0mm"     y="180.0mm"    width="260.0mm"  height="35.0mm">
                 <blockTable colWidths="260mm" rowHeights="7mm" style="TITLETABLE">
                     <tr>
                         <td>
@@ -25,14 +25,18 @@
                 </blockTable>
             </place>
 
+			
+
             <setFont name="Helvetica-Oblique" size="8.0"/>
 
-            <image x="10.0mm" y="195.0mm" width="60mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
+            <image x="12.0mm" y="198.0mm" width="60mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
+            
             <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
             <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
                    
         </pageGraphics>
-      <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="185.0mm"/>
+        
+      <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="184.0mm"/>
     </pageTemplate>
   </template>
 
@@ -50,29 +54,102 @@
 			<lineStyle kind="BOX" colorName="gray" thickness="0.5"/>
 		</blockTableStyle>     
 
+		<blockTableStyle id="TERMSTABLE">
+            <blockBackground colorName="white"/>
+			<blockValign value="TOP"/>
+			<lineStyle kind="BOX" colorName="gray" thickness="0.5"/>
+		</blockTableStyle>
+		
+		
+	   <blockTableStyle id="Table">
+		  <blockValign value="TOP"/>
+		  <blockAlignment value="RIGHT"/>
+		  <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,0"/>
+		
+		
+		<!--
+		<para>[[  ]]</para>
+		
+		<blockBackground colorName="gainsboro" start="0,1" stop="2,1"/>
+		<blockBackground colorName="whitesmoke" start="0,2" stop="2,2"/>
+-->
+
+<!--
+		<blockBackground colorName="cornsilk" start="0,1" stop="-1,-1"/>
+-->
+
+<!--
+		  <lineStyle kind="GRID" colorName="silver"/>
+-->
+		<lineStyle kind="LINEBELOW" colorName="silver" start="0,1" stop="-1,-1"/>
+		  <lineStyle kind="LINEAFTER" colorName="silver" start="1,1" stop="1,6" thickness="1"/>
+		  <lineStyle kind="LINEAFTER" colorName="silver" start="0,1" stop="0,6" thickness="1"/>
+<!--
+			<lineStyle kind="LINEAFTER" colorName="silver" start="9,1" stop="9,6" thickness="1"/>
+-->
+
+<!--
+
+		<blockAlignment value="RIGHT" start="3,0" stop="3,-1"/>
+		<blockAlignment value="LEFT" start="0,1" stop="0,-1"/>
+-->
+
+
+		</blockTableStyle>
+		 
+	
+<!--
+		<blockTableStyle id="repeater4" parent="_repeater">
+			<lineStyle kind="LINEBELOW" colorName="black" start="0,splitlast" stop="-1,splitlast" thickness="0.5"/>
+		</blockTableStyle>
+		<blockTableStyle id="verticalTest">
+			<blockAlignment value="left"/>
+			<blockSpan start="0,0" stop="0,2"/>
+			<blockFont name="Helvetica"/>
+			<lineStyle kind="GRID" colorName="black"/>
+		</blockTableStyle>
+-->
+		 
+		 
 	</stylesheet>
 	
 	
 	<story>
+
+<!--
+		 <spacer length="15"/>
+-->
+		 
 	<para>[[ repeatIn(objects,'o') ]] </para>
 	<section>
-<!--
-		 <para>[[ repeatIn(get_lines(o),'ifrs_l') ]]</para>
-		 <section>
-		 
+		<blockTable repeatRows="1" style="Table" colWidths="180.0mm,40.0mm,40.0mm">
+		  <tr>
+			<td><para>Flujo de efectivo por las actividades operativas:</para></td>
+			<td><para></para></td>
+			<td><para alignment="center">(Miles)</para></td>
+		  </tr>
+		  
+		  <tr>
+			<para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l') ]]</para> 
 			
-		 
-		 </section>
--->
+				<td><para>[[ ifrs_l.name]]</para></td> 
+	
+
+				
+				<td background="lightblue"><para alignment="center" >[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td ><para alignment="center" >[[ ifrs_l.type=='total' and ifrs_l.amount ]]</para></td>
+		  
+		  
+		  
+		  </tr>
+		</blockTable>
+		
 	</section>
 	
+		
 	
 	</story>
 	
-	
-	<pageDrawing>
 
-	</pageDrawing>
-  
 </document>
 

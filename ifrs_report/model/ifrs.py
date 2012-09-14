@@ -103,7 +103,7 @@ class ifrs_lines(osv.osv):
 	'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS' ),
 	### NOTAK; PREGUNTAR required = True?
 
-	'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount'),
+	'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', store=True),
 
 	'total_ids' : fields.many2many('ifrs.lines', 'ifrs_ifrs_rel', 'ifk1_id', 'ifk2_id', string='Total'),
 	}
