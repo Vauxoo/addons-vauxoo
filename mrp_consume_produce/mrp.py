@@ -34,7 +34,7 @@ class mrp_production(osv.osv):
         res = {}
         for production in self.browse(cr,uid,ids,context=context):
             moves = [move for move in production.move_lines]
-            if len(moves)==0:
+            if len(moves)==0 and production.state<>'draft':
                 res[production.id]=True
             else:
                 res[production.id]=False
