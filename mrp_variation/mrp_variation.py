@@ -29,13 +29,27 @@ class mrp_production(osv.osv):
     _inherit='mrp.production'
     
     _columns = {
-        'variation_ids' : fields.one2many('mrp.variation','production_id','Variation Product'),
+        'variation_ids' : fields.one2many('mrp.variation','production_id','Variation Product Consumed'),
+        'variation_finished_product_ids' : fields.one2many('mrp.variation','production_id','Variation Product Finished'),
     }
 
 mrp_production()
 
 class mrp_variation(osv.osv):
     _name='mrp.variation'
+    _rec_name='product_id'
+    
+    _columns = {
+        'product_id' : fields.many2one('product.product','Product'),
+        'quantity' : fields.float('quantity'),
+        'production_id' : fields.many2one('mrp.production','production'),
+        'product_uom' : fields.many2one('product.uom','UoM')
+    }
+    
+mrp_variation()
+
+class mrp_variation_finished_product(osv.osv):
+    _name='mrp.variation.finished.product'
     _rec_name='product_id'
     
     _columns = {
