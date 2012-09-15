@@ -30,7 +30,7 @@ class mrp_production(osv.osv):
     
     _columns = {
         'variation_ids' : fields.one2many('mrp.variation','production_id','Variation Product Consumed'),
-        'variation_finished_product_ids' : fields.one2many('mrp.variation','production_id','Variation Product Finished'),
+        'variation_finished_product_ids' : fields.one2many('mrp.variation.finished.product','production_id','Variation Product Finished'),
     }
 
 mrp_production()
@@ -59,15 +59,36 @@ class mrp_variation_finished_product(osv.osv):
         'product_uom' : fields.many2one('product.uom','UoM')
     }
     
-mrp_variation()
+mrp_variation_finished_product()
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
     
     def action_finish(self,cr,uid,ids,context={}):
         res = super(mrp_production, self).action_finish(cr,uid,ids,context=context)
-        self.create_variation(cr,uid,ids,context=context)
+        self.create_variation_consumed(cr,uid,ids,context=context)
+        self.create_variation_finished_product(cr,uid,ids,context=context)
         return res
+
+    def create_variation(self,cr,uid,ids,real={},planned={},context={}):
+        prod_product = self.pool.get('product.product')
+        list_val=[]
+        for production in self.browse(cr,uid,ids,context=context):
+            lista=[]
+            lista.extend(real.keys())
+            lista.extend(planned.keys())
+            lista=list(set(lista))
+            res_diff = dict( planned )
+            for product_id in lista:
+                res_diff[product_id]-=real.get(product_id, 0)
+            for val_diff in res_diff.items():
+                val={'product_id':val_diff[0],
+                    'quantity':(val_diff[1])*-1,
+                    'product_uom':prod_product.browse(cr,uid,val_diff[0]).uom_id.id,
+                    'production_id':production.id
+                    }
+                list_val.append(val)
+        return list_val
     
     def create_consume_real(self,cr,uid,ids,context={}):
         product_product=self.pool.get('product.product')
@@ -107,26 +128,61 @@ class mrp_production(osv.osv):
                 res_planned[lin['product_id']]+=qty_uom_convert
         return res_planned
     
-    def create_variation(self,cr,uid,ids,context={}):
-        prod_variation = self.pool.get('mrp.variation')
-        prod_product = self.pool.get('product.product')
+    def create_finished_product_real(self,cr,uid,ids,context={}):
+        product_product=self.pool.get('product.product')
         for production in self.browse(cr,uid,ids,context=context):
-            prod_variation.unlink(cr,uid,map(lambda x:x.id, production.variation_ids))
+            cr.execute("""
+                    SELECT product_id,product_uom,sum(product_qty) AS product_qty 
+                        FROM stock_move
+                    WHERE production_id=%s
+                    AND state='done'
+                    GROUP BY product_id,product_uom
+                    """,(production.id,))
+            dat = cr.dictfetchall()
+            res_real={}
+            for lin in dat:
+                res_real.setdefault(lin['product_id'],0)
+                product=product_product.browse(cr,uid,lin['product_id'],context=context)
+                qty_uom_convert=self.pool.get('product.uom')._compute_qty(cr, uid, lin['product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
+                res_real[lin['product_id']]+=qty_uom_convert
+        return res_real
+    
+    def create_finished_product_planned(self,cr,uid,ids,context={}):
+        product_product=self.pool.get('product.product')
+        for production in self.browse(cr,uid,ids,context=context):
+            cr.execute("""
+                    SELECT product_id,sum(quantity) AS product_qty, product_uom 
+                        FROM mrp_pt_planified
+                    WHERE production_id=%s
+                    GROUP BY product_id,product_uom
+                    """,(production.id,))
+            dat = cr.dictfetchall()
+            res_planned={}
+            for lin in dat:
+                res_planned.setdefault(lin['product_id'],0)
+                product=product_product.browse(cr,uid,lin['product_id'],context=context)
+                qty_uom_convert=self.pool.get('product.uom')._compute_qty(cr, uid, lin['product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
+                res_planned[lin['product_id']]+=qty_uom_convert
+        return res_planned
+    
+    def create_variation_consumed(self,cr,uid,ids,context={}):
+        prod_variation_consumed = self.pool.get('mrp.variation')
+        for production in self.browse(cr,uid,ids,context=context):
+            prod_variation_consumed.unlink(cr,uid,map(lambda x:x.id, production.variation_ids))
             real=self.create_consume_real(cr,uid,ids,context=context)
             planned=self.create_consume_planned(cr,uid,ids,context=context)
-            lista=[]
-            lista.extend(real.keys())
-            lista.extend(planned.keys())
-            lista=list(set(lista))
-            res_diff = dict( planned )
-            for product_id in lista:
-                res_diff[product_id]-=real.get(product_id, 0)
-            for val_diff in res_diff.items():
-                prod_variation.create(cr,uid,{'product_id':val_diff[0],
-                    'quantity':(val_diff[1])*-1,
-                    'product_uom':prod_product.browse(cr,uid,val_diff[0]).uom_id.id,
-                    'production_id':production.id
-                    })
+            res = self.create_variation(cr,uid,ids,real,planned,context=context)
+            [prod_variation_consumed.create(cr,uid,lin) for lin in res]
+        return True
+    
+    def create_variation_finished_product(self,cr,uid,ids,context={}):
+        prod_variation_finished_product=self.pool.get('mrp.variation.finished.product')
+        for production in self.browse(cr,uid,ids,context=context):
+            prod_variation_finished_product.unlink(cr,uid,map(lambda x:x.id, production.variation_finished_product_ids))
+            real=self.create_finished_product_real(cr,uid,ids,context=context)
+            planned=self.create_finished_product_planned(cr,uid,ids,context=context)
+            res = self.create_variation(cr,uid,ids,real,planned,context=context)
+            [prod_variation_finished_product.create(cr,uid,lin) for lin in res]
         return True
 
 mrp_production()
