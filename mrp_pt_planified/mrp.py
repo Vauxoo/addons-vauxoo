@@ -50,7 +50,7 @@ class mrp_production(osv.osv):
             for pro in bom_obj.browse(cr,uid,[bom_id]):
                 val = {
                     'product_id' : pro.product_id and pro.product_id.id or False,
-                    'quantity' : pro.product_qty,
+                    'quantity' : production.product_qty,
                     'product_uom' : pro.product_uom.id,
                     'production_id' : production.id
                 }
