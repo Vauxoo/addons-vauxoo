@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="res.groups" id="group_account_tax_category_manager">
+            <field name="name">Account Tax Category / Manager</field>
+        </record>
+        
+         <record model="res.groups" id="group_account_tax_category_user">
+            <field name="name">Account Tax Category / User</field>
+        </record>
+        
+    </data>
+</openerp>
