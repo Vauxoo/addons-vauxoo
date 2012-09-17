@@ -90,8 +90,19 @@ class mrp_production(osv.osv):
                 list_val.append(val)
         return list_val
     
-    def create_consume_real(self,cr,uid,ids,context={}):
+    def create_res_real_planned(self,cr,uid,dat=False):
         product_product=self.pool.get('product.product')
+        if dat is False:
+            dat = []
+        res = {}
+        for lin in dat:
+            res.setdefault(lin['product_id'],0)
+            product=product_product.browse(cr,uid,lin['product_id'])
+            qty_uom_convert=self.pool.get('product.uom')._compute_qty(cr, uid, lin['product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
+            res[lin['product_id']]+=qty_uom_convert
+        return res
+    
+    def create_consume_real(self,cr,uid,ids,context={}):
         for production in self.browse(cr,uid,ids,context=context):
             cr.execute("""
                     SELECT sm.product_uom,sm.product_id,sum(COALESCE(sm.product_qty,0)) AS product_qty
@@ -102,16 +113,10 @@ class mrp_production(osv.osv):
                     GROUP BY sm.product_id,sm.product_uom 
                     """,(production.id,))
             dat = cr.dictfetchall()
-            res_real={}
-            for lin in dat:
-                res_real.setdefault(lin['product_id'],0)
-                product=product_product.browse(cr,uid,lin['product_id'],context=context)
-                qty_uom_convert=self.pool.get('product.uom')._compute_qty(cr, uid, lin['product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
-                res_real[lin['product_id']]+=qty_uom_convert
+            res_real=self.create_res_real_planned(cr,uid,dat)
         return res_real
     
     def create_consume_planned(self,cr,uid,ids,context={}):
-        product_product=self.pool.get('product.product')
         for production in self.browse(cr,uid,ids,context=context):
             cr.execute("""
                     SELECT product_id,sum(COALESCE(product_qty,0)) AS product_qty,product_uom
@@ -120,16 +125,10 @@ class mrp_production(osv.osv):
                     GROUP BY product_id,product_uom
                     """,(production.id,))
             dat = cr.dictfetchall()
-            res_planned={}
-            for lin in dat:
-                res_planned.setdefault(lin['product_id'],0)
-                product=product_product.browse(cr,uid,lin['product_id'],context=context)
-                qty_uom_convert=self.pool.get('product.uom')._compute_qty(cr, uid, lin['product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
-                res_planned[lin['product_id']]+=qty_uom_convert
+            res_planned=self.create_res_real_planned(cr,uid,dat)
         return res_planned
     
     def create_finished_product_real(self,cr,uid,ids,context={}):
-        product_product=self.pool.get('product.product')
         for production in self.browse(cr,uid,ids,context=context):
             cr.execute("""
                     SELECT product_id,product_uom,sum(product_qty) AS product_qty 
@@ -139,16 +138,10 @@ class mrp_production(osv.osv):
                     GROUP BY product_id,product_uom
                     """,(production.id,))
             dat = cr.dictfetchall()
-            res_real={}
-            for lin in dat:
-                res_real.setdefault(lin['product_id'],0)
-                product=product_product.browse(cr,uid,lin['product_id'],context=context)
-                qty_uom_convert=self.pool.get('product.uom')._compute_qty(cr, uid, lin['product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
-                res_real[lin['product_id']]+=qty_uom_convert
+            res_real=self.create_res_real_planned(cr,uid,dat)
         return res_real
     
     def create_finished_product_planned(self,cr,uid,ids,context={}):
-        product_product=self.pool.get('product.product')
         for production in self.browse(cr,uid,ids,context=context):
             cr.execute("""
                     SELECT product_id,sum(quantity) AS product_qty, product_uom 
@@ -157,12 +150,7 @@ class mrp_production(osv.osv):
                     GROUP BY product_id,product_uom
                     """,(production.id,))
             dat = cr.dictfetchall()
-            res_planned={}
-            for lin in dat:
-                res_planned.setdefault(lin['product_id'],0)
-                product=product_product.browse(cr,uid,lin['product_id'],context=context)
-                qty_uom_convert=self.pool.get('product.uom')._compute_qty(cr, uid, lin['product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
-                res_planned[lin['product_id']]+=qty_uom_convert
+            res_planned=self.create_res_real_planned(cr,uid,dat)
         return res_planned
     
     def create_variation_consumed(self,cr,uid,ids,context={}):
