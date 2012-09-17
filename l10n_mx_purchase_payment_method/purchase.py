@@ -36,10 +36,7 @@ class purchase_order(osv.osv):
             partner_bank_obj=self.pool.get('res.partner.bank')
             bank_partner_id=partner_bank_obj.search(cr, uid, [('partner_id','=',partner_id)])
             pay_method_id=partner.browse(cr,uid,partner_id).pay_method_id.id
-            if bank_partner_id:
-                res['value'].update({'acc_payment': bank_partner_id[0] or False})
-            if pay_method_id:
-                res['value'].update({'pay_method_id':pay_method_id or False})
+            res['value'].update({'acc_payment': bank_partner_id and bank_partner_id[0] or False,'pay_method_id':pay_method_id or False})
         return res
         
     _columns = {
