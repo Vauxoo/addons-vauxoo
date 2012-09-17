@@ -28,7 +28,7 @@
 			<button name="%(create_produce_action)d" string="Products Produced" icon="gtk-yes" type="action" attrs="{'invisible': ['|',('len_move','=',0),('state','=','done')]}"/>
                     </xpath>
 
-                    <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='button_recreate']" position="after">
+                    <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
 			<button name="action_finish" string="Finish Production" icon="gtk-ok" type="object" attrs="{'invisible': ['|',('consumed','=',False),('state','=','done')]}"/>
                     </xpath>
 
