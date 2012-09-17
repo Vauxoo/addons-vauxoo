@@ -159,12 +159,12 @@ class inherited_product(osv.osv):
         this_record = self.browse(cr, uid, ids)
         
         for product in self.browse(cr, uid, ids):
-            product_ids = self.search(cr,uid,['|',('default_code','=',product.default_code),('upc','=',product.upc)],context=context)
-            
+            product_code_ids = product.default_code and  self.search(cr,uid,[('default_code','=',product.default_code)],context=context) or [product.id]
+            product_upc_ids = product.upc and self.search(cr,uid,[('upc','=',product.upc)],context=context) or [product.id]
             if not product.default_code and not product.upc:
                 return True
             
-            elif len(product_ids) > 1 or product.id not in product_ids:
+            elif len(product_code_ids) > 1 or len(product_upc_ids) > 1 or  product.id not in product_code_ids or product.id not in product_upc_ids:
                 return False
             
         return True
