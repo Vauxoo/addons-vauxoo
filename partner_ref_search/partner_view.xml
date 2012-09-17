@@ -2,28 +2,14 @@
 <openerp>
     <data>
         
-        <record model="ir.ui.view" id="view_partner_form_inh_acreedor_form">
-            <field name="name">view.partner.form.inh.acreedor.form</field>
-            <field name="type">form</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="/form/group/group/field[@name='supplier']" position="after">
-                    <field name="acreedor"/>
-                </xpath>
-
-            </field>
-        </record>
-        
-        
         <record id="view_res_partner_filter_inh" model="ir.ui.view">
             <field name="name">res.partner.select.inh</field>
             <field name="model">res.partner</field>
             <field name="type">search</field>
             <field name="inherit_id" ref="base.view_res_partner_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="/search/group/filter[@name='supplier']" position="after">
-                    <filter string="Acreedores" name="Acreedor" icon="terp-personal" domain="[('acreedor','=',1)]" help="Creditors Partners"/>
+                <xpath expr="/search/group/field[@name='user_id']" position="after">
+                    <field name="ref"/>
                 </xpath>
             </field>
         </record>
