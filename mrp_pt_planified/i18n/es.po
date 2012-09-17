@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-09-17 22:41+0000\n"
-"PO-Revision-Date: 2012-09-17 18:13-0600\n"
+"PO-Revision-Date: 2012-09-17 18:49-0600\n"
 "Last-Translator: juan <openerp1@hotmil.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -71,5 +71,5 @@ msgstr "UdM"
 #. module: mrp_pt_planified
 #: field:mrp.pt.planified,quantity:0
 msgid "quantity"
-msgstr "cantidad"
+msgstr "Cantidad"
 
