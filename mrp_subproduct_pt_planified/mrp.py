@@ -45,7 +45,7 @@ class mrp_production(osv.osv):
                 for pro in subpro.sub_products:
                     val = {
                         'product_id' : pro.product_id and pro.product_id.id or False,
-                        'quantity' : pro.product_qty,
+                        'quantity' : pro.product_qty*production.product_qty,
                         'product_uom' : pro.product_uom.id,
                         'production_id' : production.id
                     }
@@ -60,7 +60,7 @@ class mrp_production(osv.osv):
                             for sub_product in bom2.sub_products:
                                 val = {
                                     'product_id' : sub_product.product_id and sub_product.product_id.id or False,
-                                    'quantity' : sub_product.product_qty,
+                                    'quantity' : sub_product.product_qty*production.product_qty,
                                     'product_uom' : sub_product.product_uom.id,
                                     'production_id' : production.id
                                 }
