@@ -15,6 +15,7 @@
 						<field name="product_id"/>
 						<field name="quantity"/>
 						<field name="product_uom"/>
+						<field name="cost_variation"/>
 					</tree>
 					<form string="Variation Product Consumed">
 						<field name="product_id"/>
@@ -27,6 +28,7 @@
 						<field name="product_id"/>
 						<field name="quantity"/>
 						<field name="product_uom"/>
+						<field name="cost_variation"/>
 					</tree>
 					<form string="Variation Product Finished">
 						<field name="product_id"/>

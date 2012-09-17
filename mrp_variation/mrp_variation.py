@@ -24,13 +24,14 @@
 #
 ##############################################################################
 from osv import osv,fields
+import decimal_precision as dp
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
     
     _columns = {
-        'variation_ids' : fields.one2many('mrp.variation','production_id','Variation Product Consumed'),
-        'variation_finished_product_ids' : fields.one2many('mrp.variation.finished.product','production_id','Variation Product Finished'),
+        'variation_ids' : fields.one2many('mrp.variation','production_id','Variation Product Consumed',readonly=True),
+        'variation_finished_product_ids' : fields.one2many('mrp.variation.finished.product','production_id','Variation Product Finished',readonly=True),
     }
 
 mrp_production()
@@ -39,11 +40,18 @@ class mrp_variation(osv.osv):
     _name='mrp.variation'
     _rec_name='product_id'
     
+    def _get_variation_cost(self,cr,uid,ids,field_name,args,context={}):
+        res={}
+        for variation in self.browse(cr,uid,ids,context=context):
+            res[variation.id] = variation.quantity*variation.product_id.standard_price
+        return res
+    
     _columns = {
         'product_id' : fields.many2one('product.product','Product'),
         'quantity' : fields.float('quantity'),
         'production_id' : fields.many2one('mrp.production','production'),
-        'product_uom' : fields.many2one('product.uom','UoM')
+        'product_uom' : fields.many2one('product.uom','UoM'),
+        'cost_variation' : fields.function(_get_variation_cost,type='float',digits_compute=dp.get_precision('Purchase Price'),string='Variation Cost')
     }
     
 mrp_variation()
@@ -51,12 +59,19 @@ mrp_variation()
 class mrp_variation_finished_product(osv.osv):
     _name='mrp.variation.finished.product'
     _rec_name='product_id'
+
+    def _get_variation_cost(self,cr,uid,ids,field_name,args,context={}):
+        res={}
+        for variation in self.browse(cr,uid,ids,context=context):
+            res[variation.id] = variation.quantity*variation.product_id.standard_price
+        return res
     
     _columns = {
         'product_id' : fields.many2one('product.product','Product'),
         'quantity' : fields.float('quantity'),
         'production_id' : fields.many2one('mrp.production','production'),
-        'product_uom' : fields.many2one('product.uom','UoM')
+        'product_uom' : fields.many2one('product.uom','UoM'),
+        'cost_variation' : fields.function(_get_variation_cost,type='float',digits_compute=dp.get_precision('Purchase Price'),string='Variation Cost')
     }
     
 mrp_variation_finished_product()
