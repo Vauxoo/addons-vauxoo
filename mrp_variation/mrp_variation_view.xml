@@ -9,23 +9,19 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                     <xpath expr="/form/notebook/page[@string='Work Orders']" position="after">
- 			<page string="Product Variation Consumed">
+ 			<page string="Product Variation">
 				<field name="variation_ids" nolabel="1">
-					<tree string="Variation Consume">
+					<tree string="Variation Product Consumed">
 						<field name="product_id"/>
 						<field name="quantity"/>
 						<field name="product_uom"/>
 					</tree>
-					<form string="Variation Consume">
+					<form string="Variation Product Consumed">
 						<field name="product_id"/>
 						<field name="quantity"/>
 						<field name="product_uom"/>
 					</form>
 				</field>
-			</page>
-                    </xpath>
-                    <xpath expr="/form/notebook/page[@string='Work Orders']" position="after">
- 			<page string="Product Variation Finished">
 				<field name="variation_finished_product_ids" nolabel="1">
 					<tree string="Variation Product Finished">
 						<field name="product_id"/>
