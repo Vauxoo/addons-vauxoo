@@ -24,6 +24,7 @@
 #
 ##############################################################################
 from osv import osv,fields
+from tools.translate import _
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
@@ -39,7 +40,7 @@ class mrp_production(osv.osv):
             
             mrp_pt.unlink(cr,uid,map(lambda x:x.id, production.pt_planified_ids ))
             
-            bom_point = production.bom_id
+            bom_point = production.bom_id   
             bom_id = production.bom_id.id
             if not bom_point:
                 bom_id = bom_obj._bom_find(cr, uid, production.product_id.id, production.product_uom.id, properties)
