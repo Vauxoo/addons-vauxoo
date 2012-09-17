@@ -7,10 +7,16 @@
               <field name="model">update.price.list</field>
               <field name="type">form</field>
               <field name="arch" type="xml">
-                <form string="Price List by Product">
+                <form string="Price List by Product" >
                     <separator colspan="4" string="Update List Price"/>
                     <field name="price_list_id" widget="selection" attrs="{'required':[('all','=',False)]}"/>
                     <separator colspan="4"/>
+                    <group col="1" colspan="4">
+                         <field name="those_products" />
+                         <field name="product_ids" attrs="{'invisible':[('those_products','=',False)]}" nolabel="1"/>
+                    </group>    
+                    <separator colspan="4"/>
+                    
                      <field name="all" />
                      <field name="sure" />
                     <group col="2" colspan="4">
