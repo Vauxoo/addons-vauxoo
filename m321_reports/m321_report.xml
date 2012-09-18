@@ -33,6 +33,14 @@
         name="m321_reports.cm321_report"
         rml="m321_reports/report/comercializadora_m321_report.rml"
         header="False"/>
+        
+        <report id="packing_list_report"
+        string="Nota de Chequeo"
+        menu="True"
+        model="stock.picking"
+        name="m321_reports.packing_list_report"
+        rml="m321_reports/report/picking.rml"
+        header="False"/>
 
 <!-- 'rml = nombre del modulo/carpeta(report)/nombre del archivo rml '-->
   </data>

@@ -26,3 +26,4 @@ import amd_computadoras_report
 import amd_computer_shop_report
 import computacion_activa_report
 import comercializadora_m321_report
+import picking
