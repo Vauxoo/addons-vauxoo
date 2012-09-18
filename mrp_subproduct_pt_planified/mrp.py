@@ -24,6 +24,7 @@
 #
 ##############################################################################
 from osv import osv,fields
+from tools.translate import _
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
