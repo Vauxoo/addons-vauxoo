@@ -10,7 +10,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Consume">
-			<field name="consume_line_ids" mode="tree" nolabel="1">
+			<field name="consume_line_ids" mode="tree" nolabel="1" width="640" height="240">
 				<tree string="Consume" editable="bottom">
 					<field name="product_id"/>
 					<field name="quantity"/>
