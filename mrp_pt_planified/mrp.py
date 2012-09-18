@@ -25,6 +25,7 @@
 ##############################################################################
 from osv import osv,fields
 from tools.translate import _
+import decimal_precision as dp
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
@@ -66,7 +67,7 @@ class mrp_pt_planified(osv.osv):
     
     _columns = {
         'product_id' : fields.many2one('product.product','Product'),
-        'quantity' : fields.float('quantity'),
+        'quantity' : fields.float('quantity', digits_compute=dp.get_precision('Product UoM')),
         'production_id' : fields.many2one('mrp.production','production'),
         'product_uom' : fields.many2one('product.uom','UoM')
     }
