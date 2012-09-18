@@ -26,6 +26,7 @@
 import time
 from osv import osv, fields
 import decimal_precision as dp
+from tools.translate import _
 
 class mrp_consume(osv.osv_memory):
     _name='mrp.consume'
