@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="res.groups" id="group_mrp_consume_manager">
+            <field name="name">Mrp Consume / Manager</field>
+        </record>
+        
+         <record model="res.groups" id="group_mrp_consume_user">
+            <field name="name">Mrp Consume / User</field>
+        </record>
+        
+    </data>
+</openerp>

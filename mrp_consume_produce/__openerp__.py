@@ -38,6 +38,8 @@
     'update_xml': [
         'wizard/wizard_view.xml',
         'mrp_consume_produce_view.xml',
+        'security/mrp_security.xml',
+        'security/ir.model.access.csv',
         ],
     'demo_xml': [],
     'test': [],
