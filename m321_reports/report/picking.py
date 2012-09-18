@@ -32,7 +32,6 @@ class packing_list_report(report_sxw.rml_parse):
         self.localcontext.update({
             'time': time,
             'get_qtytotal':self._get_qtytotal,
-            'get_name':self._get_name,
         })
     def _get_qtytotal(self,move_lines):
         total = 0.0
@@ -41,12 +40,6 @@ class packing_list_report(report_sxw.rml_parse):
             total+=move.product_qty
         return {'quantity':total,'uom':uom}
     
-    def _get_name(self,product):
-        print "hola"
-        prod = "ff"  #product.name_get([product.id])[0][1]
-        print "prod", prod
-        return prod
-
 report_sxw.report_sxw('report.m321_reports.packing_list_report',
                       'stock.picking',
                       'addons/m321_reports/report/picking.rml',
