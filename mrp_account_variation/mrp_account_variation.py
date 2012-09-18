@@ -32,7 +32,6 @@ class mrp_production(osv.osv):
     _inherit='mrp.production'
     
     def action_finish(self,cr,uid,ids,context={}):
-        print 'imprimo action_finish'
         res = super(mrp_production, self).action_finish(cr,uid,ids,context=context)
         self._create_move_variation(cr,uid,ids,context=context)
         return res
@@ -45,6 +44,9 @@ class mrp_production(osv.osv):
                 if prod_variation.quantity>0:
                     account_moves += [(prod_variation.product_id.categ_id.property_stock_journal.id, self._create_account_variation_move_line(cr,uid,prod_variation,prod_variation.product_id.property_stock_production.valuation_in_account_id.id,\
                             prod_variation.product_id.property_stock_production.variation_in_account_id.id,prod_variation.cost_variation))]
+                if prod_variation.quantity<0:
+                    account_moves += [(prod_variation.product_id.categ_id.property_stock_journal.id, self._create_account_variation_move_line(cr,uid,prod_variation,prod_variation.product_id.property_stock_production.variation_in_account_id.id,\
+                            prod_variation.product_id.property_stock_production.valuation_in_account_id.id,(prod_variation.cost_variation*-1)))]
                             
             if account_moves:
                 for j_id,move_lines in account_moves:
@@ -52,7 +54,7 @@ class mrp_production(osv.osv):
                         {
                          'journal_id': j_id,
                          'line_id': move_lines,
-                         'ref': 'prueba'})
+                         'ref': production.name})
 
                     
         return True
@@ -63,7 +65,7 @@ class mrp_production(osv.osv):
                     'name': prod_variation.product_id.name,
                     'product_id': prod_variation.product_id and prod_variation.product_id.id or False,
                     'quantity': prod_variation.quantity,
-                    'ref': 'prueba',
+ #                   'ref': 'prueba',
                     'date': time.strftime('%Y-%m-%d'),
 #                    'partner_id': partner_id,
                     'debit': reference_amount,
@@ -73,7 +75,7 @@ class mrp_production(osv.osv):
                     'name': prod_variation.product_id.name,
                     'product_id': prod_variation.product_id and prod_variation.product_id.id or False,
                     'quantity': prod_variation.quantity,
-                    'ref': 'prueba',
+   #                 'ref': 'prueba',
                     'date': time.strftime('%Y-%m-%d'),
  #                   'partner_id': partner_id,
                     'credit': reference_amount,
