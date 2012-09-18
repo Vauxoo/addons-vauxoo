@@ -25,19 +25,17 @@
 ##############################################################################
 
 {
-    "name": "MRP Consume Produce",
+    "name": "Stock Location Code",
     "version": "1.1",
     "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
+    "category": "Generic Modules/Account",
     "website" : "http://www.vauxoo.com/",
-    "description": """ Add wizard to consume and produce.It will be necesary to apply the patch 
-        patch/stock.patch located in this module ( useatch -b stock.py  stock.patch )
+    "description": """ Add field to code of the location
     """,
-    'depends': ['mrp'],
+    'depends': ['stock'],
     'init_xml': [],
     'update_xml': [
-        'wizard/wizard_view.xml',
-        'mrp_consume_produce_view.xml',
+        'stock_view.xml',
         ],
     'demo_xml': [],
     'test': [],
@@ -45,4 +43,3 @@
     'active': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
- 

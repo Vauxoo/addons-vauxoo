@@ -182,6 +182,7 @@
                     <field name="cost_t"/>
                     <field name="cost_u"/>
                     <field name="category_prod_id"/>
+                    <field name="product_uom_default_id"/>
                 </xpath>
             </field>
         </record>

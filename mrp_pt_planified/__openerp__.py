@@ -25,19 +25,19 @@
 ##############################################################################
 
 {
-    "name": "MRP Consume Produce",
+    "name": "MRP Products Planified",
     "version": "1.1",
     "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
+    "category": "Generic Modules/MRP",
     "website" : "http://www.vauxoo.com/",
-    "description": """ Add wizard to consume and produce.It will be necesary to apply the patch 
-        patch/stock.patch located in this module ( useatch -b stock.py  stock.patch )
+    "description": """ Add o2m to products produced
     """,
     'depends': ['mrp'],
     'init_xml': [],
     'update_xml': [
-        'wizard/wizard_view.xml',
-        'mrp_consume_produce_view.xml',
+        'mrp_view.xml',
+        'security/mrp_security.xml',
+        'security/ir.model.access.csv',
         ],
     'demo_xml': [],
     'test': [],
@@ -45,4 +45,3 @@
     'active': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
- 

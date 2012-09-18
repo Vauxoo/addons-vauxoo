@@ -37,9 +37,12 @@ class update_price_list(osv.osv_memory):
     _name = 'update.price.list'
 
     _columns = {
+        'those_products':fields.boolean('Products',help='Select if wish update price list by specific product'),
         'all': fields.boolean('All Price List', help="Select this options only if you wish update all price list"),
         'sure': fields.boolean('Sure?', help="Are sure this operation"),
-        'price_list_id': fields.many2one('product.pricelist', string='Price List', help="Select the price list for price list Report", domain=[('type','=','sale')] )
+        'price_list_id': fields.many2one('product.pricelist', string='Price List', help="Select the price list for price list Report", domain=[('type','=','sale')] ),
+        'product_ids':fields.many2many('product.product','product_in','product_out','Product',help='Product to update price list'),
+        
     }
     
     def update_price_list(self,cr,uid,ids,context=None):
@@ -55,7 +58,7 @@ class update_price_list(osv.osv_memory):
         method_obj =  self.pool.get('cost.structure')
         price_obj = self.pool.get('product.pricelist')
         wz_brw = self.browse(cr,uid,ids,context=context)[0]
-        product_ids = product_obj.search(cr,uid,[('cost_ult','>',0.0),('virtual_available','>',0.0)],context=context)
+        product_ids = wz_brw.those_products and [ i.id for i in wz_brw.product_ids] or product_obj.search(cr,uid,[('cost_ult','>',0.0),('virtual_available','>',0.0)],context=context)
         price_brw = wz_brw and wz_brw.price_list_id and price_obj.browse(cr,uid,wz_brw.price_list_id.id,context=context)
         value = 'Precio|precio|price'
         if wz_brw.sure:

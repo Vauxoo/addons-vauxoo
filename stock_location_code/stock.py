@@ -24,25 +24,27 @@
 #
 ##############################################################################
 
-{
-    "name": "MRP Consume Produce",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add wizard to consume and produce.It will be necesary to apply the patch 
-        patch/stock.patch located in this module ( useatch -b stock.py  stock.patch )
-    """,
-    'depends': ['mrp'],
-    'init_xml': [],
-    'update_xml': [
-        'wizard/wizard_view.xml',
-        'mrp_consume_produce_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
- 
+from osv import osv, fields
+import re
+
+class stock_location(osv.osv):
+    _inherit = 'stock.location'
+    _columns = {
+        'code' : fields.char('Code', size=64)
+    }
+    
+    def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
+        if not args:
+            args = []
+        if name:
+            ids = self.search(cr, user, [('code','=',name)]+ args, limit=limit, context=context)
+            if not ids:
+                ids = set()
+                ids.update(self.search(cr, user, args + [('code',operator,name)], limit=limit, context=context))
+                ids.update(map(lambda a: a[0], super(stock_location, self).name_search(cr, user, name=name, args=args, operator=operator, context=context, limit=limit)))
+                ids = list(ids)
+        else:
+            ids = self.search(cr, user, args, limit=limit, context=context)
+        result = self.name_get(cr, user, ids, context=context)
+        return result
+stock_location()

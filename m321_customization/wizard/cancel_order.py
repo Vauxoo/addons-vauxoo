@@ -46,7 +46,7 @@ class cancel_orders(osv.osv_memory):
     
     } 
 
-    def cancel_orders(self,cr,uid,ids=False,days=2,context=None):
+    def cancel_orders(self,cr,uid,ids=False,days=1,context=None):
         if context is None:
             context = {}
         sale_obj = self.pool.get('sale.order')

@@ -23,26 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "MRP Consume Produce",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Production",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add wizard to consume and produce.It will be necesary to apply the patch 
-        patch/stock.patch located in this module ( useatch -b stock.py  stock.patch )
-    """,
-    'depends': ['mrp'],
-    'init_xml': [],
-    'update_xml': [
-        'wizard/wizard_view.xml',
-        'mrp_consume_produce_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
- 
+import mrp_variation
