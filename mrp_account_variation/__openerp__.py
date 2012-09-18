@@ -32,7 +32,7 @@
     "website" : "http://www.vauxoo.com/",
     "description": """ Add entries to production variation
     """,
-    'depends': ['mrp','account'],
+    'depends': ['mrp_variation','account'],
     'init_xml': [],
     'update_xml': [
         'stock_location_view.xml',
