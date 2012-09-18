@@ -48,6 +48,13 @@ class mrp_production(osv.osv):
                     account_moves += [(prod_variation.product_id.categ_id.property_stock_journal.id, self._create_account_variation_move_line(cr,uid,prod_variation,prod_variation.product_id.property_stock_production.variation_in_account_id.id,\
                             prod_variation.product_id.property_stock_production.valuation_in_account_id.id,(prod_variation.cost_variation*-1)))]
                             
+            for prod_variation in production.variation_finished_product_ids:
+                if prod_variation.quantity>0:
+                    account_moves += [(prod_variation.product_id.categ_id.property_stock_journal.id, self._create_account_variation_move_line(cr,uid,prod_variation,prod_variation.product_id.property_stock_production.valuation_in_account_id.id,\
+                            prod_variation.product_id.property_stock_production.variation_in_account_id.id,prod_variation.cost_variation))]
+                if prod_variation.quantity<0:
+                    account_moves += [(prod_variation.product_id.categ_id.property_stock_journal.id, self._create_account_variation_move_line(cr,uid,prod_variation,prod_variation.product_id.property_stock_production.variation_in_account_id.id,\
+                            prod_variation.product_id.property_stock_production.valuation_in_account_id.id,(prod_variation.cost_variation*-1)))]
             if account_moves:
                 for j_id,move_lines in account_moves:
                     move_obj.create(cr, uid,
