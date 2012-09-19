@@ -36,6 +36,8 @@
     'init_xml': [],
     'update_xml': [
         'mrp_variation_view.xml',
+        'security/mrp_variation_security.xml',
+        'security/ir.model.access.csv',
         ],
     'demo_xml': [],
     'test': [],
