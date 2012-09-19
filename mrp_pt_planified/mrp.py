@@ -29,6 +29,14 @@ from tools.translate import _
 class mrp_production(osv.osv):
     _inherit='mrp.production'
     
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'pt_planified_ids' : [],
+        })
+        return super(mrp_production, self).copy(cr, uid, id, default, context)
+    
     _columns = {
         'pt_planified_ids' : fields.one2many('mrp.pt.planified','production_id','Products Finished Good Planified'),
     }
