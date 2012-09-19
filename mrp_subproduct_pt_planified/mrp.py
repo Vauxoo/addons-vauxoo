@@ -36,7 +36,6 @@ class mrp_production(osv.osv):
         bom_obj = self.pool.get('mrp.bom')
         uom_obj = self.pool.get('product.uom')
         for production in self.browse(cr, uid, ids):
-            source = production.product_id.product_tmpl_id.property_stock_production.id
             bom_id = production.bom_id
             if not bom_id:
                 continue
