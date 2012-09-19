@@ -37,6 +37,8 @@
 				  <field name="name" />
 				  <field name="type" />
 				  <field name="parent_id" />
+				<field name="parent_left" />
+				<field name="parent_right" />
 				  <field name="cons_ids" />
 				  <field name="total_ids" />
 				  <field name="amount" />
@@ -59,7 +61,7 @@
 						attrs="{'invisible':[('type','in',('abstract','detail'))]}">
 						<separator string='Total' colspan='6' />
 						<field
-							name="total_ids"
+							name="total_ids" widget="many2many"
 							nolabel='1'
 							domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]" />
 					  </group>

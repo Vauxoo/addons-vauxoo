@@ -61,6 +61,8 @@ class ifrs_lines(osv.osv):
 
     _inherit = 'ifrs.lines'
     _parent_store = True
+    _parent_name = "parent_id"
+    _order = 'parent_left'
 
     def _get_sum( self, cr, uid, id, context = None ):
         if context is None: context = {}
@@ -126,10 +128,12 @@ class ifrs_lines(osv.osv):
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
         'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', store=True),
-        'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
+        #'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
    
-    #~ 'parent_id' : fields.many2one('ifrs.lines','Parent UNO', ondelete ='set null'),
-    'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent DOS', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
+     'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null'),
+    	#'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
+
+	'total_ids': fields.one2many('ifrs.lines', 'parent_id', string='Child'),
 
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
@@ -138,6 +142,9 @@ class ifrs_lines(osv.osv):
     _defaults = {
         'type' : 'abstract',
     }
+
+    def child_get(self, cr, uid, ids):
+        return [ids]
 
     _sql_constraints = [('sequence_ifrs_id_unique','unique(sequence,ifrs_id)', 'The sequence already have been set in another IFRS line')]
 
