@@ -29,6 +29,15 @@ import decimal_precision as dp
 class mrp_production(osv.osv):
     _inherit='mrp.production'
     
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'variation_ids' : [],
+            'variation_finished_product_ids' : [],
+        })
+        return super(mrp_production, self).copy(cr, uid, id, default, context)
+    
     _columns = {
         'variation_ids' : fields.one2many('mrp.variation','production_id','Variation Product Consumed',readonly=True),
         'variation_finished_product_ids' : fields.one2many('mrp.variation.finished.product','production_id','Variation Product Finished',readonly=True),
