@@ -42,13 +42,13 @@ class mrp_production(osv.osv):
         for production in self.browse(cr,uid,ids,context=context):
             for prod_variation in production.variation_ids:
                 context['type'] = 'consumed'
-                if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time':
+                if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time' and prod_variation.quantity <> 0:
                     j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,context=context)
                     account_moves += [(j_id, self._create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
 
             for prod_variation in production.variation_finished_product_ids:
                 context['type'] = 'produced'
-                if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time':
+                if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time' and prod_variation.quantity <> 0:
                     j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,context=context)
                     account_moves += [(j_id, self._create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
                     
@@ -100,7 +100,8 @@ class mrp_production(osv.osv):
                 reference_amount = product.cost_variation*-1
             
         journal_id = product.product_id.categ_id.property_stock_journal.id
-        
+        print product.product_id.name,'impriomo name'
+        print src_acc,dest_acc,'imrpmo acc'
         if not src_acc or not dest_acc:
             raise osv.except_osv(_('Error!'),  _('There is no account defined for this location: "%s" ') % \
                                     (product.product_id.property_stock_production.name,))
