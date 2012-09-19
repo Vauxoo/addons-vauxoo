@@ -32,40 +32,24 @@ class mrp_production(osv.osv):
         mrp_pt = self.pool.get('mrp.pt.planified')
         bom_obj = self.pool.get('mrp.bom')
         res = super(mrp_production, self).action_compute(cr,uid,ids,properties=properties,context=context)
-        for production in self.browse(cr,uid,ids,context=context):
-            bom_point = production.bom_id
-            bom_id = production.bom_id.id
-            if not bom_point:
-                bom_id = bom_obj._bom_find(cr, uid, production.product_id.id, production.product_uom.id, properties)
-                    
+        bom_obj = self.pool.get('mrp.bom')
+        uom_obj = self.pool.get('product.uom')
+        for production in self.browse(cr, uid, ids):
+            source = production.product_id.product_tmpl_id.property_stock_production.id
+            bom_id = production.bom_id
             if not bom_id:
-                raise osv.except_osv(_('Error'), _("Couldn't find a bill of material for this product."))
-            
-            for subpro in bom_obj.browse(cr,uid,[bom_id]):
-                for pro in subpro.sub_products:
-                    val = {
-                        'product_id' : pro.product_id and pro.product_id.id or False,
-                        'quantity' : pro.product_qty*production.product_qty,
-                        'product_uom' : pro.product_uom.id,
-                        'production_id' : production.id
-                    }
-                    mrp_pt.create(cr,uid,val)
-
-            for bom in bom_obj.browse(cr,uid,[bom_id]):
-                for bom_line in bom.bom_lines:
-                    if bom_line.type == 'phantom' and not bom_line.bom_lines:
-                        newbom = bom_obj._bom_find(cr, uid, bom_line.product_id.id, bom_line.product_uom.id, properties)
-                        if newbom:
-                            bom2 = bom_obj.browse(cr, uid, newbom, context=context)
-                            for sub_product in bom2.sub_products:
-                                val = {
-                                    'product_id' : sub_product.product_id and sub_product.product_id.id or False,
-                                    'quantity' : sub_product.product_qty*production.product_qty,
-                                    'product_uom' : sub_product.product_uom.id,
-                                    'production_id' : production.id
-                                }
-                                mrp_pt.create(cr,uid,val)
-                            
+                continue
+            factor = uom_obj._compute_qty(cr, uid, production.product_uom.id, production.product_qty, bom_id.product_uom.id)
+            result_subproducts =[]
+            res = bom_obj._bom_explode(cr, uid, bom_id, factor / bom_id.product_qty, properties=False, routing_id=False, result_subproducts=result_subproducts)
+            for sub_product in result_subproducts:
+                data = {
+                    'product_id': sub_product['product_id'],
+                    'quantity': sub_product['product_qty'],
+                    'product_uom': sub_product['product_uom'],
+                    'production_id': production.id
+                }
+                mrp_pt.create(cr,uid,data)
         return res
 mrp_production()
 
