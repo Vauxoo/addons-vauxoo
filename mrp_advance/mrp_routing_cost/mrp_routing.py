@@ -22,36 +22,31 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-{
-    "name" : "mrp Advanced",
-    "version" : "0.1",
-    "depends" : ["mrp","product","mrp_routing_cost"],
-    "author" : "Openerp Venzuela",
-    "description" : """
-    What do this module:
-    Add cost managment feature to manage of production in mrp.bom Object.
-    -- Sum all elements on Bill of Material
-    -- If the element on bom child has only a Product Id the cost is taken from product.
-    -- If the element has bom children elements the process of calc is the same of parent.
 
-    Validate that the Unit to produce is in the same category of Unit for the product Id to avoid inconsistencies around unit conversion.
-    
-    Add field of type assets in product.template establishing if product is assets
-    Add menu Product Assets, Product for Sale
-    
-    Add field of type assets in mrp.bom establishing if bom is assets
-    Add menu Bom Assets, Bom for Sales
-                    """,
-    "website" : "http://openerp.com.ve",
-    "category" : "Generic Modules/MRP",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "mrp_po_view.xml",
-        "data/decimal_precision_cost_bom.xml",
-    ],
-    "active": False,
-    "installable": True,
-}
+from osv import osv
+from osv import fields
+from tools.translate import _
+from tools import config
+
+
+class mrp_routing_workcenter(osv.osv):
+    _inherit = "mrp.routing.workcenter"
+
+    def _calcular(self, cr, uid, ids, field_name, arg, context):
+        res={}
+        for i in self.browse(cr,uid,ids):
+            cost = 0.00
+            cost=i.hour_nbr*i.costo
+            res[i.id]=cost
+        return res
+
+
+    _columns ={
+    'costo': fields.float('Costo Unitario', required=True) ,
+    'costo_total': fields.function(_calcular, method=True, type='float', string='Costo Total', store=False),
+    }
+    _defaults = {
+        'costo': lambda *a: 0.0,
+    }
+
+mrp_routing_workcenter()

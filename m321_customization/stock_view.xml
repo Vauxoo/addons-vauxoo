@@ -18,6 +18,12 @@
           <field name="total_sale" readonly="1"/>
           </group>
         </xpath>
+        <xpath expr='/form/notebook/page/field/tree/field[@name="product_id"]' position="after">
+        <field name="product_upc"/>
+        </xpath>
+        <xpath expr='/form/notebook/page/field/tree/field[@name="product_qty"]' position="before">
+        <field name="price_unit"/>
+        </xpath>
       </field>
     </record>
 

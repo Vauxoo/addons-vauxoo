@@ -1,0 +1,52 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_routing_cost
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.15\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2010-11-07 07:30:05+0000\n"
+"PO-Revision-Date: 2010-11-07 07:30:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_routing_cost
+#: model:ir.module.module,description:mrp_routing_cost.module_meta_information
+msgid "\n"
+"    What do this module:\n"
+"    Add cost managment feature to manage of production in mrp.bom Object.\n"
+"    -- Sum all elements on routing\n"
+"    -- Add cost concept for routing\n"
+"                    "
+msgstr "\n"
+"    Qué hace este modulo:\n"
+"    Añade la función de administración de costos para la gestión de producción en mrp.bom Objetos\n"
+"    -- Suma todos los elementos existentes en routing\n"
+"    -- Añade el concepto de costo en el routing\n"
+"                    "
+
+#. module: mrp_routing_cost
+#: field:mrp.routing.workcenter,costo:0
+msgid "Costo Unitario"
+msgstr "Costo Unitario"
+
+#. module: mrp_routing_cost
+#: field:mrp.routing.workcenter,costo_total:0
+msgid "Costo Total"
+msgstr "Costo Total"
+
+#. module: mrp_routing_cost
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML inválido para la definición de la vista!"
+
+#. module: mrp_routing_cost
+#: model:ir.module.module,shortdesc:mrp_routing_cost.module_meta_information
+msgid "Calcular de costo teorico MRP"
+msgstr "Calcular costo teorico MRP"
+

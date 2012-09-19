@@ -97,6 +97,7 @@ class stock_move(osv.osv):
     _inherit = 'stock.move'
     _columns = {
         'id_sale':fields.many2one('sale.order','Sale Order'),
+        'product_upc':fields.related('product_id','upc',type='char',string='UPC'),
     
     }
     
