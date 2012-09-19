@@ -61,6 +61,8 @@ class ifrs_lines(osv.osv):
 
     _inherit = 'ifrs.lines'
     _parent_store = True
+    _parent_name = "parent_id"
+    _order = 'parent_left'
 
     def _get_sum( self, cr, uid, id, context = None ):
         if context is None: context = {}
@@ -113,6 +115,28 @@ class ifrs_lines(osv.osv):
                 print total_id.id
         return res.keys() # Devuelvo las keys, y las recibe el metodo principal del parent_id, el _determine_parent_id en la variable ids
 
+    def _get_level(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for ifrs_line in self.browse(cr, uid, ids, context=context):
+            level = 0
+            parent = ifrs_line.parent_id
+            while parent:
+                level += 1
+                parent = parent.parent_id
+            res[ifrs_line.id] = level
+        return res
+
+    def _get_children_and_consol(self, cr, uid, ids, context=None):
+        #this function search for all the children and all consolidated children (recursively) of the given total ids
+        ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)], context=context)
+        ids3 = []
+        for rec in self.browse(cr, uid, ids2, context=context):
+            for child in rec.total_ids:
+                ids3.append(child.id)
+        if ids3:
+            ids3 = self._get_children_and_consol(cr, uid, ids3, context)
+        return ids2 + ids3
+
     _columns = {
         'sequence' : fields.integer( 'Sequence', required = True ),
         'name' : fields.char( 'Name', 128, required = True ),
@@ -126,18 +150,26 @@ class ifrs_lines(osv.osv):
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
         'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', store=True),
-        'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
+        #'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
    
-    #~ 'parent_id' : fields.many2one('ifrs.lines','Parent UNO', ondelete ='set null'),
-    'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent DOS', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
-
+     	'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null'),
+    	#'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
+		'total_ids': fields.one2many('ifrs.lines', 'parent_id', string='Child'),
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
+
+		'level': fields.function(_get_level, string='Level', method=True, type='integer',
+             store={
+                    'ifrs.lines': (_get_children_and_consol, ['parent_id'], 10),
+                   }),
     }
 
     _defaults = {
         'type' : 'abstract',
     }
+
+    def child_get(self, cr, uid, ids):
+        return [ids]
 
     _sql_constraints = [('sequence_ifrs_id_unique','unique(sequence,ifrs_id)', 'The sequence already have been set in another IFRS line')]
 
