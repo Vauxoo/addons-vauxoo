@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+       <report id="packing_list_report"
+        string="Nota de Chequeo"
+        menu="True"
+        model="stock.picking"
+        name="m321_reports.packing_list_report"
+        rml="m321_reports/report/picking.rml"
+        header="False"/>
+
+<!-- 'rml = nombre del modulo/carpeta(report)/nombre del archivo rml '-->
+  </data>
+</openerp>
