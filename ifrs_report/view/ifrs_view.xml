@@ -38,12 +38,12 @@
 				  <field name="name" />
 				  <field name="type" />
 				  <field name="parent_id" />
-				<field name="parent_left" />
-				<field name="parent_right" />
+				<!--<field name="parent_left" />
+				<field name="parent_right" />-->
 				  <field name="cons_ids" />
 				  <field name="total_ids" />
 				  <field name="amount" />
-				  <field name="level" />
+				 <!-- <field name="level" /> -->
 				</tree>
 				<form string="IFRS Lines">
 				  <field name="id" />
