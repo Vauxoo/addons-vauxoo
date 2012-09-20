@@ -48,7 +48,7 @@
           </page>
           <page string="List Price Item">
             <field name='price_list_item_ids' nolabel="1" />
-            <field name='category_item_ids' nolabel="1" />
+            <field name='category_item_ids' readonly="1" nolabel="1" />
           </page>
         </xpath>
         <xpath expr='/form/notebook/page[@string="Information"]' position="after">

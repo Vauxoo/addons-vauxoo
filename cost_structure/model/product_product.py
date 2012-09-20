@@ -126,7 +126,7 @@ class product_product(osv.osv):
     'status_bool':fields.function(_structure_cost_status, method=True,type="boolean",store=True, string='Status Price'),
     #'price_list_item_ids':fields.one2many('product.pricelit.item','product_id','Price List Item',help='Percent to compute cost from Price list item'),
     'price_list_item_ids': fields.function(_search_price_list_item_p, relation='product.pricelist.item',fnct_inv=_write_price_list_item_p,method=True, string="Price item by product", type='one2many'),
-    'category_item_ids': fields.function(_search_price_list_item_c, relation='product.pricelist.item', method=True, string="Price item by category", type='many2many'),
+    'category_item_ids': fields.function(_search_price_list_item_c, relation='product.pricelist.item', method=True, string="Price item by category", type='one2many'),
 
     }
     
