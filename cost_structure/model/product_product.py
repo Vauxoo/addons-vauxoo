@@ -66,15 +66,33 @@ class product_product(osv.osv):
                     return False
         return True
 
-    def _search_price_list_item(self, cr, uid, ids, field_name, arg, context={}):
+    def _search_price_list_item_c(self, cr, uid, ids, field_name, arg, context={}):
         
         item_obj = self.pool.get('product.pricelist.item')
         res = {}
-        
         for product in self.browse(cr,uid,ids,context=context):
             res[product.id] = item_obj.search(cr,uid,[('categ_id','=',product.categ_id.id)],context=context)
-            
         return res
+
+
+    def _search_price_list_item_p(self, cr, uid, ids, field_name, arg, context={}):
+        
+        item_obj = self.pool.get('product.pricelist.item')
+        res = {}
+        for product in self.browse(cr,uid,ids,context=context):
+            res[product.id] = item_obj.search(cr,uid,[('product_id','=',product.id)],context=context)
+        return res
+    
+    def _write_price_list_item_p(obj, cr, uid, id, name, value, fnct_inv_arg, context={}):
+        for val in value:
+            if val[0] == 1 :
+                sql_str = val[2].get('price_discount',False) and """UPDATE product_pricelist_item set
+                            price_discount='%s'
+                            WHERE id=%d """ % (val[2].get('price_discount'), val[1]) 
+                val[2].get('price_discount',False) and cr.execute(sql_str)
+        return True
+
+
 
 
     _columns = {
@@ -106,8 +124,9 @@ class product_product(osv.osv):
     'date_cost_to_price': fields.related('property_cost_structure', 'date_cost_to_price', type='datetime', string='Date'),
     'method_cost_ids': fields.related('property_cost_structure', 'method_cost_ids',relation='method.price', type='one2many', string='Method Cost',),
     'status_bool':fields.function(_structure_cost_status, method=True,type="boolean",store=True, string='Status Price'),
-    'price_list_item_ids':fields.one2many('product.pricelit.item','product_id','Price List Item',help='Percent to compute cost from Price list item'),
-    'category_item_ids': fields.function(_search_price_list_item, relation='product.pricelist.item', method=True, string="Price item by category", type='many2many'),
+    #'price_list_item_ids':fields.one2many('product.pricelit.item','product_id','Price List Item',help='Percent to compute cost from Price list item'),
+    'price_list_item_ids': fields.function(_search_price_list_item_p, relation='product.pricelist.item',fnct_inv=_write_price_list_item_p,method=True, string="Price item by product", type='one2many'),
+    'category_item_ids': fields.function(_search_price_list_item_c, relation='product.pricelist.item', method=True, string="Price item by category", type='many2many'),
 
     }
     
@@ -264,4 +283,37 @@ class report_cost(osv.osv):
      
 report_cost()
 
+
+class inherit_product_category(osv.osv):
+    """ """
+    
+    _inherit='product.category'
+
+
+    def _search_price_list_item(self, cr, uid, ids, field_name, arg, context={}):
+        
+        item_obj = self.pool.get('product.pricelist.item')
+        res = {}
+        for category in self.browse(cr,uid,ids,context=context):
+            res[category.id] = item_obj.search(cr,uid,[('categ_id','=',category.id)],context=context)
+        return res
+
+
+    def _write_price_list_item(obj, cr, uid, id, name, value, fnct_inv_arg, context={}):
+        for val in value:
+            if val[0] == 1 :
+                sql_str = val[2].get('price_discount',False) and """UPDATE product_pricelist_item set
+                            price_discount='%s'
+                            WHERE id=%d """ % (val[2].get('price_discount'), val[1]) 
+                val[2].get('price_discount',False) and cr.execute(sql_str)
+        return True
+
+    _columns={
+    'price_list_item_ids': fields.function(_search_price_list_item, relation='product.pricelist.item',fnct_inv=_write_price_list_item,method=True, string="Price item by category", type='one2many'),
+    
+    }
+
+
+
+inherit_product_category()
 

@@ -38,13 +38,11 @@ class inherit_price_list_item(osv.osv):
         
         if context is None:
             context = {}
-        versio_obj = self.pool.get('product.pricelist.version')
-        price_obj = self.pool.get('product.pricelist')
         res = {}
         for item in self.browse(cr,uid,ids,context=context):
             res[item.id] = item.price_version_id and item.price_version_id.pricelist_id and \
                                                      item.price_version_id.pricelist_id.id  
-            
+        
         return res
         
 
