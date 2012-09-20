@@ -183,7 +183,52 @@ class inherited_product(osv.osv):
         
         return super(inherited_product, self).copy(cr, uid, id, default, context)
 
+    def name_get(self, cr, user, ids, context=None):
+        if context is None:
+            context = {}
+        if not len(ids):
+            return []
+        def _name_get(d):
+            name = d.get('name','')
+            code = d.get('default_code',False)
+            upc = d.get('upc',False)
+            ean13 = d.get('ean13',False)
+            cc = upc and '%s' % upc or ean13 and '%s' % ean13 or code
+            if cc:
+                name = '[%s] %s' % (cc,name)
+            if d.get('variants'):
+                name = name + ' - %s' % (d['variants'],)
+            return (d['id'], name)
+
+        partner_id = context.get('partner_id', False)
+
+        result = []
+        for product in self.browse(cr, user, ids, context=context):
+            sellers = filter(lambda x: x.name.id == partner_id, product.seller_ids)
+            if sellers:
+                for s in sellers:
+                    mydict = {
+                              'id': product.id,
+                              'name': s.product_name or product.name,
+                              'default_code': s.product_code or product.default_code,
+                              'upc': product.upc or False,
+                              'ean13': product.ean13 or False,
+                              'variants': product.variants,
+                              }
+                    result.append(_name_get(mydict))
+            else:
+                mydict = {
+                          'id': product.id,
+                          'name': product.name,
+                          'default_code': product.default_code,
+                          'upc': product.upc or False,
+                          'ean13': product.ean13 or False,
+                          'variants': product.variants,
+                          }
+                result.append(_name_get(mydict))
+        #return super(inherited_product, self).name_get(cr, user, ids, context)  
         
+        return result
         
 
     _columns = {
