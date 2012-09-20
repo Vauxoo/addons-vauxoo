@@ -66,6 +66,17 @@ class product_product(osv.osv):
                     return False
         return True
 
+    def _search_price_list_item(self, cr, uid, ids, field_name, arg, context={}):
+        
+        item_obj = self.pool.get('product.pricelist.item')
+        res = {}
+        
+        for product in self.browse(cr,uid,ids,context=context):
+            res[product.id] = item_obj.search(cr,uid,[('categ_id','=',product.categ_id.id)],context=context)
+            
+        return res
+
+
     _columns = {
     'property_cost_structure': fields.property(
     'cost.structure',
@@ -95,6 +106,9 @@ class product_product(osv.osv):
     'date_cost_to_price': fields.related('property_cost_structure', 'date_cost_to_price', type='datetime', string='Date'),
     'method_cost_ids': fields.related('property_cost_structure', 'method_cost_ids',relation='method.price', type='one2many', string='Method Cost',),
     'status_bool':fields.function(_structure_cost_status, method=True,type="boolean",store=True, string='Status Price'),
+    'price_list_item_ids':fields.one2many('product.pricelit.item','product_id','Price List Item',help='Percent to compute cost from Price list item'),
+    'category_item_ids': fields.function(_search_price_list_item, relation='product.pricelist.item', method=True, string="Price item by category", type='many2many'),
+
     }
     
     _constraints =  [(_check_default_cost, 'ERROR, The product can only a default price', ['default_cost'])]    

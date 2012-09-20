@@ -46,6 +46,13 @@
             </tree>
             </field>
           </page>
+          <page string="List Price Item">
+          <field name='price_list_item_ids' widget="many2many" nolabel="1"/>
+              <field name='category_item_ids' nolabel="1"  />
+          
+          
+          
+          </page>
         </xpath>
         <xpath expr='/form/notebook/page[@string="Information"]' position="after">
           <page string="Landing Information"><!-- <field name='arancel' /> --></page>
