@@ -64,6 +64,7 @@ class mrp_production(osv.osv):
         return True
     
     def _get_journal_accounts(self,cr,uid,product,context={}):
+
         if not context:
             context = {}
         
@@ -88,20 +89,18 @@ class mrp_production(osv.osv):
         if context.get('type',False) == 'produced':
             if product.quantity > 0:
                 if product.product_id.property_stock_production.valuation_out_account_id:
-                    src_acc = product.product_id.property_stock_production.valuation_out_account_id.id
+                    src_acc = product.product_id.property_stock_production.variation_out_account_id.id
                 if product.product_id.property_stock_production.variation_out_account_id:
-                    dest_acc = product.product_id.property_stock_production.variation_out_account_id.id
+                    dest_acc = product.product_id.property_stock_production.valuation_out_account_id.id
                 reference_amount = product.cost_variation
             if product.quantity < 0:
                 if product.product_id.property_stock_production.variation_out_account_id:
-                    src_acc = product.product_id.property_stock_production.variation_out_account_id.id
+                    src_acc = product.product_id.property_stock_production.valuation_out_account_id.id
                 if product.product_id.property_stock_production.valuation_out_account_id:
-                    dest_acc = product.product_id.property_stock_production.valuation_out_account_id.id
+                    dest_acc = product.product_id.property_stock_production.variation_out_account_id.id
                 reference_amount = product.cost_variation*-1
             
         journal_id = product.product_id.categ_id.property_stock_journal.id
-        print product.product_id.name,'impriomo name'
-        print src_acc,dest_acc,'imrpmo acc'
         if not src_acc or not dest_acc:
             raise osv.except_osv(_('Error!'),  _('There is no account defined for this location: "%s" ') % \
                                     (product.product_id.property_stock_production.name,))
