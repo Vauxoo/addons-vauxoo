@@ -1,155 +1,178 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
 
-  <template pageSize="(280.0mm,220.0mm)" title="IFRS" author="Yanina Aular" allowSplitting="20" showBoundary="1">
-    <pageTemplate id="first">
-        <pageGraphics>
-            
-            <place x="10.0mm"     y="180.0mm"    width="260.0mm"  height="35.0mm">
-                <blockTable colWidths="260mm" rowHeights="7mm" style="TITLETABLE">
-                    <tr>
-                        <td>
-                            <para style="TITLE">[[company.name.upper()]]</para>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <para style="TITLE">[[ o.title ]]</para>
-                        </td>
-                    </tr>
-					<tr>
-                        <td>
-                            <para style="FISCAL">[[ o.fiscal_year.date_stop ]]</para>
-                        </td>
-                    </tr>
-                </blockTable>
-            </place>
+  <template pageSize="(215.9mm,279.4mm)" title="IFRS" author="Yanina Aular y Katherine Zaoral" allowSplitting="20" showBoundary="0">
+	<pageTemplate id="first">
 
-			
+		<pageGraphics>
 
-            <setFont name="Helvetica-Oblique" size="8.0"/>
+			<setFont name="Helvetica-Oblique" size="8.0"/>
 
-            <image x="12.0mm" y="198.0mm" width="60mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
-            
-            <drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString> 
-            <drawRightString x="270mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString> 
-                   
-        </pageGraphics>
-        
-      <frame id="first"     x1="10.0mm"     y1="10mm"    width="260mm"  height="184.0mm"/>
-    </pageTemplate>
+			<!-- BANNER TITLES -->
+			<place x="10.0mm"     y="234.4mm"    width="195.9mm"  height="35.0mm">
+				<blockTable colWidths="195.5mm" rowHeights="7mm" style="TITLETABLE">
+					<tr><td><para style="TITLE">[[ company.name.upper() ]]</para></td></tr>
+					<tr><td><para style="TITLE">[[ o.title ]]</para></td></tr>
+					<tr><td><para style="FISCAL"> Año Terminado el [[ o.fiscalyear_id.date_stop ]]</para></td></tr>
+				</blockTable>
+			</place>
+
+			<!-- COMPANY LOGO -->
+			<image x="12.0mm" y="252.0mm" height="15mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
+
+			<!-- REPORT CURVE BORDER  -->
+			<stroke color="black"/>
+			<rect x="10mm" y="10mm" width="195.9mm" height="259.4mm" fill="no" stroke="yes" round="2.5mm" />
+
+			<!-- FOOTER -->
+			<drawString x="10mm" y="5mm">Reporte Impreso en OpenERP con ReportLab</drawString>
+			<drawRightString x="200mm" y="5mm">Fecha de Impresion:  [[formatLang(time.strftime('%Y-%m-%d'),date=True)]] [[time.strftime('%H:%m')]] / Pagina:<pageNumber/> </drawRightString>
+
+		</pageGraphics>
+
+		<frame id="first" x1="10mm" y1="10mm" width="195.9mm" height="238,4mm"/>
+	</pageTemplate>
   </template>
 
 
-<!--
-	Se crean los estilos de tablas, para, etc 
--->
+	<!-- Definición de Estilos del Reporte -->
 	<stylesheet>
-		<paraStyle name="TITLE" alignment="CENTER" fontName="Helvetica-BoldOblique" fontSize="12.0" leading="10" textColor="black"/>   
-        <paraStyle name="FISCAL" alignment="CENTER" fontName="Helvetica" fontSize="12.0" leading="10" textColor="black"/>
-		
+
+		<paraStyle
+			name="TITLE"
+			alignment="CENTER"
+			fontName="Helvetica-Bold"
+			fontSize="10.0"
+			textColor="black"
+		/>
+
+		<paraStyle
+			name="FISCAL"
+			alignment="CENTER"
+			fontName="Helvetica"
+			fontSize="10.0"
+			textColor="black"
+		/>
+
+	<!-- pappding style for tables entries -->
+
+		<paraStyle
+			name="padding_table_style"
+			fontName="Helvetica"
+			fontSize="12.0"
+			textColor="red"
+			alignment="left"
+		/>
+
+		<paraStyle
+			name="padding_level_0"
+			parent="padding_table_style"
+			leftIndent="0"
+		/>
+
+		<paraStyle
+			name="padding_level_1"
+			parent="padding_table_style"
+			leftIndent="15"
+		/>
+
+		<paraStyle
+			name="padding_level_2"
+			parent="padding_table_style"
+			leftIndent="30"
+		/>
+
+		<paraStyle
+			name="padding_level_3"
+			parent="padding_table_style"
+			leftIndent="45"
+		/>
+
+		<paraStyle
+			name="padding_level_4"
+			parent="padding_table_style"
+			leftIndent="60"
+		/>
+
+		<paraStyle
+			name="padding_level_5"
+			parent="padding_table_style"
+			leftIndent="75"
+		/>
+
+		<paraStyle
+			name="padding_level_6"
+			parent="padding_table_style"
+			leftIndent="90"
+		/>
+
 		<blockTableStyle id="TITLETABLE">
-			<blockBackground colorName="lightgrey"/>
 			<blockValign value="TOP"/>
-			<lineStyle kind="BOX" colorName="gray" thickness="0.5"/>
-		</blockTableStyle>     
-
-		<blockTableStyle id="TERMSTABLE">
-            <blockBackground colorName="white"/>
-			<blockValign value="TOP"/>
-			<lineStyle kind="BOX" colorName="gray" thickness="0.5"/>
 		</blockTableStyle>
-		
-		
-	   <blockTableStyle id="Table">
-		  <blockValign value="TOP"/>
-		  <blockAlignment value="RIGHT"/>
-		  <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,0"/>
-		
-		
-		<!--
-		<para>[[  ]]</para>
-		
-		<blockBackground colorName="gainsboro" start="0,1" stop="2,1"/>
-		<blockBackground colorName="whitesmoke" start="0,2" stop="2,2"/>
--->
 
 <!--
-		<blockBackground colorName="cornsilk" start="0,1" stop="-1,-1"/>
--->
-
-<!--
-		  <lineStyle kind="GRID" colorName="silver"/>
--->
-		<lineStyle kind="LINEBELOW" colorName="silver" start="0,1" stop="-1,-1"/>
-		  <lineStyle kind="LINEAFTER" colorName="silver" start="1,1" stop="1,6" thickness="1"/>
-		  <lineStyle kind="LINEAFTER" colorName="silver" start="0,1" stop="0,6" thickness="1"/>
-<!--
-			<lineStyle kind="LINEAFTER" colorName="silver" start="9,1" stop="9,6" thickness="1"/>
--->
-
-<!--
-
-		<blockAlignment value="RIGHT" start="3,0" stop="3,-1"/>
-		<blockAlignment value="LEFT" start="0,1" stop="0,-1"/>
--->
-
-
-		</blockTableStyle>
-		 
-	
-<!--
-		<blockTableStyle id="repeater4" parent="_repeater">
-			<lineStyle kind="LINEBELOW" colorName="black" start="0,splitlast" stop="-1,splitlast" thickness="0.5"/>
-		</blockTableStyle>
-		<blockTableStyle id="verticalTest">
-			<blockAlignment value="left"/>
-			<blockSpan start="0,0" stop="0,2"/>
-			<blockFont name="Helvetica"/>
-			<lineStyle kind="GRID" colorName="black"/>
+		# Utilizada cuando se hacia una tabla principal con todo adentro, no lo borro porque puede servir cuando haga el segundo intento de generar las lineas pero utilizando una tabla unica + estilo parastyle
+		<blockTableStyle id="main_table_style">
+			<blockValign value="CENTER"/>
+			<blockAlignment value="CENTER"/>
+			<blockTopPadding length="0"/>
+			<blockBottomPadding length="0"/>
+			<blockRightPadding length="0"/>
+			<blockLeftPadding length="0"/>
+			<lineStyle kind="INNERGRID" colorName="red" thickness="1" />
 		</blockTableStyle>
 -->
-		 
-		 
+
+		<blockTableStyle id="header_table_style">
+			<blockValign value="CENTER"/>
+			<blockAlignment value="CENTER"/>
+			<lineStyle kind="LINEABOVE" colorName="red" thickness="1" />
+		</blockTableStyle>
+
+		<blockTableStyle id="gainsboro_data_table_style">
+			<blockBackground colorName="gainsboro" />
+			<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+		</blockTableStyle>
+
+		<blockTableStyle id="white_data_table_style">
+			<blockBackground colorName="white" />
+			<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+		</blockTableStyle>
+
 	</stylesheet>
-	
-	
+
 	<story>
 
-<!--
-		 <spacer length="15"/>
--->
-		 
-	<para>[[ repeatIn(objects,'o') ]] </para>
-	<section>
-		<blockTable repeatRows="1" style="Table" colWidths="180.0mm,40.0mm,40.0mm">
-		  <tr>
-			<td><para>Flujo de efectivo por las actividades operativas:</para></td>
-			<td><para></para></td>
-			<td><para alignment="center">(Miles)</para></td>
-		  </tr>
-		  
-		  <tr>
-			<para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l') ]]</para> 
-			
-				<td><para>[[ ifrs_l.name]]</para></td> 
-	
+		<para>[[ repeatIn(objects,'o') ]] </para>
+		<para>[[ get_total_ifrs_lines(o) ]] </para>
 
-				
-				<td background="lightblue"><para alignment="center" >[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-				<td ><para alignment="center" >[[ ifrs_l.type=='total' and ifrs_l.amount ]]</para></td>
-		  
-		  
-		  
-		  </tr>
+		<!-- header row table -->
+		<blockTable style="header_table_style" colWidths="155.0mm,40.0mm">
+			<tr>
+				<td><para>Flujo de efectivo por las actividades operativas:</para></td>
+				<td><para alignment="center">(Miles)</para></td>
+			</tr>
 		</blockTable>
-		
-	</section>
-	
-		
-	
+
+		<!-- data row table -->
+		<blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '115.0mm,40.0mm,40.0mm', 'style' : get_line_color()+'_data_table_style'}) ]]
+		<para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l', 'blockTable') ]]</para>
+			<tr>
+				<td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
+				<td><para alignment="center" >[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para alignment="center" >[[ ifrs_l.type=='total' and ifrs_l.amount ]]</para></td>
+			</tr>
+		</blockTable>
+
+	<!--
+		<blockTable repeatRows="1" style="Table" colWidths="115.9mm">
+			<tr><td><para> Depurado... </para></td></tr>
+			<tr><td><para>[[ o ]]</para></td></tr>
+			<tr><td><para>[[ repr(o) ]]</para></td></tr>
+			<tr><td><para>[[ repr(doc._nameSpace) ]]</para></td></tr>
+			<tr><td><para><docPara expr='repr(doc._nameSpace)'/></para></td></tr>
+		</blockTable>
+	-->
+
 	</story>
-	
-
 </document>
-
