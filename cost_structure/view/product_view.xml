@@ -47,8 +47,41 @@
             </field>
           </page>
           <page string="List Price Item">
-            <field name='price_list_item_ids' nolabel="1" />
-            <field name='category_item_ids' readonly="1" nolabel="1" />
+            <separator string="Price list by Product" colspan="6"/>
+            <field name='price_list_item_ids' context="{'product':'active_id','accccc':'id'}" nolabel="1" >
+            <tree string="By Product" editable="bottom" >
+            <field name='sequence' />
+            <field name='price_list_id' />
+            <field name='name' />
+            <field name='product_id' />
+            <field name='price_discount' />
+            <field name='price_round' />
+            <field name='price_min_margin' />
+            <field name='date_start' />
+            <field name='date_end' />
+            <field name='compute_price' context="{'active':'active_id'}"/>
+            </tree>
+            </field>
+            <newline/>
+            <separator string="Price list by Category" colspan="6"/>
+            <field name='category_item_ids' readonly="1" nolabel="1" >
+             <tree string="By Category" editable="bottom">
+            <field name='sequence' />
+            <field name='price_list_id' />
+            <field name='name' />
+            <field name='product_id' />
+            <field name='price_discount' />
+            <field name='price_round' />
+            <field name='price_min_margin' />
+            <field name='price_max_margin' />
+             <field name='date_start' />
+            <field name='date_end' />
+            </tree>
+            
+            
+            
+            
+            </field>
           </page>
         </xpath>
         <xpath expr='/form/notebook/page[@string="Information"]' position="after">

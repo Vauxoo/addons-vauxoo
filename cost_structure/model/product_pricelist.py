@@ -46,12 +46,47 @@ class inherit_price_list_item(osv.osv):
         return res
         
 
+    def _compute_price(self, cr, uid, ids, field_name, arg, context=None):
+        
+        if context is None:
+            context = {}
+        res = {}
+        product_obj = self.pool.get('product.product')
+        pricelist_obj = self.pool.get('product.pricelist')
+        if context.get('product',False):
+            for item in self.browse(cr,uid,ids,context=context):
+                price = pricelist_obj.price_get(cr, uid, [item.price_list_id and \
+                                                       item.price_list_id.id],
+                                                       context.get('product'), 1, context=context)
+                
+                price = item.price_list_id and price.get(item.price_list_id.id)
+
+                res[item.id] = price
+        else:
+            for item in self.browse(cr,uid,ids,context=context):
+                if item.product_id:
+                    price = pricelist_obj.price_get(cr, uid, [item.price_list_id and \
+                                                           item.price_list_id.id],
+                                                           item.product_id.id, 1, context=context)
+                    
+                    price = item.price_list_id and price.get(item.price_list_id.id)
+
+                    res[item.id] = price
+        
+            
+            
+        return res
+        
+
     
     _inherit='product.pricelist.item'
 
     _columns={
     'price_list_id':fields.function(_get_price_list,method=True,type='many2one',relation='product.pricelist',string='Price LIst'),
-    
+    'compute_price':fields.function(_compute_price,method=True,type='float',string='Price'),
+    'price_version_id': fields.many2one('product.pricelist.version', 'Price List Version', required=True, select=True, ondelete='cascade'),
+    'date_start':fields.related('price_version_id','date_start',type='date',string='Date Start'),
+    'date_end':fields.related('price_version_id','date_end',type='date',string='Date End'),
     }
 
 inherit_price_list_item()
