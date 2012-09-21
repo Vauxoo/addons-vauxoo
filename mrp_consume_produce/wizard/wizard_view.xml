@@ -10,7 +10,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Consume">
-			<field name="consume_line_ids" mode="tree" nolabel="1">
+			<field name="consume_line_ids" mode="tree" nolabel="1" width="640" height="240">
 				<tree string="Consume" editable="bottom">
 					<field name="product_id"/>
 					<field name="quantity"/>
@@ -60,7 +60,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Produce">
-			<field name="produce_line_ids" mode="tree" nolabel="1">
+			<field name="produce_line_ids" mode="tree" nolabel="1" width="640" height="240">
 				<tree string="Produce" editable="bottom">
 					<field name="product_id"/>
 					<field name="quantity"/>
@@ -74,7 +74,7 @@
 			</field>
 			<group colspan="4">
 				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
-				<button string="Produced Products" icon="gtk-ok" name="action_produce" type="object"/>
+				<button string="Products Produced" icon="gtk-ok" name="action_produce" type="object"/>
 			</group>
                 </form>
             </field>
