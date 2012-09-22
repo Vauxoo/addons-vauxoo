@@ -32,118 +32,98 @@
 
 		<frame id="first" x1="10mm" y1="10mm" width="195.9mm" height="238,4mm"/>
 	</pageTemplate>
-  </template>
+	</template>
 
-
-	<!-- Definición de Estilos del Reporte -->
 	<stylesheet>
 
-		<paraStyle
-			name="TITLE"
-			alignment="CENTER"
-			fontName="Helvetica-Bold"
-			fontSize="10.0"
-			textColor="black"
-		/>
+		<!-- Header styles -->
 
-		<paraStyle
-			name="FISCAL"
-			alignment="CENTER"
-			fontName="Helvetica"
-			fontSize="10.0"
-			textColor="black"
-		/>
+			<paraStyle
+				name="TITLE"
+				alignment="CENTER"
+				fontName="Helvetica-Bold"
+				fontSize="10.0"
+				textColor="black"
+			/>
 
-	<!-- pappding style for tables entries -->
+			<paraStyle
+				name="FISCAL"
+				alignment="CENTER"
+				fontName="Helvetica"
+				fontSize="10.0"
+				textColor="black"
+			/>
 
-		<paraStyle
-			name="padding_table_style"
-			fontName="Helvetica"
-			fontSize="12.0"
-			textColor="red"
-			alignment="left"
-		/>
+			<blockTableStyle id="TITLETABLE">
+				<blockValign value="TOP"/>
+			</blockTableStyle>
 
-		<paraStyle
-			name="padding_level_0"
-			parent="padding_table_style"
-			leftIndent="0"
-		/>
+		<!-- Pappding style for ifrs lines -->
 
-		<paraStyle
-			name="padding_level_1"
-			parent="padding_table_style"
-			leftIndent="15"
-		/>
+			<paraStyle
+				name="padding_table_style"
+				fontName="Helvetica"
+				fontSize="12.0"
+				textColor="red"
+				alignment="left"
+			/>
 
-		<paraStyle
-			name="padding_level_2"
-			parent="padding_table_style"
-			leftIndent="30"
-		/>
+			<paraStyle name="padding_level_0" parent="padding_table_style" leftIndent="0" />
+			<paraStyle name="padding_level_1" parent="padding_table_style" leftIndent="15" />
+			<paraStyle name="padding_level_2" parent="padding_table_style" leftIndent="30" />
+			<paraStyle name="padding_level_3" parent="padding_table_style" leftIndent="45" />
+			<paraStyle name="padding_level_4" parent="padding_table_style" leftIndent="60" />
+			<paraStyle name="padding_level_5" parent="padding_table_style" leftIndent="75" />
+			<paraStyle name="padding_level_6" parent="padding_table_style" leftIndent="90" />
+			<!-- OJO: no funciona el atributo parent, imprime con el estilo por defecto me iamgino, debo checar que pasa y si este atributo esta contemplado en openerp -->
 
-		<paraStyle
-			name="padding_level_3"
-			parent="padding_table_style"
-			leftIndent="45"
-		/>
+		<!-- Data Table Styles -->
 
-		<paraStyle
-			name="padding_level_4"
-			parent="padding_table_style"
-			leftIndent="60"
-		/>
+			<blockTableStyle id="header_table_style">
+				<blockValign value="CENTER"/>
+				<blockAlignment value="CENTER"/>
+				<lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
+			</blockTableStyle>
 
-		<paraStyle
-			name="padding_level_5"
-			parent="padding_table_style"
-			leftIndent="75"
-		/>
+			<!--
+			# Utilizada cuando se hacia una tabla principal con todo adentro, no lo borro porque puede servir cuando haga el segundo intento de generar las lineas pero utilizando una tabla unica + estilo parastyle
+			<blockTableStyle id="main_table_style">
+				<blockValign value="CENTER"/>
+				<blockAlignment value="CENTER"/>
+				<blockTopPadding length="0"/>
+				<blockBottomPadding length="0"/>
+				<blockRightPadding length="0"/>
+				<blockLeftPadding length="0"/>
+				<lineStyle kind="INNERGRID" colorName="red" thickness="1" />
+			</blockTableStyle>
+			-->
 
-		<paraStyle
-			name="padding_level_6"
-			parent="padding_table_style"
-			leftIndent="90"
-		/>
+			<!-- Color Row Styles -->
 
-		<blockTableStyle id="TITLETABLE">
-			<blockValign value="TOP"/>
-		</blockTableStyle>
+				<blockTableStyle id="gainsboro_data_table_style">
+					<blockBackground colorName="gainsboro" />
+					<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+				</blockTableStyle>
 
-<!--
-		# Utilizada cuando se hacia una tabla principal con todo adentro, no lo borro porque puede servir cuando haga el segundo intento de generar las lineas pero utilizando una tabla unica + estilo parastyle
-		<blockTableStyle id="main_table_style">
-			<blockValign value="CENTER"/>
-			<blockAlignment value="CENTER"/>
-			<blockTopPadding length="0"/>
-			<blockBottomPadding length="0"/>
-			<blockRightPadding length="0"/>
-			<blockLeftPadding length="0"/>
-			<lineStyle kind="INNERGRID" colorName="red" thickness="1" />
-		</blockTableStyle>
--->
+				<blockTableStyle id="white_data_table_style">
+					<blockBackground colorName="white" />
+					<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+				</blockTableStyle>
 
-		<blockTableStyle id="header_table_style">
-			<blockValign value="CENTER"/>
-			<blockAlignment value="CENTER"/>
-			<lineStyle kind="LINEABOVE" colorName="red" thickness="1" />
-		</blockTableStyle>
+			<!-- Amount Cell Stype (total or simple) -->
 
-		<blockTableStyle id="gainsboro_data_table_style">
-			<blockBackground colorName="gainsboro" />
-			<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
-		</blockTableStyle>
+				<blockTableStyle id="total_amount_data_table_style">
+					<lineStyle kind="LINEBELOW" thickness="1" />
+				</blockTableStyle>
 
-		<blockTableStyle id="white_data_table_style">
-			<blockBackground colorName="white" />
-			<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
-		</blockTableStyle>
+				<blockTableStyle id="simple_amount_data_table_style">
+				</blockTableStyle>
 
 	</stylesheet>
 
 	<story>
 
-		<para>[[ repeatIn(objects,'o') ]] </para>
+		<para>[[ repeatIn(objects,'o') ]]</para>
 		<para>[[ get_total_ifrs_lines(o) ]] </para>
 
 		<!-- header row table -->
@@ -160,11 +140,18 @@
 			<tr>
 				<td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
 				<td><para alignment="center" >[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+					<!-- HACER: estilo de celda de totalizacion.
+					1. Agregar una tabla nueva anidada donde se coloque el subrayado a la celda utilizando el estilo "total_amount_data_table_style", a traves del criterio del tipo de ifrs_line en la funcion del parser
+					2.
+					, para ello necesito ver si puedo generar por lote y con condiicones de [[]] los estilos -->
 				<td><para alignment="center" >[[ ifrs_l.type=='total' and ifrs_l.amount ]]</para></td>
+			<!--
+			HACER: un set tag para imprimir las ultimas dos TD TD { style : _get_td_format()+"_table_style" }
+			-->
 			</tr>
 		</blockTable>
 
-	<!--
+	<!-- # Some old school debug
 		<blockTable repeatRows="1" style="Table" colWidths="115.9mm">
 			<tr><td><para> Depurado... </para></td></tr>
 			<tr><td><para>[[ o ]]</para></td></tr>
