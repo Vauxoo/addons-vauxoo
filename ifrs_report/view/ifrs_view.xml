@@ -38,12 +38,13 @@
 				  <field name="name" />
 				  <field name="type" />
 				  <field name="parent_id" />
+				<field name="parent_abstract_id" />
 				<!--<field name="parent_left" />
 				<field name="parent_right" />-->
 				  <field name="cons_ids" />
 				  <field name="total_ids" />
 				  <field name="amount" />
-				 <!-- <field name="level" /> -->
+				 <field name="level" />
 				</tree>
 				<form string="IFRS Lines">
 				  <field name="id" />
@@ -51,6 +52,7 @@
 				  <field name="name" />
 				  <field name="type" />
 				  <field name="parent_id" />
+				<field name="parent_abstract_id" />
 				  <field name="amount" />
 				  <group colspan='6'>
 					  <group
@@ -65,20 +67,7 @@
 						<field
 							name="total_ids" widget="many2many"
 							nolabel='1'
-							domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]" ><!-- widget="many2many"-->
-<!--
-						<tree>
-							<field name="name"/>
-							<field name="type"/>
-							<field name="parent_id"/>
-						</tree>
-						<form string="ksjdhf">
-							<field name="name"/>
-							<field name="type"/>
-							<field name="parent_id"/>
-						</form>
-						
--->
+							domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
 						</field>
 					  </group>
 				  </group>
@@ -102,7 +91,7 @@
 			</field>
 		    </record> -->
 
-<!--
+
 		<record model="ir.ui.view" id="view_ifrs_lines_form">
 			<field name="name">ifrs.lines.form</field>
 			<field name="model">ifrs.lines</field>
@@ -111,12 +100,16 @@
 				<form string="IFRS Line">
 					<group col="6" colspan="4">
 						<field name="name" />
-						<field name="parent_id" domain="[('ifrs_lines_id','=',parent.id)"></field>
+						<field name="parent_id"></field>
+						<field name="sequence"></field>
+						<field name="type" />
+						<field name="amount"></field>
+						<field name="ifrs_id"></field>
 					</group>
 				</form>
 			</field>
 		</record>
--->
+
 		<!-- ACCIONES -->
 
 		<record model="ir.actions.act_window" id="action_ifrs_ifrs_form">
@@ -125,14 +118,15 @@
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-<!--
+
 		<record model="ir.actions.act_window" id="action_ifrs_lines_form">
 			<field name="name">IFRS Lines</field>
 			<field name="res_model">ifrs.lines</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">search</field>
+<!--			<field name="domain">[('type','=','total')]</field>-->
 		</record>
--->
+
 		<!-- MENUS -->
 
 		<menuitem
