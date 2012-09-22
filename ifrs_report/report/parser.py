@@ -34,7 +34,6 @@ class ifrs_report(report_sxw.rml_parse):
 
 	_iter_record = 0
 	_total_record = 0
-	#~ _total_record = self._get_total_ifrs_lines(...)
 
 	def __init__(self, cr, uid, name, context):
 		super(ifrs_report, self).__init__(cr, uid, name, context=context)
@@ -43,21 +42,23 @@ class ifrs_report(report_sxw.rml_parse):
 			'get_lines': self._get_lines,
 			'get_hour': self._get_hour,
 			'get_time': self._get_time,
+			#~ Format method helpers
 			'get_total_ifrs_lines': self._get_total_ifrs_lines,
 			'get_padding_level' : self._get_padding_level,
 			'get_line_color' : self._get_line_color,
-			#~ Al colocar la funcion o el atributo de la clase en esta seccion permite que se pueda usar en en RML
+			'get_td_format' : self._get_td_format,
+			'get_amount_format' : self._get_amount_format,
 		})
 		self.cr = cr
 		self.context = context
 		self.uid = uid
 
 		print "\n__init__():"
+		print "self._iter_record = " + str(self._iter_record)
+		print "self._total_record = " + str(self._total_record)
 		#~ self.cr.execute("select ifrs_lines_ids from ifrs_ifrs where id=%s", str(uid) )
 		#~ print "cr.fetchone() = " + str(cr.fetchone())
 		#~ # raro pero me dice que no existe la columna ifrs_lines_ids
-		print "self._iter_record = " + str(self._iter_record)
-		print "self._total_record = " + str(self._total_record)
 
 	def _get_lines(self, ifrs_brws):
 		res = {}
@@ -85,7 +86,7 @@ class ifrs_report(report_sxw.rml_parse):
 		return time.strftime('%Y-%m-%d', time.gmtime(t))
 
 	#########################################################################################################################
-	#~ Funciones para generar dinamicamente el Formato de Impresion
+	#~ Format method helpers
 
 	def _get_total_ifrs_lines(self, ifrs_brws):
 		res = 0
@@ -110,6 +111,7 @@ class ifrs_report(report_sxw.rml_parse):
 		print "self._total_record = " + str(self._total_record)
 
 	#~ # OJO: intente utilizar estos emtodos en el metodo de arriba pero no pude.... no funciona
+
 	#~ def _update_total_record(self, total):
 		#~ self._total_record = total
 		#~ print "execute _update_total_record()"
@@ -121,6 +123,8 @@ class ifrs_report(report_sxw.rml_parse):
 	def _get_padding_level(self, level):
 		return "padding_level_"+str(level)
 		#~ OJO::: el level_padding de total es que ¿? cual le pones...
+		#~ OJO::: cuidado como se utiliza el level_padding = 0
+		#~ HACER: cambio de... ¿?
 
 	def _get_line_color(self):
 		res_color = 'white'
@@ -129,6 +133,10 @@ class ifrs_report(report_sxw.rml_parse):
 			par = True
 		else:
 			par = False
+
+		#~ NOTAK; probar optimizacion
+		#~ par = True if self._total_record % 2 else False
+
 
 		if self._iter_record == self._total_record:
 			res_color = 'gainsboro'
@@ -143,10 +151,28 @@ class ifrs_report(report_sxw.rml_parse):
 					res_color = 'white'
 				else:
 					res_color = 'gainsboro'
-		#~ optimizar: mejorar con una seleccion switch
+
+		#~ NOTAK; probar optimizacion
+		#~ res_color = 'gainsboro' if self._iter_record == self._total_record or par and self._iter_record % 2 or !par and !self._iter_record % 2 else 'white'
 
 		self._iter_record-=1
 		return res_color
+
+	#~ NOTAK; No la he utilizado todavia
+	def _get_amount_format(self, amount):
+		#~ """ auto-doc: _get_amount_format() return the format, '(negative amount)' or 'amount' depending of the amount sign """
+		if amount < 0.0:
+			amount = '('+str(amount)+')'
+		return amount
+
+	#~ NOTAK; No la he utilizado todavia
+	def _get_td_format(self, ifrsl_type):
+		#~ """ auto-doc: _get_td_format() return the style of the cell for amount, total type (with a black thick line below) or simple (dont apply any format) """
+		if ifrsl_type in 'total':
+			return amount
+		else:
+			return "simple_amount_data"
+
 
 report_sxw.report_sxw(
 	'report.ifrs',
