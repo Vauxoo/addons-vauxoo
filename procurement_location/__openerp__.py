@@ -27,13 +27,11 @@
     'name': 'plocation',
     "version" : "1.1",
     'author': 'Vauxoo',
-    'depends': ['mrp','product'],
+    'depends': ['mrp_default_location'],
     'description': """
         Added the Locations by default when select the product in order of production
     """,
     'update_xml':[
-    #~ 'product_category_view.xml',
-    #~ 'product_view.xml',
     ],
     'active': False,
     'installable': True
