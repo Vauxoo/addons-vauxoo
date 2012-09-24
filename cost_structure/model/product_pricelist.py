@@ -26,12 +26,10 @@
 from osv import fields, osv
 import tools
 from tools.translate import _
-from tools import config
 import decimal_precision as dp
 
 class inherit_price_list_item(osv.osv):
     """ """
-    
     
     
     def _get_price_list(self, cr, uid, ids, field_name, arg, context=None):
@@ -63,6 +61,7 @@ class inherit_price_list_item(osv.osv):
 
                 res[item.id] = price
         else:
+            
             for item in self.browse(cr,uid,ids,context=context):
                 if item.product_id:
                     price = pricelist_obj.price_get(cr, uid, [item.price_list_id and \
@@ -73,7 +72,15 @@ class inherit_price_list_item(osv.osv):
 
                     res[item.id] = price
         
-            
+                else:
+                    price = pricelist_obj.price_get(cr, uid, [item.price_list_id and \
+                                                           item.price_list_id.id],
+                                                           item.product_active_id and item.product_active_id.id,
+                                                            1, context=context)
+                    price = item.price_list_id and price.get(item.price_list_id.id)
+
+                    res[item.id] = price
+                    
             
         return res
         
@@ -85,8 +92,14 @@ class inherit_price_list_item(osv.osv):
     'price_list_id':fields.function(_get_price_list,method=True,type='many2one',relation='product.pricelist',string='Price LIst'),
     'compute_price':fields.function(_compute_price,method=True,type='float',string='Price'),
     'price_version_id': fields.many2one('product.pricelist.version', 'Price List Version', required=True, select=True, ondelete='cascade'),
+    'product_active_id': fields.many2one('product.product', 'product',help='Product active to list price'),
     'date_start':fields.related('price_version_id','date_start',type='date',string='Date Start'),
     'date_end':fields.related('price_version_id','date_end',type='date',string='Date End'),
     }
 
+    def delete_record(self,cr,uid,ids,context=None):
+        if context is None:
+            context={} 
+        return ids and self.unlink(cr,uid,ids,context=context)
+        
 inherit_price_list_item()

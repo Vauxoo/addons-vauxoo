@@ -71,7 +71,12 @@ class product_product(osv.osv):
         item_obj = self.pool.get('product.pricelist.item')
         res = {}
         for product in self.browse(cr,uid,ids,context=context):
-            res[product.id] = item_obj.search(cr,uid,[('categ_id','=',product.categ_id.id)],context=context)
+            item_ids = item_obj.search(cr,uid,[('categ_id','=',product.categ_id.id)],context=context)
+            sql_str = item_ids and len(ids) == 1 and '''UPDATE product_pricelist_item set
+                            product_active_id=%d
+                            WHERE id %s %s '''%(product.id,len(item_ids) > 1 and 'in' or '=',len(item_ids) > 1 and tuple(item_ids) or item_ids[0])
+            sql_str and cr.execute(sql_str)
+            res[product.id] = item_ids
         return res
 
 
@@ -80,7 +85,12 @@ class product_product(osv.osv):
         item_obj = self.pool.get('product.pricelist.item')
         res = {}
         for product in self.browse(cr,uid,ids,context=context):
-            res[product.id] = item_obj.search(cr,uid,[('product_id','=',product.id)],context=context)
+            item_ids = item_obj.search(cr,uid,[('product_id','=',product.id)],context=context)
+            sql_str = item_ids and len(ids) == 1 and '''UPDATE product_pricelist_item set
+                            product_active_id=%d
+                            WHERE id %s %s '''%(product.id,len(item_ids) > 1 and 'in' or '=',len(item_ids) > 1 and tuple(item_ids) or item_ids[0])
+            sql_str and cr.execute(sql_str)
+            res[product.id] = item_ids
         return res
     
     def _write_price_list_item_p(obj, cr, uid, id, name, value, fnct_inv_arg, context={}):

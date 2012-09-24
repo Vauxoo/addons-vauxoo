@@ -48,34 +48,38 @@
           </page>
           <page string="List Price Item">
             <separator string="Price list by Product" colspan="6"/>
-            <field name='price_list_item_ids' context="{'product':'active_id','accccc':'id'}" nolabel="1" >
+            <field name='price_list_item_ids' context="{'product':'active_id'}" nolabel="1" >
             <tree string="By Product" editable="bottom" >
-            <field name='sequence' />
+            <field name='sequence' context="{'product':'active_id'}" />
             <field name='price_list_id' />
             <field name='name' />
             <field name='product_id' />
             <field name='price_discount' />
+             <field name='compute_price' />
             <field name='price_round' />
             <field name='price_min_margin' />
+            <field name='price_max_margin' />
             <field name='date_start' />
             <field name='date_end' />
-            <field name='compute_price' context="{'active':'active_id'}"/>
+            <button name="delete_record" string="Delete" type="object" confirm="Are you sure ?" icon="gtk-execute"/>
             </tree>
             </field>
             <newline/>
             <separator string="Price list by Category" colspan="6"/>
-            <field name='category_item_ids' readonly="1" nolabel="1" >
+            <field name='category_item_ids'  context="{'product':'active_id'}" readonly="1" nolabel="1" >
              <tree string="By Category" editable="bottom">
-            <field name='sequence' />
+            <field name='sequence' context="{'product':'active_id'}"/>
             <field name='price_list_id' />
             <field name='name' />
             <field name='product_id' />
             <field name='price_discount' />
+             <field name='compute_price' />
             <field name='price_round' />
             <field name='price_min_margin' />
             <field name='price_max_margin' />
              <field name='date_start' />
             <field name='date_end' />
+             <button name="delete_record" string="Delete" type="object" confirm="Are you sure ?" icon="gtk-execute"/>
             </tree>
             
             
@@ -96,7 +100,22 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <xpath expr='//field[@name="type"]' position="after">
-              <field name='price_list_item_ids' colspan="6" nolabel="1"/>
+              <field name='price_list_item_ids' context="{'product':'active_id'}" colspan="6" nolabel="1" >
+            <tree string="By Category" editable="bottom" >
+            <field name='sequence' context="{'product':'active_id'}" />
+            <field name='price_list_id' />
+            <field name='name' />
+            <field name='price_discount' />
+            <field name='price_round' />
+            <field name='price_min_margin' />
+            <field name='price_max_margin' />
+            <field name='date_start' />
+            <field name='date_end' />
+            <button name="delete_record" string="Delete" type="object" confirm="Are you sure ?" icon="gtk-execute"/>
+            </tree>
+            </field>
+              
+            
         </xpath>
       </field>
     </record>
