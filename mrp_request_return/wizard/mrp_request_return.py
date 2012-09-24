@@ -36,17 +36,29 @@ class mrp_request_return(osv.osv_memory):
     }
     def action_request_return(self, cr, uid, ids, context={}):
         stock_picking = self.pool.get('stock.picking')
-        mrp_prouction = self.pool.get('mrp.production')
+        mrp_production = self.pool.get('mrp.production')
+        stock_move = self.pool.get('stock.move')
         
         mrp_ids = context.get('active_ids', [])
         production = self.pool.get('mrp.production').browse(cr, uid, mrp_ids, context=context)[0]
         
-        for wizard_moves  in self.browse(cr, uid, ids, context=context):
-            pick_id = mrp_prouction._make_production_internal_shipment(cr, uid, production, context=context)
-            for wiz_move in wizard_moves.re_line_ids:
-                if wiz_move.product_qty > 0.0:
-                    shipment_move_id = mrp_prouction._make_production_internal_shipment_line(cr, uid, wiz_move, pick_id, False)
-            
+        for wizard_moves in self.browse(cr, uid, ids, context=context):
+            if wizard_moves.type == 'request':
+                pick_id = mrp_production._make_production_internal_shipment(cr, uid, production, context=context)
+                stock_picking.write(cr, uid, pick_id, {'state':'draft'})
+                for wiz_move in wizard_moves.re_line_ids:
+                    if wiz_move.product_qty > 0.0:
+                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move, pick_id, False)
+                        mrp_production._make_production_consume_line(cr, uid, wiz_move, False )
+                            
+            if wizard_moves.type == 'return':
+                pick_id_return = mrp_production._make_production_internal_shipment(cr, uid, production, context=context)
+                stock_picking.write(cr, uid, pick_id_return, {'state':'draft', 'auto_picking':False})
+                for wiz_move2 in wizard_moves.re_line_ids:
+                    if wiz_move2.product_qty > 0.0:
+                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
+                        stock_move.write(cr, uid, shipment_move_id, {'state':'draft', 'location_id':wiz_move2.product_id.product_tmpl_id.property_stock_production.id})
+
         return True
     
     def default_get(self, cr, uid, fields, context=None):
