@@ -59,7 +59,7 @@ class mrp_request_return(osv.osv_memory):
                         shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
                         stock_move.write(cr, uid, shipment_move_id, {'state':'draft', 'location_id':wiz_move2.product_id.product_tmpl_id.property_stock_production.id})
 
-        return True
+        return {}
     
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
