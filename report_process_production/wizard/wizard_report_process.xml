@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    
+        <record id="view_wizard_report_process_form" model="ir.ui.view">
+            <field name="name">view.wizard.report.process.form</field>
+            <field name="model">wizard.report.process</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+               <form string="Report Process">
+                    <field name="product_ids" colspan="4" nolabel="1"/>
+                    <newline/>
+                    <field name="group" />
+                    <newline/>
+                    <button special="cancel" string="Cancel" colspan="2" icon="gtk-cancel"/>
+                    <button name="check_report" string="Report" type="object" colspan="1" icon="gtk-execute"/>
+
+                </form>
+            </field>
+        </record>
+        
+            <act_window id="wizard_report_process"
+                name="Reporte Produce"
+                src_model="mrp.production"
+                res_model="wizard.report.process"
+                view_mode="form"
+                target="new"
+                key2="client_action_multi"
+                />
+
+        <record id="action_wizard_report_process" model="ir.actions.act_window">
+             <field name="name">Reporte Proceso</field>
+             <field name="res_model">wizard.report.process</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="view_wizard_report_process_form"/>
+             <!--<field name="context">{'record_id':active_id}</field>-->
+             <field name="context">{}</field>
+             <field name="target">new</field>
+       </record>
+
+    </data>
+</openerp>
