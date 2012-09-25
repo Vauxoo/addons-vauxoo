@@ -42,7 +42,6 @@ class process_report(report_sxw.rml_parse):
             for line in prod.move_lines:
                 if line.product_id.id in data['product_ids']:
                     res.append(line)
-            print res,"aqui estaaaaa"
         return res
 
 report_sxw.report_sxw('report.process.report','mrp.production','addons/report_process_production/report/process_production_report.rml',parser=process_report,header=False)

@@ -47,13 +47,11 @@ class process_report_group(report_sxw.rml_parse):
                         new_ids.append(line.product_id.id)
                     else:
                         for r in res:
-                            print r,"la errrrrrrr"
-                            if line.product_id.id==521:
-                                print r['product_id'],line.product_id.id
-                                print r['product_qty'],"rer"
-                                print line.product_qty,"line"
                             if r['product_id']==line.product_id.id:
-                                r['product_qty']+=line.product_qty
+                                #~ r['product_qty']+=line.product_qty
+                                qty=pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id)
+                                r['product_qty']+=qty
+                                r['product_uom']=line.product_id.uom_id.name
                     if not res:
                         print line.product_id.id,"primer"
                         res.append({'product_id':line.product_id.id,'name':line.product_id.name,'product_uom':line.product_uom.name,'product_qty':line.product_qty,'product_categ':line.product_id.categ_id.name})
@@ -63,7 +61,6 @@ class process_report_group(report_sxw.rml_parse):
         for r in res:
             result.setdefault(r['product_id'],0)
             result[r['product_id']]+= r['product_qty']
-        print result,"aquisss"
         """
         return res
 

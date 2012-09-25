@@ -53,7 +53,6 @@ class wizard_report_process(osv.osv_memory):
         production_obj = self.pool.get('mrp.production')
         res = super(wizard_report_process, self).default_get(cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
-        print production_ids,"aqui mira"
         if not production_ids:
             return res
         prod_list=[]
