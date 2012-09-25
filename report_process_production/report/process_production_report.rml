@@ -111,7 +111,7 @@
             <para style="P6">[[ p.product_qty ]]</para>
           </td>
           <td>
-            <para style="P6">[[ p.product_id.uom_id.name ]]</para>
+            <para style="P6">[[ p.product_uom.name ]]</para>
           </td>
           <td>
             <para style="P6">[[ p.product_id.categ_id.name ]]</para>
