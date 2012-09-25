@@ -36,18 +36,35 @@ class process_report_group(report_sxw.rml_parse):
         
     def _get_production_group(self, data):
         res=[]
+        new_ids=[]
         pool = pooler.get_pool(self.cr.dbname)
         obj_prod=pool.get('mrp.production')
         for prod in obj_prod.browse(self.cr, self.uid, self.ids):
             for line in prod.move_lines:
                 if line.product_id.id in data['product_ids']:
+                    if line.product_id.id not in new_ids:
                         res.append({'product_id':line.product_id.id,'name':line.product_id.name,'product_uom':line.product_uom.name,'product_qty':line.product_qty,'product_categ':line.product_id.categ_id.name})
+                        new_ids.append(line.product_id.id)
+                    else:
+                        for r in res:
+                            print r,"la errrrrrrr"
+                            if line.product_id.id==521:
+                                print r['product_id'],line.product_id.id
+                                print r['product_qty'],"rer"
+                                print line.product_qty,"line"
+                            if r['product_id']==line.product_id.id:
+                                r['product_qty']+=line.product_qty
+                    if not res:
+                        print line.product_id.id,"primer"
+                        res.append({'product_id':line.product_id.id,'name':line.product_id.name,'product_uom':line.product_uom.name,'product_qty':line.product_qty,'product_categ':line.product_id.categ_id.name})
+                        new_ids.append(line.product_id.id)
+        """
         result={}
         for r in res:
-            print r,"errrre"
             result.setdefault(r['product_id'],0)
             result[r['product_id']]+= r['product_qty']
         print result,"aquisss"
+        """
         return res
 
 report_sxw.report_sxw('report.process.report.group','mrp.production','addons/report_process_production/report/process_production_report_group.rml',parser=process_report_group,header=False)
