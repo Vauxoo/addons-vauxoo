@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data> 
+        <report id="process_report"
+            name="process.report"
+            string="Report Process"
+            model="mrp.production"
+            rml='report_process_production/report/process_production_report.rml'
+            auto="False"
+            header="False"
+            menu="True"
+            multi="True"
+        />
+    </data>
+</openerp>
