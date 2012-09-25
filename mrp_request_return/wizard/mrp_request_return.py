@@ -59,7 +59,7 @@ class mrp_request_return(osv.osv_memory):
                 for wiz_move2 in wizard_moves.re_line_ids:
                     if wiz_move2.product_qty > 0.0:
                         shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
-                        stock_move.write(cr, uid, shipment_move_id, {'state':'draft', 'location_id':wiz_move2.product_id.product_tmpl_id.property_stock_production.id})
+                        stock_move.write(cr, uid, shipment_move_id, {'state':'draft'})
 
         return {}
     
