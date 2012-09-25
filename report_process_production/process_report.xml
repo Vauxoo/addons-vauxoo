@@ -8,8 +8,8 @@
             rml='report_process_production/report/process_production_report.rml'
             auto="False"
             header="False"
-            menu="True"
-            multi="True"
+            menu="False"
+            multi="False"
         />
     </data>
 </openerp>
