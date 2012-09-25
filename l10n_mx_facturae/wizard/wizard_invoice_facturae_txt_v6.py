@@ -112,7 +112,16 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
                 ( 'state', 'in', ['open', 'paid', 'cancel'] ),
                 ( 'date_invoice', '>=', date_start ),
                 ( 'date_invoice', '<', date_end ),
-                ( 'number', '<>', False )
+                ( 'number', '<>', False ),
+            ], order='date_invoice', context=context)
+        )
+        invoice_ids.extend(
+            invoice_obj.search(cr, uid, [
+                ( 'type', 'in', ['out_invoice', 'out_refund'] ),
+                ( 'state', 'in', ['cancel'] ),
+                ( 'date_invoice_cancel', '>=', date_start ),
+                ( 'date_invoice_cancel', '<', date_end ),
+                ( 'number', '<>', False ),
             ], order='date_invoice', context=context)
         )
         self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)
@@ -129,13 +138,14 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         date_start = datetime.datetime(year, month, 1, 0, 0, 0)
         date_end = date_start + relativedelta(months=1)
         context.update( {'date': date_start.strftime("%Y-%m-%d")} )
-        invoice_ids.extend(  
+        invoice_ids.extend(
             invoice_obj.search(cr, uid, [
                 ( 'type', 'in', ['out_invoice', 'out_refund'] ),
                 ( 'state', 'in', ['open', 'paid', 'cancel'] ),
                 ( 'date_invoice', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
                 ( 'date_invoice', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
-                #( 'number', '<>', False )
+                #( 'number', '<>', False ),
+                ( 'internal_number', '<>', False ),
                 ], order='date_invoice', context=context)
         )
         invoice_ids.extend(  
@@ -144,7 +154,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
                 ( 'state', 'in', ['cancel'] ),
                 ( 'date_invoice_cancel', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
                 ( 'date_invoice_cancel', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
-                #( 'number', '<>', False )
+                ( 'internal_number', '<>', False ),
                 ], order='date_invoice', context=context)
         )
         invoice_ids = list(set(invoice_ids))

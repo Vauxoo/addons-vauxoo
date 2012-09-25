@@ -131,7 +131,7 @@ def _get_invoices_month(self, cr, uid, data, context={}):
             ( 'state', 'in', ['open', 'paid', 'cancel'] ),
             ( 'date_invoice', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'date_invoice', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
-            #( 'number', '<>', False )
+            ( 'number', '<>', False ),
             ], order='date_invoice', context=context)
     )
     
@@ -141,7 +141,7 @@ def _get_invoices_month(self, cr, uid, data, context={}):
             ( 'state', 'in', ['cancel'] ),
             ( 'date_invoice_cancel', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'date_invoice_cancel', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
-            #( 'number', '<>', False )
+            ( 'number', '<>', False ),
             ], order='date_invoice', context=context)
     )
     invoice_ids = list(set(invoice_ids))
@@ -167,10 +167,18 @@ def _get_invoices_date(self, cr, uid, data, context={}):
             ( 'state', 'in', ['open', 'paid', 'cancel'] ),
             ( 'date_invoice', '>=', date_start ),
             ( 'date_invoice', '<', date_end ),
-            ( 'number', '<>', False )
+            ( 'internal_number', '<>', False ),
         ], order='date_invoice', context=context)
     )
-    
+    invoice_ids.extend(
+        invoice_obj.search(cr, uid, [
+            ( 'type', 'in', ['out_invoice', 'out_refund'] ),
+            ( 'state', 'in', ['cancel'] ),
+            ( 'date_invoice_cancel', '>=', date_start ),
+            ( 'date_invoice_cancel', '<', date_end ),
+            ( 'internal_number', '<>', False ),
+        ], order='date_invoice', context=context)
+    )
     return {'invoice_ids': invoice_ids}
 
 
