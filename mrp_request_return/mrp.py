@@ -23,24 +23,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import osv,fields
+from tools.translate import _
 
-{
-    "name": "MRP Acreation",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/MRP",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add wizard to request or return product to the stock
-    """,
-    'depends': ['mrp'],
-    'init_xml': [],
-    'update_xml': [
-        'wizard/mrp_request_return_view.xml',
-        'mrp_view.xml'
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+class mrp_production(osv.osv):
+    _inherit='mrp.production'
+    
+    _columns = {
+        'picking_ids' : fields.one2many('stock.picking', 'production_id', 'Picking')
+    }
+mrp_production()
+
+class stock_picking(osv.osv):
+    _inherit='stock.picking'
+    
+    _columns = {
+        'production_id' : fields.many2one('mrp.production', 'Production')
+    }
+mrp_production()
