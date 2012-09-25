@@ -13,6 +13,11 @@
  				<field name="picking_ids" nolabel="1"/>
 			</page>
                     </xpath>
+                    <xpath expr="/form/notebook/page[@string='Consumed Products']/field[@name='location_dest_id']" position="after">
+                        <button type="action"
+                            name="%(mrp_request_return.create_request_return_action)d"
+                            string="Product Request/Return" states="in_production" colspan="2" />
+                    </xpath>
 	    </field>
         </record>
 
