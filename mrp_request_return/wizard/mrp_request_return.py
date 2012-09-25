@@ -44,7 +44,8 @@ class mrp_request_return(osv.osv_memory):
         
         for wizard_moves in self.browse(cr, uid, ids, context=context):
             if wizard_moves.type == 'request':
-                pick_id = mrp_production._make_production_internal_shipment(cr, uid, production, context=context)
+                context['type'] = wizard_moves.type
+                pick_id = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
                 for wiz_move in wizard_moves.re_line_ids:
                     if wiz_move.product_qty > 0.0:
@@ -52,7 +53,8 @@ class mrp_request_return(osv.osv_memory):
                         mrp_production._make_production_consume_line(cr, uid, wiz_move, False )
                             
             if wizard_moves.type == 'return':
-                pick_id_return = mrp_production._make_production_internal_shipment(cr, uid, production, context=context)
+                context['type'] = wizard_moves.type
+                pick_id_return = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id_return, {'state':'draft', 'auto_picking':False, 'production_id':production.id})
                 for wiz_move2 in wizard_moves.re_line_ids:
                     if wiz_move2.product_qty > 0.0:
