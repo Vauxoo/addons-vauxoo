@@ -4,9 +4,9 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
 ###############Credits######################################################
-#    Coded by: author NAME LASTNAME <email@openerp.com.ve>                 #
+#    Coded by: Miguel Delgado <miguel@openerp.com.ve>                      #
 #    Planified by: Nhomar Hernandez                                        #
-#    Finance by: COMPANY NAME <EMAIL-COMPANY>                              #
+#    Finance by: Corporacion AMD                                           #
 #    Audited by: Humberto Arocha humberto@openerp.com.ve                   #
 ############################################################################
 #    This program is free software: you can redistribute it and/or modify  #
@@ -22,5 +22,4 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-import model
 import wizard
