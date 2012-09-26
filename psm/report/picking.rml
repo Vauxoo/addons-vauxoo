@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<document filename="Packing List.pdf">
+  <template pageSize="(210.0mm,270.0mm)" title="Packing List" author="OpenERP S.A.(sales@openerp.com)" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="5.0mm" y1="5mm" width="190mm" height="265mm" />
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+    </blockTableStyle>
+    <blockTableStyle id="Table_Address_detail">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+    </blockTableStyle>
+    <blockTableStyle id="Table_Title_String">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+    </blockTableStyle>
+    <blockTableStyle id="Header_Order_Reference_Tbl">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="0,0" stop="0,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="0,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="1,0" stop="1,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="1,0" stop="1,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="2,0" stop="2,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="2,0" stop="2,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="2,-1" stop="2,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="3,0" stop="3,-1" />
+      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="3,0" stop="3,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="3,0" stop="3,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="3,-1" stop="3,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="4,0" stop="4,-1" />
+      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="4,0" stop="4,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="4,0" stop="4,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="4,-1" stop="4,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="Content_Order_Reference_Table">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="0,0" stop="0,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="0,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="1,0" stop="1,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="1,0" stop="1,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="2,0" stop="2,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="2,0" stop="2,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="2,-1" stop="2,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="3,0" stop="3,-1" />
+      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="3,0" stop="3,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="3,0" stop="3,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="3,-1" stop="3,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="4,0" stop="4,-1" />
+      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="4,0" stop="4,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="4,0" stop="4,0" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="4,-1" stop="4,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="Move_Line_Header">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="pedigree_serialization">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="2,-1" stop="2,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="3,-1" stop="3,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="4,-1" stop="4,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="2,-1" stop="2,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="3,-1" stop="3,-1" />
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="4,-1" stop="4,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT" />
+      <blockValign value="TOP" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0" />
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify" />
+    </initialize>
+    <paraStyle name="Standard" fontName="Helvetica" />
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0" />
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0" />
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0" />
+    <paraStyle name="Caption" fontName="Helvetica-Oblique" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0" />
+    <paraStyle name="Index" fontName="Helvetica" />
+    <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_header_Centre" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Bold_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_tblheader_Details_Centre" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Centre_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Centre_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0" />
+    <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="Table Contents" fontName="Helvetica" />
+    <paraStyle name="Footer" fontName="Helvetica" />
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER" />
+    <paraStyle name="Horizontal Line" fontName="Helvetica" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="14.0" />
+    <paraStyle name="Heading 9" fontName="Helvetica-Bold" fontSize="75%" leading="NaN" spaceBefore="12.0" spaceAfter="6.0" />
+    <paraStyle name="terp_tblheader_General_Right" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_tblheader_Details_Right" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Right_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_header_Right" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_address" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Bold_10" fontName="Helvetica-Bold" fontSize="10.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Right_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Right_Bold_7" fontName="Helvetica-Bold" fontSize="7.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Right_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_Right_7" fontName="Helvetica" fontSize="6.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_7" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_2" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_5cm_Above_Space" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="0.0" />
+    <paraStyle name="terp_default_1cm_above_space" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="3.0" spaceAfter="0.0" />
+    <images />
+  </stylesheet>
+  <story>
+    <pto>
+      <pto_header>
+        <blockTable colWidths="477.0,71.0" repeatRows="1" style="Move_Line_Header">
+          <tr>
+            <td>
+              <para style="terp_tblheader_Details">Descripcion</para>
+            </td>
+            <td>
+              <para style="terp_tblheader_Details_Right">Cantidad</para>
+            </td>
+          </tr>
+        </blockTable>
+      </pto_header>
+      <para style="terp_default_8">[[repeatIn(objects,'picking')]]</para>
+      <para style="terp_default_5cm_Above_Space">
+        <font color="white" />
+      </para>
+      <blockTable colWidths="338.0,200.0" style="Table_Title_String">
+        <tr>
+          <td>
+            <para style="terp_header">Nota de Chequeo: [[ (picking.type == 'out' or removeParentNode('para')) and '' ]] [[ picking.name ]]</para>
+          </td>
+          <td>
+            <para style="terp_tblheader_General">[[ picking.origin and "Orden (Origen):" or '']] [[ picking.origin or '' ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="terp_default_2">
+        <font color="white" />
+      </para>
+      <section>
+        <para>[[repeatIn(get_psm(objects),'p')]]</para>
+        <blockTable colWidths="551" style="pedigree_serialization">
+          <tr>
+            <td>
+              <para style="terp_default_7">[[ p.get('product')  and ('PRODUCT: %s '%(p.get('product'))) or removeParentNode('para')]]</para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="terp_default_7">[[ p.get('product') and p.get('serial') or removeParentNode('para')]]</para>
+            </td>
+          </tr>
+        </blockTable>
+      </section>
+      <para style="terp_default_2">
+        <font color="white" />
+      </para>
+    </pto>
+  </story>
+</document>
