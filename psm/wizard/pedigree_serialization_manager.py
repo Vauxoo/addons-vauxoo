@@ -104,6 +104,7 @@ class pedigree_serialization_manager(osv.osv_memory):
                 psm = data.psm
                 if psm:
                     lines=psm.split('\n')
+                    lines = list(set(lines))
                 else:
                     lines=[]
                 for line in lines:
