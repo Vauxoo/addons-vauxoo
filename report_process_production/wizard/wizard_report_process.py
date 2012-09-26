@@ -35,7 +35,7 @@ class wizard_report_process(osv.osv_memory):
 
     _columns = {
       'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos'),
-      'group':fields.boolean('Agrupar'),
+      'print':fields.selection([('sin','Sin Agrupar'),('agrupado','Agrupado'),('ambos','Ambos')],'Imprimir'),
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -75,16 +75,22 @@ class wizard_report_process(osv.osv_memory):
             'form': data,
             'uid': uid,
         }
-        if data['group']:
+        if data['print']=='agrupado':
             return {
             'type': 'ir.actions.report.xml',
             'report_name': 'process.report.group',
             'datas': datas,
             }
-        else:
+        if data['print']=='sin':
             return {
             'type': 'ir.actions.report.xml',
             'report_name': 'process.report',
+            'datas': datas,
+            }
+        if data['print']=='ambos':
+            return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'process.report.two',
             'datas': datas,
             }
 

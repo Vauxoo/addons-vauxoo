@@ -62,7 +62,8 @@
     <paraStyle name="P3" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P4" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P5" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P6" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -85,19 +86,19 @@
     <blockTable colWidths="169.0,72.0,69.0,120.0,69.0" style="Table1">
       <tr>
         <td>
-          <para style="P6">Nombre</para>
+          <para style="P7">Nombre</para>
         </td>
         <td>
-          <para style="P6">Cantidad</para>
+          <para style="P7">Cantidad</para>
         </td>
         <td>
-          <para style="P6">UOM</para>
+          <para style="P7">UOM</para>
         </td>
         <td>
-          <para style="P6">Categoria</para>
+          <para style="P7">Categoria</para>
         </td>
         <td>
-          <para style="P6">Real</para>
+          <para style="P7">Real</para>
         </td>
       </tr>
       <tr>
@@ -106,7 +107,7 @@
           <para style="P5">[[ p['name'] ]]</para>
         </td>
         <td>
-          <para style="P5">[[ p['product_qty'] ]]</para>
+          <para style="P6">[[ formatLang(p['product_qty']) ]]</para>
         </td>
         <td>
           <para style="P5">[[ p['product_uom'] ]]</para>
@@ -115,7 +116,7 @@
           <para style="P5">[[ p['product_categ'] ]]</para>
         </td>
         <td>
-          <para style="P6">
+          <para style="P7">
             <font color="white"> </font>
           </para>
         </td>

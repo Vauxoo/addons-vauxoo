@@ -26,13 +26,24 @@ import pooler
 from tools.amount_to_text import amount_to_text
 from tools.translate import _
 
-class process_report_group(report_sxw.rml_parse):
+class process_report_two(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(process_report_group, self).__init__(cr, uid, name, context=context)
+        super(process_report_two, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
         'time': time,
         'get_production_group':self._get_production_group,
+        'get_production':self._get_production,
         })
+        
+    def _get_production(self, data,prod_id):
+        res=[]
+        pool = pooler.get_pool(self.cr.dbname)
+        obj_prod=pool.get('mrp.production')
+        for prod in obj_prod.browse(self.cr, self.uid, [prod_id]):
+            for line in prod.move_lines:
+                if line.product_id.id in data['product_ids']:
+                    res.append(line)
+        return res
         
     def _get_production_group(self, data):
         res=[]
@@ -61,7 +72,7 @@ class process_report_group(report_sxw.rml_parse):
         """
         return res
 
-report_sxw.report_sxw('report.process.report.group','mrp.production','addons/report_process_production/report/process_production_report_group.rml',parser=process_report_group,header=False)
+report_sxw.report_sxw('report.process.report.two','mrp.production','addons/report_process_production/report/process_production_report_two.rml',parser=process_report_two,header=False)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

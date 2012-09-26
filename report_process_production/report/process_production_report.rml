@@ -63,7 +63,7 @@
     <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P5" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P6" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P7" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -83,7 +83,7 @@
         <font color="white"> </font>
       </para>
       <para style="P5">[[repeatIn(objects,'o')]]</para>
-      <para style="P2">Producción: [[ o.name ]] , Producto: [[o.product_id.name ]]</para>
+      <para style="P2">Producción: [[ o.name ]] , Producto: [[o.product_id.name ]], Cantidad: [[ o.product_qty ]], Unidad Medida: [[o.product_uom.name ]],</para>
       <blockTable colWidths="169.0,72.0,69.0,120.0,69.0" style="Table1">
         <tr>
           <td>
@@ -108,7 +108,7 @@
             <para style="P6">[[ p.product_id.name ]]</para>
           </td>
           <td>
-            <para style="P6">[[ p.product_qty ]]</para>
+            <para style="P7">[[ formatLang(p.product_qty) ]]</para>
           </td>
           <td>
             <para style="P6">[[ p.product_uom.name ]]</para>
