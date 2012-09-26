@@ -51,6 +51,7 @@
                 "wizard/pedigree_serialization_manager.xml",
                 "wizard/stock_invoice_onshipping_view.xml",
                 "view/stock_view.xml",
+                "report/psm_picking_report.xml",
     ],
     "active": False,
     "installable": True,

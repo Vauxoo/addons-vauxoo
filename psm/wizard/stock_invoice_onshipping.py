@@ -69,5 +69,3 @@ class stock_invoice_onshipping_psm(osv.osv_memory):
         return res
         
 stock_invoice_onshipping_psm()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

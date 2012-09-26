@@ -56,9 +56,6 @@ class pedigree_serialization_manager(osv.osv_memory):
         'product_id': fields.many2one('product.product', 'Product', required=True, select=True),
         'product_uom': fields.many2one('product.uom', 'UoM'),
         'psm':fields.text('Pedigree Serialization Manager'),
-        #~ 'line_ids': fields.one2many('stock.move.split.lines', 'lot_id', 'Production Lots'),
-        #~ 'line_exist_ids': fields.one2many('stock.move.split.lines.exist', 'lot_id', 'Production Lots'),
-        #~ 'use_exist' : fields.boolean('Existing Lots', help="Check this option to select existing lots in the list below, otherwise you should enter new ones line by line."),
         'location_id': fields.many2one('stock.location', 'Source Location')
      }
 
