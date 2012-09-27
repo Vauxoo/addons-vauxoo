@@ -35,9 +35,12 @@ class wizard_report_process(osv.osv_memory):
 
     _columns = {
       'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos'),
-      'group':fields.boolean('Agrupar'),
+      'print':fields.selection([('sin','Sin Agrupar'),('agrupado','Agrupado'),('ambos','Ambos')],'Imprimir',required=True),
     }
 
+    _defaults={
+        'print':'ambos'
+    }
     def default_get(self, cr, uid, fields, context=None):
         """ To get default values for the object.
          @param self: The object pointer.
@@ -53,7 +56,6 @@ class wizard_report_process(osv.osv_memory):
         production_obj = self.pool.get('mrp.production')
         res = super(wizard_report_process, self).default_get(cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
-        print production_ids,"aqui mira"
         if not production_ids:
             return res
         prod_list=[]
@@ -76,17 +78,12 @@ class wizard_report_process(osv.osv_memory):
             'form': data,
             'uid': uid,
         }
-        if data['group']:
-            return {
-            'type': 'ir.actions.report.xml',
-            'report_name': 'process.report.group',
-            'datas': datas,
-            }
-        else:
-            return {
+        
+        return {
             'type': 'ir.actions.report.xml',
             'report_name': 'process.report',
             'datas': datas,
-            }
+        }
+
 
 wizard_report_process()
