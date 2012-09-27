@@ -35,23 +35,19 @@
       <blockValign value="TOP"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="4,0" stop="4,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table3">
@@ -79,23 +75,23 @@
       <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="0,1" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,1" stop="0,1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,1" stop="0,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,1" stop="1,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="1,1" stop="1,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,1" stop="1,1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,1" stop="1,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,1" stop="2,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="2,1" stop="2,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,1" stop="2,1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,1" stop="2,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,1" stop="3,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,1" stop="3,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,1" stop="3,1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,1" stop="3,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,1" stop="4,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="4,1" stop="4,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,1" stop="4,1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,1" stop="4,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
     </blockTableStyle>
     <initialize>
@@ -133,7 +129,7 @@
       <para style="P6">
         <font face="Helvetica" size="8.0">[[ repeatIn(get_sin(data['form']), 's') ]]</font>
       </para>
-      <para style="P14">Reporte De Proceso De Producción</para>
+      <para style="P14">Reporte de proceso de producción</para>
       <blockTable colWidths="168.0,73.0,67.0,123.0,68.0" style="Table2">
         <tr>
           <td>
@@ -200,7 +196,7 @@
         <font face="Helvetica-Bold" size="8.0">[[ repeatIn(get_group(data['form']), 'g') ]]</font>
       </para>
       <para style="P15">
-        <font face="Helvetica" size="10.0">Reporte De Proceso De Producción Agrupado</font>
+        <font face="Helvetica" size="10.0">Reporte de proceso de producción agrupado</font>
       </para>
       <para style="P4">
         <font color="white"> </font>
