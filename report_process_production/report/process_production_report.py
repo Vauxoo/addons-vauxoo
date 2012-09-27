@@ -101,6 +101,7 @@ class process_report(report_sxw.rml_parse):
     def _get_table(self,data,obj):
         if data['print']=='agrupado':
             return []
+        borrar=[]
         for o in obj:
             pasa=0
             if o.move_lines:
@@ -108,9 +109,12 @@ class process_report(report_sxw.rml_parse):
                     if l.product_id.id in data['product_ids']:
                         pasa=1
             else:
-                obj.remove(o)
+                borrar.append(o)
+                pasa=1
             if not pasa:
-                obj.remove(o)
+                borrar.append(o)
+        for b in borrar:
+            obj.remove(b)
         return obj
         
 report_sxw.report_sxw('report.process.report','mrp.production','addons/report_process_production/report/process_production_report.rml',parser=process_report,header=False)
