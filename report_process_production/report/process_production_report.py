@@ -50,7 +50,7 @@ class process_report(report_sxw.rml_parse):
             for line in prod.move_lines:
                 if line.product_id.id in data['product_ids']:
                     if line.product_id.id not in new_ids:
-                        res.append({'product_id':line.product_id.id,'name':line.product_id.name,'product_uom':line.product_id.uom_id.name,'product_qty':pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id),'product_categ':line.product_id.categ_id.name})
+                        res.append({'product_id':line.product_id.id,'name':line.product_id.name,'code':line.product_id.default_code,'product_uom':line.product_id.uom_id.name,'product_qty':pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id),'product_categ':line.product_id.categ_id.name})
                         new_ids.append(line.product_id.id)
                     else:
                         for r in res:
@@ -58,7 +58,7 @@ class process_report(report_sxw.rml_parse):
                                 qty=pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id)
                                 r['product_qty']+=qty
                     if not res:
-                        res.append({'product_id':line.product_id.id,'name':line.product_id.name,'product_uom':line.product_id.uom_id.name,'product_qty':pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id),'product_categ':line.product_id.categ_id.name})
+                        res.append({'product_id':line.product_id.id,'name':line.product_id.name,'code':line.product_id.default_code,'product_uom':line.product_id.uom_id.name,'product_qty':pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id),'product_categ':line.product_id.categ_id.name})
                         new_ids.append(line.product_id.id)
         """
         result={}
