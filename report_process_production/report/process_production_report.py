@@ -32,9 +32,45 @@ class process_report(report_sxw.rml_parse):
         self.localcontext.update({
         'time': time,
         'get_production':self._get_production,
+        'get_production_group':self._get_production_group,
+        'get_print':self._get_print,
+        'get_table':self._get_table,
+        'get_group':self._get_group,
+        'get_sin':self._get_sin,
         })
         
+    def _get_production_group(self, data):
+        if data['print']=='sin':
+            return {}
+        res=[]
+        new_ids=[]
+        pool = pooler.get_pool(self.cr.dbname)
+        obj_prod=pool.get('mrp.production')
+        for prod in obj_prod.browse(self.cr, self.uid, self.ids):
+            for line in prod.move_lines:
+                if line.product_id.id in data['product_ids']:
+                    if line.product_id.id not in new_ids:
+                        res.append({'product_id':line.product_id.id,'name':line.product_id.name,'product_uom':line.product_id.uom_id.name,'product_qty':pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id),'product_categ':line.product_id.categ_id.name})
+                        new_ids.append(line.product_id.id)
+                    else:
+                        for r in res:
+                            if r['product_id']==line.product_id.id:
+                                qty=pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id)
+                                r['product_qty']+=qty
+                    if not res:
+                        res.append({'product_id':line.product_id.id,'name':line.product_id.name,'product_uom':line.product_id.uom_id.name,'product_qty':pool.get('product.uom')._compute_qty(self.cr, self.uid, line.product_uom.id, line.product_qty, to_uom_id=line.product_id.uom_id.id),'product_categ':line.product_id.categ_id.name})
+                        new_ids.append(line.product_id.id)
+        """
+        result={}
+        for r in res:
+            result.setdefault(r['product_id'],0)
+            result[r['product_id']]+= r['product_qty']
+        """
+        return res
+        
     def _get_production(self, data,prod_id):
+        if data['print'] =='agrupado':
+            return []
         res=[]
         pool = pooler.get_pool(self.cr.dbname)
         obj_prod=pool.get('mrp.production')
@@ -44,7 +80,39 @@ class process_report(report_sxw.rml_parse):
                     res.append(line)
         return res
 
+    def _get_print(self, data):
+        if data['print']=='agrupado':
+            return False
+        if data['print'] in ('ambos','sin'):
+            return True
+    
+    def _get_group(self, data):
+        if data['print'] in ('agrupado','ambos'):
+            return ['uno']
+        else:
+            return []
+    
+    def _get_sin(self, data):
+        if data['print'] in ('sin','ambos'):
+            return [{'name':'Nombre','qty':'Cantidad','uom':'UOM','categ':'Categoria','real':'Real'}]
+        else:
+            return []
+            
+    def _get_table(self,data,obj):
+        if data['print']=='agrupado':
+            return []
+        for o in obj:
+            pasa=0
+            if o.move_lines:
+                for l in o.move_lines:
+                    if l.product_id.id in data['product_ids']:
+                        pasa=1
+            else:
+                obj.remove(o)
+            if not pasa:
+                obj.remove(o)
+        return obj
+        
 report_sxw.report_sxw('report.process.report','mrp.production','addons/report_process_production/report/process_production_report.rml',parser=process_report,header=False)
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
