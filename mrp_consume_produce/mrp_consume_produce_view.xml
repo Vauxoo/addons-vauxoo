@@ -29,11 +29,13 @@
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
-			<button name="action_finish" string="Finish Production" icon="gtk-ok" type="object" attrs="{'invisible': ['|',('consumed','=',False),('state','=','done')]}"/>
+			<button name="action_finish" string="Finish Production" icon="gtk-ok" type="object" attrs="{'invisible': ['|','|',('consumed','=',False),('state','=','done'),('len_move_prod','=',0)]}"/>
                     </xpath>
 
                     <xpath expr="/form/group/field[@name='origin']" position="after">
 			<field name="len_move" invisible="1"/>
+			<field name="len_move_prod" invisible="1"/>
+            
                     </xpath>
 	    </field>
         </record>
