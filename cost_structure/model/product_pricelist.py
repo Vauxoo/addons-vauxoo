@@ -72,7 +72,7 @@ class inherit_price_list_item(osv.osv):
 
                     res[item.id] = price
         
-                else:
+                elif item.product_active_id:
                     price = pricelist_obj.price_get(cr, uid, [item.price_list_id and \
                                                            item.price_list_id.id],
                                                            item.product_active_id and item.product_active_id.id,
