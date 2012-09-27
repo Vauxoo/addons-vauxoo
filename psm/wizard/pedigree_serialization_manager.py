@@ -89,13 +89,12 @@ class pedigree_serialization_manager(osv.osv_memory):
         if psm:
             lines=psm.split('\n')
             lines = list(set(lines))
+            for i in psm:
+                if i in seriales:
+                    aux.append(i)
         else:
             lines=[]
         
-        for i in psm:
-            if i in seriales:
-                aux.append(i)
-
         return  '\n'.join(aux)
 
     def split(self, cr, uid, ids, move_ids, context=None):
@@ -176,8 +175,7 @@ class pedigree_serialization_manager(osv.osv_memory):
                             'product_id': move.product_id.id,
                             'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
                             'check_serial':True,
-                            },
-                        context=context)
+                            },context=context)
 
                     move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state})
 

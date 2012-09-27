@@ -25,7 +25,7 @@
 {
     "name" : "Serial Picking Manager",
     "version" : "1.0",
-    "depends" : ["base","stock"],
+    "depends" : ["base","stock","sale","purchase"],
     "author" : "Vauxoo",
     "description" : """
 
@@ -55,7 +55,6 @@
                 "view/product_view.xml",
                 "report/psm_picking_report.xml",
                 'data/psm_sequence.xml',
-                
     ],
     "active": False,
     "installable": True,

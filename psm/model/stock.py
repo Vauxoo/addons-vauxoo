@@ -28,11 +28,26 @@ import decimal_precision as dp
 
 class stock_production_lot(osv.osv):
     
+    def _serial_identification(self, cr, uid, ids, context=None):
+        if context is None: context={}
+        spl_brw = self.browse(cr, uid, ids, context=context)
+
+        for spl in spl_brw:
+            if spl.check_serial and spl.stock_available != 0:
+                return False
+        return True
+    
+    
     _inherit = 'stock.production.lot'
     
     _columns = {
         'check_serial': fields.boolean('Check Serial'),
+        'ref': fields.char('Internal Reference', size=256, help="Internal reference number in case it differs from the manufacturer's serial number")
     }
+    
+    _constraints = [
+          (_serial_identification, _('Check this picking problem with serial'),['Check Serial (check_serial)','Stock Available (stock_available)']),
+         ]
     
     def name_get(self, cr, uid, ids, context=None):
         if context is None:
@@ -42,8 +57,7 @@ class stock_production_lot(osv.osv):
         for i in res:
             ret.append((i[0],i[1].split(' ')[0]))
         return ret
-        
-    
+
 stock_production_lot()
 
 class stock_picking(osv.osv):
