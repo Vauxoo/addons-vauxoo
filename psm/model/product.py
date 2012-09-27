@@ -22,6 +22,16 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-import wizard
-import report
-import model
+from osv import fields, osv
+from tools.translate import _
+import decimal_precision as dp
+
+class product_product(osv.osv):
+    _inherit = "product.product"
+
+    _columns = {
+        'track_serial_incoming': fields.boolean('Track Incoming Serial Lots', help="Forces to specify a Production serial incoming Lot for all moves containing this product"),
+        'track_serial_outgoing': fields.boolean('Track Outgoing Serial Lots', help="Forces to specify a Production serial outgoing Lot for all moves containing this product"),
+    }
+
+product_product()

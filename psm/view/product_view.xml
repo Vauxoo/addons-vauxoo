@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="psm_view_production_lot_form" model="ir.ui.view">
+      <field name="name">psm.product.normal.form.inherit</field>
+      <field name="model">product.product</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="product.product_normal_form_view" />
+      <field name="arch" type="xml">
+        <xpath expr="/form/notebook/page/group[@name='uom']" position="after">
+          <group colspan="2" col="2" name="lot_serialization" groups="base.group_extended">
+            <separator string="Lots Serial" colspan="4" />
+            <field name="track_serial_incoming" />
+            <field name="track_serial_outgoing" />
+          </group>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</openerp>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="stock.trans_confirmed_assigned" model="workflow.transition">
+            <field name="act_from" ref="stock.act_confirmed"/>
+            <field name="act_to" ref="stock.act_assigned"/>
+            <field name="condition">test_assigned() and test_serial_outgoing()</field>
+        </record>
+        <record id="stock.trans_assigned_move_done" model="workflow.transition">
+            <field name="act_from" ref="stock.act_assigned"/>
+            <field name="act_to" ref="stock.act_move"/>
+            <field name="condition">test_done() and test_serial_incoming()</field>
+        </record>
+    </data>
+</openerp>
