@@ -5,12 +5,39 @@
       <field name="name">pedigree.serialization.manager.view.form</field>
       <field name="model">stock.picking</field>
       <field name="type">form</field>
-      <field name="inherit_id" ref="stock.view_picking_out_form"/>
+      <field name="inherit_id" ref="stock.view_picking_out_form" />
       <field name="arch" type="xml">
-       <xpath expr='/form/notebook/page[@string="Products"]/field[@name="move_lines"]/tree[@string="Stock Moves"]/button[@string="Split in production lots"]' position="replace">
-          <button name="%(track_line2)d" string="Split in production looooooooots" type="action" icon="terp-stock_effects-object-colorize" states="draft,waiting,confirmed,assigned" groups="base.group_extended"/>
+        <xpath expr='/form/notebook/page[@string="Products"]/field[@name="move_lines"]/tree[@string="Stock Moves"]/button[@string="Split in production lots"]' position="replace">
+          <button name="%(track_line2)d" string="Split in production lots" type="action" icon="terp-stock_effects-object-colorize" states="draft,waiting,confirmed,assigned" groups="base.group_extended" />
         </xpath>
       </field>
     </record>
+    <record id="pedigree_serialization_manager_in_view" model="ir.ui.view">
+      <field name="name">pedigree.serialization.manager.view.form</field>
+      <field name="model">stock.picking</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="stock.view_picking_in_form" />
+      <field name="arch" type="xml">
+        <xpath expr='/form/notebook/page[@string="General Information"]/field[@name="move_lines"]/tree[@string="Stock Moves"]/button[@string="Split in production lots"]' position="replace">
+          <button name="%(track_line2)d" string="Split in production lots" type="action" icon="terp-stock_effects-object-colorize" states="draft,waiting,confirmed,assigned" groups="base.group_extended" />
+        </xpath>
+      </field>
+    </record>
+    
+    <record id="psm_view_production_lot_form" model="ir.ui.view">
+      <field name="name">psm.stock.production.lot.form</field>
+      <field name="model">stock.production.lot</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="stock.view_production_lot_form" />
+      <field name="arch" type="xml">
+        <xpath expr='//field[@name="ref"]' position="replace">
+          <field name="ref" readonly="1" colspan="4" />
+        </xpath>
+        <xpath expr='//button[@string="Downstream Traceability"]' position="after">
+          <field name="check_serial" readonly="1" colspan="4" />
+        </xpath>
+      </field>
+    </record>
+    
   </data>
 </openerp>
