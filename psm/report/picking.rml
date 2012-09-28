@@ -137,18 +137,42 @@
   </stylesheet>
   <story>
     <pto>
-      <pto_header>
-        <blockTable colWidths="477.0,71.0" repeatRows="1" style="Move_Line_Header">
-          <tr>
-            <td>
-              <para style="terp_tblheader_Details">Descripcion</para>
-            </td>
-            <td>
-              <para style="terp_tblheader_Details_Right">Cantidad</para>
-            </td>
-          </tr>
-        </blockTable>
-      </pto_header>
+      <blockTable colWidths="269.0,269.0" style="Table_Address_detail">
+        <tr>
+        <td>
+            <para style="terp_default_Bold_10">[[user.company_id.partner_id.name]]</para>
+        </td>
+        <td>
+            <!--<image height="50.0" width="50.0mm">[[user.company_id.logo or removeParentNode('image') ]]</image>-->
+            
+            <para style="terp_default_Right_7">FECHA DE IMPRESION: [[ time.strftime('%d/%m/%Y %I:%M %p') ]] </para>
+        </td>
+        </tr>
+    </blockTable>    
+    <para style="terp_default_2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="369.0,169.0" style="Table_Address_detail">
+      <tr>
+        <td>
+          <para style="terp_default_Bold_9">Cliente:</para>
+          <para style="terp_default_Bold_9">[[ (picking.address_id and picking.address_id.partner_id and picking.address_id.partner_id.title.name) or '' ]] [[ picking.address_id and picking.address_id.partner_id and picking.address_id.partner_id.name ]]</para>
+          <para style="terp_default_Bold_9">[[ (picking.address_id and picking.address_id.partner_id and (' RIF.:%s-%s-%s'%(picking.address_id.partner_id.vat[2:3],picking.address_id.partner_id.vat[3:11],picking.address_id.partner_id.vat[11:12]))) or '' ]]</para>
+          <para style="terp_default_9">[[ picking.address_id and picking.address_id.street or '' ]]</para>
+          <para style="terp_default_9">[[ (picking.address_id and picking.address_id.street2) or removeParentNode('para') ]]</para>
+          <para style="terp_default_9">[[ picking.address_id and picking.address_id.zip or '' ]] [[ picking.address_id and picking.address_id.city or '' ]]</para>
+          <para style="terp_default_9">[[ (picking.address_id and picking.address_id.state_id and picking.address_id.state_id.name) or removeParentNode('para') ]]</para>
+          
+        </td>
+        <td>
+         <para style="terp_default_Bold_9"> [[ picking.sales_incoterm.name and "Transporte:" or '']] </para>
+         <para style="terp_default_9"> [[ picking.sales_incoterm.name and picking.sales_incoterm.name or '']] </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="terp_default_5cm_Above_Space">
+      <font color="white"> </font>
+    </para>
       <para style="terp_default_8">[[repeatIn(objects,'picking')]]</para>
       <para style="terp_default_5cm_Above_Space">
         <font color="white" />
@@ -156,7 +180,7 @@
       <blockTable colWidths="338.0,200.0" style="Table_Title_String">
         <tr>
           <td>
-            <para style="terp_header">Nota de Chequeo: [[ (picking.type == 'out' or removeParentNode('para')) and '' ]] [[ picking.name ]]</para>
+            <para style="terp_header">Hoja de Seriales: [[ (picking.type == 'out' or removeParentNode('para')) and '' ]] [[ picking.name ]]</para>
           </td>
           <td>
             <para style="terp_tblheader_General">[[ picking.origin and "Orden (Origen):" or '']] [[ picking.origin or '' ]]</para>
