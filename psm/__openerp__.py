@@ -41,11 +41,19 @@
  - Hide native OpenERP wizard.
  - Create action Show serial/lot for products.
  - Create report where the serial printed grouped by porducto.
+ 
+ If you have a multi-company environment you must:
+
+- Login as admin
+- Duplicate the sequence 'PSM', for each company you handle
+- Change the prefix of the sequence by company for differentiation
        
         """,
     "website" : "http://www.vauxoo.com",
     "category" : "Product Serialization",
-    "init_xml" : [    ],
+    "init_xml" : [    
+                'data/psm_sequence.xml',
+    ],
     "demo_xml" : [    ],
     "update_xml" : [
                 'workflow/stock_workflow.xml',
@@ -54,7 +62,7 @@
                 "view/stock_view.xml",
                 "view/product_view.xml",
                 "report/psm_picking_report.xml",
-                'data/psm_sequence.xml',
+                
     ],
     "active": False,
     "installable": True,

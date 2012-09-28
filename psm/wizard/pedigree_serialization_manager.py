@@ -133,7 +133,7 @@ class pedigree_serialization_manager(osv.osv_memory):
                 psm = data.psm
                 if psm:
                     lines=psm.split('\n')
-                    lines = list(set(lines))
+                    lines = list(set(lines)).remove('')
                 else:
                     lines=[]
                 
