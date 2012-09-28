@@ -63,11 +63,27 @@ stock_production_lot()
 class stock_picking(osv.osv):
     _inherit = "stock.picking"
     
-    def test_serial_outgoing(self, cr, uid, ids):
+    #~ def test_serial_outgoing(self, cr, uid, ids):
+        #~ ok = True
+        #~ spl_obj=self.pool.get('stock.production.lot')
+        #~ for pick in self.browse(cr, uid, ids):
+            #~ for move in pick.move_lines:
+                #~ if move.product_id.track_serial_outgoing and not move.prodlot_id and pick.type == 'out':
+                    #~ raise osv.except_osv(_('Error !'), _('This product %s should be serialized')% move.product_id.name)
+                    #~ 
+                #~ if move.product_id.track_serial_incoming and move.product_id.track_serial_outgoing and pick.type == 'out':
+                    #~ spl_ids = spl_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',move.prodlot_id.name)])
+                    #~ if len(spl_ids) < 1:
+                        #~ raise osv.except_osv(_('Error !'), _('This serial %s is not exist')% move.prodlot_id.name)
+        #~ return ok
+        
+    def test_serial(self, cr, uid, ids):
         ok = True
         spl_obj=self.pool.get('stock.production.lot')
         for pick in self.browse(cr, uid, ids):
             for move in pick.move_lines:
+                if move.product_id.track_serial_incoming and not move.prodlot_id and pick.type == 'in':
+                    raise osv.except_osv(_('Error !'), _('This product %s should be serialized')% move.product_id.name)
                 if move.product_id.track_serial_outgoing and not move.prodlot_id and pick.type == 'out':
                     raise osv.except_osv(_('Error !'), _('This product %s should be serialized')% move.product_id.name)
                     
@@ -75,16 +91,6 @@ class stock_picking(osv.osv):
                     spl_ids = spl_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',move.prodlot_id.name)])
                     if len(spl_ids) < 1:
                         raise osv.except_osv(_('Error !'), _('This serial %s is not exist')% move.prodlot_id.name)
-        return ok
-        
-    def test_serial_incoming(self, cr, uid, ids):
-        ok = True
-        spl_obj=self.pool.get('stock.production.lot')
-        for pick in self.browse(cr, uid, ids):
-            for move in pick.move_lines:
-                if move.product_id.track_serial_incoming and not move.prodlot_id and pick.type == 'in':
-                    raise osv.except_osv(_('Error !'), _('This product %s should be serialized')% move.product_id.name)
-
         return ok
         
 stock_picking()
