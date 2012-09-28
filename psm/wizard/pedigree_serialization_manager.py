@@ -137,6 +137,11 @@ class pedigree_serialization_manager(osv.osv_memory):
                     lines.remove('')
                 else:
                     lines=[]
+                    
+                for line in lines:
+                    spl_ids = prodlot_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',line)])
+                        if len(spl_ids) < 1:
+                            raise osv.except_osv(_('Error !'), _('This serial %s is not exist')% line)
                 
                 if data.product_id.track_serial_incoming and move.picking_id.type == "in":
                     self.track_serial_incoming(cr, uid, ids,data.product_id.id,lines,context=context)
