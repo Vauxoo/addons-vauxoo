@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--
+	Deleting the field from the parent account move view
+-->
+
+	
+    </data>
+</openerp>
