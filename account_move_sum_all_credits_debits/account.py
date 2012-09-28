@@ -31,23 +31,21 @@ import decimal_precision as dp
 class account_move(osv.osv):
     _inherit = "account.move"
     
-    """equivalent query that get these fields ---
-    select sum(credit) from account_move_line
-    select sum(debit) from account_move_line
+    """example of query that get these fields ---
+    select sum(credit), sum(debit) 
+    from account_move_line 
+    where move_id=27
     """
     
     def _sum_credit_debit(self, cr, uid, ids, field, arg, context=None):
         suma = []
         dict = {}
-        print field
         for id in ids:
             cr.execute("""select sum(credit), sum(debit) 
                         from account_move_line 
                         where move_id=%s""",(id,))
             suma = cr.fetchone()
-            print suma, " = suma"
             dict[id] = {field[0]:suma[0],field[1]:suma[1]}
-        print dict
         return dict#{25:{total_debit:1200},{total_credit:1200}}
     
     _columns = {
