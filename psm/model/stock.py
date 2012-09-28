@@ -87,7 +87,7 @@ class stock_picking(osv.osv):
                 if move.product_id.track_serial_outgoing and not move.prodlot_id and pick.type == 'out':
                     raise osv.except_osv(_('Error !'), _('This product %s should be serialized')% move.product_id.name)
                     
-                if move.product_id.track_serial_incoming and move.product_id.track_serial_outgoing and pick.type == 'out':
+                if move.product_id.track_serial_incoming and move.product_id.track_serial_outgoing and move.pick.type == 'out':
                     spl_ids = spl_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',move.prodlot_id.name)])
                     if len(spl_ids) < 1:
                         raise osv.except_osv(_('Error !'), _('This serial %s is not exist')% move.prodlot_id.name)
