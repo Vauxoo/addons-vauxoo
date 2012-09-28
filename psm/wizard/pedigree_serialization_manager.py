@@ -107,7 +107,7 @@ class pedigree_serialization_manager(osv.osv_memory):
         #~ @param context: A standard dictionary
         #~ @return:
         #~ """
-        check=True
+        check_aux=True
         if context is None:
             context = {}
         inventory_id = context.get('inventory_id', False)
@@ -147,7 +147,7 @@ class pedigree_serialization_manager(osv.osv_memory):
                 
                 if data.product_id.track_serial_incoming and move.picking_id.type == "in":
                     self.track_serial_incoming(cr, uid, ids,data.product_id.id,lines,context=context)
-                    check=False
+                    check_aux=False
                 
                 
                 for line in lines:
@@ -185,7 +185,8 @@ class pedigree_serialization_manager(osv.osv_memory):
                             'name': line,
                             'product_id': move.product_id.id,
                             'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
-                            'check_serial':check,
+                            'check_serial':check_aux,
+                            'company_id':picking.company_id.id,
                             },context=context)
 
                     move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state})
