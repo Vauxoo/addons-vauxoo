@@ -36,25 +36,23 @@ class account_move(osv.osv):
     select sum(debit) from account_move_line
     """
     
-    def _sum_credit(self, cr, uid, ids, field, arg, context=None):
-        cr.execute("select sum(credit) from account_move_line")
-        suma = cr.fetchone()
+    def _sum_credit_debit(self, cr, uid, ids, field, arg, context=None):
+        suma = []
         dict = {}
-        for line in ids:
-            dict[line] = suma[0]
-        return dict
-    
-    def _sum_debit(self, cr, uid, ids, field, arg, context=None):
-        cr.execute("select sum(debit) from account_move_line")
-        suma = cr.fetchone()
-        dict = {}
-        for line in ids:
-            dict[line] = suma[0]
-        return dict
+        print field
+        for id in ids:
+            cr.execute("""select sum(credit), sum(debit) 
+                        from account_move_line 
+                        where move_id=%s""",(id,))
+            suma = cr.fetchone()
+            print suma, " = suma"
+            dict[id] = {field[0]:suma[0],field[1]:suma[1]}
+        print dict
+        return dict#{25:{total_debit:1200},{total_credit:1200}}
     
     _columns = {
-        'total_debit': fields.function(_sum_debit, string='Total debit', method=True, digits_compute=dp.get_precision('Account'), type='float'),
-        'total_credit': fields.function(_sum_credit, string='Total credit', method=True, digits_compute=dp.get_precision('Account'), type='float'),
+        'total_debit': fields.function(_sum_credit_debit, string='Total debit', method=True, digits_compute=dp.get_precision('Account'), type='float', multi="total_credit_debit"),
+        'total_credit': fields.function(_sum_credit_debit, string='Total credit', method=True, digits_compute=dp.get_precision('Account'), type='float', multi="total_credit_debit"),
     }
 
 account_move()
