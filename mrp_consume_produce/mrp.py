@@ -50,8 +50,7 @@ class mrp_production(osv.osv):
     def _check_len_move_prod(self,cr,uid,ids,field_name,args,context={}):
         res = {}
         for production in self.browse(cr,uid,ids,context=context):
-            moves = [move for move in production.move_created_ids2]
-            res[production.id]=len(moves)
+            res[production.id]=len(production.move_created_ids2)
         return res
             
     _columns = {
