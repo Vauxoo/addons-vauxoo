@@ -24,3 +24,4 @@
 ############################################################################
 import pedigree_serialization_manager
 import stock_invoice_onshipping
+import stock_return_picking

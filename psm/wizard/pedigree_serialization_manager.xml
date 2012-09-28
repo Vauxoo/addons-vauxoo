@@ -7,13 +7,13 @@
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form string="Split in lots">
-          <group width="550" height="230">
+          <group width="550" height="350">
             <field name="product_id" readonly="1" />
             <field name="qty" readonly="1" />
             <field name="product_uom" readonly="1" />
             <field name="location_id" invisible="1" />
             <group colspan="4" string="Production Lot Numbers">
-                <field name="psm" colspan="4" nolabel="1"/>
+                <field name="psm" colspan="4" nolabel="1" height="200"/>
             </group>
             <separator colspan="4"/>
             <button icon='gtk-cancel'  colspan="2" special="cancel" string="Cancel" />

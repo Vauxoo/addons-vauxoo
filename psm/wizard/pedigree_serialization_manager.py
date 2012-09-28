@@ -145,7 +145,7 @@ class pedigree_serialization_manager(osv.osv_memory):
                         if len(spl_ids) < 1:
                             raise osv.except_osv(_('Error !'), _('This serial %s is not exist')% line)
                 
-                if data.product_id.track_serial_incoming and move.picking_id.type == "in":
+                if move.picking_id.type == "in":
                     self.track_serial_incoming(cr, uid, ids,data.product_id.id,lines,context=context)
                     check_aux=False
                 
@@ -178,16 +178,45 @@ class pedigree_serialization_manager(osv.osv_memory):
 
                     if quantity_rest == 0:
                         current_move = move.id
-                    prodlot_id = False
-                    if not prodlot_id:
-                        picking = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
-                        prodlot_id = prodlot_obj.create(cr, uid, {
-                            'name': line,
-                            'product_id': move.product_id.id,
-                            'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
-                            'check_serial':check_aux,
-                            'company_id':picking.company_id.id,
-                            },context=context)
+                        
+                    picking = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
+                    
+                    
+                    if picking.type == 'out':
+                        
+                        spl_id = prodlot_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',line)])
+                        if spl_id:
+                            prodlot_obj.write(cr, uid, [spl_id], {'check_serial': True,'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name})
+                            
+                            prodlot_brw = prodlot_obj.browse(cr,uid,[spl_id],context=context)[0]
+                            
+                            if not prodlot_brw.check_serial: 
+                            
+                                prodlot_id = prodlot_brw.id
+                            else:
+                                raise osv.except_osv(_('Error !'), _('These serial already by used in other outgoing picking %s ')%'\n'.join(res))
+                        else:
+                            prodlot_id = False
+                            if not prodlot_id:
+                                picking = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
+                                prodlot_id = prodlot_obj.create(cr, uid, {
+                                    'name': line,
+                                    'product_id': move.product_id.id,
+                                    'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
+                                    'check_serial':check_aux,
+                                    'company_id':picking.company_id.id,
+                                    },context=context)
+                    else:
+                        prodlot_id = False
+                        if not prodlot_id:
+                            picking = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
+                            prodlot_id = prodlot_obj.create(cr, uid, {
+                                'name': line,
+                                'product_id': move.product_id.id,
+                                'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
+                                'check_serial':check_aux,
+                                'company_id':picking.company_id.id,
+                                },context=context)
 
                     move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state})
 

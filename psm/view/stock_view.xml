@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
   <data>
-    <record id="pedigree_serialization_manager_view" model="ir.ui.view">
+    <record id="pedigree_serialization_manager_out_view" model="ir.ui.view">
       <field name="name">pedigree.serialization.manager.view.form</field>
       <field name="model">stock.picking</field>
       <field name="type">form</field>
@@ -12,6 +12,19 @@
         </xpath>
       </field>
     </record>
+    
+    <record id="pedigree_serialization_manager_view" model="ir.ui.view">
+      <field name="name">pedigree.serialization.manager.view.form</field>
+      <field name="model">stock.picking</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="stock.view_picking_form" />
+      <field name="arch" type="xml">
+        <xpath expr='/form/notebook/page[@string="Products"]/field[@name="move_lines"]/tree[@string="Stock Moves"]/button[@string="Split in production lots"]' position="replace">
+          <button name="%(track_line2)d" string="Split in production lots" type="action" icon="terp-stock_effects-object-colorize" states="draft,waiting,confirmed,assigned" groups="base.group_extended" />
+        </xpath>
+      </field>
+    </record>
+    
     <record id="pedigree_serialization_manager_in_view" model="ir.ui.view">
       <field name="name">pedigree.serialization.manager.view.form</field>
       <field name="model">stock.picking</field>

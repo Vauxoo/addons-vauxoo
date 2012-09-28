@@ -53,6 +53,7 @@ class spm_report(report_sxw.rml_parse):
                 
                     val = {
                                 'product':pool.get('product.product').browse(self.cr, self.uid, [product.id])[0].name,
+                                'nro_prod':len(aux),
                                 'serial': ' | '.join(aux)
                             }
                     if val:
@@ -61,7 +62,6 @@ class spm_report(report_sxw.rml_parse):
             return res
         
     def _get_serial(self,picking,product):
-        print 'product',product
         res=[]
         ml_ids = picking.move_lines
         for ml_id in ml_ids:
@@ -69,12 +69,6 @@ class spm_report(report_sxw.rml_parse):
                 if ml_id.prodlot_id.name:
                     res.append(ml_id.prodlot_id.name)
         return res
-    
-    
-    
-    
-    
-    
     
     
 report_sxw.report_sxw('report.spm_report',

@@ -31,6 +31,10 @@ class stock_invoice_onshipping_psm(osv.osv_memory):
         'group_by_product': fields.boolean("Group by product"),
     }
 
+    _defaults = {
+        'group_by_product': True,
+    }
+    
     def drop_duplicate_invoice_lines(self, cr, uid, invoice_id, product_ids, context=None):
         if context is None:
             context = {}
