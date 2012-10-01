@@ -24,6 +24,9 @@
         <xpath expr='/form/notebook/page/field/tree/field[@name="product_qty"]' position="before">
         <field name="price_unit"/>
         </xpath>
+        <xpath expr='//field[@name="backorder_id"]' position="before">
+			<field name="sales_incoterm"/>
+		</xpath>
       </field>
     </record>
 

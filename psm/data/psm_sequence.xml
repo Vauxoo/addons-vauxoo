@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+    
+        <!-- Sequences for control_pulidora --> 
+        <record id="seq_type_psm" model="ir.sequence.type">
+            <field name="name">PSM Sequence</field>
+            <field name="code">psm.stock.production.lot</field>
+        </record>
+        <record id="seq_psm" model="ir.sequence">
+            <field name="name">PSM Sequence</field>
+            <field name="code">psm.stock.production.lot</field>
+            <field name="prefix">PSM</field>
+            <field name="padding">5</field>
+        </record>
+
+    </data>
+</openerp>

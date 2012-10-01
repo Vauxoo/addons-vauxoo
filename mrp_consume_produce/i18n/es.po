@@ -1,0 +1,146 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_consume_produce
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-18 21:14+0000\n"
+"PO-Revision-Date: 2012-09-18 16:28-0600\n"
+"Last-Translator: juan <openerp1@hotmil.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: mrp_consume_produce
+#: model:ir.model,name:mrp_consume_produce.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Orden de Producción"
+
+#. module: mrp_consume_produce
+#: field:mrp.consume.line,wizard2_id:0
+#: field:mrp.consume.line,wizard_id:0
+msgid "Wizard"
+msgstr "Wizard"
+
+#. module: mrp_consume_produce
+#: field:mrp.production,consumed:0
+msgid "consumed?"
+msgstr "consumido?"
+
+#. module: mrp_consume_produce
+#: field:mrp.consume.line,location_id:0
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: mrp_consume_produce
+#: field:mrp.production,len_move:0
+msgid "moves"
+msgstr "movimientos"
+
+#. module: mrp_consume_produce
+#: field:mrp.consume.line,product_uom:0
+msgid "Unit of Measure"
+msgstr "Unidad de Medida"
+
+#. module: mrp_consume_produce
+#: field:mrp.consume.line,product_id:0
+msgid "Product"
+msgstr "Producto"
+
+#. module: mrp_consume_produce
+#: view:mrp.production:0
+msgid "Finished Consumed"
+msgstr "Finalizar Consumo"
+
+#. module: mrp_consume_produce
+#: model:ir.actions.act_window,name:mrp_consume_produce.create_produce_action
+#: model:ir.actions.act_window,name:mrp_consume_produce.produce_wizard
+#: view:mrp.produce:0
+#: view:mrp.production:0
+msgid "Produce"
+msgstr "Producir"
+
+#. module: mrp_consume_produce
+#: view:mrp.production:0
+msgid "Products Produced"
+msgstr "Productos Producidos"
+
+#. module: mrp_consume_produce
+#: constraint:mrp.production:0
+msgid "Order quantity cannot be negative or zero!"
+msgstr "Cantidad de pedido no puede ser negativo o cero!"
+
+#. module: mrp_consume_produce
+#: model:ir.model,name:mrp_consume_produce.model_mrp_consume
+msgid "mrp.consume"
+msgstr "mrp.consume"
+
+#. module: mrp_consume_produce
+#: view:mrp.production:0
+msgid "Finish Production"
+msgstr "Finalizar Producción"
+
+#. module: mrp_consume_produce
+#: view:mrp.production:0
+msgid "Consumed"
+msgstr "Consumir"
+
+#. module: mrp_consume_produce
+#: help:mrp.production,consumed:0
+msgid "indicates if product to consume have been consumed or canceled"
+msgstr "indica si los productos a consumir han sido consumidos o cancelados"
+
+#. module: mrp_consume_produce
+#: model:ir.model,name:mrp_consume_produce.model_mrp_produce
+msgid "mrp.produce"
+msgstr "mrp.produce"
+
+#. module: mrp_consume_produce
+#: sql_constraint:mrp.production:0
+msgid "Reference must be unique per Company!"
+msgstr "Referencia deben ser única por Empresa!"
+
+#. module: mrp_consume_produce
+#: field:mrp.consume.line,quantity:0
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: mrp_consume_produce
+#: view:mrp.produce:0
+msgid "Produced Products"
+msgstr "Productos Producidos"
+
+#. module: mrp_consume_produce
+#: model:ir.actions.act_window,name:mrp_consume_produce.consume_wizard
+#: model:ir.actions.act_window,name:mrp_consume_produce.create_consume_action
+#: view:mrp.consume:0
+#: field:mrp.consume,consume_line_ids:0
+#: field:mrp.produce,produce_line_ids:0
+msgid "Consume"
+msgstr "Consumir"
+
+#. module: mrp_consume_produce
+#: field:mrp.consume.line,move_id:0
+msgid "Move"
+msgstr "Mover"
+
+#. module: mrp_consume_produce
+#: view:mrp.consume:0
+#: view:mrp.produce:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: mrp_consume_produce
+#: model:ir.model,name:mrp_consume_produce.model_mrp_consume_line
+msgid "mrp.consume.line"
+msgstr "mrp.consume.line"
+
+#. module: mrp_consume_produce
+#: field:mrp.consume.line,location_dest_id:0
+msgid "Dest. Location"
+msgstr "Dest. Location"
+
