@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_mrp_production_filter_date_inh" model="ir.ui.view">
+            <field name="name">view.mrp.production.filter.date.inh</field>
+            <field name="model">mrp.production</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/group/field[@name='user_id']" position="after">
+                    <field name="date_planned"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>
