@@ -21,7 +21,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Inherit ref field in search view of res_partner",
+    "name" : "Inherit date_planned field in search view of mrp_production",
     "version" : "1.0",
     "depends" : ['mrp'],
     "author" : "Vauxoo",
