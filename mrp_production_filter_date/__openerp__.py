@@ -23,7 +23,7 @@
 {
     "name" : "Inherit ref field in search view of res_partner",
     "version" : "1.0",
-    "depends" : ['base'],
+    "depends" : ['mrp'],
     "author" : "Vauxoo",
     #"license" : "AGPL-3",
     "description" : """This module inherit date_planned field in search view of mrp_production
