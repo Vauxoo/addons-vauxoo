@@ -62,13 +62,8 @@ class stock_move(osv.osv):
     
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
         res = super(stock_move,self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
-        #[(0, 0, {'name': u'PROD: MO/00028', 'debit': 933.32, 'date': '2012-10-03', 'partner_id': False, 'quantity': 1.0, 'ref': False, 'account_id': 69L, 'product_id': 10}), 
-        # (0, 0, {'credit': 933.32, 'name': u'PROD: MO/00028', 'date': '2012-10-03', 'partner_id': False, 'quantity': 1.0, 'ref': False, 'account_id': 8L, 'product_id': 10})]
-        print move.id, " = move.id"
         for line in res:
-            #line[2]['production_id'] = production_data.id
             line[2]['stock_move_id'] = move.id
-        print res, " = res"
         return res
 
 stock_move()
