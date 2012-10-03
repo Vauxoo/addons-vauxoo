@@ -24,32 +24,22 @@
 #
 ##############################################################################
 
-from tools.translate import _
-from osv import osv, fields
-import decimal_precision as dp
-
-class account_move_line(osv.osv):
-    _inherit = "account.move.line"
-    
-    """
-    """
-    
-    _columns = {
-        'product_id': fields.many2one('mrp_production', 'Production ID'),
-        'stock_move_id': fields.many2one('stock_move', 'Stock move ID'),
-    }
-
-account_move_line()
-
-class account_move(osv.osv):
-    _inherit = "account.move"
-    
-    """
-    """
-    
-    _columns = {
-        'product_id': fields.many2one('mrp_production', 'Production ID'),
-        'stock_move_id': fields.many2one('stock_move', 'Stock move ID'),
-    }
-
-account_move()
+{
+    "name": "Account relation move",
+    "version": "1.0",
+    "author" : "Vauxoo",
+    "category": "Generic Modules/Account",
+    "website" : "http://www.vauxoo.com/",
+    "description": """ Adds 4 fields to generate a connection between account
+    and production models
+    """,
+    'depends': ['mrp'],
+    'init_xml': [],
+    'update_xml': [
+        #'account_view.xml',
+        ],
+    'demo_xml': [],
+    'test': [],
+    'installable': True,
+    'active': False,
+}
