@@ -31,7 +31,29 @@ class mrp_production(osv.osv):
         
     def _create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
         res = super(mrp_production, self)._create_account_variation_move_line(cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=context)
-        print res,'imprimo res'
+        for lin in res:
+            lin[2]['production_id'] = prod_variation.production_id and prod_variation.production_id.id or False
         return res
-
+    
+    def action_cancel(self, cr, uid, ids, context=None):
+        account_move_line = self.pool.get('account.move.line')
+        account_move = self.pool.get('account.move')
+        
+        if context is None:
+            context = {}
+            
+        move_obj = self.pool.get('stock.move')
+        result= {}
+        for production in self.browse(cr, uid, ids, context=context):
+            account_move_line_id = account_move_line.search(cr,uid,[('production_id','=',production.id)])
+            for move_line in account_move_line.browse(cr, uid, account_move_line_id, context=context):
+                result.setdefault(move_line.move_id.id, production.id)
+        for lin in result.items():
+            try:
+                account_move.button_cancel(cr, uid, [lin[0]], context=context)
+            except:
+                pass
+            account_move.unlink(cr, uid, [lin[0]])
+        return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
+    
 mrp_production()
