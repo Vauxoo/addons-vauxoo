@@ -2,19 +2,6 @@
 <document filename="test.pdf">
   <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
-    <pageGraphics>
-        <setFont name="Courier-Bold" size="12.0"/>
-        <drawCentredString x="10.5cm" y="0.8cm">Page: <pageNumber/></drawCentredString>
-    <place x="18.0cm"  y="25.0cm"  width="90"  height="60">
-      <blockTable colWidths="85" style="Table_order">
-        <tr>
-          <td>
-            <para style="P7">Impreso: [[time.strftime('%d-%b-%Y')]]</para>
-          </td>
-        </tr>
-      </blockTable>
-    </place>
-        </pageGraphics>
       <frame id="first" x1="28.0" y1="57.0" width="556" height="678"/>
     </pageTemplate>
   </template>
@@ -22,11 +9,6 @@
     <blockTableStyle id="Standard_Outline">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-    </blockTableStyle>
-    <blockTableStyle id="Table_order">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-      <lineStyle kind="GRID" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
