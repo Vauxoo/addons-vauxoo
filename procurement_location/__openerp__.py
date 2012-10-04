@@ -1,10 +1,10 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
 #    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
@@ -24,21 +24,16 @@
 #
 ##############################################################################
 {
-    "name" : "Stock Picking Cancel",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Stock",
-    "description" : """This module add a button to cancel after to done""",
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["stock","account_relation_move"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/picking_security.xml",
-        "stock_workflow.xml",
-        "stock_view.xml",
+    'name': 'plocation',
+    "version" : "1.1",
+    'author': 'Vauxoo',
+    'depends': ['mrp_default_location'],
+    'description': """
+        Added the Locations by default when select the product in order of production
+    """,
+    'update_xml':[
     ],
-    "installable" : True,
-    "active" : False,
+    'active': False,
+    'installable': True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

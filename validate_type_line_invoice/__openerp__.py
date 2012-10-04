@@ -23,21 +23,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    "name" : "Stock Picking Cancel",
+    "name" : "Validate Type Line Invoice",
     "version" : "1.0",
     "author" : "Vauxoo",
-    "category" : "Stock",
-    "description" : """This module add a button to cancel after to done""",
+    "category" : "Generic Modules",
+    "description" : """
+        This module validate that type line to invoice is different to "a pagar" or "a cobrar"
+    """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["stock","account_relation_move"],
+    "depends" : ["account",
+        ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "security/picking_security.xml",
-        "stock_workflow.xml",
-        "stock_view.xml",
+        
     ],
     "installable" : True,
     "active" : False,

@@ -1,0 +1,99 @@
+=== modified file 'report_process_production/report/process_production_report.rml'
+--- report_process_production/report/process_production_report.rml	2012-10-03 22:16:40 +0000
++++ report_process_production/report/process_production_report.rml	2012-10-03 22:20:56 +0000
+@@ -2,6 +2,19 @@
+ <document filename="test.pdf">
+   <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
+     <pageTemplate id="first">
++    <pageGraphics>
++        <setFont name="Courier-Bold" size="12.0"/>
++        <drawCentredString x="10.5cm" y="0.8cm">Página: <pageNumber/></drawCentredString>
++    <place x="18.0cm"  y="25.0cm"  width="90"  height="60">
++      <blockTable colWidths="85" style="Table_order">
++        <tr>
++          <td>
++            <para style="P7">Impreso: [[time.strftime('%d-%b-%Y')]]</para>
++          </td>
++        </tr>
++      </blockTable>
++    </place>
++        </pageGraphics>
+       <frame id="first" x1="28.0" y1="57.0" width="556" height="678"/>
+     </pageTemplate>
+   </template>
+@@ -10,6 +23,11 @@
+       <blockAlignment value="LEFT"/>
+       <blockValign value="TOP"/>
+     </blockTableStyle>
++    <blockTableStyle id="Table_order">
++      <blockAlignment value="LEFT"/>
++      <blockValign value="TOP"/>
++      <lineStyle kind="GRID" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
++    </blockTableStyle>
+     <blockTableStyle id="Table2">
+       <blockAlignment value="LEFT"/>
+       <blockValign value="TOP"/>
+@@ -35,19 +53,19 @@
+       <blockValign value="TOP"/>
+       <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="0,0" stop="0,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="4,0" stop="4,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+     </blockTableStyle>
+     <blockTableStyle id="Table3">
+@@ -75,23 +93,23 @@
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+       <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="0,1" stop="0,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,1" stop="0,1"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,1" stop="0,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+       <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,1" stop="1,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="1,1" stop="1,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,1" stop="1,1"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,1" stop="1,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+       <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,1" stop="2,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="2,1" stop="2,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,1" stop="2,1"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,1" stop="2,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+       <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,1" stop="3,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,1" stop="3,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,1" stop="3,1"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,1" stop="3,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+       <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,1" stop="4,-1"/>
+       <lineStyle kind="LINEAFTER" colorName="#000000" start="4,1" stop="4,-1"/>
+-      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,1" stop="4,1"/>
++      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,1" stop="4,-1"/>
+       <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+     </blockTableStyle>
+     <initialize>
+@@ -107,7 +125,7 @@
+     <paraStyle name="P8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+     <paraStyle name="P9" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+     <paraStyle name="P10" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+-    <paraStyle name="P11" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
++    <paraStyle name="P11" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+     <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+     <paraStyle name="P13" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+     <paraStyle name="P14" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+

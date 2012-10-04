@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
 #    All Rights Reserved.
-#    info Vauxoo (info@vauxoo.com)
+#    info@vauxoo.com
 ############################################################################
-#    Coded by: Luis Torres (luis_t@vauxoo.com)
+#    Coded by: fernandoL (fernando_ld@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,22 +23,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    "name" : "Stock Picking Cancel",
-    "version" : "1.0",
+    "name": "Account relation move",
+    "version": "1.0",
     "author" : "Vauxoo",
-    "category" : "Stock",
-    "description" : """This module add a button to cancel after to done""",
+    "category": "Generic Modules/Account",
     "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["stock","account_relation_move"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/picking_security.xml",
-        "stock_workflow.xml",
-        "stock_view.xml",
-    ],
-    "installable" : True,
-    "active" : False,
+    "description": """ Adds 4 fields to generate a connection between account
+    and production models
+    """,
+    'depends': ['mrp'],
+    'init_xml': [],
+    'update_xml': [
+        #'account_view.xml',
+        ],
+    'demo_xml': [],
+    'test': [],
+    'installable': True,
+    'active': False,
 }
