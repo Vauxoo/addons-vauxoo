@@ -24,38 +24,19 @@
 #
 ##############################################################################
 from osv import fields, osv
-from lxml import etree
 
-class stock_move(osv.osv):
-    _inherit= "stock.move"
+class stock_partial_move(osv.osv_memory):
+    _inherit = "stock.partial.move"
     
-    _columns={
-        'type_process_date':fields.selection([
-            ('current_date','Current Date'),
-            ('planned_date','Planned Date'),
-        ],readonly=True,string='Type Process Date',states={'draft': [('readonly', False)]}),
-    }
-    
-    _defaults = {
-        'type_process_date': 'current_date',
-    }
-    
-    def action_confirm(self, cr, uid, ids, context=None):
-        res=super(stock_move,self).action_confirm(cr,uid,ids,context=context)
-        for id_move in ids:
-            move=self.browse(cr,uid,id_move)
+    def do_partial(self, cr, uid, ids, context=None):
+        res=super(stock_partial_move,self).do_partial(cr, uid, ids, context=context)
+        stock_move_obj=self.pool.get('stock.move')
+        ids_validate=context.get('active_ids')
+        for id_move in ids_validate:
+            move=stock_move_obj.browse(cr,uid,id_move)
             type_pross_date=move.type_process_date
             date_expect=move.date_expected
             if type_pross_date=='planned_date':
-                self.write(cr, uid, ids, {'create_date': date_expect})
-        return res
+                stock_move_obj.write(cr, uid, id_move, {'date': date_expect})
         
-    def action_done(self, cr, uid, ids, context=None):
-        res=super(stock_move,self).action_done(cr,uid,ids,context=context)
-        for id_move in ids:
-            move=self.browse(cr,uid,id_move)
-            type_pross_date=move.type_process_date
-            date_expect=move.date_expected
-            if type_pross_date=='planned_date':
-                self.write(cr, uid, ids, {'date': date_expect})
         return res

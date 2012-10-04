@@ -27,10 +27,11 @@
     'name': 'Stock Validate Past',
     "version" : "1.1",
     'author': 'Vauxoo',
-    'category' : "Localization/Mexico",
+    "category" : "Warehouse Management",
+    "website" : "http://www.vauxoo.com/",
     'depends': ['stock',],
     'description': """
-This module to the validate a move, review that if is imported take date_planned the csv
+This module add the selection field "type_process_date", if its value = planned_date the field date_create takes the value from date_expected
     """,
     'update_xml':[
         'stock_view.xml'],
