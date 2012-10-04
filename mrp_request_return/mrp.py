@@ -60,6 +60,14 @@ class mrp_production(osv.osv):
             'company_id': production.company_id.id,
         })
         return picking_id
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'picking_ids': []
+        })
+        return super(mrp_production, self).copy(cr, uid, id, default, context)
 mrp_production()
 
 class stock_picking(osv.osv):
