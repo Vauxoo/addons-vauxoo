@@ -30,5 +30,42 @@
                 </xpath>
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="view_stock_move_lines_int_inherit_type_pross_date_form">
+            <field name="name">view.stock.move.lines.int.inherit.type.pross.date.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='move_lines']/form[@string='Stock Moves']/group/field[@name='location_dest_id']" position="after">
+                    <field name="type_process_date" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_stock_move_lines_out_inherit_type_pross_date_form">
+            <field name="name">view.stock.move.lines.out.inherit.type.pross.date.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='move_lines']/form[@string='Stock Moves']/group/field[@name='location_dest_id']" position="after">
+                    <field name="type_process_date" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_stock_move_lines_inc_inherit_type_pross_date_form">
+            <field name="name">view.stock.move.lines.inc.inherit.type.pross.date.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='move_lines']/form[@string='Stock Moves']/group/field[@name='location_dest_id']" position="after">
+                    <field name="type_process_date" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>
