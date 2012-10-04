@@ -58,7 +58,7 @@ class mrp_production(osv.osv):
                         {
                          'journal_id': j_id,
                          'line_id': move_lines,
-                         'ref': production.name})
+                         'ref': 'PROD: ' + production.name})
 
                     
         return True
@@ -113,7 +113,7 @@ class mrp_production(osv.osv):
         
     def _create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
         debit_line_vals = {
-                    'name': prod_variation.product_id.name,
+                    'name': 'PROD: ' + prod_variation.production_id.name +' - '+ prod_variation.product_id.name,
                     'product_id': prod_variation.product_id and prod_variation.product_id.id or False,
                     'quantity': prod_variation.quantity,
  #                   'ref': 'prueba',
@@ -123,7 +123,7 @@ class mrp_production(osv.osv):
                     'account_id': dest_account_id,
         }
         credit_line_vals = {
-                    'name': prod_variation.product_id.name,
+                    'name': 'PROD: ' + prod_variation.production_id.name +' - '+ prod_variation.product_id.name,
                     'product_id': prod_variation.product_id and prod_variation.product_id.id or False,
                     'quantity': prod_variation.quantity,
    #                 'ref': 'prueba',
@@ -136,4 +136,41 @@ class mrp_production(osv.osv):
         return [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
 
 mrp_production()
+
+
+class stock_move(osv.osv):
+    _inherit = 'stock.move'
+    
+    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
+        res = super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
+        for lin in res:
+            lin[2]['name'] = move.name+' - '+move.product_id.name
+        return res
+
+stock_move()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
