@@ -32,45 +32,11 @@ class account_move_group(osv.osv_memory):
     _name='account.move.group'
     
     def move_group(self, cr, uid, ids, context=None):
-        account_move = self.pool.get('account.move')
         account_move_line = self.pool.get('account.move.line')
         if context is None:
             context = {}
         move_ids = context.get('active_ids', [])
-        res_journal = {}
-        res_period = {}
-        res_reference = {}
-        moves = []
-        moves_line = []
-        ok = False
-        for move in account_move.browse(cr, uid, move_ids, context=context):
-            moves.append(move.id)
-            if move.state <> 'draft':
-                ok = True
-            for mov in move.line_id:
-                res_reference.setdefault(move.ref, 0)
-                res_journal.setdefault(mov.journal_id.id, 0)
-                res_period.setdefault(mov.period_id.id, 0)
-                moves_line.append(mov.id)
-        if len(moves) <= 1: 
-            raise osv.except_osv(_('Error'), _('You need at least two entries to merged') )
-        
-        if ok == True:
-            raise osv.except_osv(_('Error'), _('Entries must be in state draft') )
-        
-        if len(res_journal) > 1:
-            raise osv.except_osv(_('Error'), _('Entries to merged must have the same journal') )
-        
-        if len(res_period) > 1:
-            raise osv.except_osv(_('Error'), _('Entries to merged must have the same period') )
-        else:
-            reference = ','.join(lin for lin in res_reference.keys())
-            move_id = account_move.create(cr, uid, {
-                        'journal_id': res_journal.keys()[0],
-                        'ref': reference
-                        })
-            account_move_line.write(cr, uid, moves_line, {'move_id':move_id})
-            account_move.unlink(cr, uid, move_ids)
+        account_move_line._create_move_group(cr, uid, move_ids, context=context)
         return {}
     
 account_move_group()

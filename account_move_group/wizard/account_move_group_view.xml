@@ -8,9 +8,9 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Account Move Group">
-			<group colspan="4">
+			<group colspan="4" width="615" height="80">
 				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
-				<button string="Gorup Moves" icon="gtk-ok" name="move_group" type="object"/>
+				<button string="Merge Entries" icon="gtk-ok" name="move_group" type="object"/>
 			</group>
                 </form>
             </field>
