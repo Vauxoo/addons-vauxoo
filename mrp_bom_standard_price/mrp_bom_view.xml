@@ -8,7 +8,7 @@
             <field name="type">tree</field>
             <field name="inherit_id" ref="mrp.mrp_bom_component_tree_view"/>
             <field name="arch" type="xml">
-                <xpath expr="/tree/field[@name='name']" position="after">
+                <xpath expr="/tree/field[@name='type']" position="before">
                     <field name="standard_price"/>
                 </xpath>
             </field>
