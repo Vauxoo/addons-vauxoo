@@ -42,17 +42,27 @@ class account_move_group(osv.osv_memory):
         res_reference = {}
         moves = []
         moves_line = []
+        ok = False
         for move in account_move.browse(cr, uid, move_ids, context=context):
             moves.append(move.id)
+            if move.state <> 'draft':
+                ok = True
             for mov in move.line_id:
                 res_reference.setdefault(move.ref, 0)
                 res_journal.setdefault(mov.journal_id.id, 0)
                 res_period.setdefault(mov.period_id.id, 0)
-                moves.append(mov.id)
-        if len(moves) <= 1:
+                moves_line.append(mov.id)
+        if len(moves) <= 1: 
             raise osv.except_osv(_('Error'), _('You need at least two entries to merged') )
-        if len(res_journal) > 1 or len(res_journal) > 1:
-            raise osv.except_osv(_('Error'), _('Entries can not merge') )
+        
+        if ok == True:
+            raise osv.except_osv(_('Error'), _('Entries must be in state draft') )
+        
+        if len(res_journal) > 1:
+            raise osv.except_osv(_('Error'), _('Entries to merged must have the same journal') )
+        
+        if len(res_period) > 1:
+            raise osv.except_osv(_('Error'), _('Entries to merged must have the same period') )
         else:
             reference = ','.join(lin for lin in res_reference.keys())
             move_id = account_move.create(cr, uid, {
