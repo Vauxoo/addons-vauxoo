@@ -4,5 +4,9 @@
     <record id="base.group_picking_cancel" model="res.groups">
         <field name="name">Picking / Button Cancel</field>
     </record>
+    <!--from stock move cancel module-->
+    <record id="base.group_moves_cancel" model="res.groups">
+        <field name="name">Moves / Button Cancel</field>
+    </record>
 
 </data></openerp>
