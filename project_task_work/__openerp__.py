@@ -41,8 +41,11 @@
 
     ], 
     "update_xml" : [
+        'security/project_task_work.xml',
+        'security/ir.model.access.csv',
         'view/project_view.xml',
         'view/report.xml',
+        
     ],
     "active": False,
     "installable": True
