@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_partner_not_acc_rec_inherit_filter">
+            <field name="name">view.partner.not.acc.rec.inherit.filter</field>
+            <field name="model">res.partner</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/group/filter[@string='Suppliers']" position="after">
+                    <filter icon="terp-document-new" string="Not ccount receivable" domain="[('property_account_receivable','=','110200 Debtors')]" name="no_acc_rec"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="action_no_acc_rec_partner_filter" model="ir.actions.act_window">
+            <field name="name">Partner without account Receivable</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_no_acc_rec":1}</field>
+            <field name="search_view_id" ref="view_partner_not_acc_rec_inherit_filter"/>
+            <field name="help">Show partners that don't have account receivable.</field>
+        </record>
+        
+        <menuitem name="Query" id="menu_action_query"/>       
+        <menuitem action="action_no_acc_rec_partner_filter" id="action_filter_account_move"
+            parent="menu_action_query"
+            sequence="1"/>
+    </data>
+</openerp>
