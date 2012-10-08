@@ -45,7 +45,8 @@ class account_move_line(osv.osv):
         for move in account_move.browse(cr, uid, ids, context=context):
             moves.append(move.id)
             if move.state <> 'draft':
-                ok = True
+                account_move.button_cancel(cr, uid, [move.id], context=context)
+#                ok = True
             for mov in move.line_id:
                 res_reference.setdefault(move.ref, 0)
                 res_journal.setdefault(mov.journal_id.id, 0)
@@ -55,8 +56,8 @@ class account_move_line(osv.osv):
         if len(moves) <= 1: 
             raise osv.except_osv(_('Error'), _('You need at least two entries to merged') )
         
-        if ok == True:
-            raise osv.except_osv(_('Error'), _('Entries must be in state draft') )
+#        if ok == True:
+ #           raise osv.except_osv(_('Error'), _('Entries must be in state draft') )
         
         if len(res_journal) > 1:
             raise osv.except_osv(_('Error'), _('Entries to merged must have the same journal') )
