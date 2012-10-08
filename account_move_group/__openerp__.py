@@ -32,7 +32,7 @@
     "website" : "http://www.vauxoo.com/",
     "description": """ Group Entries
     """,
-    'depends': ['account','account_relation_move'],
+    'depends': ['account'],
     'init_xml': [],
     'update_xml': [
         'wizard/account_move_group_view.xml',
