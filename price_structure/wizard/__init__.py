@@ -1,0 +1,1 @@
+import update_price_list
