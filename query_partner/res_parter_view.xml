@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="base.view_res_partner_filter"/>
             <field name="arch" type="xml">
                 <xpath expr="/search/group/filter[@string='Suppliers']" position="after">
-                    <filter icon="terp-document-new" string="Not ccount receivable" domain="[('property_account_receivable','=','110200 Debtors')]" name="no_acc_rec"/>
+                    <filter icon="terp-document-new" string="Not ccount receivable" domain="[('property_account_receivable','=',False)]" name="no_acc_rec"/>
                 </xpath>
             </field>
         </record>
