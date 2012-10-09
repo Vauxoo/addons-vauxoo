@@ -123,6 +123,11 @@ class mrp_request_return_line(osv.osv_memory):
         'product_uos_qty' : fields.float('Quantity UoS'),
         'wizard_id' : fields.many2one('mrp.request.return', string="Wizard"),
     }
+    
+    def on_change_product_uom(self, cr, uid, ids, product_id):
+        product_product = self.pool.get('product.product')
+        product = product_product.browse(cr, uid, product_id)
+        return {'value' : { 'product_uom': product.uom_id and product.uom_id.id}}
 
 mrp_request_return_line()
 
