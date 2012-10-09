@@ -95,6 +95,22 @@ mrp_request_return()
 class mrp_request_return_line(osv.osv_memory):
     _name='mrp.request.return.line'
     _rec_name = 'product_id'
+    
+    def default_get(self, cr, uid, fields, context=None):
+        if context is None: context = {}
+        res = super(mrp_request_return_line, self).default_get(cr, uid, fields, context=context)
+        mrp_ids = context.get('active_ids', [])
+        if not mrp_ids or (not context.get('active_model') == 'mrp.production') \
+            or len(mrp_ids) != 1:
+            return res
+        mrp_id, = mrp_ids
+        mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
+        res.update({
+            'location_id' : mrp.location_src_id.id,
+            'location_dest_id' : mrp.location_src_id.id,
+            'production_id' : mrp.id})
+        return res
+    
     _columns = {
         'product_id' : fields.many2one('product.product', string="Product", required=True),
         'product_qty' : fields.float("Quantity", digits_compute=dp.get_precision('Product UoM'), required=True),
