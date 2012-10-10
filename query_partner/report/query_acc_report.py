@@ -32,6 +32,7 @@ class query_report(report_sxw.rml_parse):
         super(query_report, self).__init__(cr,uid,name,context)
         self.localcontext.update({
         'not_acc_rec': self.not_acc_rec,
+        'not_acc_pay': self.not_acc_pay,
         })
     
     def not_acc_rec(self, company_id):
@@ -46,17 +47,34 @@ class query_report(report_sxw.rml_parse):
                 lista.append(partner_id)
         for id_no_acc in lista:
             res={}
-            print 'id_no_acc',id_no_acc
             partner=partner_obj.browse(self.cr,self.uid,id_no_acc)
             name=partner.name
-            print 'name',name
             ref=partner.ref
-            print 'ref',ref
             res['partner_id'] = id_no_acc or ''
             res['partner_name'] = name or ''
             res['partner_ref'] = ref or ''
             result.append(res)
-        print 'res',result
+        return result
+        
+    def not_acc_pay(self, company_id):
+        partner_obj=self.pool.get('res.partner')
+        property_obj = self.pool.get('ir.property')
+        list_partners=partner_obj.search(self.cr, self.uid,[])
+        lista=[]
+        result=[]
+        for partner_id in list_partners:
+            rec_pro_id = property_obj.search(self.cr,self.uid,[('name','=','property_account_payable'),('res_id','=','res.partner,'+str(partner_id)+''),('company_id','=',company_id)])
+            if not rec_pro_id:
+                lista.append(partner_id)
+        for id_no_acc in lista:
+            res={}
+            partner=partner_obj.browse(self.cr,self.uid,id_no_acc)
+            name=partner.name
+            ref=partner.ref
+            res['partner_id'] = id_no_acc or ''
+            res['partner_name'] = name or ''
+            res['partner_ref'] = ref or ''
+            result.append(res)
         return result
         
 report_sxw.report_sxw('report.partner.report','res.partner','modules_sys/query_partner/report/query_report.rml',parser=query_report,header=False)

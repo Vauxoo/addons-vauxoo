@@ -10,12 +10,20 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
     <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,1" stop="-1,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
@@ -26,8 +34,6 @@
       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,1" stop="0,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,1" stop="1,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,1" stop="2,-1"/>
@@ -35,25 +41,52 @@
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,1" stop="3,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,1" stop="3,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,2" stop="0,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,2" stop="1,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,2" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,2" stop="3,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,2" stop="3,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,1" stop="-1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,1" stop="3,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,1" stop="3,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Helvetica-BoldOblique" fontSize="8.0" leading="10" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P2" fontName="Helvetica" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P3" fontName="Helvetica" fontSize="10.0" leading="13"/>
-    <paraStyle name="P4" fontName="Helvetica" fontSize="10.0" leading="13" alignment="JUSTIFY"/>
-    <paraStyle name="P5" fontName="Helvetica" fontSize="8.0" leading="10" alignment="JUSTIFY"/>
-    <paraStyle name="P6" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="10.0" leading="10"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="10.0" leading="13" alignment="JUSTIFY"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="8.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P6" fontName="Helvetica-BoldOblique" fontSize="8.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="8.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P8" fontName="Helvetica-BoldOblique" fontSize="6.0" leading="8" alignment="JUSTIFY"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="10.0" leading="10" alignment="CENTER"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -66,74 +99,109 @@
     <images/>
   </stylesheet>
   <story>
-    <para style="P2">[[repeatIn(objects,'o')]]</para>
-    <para style="P1">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="125.0,125.0,125.0,125.0" style="Table1">
+    <para style="P1">[[repeatIn(objects,'o')]]</para>
+    <blockTable colWidths="6.0,488.0,5.0" style="Table2">
       <tr>
         <td>
-          <para style="P5">
-            <font face="Helvetica">[[ repeatIn(not_acc_rec( o.company_id.id ), 'p') ]]</font>
-          </para>
-          <para style="P5">
+          <para style="P2">
             <font color="white"> </font>
           </para>
         </td>
         <td>
-          <para style="P3">
+          <para style="P10">Partners sin Cuenta Contable a Cobrar</para>
+        </td>
+        <td>
+          <para style="P2">
             <font color="white"> </font>
           </para>
-        </td>
-        <td>
-          <para style="P3">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P3">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P6">[[ repeatIn(p,'r') ]]</para>
-        </td>
-        <td>
-          <para style="P5">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P5">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P5">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P4">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P5">[[ p ['partner_id'] or '']]</para>
-        </td>
-        <td>
-          <para style="P5">[[ p ['partner_ref'] or '']]</para>
-        </td>
-        <td>
-          <para style="P5">[[ p ['partner_name'] or '']]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P2">
+    <blockTable colWidths="6.0,43.0,156.0,294.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P6">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P2">Id</para>
+        </td>
+        <td>
+          <para style="P2">Referencia</para>
+        </td>
+        <td>
+          <para style="P2">Nombre</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P8">[[ repeatIn((not_acc_rec(o.company_id.id)),'p') ]] </para>
+        </td>
+        <td>
+          <para style="P4">[[ p['partner_id'] ]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ p['partner_ref'] ]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ p['partner_name'] ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="6.0,487.0,6.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P10">Partners Sin Cuenta Contable a Pagar </para>
+        </td>
+        <td>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="6.0,43.0,156.0,294.0" style="Table4">
+      <tr>
+        <td>
+          <para style="P6">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P2">Id</para>
+        </td>
+        <td>
+          <para style="P2">Referencia</para>
+        </td>
+        <td>
+          <para style="P2">Nombre</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P8">[[ repeatIn((not_acc_pay(o.company_id.id)),'p') ]] </para>
+        </td>
+        <td>
+          <para style="P4">[[ p['partner_id'] ]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ p['partner_ref'] ]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ p['partner_name'] ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Standard">
       <font color="white"> </font>
     </para>
   </story>
