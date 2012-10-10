@@ -39,7 +39,6 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "res_parter_view.xml",
         "partner_report.xml",
     ],
     "installable" : True,
