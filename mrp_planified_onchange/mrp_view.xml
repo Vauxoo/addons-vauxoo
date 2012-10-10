@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--
+	modifiying view
+-->
+        <record id="mrp_planified_onchange_form" model="ir.ui.view">
+            <field name="name">mrp.planified.onchange.form</field>
+            <field name="model">mrp.production</field>
+	    <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Scheduled Products']" position="inside">
+		  <newline/>
+		    <!--<field name="total_debit"-->
+		</xpath>
+            </field>
+        </record>
+	
+	<act_window
+            domain="[('production_id','=',active_id)]"
+            id="act_account_production"
+            name="Polizas"
+            res_model="account.move.line"
+            src_model="mrp.production"
+            context="{}" />
+
+    </data>
+</openerp>
