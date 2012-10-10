@@ -67,7 +67,6 @@ class stock_move(osv.osv):
         for line in res:
             line[2]['stock_move_id'] = move.id
             line[2]['production_id'] = result and result[0]['production_id'] or False
-        print res, ' = res'
         return res
 
 stock_move()
