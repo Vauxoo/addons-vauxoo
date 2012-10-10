@@ -35,7 +35,7 @@
     product_uom to only show the uom matching the selected product. Also Adds a link
     from the production order to its account_move_lines
     """,
-    'depends': ['mrp'],
+    'depends': ['account_relation_move'],
     'init_xml': [],
     'update_xml': [
         'mrp_view.xml',
