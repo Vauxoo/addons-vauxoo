@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="procurement_order_group_form" model="ir.ui.view">
+            <field name="name">procurement.order.group.form</field>
+            <field name="model">procurement.order.group</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Procurement Group">
+			<group colspan="4" width="615" height="250">                
+				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
+				<button string="Group Procurement" icon="gtk-ok" name="procurement_group" type="object"/>
+			</group>
+                </form>
+            </field>
+        </record>
+
+	<act_window id="procurement_group_wizard"
+		name="Procurement Group"
+		src_model="procurement.order"
+		res_model="procurement.order.group"
+		view_mode="form"
+		target="new"
+		key2="client_action_multi"
+		/>
+
+
+       <record id="create_procurement_group_action" model="ir.actions.act_window">
+            <field name="name">Procurement Group</field>
+            <field name="res_model">procurement.order.group</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>
+
