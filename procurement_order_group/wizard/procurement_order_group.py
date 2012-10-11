@@ -27,6 +27,7 @@ import time
 from osv import osv, fields
 import decimal_precision as dp
 from tools.translate import _
+import netsvc
 
 class procurement_order_group(osv.osv_memory):
     _name='procurement.order.group'
@@ -64,6 +65,9 @@ class procurement_order_group(osv.osv_memory):
                 'product_uom' : product_uom,
                 'procure_method' : res_method.keys()[0]
             })
+        for proc in procurement_ids:
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'procurement.order', proc, 'button_cancel', cr)
         return {}
     
 procurement_order_group()
