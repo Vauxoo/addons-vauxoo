@@ -38,8 +38,13 @@ class procurement_order(osv.osv):
         res_method = {}
         res_name = []
         res_origin = []
+        ok = False
         
         for procurement in procurement_order.browse(cr, uid, ids):
+            
+            if procurement.state <> 'draft':
+                ok = True
+                
             res_product.setdefault(procurement.product_id.id, 0)
             res_product[procurement.product_id.id] += self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
             res_location.setdefault(procurement.location_id.id, 1)
@@ -47,8 +52,13 @@ class procurement_order(osv.osv):
             res_name.append(procurement.name)
             res_origin.append(procurement.origin)
             product_uom = procurement.product_id.uom_id.id
+            
+        if ok == True:
+            raise osv.except_osv(_('Error'), _('Procurements must be in state draft') )
+
         if len(res_product) > 1 or len(res_location) > 1 or len(res_method) > 1:
-            print 'imprimo len mayor'
+            raise osv.except_osv(_('Error'), _('Procurements can not be merged') )
+            
         else:
             procure_name = ','.join( map(str, res_name) )
             procure_origin = ','.join( map(str, res_origin) )
