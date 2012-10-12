@@ -2,44 +2,44 @@
 <openerp>
     <data>
 
-        <record id="procurement_order_group_form" model="ir.ui.view">
-            <field name="name">procurement.order.group.form</field>
-            <field name="model">procurement.order.group</field>
+        <record id="procurement_order_merge_form" model="ir.ui.view">
+            <field name="name">procurement.order.merge.form</field>
+            <field name="model">procurement.order.merge</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Procurement Group">
+                <form string="Procurement Merge">
                     <separator string="Are you sure you want to merge these procurements ?" colspan="4"/>
                        <newline/>
                     <label string="
 Please note that: &#10; &#10;
 Orders will only be merged if: &#10;
 * Procurments Orders are in draft &#10;
-* Procurments Orders are have same location &#10;
-* Procurments Orders are have same procurement method &#10;
-* Procurments Orders are have same product
+* Procurments Orders have same location &#10;
+* Procurments Orders have same procurement method &#10;
+* Procurments Orders have same product
 " colspan="4"/>                
                     <newline/>                    
                     <separator string="" colspan="4" />              
 			<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
-			<button string="Group Procurement" icon="gtk-ok" name="procurement_group" type="object"/>
+			<button string="Merge Procurement" icon="gtk-ok" name="procurement_merge" type="object"/>
 
                 </form>
             </field>
         </record>
 
-	<act_window id="procurement_group_wizard"
-		name="Procurement Group"
+	<act_window id="procurement_merge_wizard"
+		name="Procurement Merge"
 		src_model="procurement.order"
-		res_model="procurement.order.group"
+		res_model="procurement.order.merge"
 		view_mode="form"
 		target="new"
 		key2="client_action_multi"
 		/>
 
 
-       <record id="create_procurement_group_action" model="ir.actions.act_window">
-            <field name="name">Procurement Group</field>
-            <field name="res_model">procurement.order.group</field>
+       <record id="create_procurement_merge_action" model="ir.actions.act_window">
+            <field name="name">Procurement Merge</field>
+            <field name="res_model">procurement.order.merge</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>

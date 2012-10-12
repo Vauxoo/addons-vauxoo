@@ -25,17 +25,17 @@
 ##############################################################################
 
 {
-    "name": "Procurement Order Group",
+    "name": "Procurement Order Merge",
     "version": "1.1",
     "author" : "Vauxoo",
     "category": "Generic Modules/Procurement",
     "website" : "http://www.vauxoo.com/",
-    "description": """ Group with wizard the procurement
+    "description": """ Merge with wizard the procurement
     """,
     'depends': ['procurement'],
     'init_xml': [],
     'update_xml': [
-        'wizard/procurement_order_group_view.xml',
+        'wizard/procurement_order_merge_view.xml',
         ],
     'demo_xml': [],
     'test': [],

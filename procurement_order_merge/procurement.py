@@ -30,7 +30,7 @@ import netsvc
 class procurement_order(osv.osv):
     _inherit='procurement.order'
     
-    def do_group(self, cr, uid, ids, context={}):
+    def do_merge(self, cr, uid, ids, context={}):
         procurement_order = self.pool.get('procurement.order')
         
         res_product = {}

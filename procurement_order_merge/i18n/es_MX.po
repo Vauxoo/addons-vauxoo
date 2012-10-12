@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* procurement_order_group
+#	* procurement_order_merge
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-12 16:59+0000\n"
-"PO-Revision-Date: 2012-10-12 12:14-0600\n"
+"POT-Creation-Date: 2012-10-12 17:58+0000\n"
+"PO-Revision-Date: 2012-10-12 13:02-0600\n"
 "Last-Translator: julio <julio@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,85 +15,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. module: procurement_order_group
-#: view:procurement.order.group:0
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
 msgid "Are you sure you want to merge these procurements ?"
 msgstr "Estas seguro de  querer mezclar estos abastecimientos ?"
 
-#. module: procurement_order_group
-#: model:ir.model,name:procurement_order_group.model_procurement_order_group
-msgid "procurement.order.group"
-msgstr "procurement.order.group"
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
+msgid "Merge Procurement"
+msgstr "Mezclar abastecimientos"
 
-#. module: procurement_order_group
-#: view:procurement.order.group:0
-msgid "Group Procurement"
-msgstr "Agrupar abastecimientos"
+#. module: procurement_order_merge
+#: model:ir.model,name:procurement_order_merge.model_procurement_order_merge
+msgid "procurement.order.merge"
+msgstr "procurement.order.merge"
 
-#. module: procurement_order_group
-#: model:ir.model,name:procurement_order_group.model_procurement_order
+#. module: procurement_order_merge
+#: model:ir.actions.act_window,name:procurement_order_merge.create_procurement_merge_action
+#: model:ir.actions.act_window,name:procurement_order_merge.procurement_merge_wizard
+#: view:procurement.order.merge:0
+msgid "Procurement Merge"
+msgstr "Mezclar abastecimientos"
+
+#. module: procurement_order_merge
+#: model:ir.model,name:procurement_order_merge.model_procurement_order
 msgid "Procurement"
 msgstr "Abastecimiento"
 
-#. module: procurement_order_group
-#: model:ir.actions.act_window,name:procurement_order_group.create_procurement_group_action
-#: model:ir.actions.act_window,name:procurement_order_group.procurement_group_wizard
-#: view:procurement.order.group:0
-msgid "Procurement Group"
-msgstr "Agrupar abastecimientos"
-
-#. module: procurement_order_group
-#: view:procurement.order.group:0
-msgid "Cancel"
-msgstr "Cancelar"
-
-#. module: procurement_order_group
-#: code:addons/procurement_order_group/procurement.py:60
+#. module: procurement_order_merge
+#: code:addons/procurement_order_merge/procurement.py:60
 #, python-format
 msgid "Procurements can not be merged"
 msgstr "Abastecimientos no pueden ser mezclados"
 
-#. module: procurement_order_group
-#: code:addons/procurement_order_group/wizard/procurement_order_group.py:38
+#. module: procurement_order_merge
+#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:38
 #, python-format
 msgid "Please select multiple order to merge in the list view."
-msgstr "Por Favor seleccione varios abastecimientos en la lista para mezclarlos"
+msgstr "Por Favor seleccione varios abastecimientos en la lista para mezclarlos."
 
-#. module: procurement_order_group
-#: code:addons/procurement_order_group/procurement.py:57
-#: code:addons/procurement_order_group/procurement.py:60
+#. module: procurement_order_merge
+#: code:addons/procurement_order_merge/procurement.py:57
+#: code:addons/procurement_order_merge/procurement.py:60
 #, python-format
 msgid "Error"
 msgstr "Error"
 
-#. module: procurement_order_group
-#: view:procurement.order.group:0
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: procurement_order_merge
+#: code:addons/procurement_order_merge/wizard/procurement_order_merge.py:37
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: procurement_order_merge
+#: code:addons/procurement_order_merge/procurement.py:57
+#, python-format
+msgid "Procurements must be in state draft"
+msgstr "Los abastecimientos deben de estar en estado borrador"
+
+#. module: procurement_order_merge
+#: view:procurement.order.merge:0
 msgid ""
 " Please note that: \n"
 " \n"
 " Orders will only be merged if: \n"
 " * Procurments Orders are in draft \n"
-" * Procurments Orders are have same location \n"
-" * Procurments Orders are have same procurement method \n"
-" * Procurments Orders are have same product "
+" * Procurments Orders have same location \n"
+" * Procurments Orders have same procurement method \n"
+" * Procurments Orders have same product "
 msgstr ""
-" Por favor note que: \n"
-" \n"
-" Abastecimientos solo se mezclaran si: \n"
+"Por favor note que: \n"
+"Abastecimientos solo se mezclaran si: \n"
 " *Orden de abastecimiento esta en estado borrador \n"
 " * Orden de abastecimiento tienen la misma ubicacion \n"
 " * Orden de abastecimiento tienen el misma metodo de abastecimiento \n"
 " * Orden de abastecimiento tienen el mismo producto"
-
-#. module: procurement_order_group
-#: code:addons/procurement_order_group/wizard/procurement_order_group.py:37
-#, python-format
-msgid "Warning"
-msgstr "Advertencia"
-
-#. module: procurement_order_group
-#: code:addons/procurement_order_group/procurement.py:57
-#, python-format
-msgid "Procurements must be in state draft"
-msgstr "Los abastecimientos deben de estar en estado borrador"
 
