@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name": "mrp planified onchange",
+    "name": "mrp planified onchange plus account links",
     "version": "1.0",
     "author" : "Vauxoo",
     "category": "Generic Modules/Production",
