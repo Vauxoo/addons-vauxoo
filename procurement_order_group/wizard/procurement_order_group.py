@@ -24,9 +24,19 @@
 #
 ##############################################################################
 from osv import osv, fields
+from tools.translate import _
 
 class procurement_order_group(osv.osv_memory):
     _name='procurement.order.group'
+    
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+        if context is None:
+            context={}
+        res = super(procurement_order_group, self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar,submenu=False)
+        if context.get('active_model','') == 'procurement.order' and len(context['active_ids']) < 2:
+            raise osv.except_osv(_('Warning'),
+            _('Please select multiple order to merge in the list view.'))
+        return res
     
     def procurement_group(self, cr, uid, ids, context=None):
         procurement_order = self.pool.get('procurement.order')

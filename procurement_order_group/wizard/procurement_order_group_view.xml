@@ -8,10 +8,21 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Procurement Group">
-			<group colspan="4" width="615" height="250">                
-				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
-				<button string="Group Procurement" icon="gtk-ok" name="procurement_group" type="object"/>
-			</group>
+                    <separator string="Are you sure you want to merge these procurements ?" colspan="4"/>
+                       <newline/>
+                    <label string="
+Please note that: &#10; &#10;
+Orders will only be merged if: &#10;
+* Procurments Orders are in draft &#10;
+* Procurments Orders are have same location &#10;
+* Procurments Orders are have same procurement method &#10;
+* Procurments Orders are have same product
+" colspan="4"/>                
+                    <newline/>                    
+                    <separator string="" colspan="4" />              
+			<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
+			<button string="Group Procurement" icon="gtk-ok" name="procurement_group" type="object"/>
+
                 </form>
             </field>
         </record>
