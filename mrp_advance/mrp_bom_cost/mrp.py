@@ -55,6 +55,12 @@ class mrp_bom(osv.osv):
                     cost = cost + self._calc_cost_u(cr,uid,[l.id],field_name,arg,context)[l.id]*l.product_qty
                     res[i.id]=cost/l.product_qty
             res[i.id] = i.cost_t/i.product_qty
+            if i._columns.has_key('sub_products') and i.sub_products:
+                sum_amount_subproducts=0.0
+                product_uom_obj = self.pool.get('product.uom')
+                for sub_prod in i.sub_products:
+                    sum_amount_subproducts += (product_uom_obj._compute_price(cr, uid,sub_prod.product_id.uom_id.id , sub_prod.product_id.standard_price, sub_prod.product_uom.id) * sub_prod.product_qty) 
+                res[i.id] =  (i.cost_t - sum_amount_subproducts)/ i.product_qty #mrp.bom valida cantidades mayores a 0
         return res
 
     def _get_category(self, cr, uid, ids, field_name, arg, context):
