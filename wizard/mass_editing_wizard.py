@@ -62,9 +62,7 @@ class mass_fuse_wizard(osv.osv_memory):
                         target_model.write(cr,uid,target_ids,{str(related.name):base_id})
                     except:
                         pass #Lame way to validate field deletion on tables that still on the ir.model.fields model
-                    for active in active_ids:
-                        if active != base_id:
-                            to_unlink.append(active) 
+                    to_unlink = list(set(active_ids) - set([base_id])) 
                     model_obj.unlink(cr,uid,to_unlink)
         result = super(mass_fuse_wizard, self).create(cr, uid, {}, context)
         return result
