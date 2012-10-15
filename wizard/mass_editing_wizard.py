@@ -36,7 +36,7 @@ class mass_fuse_wizard(osv.osv_memory):
             all_fields = {}
             xml_form = etree.Element('form', {'string': tools.ustr(fuse_data.name)})
             xml_group = etree.SubElement(xml_form, 'group', {'colspan': '4'})
-            etree.SubElement(xml_form, 'separator', {'string' : 'About to consolidate the following','colspan': '6'})
+            etree.SubElement(xml_form, 'separator', {'string' : 'About to consolidate the selected records in one','colspan': '6'})
             xml_group3 = etree.SubElement(xml_form, 'group', {'col': '2', 'colspan': '4'})
             etree.SubElement(xml_group3, 'button', {'string' :'Close','icon': "gtk-close", 'special' :'cancel'})
             etree.SubElement(xml_group3, 'button', {'string' :'Apply','icon': "gtk-execute", 'type' :'object','name':"action_apply"})
@@ -45,6 +45,32 @@ class mass_fuse_wizard(osv.osv_memory):
             result['fields'] = all_fields
             print result
         return result
+
+    def create(self, cr, uid, vals, context=None):
+        if context.get('active_model') and context.get('active_ids'):
+            active_ids = context.get('active_ids')
+            base_id = active_ids[0]
+            model_obj = self.pool.get(context.get('active_model'))
+            models_obj = self.pool.get('ir.model.fields')
+            related_ids = models_obj.search(cr,uid,[('relation','=',str(context.get('active_model')))]) #get the models related to the one to fuse        
+            for related in models_obj.browse(cr,uid,related_ids):
+                to_unlink = []
+                target_model = self.pool.get(related.model)
+                target_ids = target_model.search(cr,uid,[(related.name,'in',active_ids)])
+                if target_ids:
+                    try:
+                        target_model.write(cr,uid,target_ids,{str(related.name):base_id})
+                    except:
+                        pass #Lame way to validate field deletion on tables that still on the ir.model.fields model
+                    for active in active_ids:
+                        if active != base_id:
+                            to_unlink.append(active) 
+                    model_obj.unlink(cr,uid,to_unlink)
+        result = super(mass_fuse_wizard, self).create(cr, uid, {}, context)
+        return result
+
+    def action_apply(self, cr, uid, ids, context=None):
+        return  {'type': 'ir.actions.act_window_close'}
 
 mass_fuse_wizard()
 
