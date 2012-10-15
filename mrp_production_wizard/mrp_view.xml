@@ -2,9 +2,44 @@
 <openerp>
     <data>
 <!--
-	View of wizard on mrp production
+	View of wizard on mrp production modificar!!!!
 -->
-        
+        <record id="mrp_production_wizard_form" model="ir.ui.view">
+            <field name="name">mrp.production.wizard.form</field>
+            <field name="model">mrp.production.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Produce without BoM">
+			<field name="product_id"/>
+			<newline/>
+			<field colspan="2" name="move_lines" nolabel="1" widget="one2many_list"
+                                mode="tree,form" height="275" domain="[('state','&lt;&gt;', ('done', 'cancel'))]">
+                                <tree colors="blue:state == 'draft';black:state in ('picking_except','confirmed','ready','in_production');gray:state in ('cancel','done') " string="Products to Consume">
+                                    <field name="product_id" />
+                                    <field name="product_qty"  string="Qty"/>
+                                    <field name="product_uom"  string="UOM"/>
+                                    <field name="location_id"  string="Source Loc."/>
+                                    <field name="prodlot_id" string="Production Lot"/>
+                                    <field name="state" invisible="1"/>
+				    <!-- mrp lines 667 -->
+                                </tree>
+                            </field>
+			<group colspan="4">
+				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
+				<button string="Create production order" icon="gtk-ok" name="sum_qty_products" type="object"/>
+			</group>
+                </form>
+            </field>
+        </record>
+		  
+	<act_window id="mrp_production_wizard_act"
+		name="Special Order"
+		src_model="mrp.production"
+		res_model="mrp.production.wizard"
+		view_mode="form"
+		target="new"
+		key2="client_action_multi"
+		  />
 	
     </data>
 </openerp>

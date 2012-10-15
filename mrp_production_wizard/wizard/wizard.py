@@ -31,7 +31,8 @@ from tools.translate import _
 class mrp_production_wizard(osv.osv_memory):
     _name='mrp.production.wizard'
     _columns={
-        
+        'product_id': fields.many2one('product.product', 'Product', required=True, ),
+        'move_lines': fields.many2many('stock.move', 'mrp_production_move_ids', 'production_id', 'move_id', 'Consumed Products', domain=[('state','in', ('done', 'cancel'))]),
     }
     
     def sum_qty_products(self,cr,uid,ids,context={}):
