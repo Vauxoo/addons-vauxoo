@@ -37,6 +37,7 @@ class mass_fuse_wizard(osv.osv_memory):
             xml_form = etree.Element('form', {'string': tools.ustr(fuse_data.name)})
             xml_group = etree.SubElement(xml_form, 'group', {'colspan': '4'})
             etree.SubElement(xml_form, 'separator', {'string' : 'About to consolidate the selected records in one','colspan': '6'})
+            #TODO Creating a tree with the selected records, allowing to select which record will be the main
             xml_group3 = etree.SubElement(xml_form, 'group', {'col': '2', 'colspan': '4'})
             etree.SubElement(xml_group3, 'button', {'string' :'Close','icon': "gtk-close", 'special' :'cancel'})
             etree.SubElement(xml_group3, 'button', {'string' :'Apply','icon': "gtk-execute", 'type' :'object','name':"action_apply"})
