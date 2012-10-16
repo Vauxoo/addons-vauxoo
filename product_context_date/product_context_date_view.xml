@@ -8,8 +8,9 @@
             <field name="type">search</field>
             <field name="inherit_id" ref="product.product_search_form_view"/>
             <field name="arch" type="xml">
-                   <field name="pricelist_id" position="before">
-                       <field name="sale_id" widget="date" context="{'to_date': self}"/>
+                   <field name="pricelist_id" position="after">
+			<field name="date_from" widget="date" context="{'from_date': self}"/>
+			<field name="date_to" widget="date" context="{'to_date': self}"/>
                    </field>
             </field>
         </record>

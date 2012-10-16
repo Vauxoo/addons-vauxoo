@@ -1,13 +1,8 @@
-# -*- encoding: utf-8 -*-
-###########################################################################
-#    Module Writen to OpenERP, Open Source Management Solution
+# -*- coding: utf-8 -*-
+##############################################################################
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info@vauxoo.com
-############################################################################
-#    Coded by: julio (julio@vauxoo.com)
-############################################################################
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,4 +18,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import product
+
+from osv import fields, osv
+from tools.translate import _
+import decimal_precision as dp
+
+class product_product(osv.osv):
+    _inherit = "product.product"
+    _columns = {
+        'date_to': fields.dummy(string='Date To', type='datetime'),
+        'date_from': fields.dummy(string='Date From', type='datetime'),
+    }
+
+product_product()
+
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
