@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: Luis Torres (luis_t@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com),Rodo (rodo@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -32,13 +32,13 @@ class mrp_production(osv.osv):
         bom_obj=self.pool.get('mrp.bom')
         res=super(mrp_production, self).product_id_change(cr, uid, ids,product_id,context=None)
         bom=bom_obj.browse(cr,uid,[res['value']['bom_id']],context=context)
-        res['value']['analytic_acc_mp']=bom and bom[0].analytic_acc_mp.id or False
-        res['value']['analytic_acc_pt']=bom and bom[0].analytic_acc_pt.id or False
+        res['value']['analytic_acc_rm']=bom and bom[0].analytic_acc_rm.id or False
+        res['value']['analytic_acc_fg']=bom and bom[0].analytic_acc_fg.id or False
         return res
         
     _columns={
-        'analytic_acc_mp': fields.many2one('account.analytic.account','Analytic Account MP',),
-        'analytic_acc_pt': fields.many2one('account.analytic.account','Analytic Account PT',)
+        'analytic_acc_rm': fields.many2one('account.analytic.account','Analytic Account RM',),
+        'analytic_acc_fg': fields.many2one('account.analytic.account','Analytic Account FG',)
     }
 
         
@@ -48,14 +48,8 @@ class mrp_bom(osv.osv):
 
     
     _columns={
-        'analytic_acc_mp': fields.many2one('account.analytic.account','Analytic Account MP',),
-        'analytic_acc_pt': fields.many2one('account.analytic.account','Analytic Account PT',)
+        'analytic_acc_rm': fields.many2one('account.analytic.account','Analytic Account RM',),
+        'analytic_acc_fg': fields.many2one('account.analytic.account','Analytic Account FG',)
     }
 
-    
-class mrp_production_product_line(osv.osv):
-    _inherit= "mrp.production.product.line"
-    
-    _columns={
-        'analytic_acc': fields.many2one('account.analytic.account','Analytic Account',)
-    }
+

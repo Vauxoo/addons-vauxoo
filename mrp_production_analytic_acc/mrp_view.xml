@@ -8,8 +8,8 @@
             <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
             <field name="arch" type="xml">
                 <field name="company_id" position="after">
-                    <field name="analytic_acc_mp" select="2"/>
-                     <field name="analytic_acc_pt" select="2"/>
+                    <field name="analytic_acc_rm" select="2"/>
+                     <field name="analytic_acc_fg" select="2"/>
                 </field>
             </field>
         </record>
@@ -22,8 +22,8 @@
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
                 <field name="location_dest_id" position="after">
-                    <field name="analytic_acc_mp" select="2"/>
-                     <field name="analytic_acc_pt" select="2"/>
+                    <field name="analytic_acc_rm" select="2"/>
+                     <field name="analytic_acc_fg" select="2"/>
                 </field>
             </field>
         </record>
@@ -78,30 +78,6 @@
             </field>
         </record>
         
-        
-        <record model="ir.ui.view" id="view_mrp_prod_line_inherit_analytic_acc_form">
-            <field name="name">view.mrp.prod.line.inherit.analytic.acc.form</field>
-            <field name="model">mrp.production.product.line</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="mrp.mrp_production_product_form_view"/>
-            <field name="arch" type="xml">
-                <field name="product_uos" position="after">
-                    <field name="analytic_acc" select="2"/>
-                </field>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_mrp_prod_line_inherit_analytic_acc_tree">
-            <field name="name">view.mrp.prod.line.inherit.analytic.acc.tree</field>
-            <field name="model">mrp.production.product.line</field>
-            <field name="type">tree</field>
-            <field name="inherit_id" ref="mrp.mrp_production_product_tree_view"/>
-            <field name="arch" type="xml">
-                <field name="product_uos" position="after">
-                    <field name="analytic_acc" select="2"/>
-                </field>
-            </field>
-        </record>
 
     </data>
 </openerp>  
