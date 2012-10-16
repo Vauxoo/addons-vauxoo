@@ -77,4 +77,4 @@ class query_report(report_sxw.rml_parse):
             result.append(res)
         return result
         
-report_sxw.report_sxw('report.partner.report','res.partner','modules_sys/query_partner/report/query_report.rml',parser=query_report,header=False)
+report_sxw.report_sxw('report.partner.report','res.partner','modules_sys/query_account_property/report/query_report.rml',parser=query_report,header=False)

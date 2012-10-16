@@ -8,7 +8,7 @@
             auto="False"
             header="False"
             menu="True"
-            rml='query_partner/report/query_report.rml'
+            rml='query_account_property/report/query_report.rml'
         />
     </data>
 </openerp>
