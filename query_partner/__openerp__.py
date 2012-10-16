@@ -31,6 +31,7 @@
     "category" : "Generic Modules",
     "description" : """
         This module show partners that don't have account's
+        & products that dont have category
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
@@ -40,6 +41,7 @@
     "demo_xml" : [],
     "update_xml" : [
         "partner_report.xml",
+        "category_report.xml",
     ],
     "installable" : True,
     "active" : False,
