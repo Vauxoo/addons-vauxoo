@@ -9,8 +9,9 @@
             <field name="inherit_id" ref="product.product_search_form_view"/>
             <field name="arch" type="xml">
                    <field name="pricelist_id" position="after">
-			<field name="date_from" widget="date" context="{'from_date': self}"/>
-			<field name="date_to" widget="date" context="{'to_date': self}"/>
+                        <field name="date_from_to" widget="date" context="{}"/>
+			<!--<field name="date_from" widget="date2" context="{'from_date': self}"/>
+			<field name="date_to" widget="date2" context="{'to_date': self}"/>-->
                    </field>
             </field>
         </record>
