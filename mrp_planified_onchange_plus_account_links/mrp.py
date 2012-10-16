@@ -40,10 +40,11 @@ class mrp_production_product_line(osv.osv):
             new_product_id = [product_id]
             product_product_obj = self.pool.get('product.product')
             product_product_data = product_product_obj.browse(cr, uid, new_product_id, context=None)
-            for line in product_product_data:
-                val = {'name' : line.name, 'product_uom' : line.uom_id.id, 'product_qty' : 1}
-                domain_uom = {'product_uom':[('category_id', '=', line.uom_id.category_id.id)]}
-                return {'value': val, 'domain': domain_uom}
+            if product_product_data:
+                for line in product_product_data:
+                    val = {'name' : line.name, 'product_uom' : line.uom_id.id, 'product_qty' : 1}
+                    domain_uom = {'product_uom':[('category_id', '=', line.uom_id.category_id.id)]}
+                    return {'value': val, 'domain': domain_uom}
         return {}
 
 mrp_production_product_line()
