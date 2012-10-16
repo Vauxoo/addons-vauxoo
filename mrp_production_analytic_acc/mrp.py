@@ -32,8 +32,8 @@ class mrp_production(osv.osv):
         bom_obj=self.pool.get('mrp.bom')
         res=super(mrp_production, self).product_id_change(cr, uid, ids,product_id,context=None)
         bom=bom_obj.browse(cr,uid,[res['value']['bom_id']],context=context)
-        res['value']['analytic_acc_mp']=bom and bom[0].analytic_acc_mp.id
-        res['value']['analytic_acc_pt']=bom and bom[0].analytic_acc_pt.id
+        res['value']['analytic_acc_mp']=bom and bom[0].analytic_acc_mp.id or False
+        res['value']['analytic_acc_pt']=bom and bom[0].analytic_acc_pt.id or False
         return res
         
     _columns={
