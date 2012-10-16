@@ -1,0 +1,36 @@
+=== modified file 'mrp/mrp.py'
+--- mrp/mrp.py	2012-07-23 08:44:52 +0000
++++ mrp/mrp.py	2012-10-16 04:49:17 +0000
+@@ -892,6 +892,7 @@
+                         'location_dest_id': destination_location_id,
+                         'state': 'waiting',
+                         'company_id': production.company_id.id,
++                        'analytic_acc': production.analytic_acc_mp and production.analytic_acc_mp.id or False,
+                 })
+           
+     def _make_production_internal_shipment(self, cr, uid, production, context=None):
+@@ -921,6 +922,7 @@
+             'address_id': address_id,
+             'auto_picking': self._get_auto_picking(cr, uid, production),
+             'company_id': production.company_id.id,
++            'analytic_acc_mp': production.analytic_acc_mp and production.analytic_acc_mp.id or False,
+         })
+         production.write({'picking_id': picking_id}, context=context)
+         return picking_id
+@@ -943,6 +945,7 @@
+             'move_dest_id': production.move_prod_id.id,
+             'state': 'waiting',
+             'company_id': production.company_id.id,
++            'analytic_acc': production.analytic_acc_pt and production.analytic_acc_pt.id or False,
+         }
+         move_id = stock_move.create(cr, uid, data, context=context)
+         production.write({'move_created_ids': [(6, 0, [move_id])]}, context=context)
+@@ -971,6 +974,7 @@
+             'move_dest_id': parent_move_id,
+             'state': 'waiting',
+             'company_id': production.company_id.id,
++            'analytic_acc': production.analytic_acc_mp and production.analytic_acc_mp.id or False,
+         })
+         production.write({'move_lines': [(4, move_id)]}, context=context)
+         return move_id
+
