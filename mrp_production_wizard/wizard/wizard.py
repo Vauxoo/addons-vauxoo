@@ -32,10 +32,31 @@ class mrp_production_wizard(osv.osv_memory):
     _name='mrp.production.wizard'
     _columns={
         'product_id': fields.many2one('product.product', 'Product', required=True, ),
-        'move_lines': fields.many2many('stock.move', 'mrp_production_move_ids', 'production_id', 'move_id', 'Consumed Products', domain=[('state','in', ('done', 'cancel'))]),
+        'wiz_data': fields.one2many('wizard.data', 'mrp_production_wiz', 'Prod lines'),
     }
     
-    def sum_qty_products(self,cr,uid,ids,context={}):
-        print "testing"
+    def pass_products_to_parent(self,cr,uid,ids,context={}):
+        if not context:
+            context={}
+        form=self.read(cr,uid,ids,[])
+        product = form and form[0]['product_id'] or []
+        print product, " = product"
+        wizard_data_data = self.browse(cr, uid, ids, context=context)
+        for line in wizard_data_data:
+            for move in line.wiz_data:
+                print move.product_id_consume.id, " = product id"
         return True
+    
 mrp_production_wizard()
+
+class wizard_data(osv.osv_memory):
+    _name='wizard.data'
+    
+    _columns={
+        'mrp_production_wiz': fields.many2one('mrp.production.wizard', 'Padre'),
+        'product_id_consume': fields.many2one('product.product', 'Product', required=True),
+        'product_qty': fields.float('Product Qty', required=True),
+        'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
+    }
+
+wizard_data()
