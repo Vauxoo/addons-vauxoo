@@ -1,0 +1,28 @@
+=== modified file 'mrp/mrp.py'
+--- mrp/mrp.py	2012-10-05 10:44:47 +0000
++++ mrp/mrp.py	2012-10-16 16:26:16 +0000
+@@ -913,6 +913,7 @@
+                         'location_dest_id': destination_location_id,
+                         'state': 'waiting',
+                         'company_id': production.company_id.id,
++                        'analytic_acc': production.analytic_acc_rm and production.analytic_acc_rm.id or False,
+                 })
+           
+     def _make_production_internal_shipment(self, cr, uid, production, context=None):
+@@ -964,6 +965,7 @@
+             'move_dest_id': production.move_prod_id.id,
+             'state': 'waiting',
+             'company_id': production.company_id.id,
++            'analytic_acc': production.analytic_acc_fg and production.analytic_acc_fg.id or False,
+         }
+         move_id = stock_move.create(cr, uid, data, context=context)
+         production.write({'move_created_ids': [(6, 0, [move_id])]}, context=context)
+@@ -992,6 +994,7 @@
+             'move_dest_id': parent_move_id,
+             'state': 'waiting',
+             'company_id': production.company_id.id,
++            'analytic_acc': production.analytic_acc_rm and production.analytic_acc_rm.id or False,
+         })
+         production.write({'move_lines': [(4, move_id)]}, context=context)
+         return move_id
+

@@ -1,0 +1,19 @@
+=== modified file 'stock/stock.py'
+--- stock/stock.py	2012-08-07 10:04:35 +0000
++++ stock/stock.py	2012-10-16 04:42:28 +0000
+@@ -2277,6 +2277,7 @@
+                     'partner_id': partner_id,
+                     'debit': reference_amount,
+                     'account_id': dest_account_id,
++                    'analytic_account_id': move.analytic_acc and move.analytic_acc.id or False,
+         }
+         credit_line_vals = {
+                     'name': move.name,
+@@ -2287,6 +2288,7 @@
+                     'partner_id': partner_id,
+                     'credit': reference_amount,
+                     'account_id': src_account_id,
++                    'analytic_account_id': move.analytic_acc and move.analytic_acc.id or False,
+         }
+ 
+         # if we are posting to accounts in a different currency, provide correct values in both currencies correctly
