@@ -26,16 +26,11 @@
 
 import pooler
 import wizard
-import base64
-import cStringIO
 import netsvc
 from tools.translate import _
 import tools
 import os
 from osv import osv, fields
-import base64
-import csv
-import StringIO
 import time
 from tools import ustr
 
@@ -44,5 +39,36 @@ class mrp_production(osv.osv):
     
     """
     """
+    def create_production_wizard(self, cr, uid, product, list_produce, context):
+        """ creates the production order
+        @param product id to create
+        @return: True
+        """
+        print product.id,"ids"
+        print list_produce," list produce"
+        #crear datos de orden de produccion y luego crear hijines
+        production_order_dict = {
+            'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
+            'date_planed' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+            'product_id' : product.id,
+            'product_qty' : 1,
+            'product_uom' : product.uom_id.id,
+            'location_src_id': 12,
+            'location_dest_id': 12,
+            'state' : 'draft'
+        }
+        print production_order_dict
+        new_id = self.create(cr, uid, production_order_dict)
+        print new_id, " = new id"
+        for line in list_produce:
+            production_scheduled_dict = {
+                'name': line['name'],
+                'product_id': line['product_id'],
+                'product_qty': line['product_qty'],
+                'product_uom': line['product_uom'],
+                'production_id': new_id,
+            }
+            self.pool.get('mrp.production.product.line').create(cr, uid, production_scheduled_dict)
+        return True
     
 mrp_production()

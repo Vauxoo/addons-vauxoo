@@ -2,7 +2,7 @@
 <openerp>
     <data>
 <!--
-	View of wizard on mrp production modificar!!!!
+	View of wizard on mrp production
 -->
         <record id="mrp_production_wizard_form" model="ir.ui.view">
             <field name="name">mrp.production.wizard.form</field>
@@ -14,11 +14,13 @@
 			<newline/>
 			<field colspan="2" name="wiz_data" nolabel="1" widget="one2many_list" mode="tree,form" height="275">
 			    <tree string="Products to consume">
+				<field name="name"/>
 				<field name="product_id_consume"/>
 				<field name="product_qty" string="Qty"/>
 				<field name="product_uom" string="UOM"/>
 			    </tree>
 			    <form string="Products to consume">
+				<field name="name"/>
 				<field name="product_id_consume"/>
 				<field name="product_qty" string="Qty"/>
 				<field name="product_uom" string="UOM"/>

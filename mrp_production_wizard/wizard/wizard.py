@@ -38,13 +38,20 @@ class mrp_production_wizard(osv.osv_memory):
     def pass_products_to_parent(self,cr,uid,ids,context={}):
         if not context:
             context={}
-        form=self.read(cr,uid,ids,[])
-        product = form and form[0]['product_id'] or []
-        print product, " = product"
         wizard_data_data = self.browse(cr, uid, ids, context=context)
+        list_product_lines = []
+        dict_line = {}
         for line in wizard_data_data:
+            product = line.product_id
             for move in line.wiz_data:
                 print move.product_id_consume.id, " = product id"
+                dict_line = {
+                    'name' : move.name,
+                    'product_id' : move.product_id_consume.id,
+                    'product_qty' : move.product_qty,
+                    'product_uom' : move.product_uom.id}
+                list_product_lines.append(dict_line)
+        self.pool.get('mrp.production').create_production_wizard(cr, uid, product, list_product_lines, context=context)
         return True
     
 mrp_production_wizard()
@@ -54,6 +61,7 @@ class wizard_data(osv.osv_memory):
     
     _columns={
         'mrp_production_wiz': fields.many2one('mrp.production.wizard', 'Padre'),
+        'name': fields.char('Name', size=64, required=True),
         'product_id_consume': fields.many2one('product.product', 'Product', required=True),
         'product_qty': fields.float('Product Qty', required=True),
         'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
