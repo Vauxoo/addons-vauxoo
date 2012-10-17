@@ -11,6 +11,10 @@
                     <field name="cost_t"/>
                     <field name="cost_u"/>
                 </xpath> 
+                <xpath expr="/form/notebook/page[@string='Sub Products']/field[@name='sub_products']/form/field[@name='subproduct_type']" position="after">
+                    <field name="cost_t"/>
+                    <field name="cost_u"/>
+                </xpath> 
             </field>
         </record>
 	</data>
