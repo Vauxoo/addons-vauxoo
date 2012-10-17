@@ -26,22 +26,8 @@ import decimal_precision as dp
 class product_product(osv.osv):
     _inherit = "product.product"
     _columns = {
-        'date_to': fields.dummy(string='Date To', type='datetime'),
         'date_from_to': fields.dummy(string='Date From-To', type='datetime'),
-        'date_from': fields.dummy(string='Date From', type='datetime'),
     }
-
-    def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
-        for lin in args:
-            if len(lin) == 3:
-                for field, operator, value in [tuple(lin)]:
-                    if field == 'date_from_to':
-                        if '>' in operator:
-                            context['from_date']=value
-                        if '<' in operator:
-                            context['to_date']=value
-        res = super(product_product, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
-        return res
 product_product()
 
 
