@@ -8,9 +8,9 @@
             <field name="inherit_id" ref="mrp.mrp_production_form_view" />
             <field name="type">form</field>
             <field name="arch" type="xml">
-                    <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
-            <button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" invisible="1"/>
-                    </xpath>
+                   <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
+            <button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" groups="mrp_consume_produce.group_mrp_button_produce"/>
+                    </xpath> 
 
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="after">
             <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action"  attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}"/>
