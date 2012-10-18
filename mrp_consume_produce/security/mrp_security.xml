@@ -13,6 +13,10 @@
          <record model="res.groups" id="group_mrp_button_produce">
             <field name="name">MRP / Button Produce</field>
         </record>
+
+         <record model="res.groups" id="group_mrp_button_consume_produce">
+            <field name="name">MRP / Button Consume-Produce</field>
+        </record>
         
     </data>
 </openerp>
