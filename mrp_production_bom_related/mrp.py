@@ -28,6 +28,7 @@ from osv import osv, fields
 class mrp_production(osv.osv):
     _inherit='mrp.production'
     
-    _columns={
-        'bom_qty': fields.related('bom_id','product_qty',type='float',relation='mrp.bom',string='Bom Qty',store=True)
-        }
+    _columns = {
+        'bom_qty': fields.related('bom_id', 'product_qty', type='float', relation='mrp.bom', string='Bom Qty', store=True, digits_compute=dp.get_precision('Product UoM')),
+    }
+mrp_production()
