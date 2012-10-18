@@ -69,6 +69,14 @@ class mrp_production(osv.osv):
                 'production_id': new_id,
             }
             self.pool.get('mrp.production.product.line').create(cr, uid, production_scheduled_dict)
+        
+        mrp_pt_planifed_dict = {
+            'product_id' : product.id,
+            'quantity' : 1,
+            'production_id' : new_id,
+            'product_uom' : product.uom_id.id,
+        }
+        self.pool.get('mrp.pt.planified').create(cr, uid, mrp_pt_planifed_dict)
         return True
     
 mrp_production()

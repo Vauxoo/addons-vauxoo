@@ -66,5 +66,17 @@ class wizard_data(osv.osv_memory):
         'product_qty': fields.float('Product Qty', required=True),
         'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
     }
+    
+    def onchange_production_wizard_product_name(self, cr, uid, ids, product_id):
+        if product_id:
+            new_product_id = [product_id]
+            product_product_obj = self.pool.get('product.product')
+            product_product_data = product_product_obj.browse(cr, uid, new_product_id, context=None)
+            if product_product_data:
+                for line in product_product_data:
+                    val = {'name' : line.name, 'product_uom' : line.uom_id.id, 'product_qty' : 1}
+                    domain_uom = {'product_uom':[('category_id', '=', line.uom_id.category_id.id)]}
+                    return {'value': val, 'domain': domain_uom}
+        return {}
 
 wizard_data()
