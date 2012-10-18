@@ -3,17 +3,8 @@
     <data>
     <menuitem id="menu_mrp_product" name="Products" parent="base.menu_mrp_root" sequence="1"/>
 <!--Product
-    new sub-menu:Products Assets, Products for Sales.
+    new sub-menu: Products for Sales.
     -->
-        <record id="product_normal_action_assets" model="ir.actions.act_window">
-            <field name="name">Products Assets</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">product.product</field>
-            <field name="domain">[('product_active','=',True)]</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <menuitem action="product_normal_action_assets" id="menu_products_assets" parent="menu_mrp_product" sequence="18"/>
 
         <record id="product_normal_action_sales" model="ir.actions.act_window">
             <field name="name">Products for Sales</field>
@@ -56,34 +47,13 @@
     Bill of Materials
     -->
 
-   <!-- bom Assets -->
-        <record id="mrp_bom_form_action_assets" model="ir.actions.act_window">
-            <field name="name">Bill of Materials Assets</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">mrp.bom</field>
-            <field name="view_type">form</field>
-            <field name="domain">[('bom_id','=',False),('bom_assets','=',True)]</field>
-        </record>
-        <menuitem action="mrp_bom_form_action_assets" id="menu_mrp_bom_form_action_assets" parent="mrp.menu_mrp_configuration"/>
-
-        <record id="mrp_bom_form_action_new_assets" model="ir.actions.act_window">
-            <field name="name">New Bill of Materials Assets</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">mrp.bom</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form,tree</field>
-            <field name="domain">[('bom_id','=',False),('bom_assets','=',True)]</field>
-            <field name="context">{'bom_assets': True}</field>
-        </record>
-        <menuitem action="mrp_bom_form_action_new_assets" id="menu_mrp_bom_form_action_new_assets" parent="menu_mrp_bom_form_action_assets"/> 
-
 <!-- bom for Sales -->
         <record id="mrp_bom_form_action_for_sales" model="ir.actions.act_window">
             <field name="name">Bill of Materials for Sales</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.bom</field>
             <field name="view_type">form</field>
-            <field name="domain">[('bom_id','=',False),('bom_assets','=',False)]</field>
+            <field name="domain">[('bom_id','=',False),]</field>
         </record>
         <menuitem action="mrp_bom_form_action_for_sales" id="menu_mrp_bom_form_action_for_sales" parent="mrp.menu_mrp_configuration"/>
 
@@ -93,24 +63,10 @@
             <field name="res_model">mrp.bom</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
-            <field name="domain">[('bom_id','=',False),('bom_assets','=',False)]</field>
-            <field name="context">{'bom_assets': False}</field>
+            <field name="domain">[('bom_id','=',False),]</field>
         </record>
         <menuitem action="mrp_bom_form_action_new_for_sales" id="menu_mrp_bom_form_action_new_for_sales" parent="menu_mrp_bom_form_action_for_sales"/>
 
-<!-- field bom_assets 
-            <record model="ir.ui.view" id="view_mrp_bom_form_cost_assets">
-            <field name="name">mrp.bom.form.cost_assets</field>
-            <field name="model">mrp.bom</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
-            <field name="arch" type="xml">
-                <field name="type" position="after">
-                    <field name="bom_assets" invisible='0'/>
-                </field>                
-            </field>
-        </record>
--->
             <record model="ir.ui.view" id="view_mrp_bom_form_cost1">
             <field name="name">mrp.bom.form.cost_t1</field>
             <field name="model">mrp.bom</field>
