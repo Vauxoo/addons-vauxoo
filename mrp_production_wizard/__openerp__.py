@@ -34,7 +34,8 @@
     selected product in draft state, with the qty added of the selected
     products. from the stock_picking model
     """,
-    'depends': ['mrp'],
+    'depends': ['mrp_default_location',
+                'mrp_pt_planifed'],
     'init_xml': [],
     'update_xml': [
         'mrp_view.xml',
