@@ -31,11 +31,55 @@ class mrp_production(osv.osv):
     def product_id_change(self, cr, uid, ids, product_id, context=None):
         bom_obj=self.pool.get('mrp.bom')
         res=super(mrp_production, self).product_id_change(cr, uid, ids,product_id,context=None)
-        bom=bom_obj.browse(cr,uid,[res['value']['bom_id']],context=context)
-        res['value']['analytic_acc_rm']=bom and bom[0].analytic_acc_rm.id or False
-        res['value']['analytic_acc_fg']=bom and bom[0].analytic_acc_fg.id or False
+        if not product_id:
+            res['value']['analytic_acc_rm']=False
+            res['value']['analytic_acc_fg']=False
+        if res['value']['bom_id']:
+            bom=bom_obj.browse(cr,uid,[res['value']['bom_id']],context=context)
+            res['value']['analytic_acc_rm']=bom and bom[0].analytic_acc_rm.id or False
+            res['value']['analytic_acc_fg']=bom and bom[0].analytic_acc_fg.id or False
         return res
         
+    def bom_id_change(self, cr, uid, ids, bom_id, context=None):
+        bom_obj=self.pool.get('mrp.bom')
+        res=super(mrp_production, self).bom_id_change(cr, uid, ids, bom_id, context=None)
+        if bom_id:
+            bom=bom_obj.browse(cr,uid,[bom_id],context=context)
+            res['value']['analytic_acc_rm']=bom and bom[0].analytic_acc_rm.id or False
+            res['value']['analytic_acc_fg']=bom and bom[0].analytic_acc_fg.id or False
+        else:
+            res['value']['analytic_acc_rm']= False
+            res['value']['analytic_acc_fg']= False
+        return res
+        
+        
+    def _make_production_internal_shipment_line(self, cr, uid, production_line, shipment_id, parent_move_id, destination_location_id=False, context=None):
+        stock_move = self.pool.get('stock.move')
+        production = production_line.production_id
+        res=super(mrp_production, self)._make_production_internal_shipment_line(cr, uid, production_line, shipment_id, parent_move_id, destination_location_id=False, context=None)
+        if self._columns.has_key('analytic_acc_rm'):
+            if parent_move_id:
+                stock_move.write(cr,uid,[parent_move_id],{'analytic_acc':production.analytic_acc_rm and production.analytic_acc_rm.id or False},context=context)
+            stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm and production.analytic_acc_rm.id or False},context=context)
+        return res
+        
+    def _make_production_produce_line(self, cr, uid, production, context=None):
+        stock_move = self.pool.get('stock.move')
+        res=super(mrp_production, self)._make_production_produce_line(cr, uid, production, context=None)
+        if self._columns.has_key('analytic_acc_fg'):
+            stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_fg and production.analytic_acc_fg.id or False},context=context)
+        return res
+        
+        
+        def _make_production_consume_line(self, cr, uid, production_line, parent_move_id, source_location_id=False, context=None):
+            stock_move = self.pool.get('stock.move')
+            production = production_line.production_id
+            res=super(mrp_production, self)._make_production_consume_line(cr, uid, production_line, parent_move_id, source_location_id=False, context=None)
+            if self._columns.has_key('analytic_acc_rm'):
+                stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm and production.analytic_acc_rm.id or False},context=context)
+            return res
+        
+                
     _columns={
         'analytic_acc_rm': fields.many2one('account.analytic.account','Analytic Account RM',),
         'analytic_acc_fg': fields.many2one('account.analytic.account','Analytic Account FG',)

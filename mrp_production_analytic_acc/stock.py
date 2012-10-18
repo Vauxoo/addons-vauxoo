@@ -28,6 +28,16 @@ from osv import fields, osv
 class stock_move(osv.osv):
     _inherit= "stock.move"
     
+    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
+        res=super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None)
+        if self.pool.get('stock.move')._columns.has_key('analytic_acc'):
+            for r in res:
+                value=move.analytic_acc and move.analytic_acc.id or False,
+                r[2]['analytic_account_id']=value[0]
+        return res
+        
+        
+        
     _columns={
         'analytic_acc': fields.many2one('account.analytic.account','Analytic Account',)
     }
