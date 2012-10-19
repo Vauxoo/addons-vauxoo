@@ -46,37 +46,39 @@ class mrp_production(osv.osv):
         """
         default_location_dict = self.product_id_change(cr, uid, [], product.id, context)
         print default_location_dict, "dict default"
-        print default_location_dict['value']['location_src_id'], "location src"
-        production_order_dict = {
-            'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
-            'date_planed' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-            'product_id' : product.id,
-            'product_qty' : 1,
-            'product_uom' : product.uom_id.id,
-            'location_src_id': default_location_dict['value']['location_src_id'],
-            'location_dest_id': default_location_dict['value']['location_dest_id'],
-            'state' : 'draft'
-        }
-        print production_order_dict
-        new_id = self.create(cr, uid, production_order_dict)
-        
-        for line in list_produce:
-            production_scheduled_dict = {
-                'name': line['name'],
-                'product_id': line['product_id'],
-                'product_qty': line['product_qty'],
-                'product_uom': line['product_uom'],
-                'production_id': new_id,
+        if (default_location_dict['value']['location_src_id'] & default_location_dict['value']['location_dest_id']):
+            production_order_dict = {
+                'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
+                'date_planed' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+                'product_id' : product.id,
+                'product_qty' : 1,
+                'product_uom' : product.uom_id.id,
+                'location_src_id': default_location_dict['value']['location_src_id'],#si no hay ke hacer?
+                'location_dest_id': default_location_dict['value']['location_dest_id'],
+                'state' : 'draft'
             }
-            self.pool.get('mrp.production.product.line').create(cr, uid, production_scheduled_dict)
-        
-        mrp_pt_planifed_dict = {
-            'product_id' : product.id,
-            'quantity' : 1,
-            'production_id' : new_id,
-            'product_uom' : product.uom_id.id,
-        }
-        self.pool.get('mrp.pt.planified').create(cr, uid, mrp_pt_planifed_dict)
+            print production_order_dict
+            new_id = self.create(cr, uid, production_order_dict)
+            
+            for line in list_produce:
+                production_scheduled_dict = {
+                    'name': line['name'],
+                    'product_id': line['product_id'],
+                    'product_qty': line['product_qty'],
+                    'product_uom': line['product_uom'],
+                    'production_id': new_id,
+                }
+                self.pool.get('mrp.production.product.line').create(cr, uid, production_scheduled_dict)
+            
+            mrp_pt_planifed_dict = {
+                'product_id' : product.id,
+                'quantity' : 1,
+                'production_id' : new_id,
+                'product_uom' : product.uom_id.id,
+            }
+            self.pool.get('mrp.pt.planified').create(cr, uid, mrp_pt_planifed_dict)
+        else:
+            raise osv.except_osv(_('Error'), _("The category of the product to produce has not predefined locations "))
         return True
     
 mrp_production()
