@@ -57,9 +57,10 @@ class mrp_production(osv.osv):
         stock_move = self.pool.get('stock.move')
         production = production_line.production_id
         res=super(mrp_production, self)._make_production_internal_shipment_line(cr, uid, production_line, shipment_id, parent_move_id, destination_location_id=destination_location_id, context=context)
+        print res
         if parent_move_id and production.analytic_acc_rm:
             stock_move.write(cr,uid,[parent_move_id],{'analytic_acc':production.analytic_acc_rm.id},context=context)
-        if production.analytic_acc_rm:
+        if res and production.analytic_acc_rm:
             stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm.id},context=context)
         return res
         
