@@ -57,18 +57,17 @@ class mrp_production(osv.osv):
         stock_move = self.pool.get('stock.move')
         production = production_line.production_id
         res=super(mrp_production, self)._make_production_internal_shipment_line(cr, uid, production_line, shipment_id, parent_move_id, destination_location_id=destination_location_id, context=context)
-        if self._columns.has_key('analytic_acc_rm'):
-            if parent_move_id and production.analytic_acc_rm:
-                stock_move.write(cr,uid,[parent_move_id],{'analytic_acc':production.analytic_acc_rm and production.analytic_acc_rm.id or False},context=context)
-            if production.analytic_acc_rm:
-                stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm.id},context=context)
+        if parent_move_id and production.analytic_acc_rm:
+            stock_move.write(cr,uid,[parent_move_id],{'analytic_acc':production.analytic_acc_rm.id},context=context)
+        if production.analytic_acc_rm:
+            stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm.id},context=context)
         return res
         
     def _make_production_produce_line(self, cr, uid, production, context=None):
         stock_move = self.pool.get('stock.move')
         res=super(mrp_production, self)._make_production_produce_line(cr, uid, production, context=context)
-        if self._columns.has_key('analytic_acc_fg'):
-            stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_fg and production.analytic_acc_fg.id or False},context=context)
+        if production.analytic_acc_fg:
+            stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_fg.id},context=context)
         return res
         
         
@@ -76,8 +75,8 @@ class mrp_production(osv.osv):
             stock_move = self.pool.get('stock.move')
             production = production_line.production_id
             res=super(mrp_production, self)._make_production_consume_line(cr, uid, production_line, parent_move_id, source_location_id=False, context=context)
-            if self._columns.has_key('analytic_acc_rm'):
-                stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm and production.analytic_acc_rm.id or False},context=context)
+            if production.analytic_acc_rm.id:
+                stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm.id},context=context)
             return res
         
                 
