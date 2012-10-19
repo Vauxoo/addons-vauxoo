@@ -32,8 +32,7 @@ class stock_move(osv.osv):
         res=super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None)
         if self.pool.get('stock.move')._columns.has_key('analytic_acc'):
             for r in res:
-                value=move.analytic_acc and move.analytic_acc.id or False,
-                r[2]['analytic_account_id']=value[0]
+                value=move.analytic_acc and move.analytic_acc.id or False
         return res
         
         
