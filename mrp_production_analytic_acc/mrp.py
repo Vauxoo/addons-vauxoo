@@ -81,8 +81,8 @@ class mrp_production(osv.osv):
         
                 
     _columns={
-        'analytic_acc_rm': fields.many2one('account.analytic.account','Analytic Account RM',),
-        'analytic_acc_fg': fields.many2one('account.analytic.account','Analytic Account FG',)
+        'analytic_acc_rm': fields.many2one('account.analytic.account','Analytic Account RM', readonly=True, states={'draft':[('readonly',False)]}),
+        'analytic_acc_fg': fields.many2one('account.analytic.account','Analytic Account FG', readonly=True, states={'draft':[('readonly',False)]})
     }
 
         
