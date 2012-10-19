@@ -61,7 +61,7 @@ class mrp_production(osv.osv):
             if parent_move_id and production.analytic_acc_rm:
                 stock_move.write(cr,uid,[parent_move_id],{'analytic_acc':production.analytic_acc_rm and production.analytic_acc_rm.id or False},context=context)
             if production.analytic_acc_rm:
-                stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm and production.analytic_acc_rm.id or False},context=context)
+                stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm.id},context=context)
         return res
         
     def _make_production_produce_line(self, cr, uid, production, context=None):
