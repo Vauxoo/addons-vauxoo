@@ -44,7 +44,6 @@ class mrp_production_wizard(osv.osv_memory):
         for line in wizard_data_data:
             product = line.product_id
             for move in line.wiz_data:
-                print move.product_id_consume.id, " = product id"
                 dict_line = {
                     'name' : move.name,
                     'product_id' : move.product_id_consume.id,
@@ -52,7 +51,7 @@ class mrp_production_wizard(osv.osv_memory):
                     'product_uom' : move.product_uom.id}
                 list_product_lines.append(dict_line)
         self.pool.get('mrp.production').create_production_wizard(cr, uid, product, list_product_lines, context=context)
-        return True
+        return {}
     
 mrp_production_wizard()
 

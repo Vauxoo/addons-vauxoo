@@ -45,7 +45,6 @@ class mrp_production(osv.osv):
         @return: True
         """
         default_location_dict = self.product_id_change(cr, uid, [], product.id, context)
-        print default_location_dict, "dict default"
         if (default_location_dict['value']['location_src_id'] & default_location_dict['value']['location_dest_id']):
             production_order_dict = {
                 'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
@@ -53,11 +52,10 @@ class mrp_production(osv.osv):
                 'product_id' : product.id,
                 'product_qty' : 1,
                 'product_uom' : product.uom_id.id,
-                'location_src_id': default_location_dict['value']['location_src_id'],#si no hay ke hacer?
+                'location_src_id': default_location_dict['value']['location_src_id'],
                 'location_dest_id': default_location_dict['value']['location_dest_id'],
                 'state' : 'draft'
             }
-            print production_order_dict
             new_id = self.create(cr, uid, production_order_dict)
             
             for line in list_produce:
