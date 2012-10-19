@@ -62,7 +62,7 @@ class stock_move(osv.osv):
     
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
         res = super(stock_move,self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
-        cr.execute('SELECT * FROM mrp_production_move_ids WHERE move_id = %s', (move.id,))
+        cr.execute('SELECT production_id FROM mrp_production_move_ids WHERE move_id = %s', (move.id,))
         result = cr.dictfetchall()
         for line in res:
             line[2]['stock_move_id'] = move.id
