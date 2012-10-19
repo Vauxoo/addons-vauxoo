@@ -44,22 +44,22 @@ class mrp_production(osv.osv):
         @param product id to create
         @return: True
         """
-        print product.id,"ids"
-        print list_produce," list produce"
-        #crear datos de orden de produccion y luego crear hijines
+        default_location_dict = self.product_id_change(cr, uid, [], product.id, context)
+        print default_location_dict, "dict default"
+        print default_location_dict['value']['location_src_id'], "location src"
         production_order_dict = {
             'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
             'date_planed' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
             'product_id' : product.id,
             'product_qty' : 1,
             'product_uom' : product.uom_id.id,
-            'location_src_id': 12,
-            'location_dest_id': 12,
+            'location_src_id': default_location_dict['value']['location_src_id'],
+            'location_dest_id': default_location_dict['value']['location_dest_id'],
             'state' : 'draft'
         }
         print production_order_dict
         new_id = self.create(cr, uid, production_order_dict)
-        print new_id, " = new id"
+        
         for line in list_produce:
             production_scheduled_dict = {
                 'name': line['name'],

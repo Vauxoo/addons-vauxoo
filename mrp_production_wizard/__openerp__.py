@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name": "Stock dumb wizard export csv",
+    "name": "MPR Production Wizard",
     "version": "1.0",
     "author" : "Vauxoo",
     "category": "Generic Modules/Production",
@@ -35,7 +35,7 @@
     products. from the stock_picking model
     """,
     'depends': ['mrp_default_location',
-                'mrp_pt_planifed'],
+                'mrp_pt_planified'],
     'init_xml': [],
     'update_xml': [
         'mrp_view.xml',

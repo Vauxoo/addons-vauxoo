@@ -34,8 +34,7 @@
             </field>
         </record>
 	
-	<menuitem action="mrp_production_wizard_act" id="mrp_production_wizard_action"
-            parent="mrp.menu_mrp_manufacturing" sequence="50"/>
+
 		  
 	<act_window id="mrp_production_wizard_act"
 		name="Special Order"
@@ -46,5 +45,8 @@
 		key2="client_action_multi"
 		  />
 	
+	<menuitem action="mrp_production_wizard_act" id="mrp_production_wizard_action"
+            parent="mrp.menu_mrp_manufacturing" sequence="50"/>
+	    
     </data>
 </openerp>
