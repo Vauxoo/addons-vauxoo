@@ -48,7 +48,7 @@ class mrp_production(osv.osv):
         if (default_location_dict['value']['location_src_id'] & default_location_dict['value']['location_dest_id']):
             production_order_dict = {
                 'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
-                'date_planed' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+                'date_planned' : time.strftime('%Y-%m-%d %H:%M:%S'),
                 'product_id' : product.id,
                 'product_qty' : 1,
                 'product_uom' : product.uom_id.id,
@@ -77,6 +77,6 @@ class mrp_production(osv.osv):
             self.pool.get('mrp.pt.planified').create(cr, uid, mrp_pt_planifed_dict)
         else:
             raise osv.except_osv(_('Error'), _("The category of the product to produce has not predefined locations "))
-        return True
+        return new_id
     
 mrp_production()

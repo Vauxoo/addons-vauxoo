@@ -50,8 +50,24 @@ class mrp_production_wizard(osv.osv_memory):
                     'product_qty' : move.product_qty,
                     'product_uom' : move.product_uom.id}
                 list_product_lines.append(dict_line)
-        self.pool.get('mrp.production').create_production_wizard(cr, uid, product, list_product_lines, context=context)
-        return {}
+        mrp_production_id = self.pool.get('mrp.production').create_production_wizard(cr, uid, product, list_product_lines, context=context)
+        
+        mod_obj = self.pool.get('ir.model.data')
+        res = mod_obj.get_object_reference(cr, uid, 'mrp', 'mrp_production_form_view')
+        res_id = res and res[1] or False,
+        print res_id, " = res_id"
+        return {
+            'name': _('Manufacturing orders'),
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': [res_id],
+            'res_model': 'mrp.production',
+            'context': "",
+            'type': 'ir.actions.act_window',
+            'nodestroy': False,
+            'target': 'current',
+            'res_id': mrp_production_id or False,
+        }
     
 mrp_production_wizard()
 
