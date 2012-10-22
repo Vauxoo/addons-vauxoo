@@ -25,15 +25,14 @@
 ##############################################################################
 
 {
-    "name": "mrp planified onchange plus account links",
+    "name": "mrp acount link",
     "version": "1.0",
     "author" : "Vauxoo",
     "category": "Generic Modules/Production",
     "website" : "http://www.vauxoo.com/",
-    "description": """When you add a product, it sets automatically the default uom
-    for the product and the name of the product. Adds too a domain to the field
-    product_uom to only show the uom matching the selected product. Also Adds a link
-    from the production order to its account_move_lines
+    "description": """This module adds a link
+    between the production order to its account_move_lines generated after
+    the instalation of this module.
     """,
     'depends': ['account_relation_move'],
     'init_xml': [],
