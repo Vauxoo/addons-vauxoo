@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* mrp_planified_onchange
+#	* mrp_account_link
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-11 22:35+0000\n"
-"PO-Revision-Date: 2012-10-11 17:39-0600\n"
+"POT-Creation-Date: 2012-10-22 23:38+0000\n"
+"PO-Revision-Date: 2012-10-22 18:39-0600\n"
 "Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,43 +15,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
-#. module: mrp_planified_onchange
-#: constraint:account.move:0
-msgid "You can not create more than one move per period on centralized journal"
-msgstr "No puede crear más de un movimiento por periodo en un diario centralizado"
+#. module: mrp_account_link
+#: model:ir.actions.act_window,name:mrp_account_link.act_account_production
+msgid "Journal items"
+msgstr "Apuntes contables"
 
-#. module: mrp_planified_onchange
-#: model:ir.model,name:mrp_planified_onchange.model_account_move
-msgid "Account Entry"
-msgstr "Asiento contable"
-
-#. module: mrp_planified_onchange
-#: model:ir.model,name:mrp_planified_onchange.model_mrp_production_product_line
+#. module: mrp_account_link
+#: model:ir.model,name:mrp_account_link.model_mrp_production_product_line
 msgid "Production Scheduled Product"
-msgstr "Fabricación planificada producto"
+msgstr "Produccion de producto planificado"
 
-#. module: mrp_planified_onchange
-#: model:ir.model,name:mrp_planified_onchange.model_mrp_production
-msgid "Manufacturing Order"
-msgstr "Orden de fabricación"
-
-#. module: mrp_planified_onchange
-#: model:ir.actions.act_window,name:mrp_planified_onchange.act_account_production
-msgid "Ítems"
-msgstr "Ítems"
-
-#. module: mrp_planified_onchange
-#: sql_constraint:mrp.production:0
-msgid "Reference must be unique per Company!"
-msgstr "Referencia debe ser única por compañía!"
-
-#. module: mrp_planified_onchange
-#: model:ir.actions.act_window,name:mrp_planified_onchange.act_account_line_production
-msgid "Entries"
-msgstr "Asientos"
-
-#. module: mrp_planified_onchange
-#: constraint:mrp.production:0
-msgid "Order quantity cannot be negative or zero!"
-msgstr "¡La cantidad de la orden no puede ser negativa o cero!"
+#. module: mrp_account_link
+#: model:ir.actions.act_window,name:mrp_account_link.act_account_line_production
+msgid "Journal entries"
+msgstr "Asientos contables"
 
