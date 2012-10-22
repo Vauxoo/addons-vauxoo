@@ -39,6 +39,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        'security/field_related_mrp_prod.xml',
         "mrp_view.xml",
     ],
     "installable" : True,

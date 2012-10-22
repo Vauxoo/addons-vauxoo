@@ -9,8 +9,8 @@
             <field name="arch" type="xml">
                 <xpath expr="/form/group/field[@name='product_uos']" position="after">
                     <group colspan="2">
-                        <field name="bom_qty"/>
-                        <field name="bom_uom"/>
+                        <field name="bom_qty" groups="mrp_production_bom_related.group_related_mrp_prod_bom"/>
+                        <field name="bom_uom" groups="mrp_production_bom_related.group_related_mrp_prod_bom"/>
                     </group>
                 </xpath> 
             </field>
