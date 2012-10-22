@@ -63,12 +63,21 @@
 					  </group>
 					  <group colspan='6'
 						attrs="{'invisible':[('type','in',('abstract','detail'))]}">
-						<separator string='Total' colspan='6' />
-						<field
-							name="total_ids" widget="many2many"
-							nolabel='1'
-							domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
-						</field>
+						<group col='1'>
+                            <separator string='Total' colspan='2' />
+                            <field
+                                name="total_ids" widget="many2many"
+                                nolabel='1'
+                                domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
+                            </field>
+                        </group>
+                        <group col='1'>
+                            <separator string='Operand' colspan='2' />
+                            <field
+                                name="operand_ids" widget="many2many"
+                                nolabel='1'>
+                            </field>
+                        </group>
 					  </group>
 				  </group>
 
