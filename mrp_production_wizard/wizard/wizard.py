@@ -55,11 +55,10 @@ class mrp_production_wizard(osv.osv_memory):
         mod_obj = self.pool.get('ir.model.data')
         res = mod_obj.get_object_reference(cr, uid, 'mrp', 'mrp_production_form_view')
         res_id = res and res[1] or False,
-        print res_id, " = res_id"
         return {
             'name': _('Manufacturing orders'),
             'view_type': 'form',
-            'view_mode': 'form',
+            'view_mode': 'form,tree',
             'view_id': [res_id],
             'res_model': 'mrp.production',
             'context': "",

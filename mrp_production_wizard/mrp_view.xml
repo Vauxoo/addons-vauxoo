@@ -14,15 +14,15 @@
 			<newline/>
 			<field colspan="2" name="wiz_data" nolabel="1" widget="one2many_list" mode="tree,form" height="275">
 			    <tree string="Products to consume">
-				<field name="name"/>
 				<field name="product_id_consume" on_change="onchange_production_wizard_product_name(product_id_consume)"/>
 				<field name="product_qty" string="Qty"/>
+				<field name="name"/>
 				<field name="product_uom" string="UOM"/>
 			    </tree>
 			    <form string="Products to consume">
-				<field name="name"/>
 				<field name="product_id_consume" on_change="onchange_production_wizard_product_name(product_id_consume)"/>
 				<field name="product_qty" string="Qty"/>
+				<field name="name"/>
 				<field name="product_uom" string="UOM"/>
 			    </form>
 			</field>
