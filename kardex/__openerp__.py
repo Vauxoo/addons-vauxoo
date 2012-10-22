@@ -23,7 +23,7 @@
 {
     "name" : "Add kardex in menuitem",
     "version" : "1.0",
-    "depends" : ['stock','product_context_date'],
+    "depends" : ['product','stock','product_context_date'],
     "author" : "Vauxoo",
     #"license" : "AGPL-3",
     "description" : """This module add kardex in menuitem

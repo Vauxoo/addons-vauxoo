@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
+
        <record id="product_search_form_view_inh" model="ir.ui.view">
             <field name="name">product.search.form.inh</field>
             <field name="model">product.product</field>
@@ -19,12 +19,13 @@
                    <field name="categ_id" widget="selection" operator="child_of" groups="base.group_extended"/>
                    <newline/>
                    <group expand="0" string="Context..." groups="base.group_extended">
-					   <field name="location_id" widget="selection" context="{'location': self}"/>
-					   <field name="warehouse_id" widget="selection" context="{'warehouse': self}"/>
-					   <separator orientation="vertical"/>
+                       <field name="location_id" widget="selection" context="{'location': self}"/>
+                       <field name="warehouse_id" widget="selection" context="{'warehouse': self}"/>
+                       <separator orientation="vertical"/>
                        <field name="pricelist_id" widget="selection" context="{'pricelist': self}" />
                        <separator orientation="vertical" groups="base.group_multi_company" />
                        <field name="company_id" widget="selection" groups="base.group_multi_company" />
+                       <field name="date_from_to" widget="date" context="{'from_date':self, 'to_date':self2}"/>
                    </group>
                    <newline/>
                    <group  expand='0' string='Group by...' groups="base.group_extended">
@@ -40,7 +41,7 @@
                 </search>
             </field>
         </record>
-        
+
         <record id="product_product_tree_view_inh" model="ir.ui.view">
             <field name="name">product.product.tree.inh</field>
             <field name="model">product.product</field>
@@ -56,6 +57,8 @@
                     <field name="type"/>
                     <field name="qty_available"/>
                     <field name="virtual_available"/>
+                    <field name="incoming_qty"/>
+                    <field name="outgoing_qty"/>
                     <field name="lst_price"/>
                     <field name="price" invisible="not context.get('pricelist',False)"/>
                     <field name="standard_price" groups="base.group_extended"/>
@@ -64,7 +67,35 @@
                 </tree>
             </field>
         </record>
-        
+
+        <record id="view_normal_stock_property_form_inh" model="ir.ui.view">
+            <field name="name">product.normal.stock.form.inh</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product_normal_form_view_inh"/>
+            <field name="arch" type="xml">
+                <group name="status" position="after">
+                    <group colspan="2" col="3">
+                        <separator string="Stocks" colspan="4"/>
+                        <field name="qty_available"/>
+                        <newline/>
+                        <field name="virtual_available"/>
+                    </group>
+                    <group colspan="2" col="2" name="stock_variations" groups="base.group_extended">
+                        <separator string="Expected Stock Variations" colspan="2"/>
+                        <field name="incoming_qty"/>
+                        <field name="outgoing_qty"/>
+                    </group>
+                    <group colspan="2" col="2" name="lot" groups="base.group_extended">
+                        <separator string="Lots" colspan="4"/>
+                        <field name="track_production" />
+                        <field name="track_incoming" />
+                        <field name="track_outgoing" />
+                    </group>
+                </group>
+            </field>
+        </record>
+
         <record id="product_normal_form_view_inh" model="ir.ui.view">
             <field name="name">product.normal.form_inh</field>
             <field name="model">product.product</field>
@@ -90,7 +121,7 @@
                     </group>
                     <group colspan="1" col="1">
                         <field name="product_image" widget='image' nolabel="1"/>
-                    </group> 
+                    </group>
                    </group>
 
                     <notebook colspan="4">
@@ -198,7 +229,7 @@
                 </form>
             </field>
         </record>
-        
+
        <record id="product_normal_action_inh" model="ir.actions.act_window">
             <field name="name">Producto Kardex</field>
             <field name="type">ir.actions.act_window</field>
@@ -216,26 +247,26 @@
             <field name="view_mode">tree,form,kanban</field>
             <field name="view_type">form</field>
             <field name="context">{"search_default_filter_to_sell":1}</field>
-            <field name="view_id" ref="product_product_tree_view_inh"/>  
-            <field name="search_view_id" ref="product_search_form_view_inh"/>            
+            <field name="view_id" ref="product_product_tree_view_inh"/>
+            <field name="search_view_id" ref="product_search_form_view_inh"/>
             <field name="help">You must define a Product for everything you buy or sell. Products can be raw materials, stockable products, consumables or services. The Product form contains detailed information about your products related to procurement logistics, sales price, product category, suppliers and so on.</field>
         </record>
-        
+
         <record id="open_view_product_tree1_inh" model="ir.actions.act_window.view">
             <field name="sequence" eval="1"/>
             <field name="view_mode">tree</field>
            <field name="view_id" ref="product_product_tree_view_inh"/>
             <field name="act_window_id" ref="product_normal_action_sell_inh"/>
         </record>
-        
+
         <record id="open_view_product_form1_inh" model="ir.actions.act_window.view">
             <field name="sequence" eval="2"/>
             <field name="view_mode">form</field>
             <field name="view_id" ref="product_normal_form_view_inh"/>
             <field name="act_window_id" ref="product_normal_action_sell_inh"/>
-        </record> 
+        </record>
 
         <menuitem action="product_normal_action_sell_inh" id="menu_products_inh" parent="stock.menu_stock_product" />
-        
+
     </data>
 </openerp>
