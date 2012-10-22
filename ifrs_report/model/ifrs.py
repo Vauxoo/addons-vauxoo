@@ -168,6 +168,11 @@ class ifrs_lines(osv.osv):
 
         'operand_ids' : fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands' ),
 
+        'operator': fields.selection( [
+            ('subtract', 'Subtraction'),
+            ('ratio','Ratio')],
+            'Operator', required=False ),
+
         #'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
    	#'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
 
