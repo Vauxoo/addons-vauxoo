@@ -159,7 +159,7 @@ class ifrs_lines(osv.osv):
 
 #,('id','!=',id)
 
-	'total_ids': fields.one2many('ifrs.lines', 'parent_id', string='Child'),
+	#~ 'total_ids': fields.one2many('ifrs.lines', 'parent_id', string='Child'),
 
 
 
@@ -178,7 +178,7 @@ class ifrs_lines(osv.osv):
             ('ratio','Ratio')],
             'Operator', required=False ),
 
-        #'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
+        'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
    	#'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
 
 
