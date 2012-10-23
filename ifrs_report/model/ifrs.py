@@ -148,7 +148,14 @@ class ifrs_lines(osv.osv):
             string = 'Type',
             required = True ),
 		'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
-        'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', store=True),
+        'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
+            store=True
+            #~ TODO: ACTIVE THE SENSIBILITY OF THIS FIELD TO OTHER MODELS
+            #~ {
+                #~ 'account.move.line':(_get_changes,['debit','credit'],15)
+                #~ 'ifrs.lines':(_get_changes,[],15)
+            #~ }
+            ),
         
 
 		'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
