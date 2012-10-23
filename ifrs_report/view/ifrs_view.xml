@@ -37,10 +37,7 @@
 				  <field name="sequence" />
 				  <field name="name" />
 				  <field name="type" />
-				  <field name="parent_id" />
 				<field name="parent_abstract_id" />
-				<!--<field name="parent_left" />
-				<field name="parent_right" />-->
 				  <field name="cons_ids" />
 				  <field name="total_ids" />
 				  <field name="amount" />
@@ -50,11 +47,11 @@
 				  <field name="id" />
 				  <field name="sequence" />
 				  <field name="name" />
-				  <field name="parent_id" />
 				<field name="parent_abstract_id" />
 				  <field name="type" />
 				  <field name="amount" />
 				  <field name="operator" />
+				  <field name="inv_sign" />
 				  <group colspan='6'>
 					  <group
 						colspan='6'
@@ -110,7 +107,6 @@
 				<form string="IFRS Line">
 					<group col="6" colspan="4">
 						<field name="name" />
-						<field name="parent_id"></field>
 						<field name="sequence"></field>
 						<field name="type" />
 						<field name="amount"></field>

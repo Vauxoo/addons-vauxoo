@@ -57,7 +57,7 @@ class ifrs_lines(osv.osv):
     _name = 'ifrs.lines'
     _parent_store = True
 #    _parent_name = "parent_id"
-    _order = 'parent_left'
+    _order = 'sequence, type'
 
     def _get_sum( self, cr, uid, id, context = None ):
         if context is None: context = {}
@@ -77,7 +77,8 @@ class ifrs_lines(osv.osv):
                 for o in brw.operand_ids:
                     res2 += self._get_sum( cr, uid, o.id, context = context )
                 res = brw.operator == 'subtract' and (res - res2) or (res2 != 0 and (res / res2) or 0.0)  
-        return res
+        
+        return brw.inv_sign and (-1.0 * res) or res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
         if context is None: context = {}
@@ -179,6 +180,7 @@ class ifrs_lines(osv.osv):
             'Operator', required=False ),
 
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
+        'inv_sign' : fields.boolean('Change Sign to Amount')
    	#'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
 
 
