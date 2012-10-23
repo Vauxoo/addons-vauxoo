@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 00:04+0000\n"
-"PO-Revision-Date: 2012-10-22 19:08-0600\n"
+"POT-Creation-Date: 2012-10-23 00:30+0000\n"
+"PO-Revision-Date: 2012-10-22 19:32-0600\n"
 "Last-Translator: juan <openerp1@hotmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -91,6 +91,13 @@ msgid "Miscellaneous"
 msgstr "Miscellaneous"
 
 #. module: kardex
+#: model:ir.actions.act_window,name:kardex.product_normal_action_inh
+#: model:ir.actions.act_window,name:kardex.product_normal_action_sell_inh
+#: model:ir.ui.menu,name:kardex.menu_products_inh
+msgid "Product Kardex"
+msgstr "Productos Kardex"
+
+#. module: kardex
 #: model:ir.actions.act_window,help:kardex.product_normal_action_inh
 #: model:ir.actions.act_window,help:kardex.product_normal_action_sell_inh
 msgid "You must define a Product for everything you buy or sell. Products can be raw materials, stockable products, consumables or services. The Product form contains detailed information about your products related to procurement logistics, sales price, product category, suppliers and so on."
@@ -124,7 +131,7 @@ msgstr "Entradas"
 #. module: kardex
 #: view:product.product:0
 msgid "Name"
-msgstr "Nombre"
+msgstr "Name"
 
 #. module: kardex
 #: view:product.product:0
@@ -145,14 +152,7 @@ msgstr "Suppliers"
 #: model:ir.model,name:kardex.model_product_product
 #: view:product.product:0
 msgid "Product"
-msgstr "Product"
-
-#. module: kardex
-#: model:ir.actions.act_window,name:kardex.product_normal_action_inh
-#: model:ir.actions.act_window,name:kardex.product_normal_action_sell_inh
-#: model:ir.ui.menu,name:kardex.menu_products_inh
-msgid "Producto Kardex"
-msgstr "Producto Kardex"
+msgstr "Producto"
 
 #. module: kardex
 #: view:product.product:0

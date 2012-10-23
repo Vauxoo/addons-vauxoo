@@ -69,33 +69,7 @@
             </field>
         </record>
 
-        <record id="view_normal_stock_property_form_inh" model="ir.ui.view">
-            <field name="name">product.normal.stock.form.inh</field>
-            <field name="model">product.product</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="product_normal_form_view_inh"/>
-            <field name="arch" type="xml">
-                <group name="status" position="after">
-                    <group colspan="2" col="3">
-                        <separator string="Stocks" colspan="4"/>
-                        <field name="qty_available"/>
-                        <newline/>
-                        <field name="virtual_available"/>
-                    </group>
-                    <group colspan="2" col="2" name="stock_variations" groups="base.group_extended">
-                        <separator string="Expected Stock Variations" colspan="2"/>
-                        <field name="incoming_qty"/>
-                        <field name="outgoing_qty"/>
-                    </group>
-                    <group colspan="2" col="2" name="lot" groups="base.group_extended">
-                        <separator string="Lots" colspan="4"/>
-                        <field name="track_production" />
-                        <field name="track_incoming" />
-                        <field name="track_outgoing" />
-                    </group>
-                </group>
-            </field>
-        </record>
+
 
         <record id="product_normal_form_view_inh" model="ir.ui.view">
             <field name="name">product.normal.form_inh</field>
@@ -231,18 +205,8 @@
             </field>
         </record>
 
-       <record id="product_normal_action_inh" model="ir.actions.act_window">
-            <field name="name">Producto Kardex</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">product.product</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <field name="view_id" ref="product_product_tree_view_inh"/>
-            <field name="search_view_id" ref="product_search_form_view_inh"/>
-            <field name="help">You must define a Product for everything you buy or sell. Products can be raw materials, stockable products, consumables or services. The Product form contains detailed information about your products related to procurement logistics, sales price, product category, suppliers and so on.</field>
-        </record>
         <record id="product_normal_action_sell_inh" model="ir.actions.act_window">
-            <field name="name">Producto Kardex</field>
+            <field name="name">Product Kardex</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
             <field name="view_mode">tree,form,kanban</field>
@@ -253,21 +217,35 @@
             <field name="help">You must define a Product for everything you buy or sell. Products can be raw materials, stockable products, consumables or services. The Product form contains detailed information about your products related to procurement logistics, sales price, product category, suppliers and so on.</field>
         </record>
 
-        <record id="open_view_product_tree1_inh" model="ir.actions.act_window.view">
-            <field name="sequence" eval="1"/>
-            <field name="view_mode">tree</field>
-           <field name="view_id" ref="product_product_tree_view_inh"/>
-            <field name="act_window_id" ref="product_normal_action_sell_inh"/>
-        </record>
-
-        <record id="open_view_product_form1_inh" model="ir.actions.act_window.view">
-            <field name="sequence" eval="2"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="product_normal_form_view_inh"/>
-            <field name="act_window_id" ref="product_normal_action_sell_inh"/>
-        </record>
-
         <menuitem action="product_normal_action_sell_inh" id="menu_products_inh" parent="stock.menu_stock_product" />
+
+        <record id="view_normal_stock_property_form_inh" model="ir.ui.view">
+            <field name="name">product.normal.stock.form.inh</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product_normal_form_view_inh"/>
+            <field name="arch" type="xml">
+                <group name="status" position="after">
+                    <group colspan="2" col="3">
+                        <separator string="Stocks" colspan="4"/>
+                        <field name="qty_available"/>
+                        <newline/>
+                        <field name="virtual_available"/>
+                    </group>
+                    <group colspan="2" col="2" name="stock_variations" groups="base.group_extended">
+                        <separator string="Expected Stock Variations" colspan="2"/>
+                        <field name="incoming_qty"/>
+                        <field name="outgoing_qty"/>
+                    </group>
+                    <group colspan="2" col="2" name="lot" groups="base.group_extended">
+                        <separator string="Lots" colspan="4"/>
+                        <field name="track_production" />
+                        <field name="track_incoming" />
+                        <field name="track_outgoing" />
+                    </group>
+                </group>
+            </field>
+        </record>
 
     </data>
 </openerp>
