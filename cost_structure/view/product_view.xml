@@ -31,7 +31,7 @@
               <!-- <field name='cost_to_price' /> -->
 <!--            <field name='date_cost_to_price' />-->
             </group>
-            <field name='method_cost_ids' nolabel="1" context="{'method_cost_ids':method_cost_ids,'property_cost_structure':property_cost_structure}">
+            <field name='method_cost_ids' nolabel="1" context="{'property_cost_structure':property_cost_structure}">
             <tree editable="bottom" >
               <field name='sequence' />
                 <field name='unit_price' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />
