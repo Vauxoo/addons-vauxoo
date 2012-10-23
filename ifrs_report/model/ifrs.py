@@ -76,7 +76,12 @@ class ifrs_lines(osv.osv):
                 res2=0
                 for o in brw.operand_ids:
                     res2 += self._get_sum( cr, uid, o.id, context = context )
-                res = brw.operator == 'subtract' and (res - res2) or (res2 != 0 and (res / res2) or 0.0)  
+                if brw.operator == 'subtract':
+                    res -= res2
+                elif brw.operator == 'percent':
+                    res =  res2 != 0 and (100 * res / res2) or 0.0
+                elif brw.operator == 'ratio':
+                    res =  res2 != 0 and (res / res2) or 0.0
         
         return brw.inv_sign and (-1.0 * res) or res 
 
@@ -183,6 +188,7 @@ class ifrs_lines(osv.osv):
 
         'operator': fields.selection( [
             ('subtract', 'Subtraction'),
+            ('percent', 'Percentage'),
             ('ratio','Ratio')],
             'Operator', required=False ),
 
