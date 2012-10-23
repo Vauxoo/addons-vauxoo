@@ -72,6 +72,11 @@ class ifrs_lines(osv.osv):
         elif brw.type == 'total':
             for c in brw.total_ids:
                 res += self._get_sum( cr, uid, c.id, context = context )
+            if brw.operator:
+                res2=0
+                for o in brw.operand_ids:
+                    res2 += self._get_sum( cr, uid, o.id, context = context )
+                res = brw.operator == 'subtract' and (res - res2) or (res2 != 0 and (res / res2) or 0.0)  
         return res
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
