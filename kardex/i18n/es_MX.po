@@ -1,0 +1,241 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* kardex
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-10-23 00:30+0000\n"
+"PO-Revision-Date: 2012-10-22 19:32-0600\n"
+"Last-Translator: juan <openerp1@hotmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Category"
+msgstr "Category"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Information"
+msgstr "Information"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Codes"
+msgstr "Codes"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Lots"
+msgstr "Lots"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Delays"
+msgstr "Delays"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Default UOM"
+msgstr "Default UOM"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Type"
+msgstr "Type"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Unit of Measure"
+msgstr "Unit of Measure"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Procurement & Locations"
+msgstr "Procurement & Locations"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Status"
+msgstr "Status"
+
+#. module: kardex
+#: field:product.product,outgoing_done_qty:0
+msgid "Outgoing"
+msgstr "Salidas"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Palletization"
+msgstr "Palletization"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Description"
+msgstr "Description"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Company"
+msgstr "Company"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Miscellaneous"
+msgstr "Miscellaneous"
+
+#. module: kardex
+#: model:ir.actions.act_window,name:kardex.product_normal_action_inh
+#: model:ir.actions.act_window,name:kardex.product_normal_action_sell_inh
+#: model:ir.ui.menu,name:kardex.menu_products_inh
+msgid "Product Kardex"
+msgstr "Productos Kardex"
+
+#. module: kardex
+#: model:ir.actions.act_window,help:kardex.product_normal_action_inh
+#: model:ir.actions.act_window,help:kardex.product_normal_action_sell_inh
+msgid "You must define a Product for everything you buy or sell. Products can be raw materials, stockable products, consumables or services. The Product form contains detailed information about your products related to procurement logistics, sales price, product category, suppliers and so on."
+msgstr "You must define a Product for everything you buy or sell. Products can be raw materials, stockable products, consumables or services. The Product form contains detailed information about your products related to procurement logistics, sales price, product category, suppliers and so on."
+
+#. module: kardex
+#: view:product.product:0
+msgid "Services"
+msgstr "Services"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Stocks"
+msgstr "Stocks"
+
+#. module: kardex
+#: view:product.product:0
+msgid "UoM"
+msgstr "UoM"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Purchase Description"
+msgstr "Purchase Description"
+
+#. module: kardex
+#: field:product.product,incoming_done_qty:0
+msgid "Incoming"
+msgstr "Entradas"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Name"
+msgstr "Name"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Sale Description"
+msgstr "Sale Description"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Storage Localisation"
+msgstr "Storage Localisation"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Suppliers"
+msgstr "Suppliers"
+
+#. module: kardex
+#: model:ir.model,name:kardex.model_product_product
+#: view:product.product:0
+msgid "Product"
+msgstr "Producto"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Context..."
+msgstr "Context..."
+
+#. module: kardex
+#: field:product.product,stock_done_start:0
+msgid "Stock_Start"
+msgstr "Saldo Inicial"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Procurement"
+msgstr "Procurement"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Second UoM"
+msgstr "Second UoM"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Products"
+msgstr "Productos"
+
+#. module: kardex
+#: view:product.product:0
+msgid "To Purchase"
+msgstr "To Purchase"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Base Prices"
+msgstr "Base Prices"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Expected Stock Variations"
+msgstr "Expected Stock Variations"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Characteristics"
+msgstr "Characteristics"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Both stockable and consumable products"
+msgstr "Both stockable and consumable products"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Packaging"
+msgstr "Packaging"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Group by..."
+msgstr "Group by..."
+
+#. module: kardex
+#: view:product.product:0
+msgid "Pallet Dimension"
+msgstr "Pallet Dimension"
+
+#. module: kardex
+#: constraint:product.product:0
+msgid "Error: Invalid ean code"
+msgstr "Error: Invalid ean code"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Descriptions"
+msgstr "Descriptions"
+
+#. module: kardex
+#: view:product.product:0
+msgid "Weights"
+msgstr "Weights"
+
+#. module: kardex
+#: view:product.product:0
+msgid "To Sell"
+msgstr "To Sell"
+
