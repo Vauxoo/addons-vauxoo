@@ -8,12 +8,12 @@
             <field name="model">project.task.work</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Project Task Work" editable="bottom">
-                    <field name="partner_id"/>
-                    <field name="name"/>
-                    <field name="hours"/>
-                    <field name="date"/>
-                    <field name="company_id"/>
+                <tree string="Project Task Work" editable="top">
+                    <field name="partner_id" readonly='1'/>
+                    <field name="name" readonly='1'/>
+                    <field name="hours" readonly='1'/>
+                    <field name="date" readonly='1'/>
+                    <field name="company_id" readonly='1'/>
                     <field name="state"/>
                     <field name="project_id" invisible='1'/>
                     <field name="issue_id" invisible='1'/>
@@ -87,6 +87,7 @@
             id="menu_action_project_task_work_ext"
             name="Project Task Work"
             parent="project.menu_project_management"
+            groups="project_task_work.group_project_task_work_manager,project_task_work.group_project_task_work_user"
             action="action_project_task_work_ext"/>
 
     </data>
