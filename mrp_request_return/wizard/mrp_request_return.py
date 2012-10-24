@@ -131,7 +131,7 @@ class mrp_request_return_line(osv.osv_memory):
 
 mrp_request_return_line()
 
-class stock_move(osv.osv_memory):
+class stock_move(osv.osv):
     _inherit = 'stock.move'
     
     def action_consume(self, cr, uid, ids, quantity, location_id=False, context=None):
