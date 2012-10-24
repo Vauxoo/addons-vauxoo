@@ -29,58 +29,70 @@
 			  <field name="company_id" />
 			  <field name="title" />
 			  <field name="fiscalyear_id" />
+                <notebook colspan='6'>
+                    <page string='Report Lines'>
+                      <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
+                        
+                        <tree string="IFRS Lines">
+                          <field name="id" />
+                          <field name="sequence" />
+                          <field name="name" />
+                          <field name="type" />
+                        <field name="parent_abstract_id" />
+                          <field name="cons_ids" />
+                          <field name="total_ids" />
+                          <field name="amount" />
+                         <field name="level" />
+                        </tree>
+                        <form string="IFRS Lines">
+        <!--
+                          <field name="id" />
+        -->
+                          <field name="sequence" />
+                          <field name="name" />
+                          <field name="type" />
+                        <field name="parent_abstract_id" />
+                          <field name="amount" />
+                          <field name="operator" />
+                          <field name="inv_sign" />
+                          <group colspan='6'>
+                              <group
+                                colspan='6'
+                                attrs="{'invisible':[('type','in',('abstract','total'))]}">
+                                <separator string='Consolidated Accounts' colspan='6' />
+                                <field name="cons_ids" nolabel='1'/>
+                              </group>
+                              <group colspan='6'
+                                attrs="{'invisible':[('type','in',('abstract','detail'))]}">
+                                <group col='1'>
+                                    <separator string='Total' colspan='2' />
+                                    <field
+                                        name="total_ids" widget="many2many"
+                                        nolabel='1'
+                                        domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
+                                    </field>
+                                </group>
+                                <group col='1'>
+                                    <separator string='Operand' colspan='2' />
+                                    <field
+                                        name="operand_ids" widget="many2many"
+                                        nolabel='1'>
+                                    </field>
+                                </group>
+                              </group>
+                          </group>
 
-			  <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
-				
-				<tree string="IFRS Lines">
-				  <field name="id" />
-				  <field name="sequence" />
-				  <field name="name" />
-				  <field name="type" />
-				<field name="parent_abstract_id" />
-				  <field name="cons_ids" />
-				  <field name="total_ids" />
-				  <field name="amount" />
-				 <field name="level" />
-				</tree>
-				<form string="IFRS Lines">
-				  <field name="id" />
-				  <field name="sequence" />
-				  <field name="name" />
-				<field name="parent_abstract_id" />
-				  <field name="type" />
-				  <field name="amount" />
-				  <field name="operator" />
-				  <field name="inv_sign" />
-				  <group colspan='6'>
-					  <group
-						colspan='6'
-						attrs="{'invisible':[('type','in',('abstract','total'))]}">
-						<separator string='Consolidated Accounts' colspan='6' />
-						<field name="cons_ids" nolabel='1'/>
-					  </group>
-					  <group colspan='6'
-						attrs="{'invisible':[('type','in',('abstract','detail'))]}">
-						<group col='1'>
-                            <separator string='Total' colspan='2' />
-                            <field
-                                name="total_ids" widget="many2many"
-                                nolabel='1'
-                                domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
-                            </field>
-                        </group>
-                        <group col='1'>
-                            <separator string='Operand' colspan='2' />
-                            <field
-                                name="operand_ids" widget="many2many"
-                                nolabel='1'>
-                            </field>
-                        </group>
-					  </group>
-				  </group>
-
-				</form>
-			  </field>
+                        </form>
+                      </field>
+                    </page>
+                    <page string='Based on Other Reports'>
+                        <field 
+                            name='ifrs_ids' 
+                            nolabel='1'
+                            domain="[('id','!=',id)]"
+                            />
+                    </page>
+                </notebook>
 			  <field name="state" />
 			</form>
 		  </field>

@@ -222,6 +222,18 @@ class ifrs_lines(osv.osv):
 ifrs_lines()
 
 
+class ifrs_ifrs(osv.osv):
+
+    _inherit = 'ifrs.ifrs'
+    _columns = {
+        'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', 'Other Reportes')
+    }
+
+ifrs_ifrs()
+
+
+
+
 #~ pregunta. comprobacion de la linea... lo hace cuando le da a guardar--- no lo hace a la hora de ingresarlo, puede taer confuciones a la hora que el usuario agregue a mucha gente y luego no sepa a cual se refiere.
 
 #~ buscar, como hacer para que ordene por secuencia, lo que ingreso!
