@@ -21,12 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Add locaton_id,location_dest_id,date,date_expected in stocks moves",
+    "name" : "Add locaton_id,location_dest_id,date_expected,state in stocks moves",
     "version" : "1.0",
     "depends" : ['stock'],
     "author" : "Vauxoo",
     #"license" : "AGPL-3",
-    "description" : """This module add locaton_id,location_dest_id,date,date_expected in stocks moves
+    "description" : """This module add locaton_id,location_dest_id,date_expected,state in stocks moves
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
