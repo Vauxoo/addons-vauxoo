@@ -68,7 +68,12 @@ class ifrs_lines(osv.osv):
             pass
         elif brw.type == 'detail':
             for a in brw.cons_ids:
-                res += a.balance
+                if brw.value == 'debit':
+                    res += a.debit
+                elif brw.value == 'credit':
+                    res += a.credit
+                else:
+                    res += a.balance
         elif brw.type == 'total':
             for c in brw.total_ids:
                 res += self._get_sum( cr, uid, c.id, context = context )
@@ -191,6 +196,12 @@ class ifrs_lines(osv.osv):
             ('percent', 'Percentage'),
             ('ratio','Ratio')],
             'Operator', required=False ),
+
+        'value': fields.selection( [
+            ('init', 'Initial Balance'),
+            ('debit', 'Debit'),
+            ('credit','Credit')],
+            'Accounting Value', required=False ),
 
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
         'inv_sign' : fields.boolean('Change Sign to Amount')
