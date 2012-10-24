@@ -27,7 +27,6 @@
 			<form string="International Financial Reporting Standards">
 			<field name="name" />
 			  <field name="company_id" />
-			  <field name="title" />
 			  <field name="fiscalyear_id" />
                 <notebook colspan='6'>
                     <page string='Report Lines'>
@@ -38,11 +37,10 @@
                           <field name="sequence" />
                           <field name="name" />
                           <field name="type" />
-                        <field name="parent_abstract_id" />
                           <field name="cons_ids" />
                           <field name="total_ids" />
                           <field name="amount" />
-                         <field name="level" />
+                         <field name="value" />
                         </tree>
                         <form string="IFRS Lines">
         <!--
@@ -51,7 +49,7 @@
                           <field name="sequence" />
                           <field name="name" />
                           <field name="type" />
-                        <field name="parent_abstract_id" />
+                          <field name="value" />
                           <field name="amount" />
                           <field name="operator" />
                           <field name="inv_sign" />
@@ -92,6 +90,9 @@
                             nolabel='1'
                             domain="[('id','!=',id)]"
                             />
+                    </page>
+                    <page string='Other Info'>
+                        <field name="title" />
                     </page>
                 </notebook>
 			  <field name="state" />
