@@ -60,11 +60,37 @@ class ifrs_lines(osv.osv):
     _order = 'sequence, type'
 
     def _get_sum( self, cr, uid, id, context = None ):
+        fy_obj = self.pool.get('account.fiscalyear')
+        period_obj = self.pool.get('account.period')
         if context is None: context = {}
         res = 0
-        brw = self.browse( cr, uid, id, context = context )
+        if type(context) is dict:
+            c = context.copy()
+        else:
+            c = {}
+        brw = self.browse( cr, uid, id, context = c )
+        
+        if brw.type == 'detail':
+            if not c.get('fiscalyear'):
+                c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
+            
+            if not c.get('period_from',False) and not c.get('period_to',False):
+                c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])[1]
+                c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
+            
+            c.get('periods') and c.pop('periods')
 
-        if brw.type == 'abtract':
+            c.get('initial_bal') and c.pop('initial_bal')
+
+            if brw.acc_val=='init':
+                c['initial_bal'] = True
+                
+            elif brw.acc_val=='var':
+                pass
+                
+            brw = self.browse( cr, uid, id, context = c )
+        
+        if brw.type == 'abstract':
             pass
         elif brw.type == 'detail':
             for a in brw.cons_ids:
@@ -76,11 +102,11 @@ class ifrs_lines(osv.osv):
                     res += a.balance
         elif brw.type == 'total':
             for c in brw.total_ids:
-                res += self._get_sum( cr, uid, c.id, context = context )
+                res += self._get_sum( cr, uid, c.id, context = c )
             if brw.operator:
                 res2=0
                 for o in brw.operand_ids:
-                    res2 += self._get_sum( cr, uid, o.id, context = context )
+                    res2 += self._get_sum( cr, uid, o.id, context = c )
                 if brw.operator == 'subtract':
                     res -= res2
                 elif brw.operator == 'percent':
@@ -195,13 +221,20 @@ class ifrs_lines(osv.osv):
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
             ('ratio','Ratio')],
-            'Operator', required=False ),
+            'Operator', required=False ,
+            help='Leaving blank will not take into account Operands'),
+        
+        'acc_val': fields.selection( [
+            ('init', 'Initial Values'),
+            ('var','Variation in Periods')],
+            'Accounting Value', required=False,
+            help='Leaving blank means YTD'),
 
         'value': fields.selection( [
-            ('init', 'Initial Balance'),
             ('debit', 'Debit'),
             ('credit','Credit')],
-            'Accounting Value', required=False ),
+            'Accounting Value', required=False,
+            help='Leaving blank means Balance'),
 
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
         'inv_sign' : fields.boolean('Change Sign to Amount')
