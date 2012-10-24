@@ -42,7 +42,7 @@ class product_product(osv.osv):
                 c.update({ 'states': ('done',), 'what': ('out',) })
             if f == 'stock_done_start':
                 c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False, 'to_date': from_date })
-            if f == 'qty_available2':
+            if f == 'stock_balance':
                 c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False,'to_date': to_date})
             stock = self.get_product_available(cr, uid, ids, context=c)
             for id in ids:
@@ -59,9 +59,9 @@ class product_product(osv.osv):
         'stock_done_start': fields.function(_product_available_done, multi='incoming_done_qty',
             type='float',  digits_compute=dp.get_precision('Product UoM'),
             string='Stock_Start'),
-        'qty_available2': fields.function(_product_available_done, multi='incoming_done_qty',
+        'stock_balance': fields.function(_product_available_done, multi='incoming_done_qty',
             type='float',  digits_compute=dp.get_precision('Product UoM'),
-            string='Stock_Real2'),
+            string='Stock Balance'),
 }
 
 product_product()

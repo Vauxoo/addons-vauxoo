@@ -58,7 +58,7 @@
                     <field name="stock_done_start"/>
                     <field name="incoming_done_qty"/>
                     <field name="outgoing_done_qty"/>
-                    <field name="qty_available2"/>
+                    <field name="stock_balance"/>
                     <field name="lst_price"/>
                     <field name="price" invisible="not context.get('pricelist',False)"/>
                     <field name="standard_price" groups="base.group_extended"/>
