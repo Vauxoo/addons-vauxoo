@@ -174,7 +174,7 @@
     </section>
     <section>
       <para style="P8">[[ repeatIn(get_table(data['form'],objects),'o') ]]</para>
-      <para style="P3">Producción: [[ o.name ]] , Producto: [[o.product_id.name ]], Codigo: [[o.product_id.default_code ]] , Cantidad: [[ o.product_qty ]], Unidad Medida: [[o.product_uom.name ]] , Fecha Planificada: [[o.date_planned or '']]</para>
+      <para style="P3">Producción: [[ o.name ]] , Producto: [[o.product_id.name ]], Codigo: [[o.product_id.default_code ]] , Cantidad: [[ o.product_qty ]], Unidad Medida: [[o.product_uom.name ]] , Fecha Planificada: [[o.date_planned or '']] , Lista De Materiales: [[ o.bom_id and o.bom_id.name or '' ]]</para>
       <blockTable colWidths="242.0,61.0,66.0,121.0,62.0" style="Table1">
         <tr>
           <td>

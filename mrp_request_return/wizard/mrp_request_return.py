@@ -131,3 +131,14 @@ class mrp_request_return_line(osv.osv_memory):
 
 mrp_request_return_line()
 
+class stock_move(osv.osv):
+    _inherit = 'stock.move'
+    
+    def action_consume(self, cr, uid, ids, quantity, location_id=False, context=None):
+        if context is None: context = {}
+        for move in self.browse(cr, uid, ids, context=context):
+            move_qty = move.product_qty
+            if quantity > move_qty:
+                raise osv.except_osv(_('Error!'), _('You can not consume more product of the ones you have to consume. You need to request them first'))
+        return super(stock_move, self).action_consume(cr, uid, ids, quantity, location_id, context)
+stock_move()
