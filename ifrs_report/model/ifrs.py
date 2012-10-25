@@ -85,25 +85,34 @@ class ifrs_lines(osv.osv):
         c = context.copy()
         brw = self.browse( cr, uid, id, context = c )
         
+        #~ Assembling context
+        
+        #~ Generic context applicable to the different types
+        
+        if not c.get('fiscalyear'):
+            c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
+        
+        if not c.get('period_from',False) and not c.get('period_to',False):
+            c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])[1]
+            c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
+        
+        c.get('periods') and c.pop('periods')
+        c.get('initial_bal') and c.pop('initial_bal')
+        
         if brw.type == 'detail':
-            if not c.get('fiscalyear'):
-                c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
-            
-            if not c.get('period_from',False) and not c.get('period_to',False):
-                c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])[1]
-                c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
-            
-            c.get('periods') and c.pop('periods')
-
-            c.get('initial_bal') and c.pop('initial_bal')
-
             if brw.acc_val=='init':
                 c['initial_bal'] = True
-                
             elif brw.acc_val=='var':
                 pass
-                
-            brw = self.browse( cr, uid, id, context = c )
+
+        elif brw.type == 'total':
+            if brw.comparison:
+                c2 = c.copy()
+                period_obj._previous_period
+        
+        
+        #~ Stuffing the sum
+        brw = self.browse( cr, uid, id, context = c )
         
         if brw.type == 'abstract':
             pass
@@ -122,7 +131,6 @@ class ifrs_lines(osv.osv):
                 res2=0
                 #~ TODO: Write definition for previous periods
                 #~ that will be the arguments for the new brw.
-                c2 = c.copy()
                 
                 brw = self.browse( cr, uid, id, context = c2 )
                 res2 = self._get_sum_total(cr, uid, brw, context = c2)
