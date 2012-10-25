@@ -27,6 +27,8 @@
 from osv import osv
 from osv import fields
 
+from tools.translate import _
+
 class ifrs_ifrs(osv.osv):
 
     _name = 'ifrs.ifrs'
@@ -108,7 +110,17 @@ class ifrs_lines(osv.osv):
         elif brw.type == 'total':
             if brw.comparison:
                 c2 = c.copy()
-                period_obj._previous_period
+
+                print "c2['period_from']",c2['period_from']
+                print "c2['period_to']",c2['period_to']
+
+                c2['period_from'] = period_obj.previous(cr, uid, c2['period_from'],context= c2)
+                if not c2['period_from']:
+                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
+                c2['period_to']=c2['period_from']
+                
+                print "c2['period_from']",c2['period_from']
+                print "c2['period_to']",c2['period_to']
         
         
         #~ Stuffing the sum
@@ -135,13 +147,19 @@ class ifrs_lines(osv.osv):
                 brw = self.browse( cr, uid, id, context = c2 )
                 res2 = self._get_sum_total(cr, uid, brw, context = c2)
 
-                if brw.operator == 'subtract':
+                print 100*'*'
+                print 'RES 1 DE COMPARACION ', res
+                print 'RES 2 DE COMPARACION ', res2
+
+
+                if brw.comparison == 'subtract':
                     res -= res2
-                elif brw.operator == 'percent':
+                elif brw.comparison == 'percent':
                     res =  res2 != 0 and (100 * res / res2) or 0.0
-                elif brw.operator == 'ratio':
+                elif brw.comparison == 'ratio':
                     res =  res2 != 0 and (res / res2) or 0.0
-                
+            
+            print 'RES DESPUES DE COMPARACION ', res
         return brw.inv_sign and (-1.0 * res) or res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
