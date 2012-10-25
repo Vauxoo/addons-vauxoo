@@ -32,28 +32,18 @@ class mrp_production(osv.osv):
     _inherit = "mrp.production"
     
     def action_cancel(self, cr, uid, ids, context=None):
-        print "entro de vd??"
-        
-        #wf_service = netsvc.LocalService("workflow")
 
         if context is None:
             context = {}
             
         move_obj = self.pool.get('stock.move')
+        request_return_picking_ids = []
         for production in self.browse(cr, uid, ids, context=context):
-            print "entro a for"
-            if production.picking_id.id:
-                #wf_service.trg_validate(uid, 'stock.picking', production.picking_id.id, 'button_cancel', cr)
-                print production.picking_id.id, " = production.picking_id.id"
-            for line in production.move_lines2:
-                print line.id, "= line.id de move lines2"
-            #move_obj.action_cancel(cr, uid, [x.id for x in production.move_lines2])
-            if production.move_created_ids2:
-                #move_obj.action_cancel(cr, uid, [x.id for x in production.move_created_ids2])
-                for line in production.move_created_ids2:
-                    print line.id, " = line.id de move created ids2"
-        return True
-        #
-        #return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
+            if production.picking_ids:
+                for line in production.picking_ids:
+                    for entry_line in line.move_lines:
+                        request_return_picking_ids.append(entry_line.id)
+                move_obj.action_cancel(cr, uid, request_return_picking_ids)
+        return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
     
 mrp_production()
