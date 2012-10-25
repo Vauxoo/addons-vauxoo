@@ -227,7 +227,7 @@ class ifrs_lines(osv.osv):
         'acc_val': fields.selection( [
             ('init', 'Initial Values'),
             ('var','Variation in Periods')],
-            'Accounting Value', required=False,
+            'Accounting Spam', required=False,
             help='Leaving blank means YTD'),
 
         'value': fields.selection( [
