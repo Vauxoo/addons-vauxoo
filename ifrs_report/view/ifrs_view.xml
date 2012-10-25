@@ -56,6 +56,7 @@
                           <field name="amount" />
                           <group colspan='2' col='2' attrs="{'invisible':[('type','!=','total')]}">
                               <field name="operator" />
+                              <field name="comparison" />
                           </group>
                           <field name="inv_sign" />
                           <group colspan='6'>
