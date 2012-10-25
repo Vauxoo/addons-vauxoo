@@ -36,14 +36,13 @@ class mrp_production(osv.osv):
         if context is None:
             context = {}
             
+        wf_service = netsvc.LocalService("workflow")
+        
         move_obj = self.pool.get('stock.move')
-        request_return_picking_ids = []
         for production in self.browse(cr, uid, ids, context=context):
-            if production.picking_ids:
-                for line in production.picking_ids:
-                    for entry_line in line.move_lines:
-                        request_return_picking_ids.append(entry_line.id)
-                move_obj.action_cancel(cr, uid, request_return_picking_ids)
+            for line in production.picking_ids:
+                if line.id:
+                    wf_service.trg_validate(uid, 'stock.picking', line.id, 'button_cancel', cr)
         return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
     
 mrp_production()
