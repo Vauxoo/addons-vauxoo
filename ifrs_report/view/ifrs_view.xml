@@ -54,7 +54,9 @@
                               <field name="value" />
                           </group>
                           <field name="amount" />
-                          <field name="operator" />
+                          <group colspan='2' col='2' attrs="{'invisible':[('type','!=','total')]}">
+                              <field name="operator" />
+                          </group>
                           <field name="inv_sign" />
                           <group colspan='6'>
                               <group
