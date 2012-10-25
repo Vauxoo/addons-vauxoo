@@ -30,14 +30,14 @@ from osv import fields
 class account_period(osv.osv):
     _inherit='account.period'
     
-    def previous(self, cr, uid, id, step, context=None):
+    def previous(self, cr, uid, id, step=1, context=None):
         if context is None: context = {}
         period = self.pool.get('account.period').browse(cr,uid,id,context=context)
         
         #~ TODO: Take into account previous fiscalyear or just the fiscalyear of the period
         ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',False)])
         if not ids:
-            self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',True)])
+            ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',True)])
         if len(ids)>=step:
             return ids[-step]
         return False
