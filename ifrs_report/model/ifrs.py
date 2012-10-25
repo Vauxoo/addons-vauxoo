@@ -59,15 +59,30 @@ class ifrs_lines(osv.osv):
 #    _parent_name = "parent_id"
     _order = 'sequence, type'
 
+    def _get_sum_total(self, cr, uid, brw, context = None):
+        if context is None: context = {}
+        c = context.copy()
+        res = 0
+        for t in brw.total_ids:
+            res += self._get_sum( cr, uid, t.id, context = c )
+        if brw.operator:
+            res2=0
+            for o in brw.operand_ids:
+                res2 += self._get_sum( cr, uid, o.id, context = c )
+            if brw.operator == 'subtract':
+                res -= res2
+            elif brw.operator == 'percent':
+                res =  res2 != 0 and (100 * res / res2) or 0.0
+            elif brw.operator == 'ratio':
+                res =  res2 != 0 and (res / res2) or 0.0
+        return res
+
     def _get_sum( self, cr, uid, id, context = None ):
         fy_obj = self.pool.get('account.fiscalyear')
         period_obj = self.pool.get('account.period')
         if context is None: context = {}
         res = 0
-        if type(context) is dict:
-            c = context.copy()
-        else:
-            c = {}
+        c = context.copy()
         brw = self.browse( cr, uid, id, context = c )
         
         if brw.type == 'detail':
@@ -101,18 +116,7 @@ class ifrs_lines(osv.osv):
                 else:
                     res += a.balance
         elif brw.type == 'total':
-            for c in brw.total_ids:
-                res += self._get_sum( cr, uid, c.id, context = c )
-            if brw.operator:
-                res2=0
-                for o in brw.operand_ids:
-                    res2 += self._get_sum( cr, uid, o.id, context = c )
-                if brw.operator == 'subtract':
-                    res -= res2
-                elif brw.operator == 'percent':
-                    res =  res2 != 0 and (100 * res / res2) or 0.0
-                elif brw.operator == 'ratio':
-                    res =  res2 != 0 and (res / res2) or 0.0
+            res = self._get_sum_total(cr, uid, brw, context = c)
         
         return brw.inv_sign and (-1.0 * res) or res 
 
