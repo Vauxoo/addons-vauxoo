@@ -46,6 +46,7 @@ class ifrs_ifrs(osv.osv):
             'State', required=True ),
 
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', required = True ),
+        'do_compute' : fields.boolean('Compute'),
     }
 
     _defaults = {
@@ -159,7 +160,8 @@ class ifrs_lines(osv.osv):
                 elif brw.comparison == 'ratio':
                     res =  res2 != 0 and (res / res2) or 0.0
             
-            print 'RES DESPUES DE COMPARACION ', res
+                print 'RES DESPUES DE COMPARACION ', res
+                
         return brw.inv_sign and (-1.0 * res) or res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
@@ -218,7 +220,20 @@ class ifrs_lines(osv.osv):
         if ids3:
             ids3 = self._get_children_and_total(cr, uid, ids3, context)
         return ids2 + ids3
-
+    def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+        res = []
+        ifrs_brws = self.pool.get('ifrs.ifrs').browse(cr, uid, ids, context = context)
+        for brw in ifrs_brws:
+            if brw.do_compute:
+                for l in brw.ifrs_lines_ids:
+                    res.append(l.id)
+                #~ TODO: write back False to brw.do_compute with SQL
+                #~ INCLUDE A LOGGER
+        print 100*"*"
+        print 'RECOMPUTING LINES ',res
+        return res
+        
     _columns = {
         'sequence' : fields.integer( 'Sequence', required = True ),
         'name' : fields.char( 'Name', 128, required = True ),
@@ -231,14 +246,10 @@ class ifrs_lines(osv.osv):
             required = True ),
 		'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
-            store=True
-            #~ TODO: ACTIVE THE SENSIBILITY OF THIS FIELD TO OTHER MODELS
-            #~ {
-                #~ 'account.move.line':(_get_changes,['debit','credit'],15)
-                #~ 'ifrs.lines':(_get_changes,[],15)
-            #~ }
+            store={
+                    'ifrs.ifrs':(_get_changes_on_ifrs,['do_compute'],15)
+            }
             ),
-        
 
 		'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
 

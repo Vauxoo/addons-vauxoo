@@ -28,6 +28,7 @@
 			<field name="name" />
 			  <field name="company_id" />
 			  <field name="fiscalyear_id" />
+			  <field name="do_compute" />
                 <notebook colspan='6'>
                     <page string='Report Lines'>
                       <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
