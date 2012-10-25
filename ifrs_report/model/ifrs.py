@@ -53,6 +53,10 @@ class ifrs_ifrs(osv.osv):
         'state' : 'draft',
     }
 
+    def compute(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+        self.write(cr,uid,ids,{'do_compute':True},context=context)
+
 ifrs_ifrs()
 
 class ifrs_lines(osv.osv):

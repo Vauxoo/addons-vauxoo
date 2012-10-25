@@ -28,7 +28,10 @@
 			<field name="name" />
 			  <field name="company_id" />
 			  <field name="fiscalyear_id" />
-			  <field name="do_compute" />
+              <group colspan='2' col='3'>
+                  <field name="do_compute" />
+                  <button string="Compute" name='compute' type='object' icon='gtk-execute'/>
+              </group>
                 <notebook colspan='6'>
                     <page string='Report Lines'>
                       <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
