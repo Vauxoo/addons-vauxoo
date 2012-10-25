@@ -41,8 +41,7 @@ class mrp_production(osv.osv):
         move_obj = self.pool.get('stock.move')
         for production in self.browse(cr, uid, ids, context=context):
             for line in production.picking_ids:
-                if line.id:
-                    wf_service.trg_validate(uid, 'stock.picking', line.id, 'button_cancel', cr)
+                wf_service.trg_validate(uid, 'stock.picking', line.id, 'button_cancel', cr)
         return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
     
 mrp_production()
