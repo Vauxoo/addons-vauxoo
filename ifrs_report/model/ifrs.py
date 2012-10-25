@@ -117,7 +117,23 @@ class ifrs_lines(osv.osv):
                     res += a.balance
         elif brw.type == 'total':
             res = self._get_sum_total(cr, uid, brw, context = c)
-        
+            
+            if brw.comparison:
+                res2=0
+                #~ TODO: Write definition for previous periods
+                #~ that will be the arguments for the new brw.
+                c2 = c.copy()
+                
+                brw = self.browse( cr, uid, id, context = c2 )
+                res2 = self._get_sum_total(cr, uid, brw, context = c2)
+
+                if brw.operator == 'subtract':
+                    res -= res2
+                elif brw.operator == 'percent':
+                    res =  res2 != 0 and (100 * res / res2) or 0.0
+                elif brw.operator == 'ratio':
+                    res =  res2 != 0 and (res / res2) or 0.0
+                
         return brw.inv_sign and (-1.0 * res) or res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
