@@ -1,19 +1,19 @@
-=== modified file 'account/invoice.py'
---- account/invoice.py	2011-03-08 16:40:37 +0000
-+++ account/invoice.py	2011-06-17 17:11:41 +0000
-@@ -211,7 +211,7 @@
+=== modified file 'account/account_invoice.py'
+--- account/account_invoice.py	2012-08-20 15:52:57 +0000
++++ account/account_invoice.py	2012-10-26 03:09:06 +0000
+@@ -220,7 +220,7 @@
              \n* The \'Open\' state is used when user create invoice,a invoice number is generated.Its in open state till user does not pay invoice. \
-             \n* The \'Paid\' state is set automatically when invoice is paid.\
+             \n* The \'Paid\' state is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled. \
              \n* The \'Cancelled\' state is used when user cancel invoice.'),
--        'date_invoice': fields.date('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
+-        'date_invoice': fields.date('Invoice Date', readonly=True, states={'draft':[('readonly',False)]}, select=True, help="Keep empty to use the current date"),
 +        'date_invoice': fields.datetime('Invoice Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True, help="Keep empty to use the current date"),
          'date_due': fields.date('Due Date', states={'paid':[('readonly',True)], 'open':[('readonly',True)], 'close':[('readonly',True)]}, select=True,
              help="If you use payment terms, the due date will be computed automatically at the generation "\
                  "of accounting entries. If you keep the payment term and the due date empty, it means direct payment. The payment term may compute several due dates, for example 50% now, 50% in one month."),
 
 === modified file 'account/report/account_invoice_report.py'
---- account/report/account_invoice_report.py	2011-04-07 12:29:55 +0000
-+++ account/report/account_invoice_report.py	2011-06-22 02:41:55 +0000
+--- account/report/account_invoice_report.py	2011-12-19 16:54:40 +0000
++++ account/report/account_invoice_report.py	2012-10-26 03:07:13 +0000
 @@ -80,7 +80,7 @@
          cr.execute("""
              create or replace view account_invoice_report as (
