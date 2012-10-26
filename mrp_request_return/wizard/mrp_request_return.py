@@ -64,7 +64,6 @@ class mrp_request_return(osv.osv_memory):
         return {}
     
     def default_get(self, cr, uid, fields, context=None):
-        print context,'imprimo context'
         if context is None: context = {}
         res = super(mrp_request_return, self).default_get(cr, uid, fields, context=context)
         mrp_ids = context.get('active_ids', [])
