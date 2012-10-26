@@ -55,6 +55,7 @@ class ifrs_ifrs(osv.osv):
 
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
+        context.update({'whole_fy':True})
         self.write(cr,uid,ids,{'do_compute':True},context=context)
 
 ifrs_ifrs()
@@ -100,7 +101,12 @@ class ifrs_lines(osv.osv):
             c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
         
         if not c.get('period_from',False) and not c.get('period_to',False):
-            c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])[1]
+            if context.get('whole_fy',False):
+                c['period_from'] = period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear']),('special','=',True)])
+                if not c['period_from']:
+                    raise osv.except_osv(_('Error !'), _('There are no special period in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
+                c['period_from']=c['period_from'][0]
+                
             c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
         
         c.get('periods') and c.pop('periods')
@@ -110,7 +116,11 @@ class ifrs_lines(osv.osv):
             if brw.acc_val=='init':
                 c['initial_bal'] = True
             elif brw.acc_val=='var':
-                pass
+                if context.get('whole_fy',False):
+                    c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])
+                    if not c['period_from']:
+                        raise osv.except_osv(_('Error !'), _('There are no periods in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
+                c['period_from']=c['period_from'][1]
 
         elif brw.type == 'total':
             if brw.comparison:
