@@ -74,16 +74,20 @@ class mrp_production(osv.osv):
         if context.get('type',False) == 'consumed':
             if product.quantity > 0:
                 if product.product_id.property_stock_production.valuation_in_account_id:
-                    src_acc = product.product_id.property_stock_production.valuation_in_account_id.id
-                if product.product_id.property_stock_production.variation_in_account_id: 
-                    dest_acc = product.product_id.property_stock_production.variation_in_account_id.id
+                    src_acc = product.product_id.property_stock_production.valuation_in_account_id and product.product_id.property_stock_production.valuation_in_account_id.id or False
+                if product.product_id.type == 'service':
+                    dest_acc = product.product_id.categ_id.property_stock_valuation_account_id and product.product_id.categ_id.property_stock_valuation_account_id.id or False
+                elif product.product_id.property_stock_production.variation_in_account_id: 
+                    dest_acc = product.product_id.property_stock_production.variation_in_account_id and product.product_id.property_stock_production.variation_in_account_id.id or False
                 reference_amount = product.cost_variation
                 
             if product.quantity < 0:
-                if product.product_id.property_stock_production.variation_in_account_id:
-                    src_acc = product.product_id.property_stock_production.variation_in_account_id.id
+                if product.product_id.type == 'service':
+                    src_acc = product.product_id.categ_id.property_stock_valuation_account_id and product.product_id.categ_id.property_stock_valuation_account_id.id or False
+                elif product.product_id.property_stock_production.variation_in_account_id:
+                    src_acc = product.product_id.property_stock_production.variation_in_account_id and product.product_id.property_stock_production.variation_in_account_id.id or False
                 if product.product_id.property_stock_production.valuation_in_account_id:
-                    dest_acc = product.product_id.property_stock_production.valuation_in_account_id.id
+                    dest_acc = product.product_id.property_stock_production.valuation_in_account_id and product.product_id.property_stock_production.valuation_in_account_id.id or False
                 reference_amount = product.cost_variation*-1
                 
         if context.get('type',False) == 'produced':
