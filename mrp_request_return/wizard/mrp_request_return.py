@@ -99,9 +99,8 @@ class mrp_request_return_line(osv.osv_memory):
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = super(mrp_request_return_line, self).default_get(cr, uid, fields, context=context)
-        mrp_ids = context.get('active_ids', [])
-        if not mrp_ids or (not context.get('active_model') == 'mrp.production') \
-            or len(mrp_ids) != 1:
+        mrp_ids = context.get('ctx', {}).get('active_ids', [])
+        if not mrp_ids or len(mrp_ids) != 1:
             return res
         mrp_id, = mrp_ids
         mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
