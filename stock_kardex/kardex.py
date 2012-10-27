@@ -41,7 +41,10 @@ class product_product(osv.osv):
             if f == 'outgoing_done_qty':
                 c.update({ 'states': ('done',), 'what': ('out',) })
             if f == 'stock_done_start':
-                c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False, 'to_date': from_date })
+                if not from_date and to_date:
+                    'stock_done_start' = 0.0
+                else:
+                    c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False, 'to_date': from_date })
             if f == 'stock_balance':
                 c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False,'to_date': to_date})
             stock = self.get_product_available(cr, uid, ids, context=c)
