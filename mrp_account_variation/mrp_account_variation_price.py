@@ -84,12 +84,14 @@ class mrp_production(osv.osv):
                     'date': time.strftime('%Y-%m-%d'),
                     'debit': reference_amount,
                     'account_id': dest_account_id,
+                    'production_id' : production.id
         }
         credit_line_vals = {
                     'name': 'PROD: ' + production.name or '',
                     'date': time.strftime('%Y-%m-%d'),
                     'credit': reference_amount,
                     'account_id': src_account_id,
+                    'production_id' : production.id
         }
 
         return [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
