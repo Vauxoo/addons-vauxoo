@@ -40,42 +40,39 @@ class mrp_production(osv.osv):
         move_obj = self.pool.get('account.move')
         product_uom_pool = self.pool.get('product.uom')
         for production in self.browse(cr, uid, ids, context=context):
-            account_moves = []
-            total_product_consumed = 0.0
-            total_product_finished = 0.0
-            for prod_consumed in production.move_lines2:
-                if prod_consumed.state == 'done':
+            if production.product_id.valuation == 'real_time':
+                account_moves = []
+                total_product_consumed = 0.0
+                total_product_finished = 0.0
+                for prod_consumed in production.product_lines:
                     product_consumed = product_uom_pool._compute_qty(cr, uid, prod_consumed.product_uom.id, prod_consumed.product_qty, to_uom_id=prod_consumed.product_id.uom_id.id)
                     total_product_consumed += product_consumed * prod_consumed.product_id.standard_price
-            for prod_finished in production.move_created_ids2:
-                if prod_finished.state == 'done':
-                    product_finished = product_uom_pool._compute_qty(cr, uid, prod_finished.product_uom.id, prod_finished.product_qty, to_uom_id=prod_finished.product_id.uom_id.id)
+                for prod_finished in production.pt_planified_ids:
+                    product_finished = product_uom_pool._compute_qty(cr, uid, prod_finished.product_uom.id, prod_finished.quantity, to_uom_id=prod_finished.product_id.uom_id.id)
                     total_product_finished += product_finished * prod_finished.product_id.standard_price
-                    
-            if production.product_id.property_stock_production:
-                if total_product_consumed > total_product_finished:
-                    if production.product_id.property_stock_production.property_account_in_production_price_difference:
-                        src_account_id = production.product_id.property_stock_production.valuation_out_account_id.id
-                        dest_account_id = production.product_id.property_stock_production.property_account_in_production_price_difference.id
-                        reference_amount = (total_product_consumed - total_product_finished)
-                        journal_id = production.product_id.categ_id.property_stock_journal.id
-                        account_moves = [(journal_id, self._create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
-                if total_product_consumed < total_product_finished:
-                    if production.product_id.property_stock_production.property_account_out_production_price_difference:
-                        src_account_id = production.product_id.property_stock_production.property_account_out_production_price_difference.id
-                        dest_account_id = production.product_id.property_stock_production.valuation_in_account_id.id
-                        reference_amount = (total_product_consumed - total_product_finished)*-1
-                        journal_id = production.product_id.categ_id.property_stock_journal.id
-                        account_moves = [(journal_id,self._create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
+                if production.product_id.property_stock_production:
+                    if total_product_consumed > total_product_finished:
+                        if production.product_id.property_stock_production.property_account_in_production_price_difference:
+                            src_account_id = production.product_id.property_stock_production.valuation_out_account_id.id
+                            dest_account_id = production.product_id.property_stock_production.property_account_in_production_price_difference.id
+                            reference_amount = (total_product_consumed - total_product_finished)
+                            journal_id = production.product_id.categ_id.property_stock_journal.id
+                            account_moves = [(journal_id, self._create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
+                    if total_product_consumed < total_product_finished:
+                        if production.product_id.property_stock_production.property_account_out_production_price_difference:
+                            src_account_id = production.product_id.property_stock_production.property_account_out_production_price_difference.id
+                            dest_account_id = production.product_id.property_stock_production.valuation_in_account_id.id
+                            reference_amount = (total_product_consumed - total_product_finished)*-1
+                            journal_id = production.product_id.categ_id.property_stock_journal.id
+                            account_moves = [(journal_id,self._create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
 
-            if account_moves:
-                for j_id,move_lines in account_moves:
-                    move_obj.create(cr, uid,
-                        {
-                         'journal_id': j_id,
-                         'line_id': move_lines,
-                         'ref': 'PROD: ' + production.name})
-                
+                if account_moves:
+                    for j_id,move_lines in account_moves:
+                        move_obj.create(cr, uid,
+                            {
+                             'journal_id': j_id,
+                             'line_id': move_lines,
+                             'ref': 'PROD: ' + production.name})
         return True
         
     def _create_account_variation_price_move_line(self, cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None):
