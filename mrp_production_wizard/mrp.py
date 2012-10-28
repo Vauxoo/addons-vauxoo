@@ -46,8 +46,10 @@ class mrp_production(osv.osv):
         """
         #gets the weight of the totality of the lines
         total_weight = 0
+        print product.uom_id.factor, " = factor de producto padre"
         for line in list_produce:
                 product_obj_data = self.pool.get('product.product').browse(cr, uid, line['product_id'], context=None)
+                print product_obj_data.uom_id.factor, " = factor de linea"
                 if product_obj_data.weight:
                     total_weight += (line['product_qty'] * product_obj_data.weight)
                 else:
