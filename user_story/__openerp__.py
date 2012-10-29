@@ -26,7 +26,7 @@
 {
     "name" : "User Story",
     "version" : "0.1",
-    "depends" : ["base","project_scrum"],
+    "depends" : ["base","project"],
     "author" : ["Vauxoo",],
     "description" : """
     What do this module:

@@ -19,7 +19,7 @@
               <separator string="Description" colspan='4' />
               <field name="description" colspan="4" nolabel="1" />
               <separator string="Acceptability Criteria" colspan='4' />
-              <field name="accep_crit_ids" colspan="4" nolabel="1" mode="tree,form">
+              <field name="accep_crit_ids" colspan="4" nolabel="1" >
                 <form string="Acceptability Criteria">
                   <separator string="Name" colspan='4' />
                   <field name="name" colspan="4" nolabel="1" />
@@ -91,6 +91,6 @@
       <field name="context">{"search_default_current": uid}</field>
       <field name="search_view_id" ref="view_userstory_search" />
     </record>
-    <menuitem parent="project_scrum.menu_scrum" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" />
+    <menuitem parent="project.menu_project_management" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" />
   </data>
 </openerp>
