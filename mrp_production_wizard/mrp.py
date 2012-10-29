@@ -46,16 +46,14 @@ class mrp_production(osv.osv):
         """
         #gets the weight of the totality of the lines
         total_weight = 0
-        print product.uom_id.factor, " = factor de producto padre"
         for line in list_produce:
                 product_obj_data = self.pool.get('product.product').browse(cr, uid, line['product_id'], context=None)
-                print product_obj_data.uom_id.factor, " = factor de linea"
                 if product_obj_data.weight:
                     total_weight += (line['product_qty'] * product_obj_data.weight * (product.uom_id.factor / product_obj_data.uom_id.factor))
                 else:
                     total_weight += line['product_qty'] * (product.uom_id.factor / product_obj_data.uom_id.factor)
-                print product_obj_data.weight, "peso bruto del prod"
-        print total_weight, " = peso total"
+        total_weight = total_weight / ((product.weight or 1) * product.uom_id.factor)
+        print "product weight ", product.weight
         
         default_location_dict = self.product_id_change(cr, uid, [], product.id, context)
         if (default_location_dict['value']['location_src_id'] & default_location_dict['value']['location_dest_id']):
@@ -63,7 +61,7 @@ class mrp_production(osv.osv):
                 'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
                 'date_planned' : time.strftime('%Y-%m-%d %H:%M:%S'),
                 'product_id' : product.id,
-                'product_qty' : 1,
+                'product_qty' : total_weight,
                 'product_uom' : product.uom_id.id,
                 'location_src_id': default_location_dict['value']['location_src_id'],
                 'location_dest_id': default_location_dict['value']['location_dest_id'],
@@ -83,7 +81,7 @@ class mrp_production(osv.osv):
             
             mrp_pt_planifed_dict = {
                 'product_id' : product.id,
-                'quantity' : 1,
+                'quantity' : total_weight,
                 'production_id' : new_id,
                 'product_uom' : product.uom_id.id,
             }
