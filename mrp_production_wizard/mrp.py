@@ -44,7 +44,7 @@ class mrp_production(osv.osv):
         @param product id to create
         @return: True
         """
-        #gets the weight of the totality of the lines
+
         total_weight = 0
         for line in list_produce:
                 product_obj_data = self.pool.get('product.product').browse(cr, uid, line['product_id'], context=None)
@@ -53,7 +53,6 @@ class mrp_production(osv.osv):
                 else:
                     total_weight += line['product_qty'] * (product.uom_id.factor / product_obj_data.uom_id.factor)
         total_weight = total_weight / ((product.weight or 1) * product.uom_id.factor)
-        print "product weight ", product.weight
         
         default_location_dict = self.product_id_change(cr, uid, [], product.id, context)
         if (default_location_dict['value']['location_src_id'] & default_location_dict['value']['location_dest_id']):
