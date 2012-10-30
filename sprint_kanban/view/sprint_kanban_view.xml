@@ -38,10 +38,20 @@
 		</record>
 		
 
-<!-- +++++++++++ view in Form Inherit +++++++++++++++++++++++++++ -->
+<!-- +++++++++++ view in Form Inherit of Tasks Project +++++++++++++++++++++++++++ -->
 
 	
-		
+		<record model="ir.ui.view" id="inherit_tasks_sprint_kanban_form_view">
+			<field name="name">inherit.tasks.sprint.kanban</field>
+				<field name="model">project.task</field>
+				<field name="type">form</field>
+				<field name="inherit_id" ref="project.view_task_form2"/>
+				<field name="arch" type="xml">
+					<xpath expr="//field[@name='categ_ids']" position="after">
+						<field name="sprint_id" />
+					</xpath>
+			    </field>
+		</record>
 
 
 <!-- +++++++++++ view in Kanban +++++++++++++++++++++++++++ -->
