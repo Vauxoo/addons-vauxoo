@@ -73,17 +73,17 @@ class mrp_production(osv.osv):
             for moves in production.move_created_ids:
                 stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
                 
-        pickings=stock_picking.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
-        moves=stock_move.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
+        #pickings=stock_picking.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
+        #moves=stock_move.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
 
-        if pickings or moves:
-            raise osv.except_osv(_('Error !'), _('You can not Finish Production With Pickings or Moves in state Open or Reserved!'))
+        #if pickings or moves:
+            #raise osv.except_osv(_('Error !'), _('You can not Finish Production With Pickings or Moves in state Open or Reserved!'))
         try:
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'mrp.production', production.id, 'button_produce_done', cr)
         except:
             pass
         return True
-
+    
 mrp_production()
 

@@ -71,7 +71,7 @@
           </group>
           <group colspan="6" col="8">
             <field name='method_cost_ids' nolabel="1">
-              <tree string="Method Price" editable="buttom">
+              <tree string="Method Price" editable="bottom">
                 <field name='sequence' />
                 <field name='cost_structure_id' invisible="1"/>
                 <field name='unit_price' />

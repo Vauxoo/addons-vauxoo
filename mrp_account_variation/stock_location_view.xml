@@ -11,6 +11,8 @@
                     <xpath expr="/form/group/field[@name='valuation_out_account_id']" position="after">
                     	<field name="variation_out_account_id" attrs="{'readonly':[('usage','not in',('inventory','production'))]}"/>
                     	<field name="variation_in_account_id" attrs="{'readonly':[('usage','not in',('inventory','production'))]}"/>
+                    	<field name="property_account_out_production_price_difference" attrs="{'readonly':[('usage','not in',('inventory','production'))]}"/>
+                    	<field name="property_account_in_production_price_difference" attrs="{'readonly':[('usage','not in',('inventory','production'))]}"/>
                     </xpath>
 	    </field>
         </record>
