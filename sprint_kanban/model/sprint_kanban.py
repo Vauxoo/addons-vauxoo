@@ -10,7 +10,7 @@ from datetime import datetime
 class sprint_kanban(osv.osv): #
 	
 	_name = 'sprint.kanban'
-	
+	_inherit = ['mail.thread', 'ir.needaction_mixin']
 	_columns = {
 	            'name': fields.char('Name Sprint',264, required=True),
 	            'project_id': fields.many2one('project.project','Project',ondelete="cascade"),
