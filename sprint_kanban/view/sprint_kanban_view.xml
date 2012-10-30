@@ -1,129 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-<data>
-	
-<!-- +++++++++++ view in Tree +++++++++++++++++++++++++++ -->
-			
-	<record model="ir.ui.view" id="sprint_kanban_tree_view">
-			<field name="name">sprint.kanban.tree</field>
-				<field name="model">sprint.kanban</field>
-				<field name="type">tree</field>
-				<field name="arch" type="xml">
-					<tree string="Sprint Kanban Tree">
-						<field name="name"/>	
-							<field name="project_id"/>
-							<field name="description"/>	
-							<field name="datestart"/>
-							<field name="dateend"/>	
-											
-					</tree>
-			</field>
-		</record>
-
-<!-- +++++++++++ view in Form +++++++++++++++++++++++++++ -->
-
-		<record model="ir.ui.view" id="sprint_kanban_form_view">
-			<field name="name">sprint.kanban.form</field>
-				<field name="model">sprint.kanban</field>
-				<field name="type">form</field>
-				<field name="arch" type="xml">
-					<form string ="Sprint Kanban Form" version="7.0">	
-				        <sheet string="Project">
-						   <label for="name" class="oe_edit_only"/>
-						      <h1> <field name="name"/> </h1>
-						  <group>
-							<group>
-								<field name="project_id"/>
-							</group>
-							<group>
-								<field name="datestart" />
-								<field name="dateend" />
-							</group>
-						  </group>
-						
-						  <group>
-							<field name="description" />	
-						  </group>	
-				  </sheet>
-				    <div class="oe_chatter">
-                        <field name="message_ids" widget="mail_thread"/>
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                    </div>
-					</form>
-			</field>
-		</record>
-		            		
-<!-- +++++++++++ view in Kanban +++++++++++++++++++++++++++ -->      
-
-
-          <record model="ir.ui.view" id="view_sprint_kanban">
-            <field name="name">sprint.task.kanban</field>
-            <field name="model">sprint.kanban</field>
-            <field name="arch" type="xml">
-                <kanban>
-                    
-                    <field name="name"/>
-                    <field name="project_id"/>
-					<field name="datestart" />
-					<field name="dateend" />
-                  
-                    <templates>
-                        <t t-name="kanban-box">
-                            <div class="oe_kanban_vignette oe_semantic_html_override">
-                              
-                                <div class="oe_kanban_details">
-                                    <h4 class="oe_partner_heading"><a type="open"><field name="name"/></a></h4>
-                                    <div class="oe_kanban_partner_categories"/>
-                                    <div class="oe_kanban_partner_links"/>
-                                    <ul>
-                             
-                                        
-                                        <li><a name="set_remaining_time_1" type="object" class="oe_kanban_button">1</a><field name="project_id"/></li>
-                                        <li><a name="set_remaining_time_2" type="object" class="oe_kanban_button">2</a><field name="datestart"/></li>
-                                        <li><a name="set_remaining_time_5" type="object" class="oe_kanban_button">5</a><field name="dateend"/></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                        </t>
-                    </templates>
-                </kanban>
-            </field>
-        </record>
-<!-- +++++++++++ view in Form Inherit of Tasks Project +++++++++++++++++++++++++++ -->
-
-	
-		<record model="ir.ui.view" id="inherit_tasks_sprint_kanban_form_view">
-			<field name="name">inherit.tasks.sprint.kanban</field>
-				<field name="model">project.task</field>
-				<field name="type">form</field>
-				<field name="inherit_id" ref="project.view_task_form2"/>
-				<field name="arch" type="xml">
-					<xpath expr="//field[@name='categ_ids']" position="after">
-						<field name="sprint_id" />
-					</xpath>
-			    </field>
-		</record>
-
-		
-<!--++++++++++++++++++++++++++Actions+++++++++++++++++++++++++++++++++++-->	
-
-			
-	
-		<record model="ir.actions.act_window" id="sprint_kanban_action">
-			<field name="name">Sprint</field>
-			<field name="res_model">sprint.kanban</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form,kanban</field>
-		</record>
-		
-		
-<!--+++++++++++++++++++++++++++++ MENUS +++++++++++++++++++++++++++++++++++++++++-->
-
-	
-		<!-- submenus -->
-		<menuitem id="sprint_kanban_menu" name="Sprint" parent="project.menu_project_management" action="sprint_kanban_action"/>
-						
-</data>
-</openerp>		
-
+  <data>
+    <!-- +++++++++++ view in Tree +++++++++++++++++++++++++++ -->
+    <record model="ir.ui.view" id="sprint_kanban_tree_view">
+      <field name="name">sprint.kanban.tree</field>
+      <field name="model">sprint.kanban</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree string="Sprint Kanban Tree">
+          <field name="name" />
+          <field name="project_id" />
+          <field name="description" />
+          <field name="datestart" />
+          <field name="dateend" />
+        </tree>
+      </field>
+    </record>
+    <!-- +++++++++++ view in Form +++++++++++++++++++++++++++ -->
+    <record model="ir.ui.view" id="sprint_kanban_form_view">
+      <field name="name">sprint.kanban.form</field>
+      <field name="model">sprint.kanban</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string ="Sprint Kanban Form" version="7.0">
+          <sheet string="Project">
+            <label for="name" class="oe_edit_only" />
+            <h1>
+              <field name="name" />
+            </h1>
+            <group>
+              <group>
+                <field name="project_id" />
+              </group>
+              <group>
+                <field name="datestart" />
+                <field name="dateend" />
+              </group>
+            </group>
+            <group>
+              <field name="description" />
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+            <field name="message_ids" widget="mail_thread" />
+            <field name="message_follower_ids" widget="mail_followers" />
+          </div>
+        </form>
+      </field>
+    </record>
+    <!-- +++++++++++ view in Kanban +++++++++++++++++++++++++++ -->
+    <record model="ir.ui.view" id="view_sprint_kanban">
+      <field name="name">sprint.task.kanban</field>
+      <field name="model">sprint.kanban</field>
+      <field name="arch" type="xml">
+        <kanban version="7.0" class="oe_background_grey">
+          <field name="color" />
+          <field name="members" />
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_project oe_kanban_global_click">
+                <div class="oe_dropdown_toggle oe_dropdown_kanban">
+                  <span class="oe_e">í</span>
+                  <ul class="oe_dropdown_menu">
+                    <t t-if="widget.view.is_action_enabled('edit')">
+                      <li>
+                        <a type="edit">Edit...</a>
+                      </li>
+                    </t>
+                    <t t-if="widget.view.is_action_enabled('delete')">
+                      <li>
+                        <a type="delete">Delete</a>
+                      </li>
+                    </t>
+                    <li>
+                      <ul class="oe_kanban_colorpicker" data-field="color" />
+                    </li>
+                  </ul>
+                </div>
+                
+                 <div class="oe_kanban_content">
+                  <h4>
+                   <field name="name" />
+                  </h4>
+              
+               
+                  <div class="oe_kanban_project_avatars">
+                    <t t-foreach="record.members.raw_value" t-as="member">
+                      <img t-att-src="kanban_image('res.users', 'image_small', member)" t-att-data-member_id="member" />
+                    </t>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    <!-- +++++++++++ view in Form Inherit of Tasks Project +++++++++++++++++++++++++++ -->
+    <record model="ir.ui.view" id="inherit_tasks_sprint_kanban_form_view">
+      <field name="name">inherit.tasks.sprint.kanban</field>
+      <field name="model">project.task</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="project.view_task_form2" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='categ_ids']" position="after">
+          <field name="sprint_id" />
+        </xpath>
+      </field>
+    </record>
+    <!--++++++++++++++++++++++++++Actions+++++++++++++++++++++++++++++++++++-->
+    <record model="ir.actions.act_window" id="sprint_kanban_action">
+      <field name="name">Sprint</field>
+      <field name="res_model">sprint.kanban</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <!--+++++++++++++++++++++++++++++ MENUS +++++++++++++++++++++++++++++++++++++++++-->
+    <!-- submenus -->
+    <menuitem id="sprint_kanban_menu" name="Sprint" parent="project.menu_project_management" action="sprint_kanban_action" />
+  </data>
+</openerp>

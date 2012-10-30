@@ -17,6 +17,9 @@ class sprint_kanban(osv.osv): #
 	            'description': fields.text('Description'),
 	            'datestart': fields.date('Start Date'),
 	            'dateend': fields.date('End Date'),
+	            'color': fields.integer('Color Index'),
+	            'members': fields.many2many('res.users', 'project_user_rel', 'project_id', 'uid', 'Project Members',
+            help="Project's members are users who can have an access to the tasks related to this project.", states={'close':[('readonly',True)], 'cancelled':[('readonly',True)]}),
 	            }
 sprint_kanban()	
 
@@ -27,6 +30,7 @@ class sprint_kanban_tasks(osv.osv):
     _columns={
 	 
 	    'sprint_id':fields.many2one('sprint.kanban','Sprint',ondelete="cascade"),
+	 
 		
 		
  }

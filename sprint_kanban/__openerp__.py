@@ -4,8 +4,8 @@
 
 {
 	"name" : "sprint_kanban",#Module's name
-	"version" : "0.1",	#Version's number
-	"depends" :  ["project"],	#Dependent module
+	"version" : "1.1",	#Version's number
+	"depends" :  ['project','web_kanban'],	#Dependent module
 	"author" : "Luis Torres",#Programmer
 	"description" : """
 	This is a module of the sprint kanban
