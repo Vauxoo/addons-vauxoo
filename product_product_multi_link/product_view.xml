@@ -8,7 +8,7 @@
 	 <act_window
             domain="[('product_id','=',active_id), ('production_id','&lt;&gt;',False)]"
             id="act_product_stock"
-            name="Stock moves with productions"
+            name="Stock moves with production orders"
             res_model="stock.move"
             src_model="product.product"
             context="{}" />
@@ -16,7 +16,7 @@
 	 <act_window
             domain="[('product_id','=',active_id)]"
             id="act_product_production"
-            name="Production order"
+            name="Production orders 2"
             res_model="mrp.production"
             src_model="product.product"
             context="{}" />
