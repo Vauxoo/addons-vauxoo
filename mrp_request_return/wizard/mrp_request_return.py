@@ -95,6 +95,21 @@ mrp_request_return()
 class mrp_request_return_line(osv.osv_memory):
     _name='mrp.request.return.line'
     _rec_name = 'product_id'
+    
+    def default_get(self, cr, uid, fields, context=None):
+        if context is None: context = {}
+        res = super(mrp_request_return_line, self).default_get(cr, uid, fields, context=context)
+        mrp_ids = context.get('ctx', {}).get('active_ids', [])
+        if not mrp_ids or len(mrp_ids) != 1:
+            return res
+        mrp_id, = mrp_ids
+        mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
+        res.update({
+            'location_id' : mrp.location_src_id.id,
+            'location_dest_id' : mrp.location_src_id.id,
+            'production_id' : mrp.id})
+        return res
+    
     _columns = {
         'product_id' : fields.many2one('product.product', string="Product", required=True),
         'product_qty' : fields.float("Quantity", digits_compute=dp.get_precision('Product UoM'), required=True),
@@ -107,6 +122,24 @@ class mrp_request_return_line(osv.osv_memory):
         'product_uos_qty' : fields.float('Quantity UoS'),
         'wizard_id' : fields.many2one('mrp.request.return', string="Wizard"),
     }
+    
+    def on_change_product_uom(self, cr, uid, ids, product_id):
+        product_product = self.pool.get('product.product')
+        product = product_product.browse(cr, uid, product_id)
+        return {'value' : { 'product_uom': product.uom_id and product.uom_id.id}}
 
 mrp_request_return_line()
 
+class stock_move(osv.osv):
+    _inherit = 'stock.move'
+    """
+    #TODO: Fix when consume is from finish good. NOTE: With raw materials is good!
+    def action_consume(self, cr, uid, ids, quantity, location_id=False, context=None):
+        if context is None: context = {}
+        for move in self.browse(cr, uid, ids, context=context):
+            move_qty = move.product_qty
+            if quantity > move_qty:
+                raise osv.except_osv(_('Error!'), _('You can not consume more product of the ones you have to consume. You need to request them first'))
+        return super(stock_move, self).action_consume(cr, uid, ids, quantity, location_id, context)
+    """
+stock_move()

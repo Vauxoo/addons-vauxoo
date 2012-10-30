@@ -463,6 +463,7 @@ class bank_statement_imported_lines(osv.osv):
 
             if context.get('cancel',False) and aml:
                 invoice_ids = [i.id for i in abs_brw.invoice_ids]
+                move_ids = [d.id for d in abs_brw.acc_move_line_ids]
                 for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
                     if abs_brw.move_id:
                         res.append(account_move_line_obj.search(cr,uid,[('move_id','=',abs_brw.move_id.id),
@@ -473,8 +474,13 @@ class bank_statement_imported_lines(osv.osv):
                                                                     ('account_id','=',invoice.account_id.id),
                                                                     ])) 
                     res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
-                    print 'res',res
                     break
+                
+                for move in account_move_line_obj.browse(cr,uid,move_ids,context=context):
+                    res.append(account_move_line_obj.search(cr,uid,[('move_id','=',abs_brw.move_id.id),
+                                                                   ('account_id','=',move.account_id.id)]))
+                    res.append('%s'%(aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
+                    break 
                 
                 res and [res[0].append(i.id) for i in abs_brw.acc_move_line_ids ] 
                 

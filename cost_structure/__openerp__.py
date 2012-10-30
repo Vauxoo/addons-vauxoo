@@ -51,11 +51,11 @@
     "update_xml" : [
     'security/cost_structure_security.xml',
     'security/ir.model.access.csv',
-    'wizard/compute_cost_view.xml',
+#    'wizard/compute_cost_view.xml',
     'wizard/default_cost_to_report_view.xml',
     'wizard/update_price_list_view.xml',
     'view/cost_structure.xml',
-    'view/report_cost.xml',
+#    'view/report_cost.xml',
     'view/product_view.xml',
     'view/sale_view.xml',
     'workflow/sale_workflow.xml',

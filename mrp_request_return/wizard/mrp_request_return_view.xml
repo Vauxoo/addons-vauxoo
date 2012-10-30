@@ -12,9 +12,9 @@
                 <form string="Products">
 			<field name="type"/>
 			<newline/>
-			<field name="re_line_ids" mode="tree" nolabel="1" colspan="4" width="640" height="240">
+			<field name="re_line_ids" mode="tree" nolabel="1" colspan="4" width="640" height="240" context="{'ctx':context}">
 				<tree string="Products" editable="bottom">
-					<field name="product_id"/>
+					<field name="product_id" on_change="on_change_product_uom(product_id)"/>
 					<field name="product_qty"/>
 					<field name="product_uom"/>
 				</tree>
@@ -22,6 +22,8 @@
 					<field name="product_id"/>
 					<field name="product_qty"/>
 					<field name="product_uom"/>
+					<field name="location_id"/>
+					<field name="location_dest_id"/>
 				</form>
 			</field>
 			<group colspan="4">

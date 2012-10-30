@@ -43,13 +43,13 @@ class mrp_production(osv.osv):
             for prod_variation in production.variation_ids:
                 context['type'] = 'consumed'
                 if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time' and prod_variation.quantity <> 0:
-                    j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,context=context)
+                    j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,production,context=context)
                     account_moves += [(j_id, self._create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
 
             for prod_variation in production.variation_finished_product_ids:
                 context['type'] = 'produced'
                 if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time' and prod_variation.quantity <> 0:
-                    j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,context=context)
+                    j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,production,context=context)
                     account_moves += [(j_id, self._create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
                     
             if account_moves:
@@ -63,7 +63,7 @@ class mrp_production(osv.osv):
                     
         return True
     
-    def _get_journal_accounts(self,cr,uid,product,context={}):
+    def _get_journal_accounts(self,cr,uid,product,production,context={}):
 
         if not context:
             context = {}
@@ -73,37 +73,41 @@ class mrp_production(osv.osv):
         
         if context.get('type',False) == 'consumed':
             if product.quantity > 0:
-                if product.product_id.property_stock_production.valuation_in_account_id:
-                    src_acc = product.product_id.property_stock_production.valuation_in_account_id.id
-                if product.product_id.property_stock_production.variation_in_account_id: 
-                    dest_acc = product.product_id.property_stock_production.variation_in_account_id.id
+                if production.product_id.property_stock_production.valuation_in_account_id:
+                    src_acc = production.product_id.property_stock_production.valuation_in_account_id.id
+                if product.product_id.type == 'service':
+                    dest_acc = product.product_id.categ_id.property_stock_valuation_account_id and product.product_id.categ_id.property_stock_valuation_account_id.id or False
+                elif production.product_id.property_stock_production.variation_in_account_id: 
+                    dest_acc = production.product_id.property_stock_production.variation_in_account_id.id
                 reference_amount = product.cost_variation
                 
             if product.quantity < 0:
-                if product.product_id.property_stock_production.variation_in_account_id:
-                    src_acc = product.product_id.property_stock_production.variation_in_account_id.id
-                if product.product_id.property_stock_production.valuation_in_account_id:
-                    dest_acc = product.product_id.property_stock_production.valuation_in_account_id.id
+                if product.product_id.type == 'service':
+                    src_acc = product.product_id.categ_id.property_stock_valuation_account_id and product.product_id.categ_id.property_stock_valuation_account_id.id or False
+                elif production.product_id.property_stock_production.variation_in_account_id:
+                    src_acc = production.product_id.property_stock_production.variation_in_account_id.id
+                if production.product_id.property_stock_production.valuation_in_account_id:
+                    dest_acc = production.product_id.property_stock_production.valuation_in_account_id.id
                 reference_amount = product.cost_variation*-1
                 
         if context.get('type',False) == 'produced':
             if product.quantity > 0:
-                if product.product_id.property_stock_production.valuation_out_account_id:
-                    src_acc = product.product_id.property_stock_production.variation_out_account_id.id
-                if product.product_id.property_stock_production.variation_out_account_id:
-                    dest_acc = product.product_id.property_stock_production.valuation_out_account_id.id
+                if production.product_id.property_stock_production.valuation_out_account_id:
+                    src_acc = production.product_id.property_stock_production.variation_out_account_id.id
+                if production.product_id.property_stock_production.variation_out_account_id:
+                    dest_acc = production.product_id.property_stock_production.valuation_out_account_id.id
                 reference_amount = product.cost_variation
             if product.quantity < 0:
-                if product.product_id.property_stock_production.variation_out_account_id:
-                    src_acc = product.product_id.property_stock_production.valuation_out_account_id.id
-                if product.product_id.property_stock_production.valuation_out_account_id:
-                    dest_acc = product.product_id.property_stock_production.variation_out_account_id.id
+                if production.product_id.property_stock_production.variation_out_account_id:
+                    src_acc = production.product_id.property_stock_production.valuation_out_account_id.id
+                if production.product_id.property_stock_production.valuation_out_account_id:
+                    dest_acc = production.product_id.property_stock_production.variation_out_account_id.id
                 reference_amount = product.cost_variation*-1
             
         journal_id = product.product_id.categ_id.property_stock_journal.id
         if not src_acc or not dest_acc:
             raise osv.except_osv(_('Error!'),  _('There is no account defined for this location: "%s" ') % \
-                                    (product.product_id.property_stock_production.name,))
+                                    (production.product_id.property_stock_production.name,))
                                     
         if not journal_id:
             raise osv.except_osv(_('Error!'), _('There is no journal defined on the product category: "%s" (id: %d)') % \
