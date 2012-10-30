@@ -23,9 +23,17 @@
 	    
 	 <act_window
             domain="[('product_id','=',active_id)]"
-            id="act_product_bom"
+            id="act_product_account"
             name="Account move lines"
             res_model="account.move.line"
+            src_model="product.product"
+            context="{}" />
+	    
+	 <act_window
+            domain="[('bom_lines.product_id','=',active_id)]"
+            id="act_product_bom"
+            name="As BoM component"
+            res_model="mrp.bom"
             src_model="product.product"
             context="{}" />
 
