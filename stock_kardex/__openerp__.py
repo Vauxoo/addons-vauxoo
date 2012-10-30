@@ -21,12 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Add kardex in menuitem",
+    "name" : "Add stock_kardex in menuitem",
     "version" : "1.0",
     "depends" : ['product','stock','product_context_date'],
     "author" : "Vauxoo",
     #"license" : "AGPL-3",
-    "description" : """This module add kardex in menuitem
+    "description" : """This module add stock_kardex in menuitem
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
