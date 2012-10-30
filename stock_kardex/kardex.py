@@ -41,7 +41,7 @@ class product_product(osv.osv):
             if f == 'outgoing_done_qty':
                 c.update({ 'states': ('done',), 'what': ('out',) })
             if f == 'stock_done_start':
-                if not from_date and to_date:
+                if not from_date:
                     'stock_done_start' == 0.0
                 else:
                     c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False, 'to_date': from_date })
