@@ -41,22 +41,22 @@ class product_product(osv.osv):
             if f == 'incoming_done_qty':
                 c.update( {
                     'from_date': from_date and from_date + ' 00:00:00' or False, 
-                    'to_date': to_date and to_date + ' 23:59:60' or False, } )
+                    'to_date': to_date and to_date + ' 23:59:59' or False, } )
                 c.update({ 'states': ('done',), 'what': ('in',) })
             if f == 'outgoing_done_qty':
                 c.update( {
                     'from_date': from_date and from_date + ' 00:00:00' or False, 
-                    'to_date': to_date and to_date + ' 23:59:60' or False, } )
+                    'to_date': to_date and to_date + ' 23:59:59' or False, } )
                 c.update({ 'states': ('done',), 'what': ('out',) })
             if f == 'stock_done_start':
                 if not from_date:
                     'stock_done_start' == 0.0
                 else:
                     new_to_date = datetime.strptime(from_date, '%Y-%m-%d') - relativedelta(days=1)
-                    new_to_date = new_to_date.strftime('%Y-%m-%d') + ' 23:59:60'
+                    new_to_date = new_to_date.strftime('%Y-%m-%d') + ' 23:59:59'
                     c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False, 'to_date': new_to_date })
             if f == 'stock_balance':
-                c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False, 'to_date': to_date and to_date + ' 23:59:60' or False,})
+                c.update({ 'states': ('done',), 'what': ('in','out',) ,'from_date': False, 'to_date': to_date and to_date + ' 23:59:59' or False,})
             stock = self.get_product_available(cr, uid, ids, context=c)
             for id in ids:
                 res[id][f] = stock.get(id, 0.0)
