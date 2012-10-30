@@ -30,11 +30,11 @@
     "author" : "Vauxoo",
     "category": "Generic Modules",
     "website" : "http://www.vauxoo.com/",
-    "description": """This module links to products from their journal items,
+    "description": """This module links from products to their journal items,
     production orders, stock moves with productions, and bill of materials where
     those products are components
     """,
-    'depends': ['stock'],
+    'depends': ['product', 'stock', 'mrp'],
     'init_xml': [],
     'update_xml': [
         'product_view.xml',

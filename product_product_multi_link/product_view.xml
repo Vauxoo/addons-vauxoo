@@ -6,12 +6,14 @@
 -->
 	    
 	 <act_window
-            domain="[('id','=',product_id)]"
+            domain="[('product_id','=',active_id), ('production_id','&lt;&gt;',False)]"
             id="act_product_stock"
-            name="Related product"
-            res_model="product.product"
-            src_model="stock.move"
+            name="Related stock moves 2"
+            res_model="stock.move"
+            src_model="product.product"
             context="{}" />
+	    
+	 
 
     </data>
 </openerp>
