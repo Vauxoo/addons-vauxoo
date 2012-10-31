@@ -29,8 +29,8 @@ import decimal_precision as dp
 class mrp_production(osv.osv):
     _inherit='mrp.production'
         
-    def _create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
-        res = super(mrp_production, self)._create_account_variation_move_line(cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=context)
+    def create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
+        res = super(mrp_production, self).create_account_variation_move_line(cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=context)
         for lin in res:
             lin[2]['production_id'] = prod_variation.production_id and prod_variation.production_id.id or False
         return res
