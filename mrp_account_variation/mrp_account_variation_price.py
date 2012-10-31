@@ -33,10 +33,10 @@ class mrp_production(osv.osv):
     
     def action_finish(self,cr,uid,ids,context={}):
         res = super(mrp_production, self).action_finish(cr,uid,ids,context=context)
-        self._create_move_variation_price(cr, uid, ids, context=context)
+        self.create_move_variation_price(cr, uid, ids, context=context)
         return res
     
-    def _create_move_variation_price(self, cr, uid, ids, context={}):
+    def create_move_variation_price(self, cr, uid, ids, context={}):
         move_obj = self.pool.get('account.move')
         product_uom_pool = self.pool.get('product.uom')
         for production in self.browse(cr, uid, ids, context=context):
@@ -57,14 +57,14 @@ class mrp_production(osv.osv):
                             dest_account_id = production.product_id.property_stock_production.property_account_in_production_price_difference.id
                             reference_amount = (total_product_consumed - total_product_finished)
                             journal_id = production.product_id.categ_id.property_stock_journal.id
-                            account_moves = [(journal_id, self._create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
+                            account_moves = [(journal_id, self.create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
                     if total_product_consumed < total_product_finished:
                         if production.product_id.property_stock_production.property_account_out_production_price_difference:
                             src_account_id = production.product_id.property_stock_production.property_account_out_production_price_difference.id
                             dest_account_id = production.product_id.property_stock_production.valuation_in_account_id.id
                             reference_amount = (total_product_consumed - total_product_finished)*-1
                             journal_id = production.product_id.categ_id.property_stock_journal.id
-                            account_moves = [(journal_id,self._create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
+                            account_moves = [(journal_id,self.create_account_variation_price_move_line(cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None))]
 
                 if account_moves:
                     for j_id,move_lines in account_moves:
@@ -75,7 +75,7 @@ class mrp_production(osv.osv):
                              'ref': 'PROD: ' + production.name})
         return True
         
-    def _create_account_variation_price_move_line(self, cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None):
+    def create_account_variation_price_move_line(self, cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None):
         debit_line_vals = {
                     'name': 'PROD: ' + production.name or '',
                     'date': time.strftime('%Y-%m-%d'),
