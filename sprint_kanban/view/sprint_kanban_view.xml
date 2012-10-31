@@ -66,10 +66,13 @@
         
         <kanban version="7.0" class="oe_background_grey">
 			
-		  <field name="name" />	
+		  <field name="name" />	<field name="state" />	
 		  <field name="project_id" />
           <field name="color" />
           <field name="members" />
+          <field name="user_id" />          
+          <field name="description" />
+          <field name="priority" />
           <templates>
             <t t-name="kanban-box">
 			    <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_project oe_kanban_global_click">
@@ -84,13 +87,44 @@
 				
 					<div class="oe_kanban_content">
 						<h4><field name="name" /></h4>
-			  
+						
+						 <div class="oe_kanban_project_list">
+							<field name="project_id" />
+							
+						</div>
+						
+						 <div class="oe_kanban_bottom_right">
+							<a t-if="record.state.raw_value === 'open'" type="object" string="In Progress" name="set_open" class="oe_kanban_status oe_kanban_status_yellow" />
+							<a t-if="record.state.raw_value === 'done'" type="object" string="Done" name="set_done" class="oe_kanban_status oe_kanban_status_green" />
+							<a t-if="record.state.raw_value === 'pending'" type="object" string="Pending" name="set_pending" class="oe_kanban_status oe_kanban_status_blue" />
+							<a t-if="record.state.raw_value === 'cancelled'" type="object" string="Cancel" name="set_cancel" class="oe_kanban_status oe_kanban_status_red" />
+							<a t-if="record.priority.raw_value == 1" type="object" string="Priority" name="set_Sprint_priority" class="oe_e oe_star_on">7</a>
+							<a t-if="record.priority.raw_value != 1" type="object" string="Priority" name="set_high_priority" class="oe_e oe_star_off">7</a>
+							<img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar" />
+						  </div>
 			   
+<!--	
 						 <div class="oe_kanban_project_avatars">
-							<t t-foreach="record.members.raw_value" t-as="member">
-							  <img t-att-src="kanban_image('res.users', 'image_small', member)" t-att-data-member_id="member" />
+							<t>
+							 <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar" />
 							</t>
 						 </div>
+-->
+						 
+						<div class="oe_kanban_footer_left">
+							<span t-if="record.dateend.raw_value">
+							  <span class="oe_e">N</span>
+							  <field name="datestart" />
+							  
+							   <span t-attf-class="#{red || ''}">
+								  <i>
+									<field name="dateend" />
+								  </i>
+								</span>
+							  
+							   <br t-if="record.description.value" />
+							</span>
+						</div>
 					</div>
 			    </div>
             </t>

@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+sprint_comp_rule,sprint_kanban.manager,model_sprint_kanban,sprint_kanban.group_sprint_kanban_manager,1,1,1,1
+
+
+
+
+
