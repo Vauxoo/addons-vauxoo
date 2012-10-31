@@ -16,18 +16,27 @@
         </tree>
       </field>
     </record>
-    <!-- +++++++++++ view in Form +++++++++++++++++++++++++++ -->
+     +++++++++++ view in Form +++++++++++++++++++++++++++ 
     <record model="ir.ui.view" id="sprint_kanban_form_view">
       <field name="name">sprint.kanban.form</field>
       <field name="model">sprint.kanban</field>
       <field name="type">form</field>
       <field name="arch" type="xml">
         <form string ="Sprint Kanban Form" version="7.0">
+			<header>
+            <button name="set_done" string="Close Project" type="object" states="open,pending" />
+            <button name="set_open" string="Re-open project" type="object" states="pending" class="oe_highlight" />
+            <button name="set_open" string="Re-open project" type="object" states="cancelled,close" />
+            <button name="set_pending" string="Pending" type="object" states="open" />
+            <button name="set_template" string="Set as Template" type="object" states="open" />
+            <button string="New Project Based on Template" name="duplicate_template" type="object" states="template" context="{'parent_id':parent_id}" class="oe_highlight" />
+            <button name="reset_project" string="Reset as Project" type="object" states="template" class="oe_highlight" />
+            <button name="set_cancel" string="Cancel" type="object" states="open,pending" />
+            <field name="state" widget="statusbar" statusbar_visible="open,close" statusbar_colors='{"pending":"blue"}' readonly="1" />
+            </header>
           <sheet string="Project">
             <label for="name" class="oe_edit_only" />
-            <h1>
-              <field name="name" />
-            </h1>
+            <h1><field name="name" /></h1>
             <group>
               <group>
                 <field name="project_id" />
@@ -49,48 +58,41 @@
       </field>
     </record>
     <!-- +++++++++++ view in Kanban +++++++++++++++++++++++++++ -->
+    
     <record model="ir.ui.view" id="view_sprint_kanban">
       <field name="name">sprint.task.kanban</field>
       <field name="model">sprint.kanban</field>
       <field name="arch" type="xml">
+        
         <kanban version="7.0" class="oe_background_grey">
+			
+		  <field name="name" />	
+		  <field name="project_id" />
           <field name="color" />
           <field name="members" />
           <templates>
             <t t-name="kanban-box">
-              <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_project oe_kanban_global_click">
-                <div class="oe_dropdown_toggle oe_dropdown_kanban">
-                  <span class="oe_e">í</span>
-                  <ul class="oe_dropdown_menu">
-                    <t t-if="widget.view.is_action_enabled('edit')">
-                      <li>
-                        <a type="edit">Edit...</a>
-                      </li>
-                    </t>
-                    <t t-if="widget.view.is_action_enabled('delete')">
-                      <li>
-                        <a type="delete">Delete</a>
-                      </li>
-                    </t>
-                    <li>
-                      <ul class="oe_kanban_colorpicker" data-field="color" />
-                    </li>
-                  </ul>
-                </div>
-                
-                 <div class="oe_kanban_content">
-                  <h4>
-                   <field name="name" />
-                  </h4>
-              
-               
-                  <div class="oe_kanban_project_avatars">
-                    <t t-foreach="record.members.raw_value" t-as="member">
-                      <img t-att-src="kanban_image('res.users', 'image_small', member)" t-att-data-member_id="member" />
-                    </t>
-                  </div>
-                </div>
-              </div>
+			    <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_project oe_kanban_global_click">
+					<div class="oe_dropdown_toggle oe_dropdown_kanban">
+						<span class="oe_e">í</span>
+						<ul class="oe_dropdown_menu">
+						<t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Edit...</a> </li></t>
+						<t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+						<li><ul class="oe_kanban_colorpicker" data-field="color" /></li>
+						</ul>
+					</div>
+				
+					<div class="oe_kanban_content">
+						<h4><field name="name" /></h4>
+			  
+			   
+						 <div class="oe_kanban_project_avatars">
+							<t t-foreach="record.members.raw_value" t-as="member">
+							  <img t-att-src="kanban_image('res.users', 'image_small', member)" t-att-data-member_id="member" />
+							</t>
+						 </div>
+					</div>
+			    </div>
             </t>
           </templates>
         </kanban>
