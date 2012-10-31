@@ -7,7 +7,26 @@ import time
 import random
 from datetime import datetime
 
-class sprint_kanban(osv.osv): #
+class sprint_kanban(osv.osv): 
+
+	def set_done(self, cr, uid, ids, context=None):
+		self.write(cr, uid, ids, {'state':'done'}, context=context)
+		return True
+	
+	def set_cancel(self, cr, uid, ids, context=None):
+		
+		self.write(cr, uid, ids, {'state':'cancelled'}, context=context)
+		return True
+
+	def set_pending(self, cr, uid, ids, context=None):
+		self.write(cr, uid, ids, {'state':'pending'}, context=context)
+		return True
+
+	def set_open(self, cr, uid, ids, context=None):
+		self.write(cr, uid, ids, {'state':'open'}, context=context)
+		return True
+
+	
 	
 	_name = 'sprint.kanban'
 	_inherit = ['mail.thread', 'ir.needaction_mixin']
@@ -20,94 +39,15 @@ class sprint_kanban(osv.osv): #
 	            'color': fields.integer('Color Index'),
 	            'members': fields.many2many('res.users', 'project_user_rel', 'project_id', 'uid', 'Project Members',states={'close':[('readonly',True)], 'cancelled':[('readonly',True)]}),
 				'priority': fields.selection([('4','Very Low'), ('3','Low'), ('2','Medium'), ('1','Important'), ('0','Very important')], 'Priority', select=True),
-			    'sprint_state': fields.selection([('normal', 'Normal'),('blocked', 'Blocked'),('done', 'Ready To Pull')], 'Kanban State', readonly=True, required=False),
-	            'state': fields.selection([('template', 'Template'),('draft','New'),('open','In Progress'), ('cancelled', 'Cancelled'),('pending','Pending'),('close','Closed')], 'Status', required=True,),
+	            'state': fields.selection([('draft','New'),('open','In Progress'), ('cancelled', 'Cancelled'),('pending','Pending'),('done', 'Done')], 'Status', required=True,),
 	            }
-	            
-def set_template(self, cr, uid, ids, context=None):
-	
-	res = self.setActive(cr, uid, ids, value=False, context=context)
-	return res
-    
-def set_done(self, cr, uid, ids, context=None):
-	task_obj = self.pool.get('project.task')
-	task_ids = task_obj.search(cr, uid, [('project_id', 'in', ids), ('state', 'not in', ('cancelled', 'done'))])
-	task_obj.case_close(cr, uid, task_ids, context=context)
-	self.write(cr, uid, ids, {'state':'close'}, context=context)
-	self.set_close_send_note(cr, uid, ids, context=context)
-	return True
-
-def set_cancel(self, cr, uid, ids, context=None):
-	task_obj = self.pool.get('project.task')
-	task_ids = task_obj.search(cr, uid, [('project_id', 'in', ids), ('state', '!=', 'done')])
-	task_obj.case_cancel(cr, uid, task_ids, context=context)
-	self.write(cr, uid, ids, {'state':'cancelled'}, context=context)
-	self.set_cancel_send_note(cr, uid, ids, context=context)
-	return True
-
-def set_pending(self, cr, uid, ids, context=None):
-	self.write(cr, uid, ids, {'state':'pending'}, context=context)
-	self.set_pending_send_note(cr, uid, ids, context=context)
-	return True
-
-def set_open(self, cr, uid, ids, context=None):
-	self.write(cr, uid, ids, {'state':'open'}, context=context)
-	self.set_open_send_note(cr, uid, ids, context=context)
-	return True
-
-def reset_project(self, cr, uid, ids, context=None):
-	res = self.setActive(cr, uid, ids, value=True, context=context)
-	self.set_open_send_note(cr, uid, ids, context=context)
-	return res
-	
-def duplicate_template(self, cr, uid, ids, context=None):
-	if context is None:
-		context = {}
-	data_obj = self.pool.get('ir.model.data')
-	result = []
-	for proj in self.browse(cr, uid, ids, context=context):
-		parent_id = context.get('parent_id', False)
-		context.update({'analytic_project_copy': True})
-		new_date_start = time.strftime('%Y-%m-%d')
-		new_date_end = False
-		if proj.date_start and proj.date:
-			start_date = date(*time.strptime(proj.date_start,'%Y-%m-%d')[:3])
-			end_date = date(*time.strptime(proj.date,'%Y-%m-%d')[:3])
-			new_date_end = (datetime(*time.strptime(new_date_start,'%Y-%m-%d')[:3])+(end_date-start_date)).strftime('%Y-%m-%d')
-		context.update({'copy':True})
-		new_id = self.copy(cr, uid, proj.id, default = {
-								'name':_("%s (copy)") % (proj.name),
-								'state':'open',
-								'date_start':new_date_start,
-								'date':new_date_end,
-								'parent_id':parent_id}, context=context)
-		result.append(new_id)
-
-		child_ids = self.search(cr, uid, [('parent_id','=', proj.analytic_account_id.id)], context=context)
-		parent_id = self.read(cr, uid, new_id, ['analytic_account_id'])['analytic_account_id'][0]
-		if child_ids:
-			self.duplicate_template(cr, uid, child_ids, context={'parent_id': parent_id})
-
-	if result and len(result):
-		res_id = result[0]
-		form_view_id = data_obj._get_id(cr, uid, 'project', 'edit_project')
-		form_view = data_obj.read(cr, uid, form_view_id, ['res_id'])
-		tree_view_id = data_obj._get_id(cr, uid, 'project', 'view_project')
-		tree_view = data_obj.read(cr, uid, tree_view_id, ['res_id'])
-		search_view_id = data_obj._get_id(cr, uid, 'project', 'view_project_project_filter')
-		search_view = data_obj.read(cr, uid, search_view_id, ['res_id'])
-		return {
-			'name': _('Projects'),
-			'view_type': 'form',
-			'view_mode': 'form,tree',
-			'res_model': 'project.project',
-			'view_id': False,
-			'res_id': res_id,
-			'views': [(form_view['res_id'],'form'),(tree_view['res_id'],'tree')],
-			'type': 'ir.actions.act_window',
-			'search_view_id': search_view['res_id'],
-			'nodestroy': True
-		}	            
+	_defaults = {
+        
+        'state': 'draft',
+        'priority': '1',
+     
+    }            
+   
 sprint_kanban()	
 
 class sprint_kanban_tasks(osv.osv):
