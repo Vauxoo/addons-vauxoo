@@ -48,7 +48,7 @@
             <field name="type">tree</field>
             <field eval="7" name="priority"/>
             <field name="arch" type="xml">
-                <tree colors="red:virtual_available&lt;0;blue:virtual_available&gt;=0 and state in ('draft', 'end', 'obsolete');black:virtual_available&gt;=0 and state not in ('draft', 'end', 'obsolete')" string="Products">
+                <tree string="Products">
                     <field name="default_code"/>
                     <field name="name"/>
                     <field name="categ_id" invisible="1"/>
@@ -68,10 +68,8 @@
             </field>
         </record>
 
-
-
         <record id="product_normal_form_view_inh" model="ir.ui.view">
-            <field name="name">product.normal.form_inh</field>
+            <field name="name">product.normal.form.inh</field>
             <field name="model">product.product</field>
             <field name="type">form</field>
             <field eval="7" name="priority"/>
@@ -204,6 +202,7 @@
             </field>
         </record>
 
+
         <record id="product_normal_action_sell_inh" model="ir.actions.act_window">
             <field name="name">Product Kardex</field>
             <field name="type">ir.actions.act_window</field>
@@ -218,8 +217,22 @@
 
         <menuitem action="product_normal_action_sell_inh" id="menu_products_inh" parent="stock.menu_stock_product" />
 
+        <record id="open_view_product_tree1_inh" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+           <field name="view_id" ref="product_product_tree_view_inh"/>
+            <field name="act_window_id" ref="product_normal_action_sell_inh"/>
+        </record>
+
+        <record id="open_view_product_form1_inh" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="product_normal_form_view_inh"/>
+            <field name="act_window_id" ref="product_normal_action_sell_inh"/>
+        </record>
+
         <record id="view_normal_stock_property_form_inh" model="ir.ui.view">
-            <field name="name">product.normal.stock.form.inh</field>
+            <field name="name">product.normal.stock.form.inherit2</field>
             <field name="model">product.product</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="product_normal_form_view_inh"/>
@@ -227,9 +240,9 @@
                 <group name="status" position="after">
                     <group colspan="2" col="3">
                         <separator string="Stocks" colspan="4"/>
-                        <field name="qty_available"/>
+                        <field name="incoming_done_qty"/>
                         <newline/>
-                        <field name="virtual_available"/>
+                        <field name="outgoing_done_qty"/>
                     </group>
                     <group colspan="2" col="2" name="stock_variations" groups="base.group_extended">
                         <separator string="Expected Stock Variations" colspan="2"/>
@@ -245,6 +258,7 @@
                 </group>
             </field>
         </record>
+
 
     </data>
 </openerp>
