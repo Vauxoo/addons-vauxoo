@@ -30,12 +30,12 @@ import time
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
-    
+
     def action_finish(self,cr,uid,ids,context={}):
         res = super(mrp_production, self).action_finish(cr,uid,ids,context=context)
         self.create_move_variation_price(cr, uid, ids, context=context)
         return res
-    
+
     def create_move_variation_price(self, cr, uid, ids, context={}):
         move_obj = self.pool.get('account.move')
         product_uom_pool = self.pool.get('product.uom')
@@ -72,9 +72,9 @@ class mrp_production(osv.osv):
                             {
                              'journal_id': j_id,
                              'line_id': move_lines,
-                             'ref': 'PROD: ' + production.name})
+                             'ref': 'PROD: ' + production.name + ' - ' + _('Deflection  by difference on consume RM vs FP')})
         return True
-        
+
     def create_account_variation_price_move_line(self, cr, uid, production, src_account_id, dest_account_id, reference_amount, context=None):
         debit_line_vals = {
                     'name': 'PROD: ' + production.name or '',

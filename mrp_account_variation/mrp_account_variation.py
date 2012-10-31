@@ -58,7 +58,7 @@ class mrp_production(osv.osv):
                         {
                          'journal_id': j_id,
                          'line_id': move_lines,
-                         'ref': 'PROD: ' + production.name + ' - ' + _('Deflection  by difference on consume RM vs FP')})
+                         'ref': 'PROD: ' + production.name })
 
 
         return True
