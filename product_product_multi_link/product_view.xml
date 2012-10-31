@@ -15,14 +15,6 @@
 	    
 	 <act_window
             domain="[('product_id','=',active_id)]"
-            id="act_product_production"
-            name="Production orders 2"
-            res_model="mrp.production"
-            src_model="product.product"
-            context="{}" />
-	    
-	 <act_window
-            domain="[('product_id','=',active_id)]"
             id="act_product_account"
             name="Account move lines"
             res_model="account.move.line"
