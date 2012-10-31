@@ -33,24 +33,24 @@ class mrp_production(osv.osv):
     
     def action_finish(self,cr,uid,ids,context={}):
         res = super(mrp_production, self).action_finish(cr,uid,ids,context=context)
-        self._create_move_variation(cr,uid,ids,context=context)
+        self.create_move_variation(cr,uid,ids,context=context)
         return res
     
-    def _create_move_variation(self,cr,uid,ids,context={}):
+    def create_move_variation(self,cr,uid,ids,context={}):
         move_obj = self.pool.get('account.move')
         account_moves = []
         for production in self.browse(cr,uid,ids,context=context):
             for prod_variation in production.variation_ids:
                 context['type'] = 'consumed'
                 if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time' and prod_variation.quantity <> 0:
-                    j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,production,context=context)
-                    account_moves += [(j_id, self._create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
+                    j_id, src_acc, dest_acc, reference_amount = self.get_journal_accounts(cr,uid,prod_variation,production,context=context)
+                    account_moves += [(j_id, self.create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
 
             for prod_variation in production.variation_finished_product_ids:
                 context['type'] = 'produced'
                 if prod_variation.product_id and prod_variation.product_id.valuation == 'real_time' and prod_variation.quantity <> 0:
-                    j_id, src_acc, dest_acc, reference_amount = self._get_journal_accounts(cr,uid,prod_variation,production,context=context)
-                    account_moves += [(j_id, self._create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
+                    j_id, src_acc, dest_acc, reference_amount = self.get_journal_accounts(cr,uid,prod_variation,production,context=context)
+                    account_moves += [(j_id, self.create_account_variation_move_line(cr,uid,prod_variation,src_acc,dest_acc,reference_amount))]
                     
             if account_moves:
                 for j_id,move_lines in account_moves:
@@ -63,7 +63,7 @@ class mrp_production(osv.osv):
                     
         return True
     
-    def _get_journal_accounts(self,cr,uid,product,production,context={}):
+    def get_journal_accounts(self,cr,uid,product,production,context={}):
 
         if not context:
             context = {}
@@ -115,7 +115,7 @@ class mrp_production(osv.osv):
                                     
         return journal_id, src_acc, dest_acc, reference_amount
         
-    def _create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
+    def create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
         debit_line_vals = {
                     'name': 'PROD: ' + prod_variation.production_id.name +' - '+ (prod_variation.product_id and prod_variation.product_id.name or ''),
                     'product_id': prod_variation.product_id and prod_variation.product_id.id or False,
