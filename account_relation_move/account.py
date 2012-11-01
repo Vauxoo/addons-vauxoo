@@ -66,7 +66,7 @@ class stock_move(osv.osv):
         result = cr.dictfetchall()
         for line in res:
             line[2]['stock_move_id'] = move.id
-            line[2]['production_id'] = result and result[0]['production_id'] or False
+            line[2]['production_id'] = move.production_id and move.production_id.id or (result and result[0]['production_id'] or  False )
         return res
 
 stock_move()
