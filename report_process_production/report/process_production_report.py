@@ -37,6 +37,7 @@ class process_report(report_sxw.rml_parse):
         'get_table':self._get_table,
         'get_group':self._get_group,
         'get_sin':self._get_sin,
+        'get_number_dg':self._get_number_dg,
         })
         
     def _get_production_group(self, data):
@@ -79,6 +80,15 @@ class process_report(report_sxw.rml_parse):
                 if line.product_id.id in data['product_ids']:
                     res.append(line)
         return res
+        
+    def _get_number_dg(self):
+        decimal_precision=self.pool.get('decimal.precision')
+        digits_product=2
+        id_dec_production=decimal_precision.search(self.cr, self.uid, [('name','=','Product UoM')])
+        if id_dec_production:
+            dec_product=decimal_precision.browse(self.cr, self.uid, id_dec_production[0])
+            digits_product=dec_product.digits or 2
+        return digits_product
 
     def _get_print(self, data):
         if data['print']=='agrupado':
