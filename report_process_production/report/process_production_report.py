@@ -83,9 +83,11 @@ class process_report(report_sxw.rml_parse):
         
     def _get_number_dg(self):
         decimal_precision=self.pool.get('decimal.precision')
+        digits_product=2
         id_dec_production=decimal_precision.search(self.cr, self.uid, [('name','=','Product UoM')])
-        dec_product=decimal_precision.browse(self.cr, self.uid, id_dec_production[0])
-        digits_product=dec_product.digits or 2
+        if id_dec_production:
+            dec_product=decimal_precision.browse(self.cr, self.uid, id_dec_production[0])
+            digits_product=dec_product.digits or 2
         return digits_product
 
     def _get_print(self, data):
