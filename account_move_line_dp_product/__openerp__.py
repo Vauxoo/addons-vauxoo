@@ -21,20 +21,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "This module inherits decimal precision para product
+    "name" : "Grouped by production and stock move in model account_move_line",
     "version" : "1.0",
-    "depends" : ['account','product'],
+    "depends" : ['product','account'],
     "author" : "Vauxoo",
     #"license" : "AGPL-3",
-    "description" : """This module inherits decimal precision para product
+    "description" : """Grouped by production and stock move in model account_move_line
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "init_xml" : [],
     "demo_xml" : [],
     "test": [],
-    "update_xml" : [
-    ],
+    "update_xml" : [],
     "active": False,
     "installable": True,
 }

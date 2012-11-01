@@ -28,7 +28,7 @@ class account_move_line(osv.osv):
     _inherit = 'account.move.line'
 
     _columns = {
-        'product_id': fields.many2one('product.product', 'Product',digits_compute=dp.get_precision('Product UoM')),
+        'quantity': fields.float('Quantity', digits=(16,2),digits_compute=dp.get_precision('Product UoM'), help="The optional quantity expressed by this line, eg: number of product sold. The quantity is not a legal requirement but is very useful for some reports."),
     }
 account_move_line()
 
