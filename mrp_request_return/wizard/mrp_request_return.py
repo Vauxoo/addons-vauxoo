@@ -73,7 +73,12 @@ class mrp_request_return(osv.osv_memory):
         mrp_id, = mrp_ids
         if 're_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
-            moves = [self._partial_move_for(cr, uid, m, mrp) for m in mrp.product_lines]
+            list_moves=[]
+            for m in mrp.product_lines:
+                type_prod=m.product_id and m.product_id.type or ''
+                if type_prod <> 'service' and type_prod <> '':
+                    list_moves.append(m)
+            moves = [self._partial_move_for(cr, uid, x, mrp) for x in list_moves]
             res.update(re_line_ids=moves)
         return res
 
