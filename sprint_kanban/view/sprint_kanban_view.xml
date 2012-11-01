@@ -16,7 +16,9 @@
         </tree>
       </field>
     </record>
-     +++++++++++ view in Form +++++++++++++++++++++++++++ 
+
+     <!-- +++++++++++ view in Form +++++++++++++++++++++++++++ -->
+     
     <record model="ir.ui.view" id="sprint_kanban_form_view">
       <field name="name">sprint.kanban.form</field>
       <field name="model">sprint.kanban</field>
@@ -72,7 +74,58 @@
           <field name="members" />
           <field name="user_id" />          
           <field name="description" />
-          <field name="priority" />
+          <field name="priority" /><field name="task_count" />
+          
+          
+        <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_project oe_kanban_global_click">
+                <div class="oe_dropdown_toggle oe_dropdown_kanban">
+                  <span class="oe_e">í</span>
+                    <ul class="oe_dropdown_menu">
+                      <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Edit...</a></li></t>
+                      <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+                      <li><ul class="oe_kanban_colorpicker" data-field="color" /></li>
+                    </ul>
+                    
+                    </div>
+						<div class="oe_kanban_content">
+							<h4>  <field name="name" />   </h4>
+                        
+							<div class="oe_kanban_project_list">
+							<field name="project_id" />
+							</div>
+						
+							<div class="oe_kanban_project_list">
+							<a t-if="record.task_count.raw_value" >	<field name="task_count" /> Tasks </a>
+						</div>
+                  
+						<div class="oe_kanban_footer_left">
+							<span groups="project.group_time_work_estimation_tasks">
+								<span class="oe_e">R</span>
+								<t t-esc="Math.round(record.effective_hours.raw_value)" />                      
+								<t t-esc="Math.round(record.planned_hours.raw_value)" />
+								<field name="company_uom_id" />
+							</span>
+                    
+							<span t-if="record.date.raw_value">
+							  <span class="oe_e">N</span>
+							  <field name="date" />
+							</span>
+						
+						</div>
+						  <div class="oe_kanban_project_avatars">
+							<t t-foreach="record.members.raw_value" t-as="member">
+							  <img t-att-src="kanban_image('res.users', 'image_small', member)" t-att-data-member_id="member" />
+							</t>
+						</div>
+					</div>
+              </div>
+            </t>
+        </templates>
+          
+          
+<!--
           <templates>
             <t t-name="kanban-box">
 			    <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_project oe_kanban_global_click">
@@ -81,6 +134,17 @@
 						<ul class="oe_dropdown_menu">
 						<t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Edit...</a> </li></t>
 						<t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+						
+						 <li>
+						  <ul class="oe_kanban_project_times" groups="project.group_time_work_estimation_tasks">
+							<li><a name="set_remaining_time_1" type="object" class="oe_kanban_button">1</a></li>
+							<li><a name="set_remaining_time_2" type="object" class="oe_kanban_button">2</a></li>
+							<li><a name="set_remaining_time_5" type="object" class="oe_kanban_button">5</a></li>
+							<li><a name="set_remaining_time_10" type="object" class="oe_kanban_button">10</a></li>
+							<li><a name="do_open" states="draft" string="Validate planned time" type="object" class="oe_kanban_button oe_kanban_button_active">!</a></li>
+						  </ul>
+						</li>
+        
 						<li><ul class="oe_kanban_colorpicker" data-field="color" /></li>
 						</ul>
 					</div>
@@ -88,10 +152,14 @@
 					<div class="oe_kanban_content">
 						<h4><field name="name" /></h4>
 						
+		
+						
 						 <div class="oe_kanban_project_list">
 							<field name="project_id" />
-							
 						</div>
+
+							<t t-if="record.dateend.raw_value and record.dateend.raw_value lt (new Date())" t-set="red">oe_kanban_text_red</t>
+
 						
 						 <div class="oe_kanban_bottom_right">
 							<a t-if="record.state.raw_value === 'open'" type="object" string="In Progress" name="set_open" class="oe_kanban_status oe_kanban_status_yellow" />
@@ -103,32 +171,28 @@
 							<img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar" />
 						  </div>
 			   
-<!--	
-						 <div class="oe_kanban_project_avatars">
-							<t>
-							 <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar" />
-							</t>
-						 </div>
--->
 						 
 						<div class="oe_kanban_footer_left">
 							<span t-if="record.dateend.raw_value">
 							  <span class="oe_e">N</span>
 							  <field name="datestart" />
-							  
 							   <span t-attf-class="#{red || ''}">
 								  <i>
+									   <span class="oe_e">R</span>
 									<field name="dateend" />
 								  </i>
 								</span>
 							  
+
 							   <br t-if="record.description.value" />
+
 							</span>
 						</div>
 					</div>
 			    </div>
             </t>
           </templates>
+-->
         </kanban>
       </field>
     </record>
