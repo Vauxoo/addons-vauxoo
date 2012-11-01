@@ -16,7 +16,7 @@
 	"demo_xml" : [],#Demo data
 	"test" : [],#Load, yaml
 	"update_xml" : [
-					"view/sprint_kanban_view.xml",
+					'security/security_sprint_kanban.xml','security/ir.model.access.csv',"view/sprint_kanban_view.xml"
 	                 ],
 	"installable" : True,
 	"active" : False
