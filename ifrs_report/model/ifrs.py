@@ -192,34 +192,6 @@ class ifrs_lines(osv.osv):
         for id in ids:
             res[id] = self._get_sum( cr, uid, id, context = context )
         return res
-    
-#    def _determine_parent_id(self, cr, uid, ids, field_name, arg, context = None):
-#        if context is None: context = {}
-#        res = {}.fromkeys(ids,False)
-#        print "Entre a _determine_parent_id"
-#        print "ids = '%s' - field_name = '%s' " % (ids, field_name) # field_name es el nombre del campo parent_id
-#        
-#        cr.execute('select parent_id,child_id from ifrs_lines_rel where child_id in (%s)' %', '.join([str(id) for id in ids]))
-#                
-#        for t in cr.dictfetchall():
-#            res[ int(t['child_id']) ] =  int(t['parent_id']) 
-#            print "child : %s , parent : %s" % (t['child_id'], t['parent_id'])
-#        print res
-#        return res
-
-#    def _determine_list_totalids(self, cr, uid, ids, context=None):
-#        res = {}
-#        if context is None: context = {}
-#        print "Entre a _determine_list_parent"
-#        print "ids = '%s'" % (ids) # El id del ifrs.line actual
-#        
-#        for ifrs_l_id in ids: #Obtengo el id del ifrs.line actual
-#            ifrs_l = self.browse( cr, uid, ifrs_l_id, context = context )
-#            for total_id in ifrs_l.total_ids: # Recorro los total ids
-#                res[total_id.id] = True # Guardo el id del ifrs.line actual en el id de uno de los ifrs.line que posee, es decir guardo el parent_id en uno de los total_ids
-#                print total_id.id
-#        return res.keys() # Devuelvo las keys, y las recibe el metodo principal del parent_id, el _determine_parent_id en la variable ids
-    
 
     def _get_level(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
@@ -287,12 +259,6 @@ class ifrs_lines(osv.osv):
 
 		'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
 
-#,('id','!=',id)
-
-	#~ 'total_ids': fields.one2many('ifrs.lines', 'parent_id', string='Child'),
-
-
-
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
 
@@ -332,9 +298,8 @@ class ifrs_lines(osv.osv):
             help='Leaving blank means Balance'),
 
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
-        'inv_sign' : fields.boolean('Change Sign to Amount')
-   	#'parent_id': fields.function(_determine_parent_id, method=True, relation='ifrs.lines', type='many2one', string='Parent', store={'ifrs.lines':(_determine_list_totalids, ['total_ids'], 15),}),
-
+        
+        'inv_sign' : fields.boolean('Change Sign to Amount'),
 
     }
 
