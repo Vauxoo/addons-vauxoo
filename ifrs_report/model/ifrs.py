@@ -149,6 +149,8 @@ class ifrs_lines(osv.osv):
         elif brw.type == 'constant':
             if brw.constant_type == 'period_days':
                 res = period_obj._get_period_days(cr, uid, c['period_from'], c['period_to'])
+            elif brw.constant_type == 'fy_periods':
+                res = fy_obj._get_fy_periods(cr, uid, c['fiscalyear'])
         elif brw.type == 'detail':
             for a in brw.cons_ids:
                 if brw.value == 'debit':
@@ -242,6 +244,7 @@ class ifrs_lines(osv.osv):
         'constant_type': fields.selection(
            [
                 ('period_days','Days of Period'),
+                ('fy_periods',"FY's Periods"),
             ],
             string = 'Constant Type',
             required = False ),

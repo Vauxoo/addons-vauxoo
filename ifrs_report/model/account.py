@@ -52,3 +52,13 @@ class account_period(osv.osv):
             return ids[-step]
         return False
 account_period()
+
+class account_fiscalyear(osv.osv):
+    _inherit = "account.fiscalyear"
+
+    def _get_fy_periods(self, cr, uid, id, special=False, context=None):
+        if context is None: context = {}
+        res = self.pool.get('account.period').search(cr,uid,[special and ('fiscalyear_id','=',id) or ('fiscalyear_id','=',id),('special','=',special)],context=context)
+        return len(res)
+
+account_fiscalyear()
