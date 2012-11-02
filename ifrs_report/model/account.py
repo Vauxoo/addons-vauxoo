@@ -26,10 +26,20 @@
 
 from osv import osv
 from osv import fields
+import mx.DateTime
 
 class account_period(osv.osv):
     _inherit='account.period'
     
+    def _get_period_days(self, cr, uid, init_period, last_period, context = None):
+        if context is None: context = {}
+        date_start = self.browse(cr, uid, init_period, context = context).date_start
+        date_stop = self.browse(cr, uid, last_period, context = context).date_stop
+        
+        date_start = mx.DateTime.strptime(date_start, '%Y-%m-%d')
+        date_stop = mx.DateTime.strptime(date_stop, '%Y-%m-%d')
+        return (date_stop - date_start).day
+
     def previous(self, cr, uid, id, step=1, context=None):
         if context is None: context = {}
         period = self.pool.get('account.period').browse(cr,uid,id,context=context)

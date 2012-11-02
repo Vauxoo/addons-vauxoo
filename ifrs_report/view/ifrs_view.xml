@@ -53,25 +53,30 @@
                           <field name="sequence" />
                           <field name="name" />
                           <field name="type" />
-                          <group colspan='2' col='2' attrs="{'invisible':[('type','!=','detail')]}">
-                              <field name="acc_val" />
-                              <field name="value" />
+                          <group colspan='2' col='1'>
+                              <group colspan='2' col='2' attrs="{'invisible':[('type','!=','constant')]}">
+                                  <field name="constant_type" />
+                              </group>
+                              <group colspan='2' col='2' attrs="{'invisible':[('type','!=','detail')]}">
+                                  <field name="acc_val" />
+                                  <field name="value" />
+                              </group>
+                              <group colspan='2' col='2' attrs="{'invisible':[('type','!=','total')]}">
+                                  <field name="operator" />
+                                  <field name="comparison" />
+                              </group>
                           </group>
                           <field name="amount" />
-                          <group colspan='2' col='2' attrs="{'invisible':[('type','!=','total')]}">
-                              <field name="operator" />
-                              <field name="comparison" />
-                          </group>
                           <field name="inv_sign" />
                           <group colspan='6'>
                               <group
                                 colspan='6'
-                                attrs="{'invisible':[('type','in',('abstract','total'))]}">
+                                attrs="{'invisible':[('type','!=','detail')]}">
                                 <separator string='Consolidated Accounts' colspan='6' />
                                 <field name="cons_ids" nolabel='1'/>
                               </group>
                               <group colspan='6'
-                                attrs="{'invisible':[('type','in',('abstract','detail'))]}">
+                                attrs="{'invisible':[('type','!=','total')]}">
                                 <group col='1'>
                                     <separator string='Total' colspan='2' />
                                     <field

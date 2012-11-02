@@ -146,6 +146,9 @@ class ifrs_lines(osv.osv):
         
         if brw.type == 'abstract':
             pass
+        elif brw.type == 'constant':
+            if brw.constant_type == 'period_days':
+                res = period_obj._get_period_days(cr, uid, c['period_from'], c['period_to'])
         elif brw.type == 'detail':
             for a in brw.cons_ids:
                 if brw.value == 'debit':
@@ -258,9 +261,16 @@ class ifrs_lines(osv.osv):
            [
                 ('abstract','Abstract'),
                 ('detail', 'Detail'),
+                ('constant', 'Constant'),
                 ('total','Total') ] ,
             string = 'Type',
             required = True ),
+        'constant_type': fields.selection(
+           [
+                ('period_days','Days of Period'),
+            ],
+            string = 'Constant Type',
+            required = False ),
 		'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
             store={
