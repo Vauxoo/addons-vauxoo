@@ -179,6 +179,8 @@ class ifrs_lines(osv.osv):
                     res =  res2 != 0 and (100 * res / res2) or 0.0
                 elif brw.comparison == 'ratio':
                     res =  res2 != 0 and (res / res2) or 0.0
+                elif brw.comparison == 'product':
+                    res =  res * res2
             
                 print 'RES DESPUES DE COMPARACION ', res
                 
@@ -304,7 +306,9 @@ class ifrs_lines(osv.osv):
         'operator': fields.selection( [
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
-            ('ratio','Ratio')],
+            ('ratio','Ratio'),
+            ('product','Product'),
+            ],
             'Operator', required=False ,
             help='Leaving blank will not take into account Operands'),
 
