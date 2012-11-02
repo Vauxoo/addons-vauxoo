@@ -83,6 +83,8 @@ class ifrs_lines(osv.osv):
                 res =  res2 != 0 and (100 * res / res2) or 0.0
             elif brw.operator == 'ratio':
                 res =  res2 != 0 and (res / res2) or 0.0
+            elif brw.operator == 'product':
+                res =  res * res2
         return res
 
     def _get_sum( self, cr, uid, id, context = None ):
@@ -181,8 +183,6 @@ class ifrs_lines(osv.osv):
                     res =  res2 != 0 and (100 * res / res2) or 0.0
                 elif brw.comparison == 'ratio':
                     res =  res2 != 0 and (res / res2) or 0.0
-                elif brw.comparison == 'product':
-                    res =  res * res2
             
                 print 'RES DESPUES DE COMPARACION ', res
                 
