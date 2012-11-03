@@ -218,5 +218,5 @@
     <!--+++++++++++++++++++++++++++++ MENUS +++++++++++++++++++++++++++++++++++++++++-->
     <!-- submenus -->
     <menuitem id="sprint_kanban_menu" name="Sprint" parent="project.menu_project_management" action="sprint_kanban_action" />
-  </data>
+ z </data>
 </openerp>
