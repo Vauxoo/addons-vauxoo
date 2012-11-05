@@ -32,6 +32,8 @@ class mrp_production_wizard(osv.osv_memory):
     _name='mrp.production.wizard'
     _columns={
         'product_id': fields.many2one('product.product', 'Product', required=True, ),
+        #'product_qty': fields.float('Product Qty', required=True),
+        #'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
         'wiz_data': fields.one2many('wizard.data', 'mrp_production_wiz', 'Prod lines'),
     }
     
@@ -58,7 +60,7 @@ class mrp_production_wizard(osv.osv_memory):
         return {
             'name': _('Manufacturing orders'),
             'view_type': 'form',
-            'view_mode': 'form,tree',
+            'view_mode': 'form',
             'view_id': [res_id],
             'res_model': 'mrp.production',
             'context': "",
@@ -67,6 +69,12 @@ class mrp_production_wizard(osv.osv_memory):
             'target': 'current',
             'res_id': mrp_production_id or False,
         }
+        
+    #def onchange_product_to_produce(self, cr, uid, ids, product_id):
+    #    res = self.pool.get('wizard.data').onchange_production_wizard_product_name(cr, uid, ids, product_id)
+    #    print res['value'], " = res value"
+    #    return res
+    
     
 mrp_production_wizard()
 
