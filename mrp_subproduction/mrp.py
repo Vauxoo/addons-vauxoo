@@ -31,18 +31,38 @@ import decimal_precision as dp
 class mrp_production(osv.osv):
     _inherit = "mrp.production"
     
-    def _get_subproduction_product_qty(self, cr, uid, ids, field_names, args, context=None):
-        dict = {}
-        print ids
-        for line in ids:
-            dict[line] = 3
-            return dict
+    def _get_product_subproduction_qty(self, cr, uid, ids, field_names, args, context=None):
+        """
+        La función def _get_product_subproduction_qty, recibirá el product_id que deberá
+        contabilizar de materia prima, para saber que producto es el que se está consumiendo.
+        Y este contexto, se le mandará, con el producto_terminado de la producción padre, y
+        calculará cuánto se consumió en realidad en la producción hija como materia prima.
+        """
+        if context is None:
+            context = {}
+        result = {}
+        subp_sum = 0.0
+        for production in self.browse(cr, uid, ids, context=context):
+            print production.product_id.id, " = product id"
+            if production.subproduction_ids:
+                for subprod in production.subproduction_ids:
+                    if subprod.product_lines:
+                        for scheduled in subprod.product_lines:
+                            print scheduled.product_id.id, "id del producto"
+                            print scheduled.product_qty, "cantidad a tomar"
+                            if scheduled.product_id.id == production.product_id.id:
+                                subp_sum += scheduled.product_qty
+            result[production.id] = {
+                'product_subproduction_qty_real': 0.0,
+                'product_subproduction_qty_planned': subp_sum
+            }
+        return result
     
     _columns = {
-        'subproduction_ids': fields.many2many('mrp.production', 'rel_mrp_production_self', 'production_id', 'production_id2', 'Subproductions', domain=[('has_parent','=', False)]),
-        'has_parent': fields.boolean('Has parent', help="If the production order has already a parent it will not be shown in subproductions."),
-        #'product_subproduction_qty_real': fields.function(_get_subproduction_product_qty, type='float', method=True, string='Real used', multi=True),
-        #'product_subproduction_qty_planned': fields.function(_get_subproduction_product_qty, type='float', method=True, string='Planned', multi=True),
+        'parent_id': fields.many2one('mrp.production', 'Parent production'),
+        'subproduction_ids': fields.one2many('mrp.production', 'parent_id', 'Subproductions'),
+        'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Real used', multi=True),
+        'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Planned', multi=True),
     }
 
 mrp_production()

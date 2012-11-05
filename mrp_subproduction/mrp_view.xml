@@ -12,8 +12,12 @@
             <field name="arch" type="xml">
 		<xpath expr="/form/notebook/page[@string='Extra Information']" position="after">
 		    <page string="Subproductions">
+			<field name="parent_id"/>
 			<separator string="Subproductions" colspan="4"/>
-                        <field name="subproduction_ids" nolabel="1" widget="many2many_list" mode="tree,form" height="275"/>
+                        <field name="subproduction_ids" nolabel="1" widget="one2many_list" mode="tree,form" height="275" colspan="2" context="{'product_id': 4}"/>
+			<newline/>
+			<field name="product_subproduction_qty_real"/>
+			<field name="product_subproduction_qty_planned"/>
                     </page>
 		</xpath>
             </field>
