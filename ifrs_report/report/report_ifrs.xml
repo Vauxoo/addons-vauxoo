@@ -11,5 +11,16 @@
 			auto = "False"
 			menu="True"
 			/> <!-- No sera necesario importar el parser -->
+
+		<report
+			id="ifrs_report_12"
+			name="ifrs_12"
+			string="Print Monthly IFRS"
+			model="ifrs.ifrs"
+			rml="ifrs_report/report/ifrs_cash_flow_indirect_12.rml"
+			header="False"
+			auto = "False"
+			menu="True"
+			/> <!-- No sera necesario importar el parser -->
 	</data>
 </openerp>

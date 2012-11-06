@@ -194,4 +194,12 @@ report_sxw.report_sxw(
 	parser=ifrs_report,
 	header = False
 )
+
+report_sxw.report_sxw(
+	'report.ifrs_12',
+	'ifrs.ifrs',
+	'ifrs_report/report/ifrs_cash_flow_indirect_12.rml',
+	parser=ifrs_report,
+	header = False
+)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
