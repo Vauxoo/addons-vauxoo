@@ -42,18 +42,27 @@ class mrp_production(osv.osv):
             context = {}
         result = {}
         subp_sum = 0.0
+        subp_real_sum = 0.0
         for production in self.browse(cr, uid, ids, context=context):
             print production.product_id.id, " = product id"
             if production.subproduction_ids:
                 for subprod in production.subproduction_ids:
-                    if subprod.product_lines:
+                    if subprod.product_lines: #productos planificados
                         for scheduled in subprod.product_lines:
                             print scheduled.product_id.id, "id del producto"
                             print scheduled.product_qty, "cantidad a tomar"
                             if scheduled.product_id.id == production.product_id.id:
                                 subp_sum += scheduled.product_qty
+                    print subprod.move_lines2, "consumidos"
+                    if subprod.move_lines2: #productos consumidos
+                        for consumed in subprod.move_lines2:
+                            print consumed.product_id.id, "id del producto cons"
+                            print consumed.product_qty, "cantidad consumida"
+                            print consumed.state, "estado"
+                            if (consumed.product_id.id == production.product_id.id and consumed.state not in ('cancel')):
+                                subp_real_sum += consumed.product_qty
             result[production.id] = {
-                'product_subproduction_qty_real': 0.0,
+                'product_subproduction_qty_real': subp_real_sum,
                 'product_subproduction_qty_planned': subp_sum
             }
         return result
