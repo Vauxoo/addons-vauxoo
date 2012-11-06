@@ -60,6 +60,12 @@ class mrp_production(osv.osv):
         result = {}
         print "CONTEXT->", context
         print "parent id ->", parent_id
+        if parent_id:
+            parent_production = self.browse(cr, uid, parent_id, context=context)
+            parent_product_id = parent_production.product_id.id
+        else:
+            parent_product_id = 0
+        
         for production in self.browse(cr, uid, ids, context=context):
             print "production.name ->", production.name
             planned_qty = 0.0
@@ -69,13 +75,13 @@ class mrp_production(osv.osv):
                     print "scheduled.product_id.id ->", scheduled.product_id.id
                     print "scheduled.product_qty ->", scheduled.product_qty
                     print "production.product_id.id ->", production.product_id.id, "\n"
-                    if scheduled.product_id.id == 53: #needs to be parent id
+                    if scheduled.product_id.id == parent_product_id:
                         planned_qty += (scheduled.product_qty * (production.product_id.uom_id.factor / scheduled.product_uom.factor))
                         print "planned ->", planned_qty
                         
             if production.move_lines2:
                 for consumed in production.move_lines2:
-                    if (consumed.product_id.id == 53 and consumed.state not in ('cancel')): #needs to be parent id
+                    if (consumed.product_id.id == parent_product_id and consumed.state in ('done')):
                         real_qty += (consumed.product_qty * (production.product_id.uom_id.factor / consumed.product_uom.factor))
                         print "real ->", real_qty
             
