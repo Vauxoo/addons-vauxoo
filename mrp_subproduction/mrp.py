@@ -32,12 +32,6 @@ class mrp_production(osv.osv):
     _inherit = "mrp.production"
     
     def _get_product_subproduction_qty(self, cr, uid, ids, field_names, args, context=None):
-        """
-        La función def _get_product_subproduction_qty, recibirá el product_id que deberá
-        contabilizar de materia prima, para saber que producto es el que se está consumiendo.
-        Y este contexto, se le mandará, con el producto_terminado de la producción padre, y
-        calculará cuánto se consumió en realidad en la producción hija como materia prima.
-        """
         if context is None:
             context = {}
         result = {}
@@ -49,12 +43,12 @@ class mrp_production(osv.osv):
                     if subprod.product_lines:
                         for scheduled in subprod.product_lines:
                             if scheduled.product_id.id == production.product_id.id:
-                                subp_sum += scheduled.product_qty
+                                subp_sum += (scheduled.product_qty * (production.product_id.uom_id.factor / scheduled.product_uom.factor))
                                 
                     if subprod.move_lines2:
                         for consumed in subprod.move_lines2:
                             if (consumed.product_id.id == production.product_id.id and consumed.state not in ('cancel')):
-                                subp_real_sum += consumed.product_qty
+                                subp_real_sum += (consumed.product_qty * (production.product_id.uom_id.factor / consumed.product_uom.factor))
             result[production.id] = {
                 'product_subproduction_qty_real': subp_real_sum,
                 'product_subproduction_qty_planned': subp_sum
