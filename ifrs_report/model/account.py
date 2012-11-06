@@ -33,6 +33,8 @@ class account_period(osv.osv):
     
     def _get_period_days(self, cr, uid, init_period, last_period, context = None):
         if context is None: context = {}
+        #~ TODO: ERASE LINE BEFORE GO-LIVE
+        last_period = init_period = 2
         date_start = self.browse(cr, uid, init_period, context = context).date_start
         date_stop = self.browse(cr, uid, last_period, context = context).date_stop
         
@@ -67,6 +69,8 @@ class account_fiscalyear(osv.osv):
 
     def _get_fy_month(self, cr, uid, id, period_id, special=False, context=None):
         if context is None: context = {}
+        #~ TODO: ERASE LINE BEFORE GO-LIVE
+        return 1.0
         return self._get_fy_period_ids(cr, uid, id, special=special, context=context).index(period_id)+1
 
 account_fiscalyear()
