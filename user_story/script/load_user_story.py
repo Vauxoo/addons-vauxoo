@@ -5,11 +5,11 @@ import datetime
 import random
 
 # Source server info
-HOST='192.168.1.152'
-PORT=8069
-DB='prueba7'
+HOST='vauxoo.info'
+PORT=18869
+DB='herrera'
 USER='admin'
-PASS='prueba'
+PASS='admin'
 url='http://%s:%d/xmlrpc/'%(HOST,PORT)
 common_proxy = xmlrpclib.ServerProxy(url+'common')
 object_proxy = xmlrpclib.ServerProxy(url+'object')
@@ -19,9 +19,9 @@ uid = common_proxy.login(DB,USER,PASS)
 # Destiny server info
 HOST2='localhost'
 PORT2=8069
-DB2='prueba7'
+DB2='migration4'
 USER2='admin'
-PASS2='admin'
+PASS2='12345'
 url2='http://%s:%d/xmlrpc/'%(HOST2,PORT2)
 common_proxy2 = xmlrpclib.ServerProxy(url2+'common')
 object_proxy2 = xmlrpclib.ServerProxy(url2+'object')
@@ -29,7 +29,7 @@ object_proxy2 = xmlrpclib.ServerProxy(url2+'object')
 uid2 = common_proxy2.login(DB2,USER2,PASS2)
 
 def search_in_destiny(model,name):
-	return object_proxy2.execute(DB2,uid2,PASS2,model,'search',[("name","=",name)])
+	return object_proxy2.execute(DB2,uid2,PASS2,model,'search',[("name","ilike",name)])
 
 def create_in_destiny(model,model_dict={}):
 	if model_dict:
@@ -72,6 +72,7 @@ def user_matching(user_id):
 
 		# Extraemos id del diccionario para que no ocurra error
 		user.pop('id')
+		user.pop('groups_id')
 		
 		# Almacenamos el usuario en el destino
 		user_id = create_in_destiny('res.users',user)
@@ -86,7 +87,8 @@ def user_matching(user_id):
 def __main__():
     
 	print 'ha comenzado la carga de datos'
-
+	begin_p = time.time()
+	
 	user_story_ids = object_proxy.execute(DB,uid,PASS,'user.story','search',[])
 	user_story_dict = object_proxy.execute(DB,uid,PASS,'user.story','read',user_story_ids,[])
 	
@@ -95,12 +97,13 @@ def __main__():
 		user_id = user_story.get('user_id')[0]
 		user_name = user_story.get('user_id')[1]
 		user_story_name = user_story.get('name')
-
+		
+		print 'Evaluando la historia %s'%(user_story_name)
+		
 		# Si no existe la historia de usuario (user_story)
 		if not search_in_destiny('user.story',user_story_name):
-					
-			#~ print 'ORIGEN'
-			#~ print user_story
+			print 'Creando la historia %s'%(user_story_name)
+			begin = time.time()
 		
 		# Comprobamos si tiene elementos accep_crit_ids, de ser asi creamos estos elementos en el destino
 			if accep_crit_ids:
@@ -112,7 +115,7 @@ def __main__():
 		# Ubicamos los datos de project.project en el destino, sino existe se crea
 			project = read_in_source('project.project',user_story.get('project_id',[])[0],
 			['name','state','date_start','date_end','privacy_visibility','priority','user_task','user_id','members'])
-			
+
 		# Inicilizamos la lista de los miembros del proyecto
 			project_members = []
 		
@@ -130,7 +133,7 @@ def __main__():
 			project.update({'user_id': user_matching(project.get('user_id')[0])})
 			
 		# Ubicamos los datos de project en el destino, sino existe se crea			
-			project_id = user_story.get('project_id',[]) and search_in_destiny('project.project',user_story.get('project_id',[])[1])
+			project_id = user_story.get('project_id',[]) and search_in_destiny('project.project',project.get('name',[]))
 			project_id = project_id and project_id[0] or create_in_destiny('project.project',project)
 			
 		# Actualizamos el diccionario de user_story
@@ -139,13 +142,17 @@ def __main__():
 								"user_id": user_matching(user_id),
 								"task_ids": [],	
 								"project_id": project_id})
-			#~ print 'DESTINO'
-			#~ print user_story
-			#~ print '----------------------------------------------------------'
 			
 		# Almacenamos el user_story en el destino	
 			user_story_id = create_in_destiny('user.story',user_story)
-		
+			end=time.time()
+			print 'Creada la historia %s en %ss'%(user_story_name,end-begin)
+	
+		else:
+			print 'Ya existe la historia %s'%(user_story_name)
+			
+	end_p=time.time()
+	print 'Creadas todas las historias en %ss'%(end_p-begin_p)		
 	print 'ha finalizado la carga de datos'
 
 __main__()
