@@ -83,7 +83,8 @@
 				<blockValign value="CENTER"/>
 				<blockAlignment value="CENTER"/>
 				<lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
-                <blockFont name="Helvetica" size="8" start="1,0" stop="-1,-1"/>
+				<blockFont name="Helvetica" size="8" start="1,0" stop="-1,-1"/>
+				<blockBackground colorName="#ECFFDC"/>
 			</blockTableStyle>
 
 			<!-- Color Row Styles -->
@@ -119,18 +120,18 @@
 		<blockTable style="header_table_style" colWidths="155.2mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm">
 			<tr>
 				<td><para>Flujo de efectivo por las actividades operativas:</para></td>
-				<td><para >Enero</para></td>
-				<td><para >Febrero</para></td>
-				<td><para >Marzo</para></td>
-				<td><para >Abril</para></td>
-				<td><para >Mayo</para></td>
-				<td><para >Junio</para></td>
-				<td><para >Julio</para></td>
-				<td><para >Agosto</para></td>
-				<td><para >Septiembre</para></td>
-				<td><para >Octubre</para></td>
-				<td><para >Noviembre</para></td>
-				<td><para >Diciembre</para></td>
+				<td><para alignment="center">Enero</para></td>
+				<td><para alignment="center">Febrero</para></td>
+				<td><para alignment="center">Marzo</para></td>
+				<td><para alignment="center">Abril</para></td>
+				<td><para alignment="center">Mayo</para></td>
+				<td><para alignment="center">Junio</para></td>
+				<td><para alignment="center">Julio</para></td>
+				<td><para alignment="center">Agosto</para></td>
+				<td><para alignment="center">Septiembre</para></td>
+				<td><para alignment="center">Octubre</para></td>
+				<td><para alignment="center">Noviembre</para></td>
+				<td><para alignment="center">Diciembre</para></td>
 			</tr>
 		</blockTable>
 

@@ -83,6 +83,7 @@
 				<blockValign value="CENTER"/>
 				<blockAlignment value="CENTER"/>
 				<lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
+				<blockBackground colorName="#ECFFDC"/>
 			</blockTableStyle>
 
 			<!--
@@ -101,7 +102,7 @@
 			<!-- Color Row Styles -->
 
 				<blockTableStyle id="dark_color_data_table_style">
-					<blockBackground colorName="#DAFFBA" />
+					<blockBackground colorName="#ECFFDC" />
 					<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
 				</blockTableStyle>
 
