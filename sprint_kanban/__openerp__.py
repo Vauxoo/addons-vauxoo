@@ -25,7 +25,7 @@
 	"test" : [],#Load, yaml
 	"update_xml" : [
 					'security/security_sprint_kanban.xml','security/ir.model.access.csv',
-					"view/sprint_kanban_view.xml","view/sprint_prueba_view.xml"
+					"view/sprint_kanban_view.xml"
 	                 ],
 	"installable" : True,
 	"active" : False

@@ -28,13 +28,6 @@ class sprint_kanban(osv.osv):
 		self.write(cr, uid, ids, {'state':'open'}, context=context)
 		return True
 		
-	def _task_count(self, cr, uid, ids, field_name, arg, context=None):
-		res = dict.fromkeys(ids, 0)
-		task_ids = self.pool.get('project.task').search(cr, uid, [('project_id', 'in', ids)])
-		for task in self.pool.get('project.task').browse(cr, uid, task_ids, context):
-			res[task.project_id.id] += 1
-		return res
-	
 	
 	_name = 'sprint.kanban'
 	_inherit = ['mail.thread', 'ir.needaction_mixin','account.analytic.account']
@@ -50,9 +43,26 @@ class sprint_kanban(osv.osv):
 				'priority': fields.selection([('4','Very Low'), ('3','Low'), ('2','Medium'), ('1','Important'), ('0','Very important')], 'Priority', select=True),
 	            'state': fields.selection([('draft','New'),('open','In Progress'), ('cancelled', 'Cancelled'),('pending','Pending'),('done', 'Done')], 'Status', required=True,),
 	            'user_id': fields.many2one('res.users', 'Assigned to'),
-	            'task_count': fields.function(_task_count, type='integer', string="Open Tasks"),
-	           
+	            'kanban_state': fields.selection([('normal', 'Normal'),('blocked', 'Blocked'),('done', 'Ready To Pull')], 'Kanban State',
+                                         help="A task's kanban state indicates special situations affecting it:\n"
+                                              " * Normal is the default situation\n"
+                                              " * Blocked indicates something is preventing the progress of this task\n"
+                                              " * Ready To Pull indicates the task is ready to be pulled to the next stage",
+                                         readonly=True, required=False),
 	            }
+	            
+	def set_kanban_state_blocked(self, cr, uid, ids, context=None):
+		self.write(cr, uid, ids, {'kanban_state': 'blocked'}, context=context)
+		return False
+		
+	def set_kanban_state_normal(self, cr, uid, ids, context=None):
+		self.write(cr, uid, ids, {'kanban_state': 'normal'}, context=context)
+		return False
+	def set_kanban_state_done(self, cr, uid, ids, context=None):
+		self.write(cr, uid, ids, {'kanban_state': 'done'}, context=context)
+		return False
+	
+		            
 	_defaults = {
         
         'state': 'draft',
