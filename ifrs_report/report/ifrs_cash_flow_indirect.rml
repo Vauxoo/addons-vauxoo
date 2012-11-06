@@ -100,12 +100,12 @@
 
 			<!-- Color Row Styles -->
 
-				<blockTableStyle id="gainsboro_data_table_style">
-					<blockBackground colorName="gainsboro" />
+				<blockTableStyle id="dark_color_data_table_style">
+					<blockBackground colorName="#DAFFBA" />
 					<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
 				</blockTableStyle>
 
-				<blockTableStyle id="white_data_table_style">
+				<blockTableStyle id="light_color_data_table_style">
 					<blockBackground colorName="white" />
 					<lineStyle kind="INNERGRID" colorName="black" thickness="0" />
 				</blockTableStyle>

@@ -140,7 +140,7 @@ class ifrs_report(report_sxw.rml_parse):
 		#~ HACER: cambio de... ¿?
 
 	def _get_line_color(self):
-		res_color = 'white'
+		res_color = "light_color"
 
 		if self._total_record % 2:
 			par = True
@@ -152,21 +152,21 @@ class ifrs_report(report_sxw.rml_parse):
 
 
 		if self._iter_record == self._total_record:
-			res_color = 'gainsboro'
+			res_color = "dark_color"
 		else:
 			if par:
 				if self._iter_record % 2:
-					res_color = 'gainsboro'
+					res_color = "dark_color"
 				else:
-					res_color = 'white'
+					res_color = "light_color"
 			else:
 				if self._iter_record % 2:
-					res_color = 'white'
+					res_color = "light_color"
 				else:
-					res_color = 'gainsboro'
+					res_color = "dark_color"
 
 		#~ NOTAK; probar optimizacion
-		#~ res_color = 'gainsboro' if self._iter_record == self._total_record or par and self._iter_record % 2 or !par and !self._iter_record % 2 else 'white'
+		#~ res_color = "dark_color" if self._iter_record == self._total_record or par and self._iter_record % 2 or !par and !self._iter_record % 2 else "light_color"
 
 		self._iter_record-=1
 		return res_color
