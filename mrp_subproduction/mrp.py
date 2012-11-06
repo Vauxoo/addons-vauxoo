@@ -55,11 +55,25 @@ class mrp_production(osv.osv):
             }
         return result
     
+    def _get_parent_product(self, cr, uid, ids, field_names, args, context=None):
+        parent_id = context.get('subproduction_parent_id') or 0
+        result = {}
+        print "parent id ->", parent_id
+        for production in self.browse(cr, uid, ids, context=context):
+            result[production.id] = {
+                'product_subproduction_qty_line_real': 3.0,
+                'product_subproduction_qty_line_planned': 3.0
+            }
+        print "result ->", result
+        return result
+        
     _columns = {
         'parent_id': fields.many2one('mrp.production', 'Parent production'),
-        'subproduction_ids': fields.one2many('mrp.production', 'parent_id', 'Subproductions'),
-        'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Really used', multi=True),
-        'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Planned', multi=True),
+        'subproduction_ids': fields.many2many('mrp.production', 'rel_mrp_subproduction_self', 'parent_id', 'children_id', 'Subproductions'),
+        'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Really used', multi=True, help="UoM is the same that the parent production order"),
+        'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Planned', multi=True, help="UoM is the same that the parent production order"),
+        'product_subproduction_qty_line_real': fields.function(_get_parent_product, type='float', method=True, string='Real in line', multi=True),
+        'product_subproduction_qty_line_planned': fields.function(_get_parent_product, type='float', method=True, string='Planned in line', multi=True),
     }
 
 mrp_production()
