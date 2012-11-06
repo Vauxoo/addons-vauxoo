@@ -64,7 +64,7 @@ class mrp_production(osv.osv):
     _columns = {
         'parent_id': fields.many2one('mrp.production', 'Parent production'),
         'subproduction_ids': fields.one2many('mrp.production', 'parent_id', 'Subproductions'),
-        'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Real used', multi=True),
+        'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Really used', multi=True),
         'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Planned', multi=True),
     }
 
