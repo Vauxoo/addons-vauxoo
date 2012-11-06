@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
 
-  <template pageSize="(215.9mm,279.4mm)" title="IFRS" author="Yanina Aular y Katherine Zaoral" allowSplitting="20" showBoundary="0">
+	<template pageSize="(215.9mm,279.4mm)" title="IFRS" author="Yanina Aular y Katherine Zaoral" allowSplitting="1" showBoundary="0">
 	<pageTemplate id="first">
 
 		<pageGraphics>
@@ -12,7 +12,7 @@
 			<place x="10.0mm"     y="234.4mm"    width="195.9mm"  height="35.0mm">
 				<blockTable colWidths="195.5mm" rowHeights="7mm" style="TITLETABLE">
 					<tr><td><para style="TITLE">[[ company.name.upper() ]]</para></td></tr>
-					<tr><td><para style="TITLE">[[ o.title ]]</para></td></tr>
+					<tr><td><para style="TITLE">[[ get_report_title(o) ]]</para></td></tr>
 					<tr><td><para style="FISCAL"> Año Terminado el [[ o.fiscalyear_id.date_stop ]]</para></td></tr>
 				</blockTable>
 			</place>
@@ -30,7 +30,7 @@
 
 		</pageGraphics>
 
-		<frame id="first" x1="10mm" y1="10mm" width="195.9mm" height="238,4mm"/>
+		<frame id="first" x1="10mm" y1="10mm" width="195.9mm" height="238.4mm"/>
 	</pageTemplate>
 	</template>
 
@@ -124,6 +124,7 @@
 	<story>
 
 		<para>[[ repeatIn(objects,'o') ]]</para>
+		<section>
 		<para>[[ get_total_ifrs_lines(o) ]] </para>
 
 		<!-- header row table -->
@@ -160,6 +161,7 @@
 			<tr><td><para><docPara expr='repr(doc._nameSpace)'/></para></td></tr>
 		</blockTable>
 	-->
+		</section>
 
 	</story>
 </document>
