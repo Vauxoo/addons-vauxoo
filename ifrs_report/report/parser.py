@@ -48,6 +48,8 @@ class ifrs_report(report_sxw.rml_parse):
 			'get_line_color' : self._get_line_color,
 			'get_td_format' : self._get_td_format,
 			'get_amount_format' : self._get_amount_format,
+			#~ Dinamic report title
+			'get_report_title' : self._get_report_title,
 		})
 		self.cr = cr
 		self.context = context
@@ -84,6 +86,17 @@ class ifrs_report(report_sxw.rml_parse):
 		t = time.mktime(t)
 
 		return time.strftime('%Y-%m-%d', time.gmtime(t))
+
+	#########################################################################################################################
+	#~ Dinamic Title @ page drawning banner
+
+	def _get_report_title(self, ifrs_doc):
+		
+		"""devuelve la cadena con el nombre del reporte segun sea la pagina para el caso de imprimir varios reportes"""
+		
+		print "\n_get_report_title():" + str(ifrs_doc.title)
+		#~ hacer iterar en los objetos tomados y devolver consulta de titulo
+		return str(ifrs_doc.title)
 
 	#########################################################################################################################
 	#~ Format method helpers
