@@ -32,16 +32,21 @@ class mrp_request_return(osv.osv_memory):
     _name='mrp.request.return'
     _columns={
         're_line_ids' : fields.one2many('mrp.request.return.line','wizard_id','Acreation'),
-        'type' : fields.selection([('request','Request'),('return','Return')], 'Type', required=True)
+        'type' : fields.selection([('request','Request')], 'Type', required=True)
     }
+
+    _defaults={
+        'type': 'request',
+    }
+
     def action_request_return(self, cr, uid, ids, context={}):
         stock_picking = self.pool.get('stock.picking')
         mrp_production = self.pool.get('mrp.production')
         stock_move = self.pool.get('stock.move')
-        
+
         mrp_ids = context.get('active_ids', [])
         production = self.pool.get('mrp.production').browse(cr, uid, mrp_ids, context=context)[0]
-        
+
         for wizard_moves in self.browse(cr, uid, ids, context=context):
             if wizard_moves.type == 'request':
                 context['type'] = wizard_moves.type
@@ -49,20 +54,20 @@ class mrp_request_return(osv.osv_memory):
                 stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
                 for wiz_move in wizard_moves.re_line_ids:
                     if wiz_move.product_qty > 0.0:
-                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move, pick_id, False)
+                        shipment_move_id = mrp_production._make_production_internal_shipment_line2(cr, uid, production, wiz_move, pick_id, False)
                         mrp_production._make_production_consume_line(cr, uid, wiz_move, False )
-                            
+
             if wizard_moves.type == 'return':
                 context['type'] = wizard_moves.type
                 pick_id_return = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id_return, {'state':'draft', 'auto_picking':False, 'production_id':production.id})
                 for wiz_move2 in wizard_moves.re_line_ids:
                     if wiz_move2.product_qty > 0.0:
-                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
+                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, production, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
                         stock_move.write(cr, uid, shipment_move_id, {'state':'draft'})
 
         return {}
-    
+
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = super(mrp_request_return, self).default_get(cr, uid, fields, context=context)
@@ -100,7 +105,7 @@ mrp_request_return()
 class mrp_request_return_line(osv.osv_memory):
     _name='mrp.request.return.line'
     _rec_name = 'product_id'
-    
+
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = super(mrp_request_return_line, self).default_get(cr, uid, fields, context=context)
@@ -114,7 +119,7 @@ class mrp_request_return_line(osv.osv_memory):
             'location_dest_id' : mrp.location_src_id.id,
             'production_id' : mrp.id})
         return res
-    
+
     _columns = {
         'product_id' : fields.many2one('product.product', string="Product", required=True),
         'product_qty' : fields.float("Quantity", digits_compute=dp.get_precision('Product UoM'), required=True),
@@ -127,7 +132,7 @@ class mrp_request_return_line(osv.osv_memory):
         'product_uos_qty' : fields.float('Quantity UoS'),
         'wizard_id' : fields.many2one('mrp.request.return', string="Wizard"),
     }
-    
+
     def on_change_product_uom(self, cr, uid, ids, product_id):
         product_product = self.pool.get('product.product')
         product = product_product.browse(cr, uid, product_id)

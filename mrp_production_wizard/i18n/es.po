@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-22 18:08+0000\n"
-"PO-Revision-Date: 2012-10-22 13:20-0600\n"
+"POT-Creation-Date: 2012-10-29 18:58+0000\n"
+"PO-Revision-Date: 2012-10-29 13:02-0600\n"
 "Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: mrp_production_wizard
-#: code:addons/mrp_production_wizard/mrp.py:79
+#: code:addons/mrp_production_wizard/mrp.py:89
 #, python-format
 msgid "The category of the product to produce has not predefined locations "
 msgstr "La categoría del producto a producir no tiene ubicaciones predefinidas."
@@ -48,7 +48,7 @@ msgid "Create production order"
 msgstr "Crear orden de producción"
 
 #. module: mrp_production_wizard
-#: code:addons/mrp_production_wizard/mrp.py:79
+#: code:addons/mrp_production_wizard/mrp.py:89
 #, python-format
 msgid "Error"
 msgstr "Error"
@@ -71,7 +71,7 @@ msgstr "Cantidad de producto"
 #. module: mrp_production_wizard
 #: field:wizard.data,product_uom:0
 msgid "Product UOM"
-msgstr "LdM del producto"
+msgstr "UdM del producto"
 
 #. module: mrp_production_wizard
 #: view:mrp.production.wizard:0
@@ -84,7 +84,7 @@ msgid "Products to consume"
 msgstr "Productos a consumir"
 
 #. module: mrp_production_wizard
-#: code:addons/mrp_production_wizard/wizard/wizard.py:60
+#: code:addons/mrp_production_wizard/wizard/wizard.py:61
 #, python-format
 msgid "Manufacturing orders"
 msgstr "Ordenes de producción"
@@ -118,7 +118,7 @@ msgstr "wizard.data"
 #. module: mrp_production_wizard
 #: view:mrp.production.wizard:0
 msgid "UOM"
-msgstr "LdM"
+msgstr "UdM"
 
 #. module: mrp_production_wizard
 #: field:wizard.data,mrp_production_wiz:0
