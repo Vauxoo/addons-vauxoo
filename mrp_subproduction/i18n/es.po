@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-06 00:52+0000\n"
-"PO-Revision-Date: 2012-11-05 18:54-0600\n"
+"POT-Creation-Date: 2012-11-07 01:09+0000\n"
+"PO-Revision-Date: 2012-11-06 19:10-0600\n"
 "Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,15 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mrp_subproduction
-#: field:mrp.production,parent_id:0
-msgid "Parent production"
-msgstr "Producción padre"
+#: help:mrp.production,product_subproduction_qty_planned:0
+#: help:mrp.production,product_subproduction_qty_real:0
+msgid "UoM is the same that the parent production order"
+msgstr "UdM es la misma que la de la orden de producción padre"
+
+#. module: mrp_subproduction
+#: field:mrp.production,product_subproduction_qty_line_planned:0
+msgid "Planned in line"
+msgstr "Planeado en línea"
 
 #. module: mrp_subproduction
 #: model:ir.model,name:mrp_subproduction.model_mrp_production
@@ -55,4 +61,9 @@ msgstr "Usado realmente"
 #: constraint:mrp.production:0
 msgid "Order quantity cannot be negative or zero!"
 msgstr "¡La cantidad de la orden no puede ser negativa o cero!"
+
+#. module: mrp_subproduction
+#: field:mrp.production,product_subproduction_qty_line_real:0
+msgid "Real in line"
+msgstr "Real en línea"
 

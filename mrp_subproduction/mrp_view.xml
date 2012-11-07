@@ -9,7 +9,6 @@
             <field name="arch" type="xml">
             <xpath expr="/form/notebook/page[@string='Extra Information']" position="after">
                 <page string="Subproductions">
-                    <field name="parent_id"/>
                     <separator string="Subproductions" colspan="4"/>
                     <field colspan="4" name="subproduction_ids" nolabel="1" widget="many2many_list" mode="tree,form" height="275" context="{'subproduction_parent_id': active_id or False}">
                         <tree string="Subproductions">

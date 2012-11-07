@@ -58,42 +58,34 @@ class mrp_production(osv.osv):
     def _get_parent_product(self, cr, uid, ids, field_names, args, context=None):
         parent_id = context.get('subproduction_parent_id') or 0
         result = {}
-        print "CONTEXT->", context
-        print "parent id ->", parent_id
         if parent_id:
             parent_production = self.browse(cr, uid, parent_id, context=context)
             parent_product_id = parent_production.product_id.id
+            parent_product_factor = parent_production.product_uom.factor
         else:
             parent_product_id = 0
+            parent_product_factor = 1
         
         for production in self.browse(cr, uid, ids, context=context):
-            print "production.name ->", production.name
             planned_qty = 0.0
             real_qty = 0.0
             if production.product_lines:
                 for scheduled in production.product_lines:
-                    print "scheduled.product_id.id ->", scheduled.product_id.id
-                    print "scheduled.product_qty ->", scheduled.product_qty
-                    print "production.product_id.id ->", production.product_id.id, "\n"
                     if scheduled.product_id.id == parent_product_id:
-                        planned_qty += (scheduled.product_qty * (production.product_id.uom_id.factor / scheduled.product_uom.factor))
-                        print "planned ->", planned_qty
+                        planned_qty += (scheduled.product_qty * (parent_product_factor / scheduled.product_uom.factor))
                         
             if production.move_lines2:
                 for consumed in production.move_lines2:
                     if (consumed.product_id.id == parent_product_id and consumed.state in ('done')):
-                        real_qty += (consumed.product_qty * (production.product_id.uom_id.factor / consumed.product_uom.factor))
-                        print "real ->", real_qty
+                        real_qty += (consumed.product_qty * (parent_product_factor / consumed.product_uom.factor))
             
             result[production.id] = {
                 'product_subproduction_qty_line_real': real_qty,
                 'product_subproduction_qty_line_planned': planned_qty
             }
-        print "result ->", result
         return result
         
     _columns = {
-        'parent_id': fields.many2one('mrp.production', 'Parent production'),
         'subproduction_ids': fields.many2many('mrp.production', 'rel_mrp_subproduction_self', 'parent_id', 'children_id', 'Subproductions'),
         'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Really used', multi=True, help="UoM is the same that the parent production order"),
         'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Planned', multi=True, help="UoM is the same that the parent production order"),
