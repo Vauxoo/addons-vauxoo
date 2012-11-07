@@ -34,6 +34,8 @@ class ifrs_report(report_sxw.rml_parse):
 
 	_iter_record = 0
 	_total_record = 0
+	_period_name = {}
+	_title_line = 'Flujo de efectivo por las actividades operativas:'
 
 	def __init__(self, cr, uid, name, context):
 		super(ifrs_report, self).__init__(cr, uid, name, context=context)
@@ -48,8 +50,10 @@ class ifrs_report(report_sxw.rml_parse):
 			'get_line_color' : self._get_line_color,
 			'get_td_format' : self._get_td_format,
 			'get_amount_format' : self._get_amount_format,
-			#~ Dinamic report title
+			#~ Dinamic data
 			'get_report_title' : self._get_report_title,
+			'get_periods_name' : self._get_periods_name,
+			'get_column_name'  : self._get_column_name,
 		})
 		self.cr = cr
 		self.context = context
@@ -88,7 +92,7 @@ class ifrs_report(report_sxw.rml_parse):
 		return time.strftime('%Y-%m-%d', time.gmtime(t))
 
 	#########################################################################################################################
-	#~ Dinamic Title @ page drawning banner
+	#~ Dinamic Data
 
 	def _get_report_title(self, ifrs_doc):
 		
@@ -97,6 +101,32 @@ class ifrs_report(report_sxw.rml_parse):
 		print "\n_get_report_title():" + str(ifrs_doc.title)
 		#~ hacer iterar en los objetos tomados y devolver consulta de titulo
 		return str(ifrs_doc.title)
+
+	def _get_periods_name(self, ifrs_obj):
+
+		"""devuelve el nombre del periodo fiscal"""
+
+		print "\n_get_periods_name():"
+		period_dict = {}
+		period_dict['0'] = self._title_line
+
+		periods = self.pool.get('account.period')
+		periods_ids = ifrs_obj.fiscalyear_id._get_fy_period_ids()
+		
+		ii=1
+		for period_id in periods_ids:
+			period_dict[str(ii)] = periods.browse(self.cr, self.uid, period_id).name
+			ii+=1
+
+		self._period_name = period_dict
+		
+		print '_period_name' + str(self._period_name)
+
+	def _get_column_name(self, column_num):
+
+		"""devuelve string con el nombre del periodo que debe titular ese numero de columna"""
+		print "\n_get_column_name(columna %s):  " % column_num
+		return self._period_name[column_num]
 
 	#########################################################################################################################
 	#~ Format method helpers

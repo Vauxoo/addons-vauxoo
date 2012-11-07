@@ -115,23 +115,24 @@
 		<para>[[ repeatIn(objects,'o') ]]</para>
 		<section>
 		<para>[[ get_total_ifrs_lines(o) ]] </para>
+        <para>[[ get_periods_name(o) ]]</para>
 
 		<!-- header row table -->
 		<blockTable style="header_table_style" colWidths="112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm">
 			<tr>
-				<td><para>Flujo de efectivo por las actividades operativas:</para></td>
-				<td><para alignment="center">Enero</para></td>
-				<td><para alignment="center">Febrero</para></td>
-				<td><para alignment="center">Marzo</para></td>
-				<td><para alignment="center">Abril</para></td>
-				<td><para alignment="center">Mayo</para></td>
-				<td><para alignment="center">Junio</para></td>
-				<td><para alignment="center">Julio</para></td>
-				<td><para alignment="center">Agosto</para></td>
-				<td><para alignment="center">Septiembre</para></td>
-				<td><para alignment="center">Octubre</para></td>
-				<td><para alignment="center">Noviembre</para></td>
-				<td><para alignment="center">Diciembre</para></td>
+				<td><para alignment="center">[[get_column_name('0')]]</para></td>
+				<td><para alignment="center">[[get_column_name('1')]]</para></td>
+				<td><para alignment="center">[[get_column_name('2')]]</para></td>
+				<td><para alignment="center">[[get_column_name('3')]]</para></td>
+				<td><para alignment="center">[[get_column_name('4')]]</para></td>
+				<td><para alignment="center">[[get_column_name('5')]]</para></td>
+				<td><para alignment="center">[[get_column_name('6')]]</para></td>
+				<td><para alignment="center">[[get_column_name('7')]]</para></td>
+				<td><para alignment="center">[[get_column_name('8')]]</para></td>
+				<td><para alignment="center">[[get_column_name('9')]]</para></td>
+				<td><para alignment="center">[[get_column_name('10')]]</para></td>
+				<td><para alignment="center">[[get_column_name('11')]]</para></td>
+				<td><para alignment="center">[[get_column_name('12')]]</para></td>
 			</tr>
 		</blockTable>
 
