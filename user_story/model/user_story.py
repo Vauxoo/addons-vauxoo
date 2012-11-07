@@ -44,6 +44,7 @@ class user_story(osv.osv):
 		'task_ids':fields.many2many('project.task', 'userstory_task_rel', 'userstory_id', 'task_id', 'Task'),
 		'date': fields.date('Date'),
         'user_id':fields.many2one('res.users', 'Create User'),
+        'sk_id':fields.many2one('sprint.kanban', 'Sprint Kanban'),
 	}
 	_defaults = {
 		'name': lambda *a: None,
