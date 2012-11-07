@@ -7,25 +7,20 @@
       <field name="inherit_id" ref="sale.view_order_form" />
       <field name="type">form</field>
       <field name="arch" type="xml">
-    
-          <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]/group/field[@name="product_id"]' position="replace">
-           <field colspan="3"
-                                                               context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom, 'force_product_uom': True}"
-                                                                                                               name="product_id"
-                                                                                                                                                               on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, True, parent.date_order, product_packaging, parent.fiscal_position, False, context)"/>
+          /form/sheet/notebook/page[@string="Order Lines"]/field[@name="order_line"]/tree[@string="Sales Order Lines"]/ 
+          <xpath expr='/form/sheet/notebook/page[@string="Order Lines"]/field[@name="order_line"]/tree[@string="Sales Order Lines"]/field[@name="product_id"]' position="replace">
+              <field name="product_id" context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"  groups="base.group_user" on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)"/>
 
           
           </xpath>
     
     
-    <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]/group/field[@name="product_uom_qty"]' position="replace">
-    <field
-                                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
-                                                                                                        name="product_uom_qty"
-                                                                                                                                                        on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, product_packaging, parent.fiscal_position, True, context)"/>
+          <xpath expr='/form/sheet/notebook/page[@string="Order Lines"]/field[@name="order_line"]/tree[@string="Sales Order Lines"]/field[@name="product_uom_qty"]' position="replace">
+              <field context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+                     name="product_uom_qty" class="oe_inline" on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)"/>
 
         </xpath>
-        <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]/group/field[@name="product_uom_qty"]' position="after">
+        <xpath expr='/form/sheet/notebook/page[@string="Order Lines"]/field[@name="order_line"]/tree[@string="Sales Order Lines"]/field[@name="product_uom_qty"]' position="after">
           
           <field name="cost_structure_id" invisible="1" />
           <field name="price_structure_id" domain="[('cost_structure_id','=',cost_structure_id)]" on_change="price_unit(price_structure_id,product_uom,product_uom_qty)" />
