@@ -79,7 +79,7 @@ msgstr "Está intentando asignar un lote que no es del mismo producto"
 #. module: mrp_request_return
 #: view:mrp.production:0
 msgid "Product Request/Return"
-msgstr "Solicitar/Devolver Producto"
+msgstr "Solicitar Producto"
 
 #. module: mrp_request_return
 #: field:mrp.request.return.line,product_uos:0

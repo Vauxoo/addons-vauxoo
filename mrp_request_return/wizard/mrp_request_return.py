@@ -32,8 +32,13 @@ class mrp_request_return(osv.osv_memory):
     _name='mrp.request.return'
     _columns={
         're_line_ids' : fields.one2many('mrp.request.return.line','wizard_id','Acreation'),
-        'type' : fields.selection([('request','Request'),('return','Return')], 'Type', required=True)
+        'type' : fields.selection([('request','Request')], 'Type', required=True)
     }
+    
+    _defaults={
+        'type': 'request',
+    }
+    
     def action_request_return(self, cr, uid, ids, context={}):
         stock_picking = self.pool.get('stock.picking')
         mrp_production = self.pool.get('mrp.production')
@@ -73,7 +78,12 @@ class mrp_request_return(osv.osv_memory):
         mrp_id, = mrp_ids
         if 're_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
-            moves = [self._partial_move_for(cr, uid, m, mrp) for m in mrp.product_lines]
+            list_moves=[]
+            for m in mrp.product_lines:
+                type_prod=m.product_id and m.product_id.type or ''
+                if type_prod <> 'service' and type_prod <> '':
+                    list_moves.append(m)
+            moves = [self._partial_move_for(cr, uid, x, mrp) for x in list_moves]
             res.update(re_line_ids=moves)
         return res
 

@@ -20,3 +20,22 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+{
+    "name" : "Grouped by product,move_id y analytic in model account_move_line",
+    "version" : "1.0",
+    "depends" : ['account'],
+    "author" : "Vauxoo",
+    #"license" : "AGPL-3",
+    "description" : """This  module Grouped by product,move_id y analytic in model account_move_line
+    """,
+    "website" : "http://vauxoo.com",
+    "category" : "Generic Modules",
+    "init_xml" : [],
+    "demo_xml" : [],
+    "test": [],
+    "update_xml" : ['account_move_line.xml',
+    ],
+    "active": False,
+    "installable": True,
+}
+
