@@ -32,8 +32,13 @@ class mrp_request_return(osv.osv_memory):
     _name='mrp.request.return'
     _columns={
         're_line_ids' : fields.one2many('mrp.request.return.line','wizard_id','Acreation'),
-        'type' : fields.selection([('request','Request'),('return','Return')], 'Type', required=True)
+        'type' : fields.selection([('request','Request')], 'Type', required=True)
     }
+    
+    _defaults={
+        'type': 'request',
+    }
+    
     def action_request_return(self, cr, uid, ids, context={}):
         stock_picking = self.pool.get('stock.picking')
         mrp_production = self.pool.get('mrp.production')
