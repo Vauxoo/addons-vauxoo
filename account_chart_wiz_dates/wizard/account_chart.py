@@ -58,7 +58,12 @@ class account_chart(osv.osv_memory):
         return res
     
     def account_chart_open_window(self, cr, uid, ids, context=None):
-        print 'ids', self.browse(cr, uid, ids)
-        res=super(account_chart, self).account_chart_open_window(cr, uid, ids, context=context)
-        print 'res', res
-        return res
+        data = self.read(cr, uid, ids, [], context=context)[0]
+        filter_val= data.get('filter', False) and data['filter'] or False
+        result=super(account_chart, self).account_chart_open_window(cr, uid, ids, context=context)
+        if filter_val == 'dates':
+            date_from=str({'date_from':data.get('initial_date', False) and data['initial_date'] or '01/01/2000'})
+            date_to=str({'date_to':data.get('end_date', False) and data['end_date'] or '01/12/2000'})
+            result_get=result.get('context')
+            result['context']='{'+result_get[1:-1]+', '+date_from[1:-1]+', '+date_to[1:-1]+'}'
+        return result
