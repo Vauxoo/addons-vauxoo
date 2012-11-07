@@ -58,32 +58,32 @@
 				<blockValign value="TOP"/>
 			</blockTableStyle>
 
-		<!-- Pappding style for ifrs lines -->
+		<!-- Data Table Style  -->
 
+            <!-- Numeric Data  -->
 			<paraStyle
-				name="padding_table_style"
+				name="numeric_data_table_style"
 				fontName="Helvetica"
-				fontSize="12.0"
-				textColor="red"
-				alignment="left"
+				fontSize="9.0"
+				alignment="right"
 			/>
 
-			<paraStyle name="padding_level_0" parent="padding_table_style" leftIndent="0" />
-			<paraStyle name="padding_level_1" parent="padding_table_style" leftIndent="15" />
-			<paraStyle name="padding_level_2" parent="padding_table_style" leftIndent="30" />
-			<paraStyle name="padding_level_3" parent="padding_table_style" leftIndent="45" />
-			<paraStyle name="padding_level_4" parent="padding_table_style" leftIndent="60" />
-			<paraStyle name="padding_level_5" parent="padding_table_style" leftIndent="75" />
-			<paraStyle name="padding_level_6" parent="padding_table_style" leftIndent="90" />
-			<!-- OJO: no funciona el atributo parent, imprime con el estilo por defecto me iamgino, debo checar que pasa y si este atributo esta contemplado en openerp -->
+            <!-- Pappding style for ifrs lines -->
+			<paraStyle name="padding_level_0" leftIndent="0"  fontName="Helvetica" fontSize="9.0" alignment="left"/>
+			<paraStyle name="padding_level_1" leftIndent="15" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+			<paraStyle name="padding_level_2" leftIndent="30" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+			<paraStyle name="padding_level_3" leftIndent="45" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+			<paraStyle name="padding_level_4" leftIndent="60" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+			<paraStyle name="padding_level_5" leftIndent="75" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+			<paraStyle name="padding_level_6" leftIndent="90" fontName="Helvetica" fontSize="9.0" alignment="left"/>
 
-		<!-- Data Table Styles -->
+		<!-- Table Styles -->
 
 			<blockTableStyle id="header_table_style">
 				<blockValign value="CENTER"/>
 				<blockAlignment value="CENTER"/>
 				<lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
-				<blockFont name="Helvetica" size="8" start="1,0" stop="-1,-1"/>
+				<blockFont name="Helvetica" size="9.0" start="1,0" stop="-1,0"/>
 				<blockBackground colorName="#ECFFDC"/>
 			</blockTableStyle>
 
@@ -117,7 +117,7 @@
 		<para>[[ get_total_ifrs_lines(o) ]] </para>
 
 		<!-- header row table -->
-		<blockTable style="header_table_style" colWidths="155.2mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm">
+		<blockTable style="header_table_style" colWidths="112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm">
 			<tr>
 				<td><para>Flujo de efectivo por las actividades operativas:</para></td>
 				<td><para alignment="center">Enero</para></td>
@@ -136,22 +136,22 @@
 		</blockTable>
 
 		<!-- data row table -->
-		<blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '155.2mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm,21.4mm', 'style' : get_line_color()+'_data_table_style'}) ]]
+		<blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm', 'style' : get_line_color()+'_data_table_style'}) ]]
 		<para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l', 'blockTable') ]]</para>
 			<tr>
 				<td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>7</td>
-                <td>8</td>
-                <td>9</td>
-                <td>10</td>
-                <td>11</td>
-                <td>12</td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+				<td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
 			<!--
 			HACER: un set tag para imprimir las ultimas dos TD TD { style : _get_td_format()+"_table_style" }
 			-->
