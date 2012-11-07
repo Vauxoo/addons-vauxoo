@@ -29,7 +29,7 @@ import netsvc
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
-    
+
     def _check_boolean(self,cr,uid,ids,field_name,args,context={}):
         res = {}
         for production in self.browse(cr,uid,ids,context=context):
@@ -39,40 +39,40 @@ class mrp_production(osv.osv):
             else:
                 res[production.id]=False
         return res
-        
+
     def _check_len_move(self,cr,uid,ids,field_name,args,context={}):
         res = {}
         for production in self.browse(cr,uid,ids,context=context):
             moves = [move for move in production.move_lines2 if move.state=='done']
             res[production.id]=len(moves)
         return res
-        
+
     def _check_len_move_prod(self,cr,uid,ids,field_name,args,context={}):
         res = {}
         for production in self.browse(cr,uid,ids,context=context):
             res[production.id]=len(production.move_created_ids2)
         return res
-            
+
     _columns = {
         'consumed' : fields.function(_check_boolean, string='consumed?', type='boolean', help="indicates if product to consume have been consumed or canceled"),
         'len_move' : fields.function(_check_len_move, string='moves', type='float'),
         'len_move_prod' : fields.function(_check_len_move_prod, string='produced', type='integer',),
     }
-    
+
     def action_finished_consume(self,cr,uid,ids,context={}):
         stock_move = self.pool.get('stock.move')
         for production in self.browse(cr,uid,ids,context=context):
             for moves in production.move_lines:
                 stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
         return True
-    
+
     def action_finish(self,cr,uid,ids,context={}):
         stock_move = self.pool.get('stock.move')
         stock_picking= self.pool.get('stock.picking')
         for production in self.browse(cr,uid,ids,context=context):
             for moves in production.move_created_ids:
                 stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
-                
+
         #pickings=stock_picking.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
         #moves=stock_move.search(cr, uid, [('production_id','=',production.id),('state','not in',('done','cancel'))], limit=80, context=context)
 
@@ -84,6 +84,6 @@ class mrp_production(osv.osv):
         except:
             pass
         return True
-    
+
 mrp_production()
 
