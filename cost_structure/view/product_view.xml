@@ -7,7 +7,7 @@
       <field name="inherit_id" ref="product.product_normal_form_view" />
       <field name="type">form</field>
       <field name="arch" type="xml">
-        <xpath expr='/form/notebook/page[@string="Information"]' position="after">
+        <xpath expr='//page[@string="Information"]' position="after">
           <page string="Advance Options">
             <group colspan="9" col="1">
               <field name="property_cost_structure" />
@@ -47,7 +47,7 @@
             </field>
           </page>
         </xpath>
-        <xpath expr='/form/notebook/page[@string="Information"]' position="after">
+        <xpath expr='//page[@string="Information"]' position="after">
           <page string="Landing Information"><!-- <field name='arancel' /> --></page>
         </xpath>
       </field>

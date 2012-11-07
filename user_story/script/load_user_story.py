@@ -19,7 +19,7 @@ uid = common_proxy.login(DB,USER,PASS)
 # Destiny server info
 HOST2='localhost'
 PORT2=8069
-DB2='migration4'
+DB2='migration3'
 USER2='admin'
 PASS2='12345'
 url2='http://%s:%d/xmlrpc/'%(HOST2,PORT2)
