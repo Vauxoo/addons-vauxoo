@@ -58,10 +58,19 @@ class sprint_kanban(osv.osv):
 	def set_kanban_state_normal(self, cr, uid, ids, context=None):
 		self.write(cr, uid, ids, {'kanban_state': 'normal'}, context=context)
 		return False
+	
 	def set_kanban_state_done(self, cr, uid, ids, context=None):
 		self.write(cr, uid, ids, {'kanban_state': 'done'}, context=context)
 		return False
 	
+	def set_priority(self, cr, uid, ids, priority, *args):
+		return self.write(cr, uid, ids, {'priority' : priority})
+		
+	def set_high_priority(self, cr, uid, ids, *args):
+		return self.set_priority(cr, uid, ids, '1')
+		
+	def set_normal_priority(self, cr, uid, ids, *args):
+		return self.set_priority(cr, uid, ids, '2')
 		            
 	_defaults = {
         
