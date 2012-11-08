@@ -56,6 +56,7 @@ class mrp_production(osv.osv):
         return result
     
     def _get_parent_product(self, cr, uid, ids, field_names, args, context=None):
+        product_uom_pool=self.pool.get('product.uom')
         parent_id = context.get('subproduction_parent_id') or 0
         result = {}
         if parent_id:
@@ -72,12 +73,12 @@ class mrp_production(osv.osv):
             if production.product_lines:
                 for scheduled in production.product_lines:
                     if scheduled.product_id.id == parent_product_id:
-                        planned_qty += (scheduled.product_qty * (parent_product_factor / scheduled.product_uom.factor))
+                        planned_qty += product_uom_pool._compute_qty(cr, uid, scheduled.product_uom.id, scheduled.product_qty, to_uom_id=parent_production.product_uom.id)
                         
             if production.move_lines2:
                 for consumed in production.move_lines2:
                     if (consumed.product_id.id == parent_product_id and consumed.state in ('done')):
-                        real_qty += (consumed.product_qty * (parent_product_factor / consumed.product_uom.factor))
+                        real_qty += product_uom_pool._compute_qty(cr, uid, consumed.product_uom.id, consumed.product_qty, to_uom_id=parent_production.product_uom.id)
             
             result[production.id] = {
                 'product_subproduction_qty_line_real': real_qty,
