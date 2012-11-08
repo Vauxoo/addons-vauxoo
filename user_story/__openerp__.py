@@ -26,7 +26,7 @@
 {
     "name" : "User Story",
     "version" : "0.1",
-    "depends" : ["base","project"],
+    "depends" : ["base","project","sprint_kanban"],
     "author" : ["Vauxoo",],
     "description" : """
     What do this module:
