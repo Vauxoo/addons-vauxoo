@@ -34,6 +34,7 @@ class mrp_production(osv.osv):
     def _get_product_subproduction_qty(self, cr, uid, ids, field_names, args, context=None):
         if context is None:
             context = {}
+        product_uom_pool=self.pool.get('product.uom')
         result = {}
         subp_sum = 0.0
         subp_real_sum = 0.0
@@ -43,12 +44,12 @@ class mrp_production(osv.osv):
                     if subprod.product_lines:
                         for scheduled in subprod.product_lines:
                             if scheduled.product_id.id == production.product_id.id:
-                                subp_sum += (scheduled.product_qty * (production.product_id.uom_id.factor / scheduled.product_uom.factor))
+                                subp_sum += product_uom_pool._compute_qty(cr, uid, scheduled.product_uom.id, scheduled.product_qty, to_uom_id=production.product_uom.id)
                                 
                     if subprod.move_lines2:
                         for consumed in subprod.move_lines2:
                             if (consumed.product_id.id == production.product_id.id and consumed.state not in ('cancel')):
-                                subp_real_sum += (consumed.product_qty * (production.product_id.uom_id.factor / consumed.product_uom.factor))
+                                subp_real_sum += product_uom_pool._compute_qty(cr, uid, consumed.product_uom.id, consumed.product_qty, to_uom_id=production.product_uom.id)
             result[production.id] = {
                 'product_subproduction_qty_real': subp_real_sum,
                 'product_subproduction_qty_planned': subp_sum
@@ -58,14 +59,11 @@ class mrp_production(osv.osv):
     def _get_parent_product(self, cr, uid, ids, field_names, args, context=None):
         product_uom_pool=self.pool.get('product.uom')
         parent_id = context.get('subproduction_parent_id') or 0
+        parent_product_id = 0
         result = {}
         if parent_id:
             parent_production = self.browse(cr, uid, parent_id, context=context)
             parent_product_id = parent_production.product_id.id
-            parent_product_factor = parent_production.product_uom.factor
-        else:
-            parent_product_id = 0
-            parent_product_factor = 1
         
         for production in self.browse(cr, uid, ids, context=context):
             planned_qty = 0.0
