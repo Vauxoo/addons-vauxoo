@@ -36,14 +36,15 @@ class mrp_production(osv.osv):
             prod_id=self.browse(cr, uid, id)
             loc_dest_prod=prod_id.location_dest_id and prod_id.location_dest_id.id or ''
             product_prod=prod_id.product_id and prod_id.product_id.id or ''
-            for move in prod_id.move_created_ids2:
-                move_id=stock_obj.browse(cr, uid, move.id)
-                product_move=move_id.product_id and move_id.product_id.id or ''
-                loc_dest_move=move_id.location_dest_id and move_id.location_dest_id.id or ''
-                state_move=move_id.state or ''
-                if loc_dest_move == loc_dest_prod and state_move=='done' and product_prod==product_move:
-                    total_move=move_id.product_qty or 0.0
-                    total=total+total_move
+            if prod_id.move_created_ids2:
+                for move in prod_id.move_created_ids2:
+                    move_id=stock_obj.browse(cr, uid, move.id)
+                    product_move=move_id.product_id and move_id.product_id.id or ''
+                    loc_dest_move=move_id.location_dest_id and move_id.location_dest_id.id or ''
+                    state_move=move_id.state or ''
+                    if loc_dest_move == loc_dest_prod and state_move=='done' and product_prod==product_move:
+                        total_move=move_id.product_qty or 0.0
+                        total=total+total_move
             res[id]=total
         return res
         
@@ -56,16 +57,17 @@ class mrp_production(osv.osv):
             prod_id=self.browse(cr, uid, id)
             loc_dest_prod=prod_id.location_dest_id and prod_id.location_dest_id.id or ''
             product_prod=prod_id.product_id and prod_id.product_id.id or ''
-            for move in prod_id.move_created_ids2:
-                move_id=stock_obj.browse(cr, uid, move.id)
-                loc_dest_move=move_id.location_dest_id and move_id.location_dest_id.id or ''
-                state_move=move_id.state or ''
-                product_move=move_id.product_id and move_id.product_id.id or ''
-                if loc_dest_move <> loc_dest_prod and state_move=='done' and product_prod==product_move:
-                    total_move=move_id.product_qty or 0.0
-                    total_des=total_des+total_move
-                total_produced=prod_id.product_produced or 0.0
-                total=total_produced - total_des
+            if prod_id.move_created_ids2:
+                for move in prod_id.move_created_ids2:
+                    move_id=stock_obj.browse(cr, uid, move.id)
+                    loc_dest_move=move_id.location_dest_id and move_id.location_dest_id.id or ''
+                    state_move=move_id.state or ''
+                    product_move=move_id.product_id and move_id.product_id.id or ''
+                    if loc_dest_move <> loc_dest_prod and state_move=='done' and product_prod==product_move:
+                        total_move=move_id.product_qty or 0.0
+                        total_des=total_des+total_move
+                    total_produced=prod_id.product_produced or 0.0
+                    total=total_produced - total_des
             res[id]=total
         return res
         
