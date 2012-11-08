@@ -115,24 +115,24 @@
         <para>[[ repeatIn(objects,'o') ]]</para>
         <section>
         <para>[[ get_total_ifrs_lines(o) ]] </para>
-        <para>[[ get_periods_name(o) ]]</para>
+        <para>[[ get_periods_name_list(o) ]]</para>
 
         <!-- header row table -->
         <blockTable style="header_table_style" colWidths="112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm">
             <tr>
-                <td><para alignment="center">[[get_column_name('0')]]</para></td>
-                <td><para alignment="center">[[get_column_name('1')]]</para></td>
-                <td><para alignment="center">[[get_column_name('2')]]</para></td>
-                <td><para alignment="center">[[get_column_name('3')]]</para></td>
-                <td><para alignment="center">[[get_column_name('4')]]</para></td>
-                <td><para alignment="center">[[get_column_name('5')]]</para></td>
-                <td><para alignment="center">[[get_column_name('6')]]</para></td>
-                <td><para alignment="center">[[get_column_name('7')]]</para></td>
-                <td><para alignment="center">[[get_column_name('8')]]</para></td>
-                <td><para alignment="center">[[get_column_name('9')]]</para></td>
-                <td><para alignment="center">[[get_column_name('10')]]</para></td>
-                <td><para alignment="center">[[get_column_name('11')]]</para></td>
-                <td><para alignment="center">[[get_column_name('12')]]</para></td>
+                <td><para alignment="center">[[get_column_name(0)]]</para></td>
+                <td><para alignment="center">[[get_column_name(1)]]</para></td>
+                <td><para alignment="center">[[get_column_name(2)]]</para></td>
+                <td><para alignment="center">[[get_column_name(3)]]</para></td>
+                <td><para alignment="center">[[get_column_name(4)]]</para></td>
+                <td><para alignment="center">[[get_column_name(5)]]</para></td>
+                <td><para alignment="center">[[get_column_name(6)]]</para></td>
+                <td><para alignment="center">[[get_column_name(7)]]</para></td>
+                <td><para alignment="center">[[get_column_name(8)]]</para></td>
+                <td><para alignment="center">[[get_column_name(9)]]</para></td>
+                <td><para alignment="center">[[get_column_name(10)]]</para></td>
+                <td><para alignment="center">[[get_column_name(11)]]</para></td>
+                <td><para alignment="center">[[get_column_name(12)]]</para></td>
             </tr>
         </blockTable>
 
@@ -141,18 +141,18 @@
         <para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l', 'blockTable') ]]</para>
             <tr>
                 <td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '1') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '2') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '3') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '4') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '5') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '6') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '7') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '8') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '9') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '10') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '11') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '12') ]]</para></td>
             <!--
             HACER: un set tag para imprimir las ultimas dos TD TD { style : _get_td_format()+"_table_style" }
             -->
