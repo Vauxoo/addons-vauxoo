@@ -36,16 +36,15 @@ class mrp_production(osv.osv):
             prod_id=self.browse(cr, uid, id)
             loc_dest_prod=prod_id.location_dest_id and prod_id.location_dest_id.id or ''
             product_prod=prod_id.product_id and prod_id.product_id.id or ''
-            move_list=stock_obj.search(cr, uid, [('production_id', '=', id)])
-            for move in move_list:
-                move_id=stock_obj.browse(cr, uid, move)
+            for move in prod_id.move_created_ids2:
+                move_id=stock_obj.browse(cr, uid, move.id)
                 product_move=move_id.product_id and move_id.product_id.id or ''
                 loc_dest_move=move_id.location_dest_id and move_id.location_dest_id.id or ''
                 state_move=move_id.state or ''
                 if loc_dest_move == loc_dest_prod and state_move=='done' and product_prod==product_move:
                     total_move=move_id.product_qty or 0.0
                     total=total+total_move
-                res[id]=total
+            res[id]=total
         return res
         
     def _product_in_stock(self, cr, uid, ids, field, args, context=None):
@@ -57,9 +56,8 @@ class mrp_production(osv.osv):
             prod_id=self.browse(cr, uid, id)
             loc_dest_prod=prod_id.location_dest_id and prod_id.location_dest_id.id or ''
             product_prod=prod_id.product_id and prod_id.product_id.id or ''
-            move_list=stock_obj.search(cr, uid, [('production_id', '=', id)])
-            for move in move_list:
-                move_id=stock_obj.browse(cr, uid, move)
+            for move in prod_id.move_created_ids2:
+                move_id=stock_obj.browse(cr, uid, move.id)
                 loc_dest_move=move_id.location_dest_id and move_id.location_dest_id.id or ''
                 state_move=move_id.state or ''
                 product_move=move_id.product_id and move_id.product_id.id or ''
@@ -68,7 +66,7 @@ class mrp_production(osv.osv):
                     total_des=total_des+total_move
                 total_produced=prod_id.product_produced or 0.0
                 total=total_produced - total_des
-                res[id]=total
+            res[id]=total
         return res
         
     _columns = {
