@@ -44,5 +44,6 @@ class document_storage(osv.osv):
                         r=open (path + str(name_random), "w")
                         r.write(attachment.db_datas)
                         r.close()
+                        ir_attach_obj.write(cr, uid, [ir], {'store_fname': path+ str(name_random)})
                         ir_attach_obj.write(cr, uid, [ir], {'db_datas': False})
         return True
