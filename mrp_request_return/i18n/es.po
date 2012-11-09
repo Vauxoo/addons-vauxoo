@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-23 23:53+0000\n"
-"PO-Revision-Date: 2012-10-23 18:59-0600\n"
+"PO-Revision-Date: 2012-10-30 12:41-0600\n"
 "Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -179,5 +179,5 @@ msgstr "Cancel"
 #. module: mrp_request_return
 #: field:mrp.request.return.line,location_dest_id:0
 msgid "Dest. Location"
-msgstr "Dest. Location"
+msgstr "Ubicación Dest."
 
