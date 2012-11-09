@@ -54,6 +54,7 @@ class ifrs_report(report_sxw.rml_parse):
             'get_report_title' : self._get_report_title,
             'get_periods_name_list' : self._get_periods_name_list,
             'get_column_name'  : self._get_column_name,
+            'get_amount_value' : self._get_amount_value,
         })
         self.cr = cr
         self.context = context
@@ -117,15 +118,32 @@ class ifrs_report(report_sxw.rml_parse):
             period_list.append((str(ii), period_id, periods.browse(self.cr, self.uid, period_id).name ))
 
         self._period_info_list = period_list
-        
-        for x in self._period_info_list:
-            print x 
 
     def _get_column_name(self, column_num):
 
         """devuelve string con el nombre del periodo que debe titular ese numero de columna"""
 
         return self._period_info_list[column_num][2]
+
+    def _get_amount_value(self, ifrs_line, period_num=None):
+        
+        '''devuelve la cantidad correspondiente al periodo'''
+
+        print "\n_get_amount_value():" 
+
+        context = {}
+        if period_num:
+            period_id = self._period_info_list[period_num][1]
+            context = {'period_from': period_id, 'period_to': period_id}
+        else:
+            context = {'whole_fy': 'True'} 
+
+        ifrs_l_obj = self.pool.get('ifrs.lines')
+
+        print 100*'*'
+        print 'RESULTADO, ',ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
+        print 100*'*'
+        return ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
     #########################################################################################################################
     #~ Format method helpers
 

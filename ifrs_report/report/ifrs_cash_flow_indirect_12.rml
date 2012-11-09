@@ -141,18 +141,18 @@
         <para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l', 'blockTable') ]]</para>
             <tr>
                 <td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '1') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '2') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '3') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '4') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '5') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '6') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '7') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '8') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '9') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '10') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '11') ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount(ifrs_l, '12') ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 1) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 2) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 3) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 4) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 5) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 6) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 7) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 8) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 9) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 10) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 11) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 12) ]]</para></td>
             <!--
             HACER: un set tag para imprimir las ultimas dos TD TD { style : _get_td_format()+"_table_style" }
             -->
