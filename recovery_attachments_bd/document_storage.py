@@ -32,18 +32,19 @@ class document_storage(osv.osv):
     
     def recovery_attachments(self, cr, uid, ids, context=None):
         ir_attach_obj=self.pool.get('ir.attachment')
-        for id in ids:
-            ir_attach=self.browse(cr, uid, id)
-            path=ir_attach.path or False
-            if path:
-                list=ir_attach_obj.search(cr,uid,[])
-                for ir in list:
-                    name_random=self.__get_random_fname(path)
-                    attachment=ir_attach_obj.browse(cr,uid,[ir],context=context)[0]
-                    if attachment.datas_fname and attachment.db_datas:
-                        r=open (path + str(name_random), "w")
-                        r.write(attachment.db_datas)
-                        r.close()
-                        ir_attach_obj.write(cr, uid, [ir], {'store_fname': path+ str(name_random)})
-                        ir_attach_obj.write(cr, uid, [ir], {'db_datas': False})
+        for document_storage_pool in self.browse(cr, uid, ids, context=context):
+            path = document_storage_pool.path or False
+            if path and document_storage_pool.type == 'filestore':
+                document_dir_obj=self.pool.get('document.directory')
+                id_type_int=self.search(cr,uid,[('type', '=', 'filestore')])
+                if id_type_int:
+                    directory_ids = document_dir_obj.search(cr, uid, [('storage_id', '=', id_type_int[0])])
+                    attach_ids = ir_attach_obj.search(cr,uid,[('parent_id', 'in', directory_ids)])
+                    for attachment in ir_attach_obj.browse(cr,uid,attach_ids,context=context):
+                        name_random=self.__get_random_fname(path)
+                        if attachment.db_datas:
+                            r = open(os.path.join(path, name_random), "wb")
+                            r.write(attachment.db_datas)
+                            r.close()
+                            ir_attach_obj.write(cr, uid, [ir], {'store_fname': os.path.join(path, name_random), 'db_datas': False})
         return True
