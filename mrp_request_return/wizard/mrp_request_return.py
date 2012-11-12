@@ -141,7 +141,7 @@ class mrp_request_return_line(osv.osv_memory):
 
 mrp_request_return_line()
 
-class mrp_consume(osv.osv):
+class mrp_consume(osv.osv_memory):
     _inherit = 'mrp.consume'
     
     def action_consume(self, cr, uid, ids, context=None):
@@ -152,6 +152,7 @@ class mrp_consume(osv.osv):
         mrp_production = self.pool.get('mrp.production')
         product_uom_pool=self.pool.get('product.uom')
         stock_picking = self.pool.get('stock.picking')
+        mrp_consume_line = self.pool.get('mrp.consume.line')
         production = mrp_production.browse(cr, uid, mrp_ids, context=context)[0]
         for move in self.browse(cr, uid, ids, context=context):
             for line in move.consume_line_ids:
@@ -159,14 +160,49 @@ class mrp_consume(osv.osv):
                 qty_to_consume = product_uom_pool._compute_qty(cr, uid, line.product_uom.id, line.quantity, to_uom_id=fetch_record.product_uom.id)
                 current_qty = product_uom_pool._compute_qty(cr, uid, fetch_record.product_uom.id, fetch_record.product_qty, to_uom_id=fetch_record.product_uom.id)
                 if qty_to_consume > current_qty:
+                    """
+                    move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {'product_qty':qty_to_consume-current_qty })
+                    mrp_consume_line.write(cr, uid, line.id, {'quantity':current_qty })
+                    print move_id, "move id"
+                    mrp_production.write(cr, uid, context.get('active_ids', False),{'move_lines': [(4, move_id)]}, context=context)
+                    
                     fetch_record.product_qty = qty_to_consume - current_qty
                     fetch_record.production_id = production
-                    print fetch_record.product_qty, "esto tenemos"
-                    #raise osv.except_osv(_('Error!'), _('You can not consume more product of the ones you have to consume. You need to request them first'))
+                    print current_qty, "cantidad de stock move"
+                    #stock_move_obj.write(cr, uid, line.move_id.id, {'product_qty':qty_to_consume})
+                    #mrp_production._make_production_consume_line(cr, uid, fetch_record, False )
+                    """
+                    #lo ke esta bien va abajo de esta linea
+                    move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {'product_qty':qty_to_consume-current_qty })
+                    print move_id,'imprimo move_id'
+                    mrp_production.write(cr, uid, context.get('active_ids', False),{'move_lines': [(4, move_id)]}, context=context)
+                    stock_move_obj.action_consume(cr, uid, [move_id], qty_to_consume-current_qty, line.location_id.id, context=context)
+                    mrp_consume_line.write(cr, uid, line.id, {'quantity':current_qty })
+                    #pickings
+                    fetch_record.production_id = production
+                    fetch_record.product_qty = qty_to_consume - current_qty
                     pick_id = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                     print pick_id, "pick id"
                     stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
                     shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, fetch_record, pick_id, False)
-                    mrp_production._make_production_consume_line(cr, uid, fetch_record, False )
+                    
         return super(mrp_consume, self).action_consume(cr, uid, ids, context)
+    
+    """
+    def action_consume(self, cr, uid, ids, context=None):
+        stock_move_obj = self.pool.get('stock.move')
+        mrp_consume_line = self.pool.get('mrp.consume.line')
+        production = self.pool.get('mrp.production')
+        for move in self.browse(cr, uid, ids, context=context):
+            for line in move.consume_line_ids:
+                fetch_record = stock_move_obj.browse(cr, uid, line.move_id.id, context=context)
+                qty_to_consume = line.quantity / line.product_uom.factor
+                current_qty = fetch_record.product_qty / fetch_record.product_uom.factor
+                if qty_to_consume > current_qty:
+                    move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {'product_qty':qty_to_consume-current_qty })
+                    print move_id,'imprimo move_id'
+                    mrp_production.write(cr, uid, context.get('active_ids', False),{'move_lines': [(4, move_id)]}, context=context)
+                    stock_move_obj.action_consume(cr, uid, [move_id], qty_to_consume-current_qty, line.location_id.id, context=context)
+                    mrp_consume_line.write(cr, uid, line.id, {'quantity':current_qty })
+    """
 mrp_consume()
