@@ -53,7 +53,7 @@ class mrp_request_return(osv.osv_memory):
                 pick_id = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
                 for wiz_move in wizard_moves.re_line_ids:
-                    print wiz_move.move_id, "esto necesitamos \n"
+                    print wiz_move.move_id
                     if wiz_move.product_qty > 0.0:
                         shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move, pick_id, False)
                         mrp_production._make_production_consume_line(cr, uid, wiz_move, False )
