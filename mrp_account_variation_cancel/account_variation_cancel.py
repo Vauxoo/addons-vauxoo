@@ -29,8 +29,8 @@ import decimal_precision as dp
 class mrp_production(osv.osv):
     _inherit='mrp.production'
         
-    def _create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
-        res = super(mrp_production, self)._create_account_variation_move_line(cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=context)
+    def create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
+        res = super(mrp_production, self).create_account_variation_move_line(cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=context)
         for lin in res:
             lin[2]['production_id'] = prod_variation.production_id and prod_variation.production_id.id or False
         return res
@@ -48,12 +48,15 @@ class mrp_production(osv.osv):
             account_move_line_id = account_move_line.search(cr,uid,[('production_id','=',production.id)])
             for move_line in account_move_line.browse(cr, uid, account_move_line_id, context=context):
                 result.setdefault(move_line.move_id.id, production.id)
+                account_move_line.unlink(cr, uid, [move_line.id])
         for lin in result.items():
-            try:
-                account_move.button_cancel(cr, uid, [lin[0]], context=context)
-            except:
-                pass
-            account_move.unlink(cr, uid, [lin[0]])
+            account_production = account_move.browse(cr, uid, lin[0], context=context)
+            if len(account_production.line_id) == 0:
+                try:
+                    account_move.button_cancel(cr, uid, [lin[0]], context=context)
+                except:
+                    pass
+                account_move.unlink(cr, uid, [lin[0]])
         return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
     
 mrp_production()

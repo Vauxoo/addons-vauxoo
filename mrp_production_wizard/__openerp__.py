@@ -25,17 +25,17 @@
 ##############################################################################
 
 {
-    "name": "mrp planified onchange plus account links",
+    "name": "MPR Production Wizard",
     "version": "1.0",
     "author" : "Vauxoo",
     "category": "Generic Modules/Production",
     "website" : "http://www.vauxoo.com/",
-    "description": """When you add a product, it sets automatically the default uom
-    for the product and the name of the product. Adds too a domain to the field
-    product_uom to only show the uom matching the selected product. Also Adds a link
-    from the production order to its account_move_lines
+    "description": """ Add wizard to create a new production order of the
+    selected product in draft state, with the qty added of the selected
+    products. from the stock_picking model
     """,
-    'depends': ['account_relation_move'],
+    'depends': ['mrp_default_location',
+                'mrp_pt_planified'],
     'init_xml': [],
     'update_xml': [
         'mrp_view.xml',

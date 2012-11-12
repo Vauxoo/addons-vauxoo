@@ -32,8 +32,13 @@ class mrp_request_return(osv.osv_memory):
     _name='mrp.request.return'
     _columns={
         're_line_ids' : fields.one2many('mrp.request.return.line','wizard_id','Acreation'),
-        'type' : fields.selection([('request','Request'),('return','Return')], 'Type', required=True)
+        'type' : fields.selection([('request','Request')], 'Type', required=True)
     }
+    
+    _defaults={
+        'type': 'request',
+    }
+    
     def action_request_return(self, cr, uid, ids, context={}):
         stock_picking = self.pool.get('stock.picking')
         mrp_production = self.pool.get('mrp.production')
@@ -73,7 +78,12 @@ class mrp_request_return(osv.osv_memory):
         mrp_id, = mrp_ids
         if 're_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
-            moves = [self._partial_move_for(cr, uid, m, mrp) for m in mrp.product_lines]
+            list_moves=[]
+            for m in mrp.product_lines:
+                type_prod=m.product_id and m.product_id.type or ''
+                if type_prod <> 'service' and type_prod <> '':
+                    list_moves.append(m)
+            moves = [self._partial_move_for(cr, uid, x, mrp) for x in list_moves]
             res.update(re_line_ids=moves)
         return res
 
@@ -99,9 +109,8 @@ class mrp_request_return_line(osv.osv_memory):
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = super(mrp_request_return_line, self).default_get(cr, uid, fields, context=context)
-        mrp_ids = context.get('active_ids', [])
-        if not mrp_ids or (not context.get('active_model') == 'mrp.production') \
-            or len(mrp_ids) != 1:
+        mrp_ids = context.get('ctx', {}).get('active_ids', [])
+        if not mrp_ids or len(mrp_ids) != 1:
             return res
         mrp_id, = mrp_ids
         mrp = self.pool.get('mrp.production').browse(cr, uid, mrp_id, context=context)
@@ -131,3 +140,20 @@ class mrp_request_return_line(osv.osv_memory):
 
 mrp_request_return_line()
 
+class mrp_consume(osv.osv):
+    _inherit = 'mrp.consume'
+    
+    def action_consume(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+        stock_move_obj = self.pool.get('stock.move')
+        qty_to_consume = 0
+        current_qty = 0
+        for move in self.browse(cr, uid, ids, context=context):
+            for line in move.consume_line_ids:
+                fetch_record = stock_move_obj.browse(cr, uid, line.move_id.id, context=context)
+                qty_to_consume = line.quantity / line.product_uom.factor
+                current_qty = fetch_record.product_qty / fetch_record.product_uom.factor
+                if qty_to_consume > current_qty:
+                    raise osv.except_osv(_('Error!'), _('You can not consume more product of the ones you have to consume. You need to request them first'))
+        return super(mrp_consume, self).action_consume(cr, uid, ids, context)
+mrp_consume()

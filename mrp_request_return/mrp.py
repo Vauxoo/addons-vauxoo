@@ -28,10 +28,55 @@ from tools.translate import _
 
 class mrp_production(osv.osv):
     _inherit='mrp.production'
-    
+
     _columns = {
         'picking_ids' : fields.one2many('stock.picking', 'production_id', 'Picking')
     }
+
+    def action_finished_consume(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+
+        stock_picking = self.pool.get('stock.picking')
+        mrp_production2 = self.pool.get('mrp.production')
+        stock_move = self.pool.get('stock.move')
+        production = self.pool.get('mrp.production').browse(cr, uid, ids, context=context)[0]
+
+        for wizard_moves in self.browse(cr, uid, ids, context=context):
+            context['type'] = 'return'
+            pick_id_return = mrp_production2._make_production_internal_shipment2(cr, uid, production, context=context)
+            stock_picking.write(cr, uid, pick_id_return, {'state':'draft', 'auto_picking':False, 'production_id':production.id})
+            for wiz_move2 in wizard_moves.move_lines:
+                if wiz_move2.product_qty > 0.0:
+                    shipment_move_id = mrp_production2._make_production_internal_shipment_line2(cr, uid, production, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
+                    stock_move.write(cr, uid, shipment_move_id, {'state':'draft'})
+        res = super(mrp_production, self).action_finished_consume(cr, uid, ids, context=context)
+        return res
+
+    def _make_production_internal_shipment_line2(self, cr, uid, production, production_line, shipment_id, parent_move_id, destination_location_id=False, context=None):
+        stock_move = self.pool.get('stock.move')
+        date_planned = production.date_planned
+        if production_line.product_id.type not in ('product', 'consu'):
+            return False
+        move_name = _('PROD: %s') % production.name
+        source_location_id = production.location_src_id.id
+
+        if not destination_location_id:
+            destination_location_id = source_location_id
+        return stock_move.create(cr, uid, {
+                        'name': move_name,
+                        'picking_id': shipment_id,
+                        'product_id': production_line.product_id.id,
+                        'product_qty': production_line.product_qty,
+                        'product_uom': production_line.product_uom.id,
+                        'product_uos_qty': production_line.product_uos and production_line.product_uos_qty or False,
+                        'product_uos': production_line.product_uos and production_line.product_uos.id or False,
+                        'date': date_planned,
+                        'move_dest_id': parent_move_id,
+                        'location_id': source_location_id,
+                        'location_dest_id': destination_location_id,
+                        'state': 'waiting',
+                        'company_id': production.company_id.id,
+                })
 
     def _make_production_internal_shipment2(self, cr, uid, production, context=None):
         ir_sequence = self.pool.get('ir.sequence')
@@ -39,7 +84,7 @@ class mrp_production(osv.osv):
         routing_loc = None
         pick_type = 'internal'
         address_id = False
-        
+
         # Take routing address as a Shipment Address.
         # If usage of routing location is a internal, make outgoing shipment otherwise internal shipment
         if production.bom_id.routing_id and production.bom_id.routing_id.location_id:
@@ -60,7 +105,7 @@ class mrp_production(osv.osv):
             'company_id': production.company_id.id,
         })
         return picking_id
-    
+
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
@@ -72,7 +117,7 @@ mrp_production()
 
 class stock_picking(osv.osv):
     _inherit='stock.picking'
-    
+
     _columns = {
         'production_id' : fields.many2one('mrp.production', 'Production')
     }

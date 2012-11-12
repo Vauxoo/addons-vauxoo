@@ -25,3 +25,4 @@
 ##############################################################################
 import stock_location
 import mrp_account_variation
+import mrp_account_variation_price

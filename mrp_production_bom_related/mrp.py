@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: fernandoL (fernando_ld@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,27 +23,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from tools.translate import _
 from osv import osv, fields
 import decimal_precision as dp
 
-class mrp_production_product_line(osv.osv):
-    _inherit = "mrp.production.product.line"
+class mrp_production(osv.osv):
+    _inherit='mrp.production'
     
     _columns = {
-        
+        'bom_qty': fields.related('bom_id', 'product_qty', type='float', string='Bom Qty', 
+            store=True, digits_compute=dp.get_precision('Product UoM'), readonly=True, states={'draft':[('readonly',False)]}, 
+            help="BoM's Quantity to change from production order"
+        ),
+        'bom_uom': fields.related('bom_id', 'product_uom', type='many2one', relation='product.uom', string='Bom UoM', 
+            store=True, readonly=True, states={'draft':[('readonly',False)]}, 
+            help="BoM's UoM to change from production order"
+        ),
     }
-    
-    def onchange_product_scheduled_line(self, cr, uid, ids, product_id):
-        if product_id:
-            new_product_id = [product_id]
-            product_product_obj = self.pool.get('product.product')
-            product_product_data = product_product_obj.browse(cr, uid, new_product_id, context=None)
-            for line in product_product_data:
-                val = {'name' : line.name, 'product_uom' : line.uom_id.id, 'product_qty' : 1}
-                domain_uom = {'product_uom':[('category_id', '=', line.uom_id.category_id.id)]}
-                return {'value': val, 'domain': domain_uom}
-        return {}
-
-mrp_production_product_line()
+mrp_production()
