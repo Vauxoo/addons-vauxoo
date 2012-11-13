@@ -32,7 +32,7 @@
                  update_val = {
                          'product_qty' : quantity_rest,
                          'product_uos_qty' : uos_qty_rest,
-+                        'product_uom' : context.get('product_uom',move.product_uom.id),
++                        'product_uom' : move.product_uom.id,
                          'location_id': location_id or move.location_id.id,
                  }
                  self.write(cr, uid, [move.id], update_val)
