@@ -63,7 +63,7 @@ class mrp_production(osv.osv):
         stock_move = self.pool.get('stock.move')
         for production in self.browse(cr,uid,ids,context=context):
             for moves in production.move_lines:
-                stock_move.write(cr,uid,[moves.id],{'state':'cancel'})
+                stock_move.action_cancel(cr, uid, [moves.id], context=context)
         return True
 
     def action_finish(self,cr,uid,ids,context={}):
