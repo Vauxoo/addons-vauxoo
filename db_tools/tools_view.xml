@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="menu_pacs" name="PACS" parent="base.menu_administration"/>
+    </data>
+</openerp>

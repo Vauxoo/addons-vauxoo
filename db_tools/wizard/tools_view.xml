@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem id="menu_action_db_toolsssssssssss" name="DB toolsssss"/>
+        <record model="ir.ui.view" id="view_db_tools_wizard_form">
+            <field name="name">view.db.tools.wizard.form</field>
+            <field name="model">db.tools</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="DB Tools">
+                    <field name="filter"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="db_tools_wizard_action">
+            <field name="name">DB Tools</field>
+            <field name="res_model">db.tools</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <!--Menus-->
+        
+        <menuitem id="menu_action_db_tools" name="DB tools" parent="base.menu_config"/>
+        <menuitem id="menu_action_db_tools_wizard_form" name="DB tools" parent="menu_action_db_tools"/>
+    </data>
+</openerp>
