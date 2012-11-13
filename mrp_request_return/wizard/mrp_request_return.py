@@ -53,7 +53,6 @@ class mrp_request_return(osv.osv_memory):
                 pick_id = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
                 for wiz_move in wizard_moves.re_line_ids:
-                    print wiz_move.move_id
                     if wiz_move.product_qty > 0.0:
                         shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move, pick_id, False)
                         mrp_production._make_production_consume_line(cr, uid, wiz_move, False )
@@ -153,6 +152,7 @@ class mrp_consume(osv.osv_memory):
         product_uom_pool = self.pool.get('product.uom')
         stock_picking = self.pool.get('stock.picking')
         mrp_consume_line = self.pool.get('mrp.consume.line')
+        pick_id = 0
         production = mrp_production.browse(cr, uid, mrp_ids, context=context)[0]
         for move in self.browse(cr, uid, ids, context=context):
             for line in move.consume_line_ids:
@@ -163,11 +163,12 @@ class mrp_consume(osv.osv_memory):
                     move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {'product_qty':qty_to_consume-current_qty })
                     mrp_production.write(cr, uid, context.get('active_ids', False),{'move_lines': [(4, move_id)]}, context=context)
                     stock_move_obj.action_consume(cr, uid, [move_id], qty_to_consume-current_qty, line.location_id.id, context=context)
-                    mrp_consume_line.write(cr, uid, line.id, {'quantity':current_qty })
+                    mrp_consume_line.write(cr, uid, line.id, {'quantity':current_qty, 'product_uom': fetch_record.product_uom.id})
                     
                     fetch_record.production_id = production
                     fetch_record.product_qty = qty_to_consume - current_qty
-                    pick_id = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
+                    if not pick_id:
+                        pick_id = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                     stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
                     shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, fetch_record, pick_id, False)
         return super(mrp_consume, self).action_consume(cr, uid, ids, context)
