@@ -138,7 +138,12 @@ class mrp_production(osv.osv):
         }
 
         return [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
-
+    
+    def action_production_end(self, cr, uid, ids):
+        res  = super(mrp_production, self).action_production_end(cr, uid, ids)
+        self.action_finish(cr, uid, ids)
+        return res
+    
 mrp_production()
 
 
