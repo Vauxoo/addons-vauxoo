@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <!-- No sera necesario importar el parser -->
         <report
             id="ifrs_report"
             name="ifrs"
@@ -10,7 +11,7 @@
             header="False"
             auto = "False"
             menu="True"
-            /> <!-- No sera necesario importar el parser -->
+            />
 
         <report
             id="ifrs_report_12"
@@ -21,6 +22,6 @@
             header="False"
             auto = "False"
             menu="True"
-            /> <!-- No sera necesario importar el parser -->
+            />
     </data>
 </openerp>

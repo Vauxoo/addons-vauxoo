@@ -61,6 +61,7 @@
         <!-- Data Table Style  -->
 
             <!-- Numeric Data  -->
+            
             <paraStyle
                 name="numeric_data_table_style"
                 fontName="Helvetica"
@@ -69,6 +70,7 @@
             />
 
             <!-- Pappding style for ifrs lines -->
+            
             <paraStyle name="padding_level_0" leftIndent="0"  fontName="Helvetica" fontSize="9.0" alignment="left"/>
             <paraStyle name="padding_level_1" leftIndent="15" fontName="Helvetica" fontSize="9.0" alignment="left"/>
             <paraStyle name="padding_level_2" leftIndent="30" fontName="Helvetica" fontSize="9.0" alignment="left"/>
@@ -78,6 +80,8 @@
             <paraStyle name="padding_level_6" leftIndent="90" fontName="Helvetica" fontSize="9.0" alignment="left"/>
 
         <!-- Table Styles -->
+
+            <!-- Header Row Style  -->
 
             <blockTableStyle id="header_table_style">
                 <blockValign value="CENTER"/>
@@ -89,24 +93,24 @@
 
             <!-- Color Row Styles -->
 
-                <blockTableStyle id="dark_color_data_table_style">
-                    <blockBackground colorName="#ECFFDC" />
-                    <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
-                </blockTableStyle>
+            <blockTableStyle id="dark_color_data_table_style">
+                <blockBackground colorName="#ECFFDC" />
+                <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+            </blockTableStyle>
 
-                <blockTableStyle id="light_color_data_table_style">
-                    <blockBackground colorName="white" />
-                    <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
-                </blockTableStyle>
+            <blockTableStyle id="light_color_data_table_style">
+                <blockBackground colorName="white" />
+                <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+            </blockTableStyle>
 
             <!-- Amount Cell Stype (total or simple) -->
 
-                <blockTableStyle id="total_amount_data_table_style">
-                    <lineStyle kind="LINEBELOW" thickness="1" />
-                </blockTableStyle>
+            <blockTableStyle id="total_amount_data_table_style">
+                <lineStyle kind="LINEBELOW" thickness="1" />
+            </blockTableStyle>
 
-                <blockTableStyle id="simple_amount_data_table_style">
-                </blockTableStyle>
+            <blockTableStyle id="simple_amount_data_table_style">
+            </blockTableStyle>
 
     </stylesheet>
 
