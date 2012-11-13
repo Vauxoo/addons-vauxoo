@@ -74,10 +74,10 @@ class mrp_pt_planified(osv.osv):
     _rec_name='product_id'
     
     _columns = {
-        'product_id' : fields.many2one('product.product','Product'),
-        'quantity' : fields.float('quantity', digits_compute=dp.get_precision('Product UoM')),
+        'product_id' : fields.many2one('product.product','Product', required=True),
+        'quantity' : fields.float('quantity', digits_compute=dp.get_precision('Product UoM'), required=True),
         'production_id' : fields.many2one('mrp.production','production'),
-        'product_uom' : fields.many2one('product.uom','UoM')
+        'product_uom' : fields.many2one('product.uom','UoM', required=True)
     }
     
 mrp_pt_planified()
