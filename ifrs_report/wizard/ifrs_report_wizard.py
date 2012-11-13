@@ -46,11 +46,15 @@ class ifrs_report_wizard(osv.osv_memory):
             period_id = ids[0]
         return period_id
 
-    def print_report(self, cr, uid, context={}):
-
-        """ Llama a imprimir el reporte """
-        #~ NOTAK; Pendientes... TODO averiguar como hacer para que el boton mande a imprimir el reporte
-        return True
+    def print_report(self, cr, uid, ids, context={}):
+        datas = {'ids': context.get('active_ids', [])}
+        wizard_ifrs = self.browse(cr, uid, ids, context=context)[0]
+        datas['period'] = wizard_ifrs.period.id
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'ifrs',
+            'datas' : datas
+       }
 
 ifrs_report_wizard()
 

@@ -126,7 +126,7 @@
 
         <para>[[ repeatIn(objects,'o') ]]</para>
         <section>
-        <para>[[ get_total_ifrs_lines(o) ]] </para>
+        <para>[[ get_total_ifrs_lines(o, data['period']) ]] </para>
 
         <!-- header row table -->
         <blockTable style="header_table_style" colWidths="155.0mm,40.0mm">

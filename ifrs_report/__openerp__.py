@@ -36,6 +36,7 @@
     "update_xml" : [
         'view/ifrs_view.xml',
         'report/report_ifrs.xml',
+        'wizard/ifrs_report_wizard_view.xml'
     ],
     "active": False,
     "installable": True

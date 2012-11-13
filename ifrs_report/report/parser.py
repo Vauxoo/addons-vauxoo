@@ -147,7 +147,9 @@ class ifrs_report(report_sxw.rml_parse):
     #########################################################################################################################
     #~ Format method helpers
 
-    def _get_total_ifrs_lines(self, ifrs_brws):
+    def _get_total_ifrs_lines(self, ifrs_brws, period):
+        print period,'imprimo period'
+        print ifrs_brws,'imprimo ifrs_brws'
         res = 0
         for ifrs_line in ifrs_brws.ifrs_lines_ids:
             res += 1
