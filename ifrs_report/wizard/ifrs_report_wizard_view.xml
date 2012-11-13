@@ -1,0 +1,39 @@
+<!--
+    NOTAK;  no funcional todavia. probar...
+-->
+
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_ifrs_report" model="ir.ui.view">
+            <field name="name">ifrs.report.wizard.form</field>
+            <field name="model">ifrs.report.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="IFRS Report">
+                    <separator string="IFRS Report Options" colspan="4"/>
+                    <group colspan="4" >
+                         <field name="period"/>
+                    </group>
+                    <separator colspan="4"/>
+                    <group colspan="4" col="6">
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                        <button string='Create' icon="gtk-execute" name="print_report" type="object"/>
+                   </group>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_ifrs_report" model="ir.actions.act_window">
+            <field name="name">IFRS Report</field>
+            <field name="res_model">ifrs.report.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+           <field name="view_id" ref="view_ifrs_report"/>
+           <field name="target">new</field>
+        </record>
+
+
+    </data>
+</openerp>
