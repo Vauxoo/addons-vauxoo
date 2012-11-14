@@ -80,5 +80,12 @@ class mrp_pt_planified(osv.osv):
         'product_uom' : fields.many2one('product.uom','UoM', required=True)
     }
     
+    def on_change_product_uom(self, cr, uid, ids, product_id):
+        product_product = self.pool.get('product.product')
+        if product_id:
+            product = product_product.browse(cr, uid, product_id)
+            return {'value' : { 'product_uom': product.uom_id and product.uom_id.id}}
+        return {'value' : { 'product_uom' : False}}
+    
 mrp_pt_planified()
 
