@@ -34,19 +34,19 @@ class mrp_request_return(osv.osv_memory):
         're_line_ids' : fields.one2many('mrp.request.return.line','wizard_id','Acreation'),
         'type' : fields.selection([('request','Request')], 'Type', required=True)
     }
-    
+
     _defaults={
         'type': 'request',
     }
-    
+
     def action_request_return(self, cr, uid, ids, context={}):
         stock_picking = self.pool.get('stock.picking')
         mrp_production = self.pool.get('mrp.production')
         stock_move = self.pool.get('stock.move')
-        
+
         mrp_ids = context.get('active_ids', [])
         production = self.pool.get('mrp.production').browse(cr, uid, mrp_ids, context=context)[0]
-        
+
         for wizard_moves in self.browse(cr, uid, ids, context=context):
             if wizard_moves.type == 'request':
                 context['type'] = wizard_moves.type
@@ -54,20 +54,20 @@ class mrp_request_return(osv.osv_memory):
                 stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
                 for wiz_move in wizard_moves.re_line_ids:
                     if wiz_move.product_qty > 0.0:
-                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move, pick_id, False)
+                        shipment_move_id = mrp_production._make_production_internal_shipment_line2(cr, uid, production, wiz_move, pick_id, False)
                         mrp_production._make_production_consume_line(cr, uid, wiz_move, False )
-                            
+
             if wizard_moves.type == 'return':
                 context['type'] = wizard_moves.type
                 pick_id_return = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id_return, {'state':'draft', 'auto_picking':False, 'production_id':production.id})
                 for wiz_move2 in wizard_moves.re_line_ids:
                     if wiz_move2.product_qty > 0.0:
-                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
+                        shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, production, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
                         stock_move.write(cr, uid, shipment_move_id, {'state':'draft'})
 
         return {}
-    
+
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = super(mrp_request_return, self).default_get(cr, uid, fields, context=context)
@@ -105,7 +105,7 @@ mrp_request_return()
 class mrp_request_return_line(osv.osv_memory):
     _name='mrp.request.return.line'
     _rec_name = 'product_id'
-    
+
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = super(mrp_request_return_line, self).default_get(cr, uid, fields, context=context)
@@ -119,7 +119,7 @@ class mrp_request_return_line(osv.osv_memory):
             'location_dest_id' : mrp.location_src_id.id,
             'production_id' : mrp.id})
         return res
-    
+
     _columns = {
         'product_id' : fields.many2one('product.product', string="Product", required=True),
         'product_qty' : fields.float("Quantity", digits_compute=dp.get_precision('Product UoM'), required=True),
@@ -132,7 +132,7 @@ class mrp_request_return_line(osv.osv_memory):
         'product_uos_qty' : fields.float('Quantity UoS'),
         'wizard_id' : fields.many2one('mrp.request.return', string="Wizard"),
     }
-    
+
     def on_change_product_uom(self, cr, uid, ids, product_id):
         product_product = self.pool.get('product.product')
         product = product_product.browse(cr, uid, product_id)
@@ -140,20 +140,37 @@ class mrp_request_return_line(osv.osv_memory):
 
 mrp_request_return_line()
 
-class mrp_consume(osv.osv):
+class mrp_consume(osv.osv_memory):
     _inherit = 'mrp.consume'
     
     def action_consume(self, cr, uid, ids, context=None):
         if context is None: context = {}
+        context['type'] = 'request'
+        mrp_ids = context.get('active_ids', [])
         stock_move_obj = self.pool.get('stock.move')
-        qty_to_consume = 0
-        current_qty = 0
+        mrp_production = self.pool.get('mrp.production')
+        product_uom_pool = self.pool.get('product.uom')
+        stock_picking = self.pool.get('stock.picking')
+        mrp_consume_line = self.pool.get('mrp.consume.line')
+        pick_id = 0
+        production = mrp_production.browse(cr, uid, mrp_ids, context=context)[0]
         for move in self.browse(cr, uid, ids, context=context):
             for line in move.consume_line_ids:
                 fetch_record = stock_move_obj.browse(cr, uid, line.move_id.id, context=context)
-                qty_to_consume = line.quantity / line.product_uom.factor
-                current_qty = fetch_record.product_qty / fetch_record.product_uom.factor
+                qty_to_consume = product_uom_pool._compute_qty(cr, uid, line.product_uom.id, line.quantity, to_uom_id=fetch_record.product_uom.id)
+                current_qty = product_uom_pool._compute_qty(cr, uid, fetch_record.product_uom.id, fetch_record.product_qty, to_uom_id=fetch_record.product_uom.id)
                 if qty_to_consume > current_qty:
-                    raise osv.except_osv(_('Error!'), _('You can not consume more product of the ones you have to consume. You need to request them first'))
+                    move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {'product_qty':qty_to_consume-current_qty })
+                    mrp_production.write(cr, uid, context.get('active_ids', False),{'move_lines': [(4, move_id)]}, context=context)
+                    stock_move_obj.action_consume(cr, uid, [move_id], qty_to_consume-current_qty, line.location_id.id, context=context)
+                    mrp_consume_line.write(cr, uid, line.id, {'quantity':current_qty, 'product_uom': fetch_record.product_uom.id})
+                    
+                    fetch_record.production_id = production
+                    fetch_record.product_qty = qty_to_consume - current_qty
+                    if not pick_id:
+                        pick_id = mrp_production._make_production_internal_shipment2(cr, uid, production, context=context)
+                    stock_picking.write(cr, uid, pick_id, {'state':'draft', 'production_id':production.id})
+                    shipment_move_id = mrp_production._make_production_internal_shipment_line(cr, uid, fetch_record, pick_id, False)
         return super(mrp_consume, self).action_consume(cr, uid, ids, context)
+    
 mrp_consume()
