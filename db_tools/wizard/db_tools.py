@@ -24,11 +24,62 @@
 #
 ##############################################################################
 from osv import osv, fields
+import os
 
 class db_tools(osv.osv_memory):
     _name = 'db.tools'
     
+    def _list_db(self):
+        res=super(rpc_session, self).list_db(self.server)
+        return True
+    
+    def confirm_data(self, cr, uid, ids, field, args, context=None):
+        res = {}
+        data_server_obj = self.pool.get('data.server')
+        data_server = data_server_obj.confirm_data2(cr, uid, ids, context=context)
+        for id in ids:
+            res[id] = data_server
+        return res
+    
     _columns = {
-        'filter':fields.selection([ ('backup','Backup'), ('restore','Restore')], 'Filter',),
+        'filter' : fields.selection([ ('backup','Backup'), ('restore','Restore')], 'Filter',),
+        'server': fields.function(confirm_data, method=True, store=False, string='Server', type='char'),
+        'password': fields.char('Password', size=64, required=True),
+        'path_db': fields.char('Path Data Base', size=256,required=True),
+        'name_db': fields.char('Name Data Base', size=128,required=True),
+        #~ 'list_db' : fields.function(_list_db, method=True, store=False, string='Data Base'),
     }
+    
+    _defaults = {
+        'server' : 'socket://localhost:8070'
+        }
+        
+    def find_db(self):
+        return True
 db_tools()
+
+class data_server(osv.osv_memory):
+    _name = 'data.server'
+    
+    _columns = {
+        'server' : fields.char('Server', size=256, required=True),
+        'port' : fields.char('Port', size=16, required=True),
+        'protocol_conection': fields.selection([ ('net', 'NET-RPC (faster)(port : 8070)'), ('xml_rcp', 'XML-RCP secure'), ('xml_port', 'XML-RCP (port : 8069)')], 'Protocol Conection',),
+        }
+        
+    _defaults = {
+        'protocol_conection' : 'net'
+        }
+        
+    def confirm_data2(self, cr, uid, ids, context=None):
+        data = self.read(cr, uid, ids, [], context=context)[0]
+        server = data.get('server', False)
+        port = data.get('port', False)
+        res = 'socket:'+ os.sep + os.sep + server + ':' + port
+        return res
+        
+    def confirm_data(self, cr, uid, ids, context=None):
+        self.confirm_data2(cr, uid, ids, context=context)
+        return {}
+        
+data_server()

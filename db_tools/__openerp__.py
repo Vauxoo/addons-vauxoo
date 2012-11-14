@@ -39,6 +39,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "wizard/datas_server_view.xml",
         "wizard/tools_view.xml",
     ],
     "installable" : True,
