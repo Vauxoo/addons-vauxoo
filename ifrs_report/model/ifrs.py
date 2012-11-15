@@ -56,7 +56,7 @@ class ifrs_ifrs(osv.osv):
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
         context.update({'whole_fy':True})
-        self.write(cr,uid,ids,{'do_compute':True},context=context)
+        return self.write(cr,uid,ids,{'do_compute':True},context=context)
 
 ifrs_ifrs()
 
@@ -251,24 +251,24 @@ class ifrs_lines(osv.osv):
             ],
             string = 'Constant Type',
             required = False ),
-		'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
+        'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
             store={
                     'ifrs.ifrs':(_get_changes_on_ifrs,['do_compute'],15)
             }
             ),
 
-		'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
+        'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
 
         
-     	'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
+        'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
 
-		'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
+        'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
 
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
 
-	'level': fields.function(_get_level, string='Level', method=True, type='integer',
+    'level': fields.function(_get_level, string='Level', method=True, type='integer',
          store={
             'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
          }),
@@ -311,15 +311,15 @@ class ifrs_lines(osv.osv):
 
     _defaults = {
         'type' : 'abstract',
-		#'sequence': lambda obj, cr, uid, context: uid,
+        #'sequence': lambda obj, cr, uid, context: uid,
     }
 
 
     def _check_description(self, cr, user, ids):
         for s in self.browse(cr,user,ids):
-			#if s.type=='total' and s.parent_id.type!='abstract':
+            #if s.type=='total' and s.parent_id.type!='abstract':
             #    return False
-			pass
+            pass
         return True
     
     _constraints = [
