@@ -89,6 +89,10 @@ class sprint_kanban_tasks(osv.osv):
     _columns={
         'use_phases': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),
         'sprint_id':fields.many2one('sprint.kanban','Sprint',ondelete="cascade"),
+        'url_branch': fields.char('Url Branch',264),
+		'merge_proposal': fields.char('Merge Proposal',264),
+		'blueprint': fields.char('Blueprint',264),
+		'res_id': fields.char('Revno',64),
              
  }
 sprint_kanban_tasks()
