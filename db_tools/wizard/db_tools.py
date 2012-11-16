@@ -61,8 +61,8 @@ class db_tools(osv.osv_memory):
         #~ print self.read(cr, uid, context.get('active_ids', []),['server'])
         for wiz in form:
             print wiz
-            print wiz.server
-            res[wiz.id]=wiz.server
+            #~ print wiz.server
+            #~ res[wiz.id]=wiz.server
         uri = 'http://localhost:' + '8069'
         conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
         db_list = self.execute(conn,'list')
@@ -81,8 +81,8 @@ class db_tools(osv.osv_memory):
         'path_db': fields.char('Path Data Base', size=256,required=True),
         'name_db': fields.char('Name Data Base', size=128,required=True),
         #~ 'list_db' : fields.function(list_db, method=True, store=False, string='Data Base', type='selection', selection = [('9','9')] readonly=False),
-        'list_db' : fields.function(list_db, method=True, store=False, string='Data Base', type='selection',),
-        #~ 'list_db' : fields.selection(list_db, 'Data Base'),
+        'list_db2' : fields.function(list_db, method=True, store=False, string='Data Base', selection = [('9','9')], type='selection',),
+        'list_db' : fields.selection(list_db, 'Data Base'),
     }
     
     _defaults = {
@@ -127,13 +127,13 @@ class db_tools(osv.osv_memory):
     #        print db_list,'imprimo dbname'
         return True
         
-    def find_db(self):
+    def find_db(self, cr, uid, ids, context=None):
         return True
     
-    def confirm_action(self):
+    def confirm_action(self, cr, uid, ids, context=None):
         return {}
         
-    def cancel_action(self):
+    def cancel_action(self, cr, uid, ids, context=None):
         return {}
 db_tools()
 
