@@ -24,38 +24,117 @@
 #
 ##############################################################################
 from osv import osv, fields
+import xmlrpclib
+import ConfigParser
+import optparse
+import sys
+import thread
+import threading
 import os
+import time
+import pickle
+import base64
+import socket
+uri = 'http://localhost:' + '8069'
+#~ def list_db(uri):
+    #~ conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
+    #~ db_list = self.execute(conn,'list')
+    #~ list = []
+    #~ for db in db_list:
+        #~ list.append((db.lower(), db))
+    #~ print list,'imprimo list'
+    #~ return list
 
 class db_tools(osv.osv_memory):
     _name = 'db.tools'
     
-    def _list_db(self):
-        res=super(rpc_session, self).list_db(self.server)
-        return True
     
-    def confirm_data(self, cr, uid, ids, field, args, context=None):
-        res = {}
-        data_server_obj = self.pool.get('data.server')
-        data_server = data_server_obj.confirm_data2(cr, uid, ids, context=context)
-        for id in ids:
-            res[id] = data_server
+    def lista_db(self, cr, uid, ids):
+        uri = 'http://localhost:' + '8069'
+        res = self.list_db(cr, uid, uri)
+        print '7'
         return res
-    
+        
+    def list_db(self, cr, uid, ids, field_name, args, context=None):
+        res = {}
+        form = self.browse(cr, uid, ids, context=context)
+        #~ print self.read(cr, uid, context.get('active_ids', []),['server'])
+        for wiz in form:
+            print wiz
+            print wiz.server
+            res[wiz.id]=wiz.server
+        uri = 'http://localhost:' + '8069'
+        conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
+        db_list = self.execute(conn,'list')
+        list = []
+        for db in db_list:
+            list.append((db.lower(), db))
+        print list,'imprimo list'
+        return res
+        
+
+            
     _columns = {
         'filter' : fields.selection([ ('backup','Backup'), ('restore','Restore')], 'Filter',),
-        'server': fields.function(confirm_data, method=True, store=False, string='Server', type='char'),
+        'server': fields.char('Server', size=128, readonly=True),
         'password': fields.char('Password', size=64, required=True),
         'path_db': fields.char('Path Data Base', size=256,required=True),
         'name_db': fields.char('Name Data Base', size=128,required=True),
-        #~ 'list_db' : fields.function(_list_db, method=True, store=False, string='Data Base'),
+        #~ 'list_db' : fields.function(list_db, method=True, store=False, string='Data Base', type='selection', selection = [('9','9')] readonly=False),
+        'list_db' : fields.function(list_db, method=True, store=False, string='Data Base', type='selection',),
+        #~ 'list_db' : fields.selection(list_db, 'Data Base'),
     }
     
     _defaults = {
-        'server' : 'socket://localhost:8070'
+        'server' : 'socket://localhost:8070',
+        'filter' : 'backup'
         }
+        
+    def execute(self, connector, method, *args):
+        global wait_count
+        res = False
+        try:
+            res = getattr(connector,method)(*args)
+        except socket.error,e:
+            if e.args[0] == 111:
+                if wait_count > wait_limit:
+                    print "Server is taking too long to start, it has exceeded the maximum limit of %d seconds."%(wait_limit)
+                    clean()
+                    sys.exit(1)
+                print 'Please wait %d sec to start server....'%(waittime)
+                wait_count += 1
+                time.sleep(waittime)
+                res = execute(connector, method, *args)
+            else:
+                raise e
+        wait_count = 0
+        return res
+        
+    def drop_db(self, uri, dbname):
+        conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
+        db_list = execute(conn,'list')
+        filename=('%s_%s.sql' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
+        dump_db64=execute(conn, 'dump', 'admin', dbname)
+        dump = base64.decodestring(dump_db64)
+        f = file(filename, 'wb')
+        f.write(dump)
+        f.close()
+        f = file(filename, 'rb')
+        data_b64 = base64.encodestring(f.read())
+        f.close()
+        execute(conn, 'restore', 'admin', 'julio', data_b64)
+    #    if dbname in db_list:
+    #        print db_list,'imprimo dbname'
+        return True
         
     def find_db(self):
         return True
+    
+    def confirm_action(self):
+        return {}
+        
+    def cancel_action(self):
+        return {}
 db_tools()
 
 class data_server(osv.osv_memory):
@@ -72,10 +151,19 @@ class data_server(osv.osv_memory):
         }
         
     def confirm_data2(self, cr, uid, ids, context=None):
-        data = self.read(cr, uid, ids, [], context=context)[0]
-        server = data.get('server', False)
-        port = data.get('port', False)
-        res = 'socket:'+ os.sep + os.sep + server + ':' + port
+        db_tools_obj = self.pool.get('db.tools')
+        id_wiz_tools = context.get('active_id')
+        data = self.browse(cr, uid, ids[0])
+        server = data.server or ''
+        port = data.port or ''
+        val_prot= data.protocol_conection
+        if val_prot == 'net':
+            res = 'socket:'+ os.sep + os.sep + server + ':' + port
+        elif val_prot == 'xml_rcp':
+            res = 'https:'+ os.sep + os.sep + server + ':' + portlocalhost
+        elif val_prot == 'xml_port':
+            res = 'http:'+ os.sep + os.sep + server + ':' + portlocalhost
+        db_tools_obj.write(cr, uid, id_wiz_tools, {'server': res})
         return res
         
     def confirm_data(self, cr, uid, ids, context=None):
