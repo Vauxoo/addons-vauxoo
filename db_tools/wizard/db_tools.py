@@ -55,12 +55,13 @@ class db_tools(osv.osv_memory):
         print '7'
         return res
         
-    def list_db(self, cr, uid, ids, field_name, args, context=None):
+    #~ def list_db(self, cr, uid, ids, field_name, args, context=None):
+    def list_db(self, cr, uid, context=None):
         res = {}
-        form = self.browse(cr, uid, ids, context=context)
+        #~ form = self.browse(cr, uid, context.get('active_ids', []))
         #~ print self.read(cr, uid, context.get('active_ids', []),['server'])
-        for wiz in form:
-            print wiz
+        #~ for wiz in self.browse(cr, uid, context.get('active_ids', [])):
+            #~ print wiz
             #~ print wiz.server
             #~ res[wiz.id]=wiz.server
         uri = 'http://localhost:' + '8069'
@@ -70,18 +71,17 @@ class db_tools(osv.osv_memory):
         for db in db_list:
             list.append((db.lower(), db))
         print list,'imprimo list'
-        return res
+        return list
         
 
             
     _columns = {
-        'filter' : fields.selection([ ('backup','Backup'), ('restore','Restore')], 'Filter',),
+        'filter' : fields.selection([ ('backup','Backup'), ('restore_backup','Restore & Backup')], 'Filter',),
         'server': fields.char('Server', size=128, readonly=True),
         'password': fields.char('Password', size=64, required=True),
-        'path_db': fields.char('Path Data Base', size=256,required=True),
+        #~ 'path_db': fields.char('Path Data Base', size=256,required=True),
         'name_db': fields.char('Name Data Base', size=128,required=True),
-        #~ 'list_db' : fields.function(list_db, method=True, store=False, string='Data Base', type='selection', selection = [('9','9')] readonly=False),
-        'list_db2' : fields.function(list_db, method=True, store=False, string='Data Base', selection = [('9','9')], type='selection',),
+        #~ 'list_db' : fields.function(list_db, method=True, store=False, string='Data Base', selection = [('9','9')], type='selection',),
         'list_db' : fields.selection(list_db, 'Data Base'),
     }
     
@@ -110,11 +110,14 @@ class db_tools(osv.osv_memory):
         wait_count = 0
         return res
         
-    def drop_db(self, uri, dbname):
+    #~ def drop_db(self, uri, dbname):
+    def drop_db(self, cr, uid, ids, context=None):
+        uri = 'http://localhost:' + '8069'
+        dbname = 'sys_08_11_12'
         conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
-        db_list = execute(conn,'list')
+        db_list = self.execute(conn,'list')
         filename=('%s_%s.sql' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
-        dump_db64=execute(conn, 'dump', 'admin', dbname)
+        dump_db64 = self.execute(conn, 'dump', 'admin', dbname)
         dump = base64.decodestring(dump_db64)
         f = file(filename, 'wb')
         f.write(dump)
@@ -122,19 +125,17 @@ class db_tools(osv.osv_memory):
         f = file(filename, 'rb')
         data_b64 = base64.encodestring(f.read())
         f.close()
-        execute(conn, 'restore', 'admin', 'julio', data_b64)
+        self.execute(conn, 'restore', 'admin', 'admin', data_b64)
     #    if dbname in db_list:
     #        print db_list,'imprimo dbname'
         return True
         
-    def find_db(self, cr, uid, ids, context=None):
-        return True
+    #~ def find_db(self, cr, uid, ids, context=None):
+        #~ return True
     
     def confirm_action(self, cr, uid, ids, context=None):
         return {}
         
-    def cancel_action(self, cr, uid, ids, context=None):
-        return {}
 db_tools()
 
 class data_server(osv.osv_memory):

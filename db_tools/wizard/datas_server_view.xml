@@ -10,7 +10,8 @@
                     <field name="server" colspan="4"/>
                     <field name="port" colspan="4"/>
                     <field name="protocol_conection" colspan="4"/>
-                    <button name="confirm_data" string="Confirm" type="object" icon="terp-gtk-go-back-ltr"/>
+                    <button string="Cancel" special="cancel" icon="gtk-cancel" colspan="2"/>
+                    <button name="confirm_data" string="Confirm" type="object" icon="terp-gtk-go-back-ltr" colspan="2"/>
                 </form>
             </field>
         </record>

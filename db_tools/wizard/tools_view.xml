@@ -12,9 +12,10 @@
 <!--
                     <field name="path_db" attrs="{'invisible':[('filter','=','backup')]}"/>
 -->
+<!--
                     <field name="path_db"/>
                     <button name="find_db" string="Find DB" type="action" icon="terp-gtk-go-back-ltr" attrs="{'invisible':[('filter','=','backup')]}"/>
-                    <newline/>
+-->
                     <field name="server"/>
                     <button name="%(action_data_server_wizard)d" string="Change Server" type="action" icon="terp-gtk-go-back-ltr"/>
                     <newline/>
@@ -27,8 +28,8 @@
                     <field name="list_db" colspan="4" attrs="{'invisible':[('filter','=','restore')]}"/>
 -->
                     <field name="list_db" colspan="4"/>
-                    <button name="cancel_action" string="Cancel" type="object" icon="gtk-stop"/>
-                    <button name="confirm_action" string="Confirm" type="object" icon="terp-gtk-go-back-ltr"/>
+                    <button string="Cancel" special="cancel" icon="gtk-cancel" colspan="2"/>
+                    <button name="drop_db" string="Confirm" type="object" icon="terp-gtk-go-back-ltr" colspan="2"/>
                 </form>
             </field>
         </record>
