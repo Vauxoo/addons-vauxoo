@@ -35,7 +35,7 @@ class ifrs_report(report_sxw.rml_parse):
     _iter_record = 0
     _total_record = 0
     _period_info_list = []    #~ [ 0 : period_enumerate, 1 : period_id, 2 : period_name ]
-    _title_line = 'Flujo de efectivo por las actividades operativas:'
+    _title_line = ' '
 
     def __init__(self, cr, uid, name, context):
         super(ifrs_report, self).__init__(cr, uid, name, context=context)
@@ -47,7 +47,7 @@ class ifrs_report(report_sxw.rml_parse):
             #~ Format method helpers
             'get_total_ifrs_lines': self._get_total_ifrs_lines,
             'get_padding_level' : self._get_padding_level,
-            'get_line_color' : self._get_line_color,
+            'get_row_style' : self._get_row_style,
             'get_td_format' : self._get_td_format,
             'get_amount_format' : self._get_amount_format,
             #~ Dinamic data
@@ -96,11 +96,9 @@ class ifrs_report(report_sxw.rml_parse):
     #~ Dinamic Data
 
     def _get_report_title(self, ifrs_doc):
-        
-        """devuelve la cadena con el nombre del reporte segun sea la pagina para el caso de imprimir varios reportes"""
-        
-        print "\n_get_report_title():" + str(ifrs_doc.title)
-        #~ hacer iterar en los objetos tomados y devolver consulta de titulo
+
+        """ Return the current IFRS doc name """
+        #~ TODO al agregar el campo de codigo en el ifrs concatenar cadena
         return str(ifrs_doc.title)
 
     def _get_periods_name_list(self, ifrs_obj):
@@ -187,37 +185,20 @@ class ifrs_report(report_sxw.rml_parse):
         #~ OJO::: cuidado como se utiliza el level_padding = 0
         #~ TODO: remake with new modeling of ifrs.ifrs models
 
-    def _get_line_color(self):
-        res_color = "dark_color"
+    def _get_row_style(self):
 
-        if self._total_record % 2:
-            par = True
-        else:
-            par = False
-
-        #~ NOTAK; probar optimizacion
-        #~ par = True if self._total_record % 2 else False
-
+        """ Row Style """
 
         if self._iter_record == self._total_record:
-            res_color = "light_color"
+            res_style = "first"
         else:
-            if par:
-                if self._iter_record % 2:
-                    res_color = "light_color"
-                else:
-                    res_color = "dark_color"
+            if self._iter_record % 2:
+                res_style = "dark_color"
             else:
-                if self._iter_record % 2:
-                    res_color = "dark_color"
-                else:
-                    res_color = "light_color"
-
-        #~ NOTAK; probar optimizacion
-        #~ res_color = "light_color" if self._iter_record == self._total_record or par and self._iter_record % 2 or !par and !self._iter_record % 2 else "dark_color"
+                res_style = "light_color"
 
         self._iter_record-=1
-        return res_color
+        return res_style
 
     #~ NOTAK; No la he utilizado todavia
     def _get_amount_format(self, amount):

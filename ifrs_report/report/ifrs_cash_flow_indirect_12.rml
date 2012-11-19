@@ -6,17 +6,6 @@
 
         <pageGraphics>
 
-            <setFont name="Helvetica-Oblique" size="8.0"/>
-
-            <!-- BANNER TITLES -->
-            <place x="10.0mm"     y="234.4mm"    width="412mm"  height="35.0mm">
-                <blockTable colWidths="412mm" rowHeights="7mm" style="TITLETABLE">
-                    <tr><td><para style="TITLE">[[ company.name.upper() ]]</para></td></tr>
-                    <tr><td><para style="TITLE">[[ get_report_title(o) ]]</para></td></tr>
-                    <tr><td><para style="FISCAL"> Año Terminado el [[ o.fiscalyear_id.date_stop ]]</para></td></tr>
-                </blockTable>
-            </place>
-
             <!-- COMPANY LOGO -->
             <image x="12.0mm" y="252.0mm" height="15mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
 
@@ -40,7 +29,6 @@
 
             <paraStyle
                 name="TITLE"
-                alignment="CENTER"
                 fontName="Helvetica-Bold"
                 fontSize="10.0"
                 textColor="black"
@@ -48,17 +36,22 @@
 
             <paraStyle
                 name="FISCAL"
-                alignment="CENTER"
                 fontName="Helvetica"
                 fontSize="10.0"
                 textColor="black"
             />
 
-            <blockTableStyle id="TITLETABLE">
-                <blockValign value="TOP"/>
-            </blockTableStyle>
+        <!-- Pappding style for ifrs lines -->
 
-        <!-- Data Table Style  -->
+            <paraStyle name="padding_level_0" leftIndent="0"  fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_1" leftIndent="15" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_2" leftIndent="30" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_3" leftIndent="45" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_4" leftIndent="60" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_5" leftIndent="75" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_6" leftIndent="90" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+
+        <!-- Data Table Styles -->
 
             <!-- Numeric Data  -->
             
@@ -69,48 +62,40 @@
                 alignment="right"
             />
 
-            <!-- Pappding style for ifrs lines -->
-            
-            <paraStyle name="padding_level_0" leftIndent="0"  fontName="Helvetica" fontSize="9.0" alignment="left"/>
-            <paraStyle name="padding_level_1" leftIndent="15" fontName="Helvetica" fontSize="9.0" alignment="left"/>
-            <paraStyle name="padding_level_2" leftIndent="30" fontName="Helvetica" fontSize="9.0" alignment="left"/>
-            <paraStyle name="padding_level_3" leftIndent="45" fontName="Helvetica" fontSize="9.0" alignment="left"/>
-            <paraStyle name="padding_level_4" leftIndent="60" fontName="Helvetica" fontSize="9.0" alignment="left"/>
-            <paraStyle name="padding_level_5" leftIndent="75" fontName="Helvetica" fontSize="9.0" alignment="left"/>
-            <paraStyle name="padding_level_6" leftIndent="90" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <!-- Row Styles -->
 
-        <!-- Table Styles -->
+                <blockTableStyle id="header_table_style">
+                    <blockValign value="CENTER"/>
+                    <blockAlignment value="CENTER"/>
+                    <lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
+                    <blockFont name="Helvetica" size="9.0" start="1,0" stop="-1,0"/>
+                    <blockBackground colorName="#ECFFDC"/>
+                </blockTableStyle>
 
-            <!-- Header Row Style  -->
+                <blockTableStyle id="first_row_style">
+                    <blockBackground colorName="#ECFFDC"/>
+                    <lineStyle kind="INNERGRID" colorName="black" thickness="0"/>
+                    <lineStyle kind="LINEABOVE" colorName="black" thickness="1"/>
+                </blockTableStyle>
 
-            <blockTableStyle id="header_table_style">
-                <blockValign value="CENTER"/>
-                <blockAlignment value="CENTER"/>
-                <lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
-                <blockFont name="Helvetica" size="9.0" start="1,0" stop="-1,0"/>
-                <blockBackground colorName="#ECFFDC"/>
-            </blockTableStyle>
+                <blockTableStyle id="dark_color_row_style">
+                    <blockBackground colorName="#ECFFDC"/>
+                    <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+                </blockTableStyle>
 
-            <!-- Color Row Styles -->
-
-            <blockTableStyle id="dark_color_data_table_style">
-                <blockBackground colorName="#ECFFDC" />
-                <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
-            </blockTableStyle>
-
-            <blockTableStyle id="light_color_data_table_style">
-                <blockBackground colorName="white" />
-                <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
-            </blockTableStyle>
+                <blockTableStyle id="light_color_row_style">
+                    <blockBackground colorName="white"/>
+                    <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
+                </blockTableStyle>
 
             <!-- Amount Cell Stype (total or simple) -->
 
-            <blockTableStyle id="total_amount_data_table_style">
-                <lineStyle kind="LINEBELOW" thickness="1" />
-            </blockTableStyle>
+                <blockTableStyle id="total_amount_row_style">
+                    <lineStyle kind="LINEBELOW" thickness="1" />
+                </blockTableStyle>
 
-            <blockTableStyle id="simple_amount_data_table_style">
-            </blockTableStyle>
+                <blockTableStyle id="simple_amount_row_style">
+                </blockTableStyle>
 
     </stylesheet>
 
@@ -118,6 +103,12 @@
 
         <para>[[ repeatIn(objects,'o') ]]</para>
         <section>
+
+        <para style="TITLE">Company: [[ company.name.upper() ]]</para>
+        <para style="TITLE">IFRS report: [[ get_report_title(o) ]]</para>
+        <para style="FISCAL">Fiscal year: [[ o.fiscalyear_id.name ]]</para>
+        <para style="FISCAL">Period: #TODO </para>
+
         <para>[[ get_total_ifrs_lines(o) ]] </para>
         <para>[[ get_periods_name_list(o) ]]</para>
 
@@ -141,25 +132,24 @@
         </blockTable>
 
         <!-- data row table -->
-        <blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm', 'style' : get_line_color()+'_data_table_style'}) ]]
+        <blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm', 'style' : get_row_style()+'_row_style'}) ]]
         <para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l', 'blockTable') ]]</para>
             <tr>
-                <td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 1) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 2) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 3) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 4) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 5) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 6) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 7) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 8) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 9) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 10) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 11) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ get_amount_value(ifrs_l, 12) ]]</para></td>
-            <!--
-            HACER: un set tag para imprimir las ultimas dos TD TD { style : _get_td_format()+"_table_style" }
-            -->
+                <td>
+                    <para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para>
+                </td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 1), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 2), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 3), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 4), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 5), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 6), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 7), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 8), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 9), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 10), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 11), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 12), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
             </tr>
         </blockTable>
 
