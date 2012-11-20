@@ -54,10 +54,15 @@ class sale_order(osv.osv):
         uom_obj = self.pool.get('product.uom')
         pp_obj  = self.pool.get('product.product')
         
+        so_brw = self.browse(cr, uid, id, context=context)
+        
         note ='\n'
         check = True
         res = {}
-        for sol_brw in self.browse(cr, uid, id, context=context).order_line:
+        
+        so_brw.shop_id and context.update({'shop':so_brw.shop_id.id})
+        
+        for sol_brw in so_brw.order_line:
             if sol_brw.product_id and sol_brw.product_id.type!="service":
                 from_uom_id = sol_brw.product_uom
                 to_uom_id = sol_brw.product_id.uom_id
