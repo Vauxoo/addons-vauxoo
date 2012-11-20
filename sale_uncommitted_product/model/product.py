@@ -54,6 +54,11 @@ class product_product(osv.osv):
             field_names = []
         if context is None: context = {}
 
+        ARGS = [('order_id','!=',False),('order_id.state','=','committed'),('product_id','=',id)]
+        
+        if context.get('shop', False):
+            ARGS+=[('order_id.shop_id','=',context.get('shop', False))]
+        
         res = {}
         
         for id in ids:
@@ -61,7 +66,7 @@ class product_product(osv.osv):
             
         for id in ids:
             #~ TODO: Cambiar por una sentencia sql para no tener que pasar el usuario 1
-            sol_ids = sol_obj.search(cr, 1, [('order_id','!=',False),('order_id.state','=','committed'),('product_id','=',id)], context=context)
+            sol_ids = sol_obj.search(cr, 1, ARGS, context=context)
 
             amount = 0.0
             if sol_ids and field_names:
