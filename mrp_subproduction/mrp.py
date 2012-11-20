@@ -91,5 +91,13 @@ class mrp_production(osv.osv):
         'product_subproduction_qty_line_real': fields.function(_get_parent_product, type='float', method=True, string='Real in line', multi=True),
         'product_subproduction_qty_line_planned': fields.function(_get_parent_product, type='float', method=True, string='Planned in line', multi=True),
     }
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'subproduction_ids' : [],
+        })
+        return super(mrp_production, self).copy(cr, uid, id, default, context)
 
 mrp_production()
