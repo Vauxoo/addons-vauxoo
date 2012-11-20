@@ -83,6 +83,8 @@ class product_product(osv.osv):
     _columns = {
         'qty_committed': fields.function(_product_committed, method=True, type='float', string='Sale Committed', multi='committed', help="Current quantities of committed products in Committe Sale Orders.", digits_compute=dp.get_precision('Product UoM')),
         'qty_uncommitted': fields.function(_product_committed, method=True, type='float', string='Uncommitted', multi='committed', help="Current quantities of committed products in Committe Sale Orders.", digits_compute=dp.get_precision('Product UoM')),
+        'warehouse_id': fields.dummy(string='Warehouse', relation='stock.warehouse', type='many2one'),
+        'shop_id': fields.dummy(string='Shop', relation='sale.shop', type='many2one'),
     }
 
 product_product()

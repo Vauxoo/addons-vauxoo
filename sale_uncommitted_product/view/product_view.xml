@@ -19,5 +19,23 @@
                 </xpath>
             </field>
         </record>
+        
+        <record id="uncommitted_product_search_form_view_stock" model="ir.ui.view">
+            <field name="name">product.search.stock.form</field>
+            <field name="model">product.product</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                       <field name="shop_id" widget="selection" context="{'shop': self}"/>
+                </xpath>
+                   <field name="pricelist_id" position="before">
+                       <field name="warehouse_id" widget="selection" context="{'warehouse': self}"/>
+                       <field name="location_id" widget="selection" context="{'location': self}"/>
+                       <separator orientation="vertical"/>
+                   </field>
+            </field>
+        </record>
+        
     </data>
 </openerp>
