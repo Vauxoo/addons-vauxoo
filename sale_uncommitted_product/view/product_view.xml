@@ -10,15 +10,14 @@
             <field name="priority">26</field>
             <field name="arch" type="xml">
                 <xpath expr="/tree/field[@name='virtual_available']" position="before">
-                    <field name="incoming_qty" groups="base.group_extended"/>
-                    <field name="outgoing_qty" groups="base.group_extended"/>
+                    <field name="incoming_qty" groups="base.group_extended,sale_uncommitted_product.group_sale_committer,sale_uncommitted_product.group_sale_force_committer"/>
+                    <field name="outgoing_qty" groups="base.group_extended,sale_uncommitted_product.group_sale_committer,sale_uncommitted_product.group_sale_force_committer"/>
                 </xpath>
                 <xpath expr="/tree/field[@name='virtual_available']" position="after">
-                    <field name="qty_committed" groups="base.group_extended"/>
-                    <field name="qty_uncommitted" groups="base.group_extended"/>
+                    <field name="qty_committed" groups="base.group_extended,sale_uncommitted_product.group_sale_committer,sale_uncommitted_product.group_sale_force_committer"/>
+                    <field name="qty_uncommitted" groups="base.group_extended,sale_uncommitted_product.group_sale_committer,sale_uncommitted_product.group_sale_force_committer"/>
                 </xpath>
             </field>
         </record>
-
     </data>
 </openerp>
