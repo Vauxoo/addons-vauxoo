@@ -66,8 +66,7 @@ class product_product(osv.osv):
             
         for id in ids:
             #~ TODO: Cambiar por una sentencia sql para no tener que pasar el usuario 1
-            sol_ids = sol_obj.search(cr, 1, ARGS, context=context)
-            ARGS+=[('product_id','=',id)]
+            sol_ids = sol_obj.search(cr, 1, ARGS+[('product_id','=',id)], context=context)
             amount = 0.0
             if sol_ids and field_names:
                 amount = self._get_product_committed_amount(cr, uid, sol_ids, context=context)
