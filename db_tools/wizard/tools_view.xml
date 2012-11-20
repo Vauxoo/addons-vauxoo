@@ -12,24 +12,18 @@
 <!--
                     <field name="path_db" attrs="{'invisible':[('filter','=','backup')]}"/>
 -->
-<!--
-                    <field name="path_db"/>
-                    <button name="find_db" string="Find DB" type="action" icon="terp-gtk-go-back-ltr" attrs="{'invisible':[('filter','=','backup')]}"/>
--->
                     <field name="server"/>
-                    <button name="%(action_data_server_wizard)d" string="Change Server" type="action" icon="terp-gtk-go-back-ltr"/>
                     <newline/>
                     <field name="password" colspan="4"/>
 <!--
                     <field name="name_db" colspan="4" attrs="{'invisible':[('filter','=','backup')]}"/>
 -->
-                    <field name="name_db" colspan="4"/>
 <!--
                     <field name="list_db" colspan="4" attrs="{'invisible':[('filter','=','restore')]}"/>
 -->
                     <field name="list_db" colspan="4"/>
-                    <button string="Cancel" special="cancel" icon="gtk-cancel" colspan="2"/>
-                    <button name="drop_db" string="Confirm" type="object" icon="terp-gtk-go-back-ltr" colspan="2"/>
+                    <button string="Cancel" special="cancel" icon="gtk-stop"/>
+                    <button name="confirm_action" string="Confirm" type="object" icon="terp-gtk-go-back-ltr"/>
                 </form>
             </field>
         </record>
@@ -42,7 +36,6 @@
         </record>
         
         <!--Menus-->
-        <menuitem id="menu_action_db_tools" name="DB tools" parent="base.menu_config"/>
-        <menuitem id="menu_action_db_tools_wizard_form" parent="menu_action_db_tools" action="db_tools_wizard_action"/>
+
     </data>
 </openerp>
