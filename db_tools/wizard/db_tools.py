@@ -7,6 +7,7 @@
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: Luis Torres (luis_t@vauxoo.com)
+#              Julio (julio@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -31,7 +32,11 @@ import time
 import base64
 import socket
 #~ uri = 'http://localhost:' + '8070'
-uri = 'http://localhost:' + '8069'
+#~ uri = 'http://localhost:' + '8069'
+
+waittime = 10
+wait_count = 0
+wait_limit = 12
 
 class db_tools(osv.osv_memory):
     _name = 'db.tools'
@@ -58,15 +63,10 @@ class db_tools(osv.osv_memory):
         }
         
     def execute(self, connector, method, *args):
-        print 'execute'
         global wait_count
         res = False
         try:
-            print 'entre_try'
-            print 'connector0', connector
-            print 'method', method
             res = getattr(connector,method)(*args)
-            print 'try_salido'
         except socket.error,e:
             if e.args[0] == 111:
                 if wait_count > 2:
@@ -80,12 +80,9 @@ class db_tools(osv.osv_memory):
             else:
                 raise e
         wait_count = 0
-        print '1111111111111111111111'
         return res
         
     def backup_db(self, uri, dbname):
-        print '666666666666666'
-        print 'uri', uri
         conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
         filename=('%s_%s.sql' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
         dump_db64=self.execute(conn, 'dump', 'admin', dbname)
@@ -95,36 +92,27 @@ class db_tools(osv.osv_memory):
         file_db.close()
         return '/tmp/' + filename
     
-    def backup_restore_db(self, uri, dbname):
+    def backup_restore_db(self, cr, uid, ids, uri, dbname):
         conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
-        print 'uri', uri
-        name_db = dbname + time.strftime('%Y%m%d_%H:%M').replace(':','_') + '.sql'
-        print 'name_db', name_db
         res = self.backup_db(uri, dbname)
-        print res,'imprimo res'
+        name_db = res[5:-4]
         f = file(res, 'r')
         data_b64 = base64.encodestring(f.read())
         f.close()
-        print '666777777777777777777777'
-        #~ self.execute(conn, 'restore', 'admin', 'admin9_20121120_23_08.sql', data_b64)
-        self.execute(conn, 'restore', 'admin', name_db, data_b64)
-                                    #~ pwdd, nombre de la base de datos a restaurar
+        password = self.browse(cr, uid, ids[0]).password
+        self.execute(conn, 'restore', password, name_db, data_b64)
         return True
         
     def find_db(self, cr, uid, ids, context=None):
         return True
     
     def confirm_action(self, cr, uid, ids, context=None):
-        print 'entre'
+        uri=context.get('uri', False)
         for lin in self.browse(cr, uid, ids, context=context):
             if lin.filter=='backup':
-                print 'uri', uri
-                print 'backup'
                 self.backup_db(context.get('uri', False), lin.list_db)
             if lin.filter == 'restore':
-                print 'uri', uri
-                print 'restore'
-                self.backup_restore_db(context.get('uri', False), lin.list_db)
+                self.backup_restore_db(cr, uid, ids, context.get('uri', False), lin.list_db)
         return {}
         
     def cancel_action(self, cr, uid, ids, context=None):
@@ -157,13 +145,11 @@ class data_server(osv.osv_memory):
             res = 'https:'+ os.sep + os.sep + server + ':' + port
         elif val_prot == 'xml_port':
             res = 'http:'+ os.sep + os.sep + server + ':' + port
-#        db_tools_obj.write(cr, uid, id_wiz_tools, {'server': res})
         return res
         
     def confirm_data(self, cr, uid, ids, context=None):
         res = self.confirm_data2(cr, uid, ids, context=context)
-        print res,'imprimo res'
-        #~ partial_id = self.pool.get("db.tools").create(cr, uid, {}, context=context)
+        print 'res', res
         context['uri'] = res
         return {
             'name':"tool db",
