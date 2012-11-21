@@ -23,24 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import osv, fields
+from tools.translate import _
 
-{
-    "name": "MRP production procurement order",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules",
-    "website" : "http://www.vauxoo.com/",
-    "description": """This module generates procurement orders in draft state
-    by a production order.
-    """,
-    'depends': ['mrp_production_procurement_order'],
-    'init_xml': [],
-    'update_xml': [
-    'wizard/procurement_order_merge_view.xml'
-    ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
+class procurement_order_merge(osv.osv_memory):
+    _inherit='procurement.order.merge'
     
-}
+    def procurement_merge(self, cr, uid, ids, context=None):
+        procurement_order = self.pool.get('procurement.order')
+        mrp_production_pool = self.pool.get('mrp.production')
+        if context is None:
+            context = {}
+        production_ids = context.get('active_ids', [])
+        procurement_product_list = []
+        for production_id in production_ids:
+            production_data = mrp_production_pool.browse(cr, uid, production_id, context=context)
+            for line in production_data.procurement_ids:
+                print line.id, "id del procurement"
+                print line.product_id.name, "producto\n"
+                if line.product_id.id not in procurement_product_list:
+                    procurement_product_list.append(line.product_id.id)
+                    "producto diferente agregado"
+        print procurement_product_list, "lista de productos ke aparecen"
+        #procurement_order.do_merge(cr, uid, procurement_ids, context=context)
+        return {}
+    
+procurement_order_merge()

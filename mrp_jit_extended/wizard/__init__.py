@@ -23,24 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "MRP production procurement order",
-    "version": "1.0",
-    "author" : "Vauxoo",
-    "category": "Generic Modules",
-    "website" : "http://www.vauxoo.com/",
-    "description": """This module generates procurement orders in draft state
-    by a production order.
-    """,
-    'depends': ['mrp_production_procurement_order'],
-    'init_xml': [],
-    'update_xml': [
-    'wizard/procurement_order_merge_view.xml'
-    ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-    
-}
+import procurement_order_merge
