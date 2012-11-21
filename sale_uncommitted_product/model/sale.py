@@ -50,14 +50,18 @@ class sale_order(osv.osv):
 
     def _check_so(self, cr, uid, id, context=None):
         if context is None: context = {}
-        
         uom_obj = self.pool.get('product.uom')
         pp_obj  = self.pool.get('product.product')
+        
+        so_brw = self.browse(cr, uid, id, context=context)
         
         note ='\n'
         check = True
         res = {}
-        for sol_brw in self.browse(cr, uid, id, context=context).order_line:
+        
+        so_brw.shop_id and context.update({'shop':so_brw.shop_id.id})
+        
+        for sol_brw in so_brw.order_line:
             if sol_brw.product_id and sol_brw.product_id.type!="service":
                 from_uom_id = sol_brw.product_uom
                 to_uom_id = sol_brw.product_id.uom_id
@@ -71,7 +75,7 @@ class sale_order(osv.osv):
             pp_brw = pp_obj.browse(cr, uid, p_id, context=context)
             if res[p_id] > pp_brw.qty_uncommitted:
                 check=False
-                note += _('\n[%s] %s - requested: %s, available: %s')%(pp_brw.default_code or 'N/D', pp_brw.name, res[p_id], pp_brw.qty_uncommitted)
+                note += _('\n[%s] %s - requested: %s, available: %s')%(_(pp_brw.default_code) or _('N/D'), _(pp_brw.name), res[p_id], pp_brw.qty_uncommitted)
         
         return {'note':note, 'check':check}
         
@@ -79,6 +83,9 @@ class sale_order(osv.osv):
 
     def check_committed(self, cr, uid, ids, context=None):
         if context is None: context = {}
+        if not context.get('lang', False):
+            context.update({'lang':self.pool.get('res.users').browse(cr, uid, uid, context= context).context_lang})
+        
         for id in ids:
             res = self._check_so(cr, uid, id, context=context)
             if not res['check']:

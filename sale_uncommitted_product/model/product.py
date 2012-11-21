@@ -35,11 +35,11 @@ class product_product(osv.osv):
         amount = 0.0
         sol_obj = self.pool.get('sale.order.line')
         uom_obj = self.pool.get('product.uom')
-        for sol_brw in sol_obj.browse(cr, uid, ids, context=context):
+        for sol_brw in sol_obj.browse(cr, 1, ids, context=context):
             from_uom_id = sol_brw.product_uom
             to_uom_id = sol_brw.product_id.uom_id
             qty = sol_brw.product_uom_qty
-            amount += uom_obj._compute_qty_obj(cr, uid, from_uom_id, qty, to_uom_id, context=context)
+            amount += uom_obj._compute_qty_obj(cr, 1, from_uom_id, qty, to_uom_id, context=context)
         return amount
         
     def _product_committed(self, cr, uid, ids, field_names=None, arg=False, context=None):
@@ -48,11 +48,23 @@ class product_product(osv.osv):
         @return: Dictionary of values
         """
         
+        ru_obj  = self.pool.get('res.users')
         sol_obj = self.pool.get('sale.order.line')
         
         if not field_names:
             field_names = []
         if context is None: context = {}
+
+        ru_brw = ru_obj.browse(cr, 1, uid, context=context)
+        context.update({'company_id':ru_brw.company_id and ru_brw.company_id.id})
+        
+        ARGS = [('order_id','!=',False),('order_id.state','=','committed')]
+        
+        if context.get('shop', False):
+            ARGS+=[('order_id.shop_id','=',context.get('shop', False))]
+            
+        if context.get('company_id', False):
+            ARGS+=[('company_id','=',context.get('company_id', False))]
 
         res = {}
         
@@ -61,11 +73,10 @@ class product_product(osv.osv):
             
         for id in ids:
             #~ TODO: Cambiar por una sentencia sql para no tener que pasar el usuario 1
-            sol_ids = sol_obj.search(cr, 1, [('order_id','!=',False),('order_id.state','=','committed'),('product_id','=',id)], context=context)
-
+            sol_ids = sol_obj.search(cr, 1, ARGS+[('product_id','=',id)], context=context)
             amount = 0.0
             if sol_ids and field_names:
-                amount = self._get_product_committed_amount(cr, uid, sol_ids, context=context)
+                amount = self._get_product_committed_amount(cr, 1, sol_ids, context=context)
             
             for f in field_names:
                 if f == 'qty_committed':
@@ -78,6 +89,8 @@ class product_product(osv.osv):
     _columns = {
         'qty_committed': fields.function(_product_committed, method=True, type='float', string='Sale Committed', multi='committed', help="Current quantities of committed products in Committe Sale Orders.", digits_compute=dp.get_precision('Product UoM')),
         'qty_uncommitted': fields.function(_product_committed, method=True, type='float', string='Uncommitted', multi='committed', help="Current quantities of committed products in Committe Sale Orders.", digits_compute=dp.get_precision('Product UoM')),
+        'warehouse_id': fields.dummy(string='Warehouse', relation='stock.warehouse', type='many2one'),
+        'shop_id': fields.dummy(string='Shop', relation='sale.shop', type='many2one'),
     }
 
 product_product()
