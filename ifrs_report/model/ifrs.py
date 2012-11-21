@@ -306,10 +306,13 @@ class ifrs_lines(osv.osv):
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
         
         'inv_sign' : fields.boolean('Change Sign to Amount'),
+        
+        'invisible' : fields.boolean('Invisible'),
     }
 
     _defaults = {
         'type' : 'abstract',
+        'invisible' : False,
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 
