@@ -36,15 +36,29 @@ class procurement_order_merge(osv.osv_memory):
             context = {}
         production_ids = context.get('active_ids', [])
         procurement_product_list = []
+        procurement_product_records = []
+        procurement_ids = []
+        product_procurement_dict = {}
         for production_id in production_ids:
             production_data = mrp_production_pool.browse(cr, uid, production_id, context=context)
             for line in production_data.procurement_ids:
-                print line.id, "id del procurement"
-                print line.product_id.name, "producto\n"
-                if line.product_id.id not in procurement_product_list:
+                #    line.state == 'draft':
+                #    print line.id, "id del procurement"
+                #    print line.state, "state"
+                #    print line.product_id.name, "producto\n"
+                if (line.product_id.id not in procurement_product_list and line.state == 'draft'):
                     procurement_product_list.append(line.product_id.id)
-                    "producto diferente agregado"
+                    print "producto diferente agregado"
+                if line.state == 'draft':
+                    procurement_product_records.append(line)
+                    #procurement_ids.append(line.id)
+                    #product_procurement_dict.update({line.product_id.id : procurement_ids.append(line.id)})
+                    if product_procurement_dict.get(line.product_id.id) == None:
+                        product_procurement_dict[line.product_id.id] = []
+                    product_procurement_dict[line.product_id.id].append(line.id)
+                    print product_procurement_dict, "diccionario de products y procurements"
         print procurement_product_list, "lista de productos ke aparecen"
+        
         #procurement_order.do_merge(cr, uid, procurement_ids, context=context)
         return {}
     
