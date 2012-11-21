@@ -70,6 +70,8 @@ class mrp_production(osv.osv):
         stock_move = self.pool.get('stock.move')
         stock_picking= self.pool.get('stock.picking')
         for production in self.browse(cr,uid,ids,context=context):
+            for moves in production.move_created_ids:
+                stock_move.action_cancel(cr, uid, [moves.id], context=context)
             try:
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'mrp.production', production.id, 'button_produce_done', cr)
