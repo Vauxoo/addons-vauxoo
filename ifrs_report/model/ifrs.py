@@ -35,7 +35,7 @@ class ifrs_ifrs(osv.osv):
     _columns = {
         'name' : fields.char('Name', 128, required = True ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
-        'title' : fields.text('Title', required = True ),
+        'title' : fields.text('Title', required = True, translate = True ),
         'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
 
         'state': fields.selection( [
@@ -234,7 +234,7 @@ class ifrs_lines(osv.osv):
         
     _columns = {
         'sequence' : fields.integer( 'Sequence', required = True ),
-        'name' : fields.char( 'Name', 128, required = True ),
+        'name' : fields.char( 'Name', 128, required = True, translate = True ),
         'type': fields.selection(
            [
                 ('abstract','Abstract'),
@@ -306,7 +306,6 @@ class ifrs_lines(osv.osv):
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
         
         'inv_sign' : fields.boolean('Change Sign to Amount'),
-
     }
 
     _defaults = {
