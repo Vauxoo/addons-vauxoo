@@ -105,8 +105,6 @@ class ifrs_report(report_sxw.rml_parse):
 
         """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
 
-        print "\n_get_periods_name_list():"
-
         period_list = self._period_info_list = []
         period_list.append( ('0', None , self._title_line ) ) 
         periods_ids = ifrs_obj.fiscalyear_id._get_fy_period_ids()
@@ -127,8 +125,6 @@ class ifrs_report(report_sxw.rml_parse):
         
         '''devuelve la cantidad correspondiente al periodo'''
 
-        print "\n_get_amount_value():" 
-
         context = {}
         if period_num:
             period_id = self._period_info_list[period_num][1]
@@ -138,46 +134,23 @@ class ifrs_report(report_sxw.rml_parse):
 
         ifrs_l_obj = self.pool.get('ifrs.lines')
 
-        print 100*'*'
-        print 'RESULTADO, ',ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
-        print 100*'*'
+        #~ print "\n_get_amount_value():" + str(ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context))
         return ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
     #########################################################################################################################
     #~ Format method helpers
 
     def _get_total_ifrs_lines(self, ifrs_brws, period):
-        print period,'imprimo period'
-        print ifrs_brws,'imprimo ifrs_brws'
+
         res = 0
         for ifrs_line in ifrs_brws.ifrs_lines_ids:
             res += 1
 
         self._total_record = res
         self._iter_record = res
-        # otro modo: borrar ultimas 2 lineas y descomentar las siguientes
-        # hace la integracion de funciones, pero no funciona
-        #~ self._update_total_record(res)
-        #~ self._update_iter_record(res)
-
-        # impresion de la comprobacion
-        #~ print "2 execute _get_total_ifrs_lines()"
-        #~ print "self._total_record = " + str(self._total_record)
-        #~ print "self._iter_record = " + str(self._iter_record)
-        #~ print "OUT execute _get_total_ifrs_lines()"
 
         print "\n_get_total_ifrs_lines():"
         print "self._iter_record = " + str(self._iter_record)
         print "self._total_record = " + str(self._total_record)
-
-    #~ # OJO: intente utilizar estos emtodos en el metodo de arriba pero no pude.... no funciona
-
-    #~ def _update_total_record(self, total):
-        #~ self._total_record = total
-        #~ print "execute _update_total_record()"
-    #~
-    #~ def _update_iter_record(self, total):
-        #~ self._iter_record = total
-        #~ print "execute _update_iter_record()"
 
     def _get_padding_level(self, level):
         return "padding_level_"+str(level)
@@ -187,7 +160,7 @@ class ifrs_report(report_sxw.rml_parse):
 
     def _get_row_style(self):
 
-        """ Row Style """
+        """ Return the name of the row style (defined at .rml) """
 
         if self._iter_record == self._total_record:
             res_style = "first"
