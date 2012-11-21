@@ -31,8 +31,7 @@ import os
 import time
 import base64
 import socket
-#~ uri = 'http://localhost:' + '8070'
-#~ uri = 'http://localhost:' + '8069'
+from tools.translate import _
 
 waittime = 10
 wait_count = 0
@@ -43,11 +42,14 @@ class db_tools(osv.osv_memory):
     
     def list_db(self, cr, uid, context=None):
         uri=context.get('uri', False)
-        conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
-        db_list = self.execute(conn,'list')
         list = []
-        for db in db_list:
-            list.append((db, db))
+        try:
+            conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
+            db_list = self.execute(conn,'list')
+            for db in db_list:
+                list.append((db, db))
+        except Exception,var:
+            raise osv.except_osv(_("Error"),_("Data Bases don't found for this server"))
         return list
              
     _columns = {
