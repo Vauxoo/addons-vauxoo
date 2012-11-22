@@ -27,6 +27,8 @@
 			<form string="International Financial Reporting Standards">
 			<field name="name" />
 			  <field name="company_id" />
+              <field name="code" />
+              <field name="title" />
 			  <field name="fiscalyear_id" />
               <group colspan='2' col='3'>
                   <field name="do_compute" />
@@ -109,7 +111,7 @@
                             />
                     </page>
                     <page string='Other Info'>
-                        <field name="title" />
+                        <field name="description" />
                     </page>
                 </notebook>
 			  <field name="state" />

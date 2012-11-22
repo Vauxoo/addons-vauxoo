@@ -35,7 +35,10 @@ class ifrs_ifrs(osv.osv):
     _columns = {
         'name' : fields.char('Name', 128, required = True ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
-        'title' : fields.text('Title', required = True, translate = True ),
+        'title' : fields.char('Title', 128, required = True, translate = True ),
+        'code' : fields.char('Code', 128, required = True ),
+        'description' : fields.text('Description'),
+
         'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
 
         'state': fields.selection( [
