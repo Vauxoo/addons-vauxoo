@@ -8,9 +8,14 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="IFRS Report">
-                    <separator string="IFRS Report Options" colspan="4"/>
                     <group colspan="4" >
-                         <field name="period"/>
+                        <separator string="IFRS Report Options" colspan="4"/>
+                         <field name="company_id"/>
+                         <field name="type"/>
+                        <separator string='Time Options' colspan='4' />
+                        <field name="fiscalyear_id"/>
+                        <field name="period" attrs="{'readonly':[('type','=','ifrs_12')]}"/>
+                        <field name="target_move"/>
                     </group>
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
