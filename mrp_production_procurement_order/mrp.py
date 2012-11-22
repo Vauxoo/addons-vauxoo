@@ -40,5 +40,13 @@ class mrp_production(osv.osv):
     _columns = {
         'procurement_ids': fields.one2many('procurement.order', 'production_id', 'Production order'),
     }
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'procurement_ids' : [],
+        })
+        return super(mrp_production, self).copy(cr, uid, id, default, context)
 
 mrp_production()
