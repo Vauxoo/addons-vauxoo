@@ -55,6 +55,8 @@ class ifrs_report(report_sxw.rml_parse):
             'get_periods_name_list' : self._get_periods_name_list,
             'get_column_name'  : self._get_column_name,
             'get_amount_value' : self._get_amount_value,
+            'get_fiscalyear_print_info' : self._get_fiscalyear_print_info,
+            'get_period_print_info' : self._get_period_print_info
         })
         self.cr = cr
         self.context = context
@@ -99,7 +101,7 @@ class ifrs_report(report_sxw.rml_parse):
 
         """ Return the current IFRS doc name """
         #~ TODO al agregar el campo de codigo en el ifrs concatenar cadena
-        return str(ifrs_doc.title)
+        return '[' + str(ifrs_doc.code) + '] ' + str(ifrs_doc.title)
 
     def _get_periods_name_list(self, ifrs_obj):
 
@@ -136,10 +138,31 @@ class ifrs_report(report_sxw.rml_parse):
 
         #~ print "\n_get_amount_value():" + str(ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context))
         return ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
+
+    def _get_fiscalyear_print_info(self, fiscalyear_id):
+
+        ''' Return all the printable information about fiscalyear'''
+
+        fiscalyear = self.pool.get('account.fiscalyear').browse(self.cr, self.uid, fiscalyear_id)
+        res = str(fiscalyear.name) + ' [' + str(fiscalyear.code) + ']'
+        return res
+
+    def _get_period_print_info(self, period_id, report_type):
+
+        ''' Return all the printable information about period'''
+
+        if report_type == 'all':
+            res = 'All Periods of the fiscalyear.'
+        else:
+            period = self.pool.get('account.period').browse(self.cr, self.uid, period_id)
+            res = str(period.name) + ' [' + str(period.code) + ']'
+
+        return res
+
     #########################################################################################################################
     #~ Format method helpers
 
-    def _get_total_ifrs_lines(self, ifrs_brws, period):
+    def _get_total_ifrs_lines(self, ifrs_brws):
 
         res = 0
         for ifrs_line in ifrs_brws.ifrs_lines_ids:

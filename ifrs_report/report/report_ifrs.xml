@@ -11,7 +11,7 @@
             multi="True"
             header="False"
             auto = "False"
-            menu="True"
+            menu="False"
             />
 
         <report
@@ -23,7 +23,7 @@
             multi="True"
             header="False"
             auto = "False"
-            menu="True"
+            menu="False"
             />
     </data>
 </openerp>

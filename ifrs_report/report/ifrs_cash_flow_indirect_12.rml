@@ -7,7 +7,7 @@
         <pageGraphics>
 
             <!-- COMPANY LOGO -->
-            <image x="12.0mm" y="252.0mm" height="15mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
+            <image x="100.0mm" y="252.0mm" height="15mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
 
             <!-- REPORT CURVE BORDER  -->
             <stroke color="black"/>
@@ -19,7 +19,7 @@
 
         </pageGraphics>
 
-        <frame id="first" x1="10mm" y1="10mm" width="412mm" height="238.4mm"/>
+        <frame id="first" x1="10mm" y1="10mm" width="412mm" height="259.0mm"/>
     </pageTemplate>
     </template>
 
@@ -28,14 +28,7 @@
         <!-- Header styles -->
 
             <paraStyle
-                name="TITLE"
-                fontName="Helvetica-Bold"
-                fontSize="10.0"
-                textColor="black"
-            />
-
-            <paraStyle
-                name="FISCAL"
+                name="info_header"
                 fontName="Helvetica"
                 fontSize="10.0"
                 textColor="black"
@@ -104,10 +97,12 @@
         <para>[[ repeatIn(objects,'o') ]]</para>
         <section>
 
-        <para style="TITLE">Company: [[ company.name.upper() ]]</para>
-        <para style="TITLE">IFRS report: [[ get_report_title(o) ]]</para>
-        <para style="FISCAL">Fiscal year: [[ o.fiscalyear_id.name ]]</para>
-        <para style="FISCAL">Period: #TODO </para>
+        <para style="info_header">
+            <b>[[ get_report_title(o) ]]</b> <br/>
+            <b>Company:</b> [[ company.name.upper() ]].<br/>
+            <b>Fiscalyear:</b> [[ get_fiscalyear_print_info(data['fiscalyear']) ]].<br/>
+            <b>Period:</b> [[ get_period_print_info(data['period'],data['report_type']) ]] <br/><br/>
+        </para>
 
         <para>[[ get_total_ifrs_lines(o) ]] </para>
         <para>[[ get_periods_name_list(o) ]]</para>

@@ -28,14 +28,7 @@
         <!-- Header styles -->
 
             <paraStyle
-                name="TITLE"
-                fontName="Helvetica-Bold"
-                fontSize="10.0"
-                textColor="black"
-            />
-
-            <paraStyle
-                name="FISCAL"
+                name="info_header"
                 fontName="Helvetica"
                 fontSize="10.0"
                 textColor="black"
@@ -104,12 +97,14 @@
         <para>[[ repeatIn(objects,'o') ]]</para>
         <section>
 
-        <para style="TITLE">Company: [[ company.name.upper() ]]</para>
-        <para style="TITLE">IFRS report: [[ get_report_title(o) ]]</para>
-        <para style="FISCAL">Fiscal year: [[ o.fiscalyear_id.name ]]</para>
-        <para style="FISCAL">Period: #TODO </para>
+        <para style="info_header">
+            <b>[[ get_report_title(o) ]]</b> <br/>
+            <b>Company:</b> [[ company.name.upper() ]].<br/>
+            <b>Fiscalyear:</b> [[ get_fiscalyear_print_info(data['fiscalyear']) ]].<br/>
+            <b>Period:</b> [[ get_period_print_info(data['period'],data['report_type']) ]] <br/><br/>
+        </para>
 
-        <para>[[ get_total_ifrs_lines(o, data['period']) ]] </para>
+        <para>[[ get_total_ifrs_lines(o) ]] </para>
         <para>[[ get_periods_name_list(o) ]]</para>
 
         <!-- data row table -->
@@ -118,7 +113,7 @@
             <para>[[ ifrs_l.invisible and removeParentNode('blockTable') ]]</para>
             <tr>
                 <td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and formatLang( get_amount_value(ifrs_l), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and formatLang( get_amount_value(ifrs_l, data['period']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
                 <td><para style="numeric_data_table_style">[[ ifrs_l.type=='total' and  formatLang( get_amount_value(ifrs_l), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
             </tr>
         </blockTable>
