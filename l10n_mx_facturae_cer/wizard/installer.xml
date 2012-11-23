@@ -9,12 +9,12 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_res_company_facturae_certificate_form"/>
             <field name="help">Configure yours certificates for Electronic Invoice.</field>
+            <field name="target">new</field>
         </record>
         
          <!--      register configuration wizard -->
         <record id="config_wizard_certificates_installer" model="ir.actions.todo">
             <field name="action_id" ref="certificates_form_config_action"/>
-            <field name="category_id" ref="base.category_sales_management_config"/>
             <field name="sequence">20</field>
         </record>
   </data>
