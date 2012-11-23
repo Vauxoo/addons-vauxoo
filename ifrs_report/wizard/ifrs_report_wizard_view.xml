@@ -10,12 +10,18 @@
                 <form string="IFRS Report">
                     <group colspan="4" >
                         <separator string="IFRS Report Options" colspan="4"/>
-                         <field name="company_id"/>
-                         <field name="type"/>
-                        <separator string='Time Options' colspan='4' />
-                        <field name="fiscalyear_id"/>
-                        <field name="period" attrs="{'readonly':[('type','=','ifrs_12')]}"/>
-                        <field name="target_move"/>
+                        <group colspan="4">
+                             <field name="company_id"/>
+                             <field name="report_type"/>
+                         </group>
+                         <group attrs="{'invisible':[('report_type','=','per')]}">
+                             <field name="fiscalyear_id" />
+                             <field name="columns" attrs="{'required':[('report_type','!=','per')]}" />
+                         </group>
+                         <group attrs="{'invisible':[('report_type','=','all')]}">
+                             <field name="period" />
+                         </group>
+                         <field name="target_move"/>
                     </group>
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
