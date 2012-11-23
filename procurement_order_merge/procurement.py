@@ -64,7 +64,7 @@ class procurement_order(osv.osv):
                     'product_id' : procurement.product_id.id,
                     'location_id' : procurement.location_id.id,
                     'product_qty' : self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id),
-                    'product_uom' : procurement.product_uom.id,
+                    'product_uom' : procurement.product_id.uom_id.id,
                     'procure_method' : procurement.procure_method
                 })
             else:
