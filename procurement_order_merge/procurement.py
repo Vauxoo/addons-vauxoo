@@ -91,6 +91,8 @@ class procurement_order(osv.osv):
             for old_id in old_ids:
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
+            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr)
+            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_check', cr)
             
         return True
 procurement_order()
