@@ -25,9 +25,17 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+import math
+import openerp
+from osv import osv, fields
+from openerp import SUPERUSER_ID
+import re
+import tools
 from tools.translate import _
+import logging
+import pooler
+import pytz
+from lxml import etree
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
