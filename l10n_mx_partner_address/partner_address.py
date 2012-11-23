@@ -7,6 +7,7 @@
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Modify by: Juan Carlos Hernandez Funes (juan@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -28,23 +29,23 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
-class res_partner_address(osv.osv):
-    _inherit = 'res.partner.address'
-    
+class res_partner(osv.osv):
+    _inherit = 'res.partner'
+
     _columns = {
         'street3': fields.char('Street3', size=128),
         'street4': fields.char('Street4', size=128),
         'city2': fields.char('City2', size=128),
     }
-    
+
     def _get_default_country_id(self, cr, uid, context=None):
         country_obj = self.pool.get('res.country')
         #ids = country_obj.search(cr, uid, [ ( 'name', '=', 'México' ), ], limit=1)
         ids = country_obj.search(cr, uid, [ ( 'code', '=', 'MX' ), ], limit=1)
         id = ids and ids[0] or False
         return id
-    
+
     _defaults = {
         'country_id': _get_default_country_id,
     }
-res_partner_address()
+res_partner()

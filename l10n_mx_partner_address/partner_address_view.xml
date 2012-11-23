@@ -1,54 +1,24 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-    
-        <record id="view_partner_address_form_inh_cfd_01" model="ir.ui.view">
-            <field name="name">view.partner.address.form.inh.cfd.01</field>
-            <field name="model">res.partner.address</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="base.view_partner_address_form1"/>
-            <field name="arch" type="xml">
-                <field name="street2" position="before">
-                    <field name="street3" groups="l10n_mx_partner_address.group_address_mx"/>
-                    <field name="street4" groups="l10n_mx_partner_address.group_address_mx"/>
-                </field>
-                <field name="zip" position="after">
-                    <field name="city2" groups="l10n_mx_partner_address.group_address_mx"/>
-                </field>
-            </field>
-        </record>
-        <record id="view_partner_address_form_inh_cfd_02" model="ir.ui.view">
-            <field name="name">view.partner.address.form.inh.cfd.02</field>
-            <field name="model">res.partner.address</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="base.view_partner_address_form2"/>
-            <field name="arch" type="xml">
-                <field name="street2" position="before">
-                    <field name="street4" groups="l10n_mx_partner_address.group_address_mx"/>
-                    <field name="street3" groups="l10n_mx_partner_address.group_address_mx"/>
-                </field>
-                <field name="zip" position="after">
-                    <field name="city2" groups="l10n_mx_partner_address.group_address_mx"/>
-                </field>
-            </field>
-        </record>
-        
-        <record model="ir.ui.view" id="view_partner_form_inh_cfd_01">
-            <field name="name">view.partner.form.inh.cfd.02</field>
+
+        <record id="view_partner_form_inh_cfd_01" model="ir.ui.view">
+            <field name="name">view.partner.form.inh.cfd.01</field>
             <field name="model">res.partner</field>
+            <field name="type">form</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
-            <field name="sequence">20</field>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='General']/field[@name='address']/form/group/field[@name='street2']" position="before">
+                <field name="street2" position="after">
                     <field name="street3" groups="l10n_mx_partner_address.group_address_mx"/>
                     <field name="street4" groups="l10n_mx_partner_address.group_address_mx"/>
-                </xpath>
-                <xpath expr="/form/notebook/page[@string='General']/field[@name='address']/form/group/field[@name='zip']" position="after">
+                </field>
+                <field name="city" position="after">
                     <field name="city2" groups="l10n_mx_partner_address.group_address_mx"/>
-                </xpath>
+                </field>
             </field>
         </record>
-        
-    
+
+
+
     </data>
 </openerp>
