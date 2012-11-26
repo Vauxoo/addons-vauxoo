@@ -51,6 +51,8 @@ class procurement_order(osv.osv):
             return tuple(list_key)
         
         new_orders = {}
+        mrp_production_pool = self.pool.get('mrp.production')
+        old_orders = []
         
         for procurement in self.browse(cr, uid, ids):
             order_key = make_key(procurement, ('product_id', 'location_id', 'procure_method'))
@@ -74,6 +76,8 @@ class procurement_order(osv.osv):
                     order_infos['origin'] = (order_infos['origin'] or '') + ',' + procurement.origin
                 if procurement.product_qty:
                     order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
+            if procurement.production_id.id not in old_orders:
+                old_orders.append(procurement.production_id.id)
             
         allorders = []
         allproductions = []
@@ -92,9 +96,9 @@ class procurement_order(osv.osv):
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
             wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr)
-            #wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_check', cr)
             new_production_id = self.pool.get('procurement.order').action_produce_assign_product(cr, uid, [neworder_id], context=context)
-            print new_production_id, "<- new_production_id"
+            print new_production_id, old_orders, "<- prod hija, prods padres --para crear subproductions"
+            mrp_production_pool.write(cr, uid, old_orders, {'subproduction_ids': [(4, new_production_id)]})
             allproductions.append(new_production_id)
             
         return allproductions#debe retornar id de productions para ser recursivo
