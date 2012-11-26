@@ -8,9 +8,10 @@
             string="Print IFRS"
             model="ifrs.ifrs"
             rml="ifrs_report/report/ifrs_cash_flow_indirect.rml"
+            multi="True"
             header="False"
             auto = "False"
-            menu="True"
+            menu="False"
             />
 
         <report
@@ -19,9 +20,10 @@
             string="Print Monthly IFRS"
             model="ifrs.ifrs"
             rml="ifrs_report/report/ifrs_cash_flow_indirect_12.rml"
+            multi="True"
             header="False"
             auto = "False"
-            menu="True"
+            menu="False"
             />
     </data>
 </openerp>

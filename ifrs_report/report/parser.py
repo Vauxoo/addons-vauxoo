@@ -35,7 +35,7 @@ class ifrs_report(report_sxw.rml_parse):
     _iter_record = 0
     _total_record = 0
     _period_info_list = []    #~ [ 0 : period_enumerate, 1 : period_id, 2 : period_name ]
-    _title_line = 'Flujo de efectivo por las actividades operativas:'
+    _title_line = ' '
 
     def __init__(self, cr, uid, name, context):
         super(ifrs_report, self).__init__(cr, uid, name, context=context)
@@ -47,7 +47,7 @@ class ifrs_report(report_sxw.rml_parse):
             #~ Format method helpers
             'get_total_ifrs_lines': self._get_total_ifrs_lines,
             'get_padding_level' : self._get_padding_level,
-            'get_line_color' : self._get_line_color,
+            'get_row_style' : self._get_row_style,
             'get_td_format' : self._get_td_format,
             'get_amount_format' : self._get_amount_format,
             #~ Dinamic data
@@ -55,6 +55,8 @@ class ifrs_report(report_sxw.rml_parse):
             'get_periods_name_list' : self._get_periods_name_list,
             'get_column_name'  : self._get_column_name,
             'get_amount_value' : self._get_amount_value,
+            'get_fiscalyear_print_info' : self._get_fiscalyear_print_info,
+            'get_period_print_info' : self._get_period_print_info
         })
         self.cr = cr
         self.context = context
@@ -96,18 +98,14 @@ class ifrs_report(report_sxw.rml_parse):
     #~ Dinamic Data
 
     def _get_report_title(self, ifrs_doc):
-        
-        """devuelve la cadena con el nombre del reporte segun sea la pagina para el caso de imprimir varios reportes"""
-        
-        print "\n_get_report_title():" + str(ifrs_doc.title)
-        #~ hacer iterar en los objetos tomados y devolver consulta de titulo
-        return str(ifrs_doc.title)
+
+        """ Return the current IFRS doc name """
+        #~ TODO al agregar el campo de codigo en el ifrs concatenar cadena
+        return '[' + str(ifrs_doc.code) + '] ' + str(ifrs_doc.title)
 
     def _get_periods_name_list(self, ifrs_obj):
 
         """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
-
-        print "\n_get_periods_name_list():"
 
         period_list = self._period_info_list = []
         period_list.append( ('0', None , self._title_line ) ) 
@@ -129,8 +127,6 @@ class ifrs_report(report_sxw.rml_parse):
         
         '''devuelve la cantidad correspondiente al periodo'''
 
-        print "\n_get_amount_value():" 
-
         context = {}
         if period_num:
             period_id = self._period_info_list[period_num][1]
@@ -140,46 +136,44 @@ class ifrs_report(report_sxw.rml_parse):
 
         ifrs_l_obj = self.pool.get('ifrs.lines')
 
-        print 100*'*'
-        print 'RESULTADO, ',ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
-        print 100*'*'
+        #~ print "\n_get_amount_value():" + str(ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context))
         return ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
+
+    def _get_fiscalyear_print_info(self, fiscalyear_id):
+
+        ''' Return all the printable information about fiscalyear'''
+
+        fiscalyear = self.pool.get('account.fiscalyear').browse(self.cr, self.uid, fiscalyear_id)
+        res = str(fiscalyear.name) + ' [' + str(fiscalyear.code) + ']'
+        return res
+
+    def _get_period_print_info(self, period_id, report_type):
+
+        ''' Return all the printable information about period'''
+
+        if report_type == 'all':
+            res = 'All Periods of the fiscalyear.'
+        else:
+            period = self.pool.get('account.period').browse(self.cr, self.uid, period_id)
+            res = str(period.name) + ' [' + str(period.code) + ']'
+
+        return res
+
     #########################################################################################################################
     #~ Format method helpers
 
-    def _get_total_ifrs_lines(self, ifrs_brws, period):
-        print period,'imprimo period'
-        print ifrs_brws,'imprimo ifrs_brws'
+    def _get_total_ifrs_lines(self, ifrs_brws):
+
         res = 0
         for ifrs_line in ifrs_brws.ifrs_lines_ids:
             res += 1
 
         self._total_record = res
         self._iter_record = res
-        # otro modo: borrar ultimas 2 lineas y descomentar las siguientes
-        # hace la integracion de funciones, pero no funciona
-        #~ self._update_total_record(res)
-        #~ self._update_iter_record(res)
-
-        # impresion de la comprobacion
-        #~ print "2 execute _get_total_ifrs_lines()"
-        #~ print "self._total_record = " + str(self._total_record)
-        #~ print "self._iter_record = " + str(self._iter_record)
-        #~ print "OUT execute _get_total_ifrs_lines()"
 
         print "\n_get_total_ifrs_lines():"
         print "self._iter_record = " + str(self._iter_record)
         print "self._total_record = " + str(self._total_record)
-
-    #~ # OJO: intente utilizar estos emtodos en el metodo de arriba pero no pude.... no funciona
-
-    #~ def _update_total_record(self, total):
-        #~ self._total_record = total
-        #~ print "execute _update_total_record()"
-    #~
-    #~ def _update_iter_record(self, total):
-        #~ self._iter_record = total
-        #~ print "execute _update_iter_record()"
 
     def _get_padding_level(self, level):
         return "padding_level_"+str(level)
@@ -187,37 +181,20 @@ class ifrs_report(report_sxw.rml_parse):
         #~ OJO::: cuidado como se utiliza el level_padding = 0
         #~ TODO: remake with new modeling of ifrs.ifrs models
 
-    def _get_line_color(self):
-        res_color = "dark_color"
+    def _get_row_style(self):
 
-        if self._total_record % 2:
-            par = True
-        else:
-            par = False
-
-        #~ NOTAK; probar optimizacion
-        #~ par = True if self._total_record % 2 else False
-
+        """ Return the name of the row style (defined at .rml) """
 
         if self._iter_record == self._total_record:
-            res_color = "light_color"
+            res_style = "first"
         else:
-            if par:
-                if self._iter_record % 2:
-                    res_color = "light_color"
-                else:
-                    res_color = "dark_color"
+            if self._iter_record % 2:
+                res_style = "dark_color"
             else:
-                if self._iter_record % 2:
-                    res_color = "dark_color"
-                else:
-                    res_color = "light_color"
-
-        #~ NOTAK; probar optimizacion
-        #~ res_color = "light_color" if self._iter_record == self._total_record or par and self._iter_record % 2 or !par and !self._iter_record % 2 else "dark_color"
+                res_style = "light_color"
 
         self._iter_record-=1
-        return res_color
+        return res_style
 
     #~ NOTAK; No la he utilizado todavia
     def _get_amount_format(self, amount):

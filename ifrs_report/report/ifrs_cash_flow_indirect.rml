@@ -6,19 +6,8 @@
 
         <pageGraphics>
 
-            <setFont name="Helvetica-Oblique" size="8.0"/>
-
-            <!-- BANNER TITLES -->
-            <place x="10.0mm"     y="234.4mm"    width="195.9mm"  height="35.0mm">
-                <blockTable colWidths="195.5mm" rowHeights="7mm" style="TITLETABLE">
-                    <tr><td><para style="TITLE">[[ company.name.upper() ]]</para></td></tr>
-                    <tr><td><para style="TITLE">[[ get_report_title(o) ]]</para></td></tr>
-                    <tr><td><para style="FISCAL"> Año Terminado el [[ o.fiscalyear_id.date_stop ]]</para></td></tr>
-                </blockTable>
-            </place>
-
             <!-- COMPANY LOGO -->
-            <image x="12.0mm" y="252.0mm" height="15mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
+            <image x="100.0mm" y="252.0mm" height="15mm" >[[company.logo and company.logo or removeParentNode('image')]]</image>
 
             <!-- REPORT CURVE BORDER  -->
             <stroke color="black"/>
@@ -30,7 +19,7 @@
 
         </pageGraphics>
 
-        <frame id="first" x1="10mm" y1="10mm" width="195.9mm" height="238.4mm"/>
+        <frame id="first" x1="10mm" y1="10mm" width="195.9mm" height="259.0mm"/>
     </pageTemplate>
     </template>
 
@@ -39,85 +28,66 @@
         <!-- Header styles -->
 
             <paraStyle
-                name="TITLE"
-                alignment="CENTER"
-                fontName="Helvetica-Bold"
-                fontSize="10.0"
-                textColor="black"
-            />
-
-            <paraStyle
-                name="FISCAL"
-                alignment="CENTER"
+                name="info_header"
                 fontName="Helvetica"
                 fontSize="10.0"
                 textColor="black"
             />
-
-            <blockTableStyle id="TITLETABLE">
-                <blockValign value="TOP"/>
-            </blockTableStyle>
 
         <!-- Pappding style for ifrs lines -->
 
-            <paraStyle
-                name="padding_table_style"
-                fontName="Helvetica"
-                fontSize="12.0"
-                textColor="red"
-                alignment="left"
-            />
-
-            <paraStyle name="padding_level_0" parent="padding_table_style" leftIndent="0" />
-            <paraStyle name="padding_level_1" parent="padding_table_style" leftIndent="15" />
-            <paraStyle name="padding_level_2" parent="padding_table_style" leftIndent="30" />
-            <paraStyle name="padding_level_3" parent="padding_table_style" leftIndent="45" />
-            <paraStyle name="padding_level_4" parent="padding_table_style" leftIndent="60" />
-            <paraStyle name="padding_level_5" parent="padding_table_style" leftIndent="75" />
-            <paraStyle name="padding_level_6" parent="padding_table_style" leftIndent="90" />
-            <!-- OJO: no funciona el atributo parent, imprime con el estilo por defecto me iamgino, debo checar que pasa y si este atributo esta contemplado en openerp -->
+            <paraStyle name="padding_level_0" leftIndent="0"  fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_1" leftIndent="15" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_2" leftIndent="30" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_3" leftIndent="45" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_4" leftIndent="60" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_5" leftIndent="75" fontName="Helvetica" fontSize="9.0" alignment="left"/>
+            <paraStyle name="padding_level_6" leftIndent="90" fontName="Helvetica" fontSize="9.0" alignment="left"/>
 
         <!-- Data Table Styles -->
 
-            <blockTableStyle id="header_table_style">
-                <blockValign value="CENTER"/>
-                <blockAlignment value="CENTER"/>
-                <lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
-                <blockBackground colorName="#ECFFDC"/>
-            </blockTableStyle>
+            <!-- Numeric Data  -->
+            
+            <paraStyle
+                name="numeric_data_table_style"
+                fontName="Helvetica"
+                fontSize="9.0"
+                alignment="right"
+            />
 
-            <!--
-            # Utilizada cuando se hacia una tabla principal con todo adentro, no lo borro porque puede servir cuando haga el segundo intento de generar las lineas pero utilizando una tabla unica + estilo parastyle
-            <blockTableStyle id="main_table_style">
-                <blockValign value="CENTER"/>
-                <blockAlignment value="CENTER"/>
-                <blockTopPadding length="0"/>
-                <blockBottomPadding length="0"/>
-                <blockRightPadding length="0"/>
-                <blockLeftPadding length="0"/>
-                <lineStyle kind="INNERGRID" colorName="red" thickness="1" />
-            </blockTableStyle>
-            -->
+            <!-- Row Styles -->
 
-            <!-- Color Row Styles -->
+                <blockTableStyle id="header_table_style">
+                    <blockValign value="CENTER"/>
+                    <blockAlignment value="CENTER"/>
+                    <lineStyle kind="LINEABOVE" colorName="black" thickness="1" />
+                    <blockFont name="Helvetica" size="9.0" start="1,0" stop="-1,0"/>
+                    <blockBackground colorName="#ECFFDC"/>
+                </blockTableStyle>
 
-                <blockTableStyle id="dark_color_data_table_style">
-                    <blockBackground colorName="#ECFFDC" />
+                <blockTableStyle id="first_row_style">
+                    <blockBackground colorName="#ECFFDC"/>
+                    <lineStyle kind="INNERGRID" colorName="black" thickness="0"/>
+                    <lineStyle kind="LINEABOVE" colorName="black" thickness="1"/>
+                </blockTableStyle>
+
+                <blockTableStyle id="dark_color_row_style">
+                    <blockBackground colorName="#ECFFDC"/>
                     <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
                 </blockTableStyle>
 
-                <blockTableStyle id="light_color_data_table_style">
-                    <blockBackground colorName="white" />
+                <blockTableStyle id="light_color_row_style">
+                    <blockBackground colorName="white"/>
                     <lineStyle kind="INNERGRID" colorName="black" thickness="0" />
                 </blockTableStyle>
 
             <!-- Amount Cell Stype (total or simple) -->
 
-                <blockTableStyle id="total_amount_data_table_style">
+                <blockTableStyle id="total_amount_row_style">
                     <lineStyle kind="LINEBELOW" thickness="1" />
                 </blockTableStyle>
 
-                <blockTableStyle id="simple_amount_data_table_style">
+                <blockTableStyle id="simple_amount_row_style">
                 </blockTableStyle>
 
     </stylesheet>
@@ -126,42 +96,28 @@
 
         <para>[[ repeatIn(objects,'o') ]]</para>
         <section>
-        <para>[[ get_total_ifrs_lines(o, data['period']) ]] </para>
 
-        <!-- header row table -->
-        <blockTable style="header_table_style" colWidths="155.0mm,40.0mm">
-            <tr>
-                <td><para>Flujo de efectivo por las actividades operativas:</para></td>
-                <td><para alignment="center">(Miles)</para></td>
-            </tr>
-        </blockTable>
+        <para style="info_header">
+            <b>[[ get_report_title(o) ]]</b> <br/>
+            <b>Company:</b> [[ company.name.upper() ]].<br/>
+            <b>Fiscalyear:</b> [[ get_fiscalyear_print_info(data['fiscalyear']) ]].<br/>
+            <b>Period:</b> [[ get_period_print_info(data['period'],data['report_type']) ]] <br/><br/>
+        </para>
+
+        <para>[[ get_total_ifrs_lines(o) ]] </para>
+        <para>[[ get_periods_name_list(o) ]]</para>
 
         <!-- data row table -->
-        <blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '115.0mm,40.0mm,40.0mm', 'style' : get_line_color()+'_data_table_style'}) ]]
+        <blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '115.0mm,40.0mm,40.0mm', 'style' : get_row_style()+'_row_style'}) ]]
         <para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l', 'blockTable') ]]</para>
+            <para>[[ ifrs_l.invisible and removeParentNode('blockTable') ]]</para>
             <tr>
                 <td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
-                <td><para alignment="center" >[[ ifrs_l.type=='detail' and ifrs_l.amount ]]</para></td>
-                    <!-- HACER: estilo de celda de totalizacion.
-                    1. Agregar una tabla nueva anidada donde se coloque el subrayado a la celda utilizando el estilo "total_amount_data_table_style", a traves del criterio del tipo de ifrs_line en la funcion del parser
-                    2.
-                    , para ello necesito ver si puedo generar por lote y con condiicones de [[]] los estilos -->
-                <td><para alignment="center" >[[ ifrs_l.type=='total' and ifrs_l.amount ]]</para></td>
-            <!--
-            HACER: un set tag para imprimir las ultimas dos TD TD { style : _get_td_format()+"_table_style" }
-            -->
+                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and formatLang( get_amount_value(ifrs_l, data['period']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='total' and  formatLang( get_amount_value(ifrs_l), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
             </tr>
         </blockTable>
 
-    <!-- # Some old school debug
-        <blockTable repeatRows="1" style="Table" colWidths="115.9mm">
-            <tr><td><para> Depurado... </para></td></tr>
-            <tr><td><para>[[ o ]]</para></td></tr>
-            <tr><td><para>[[ repr(o) ]]</para></td></tr>
-            <tr><td><para>[[ repr(doc._nameSpace) ]]</para></td></tr>
-            <tr><td><para><docPara expr='repr(doc._nameSpace)'/></para></td></tr>
-        </blockTable>
-    -->
         </section>
 
     </story>

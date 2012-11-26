@@ -2,13 +2,15 @@
 <openerp>
 
 	<data noupdate="1">
+
+<!-- ESTADO DE RESULTADOS -->
 		<record id="ifrs_ifrs_estadoderesultados0" model="ifrs.ifrs">
 			<field name="name">ESTADO DE RESULTADOS</field>
 			<field name="state">draft</field>
+			<field name="code">00001</field>
 			<field name="title">ESTADO DE RESULTADOS</field>
-			<field name="company_id" ref="base.main_company"/>
+			
 			<field eval="[(6,0,[])]" name="ifrs_ids"/>
-			<field model="account.fiscalyear" name="fiscalyear_id" ref="account.data_fiscalyear"/>
 		</record>
 		<record id="ifrs_lines_ventabruta0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
@@ -459,17 +461,16 @@
 			<field name="type">total</field>
 		</record>
 
-
-
 <!-- BALANCE GENERAL -->
 
-<record id="ifrs_ifrs_balancegeneral0" model="ifrs.ifrs">
+		<record id="ifrs_ifrs_balancegeneral0" model="ifrs.ifrs">
 			<field name="name">BALANCE GENERAL</field>
 			<field name="state">draft</field>
+			<field name="code">00002</field>
 			<field name="title">BALANCE GENERAL</field>
-			<field name="company_id" ref="base.main_company"/>
+			
 			<field eval="[(6,0,[ref('ifrs_ifrs_estadoderesultados0')])]" name="ifrs_ids"/>
-			<field model="account.fiscalyear" name="fiscalyear_id" ref="account.data_fiscalyear"/>
+			
 		</record>
 		<record id="ifrs_lines_activo0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
@@ -996,10 +997,11 @@
 		<record id="ifrs_ifrs_movimientosdeactivofijo0" model="ifrs.ifrs">
 			<field name="name">MOVIMIENTOS DE ACTIVO FIJO</field>
 			<field name="state">draft</field>
+			<field name="code">00003</field>
 			<field name="title">MOVIMIENTOS DE ACTIVO FIJO</field>
-			<field name="company_id" ref="base.main_company"/>
+			
 			<field eval="[(6,0,[])]" name="ifrs_ids"/>
-			<field model="account.fiscalyear" name="fiscalyear_id" ref="account.data_fiscalyear"/>
+			
 		</record>
 		<record id="ifrs_lines_saldoinicial3" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
@@ -1276,10 +1278,11 @@
 		<record id="ifrs_ifrs_analisisdecapitaldetrabajo0" model="ifrs.ifrs">
 			<field name="name">ANALISIS DE CAPITAL DE TRABAJO</field>
 			<field name="state">draft</field>
+			<field name="code">00004</field>
 			<field name="title">ANALISIS DE CAPITAL DE TRABAJO</field>
-			<field name="company_id" ref="base.main_company"/>
+			
 			<field eval="[(6,0,[])]" name="ifrs_ids"/>
-			<field model="account.fiscalyear" name="fiscalyear_id" ref="account.data_fiscalyear"/>
+			
 		</record>
 		<record id="ifrs_lines_saldoinicial1" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
@@ -1517,13 +1520,14 @@
 
 <!-- FLUJO DE EFECTIVO -->
 
-<record id="ifrs_ifrs_flujodeefectivo0" model="ifrs.ifrs">
+		<record id="ifrs_ifrs_flujodeefectivo0" model="ifrs.ifrs">
 			<field name="name">FLUJO DE EFECTIVO</field>
 			<field name="state">draft</field>
+			<field name="code">00005</field>
 			<field name="title">FLUJO DE EFECTIVO</field>
-			<field name="company_id" ref="base.main_company"/>
+			
 			<field eval="[(6,0,[])]" name="ifrs_ids"/>
-			<field model="account.fiscalyear" name="fiscalyear_id" ref="account.data_fiscalyear"/>
+			
 		</record>
 		<record id="ifrs_lines_utilidadneta0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
@@ -1930,10 +1934,11 @@
 		<record id="ifrs_ifrs_razonesfinancieras0" model="ifrs.ifrs">
 			<field name="name">RAZONES FINANCIERAS</field>
 			<field name="state">draft</field>
+			<field name="code">00006</field>
 			<field name="title">RAZONES FINANCIERAS</field>
-			<field name="company_id" ref="base.main_company"/>
+			
 			<field eval="[(6,0,[ref('ifrs_ifrs_estadoderesultados0')])]" name="ifrs_ids"/>
-			<field model="account.fiscalyear" name="fiscalyear_id" ref="account.data_fiscalyear"/>
+			
 		</record>
 <record id="ifrs_lines_indicesdeliquidezveces0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>

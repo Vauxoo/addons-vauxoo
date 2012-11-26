@@ -26,8 +26,10 @@
 		  <field name="arch" type="xml">
 			<form string="International Financial Reporting Standards">
 			<field name="name" />
-			  <field name="company_id" />
-			  <field name="fiscalyear_id" />
+			  <field name="company_id" required="1"/>
+              <field name="code" />
+              <field name="title" />
+			  <field name="fiscalyear_id" required="1"/>
               <group colspan='2' col='3'>
                   <field name="do_compute" />
                   <button string="Compute" name='compute' type='object' icon='gtk-execute'/>
@@ -45,29 +47,37 @@
                           <field name="total_ids" />
                           <field name="amount" />
                          <field name="value" />
+                          <field name="invisible" />
                         </tree>
                         <form string="IFRS Lines">
-        <!--
-                          <field name="id" />
-        -->
-                          <field name="sequence" />
-                          <field name="name" />
-                          <field name="type" />
-                          <group colspan='2' col='1'>
-                              <group colspan='2' col='2' attrs="{'invisible':[('type','!=','constant')]}">
-                                  <field name="constant_type" />
+
+                          <group colspan='4' col='6'>
+                              <field name="sequence" />
+                              <field name="name" />
+                              <field name="invisible" />
+                              <field name="type" />
+
+                              <group colspan='4' col='1'>
+                                  <group colspan='2' attrs="{'invisible':[('type','!=','constant')]}" >
+                                      <field name="constant_type" attrs="{'required':[('type','=','constant')]}" />
+                                  </group>
+                                  <group colspan='2' attrs="{'invisible':[('type','!=','detail')]}">
+                                      <field name="acc_val" />
+                                      <field name="value" />
+                                  </group>
+                                  <group colspan='2' attrs="{'invisible':[('type','!=','total')]}">
+                                      <field name="operator" />
+                                      <field name="comparison" />
+                                  </group>
                               </group>
-                              <group colspan='2' col='2' attrs="{'invisible':[('type','!=','detail')]}">
-                                  <field name="acc_val" />
-                                  <field name="value" />
-                              </group>
-                              <group colspan='2' col='2' attrs="{'invisible':[('type','!=','total')]}">
-                                  <field name="operator" />
-                                  <field name="comparison" />
-                              </group>
+
+                           </group>
+
+                          <group colspan='6' col='6' attrs="{'invisible':[('type','=','abstract')]}">
+                            <field name="amount" />
+                            <field name="inv_sign" />
                           </group>
-                          <field name="amount" />
-                          <field name="inv_sign" />
+
                           <group colspan='6'>
                               <group
                                 colspan='6'
@@ -85,7 +95,8 @@
                                         domain="['|',('ifrs_id','in', [len(k) and k[2] or False for k in parent.ifrs_ids]),('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
                                     </field>
                                 </group>
-                                <group col='1'>
+                                
+                                <group col='1' attrs="{'invisible':[('operator','=',False)]}">
                                     <separator string='Operand' colspan='2' />
                                     <field
                                         name="operand_ids" widget="many2many"
@@ -107,7 +118,7 @@
                             />
                     </page>
                     <page string='Other Info'>
-                        <field name="title" />
+                        <field name="description" />
                     </page>
                 </notebook>
 			  <field name="state" />
@@ -139,6 +150,7 @@
 						<field name="sequence"></field>
 						<field name="type" />
 						<field name="amount"></field>
+						<field name="invisible"></field>
 						<field name="ifrs_id"></field>
 					</group>
 				</form>
@@ -155,6 +167,8 @@
 						<field name="name" />
 						<field name="type" />
 						<field name="amount"></field>
+						<field name="invisible"></field>
+						<field name="ifrs_id"></field>
 				</tree>
 			</field>
 		</record>

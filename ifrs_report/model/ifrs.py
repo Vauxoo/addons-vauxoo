@@ -34,8 +34,11 @@ class ifrs_ifrs(osv.osv):
     _name = 'ifrs.ifrs'
     _columns = {
         'name' : fields.char('Name', 128, required = True ),
-        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
-        'title' : fields.text('Title', required = True ),
+        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade' ),
+        'title' : fields.char('Title', 128, required = True, translate = True ),
+        'code' : fields.char('Code', 128, required = True ),
+        'description' : fields.text('Description'),
+
         'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
 
         'state': fields.selection( [
@@ -45,7 +48,7 @@ class ifrs_ifrs(osv.osv):
             ('cancel','Cancel') ],
             'State', required=True ),
 
-        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', required = True ),
+        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year' ),
         'do_compute' : fields.boolean('Compute'),
         'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
@@ -53,6 +56,8 @@ class ifrs_ifrs(osv.osv):
     _defaults = {
         'state' : 'draft',
     }
+
+    _rec_name = 'code'
 
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
@@ -235,7 +240,7 @@ class ifrs_lines(osv.osv):
         
     _columns = {
         'sequence' : fields.integer( 'Sequence', required = True ),
-        'name' : fields.char( 'Name', 128, required = True ),
+        'name' : fields.char( 'Name', 128, required = True, translate = True ),
         'type': fields.selection(
            [
                 ('abstract','Abstract'),
@@ -256,7 +261,8 @@ class ifrs_lines(osv.osv):
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
             store={
                     'ifrs.ifrs':(_get_changes_on_ifrs,['do_compute'],15)
-            }
+            },
+            help="This field will update when you click the compute button in the IFRS doc form"
             ),
 
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
@@ -307,11 +313,13 @@ class ifrs_lines(osv.osv):
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
         
         'inv_sign' : fields.boolean('Change Sign to Amount'),
-
+        
+        'invisible' : fields.boolean('Invisible'),
     }
 
     _defaults = {
         'type' : 'abstract',
+        'invisible' : False,
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 

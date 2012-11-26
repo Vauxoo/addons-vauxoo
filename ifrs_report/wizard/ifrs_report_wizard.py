@@ -32,45 +32,71 @@ class ifrs_report_wizard(osv.osv_memory):
     _name = 'ifrs.report.wizard'
     _description = 'IFRS Report'
     _columns = {
-       'period': fields.many2one('account.period', 'Force period', help='Fiscal period to assign to the invoice. Keep empty to use the period of the current date.'),
+        'period': fields.many2one('account.period', 'Force period', help='Fiscal period to assign to the invoice. Keep empty to use the period of the current date.'),
+        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year' ),
+        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
+        'report_type': fields.selection( [
+            ('all','All Fiscalyear'),
+            ('per', 'Force Period')],
+            string='Type', required=True ),
+        'columns': fields.selection( [
+            ('ifrs','Two Columns'),
+            ('ifrs_12', 'Twelve Columns')],
+            string='Number of Columns' ),
+        'target_move': fields.selection([('posted', 'All Posted Entries'),
+                                        ('all', 'All Entries'),
+                                        ], 'Target Moves'),
+    }
+
+    _defaults = {
+        'report_type' : 'all'
     }
 
     def _get_period(self, cr, uid, context={}):
 
-        """ Return default account period value """
+        """ Return the current period id """
 
         account_period_obj = self.pool.get('account.period')
-        ids = account_period_obj.find(cr, uid, context=context)
-        period_id = False
-        if ids:
-            period_id = ids[0]
+        ids = account_period_obj.find(cr, uid, time.strftime('%Y-%m-%d'), context=context)
+        period_id = ids[0]
         return period_id
+
+    def _get_fiscalyear(self, cr, uid, context={}, period_id=False):
+
+        """ Return fiscalyear id for the period_id given.
+            If period_id is nor given then return the current fiscalyear """
+
+        if period_id:
+            period_obj = self.pool.get('account.period').browse(cr, uid, period_id)
+            fiscalyear_id = period_obj.fiscalyear_id.id
+        else:
+            fiscalyear_obj = self.pool.get('account.fiscalyear')
+            ids = fiscalyear_obj.find(cr, uid, time.strftime('%Y-%m-%d'), context=context)
+            fiscalyear_id = ids
+        return fiscalyear_id
 
     def print_report(self, cr, uid, ids, context={}):
         datas = {'ids': context.get('active_ids', [])}
         wizard_ifrs = self.browse(cr, uid, ids, context=context)[0]
-        datas['period'] = wizard_ifrs.period.id
+
+        datas['report_type'] = str(wizard_ifrs.report_type)
+        datas['company'] = wizard_ifrs.company_id.id
+        datas['columns'] = str(wizard_ifrs.columns)
+
+        if datas['report_type'] == 'all':
+            datas['fiscalyear'] = wizard_ifrs.fiscalyear_id.id or self._get_fiscalyear(cr, uid, context=context)
+            datas['period'] = False
+        else:
+            datas['columns'] = 'ifrs'
+            datas['period'] = wizard_ifrs.period.id or self._get_period( cr, uid, context=context )
+            datas['fiscalyear'] = self._get_fiscalyear(cr, uid, context=context, period_id=datas['period'])
+
         return {
             'type': 'ir.actions.report.xml',
-            'report_name': 'ifrs',
+            'report_name': datas['columns'],
             'datas' : datas
        }
 
 ifrs_report_wizard()
-
-
-#~ class cfd_print(wizard.interface):
-        #~ states = {
-        #~ 'init': {
-            #~ 'actions': [],
-            #~ 'result': {
-                #~ 'type': 'print',
-                #~ 'report': 'ifrs_report',
-                #~ 'state': 'end',
-            #~ }
-        #~ },
-    #~ }
-#~ cfd_print("cfd.wizard.cfd.print")
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
