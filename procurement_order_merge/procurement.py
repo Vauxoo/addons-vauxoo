@@ -91,15 +91,14 @@ class procurement_order(osv.osv):
             # create the new procurement order
             neworder_id = self.create(cr, uid, order_data)
             orders_info.update({neworder_id: old_ids})
-            allorders.append(neworder_id)# all procurement orders
+            allorders.append(neworder_id)
             for old_id in old_ids:
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
             wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr)
             new_production_id = self.pool.get('procurement.order').action_produce_assign_product(cr, uid, [neworder_id], context=context)
-            print new_production_id, old_orders, "<- prod hija, prods padres --para crear subproductions"
             mrp_production_pool.write(cr, uid, old_orders, {'subproduction_ids': [(4, new_production_id)]})
             allproductions.append(new_production_id)
             
-        return allproductions#debe retornar id de productions para ser recursivo
+        return allproductions
 procurement_order()
