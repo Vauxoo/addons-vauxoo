@@ -56,6 +56,8 @@ class ifrs_ifrs(osv.osv):
         'state' : 'draft',
     }
 
+    _rec_name = 'code'
+
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
         context.update({'whole_fy':True})
@@ -258,7 +260,8 @@ class ifrs_lines(osv.osv):
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
             store={
                     'ifrs.ifrs':(_get_changes_on_ifrs,['do_compute'],15)
-            }
+            },
+            help="This field will update when you click the compute button in the IFRS doc form"
             ),
 
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
