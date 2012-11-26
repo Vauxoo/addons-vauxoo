@@ -76,6 +76,7 @@ class procurement_order(osv.osv):
                     order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
             
         allorders = []
+        allproductions = []
         orders_info = {}
         for order_key, (order_data, old_ids) in new_orders.iteritems():
         # skip merges with only one order
@@ -86,13 +87,15 @@ class procurement_order(osv.osv):
             # create the new procurement order
             neworder_id = self.create(cr, uid, order_data)
             orders_info.update({neworder_id: old_ids})
-            allorders.append(neworder_id)
-
+            allorders.append(neworder_id)# all procurement orders
             for old_id in old_ids:
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
             wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr)
-            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_check', cr)
+            #wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_check', cr)
+            new_production_id = self.pool.get('procurement.order').action_produce_assign_product(cr, uid, [neworder_id], context=context)
+            print new_production_id, "<- new_production_id"
+            allproductions.append(new_production_id)
             
-        return True
+        return allproductions#debe retornar id de productions para ser recursivo
 procurement_order()
