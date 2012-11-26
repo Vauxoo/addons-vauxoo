@@ -47,6 +47,7 @@ class ifrs_ifrs(osv.osv):
 
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', required = True ),
         'do_compute' : fields.boolean('Compute'),
+        'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
 
     _defaults = {
@@ -330,16 +331,6 @@ class ifrs_lines(osv.osv):
 
 
 ifrs_lines()
-
-
-class ifrs_ifrs(osv.osv):
-
-    _inherit = 'ifrs.ifrs'
-    _columns = {
-        'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', 'Other Reportes')
-    }
-
-ifrs_ifrs()
 
 
 

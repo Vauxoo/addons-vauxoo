@@ -102,8 +102,8 @@
                     <page string='Based on Other Reports'>
                         <field 
                             name='ifrs_ids' 
-                            nolabel='1'
-                            domain="[('id','!=',id)]"
+                            nolabel='1' 
+			    domain="[('id', '!=', [active_id])]"
                             />
                     </page>
                     <page string='Other Info'>
