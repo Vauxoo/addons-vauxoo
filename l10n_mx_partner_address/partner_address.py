@@ -41,9 +41,9 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
 
     _columns = {
-        'l10n_mx_street3': fields.char('Street3', size=128),
-        'l10n_mx_street4': fields.char('Street4', size=128),
-        'l10n_mx_city2': fields.char('City2', size=128),
+        'street3': fields.char('Street3', size=128),
+        'street4': fields.char('Street4', size=128),
+        'city2': fields.char('City2', size=128),
     }
 
     def _get_default_country_id(self, cr, uid, context=None):
