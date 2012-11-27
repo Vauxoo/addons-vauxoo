@@ -24,10 +24,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+#    Leyendas tomadas el dia 16 de noviembre de 2012 del sitio:
+#       http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19207.html
+#           La leyenda “La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales”, con letra no menor de 5 puntos.
+#           La leyenda "Este comprobante tendrá una vigencia de dos años contados a partir de la fecha de aprobación de la asignación de folios, la cual es dd/mm/aaaa", misma que deberá ser impresa con letra no menor de 5 puntos.
+##############################################################################
 
 from report import report_sxw
 import pooler
 import tools
+import time
 #from amount_to_text_es import amount_to_text as amount_to_text_class
 
 #amount_to_text_obj = amount_to_text_class()
