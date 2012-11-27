@@ -31,9 +31,10 @@
     "category": "Generic Modules",
     "website" : "http://www.vauxoo.com/",
     "description": """This module generates procurement orders in draft state
-    by a production order.
+    by a production order. Then, a wizard uses those procurements to confirm them
+    and create subproductions to supply the parent order.
     """,
-    'depends': ['mrp_production_procurement_order'],
+    'depends': ['procurement_order_merge', 'mrp_subproduction', 'procurement_location'],
     'init_xml': [],
     'update_xml': [
     'wizard/procurement_order_merge_view.xml'
