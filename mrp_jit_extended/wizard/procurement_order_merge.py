@@ -39,10 +39,11 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
         else:
             production_ids = rec_ids
         procurement_ids = []
+        print production_ids, "productions ids bool?"
         for production_id in production_ids:
             production_data = mrp_production_pool.browse(cr, uid, production_id, context=context)
             for line in production_data.procurement_ids:
-                if line.state == 'draft':
+                if (line.state == 'draft') and (line.product_id.supply_method=='produce'):
                     procurement_ids.append(line.id)
 
         new_prods = procurement_order.do_merge(cr, uid, procurement_ids, context=context)
