@@ -8,11 +8,11 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='street2']" position="after">
-                    <field name="street3" placeholder="Street3..." groups="l10n_mx_partner_address.group_address_mx"/>
-                    <field name="street4" placeholder="Street4..." groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="l10n_mx_street3" placeholder="Street3..." groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="l10n_mx_street4" placeholder="Street4..." groups="l10n_mx_partner_address.group_address_mx"/>
                 </xpath>
                 <xpath expr="//field[@name='country_id']" position="before">
-                    <field name="city2" placeholder="City2" groups="l10n_mx_partner_address.group_address_mx"/>
+                    <field name="l10n_mx_city2" placeholder="City2" groups="l10n_mx_partner_address.group_address_mx"/>
                 </xpath>
             </field>
         </record>
