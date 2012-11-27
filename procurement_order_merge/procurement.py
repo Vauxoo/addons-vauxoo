@@ -55,29 +55,30 @@ class procurement_order(osv.osv):
         old_orders = []
         
         for procurement in self.browse(cr, uid, ids):
-            order_key = make_key(procurement, ('product_id', 'location_id', 'procure_method'))
-            new_order = new_orders.setdefault(order_key, ({}, []))
-            new_order[1].append(procurement.id)
-            order_infos = new_order[0]
-            if not order_infos:
-                order_infos.update({
-                    'name' : procurement.name,
-                    'origin' : procurement.origin,
-                    'product_id' : procurement.product_id.id,
-                    'location_id' : procurement.location_id.id,
-                    'product_qty' : self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id),
-                    'product_uom' : procurement.product_id.uom_id.id,
-                    'procure_method' : procurement.procure_method
-                })
-            else:
-                if procurement.name:
-                    order_infos['name'] = (order_infos['name'] or '') + ',' + procurement.name
-                if procurement.origin:
-                    order_infos['origin'] = (order_infos['origin'] or '') + ',' + procurement.origin
-                if procurement.product_qty:
-                    order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
-            if procurement.production_id.id not in old_orders:
-                old_orders.append(procurement.production_id.id)
+            if procurement.state == 'draft':
+                order_key = make_key(procurement, ('product_id', 'location_id', 'procure_method'))
+                new_order = new_orders.setdefault(order_key, ({}, []))
+                new_order[1].append(procurement.id)
+                order_infos = new_order[0]
+                if not order_infos:
+                    order_infos.update({
+                        'name' : procurement.name,
+                        'origin' : procurement.origin,
+                        'product_id' : procurement.product_id.id,
+                        'location_id' : procurement.location_id.id,
+                        'product_qty' : self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id),
+                        'product_uom' : procurement.product_id.uom_id.id,
+                        'procure_method' : procurement.procure_method
+                    })
+                else:
+                    if procurement.name:
+                        order_infos['name'] = (order_infos['name'] or '') + ',' + procurement.name
+                    if procurement.origin:
+                        order_infos['origin'] = (order_infos['origin'] or '') + ',' + procurement.origin
+                    if procurement.product_qty:
+                        order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
+                if procurement.production_id.id not in old_orders:
+                    old_orders.append(procurement.production_id.id)
             
         allorders = []
         allproductions = []
@@ -95,10 +96,12 @@ class procurement_order(osv.osv):
             for old_id in old_ids:
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
-            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr)
+            #wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr) TODO: to validate when no bom
             new_production_id = self.pool.get('procurement.order').action_produce_assign_product(cr, uid, [neworder_id], context=context)
-            mrp_production_pool.write(cr, uid, old_orders, {'subproduction_ids': [(4, new_production_id)]})
+            if old_orders[0]:
+                print old_orders, "sdf"
+                mrp_production_pool.write(cr, uid, old_orders, {'subproduction_ids': [(4, new_production_id)]})
             allproductions.append(new_production_id)
-            
-        return allproductions
+
+        return allproductions or True
 procurement_order()
