@@ -99,10 +99,12 @@ class procurement_order(osv.osv):
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
             wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr) #TODO: to validate when no bom
             new_production_id = self.pool.get('procurement.order').action_produce_assign_product(cr, uid, [neworder_id], context=context)
-            if old_orders[0]:
-                print old_orders, "sdf"
-                mrp_production_pool.write(cr, uid, old_orders, {'subproduction_ids': [(4, new_production_id)]})
+            #if old_orders[0]:
+            #    print old_orders, "sdf"
+            #    subproductions_rel.append((new_production_id, old_orders))
+            #    mrp_production_pool.write(cr, uid, new_production_id, {'subproduction_ids': [(4, old_orders)]})
             allproductions.append(new_production_id)
 
-        return allproductions #or True
+        print old_orders, "old orders"
+        return (allproductions, old_orders) #(all productions, ordenes de produccion anteriores)
 procurement_order()
