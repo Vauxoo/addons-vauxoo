@@ -46,9 +46,11 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
                 if (line.state == 'draft') and (line.product_id.supply_method=='produce'):
                     procurement_ids.append(line.id)
 
-        new_prods = procurement_order.do_merge(cr, uid, procurement_ids, context=context)
-        if new_prods:
-            self.procurement_merge_jit(cr, uid, ids, context, new_prods)
+        res = procurement_order.do_merge(cr, uid, procurement_ids, context=context)
+        if res[0]:
+            for line in res[1]:
+                mrp_production_pool.write(cr, uid, res[0], {'subproduction_ids': [(4, line)]})
+            self.procurement_merge_jit(cr, uid, ids, context, res[0])
         return {}
 
 procurement_order_merge_jit_extended()
