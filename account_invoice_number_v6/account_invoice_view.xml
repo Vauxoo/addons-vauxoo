@@ -21,7 +21,7 @@
             <field name="inherit_id" ref="account.view_account_invoice_filter"/>
             <field name="type">search</field>
             <field name="arch" type="xml">
-                <xpath expr="/search/group/field[@name='number']" position="replace">
+                <xpath expr="/search/field[@name='number']" position="replace">
                     <field name="internal_number"/>
                 </xpath>
             </field>
