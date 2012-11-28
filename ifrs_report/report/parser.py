@@ -62,9 +62,6 @@ class ifrs_report(report_sxw.rml_parse):
         self.context = context
         self.uid = uid
 
-        print "\n__init__():"
-        print "self._iter_record = " + str(self._iter_record)
-        print "self._total_record = " + str(self._total_record)
         #~ self.cr.execute("select ifrs_lines_ids from ifrs_ifrs where id=%s", str(uid) )
         #~ print "cr.fetchone() = " + str(cr.fetchone())
         #~ # raro pero me dice que no existe la columna ifrs_lines_ids
@@ -174,10 +171,6 @@ class ifrs_report(report_sxw.rml_parse):
 
         self._total_record = res
         self._iter_record = res
-
-        print "\n_get_total_ifrs_lines():"
-        print "self._iter_record = " + str(self._iter_record)
-        print "self._total_record = " + str(self._total_record)
 
     def _get_padding_level(self, level):
         return "padding_level_"+str(level)
