@@ -4,17 +4,15 @@
 
         <record model="ir.ui.view" id="view_account_invoice_tax_form_inh">
             <field name="name">view.account.invoice.tax.form.inh</field>
-            <field name="inherit_id" ref="account.view_tax_form"/>
             <field name="model">account.invoice.tax</field>
             <field name="inherit_id" ref="account.view_invoice_tax_form"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-               <xpath expr='/form[@string="Manual Invoice Taxes"]/field[@name="name"]' position="after">
+               <xpath expr='//field[@name="name"]' position="after">
                     <field name='name2'/>
                     <field name='tax_percent'/>
                 </xpath>
             </field>
         </record>
-        
+
     </data>
 </openerp>
