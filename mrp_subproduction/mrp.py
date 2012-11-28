@@ -86,6 +86,7 @@ class mrp_production(osv.osv):
         
     _columns = {
         'subproduction_ids': fields.many2many('mrp.production', 'rel_mrp_subproduction_self', 'parent_id', 'children_id', 'Subproductions'),
+        'superproduction_ids': fields.many2many('mrp.production', 'rel_mrp_subproduction_self', 'children_id', 'parent_id', 'Superproductions'),
         'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Really used', multi=True, help="UoM is the same that the parent production order"),
         'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Planned', multi=True, help="UoM is the same that the parent production order"),
         'product_subproduction_qty_line_real': fields.function(_get_parent_product, type='float', method=True, string='Real in line', multi=True),
@@ -97,6 +98,7 @@ class mrp_production(osv.osv):
             default = {}
         default.update({
             'subproduction_ids' : [],
+            'superproduction_ids' : [],
         })
         return super(mrp_production, self).copy(cr, uid, id, default, context)
 

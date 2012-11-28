@@ -25,6 +25,18 @@
                     <field name="product_subproduction_qty_real"/>
                     <field name="product_subproduction_qty_planned"/>
                 </page>
+                <page string="Superproductions">
+                    <separator string="Superproductions" colspan="4"/>
+                    <field name="superproduction_ids" nolabel="1" colspan="4" height="275">
+                        <tree string="Subproductions">
+                            <field name="name"/>
+                            <field name="date_planned"/>
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                            <field name="product_uom"/>
+                        </tree>
+                    </field>
+                </page>
             </xpath>
             </field>
         </record>
