@@ -157,6 +157,7 @@ class account_invoice(osv.osv):
         rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
         moneda = '''<Addenda>
             <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
+            <sf:Partner xmlns:sf="http://timbrado.solucionfactible.com/partners" xsi:schemaLocation="http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd" id="150731"/>
         </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate)
         file = False
         msg = ''
