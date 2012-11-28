@@ -103,15 +103,19 @@ class ifrs_report(report_sxw.rml_parse):
         #~ TODO al agregar el campo de codigo en el ifrs concatenar cadena
         return '[' + str(ifrs_doc.code) + '] ' + str(ifrs_doc.title)
 
-    def _get_periods_name_list(self, ifrs_obj):
+    def _get_periods_name_list(self, ifrs_obj,fiscalyear_id):
 
         """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
 
         period_list = self._period_info_list = []
         period_list.append( ('0', None , self._title_line ) ) 
-        periods_ids = ifrs_obj.fiscalyear_id._get_fy_period_ids()
-        periods = self.pool.get('account.period')
 
+        fiscalyear_bwr = self.pool.get('account.fiscalyear').browse(self.cr, self.uid, fiscalyear_id)
+        
+        periods_ids = fiscalyear_bwr._get_fy_period_ids()
+
+        periods = self.pool.get('account.period')
+        
         for ii, period_id in enumerate(periods_ids, start=1):
             period_list.append((str(ii), period_id, periods.browse(self.cr, self.uid, period_id).name ))
 

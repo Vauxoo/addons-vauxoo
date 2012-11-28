@@ -105,7 +105,7 @@
         </para>
 
         <para>[[ get_total_ifrs_lines(o) ]] </para>
-        <para>[[ get_periods_name_list(o) ]]</para>
+        <para>[[ get_periods_name_list(o,data['fiscalyear']) ]]</para>
 
         <!-- header row table -->
         <blockTable style="header_table_style" colWidths="112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm">
