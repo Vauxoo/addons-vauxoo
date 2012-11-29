@@ -32,6 +32,7 @@ from tools.translate import _
 class ifrs_ifrs(osv.osv):
 
     _name = 'ifrs.ifrs'
+    _rec_name = 'code'
     _columns = {
         'name' : fields.char('Name', 128, required = True ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade' ),
@@ -56,8 +57,6 @@ class ifrs_ifrs(osv.osv):
     _defaults = {
         'state' : 'draft',
     }
-
-    _rec_name = 'code'
 
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
