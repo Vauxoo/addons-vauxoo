@@ -61,7 +61,7 @@ class mrp_production(osv.osv):
                 val = {
                     'product_id' : pro.product_id and pro.product_id.id or False,
                     'quantity' : production.product_qty,
-                    'product_uom' : pro.product_uom.id,
+                    'product_uom' : production.product_uom.id,
                     'production_id' : production.id
                 }
                 mrp_pt.create(cr,uid,val)
