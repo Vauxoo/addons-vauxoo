@@ -32,6 +32,7 @@ import time
 import base64
 import socket
 from tools.translate import _
+import service
 
 waittime = 10
 wait_count = 0
@@ -40,28 +41,30 @@ wait_limit = 12
 class db_tools(osv.osv_memory):
     _name = 'db.tools'
     
-    def list_db(self, cr, uid, context=None):
-        uri=context.get('uri', False)
-        list = []
+    def db(self, cr, uid, context=None):
+        uri='http://localhost:8069'
         try:
             conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
             db_list = self.execute(conn,'list')
             for db in db_list:
-                list.append((db, db))
+                if cr.dbname == db:
+                    db_name = db
         except Exception,var:
             raise osv.except_osv(_("Error"),_("Data Bases don't found for this server"))
-        return list
-             
+        return db_name
+        
     _columns = {
-        'filter' : fields.selection([ ('backup','Backup'), ('restore','Restore')], 'Filter',),
+        'filter' : fields.selection([ ('backup','Backup'), ('restore','Restore-Backup')], 'Filter',),
         'server': fields.char('Server', size=128, readonly=True),
         'password': fields.char('Password', size=64, required=True),
-        'list_db' : fields.selection(list_db, 'Data Base'),
+        'list_db' : fields.char('Data Base', size=256, required = True, readonly=True),
+        'name_db' : fields.char('Name DB', size=128)
     }
     
     _defaults = {
-        'server' : 'http://localhost:8070',
-        'filter' : 'backup'
+        'server' : 'http://localhost:8069',
+        'filter' : 'backup',
+        'list_db' : db,
         }
         
     def execute(self, connector, method, *args):
@@ -84,7 +87,17 @@ class db_tools(osv.osv_memory):
         wait_count = 0
         return res
         
-    def backup_db(self, uri, dbname):
+    def backup_db(self, uri=False, dbname=''):
+        ws_obj = service.web_services.db()
+        filename=('%s_%s.sql' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
+        dump_db64 = ws_obj.exp_dump(dbname)
+        dump = base64.decodestring(dump_db64)
+        file_db = file('/tmp/' + filename, 'wb')
+        file_db.write(dump)
+        file_db.close()
+        return '/tmp/' + filename
+    
+    def ___backup_db(self, uri, dbname):
         conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
         filename=('%s_%s.sql' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
         dump_db64=self.execute(conn, 'dump', 'admin', dbname)
@@ -94,7 +107,18 @@ class db_tools(osv.osv_memory):
         file_db.close()
         return '/tmp/' + filename
     
-    def backup_restore_db(self, cr, uid, ids, uri, dbname):
+    def backup_restore_db(self, cr, uid, ids, uri, dbname=''):
+        res = self.backup_db(uri, dbname)
+        name_db = res[5:-4]
+        f = file(res, 'r')
+        data_b64 = base64.encodestring(f.read())
+        f.close()
+        password = self.browse(cr, uid, ids[0]).password
+        ws_obj = service.web_services.db()
+        ws_obj.exp_restore(name_db, data_b64)
+        return True
+        
+    def ___backup_restore_db(self, cr, uid, ids, uri, dbname):
         conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
         res = self.backup_db(uri, dbname)
         name_db = res[5:-4]
@@ -131,7 +155,10 @@ class data_server(osv.osv_memory):
         }
         
     _defaults = {
-        'protocol_conection' : 'net'
+        #~ 'protocol_conection' : 'net'
+        'protocol_conection' : 'xml_port',
+        'server':'localhost',
+        'port':'8069',
         }
         
     def confirm_data2(self, cr, uid, ids, context=None):
