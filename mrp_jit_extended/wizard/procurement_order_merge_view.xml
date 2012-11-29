@@ -7,14 +7,13 @@
             <field name="model">procurement.order.merge.jit.extended</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Supply productions">
-                    <label string="When supplying these productions, new productions orders will be generated" colspan="4"/>
+                <form string="Supply confirmed or ready productions" width="400">
+                    <label string="Only production orders of products that are not services and are to be produced, will be generated" colspan="4"/>
                     <newline/>
                     <label string=" "
                         colspan="4"/>
                     <newline/>
                     <separator string="" colspan="4" />
-
                     <button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
                     <button string="Supply" icon="gtk-ok" name="procurement_merge_jit" type="object"/>
                 </form>

@@ -55,7 +55,7 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
         for production_id in production_ids:
             production_data = mrp_production_pool.browse(cr, uid, production_id, context=context)
             for line in production_data.procurement_ids:
-                if (line.state == 'draft') and (line.product_id.supply_method=='produce'):
+                if (line.state == 'draft') and (line.product_id.supply_method=='produce') and (line.product_id.type <> 'service'):
                     #properties = [x.id for x in line.property_ids]
                     #bom_id = self.pool.get('mrp.bom')._bom_find(cr, uid, line.product_id.id, line.product_uom.id, properties)
                     #print bom_id, "<- bom id"
@@ -79,8 +79,6 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
                         #print context, "<- context"
                         #new_production_id = procurement_order_pool.action_produce_assign_product(cr, uid, [line.id], context=context)
                         #print "context", context
-                        
-                        #########todo: validar si produccion esta en solo confirmada
 
         if res[0]:
             for line in res[1]:

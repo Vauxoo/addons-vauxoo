@@ -30,9 +30,11 @@
     "author" : "Vauxoo",
     "category": "Generic Modules",
     "website" : "http://www.vauxoo.com/",
-    "description": """This module generates procurement orders in draft state
-    by a production order. Then, a wizard uses those procurements to confirm them
-    and create subproductions to supply the parent order.
+    "description": """This module uses a wizard to merge an run the procurements
+    of the selected manufacturing orders (creating new manufacturing orders) to make a recursive supply 
+    of the parent orders.
+    To apply patches needed use the command:
+    patch -b "procurement/procurement.py" "procurement.py.patch"
     """,
     'depends': ['procurement_order_merge', 'mrp_subproduction', 'procurement_location'],
     'init_xml': [],

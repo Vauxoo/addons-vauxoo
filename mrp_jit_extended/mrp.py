@@ -37,7 +37,7 @@ class mrp_production(osv.osv):
         location_id = production.location_src_id.id
         date_planned = production.date_planned
         procurement_name = (production.origin or '').split(':')[0] + ':' + production.name
-        procurement_id2 = procurement_order.create(cr, uid, {
+        procurement_id = procurement_order.create(cr, uid, {
                     'name': procurement_name,
                     'origin': procurement_name,
                     'date_planned': date_planned,
@@ -52,8 +52,7 @@ class mrp_production(osv.osv):
                     'company_id': production.company_id.id,
                     'production_id': production_line.production_id.id
                 })
-        procurement_id = super(mrp_production, self)._make_production_line_procurement(cr, uid, production_line, shipment_move_id, context=context)
-        
+        #procurement_id = super(mrp_production, self)._make_production_line_procurement(cr, uid, production_line, shipment_move_id, context=context)
         return procurement_id
 
 mrp_production()
