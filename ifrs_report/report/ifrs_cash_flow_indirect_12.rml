@@ -105,7 +105,7 @@
         </para>
 
         <para>[[ get_total_ifrs_lines(o) ]] </para>
-        <para>[[ get_periods_name_list(o) ]]</para>
+        <para>[[ get_periods_name_list(o,data['fiscalyear']) ]]</para>
 
         <!-- header row table -->
         <blockTable style="header_table_style" colWidths="112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm">
@@ -127,8 +127,10 @@
         </blockTable>
 
         <!-- data row table -->
+        <section>
+        <para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l') ]]</para>
         <blockTable> [[ setTag('blockTable','blockTable', {'colWidths' : '112.4mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm,24.96mm', 'style' : get_row_style()+'_row_style'}) ]]
-        <para>[[ repeatIn(o.ifrs_lines_ids,'ifrs_l', 'blockTable') ]]</para>
+    
             <para>[[ ifrs_l.invisible and removeParentNode('blockTable') ]]</para>
             <tr>
                 <td>
@@ -148,7 +150,9 @@
                 <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 12), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
             </tr>
         </blockTable>
-
+     
+        </section>
+        
         </section>
 
     </story>

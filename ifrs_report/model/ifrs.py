@@ -60,7 +60,8 @@ class ifrs_ifrs(osv.osv):
 
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
-        context.update({'whole_fy':True})
+        fy = self.browse(cr, uid, ids, context=context)[0]
+        context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         return self.write(cr,uid,ids,{'do_compute':True},context=context)
 
 ifrs_ifrs()
@@ -168,6 +169,7 @@ class ifrs_lines(osv.osv):
                     res += a.credit
                 else:
                     res += a.balance
+                    
         elif brw.type == 'total':
             res = self._get_sum_total(cr, uid, brw, context = c)
             
@@ -192,7 +194,6 @@ class ifrs_lines(osv.osv):
                     res =  res2 != 0 and (res / res2) or 0.0
             
                 print 'RES DESPUES DE COMPARACION ', res
-                
         return brw.inv_sign and (-1.0 * res) or res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
