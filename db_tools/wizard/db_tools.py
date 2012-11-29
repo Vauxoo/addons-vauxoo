@@ -43,6 +43,7 @@ class db_tools(osv.osv_memory):
     
     def db(self, cr, uid, context=None):
         uri='http://localhost:8069'
+        print 'context', context
         try:
             conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
             db_list = self.execute(conn,'list')
@@ -144,54 +145,3 @@ class db_tools(osv.osv_memory):
     def cancel_action(self, cr, uid, ids, context=None):
         return {}
 db_tools()
-
-class data_server(osv.osv_memory):
-    _name = 'data.server'
-    
-    _columns = {
-        'server' : fields.char('Server', size=256, required=True),
-        'port' : fields.char('Port', size=16, required=True),
-        'protocol_conection': fields.selection([ ('net', 'NET-RPC (faster)(port : 8070)'), ('xml_rcp', 'XML-RCP secure'), ('xml_port', 'XML-RCP (port : 8069)')], 'Protocol Conection',),
-        }
-        
-    _defaults = {
-        #~ 'protocol_conection' : 'net'
-        'protocol_conection' : 'xml_port',
-        'server':'localhost',
-        'port':'8069',
-        }
-        
-    def confirm_data2(self, cr, uid, ids, context=None):
-        db_tools_obj = self.pool.get('db.tools')
-        id_wiz_tools = context.get('active_id')
-        data = self.browse(cr, uid, ids[0])
-        server = data.server or ''
-        port = data.port or ''
-        val_prot= data.protocol_conection
-        if val_prot == 'net':
-            res = 'socket:'+ os.sep + os.sep + server + ':' + port
-        elif val_prot == 'xml_rcp':
-            res = 'https:'+ os.sep + os.sep + server + ':' + port
-        elif val_prot == 'xml_port':
-            res = 'http:'+ os.sep + os.sep + server + ':' + port
-        return res
-        
-    def confirm_data(self, cr, uid, ids, context=None):
-        res = self.confirm_data2(cr, uid, ids, context=context)
-        print 'res', res
-        context['uri'] = res
-        return {
-            'name':"tool db",
-            'view_mode': 'form',
-            'view_id': False,
-            'view_type': 'form',
-            'res_model': 'db.tools',
-            'type': 'ir.actions.act_window',
-            'res_id' :[],
-            'nodestroy': False,
-            'target': 'new',
-            'domain': '[]',
-            'context': context,
-        }
-        
-data_server()
