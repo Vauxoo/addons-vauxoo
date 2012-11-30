@@ -119,12 +119,12 @@ class invoice_report1(report_sxw.rml_parse):
                 subq="""
                         select b.id-- devuelve los ids de voucher_line correspondientes a esa factura
                             from account_voucher a
-                            inner join account_voucher_line b
+                            join account_voucher_line b
                                 on a.id=b.voucher_id
                                 and b.amount<>0
-                            inner join account_move_line c
+                            join account_move_line c
                                 on c.id=b.move_line_id
-                            inner join account_invoice d
+                            join account_invoice d
                                 on d.move_id=c.move_id
                             where d.id=%s
                             and a.state='posted'
@@ -142,13 +142,15 @@ class invoice_report1(report_sxw.rml_parse):
         return vou_brw
 
     def _get_invoice(self, partner_id, date_start, date_end, currency_id):
+        print  partner_id, date_start, date_end, currency_id[0]
         inv_obj = self.pool.get('account.invoice')
         inv_ids = inv_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id),
                                                      ('state', 'not in', ['cancel', 'proforma2', 'proforma']),
                                                      ('date_invoice', '>=', date_start),
                                                      ('date_invoice', '<=', date_end),
-                                                     ('currency_id', '=', currency_id), ] )
+                                                     ('currency_id', '=', currency_id[0],), ], )
         inv_brw= inv_obj.browse(self.cr, self.uid, inv_ids)
+        print inv_brw
         self.invoice=inv_brw
         self.haber_tot = 0
         self.debe_tot = 0
