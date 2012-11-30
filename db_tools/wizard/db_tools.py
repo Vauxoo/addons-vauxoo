@@ -46,55 +46,54 @@ class db_tools(osv.osv_memory):
     def db(self, cr, uid, context=None):
         ws_obj = service.web_services.db()
         db_list = ws_obj.exp_list()
-        list = []
-        list2 = []
+        list_db = []
         for db in db_list:
-            list.append((db.lower(),db))
-        return list
+            list_db.append((db.lower(),db))
+        return list_db
     
     def _db_default(self, cr, uid, context=None):
         res = self.db(cr, uid, context)
-        list = []
+        list_db = []
         for db in res:
             if ((cr.dbname, cr.dbname) == db):
-                list.append(db)
-        return list
+                list_db.append(db)
+        return list_db
         
     def db_default(self, cr, uid, context=None):
         return self._db_default(cr, uid, context)[0][0]
         
     _columns = {
-        'filter' : fields.selection([ ('backup','Backup'), ('restore','Backup-Restore')], 'Filter',),
-        'server': fields.char('Server', size=128, readonly=True),
+        'filter' : fields.selection([ ('backup','Backup'), ('restore','Backup-Restore')], 'Filter', help='Backup creates a backup of the database and stored in the path indicated, Restore-Backup creates a backup of the database, and in turn restores the new name'),
         'password': fields.char('Password', size=64, required=True),
-        'list_db' : fields.selection(_db_default, 'Data Base', required = True, readonly=True),
-        'name_db' : fields.char('Name DB', size=128)
+        'list_db' : fields.selection(_db_default, 'Data Base Restore', required = True, readonly=True),
+        'name_db' : fields.char('Name DB', size=128, required = True),
+        'path_save_db' : fields.char('Path save DB', size=256, required = True)
     }
     
     _defaults = {
-        'server' : 'http://localhost:8069',
-        'filter' : 'backup',
+        'filter' : 'restore',
         'list_db' : db_default,
+        'name_db' : lambda self, cr, uid, context=None : cr.dbname + time.strftime('_%Y%m%d_%H%M%S.backup'),
+        'path_save_db' : tempfile.gettempdir()
         }
                 
     def backup_db(self, cr, uid, ids, uri=False, dbname=''):
         ws_obj = service.web_services.db()
         data = self.browse(cr, uid, ids[0])
-        filename = data.name_db or ('%s_%s' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
+        filename = os.path.join(data.path_save_db, data.name_db)
         dump_db64 = ws_obj.exp_dump(dbname)
         dump = base64.decodestring(dump_db64)
-        (fileno,fname)  = tempfile.mkstemp('.sql', filename)
-        os.close(fileno)
-        file_db = file(fname, 'wb')
+        file_db = file(filename, 'wb')
         file_db.write(dump)
         file_db.close()
-        return fname
+        return filename
     
     def backup_restore_db(self, cr, uid, ids, uri, dbname=''):
         res = self.backup_db(cr, uid, ids, uri, dbname)
         data = self.browse(cr, uid, ids[0])
         data_base = os.path.basename(res)
         name_db = data_base[:data_base.rfind(".")]
+        print 'name_db',name_db
         f = file(res, 'r')
         data_b64 = base64.encodestring(f.read())
         f.close()
