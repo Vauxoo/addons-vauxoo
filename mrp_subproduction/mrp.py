@@ -86,10 +86,20 @@ class mrp_production(osv.osv):
         
     _columns = {
         'subproduction_ids': fields.many2many('mrp.production', 'rel_mrp_subproduction_self', 'parent_id', 'children_id', 'Subproductions'),
-        'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Really used', multi=True, help="UoM is the same that the parent production order"),
-        'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', method=True, string='Planned', multi=True, help="UoM is the same that the parent production order"),
-        'product_subproduction_qty_line_real': fields.function(_get_parent_product, type='float', method=True, string='Real in line', multi=True),
-        'product_subproduction_qty_line_planned': fields.function(_get_parent_product, type='float', method=True, string='Planned in line', multi=True),
+        'superproduction_ids': fields.many2many('mrp.production', 'rel_mrp_subproduction_self', 'children_id', 'parent_id', 'Superproductions'),
+        'product_subproduction_qty_real': fields.function(_get_product_subproduction_qty, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Really used', multi=True, help="UoM is the same that the parent production order"),
+        'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Planned', multi=True, help="UoM is the same that the parent production order"),
+        'product_subproduction_qty_line_real': fields.function(_get_parent_product, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Real in line', multi=True),
+        'product_subproduction_qty_line_planned': fields.function(_get_parent_product, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Planned in line', multi=True),
     }
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'subproduction_ids' : [],
+            'superproduction_ids' : [],
+        })
+        return super(mrp_production, self).copy(cr, uid, id, default, context)
 
 mrp_production()
