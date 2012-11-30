@@ -32,6 +32,18 @@ class procurement_order(osv.osv):
     
     _columns = {
         'production_id': fields.many2one('mrp.production', 'Production order'),
+        'production_created': fields.many2one('mrp.production', 'Production order'),
     }
+    
+    def make_mo(self, cr, uid, ids, context=None):
+        """ writes the production created to the procurement
+        @return: same res than original make_mo
+        """
+        res = super(procurement_order, self).make_mo(cr, uid, ids, context=context)
+        for line in res:
+            print line, "procurement id"
+            print res.get(line), "produccion creada"
+            self.write(cr, uid, [line], {'production_created': res.get(line)})
+        return res
 
 procurement_order()
