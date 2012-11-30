@@ -64,7 +64,7 @@ class db_tools(osv.osv_memory):
         return self._db_default(cr, uid, context)[0][0]
         
     _columns = {
-        'filter' : fields.selection([ ('backup','Backup'), ('restore','Restore-Backup')], 'Filter',),
+        'filter' : fields.selection([ ('backup','Backup'), ('restore','Backup-Restore')], 'Filter',),
         'server': fields.char('Server', size=128, readonly=True),
         'password': fields.char('Password', size=64, required=True),
         'list_db' : fields.selection(_db_default, 'Data Base', required = True, readonly=True),
