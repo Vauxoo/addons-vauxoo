@@ -11,7 +11,7 @@
                     <newline/>
                     <field name="server"/>
                     <newline/>
-                    <field name="password" colspan="4"/>
+                    <field name="password" colspan="4" password="1"/>
                     <field name="name_db" colspan="4" attrs="{'invisible': [('filter','=','backup'),]}"/>
                     <field name="list_db" colspan="4"/>
                     <button string="Cancel" special="cancel" icon="gtk-stop"/>

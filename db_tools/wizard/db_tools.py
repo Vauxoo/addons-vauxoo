@@ -33,6 +33,7 @@ import base64
 import socket
 from tools.translate import _
 import service
+import tempfile
 
 waittime = 10
 wait_count = 0
@@ -41,93 +42,65 @@ wait_limit = 12
 class db_tools(osv.osv_memory):
     _name = 'db.tools'
     
+
     def db(self, cr, uid, context=None):
-        uri='http://localhost:8069'
-        print 'context', context
-        try:
-            conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
-            db_list = self.execute(conn,'list')
-            for db in db_list:
-                if cr.dbname == db:
-                    db_name = db
-        except Exception,var:
-            raise osv.except_osv(_("Error"),_("Data Bases don't found for this server"))
-        return db_name
+        ws_obj = service.web_services.db()
+        db_list = ws_obj.exp_list()
+        list = []
+        list2 = []
+        for db in db_list:
+            list.append((db.lower(),db))
+        return list
+    
+    def _db_default(self, cr, uid, context=None):
+        res = self.db(cr, uid, context)
+        list = []
+        for db in res:
+            if ((cr.dbname, cr.dbname) == db):
+                list.append(db)
+        return list
+        
+    def db_default(self, cr, uid, context=None):
+        return self._db_default(cr, uid, context)[0][0]
         
     _columns = {
         'filter' : fields.selection([ ('backup','Backup'), ('restore','Restore-Backup')], 'Filter',),
         'server': fields.char('Server', size=128, readonly=True),
         'password': fields.char('Password', size=64, required=True),
-        'list_db' : fields.char('Data Base', size=256, required = True, readonly=True),
+        'list_db' : fields.selection(_db_default, 'Data Base', required = True, readonly=True),
         'name_db' : fields.char('Name DB', size=128)
     }
     
     _defaults = {
         'server' : 'http://localhost:8069',
         'filter' : 'backup',
-        'list_db' : db,
+        'list_db' : db_default,
         }
-        
-    def execute(self, connector, method, *args):
-        global wait_count
-        res = False
-        try:
-            res = getattr(connector,method)(*args)
-        except socket.error,e:
-            if e.args[0] == 111:
-                if wait_count > 2:
-                    print "Server is taking too long to start, it has exceeded the maximum limit of %d seconds."%(wait_limit)
-                    clean()
-                    sys.exit(1)
-                print 'Please wait %d sec to start server....'%(waittime)
-                wait_count += 1
-                time.sleep(waittime)
-                res = execute(connector, method, *args)
-            else:
-                raise e
-        wait_count = 0
-        return res
-        
-    def backup_db(self, uri=False, dbname=''):
+                
+    def backup_db(self, cr, uid, ids, uri=False, dbname=''):
         ws_obj = service.web_services.db()
-        filename=('%s_%s.sql' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
+        data = self.browse(cr, uid, ids[0])
+        filename = data.name_db or ('%s_%s' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
         dump_db64 = ws_obj.exp_dump(dbname)
         dump = base64.decodestring(dump_db64)
-        file_db = file('/tmp/' + filename, 'wb')
+        (fileno,fname)  = tempfile.mkstemp('.sql', filename)
+        os.close(fileno)
+        file_db = file(fname, 'wb')
         file_db.write(dump)
         file_db.close()
-        return '/tmp/' + filename
-    
-    def ___backup_db(self, uri, dbname):
-        conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
-        filename=('%s_%s.sql' % (dbname, time.strftime('%Y%m%d_%H:%M'),)).replace(':','_')
-        dump_db64=self.execute(conn, 'dump', 'admin', dbname)
-        dump = base64.decodestring(dump_db64)
-        file_db = file('/tmp/' + filename, 'wb')
-        file_db.write(dump)
-        file_db.close()
-        return '/tmp/' + filename
+        return fname
     
     def backup_restore_db(self, cr, uid, ids, uri, dbname=''):
-        res = self.backup_db(uri, dbname)
-        name_db = res[5:-4]
+        res = self.backup_db(cr, uid, ids, uri, dbname)
+        data = self.browse(cr, uid, ids[0])
+        data_base = os.path.basename(res)
+        name_db = data_base[:data_base.rfind(".")]
         f = file(res, 'r')
         data_b64 = base64.encodestring(f.read())
         f.close()
-        password = self.browse(cr, uid, ids[0]).password
+        password = data.password
         ws_obj = service.web_services.db()
         ws_obj.exp_restore(name_db, data_b64)
-        return True
-        
-    def ___backup_restore_db(self, cr, uid, ids, uri, dbname):
-        conn = xmlrpclib.ServerProxy(uri + '/xmlrpc/db')
-        res = self.backup_db(uri, dbname)
-        name_db = res[5:-4]
-        f = file(res, 'r')
-        data_b64 = base64.encodestring(f.read())
-        f.close()
-        password = self.browse(cr, uid, ids[0]).password
-        self.execute(conn, 'restore', password, name_db, data_b64)
         return True
         
     def find_db(self, cr, uid, ids, context=None):
@@ -137,7 +110,7 @@ class db_tools(osv.osv_memory):
         uri=context.get('uri', False)
         for lin in self.browse(cr, uid, ids, context=context):
             if lin.filter=='backup':
-                self.backup_db(context.get('uri', False), lin.list_db)
+                self.backup_db(cr, uid, ids, context.get('uri', False), lin.list_db)
             if lin.filter == 'restore':
                 self.backup_restore_db(cr, uid, ids, context.get('uri', False), lin.list_db)
         return {}
