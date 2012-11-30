@@ -56,7 +56,6 @@ class procurement_order(osv.osv):
         
         for procurement in self.browse(cr, uid, ids):
             if (procurement.state == 'draft') and (procurement.product_id.supply_method=='produce'):
-                print procurement.product_id.name, "nombre de productos en draft y a producir"
                 order_key = make_key(procurement, ('product_id', 'location_id', 'procure_method'))
                 new_order = new_orders.setdefault(order_key, ({}, []))
                 new_order[1].append(procurement.id)
@@ -97,14 +96,13 @@ class procurement_order(osv.osv):
             for old_id in old_ids:
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
-            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr) #TODO: to validate when no bom
-            new_production_id = self.pool.get('procurement.order').action_produce_assign_product(cr, uid, [neworder_id], context=context)
-            #if old_orders[0]:
-            #    print old_orders, "sdf"
-            #    subproductions_rel.append((new_production_id, old_orders))
-            #    mrp_production_pool.write(cr, uid, new_production_id, {'subproduction_ids': [(4, old_orders)]})
-            allproductions.append(new_production_id)
+            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr)
+            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_check', cr)
+            procurements = self.read(cr, uid, neworder_id, ['production_created'], context=context)
+            new_production_id_tup = procurements.get('production_created')
+            if new_production_id_tup:
+                new_production_id = new_production_id_tup[0]
+                allproductions.append(new_production_id)
 
-        print old_orders, "old orders"
-        return (allproductions, old_orders) #(all productions, ordenes de produccion anteriores)
+        return (allproductions, old_orders)
 procurement_order()
