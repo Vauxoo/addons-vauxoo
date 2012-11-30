@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name": "MRP production procurement order",
+    "name": "MRP JIT extended",
     "version": "1.0",
     "author" : "Vauxoo",
     "category": "Generic Modules",
