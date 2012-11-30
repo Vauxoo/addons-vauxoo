@@ -35,8 +35,9 @@
     of the parent orders.
     To apply patches needed use the command:
     patch -b "procurement/procurement.py" "procurement.py.patch"
+    patch -b "mrp/mrp.py" "mrp.py.patch"
     """,
-    'depends': ['procurement_order_merge', 'mrp_subproduction', 'procurement_location'],
+    'depends': ['procurement_order_merge', 'mrp_subproduction', 'procurement_location', 'mrp_production_procurement_order'],
     'init_xml': [],
     'update_xml': [
     'wizard/procurement_order_merge_view.xml'
