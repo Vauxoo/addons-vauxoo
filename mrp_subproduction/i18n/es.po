@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-07 01:09+0000\n"
-"PO-Revision-Date: 2012-11-06 19:10-0600\n"
+"POT-Creation-Date: 2012-11-30 15:48+0000\n"
+"PO-Revision-Date: 2012-11-30 09:48-0600\n"
 "Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,12 +29,7 @@ msgstr "Planeado en línea"
 #. module: mrp_subproduction
 #: model:ir.model,name:mrp_subproduction.model_mrp_production
 msgid "Manufacturing Order"
-msgstr "Orden de fabricación"
-
-#. module: mrp_subproduction
-#: model:ir.model,name:mrp_subproduction.model_mrp_subproduction
-msgid "mrp.subproduction"
-msgstr "mrp.subproduction"
+msgstr "Orden fabricación"
 
 #. module: mrp_subproduction
 #: view:mrp.production:0
@@ -61,6 +56,12 @@ msgstr "Usado realmente"
 #: constraint:mrp.production:0
 msgid "Order quantity cannot be negative or zero!"
 msgstr "¡La cantidad de la orden no puede ser negativa o cero!"
+
+#. module: mrp_subproduction
+#: view:mrp.production:0
+#: field:mrp.production,superproduction_ids:0
+msgid "Superproductions"
+msgstr "Superproducciones"
 
 #. module: mrp_subproduction
 #: field:mrp.production,product_subproduction_qty_line_real:0
