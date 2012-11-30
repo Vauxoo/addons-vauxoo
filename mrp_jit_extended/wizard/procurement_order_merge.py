@@ -48,7 +48,6 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
                     procurement_ids.append(line.id)
 
         res = procurement_order_pool.do_merge(cr, uid, procurement_ids, context=context)
-        print res, "<- res"
         
         #forwards procurements that were not merged and its product is to produce
         wf_service = netsvc.LocalService("workflow")
@@ -56,29 +55,13 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
             production_data = mrp_production_pool.browse(cr, uid, production_id, context=context)
             for line in production_data.procurement_ids:
                 if (line.state == 'draft') and (line.product_id.supply_method=='produce') and (line.product_id.type <> 'service'):
-                    #properties = [x.id for x in line.property_ids]
-                    #bom_id = self.pool.get('mrp.bom')._bom_find(cr, uid, line.product_id.id, line.product_uom.id, properties)
-                    #print bom_id, "<- bom id"
-                    #if bom_id:
-                        print line.product_id.name, "<- productos ke no se mergearon y son a producir"
-                        print line.id, "<- id del procurement"
-                        wf_service.trg_validate(uid, 'procurement.order', line.id, 'button_confirm', cr)
-                        wf_service.trg_validate(uid, 'procurement.order', line.id, 'button_check', cr)
-                        procurements = self.pool.get('procurement.order').read(cr, uid, line.id, ['production_created'], context=context)
-                        new_production_id_tup = procurements.get('production_created')
-                        #print new_production_id_tup,"<- tuple del read (id, name)"
-            #refreshes the browse to get the value writen by the workflow
-            #for line in production_data.procurement_ids:
-                #if line.production_created.id:
-                        if new_production_id_tup:
-                            new_production_id = new_production_id_tup[0]
-                            res[0].append(new_production_id)
-                        #print line.production_created.id, "<- produccion creada (debe tener valor)\n"
-                        #print new_production_id, "es un boooooooool"
-                        #new_production_id = context.get('new_production_id', False)
-                        #print context, "<- context"
-                        #new_production_id = procurement_order_pool.action_produce_assign_product(cr, uid, [line.id], context=context)
-                        #print "context", context
+                    wf_service.trg_validate(uid, 'procurement.order', line.id, 'button_confirm', cr)
+                    wf_service.trg_validate(uid, 'procurement.order', line.id, 'button_check', cr)
+                    procurements = self.pool.get('procurement.order').read(cr, uid, line.id, ['production_created'], context=context)
+                    new_production_id_tup = procurements.get('production_created')
+                    if new_production_id_tup:
+                        new_production_id = new_production_id_tup[0]
+                        res[0].append(new_production_id)
 
         if res[0]:
             for line in res[1]:
