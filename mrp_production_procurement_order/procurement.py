@@ -41,8 +41,6 @@ class procurement_order(osv.osv):
         """
         res = super(procurement_order, self).make_mo(cr, uid, ids, context=context)
         for line in res:
-            print line, "procurement id"
-            print res.get(line), "produccion creada"
             self.write(cr, uid, [line], {'production_created': res.get(line)})
         return res
 
