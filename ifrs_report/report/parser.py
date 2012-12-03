@@ -126,14 +126,12 @@ class ifrs_report(report_sxw.rml_parse):
 
     def _get_amount_value(self, ifrs_line, period_num=None, target_move=None):
         
-        print target_move,'imprimo target move'
-        
         '''devuelve la cantidad correspondiente al periodo'''
 
         context = {}
         if period_num:
             period_id = self._period_info_list[period_num][1]
-            context = {'period_from': period_id, 'period_to': period_id}
+            context = {'period_from': period_id, 'period_to': period_id, 'state': target_move}
         else:
             context = {'whole_fy': 'True'} 
 
