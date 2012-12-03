@@ -136,18 +136,18 @@
                 <td>
                     <para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para>
                 </td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 1), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 2), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 3), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 4), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 5), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 6), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 7), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 8), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 9), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 10), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 11), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 12), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 1, data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 2,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 3,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 4,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 5,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 6,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 7,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 8,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 9,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 10,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 11,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ formatLang( get_amount_value(ifrs_l, 12,data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
             </tr>
         </blockTable>
      
