@@ -49,7 +49,8 @@ class ifrs_report_wizard(osv.osv_memory):
     }
 
     _defaults = {
-        'report_type' : 'all'
+        'report_type' : 'all',
+        'target_move' : 'all'
     }
 
     def _get_period(self, cr, uid, context={}):
