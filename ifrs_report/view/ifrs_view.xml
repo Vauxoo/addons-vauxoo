@@ -36,7 +36,7 @@
               </group>
                 <notebook colspan='6'>
                     <page string='Report Lines'>
-                      <field name="ifrs_lines_ids" nolabel="1" colspan="4" mode="tree,form" >
+                      <field name="ifrs_lines_ids"  nolabel="1" colspan="4" mode="tree,form">
                         
                         <tree string="IFRS Lines">
                           <field name="id" />
@@ -62,7 +62,7 @@
                                       <field name="constant_type" attrs="{'required':[('type','=','constant')]}" />
                                   </group>
                                   <group colspan='2' attrs="{'invisible':[('type','!=','detail')]}">
-                                      <field name="acc_val" />
+                                      <field name="acc_val"/>
                                       <field name="value" />
                                   </group>
                                   <group colspan='2' attrs="{'invisible':[('type','!=','total')]}">
@@ -81,9 +81,9 @@
                           <group colspan='6'>
                               <group
                                 colspan='6'
-                                attrs="{'invisible':[('type','!=','detail')]}">
+                                attrs="{'invisible':[('type','!=','detail')]}" height="50" width="300">
                                 <separator string='Consolidated Accounts' colspan='6' />
-                                <field name="cons_ids" nolabel='1'/>
+                                <field name="cons_ids" width="900" nolabel='1'/>
                               </group>
                               <group colspan='6'
                                 attrs="{'invisible':[('type','!=','total')]}">
