@@ -50,7 +50,8 @@ class ifrs_report_wizard(osv.osv_memory):
 
     _defaults = {
         'report_type' : 'all',
-        'target_move' : 'all'
+        'target_move' : 'all',
+        'company_id'  : lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).company_id.id 
     }
 
     def _get_period(self, cr, uid, context={}):
