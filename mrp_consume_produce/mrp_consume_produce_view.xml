@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                    <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
             <button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" groups="mrp_consume_produce.group_mrp_button_produce"/>
-                    </xpath> 
+                    </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="after">
             <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action"  attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
@@ -21,7 +21,7 @@
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(create_consume_action)d']" position="after">
-            <button name="action_finished_consume" string="Finished Consumed" icon="gtk-convert" type="object" attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
+            <button name="action_finished_consume" string="Finished Consumed" icon="gtk-convert" type="object" attrs="{'invisible': ['|','|',('consumed','=',True),('state','!=','in_production'),('moves_lines2','=',0)]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Finished Products']" position="inside">
@@ -32,14 +32,14 @@
             <button name="action_finish" string="Finish Production" icon="gtk-ok" type="object" attrs="{'invisible': ['|','|',('consumed','=',False),('state','=','done'),('len_move_prod','=',0)]}"/>
                     </xpath>
 
-                    <xpath expr="/form/group/field[@name='origin']" position="after">
-            <field name="len_move" invisible="1"/>
-            <field name="len_move_prod" invisible="1"/>
-            
-                    </xpath>
+            <xpath expr="/form/group/field[@name='origin']" position="after">
+                <field name="len_move" invisible="1"/>
+                <field name="len_move_prod" invisible="1"/>
+                <field name="moves_lines2" invisible="1"/>
+            </xpath>
         </field>
         </record>
-        
+
         <record model="ir.ui.view" id="view_mrp_production_colors_inherit">
             <field name="name">view.mrp.production.colors.inherit</field>
             <field name="model">mrp.production</field>
