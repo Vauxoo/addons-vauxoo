@@ -131,8 +131,12 @@ class ifrs_lines(osv.osv):
                     c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])
                     if not c['period_from']:
                         raise osv.except_osv(_('Error !'), _('There are no periods in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
-                c['period_from']=c['period_from'][1]
-
+                    
+                if isinstance( c['period_from'], (int, long) ):
+                    c['period_from']=c['period_from']
+                else:
+                    c['period_from']=c['period_from'][1]
+                    
         elif brw.type == 'total':
             if brw.comparison:
                 c2 = c.copy()
