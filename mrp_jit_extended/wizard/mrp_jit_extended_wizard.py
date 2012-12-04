@@ -40,10 +40,11 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
         else:
             production_ids = rec_ids
         procurement_ids = []
-        print production_ids, "production ids ke llamaron este --comienzo del ciclo"
+        #print production_ids, "production ids ke llamaron este --comienzo del ciclo"
         for production_id in production_ids:
             production_data = mrp_production_pool.browse(cr, uid, production_id, context=context)
             for line in production_data.procurement_ids:
+                print line, "nueva linea many to many"
                 if (line.state == 'draft') and (line.product_id.supply_method=='produce'):
                     procurement_ids.append(line.id)
 
@@ -51,8 +52,8 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
         #append the procurements that are not in draft still
         draft_procurements = procurement_order_pool.browse(cr, uid, procurement_ids, context=context)
         for line in draft_procurements:
-            print line.state, "line state"
-            print line.product_id.supply_method, "suppky method"
+            #print line.state, "line state"
+            #print line.product_id.supply_method, "suppky method"
             if (line.state == 'draft') and (line.product_id.supply_method=='produce') and (line.product_id.type <> 'service'):
                 res.append(line.id)
         #forwards procurements that were merged
@@ -69,9 +70,13 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
             procurements = self.pool.get('procurement.order').read(cr, uid, line, ['production_created'], context=context)
             new_production_id = procurements.get('production_created')
             print new_production_id, "<- new production id"
-            print "2 veces?\n"
+            #print "2 veces?\n"
             if new_production_id:
                 new_ids.append(new_production_id[0])
+                subproductions = self.pool.get('procurement.order').read(cr, uid, line, ['production_ids'], context=context)
+                subproduction_ids = subproductions.get('production_ids')
+                print "subprods ->", subproduction_ids
+                mrp_production_pool.write(cr, uid, new_production_id[0], {'subproduction_ids': [(6, 0, subproduction_ids)]})
                         #new_production_id = new_production_id_tup[0]
                         #res[0].append(new_production_id)
 
