@@ -68,7 +68,8 @@ class procurement_order(osv.osv):
                         'location_id' : procurement.location_id.id,
                         'product_qty' : self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id),
                         'product_uom' : procurement.product_id.uom_id.id,
-                        'procure_method' : procurement.procure_method
+                        'procure_method' : procurement.procure_method,
+                        'production_ids': procurement.production_ids and [(4, procurement.production_ids[0].id)] or False
                     })
                 else:
                     if procurement.name:
@@ -77,12 +78,13 @@ class procurement_order(osv.osv):
                         order_infos['origin'] = (order_infos['origin'] or '') + ',' + procurement.origin
                     if procurement.product_qty:
                         order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
-                if procurement.production_id.id not in old_orders:
-                    old_orders.append(procurement.production_id.id)
+                    if procurement.production_ids:
+                        order_infos['production_ids'].append((4, procurement.production_ids[0].id))
             
         allorders = []
-        allproductions = []
+        neworders = []
         orders_info = {}
+        
         for order_key, (order_data, old_ids) in new_orders.iteritems():
         # skip merges with only one order
             if len(old_ids) < 2:
@@ -92,17 +94,10 @@ class procurement_order(osv.osv):
             # create the new procurement order
             neworder_id = self.create(cr, uid, order_data)
             orders_info.update({neworder_id: old_ids})
-            allorders.append(neworder_id)
+            neworders.append(neworder_id)
             for old_id in old_ids:
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
-            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_confirm', cr)
-            wf_service.trg_validate(uid, 'procurement.order', neworder_id, 'button_check', cr)
-            procurements = self.read(cr, uid, neworder_id, ['production_created'], context=context)
-            new_production_id_tup = procurements.get('production_created')
-            if new_production_id_tup:
-                new_production_id = new_production_id_tup[0]
-                allproductions.append(new_production_id)
 
-        return (allproductions, old_orders)
+        return neworders
 procurement_order()
