@@ -31,7 +31,7 @@ class procurement_order(osv.osv):
     _inherit = "procurement.order"
     
     _columns = {
-        'production_id': fields.many2one('mrp.production', 'Production order'),
+        'production_ids': fields.many2many('mrp.production', 'mrp_production_procurement_order_rel', 'procurement_id', 'production_id', 'Production orders'),
         'production_created': fields.many2one('mrp.production', 'Production order'),
     }
     
