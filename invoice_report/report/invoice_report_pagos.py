@@ -120,7 +120,7 @@ class invoice_report_pagos(report_sxw.rml_parse):
 
     def _get_payment(self, partner_id, date_start, date_end, currency_id):
         vou_obj = self.pool.get('account.voucher')
-        vou_ids = vou_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('date', '>=', date_start), ('date', '<=', date_end), ('currency_id', '=', currency_id), ('state', '=', 'posted')] )
+        vou_ids = vou_obj.search(self.cr, self.uid, [('partner_id', '=', partner_id), ('date', '>=', date_start), ('date', '<=', date_end), ('payment_rate_currency_id', '=', currency_id[0]), ('state', '=', 'posted')] )
         vou_brw= vou_obj.browse(self.cr, self.uid, vou_ids)
         self.vou_brw=vou_brw
         self.total_final_pagado=0
