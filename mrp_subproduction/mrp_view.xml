@@ -8,9 +8,9 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
             <xpath expr="/form/notebook/page[@string='Extra Information']" position="after">
-                <page string="Subproductions">
+                <page string="Related orders">
                     <separator string="Subproductions" colspan="4"/>
-                    <field colspan="4" name="subproduction_ids" nolabel="1" widget="many2many_list" mode="tree,form" height="275" context="{'subproduction_parent_id': active_id or False}">
+                    <field colspan="4" name="subproduction_ids" nolabel="1" widget="many2many_list" mode="tree,form" height="200" context="{'subproduction_parent_id': active_id or False}">
                         <tree string="Subproductions">
                         <field name="name"/>
                         <field name="date_planned"/>
@@ -24,10 +24,9 @@
                     <newline/>
                     <field name="product_subproduction_qty_real"/>
                     <field name="product_subproduction_qty_planned"/>
-                </page>
-                <page string="Superproductions">
+                    <newline/>
                     <separator string="Superproductions" colspan="4"/>
-                    <field name="superproduction_ids" nolabel="1" colspan="4" height="275">
+                    <field name="superproduction_ids" nolabel="1" colspan="4">
                         <tree string="Subproductions">
                             <field name="name"/>
                             <field name="date_planned"/>
