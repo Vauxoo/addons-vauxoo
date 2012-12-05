@@ -91,7 +91,7 @@ class mrp_production(osv.osv):
         print "ids ->", ids
         result = {}
         for production in self.browse(cr, uid, ids, context=context):
-            total_consumed = 0.0
+            total_consumed = production.product_qty
             print production.name, "nombre"
             if production.subproduction_ids:
                 for subprods in production.subproduction_ids:
@@ -100,12 +100,9 @@ class mrp_production(osv.osv):
                             if (consumed.product_id.id == production.product_id.id and consumed.state in ('done')):
                                 print consumed.product_id.name
                                 print consumed.state, "nombre, qty y estado \n"
-                                total_consumed += consumed.product_qty
+                                total_consumed -= consumed.product_qty
                         result[production.id] = total_consumed
         print result, "<- result"
-        #for lin in ids:
-        #    result[lin] =  5
-        #print result," res\n"
         return result
         
     _columns = {
@@ -115,7 +112,7 @@ class mrp_production(osv.osv):
         'product_subproduction_qty_planned': fields.function(_get_product_subproduction_qty, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Planned', multi='product_subproduction_qty_real', help="UoM is the same that the parent production order"),
         'product_subproduction_qty_line_real': fields.function(_get_parent_product, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Real in line', multi="product_subproduction_qty_line_real"),
         'product_subproduction_qty_line_planned': fields.function(_get_parent_product, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Planned in line', multi="product_subproduction_qty_line_real"),
-        'product_superproduction_qty_consumed': fields.function(_get_self_consumed, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Consumed'),
+        'product_superproduction_qty_consumed': fields.function(_get_self_consumed, type='float', digits_compute=dp.get_precision('Product UoM'), method=True, string='Remaining'),
     }
     
     def copy(self, cr, uid, id, default=None, context=None):
