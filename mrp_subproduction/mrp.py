@@ -87,22 +87,17 @@ class mrp_production(osv.osv):
     def _get_self_consumed(self, cr, uid, ids, field_name, args, context=None):
         if context is None:
             context = {}
-        
-        print "ids ->", ids
         result = {}
+        #ids received are the ones from superproducts, broese is done in backwards
         for production in self.browse(cr, uid, ids, context=context):
             total_consumed = production.product_qty
-            print production.name, "nombre"
             if production.subproduction_ids:
                 for subprods in production.subproduction_ids:
                     if subprods.move_lines2:
                         for consumed in subprods.move_lines2:
                             if (consumed.product_id.id == production.product_id.id and consumed.state in ('done')):
-                                print consumed.product_id.name
-                                print consumed.state, "nombre, qty y estado \n"
                                 total_consumed -= consumed.product_qty
                         result[production.id] = total_consumed
-        print result, "<- result"
         return result
         
     _columns = {
