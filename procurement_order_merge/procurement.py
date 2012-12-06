@@ -55,7 +55,7 @@ class procurement_order(osv.osv):
         old_orders = []
         
         for procurement in self.browse(cr, uid, ids):
-            if (procurement.state == 'draft') and (procurement.product_id.supply_method=='produce'):
+            if procurement.state == 'draft':
                 order_key = make_key(procurement, ('product_id', 'location_id', 'procure_method'))
                 new_order = new_orders.setdefault(order_key, ({}, []))
                 new_order[1].append(procurement.id)
