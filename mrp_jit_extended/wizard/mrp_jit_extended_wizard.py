@@ -47,25 +47,28 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
                     procurement_ids.append(line.id)
 
         res = procurement_order_pool.do_merge(cr, uid, procurement_ids, context=context)
+        #append the procurements that are not in draft still
         
-        #forwards procurements that were not merged and its product is to produce
+        draft_procurements = procurement_order_pool.browse(cr, uid, procurement_ids, context=context)
+        for line in draft_procurements:
+            if (line.state == 'draft') and (line.product_id.supply_method=='produce') and (line.product_id.type <> 'service'):
+                res.append(line.id)
+        #forwards procurements that were merged
         wf_service = netsvc.LocalService("workflow")
-        for production_id in production_ids:
-            production_data = mrp_production_pool.browse(cr, uid, production_id, context=context)
-            for line in production_data.procurement_ids:
-                if (line.state == 'draft') and (line.product_id.supply_method=='produce') and (line.product_id.type <> 'service'):
-                    wf_service.trg_validate(uid, 'procurement.order', line.id, 'button_confirm', cr)
-                    wf_service.trg_validate(uid, 'procurement.order', line.id, 'button_check', cr)
-                    procurements = self.pool.get('procurement.order').read(cr, uid, line.id, ['production_created'], context=context)
-                    new_production_id_tup = procurements.get('production_created')
-                    if new_production_id_tup:
-                        new_production_id = new_production_id_tup[0]
-                        res[0].append(new_production_id)
+        new_ids = []
+        for line in res:
+            wf_service.trg_validate(uid, 'procurement.order', line, 'button_confirm', cr)
+            wf_service.trg_validate(uid, 'procurement.order', line, 'button_check', cr)
+            procurements = self.pool.get('procurement.order').read(cr, uid, line, ['production_created'], context=context)
+            new_production_id = procurements.get('production_created')
+            if new_production_id:
+                new_ids.append(new_production_id[0])
+                subproductions = self.pool.get('procurement.order').read(cr, uid, line, ['production_ids'], context=context)
+                subproduction_ids = subproductions.get('production_ids')
+                mrp_production_pool.write(cr, uid, new_production_id[0], {'subproduction_ids': [(6, 0, subproduction_ids)]})
 
-        if res[0]:
-            for line in res[1]:
-                mrp_production_pool.write(cr, uid, res[0], {'subproduction_ids': [(4, line)]})
-            self.procurement_merge_jit(cr, uid, ids, context, res[0])
+        if new_ids:
+            self.procurement_merge_jit(cr, uid, ids, context, new_ids)
         return {}
 
 procurement_order_merge_jit_extended()

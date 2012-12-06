@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name": "MRP production procurement order",
+    "name": "MRP JIT extended",
     "version": "1.0",
     "author" : "Vauxoo",
     "category": "Generic Modules",
@@ -37,7 +37,7 @@
     patch -b "procurement/procurement.py" "procurement.py.patch"
     patch -b "mrp/mrp.py" "mrp.py.patch"
     """,
-    'depends': ['procurement_order_merge', 'mrp_subproduction', 'procurement_location', 'mrp_production_procurement_order'],
+    'depends': ['procurement_order_merge', 'mrp_subproduction', 'procurement_location'],
     'init_xml': [],
     'update_xml': [
     'wizard/mrp_jit_extended_wizard_view.xml'
