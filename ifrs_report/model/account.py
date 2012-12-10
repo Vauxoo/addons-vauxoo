@@ -80,3 +80,19 @@ class account_fiscalyear(osv.osv):
         return self._get_fy_period_ids(cr, uid, id, special=special, context=context).index(period_id)+1
 
 account_fiscalyear()
+
+class account_move_line(osv.osv):
+    _inherit = "account.move.line"
+    
+    def _query_get(self, cr, uid, obj='l', context=None):
+        query = super(account_move_line, self)._query_get(cr, uid, obj=obj, context=context)
+        if context.get('analytic', False):
+            print tuple(context.get('analytic')),'imprimo context analytic'
+            list_analytic_ids = context.get('analytic')
+            ids2 = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', 'child_of', list_analytic_ids)], context=context)
+            print ids2,'imprimo ids2'
+            query += 'AND '+obj+'.analytic_account_id in (%s)' % (','.join(map(str, ids2)))
+        print query,'imprimo query1'
+        return query
+
+account_move_line()
