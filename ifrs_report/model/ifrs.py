@@ -61,7 +61,7 @@ class ifrs_ifrs(osv.osv):
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
         fy = self.browse(cr, uid, ids, context=context)[0]
-        context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
+        context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id, 'analytic':True})
         return self.write(cr,uid,ids,{'do_compute':True},context=context)
 
 ifrs_ifrs()
@@ -122,10 +122,14 @@ class ifrs_lines(osv.osv):
         
         if brw.type == 'detail':
             if brw.acc_val=='init':
+                print 'imprimo periodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
+                print c['period_from'],'imprimo period_form1-----------------------------------------------------------------------'
                 c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c)
                 if not c['period_from']:
-                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
+                    print 'imprimo periodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd2'
+                    raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
                 c['period_to']=c['period_from']
+
             elif brw.acc_val=='var':
                 if context.get('whole_fy',False):
                     c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])
@@ -146,7 +150,7 @@ class ifrs_lines(osv.osv):
 
                 c2['period_from'] = period_obj.previous(cr, uid, c2['period_from'],context= c2)
                 if not c2['period_from']:
-                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
+                    raise osv.except_osv(_('Error !'), _('There --------------are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
                 c2['period_to']=c2['period_from']
                 
                 print "c2['period_from']",c2['period_from']

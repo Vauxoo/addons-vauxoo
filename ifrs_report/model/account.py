@@ -43,16 +43,22 @@ class account_period(osv.osv):
         return (date_stop - date_start).day + 1
 
     def previous(self, cr, uid, id, step=1, context=None):
+        print uid,'imprimo uid'
         if context is None: context = {}
         period = self.pool.get('account.period').browse(cr,uid,id,context=context)
+        user = self.pool.get('res.users').browse(cr, uid, 4, context=context)
+        print user.id,'imprimo user_id'
         
         #~ TODO: Take into account previous fiscalyear or just the fiscalyear of the period
-        ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',False)])
+        ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',False), ('company_id','=',user.company_id.id)])
+        print ids,'imprimo period False ids'
         if not ids:
-            ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',True)])
+            ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',True), ('company_id','=',user.company_id.id)])
+            print ids,'imprimo period True'
         if len(ids)>=step:
             return ids[-step]
-        return False
+        print id,'imprimo period_ids'
+        return 1
 account_period()
 
 class account_fiscalyear(osv.osv):
