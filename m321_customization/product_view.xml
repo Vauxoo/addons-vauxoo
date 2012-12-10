@@ -6,12 +6,14 @@
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_product_tree_view" />
             <field name="arch" type="xml">
-                <data>
                     <field name="name" position="before">
                           <field name="available_boolean" invisible="1"/>
                         <field name="upc" />
+                    
                     </field>
-                </data>
+                    <xpath expr="//field[@name='variants']" position="replace"/>
+                    <xpath expr="//field[@name='uom_id']" position="replace"/>
+                    <xpath expr="//field[@name='type']" position="replace"/>
             </field>
         </record>
         <record model="ir.ui.view" id="inherited2_product_product_tree_view">
