@@ -1,0 +1,27 @@
+<template>
+<!-- vim:fdl=1:
+-->
+<!--    Button on Menu-->
+    <t t-name="demo_button.DemoButton">
+        <div title='See Embeded doc for the actual Elements' class="oe_topbar_demo">
+            <button class="oe_demo_button">r</button>
+        </div>
+    </t>
+<!--    Template for Dialog-->
+    <t t-name="demo_button.AllFonts">
+        <div>
+            <p>
+                <span class="oe_help_demo">ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
+            </p>
+            <p>
+                ABCDEFGHIJKLMNOPQRSTUVWXYZ
+            </p>
+            <p>
+                <span class="oe_help_demo">abcdefghijklmnopqrstuvwxyz</span>
+            </p>
+            <p>
+                abcdefghijklmnopqrstuvwxyz
+            </p>
+        </div>
+    </t>
+</template>
