@@ -348,8 +348,8 @@ class compute_cost(osv.osv_memory):
                                                     order='date_invoice')
                         
                 inv_ids and [lista.append((d[3], 
-                                 (d[3] * (line.aux_financial/line.aux_qty) ) ,
-                                 (line.aux_financial/line.aux_qty), 
+                                 line.aux_qty and (d[3] * (line.aux_financial/line.aux_qty) ) ,
+                                 line.aux_qty and (line.aux_financial/line.aux_qty), 
                                  d[4] ,d[0],d[5])) \
                  for invo in invoice_obj.browse(cr, uid, [inv_ids[-1]], 
                      context=context) \
@@ -517,9 +517,11 @@ class compute_cost(osv.osv_memory):
                                 'aux_qty':(dic_comp[i][1][8] - dic_comp[i][1][3])},
                                  context=context)
                         
-                        invo_obj.write(cr, uid, [dic_comp[i][1][0]],
+                        print "dic_comp[i]",dic_comp[i]
+                        len(dic_comp[i]) > 1 and invo_obj.write(cr, uid, [dic_comp[i][1][0]],
+                                        {'cancel_check':True},context=context) or invo_obj.write(cr, uid, [dic_comp[i][0][0]],
                                         {'cancel_check':True},context=context)
-                        dic_comp[i] and dic_comp[i][0] and dic_comp[i].pop(1)
+                        len(dic_comp[i]) > 1 and dic_comp[i].pop(1)
 
                     
                     
@@ -533,7 +535,7 @@ class compute_cost(osv.osv_memory):
                                                     ('company_id','=',company_id),
                                                     ('date_invoice','<',dic_comp[i][0][5])],
                                                     order='date_invoice')
-                        inv_ids and [dic_comp[i].insert(0,(invo.id,(line.aux_financial/line.aux_qty),line.aux_financial,
+                        inv_ids and [dic_comp[i].insert(0,(invo.id,line.aux_qty and (line.aux_financial/line.aux_qty),line.aux_financial,
                                                       line.aux_qty, line.uos_id and \
                                                       line.uos_id.id,invo.date_invoice,line.id,line.aux_financial,line.aux_qty,invo.cancel_check)) \
                 
@@ -571,11 +573,9 @@ class compute_cost(osv.osv_memory):
                     lista = self.list_cost(cr,uid,aux_dic_nc_vent.get(i),ids_inv,i,company_id)
                     aux_dic_nc_vent.update({i:lista}) 
             
-            print "cost_acc",cost_acc 
             cost = self.compute_actual_cost(cr, uid, ids, dic_comp, 
                                             aux_dic_vent, dic_nc_com, 
                                             aux_dic_nc_vent)
-            print "cost",cost
         return (cost,cost_acc)
 
 compute_cost()

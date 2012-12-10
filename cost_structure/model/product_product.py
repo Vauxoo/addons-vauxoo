@@ -59,7 +59,6 @@ class product_product(osv.osv):
         i = 0
         for product in self.browse(cr,uid,ids,context=context):
             for price in product.method_cost_ids:
-                print 'pricedefault',price.default_cost
                 if price.default_cost:
                     i+=1
                 if i >1:
@@ -121,7 +120,6 @@ class product_product(osv.osv):
                         pass
                     else:
                         i[2] and i[2].update({'cost_structure_id':vals.get('property_cost_structure',False) or []})
-                        print "i[2]",i[2]
                         method_id = i[2] and method_obj.create(cr,uid,i[2],context=context)
                 
                 method_id and 'method_cost_ids' in vals  and vals.pop('method_cost_ids')

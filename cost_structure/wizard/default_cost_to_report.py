@@ -56,7 +56,6 @@ class default_price_to_report(osv.osv_memory):
                 name =  wzr_brw.list_price and wzr_brw.list_price.name or False
                 name = name.split(' ')
                 name = name and name[0] == 'Precio' and name[1].isdigit() and name[1]
-                print name
                 if name:
                     cost_id = [i.property_cost_structure and i.property_cost_structure.id  for i in product_obj.browse(cr,uid,context.get('active_ids'),context=context) ]
                     methods_ids = method_obj.search(cr,uid,[('cost_structure_id','in',cost_id),('default_cost','=',True)],context=context)
