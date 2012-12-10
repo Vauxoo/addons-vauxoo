@@ -61,7 +61,7 @@ class ifrs_ifrs(osv.osv):
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
         fy = self.browse(cr, uid, ids, context=context)[0]
-        context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id, 'analytic':True})
+        context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         return self.write(cr,uid,ids,{'do_compute':True},context=context)
 
 ifrs_ifrs()
@@ -170,6 +170,9 @@ class ifrs_lines(osv.osv):
             elif brw.constant_type == 'fy_month':
                 res = fy_obj._get_fy_month(cr, uid, c['fiscalyear'],c['period_to'])
         elif brw.type == 'detail':
+            analytic = [an.id for an in brw.analytic_ids]
+            if analytic:
+                c['analytic'] = analytic
             for a in brw.cons_ids:
                 if brw.value == 'debit':
                     res += a.debit
@@ -274,6 +277,7 @@ class ifrs_lines(osv.osv):
             ),
 
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
+        'analytic_ids' : fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts' ),
 
         
         'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
