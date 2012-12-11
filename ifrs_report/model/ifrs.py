@@ -122,10 +122,11 @@ class ifrs_lines(osv.osv):
         
         if brw.type == 'detail':
             if brw.acc_val=='init':
-                c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c)
+                c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
                 if not c['period_from']:
                     raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
                 c['period_to']=c['period_from']
+
 
             elif brw.acc_val=='var':
                 if context.get('whole_fy',False):
