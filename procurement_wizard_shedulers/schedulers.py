@@ -64,7 +64,7 @@ class procurement_order(osv.osv):
 
             procurement_obj = self.pool.get('procurement.order')
             if not ids:
-                ids = procurement_obj.search(cr, uid, [('state', '=', 'exception'),('product_id', 'in', product_ids),], order="date_planned")
+                ids = procurement_obj.search(cr, uid, [('state', '=', 'exception'),('product_id', 'in', product_ids)], order="date_planned")
             for id in ids:
                 wf_service.trg_validate(uid, 'procurement.order', id, 'button_restart', cr)
             if use_new_cursor:
@@ -79,7 +79,6 @@ class procurement_order(osv.osv):
             report_later = 0
             while True:
                 ids = procurement_obj.search(cr, uid, [('state', '=', 'confirmed'), ('procure_method', '=', 'make_to_order'),('product_id', 'in', product_ids)], offset=offset, limit=500, order='priority, date_planned', context=context)
-                print "ids",ids
                 for proc in procurement_obj.browse(cr, uid, ids, context=context):
                     if maxdate >= proc.date_planned:
                         wf_service.trg_validate(uid, 'procurement.order', proc.id, 'button_check', cr)
@@ -247,7 +246,7 @@ class procurement_order(osv.osv):
         if automatic:
             self.create_automatic_op2(cr, uid, product_ids, context=context)
         while ids:
-            ids = orderpoint_obj.search(cr, uid, [], offset=offset, limit=100)
+            ids = orderpoint_obj.search(cr, uid,  [('product_id', 'in', product_ids)], offset=offset, limit=100)
             for op in orderpoint_obj.browse(cr, uid, ids, context=context):
                 if op.procurement_id.state != 'exception':
                     if op.procurement_id and op.procurement_id.purchase_id and op.procurement_id.purchase_id.state in ('draft', 'confirmed'):
