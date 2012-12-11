@@ -122,11 +122,8 @@ class ifrs_lines(osv.osv):
         
         if brw.type == 'detail':
             if brw.acc_val=='init':
-                print 'imprimo periodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd'
-                print c['period_from'],'imprimo period_form1-----------------------------------------------------------------------'
                 c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c)
                 if not c['period_from']:
-                    print 'imprimo periodddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd2'
                     raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
                 c['period_to']=c['period_from']
 
@@ -150,7 +147,7 @@ class ifrs_lines(osv.osv):
 
                 c2['period_from'] = period_obj.previous(cr, uid, c2['period_from'],context= c2)
                 if not c2['period_from']:
-                    raise osv.except_osv(_('Error !'), _('There --------------are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
+                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
                 c2['period_to']=c2['period_from']
                 
                 print "c2['period_from']",c2['period_from']
@@ -299,6 +296,7 @@ class ifrs_lines(osv.osv):
             ('percent', 'Percentage'),
             ('ratio','Ratio'),
             ('product','Product'),
+            ('without','')
             ],
             'Operator', required=False ,
             help='Leaving blank will not take into account Operands'),
@@ -306,19 +304,22 @@ class ifrs_lines(osv.osv):
         'comparison': fields.selection( [
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
-            ('ratio','Ratio')],
+            ('ratio','Ratio'),
+            ('without','')],
             'Make Comparison', required=False ,
             help='Make a Comparison against the previous period.\nThat is, period X(n) minus period X(n-1)\nLeaving blank will not make any effects'),
         
         'acc_val': fields.selection( [
             ('init', 'Initial Values'),
-            ('var','Variation in Periods')],
+            ('var','Variation in Periods'),
+            ('fy', ('FY All'))],
             'Accounting Spam', required=False,
             help='Leaving blank means YTD'),
 
         'value': fields.selection( [
             ('debit', 'Debit'),
-            ('credit','Credit')],
+            ('credit','Credit'),
+            ('balance', 'Balance')],
             'Accounting Value', required=False,
             help='Leaving blank means Balance'),
 
@@ -332,6 +333,8 @@ class ifrs_lines(osv.osv):
     _defaults = {
         'type' : 'abstract',
         'invisible' : False,
+        'acc_val' : 'fy',
+        'value' : 'balance'
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 

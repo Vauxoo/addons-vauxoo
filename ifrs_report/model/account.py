@@ -43,22 +43,18 @@ class account_period(osv.osv):
         return (date_stop - date_start).day + 1
 
     def previous(self, cr, uid, id, step=1, context=None):
-        print uid,'imprimo uid'
         if context is None: context = {}
         period = self.pool.get('account.period').browse(cr,uid,id,context=context)
-        user = self.pool.get('res.users').browse(cr, uid, 4, context=context)
-        print user.id,'imprimo user_id'
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         
         #~ TODO: Take into account previous fiscalyear or just the fiscalyear of the period
         ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',False), ('company_id','=',user.company_id.id)])
-        print ids,'imprimo period False ids'
         if not ids:
             ids = self.search(cr, uid, [('date_stop','<=',period.date_start),('special','=',True), ('company_id','=',user.company_id.id)])
-            print ids,'imprimo period True'
         if len(ids)>=step:
             return ids[-step]
-        print id,'imprimo period_ids'
-        return 1
+        ids3 = self.search(cr, uid, [('special','=',True), ('company_id','=',user.company_id.id), ('fiscalyear_id', '=', context['fiscalyear'])], limit=1)
+        return ids3 and ids3[0] or False
 account_period()
 
 class account_fiscalyear(osv.osv):
@@ -87,12 +83,9 @@ class account_move_line(osv.osv):
     def _query_get(self, cr, uid, obj='l', context=None):
         query = super(account_move_line, self)._query_get(cr, uid, obj=obj, context=context)
         if context.get('analytic', False):
-            print tuple(context.get('analytic')),'imprimo context analytic'
             list_analytic_ids = context.get('analytic')
             ids2 = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', 'child_of', list_analytic_ids)], context=context)
-            print ids2,'imprimo ids2'
             query += 'AND '+obj+'.analytic_account_id in (%s)' % (','.join(map(str, ids2)))
-        print query,'imprimo query1'
         return query
 
 account_move_line()
