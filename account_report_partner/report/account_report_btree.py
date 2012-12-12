@@ -21,7 +21,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 import time
-import pooler
 from report import report_sxw
 
 class reportes_btree_report(report_sxw.rml_parse):
@@ -256,7 +255,6 @@ class reportes_btree_report(report_sxw.rml_parse):
                   ORDER BY subvw_final.code
                     """,(date_ini, date_fin, nivel, date_ini,))
         res=self.cr.dictfetchall()
-
         min_level=self.get_account_min_level(form)
         for lin in  res:
             if lin['level'] == min_level:

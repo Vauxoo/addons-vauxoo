@@ -23,7 +23,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import pooler
 import time
 from osv import osv, fields
 
@@ -45,12 +44,6 @@ class wizard_account(osv.osv_memory):
         if context is None:
             context = {}
         form = self.read(cr,uid,ids,[])
-        wizard_id=context.get('active_id',False)
-        nivel = form and form[0]['nivel']
-        date_ini = form and form[0]['date_ini'] or False
-        date_fin = form and form[0]['date_fin'] or False
-        account_ids = form and form[0]['account_ids'] or False
-        context.update({'account_ids': account_ids})
         datas = {
             'ids': context.get('active_ids',[]),
             'model': 'wizard.account',
