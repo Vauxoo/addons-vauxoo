@@ -30,7 +30,20 @@ import decimal_precision as dp
 
 class inherit_price_list_item(osv.osv):
     """ """
+    def default_get(self, cr, uid, fields, context=None):
+        '''test context '''
+        if context is None:
+            context = {}
     
+        res = super(inherit_price_list_item, self).default_get(cr, uid, fields, context=context)
+        res.update({'product_id':context.get('create_item',False)}) 
+        version = context.get('versions',False)
+        res.update({'price_version_id':version and version[0] \
+                                               and version[0][2] \
+                                               and version[0][2][0]}) 
+
+        return res
+       
     
     def _get_price_list(self, cr, uid, ids, field_name, arg, context=None):
         
@@ -103,3 +116,18 @@ class inherit_price_list_item(osv.osv):
         return ids and self.unlink(cr,uid,ids,context=context)
         
 inherit_price_list_item()
+
+class inherit_version(osv.osv):
+    
+    '''Versions'''
+    
+    _inherit = 'product.pricelist.version'
+    
+    _columns = {
+            'assing_this':fields.boolean('This', help='Select to create item'), 
+            
+            }
+
+inherit_version()
+
+
