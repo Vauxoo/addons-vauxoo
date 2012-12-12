@@ -73,13 +73,11 @@ class reportes_btree_report(report_sxw.rml_parse):
         date_fin = form and form[0]['date_fin'] or False
         nivel = form and form[0]['nivel']
         partner = form and form[0]['partner']
-        print "wizard",partner
         if account_ids:
             where_account_ids='parent.id in (%s)'%','.join(map(str,account_ids))
         else:
             where_account_ids='parent.id is not null'
         if partner==True:
-            print "TRUE", partner
             self.cr.execute("""SELECT subvw_final.partner,subvw_final.type,subvw_final.level,subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0::numeric) as saldo_inicial,subvw_final.debit,subvw_final.credit,
                 COALESCE((subvw_final.debit-subvw_final.credit)+subvw_final.saldo_inicial,0.0::numeric) AS saldo_final
                 FROM (
