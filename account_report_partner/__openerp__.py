@@ -1,18 +1,16 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
-#    All Rights Reserved.
-#    info@vauxoo.com
-############################################################################
-#    Coded by: julio (julio@vauxoo.com)
-############################################################################
-#
+#    Copyright (C) Vauxoo (<http://vauxoo.com>).
+#    All Rights Reserved
+###############Credits######################################################
+#    Coded by: Juan Carlos Funes(juan@vauxoo.com)
+#############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
+#    it under the terms of the GNU Affero General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,8 +19,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+################################################################################
 {
     "name" : "Account",
     "version" : "1.1",
@@ -32,8 +29,11 @@
     """,
     'init_xml': [],
     "depends" : ["account"],
-    'update_xml': ["account_view.xml",
-    "account_report_view.xml"],
+    'update_xml': [
+    "account_report_view.xml",
+    "wizard/wizard_account_btree.xml",
+
+    ],
     'demo_xml': [
     ],
     'installable': True,
