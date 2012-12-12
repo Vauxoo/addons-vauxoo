@@ -37,7 +37,6 @@ depending on the product's configuration.
     "demo_xml" : [],
     "test": [],
     "update_xml" : ['wizard/schedulers_all_view.xml',
-    'procurement_data.xml'
     ],
     "active": False,
     "installable": True,

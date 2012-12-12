@@ -1,0 +1,34 @@
+=== modified file 'procurement/schedulers.py'
+--- procurement/schedulers.py   2012-03-16 13:40:52 +0000
++++ procurement/schedulers.py   2012-12-11 23:56:13 +0000
+@@ -170,13 +170,15 @@
+         """
+         if context is None:
+             context = {}
++        product_ids = context.get('product_ids', False)
+         product_obj = self.pool.get('product.product')
+         proc_obj = self.pool.get('procurement.order')
+         warehouse_obj = self.pool.get('stock.warehouse')
+         wf_service = netsvc.LocalService("workflow")
+
+         warehouse_ids = warehouse_obj.search(cr, uid, [], context=context)
+-        products_ids = product_obj.search(cr, uid, [('purchase_ok', '=', True)], order='id', context=context)
++        products_ids = product_obj.search(cr, uid, [('purchase_ok', '=', True),('id', 'in', product_ids)], order='id', context=context)
++        print products_ids
+
+         for warehouse in warehouse_obj.browse(cr, uid, warehouse_ids, context=context):
+             context['warehouse'] = warehouse
+@@ -245,7 +247,11 @@
+         if automatic:
+             self.create_automatic_op(cr, uid, context=context)
+         while ids:
+-            ids = orderpoint_obj.search(cr, uid, [], offset=offset, limit=100)
++            product_ids = context.get('product_ids', False)
++            if product_ids==False:
++                ids = orderpoint_obj.search(cr, uid, [], offset=offset, limit=100)
++            else:
++                ids = orderpoint_obj.search(cr, uid, [('product_id', 'in', product_ids)], offset=offset, limit=100)
+             for op in orderpoint_obj.browse(cr, uid, ids, context=context):
+                 if op.procurement_id.state != 'exception':
+                     if op.procurement_id and op.procurement_id.purchase_id and op.procurement_id.purchase_id.state in ('draft', 'confirmed'):
+

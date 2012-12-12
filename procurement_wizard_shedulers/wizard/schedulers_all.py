@@ -25,54 +25,22 @@ import threading
 import pooler
 import netsvc
 import os
-
 from osv import osv, fields
 
-class procurement_compute_product(osv.osv_memory):
-    _name = 'procurement.order.compute.product'
-    _description = 'Compute all schedulers'
+class procurement_compute_all(osv.osv_memory):
+    _inherit = 'procurement.order.compute.all'
 
     _columns = {
-        'automatic': fields.boolean('Automatic orderpoint',help='Triggers an automatic procurement for all products that have a virtual stock under 0. You should probably not use this option, we suggest using a MTO configuration on products.'),
         'product_ids': fields.many2many('product.product', 'procurement_product_rel', 'procurement_id', 'product_id', 'Products')
     }
 
-    _defaults = {
-         'automatic': lambda *a: False,
-    }
-
-    def _procure_calculation_product(self, cr, uid, ids, products, context=None):
-        """
-        @param self: The object pointer.
-        @param cr: A database cursor
-        @param uid: ID of the user currently logged in
-        @param ids: List of IDs selected
-        @param context: A standard dictionary
-        """
-        proc_obj = self.pool.get('procurement.order')
-        #As this function is in a new thread, i need to open a new cursor, because the old one may be closed
-        new_cr = pooler.get_db(cr.dbname).cursor()
-        for proc in self.browse(new_cr, uid, ids, context=context):
-            proc_obj.run_scheduler2(new_cr, uid, automatic=proc.automatic, product_ids=products, use_new_cursor=new_cr.dbname,\
-                    context=context)
-        #close the new cursor
-        new_cr.close()
-        return {}
-
     def procure_calculation(self, cr, uid, ids, context=None):
-        """
-        @param self: The object pointer.
-        @param cr: A database cursor
-        @param uid: ID of the user currently logged in
-        @param ids: List of IDs selected
-        @param context: A standard dictionary
-        """
         form = self.read(cr,uid,ids,[])
         products = form and form[0]['product_ids'] or False
-        threaded_calculation = threading.Thread(target=self._procure_calculation_product, args=(cr, uid, ids, products, context))
-        threaded_calculation.start()
-        return {'type': 'ir.actions.act_window_close'}
+        context.update({'product_ids': products})
+        res=super(procurement_compute_all, self).procure_calculation(cr, uid, ids, context=context)
+        return res
 
-procurement_compute_product()
+procurement_compute_all()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
