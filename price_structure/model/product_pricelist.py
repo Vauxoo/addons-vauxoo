@@ -38,7 +38,7 @@ class inherit_price_list_item(osv.osv):
         res = super(inherit_price_list_item, self).default_get(cr, uid, fields, context=context)
         res.update({'product_id':context.get('create_item',False)}) 
         version = context.get('versions',False)
-        res.update({'price_version_id':version and version[0] \
+        version and res.update({'price_version_id':version and version[0] \
                                                and version[0][2] \
                                                and version[0][2][0]}) 
 
@@ -117,7 +117,6 @@ class inherit_price_list_item(osv.osv):
         
 inherit_price_list_item()
 
-class inherit_version(osv.osv):
     
     '''Versions'''
     
@@ -128,6 +127,5 @@ class inherit_version(osv.osv):
             
             }
 
-inherit_version()
 
 
