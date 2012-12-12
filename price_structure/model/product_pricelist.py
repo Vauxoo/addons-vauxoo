@@ -117,15 +117,4 @@ class inherit_price_list_item(osv.osv):
         
 inherit_price_list_item()
 
-    
-    '''Versions'''
-    
-    _inherit = 'product.pricelist.version'
-    
-    _columns = {
-            'assing_this':fields.boolean('This', help='Select to create item'), 
-            
-            }
-
-
 
