@@ -33,6 +33,7 @@ class wizard_account(osv.osv_memory):
         'date_ini' : fields.date('Fecha Inicial', required=True),
         'date_fin' : fields.date('Fecha Final', required=True),
         'nivel' : fields.integer('Nivel', required=True),
+        'partner' : fields.boolean('Group by Partner'),
         'account_ids': fields.many2many('account.account', 'account_account_balanza_rel', 'balanza_id', 'account_id', 'Accounts')
     }
 

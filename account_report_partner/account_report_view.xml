@@ -5,9 +5,9 @@
             string="Auxiliares de Cuentas"
             name="reportes.btree.report"
             model="account.move"
-            rml="account_report_btree/report/account_report_btree.rml"
-            auto="False"
-            menu="False"/>
+            menu="False"
+            rml="account_report_partner/report/account_report_btree.rml"
+           />
 
     </data>
 </openerp>
