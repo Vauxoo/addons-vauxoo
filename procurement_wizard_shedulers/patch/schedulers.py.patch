@@ -1,24 +1,20 @@
 === modified file 'procurement/schedulers.py'
---- procurement/schedulers.py   2012-03-16 13:40:52 +0000
-+++ procurement/schedulers.py   2012-12-11 23:56:13 +0000
-@@ -170,13 +170,15 @@
-         """
-         if context is None:
-             context = {}
-+        product_ids = context.get('product_ids', False)
-         product_obj = self.pool.get('product.product')
-         proc_obj = self.pool.get('procurement.order')
-         warehouse_obj = self.pool.get('stock.warehouse')
+--- procurement/schedulers.py	2012-03-16 13:40:52 +0000
++++ procurement/schedulers.py	2012-12-12 16:29:03 +0000
+@@ -176,7 +176,11 @@
          wf_service = netsvc.LocalService("workflow")
-
+ 
          warehouse_ids = warehouse_obj.search(cr, uid, [], context=context)
 -        products_ids = product_obj.search(cr, uid, [('purchase_ok', '=', True)], order='id', context=context)
-+        products_ids = product_obj.search(cr, uid, [('purchase_ok', '=', True),('id', 'in', product_ids)], order='id', context=context)
-+        print products_ids
-
++        product_ids = context.get('product_ids', False)
++        if product_ids==False:
++            products_ids = product_obj.search(cr, uid, [('purchase_ok', '=', True)], order='id', context=context)
++        else:
++            products_ids = product_obj.search(cr, uid, [('purchase_ok', '=', True),('id', 'in', product_ids)], order='id', context=context)
+ 
          for warehouse in warehouse_obj.browse(cr, uid, warehouse_ids, context=context):
              context['warehouse'] = warehouse
-@@ -245,7 +247,11 @@
+@@ -245,7 +249,11 @@
          if automatic:
              self.create_automatic_op(cr, uid, context=context)
          while ids:
