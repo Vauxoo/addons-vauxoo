@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report id="reportes_btree_report"
+            string="Auxiliares de Cuentas 2"
+            name="reportes.btree.report"
+            model="account.move"
+            rml="account_report_btree/report/account_report_btree.rml"
+            auto="False"
+            menu="False"/>
+
+    </data>
+</openerp>
+
+
+
