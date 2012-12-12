@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_btree_wizard" model="ir.ui.view">
+            <field name="name">Account</field>
+            <field name="model">wizard.account</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Account">
+                    <field name="date_ini"/>
+                    <field name="date_fin"/>
+                    <field name="nivel"/>
+                    <field name="partner"/>
+                    <field name="account_ids" colspan="4" nolabel="1" width="650" height="200"/>
+                    <group col="2" colspan="4">
+                        <button icon='gtk-cancel' special="cancel"
+                            string="Cancel" />
+                        <button name="calculation" string="Imprimir"
+                            colspan="1" type="object" icon="gtk-ok" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+         <act_window name="Auxiliar de Cuentas"
+            res_model="wizard.account"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_account_btree_print"/>
+
+        <menuitem parent="account.final_accounting_reports" id="menu_report_btree_wizard" name="Auxiliares de Cuentas" action="action_account_btree_print"/>
+
+    </data>
+</openerp>
