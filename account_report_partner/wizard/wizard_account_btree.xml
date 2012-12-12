@@ -23,10 +23,20 @@
             </field>
         </record>
 
+         <record id="action_account_btree_print" model="ir.actions.act_window">
+            <field name="name">Auxiliar de Cuentas</field>
+            <field name="res_model">wizard.account</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_account_btree_wizard"/>
+            <field name="target">new</field>
+        </record>
+
          <act_window name="Auxiliar de Cuentas"
             res_model="wizard.account"
             view_mode="form"
             target="new"
+            multi="True"
             key2="client_action_multi"
             id="action_account_btree_print"/>
 
