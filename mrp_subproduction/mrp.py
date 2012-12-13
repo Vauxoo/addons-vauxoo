@@ -85,6 +85,7 @@ class mrp_production(osv.osv):
         return result
     
     def _get_self_consumed(self, cr, uid, ids, field_name, args, context=None):
+        product_uom_pool=self.pool.get('product.uom')
         if context is None:
             context = {}
         result = {}
@@ -96,7 +97,7 @@ class mrp_production(osv.osv):
                     if subprods.move_lines2:
                         for consumed in subprods.move_lines2:
                             if (consumed.product_id.id == production.product_id.id and consumed.state in ('done')):
-                                total_consumed -= consumed.product_qty
+                                total_consumed -= product_uom_pool._compute_qty(cr, uid, consumed.product_uom.id, consumed.product_qty, to_uom_id=production.product_uom.id)
                         result[production.id] = total_consumed
         return result
         
