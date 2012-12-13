@@ -86,6 +86,8 @@ class account_move_line(osv.osv):
             list_analytic_ids = context.get('analytic')
             ids2 = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', 'child_of', list_analytic_ids)], context=context)
             query += 'AND '+obj+'.analytic_account_id in (%s)' % (','.join(map(str, ids2)))
+        if context.get('partner_detail', False):
+            query += 'AND l.partner_id in (select id from res_partner where id = %s)' % (context.get('partner_detail'))
         return query
 
 account_move_line()

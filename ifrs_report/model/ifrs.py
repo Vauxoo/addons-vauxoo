@@ -171,6 +171,8 @@ class ifrs_lines(osv.osv):
             analytic = [an.id for an in brw.analytic_ids]
             if analytic:
                 c['analytic'] = analytic
+            c['partner_detail'] = c.get('partner_detail')
+            print c['partner_detail'],'imprimo partner_detail'
             for a in brw.cons_ids:
                 if brw.value == 'debit':
                     res += a.debit

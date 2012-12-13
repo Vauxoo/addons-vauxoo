@@ -56,7 +56,8 @@ class ifrs_report(report_sxw.rml_parse):
             'get_column_name'  : self._get_column_name,
             'get_amount_value' : self._get_amount_value,
             'get_fiscalyear_print_info' : self._get_fiscalyear_print_info,
-            'get_period_print_info' : self._get_period_print_info
+            'get_period_print_info' : self._get_period_print_info,
+            'get_partner_detail' : self.get_partner_detail
         })
         self.cr = cr
         self.context = context
@@ -124,14 +125,14 @@ class ifrs_report(report_sxw.rml_parse):
 
         return self._period_info_list[column_num][2]
 
-    def _get_amount_value(self, ifrs_line, period_num=None, target_move=None):
+    def _get_amount_value(self, ifrs_line, period_num=None, target_move=None, pd=None):
         
         '''devuelve la cantidad correspondiente al periodo'''
 
         context = {}
         if period_num:
             period_id = self._period_info_list[period_num][1]
-            context = {'period_from': period_id, 'period_to': period_id, 'state': target_move}
+            context = {'period_from': period_id, 'period_to': period_id, 'state': target_move, 'partner_detail':pd}
         else:
             context = {'whole_fy': 'True'} 
 
@@ -207,7 +208,26 @@ class ifrs_report(report_sxw.rml_parse):
             return amount
         else:
             return "simple_amount_data"
-
+        
+    def get_partner_detail(self, ifrs_l):
+        ifrs = self.pool.get('ifrs.lines')
+        aml_obj = self.pool.get('account.move.line')
+        account_obj = self.pool.get('account.account')
+        partner_obj = self.pool.get('res.partner')
+        res = []
+        if ifrs_l.type =='detail':
+            ids2 = [lin.id for lin in ifrs_l.cons_ids]
+            ids3 = account_obj._get_children_and_consol(self.cr, self.uid, ids2)
+            print ids3,'imprimo ids3'
+            self.cr.execute(""" SELECT rp.id
+                FROM account_move_line l JOIN res_partner rp ON rp.id = l.partner_id
+                WHERE l.account_id IN %s
+                GROUP BY rp.id """, ( tuple(ids3), ) 
+                )
+            dat = self.cr.dictfetchall()
+            res = [lins for lins in partner_obj.browse( self.cr, self.uid, [li['id'] for li in dat] )]
+            print res,'imprimo res'
+        return res and res or [0]
 
 report_sxw.report_sxw(
     'report.ifrs',
