@@ -92,6 +92,7 @@ class mrp_production(osv.osv):
         #ids received are the ones from superproducts, broese is done in backwards
         for production in self.browse(cr, uid, ids, context=context):
             total_consumed = production.product_qty
+            result[production.id] = total_consumed
             if production.subproduction_ids:
                 for subprods in production.subproduction_ids:
                     if subprods.move_lines2:
