@@ -8,16 +8,31 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Account">
-                    <field name="date_ini"/>
-                    <field name="date_fin"/>
-                    <field name="nivel"/>
+                    <group>
+                    <field name="filter"/>
                     <field name="partner"/>
+                    <field name="nivel"/>
+                    </group>
+                    <newline/>
+                    <group>
+                        <separator string="Periodos" colspan="4"/>
+                        <newline/>
+                        <field name="period_from" attrs="{'readonly':[('filter','!=','filter_period')],'required':[('filter','=','filter_period')]}"/>
+                        <field name="period_to" attrs="{'readonly':[('filter','!=','filter_period')],'required':[('filter','=','filter_period')]}"/>
+                    </group>
+                    <newline/>
+                    <group>
+                        <separator string="Fechas" colspan="4"/>
+                        <newline/>
+                        <field name="date_ini" attrs="{'readonly':[('filter','!=','filter_date')],'required':[('filter','=','filter_date')]}"/>
+                        <field name="date_fin" attrs="{'readonly':[('filter','!=','filter_date')],'required':[('filter','=','filter_date')]}"/>
+                    </group>
                     <field name="account_ids" colspan="4" nolabel="1" width="650" height="200"/>
                     <group col="2" colspan="4">
                         <button icon='gtk-cancel' special="cancel"
                             string="Cancel" />
                         <button name="calculation" string="Imprimir"
-                            colspan="1" type="object" icon="gtk-ok" />
+                            colspan="1" type="object" icon="gtk-print" />
                     </group>
                 </form>
             </field>

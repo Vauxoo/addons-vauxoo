@@ -29,15 +29,19 @@ from osv import osv, fields
 class wizard_account(osv.osv_memory):
     _name='wizard.account'
     _columns={
+        'filter' : fields.selection([('filter_no','No Filtros'),('filter_date','Fecha'),('filter_period','Periodos')], 'Filtrar por', required=True),
+        'partner' : fields.boolean('Group by Partner'),
+        'period_from' : fields.many2one('account.period', 'Periodo Inicial', required=True),
+        'period_to' : fields.many2one('account.period', 'Periodo Final', required=True),
         'date_ini' : fields.date('Fecha Inicial', required=True),
         'date_fin' : fields.date('Fecha Final', required=True),
         'nivel' : fields.integer('Nivel', required=True),
-        'partner' : fields.boolean('Group by Partner'),
-        'account_ids': fields.many2many('account.account', 'account_account_balanza_rel', 'balanza_id', 'account_id', 'Accounts')
+        'account_ids': fields.many2many('account.account', 'account_account_balanza_rel', 'balanza_id', 'account_id', 'Accounts'),
     }
 
     _defaults={
-        'nivel' : 1
+        'nivel' : 1,
+        'filter' : lambda *a : 'filter_no'
     }
 
     def calculation(self, cr, uid, ids, context=None):

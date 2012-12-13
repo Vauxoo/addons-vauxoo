@@ -77,7 +77,8 @@ class reportes_btree_report(report_sxw.rml_parse):
         else:
             where_account_ids='parent.id is not null'
         if partner==True:
-            self.cr.execute("""SELECT subvw_final.partner,subvw_final.type,subvw_final.level,subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0::numeric) as saldo_inicial,subvw_final.debit,subvw_final.credit,
+            self.cr.execute("""SELECT COALESCE(subvw_final.partner,'INDEFINIDO') AS partner,subvw_final.type,subvw_final.level,subvw_final.code,subvw_final.name,
+            COALESCE(subvw_final.saldo_inicial,0.0::numeric) as saldo_inicial,subvw_final.debit,subvw_final.credit,
                 COALESCE((subvw_final.debit-subvw_final.credit)+subvw_final.saldo_inicial,0.0::numeric) AS saldo_final
                 FROM (
                     SELECT *, debit-credit AS balance
@@ -116,7 +117,7 @@ class reportes_btree_report(report_sxw.rml_parse):
                             LEFT OUTER JOIN account_move_line l
                               ON l.account_id = account_child_and_consolidated.child_id join account_move
                               on l.move_id=account_move.id
-                              join res_partner ON res_partner.id = l.partner_id
+                              left join res_partner ON res_partner.id = l.partner_id
                             WHERE  account_move.state='posted' AND l.date >= %s AND l.date <= %s
                              GROUP BY account_child_and_consolidated.parent_id,res_partner.name) subvw
             JOIN
@@ -138,14 +139,15 @@ class reportes_btree_report(report_sxw.rml_parse):
                 AND """+where_account_ids+"""
                 ORDER BY parent.parent_left ) nivel
                 ) padres ON padres.id=nivel.id
-            WHERE nivel.level<=%s
+            WHERE nivel.level = %s
             ORDER BY nivel.code) subvw_level
         ON subvw_level.id = subvw.id
             LEFT JOIN
                 (
-                SELECT subvw.id as id_inicial,COALESCE((subvw.debit - subvw.credit),0.0::numeric) AS saldo_inicial
-                   FROM ( SELECT account_child_and_consolidated.parent_id AS id, COALESCE(sum(l.credit), 0::numeric) AS credit,
-                    COALESCE(sum(l.debit), 0::numeric) AS debit
+                SELECT subvw.id as id_inicial,COALESCE(subvw.debit - subvw.credit,0.0) AS saldo_inicial
+                   FROM ( SELECT account_child_and_consolidated.parent_id AS id,
+                   sum(l.credit) AS credit,
+                    sum(l.debit) AS debit
                        FROM ( SELECT account_child_vw.parent_id, COALESCE(account_consolidated_vw.child_id, account_child_vw.child_id) AS child_id,
                         COALESCE(account_consolidated_vw.parent_currency_id, account_child_vw.parent_currency_id) AS parent_currency_id
                            FROM ( SELECT aa_tree_1.id AS parent_id, aa_tree_2.id AS child_id, aa_tree_1.currency_id AS parent_currency_id
@@ -231,9 +233,10 @@ class reportes_btree_report(report_sxw.rml_parse):
         ON subvw_level.id = subvw.id
            LEFT JOIN
                 (
-                SELECT subvw.id as id_inicial,COALESCE((subvw.debit - subvw.credit),0.0::numeric) AS saldo_inicial
-                   FROM ( SELECT account_child_and_consolidated.parent_id AS id, COALESCE(sum(l.credit), 0::numeric) AS credit,
-                    COALESCE(sum(l.debit), 0::numeric) AS debit
+                SELECT subvw.id as id_inicial,COALESCE(subvw.debit - subvw.credit,0.0) AS saldo_inicial
+                   FROM ( SELECT account_child_and_consolidated.parent_id AS id,
+                    sum(l.credit) AS credit,
+                    sum(l.debit) AS debit
                        FROM ( SELECT account_child_vw.parent_id, COALESCE(account_consolidated_vw.child_id, account_child_vw.child_id) AS child_id,
                         COALESCE(account_consolidated_vw.parent_currency_id, account_child_vw.parent_currency_id) AS parent_currency_id
                            FROM ( SELECT aa_tree_1.id AS parent_id, aa_tree_2.id AS child_id, aa_tree_1.currency_id AS parent_currency_id
@@ -255,6 +258,7 @@ class reportes_btree_report(report_sxw.rml_parse):
                   ORDER BY subvw_final.code
                     """,(date_ini, date_fin, nivel, date_ini,))
         res=self.cr.dictfetchall()
+        print res
         min_level=self.get_account_min_level(form)
         for lin in  res:
             if lin['level'] == min_level:
