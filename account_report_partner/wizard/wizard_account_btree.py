@@ -44,6 +44,12 @@ class wizard_account(osv.osv_memory):
         'filter' : lambda *a : 'filter_no'
     }
 
+    def onchange_filter(self, cr, uid, ids, filter=False, context=None):
+        res = {}
+        if filter:
+            res['value'] = {'period_from': False,'period_to': False,'date_ini': False,'date_fin': False}
+        return res
+
     def calculation(self, cr, uid, ids, context=None):
         if context is None:
             context = {}

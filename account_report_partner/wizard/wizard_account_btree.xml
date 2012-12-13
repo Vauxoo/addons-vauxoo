@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <form string="Account">
                     <group>
-                    <field name="filter"/>
+                    <field name="filter" on_change="onchange_filter(filter)"/>
                     <field name="partner"/>
                     <field name="nivel"/>
                     </group>
@@ -55,7 +55,11 @@
             key2="client_action_multi"
             id="action_account_btree_print"/>
 
-        <menuitem parent="account.final_accounting_reports" id="menu_report_btree_wizard" name="Auxiliares de Cuentas" action="action_account_btree_print"/>
+        <menuitem icon="STOCK_PRINT"
+                  parent="account.final_accounting_reports"
+                  id="menu_report_btree_wizard"
+                  name="Auxiliares de Cuentas"
+                  action="action_account_btree_print"/>
 
     </data>
 </openerp>
