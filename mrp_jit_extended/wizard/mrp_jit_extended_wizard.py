@@ -29,6 +29,9 @@ import netsvc
 
 class procurement_order_merge_jit_extended(osv.osv_memory):
     _name = 'procurement.order.merge.jit.extended'
+    _columns = {
+        'date_planned': fields.datetime('Scheduled date', select=1),
+    }
 
     def procurement_merge_jit(self, cr, uid, ids, context=None, rec_ids=None):
         procurement_order_pool = self.pool.get('procurement.order')
@@ -65,7 +68,11 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
                 new_ids.append(new_production_id[0])
                 subproductions = self.pool.get('procurement.order').read(cr, uid, line, ['production_ids'], context=context)
                 subproduction_ids = subproductions.get('production_ids')
-                mrp_production_pool.write(cr, uid, new_production_id[0], {'subproduction_ids': [(6, 0, subproduction_ids)]})
+                for wiz_data in self.browse(cr, uid, ids, context):
+                    if wiz_data.date_planned:
+                        mrp_production_pool.write(cr, uid, new_production_id[0], {'subproduction_ids': [(6, 0, subproduction_ids)], 'date_planned':wiz_data.date_planned})
+                    else:
+                        mrp_production_pool.write(cr, uid, new_production_id[0], {'subproduction_ids': [(6, 0, subproduction_ids)]})
 
         if new_ids:
             self.procurement_merge_jit(cr, uid, ids, context, new_ids)

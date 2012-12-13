@@ -10,6 +10,8 @@
                 <form string="Supply confirmed or ready productions">
                     <label string="Only production orders of products that are not services and are to be produced, will be generated" colspan="4"/>
                     <newline/>
+                    <field name="date_planned"/>
+                    <label string="Note: The usage of this field overrides the formula involving manufacturing_lead and produce_delay" colspan="4"/>
                     <separator string="" colspan="4" />
                     <button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
                     <button string="Supply" icon="gtk-ok" name="procurement_merge_jit" type="object"/>
