@@ -43,6 +43,7 @@ class product_product(osv.osv):
         for product in self.browse(cr,uid,ids,context=context):
             item_ids = item_obj.search(cr,uid,[('categ_id','=',product.categ_id.id)],context=context)
             if context.get('query',True):
+                print 'si entro aqui la cague1'
                 sql_str = item_ids and len(ids) == 1 and '''UPDATE product_pricelist_item set
                                 product_active_id=%d
                                 WHERE id %s %s '''%(product.id,len(item_ids) > 1 and 'in' or '=',len(item_ids) > 1 and tuple(item_ids) or item_ids[0])
@@ -60,6 +61,7 @@ class product_product(osv.osv):
         for product in self.browse(cr,uid,ids,context=context):
             item_ids = item_obj.search(cr,uid,[('product_id','=',product.id)],context=context)
             if context.get('query',True):
+                print 'si entro aqui la cague2'
                 sql_str = item_ids and len(ids) == 1 and '''UPDATE product_pricelist_item set
                                 product_active_id=%d
                                 WHERE id %s %s '''%(product.id,len(item_ids) > 1 and 'in' or '=',len(item_ids) > 1 and tuple(item_ids) or item_ids[0])

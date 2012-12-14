@@ -97,7 +97,7 @@ class sale_order(osv.osv):
         product = []
         context.update({'query':False})
         pricelist_obj = self.pool.get('product.pricelist')
-        for order in self.browse(cr,uid,ids,context=context):
+        for order in len(ids) == 1 and self.browse(cr,uid,ids,context=context) or []:
             for line in order.order_line:
                 price_compute = line.product_id and [ pricelist_obj.price_get(cr, uid, [i.price_list_id and i.price_list_id.id ],
                                                       line.product_id.id, line.product_uom_qty, context=context).get(i.price_list_id.id) for i in line.product_id.price_list_item_ids or line.product_id.category_item_ids]
@@ -149,8 +149,7 @@ class sale_order(osv.osv):
         sale_brw = self.browse(cr,uid,ids and ids[0],context=context)
         pricelist_obj = self.pool.get('product.pricelist')
         
-                                          
-        for line in sale_brw.order_line:
+        for line in len(ids) == 1 and sale_brw.order_line or []:
             property_cost_structure = line and line.product_id and line.product_id.property_cost_structure and line.product_id.property_cost_structure.id or False
             price_compute = line.product_id and [ pricelist_obj.price_get(cr, uid, [i.price_list_id and i.price_list_id.id ],
                                                       line.product_id.id, line.product_uom_qty, context=context).get(i.price_list_id.id) for i in line.product_id.price_list_item_ids or line.product_id.category_item_ids]
