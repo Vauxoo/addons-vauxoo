@@ -47,7 +47,7 @@ class product_product(osv.osv):
                                 product_active_id=%d
                                 WHERE id %s %s '''%(product.id,len(item_ids) > 1 and 'in' or '=',len(item_ids) > 1 and tuple(item_ids) or item_ids[0])
                 sql_str and cr.execute(sql_str)
-                cr.commit()
+                item_ids and len(ids) == 1 and cr.commit()
             res[product.id] = item_ids
 
         return res
@@ -64,7 +64,7 @@ class product_product(osv.osv):
                                 product_active_id=%d
                                 WHERE id %s %s '''%(product.id,len(item_ids) > 1 and 'in' or '=',len(item_ids) > 1 and tuple(item_ids) or item_ids[0])
                 sql_str and cr.execute(sql_str)
-                cr.commit()
+                item_ids and len(ids) == 1 and cr.commit()
             res[product.id] = item_ids
         return res
     
