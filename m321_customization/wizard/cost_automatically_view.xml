@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record model='ir.ui.view' id='xls_load_cost_form_view'>
+      <field name='name'>XLS File</field>
+      <field name='model'>load.cost</field>
+      <field name='type'>form</field>
+      <field name='arch' type='xml'>
+        <form string="Xmind File">
+          <group  colspan="9" height="600" width="600" col="2">
+            <group colspan="1" col="1">
+              <group col="1">
+                <field name="cost_file" required="1" nolabel="1" />
+              </group>
+              <group col="1">
+                <button string="Exit" special="cancel" icon="terp-stock_effects-object-colorize" />
+                <button name="xls_file" string="Load Cost" type="object" icon="terp-stock_effects-object-colorize" />
+              </group>
+            </group>
+          </group>
+        </form>
+      </field>
+    </record>
+    <record id="xls_load_cost_action" model="ir.actions.act_window">
+      <field name="name">XLS File</field>
+      <field name="type">ir.actions.act_window</field>
+      <field name="res_model">load.cost</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+    
+    <menuitem                                                           
+    name = "Update Cost"                                          
+    id ="update_cost_from_xlswz"                                          
+    parent = 'base.menu_base_config'
+    action='xls_load_cost_action'
+    sequence ='50'                                                      
+    />   
+
+  </data>
+</openerp>
