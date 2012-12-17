@@ -13,8 +13,14 @@
                 <field name="cost_file" required="1" nolabel="1" />
               </group>
               <group col="1">
+                <field name="update_cost" />
+                <field name="update_price_list" />
+              </group>
+
+              <group col="1">
                 <button string="Exit" special="cancel" icon="terp-stock_effects-object-colorize" />
-                <button name="xls_file" string="Load Cost" type="object" icon="terp-stock_effects-object-colorize" />
+                <button name="xls_file" string="Load Cost" attrs="{'invisible':[('update_cost','=',False)]}" type="object" icon="terp-stock_effects-object-colorize" />
+                <button name="update_price_list" string="Update Price List" attrs="{'invisible':[('update_price_list','=',False)]}" type="object" icon="terp-stock_effects-object-colorize" />
               </group>
             </group>
           </group>
