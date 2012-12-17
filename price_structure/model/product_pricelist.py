@@ -110,6 +110,13 @@ class inherit_price_list_item(osv.osv):
     'date_end':fields.related('price_version_id','date_end',type='date',string='Date End'),
     }
 
+    _defaults={
+    'sequence':1,
+    'base':2,
+        }
+
+    _order='price_discount desc'
+
     def delete_record(self,cr,uid,ids,context=None):
         if context is None:
             context={} 
