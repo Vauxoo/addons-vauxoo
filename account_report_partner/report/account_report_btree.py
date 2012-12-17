@@ -22,16 +22,30 @@
 ################################################################################
 import time
 from report import report_sxw
+import pooler
+from tools.translate import _
 
 class reportes_btree_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(reportes_btree_report, self).__init__(cr, uid, name, context)
+        if context is None:
+            context = {}
+        super(reportes_btree_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'get_account_moves': self.get_account_moves,
             'get_account_min_level': self.get_account_min_level,
+            'get_partner': self.get_partner,
 
         })
+        self.context = context
+
+    def get_partner(self,form):
+        if form[0]['partner']==True:
+            value='SI'
+        else:
+            value='NO'
+        return value
+
     def get_account_min_level(self,form):
         account_ids = form and form[0]['account_ids'] or False
         nivel = form and form[0]['nivel']
@@ -62,20 +76,21 @@ class reportes_btree_report(report_sxw.rml_parse):
         res= dat and dat[0]['min'] or False
         return res
 
-    def get_account_moves(self, form):
+    def get_account_moves(self, form, context=None):
         debit=0.0
         credit=0.0
         saldo_inicial=0.0
         saldo_final=0.0
         account_ids = form and form[0]['account_ids'] or False
-        date_ini = form and form[0]['date_ini'] or False
-        date_fin = form and form[0]['date_fin'] or False
-        period_from = form and form[0]['period_from'] or False
-        period_to = form and form[0]['period_to'] or False
         nivel = form and form[0]['nivel']
         filter = form and form[0]['filter']
         partner = form and form[0]['partner']
-        print period_from
+        if form[0]['period_from'] and form[0]['period_to']:
+            date_start=self.pool.get('account.period').browse(self.cr, self.uid , form[0]['period_from'][0]).date_start
+            date_stop=self.pool.get('account.period').browse(self.cr, self.uid, form[0]['period_to'][0]).date_stop
+            if filter=='filter_period':
+                where_filter="ap.date_start >= '%s' AND ap.date_stop <= '%s'"%(date_start, date_stop,)
+                where_filter2="ap.date_start < '%s'"%(date_start,)
         if account_ids:
             where_account_ids='parent.id in (%s)'%','.join(map(str,account_ids))
         else:
@@ -84,14 +99,8 @@ class reportes_btree_report(report_sxw.rml_parse):
             where_filter='l.date is not null'
             where_filter2='l.date is not null'
         if filter=='filter_date':
-            where_filter="l.date >= '%s' AND l.date <= '%s'"%(date_ini,date_fin,)
-            where_filter2="l.date < '%s'"%(date_ini,)
-        if filter=='filter_period':
-            #where_filter='l.period_id >= %s AND l.period_id <= %s'%(period_from, period_to)
-            #where_filter2='l.period_id < %s'%(period_from)
-            print "entro period"
-        print where_filter
-        print where_filter2
+            where_filter="l.date >= '%s' AND l.date <= '%s'"%(form[0]['date_ini'], form[0]['date_fin'],)
+            where_filter2="l.date < '%s'"%(form[0]['date_ini'],)
         if partner==True:
             self.cr.execute("""SELECT COALESCE(subvw_final.partner,'INDEFINIDO') as partner,subvw_final.type,subvw_final.level,
 subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as saldo_inicial,subvw_final.debit,subvw_final.credit,
@@ -134,6 +143,7 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
                               ON l.account_id = account_child_and_consolidated.child_id join account_move
                               on l.move_id=account_move.id
                               left join res_partner ON res_partner.id = l.partner_id
+                              join account_period ap ON ap.id = l.period_id
                             WHERE  account_move.state='posted' AND """+where_filter+"""
                              GROUP BY account_child_and_consolidated.parent_id,res_partner.name) subvw
             JOIN
@@ -178,6 +188,7 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
                     ON account_child_vw.child_id = account_consolidated_vw.parent_id) account_child_and_consolidated
                       LEFT JOIN account_move_line l ON l.account_id = account_child_and_consolidated.child_id
                    JOIN account_move ON account_move.id = l.move_id
+                   join account_period ap ON ap.id = l.period_id
                   WHERE (l.state::text <> ALL (ARRAY['cancel'::character varying, 'draft'::character varying]::text[]))
                   AND account_move.state::text = 'posted'::text AND """+where_filter2+"""
                   GROUP BY account_child_and_consolidated.parent_id) subvw)subvw_inicial
@@ -223,6 +234,7 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
                             LEFT OUTER JOIN account_move_line l
                               ON l.account_id = account_child_and_consolidated.child_id join account_move
                               on l.move_id=account_move.id
+                              join account_period ap ON ap.id = l.period_id
                             WHERE  account_move.state='posted' AND """+where_filter+"""
                              GROUP BY account_child_and_consolidated.parent_id ) subvw
             JOIN
@@ -267,6 +279,7 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
                     ON account_child_vw.child_id = account_consolidated_vw.parent_id) account_child_and_consolidated
                       LEFT JOIN account_move_line l ON l.account_id = account_child_and_consolidated.child_id
                    JOIN account_move ON account_move.id = l.move_id
+                   join account_period ap ON ap.id = l.period_id
                   WHERE (l.state::text <> ALL (ARRAY['cancel'::character varying, 'draft'::character varying]::text[]))
                   AND account_move.state::text = 'posted'::text AND """+where_filter2+"""
                   GROUP BY account_child_and_consolidated.parent_id) subvw)subvw_inicial
@@ -274,7 +287,6 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
                   ORDER BY subvw_final.code
                     """,(nivel,))
         res=self.cr.dictfetchall()
-        print res
         min_level=self.get_account_min_level(form)
         for lin in  res:
             if lin['level'] == min_level:

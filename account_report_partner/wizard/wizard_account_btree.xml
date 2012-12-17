@@ -3,11 +3,11 @@
     <data>
 
         <record id="view_account_btree_wizard" model="ir.ui.view">
-            <field name="name">Account</field>
+            <field name="name">Auxiliar</field>
             <field name="model">wizard.account</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Account">
+                <form string="Auxiliar">
                     <group>
                     <field name="filter" on_change="onchange_filter(filter)"/>
                     <field name="partner"/>
@@ -49,6 +49,7 @@
 
          <act_window name="Auxiliar de Cuentas"
             res_model="wizard.account"
+            src_model="account.move"
             view_mode="form"
             target="new"
             multi="True"

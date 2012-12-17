@@ -29,12 +29,12 @@ from osv import osv, fields
 class wizard_account(osv.osv_memory):
     _name='wizard.account'
     _columns={
-        'filter' : fields.selection([('filter_no','No Filtros'),('filter_date','Fecha'),('filter_period','Periodos')], 'Filtrar por', required=True),
+        'filter' : fields.selection([('filter_no','No Filtros'),('filter_date','Fecha'),('filter_period','Periodo')], 'Filtrar por', required=True),
         'partner' : fields.boolean('Group by Partner'),
-        'period_from' : fields.many2one('account.period', 'Periodo Inicial', required=True),
-        'period_to' : fields.many2one('account.period', 'Periodo Final', required=True),
-        'date_ini' : fields.date('Fecha Inicial', required=True),
-        'date_fin' : fields.date('Fecha Final', required=True),
+        'period_from' : fields.many2one('account.period', 'Periodo Inicial'),
+        'period_to' : fields.many2one('account.period', 'Periodo Final'),
+        'date_ini' : fields.date('Fecha Inicial'),
+        'date_fin' : fields.date('Fecha Final'),
         'nivel' : fields.integer('Nivel', required=True),
         'account_ids': fields.many2many('account.account', 'account_account_balanza_rel', 'balanza_id', 'account_id', 'Accounts'),
     }
@@ -47,25 +47,21 @@ class wizard_account(osv.osv_memory):
     def onchange_filter(self, cr, uid, ids, filter=False, context=None):
         res = {}
         if filter:
-            res['value'] = {'period_from': False,'period_to': False,'date_ini': False,'date_fin': False}
+            res['value'] = {'period_from': False ,'period_to': False ,'date_ini': False ,'date_fin': False}
         return res
 
-    def calculation(self, cr, uid, ids, context=None):
+    def calculation(self, cr, uid, ids, data, context=None):
         if context is None:
             context = {}
-        form = self.read(cr,uid,ids,[])
-        datas = {
+        form = self.read(cr, uid, ids, [])
+        data = {
+            'uid': uid,
             'ids': context.get('active_ids',[]),
             'model': 'wizard.account',
             'form': form,
-            'uid': uid,
             'context':context,
         }
 
-        return {
-            'type': 'ir.actions.report.xml',
-            'report_name': 'reportes.btree.report',
-            'datas': datas,
-        }
+        return {'type': 'ir.actions.report.xml', 'report_name': 'reportes.btree.report', 'datas': data, 'uid': uid}
 
 wizard_account()

@@ -44,15 +44,19 @@
       <paraStyle name="all" alignment="justify"/>
     </initialize>
     <paraStyle name="P1" fontName="Helvetica" fontSize="5.0" leading="7"/>
-    <paraStyle name="P2" fontName="Helvetica" fontSize="10.0" leading="13"/>
-    <paraStyle name="P3" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="11.0" leading="14" alignment="LEFT"/>
     <paraStyle name="P4" fontName="Helvetica" fontSize="11.0" leading="14" alignment="LEFT"/>
-    <paraStyle name="P5" fontName="Helvetica" fontSize="11.0" leading="14" alignment="LEFT"/>
-    <paraStyle name="P6" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT"/>
-    <paraStyle name="P7" fontName="Helvetica" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P8" fontName="Helvetica" fontSize="11.0" leading="14" alignment="LEFT"/>
-    <paraStyle name="P9" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
-    <paraStyle name="P10" fontName="Helvetica" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P6" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P11" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P12" fontName="Helvetica" alignment="CENTER"/>
+    <paraStyle name="P13" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P14" fontName="Helvetica" alignment="LEFT"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -66,35 +70,41 @@
     <images/>
   </stylesheet>
   <story>
-    <para style="P10">BALANZA DE COMPROBACION</para>
-    <para style="P7">
-      <font color="white"> </font>
-    </para>
-    <para style="P2">Fecha Inicial: [[ time.strftime('%d-%m-%Y',time.strptime( data['form'][0]['date_ini'] ,'%Y-%m-%d')) ]]</para>
-    <para style="P2">Fecha Final: [[ time.strftime('%d-%m-%Y',time.strptime( data['form'][0]['date_fin'] ,'%Y-%m-%d')) ]]</para>
-    <para style="P2">Nivel: [[ data['form'][0]['nivel'] ]]</para>
+    <para style="P12">AUXILIAR</para>
+    <section>
+      <para style="P13">Periodo Inicial:[[data['form'][0]['period_from'][1] or removeParentNode('section') ]]</para>
+      <para style="P14">
+        <font face="Helvetica" size="10.0">Periodo Final: [[data['form'][0]['period_to'][1] or removeParentNode('section') ]]</font>
+      </para>
+    </section>
+    <section>
+      <para style="P9">Fecha Inicial: [[ time.strftime('%d-%m-%Y',time.strptime( data['form'][0]['date_ini'] ,'%Y-%m-%d')) or removeParentNode('section') ]]</para>
+      <para style="P8">Fecha Final: [[ time.strftime('%d-%m-%Y',time.strptime( data['form'][0]['date_fin'] ,'%Y-%m-%d')) or removeParentNode('section') ]]</para>
+    </section>
+    <para style="P11">Agrupado por partner: [[get_partner(data['form'])]]</para>
+    <para style="P10">Nivel: [[ data['form'][0]['nivel'] ]]</para>
     <blockTable colWidths="69.0,107.0,93.0,74.0,72.0,70.0,80.0" style="Tabla2">
       <tr>
         <td>
-          <para style="P5">Codigo</para>
+          <para style="P4">Codigo</para>
         </td>
         <td>
-          <para style="P5">Nivel - Cuenta</para>
+          <para style="P4">Nivel - Cuenta</para>
         </td>
         <td>
-          <para style="P5">Cliente</para>
+          <para style="P4">Cliente</para>
         </td>
         <td>
-          <para style="P5">Saldo inicial</para>
+          <para style="P4">Saldo inicial</para>
         </td>
         <td>
-          <para style="P5">debe</para>
+          <para style="P4">debe</para>
         </td>
         <td>
-          <para style="P5">haber</para>
+          <para style="P4">haber</para>
         </td>
         <td>
-          <para style="P5">Saldo final</para>
+          <para style="P4">Saldo final</para>
         </td>
       </tr>
     </blockTable>
@@ -102,40 +112,40 @@
       <font color="white"> </font>
     </para>
     <section>
-      <para style="P4">[[ repeatIn(get_account_moves(data['form']), 'p') ]]</para>
+      <para style="P3">[[ repeatIn(get_account_moves(data['form']), 'p') ]]</para>
       <blockTable colWidths="70.0,106.0,93.0,74.0,73.0,69.0,80.0" style="Tabla1">
         <tr>
           <td>
-            <para style="P6">[[ p['code'] ]]</para>
+            <para style="P5">[[ p['code'] ]]</para>
           </td>
           <td>
-            <para style="P9">[[ p['level'] ]]-[[ p['name'] ]]</para>
+            <para style="P6">[[ p['level'] ]]-[[ p['name'] ]]</para>
           </td>
           <td>
-            <para style="P9">[[ p['partner'] ]]</para>
+            <para style="P6">[[ p['partner'] ]]</para>
           </td>
           <td>
-            <para style="P6">[[formatLang(p['saldo_inicial'])]]</para>
+            <para style="P5">[[formatLang(p['saldo_inicial'])]]</para>
           </td>
           <td>
-            <para style="P6">[[formatLang(p['debit'])]]</para>
+            <para style="P5">[[formatLang(p['debit'])]]</para>
           </td>
           <td>
-            <para style="P6">[[formatLang(p['credit'])]]</para>
+            <para style="P5">[[formatLang(p['credit'])]]</para>
           </td>
           <td>
-            <para style="P6">[[formatLang(p['saldo_final'])]]</para>
+            <para style="P5">[[formatLang(p['saldo_final'])]]</para>
           </td>
         </tr>
       </blockTable>
-      <para style="P3">
+      <para style="P2">
         <font color="white"> </font>
       </para>
     </section>
     <para style="Standard">
       <font color="white"> </font>
     </para>
-    <para style="P4">
+    <para style="P3">
       <font color="white"> </font>
     </para>
   </story>
