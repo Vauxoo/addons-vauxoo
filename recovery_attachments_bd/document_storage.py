@@ -31,20 +31,21 @@ class document_storage(osv.osv):
     _inherit = 'document.storage'
     
     def recovery_attachments(self, cr, uid, ids, context=None):
-        ir_attach_obj=self.pool.get('ir.attachment')
+        ir_attach_obj = self.pool.get('ir.attachment')
         for document_storage_pool in self.browse(cr, uid, ids, context=context):
             path = document_storage_pool.path or False
             if path and document_storage_pool.type == 'filestore':
-                document_dir_obj=self.pool.get('document.directory')
-                id_type_int=self.search(cr,uid,[('type', '=', 'filestore')])
+                document_dir_obj = self.pool.get('document.directory')
+                id_type_int = self.search(cr,uid,[('type', '=', 'filestore')])
                 if id_type_int:
                     directory_ids = document_dir_obj.search(cr, uid, [('storage_id', '=', id_type_int[0])])
                     attach_ids = ir_attach_obj.search(cr,uid,[('parent_id', 'in', directory_ids)])
                     for attachment in ir_attach_obj.browse(cr,uid,attach_ids,context=context):
-                        name_random=self.__get_random_fname(path)
+                        print 'attachment', attachment
+                        name_random = self.__get_random_fname(path)
                         if attachment.db_datas:
                             r = open(os.path.join(path, name_random), "wb")
                             r.write(attachment.db_datas)
                             r.close()
-                            ir_attach_obj.write(cr, uid, [ir], {'store_fname': os.path.join(path, name_random), 'db_datas': False})
+                            ir_attach_obj.write(cr, uid, [attachment.id], {'store_fname': os.path.join(path, name_random), 'db_datas': False})
         return True
