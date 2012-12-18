@@ -26,19 +26,20 @@
 ##############################################################################
 
 {
-    "name" : "Lectura se parámetros dinamicos a enviar al PAC del Factura Electronica para Mexico (CFDI-2011) ",
+    "name" : "Reading dynamic parameters to be sent to PAC for Mexico Electronic Invoice (CFDI-2011) ",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """TThis module reads the params required for PAC.""",
+    "description" : """This module reads the params required for PAC.""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae"],
+    "depends" : ["base"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
         "security/ir.model.access.csv",
-        "params_pac_view.xml"
+        "params_pac_view.xml",
+        "security/params_pac_security.xml"
     ],
     "installable" : True,
     "active" : False,

@@ -24,6 +24,20 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
     <blockTableStyle id="Tabla7">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
@@ -71,6 +85,8 @@
     <paraStyle name="P8" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
     <paraStyle name="P9" fontName="Helvetica" textColor="#ff3333"/>
     <paraStyle name="P10" fontName="Helvetica" fontSize="12.0" leading="15" textColor="#800000"/>
+    <paraStyle name="P10_enc" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="CENTER"/>
+    <paraStyle name="P11_txt" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
     <paraStyle name="P11" fontName="Helvetica" fontSize="2.0" leading="3" textColor="#800000"/>
     <paraStyle name="P12" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P13" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
@@ -87,6 +103,10 @@
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P27" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P30" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -193,7 +213,7 @@
           </td>
         </tr>
       </blockTable>
-      <blockTable colWidths="47.0,38.0,174.0,89.0,67.0,85.0" style="Tabla3">
+      <blockTable colWidths="50.0,39.0,168.0,53.0,57.0,49.0,89.0" style="Tabla3">
         <tr>
           <td>
             <para style="P7">Cantidad</para>
@@ -209,6 +229,9 @@
           </td>
           <td>
             <para style="P8">P.Unitario</para>
+          </td>
+          <td>
+            <para style="P8">Dto %</para>
           </td>
           <td>
             <para style="P8">Importe</para>
@@ -232,11 +255,14 @@
             <para style="P1">[[ formatLang(l.price_unit) ]]</para>
           </td>
           <td>
+            <para style="P1">[[ formatLang(l.discount)]]%</para>
+          </td>
+          <td>
             <para style="P1">[[ exists_key('global_discount_percent') and (formatLang(l.quantity * l.price_unit, digits=get_digits(dp='Account'))) or formatLang(l.price_subtotal) ]]</para>
           </td>
         </tr>
       </blockTable>
-      <blockTable colWidths="414.0,84.0" style="Tabla7">
+      <blockTable colWidths="414.0,91.0" style="Tabla7">
         <tr>
           <td>
             <para style="P8">Suma $</para>
@@ -265,22 +291,22 @@
           <td>
             <para style="P8">
               <font face="Helvetica" size="6.0">[[ repeatIn( get_taxes(), 'tax' ) ]]</font>
-              <font face="Helvetica">[[ tax['impuesto'] ]] ([[ round( float( tax['tasa'] ) ) ]]%) $</font>
+              <font face="Helvetica">[[ tax['name2'] ]] ([[ round( float( tax['tax_percent'] ) ) or '0.0' ]]%) $</font>
             </para>
           </td>
           <td>
-            <para style="P1">[[ formatLang( float( tax['importe'] ) ) ]]</para>
+            <para style="P1">[[ formatLang( float( tax['amount'] ) ) ]]</para>
           </td>
         </tr>
         <tr>
           <td>
             <para style="P8">
               <font face="Helvetica" size="6.0">[[ repeatIn( get_taxes_ret(), 'tax_ret' ) ]]</font>
-              <font face="Helvetica">[[ tax_ret['impuesto'] ]] Ret ([[ round( float( tax_ret['tasa'] ),2 )*-1 ]]%) $</font>
+              <font face="Helvetica">[[ tax_ret['name2'] ]] Ret ([[ round( float( tax_ret['tax_percent'] ),2 )*-1 ]]%) $</font>
             </para>
           </td>
           <td>
-            <para style="P1">[[ formatLang( float( tax_ret['importe'] )*-1 ) ]]</para>
+            <para style="P1">[[ formatLang( float( tax_ret['amount'] )*-1 ) ]]</para>
           </td>
         </tr>
         <tr>
@@ -342,9 +368,22 @@
           </td>
         </tr>
       </blockTable>
-      <para style="P12">
-        <font color="white"> </font>
-      </para>
+      <blockTable colWidths="155.0,174.0,170.0" style="Table1">
+        <tr>
+          <td>
+            <para style="P10_enc">Régimen Fiscal:</para>
+            <para style="P11_txt">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
+          </td>
+          <td>
+            <para style="P10_enc">Método de Pago: </para>
+            <para style="P11_txt">[[o.pay_method_id.name or 'No identificado']]</para>
+          </td>
+          <td>
+            <para style="P10_enc">Últimos 4 dígitos de la cuenta bancaria:</para>
+            <para style="P11_txt">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
+          </td>
+        </tr>
+      </blockTable>
       <blockTable colWidths="100.0,282.0,117.0" style="Tabla4">
         <tr>
           <td>
@@ -361,14 +400,17 @@
             <para style="P14">
               <font color="white"> </font>
             </para>
-            <para style="P12">Cadena Original del complemento de certificación digital del SAT:</para>
-            <para style="P14">[[ split_string( o.cfdi_cadena_original or '' ) ]]</para>
           </td>
           <td>
             <para style="P4">[[ o.cfdi_cbb and setTag('para','image',{'width':'6cm','height':'6cm'}) ]] [[ o.cfdi_cbb ]]</para>
           </td>
         </tr>
       </blockTable>
+      <para style="P12">Cadena Original del complemento de certificación digital del SAT:</para>
+      <para style="P29">[[ split_string( o.cfdi_cadena_original or '' ) ]]</para>
+      <para style="P5">
+        <font color="white"> </font>
+      </para>
       <para style="P5">Vendedor: [[o.user_id.name]]</para>
       <para style="terp_default_9">[[ (o.comment and format(o.comment )) or removeParentNode('para') ]]</para>
     </section>

@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="pay_method_efectivo" model="pay.method">
+            <field name="name">Efectivo</field>
+            <field name="description">Efectivo</field>
+        </record>
+    </data>
+    <data>
+        <record id="pay_method_transferencia_electronica" model="pay.method">
+            <field name="name">Transferencia Electrónica</field>
+            <field name="description">Transferencia Electrónica</field>
+        </record>
+     </data>
+     <data>
+        <record id="pay_method_cheque" model="pay.method">
+            <field name="name">Cheque</field>
+            <field name="description">Cheque</field>
+        </record>
+     </data>
+     <data>
+        <record id="pay_method_tarjeta_de_debito" model="pay.method">
+            <field name="name">Tarjeta de débito</field>
+            <field name="description">Tarjeta de débito</field>
+        </record>
+     </data>
+     <data>
+        <record id="pay_method_tarjeta_de_credito" model="pay.method">
+            <field name="name">Tarjeta de crédito</field>
+            <field name="description">Tarjeta de crédito</field>
+        </record>
+     </data>
+      <data>
+        <record id="pay_method_monedero_electronico" model="pay.method">
+            <field name="name">Monedero electrónico</field>
+            <field name="description">Monedero electrónico </field>
+        </record>
+     </data>
+</openerp>

@@ -28,11 +28,11 @@
 import pooler
 import wizard
 import base64
-import mx.DateTime
-#from mx.DateTime import now
 import netsvc
 from tools.translate import _
 import time
+import datetime
+from dateutil.relativedelta import relativedelta
 
 def _get_month_selection(self=False):
     months_selection = [
@@ -67,7 +67,7 @@ _form = """<?xml version="1.0"?>
 _fields = {
     'month': {'string': u'Mes', 'type': 'selection', 'selection': _get_month_selection(), 'default': int( time.strftime("%m") ) - 1 },
     'year': {'string': u'Año', 'type': 'integer', 'default': int(time.strftime("%Y"))},
-    'date_start': {'string': u'Fecha Inicial', 'type': 'datetime', 'default': (mx.DateTime.DateFrom( time.strftime('%Y-%m-01 00:00:00') ) - mx.DateTime.RelativeDate(months=1)).strftime('%Y-%m-%d %H:%M:%S') },
+    'date_start': {'string': u'Fecha Inicial', 'type': 'datetime', 'default': (datetime.datetime.strptime(time.strftime('%Y-%m-01 00:00:00'), '%Y-%m-%d 00:00:00' ) - relativedelta(months=1)).strftime('%Y-%m-%d %H:%M:%S') },
     'date_end': {'string': u'Fecha Final', 'type': 'datetime', 'default': time.strftime('%Y-%m-%d 23:59:59')},
     #'date_end': {'string': u'Fecha Final', 'type': 'datetime', 'default': time.strftime('%Y-%m-%d 23:59:59')},
     'invoice_ids': {'string': u'Facturas', 'type': 'many2many', 'relation': 'account.invoice', 'domain': "[('type', 'in', ['out_invoice', 'out_refund'] )]"}
@@ -122,12 +122,8 @@ def _get_invoices_month(self, cr, uid, data, context={}):
     
     year = data['form']['year']
     month = data['form']['month']
-    date_start = mx.DateTime.Date(year, month, 1, 0, 0, 0)
-    
-    #date_end = mx.DateTime.Date(year,month,-1, 23, 59, 60)
-    #date_end = mx.DateTime.Date(year, month + 1, 1, 0, 0, 0)
-    date_end = date_start + mx.DateTime.RelativeDate(months=1)
-    
+    date_start = datetime.datetime(year, month, 1, 0, 0, 0)
+    date_end = date_start + relativedelta(months=1)
     context.update( {'date': date_start.strftime("%Y-%m-%d")} )
     invoice_ids.extend(  
         invoice_obj.search(cr, uid, [
@@ -135,7 +131,7 @@ def _get_invoices_month(self, cr, uid, data, context={}):
             ( 'state', 'in', ['open', 'paid', 'cancel'] ),
             ( 'date_invoice', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'date_invoice', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
-            #( 'number', '<>', False )
+            ( 'number', '<>', False ),
             ], order='date_invoice', context=context)
     )
     
@@ -145,7 +141,7 @@ def _get_invoices_month(self, cr, uid, data, context={}):
             ( 'state', 'in', ['cancel'] ),
             ( 'date_invoice_cancel', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'date_invoice_cancel', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
-            #( 'number', '<>', False )
+            ( 'number', '<>', False ),
             ], order='date_invoice', context=context)
     )
     invoice_ids = list(set(invoice_ids))
@@ -171,10 +167,18 @@ def _get_invoices_date(self, cr, uid, data, context={}):
             ( 'state', 'in', ['open', 'paid', 'cancel'] ),
             ( 'date_invoice', '>=', date_start ),
             ( 'date_invoice', '<', date_end ),
-            ( 'number', '<>', False )
+            ( 'internal_number', '<>', False ),
         ], order='date_invoice', context=context)
     )
-    
+    invoice_ids.extend(
+        invoice_obj.search(cr, uid, [
+            ( 'type', 'in', ['out_invoice', 'out_refund'] ),
+            ( 'state', 'in', ['cancel'] ),
+            ( 'date_invoice_cancel', '>=', date_start ),
+            ( 'date_invoice_cancel', '<', date_end ),
+            ( 'internal_number', '<>', False ),
+        ], order='date_invoice', context=context)
+    )
     return {'invoice_ids': invoice_ids}
 
 

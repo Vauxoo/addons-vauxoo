@@ -12,7 +12,7 @@
             name="wizard.cancel.invoice.pac.sf.v5"
             string="Cancel invoice CFDI PAC SF"
             model="account.invoice"
-            groups="l10n_mx_facturae_pac_sf.group_facturae_mx_cfdi_pac_sf_user"
+            groups="l10n_mx_facturae_pac_sf.group_invoice_facturae_sf_cancel"
         />
     
     </data>

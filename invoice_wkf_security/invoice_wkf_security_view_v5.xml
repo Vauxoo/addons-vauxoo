@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_invoice_form2_inherit" model="ir.ui.view">
+                <field name="name">view.account.invoice.form2.inherit</field>
+                <field name="model">account.invoice</field>
+                <field name="type">form</field>      
+                <field name="inherit_id" ref="account.invoice_form"/>
+                <field name="arch" type="xml">
+                    <button name="action_cancel_draft" position="replace">
+                        <button name="action_cancel_draft" states="cancel" string="Reset to Draft"
+                                type="object" icon="terp-convert"
+                                groups="invoice_wkf_security.group_invoice_reset_draft"/>
+                    </button>
+                </field>
+        </record>
+        
+        <record id="view_account_invoice_form_inherit" model="ir.ui.view">
+                <field name="name">view.account.invoice.form.inherit</field>
+                <field name="model">account.invoice</field>
+                <field name="type">form</field>      
+                <field name="inherit_id" ref="account.invoice_form"/>
+                <field name="arch" type="xml">
+                    <button name="invoice_cancel" position="replace">
+                        <button name="invoice_cancel" states="draft,proforma2,sale,open" string="Cancel"
+                                icon="gtk-cancel" groups="invoice_wkf_security.group_invoice_cancel"/>
+                    </button>
+                </field>
+        </record>
+        
+    </data>
+</openerp>

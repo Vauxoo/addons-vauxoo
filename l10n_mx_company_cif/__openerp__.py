@@ -26,11 +26,11 @@
 ##############################################################################
 
 {
-    "name" : "l1n",
+    "name" : "l10n_mx_company_cif",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """
+    "description" : """This module add image field to company for CIF (RFC)
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
@@ -42,6 +42,7 @@
     "demo_xml" : [],
     "update_xml" : [
         "res_company_view.xml",
+        "wizard/installer.xml",
     ],
     "installable" : True,
     "active" : False,

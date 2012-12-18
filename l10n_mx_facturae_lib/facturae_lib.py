@@ -76,7 +76,7 @@ class facturae_certificate_library(osv.osv):
         os.close( fileno )
         return fname
     
-    def _read_file_attempts(self, file_obj, max_attempt=6, seconds_delay=0.5):
+    def _read_file_attempts(self, file_obj, max_attempt=12, seconds_delay=0.5):
         fdata = False
         cont = 1
         while True:

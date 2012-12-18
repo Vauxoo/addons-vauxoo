@@ -26,11 +26,11 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CBB)",
+    "name" : "l10n_mx_facturae_seq",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """
+    "description" : """Add sequence with limit from approval's for facturaE MX
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
@@ -43,6 +43,7 @@
         "security/l10n_mx_facturae_seq_security.xml",
         "security/ir.model.access.csv",
         "ir_sequence_view.xml",
+        "wizard/installer.xml",
     ],
     "installable" : True,
     "active" : False,

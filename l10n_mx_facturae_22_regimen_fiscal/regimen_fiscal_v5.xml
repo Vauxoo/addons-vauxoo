@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_regimen_fiscal_form" model="ir.ui.view">
+            <field name="name">view.regimen.fiscal.form</field>
+            <field name="model">regimen.fiscal</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Regimen Fiscal">
+                    <field name="name"/>
+                    <newline/>
+                    <field name="description"/>
+                    
+                </form>
+            </field>
+        </record>
+
+        <record id="view_regimen_fiscal_tree" model="ir.ui.view">
+            <field name="name">view.regimen.fiscal.tree</field>
+            <field name="model">regimen.fiscal</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Regimen Fiscal">
+                    <field name="name" select="1"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_regimen_fiscal" model="ir.actions.act_window">
+            <field name="name">Regimen Fiscal</field>
+            <field name="res_model">regimen.fiscal</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem
+            id="cfd_22_regimen_fiscal" name="Régimen Fiscal" parent='base.menu_partner_address_form'
+            action='action_regimen_fiscal'
+        />
+    </data>
+</openerp>

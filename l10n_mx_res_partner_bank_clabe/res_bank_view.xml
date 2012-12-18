@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_partner_bank_clabe_form_inh_xml">
+            <field name="name">view.partner.bank.clabe.form.inh.xml</field>
+            <field name="type">form</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="/form[@string='Bank account']/group[@name='bank']/field[@name='bank']" position="after">
+                    <field name="clabe" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_partner_bank_clabe_tree_inh_xml">
+            <field name="name">view.partner.bank.clabe.form.inh.xml</field>
+            <field name="type">tree</field>
+            <field name="model">res.partner.bank</field>
+            <field name="inherit_id" ref="base.view_partner_bank_tree"/>
+            <field name="arch" type="xml">
+               <xpath expr="/tree[@string='Bank Accounts']/field[@name='bank_name']" position="after">
+                    <field name="clabe" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_partner_clabe_form_inh_xml22">
+            <field name="name">view.partner.clabe.form.inh.xml22</field>
+            <field name="type">form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="sequence">20</field>
+            <field name="arch" type="xml">
+                 <xpath expr="/form/notebook/page[@string='Accounting']/field[@name='bank_ids']/form/group[@name='bank']/field[@name='bank']" position="after">
+                        <field name="clabe" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+        
+         <record model="ir.ui.view" id="view_partner_clabe_tree_inh_xml22">
+            <field name="name">view.partner.clabe.tree.inh.xml22</field>
+            <field name="type">tree</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="sequence">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Accounting']/field[@name='bank_ids']/tree/field[@name='owner_name']" position="after">
+                        <field name="clabe" colspan="2"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

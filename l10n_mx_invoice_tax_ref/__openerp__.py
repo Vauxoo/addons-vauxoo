@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_invoice_taxline_ref",
+    "name" : "l10n_mx_invoice_tax_ref",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
@@ -36,10 +36,12 @@
     "license" : "AGPL-3",
     "depends" : [
         "account",
+        "account_tax_category",
     ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        'invoice_view.xml',
     ],
     "installable" : True,
     "active" : False,

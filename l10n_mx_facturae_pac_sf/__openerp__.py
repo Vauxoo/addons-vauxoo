@@ -28,7 +28,7 @@
 {
     "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Solucion Factible",
     "version" : "1.0",
-    "author" : "Vauxoo",
+    "author" : "Vauxoo & Sfsoluciones",
     "category" : "Localization/Mexico",
     "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
 Ubuntu Package Depends:
@@ -36,15 +36,16 @@ Ubuntu Package Depends:
 """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae","l10n_mx_params_pac"],
+    "depends" : ["l10n_mx_facturae","l10n_mx_params_pac","account_tax_category"],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : [
+        "demo/l10n_mx_facturae_pac_sf_demo.xml"
+    ],
     "update_xml" : [
         "security/l10n_mx_facturae_pac_sf_security.xml",
-        "l10n_mx_facturae_pac_sf_demo.xml",
-        "invoice_wizard.xml",
+        #"invoice_wizard.xml",
         "l10n_mx_facturae_pac_sf_report.xml",
-        #"wizard/wizard_cancel_invoice_pac_sf_view.xml",
+        "wizard/wizard_cancel_invoice_pac_sf_view.xml",
         "wizard/wizard_export_invoice_pac_sf_view_v6.xml",
     ],
     "installable" : True,

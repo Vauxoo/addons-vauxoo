@@ -26,20 +26,21 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_invoice_taxline_ref",
+    "name" : "l10n_mx_invoice_tax_ref",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """
+    "description" : """ This module add tax_percent to account_invoice_tax
     """,
     "website" : "http://www.vauxoo.com/",
-    #"license" : "AGPL-3",
     "depends" : [
         "account",
+         "account_tax_category",
     ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        'invoice_view.xml',
     ],
     "installable" : True,
     "active" : False,

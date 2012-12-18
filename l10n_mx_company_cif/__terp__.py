@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name" : "l1n",
+    "name" : "l10n_mx_company_cif",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",

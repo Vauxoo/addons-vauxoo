@@ -24,9 +24,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import release
+if release.version < '6':
+    import wizard_export_invoice_pac_sf_v5
+    import wizard_cancel_invoice_pac_sf_v5
+if release.version >= '6':
+    import wizard_cancel_invoice_pac_sf_v6
+    import wizard_export_invoice_pac_sf_v6
 
-#~ import wizard_export_invoice_pac_sf
-#import wizard_cancel_invoice_pac_sf
-import wizard_export_invoice_pac_sf
-import wizard_cancel_invoice_pac_sf_v5
-#~ import wizard_export_invoice_pac_sf_v6

@@ -45,6 +45,7 @@ import netsvc
 from tools.translate import _
 import codecs
 import release
+from datetime import datetime, timedelta
 
 def exec_command_pipe(name, *args):
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
@@ -240,12 +241,12 @@ class account_invoice(osv.osv):
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
             fname += (invoice.company_id.partner_id and (invoice.company_id.partner_id._columns.has_key('vat_split') and invoice.company_id.partner_id.vat_split or invoice.company_id.partner_id.vat) or '')
-            fname += '.'
+            fname += '_'
             number_work = invoice.number or invoice.internal_number
             try:
                 context.update({ 'number_work': int( number_work ) or False })
                 fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
-                fname += '.'
+                fname += '_'
             except:
                 pass
             fname += number_work or ''
@@ -286,7 +287,22 @@ class account_invoice(osv.osv):
     def action_cancel(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
-    
+
+    def action_date_assign(self, cr, uid, ids, *args):
+        context={}
+        currency_mxn_ids=self.pool.get('res.currency').search(cr, uid, [('name','=','MXN')], limit=1, context=context)
+        currency_mxn_id= currency_mxn_ids and currency_mxn_ids[0] or False
+        if not currency_mxn_id:
+            raise osv.except_osv(_('Error !'),_('No hay moneda MXN.'))
+        for id in ids:
+            invoice = self.browse(cr, uid, [id])[0]
+            date_format = invoice.date_invoice or False
+            context['date']=date_format
+            invoice = self.browse(cr, uid, [id], context)[0]
+            rate=self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id,currency_mxn_id, 1,)
+            self.write(cr, uid, [id], {'rate': rate})
+        return super(account_invoice, self).action_date_assign(cr, uid, ids, args)
+            
     def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
         res = {}
         attachment_obj = self.pool.get('ir.attachment')
@@ -313,6 +329,7 @@ class account_invoice(osv.osv):
         'cadena_original': fields.text('Cadena Original', size=512),
         'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
         'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML'),
+        'rate': fields.float('Tipo de cambio', readonly = True),
     }
     
     _defaults = {
@@ -391,10 +408,13 @@ class account_invoice(osv.osv):
                     else:
                         file_globals['fname_xslt'] = os.path.join( tools.config["root_path"], certificate_id.fname_xslt )
                 else:
-                    file_globals['fname_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' )
-                
-                file_globals['fname_repmensual_xslt'] = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'reporte_mensual_2_0.xslt' )
-                
+                    #Search char "," for addons_path, now is multi-path
+                    all_paths = tools.config["addons_path"].split(",")
+                    for my_path in all_paths:
+                        if os.path.isdir( os.path.join( my_path, 'l10n_mx_facturae', 'SAT' ) ):
+                            #If dir is in path, save it on real_path
+                            file_globals['fname_xslt'] = my_path and os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' ) or ''
+                            break
                 if not file_globals.get('fname_xslt', False):
                     raise osv.except_osv('Warning !', 'No se ha definido fname_xslt. !')
                 
@@ -553,9 +573,9 @@ class account_invoice(osv.osv):
                         #'noCertificado': "30001000000100000800",
                     }
                 else:
-                    raise osv.except_osv('Warning !', 'La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !'%(sequence_id, msg2))
+                    raise osv.except_osv(u'Warning !', u'La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !'%(sequence_id, msg2))
             else:
-                raise osv.except_osv('Warning !', 'No se encontro un sequence de configuracion. %s !'%(msg2))
+                raise osv.except_osv(u'Warning !', u'No se encontro un sequence de configuracion. %s !'%(msg2))
         return folio_data
     
     def _dict_iteritems_sort(self, data_dict):#cr=False, uid=False, ids=[], context={}):
@@ -571,6 +591,8 @@ class account_invoice(osv.osv):
             if ko in keys:
                 key_item_sort.append( [ko, data_dict[ko]] )
                 keys.pop( keys.index( ko ) )
+        if keys == ['rfc', 'nombre', 'RegimenFiscal', 'DomicilioFiscal', 'ExpedidoEn']:
+            keys = ['rfc', 'nombre', 'DomicilioFiscal', 'ExpedidoEn','RegimenFiscal']
         for key_too in keys:
             key_item_sort.append( [key_too, data_dict[key_too]] )
         return key_item_sort
@@ -658,6 +680,7 @@ class account_invoice(osv.osv):
         cert_str = self._get_certificate_str( context['fname_cer'] )
         if not cert_str:
             raise osv.except_osv('Error en Certificado!', 'No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s'%(msg2))
+        cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
         
@@ -670,6 +693,7 @@ class account_invoice(osv.osv):
         data_xml = doc_xml.toxml('UTF-8')
         data_xml = codecs.BOM_UTF8 + data_xml
         fname_xml = (data_dict['Comprobante']['Emisor']['rfc'] or '') + '.' + ( data_dict['Comprobante'].get('serie', '') or '') + '.' + ( data_dict['Comprobante'].get('folio', '') or '') + '.xml'
+        data_xml = data_xml.replace ('<?xml version="1.0" encoding="UTF-8"?>','<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, data_xml
     
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
@@ -848,9 +872,13 @@ class account_invoice(osv.osv):
             #Inicia seccion: Receptor
             if not invoice.partner_id.vat:
                 raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(invoice.partner_id.name, msg2))
+            if invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat[0:2] <> 'MX':
+                rfc = 'XAXX010101000'
+            else:
+                rfc = ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ','')
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
-                'rfc': ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ',''),
+                'rfc': rfc,
                 'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
@@ -870,7 +898,8 @@ class account_invoice(osv.osv):
             for line in invoice.invoice_line:
                 #price_type = invoice._columns.has_key('price_type') and invoice.price_type or 'tax_excluded'
                 #if price_type == 'tax_included':
-                price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con modulo TaxIncluded
+#                price_unit = line.price_subtotal/line.quantity#Agrega compatibilidad con modulo TaxIncluded
+                price_unit = line.quantity <> 0 and line.price_subtotal/line.quantity or 0.0
                 concepto = {
                     'cantidad': "%.2f"%( line.quantity or 0.0),
                     'descripcion': line.name or '',
