@@ -41,7 +41,6 @@ class document_storage(osv.osv):
                     directory_ids = document_dir_obj.search(cr, uid, [('storage_id', '=', id_type_int[0])])
                     attach_ids = ir_attach_obj.search(cr,uid,[('parent_id', 'in', directory_ids)])
                     for attachment in ir_attach_obj.browse(cr,uid,attach_ids,context=context):
-                        print 'attachment', attachment
                         name_random = self.__get_random_fname(path)
                         if attachment.db_datas:
                             r = open(os.path.join(path, name_random), "wb")
