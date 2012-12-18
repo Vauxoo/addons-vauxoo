@@ -228,7 +228,8 @@ class ifrs_report(report_sxw.rml_parse):
 #            print len(dat),'imprimo len dat'
             res = [lins for lins in partner_obj.browse( self.cr, self.uid, [li['id'] for li in dat] )]
             print res,'imprimo res'
-        return res and res or [0]
+        res = res or [0]
+        return (x for x in res)
 
 report_sxw.report_sxw(
     'report.ifrs',
