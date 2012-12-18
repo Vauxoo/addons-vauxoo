@@ -107,6 +107,7 @@ class ifrs_lines(osv.osv):
         
         if not c.get('fiscalyear'):
             c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
+            print c['fiscalyear'],'imprimo fy1111111111111'
         
         if not c.get('period_from',False) and not c.get('period_to',False):
             if context.get('whole_fy',False):
@@ -114,7 +115,7 @@ class ifrs_lines(osv.osv):
                 if not c['period_from']:
                     raise osv.except_osv(_('Error !'), _('There are no special period in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
                 c['period_from']=c['period_from'][0]
-                
+            print c['fiscalyear'],'imprimo fiscal year'
             c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
         
         c.get('periods') and c.pop('periods')
@@ -122,10 +123,13 @@ class ifrs_lines(osv.osv):
         
         if brw.type == 'detail':
             if brw.acc_val=='init':
-                c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
+                period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
+                c['period_to']= period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
+                c['period_from'] = period_obj.search(cr, uid, [('company_id', '=', period_company_id),('special', '=', True)], order='date_start', limit=1)[0]
+#                c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
                 if not c['period_from']:
                     raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
-                c['period_to']=c['period_from']
+#                c['period_to']=c['period_from']
 
 
             elif brw.acc_val=='var':

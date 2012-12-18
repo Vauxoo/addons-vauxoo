@@ -25,5 +25,18 @@
             auto = "False"
             menu="False"
             />
+
+        <report
+            id="ifrs_report_12_partner_detail"
+            name="ifrs_12_partner_detail"
+            string="Print Monthly IFRS"
+            model="ifrs.ifrs"
+            rml="ifrs_report/report/ifrs_cash_flow_indirect_12_partner_detail.rml"
+            multi="True"
+            header="False"
+            auto = "False"
+            menu="False"
+            />
+
     </data>
 </openerp>

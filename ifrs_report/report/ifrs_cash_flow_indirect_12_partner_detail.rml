@@ -161,7 +161,7 @@
             <para>[[ False and removeParentNode('blockTable') ]]</para>
 	    <tr>
 		<td>
-		    <para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ repeatIn(get_partner_detail(ifrs_l),'ifrs_al') ]] [[ ifrs_al != [0] and ifrs_al.name or 'holaaaaaaaa']] </para>
+		    <para> [[ setTag('para','para', {'style': 'padding_level_3' })]] [[ repeatIn(get_partner_detail(ifrs_l),'ifrs_al') ]] [[ ifrs_al != [0] and ifrs_al.name or 'holaaaaaaaa']] </para>
 
 		</td>
 		<td><para style="numeric_data_table_style">[[formatLang( get_amount_value(ifrs_l, 1,data['target_move'], ifrs_al.id), digits=2, date=False, date_time=False, grouping=3, monetary=False)]]</para></td>

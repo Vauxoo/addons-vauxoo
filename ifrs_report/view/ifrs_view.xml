@@ -97,7 +97,7 @@
                                     </field>
                                 </group>
                                 
-                                <group col='1' attrs="{'invisible':[('operator','=',False)]}">
+                                <group col='1' attrs="{'invisible':[('operator','=','without')]}">
                                     <separator string='Operand' colspan='2' />
                                     <field
                                         name="operand_ids" widget="many2many"

@@ -225,6 +225,7 @@ class ifrs_report(report_sxw.rml_parse):
                 GROUP BY rp.id """, ( tuple(ids3), ) 
                 )
             dat = self.cr.dictfetchall()
+#            print len(dat),'imprimo len dat'
             res = [lins for lins in partner_obj.browse( self.cr, self.uid, [li['id'] for li in dat] )]
             print res,'imprimo res'
         return res and res or [0]
@@ -244,4 +245,14 @@ report_sxw.report_sxw(
     parser=ifrs_report,
     header = False
 )
+
+report_sxw.report_sxw(
+    'report.ifrs_12_partner_detail',
+    'ifrs.ifrs',
+    'ifrs_report/report/ifrs_cash_flow_indirect_12_partner_detail.rml',
+    parser=ifrs_report,
+    header = False
+)
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
