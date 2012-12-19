@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
+
         <record id="view_facturae_ir_sequence_approval_form" model="ir.ui.view">
             <field name="name">view.facturae.ir.sequence.approval.form</field>
             <field name="model">ir.sequence.approval</field>
@@ -15,10 +15,11 @@
                     <field name="number_start"/>
                     <field name="number_end"/>
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    <field name="type"/>
                 </form>
             </field>
         </record>
-        
+
          <record id="view_facturae_ir_sequence_approval_tree" model="ir.ui.view">
             <field name="name">view.facturae.ir.sequence.approval.tree</field>
             <field name="model">ir.sequence.approval</field>
@@ -31,11 +32,12 @@
                     <field name="approval_year"/>
                     <field name="number_start"/>
                     <field name="number_end"/>
+                    <field name="type"/>
                     <field name="company_id"/>
                  </tree>
              </field>
         </record>
-        
+
          <record id="action_facturae_sequence_tree" model="ir.actions.act_window">
             <field name="name">FacturaE MX Sequence Approval</field>
             <field name="res_model">ir.sequence.approval</field>
@@ -43,12 +45,12 @@
             <field name="view_type">form</field>
             <field name="view_id" ref="view_facturae_ir_sequence_approval_tree"/>
         </record>
-      
-        <menuitem action="action_facturae_sequence_tree" 
-                id="menu_facturae_sequence" sequence="50" 
+
+        <menuitem action="action_facturae_sequence_tree"
+                id="menu_facturae_sequence" sequence="50"
                 parent="base.next_id_5"
                 groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager"/>
-                
+
         <record id="view_facturae_sequence_search" model="ir.ui.view">
             <field name="name">view.facturae.sequence.search</field>
             <field name="model">ir.sequence.approval</field>
@@ -59,6 +61,7 @@
                     <field name="serie"/>
                     <field name="approval_year"/>
                     <field name="company_id"/>
+                    <field name="type"/>
                     <newline/>
                     <group expand="0" string="Group By...">
                         <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
@@ -69,7 +72,7 @@
                 </search>
             </field>
         </record>
-        
+
         <!--Version OpenERP-->
         <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
             <field name="name">ir.sequence.form.inh.l10n_mx_facturae</field>
@@ -100,7 +103,7 @@
                 </page>
             </field>
         </record>
-        
+
         <!--TinyERP Compatibility
         <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
             <field name="name">ir.sequence.form.inh.l10n_mx_facturae</field>
