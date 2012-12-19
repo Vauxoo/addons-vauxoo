@@ -23,11 +23,7 @@
 +                company_user = user_obj.browse(cr, uid, uid).company_id
 +                amount_invoice = currency_obj.compute(cr, uid, line.move_line_id.currency_id.id, company_user.currency_id.id, amount, context=ctx)
 +                rate_invoice = amount_invoice / amount
-+                print 'rate_invoice', rate_invoice
-+                print 'voucher_brw.payment_rate', voucher_brw.payment_rate
-+                
 +                currency_rate_difference = (rate_invoice - voucher_brw.payment_rate) * (amount/voucher_brw.payment_rate)
-+                print 'currency_rate_difference', currency_rate_difference
              move_line = {
                  'journal_id': voucher_brw.journal_id.id,
                  'period_id': voucher_brw.period_id.id,
