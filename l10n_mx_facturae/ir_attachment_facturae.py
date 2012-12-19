@@ -34,7 +34,7 @@ class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = [('cfd2010', 'CFD 2010'), ('cbb', 'CBB')]
+        types = [('cfd20', 'CFD 2.0'), ('cfd22', 'CFD 2.2'), ('cfdi30', 'CFDI 3.0'), ('cfdi32', 'CFDI 3.2'), ('cbb', 'CBB'),]
         return types
 
     def _get_index(self, cr, uid, ids, context=None):
@@ -45,16 +45,21 @@ class ir_attachment_facturae_mx(osv.osv):
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
         'company_id': fields.many2one('res.company', 'Company'),
         #'pac_id': ,Ver si no genera dependencia del modelo de pac
-        'file_input': fields.binary('File input'),#TODO: Agregar readonly dependiendo del state
+        #'file_input': fields.binary('File input'),#TODO: Agregar readonly dependiendo del state
+        'file_input': fields.many2one('ir.attachment', 'File input'),
         'file_input_index': fields.text('File input'),
-        'file_xml_sign': fields.binary('File XML Sign'),
+        #'file_xml_sign': fields.binary('File XML Sign'),
+        'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign'),
         'file_xml_sign_index': fields.text('File XML Sign Index'),
-        'file_pdf': fields.binary('File PDF'),
+        #'file_pdf': fields.binary('File PDF'),
+        'file_pdf': fields.many2one('ir.attachment', 'File PDF'),
         'file_pdf_index': fields.text('File PDF Index'),
         'identifier': fields.char('Identifier', size=128),
         'type': fields.selection(_get_type, 'Type', type='char', size=64),
         'description': fields.text('Description'),
         #'invoice_type': fields.ref(),#referencia al tipo de factura
+        'msj': fields.char('Last Message', size=256),
+        'last_date': fields.datetime('Last Modified'),
         'state': fields.selection([
                 ('draft', 'Draft'),
                 ('confirmed', 'Confirmed'),#Generate XML
@@ -66,14 +71,20 @@ class ir_attachment_facturae_mx(osv.osv):
                 ('cancel', 'Cancelled'),
             ], 'State', readonly=True, required=True),
     }
-    
+
     _defaults = {
         'state': 'draft',
+        'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
     }
-    
+
     def action_confirm(self, cr, uid, ids, context=None):
+        print "entro"
+        #invoice = self.browse(cr, uid, ids, context=context)
+        #id=self.pool.get('account.invoice')._get_facturae_invoice_xml_data(cr, uid, ids, context=context)
+        #print id
+        #certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.invoice_id.id], context=context)[invoice.company_id.id]
         return self.write(cr, uid, ids, {'state': 'confirmed'})
-    
+
     def action_sign(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'signed'})
 
@@ -82,16 +93,16 @@ class ir_attachment_facturae_mx(osv.osv):
 
     def action_send_customer(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_customer'})
-    
+
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'})
 
     def action_done(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'done'})
-    
+
     def action_cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'cancel'})
-    
+
     def reset_to_draft(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
         for row in self.browse(cr, uid, ids, context=context):

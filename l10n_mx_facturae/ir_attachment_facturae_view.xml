@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
+
+        <record id="view_ir_attachment_facturae_mx_filter" model="ir.ui.view">
+            <field name="name">view.ir.attachment.facturae.mx.filter</field>
+            <field name="model">ir.attachment.facturae.mx</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <filter string="Attachment Factura-E">
+                    <field name="name"/>
+                    <field name="identifier"/>
+                    <field name="type"/>
+                    <field name="invoice_id"/>
+                    <field name="state"/>
+                </filter>
+            </field>
+        </record>
+
         <record id="view_ir_attachment_facturae_mx_form" model="ir.ui.view">
             <field name="name">view.ir.attachment.facturae.mx.form</field>
             <field name="model">ir.attachment.facturae.mx</field>
@@ -32,6 +47,8 @@
                         <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
                     </group>
+                    <field name="msj"/>
+                    <field name="last_date"/>
                 </form>
             </field>
         </record>
@@ -56,7 +73,7 @@
         </record>
         <!--
         <menuitem id="menu_ir_attachment_facturae_mx"
-            name="Attacment FacturaE WKF" 
+            name="Attacment FacturaE WKF"
             parent="account.menu_finance_invoice"
             action="menu_action_ir_attachment_facturae_mx"
         />-->

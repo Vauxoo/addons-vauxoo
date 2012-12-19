@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        
+
         <record model="ir.ui.view" id="account_invoice_form_inh_l10n_mx_facturae_rate">
             <field name="name">account.invoice.form.inh.l10n.mx.facturae.rate</field>
             <field name="model">account.invoice</field>
@@ -13,6 +13,13 @@
                 </field>
             </field>
         </record>
-        
+
+        <act_window
+            id="act_invoice_attachment"
+            name="Attachment Factura E MX"
+            res_model="ir.attachment.facturae.mx"
+            src_model="account.invoice"
+            context="{'search_default_invoice_id': [active_id], 'default_invoice_id': active_id}" />
+
     </data>
 </openerp>

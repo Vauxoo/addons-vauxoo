@@ -1,14 +1,14 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
-        
+
         <!--Definition Workflow-->
         <record id="workflow_ir_attachment_facturae_mx_basic" model="workflow">
             <field eval="1" name="on_create"/>
             <field name="name">ir.attachment.facturae.mx.basic</field>
             <field name="osv">ir.attachment.facturae.mx</field>
         </record>
-        
+
         <!--Activities-->
         <record id="workflow_activity_draft" model="workflow.activity">
             <field name="kind">dummy</field>
@@ -89,7 +89,7 @@
             <field name="action">action_done()</field>
             <field eval="0" name="flow_start"/>
         </record>
-        
+
         <!--Transition-->
         <record id="workflow_transition_act_draft_to_act_confirm" model="workflow.transition">
             <field name="signal">action_confirm</field>
@@ -170,6 +170,6 @@
             <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
             <field name="condition">True</field>
         </record>
-    
-    </data>   
+
+    </data>
 </openerp>

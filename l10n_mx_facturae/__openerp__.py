@@ -67,6 +67,7 @@ Requires the following programs:
         "invoice_view.xml",
         #"partner_address_view.xml",
         "ir_attachment_facturae_view.xml",
+        "l10n_mx_facturae_workflow.xml",
     ],
     "installable" : True,
     "active" : False,
