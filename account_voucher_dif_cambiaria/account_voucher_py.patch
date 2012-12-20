@@ -21,9 +21,9 @@
 +                ctx = context.copy()
 +                ctx.update({'date' : date_move})
 +                company_user = user_obj.browse(cr, uid, uid).company_id
-+                amount_invoice = currency_obj.compute(cr, uid, line.move_line_id.currency_id.id, company_user.currency_id.id, amount, context=ctx)
-+                rate_invoice = amount_invoice / amount
-+                currency_rate_difference = (rate_invoice - voucher_brw.payment_rate) * (amount/voucher_brw.payment_rate)
++                rate_invoice = currency_obj.compute(cr, uid, line.move_line_id.currency_id.id, company_user.currency_id.id, 1, context=ctx)
++                rate_voucher = currency_obj.compute(cr, uid, line.move_line_id.currency_id.id, company_user.currency_id.id, 1, context=context)
++                currency_rate_difference = (rate_invoice - rate_voucher) * (amount/rate_voucher)
              move_line = {
                  'journal_id': voucher_brw.journal_id.id,
                  'period_id': voucher_brw.period_id.id,
