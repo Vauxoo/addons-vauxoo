@@ -303,6 +303,19 @@ class account_invoice(osv.osv):
             self.write(cr, uid, [id], {'rate': rate})
         return super(account_invoice, self).action_date_assign(cr, uid, ids, args)
 
+    def action_number(self, cr, uid, ids, context=None):
+        res=super(account_invoice, self).action_number(cr, uid, ids, context)
+        invoice = self.browse(cr, uid, ids, context=context)[0]
+        id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])])
+        if not id_attach:
+            self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
+            'name': invoice.number,
+            'invoice_id': ids[0],
+            'type': invoice.invoice_sequence_id.approval_id.type
+            }, context=context
+            )
+        return res
+
     def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
         res = {}
         attachment_obj = self.pool.get('ir.attachment')

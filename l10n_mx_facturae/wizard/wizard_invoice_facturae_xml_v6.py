@@ -83,14 +83,6 @@ class wizard_invoice_facturae_xml_v6(osv.osv_memory):
                 'res_model': 'account.invoice',
                 'res_id': invoice.id,
                 }, context=context)
-            self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
-            'name': invoice.number,
-            'file_input': attach,
-            'invoice_id': invoice.id,
-            'type': invoice.invoice_sequence_id.approval_id.type
-            }, context=context
-            )
-
         fdata = base64.encodestring( xml_data )
         return {'facturae': fdata, 'facturae_fname': fname_invoice,}
 
