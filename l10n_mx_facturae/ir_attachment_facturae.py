@@ -89,9 +89,9 @@ class ir_attachment_facturae_mx(osv.osv):
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice)])
         if aids:
-            msj="Se vinculo xml"
+            msj="Se vinculo XML"
         else:
-            msj="No existe xml"
+            msj="No existe XML vinculado con esta factura"
         return self.write(cr, uid, ids, {'state': 'confirmed', 'file_input': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_sign(self, cr, uid, ids, context=None):
@@ -99,9 +99,9 @@ class ir_attachment_facturae_mx(osv.osv):
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice)])
         if aids:
-            msj="Se vinculo XML Sign"
+            msj="Se vinculo XML SIGN"
         else:
-            msj="No existe xml"
+            msj="No existe XML SIGN vinculado con esta factura"
         return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_printable(self, cr, uid, ids, context=None):
@@ -111,7 +111,7 @@ class ir_attachment_facturae_mx(osv.osv):
         if aids:
             msj="Se vinculo PDF"
         else:
-            msj="No existe PDF"
+            msj="No existe PDF vinculado con esta factura"
         return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):

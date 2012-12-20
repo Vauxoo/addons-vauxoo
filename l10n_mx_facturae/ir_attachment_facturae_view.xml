@@ -24,17 +24,15 @@
             <field name="arch" type="xml">
                 <form string="Attachment Factura-E">
                     <field name="name"/>
-                    <field name="company_id"/>
                     <field name="invoice_id"/>
+                    <field name="type"/>
+                    <field name="company_id"/>
                     <newline/>
                     <field name="file_input"/>
-                    <newline/>
                     <field name="file_xml_sign"/>
                     <newline/>
                     <field name="file_pdf"/>
-                    <newline/>
                     <field name="identifier"/>
-                    <field name="type"/>
                     <newline/>
                     <group col="9" colspan="8">
                         <field name="state"/>

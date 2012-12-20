@@ -43,7 +43,7 @@ class ir_sequence_approval(osv.osv):
         'number_start': fields.integer(u'Desde', required=False),
         'number_end': fields.integer(u'Hasta', required=True),
         'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade'),
-        'type': fields.selection([('cfd20', 'CFD 2.0'), ('cfd22', 'CFD 2.2'), ('cfdi30', 'CFDI 3.0'), ('cfdi32', 'CFDI 3.2'), ('cbb', 'CBB')], 'Type'),
+        'type': fields.selection([('cfd20', 'CFD 2.0'), ('cfd22', 'CFD 2.2'), ('cfdi30', 'CFDI 3.0'), ('cfdi32', 'CFDI 3.2'), ('cbb', 'CBB')], 'Type', required=True),
     }
 
     _defaults = {
