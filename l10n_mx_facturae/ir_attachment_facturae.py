@@ -25,7 +25,7 @@
 #
 ##############################################################################
 
-
+import time
 from osv import osv
 from osv import fields
 import netsvc
@@ -58,8 +58,8 @@ class ir_attachment_facturae_mx(osv.osv):
         'type': fields.selection(_get_type, 'Type', type='char', size=64),
         'description': fields.text('Description'),
         #'invoice_type': fields.ref(),#referencia al tipo de factura
-        'msj': fields.char('Last Message', size=256),
-        'last_date': fields.datetime('Last Modified'),
+        'msj': fields.char('Last Message', size=256, readonly=True),
+        'last_date': fields.datetime('Last Modified', readonly=True),
         'state': fields.selection([
                 ('draft', 'Draft'),
                 ('confirmed', 'Confirmed'),#Generate XML
@@ -75,21 +75,44 @@ class ir_attachment_facturae_mx(osv.osv):
     _defaults = {
         'state': 'draft',
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+        'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
+    def write(self, cr, uid, ids, vals, context=None):
+        if vals:
+            vals=vals
+        res=super(ir_attachment_facturae_mx, self).write(cr, uid, ids, vals, context=context)
+        return res
+
     def action_confirm(self, cr, uid, ids, context=None):
-        print "entro"
-        #invoice = self.browse(cr, uid, ids, context=context)
-        #id=self.pool.get('account.invoice')._get_facturae_invoice_xml_data(cr, uid, ids, context=context)
-        #print id
-        #certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.invoice_id.id], context=context)[invoice.company_id.id]
-        return self.write(cr, uid, ids, {'state': 'confirmed'})
+        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+        aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice)])
+        if aids:
+            msj="Se vinculo xml"
+        else:
+            msj="No existe xml"
+        return self.write(cr, uid, ids, {'state': 'confirmed', 'file_input': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_sign(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'signed'})
+        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
+        aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice)])
+        if aids:
+            msj="Se vinculo XML Sign"
+        else:
+            msj="No existe xml"
+        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'})
+        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
+        aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.pdf'),('res_model','=','account.invoice'),('res_id','=',invoice)])
+        if aids:
+            msj="Se vinculo PDF"
+        else:
+            msj="No existe PDF"
+        return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_customer'})

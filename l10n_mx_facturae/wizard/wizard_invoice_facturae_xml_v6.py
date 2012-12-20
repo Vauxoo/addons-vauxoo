@@ -36,34 +36,33 @@ from osv import osv, fields
 
 class wizard_invoice_facturae_xml_v6(osv.osv_memory):
     _name = 'wizard.invoice.facturae.xml.v6'
-    
+
     _columns = {
         'facturae':fields.binary('Facturae File', readonly=True),
         'facturae_fname':fields.char('File Name', size=64),
-        'note':fields.text('Log'),    
+        'note':fields.text('Log'),
     }
-    
+
     def _get_facturae_fname(self, cr, uid, data, context=None):
         if context is None:
             context = {}
         res = self._get_invoice_facturae_xml(cr, uid, data, context)
         return res['facturae_fname']
-        
+
     def _get_facturae(self, cr, uid, data, context=None):
         if context is None:
             context = {}
         res = self._get_invoice_facturae_xml(cr, uid, data, context)
         return res['facturae']
-        
+
     _defaults = {
         'facturae_fname':_get_facturae_fname,
-        'facturae':_get_facturae,    
+        'facturae':_get_facturae,
     }
-    
+
     def _get_invoice_facturae_xml(self, cr, uid, data, context=None):
         if not context:
             context = {}
-        #context.update( {'date': data['form']['date']} )
         invoice_obj = self.pool.get('account.invoice')
         ids = data['active_ids']
         id = ids[0]
@@ -77,16 +76,22 @@ class wizard_invoice_facturae_xml_v6(osv.osv_memory):
                 xml_data = base64.decodestring(brow_rec.datas)
         else:
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, ids, context=context)
-            self.pool.get('ir.attachment').create(cr, uid, {
+            attach=self.pool.get('ir.attachment').create(cr, uid, {
                 'name': fname_invoice,
                 'datas': base64.encodestring(xml_data),
                 'datas_fname': fname_invoice,
                 'res_model': 'account.invoice',
                 'res_id': invoice.id,
-                }, context=context
+                }, context=context)
+            self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
+            'name': invoice.number,
+            'file_input': attach,
+            'invoice_id': invoice.id,
+            'type': invoice.invoice_sequence_id.approval_id.type
+            }, context=context
             )
-        
+
         fdata = base64.encodestring( xml_data )
         return {'facturae': fdata, 'facturae_fname': fname_invoice,}
-    
+
 wizard_invoice_facturae_xml_v6()
