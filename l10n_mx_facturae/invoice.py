@@ -285,6 +285,10 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
 
     def action_cancel(self, cr, uid, ids, *args):
+        id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])])
+        for attachment in self.pool.get('ir.attachment.facturae.mx').browse(cr, uid, id_attach):
+            if not attachment.state=='cancel':
+                self.pool.get('ir.attachment.facturae.mx').write(cr, uid, id_attach, {'state': 'cancel', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': 'Cancel from invoice'})
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
 
@@ -307,13 +311,13 @@ class account_invoice(osv.osv):
         res=super(account_invoice, self).action_number(cr, uid, ids, context)
         invoice = self.browse(cr, uid, ids, context=context)[0]
         id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])])
-        if not id_attach:
+        for attachment in self.pool.get('ir.attachment.facturae.mx').browse(cr, uid, id_attach, context):
+            continue
+        if not id_attach or attachment.state=='cancel':
             self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
             'name': invoice.number,
             'invoice_id': ids[0],
-            'type': invoice.invoice_sequence_id.approval_id.type
-            }, context=context
-            )
+            'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
         return res
 
     def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):

@@ -24,11 +24,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import tools
 import time
 from osv import osv
 from osv import fields
 import netsvc
+import tempfile
+import base64
 
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
@@ -115,7 +117,27 @@ class ir_attachment_facturae_mx(osv.osv):
         return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'sent_customer'})
+        attachments=[]
+        attach_name=''
+        to=[]
+        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        smtp= self.pool.get('email.smtpclient').browse(cr, uid, uid, context).id
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
+        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
+        for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
+            f_name = tempfile.gettempdir() +'/'+ attach.name
+            open(f_name,'wb').write(base64.decodestring(attach.datas))
+            attachments.append(f_name)
+            attach_name+=attach.name+ ', '
+        to=invoice.address_invoice_id.email
+        subject= 'Invoice'+' '+invoice.number
+        message = attach_name
+        state = self.pool.get('email.smtpclient').send_email(cr, uid, smtp, to, tools.ustr(subject), tools.ustr(message), attachments)
+        if not state:
+            msj='Please Check the Server Configuration!'
+        else :
+            msj='Email Send'
+        return self.write(cr, uid, ids, {'state': 'sent_customer', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj})
 
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'})
@@ -124,7 +146,7 @@ class ir_attachment_facturae_mx(osv.osv):
         return self.write(cr, uid, ids, {'state': 'done'})
 
     def action_cancel(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'cancel'})
+        return self.write(cr, uid, ids, {'state': 'cancel','last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': 'Cancel',})
 
     def reset_to_draft(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
