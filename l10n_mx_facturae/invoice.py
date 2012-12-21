@@ -112,6 +112,7 @@ class account_invoice(osv.osv):
         return (True,ret_file_name)
 
     def create_report_pdf(self, cr, uid, ids, context={}):
+        print "-----------ENTRO"
         if not context:
             context = {}
         id = ids[0]
@@ -120,8 +121,10 @@ class account_invoice(osv.osv):
         os.close( fileno )
 
         file = self.create_report(cr, uid, [id], "account.invoice.facturae.pdf", fname)
+        print file
         is_file = file[0]
         fname = file[1]
+        print fname
         if is_file and os.path.isfile(fname):
             f = open(fname, "r")
             data = f.read()

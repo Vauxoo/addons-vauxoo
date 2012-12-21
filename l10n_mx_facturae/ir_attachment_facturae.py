@@ -88,38 +88,58 @@ class ir_attachment_facturae_mx(osv.osv):
 
     def action_confirm(self, cr, uid, ids, context=None):
         invoice =self.browse(cr,uid,ids)[0].invoice_id
+        invoice_obj = self.pool.get('account.invoice')
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice)])
-        if aids:
-            msj="Se vinculo XML"
+        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
+        attach=self.pool.get('ir.attachment').create(cr, uid, {
+                'name': fname_invoice,
+                'datas': base64.encodestring(xml_data),
+                'datas_fname': fname_invoice,
+                'res_model': 'account.invoice',
+                'res_id': invoice.id,
+                }, context=context)
+        if attach:
+            msj="Attached Successfully XML"
         else:
-            msj="No existe XML vinculado con esta factura"
-        return self.write(cr, uid, ids, {'state': 'confirmed', 'file_input': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
+            msj="Error"
+        return self.write(cr, uid, ids, {'state': 'confirmed', 'file_input': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_sign(self, cr, uid, ids, context=None):
         invoice =self.browse(cr,uid,ids)[0].invoice_id
+        invoice_obj = self.pool.get('account.invoice')
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice)])
-        if aids:
-            msj="Se vinculo XML SIGN"
+        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
+        attach=self.pool.get('ir.attachment').create(cr, uid, {
+                'name': fname_invoice,
+                'datas': base64.encodestring(xml_data),
+                'datas_fname': fname_invoice,
+                'res_model': 'account.invoice',
+                'res_id': invoice.id,
+                }, context=context)
+        if attach:
+            msj="Attached Successfully XML SIGN"
         else:
-            msj="No existe XML SIGN vinculado con esta factura"
-        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
+            msj="Error"
+        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_printable(self, cr, uid, ids, context=None):
         invoice =self.browse(cr,uid,ids)[0].invoice_id
+        invoice_obj = self.pool.get('account.invoice')
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.pdf'),('res_model','=','account.invoice'),('res_id','=',invoice)])
-        if aids:
-            msj="Se vinculo PDF"
+        pdf = invoice_obj.create_report_pdf(cr, uid, [invoice.id] , context=context)
+        print "PDF", pdf
+        if pdf:
+            msj="Attached Successfully PDF"
         else:
-            msj="No existe PDF vinculado con esta factura"
-        return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': aids and aids[0] or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj}, context=context)
+            msj="No existe PDF"
+        return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': pdf or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
         attachments=[]
         attach_name=''
-        to=[]
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         smtp= self.pool.get('email.smtpclient').browse(cr, uid, uid, context).id
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
@@ -136,7 +156,7 @@ class ir_attachment_facturae_mx(osv.osv):
         if not state:
             msj='Please Check the Server Configuration!'
         else :
-            msj='Email Send'
+            msj='Email Send Successfully'
         return self.write(cr, uid, ids, {'state': 'sent_customer', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj})
 
     def action_send_backup(self, cr, uid, ids, context=None):
