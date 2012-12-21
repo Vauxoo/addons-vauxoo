@@ -1,7 +1,16 @@
 === modified file 'account_voucher/account_voucher.py'
 --- account_voucher/account_voucher.py	2012-08-28 10:58:11 +0000
-+++ account_voucher/account_voucher.py	2012-12-21 15:46:07 +0000
-@@ -1027,7 +1027,15 @@
++++ account_voucher/account_voucher.py	2012-12-21 17:46:40 +0000
+@@ -1010,6 +1010,8 @@
+         move_line_obj = self.pool.get('account.move.line')
+         currency_obj = self.pool.get('res.currency')
+         tax_obj = self.pool.get('account.tax')
++        voucher_line_obj = self.pool.get('account.voucher.line')
++        user_obj = self.pool.get('res.users')
+         tot_line = line_total
+         rec_lst_ids = []
+ 
+@@ -1027,7 +1029,15 @@
              if line.amount == line.amount_unreconciled:
                  currency_rate_difference = line.move_line_id.amount_residual - amount
              else:
