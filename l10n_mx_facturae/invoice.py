@@ -112,7 +112,6 @@ class account_invoice(osv.osv):
         return (True,ret_file_name)
 
     def create_report_pdf(self, cr, uid, ids, context={}):
-        print "-----------ENTRO"
         if not context:
             context = {}
         id = ids[0]
@@ -121,24 +120,23 @@ class account_invoice(osv.osv):
         os.close( fileno )
 
         file = self.create_report(cr, uid, [id], "account.invoice.facturae.pdf", fname)
-        print file
         is_file = file[0]
         fname = file[1]
-        print fname
-        if is_file and os.path.isfile(fname):
+        invoice =self.browse(cr,uid,ids)[0]
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
+        if is_file and os.path.isfile(fname_invoice):
             f = open(fname, "r")
             data = f.read()
             f.close()
-
             data_attach = {
-                'name': context.get('fname'),
+                'name': context.get('fname') or fname_invoice,
                 'datas': data and base64.encodestring( data ) or None,
                 'datas_fname': context.get('fname'),
                 'description': 'Factura-E PDF',
                 'res_model': self._name,
                 'res_id': id,
             }
-            self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
+            #self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
         return True
 
     def action_make_cfd(self, cr, uid, ids, *args):
