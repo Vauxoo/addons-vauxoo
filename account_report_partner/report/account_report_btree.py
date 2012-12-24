@@ -93,8 +93,10 @@ class reportes_btree_report(report_sxw.rml_parse):
                 where_filter2="ap.date_start < '%s'"%(date_start,)
         if account_ids:
             where_account_ids='parent.id in (%s)'%','.join(map(str,account_ids))
+            where_id='id in (%s)'%','.join(map(str,account_ids))
         else:
             where_account_ids='parent.id is not null'
+            where_id='id is not null'
         if filter=='filter_no':
             where_filter='l.date is not null'
             where_filter2='l.date is not null'
@@ -102,16 +104,23 @@ class reportes_btree_report(report_sxw.rml_parse):
             where_filter="l.date >= '%s' AND l.date <= '%s'"%(form[0]['date_ini'], form[0]['date_fin'],)
             where_filter2="l.date < '%s'"%(form[0]['date_ini'],)
         if partner==True:
-            self.cr.execute("""SELECT COALESCE(subvw_final.partner,'INDEFINIDO') as partner,subvw_final.type,subvw_final.level,
-subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as saldo_inicial,subvw_final.debit,subvw_final.credit,
-                COALESCE(subvw_final.debit-subvw_final.credit + subvw_final.saldo_inicial,subvw_final.debit-subvw_final.credit,0.0) AS saldo_final
+            level="'%s'"%(nivel,)
+            self.cr.execute("""SELECT * FROM
+            (SELECT COALESCE(subvw_final.partner_name,subvw_final.partner_name_i,'INDEFINIDO') as partner,
+COALESCE(subvw_final.level,"""+level+""") as level,
+COALESCE(subvw_final.code,subvw_final.codei) as code,
+COALESCE(subvw_final.cuenta,subvw_final.cuentai) as name,COALESCE(subvw_final.saldo_inicial,0.0) as saldo_inicial,
+COALESCE(subvw_final.debit,0.0) as debit,
+COALESCE(subvw_final.credit,0.0) as credit,
+                COALESCE(subvw_final.debit-subvw_final.credit + subvw_final.saldo_inicial,
+                subvw_final.debit-subvw_final.credit,subvw_final.saldo_inicial) AS saldo_final
                 FROM (
-                    SELECT *, debit-credit::numeric AS balance
+                    SELECT *, debit-credit AS balance
                             FROM (
                             SELECT account_child_and_consolidated.parent_id AS id,
-                             COALESCE(sum(l.credit),0.0) AS credit,
-                             COALESCE(sum(l.debit),0.0) AS debit
-                             ,res_partner.name as partner
+                             COALESCE(SUM(l.credit), 0.0) AS credit,
+                             COALESCE(SUM(l.debit), 0.0) AS debit,
+                             res_partner.id as partner2,res_partner.name as partner_name
                                FROM (
                                 SELECT account_child_vw.parent_id, COALESCE( account_consolidated_vw.child_id, account_child_vw.child_id) AS child_id,
                                  COALESCE( account_consolidated_vw.parent_currency_id, account_child_vw.parent_currency_id) AS parent_currency_id
@@ -140,15 +149,15 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
                                 ON account_child_vw.child_id = account_consolidated_vw.parent_id
                             ) account_child_and_consolidated
                             LEFT OUTER JOIN account_move_line l
-                              ON l.account_id = account_child_and_consolidated.child_id join account_move
-                              on l.move_id=account_move.id
-                              left join res_partner ON res_partner.id = l.partner_id
-                              join account_period ap ON ap.id = l.period_id
+                              ON l.account_id = account_child_and_consolidated.child_id
+                              join account_move on l.move_id=account_move.id
+                                join res_partner ON res_partner.id=l.partner_id
+                               join account_period ap ON ap.id = l.period_id
                             WHERE  account_move.state='posted' AND """+where_filter+"""
-                             GROUP BY account_child_and_consolidated.parent_id,res_partner.name) subvw
+                             GROUP BY account_child_and_consolidated.parent_id,res_partner.id ) subvw
             JOIN
                 (
-        SELECT DISTINCT nivel.id,nivel.name,nivel.level,nivel.code,padres.type
+        SELECT DISTINCT nivel.id,nivel.name as cuenta,nivel.level,nivel.code,padres.type
             FROM(SELECT
                 node.id,node.name,node.code,
                 CAST ((count(parent.name)) AS INT) as level
@@ -168,15 +177,18 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
             WHERE nivel.level= %s
             ORDER BY nivel.code) subvw_level
         ON subvw_level.id = subvw.id
-            LEFT JOIN
+             full JOIN
                 (
-                SELECT subvw.id as id_inicial,COALESCE(subvw.debit - subvw.credit,0.0) AS saldo_inicial
-                   FROM ( SELECT account_child_and_consolidated.parent_id AS id,
-                    sum(l.credit) AS credit,
-                    sum(l.debit) AS debit
-                       FROM ( SELECT account_child_vw.parent_id, COALESCE(account_consolidated_vw.child_id, account_child_vw.child_id) AS child_id,
+                SELECT subvw.partner,subvw.partner_name_i,subvw.cuenta as cuentai,subvw.code as codei,subvw.id as id_inicial, COALESCE(subvw.debit - subvw.credit,0.0) AS saldo_inicial
+                   FROM ( SELECT account_child_and_consolidated.parent_id AS id,account_child_and_consolidated.cuenta,
+                   account_child_and_consolidated.code,
+                   COALESCE(sum(l.credit), 0.0::numeric) AS credit,
+                    COALESCE(sum(l.debit), 0.0::numeric) AS debit,
+                    res_partner.id as partner, res_partner.name as partner_name_i
+                       FROM ( SELECT account_child_vw.code,account_child_vw.cuenta,account_child_vw.parent_id, COALESCE(account_consolidated_vw.child_id,
+                        account_child_vw.child_id) AS child_id,
                         COALESCE(account_consolidated_vw.parent_currency_id, account_child_vw.parent_currency_id) AS parent_currency_id
-                           FROM ( SELECT aa_tree_1.id AS parent_id, aa_tree_2.id AS child_id, aa_tree_1.currency_id AS parent_currency_id
+                           FROM ( SELECT aa_tree_1.id AS parent_id,aa_tree_1.code,aa_tree_1.name as cuenta, aa_tree_2.id AS child_id, aa_tree_1.currency_id AS parent_currency_id
                                FROM account_account aa_tree_1
                               LEFT JOIN account_account aa_tree_2 ON aa_tree_2.parent_left >= aa_tree_1.parent_left AND aa_tree_2.parent_left <= aa_tree_1.parent_right) account_child_vw
                           LEFT JOIN ( SELECT aa_tree_1.id AS parent_id, aa_tree_4.id AS child_id, aa_tree_1.currency_id AS parent_currency_id
@@ -189,11 +201,17 @@ subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as sal
                       LEFT JOIN account_move_line l ON l.account_id = account_child_and_consolidated.child_id
                    JOIN account_move ON account_move.id = l.move_id
                    join account_period ap ON ap.id = l.period_id
+                  left join res_partner ON res_partner.id=l.partner_id
+
                   WHERE (l.state::text <> ALL (ARRAY['cancel'::character varying, 'draft'::character varying]::text[]))
                   AND account_move.state::text = 'posted'::text AND """+where_filter2+"""
-                  GROUP BY account_child_and_consolidated.parent_id) subvw)subvw_inicial
-                  ON subvw_level.id = subvw_inicial.id_inicial)subvw_final
-                  ORDER BY subvw_final.code""",(nivel,))
+                  GROUP BY account_child_and_consolidated.parent_id,res_partner.id,account_child_and_consolidated.cuenta,account_child_and_consolidated.code)subvw
+                    Where """+where_id+"""
+                  )subvw_inicial
+                  ON subvw_level.id = subvw_inicial.id_inicial
+                  AND subvw.partner2 = subvw_inicial.partner
+                  )subvw_final)subvw2
+                  ORDER BY subvw2.code asc,partner asc""",(nivel,))
         else:
             self.cr.execute("""SELECT
             subvw_final.type,subvw_final.level,subvw_final.code,subvw_final.name,COALESCE(subvw_final.saldo_inicial,0.0) as saldo_inicial,subvw_final.debit,subvw_final.credit,
