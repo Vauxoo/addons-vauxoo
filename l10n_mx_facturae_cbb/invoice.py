@@ -33,18 +33,19 @@ import netsvc
 import time
 import os
 import tempfile
+import base64
 
 msg2= "Contacte a su administrador y/o a info@vauxoo.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
-    
+
     def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
         res = {}
         sequence_obj = self.pool.get('ir.sequence')
-        
+
         invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids, context=context)
         for invoice in self.browse(cr, uid, ids, context=context):
             sequence_id = invoice_id__sequence_id[invoice.id]
@@ -64,18 +65,18 @@ class account_invoice(osv.osv):
             fname += number_work or ''
             res[invoice.id] = fname
         return res
-    
+
     _columns = {
         ##Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
         'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size='26', string='File Name Invoice'),
     }
-    
+
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
-    
+
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
@@ -90,23 +91,23 @@ class account_invoice(osv.osv):
             #print 'Exception in create report:',e
             #return (False,str(e))
         return (True,ret_file_name)
-    
+
     def create_report_pdf(self, cr, uid, ids, context={}):
         if not context:
             context = {}
         id = ids[0]
-        
+
         (fileno, fname) = tempfile.mkstemp('.pdf', 'openerp_' + (False or '') + '__facturae__' )
         os.close( fileno )
-        
-        file = self.create_report(cr, uid, [id], "account.invoice.facturae.pdf", fname)
+
+        file = self.create_report(cr, uid, [id], "account.invoice.facturae.pdf2", fname)
         is_file = file[0]
         fname = file[1]
         if is_file and os.path.isfile(fname):
             f = open(fname, "r")
             data = f.read()
             f.close()
-            
+
             data_attach = {
                 'name': context.get('fname'),
                 'datas': data and base64.encodestring( data ) or None,
@@ -117,7 +118,7 @@ class account_invoice(osv.osv):
             }
             self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
         return True
-    
+
     def action_cancel_draft(self, cr, uid, ids, *args):
         attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids):
