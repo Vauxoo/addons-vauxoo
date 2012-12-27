@@ -35,7 +35,7 @@
     "depends" : ["point_of_sale","account"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard/wizard_pos_invoice.xml"],
+    "update_xml" : ["wizard/wizard_pos_invoice.xml","invoice_cbb"],
     "installable" : True,
     "active" : False,
 }

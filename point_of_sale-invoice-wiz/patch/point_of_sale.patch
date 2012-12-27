@@ -1,6 +1,6 @@
 === modified file 'point_of_sale/point_of_sale.py'
 --- point_of_sale/point_of_sale.py	2012-02-13 16:12:01 +0000
-+++ point_of_sale/point_of_sale.py	2012-12-13 13:09:50 +0000
++++ point_of_sale/point_of_sale.py	2012-12-27 18:43:36 +0000
 @@ -362,7 +362,8 @@
          inv_line_ref = self.pool.get('account.invoice.line')
          product_obj = self.pool.get('product.product')
@@ -20,7 +20,7 @@
              acc = order.partner_id.property_account_receivable.id
              inv = {
                  'name': order.name,
-@@ -386,32 +387,92 @@
+@@ -386,32 +387,97 @@
              inv.update(inv_ref.onchange_partner_id(cr, uid, [], 'out_invoice', order.partner_id.id)['value'])
              if not inv.get('account_id', None):
                  inv['account_id'] = acc
@@ -51,7 +51,8 @@
 +                        inv_line_ref.create(cr, uid, inv_line, context=context)
 +                    inv_ref.button_reset_taxes(cr, uid, [inv_old], context=context)
 +                    wf_service.trg_validate(uid, 'pos.order', order.id, 'invoice', cr)
-+                
++                    wf_service.trg_validate(uid, 'account.invoice', inv_old, 'invoice_open', cr)
++                    inv_ref.invoice_report_cbb(cr, uid, [inv_old], context=context)
 +                
 +                if (order.partner_id.id,order.sale_journal.id,order.pricelist_id.currency_id.id) not in partners :
 +                    
@@ -81,6 +82,8 @@
 +                        inv_line_ref.create(cr, uid, inv_line, context=context)
 +                    inv_ref.button_reset_taxes(cr, uid, [inv_id], context=context)
 +                    wf_service.trg_validate(uid, 'pos.order', order.id, 'invoice', cr)
++                    wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
++                    inv_ref.invoice_report_cbb(cr, uid, [inv_id], context=context)
 +            else:
 +                inv.update(inv_ref.onchange_partner_id(cr, uid, [], 'out_invoice', order.partner_id.id)['value'])
 +                if not inv.get('account_id', None):
@@ -135,5 +138,9 @@
 +                    inv_line_ref.create(cr, uid, inv_line, context=context)
 +                inv_ref.button_reset_taxes(cr, uid, [inv_id], context=context)
 +                wf_service.trg_validate(uid, 'pos.order', order.id, 'invoice', cr)
++                wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
++                inv_ref.invoice_report_cbb(cr, uid, [inv_id], context=context)
  
          if not inv_ids: return {}
+         
+
