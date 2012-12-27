@@ -36,7 +36,7 @@ class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = [('cfd20', 'CFD 2.0'), ('cfd22', 'CFD 2.2'), ('cfdi30', 'CFDI 3.0'), ('cfdi32', 'CFDI 3.2'), ('cbb', 'CBB'),]
+        types = [('cfd22', 'CFD 2.2'), ('cfdi32', 'CFDI 3.2'), ('cbb', 'CBB'),]
         return types
 
     def _get_index(self, cr, uid, ids, context=None):
@@ -79,12 +79,6 @@ class ir_attachment_facturae_mx(osv.osv):
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
-
-    def write(self, cr, uid, ids, vals, context=None):
-        if vals:
-            vals=vals
-        res=super(ir_attachment_facturae_mx, self).write(cr, uid, ids, vals, context=context)
-        return res
 
     def action_confirm(self, cr, uid, ids, context=None):
         invoice =self.browse(cr,uid,ids)[0].invoice_id
@@ -130,6 +124,9 @@ class ir_attachment_facturae_mx(osv.osv):
         pdf= invoice_obj.create_report_pdf(cr, uid, [invoice.id] , context={})
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.pdf'),('res_model','=','account.invoice'),('res_id','=',invoice)])
+        #(fileno, fname) = tempfile.mkstemp('.pdf', 'openerp_' + (False or '') + '__facturae__' )
+        #os.close( fileno )
+        #file = self.create_report(cr, uid, ids, "account.invoice.facturae.pdf2", fname)
         if aids:
             msj="Attached Successfully PDF"
         else:
