@@ -26,6 +26,8 @@
 
 from osv import osv, fields
 from tools.translate import _
+import release
+
 
 class account_voucher(osv.osv):
     _inherit = 'account.voucher'
