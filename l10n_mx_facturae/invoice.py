@@ -258,7 +258,6 @@ class account_invoice(osv.osv):
         attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids):
             try:
-                print invoice.fname_invoice
                 attachment_xml_id = attachment_obj.search(cr, uid, [
                     ('name', 'ilike', '%.xml'),
                     ('res_model','=','account.invoice'),
@@ -286,10 +285,17 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
 
     def action_cancel(self, cr, uid, ids, *args):
+        msj='Cancel from invoice'
+        invoice = self.browse(cr, uid, ids, context={})[0]
+        type=invoice.invoice_sequence_id.approval_id.type
+        if type=='cfdi32':
+            get_file_cancel=self._get_file_cancel(cr, uid, ids ,context = {})
+            sf_cancel=self.sf_cancel(cr, uid, ids, context = {})
+            msj=sf_cancel['message']
         id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])])
         for attachment in self.pool.get('ir.attachment.facturae.mx').browse(cr, uid, id_attach):
             if not attachment.state=='cancel':
-                self.pool.get('ir.attachment.facturae.mx').write(cr, uid, id_attach, {'state': 'cancel', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': 'Cancel from invoice'})
+                self.pool.get('ir.attachment.facturae.mx').write(cr, uid, id_attach, {'state': 'cancel', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj})
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
 
