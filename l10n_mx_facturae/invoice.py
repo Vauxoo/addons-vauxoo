@@ -129,14 +129,14 @@ class account_invoice(osv.osv):
             data = f.read()
             f.close()
             data_attach = {
-                'name': context.get('fname') or fname_invoice,
+                'name': context.get('fname'),
                 'datas': data and base64.encodestring( data ) or None,
                 'datas_fname': context.get('fname'),
                 'description': 'Factura-E PDF',
                 'res_model': self._name,
                 'res_id': id,
             }
-            #self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
+            self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
         return True
 
     def action_make_cfd(self, cr, uid, ids, *args):

@@ -45,8 +45,10 @@
                         <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
                     </group>
-                    <field name="msj"/>
-                    <field name="last_date"/>
+                    <group colspan="4">
+                        <field name="msj"/>
+                        <field name="last_date"/>
+                    </group>
                 </form>
             </field>
         </record>

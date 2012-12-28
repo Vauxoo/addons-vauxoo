@@ -52,7 +52,7 @@ import time
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
-    
+
     _columns = {
         'cfdi_cbb': fields.binary('CFD-I CBB'),
         'cfdi_sello': fields.text('CFD-I Sello'),
@@ -62,7 +62,7 @@ class account_invoice(osv.osv):
         'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion'),
         'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64),
     }
-    
+
     def cfdi_data_write(self, cr, uid, ids, cfdi_data, context={}):
         if not context:
             context = {}
@@ -88,7 +88,7 @@ class account_invoice(osv.osv):
                 else:
                     attachment_obj.create(cr, uid, data_attach, context=context)
         return True
-        
+
     def copy(self, cr, uid, id, default={}, context=None):
         if context is None:
             context = {}
@@ -116,7 +116,7 @@ class account_invoice(osv.osv):
         })
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
     """
-        
+
     def _get_file(self, cr, uid, inv_ids , context={}):
         if not context:
             context = {}
@@ -141,10 +141,10 @@ class account_invoice(osv.osv):
         self.fdata = base64.encodestring( xml_data )
         msg = "Presiona clic en el boton 'subir archivo'"
         return {'file': self.fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
-        
-    def _upload_ws_file(self, cr, uid, inv_ids, context={}):
+
+    def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
         pac_params_obj = self.pool.get('params.pac')
-        cfd_data = base64.decodestring( self.fdata or '' )
+        cfd_data = base64.decodestring( fdata or self.fdata )
         xml_res_str = xml.dom.minidom.parseString(cfd_data)
         compr = xml_res_str.getElementsByTagName('Comprobante')[0]
         date = compr.attributes['fecha'].value
@@ -196,7 +196,7 @@ class account_invoice(osv.osv):
                     wsdl_client.soapproxy.config.dumpSOAPIn = 0
                     wsdl_client.soapproxy.config.debug = 0
                     wsdl_client.soapproxy.config.dict_encoding='UTF-8'
-                    resultado = wsdl_client.timbrar(*params)               
+                    resultado = wsdl_client.timbrar(*params)
                     msg += resultado['resultados'] and resultado['resultados']['mensaje'] or ''
                     status = resultado['resultados'] and resultado['resultados']['status'] or ''
                     if status == '200' or status == '307':
@@ -229,8 +229,8 @@ class account_invoice(osv.osv):
         else:
             msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
         return {'file': file, 'msg': msg, 'status': status}
-        
-        
+
+
     def _get_file_cancel(self, cr, uid, inv_ids,context = {}):
         inv_ids = inv_ids[0]
         atta_obj = self.pool.get('ir.attachment')
@@ -243,7 +243,7 @@ class account_invoice(osv.osv):
             inv_xml = False
             raise osv.except_osv(('Estado de Cancelación!'),('Esta factura no ha sido timbrada, por lo que no es posible cancelarse.'))
         return {'file': inv_xml}
-        
+
     def sf_cancel(self, cr, uid, inv_ids, context=None):
         context_id=inv_ids[0]
         company_obj = self.pool.get('res.company.facturae.certificate')
@@ -264,7 +264,7 @@ class account_invoice(osv.osv):
             #~ password = 'timbrado.SF.16672'
             #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
             #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
-            
+
             wsdl_client = False
             wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
             if True:#if wsdl_client:
@@ -276,19 +276,19 @@ class account_invoice(osv.osv):
                 zip = False#Validar si es un comprimido zip, con la extension del archivo
                 contrasenaCSD = file_globals.get('password', '')
                 uuids = invoice_brw.cfdi_folio_fiscal#cfdi_folio_fiscal
-                
+
                 params = [user, password, uuids, cerCSD, keyCSD, contrasenaCSD ]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                 result = wsdl_client.cancelar(*params)
-                
+
                 status = result['resultados'] and result['resultados']['status'] or ''
                 #agregados
                 uuid_nvo = result['resultados'] and result['resultados']['uuid'] or ''
                 msg_nvo = result['resultados'] and result['resultados']['mensaje'] or ''
-                
+
                 status_uuid = result['resultados'] and result['resultados']['statusUUID'] or ''
                 msg_status={}
                 if status =='200':
@@ -316,5 +316,5 @@ class account_invoice(osv.osv):
         else:
             msg_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
         return {'message': msg_global }
-        
+
 account_invoice()
