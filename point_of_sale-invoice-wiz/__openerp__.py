@@ -32,10 +32,10 @@
     "description" : """Wizard invoice point_of_sale""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["point_of_sale","account"],
+    "depends" : ["point_of_sale","account","invoice_cbb"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard/wizard_pos_invoice.xml","invoice_cbb"],
+    "update_xml" : ["wizard/wizard_pos_invoice.xml"],
     "installable" : True,
     "active" : False,
 }
