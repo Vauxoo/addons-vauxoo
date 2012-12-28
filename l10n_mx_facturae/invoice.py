@@ -258,12 +258,12 @@ class account_invoice(osv.osv):
         attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids):
             try:
+                print invoice.fname_invoice
                 attachment_xml_id = attachment_obj.search(cr, uid, [
-                    ('name','=',invoice.fname_invoice+'.xml'),
-                    ('datas_fname','=',invoice.fname_invoice+'.xml'),
+                    ('name', 'ilike', '%.xml'),
                     ('res_model','=','account.invoice'),
                     ('res_id','=',invoice.id)
-                ], limit=1)
+                ], limit=2)
                 attachment_obj.unlink(cr, uid, attachment_xml_id)
 
                 attachment_pdf_id = attachment_obj.search(cr, uid, [
