@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) Vauxoo (<http://vauxoo.com>).
+#    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
@@ -21,3 +21,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 import invoice
+import stock

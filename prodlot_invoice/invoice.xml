@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="account.view_invoice_line_tree"/>
             <field name="arch" type="xml">
             <xpath expr="//field[@name='uos_id']" position="after">
-                <field name="prod_lot"/>
+                <field name="prodlot_id"/>
             </xpath>
             </field>
         </record>
@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="account.view_invoice_line_form"/>
             <field name="arch" type="xml">
             <xpath expr="//field[@name='account_id']" position="after">
-                <field name="prod_lot"/>
+                <field name="prodlot_id"/>
             </xpath>
             </field>
         </record>

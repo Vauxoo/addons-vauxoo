@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
-#    Copyright (C) Vauxoo (<http://vauxoo.com>).
+#    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
@@ -28,7 +28,7 @@ class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
 
     _columns = {
-        'prod_lot': fields.many2one('stock.production.lot', 'Prod_lot'),
+        'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot'),
 }
 
 account_invoice_line()
