@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_invoice_line_tree_prodlot_inh" model="ir.ui.view">
+            <field name="name">view.invoice.line.tree.prodlot.inh</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='uos_id']" position="after">
+                <field name="prod_lot"/>
+            </xpath>
+            </field>
+        </record>
+
+        <record id="view_invoice_line_form_prodlot_inh" model="ir.ui.view">
+            <field name="name">view.invoice.line.form.prodlot.inh</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//field[@name='account_id']" position="after">
+                <field name="prod_lot"/>
+            </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
