@@ -24,11 +24,12 @@
 from osv import fields, osv, orm
 from tools.translate import _
 
-class account_invoice_line(osv.osv):
-    _inherit = "account.invoice.line"
+class stock_picking(osv.osv):
+    _inherit = "stock.picking"
 
-    _columns = {
-        'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', domain="[('product_id','=',product_id)]"),
-}
+    def _prepare_invoice_line(self, cr, uid, group, picking, move_line, invoice_id, invoice_vals, context=None):
+        res=super(stock_picking, self)._prepare_invoice_line(cr, uid, group, picking, move_line, invoice_id, invoice_vals, context=context)
+        res.update({'prodlot_id': move_line.prodlot_id.id})
+        return res
 
-account_invoice_line()
+stock_picking()
