@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_voucher_move" model="ir.ui.view">
+                <field name="name">view.account.voucher.move</field>
+                <field name="model">account.voucher</field>
+                <field name="type">form</field>      
+                <field name="inherit_id" ref="account_voucher.view_voucher_form"/>
+                <field name="arch" type="xml">
+                    <page string="Journal Items" position="after">
+                        <page string="Journal Items 2" groups="base.group_extended" attrs="{'invisible': [('state','!=','posted')]}">
+                            <field name="move_ids2" colspan="4" nolabel="1" readonly="1">
+                               <tree string="Journal Items">
+                                   <field name="move_id"/>
+                                   <field name="ref"/>
+                                   <field name="date"/>
+                                   <field name="statement_id"/>
+                                   <field name="partner_id"/>
+                                   <field name="account_id"/>
+                                   <field name="name"/>
+                                   <field name="debit"/>
+                                   <field name="credit"/>
+                                   <field name="state"/>
+                                   <field name="reconcile_id"/>
+                               </tree>
+                            </field>
+                        </page>
+                    </page>
+                </field>
+        </record>
+
+
+    </data>
+</openerp>
