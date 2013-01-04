@@ -26,26 +26,27 @@ from tools.translate import _
 
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
-
-    def onchange_prodlot_id(self, cr, uid, ids, product_id, context=None):
-        res = {}
-        if not product_id:
-            res['value'] = {'prodlot_id': False }
+    
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, currency_id=False, context=None, company_id=None):
+        res = super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=partner_id, fposition_id=fposition_id, price_unit=price_unit, address_invoice_id=address_invoice_id, currency_id=currency_id, context=context, company_id=company_id)
+        res['value'].update({'prodlot_id':False})
         return res
-
-
-    def _check_len_move(self cr, uid, ids, field_name, args, context={}):
+        
+    def _check_len_move(self, cr, uid, ids, name, args, context=None):
+        stock_prod_lot_obj = self.pool.get('stock.production.lot')
         res = {}
-        for p in self.browse(cr,uid,ids,context=context):
-            print p
-            moves = [move for move in p.product_id if move.track_outgoing==True]
-            print moves
-            res[p.id]=len(moves)
+        for id_ in ids:
+            move_line = self.browse(cr, uid, id_, context=context)
+            lot_prod = stock_prod_lot_obj.search(cr, uid, [('product_id', '=', move_line.product_id.id)])
+            check_prodlot = False
+            if move_line.product_id.track_outgoing == True and lot_prod:
+                check_prodlot = True
+            res[move_line.id] = check_prodlot
         return res
 
     _columns = {
         'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', domain="[('product_id','=',product_id)]"),
-        'check_prodlot' : fields.function(_check_len_move, string='check', type='integer'),
+        'check_prodlot' : fields.function(_check_len_move, string='check', type='boolean'),
 }
 
 account_invoice_line()
