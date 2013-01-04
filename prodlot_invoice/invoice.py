@@ -27,8 +27,25 @@ from tools.translate import _
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
 
+    def onchange_prodlot_id(self, cr, uid, ids, product_id, context=None):
+        res = {}
+        if not product_id:
+            res['value'] = {'prodlot_id': False }
+        return res
+
+
+    def _check_len_move(self cr, uid, ids, field_name, args, context={}):
+        res = {}
+        for p in self.browse(cr,uid,ids,context=context):
+            print p
+            moves = [move for move in p.product_id if move.track_outgoing==True]
+            print moves
+            res[p.id]=len(moves)
+        return res
+
     _columns = {
         'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', domain="[('product_id','=',product_id)]"),
+        'check_prodlot' : fields.function(_check_len_move, string='check', type='integer'),
 }
 
 account_invoice_line()
