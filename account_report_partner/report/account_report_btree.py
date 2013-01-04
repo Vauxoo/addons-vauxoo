@@ -152,7 +152,7 @@ COALESCE(subvw_final.credit,0.0) as credit,
                               ON l.account_id = account_child_and_consolidated.child_id
                               join account_move on l.move_id=account_move.id
                                 join res_partner ON res_partner.id=l.partner_id
-                               join account_period ap ON ap.id = l.period_id
+                               left join account_period ap ON ap.id = l.period_id
                             WHERE  account_move.state='posted' AND """+where_filter+"""
                              GROUP BY account_child_and_consolidated.parent_id,res_partner.id ) subvw
             JOIN
@@ -203,8 +203,7 @@ COALESCE(subvw_final.credit,0.0) as credit,
                    join account_period ap ON ap.id = l.period_id
                   left join res_partner ON res_partner.id=l.partner_id
 
-                  WHERE (l.state::text <> ALL (ARRAY['cancel'::character varying, 'draft'::character varying]::text[]))
-                  AND account_move.state::text = 'posted'::text AND """+where_filter2+"""
+                  WHERE account_move.state::text = 'posted'::text AND """+where_filter2+"""
                   GROUP BY account_child_and_consolidated.parent_id,res_partner.id,account_child_and_consolidated.cuenta,account_child_and_consolidated.code)subvw
                     Where """+where_id+"""
                   )subvw_inicial
