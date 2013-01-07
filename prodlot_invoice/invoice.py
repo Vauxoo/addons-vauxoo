@@ -32,21 +32,8 @@ class account_invoice_line(osv.osv):
         res['value'].update({'prodlot_id':False})
         return res
         
-    #~ def _check_len_move(self, cr, uid, ids, name, args, context=None):
-        #~ stock_prod_lot_obj = self.pool.get('stock.production.lot')
-        #~ res = {}
-        #~ for id_ in ids:
-            #~ move_line = self.browse(cr, uid, id_, context=context)
-            #~ lot_prod = stock_prod_lot_obj.search(cr, uid, [('product_id', '=', move_line.product_id.id)])
-            #~ check_prodlot = False
-            #~ if move_line.product_id.track_outgoing == True and lot_prod:
-                #~ check_prodlot = True
-            #~ res[move_line.id] = check_prodlot
-        #~ return res
-        
     _columns = {
         'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', domain="[('product_id','=',product_id)]"),
-        #~ 'check_prodlot' : fields.function(_check_len_move, string='check', type='boolean'),
 }
 
 account_invoice_line()
