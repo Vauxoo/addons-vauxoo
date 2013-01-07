@@ -59,10 +59,22 @@ class ifrs_ifrs(osv.osv):
     }
 
     def compute(self, cr, uid, ids, context=None):
+        print uid,'imprimo uid'
         if context is None: context = {}
         fy = self.browse(cr, uid, ids, context=context)[0]
         context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
+        
+        print uid,'imprimo uid1'
         return self.write(cr,uid,ids,{'do_compute':True},context=context)
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default.update({
+            'do_compute' : False,
+        })
+        res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
+        return res
 
 ifrs_ifrs()
 
@@ -79,7 +91,7 @@ class ifrs_lines(osv.osv):
         res = 0
         for t in brw.total_ids:
             res += self._get_sum( cr, uid, t.id, context = c )
-        if brw.operator:
+        if brw.operator <> 'without':
             res2=0
             for o in brw.operand_ids:
                 res2 += self._get_sum( cr, uid, o.id, context = c )
@@ -107,7 +119,6 @@ class ifrs_lines(osv.osv):
         
         if not c.get('fiscalyear'):
             c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
-            print c['fiscalyear'],'imprimo fy1111111111111'
         
         if not c.get('period_from',False) and not c.get('period_to',False):
             if context.get('whole_fy',False):
@@ -115,7 +126,6 @@ class ifrs_lines(osv.osv):
                 if not c['period_from']:
                     raise osv.except_osv(_('Error !'), _('There are no special period in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
                 c['period_from']=c['period_from'][0]
-            print c['fiscalyear'],'imprimo fiscal year'
             c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
         
         c.get('periods') and c.pop('periods')
@@ -124,8 +134,15 @@ class ifrs_lines(osv.osv):
         if brw.type == 'detail':
             if brw.acc_val=='init':
                 period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
-                c['period_to']= period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
-                c['period_from'] = period_obj.search(cr, uid, [('company_id', '=', period_company_id),('special', '=', True)], order='date_start', limit=1)[0]
+#                c['period_to']= period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
+                period_to = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
+                c['period_from'] = period_obj.search(cr, uid, [('company_id', '=', period_company_id),('special', '=', True), ('fiscalyear_id','=',context.get('fiscalyear'))], order='date_start', limit=1)[0]
+                period_from_to = period_obj.browse(cr, uid, [c['period_to'], c['period_from']], context=context)
+                if period_from_to[0].date_start <> period_from_to[1].date_start:
+                    c['period_to'] = period_to
+                else:
+                    c['period_to'] = c['period_from']
+                    
 #                c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
                 if not c['period_from']:
                     raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
@@ -144,7 +161,7 @@ class ifrs_lines(osv.osv):
                     c['period_from']=c['period_from'][1]
                     
         elif brw.type == 'total':
-            if brw.comparison:
+            if brw.comparison <> 'without':
                 c2 = c.copy()
 
                 print "c2['period_from']",c2['period_from']
@@ -176,7 +193,6 @@ class ifrs_lines(osv.osv):
             if analytic:
                 c['analytic'] = analytic
             c['partner_detail'] = c.get('partner_detail')
-            print c['partner_detail'],'imprimo partner_detail'
             for a in brw.cons_ids:
                 if brw.value == 'debit':
                     res += a.debit
@@ -187,8 +203,8 @@ class ifrs_lines(osv.osv):
                     
         elif brw.type == 'total':
             res = self._get_sum_total(cr, uid, brw, context = c)
-            
-            if brw.comparison:
+            print brw.comparison,'imprimo brw.comparison'
+            if brw.comparison <> 'without':
                 res2=0
                 #~ TODO: Write definition for previous periods
                 #~ that will be the arguments for the new brw.
@@ -358,8 +374,7 @@ class ifrs_lines(osv.osv):
     ]
 
     _sql_constraints = [('sequence_ifrs_id_unique','unique(sequence,ifrs_id)', 'The sequence already have been set in another IFRS line')]
-
-
+    
 ifrs_lines()
 
 

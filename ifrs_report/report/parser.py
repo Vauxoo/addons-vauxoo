@@ -33,6 +33,7 @@ import mx.DateTime
 class ifrs_report(report_sxw.rml_parse):
 
     _iter_record = 0
+    _fy = False
     _total_record = 0
     _period_info_list = []    #~ [ 0 : period_enumerate, 1 : period_id, 2 : period_name ]
     _title_line = ' '
@@ -118,7 +119,8 @@ class ifrs_report(report_sxw.rml_parse):
             period_list.append((str(ii), period_id, periods.browse(self.cr, self.uid, period_id).name ))
 
         self._period_info_list = period_list
-
+        self._fy = fiscalyear_id
+        
     def _get_column_name(self, column_num):
 
         """devuelve string con el nombre del periodo que debe titular ese numero de columna"""
@@ -131,8 +133,10 @@ class ifrs_report(report_sxw.rml_parse):
 
         context = {}
         if period_num:
+            print period_num,'period_num'
+            print self._period_info_list,'imprimo self._period_info_list'
             period_id = self._period_info_list[period_num][1]
-            context = {'period_from': period_id, 'period_to': period_id, 'state': target_move, 'partner_detail':pd}
+            context = {'period_from': period_id, 'period_to': period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':self._fy}
         else:
             context = {'whole_fy': 'True'} 
 
@@ -222,14 +226,14 @@ class ifrs_report(report_sxw.rml_parse):
             self.cr.execute(""" SELECT rp.id
                 FROM account_move_line l JOIN res_partner rp ON rp.id = l.partner_id
                 WHERE l.account_id IN %s
-                GROUP BY rp.id """, ( tuple(ids3), ) 
+                GROUP BY rp.id 
+                ORDER BY rp.name ASC""", ( tuple(ids3), ) 
                 )
             dat = self.cr.dictfetchall()
 #            print len(dat),'imprimo len dat'
             res = [lins for lins in partner_obj.browse( self.cr, self.uid, [li['id'] for li in dat] )]
             print res,'imprimo res'
-        res = res or [0]
-        return (x for x in res)
+        return res
 
 report_sxw.report_sxw(
     'report.ifrs',
@@ -248,9 +252,9 @@ report_sxw.report_sxw(
 )
 
 report_sxw.report_sxw(
-    'report.ifrs_12_partner_detail',
+    'report.webkitaccount.invoice_12',
     'ifrs.ifrs',
-    'ifrs_report/report/ifrs_cash_flow_indirect_12_partner_detail.rml',
+    'addons/ifrs_report/report/report_webkit_html_12.mako',
     parser=ifrs_report,
     header = False
 )
