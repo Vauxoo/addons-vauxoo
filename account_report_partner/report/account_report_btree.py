@@ -151,8 +151,8 @@ COALESCE(subvw_final.credit,0.0) as credit,
                             LEFT OUTER JOIN account_move_line l
                               ON l.account_id = account_child_and_consolidated.child_id
                               join account_move on l.move_id=account_move.id
-                                join res_partner ON res_partner.id=l.partner_id
-                               left join account_period ap ON ap.id = l.period_id
+                               join account_period ap ON ap.id = l.period_id
+                               left join res_partner ON res_partner.id=l.partner_id
                             WHERE  account_move.state='posted' AND """+where_filter+"""
                              GROUP BY account_child_and_consolidated.parent_id,res_partner.id ) subvw
             JOIN
@@ -199,10 +199,9 @@ COALESCE(subvw_final.credit,0.0) as credit,
                        LEFT JOIN account_account aa_tree_4 ON aa_tree_4.parent_left >= aa_tree_2.parent_left AND aa_tree_4.parent_left <= aa_tree_2.parent_right) account_consolidated_vw
                     ON account_child_vw.child_id = account_consolidated_vw.parent_id) account_child_and_consolidated
                       LEFT JOIN account_move_line l ON l.account_id = account_child_and_consolidated.child_id
-                   JOIN account_move ON account_move.id = l.move_id
-                   join account_period ap ON ap.id = l.period_id
+                   left JOIN account_move ON account_move.id = l.move_id
                   left join res_partner ON res_partner.id=l.partner_id
-
+                  join account_period ap ON ap.id = l.period_id
                   WHERE account_move.state::text = 'posted'::text AND """+where_filter2+"""
                   GROUP BY account_child_and_consolidated.parent_id,res_partner.id,account_child_and_consolidated.cuenta,account_child_and_consolidated.code)subvw
                     Where """+where_id+"""
@@ -249,8 +248,8 @@ COALESCE(subvw_final.credit,0.0) as credit,
                                 ON account_child_vw.child_id = account_consolidated_vw.parent_id
                             ) account_child_and_consolidated
                             LEFT OUTER JOIN account_move_line l
-                              ON l.account_id = account_child_and_consolidated.child_id join account_move
-                              on l.move_id=account_move.id
+                              ON l.account_id = account_child_and_consolidated.child_id
+                              join account_move on l.move_id=account_move.id
                               join account_period ap ON ap.id = l.period_id
                             WHERE  account_move.state='posted' AND """+where_filter+"""
                              GROUP BY account_child_and_consolidated.parent_id ) subvw
@@ -295,8 +294,8 @@ COALESCE(subvw_final.credit,0.0) as credit,
                        LEFT JOIN account_account aa_tree_4 ON aa_tree_4.parent_left >= aa_tree_2.parent_left AND aa_tree_4.parent_left <= aa_tree_2.parent_right) account_consolidated_vw
                     ON account_child_vw.child_id = account_consolidated_vw.parent_id) account_child_and_consolidated
                       LEFT JOIN account_move_line l ON l.account_id = account_child_and_consolidated.child_id
-                   JOIN account_move ON account_move.id = l.move_id
-                   join account_period ap ON ap.id = l.period_id
+                   left JOIN account_move ON account_move.id = l.move_id
+                    join account_period ap ON ap.id = l.period_id
                   WHERE (l.state::text <> ALL (ARRAY['cancel'::character varying, 'draft'::character varying]::text[]))
                   AND account_move.state::text = 'posted'::text AND """+where_filter2+"""
                   GROUP BY account_child_and_consolidated.parent_id) subvw)subvw_inicial
