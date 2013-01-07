@@ -19,8 +19,7 @@
             <field name="inherit_id" ref="account.view_invoice_line_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='account_id']" position="after">
-                    <field name="check_prodlot" invisible="True"/>
-                    <field name="prodlot_id" attrs="{'required':[('check_prodlot','=',True)]}"/>
+                    <field name="prodlot_id"/>
                 </xpath>
             </field>
         </record>
