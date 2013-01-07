@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+    <data> 
+        <report auto="False"
+                id="mrp_webkit_report_wizard_html"
+                model="mrp.production"
+                name="webkitmrp.production_variation"
+                file="mrp_webkit_report_wizard/report/report_webkit_html.mako"
+                string="Variation report"
+                report_type="webkit"
+                webkit_header="report_webkit.ir_header_webkit_basesample0"/>
+    </data>
+</openerp>
