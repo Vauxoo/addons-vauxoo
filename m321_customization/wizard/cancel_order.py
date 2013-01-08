@@ -54,16 +54,26 @@ class cancel_orders(osv.osv_memory):
         invoice_obj = self.pool.get('account.invoice')
         journal_obj = self.pool.get('account.journal')
         journal_ids = journal_obj.search(cr,uid,[],context=context)
-        [journal_obj.write(cr,uid,[i.id],{'update_posted':True},context=context) for i in journal_obj.browse(cr,uid,journal_ids,context=context) if hasattr(i, "update_posted") if i.type in ('sale','sale_refund') ]
+        [journal_obj.write(cr,uid,[i.id],
+            {'update_posted':True},context=context) \
+               for i in journal_obj.browse(cr,uid,journal_ids,context=context) \
+                   if hasattr(i, "update_posted") \
+                   if i.type in ('sale','sale_refund') ]
         wz_brw = ids and self.browse(cr,uid,ids[0],context=context) or False
         evalu = wz_brw and 'wz_brw.sure and wz_brw.are_sure' or 'True'
         date = datetime.datetime.today()
-        date = date and date - datetime.timedelta(days= wz_brw and eval('wz_brw.n_days') or days)
+        date = date \
+                and date - datetime.timedelta(days= wz_brw \
+                and eval('wz_brw.n_days') or days)
         date = date and date.strftime('%Y-%m-%d')
         company_ids = self.pool.get('res.company').search(cr,1,[],context=context)
-        user_brw = self.pool.get('res.users').browse(cr,uid,uid,context=context)
+        user_obj = self.pool.get('res.users')
+        user_brw = user_obj.browse(cr,uid,uid,context=context)
         company_org = user_brw.company_id and user_brw.company_id.id  
+        spcial_ids = user_obj.search(cr, uid, [('login','=','carmen')], context=context)
         for company in company_ids: 
+            if uid in spcial_ids:
+                break
             user_brw.write({'company_id':company})
             sales_ids = sale_obj.search(cr,uid,[('date_order','<=',date)],context=context)
             sale_brw =  sales_ids and sale_obj.browse(cr,uid,sales_ids,context=context) 
@@ -71,8 +81,11 @@ class cancel_orders(osv.osv_memory):
             if eval(evalu) and sale_brw:
                 for sale in sale_brw:
                     if sale.state in ('manual','progress'):
-                        pick = [False for pick in sale.picking_ids if pick and pick.state in ('confirmed','done') ] 
-                        invoice = [False for invoice in sale.invoice_ids if invoice and invoice.state in ('paid','open') ] 
+                        pick = [False for pick in sale.picking_ids \
+                                if pick and pick.state in ('confirmed','done') ] 
+                        invoice = [False for invoice in sale.invoice_ids \
+                                if invoice \
+                                and invoice.state in ('paid','open') ] 
                         all(pick) and all(invoice) and sale_ids.append(sale.id)
                 
                 sale_ids and picking_obj.action_cancel(cr, uid,[d.id for i in sale_obj.browse(cr,uid,sale_ids,context=context) for d in i.picking_ids], context=context) 
