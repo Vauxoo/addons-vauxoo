@@ -127,6 +127,8 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_id': invoice.id,
                 }, context=context)
             aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
+            if aids:
+                return self.write(cr, uid, ids, {'state': 'signed', 'file_input': aids, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': 'Attached Successfully XML'}, context=context)
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.V2.2.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
@@ -137,14 +139,12 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_model': 'account.invoice',
                 'res_id': invoice.id,
                 }, context=context)
-            aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.V2.2.xml'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
+            aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=', invoice.fname_invoice+'.V2.2.xml'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
-            xml_v3_2 = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
-        if xml_v3_2:
-            return self.write(cr, uid, ids, {'state': 'signed', 'file_input': aids or False, 'file_xml_sign': xml_v3_2 or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
-        if aids:
-            return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': 'Attached Successfully XML'}, context=context)
+            xml_v3_2 = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=', invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
+            if xml_v3_2:
+                return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': xml_v3_2 or False, 'file_input': aids, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
         aids=[]
@@ -156,14 +156,63 @@ class ir_attachment_facturae_mx(osv.osv):
         if type=='cfd22':
             file = invoice_obj.create_report(cr, uid, [invoice.id], "account.invoice.facturae.pdf", fname)
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
+            is_file = file[0]
+            fname = file[1]
+            #if is_file and os.path.isfile(fname_invoice):
+            if is_file and os.path.isfile(fname):
+                f = open(fname, "r")
+                data = f.read()
+                f.close()
+                data_attach = {
+                    'name': invoice.fname_invoice,
+                    'datas': data and base64.encodestring( data ) or None,
+                    'datas_fname': fname_invoice,
+                    'description': 'Factura_PDF_CFD',
+                    'res_model': invoice_obj._name,
+                    'res_id': invoice.id,
+                }
+                self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
+
             aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.pdf'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
         if type=='cfdi32':
             file = invoice_obj.create_report(cr, uid, [invoice.id], "account.invoice.facturae.pac.sf.pdf", fname)
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
-            aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.pdf'),('res_model','=','account.invoice'),('res_id','=',invoice)])[0]
+            is_file = file[0]
+            fname = file[1]
+            #if is_file and os.path.isfile(fname_invoice):
+            if is_file and os.path.isfile(fname):
+                f = open(fname, "r")
+                data = f.read()
+                f.close()
+                data_attach = {
+                    'name': invoice.fname_invoice,
+                    'datas': data and base64.encodestring( data ) or None,
+                    'datas_fname': fname_invoice,
+                    'description': 'Factura_PDF_CFDI_SF',
+                    'res_model': invoice_obj._name,
+                    'res_id': invoice.id,
+                }
+                self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
+            aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.pdf'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
         if type=='cbb':
             file = invoice_obj.create_report(cr, uid, [invoice.id], "account.invoice.facturae.pdf2", fname)
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
+            is_file = file[0]
+            fname = file[1]
+            #if is_file and os.path.isfile(fname_invoice):
+            if is_file and os.path.isfile(fname):
+                f = open(fname, "r")
+                data = f.read()
+                f.close()
+                data_attach = {
+                    'name': invoice.fname_invoice,
+                    'datas': data and base64.encodestring( data ) or None,
+                    'datas_fname': fname_invoice,
+                    'description': 'Factura_PDF_CBB',
+                    'res_model': invoice_obj._name,
+                    'res_id': invoice.id,
+                }
+                self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
             aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.pdf'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
         if aids:
             msj="Attached Successfully PDF"

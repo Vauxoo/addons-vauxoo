@@ -321,10 +321,17 @@ class account_invoice(osv.osv):
         for attachment in self.pool.get('ir.attachment.facturae.mx').browse(cr, uid, id_attach, context):
             continue
         if not id_attach or attachment.state=='cancel':
-            self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
+            attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
             'name': invoice.number,
             'invoice_id': ids[0],
             'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
         return res
 
     def _get_cfd_xml_invoice(self, cr, uid, ids, field_name=None, arg=False, context=None):
