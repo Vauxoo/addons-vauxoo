@@ -56,6 +56,11 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         ]
         return months_selection
         
+    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
+        res = super(wizard_invoice_facturae_txt_v6,self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+        print 'res', res
+        return res
+        
     _columns = {
         'month':fields.selection(_get_month_selection, 'Mes', type="integer"),
         'year':fields.integer('Ano'),
