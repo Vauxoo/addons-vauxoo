@@ -40,6 +40,8 @@ class procurement_order(osv.osv):
         @return: same res than original make_mo
         """
         res = super(procurement_order, self).make_mo(cr, uid, ids, context=context)
+        print line, "line de otro modulo"
+        print res, "res"
         for line in res:
             self.write(cr, uid, [line], {'production_created': res.get(line)})
         return res

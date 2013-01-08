@@ -34,9 +34,9 @@ class wizard_report_variation(osv.osv_memory):
     _name = 'wizard.report.variation'
 
     _columns = {
-        'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos'),
-        'date_start': fields.datetime('Start Date', select=True),
-        'date_finished': fields.datetime('End Date', select=True),
+        'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos', required=True),
+        'date_start': fields.datetime('Start Date', select=True, required=True),
+        'date_finished': fields.datetime('End Date', select=True, required=True),
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -63,21 +63,22 @@ class wizard_report_variation(osv.osv_memory):
         res['product_ids']=prod_list
         return res
         
-        
     def check_report(self, cr, uid, ids, context=None):
-        print "hola"
         datas = {}
         if context is None:
             context = {}
         data = self.read(cr, uid, ids)[0]
-
+        print data.get('product_ids'),"prods ids"
+        myids = self.pool.get('mrp.production').search(cr, uid, [('product_id', 'in', data.get('product_ids')),('date_planned', '>', data.get('date_start')),('date_planned', '<', data.get('date_finished'))])
+        print myids,"myids"
+        
         datas = {
-            'ids': context.get('active_ids',[]),
+            'ids': myids,
             'model': 'wizard.report.variation',
             'form': data,
             'uid': uid,
         }
-        
+        print "datas ->", datas
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'webkitmrp.production_variation',
