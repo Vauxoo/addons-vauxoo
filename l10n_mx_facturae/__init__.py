@@ -26,7 +26,7 @@
 ##############################################################################
 
 import invoice
-import wizard
+#~ import wizard
 import report
 #import ir_sequence
 #import res_company

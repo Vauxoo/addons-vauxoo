@@ -27,5 +27,5 @@
 
 import res_company
 import invoice
-import wizard
+#~ import wizard
 

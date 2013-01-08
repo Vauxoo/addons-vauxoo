@@ -27,4 +27,4 @@
 
 import invoice
 import ir_sequence
-import wizard
+#~ import wizard
