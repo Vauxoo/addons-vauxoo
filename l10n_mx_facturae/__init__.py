@@ -27,6 +27,9 @@
 
 import invoice
 import report
+import wizard
 #import ir_sequence
 #import res_company
 #import partner_address
+
+
