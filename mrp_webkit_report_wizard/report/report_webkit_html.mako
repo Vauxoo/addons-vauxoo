@@ -5,15 +5,21 @@
         </style>
     </head>
     <body>
-        ${helper.embed_logo_by_name('company_logo',75, 53)|n}
         <div class="basic_header">
-                    Company: ${company.name |entity}<br/>
-                    Address ${company.partner_id.address and company.partner_id.address[0].street or ''|entity}<br/>
-                    Phone: ${company.partner_id.address and company.partner_id.address[0].phone or ''|entity}<br/>
-                    Mail: ${company.partner_id.address and company.partner_id.address[0].email or ''|entity}<br/>
-                    User: ${user.name or ''|entity}<br/>
-                </div>
-                <p><h3>Reporte de variación en producciones</h3></p>
+            <table class="basic_table">
+                <tr><td style="text-align:center;">${helper.embed_logo_by_name('company_logo',75, 53)|n}</td>
+                <td class="basic_td">
+                    <table class="basic_table">
+                        <tr><td class="basic_td">Company: ${company.name |entity}</td></tr>
+                        <tr><td class="basic_td">Address: ${company.partner_id.address and company.partner_id.address[0].street or ''|entity}</td></tr>
+                        <tr><td class="basic_td">Phone: ${company.partner_id.address and company.partner_id.address[0].phone or ''|entity}</td></tr>
+                        <tr><td class="basic_td">Mail: ${company.partner_id.address and company.partner_id.address[0].email or ''|entity}</td></tr>
+                        <tr><td class="basic_td">User: ${user.name or ''|entity}</td></tr>
+                    </table>
+                </td></tr>
+            </table>
+         </div>
+         <p><h3>Report of product variation</h3></p>
 
         <%def name="all_prods(objs=None)">
             %for prod in objs:
@@ -209,7 +215,7 @@
                     </table>
                     <br/>
 
-                    <hr>Detalle de producciones hijas
+                    <hr>Children production detail
                     <br/>
                     <table class="basic_table">
                         <tr>

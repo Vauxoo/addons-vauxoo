@@ -1,0 +1,70 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_webkit_report_wizard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-09 20:29+0000\n"
+"PO-Revision-Date: 2013-01-09 14:31-0600\n"
+"Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: mrp_webkit_report_wizard
+#: field:wizard.report.variation,date_finished:0
+msgid "End Date"
+msgstr "Fecha final"
+
+#. module: mrp_webkit_report_wizard
+#: model:ir.actions.act_window,name:mrp_webkit_report_wizard.wizard_report_variation
+#: view:wizard.report.variation:0
+msgid "MRP variation"
+msgstr "Variación MRP"
+
+#. module: mrp_webkit_report_wizard
+#: code:addons/mrp_webkit_report_wizard/wizard/wizard_report_variation.py:77
+#, python-format
+msgid "There is no production orders for the products you selected in the range of dates you specified."
+msgstr "No hay órdenes de producción para los productos seleccionados en el rango de fechas especificado."
+
+#. module: mrp_webkit_report_wizard
+#: code:addons/mrp_webkit_report_wizard/wizard/wizard_report_variation.py:77
+#, python-format
+msgid "Advice"
+msgstr "Aviso"
+
+#. module: mrp_webkit_report_wizard
+#: model:ir.model,name:mrp_webkit_report_wizard.model_wizard_report_variation
+msgid "wizard.report.variation"
+msgstr "wizard.report.variation"
+
+#. module: mrp_webkit_report_wizard
+#: view:wizard.report.variation:0
+msgid "Report"
+msgstr "Reporte"
+
+#. module: mrp_webkit_report_wizard
+#: view:wizard.report.variation:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: mrp_webkit_report_wizard
+#: field:wizard.report.variation,product_ids:0
+msgid "Productos"
+msgstr "Productos"
+
+#. module: mrp_webkit_report_wizard
+#: model:ir.actions.report.xml,name:mrp_webkit_report_wizard.mrp_webkit_report_wizard_html
+msgid "Variation report"
+msgstr "Reporte de variaciones"
+
+#. module: mrp_webkit_report_wizard
+#: field:wizard.report.variation,date_start:0
+msgid "Start Date"
+msgstr "Fecha inicial"
+

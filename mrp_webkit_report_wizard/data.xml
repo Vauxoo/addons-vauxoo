@@ -68,9 +68,9 @@ height:100%;
 {
 margin:auto;
 width:60%;
-background-color:#7777AA;
+background-color:AADDAA;
 color:#DDF0F0;
-min-height:75px
+min-height:65px
 }
 
 td.basic_td{
