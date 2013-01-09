@@ -127,7 +127,7 @@ class ifrs_report(report_sxw.rml_parse):
 
         return self._period_info_list[column_num][2]
 
-    def _get_amount_value(self, ifrs_line, period_num=None, target_move=None, pd=None):
+    def _get_amount_value(self, ifrs_line, period_num=None, target_move=None, pd=None, undefined=None):
         
         '''devuelve la cantidad correspondiente al periodo'''
 
