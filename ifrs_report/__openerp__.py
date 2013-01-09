@@ -34,11 +34,11 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        'view/data.xml',
         'view/ifrs_view.xml',
         'report/report_ifrs.xml',
         'wizard/ifrs_report_wizard_view.xml',
         'view/ifrs_demo.xml',
-        'view/data.xml'
     ],
     "active": False,
     "installable": True
