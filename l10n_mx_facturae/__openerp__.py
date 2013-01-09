@@ -60,6 +60,7 @@ Requires the following programs:
         #'security/ir.model.access.csv',
         "l10n_mx_facturae_report.xml",
         "wizard/wizard_invoice_facturae_txt_v6_view.xml",
+        "wizard/wizard_invoice_facturae_xml_v6_view.xml",
         "wizard/installer_view.xml",
         #"ir_sequence_view.xml",
         #"res_company_view6.xml",
