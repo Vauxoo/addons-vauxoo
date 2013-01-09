@@ -207,5 +207,11 @@ background-color:#C0C0BF;
 </field>
 			<field name="name">Reports IFRS WebKit</field>
 		</record>
+		
+		<record id="ir_header_img_company" model="ir.header_img">
+			<field name="type">png</field>
+			<field name="name">company_logo</field>
+		</record>
+		
 	</data>
 </openerp>
