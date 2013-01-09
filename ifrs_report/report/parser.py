@@ -248,7 +248,7 @@ report_sxw.report_sxw(
 )
 
 report_sxw.report_sxw(
-    'report.webkitaccount.invoice_12',
+    'report.webkitaccount.ifrs_12',
     'ifrs.ifrs',
     'addons/ifrs_report/report/report_webkit_html_12.mako',
     parser=ifrs_report,
