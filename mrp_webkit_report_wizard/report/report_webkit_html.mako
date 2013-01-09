@@ -17,7 +17,9 @@
 
         <%def name="all_prods(objs=None)">
             %for prod in objs:
+                <hr><hr>
                 <table class="basic_table">
+                    <tr><td class="sys_td">This production data</td><td></td><td></td><td></td></tr>
                     <tr>
                         <td class="sys_td"><b>Reference:</td>
                         <td class="sys_td">Planned quantity:</td>

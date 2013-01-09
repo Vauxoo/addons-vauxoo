@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: el_rodo_1 (rodo@vauxoo.com)
+#    Coded by: fernandoL (fernando_ld@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -38,6 +38,10 @@ class wizard_report_variation(osv.osv_memory):
         'date_start': fields.datetime('Start Date', select=True, required=True),
         'date_finished': fields.datetime('End Date', select=True, required=True),
     }
+    
+    _defaults = {
+        'date_finished': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+    }
 
     def default_get(self, cr, uid, fields, context=None):
         """ To get default values for the object.
@@ -68,9 +72,9 @@ class wizard_report_variation(osv.osv_memory):
         if context is None:
             context = {}
         data = self.read(cr, uid, ids)[0]
-        print data.get('product_ids'),"prods ids"
-        myids = self.pool.get('mrp.production').search(cr, uid, [('product_id', 'in', data.get('product_ids')),('date_planned', '>', data.get('date_start')),('date_planned', '<', data.get('date_finished'))])
-        print myids,"myids"
+        myids = self.pool.get('mrp.production').search(cr, uid, [('product_id', 'in', data.get('product_ids')),('date_planned', '>', data.get('date_start')),('date_planned', '<', data.get('date_finished')),('state', '<>', 'cancel')])
+        if not myids:
+            raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
         
         datas = {
             'ids': myids,
@@ -78,12 +82,10 @@ class wizard_report_variation(osv.osv_memory):
             'form': data,
             'uid': uid,
         }
-        print "datas ->", datas
+
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'webkitmrp.production_variation',
             'datas': datas,
         }
-
-
 wizard_report_variation()
