@@ -133,8 +133,6 @@ class ifrs_report(report_sxw.rml_parse):
 
         context = {}
         if period_num:
-            print period_num,'period_num'
-            print self._period_info_list,'imprimo self._period_info_list'
             period_id = self._period_info_list[period_num][1]
             context = {'period_from': period_id, 'period_to': period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':self._fy}
         else:
@@ -221,18 +219,16 @@ class ifrs_report(report_sxw.rml_parse):
         res = []
         if ifrs_l.type =='detail':
             ids2 = [lin.id for lin in ifrs_l.cons_ids]
-            ids3 = account_obj._get_children_and_consol(self.cr, self.uid, ids2)
-            print ids3,'imprimo ids3'
-            self.cr.execute(""" SELECT rp.id
-                FROM account_move_line l JOIN res_partner rp ON rp.id = l.partner_id
-                WHERE l.account_id IN %s
-                GROUP BY rp.id 
-                ORDER BY rp.name ASC""", ( tuple(ids3), ) 
-                )
-            dat = self.cr.dictfetchall()
-#            print len(dat),'imprimo len dat'
-            res = [lins for lins in partner_obj.browse( self.cr, self.uid, [li['id'] for li in dat] )]
-            print res,'imprimo res'
+            ids3 = ids2 and account_obj._get_children_and_consol(self.cr, self.uid, ids2) or []
+            if ids3:
+                self.cr.execute(""" SELECT rp.id
+                    FROM account_move_line l JOIN res_partner rp ON rp.id = l.partner_id
+                    WHERE l.account_id IN %s
+                    GROUP BY rp.id 
+                    ORDER BY rp.name ASC""", ( tuple(ids3), ) 
+                    )
+                dat = self.cr.dictfetchall()
+                res = [lins for lins in partner_obj.browse( self.cr, self.uid, [li['id'] for li in dat] )]
         return res
 
 report_sxw.report_sxw(

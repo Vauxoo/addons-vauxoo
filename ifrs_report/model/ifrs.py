@@ -59,12 +59,10 @@ class ifrs_ifrs(osv.osv):
     }
 
     def compute(self, cr, uid, ids, context=None):
-        print uid,'imprimo uid'
         if context is None: context = {}
         fy = self.browse(cr, uid, ids, context=context)[0]
         context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         
-        print uid,'imprimo uid1'
         return self.write(cr,uid,ids,{'do_compute':True},context=context)
     
     def copy(self, cr, uid, id, default=None, context=None):
@@ -203,7 +201,6 @@ class ifrs_lines(osv.osv):
                     
         elif brw.type == 'total':
             res = self._get_sum_total(cr, uid, brw, context = c)
-            print brw.comparison,'imprimo brw.comparison'
             if brw.comparison <> 'without':
                 res2=0
                 #~ TODO: Write definition for previous periods
