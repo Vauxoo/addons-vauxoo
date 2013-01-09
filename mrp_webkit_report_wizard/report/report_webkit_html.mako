@@ -13,13 +13,14 @@
                     Mail: ${company.partner_id.address and company.partner_id.address[0].email or ''|entity}<br/>
                     User: ${user.name or ''|entity}<br/>
                 </div>
-                <p style="clear:both; text-align:center;"><h3>Reporte de variación en producciones</h3></p>
+                <p><h3>Reporte de variación en producciones</h3></p>
 
         <%def name="all_prods(objs=None)">
             %for prod in objs:
-                <hr><hr>
+                <br>&nbsp;
+                <br>&nbsp;
                 <table class="basic_table">
-                    <tr><td class="sys_td">This production data</td><td></td><td></td><td></td></tr>
+                    <tr><td class="sys_td">Production main data</td><td class="sys_td"> &nbsp; </td><td class="sys_td"> &nbsp; </td><td class="sys_td"> &nbsp; </td></tr>
                     <tr>
                         <td class="sys_td"><b>Reference:</td>
                         <td class="sys_td">Planned quantity:</td>
@@ -161,6 +162,29 @@
                         %endif
                 </table>
                 
+                %if prod.subproduction_ids:
+                    <br/> For subproductions:
+                    <table class="basic_table">
+                    <tr>
+                        <td class="sys_td">*</td>
+                        <td class="sys_td"><b>Reference:</td>
+                        <td class="sys_td">Planned quantity:</td>
+                        <td class="sys_td">Date:</td>
+                        <td class="sys_td">Unit of M:</td>
+                    </tr>
+                    %for subps in prod.subproduction_ids:
+                        <tr>
+                            <td class="sys_td"><b>--</td>
+                            <td class="sys_td"><b>${subps.name or ''|entity} - ${subps.product_id.name |entity}</td>
+                            <td class="sys_td">${subps.product_qty or ''|entity}</td>
+                            <td class="sys_td">${subps.date_planned or ''|entity}</td>
+                            <td class="sys_td">${subps.product_uom.name or ''|entity}</td>
+                        </tr>
+                    %endfor
+                    </table>
+                    <br/>
+                %endif
+                
                 %if prod.superproduction_ids:
                     <br/> For superproductions:
                     <%superps_list=[]%>
@@ -187,11 +211,19 @@
 
                     <hr>Detalle de producciones hijas
                     <br/>
-                    ${all_prods(superps_list)}
+                    <table class="basic_table">
+                        <tr>
+                            <td class="sys_td">-&gt;</td>
+                            <td class="leftred">${all_prods(superps_list)}</td>
+                        </tr>
+					</table>
                 %endif
-            <p style="page-break-after:always"></p>
             %endfor
         </%def>
-        ${all_prods(objects)}
+        %for obje in objects:
+			${all_prods([obje])}
+			<p style="page-break-after:always"></p>
+		%endfor
+        
     </body>
 </html>
