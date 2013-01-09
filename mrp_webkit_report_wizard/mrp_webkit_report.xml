@@ -8,6 +8,6 @@
                 file="mrp_webkit_report_wizard/report/report_webkit_html.mako"
                 string="Variation report"
                 report_type="webkit"
-                webkit_header="report_webkit.ir_header_webkit_basesample0"/>
+                webkit_header="ir_header_webkit_mrp_variation0"/>
     </data>
 </openerp>
