@@ -24,7 +24,7 @@
     "name" : "Account Periods Initial",
     "version" : "1.1",
     "author" : "Vauxoo",
-    "category": 'Vauxoo',
+    "category": 'Account',
     "description": """Add function build_ctx_periods_initial
     """,
     'init_xml': [],
