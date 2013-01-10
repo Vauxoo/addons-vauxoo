@@ -12,6 +12,7 @@
                     <field name="filter" on_change="onchange_filter(filter)"/>
                     <field name="partner"/>
                     <field name="nivel"/>
+                    <field name="show"/>
                     </group>
                     <newline/>
                     <group>

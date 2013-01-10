@@ -31,6 +31,7 @@ class wizard_account(osv.osv_memory):
     _columns={
         'filter' : fields.selection([('filter_no','No Filtros'),('filter_date','Fecha'),('filter_period','Periodo')], 'Filtrar por', required=True),
         'partner' : fields.boolean('Group by Partner'),
+        'show' : fields.boolean('Show All Accounts'),
         'period_from' : fields.many2one('account.period', 'Periodo Inicial'),
         'period_to' : fields.many2one('account.period', 'Periodo Final'),
         'date_ini' : fields.date('Fecha Inicial'),

@@ -81,16 +81,25 @@ class reportes_btree_report(report_sxw.rml_parse):
         credit=0.0
         saldo_inicial=0.0
         saldo_final=0.0
+        obj_period = self.pool.get('account.period')
         account_ids = form and form[0]['account_ids'] or False
         nivel = form and form[0]['nivel']
         filter = form and form[0]['filter']
         partner = form and form[0]['partner']
         if form[0]['period_from'] and form[0]['period_to']:
+            ids_periods=obj_period.build_ctx_periods( self.cr, self.uid, form[0]['period_from'][0], form[0]['period_to'][0])
             date_start=self.pool.get('account.period').browse(self.cr, self.uid , form[0]['period_from'][0]).date_start
             date_stop=self.pool.get('account.period').browse(self.cr, self.uid, form[0]['period_to'][0]).date_stop
+            period_from = obj_period.browse(self.cr, self.uid, form[0]['period_from'][0])
+            company_id = period_from.company_id.id
+            fiscalyear_id = period_from.fiscalyear_id.id
+            period_date_start = period_from.date_start
+            where_filter="ap.id in (%s)"%','.join(map(str, ids_periods))
+            #ids_period_initial= obj_period.build_ctx_periods_initial(self.cr, self.uid, form[0]['period_from'][0])
             if filter=='filter_period':
-                where_filter="ap.date_start >= '%s' AND ap.date_stop <= '%s'"%(date_start, date_stop,)
-                where_filter2="ap.date_start < '%s'"%(date_start,)
+                    ids_period_initial=obj_period.search(self.cr, self.uid, [('date_stop', '<=', period_date_start), ('company_id', '=', company_id), ('id','<>',form[0]['period_from'][0]), ('fiscalyear_id', '=', fiscalyear_id)])
+                    where_filter="ap.id in (%s)"%(','.join(map(str, ids_periods)))
+                    where_filter2="ap.id in (%s)"%(','.join(map(str, ids_period_initial)))
         if account_ids:
             where_account_ids='parent.id in (%s)'%','.join(map(str,account_ids))
             where_id='id in (%s)'%','.join(map(str,account_ids))
@@ -253,7 +262,7 @@ COALESCE(subvw_final.credit,0.0) as credit,
                               join account_period ap ON ap.id = l.period_id
                             WHERE  account_move.state='posted' AND """+where_filter+"""
                              GROUP BY account_child_and_consolidated.parent_id ) subvw
-            JOIN
+              JOIN
                 (
         SELECT DISTINCT nivel.id,nivel.name,nivel.level,nivel.code,padres.type
             FROM(SELECT
@@ -272,7 +281,7 @@ COALESCE(subvw_final.credit,0.0) as credit,
                 AND """+where_account_ids+"""
                 ORDER BY parent.parent_left ) nivel
                 ) padres ON padres.id=nivel.id
-            WHERE nivel.level<=%s
+            WHERE nivel.level <= %s
             ORDER BY nivel.code) subvw_level
         ON subvw_level.id = subvw.id
            LEFT JOIN
@@ -296,28 +305,46 @@ COALESCE(subvw_final.credit,0.0) as credit,
                       LEFT JOIN account_move_line l ON l.account_id = account_child_and_consolidated.child_id
                    left JOIN account_move ON account_move.id = l.move_id
                     join account_period ap ON ap.id = l.period_id
-                  WHERE (l.state::text <> ALL (ARRAY['cancel'::character varying, 'draft'::character varying]::text[]))
-                  AND account_move.state::text = 'posted'::text AND """+where_filter2+"""
+                  WHERE account_move.state::text = 'posted'::text AND """+where_filter2+"""
                   GROUP BY account_child_and_consolidated.parent_id) subvw)subvw_inicial
                   ON subvw_level.id = subvw_inicial.id_inicial)subvw_final
                   ORDER BY subvw_final.code
                     """,(nivel,))
         res=self.cr.dictfetchall()
-        min_level=self.get_account_min_level(form)
-        for lin in  res:
-            if lin['level'] == min_level:
-                credit+=lin['credit']
-                debit+=lin['debit']
-                saldo_inicial+=lin['saldo_inicial']
-                saldo_final+=lin['saldo_final']
-        amount={
+        if res:
+            min_level=self.get_account_min_level(form)
+            for lin in res:
+                if partner==True:
+                    if lin['level'] == min_level:
+                        print "agrupado x partner", lin['level'],min_level
+                        credit+=lin['credit']
+                        debit+=lin['debit']
+                        saldo_inicial+=lin['saldo_inicial']
+                        saldo_final+=lin['saldo_final']
+                else:
+                    if lin['level'] <= min_level:
+                        credit+=lin['credit']
+                        debit+=lin['debit']
+                        saldo_inicial+=lin['saldo_inicial']
+                        saldo_final+=lin['saldo_final']
+
+            amount={
+                'credit' : credit,
+                'debit'  : debit,
+                'name'   : 'Total',
+                'saldo_inicial' : saldo_inicial,
+                'saldo_final' : saldo_final,
+                'code' : '' }
+            res.append(amount)
+        else:
+            amount={
             'credit' : credit,
             'debit'  : debit,
             'name'   : 'Total',
             'saldo_inicial' : saldo_inicial,
             'saldo_final' : saldo_final,
             'code' : '' }
-        res.append(amount)
+            res.append(amount)
         return res
 report_sxw.report_sxw('report.reportes.btree.report', 'account.move', '/account_report_partner/report/account_report_btree.rml', parser=reportes_btree_report, header=False)
 
