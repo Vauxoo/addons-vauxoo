@@ -6,7 +6,7 @@
             <field name="model">account.order.wizard</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Account Sorting">
                     <group col='2'>
                         <group col='2'>
                             <field name='company_id' colspan='6'/>
