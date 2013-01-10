@@ -27,3 +27,4 @@
 import invoice
 import report
 import params_pac
+import wizard
