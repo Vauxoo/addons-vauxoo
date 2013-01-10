@@ -154,6 +154,21 @@ class inherited_product(osv.osv):
         else:
             return True
 
+
+    def _check_upc_reference_unique(self, cr, uid, ids, context=None):
+        this_record = self.browse(cr, uid, ids)
+        
+        for product in self.browse(cr, uid, ids):
+            product_code_ids = product.default_code and  self.search(cr,uid,[('default_code','=',product.default_code)],context=context) or [product.id]
+            product_upc_ids = product.upc and self.search(cr,uid,[('upc','=',product.upc)],context=context) or [product.id]
+            if not product.default_code and not product.upc:
+                return True
+            
+            elif len(product_code_ids) > 1 or len(product_upc_ids) > 1 or  product.id not in product_code_ids or product.id not in product_upc_ids:
+                return False
+            
+        return True
+
     def copy(self, cr, uid, id, default=None, context=None):
         
         if default is None:
@@ -163,12 +178,57 @@ class inherited_product(osv.osv):
             context = {}
             
         default = default.copy()
-        default.update({'upc':False,'ean13':False,
+        default.update({'upc':False,'ean13':False,'default_code':False,
         })
         
         return super(inherited_product, self).copy(cr, uid, id, default, context)
 
+    def name_get(self, cr, user, ids, context=None):
+        if context is None:
+            context = {}
+        if not len(ids):
+            return []
+        def _name_get(d):
+            name = d.get('name','')
+            code = d.get('default_code',False)
+            upc = d.get('upc',False)
+            ean13 = d.get('ean13',False)
+            cc = upc and '%s' % upc or ean13 and '%s' % ean13 or code
+            if cc:
+                name = '[%s] %s' % (cc,name)
+            if d.get('variants'):
+                name = name + ' - %s' % (d['variants'],)
+            return (d['id'], name)
+
+        partner_id = context.get('partner_id', False)
+
+        result = []
+        for product in self.browse(cr, user, ids, context=context):
+            sellers = filter(lambda x: x.name.id == partner_id, product.seller_ids)
+            if sellers:
+                for s in sellers:
+                    mydict = {
+                              'id': product.id,
+                              'name': s.product_name or product.name,
+                              'default_code': s.product_code or product.default_code,
+                              'upc': product.upc or False,
+                              'ean13': product.ean13 or False,
+                              'variants': product.variants,
+                              }
+                    result.append(_name_get(mydict))
+            else:
+                mydict = {
+                          'id': product.id,
+                          'name': product.name,
+                          'default_code': product.default_code,
+                          'upc': product.upc or False,
+                          'ean13': product.ean13 or False,
+                          'variants': product.variants,
+                          }
+                result.append(_name_get(mydict))
+        #return super(inherited_product, self).name_get(cr, user, ids, context)  
         
+        return result
         
 
     _columns = {
@@ -177,7 +237,6 @@ class inherited_product(osv.osv):
             'profit_code':fields.char("Code from profit", size=20, help="Code from profit database"),
         }
 
-    _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc'])]
-
+    _constraints =  [(_check_upc, 'ERROR, Invalid UPC', ['upc']),(_check_upc_reference_unique, 'ERROR, the upc or reference must by unique', ['upc','reference'])]
 
 inherited_product()

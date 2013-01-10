@@ -14,24 +14,24 @@
               <field name="status_bool" invisible="1" />
             </group>
             <group colspan="6" col="4" string="Costos">
-              <field name='cost_ult' />
-              <field name='date_cost_ult' />
-              <field name='cost_ant' />
-              <field name='date_cost_ant' />
-              <field name='cost_prom' colspan="1" />
-              <field name='date_cost_prom' />
-              <field name='ult_om' />
-              <field name='date_ult_om' />
-              <field name='ant_om' />
-              <field name='date_ant_om' />
-              <field name='prom_om' />
-              <field name='date_prom_om' />
-              <field name='cost_suppler' />
-              <field name='date_cost_suppler' />
+              <field name='cost_ult' groups="cost_structure.group_cost_structure_manager" />
+              <field name='date_cost_ult' groups="cost_structure.group_cost_structure_manager"/>
+              <field name='cost_ant' groups="cost_structure.group_cost_structure_manager" />
+              <field name='date_cost_ant' groups="cost_structure.group_cost_structure_manager" />
+              <field name='cost_prom' colspan="1" groups="cost_structure.group_cost_structure_manager" />
+              <field name='date_cost_prom' groups="cost_structure.group_cost_structure_manager" />
+              <field name='ult_om' groups="cost_structure.group_cost_structure_manager" />
+              <field name='date_ult_om' groups="cost_structure.group_cost_structure_manager" />
+              <field name='ant_om' groups="cost_structure.group_cost_structure_manager" />
+              <field name='date_ant_om' groups="cost_structure.group_cost_structure_manager" />
+              <field name='prom_om' groups="cost_structure.group_cost_structure_manager" />
+              <field name='date_prom_om' groups="cost_structure.group_cost_structure_manager" />
+              <field name='cost_suppler' groups="cost_structure.group_cost_structure_manager" />
+              <field name='date_cost_suppler' groups="cost_structure.group_cost_structure_manager" />
               <!-- <field name='cost_to_price' /> -->
 <!--            <field name='date_cost_to_price' />-->
             </group>
-            <field name='method_cost_ids' nolabel="1" context="{'method_cost_ids':method_cost_ids,'property_cost_structure':property_cost_structure}">
+            <field name='method_cost_ids' nolabel="1" context="{'property_cost_structure':property_cost_structure}">
             <tree editable="bottom" >
               <field name='sequence' />
                 <field name='unit_price' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />

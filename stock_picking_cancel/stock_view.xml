@@ -43,5 +43,30 @@
                 </xpath>
             </field>
         </record>
+	<!--from stock move cancel module-->
+	<record model="ir.ui.view" id="view_stock_move_inherit2">
+            <field name="name">view.stock.move.inherit2</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                    <xpath expr="/form/group/button[@name='action_cancel']" position="replace">
+ 			<button name="action_cancel" states="assigned,confirmed,done" string="_Cancel" type="object" icon="gtk-cancel" groups="base.group_picking_cancel"/>
+                    </xpath>
+	    </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_stock_move_inherit3">
+            <field name="name">view.stock.move.inherit3</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form_reception_picking" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                    <xpath expr="/form/group/button[@name='action_cancel']" position="replace">
+ 			<button name="action_cancel" states="assigned,confirmed,done" string="_Cancel" type="object" icon="gtk-cancel" groups="base.group_picking_cancel"/>
+                    </xpath>
+	    </field>
+        </record>
+	
     </data>
 </openerp>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_db_tools_wizard_form">
+            <field name="name">view.db.tools.wizard.form</field>
+            <field name="model">db.tools</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="DB Tools">
+                    <field name="filter"/>
+                    <newline/>
+                    <field name="path_save_db" colspan="4"/>
+                    <field name="password" colspan="4" password="1"/>
+                    <field name="name_db" colspan="4"/>
+                    <field name="list_db" colspan="4"/>
+                    <button string="Cancel" special="cancel" icon="gtk-stop"/>
+                    <button name="confirm_action" string="Confirm" type="object" icon="terp-gtk-go-back-ltr"/>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="db_tools_wizard_action">
+            <field name="name">DB Tools</field>
+            <field name="res_model">db.tools</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem id="menu_action_db_tools" name="DB tools" parent="base.menu_config"/>
+        <menuitem id="menu_action_db_tools_wizard_form" parent="menu_action_db_tools" action="db_tools_wizard_action"/>
+    </data>
+</openerp>

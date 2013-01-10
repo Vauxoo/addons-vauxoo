@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_mrp_production_pick_inherit2">
+            <field name="name">view.mrp.production.pick.inherit2</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                    <xpath expr="/form/notebook/page[@string='Extra Information']" position="after">
+			<page string="Pickings">
+ 				<field name="picking_ids" nolabel="1"/>
+			</page>
+                    </xpath>
+                    <xpath expr="/form/notebook/page[@string='Consumed Products']/field[@name='location_dest_id']" position="after">
+                        <button type="action"
+                            name="%(mrp_request_return.create_request_return_action)d"
+                            string="Product Request/Return" states="in_production" colspan="2" />
+                    </xpath>
+	    </field>
+        </record>
+
+    </data>
+</openerp>

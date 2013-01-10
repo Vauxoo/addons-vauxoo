@@ -66,6 +66,7 @@ class inherited_stock(osv.osv):
     _columns = {
             'pay_state': fields.selection([('paynot','Not Payed'),('2bpay','To pay'),('payed','Payed')],"Pay Control", help="The pay state for this picking"),
             'total_sale':fields.function(_order_total,method=True, type='float',string='Total Sale'),
+            'sales_incoterm':fields.related('sale_id','incoterm',relation='stock.incoterms',type='many2one',string='Incoterm',readonly=True),
         }
    
     _defaults = {
@@ -97,8 +98,11 @@ class stock_move(osv.osv):
     _inherit = 'stock.move'
     _columns = {
         'id_sale':fields.many2one('sale.order','Sale Order'),
+        'product_upc':fields.related('product_id','upc',type='char',string='UPC'),
+        'product_ean13':fields.related('product_id','ean13',type='char',string='EAN13'),     
     
     }
+    
     
 stock_move()
 
