@@ -30,7 +30,7 @@
     "category" : "Generic Modules",
     "website": "http://www.vauxoo.com",
     "description": ''' International Financial Reporting Standards Module''',
-    "depends" : ['base','account','report_webkit'],
+    "depends" : ['base','account_periods_initial','account','report_webkit'],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
