@@ -28,7 +28,6 @@ class account_period(osv.osv):
     _inherit = "account.period"
 
     def build_ctx_periods_initial(self, cr, uid, period_to_id):
-        print "entro-------------"
         period_to = self.browse(cr, uid, period_to_id)
         period_date_start = period_to.date_start
         company_id = period_to.company_id.id
