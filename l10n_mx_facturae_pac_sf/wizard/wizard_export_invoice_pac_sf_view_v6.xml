@@ -2,24 +2,26 @@
 <openerp>
     <data>
 
+
+        
         <record id="view_wizard_export_pac_sf_form_v6" model="ir.ui.view">
-            <field name="name">view.wizard.export.pac.sf.form.v6</field>
-            <field name="model">wizard.export.invoice.pac.sf.v6</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Export invoice V6">
-                    <separator colspan="4" string="File"/>
+             <field name="name">view.wizard.export.pac.sf.form.v6</field>
+             <field name="model">wizard.export.invoice.pac.sf.v6</field>
+             <field name="arch" type="xml">
+                <form string="Export invoice V6" version="7.0">
+                    <separator string="File"/>
                     <field name='file' nolabel="1" colspan="4"/>
-                    <newline/>
                     <separator colspan="4" string="Message"/>
                     <field name='message' nolabel="1" colspan="4"/>
                     <separator string="" colspan="4"/>
-                    <newline/>
-                    <button special="cancel" string="_Close" icon="gtk-cancel"/>
-                    <button name="upload_to_pac" type="object" string="_Upload Invoice" icon="gtk-ok"/>
+                    <footer>
+                        <button string="_Close" class="oe_highlight" special="cancel"/>
+                        or
+                        <button name="upload_to_pac" string="_Upload Invoice" type="object"/>
+                    </footer>
                 </form>
-            </field>
-        </record>
+             </field>
+         </record>
         
         <act_window name="Export Invoice PAC SF V6"
             res_model="wizard.export.invoice.pac.sf.v6"
