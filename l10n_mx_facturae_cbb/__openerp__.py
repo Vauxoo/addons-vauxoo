@@ -37,7 +37,7 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document", 
+    "depends" : ["account", "base_vat", "document",
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
             "l10n_mx_partner_address",
             "l10n_mx_invoice_datetime",
@@ -45,6 +45,7 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
             "l10n_mx_facturae_seq",
             "l10n_mx_company_cif",
             "l10n_mx_invoice_amount_to_text",
+            "l10n_mx_ir_attachment_facturae",
         ],
     "init_xml" : [],
     "demo_xml" : [],

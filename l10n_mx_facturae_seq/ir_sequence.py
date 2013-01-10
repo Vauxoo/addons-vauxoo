@@ -35,6 +35,10 @@ class ir_sequence_approval(osv.osv):
 
     _rec_name = 'approval_number'
 
+    def _get_type(self, cr, uid, ids=None, context=None):
+        types = [('cfd22', 'CFD 2.2'),]
+        return types
+
     _columns = {
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'approval_number': fields.char(u'Numero de Aprobacion', size=64, required=True),
@@ -43,7 +47,7 @@ class ir_sequence_approval(osv.osv):
         'number_start': fields.integer(u'Desde', required=False),
         'number_end': fields.integer(u'Hasta', required=True),
         'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade'),
-        'type': fields.selection([('cfd22', 'CFD 2.2'), ('cfdi32', 'CFDI 3.2 Solución Factible'), ('cbb', 'CBB')], 'Type', required=True),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True),
     }
 
     _defaults = {

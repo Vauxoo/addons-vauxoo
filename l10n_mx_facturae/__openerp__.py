@@ -51,6 +51,7 @@ Requires the following programs:
             "l10n_mx_company_cif",
             "l10n_mx_partner_address",
             "l10n_mx_invoice_amount_to_text",
+            "l10n_mx_ir_attachment_facturae",
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
         ],
     "init_xml" : [],
@@ -66,8 +67,6 @@ Requires the following programs:
         #"res_company_view6.xml",
         "invoice_view.xml",
         #"partner_address_view.xml",
-        "ir_attachment_facturae_view.xml",
-        "l10n_mx_facturae_workflow.xml",
     ],
     "installable" : True,
     "active" : False,

@@ -37,11 +37,8 @@ class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = [('cfd22', 'CFD 2.2'), ('cfdi32', 'CFDI 3.2 Solución Factible'), ('cbb', 'CBB'),]
+        types = [('cfd22', 'CFD 2.2'),]
         return types
-
-    def _get_index(self, cr, uid, ids, context=None):
-        return True
 
     _columns = {
         'name': fields.char('Name', size=128, required=True),
@@ -249,6 +246,18 @@ class ir_attachment_facturae_mx(osv.osv):
         return self.write(cr, uid, ids, {'state': 'done'})
 
     def action_cancel(self, cr, uid, ids, context=None):
+        invoice_obj = self.pool.get('account.invoice')
+        type=self.browse(cr,uid,ids)[0].type
+        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        msj='Cancel from invoice'
+        if type=='cfdi32':
+            get_file_cancel=invoice_obj._get_file_cancel(cr, uid, [invoice], context = {})
+            sf_cancel=invoice_obj.sf_cancel(cr, uid, [invoice.id], context = {})
+            msj=sf_cancel['message']
+        #id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])]
+        for attachment in self.browse(cr, uid, ids, context):
+            if not attachment.state=='cancel':
+                return self.write(cr, uid, ids, {'state': 'cancel', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj})
         return self.write(cr, uid, ids, {'state': 'cancel','last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': 'Cancel',})
 
     def reset_to_draft(self, cr, uid, ids, context=None):
