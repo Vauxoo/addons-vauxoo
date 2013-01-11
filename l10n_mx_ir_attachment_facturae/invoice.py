@@ -36,7 +36,7 @@ class account_invoice(osv.osv):
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False):
                 for attachment in self.pool.get('ir.attachment.facturae.mx').browse(cr, uid, id_attach, context):
-                    if attachment.id and attachment.state=='done':
+                    if attachment.state=='done':
                         wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attachment.id, 'action_cancel', cr)
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)

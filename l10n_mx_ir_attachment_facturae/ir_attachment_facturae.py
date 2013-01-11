@@ -220,7 +220,6 @@ class ir_attachment_facturae_mx(osv.osv):
             attach_name+=attach.name+ ', '
         to=invoice.address_invoice_id.email
         subject= 'Invoice '+invoice.number or False
-        #pendiente  validar str +bool
         message = attach_name
         state = self.pool.get('email.smtpclient').send_email(cr, uid, smtp, to, tools.ustr(subject), tools.ustr(message), attachments)
         if not state:
@@ -240,7 +239,6 @@ class ir_attachment_facturae_mx(osv.osv):
         attach_obj = self.pool.get('ir.attachment')
         type=self.browse(cr,uid,ids)[0].type
         invoice =self.browse(cr,uid,ids)[0].invoice_id
-        msj='Cancel from invoice'
         if type=='cfdi32':
             get_file_cancel=invoice_obj._get_file_cancel(cr, uid, [invoice], context = {})
             sf_cancel=invoice_obj.sf_cancel(cr, uid, [invoice.id], context = {})
@@ -248,10 +246,7 @@ class ir_attachment_facturae_mx(osv.osv):
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
             ids2=attach_obj.write(cr, uid, attachment.id, { 'res_id': False, }, context={})
-        for attachment in self.browse(cr, uid, ids, context):
-            if not attachment.state=='cancel':
-                return self.write(cr, uid, ids, {'state': 'cancel', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),'msj': msj})
-        return self.write(cr, uid, ids, {'state': 'cancel','last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': 'Cancel',})
+        return self.write(cr, uid, ids, {'state': 'cancel','last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj,})
 
     def reset_to_draft(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
