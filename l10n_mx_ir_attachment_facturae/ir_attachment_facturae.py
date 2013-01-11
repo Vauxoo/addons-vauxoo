@@ -130,7 +130,7 @@ class ir_attachment_facturae_mx(osv.osv):
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
             xml_v3_2 = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=', invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
-        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': xml_v3_2 or False, 'file_input': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
+        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': xml_v3_2 or False, 'file_input': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg'] or False}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
         aids=[]
