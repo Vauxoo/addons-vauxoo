@@ -209,6 +209,7 @@ class ir_attachment_facturae_mx(osv.osv):
     def action_send_customer(self, cr, uid, ids, context=None):
         attachments=[]
         attach_name=''
+        to=''
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         smtp= self.pool.get('email.smtpclient').browse(cr, uid, uid, context).id
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
@@ -218,7 +219,9 @@ class ir_attachment_facturae_mx(osv.osv):
             open(f_name,'wb').write(base64.decodestring(attach.datas))
             attachments.append(f_name)
             attach_name+=attach.name+ ', '
-        to=invoice.address_invoice_id.email
+        print invoice.address_invoice_id.type
+        if invoice.address_invoice_id.type=='invoice':
+            to=invoice.address_invoice_id.email
         subject= 'Invoice '+invoice.number or False
         message = attach_name
         state = self.pool.get('email.smtpclient').send_email(cr, uid, smtp, to, tools.ustr(subject), tools.ustr(message), attachments)

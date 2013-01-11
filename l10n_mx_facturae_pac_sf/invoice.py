@@ -49,21 +49,6 @@ except:
     pass
 import time
 
-class ir_sequence_approval(osv.osv):
-    _inherit = 'ir.sequence.approval'
-
-    def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_sequence_approval, self)._get_type(cr, uid, ids, context=context)
-        types.extend([
-            ('cfdi32', 'CFDI 3.2 Solución Factible'),
-        ])
-        return types
-
-    _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True),
-    }
-ir_sequence_approval()
-
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
