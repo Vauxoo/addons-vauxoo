@@ -133,17 +133,17 @@ class ifrs_lines(osv.osv):
             if brw.acc_val=='init':
                 period_ids = period_obj.build_ctx_periods_initial(cr, uid, c['period_from'])
                 c['periods'] = period_ids
-#                period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
+                period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
 ##                c['period_to']= period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
 #                period_to = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
-#                c['period_from'] = period_obj.search(cr, uid, [('company_id', '=', period_company_id),('special', '=', True), ('fiscalyear_id','=',context.get('fiscalyear'))], order='date_start', limit=1)[0]
- #               period_from_to = period_obj.browse(cr, uid, [c['period_to'], c['period_from']], context=context)
-#                if period_from_to[0].date_start <> period_from_to[1].date_start:
- #                   c['period_to'] = period_to
-  #              else:
-   #                 c['period_to'] = c['period_from']
+ #               c['period_from'] = period_obj.search(cr, uid, [('company_id', '=', period_company_id),('special', '=', True), ('fiscalyear_id','=',context.get('fiscalyear'))], order='date_start', limit=1)[0]
+  #              period_from_to = period_obj.browse(cr, uid, [c['period_to'], c['period_from']], context=context)
+   #             if period_from_to[0].date_start <> period_from_to[1].date_start:
+    #                c['period_to'] = period_to
+     #           else:
+      #              c['period_to'] = c['period_from']
 ##                c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
-                if not c['period_from']:
+            if not c['period_from']:
                     raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
 ##                c['period_to']=c['period_from']
 

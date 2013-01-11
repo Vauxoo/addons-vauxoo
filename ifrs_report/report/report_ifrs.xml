@@ -45,7 +45,8 @@
                 file="ifrs_report/report/report_webkit_html_12.mako"
                 string="WebKit ifrs"
                 report_type="webkit"
-                webkit_header="ir_header_webkit_ifrsreport"/>
+                webkit_header="ir_header_webkit_ifrsreport"
+                multi="True"/>
                 
 
     </data>
