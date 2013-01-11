@@ -44,7 +44,7 @@ import time
 
 class account_invoice_facturae_pdf2(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(account_invoice_facturae_pdf, self).__init__(cr, uid, name, context=context)
+        super(account_invoice_facturae_pdf2, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'set_global_data': self._set_global_data,
             'facturae_data_dict': self._facturae_data_dict,

@@ -72,6 +72,7 @@ class ir_attachment_facturae_mx(osv.osv):
 
     def action_confirm(self, cr, uid, ids, context=None):
         aids=[]
+        attach=''
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         invoice_obj = self.pool.get('account.invoice')
         type=self.browse(cr,uid,ids)[0].type
@@ -103,6 +104,7 @@ class ir_attachment_facturae_mx(osv.osv):
     def action_sign(self, cr, uid, ids, context={}):
         aids=[]
         xml_v3_2=[]
+        attach=''
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         invoice_obj = self.pool.get('account.invoice')
         type=self.browse(cr,uid,ids)[0].type
