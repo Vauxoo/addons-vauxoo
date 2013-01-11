@@ -255,26 +255,6 @@ class account_invoice(osv.osv):
         return res
 
     def action_cancel_draft(self, cr, uid, ids, *args):
-        attachment_obj = self.pool.get('ir.attachment')
-        for invoice in self.browse(cr, uid, ids):
-            try:
-                attachment_xml_id = attachment_obj.search(cr, uid, [
-                    ('name', 'ilike', '%.xml'),
-                    ('res_model','=','account.invoice'),
-                    ('res_id','=',invoice.id)
-                ], limit=2)
-                attachment_obj.unlink(cr, uid, attachment_xml_id)
-
-                attachment_pdf_id = attachment_obj.search(cr, uid, [
-                    ('name','=',invoice.fname_invoice),###no se agrega.pdf, porque el generador de reportes, no lo hace asi, actualmente o agrega doble .pdf o nada
-                    #('name','=',invoice.fname_invoice+'.pdf'),
-                    ('datas_fname','=',invoice.fname_invoice+'.pdf'),
-                    ('res_model','=','account.invoice'),
-                    ('res_id','=',invoice.id)
-                ], limit=1)
-                attachment_obj.unlink(cr, uid, attachment_pdf_id)
-            except:
-                pass
         self.write(cr, uid, ids, {
             'no_certificado': False,
             'certificado': False,
