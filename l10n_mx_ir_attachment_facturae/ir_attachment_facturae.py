@@ -106,6 +106,7 @@ class ir_attachment_facturae_mx(osv.osv):
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         invoice_obj = self.pool.get('account.invoice')
         type=self.browse(cr,uid,ids)[0].type
+        res= {'msg':''}
         if type=='cfd22':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
@@ -117,6 +118,7 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_id': invoice.id,
                 }, context=context)
             msj='Attached Successfully XML'
+            res['msg'] = msj
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.V2.2.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
@@ -130,7 +132,7 @@ class ir_attachment_facturae_mx(osv.osv):
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
             xml_v3_2 = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=', invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
-        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': xml_v3_2 or False, 'file_input': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg'] or False}, context=context)
+        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': xml_v3_2 or False, 'file_input': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
         aids=[]
