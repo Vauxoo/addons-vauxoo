@@ -25,7 +25,9 @@
             view_mode="form"
             target="new"
             key2="client_action_multi"
-            id="action_wizard_facturae_xml_v6_form"/>
+            id="action_wizard_facturae_xml_v6_form"
+            groups="l10n_mx_facturae.group_facturae_mx_cfd_user"/>
+            
             
     </data>
 </openerp>
