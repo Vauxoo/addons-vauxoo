@@ -22,6 +22,7 @@
                     </group>
                     <newline/>
                     <button icon="STOCK_OK" name="get_order" string="Ordenar" type="object"/>
+                    <button icon="STOCK_OK" name="order_without_pattern" string="Ordenari" type="object"/>
                 </form>
             </field>
         </record>

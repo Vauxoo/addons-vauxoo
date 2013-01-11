@@ -203,7 +203,8 @@ class account_order_wizard(osv.osv_memory):
             d={}
             lpl = len(pattern_list)
             top_parent = parent_id
-            self._new_ordering(cr, uid, company_id, pattern_list[0], pattern_list, lpl,top_parent, parent_id, 0, {})
+            self._new_ordering(cr, uid, company_id, pattern_list[0],
+                               pattern_list, lpl,top_parent, parent_id, 0, {})
             
             #~ d.get(top_parent) and d.pop(top_parent)
             #~ print 'DICCIONARIO TOTAL',d
@@ -211,4 +212,73 @@ class account_order_wizard(osv.osv_memory):
                 #~ print 'IMPRIMIENDO UN DIC ',d[ac_id]
                 #~ aa_obj.write(cr, uid, [ac_id], d[ac_id])
         return {}
+
+    
+    def get_code(self, cr, uid, ids, level, context=None):
+        if context is None:
+            context = {}
+        cr.execute('''select distinct char_length(code) as code 
+                        from account_account 
+                        where code like '%s%s'
+                        and char_length(code) > %s
+                        order by code''' % (level, '%', len(str(level))))
+
+        e = cr.dictfetchall()
+        return e
+    
+
+    def get_levels(self, cr, uid, ids, level, n, context=None):
+        if context is None:
+            context = {}
+        cr.execute('''select id, code 
+                      from account_account 
+                      where code like '%s'
+                      order by code''' % (int(n) == 1 and '_' \
+                                        or str(level).ljust(n,'_')  )) 
+        
+        e = cr.dictfetchall()
+
+        return e
+    
+    
+    def cicle_account(self, cr, uid, ids, mlevels=(), context=None):
+        if context is None:
+             context = {}
+        t = True
+        mlevels = type(mlevels) is list and mlevels or [mlevels]
+        for mlevel in mlevels:
+            d = mlevel.get('code') != 0 and self.get_code(cr, uid, ids,
+                                                    mlevel.get('code'),
+                                                    context)
+            for i in d:
+                t = self.get_levels(cr, uid, ids, mlevel.get('code'),
+                            int(i.get('code')), context)
+                
+                if t:
+                    print t
+                    [self.cicle_account(cr, uid, ids, le,context) \
+                            for le in t]
+            
+        return True
+     
+    
+    def order_without_pattern(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+    
+        levels = cr.execute('''select distinct char_length(code) as a 
+                               from account_account 
+                               order by a''') 
+
+        levels = cr.dictfetchall()
+        for level in levels:
+            print 'eeeee' 
+            mlevels = self.get_levels(cr, uid, ids, level.get('a'),
+                                int(level.get('a')), context)
+            self.cicle_account(cr, uid, ids, mlevels, context) 
+        
+        print kjhgf
+        return True
+    
+
 account_order_wizard()
