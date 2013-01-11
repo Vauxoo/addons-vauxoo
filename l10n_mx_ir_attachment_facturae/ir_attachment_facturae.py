@@ -210,9 +210,10 @@ class ir_attachment_facturae_mx(osv.osv):
 
     def action_send_customer(self, cr, uid, ids, context=None):
         attachments=[]
+        msj=''
         attach_name=''
         to=''
-        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        """invoice =self.browse(cr,uid,ids)[0].invoice_id
         smtp= self.pool.get('email.smtpclient').browse(cr, uid, uid, context).id
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
@@ -221,7 +222,6 @@ class ir_attachment_facturae_mx(osv.osv):
             open(f_name,'wb').write(base64.decodestring(attach.datas))
             attachments.append(f_name)
             attach_name+=attach.name+ ', '
-        print invoice.address_invoice_id.type
         if invoice.address_invoice_id.type=='invoice':
             to=invoice.address_invoice_id.email
         subject= 'Invoice '+invoice.number or False
@@ -230,7 +230,7 @@ class ir_attachment_facturae_mx(osv.osv):
         if not state:
             msj='Please Check the Server Configuration!'
         else :
-            msj='Email Send Successfully'
+            msj='Email Send Successfully'"""
         return self.write(cr, uid, ids, {'state': 'sent_customer', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj})
 
     def action_send_backup(self, cr, uid, ids, context=None):
