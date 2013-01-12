@@ -246,6 +246,7 @@ class ir_attachment_facturae_mx(osv.osv):
         attach_obj = self.pool.get('ir.attachment')
         type=self.browse(cr,uid,ids)[0].type
         invoice =self.browse(cr,uid,ids)[0].invoice_id
+        msj=''
         if type=='cfdi32':
             get_file_cancel=invoice_obj._get_file_cancel(cr, uid, [invoice], context = {})
             sf_cancel=invoice_obj.sf_cancel(cr, uid, [invoice.id], context = {})

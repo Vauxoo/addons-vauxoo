@@ -41,24 +41,19 @@ class account_invoice(osv.osv):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids, args)
 
-    def action_number(self, cr, uid, ids, context=None):
-        wf_service = netsvc.LocalService("workflow")
-        res=super(account_invoice, self).action_number(cr, uid, ids, context)
+    def action_create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         invoice = self.browse(cr, uid, ids, context=context)[0]
-        id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])])
-        for attachment in self.pool.get('ir.attachment.facturae.mx').browse(cr, uid, id_attach, context):
-            continue
-        if not id_attach or attachment.state in ('cancel'):
-            attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
-            'name': invoice.number,
-            'invoice_id': ids[0],
-            'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
-            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
-            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
-            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
-            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
-            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
-            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
-        return res
+        attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
+        'name': invoice.number,
+        'invoice_id': ids[0],
+        'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
+        return True
 
 account_invoice()
