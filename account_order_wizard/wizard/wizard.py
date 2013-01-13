@@ -52,6 +52,9 @@ account_order_wizard_pattern()
 class account_order_wizard(osv.osv_memory):
     _name='account.order.wizard'
     _columns={
+        'select_patter':fields.selection([('wp','With Pattern'),
+                                          ('fp','Free Pattern')],'Select pattern type',
+                                        help='Select pattern type by account'), 
         'account_id':fields.many2one('account.account', 
             'Parent Account',  
             required=True),
@@ -64,7 +67,9 @@ class account_order_wizard(osv.osv_memory):
         'patterns' : fields.one2many('account.order.wizard.pattern', 'wzd_id', 'Patterns'),
     }
 
-    
+    _defaults = {
+           'select_patter':'wp'
+           } 
     def _get_list(self, cr, uid, id, context=None):
         
         def t(s,p='x'):
@@ -214,70 +219,58 @@ class account_order_wizard(osv.osv_memory):
         return {}
 
     
-    def get_code(self, cr, uid, ids, level, context=None):
+    def get_level(self, cr, uid, ids, code, context=None):
         if context is None:
             context = {}
-        cr.execute('''select distinct char_length(code) as code 
+        cr.execute('''select distinct char_length(code) as level 
                         from account_account 
-                        where code like '%s%s'
+                        where code like '%s'
                         and char_length(code) > %s
-                        order by code''' % (level, '%', len(str(level))))
+                        order by level''' % (code+'%', len(str(code))))
 
-        e = cr.dictfetchall()
-        return e
-    
+        
+        return cr.fetchall()    
 
-    def get_levels(self, cr, uid, ids, level, n, context=None):
+
+    def get_code(self, cr, uid, ids, code, level=None, parent_id=None, context=None):
         if context is None:
             context = {}
-        cr.execute('''select id, code 
-                      from account_account 
-                      where code like '%s'
-                      order by code''' % (int(n) == 1 and '_' \
-                                        or str(level).ljust(n,'_')  )) 
+        print 'leve',level
+        if parent_id:
+            cr.execute('''select id, code 
+                          from account_account 
+                          where id <> %s and code like '%s' 
+                          order by code''' % (parent_id,str(code).ljust(int(level),'_') ))  
+        else: 
+            cr.execute('''select id, code 
+                          from account_account 
+                          where code like '%s'
+                          order by code''' % (str(code).ljust(int(level),'_') ))  
         
-        e = cr.dictfetchall()
 
-        return e
+        return cr.dictfetchall()    
     
-    
-    def cicle_account(self, cr, uid, ids, mlevels=(), context=None):
+    def order_without_pattern(self, cr, uid, ids, context=None, code='', pid=None):
         if context is None:
-             context = {}
-        t = True
-        mlevels = type(mlevels) is list and mlevels or [mlevels]
-        for mlevel in mlevels:
-            d = mlevel.get('code') != 0 and self.get_code(cr, uid, ids,
-                                                    mlevel.get('code'),
-                                                    context)
-            for i in d:
-                t = self.get_levels(cr, uid, ids, mlevel.get('code'),
-                            int(i.get('code')), context)
-                
-                if t:
-                    print t
-                    [self.cicle_account(cr, uid, ids, le,context) \
-                            for le in t]
+            context = {}
+        wz_brw = self.browse(cr, uid, ids[0], context) 
+        pid = pid or wz_brw.account_id.id
+        company_id  = wz_brw.company_id.id
+        account_obj = self.pool.get('account.account')
+        levels = self.get_level(cr, uid, ids, code, context) 
+        while levels:
+            level = levels.pop(0) 
+            codes = self.get_code(cr, uid, ids, code, level and level[0], 
+                                  pid, context)
+            c_ids = [i.get('id') for i in codes]
+            c_ids = list(set(c_ids)-set([pid]))
+            account_obj.write(cr, uid, c_ids, {'parent_id':pid}, context=context)
+            cr.commit()
+            while codes:
+                codex = codes.pop(0)
+                codex.get('code') != 0 and self.order_without_pattern(cr, uid, ids,
+                                          context, codex.get('code'),codex.get('id'))
             
-        return True
-     
-    
-    def order_without_pattern(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-    
-        levels = cr.execute('''select distinct char_length(code) as a 
-                               from account_account 
-                               order by a''') 
-
-        levels = cr.dictfetchall()
-        for level in levels:
-            print 'eeeee' 
-            mlevels = self.get_levels(cr, uid, ids, level.get('a'),
-                                int(level.get('a')), context)
-            self.cicle_account(cr, uid, ids, mlevels, context) 
-        
-        print kjhgf
         return True
     
 

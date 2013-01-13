@@ -13,7 +13,8 @@
                             <field name='account_id' colspan='6' domain="[('parent_id','=',None),('company_id','=',company_id)]"/>
                         </group>
                         <group col='2'>
-                            <field name='patterns' mode='tree' nolabel='1' colspan='2'>
+                            <field name='select_patter' colspan='6'/>
+                            <field name='patterns' mode='tree' nolabel='1' attrs="{'invisible':[('select_patter','=','fp')]}" colspan='2'>
                                 <tree string='Patterns' editable='bottom'>
                                     <field name='pattern'/>
                                 </tree>
@@ -21,8 +22,8 @@
                         </group>
                     </group>
                     <newline/>
-                    <button icon="STOCK_OK" name="get_order" string="Ordenar" type="object"/>
-                    <button icon="STOCK_OK" name="order_without_pattern" string="Ordenari" type="object"/>
+                    <button icon="STOCK_OK" name="get_order" string="Ordenar" attrs="{'invisible':[('select_patter','=','fp')]}" type="object"/>
+                    <button icon="STOCK_OK" name="order_without_pattern" attrs="{'invisible':[('select_patter','=','wp')]}" string="Ordenar" type="object"/>
                 </form>
             </field>
         </record>
