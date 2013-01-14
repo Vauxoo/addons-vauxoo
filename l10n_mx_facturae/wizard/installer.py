@@ -58,4 +58,4 @@ class facturae_config(osv.osv_memory):
         'company_id': fields.many2one('res.company',u'Company',help="Select company to assing vat and/or cif"),
     }
 
-facturae_config()
+#~ facturae_config()

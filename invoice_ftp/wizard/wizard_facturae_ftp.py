@@ -25,7 +25,6 @@
 ##############################################################################
 
 from osv import fields, osv
-import wizard
 import netsvc
 import pooler
 import time

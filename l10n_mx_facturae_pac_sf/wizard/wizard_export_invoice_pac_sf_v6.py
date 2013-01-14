@@ -27,7 +27,6 @@
 ##############################################################################
 
 from osv import fields, osv
-import wizard
 import netsvc
 import pooler
 import time
@@ -42,6 +41,7 @@ import xml.dom.minidom
 from datetime import datetime, timedelta
 from tools.misc import ustr
 import time
+from openerp.tools.translate import _
 
 
 class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
@@ -59,6 +59,7 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._upload_ws_file(cr, uid, context['active_ids'])
         self.write(cr, uid, ids, {'message': res['msg'] }, context=None)
+        raise osv.except_osv(_('Warning'), _(res['msg']))
         return True
 
     _columns = {

@@ -26,5 +26,5 @@
 ##############################################################################
 
 import invoice
-import wizard
 import report
+import wizard

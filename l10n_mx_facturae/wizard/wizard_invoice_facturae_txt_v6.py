@@ -27,7 +27,7 @@
 ##############################################################################
 
 import pooler
-import wizard
+#~ import wizard
 import base64
 import netsvc
 from tools.translate import _

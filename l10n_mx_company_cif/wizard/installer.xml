@@ -7,30 +7,14 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="base.res_config_view_base"/>
         <field name="arch" type="xml">
-          <data>
-            <form position="attributes">
-              <attribute name="string">Electronic Invoice Configuration</attribute>
-            </form>
-            <separator string="title" position="attributes">
-            <attribute name="string">Configure cif for Electronic Invoice</attribute>
-              </separator>
-              <xpath expr="//label[@string='description']" position="attributes">
-                  <attribute name="string">Through the next wizard can configure the CIF for your business..
-                  </attribute>
-              </xpath>
-            <xpath expr='//separator[@string="vsep"]' position='attributes'>
-                  <attribute name='rowspan'>5</attribute>
-                  <attribute name='string'></attribute>
-              </xpath>
-            <group string="res_config_contents" position="replace">
-                   <group colspan="4" col="8">
-                    <separator orientation="vertical"/>
-                    <group colspan="1" col="1">
-                        <field name="cif_file" widget='image'/>
-                    </group> 
-                   </group>
-            </group>
-          </data>
+        <xpath expr="/form/group" position="replace">
+            <group string="Configure CIF for Electronic Invoice"/>
+        </xpath>
+        <xpath expr="/form/footer" position="after">
+            <group colspan="1" col="1">
+                <field name="cif_file" widget='image'/>
+            </group> 
+        </xpath>
         </field>
     </record>
     
@@ -43,16 +27,11 @@
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
-    <record id="config_wizard_step_invoice_electronic" model="ir.actions.todo.category">
-        <field name="name">Electronic Invoice</field>
-        <field name="sequence">5</field>
-    </record>
+    
     <record model="ir.actions.todo" id="config_auto_invoice_electronic">
         <field name="action_id" ref="action_config_invoice_electronic"/>
-        <field name="category_id" ref="config_wizard_step_invoice_electronic"/>
         <field name="type">automatic</field>
     </record>    
-
     
   </data>
 </openerp>

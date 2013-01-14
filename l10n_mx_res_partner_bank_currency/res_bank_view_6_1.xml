@@ -7,12 +7,13 @@
             <field name="model">res.partner.bank</field>
             <field name="inherit_id" ref="base.view_partner_bank_form"/>
             <field name="arch" type="xml">
-                <field name="bank" position="after">
+                <xpath expr="/form[@string='Bank account']/group/group[@name='bank']/field[@name='bank']" position="after">
                     <field name="currency2_id" colspan="2"/>
-                </field>
+                </xpath>
             </field>
         </record>
         
+<!--
         <record model="ir.ui.view" id="view_partner_form_inh_xml22">
             <field name="name">view.partner.form.inh.xml22</field>
             <field name="type">form</field>
@@ -25,5 +26,6 @@
                 </field>
             </field>
         </record>
+-->
     </data>
 </openerp>

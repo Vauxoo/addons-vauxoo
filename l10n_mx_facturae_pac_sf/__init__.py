@@ -26,6 +26,5 @@
 ##############################################################################
 import invoice
 import report
-import wizard
 import params_pac
-import ir_sequence_approval
+import wizard

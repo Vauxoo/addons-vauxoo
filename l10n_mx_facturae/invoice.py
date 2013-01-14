@@ -805,9 +805,9 @@ class account_invoice(osv.osv):
 
             if not address_invoice_id:
                 raise osv.except_osv('Warning !', 'No se tiene definido los datos de facturacion del partner [%s].\n%s !'%(partner.name, msg2))
-
-            address_invoice = self.pool.get('res.partner.address').browse(cr, uid, address_invoice_id, context)
-            address_invoice_parent = self.pool.get('res.partner.address').browse(cr, uid, address_invoice_parent_id, context)
+            
+            address_invoice = self.pool.get('res.partner').browse(cr, uid, address_invoice_id, context)
+            address_invoice_parent = self.pool.get('res.partner').browse(cr, uid, address_invoice_parent_id, context)
 
             if not partner.vat:
                 raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(partner.name, msg2))
@@ -855,17 +855,17 @@ class account_invoice(osv.osv):
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
                 'rfc': rfc,
-                'nombre': (invoice.address_invoice_id.name or invoice.partner_id.name or ''),
+                'nombre': (invoice.partner_id.name or ''),
                 'Domicilio': {
-                    'calle': invoice.address_invoice_id.street and invoice.address_invoice_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': invoice.address_invoice_id.street3 and invoice.address_invoice_id.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
-                    'noInterior': invoice.address_invoice_id.street4 and invoice.address_invoice_id.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
-                    'colonia':  invoice.address_invoice_id.street2 and invoice.address_invoice_id.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A' ,
-                    'localidad': invoice.address_invoice_id.city2 and invoice.address_invoice_id.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
-                    'municipio': invoice.address_invoice_id.city and invoice.address_invoice_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    'estado': invoice.address_invoice_id.state_id and invoice.address_invoice_id.state_id.name and invoice.address_invoice_id.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
-                    'pais': invoice.address_invoice_id.country_id and invoice.address_invoice_id.country_id.name and invoice.address_invoice_id.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
-                    'codigoPostal': invoice.address_invoice_id.zip and invoice.address_invoice_id.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'calle': invoice.partner_id.street and invoice.partner_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'noExterior': invoice.partner_id.street3 and invoice.partner_id.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
+                    'noInterior': invoice.partner_id.street4 and invoice.partner_id.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
+                    'colonia':  invoice.partner_id.street2 and invoice.partner_id.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A' ,
+                    'localidad': invoice.partner_id.city2 and invoice.partner_id.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                    'municipio': invoice.partner_id.city and invoice.partner_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'estado': invoice.partner_id.state_id and invoice.partner_id.state_id.name and invoice.partner_id.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
+                    'pais': invoice.partner_id.country_id and invoice.partner_id.country_id.name and invoice.partner_id.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
+                    'codigoPostal': invoice.partner_id.zip and invoice.partner_id.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                 },
             })
             #Termina seccion: Receptor
