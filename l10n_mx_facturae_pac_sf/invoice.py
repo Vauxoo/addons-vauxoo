@@ -160,6 +160,7 @@ class account_invoice(osv.osv):
         </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate)
         file = False
         msg = ''
+        status = ''
 
         cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
         pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
