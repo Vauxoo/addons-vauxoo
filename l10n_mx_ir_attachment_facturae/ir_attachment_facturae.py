@@ -118,7 +118,7 @@ class ir_attachment_facturae_mx(osv.osv):
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
-            aids = self.pool.get('ir.attachment').search(cr, uid, [('name','=',fname_invoice),('res_model','=','account.invoice')])[0]
+            aids = self.pool.get('ir.attachment').search(cr, uid, [('name','=',fname_invoice),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
         return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
@@ -164,7 +164,10 @@ class ir_attachment_facturae_mx(osv.osv):
                 'email_to': invoice.partner_id.email,
                 'auto_delete': False,
                 'body_html': attach_name,
-                'attachment_ids': [(6, 0, attachments)]
+                'attachment_ids': [(6, 0, attachments)],
+                'model': invoice._name,
+                'record_name': invoice.number,
+                'res_id': invoice.id,
                 #'email_cc': 'juan@vauxoo.com',
                 #'partner_ids': invoice.partner_id.email,
                 }, context=context)
