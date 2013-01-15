@@ -163,37 +163,13 @@
                     %if prod.variation_finished_product_ids:
                         <tr>
                             <td class="basic_td">Variación de la producción</td>
-                            <td class="number_td">$ ${round(total_var_pt_c,2)-round(total_var_c,2) or '0.00'|entity}</td>
+                            <td class="number_td">$ ${round(total_var_c,2)-round(total_var_pt_c,2) or '0.00'|entity}</td>
                         </tr>
                         %endif
                 </table>
                 
-                %if prod.subproduction_ids:
-                    <br/> For subproductions:
-                    <table class="basic_table">
-                    <tr>
-                        <td class="basic_td">*</td>
-                        <td class="basic_td"><b>Reference:</td>
-                        <td class="basic_td">Planned quantity:</td>
-                        <td class="basic_td">Date:</td>
-                        <td class="basic_td">Unit of M:</td>
-                    </tr>
-                    %for subps in prod.subproduction_ids:
-                        <tr>
-                            <td class="basic_td"><b>--</td>
-                            <td class="basic_td"><b>${subps.name or ''|entity} - ${subps.product_id.name |entity}</td>
-                            <td class="basic_td">${subps.product_qty or ''|entity}</td>
-                            <td class="basic_td">${subps.date_planned or ''|entity}</td>
-                            <td class="basic_td">${subps.product_uom.name or ''|entity}</td>
-                        </tr>
-                    %endfor
-                    </table>
-                    <br/>
-                %endif
-                
                 %if prod.superproduction_ids:
                     <br/> For superproductions:
-                    <%superps_list=[]%>
                     <table class="basic_table">
                     <tr>
                         <td class="basic_td">#</td>
@@ -203,7 +179,6 @@
                         <td class="basic_td">Unit of M:</td>
                     </tr>
                     %for superps in prod.superproduction_ids:
-                        <%superps_list.append(superps)%>
                         <tr>
                             <td class="basic_td"><b>--</td>
                             <td class="basic_td"><b>${superps.name or ''|entity} - ${superps.product_id.name |entity}</td>
@@ -215,12 +190,37 @@
                     </table>
                     <br/>
 
+                %endif
+                
+                %if prod.subproduction_ids:
+                    <br/> For subproductions:
+                    <%subps_list=[]%>
+                    <table class="basic_table">
+                    <tr>
+                        <td class="basic_td">*</td>
+                        <td class="basic_td"><b>Reference:</td>
+                        <td class="basic_td">Planned quantity:</td>
+                        <td class="basic_td">Date:</td>
+                        <td class="basic_td">Unit of M:</td>
+                    </tr>
+                    %for subps in prod.subproduction_ids:
+                        <%subps_list.append(subps)%>
+                        <tr>
+                            <td class="basic_td"><b>--</td>
+                            <td class="basic_td"><b>${subps.name or ''|entity} - ${subps.product_id.name |entity}</td>
+                            <td class="basic_td">${subps.product_qty or ''|entity}</td>
+                            <td class="basic_td">${subps.date_planned or ''|entity}</td>
+                            <td class="basic_td">${subps.product_uom.name or ''|entity}</td>
+                        </tr>
+                    %endfor
+                    </table>
+                    <br/>
                     <hr>Children production detail
                     <br/>
                     <table class="basic_table">
                         <tr>
                             <td class="basic_td">-&gt;</td>
-                            <td class="basic_td">${all_prods(superps_list)}</td>
+                            <td class="basic_td">${all_prods(subps_list)}</td>
                         </tr>
                     </table>
                 %endif
@@ -231,5 +231,29 @@
             <p style="page-break-after:always"></p>
         %endfor
         
+        <%def name="addToList(self, to_add)">
+            This is not on list ${self.all_ids or 'xx'|entity}
+            <%return to_add.id%>
+        </%def>
+        
+        <%def name="get_all_ids()">
+            <%all_ids=[]%>
+            <%prueba=0%>
+            %for o in objects:
+                <br> ${o.id or ''|entity} renglon
+                <%all_ids.append(o.id)%>
+                %if o.subproduction_ids:
+                    %for subps in o.subproduction_ids:
+                        <%prueba=addToList(self, subps)%>
+                        <%all_ids.append(prueba)%>
+                    %endfor
+                    <br>
+                    imprimo all_ids ${all_ids or 'xx'|entity}
+                %endif
+            %endfor
+        </%def>
+        
+        llamando funcion
+        ${get_all_ids()}
     </body>
 </html>
