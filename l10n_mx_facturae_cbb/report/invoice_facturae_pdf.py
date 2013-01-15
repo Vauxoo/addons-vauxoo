@@ -176,14 +176,14 @@ class account_invoice_facturae_pdf2(report_sxw.rml_parse):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
         partner_obj = pool.get('res.partner')
-        address_obj = pool.get('res.partner.address')
+        address_obj = pool.get('res.partner')
         invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
         partner_id = invoice.company_id.parent_id and invoice.company_id.parent_id.partner_id.id or invoice.company_id.partner_id.id
         self.invoice = invoice
         #print "partner_id",partner_id
         #invoice = partner_obj.browse(cr, uid, invoice_id)
         address_id = partner_obj.address_get(self.cr, self.uid, [partner_id], ['invoice'])['invoice']
-        self.company_address_invoice = address_obj.browse(self.cr, self.uid, address_id)
+        self.company_address_invoice = address_obj.browse(self.cr, self.uid, partner_id)
 
         subpartner_id = invoice.company_id.partner_id.id
         if partner_id == subpartner_id:
