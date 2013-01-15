@@ -3,11 +3,12 @@
     <data>
 
         <act_window
+            context="{'search_default_invoice_id': active_id, 'default_invoice_id': active_id}"
             id="act_invoice_attachment"
             name="Attachment Factura E MX"
-            res_model="ir.attachment.facturae.mx"
             src_model="account.invoice"
-            context="{'search_default_invoice_id': [active_id], 'default_invoice_id': active_id}" />
+            res_model="ir.attachment.facturae.mx"
+            />
 
     </data>
 </openerp>
