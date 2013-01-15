@@ -176,7 +176,7 @@
             <field name="action">action_date_assign()
 action_move_create()
 action_number()
-invoice_validate()
+write({'state':'open'})
 action_create_ir_attachment_facturae()</field>
         </record>
 

@@ -26,7 +26,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates attachment for Invoice
+    "description" : """This module creates attachment for Invoice(CFD,CFDI,CBB)
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

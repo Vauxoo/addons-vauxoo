@@ -29,8 +29,8 @@ import time
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
-    def action_cancel(self, cr, uid, ids, context, *args):
-        id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])])
+    def action_cancel(self, cr, uid, ids, context=None):
+        id_attach=self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id','=',ids[0])], context)
         wf_service = netsvc.LocalService("workflow")
         inv_type_facturae = {'out_invoice': True, 'out_refund': True, 'in_invoice': False, 'in_refund': False}
         for inv in self.browse(cr, uid, ids):
@@ -39,7 +39,7 @@ class account_invoice(osv.osv):
                     if attachment.state=='done':
                         wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attachment.id, 'action_cancel', cr)
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-        return super(account_invoice, self).action_cancel(cr, uid, ids, args)
+        return super(account_invoice, self).action_cancel(cr, uid, ids, context)
 
     def action_create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         invoice = self.browse(cr, uid, ids, context=context)[0]
