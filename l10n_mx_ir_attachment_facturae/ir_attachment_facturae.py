@@ -41,23 +41,23 @@ class ir_attachment_facturae_mx(osv.osv):
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
         'company_id': fields.many2one('res.company', 'Company', readonly=True),
         #'pac_id': ,Ver si no genera dependencia del modelo de pac
-        'file_input': fields.many2one('ir.attachment', 'File input'),#TODO: Agregar readonly dependiendo del state
+        'file_input': fields.many2one('ir.attachment', 'File input',readonly=True),
         'file_input_index': fields.text('File input'),
-        'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign'),
+        'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',readonly=True),
         'file_xml_sign_index': fields.text('File XML Sign Index'),
-        'file_pdf': fields.many2one('ir.attachment', 'File PDF'),
+        'file_pdf': fields.many2one('ir.attachment', 'File PDF',readonly=True),
         'file_pdf_index': fields.text('File PDF Index'),
         'identifier': fields.char('Identifier', size=128),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True),
         'description': fields.text('Description'),
         #'invoice_type': fields.ref(),#referencia al tipo de factura
         'msj': fields.text('Last Message', readonly=True),
         'last_date': fields.datetime('Last Modified', readonly=True),
         'state': fields.selection([
                 ('draft', 'Draft'),
-                ('confirmed', 'Confirmed'),#Generate XML
-                ('signed', 'Signed'),#Generate XML Sign
-                ('printable', 'Printable Format Generated'),#Generate PDF
+                ('confirmed', 'Confirmed'),
+                ('signed', 'Signed'),
+                ('printable', 'Printable Format Generated'),
                 ('sent_customer', 'Sent Customer'),
                 ('sent_backup', 'Sent Backup'),
                 ('done', 'Done'),
@@ -168,8 +168,7 @@ class ir_attachment_facturae_mx(osv.osv):
                 'model': invoice._name,
                 'record_name': invoice.number,
                 'res_id': invoice.id,
-                #'email_cc': 'juan@vauxoo.com',
-                #'partner_ids': invoice.partner_id.email,
+                #'partner_ids': invoice.partner_id,
                 }, context=context)
         state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
         if not state:
