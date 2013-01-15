@@ -20,13 +20,14 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-import tools
+from openerp.tools.translate import _
 import time
 from osv import fields, osv, orm
 import tempfile
 import base64
 import os
 import netsvc
+import tools
 
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
@@ -117,8 +118,8 @@ class ir_attachment_facturae_mx(osv.osv):
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
-            aids = self.pool.get('ir.attachment').search(cr, uid, [('name','=',fname_invoice),('res_model','=','account.invoice'),('res_id', '=', invoice.id)])[0]
-        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
+            aids = self.pool.get('ir.attachment').search(cr, uid, [('name','=',fname_invoice),('res_model','=','account.invoice')])[0]
+        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
         aids=[]
@@ -148,25 +149,30 @@ class ir_attachment_facturae_mx(osv.osv):
         attachments=[]
         msj=''
         attach_name=''
-        to=''
-        """invoice =self.browse(cr,uid,ids)[0].invoice_id
-        smtp= self.pool.get('email.smtpclient').browse(cr, uid, uid, context).id
+        state=''
+        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        email_from = self.pool.get('ir.mail_server').browse(cr, uid, uid, context).smtp_user
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
+        subject = 'Invoice '+invoice.number or False
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
-            f_name = tempfile.gettempdir() +'/'+ attach.name
-            open(f_name,'wb').write(base64.decodestring(attach.datas))
-            attachments.append(f_name)
+            attachments.append(attach.id)
             attach_name+=attach.name+ ', '
-        if invoice.address_invoice_id.type=='invoice':
-            to=invoice.address_invoice_id.email
-        subject= 'Invoice '+invoice.number or False
-        message = attach_name
-        state = self.pool.get('email.smtpclient').send_email(cr, uid, smtp, to, tools.ustr(subject), tools.ustr(message), attachments)
+        mail=self.pool.get('mail.mail').create(cr, uid, {
+                'subject': subject,
+                'email_from': email_from,
+                'email_to': invoice.partner_id.email,
+                'auto_delete': False,
+                'body_html': attach_name,
+                'attachment_ids': [(6, 0, attachments)]
+                #'email_cc': 'juan@vauxoo.com',
+                #'partner_ids': invoice.partner_id.email,
+                }, context=context)
+        state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
         if not state:
             msj='Please Check the Server Configuration!'
         else :
-            msj='Email Send Successfully'"""
+            msj='Email Send Successfully'
         return self.write(cr, uid, ids, {'state': 'sent_customer', 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):
