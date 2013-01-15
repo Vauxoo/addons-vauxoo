@@ -232,12 +232,12 @@
         %endfor
         
         <%def name="addToList(self, to_add)">
-            This is not on list ${self.all_ids or 'xx'|entity}
             <%return to_add.id%>
         </%def>
         
         <%def name="get_all_ids()">
             <%all_ids=[]%>
+            <%unique_ids=[]%>
             <%prueba=0%>
             %for o in objects:
                 <br> ${o.id or ''|entity} renglon
@@ -246,11 +246,21 @@
                     %for subps in o.subproduction_ids:
                         <%prueba=addToList(self, subps)%>
                         <%all_ids.append(prueba)%>
+                        %if subps.subproduction_ids:
+                            %for sublvl2 in subps.subproduction_ids:
+                                <%prueba=addToList(self, sublvl2)%>
+                                <%all_ids.append(prueba)%>
+                            %endfor
+                        %endif
                     %endfor
-                    <br>
-                    imprimo all_ids ${all_ids or 'xx'|entity}
                 %endif
             %endfor
+            <br>
+            imprimo all_ids ${all_ids or '[]'|entity}
+            <%mySet = set(all_ids)%>
+            <%unique_ids = list(mySet)%>
+            <br>
+            imprimo unique_ids ${unique_ids or '[]'|entity}
         </%def>
         
         llamando funcion
