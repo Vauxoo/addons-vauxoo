@@ -8,6 +8,7 @@
             name="Attachment Factura E MX"
             src_model="account.invoice"
             res_model="ir.attachment.facturae.mx"
+            domain="[('invoice_id','=',active_id)]"
             />
 
     </data>
