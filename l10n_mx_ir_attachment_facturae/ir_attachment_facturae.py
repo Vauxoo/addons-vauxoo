@@ -38,7 +38,7 @@ class ir_attachment_facturae_mx(osv.osv):
 
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice'),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
         'company_id': fields.many2one('res.company', 'Company', readonly=True),
         #'pac_id': ,Ver si no genera dependencia del modelo de pac
         'file_input': fields.many2one('ir.attachment', 'File input',readonly=True),
