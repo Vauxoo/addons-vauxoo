@@ -246,7 +246,6 @@
           </td>
           <td>
             <para style="Table Contents">[[ l.name ]]</para>
-            <para style="P6">Notas: [[l.note or removeParentNode('para')]]</para>
           </td>
           <td>
             <para style="Table Contents">[[ l.product_id and l.product_id.default_code ]]</para>
