@@ -262,9 +262,9 @@ class account_invoice(osv.osv):
         })
         return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)
     
-    def action_cancel(self, cr, uid, ids, *args):
+    def action_cancel(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-        return super(account_invoice, self).action_cancel(cr, uid, ids, args)
+        return super(account_invoice, self).action_cancel(cr, uid, ids, context=context)
 
     def action_date_assign(self, cr, uid, ids, *args):
         context={}
