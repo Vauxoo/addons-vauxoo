@@ -28,6 +28,7 @@ import base64
 import os
 import netsvc
 import tools
+import release
 
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
@@ -38,26 +39,26 @@ class ir_attachment_facturae_mx(osv.osv):
 
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice'),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
         'company_id': fields.many2one('res.company', 'Company', readonly=True),
         #'pac_id': ,Ver si no genera dependencia del modelo de pac
-        'file_input': fields.many2one('ir.attachment', 'File input'),#TODO: Agregar readonly dependiendo del state
+        'file_input': fields.many2one('ir.attachment', 'File input',readonly=True),
         'file_input_index': fields.text('File input'),
-        'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign'),
+        'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',readonly=True),
         'file_xml_sign_index': fields.text('File XML Sign Index'),
-        'file_pdf': fields.many2one('ir.attachment', 'File PDF'),
+        'file_pdf': fields.many2one('ir.attachment', 'File PDF',readonly=True),
         'file_pdf_index': fields.text('File PDF Index'),
         'identifier': fields.char('Identifier', size=128),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True),
         'description': fields.text('Description'),
         #'invoice_type': fields.ref(),#referencia al tipo de factura
         'msj': fields.text('Last Message', readonly=True),
         'last_date': fields.datetime('Last Modified', readonly=True),
         'state': fields.selection([
                 ('draft', 'Draft'),
-                ('confirmed', 'Confirmed'),#Generate XML
-                ('signed', 'Signed'),#Generate XML Sign
-                ('printable', 'Printable Format Generated'),#Generate PDF
+                ('confirmed', 'Confirmed'),
+                ('signed', 'Signed'),
+                ('printable', 'Printable Format Generated'),
                 ('sent_customer', 'Sent Customer'),
                 ('sent_backup', 'Sent Backup'),
                 ('done', 'Done'),
@@ -118,7 +119,7 @@ class ir_attachment_facturae_mx(osv.osv):
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
-            aids = self.pool.get('ir.attachment').search(cr, uid, [('name','=',fname_invoice),('res_model','=','account.invoice')])[0]
+            aids = self.pool.get('ir.attachment').search(cr, uid, [('name','=',fname_invoice),('res_model','=','account.invoice'),('res_id','=',invoice.id)])[0]
         return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': aids or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': res['msg']}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
@@ -158,17 +159,33 @@ class ir_attachment_facturae_mx(osv.osv):
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
             attachments.append(attach.id)
             attach_name+=attach.name+ ', '
-        mail=self.pool.get('mail.mail').create(cr, uid, {
+        if release.version >= '7':
+            mail=self.pool.get('mail.mail').create(cr, uid, {
                 'subject': subject,
                 'email_from': email_from,
                 'email_to': invoice.partner_id.email,
                 'auto_delete': False,
                 'body_html': attach_name,
-                'attachment_ids': [(6, 0, attachments)]
-                #'email_cc': 'juan@vauxoo.com',
-                #'partner_ids': invoice.partner_id.email,
+                'attachment_ids': [(6, 0, attachments)],
+                'model': invoice._name,
+                'record_name': invoice.number,
+                'res_id': invoice.id,
+                #'partner_ids': invoice.partner_id,
                 }, context=context)
-        state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
+            state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
+        elif release.version < '7':
+            mail=self.pool.get('mail.message').create(cr, uid, {
+                'subject': subject,
+                'date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                'email_from': email_from,
+                'email_to': invoice.address_invoice_id.email,
+                'auto_delete': False,
+                'body_text': attach_name,
+                'attachment_ids': [(6, 0, attachments)],
+                'model': invoice._name,
+                'res_id': invoice.id,
+                }, context=context)
+            state = self.pool.get('mail.message').send(cr, uid, [mail], auto_commit=False, context=context)
         if not state:
             msj='Please Check the Server Configuration!'
         else :
