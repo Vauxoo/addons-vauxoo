@@ -28,6 +28,7 @@ import base64
 import os
 import netsvc
 import tools
+import release
 
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
@@ -158,7 +159,8 @@ class ir_attachment_facturae_mx(osv.osv):
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
             attachments.append(attach.id)
             attach_name+=attach.name+ ', '
-        mail=self.pool.get('mail.mail').create(cr, uid, {
+        if release.version >= 7:
+            mail=self.pool.get('mail.mail').create(cr, uid, {
                 'subject': subject,
                 'email_from': email_from,
                 'email_to': invoice.partner_id.email,
@@ -170,7 +172,20 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_id': invoice.id,
                 #'partner_ids': invoice.partner_id,
                 }, context=context)
-        state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
+            state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
+        else:
+            mail=self.pool.get('mail.message').create(cr, uid, {
+                'subject': subject,
+                'date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                'email_from': email_from,
+                'email_to': invoice.address_invoice_id.email,
+                'auto_delete': False,
+                'body_text': attach_name,
+                'attachment_ids': [(6, 0, attachments)],
+                'model': invoice._name,
+                'res_id': invoice.id,
+                }, context=context)
+            state = self.pool.get('mail.message').send(cr, uid, [mail], auto_commit=False, context=context)
         if not state:
             msj='Please Check the Server Configuration!'
         else :
