@@ -20,5 +20,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-import invoice
-import ir_attachment_facturae
+import release
+if release.version < '7':
+    import invoice_v6
+    import ir_attachment_facturae
+if release.version >= '7':
+    import invoice_v7
+    import ir_attachment_facturae
