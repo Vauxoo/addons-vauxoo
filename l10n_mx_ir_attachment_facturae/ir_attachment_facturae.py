@@ -159,7 +159,7 @@ class ir_attachment_facturae_mx(osv.osv):
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
             attachments.append(attach.id)
             attach_name+=attach.name+ ', '
-        if release.version >= 7:
+        if release.version >= '7':
             mail=self.pool.get('mail.mail').create(cr, uid, {
                 'subject': subject,
                 'email_from': email_from,
@@ -173,7 +173,7 @@ class ir_attachment_facturae_mx(osv.osv):
                 #'partner_ids': invoice.partner_id,
                 }, context=context)
             state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
-        else:
+        elif release.version < '7':
             mail=self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject,
                 'date': time.strftime('%Y-%m-%d %H:%M:%S'),
