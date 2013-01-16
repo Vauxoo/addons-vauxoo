@@ -22,8 +22,8 @@
 ################################################################################
 import release
 if release.version < '7':
-    import invoice_v6
+    import invoice_view_v6
     import ir_attachment_facturae
 if release.version >= '7':
-    import invoice_v7
+    import invoice_view_v7
     import ir_attachment_facturae
