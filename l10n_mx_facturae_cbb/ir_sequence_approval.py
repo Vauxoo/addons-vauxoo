@@ -39,8 +39,8 @@ class ir_sequence_approval(osv.osv):
         return types
 
     _columns = {
-        'date_start': fields.date('Fecha de Aprobación', size=32, required=True),
-        'date_end': fields.date('Fecha de Vigencia', size=32, required=True),
+        'date_start': fields.date('Fecha de Aprobación', size=32,),
+        'date_end': fields.date('Fecha de Vigencia', size=32,),
         'cbb_image': fields.binary('Imagen de Código de Barras Bidimensional'),
         'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True,),
     }

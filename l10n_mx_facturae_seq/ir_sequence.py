@@ -36,7 +36,7 @@ class ir_sequence_approval(osv.osv):
     _rec_name = 'approval_number'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = [('cfd22', 'CFD 2.2'),]
+        types = []
         return types
 
     _columns = {
