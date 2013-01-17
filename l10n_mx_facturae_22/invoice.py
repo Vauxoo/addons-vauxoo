@@ -54,15 +54,15 @@ class account_invoice(osv.osv):
             return invoice_data_parents
         else:
             invoice = self.browse(cr, uid, ids, context={'date':date_invoice})[0]
-            city = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('DomicilioFiscal',{}).get('municipio', {}) or False
-            state = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('DomicilioFiscal',{}).get('estado', {}) or False
-            country = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('DomicilioFiscal',{}).get('pais', {}) or False
+            city = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('municipio', {}) or False
+            state = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('estado', {}) or False
+            country = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('pais', {}) or False
             if city and state and country:
                 address = city +' '+ state +', '+ country
             else:
                 raise osv.except_osv(('Domicilio Incompleto!'),('Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)'))
             
-            if not invoice.company_id.partner_id.regimen_fiscal_id.name:
+            if not invoice.company_emitter_id.partner_id.regimen_fiscal_id.name:
                 raise osv.except_osv(('Regimen Fiscal Faltante!'),('El Regimen Fiscal de la compañia emisora del comprobante fiscal es un dato requerido'))
                 
             invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
@@ -71,7 +71,7 @@ class account_invoice(osv.osv):
             invoice_data_parents[0]['Comprobante']['Moneda'] = invoice.currency_id.name or ''
             invoice_data_parents[0]['Comprobante']['NumCtaPago'] = invoice.acc_payment.last_acc_number or 'No identificado'
             invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
-            invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {'Regimen':invoice.company_id.partner_id.regimen_fiscal_id.name or ''}
+            invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {'Regimen':invoice.company_emitter_id.partner_id.regimen_fiscal_id.name or ''}
             invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = address
         
         return invoice_data_parents

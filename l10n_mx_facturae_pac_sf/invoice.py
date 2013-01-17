@@ -163,7 +163,7 @@ class account_invoice(osv.osv):
         msg = ''
 
         cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
-        pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
+        pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar'), ('company_id', '=', invoice.company_emitter_id.id), ('active', '=', True)], limit=1, context=context)
 
         if pac_params_ids:
             pac_params = pac_params_obj.browse(cr, uid, pac_params_ids, context)[0]
@@ -251,7 +251,7 @@ class account_invoice(osv.osv):
 
         invoice_brw = self.browse(cr, uid, context_id, context)
         company_brw = company_obj.browse(cr, uid, [invoice_brw.company_id.id], context)[0]
-        pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_cancelar')],context=context)
+        pac_params_srch = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_cancelar'), ('company_id', '=', invoice_brw.company_emitter_id.id), ('active', '=', True)], context=context)
 
         if pac_params_srch:
             pac_params_brw = pac_params_obj.browse(cr, uid, pac_params_srch, context)[0]
