@@ -849,10 +849,10 @@ class account_invoice(osv.osv):
             else:
                 rfc = ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ','')
             
-            address_invoice_id = partner_obj.search(cr, uid, [('parent_id', '=', invoice.partner_id.id), ('type', '=', 'invoice')])[0]
+            address_invoice_id = partner_obj.search(cr, uid, [('parent_id', '=', invoice.partner_id.id), ('type', '=', 'invoice')])
             if not address_invoice_id:
-                raise osv.except_osv('Warning !', 'No se ha definido una dirección de factura para el cliente', invoice.partner_id.name)
-            address_invoice = partner_obj.browse(cr, uid, address_invoice_id, context=context)
+                raise osv.except_osv('Warning !', 'No se ha definido una dirección de factura para el cliente')
+            address_invoice = partner_obj.browse(cr, uid, address_invoice_id[0], context=context)
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
                 'rfc': rfc,
