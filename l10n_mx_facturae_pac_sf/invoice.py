@@ -234,7 +234,7 @@ class account_invoice(osv.osv):
                             status = 'parent_' + resultado['status']
         else:
             msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
-        return {'file': file, 'msg': msg, 'status': status, 'resultados': resultado['resultados'], 'cfdi_xml': cfdi_xml }
+        return {'file': file, 'msg': msg, 'status': status, 'cfdi_xml': cfdi_xml }
 
 
     def _get_file_cancel(self, cr, uid, inv_ids, context = {}):

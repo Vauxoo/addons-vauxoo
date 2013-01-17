@@ -44,7 +44,7 @@ class account_invoice(osv.osv):
     def action_create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         invoice = self.browse(cr, uid, ids, context=context)[0]
         attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
-        'name': invoice.number,
+        'name': invoice.fname_invoice,
         'invoice_id': ids[0],
         'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
         wf_service = netsvc.LocalService("workflow")

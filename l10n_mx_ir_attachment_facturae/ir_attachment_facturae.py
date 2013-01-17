@@ -177,7 +177,7 @@ class ir_attachment_facturae_mx(osv.osv):
             attachments.append(attach.id)
             attach_name+=attach.name+ ', '
         if release.version >= '7':
-            message = self.pool.get('mail.compose.message').onchange_template_id(cr, uid, [], template_id=5, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
+            message = self.pool.get('mail.compose.message').onchange_template_id(cr, uid, [], template_id=10, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
             mssg = message.get('value', False)
             mssg['partner_ids'] = [(6,0, [5])]
             mssg['attachment_ids'] = [(6, 0, attachments)]
