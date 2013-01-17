@@ -58,7 +58,7 @@
 #    'view/report_cost.xml',
     'view/product_view.xml',
     'view/sale_view.xml',
-    'workflow/sale_workflow.xml',
+#    'workflow/sale_workflow.xml',
     
     
     
