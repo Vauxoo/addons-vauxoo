@@ -185,7 +185,7 @@ class account_invoice(osv.osv):
                             (ref, move_id))
         return True
 
-    def _attach_invoice(self, cr, uid, ids, context=None):
+    """def _attach_invoice(self, cr, uid, ids, context=None):
         self._BEFORE_attach_invoice(cr, uid, ids, context=context)#Debe de quitarse esta modalidad
         print "******************************aqui voy 1"
         if not context:
@@ -205,9 +205,9 @@ class account_invoice(osv.osv):
                 self.pool.get('ir.attachment.facturae.mx').create(cr, uid, data_attach, context=context)
                 #self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
                 #self.create_report_pdf(cr, uid, ids, context={'fname': fname})
-        return True
+        return True"""
 
-    def _BEFORE_attach_invoice(self, cr, uid, ids, context=None):
+    """def _BEFORE_attach_invoice(self, cr, uid, ids, context=None):
         if not context:
             context = {}
         inv_type_facturae = {'out_invoice': True, 'out_refund': True, 'in_invoice': False, 'in_refund': False}
@@ -226,7 +226,7 @@ class account_invoice(osv.osv):
                 self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
                 fname = fname.replace('.xml', '.pdf')
                 self.create_report_pdf(cr, uid, ids, context={'fname': fname})
-        return True
+        return True"""
 
     def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
@@ -805,7 +805,7 @@ class account_invoice(osv.osv):
 
             if not address_invoice_id:
                 raise osv.except_osv('Warning !', 'No se tiene definido los datos de facturacion del partner [%s].\n%s !'%(partner.name, msg2))
-            
+
             address_invoice = self.pool.get('res.partner').browse(cr, uid, address_invoice_id, context)
             address_invoice_parent = self.pool.get('res.partner').browse(cr, uid, address_invoice_parent_id, context)
 
