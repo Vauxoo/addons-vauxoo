@@ -88,6 +88,7 @@
                                 <field name="approval_number"/>
                                 <field name="serie"/>
                                 <field name="approval_year"/>
+                                <field name="type"/>
                                 <field name="number_start"/>
                                 <field name="number_end"/>
                             </tree>
@@ -95,6 +96,7 @@
                                 <field name="approval_number"/>
                                 <field name="serie"/>
                                 <field name="approval_year"/>
+                                <field name="type"/>
                                 <field name="number_start"/>
                                 <field name="number_end"/>
                             </form>

@@ -25,8 +25,21 @@
 #
 ##############################################################################
 
-import invoice
-import wizard
-import report
-import ir_attachment_facturae
-import ir_sequence_approval
+from osv import osv
+from osv import fields
+
+class ir_sequence_approval(osv.osv):
+    _inherit = 'ir.sequence.approval'
+
+    def _get_type(self, cr, uid, ids=None, context=None):
+        types = super(ir_sequence_approval, self)._get_type(cr, uid, ids, context=context)
+        types.extend([
+            ('cfd22', 'CFD 2.2'),
+        ])
+        return types
+
+    _columns = {
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True),
+    }
+ir_sequence_approval()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
