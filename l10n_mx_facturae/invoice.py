@@ -218,7 +218,7 @@ class account_invoice(osv.osv):
             if sequence_id:
                 sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
             fname = ""
-            fname += (invoice.company_id.partner_id and (invoice.company_id.partner_id._columns.has_key('vat_split') and invoice.company_id.partner_id.vat_split or invoice.company_id.partner_id.vat) or '')
+            fname += (invoice.company_emitter_id.partner_id and (invoice.company_emitter_id.partner_id._columns.has_key('vat_split') and invoice.company_emitter_id.partner_id.vat_split or invoice.company_emitter_id.partner_id.vat) or '')
             fname += '_'
             number_work = invoice.number or invoice.internal_number
             try:
@@ -343,7 +343,7 @@ class account_invoice(osv.osv):
             invoice = self.browse(cr, uid, id, context=context)
             #certificate_id = invoice.company_id.certificate_id
             context.update( {'date_work': invoice.date_invoice_tz} )
-            certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
+            certificate_id = self.pool.get('res.company')._get_current_certificate(cr, uid, [invoice.company_emitter_id.id], context=context)[invoice.company_emitter_id.id]
             certificate_id = certificate_id and self.pool.get('res.company.facturae.certificate').browse(cr, uid, [certificate_id], context=context)[0] or False
             
             if certificate_id:
@@ -799,27 +799,21 @@ class account_invoice(osv.osv):
             #Termina seccion: Comprobante
             #Inicia seccion: Emisor
             partner_obj = self.pool.get('res.partner')
-            partner = invoice.company_id and invoice.company_id.partner_id and invoice.company_id.partner_id or False
-            partner_parent = (invoice.company_id and invoice.company_id.parent_id and invoice.company_id.parent_id.partner_id) or (invoice.company_id.partner_id and invoice.company_id.partner_id) or False
+            address_invoice = invoice.address_issued_id or False
+            address_invoice_parent = invoice.company_emitter_id and invoice.company_emitter_id.address_invoice_parent_company_id or False
             
-            address_invoice_id = partner_obj.address_get(cr, uid, [partner.id], ['invoice'])['invoice']
-            address_invoice_parent_id = partner_obj.address_get(cr, uid, [partner_parent.id], ['invoice'])['invoice']
-            
-            if not address_invoice_id:
-                raise osv.except_osv('Warning !', 'No se tiene definido los datos de facturacion del partner [%s].\n%s !'%(partner.name, msg2))
-            
-            address_invoice = self.pool.get('res.partner').browse(cr, uid, address_invoice_id, context)
-            address_invoice_parent = self.pool.get('res.partner').browse(cr, uid, address_invoice_parent_id, context)
-            
-            if not partner.vat:
-                raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(partner.name, msg2))
+            if not address_invoice:
+                raise osv.except_osv('Warning !', 'No se tiene definida la direccion emisora !')
+                
+            if not address_invoice_parent:
+                raise osv.except_osv('Warning !', 'No se ha definido una compañia  !')
             
             invoice_data = invoice_data_parent['Comprobante']
             invoice_data['Emisor'] = {}
             invoice_data['Emisor'].update({
                 
-                'rfc': ((partner_parent._columns.has_key('vat_split') and partner_parent.vat_split or partner_parent.vat) or '').replace('-', ' ').replace(' ',''),
-                'nombre': address_invoice_parent.name or partner_parent.name or '',
+                'rfc': ((address_invoice_parent._columns.has_key('vat_split') and address_invoice_parent.vat_split or address_invoice_parent.vat) or '').replace('-', ' ').replace(' ',''),
+                'nombre': address_invoice_parent.name or '',
                 #Obtener domicilio dinamicamente
                 #virtual_invoice.append( (invoice.company_id and invoice.company_id.partner_id and invoice.company_id.partner_id.vat or '').replac
                 
@@ -854,20 +848,25 @@ class account_invoice(osv.osv):
                 rfc = 'XAXX010101000'
             else:
                 rfc = ((invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat_split or invoice.partner_id.vat) or '').replace('-', ' ').replace(' ','')
+            
+            address_invoice_id = partner_obj.search(cr, uid, [('parent_id', '=', invoice.partner_id.id), ('type', '=', 'invoice')])[0]
+            if not address_invoice_id:
+                raise osv.except_osv('Warning !', 'No se ha definido una dirección de factura para el cliente', invoice.partner_id.name)
+            address_invoice = partner_obj.browse(cr, uid, address_invoice_id, context=context)
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
                 'rfc': rfc,
                 'nombre': (invoice.partner_id.name or ''),
                 'Domicilio': {
-                    'calle': invoice.partner_id.street and invoice.partner_id.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': invoice.partner_id.street3 and invoice.partner_id.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
-                    'noInterior': invoice.partner_id.street4 and invoice.partner_id.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
-                    'colonia':  invoice.partner_id.street2 and invoice.partner_id.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A' ,
-                    'localidad': invoice.partner_id.city2 and invoice.partner_id.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
-                    'municipio': invoice.partner_id.city and invoice.partner_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    'estado': invoice.partner_id.state_id and invoice.partner_id.state_id.name and invoice.partner_id.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
-                    'pais': invoice.partner_id.country_id and invoice.partner_id.country_id.name and invoice.partner_id.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
-                    'codigoPostal': invoice.partner_id.zip and invoice.partner_id.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'calle': address_invoice.street and address_invoice.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'noExterior': address_invoice.street3 and address_invoice.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
+                    'noInterior': address_invoice.street4 and address_invoice.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
+                    'colonia':  address_invoice.street2 and address_invoice.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A' ,
+                    'localidad': address_invoice.city2 and address_invoice.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                    'municipio': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'estado': address_invoice.state_id and address_invoice.state_id.name and address_invoice.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
+                    'pais': address_invoice.country_id and address_invoice.country_id.name and address_invoice.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
+                    'codigoPostal': address_invoice.zip and address_invoice.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                 },
             })
             #Termina seccion: Receptor
