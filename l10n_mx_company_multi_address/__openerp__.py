@@ -2,7 +2,7 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -26,45 +26,27 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
+    "name" : "Multiaddress para una misma compañia",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
-
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
+    "description" : """This module allows the management of multiaddress for "factura electronica" whitout multicompany scheme
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document",
-            "l10n_mx_facturae_lib", #"l10n_mx_partner_address",
-            "l10n_mx_facturae_cer",
-            "l10n_mx_invoice_datetime",
-            "l10n_mx_invoice_tax_ref",
-            "l10n_mx_facturae_seq",
-            "l10n_mx_company_cif",
-            "l10n_mx_partner_address",
-            "l10n_mx_invoice_amount_to_text",
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
+    "depends" : ["account",#"l10n_mx_facturae_22",
         ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
-        "wizard/wizard_invoice_facturae_txt_v6_view.xml",
-        "wizard/wizard_invoice_facturae_xml_v6_view.xml",
-        "wizard/installer_view.xml",
+        "invoice_view_address.xml",
+        
         #"ir_sequence_view.xml",
         #"res_company_view6.xml",
-        "invoice_view.xml",
+        #"invoice_view.xml",
+        "res_company_view.xml",
+        "account_journal_view.xml",
         #"partner_address_view.xml",
     ],
     "installable" : True,

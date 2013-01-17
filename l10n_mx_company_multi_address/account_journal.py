@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#              Moises Lopez (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,28 +24,57 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import fields
+from osv import osv
 
-{
-    "name" : "l10n_mx_facturae_seq",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Add sequence with limit from approval's for facturaE MX
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "l10n_mx_company_multi_address",
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/l10n_mx_facturae_seq_security.xml",
-        "security/ir.model.access.csv",
-        "ir_sequence_view.xml",
-        "wizard/installer.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+class account_journal(osv.osv):
+    _inherit='account.journal'
+    
+    _columns = {
+        'address_invoice_company_id': fields.many2one('res.partner', 'Invoice Company Address', domain="[('type', '=', 'invoice')]"),
+        'company2_id': fields.many2one("res.company", 'Company Emitter', help="Si este campo es llenado, en la factura electonica se tomaran los datos de esta compañia."),
+    }
+account_journal()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

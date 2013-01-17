@@ -1,8 +1,9 @@
+
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -25,27 +26,6 @@
 #
 ##############################################################################
 
-{
-    "name" : "l10n_mx_facturae_seq",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Add sequence with limit from approval's for facturaE MX
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "l10n_mx_company_multi_address",
-    ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/l10n_mx_facturae_seq_security.xml",
-        "security/ir.model.access.csv",
-        "ir_sequence_view.xml",
-        "wizard/installer.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+import res_company
+import invoice
+import account_journal
