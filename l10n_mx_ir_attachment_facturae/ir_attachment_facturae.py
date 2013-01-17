@@ -160,6 +160,13 @@ class ir_attachment_facturae_mx(osv.osv):
             attachments.append(attach.id)
             attach_name+=attach.name+ ', '
         if release.version >= '7':
+            message = self.pool.get('mail.compose.message').onchange_template_id(cr, uid, [], template_id=5, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
+            mssg = message.get('value', False)
+            mssg['partner_ids'] = [(6,0, [5])]
+            mssg['attachment_ids'] = [(6, 0, attachments)]
+            print mssg,'msg'
+            mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
+            self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
             mail=self.pool.get('mail.mail').create(cr, uid, {
                 'subject': subject,
                 'email_from': email_from,
@@ -172,7 +179,7 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_id': invoice.id,
                 #'partner_ids': invoice.partner_id,
                 }, context=context)
-            state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
+#            state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
         elif release.version < '7':
             mail=self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject,

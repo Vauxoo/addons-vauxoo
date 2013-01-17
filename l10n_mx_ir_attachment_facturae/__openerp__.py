@@ -38,6 +38,7 @@
         "ir_attachment_facturae_view.xml",
         "l10n_mx_facturae_workflow.xml",
         "invoice_view.xml",
+        "l10n_mx_facturae_email_demo.xml",
     ],
     "installable" : True,
     "active" : False,
