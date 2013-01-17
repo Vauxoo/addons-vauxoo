@@ -70,7 +70,7 @@ class account_invoice(osv.osv):
         if cfdi_xml:
             self.write(cr, uid, ids, cfdi_data)
             cfdi_data['cfdi_xml'] = cfdi_xml # Regresando valor, despues de hacer el write normal
-            for invoice in self.browse(cr, uid, ids):
+            """for invoice in self.browse(cr, uid, ids):
                 #fname, xml_data = self.pool.get('account.invoice')._get_facturae_invoice_xml_data(cr, uid, [inv.id], context=context)
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
                 data_attach = {
@@ -86,6 +86,7 @@ class account_invoice(osv.osv):
                     attachment_obj.write(cr, uid, attachment_ids, data_attach, context=context)
                 else:
                     attachment_obj.create(cr, uid, data_attach, context=context)
+                """
         return True
 
     def copy(self, cr, uid, id, default={}, context=None):
@@ -161,6 +162,7 @@ class account_invoice(osv.osv):
         file = False
         msg = ''
         status = ''
+        cfdi_xml = False
 
         cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
         pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar')], limit=1, context=context)
@@ -216,7 +218,11 @@ class account_invoice(osv.osv):
                             url_pac = '</cfdi:Comprobante><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->'
                             cfdi_data['cfdi_xml'] = cfdi_data['cfdi_xml'].replace('</cfdi:Comprobante>', url_pac)
                             file = base64.encodestring( cfdi_data['cfdi_xml'] or '' )
-                            self.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
+                            #self.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
+                            cfdi_xml = cfdi_data.pop('cfdi_xml')
+                            if cfdi_xml:
+                                self.write(cr, uid, inv_ids, cfdi_data)
+                                cfdi_data['cfdi_xml'] = cfdi_xml
                             msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
                         else:
                             msg = msg + "\nNo se pudo extraer el archivo XML del PAC"
@@ -228,7 +234,7 @@ class account_invoice(osv.osv):
                             status = 'parent_' + resultado['status']
         else:
             msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
-        return {'file': file, 'msg': msg, 'status': status}
+        return {'file': file, 'msg': msg, 'status': status, 'resultados': resultado['resultados'], 'cfdi_xml': cfdi_xml }
 
 
     def _get_file_cancel(self, cr, uid, inv_ids, context = {}):
