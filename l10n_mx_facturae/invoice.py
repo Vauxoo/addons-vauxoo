@@ -73,7 +73,7 @@ def find_in_subpath(name, subpath):
 def conv_ascii(text):
     """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
-        'ô', 'û', 'Á', 'É', 'Í', 'Ú', 'Ó', 'À', 'È', 'Ì', 'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', \
+        'ô', 'û', 'Á', 'É', 'Í', 'Ó', 'Ú', 'À', 'È', 'Ì', 'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', \
         'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' ', 'Ã'
     ]
     new_chars = ['a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', 'o', 'u', 'a', 'e', 'i', \
@@ -115,16 +115,12 @@ class account_invoice(osv.osv):
         if not context:
             context = {}
         id = ids[0]
-
         (fileno, fname) = tempfile.mkstemp('.pdf', 'openerp_' + (False or '') + '__facturae__' )
         os.close( fileno )
-
         file = self.create_report(cr, uid, [id], "account.invoice.facturae.pdf", fname)
         is_file = file[0]
         fname = file[1]
-        invoice =self.browse(cr,uid,ids)[0]
-        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.pdf' or ''
-        if is_file and os.path.isfile(fname_invoice):
+        if is_file and os.path.isfile(fname):
             f = open(fname, "r")
             data = f.read()
             f.close()
@@ -148,9 +144,7 @@ class account_invoice(osv.osv):
                 'FROM account_invoice ' \
                 'WHERE id IN ('+','.join(map(str,ids))+')')
         obj_inv = self.browse(cr, uid, ids)[0]
-
         invoice_id__sequence_id = self._get_sequence(cr, uid, ids)##agregado
-
         for (id, invtype, number, move_id, reference) in cr.fetchall():
             if not number:
                 tmp_context = {
@@ -185,55 +179,11 @@ class account_invoice(osv.osv):
                             (ref, move_id))
         return True
 
-    """def _attach_invoice(self, cr, uid, ids, context=None):
-        self._BEFORE_attach_invoice(cr, uid, ids, context=context)#Debe de quitarse esta modalidad
-        print "******************************aqui voy 1"
-        if not context:
-            context = {}
-        inv_type_facturae = {'out_invoice': True, 'out_refund': True, 'in_invoice': False, 'in_refund': False}
-        for inv in self.browse(cr, uid, ids):
-            if inv_type_facturae.get(inv.type, False):
-                fname, xml_data = self.pool.get('account.invoice')._get_facturae_invoice_xml_data(cr, uid, [inv.id], context=context)
-                data_attach = {
-                        'name': fname,
-                        'file_input': xml_data and base64.encodestring( xml_data ) or None,
-                        'description': 'Factura-E XML CFD',
-                        'invoice_id': inv.id,
-                        'company_id': inv.company_id.id,
-                        'type': 'cfd20',#TODO: recibirlo en el context
-                }
-                self.pool.get('ir.attachment.facturae.mx').create(cr, uid, data_attach, context=context)
-                #self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
-                #self.create_report_pdf(cr, uid, ids, context={'fname': fname})
-        return True"""
-
-    """def _BEFORE_attach_invoice(self, cr, uid, ids, context=None):
-        if not context:
-            context = {}
-        inv_type_facturae = {'out_invoice': True, 'out_refund': True, 'in_invoice': False, 'in_refund': False}
-        for inv in self.browse(cr, uid, ids):
-            if inv_type_facturae.get(inv.type, False):
-                fname, xml_data = self.pool.get('account.invoice')._get_facturae_invoice_xml_data(cr, uid, [inv.id], context=context)
-                data_attach = {
-                        'name': fname,
-                        #'datas':binascii.b2a_base64(str(attachents.get(attactment))),
-                        'datas': xml_data and base64.encodestring( xml_data ) or None,
-                        'datas_fname': fname,
-                        'description': 'Factura-E XML',
-                        'res_model': self._name,
-                        'res_id': inv.id,
-                }
-                self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
-                fname = fname.replace('.xml', '.pdf')
-                self.create_report_pdf(cr, uid, ids, context={'fname': fname})
-        return True"""
-
     def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
         res = {}
         sequence_obj = self.pool.get('ir.sequence')
-
         invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids, context=context)
         for invoice in self.browse(cr, uid, ids, context=context):
             sequence_id = invoice_id__sequence_id[invoice.id]

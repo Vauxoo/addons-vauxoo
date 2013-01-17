@@ -123,7 +123,7 @@ class ir_attachment_facturae_mx(osv.osv):
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
-            msj += res['msg'] + '\n'
+            msj += tools.ustr(res['msg']) + '\n'
             if res['status']=='500':
                 raise osv.except_osv(_('Warning'), _(res['msg']))
             data_attach = {
@@ -224,7 +224,7 @@ class ir_attachment_facturae_mx(osv.osv):
         if type=='cfdi32':
             get_file_cancel=invoice_obj._get_file_cancel(cr, uid, [invoice], context = {})
             sf_cancel=invoice_obj.sf_cancel(cr, uid, [invoice.id], context = {})
-            msj += tools.ustr(sf_cancel[u'message'])
+            msj += tools.ustr(sf_cancel['message'])
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
             ids2=attach_obj.write(cr, uid, attachment.id, { 'res_id': False, }, context={})
