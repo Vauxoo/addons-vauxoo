@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
-        <record model="ir.ui.view" id="view_res_company_form_inh_cif">
-            <field name="name">view.res.company.form.inh.cif</field>
+
+        <record model="ir.ui.view" id="view_res_company_form_inherit_cif">
+            <field name="name">view.res.company.form.inherit.cif</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <field name="logo" position="after">
-                    <separator colspan="4" string="Cedula de Identificacion Fiscal (RFC)"/>
+                <xpath expr="/form/sheet/notebook/page[@string='Configuration']" position="after">
+                    <page string="Cedula (RFC)">
                     <field colspan="4" name="cif_file" widget="image"/>
-                </field>
+                    </page>
+                </xpath>
             </field>
         </record>
-        
     </data>
 </openerp>
