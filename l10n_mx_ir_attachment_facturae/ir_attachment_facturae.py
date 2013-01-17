@@ -87,6 +87,8 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_model': 'account.invoice',
                 'res_id': invoice.id,
                 }, context=context)
+            if not attach:
+                msj="Error XML CFD 2.2\n"
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '_V2_2.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
@@ -97,10 +99,12 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_model': 'account.invoice',
                 #'res_id': invoice.id,
                 }, context=context)
+            if not attach:
+                msj="Not Applicable XML CFD 2.2\n"
         if attach:
             msj="Attached Successfully XML CFD 2.2\n"
         else:
-            msj="Error to attachment XML CFD 2.2\n"
+            msj="Not Applicable XML CFD 2.2\n"
         return self.write(cr, uid, ids, {'state': 'confirmed', 'file_input': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_sign(self, cr, uid, ids, context={}):
@@ -108,13 +112,12 @@ class ir_attachment_facturae_mx(osv.osv):
         res= {'msg':''}
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         msj = self.browse(cr,uid,ids)[0].msj
-        print msj
         invoice_obj = self.pool.get('account.invoice')
         attachment_obj = self.pool.get('ir.attachment')
         type=self.browse(cr,uid,ids)[0].type
         if type=='cfd22':
             aids = self.browse(cr,uid,ids)[0].file_input
-            msj += 'Attached Successfully XML\n'
+            msj += 'Attached Successfully XML CFD 2.2\n'
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
@@ -153,16 +156,17 @@ class ir_attachment_facturae_mx(osv.osv):
             aids= attachment.id
             self.pool.get('ir.attachment').write(cr, uid, attachment.id, { 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
-            msj +="Attached Successfully PDF\n"
+            msj+= "Attached Successfully PDF\n"
         else:
-            msj += "No existe PDF\n"
-        return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': aids or False, 'msj': msj,'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
+            msj+= "Not Attached PDF\n"
+        return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': aids or False, 'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
         attachments=[]
         msj=''
         attach_name=''
         state=''
+        type=self.browse(cr,uid,ids)[0].type
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         msj =self.browse(cr,uid,ids)[0].msj
         email_from = self.pool.get('ir.mail_server').browse(cr, uid, uid, context).smtp_user
@@ -174,7 +178,7 @@ class ir_attachment_facturae_mx(osv.osv):
             attach_name+=attach.name+ ', '
         if release.version >= '7':
             mail=self.pool.get('mail.mail').create(cr, uid, {
-                'subject': subject,
+                'subject': subject+' '+type,
                 'email_from': email_from,
                 'email_to': invoice.partner_id.email,
                 'auto_delete': False,
@@ -188,7 +192,7 @@ class ir_attachment_facturae_mx(osv.osv):
             state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
         elif release.version < '7':
             mail=self.pool.get('mail.message').create(cr, uid, {
-                'subject': subject,
+                'subject': subject+' '+type,
                 'date': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'email_from': email_from,
                 'email_to': invoice.address_invoice_id.email,
@@ -200,7 +204,7 @@ class ir_attachment_facturae_mx(osv.osv):
                 }, context=context)
             state = self.pool.get('mail.message').send(cr, uid, [mail], auto_commit=False, context=context)
         if not state:
-            msj +='Please Check the Server Configuration!\n'
+            msj +='Please Check the Email Configuration!\n'
         else :
             msj +='Email Send Successfully\n'
         return self.write(cr, uid, ids, {'state': 'sent_customer', 'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
@@ -217,11 +221,10 @@ class ir_attachment_facturae_mx(osv.osv):
         type=self.browse(cr,uid,ids)[0].type
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         msj = self.browse(cr,uid,ids)[0].msj
-        print "antes",msj
         if type=='cfdi32':
             get_file_cancel=invoice_obj._get_file_cancel(cr, uid, [invoice], context = {})
             sf_cancel=invoice_obj.sf_cancel(cr, uid, [invoice.id], context = {})
-            msj = sf_cancel['message']
+            msj += tools.ustr(sf_cancel[u'message'])
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
             ids2=attach_obj.write(cr, uid, attachment.id, { 'res_id': False, }, context={})
