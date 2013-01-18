@@ -809,6 +809,9 @@ class account_invoice(osv.osv):
                 
             if not address_invoice_parent:
                 raise osv.except_osv('Warning !', 'No se ha definido una compañia  !')
+
+            if not address_invoice_parent.vat:
+                raise osv.except_osv('Warning !', 'No se ha definido RFC para la direccion de factura de la compañia!')
             
             invoice_data = invoice_data_parent['Comprobante']
             invoice_data['Emisor'] = {}
