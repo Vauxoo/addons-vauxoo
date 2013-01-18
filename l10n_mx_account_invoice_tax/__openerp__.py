@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name" : "account_invoice_tax",
+    "name" : "l10n_mx_account_invoice_tax",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
