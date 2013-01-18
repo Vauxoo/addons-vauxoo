@@ -43,11 +43,11 @@ class ir_sequence_approval(osv.osv):
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'approval_number': fields.char(u'Numero de Aprobacion', size=64, required=True),
         'serie': fields.char(u'Serie de Folios', size=12, required=False, help="Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para notas de credito)"),
-        'approval_year': fields.char(u'Anio de Aprobacion', size=32, required=True),
+        'approval_year': fields.char('Año de Aprobacion', size=32, required=True),
         'number_start': fields.integer(u'Desde', required=False),
         'number_end': fields.integer(u'Hasta', required=True),
         'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade'),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
     }
 
     _defaults = {

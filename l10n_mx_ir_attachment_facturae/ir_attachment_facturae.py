@@ -49,7 +49,7 @@ class ir_attachment_facturae_mx(osv.osv):
         'file_pdf': fields.many2one('ir.attachment', 'File PDF',readonly=True),
         'file_pdf_index': fields.text('File PDF Index'),
         'identifier': fields.char('Identifier', size=128),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
         #'invoice_type': fields.ref(),#referencia al tipo de factura
         'msj': fields.text('Last Message', readonly=True),

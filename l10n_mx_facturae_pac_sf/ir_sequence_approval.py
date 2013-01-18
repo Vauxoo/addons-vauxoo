@@ -39,7 +39,7 @@ class ir_sequence_approval(osv.osv):
         return types
 
     _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
     }
 ir_sequence_approval()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
