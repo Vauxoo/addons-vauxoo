@@ -50,10 +50,10 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
     def _get_invoice_id(self, cr, uid, data, context = {}):
         res = {}
         invoice_obj = self.pool.get('account.invoice')
-        res = invoice_obj._get_file(cr, uid, data['active_ids']) 
+        res = invoice_obj._get_file(cr, uid, data['active_ids'])
         file_xml = res['file']
         return file_xml
-        
+
     def upload_to_pac(self, cr, uid, ids, context ={}):
         res = {}
         invoice_obj = self.pool.get('account.invoice')

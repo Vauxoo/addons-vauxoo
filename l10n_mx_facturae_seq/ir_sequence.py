@@ -32,9 +32,13 @@ import release
 
 class ir_sequence_approval(osv.osv):
     _name = 'ir.sequence.approval'
-    
+
     _rec_name = 'approval_number'
-    
+
+    def _get_type(self, cr, uid, ids=None, context=None):
+        types = []
+        return types
+
     _columns = {
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'approval_number': fields.char(u'Numero de Aprobacion', size=64, required=True),
@@ -43,19 +47,20 @@ class ir_sequence_approval(osv.osv):
         'number_start': fields.integer(u'Desde', required=False),
         'number_end': fields.integer(u'Hasta', required=True),
         'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade'),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True),
     }
-    
+
     _defaults = {
         #'serie': lambda *a: '0',
         'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'ir.sequence.approval', context=c),
     }
-    
+
     _sql_constraints = [
         ('number_start', 'CHECK (number_start < number_end )', 'El numero inicial (Desde), tiene que ser menor al final (Hasta)!'),
         ('number_end', 'CHECK (number_end > number_start )', 'El numero final (Hasta), tiene que ser mayor al inicial (Desde)!'),
         #('approval_number_uniq', 'UNIQUE (approval_number)', 'El numero de aprobacion tiene que ser unico'),
     ]
-    
+
     def _check_numbers_range(self, cr, uid, ids, context=None):
         approval = self.browse(cr, uid, ids[0], context=context)
         query = """SELECT approval_1.id AS id1, approval_2.id AS id2--approval_1.number_start, approval_1.number_end, approval_2.number_start, approval_2.number_end, *
@@ -75,7 +80,7 @@ class ir_sequence_approval(osv.osv):
         if res:
             return False
         return True
-    
+
     _constraints = [
         (_check_numbers_range, 'Error ! Hay rangos de numeros solapados entre aprobaciones.', ['sequence_id', 'number_start', 'number_end'])
     ]
@@ -84,14 +89,14 @@ ir_sequence_approval()
 
 class ir_sequence(osv.osv):
     _inherit = 'ir.sequence'
-    
+
     def copy(self, cr, uid, id, default={}, context={}, done_list=[], local=False):
         if not default:
             default = {}
         default = default.copy()
         default['approval_ids'] = False
-        return super(ir_sequence, self).copy(cr, uid, id, default, context=context) 
-    
+        return super(ir_sequence, self).copy(cr, uid, id, default, context=context)
+
     def _get_current_approval(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
@@ -104,19 +109,19 @@ class ir_sequence(osv.osv):
             approval_ids = approval_obj.search(cr, uid, [
                     ('sequence_id', '=', sequence.id),
                     ('number_start', '<=', number_work),
-                    ('number_end', '>=', number_work)], 
+                    ('number_end', '>=', number_work)],
                 limit=1)
             approval_id = approval_ids and approval_ids[0] or False
             res[sequence.id] = approval_id
         return res
-    
+
     _columns = {
         'approval_ids': fields.one2many('ir.sequence.approval', 'sequence_id', 'Sequences'),
         'approval_id': fields.function(_get_current_approval, method=True, type='many2one', relation='ir.sequence.approval', string='Approval Current'),
         #'expiring_rate': fields.integer('Tolerancia de Advertencia', help='Tolerancia Cantidad Advertencia de Folios Aprobados por Terminarse'),
-        #s'expiring' 
+        #s'expiring'
     }
-    
+
     def _check_sequence_number_diff(self, cr, uid, ids, context={}):
         #ahorita nadie manda a llamar esta funcion, ya que no existen los warnings, como tal en OpenERP.
         sequence_number_diff_rate = 10
@@ -135,7 +140,7 @@ class ir_sequence(osv.osv):
                     #raise osv.except_osv(_('Warning !'), _('You cannot remove/deactivate an account which is set as a property to any Partner!'))
         print "_check_sequence_number_diff [data]",[data]
         return data
-    
+
     def get_id(self, cr, uid, sequence_id, test='id=%s', context=None):
         if context is None:
             context = {}

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        
+
         <record model="ir.ui.view" id="account_invoice_form_inh_l10n_mx_facturae_rate">
             <field name="name">account.invoice.form.inh.l10n.mx.facturae.rate</field>
             <field name="model">account.invoice</field>
@@ -13,6 +13,6 @@
                 </xpath>
             </field>
         </record>
-        
+
     </data>
 </openerp>

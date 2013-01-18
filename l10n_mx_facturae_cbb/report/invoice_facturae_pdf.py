@@ -42,9 +42,9 @@ import time
 
 ###sql_delete_report = "DELETE FROM ir_act_report_xml WHERE report_name = 'account.invoice.facturae.pdf'"--Si no toma la actualizacion del reporte xml, borrarlo directamente desde la base de datos, con este script.
 
-class account_invoice_facturae_pdf(report_sxw.rml_parse):
+class account_invoice_facturae_pdf2(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(account_invoice_facturae_pdf, self).__init__(cr, uid, name, context=context)
+        super(account_invoice_facturae_pdf2, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'set_global_data': self._set_global_data,
             'facturae_data_dict': self._facturae_data_dict,
@@ -60,7 +60,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             'exists_key': self._exists_key,
         })
         self.taxes = []
-    
+
     def _exists_key(self, key):
         return self.invoice._columns.has_key(key)
         """
@@ -71,7 +71,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         except:
             return False
         """
-    
+
     def _set_global_data(self, o):
         try:
             self.setLang(o.partner_id.lang)
@@ -89,13 +89,13 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             print "exception: %s"%( e )
             pass
         return ""
-        
+
     def _get_approval(self):
         return self.approval
-        
+
     def _get_invoice_sequence(self):
         return self.sequence
-    
+
     def _set_invoice_sequence_and_approval(self, invoice_id):
         context = {}
         pool = pooler.get_pool(self.cr.dbname)
@@ -109,7 +109,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         #invoice_obj._get_invoice_sequence(self.cr, self.uid, [invoice_id])[invoice_id]
         #sequence_obj.browse(self.cr, self.uid, [sequence_id])[0]
         self.sequence = sequence
-        
+
         #invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id])[0]
         approval = sequence and sequence.approval_id or False
         approval_id = approval and approval.id or False
@@ -117,17 +117,17 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         #approval = approval_obj.browse(self.cr, self.uid, [approval_id])[0]
         self.approval = approval
         return sequence, approval
-    
+
     def _get_taxes(self):
         return self.taxes
-    
+
     def _get_taxes_ret(self):
         try:
             return self.taxes_ret
         except:
             pass
         return []
-    
+
     '''
     def _set_taxes(self, invoice_id):
         """
@@ -154,7 +154,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         #self.taxes = taxes
         return taxes
     '''
-    
+
     def _split_string(self, string, length=100):
         if string:
             for i in range(0, len(string), length):
@@ -176,15 +176,15 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
         partner_obj = pool.get('res.partner')
-        address_obj = pool.get('res.partner.address')
+        address_obj = pool.get('res.partner')
         invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
         partner_id = invoice.company_id.parent_id and invoice.company_id.parent_id.partner_id.id or invoice.company_id.partner_id.id
         self.invoice = invoice
         #print "partner_id",partner_id
         #invoice = partner_obj.browse(cr, uid, invoice_id)
         address_id = partner_obj.address_get(self.cr, self.uid, [partner_id], ['invoice'])['invoice']
-        self.company_address_invoice = address_obj.browse(self.cr, self.uid, address_id)
-        
+        self.company_address_invoice = address_obj.browse(self.cr, self.uid, partner_id)
+
         subpartner_id = invoice.company_id.partner_id.id
         if partner_id == subpartner_id:
             self.subcompany_address_invoice = self.company_address_invoice
@@ -197,18 +197,18 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         #print "self.company_address_invoice",self.company_address_invoice
         #return [self.company_address_invoice]
         return ""
-    
+
     def _company_address(self):
         #print "self.company_address_invoice",self.company_address_invoice
         return self.company_address_invoice
-    
+
     def _subcompany_address(self):
         return self.subcompany_address_invoice
-    
+
     def _facturae_data_dict(self):
         #print "self.invoice_data_dict",self.invoice_data_dict
         return self.invoice_data_dict
-    
+
     def _get_facturae_data_dict(self, invoice):
         self._set_invoice_sequence_and_approval( invoice.id )
         #invoice_obj = pool.get('account.invoice')
@@ -227,7 +227,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         except Exception, e:
             print "exception: %s"%( e )
             pass
-        
+
         #self.taxes_ret = []
         for retencion in self.invoice_data_dict['Comprobante']['Impuestos'].get('Retenciones', []):
             amount_untaxed = float( self.invoice_data_dict['Comprobante']['subTotal'] )
@@ -237,12 +237,12 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             self.taxes_ret.append( retencion['Retencion'] )
         return ""
         """
-    
+
 report_sxw.report_sxw(
     'report.account.invoice.facturae.pdf2',
     'account.invoice',
     'addons/l10n_mx_facturae_cbb/report/invoice_facturae_pdf.rml',
     header=False,
-    parser=account_invoice_facturae_pdf,
+    parser=account_invoice_facturae_pdf2,
 )
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

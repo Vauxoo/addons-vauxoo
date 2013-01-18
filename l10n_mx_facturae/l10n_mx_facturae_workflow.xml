@@ -1,0 +1,175 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <!--Definition Workflow-->
+        <record id="workflow_ir_attachment_facturae_mx_basic" model="workflow">
+            <field eval="1" name="on_create"/>
+            <field name="name">ir.attachment.facturae.mx.basic</field>
+            <field name="osv">ir.attachment.facturae.mx</field>
+        </record>
+
+        <!--Activities-->
+        <record id="workflow_activity_draft" model="workflow.activity">
+            <field name="kind">dummy</field>
+            <field name="name">draft</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field eval="1" name="flow_start"/>
+        </record>
+        <record id="workflow_activity_confirm" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">confirm</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_confirm()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+        <record id="workflow_activity_sign" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">sign</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_sign()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+        <record id="workflow_activity_printable" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">printable</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_printable()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+        <record id="workflow_activity_send_customer" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">send_customer</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_send_customer()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+        <record id="workflow_activity_send_backup" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">send_backup</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_send_backup()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+        <record id="workflow_activity_cancel" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">cancel</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="1" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_cancel()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+        <record id="workflow_activity_done" model="workflow.activity">
+            <field name="kind">function</field>
+            <field name="name">done</field>
+            <field name="join_mode">XOR</field>
+            <field model="workflow" name="wkf_id" ref="workflow_ir_attachment_facturae_mx_basic"/>
+            <field eval="0" name="flow_stop"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_done()</field>
+            <field eval="0" name="flow_start"/>
+        </record>
+
+        <!--Transition-->
+        <record id="workflow_transition_act_draft_to_act_confirm" model="workflow.transition">
+            <field name="signal">action_confirm</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_draft"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_confirm"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_confirm_to_act_sign" model="workflow.transition">
+            <field name="signal">action_sign</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_confirm"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_sign"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_sign_to_act_printable" model="workflow.transition">
+            <field name="signal">action_printable</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_sign"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_printable"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_printable_to_act_send_backup" model="workflow.transition">
+            <field name="signal">action_send_backup</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_printable"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_send_backup"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_printable_to_act_send_customer" model="workflow.transition">
+            <field name="signal">action_send_customer</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_backup"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_send_customer"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_send_customer_to_act_done" model="workflow.transition">
+            <field name="signal">action_done</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_customer"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_done"/>
+            <field name="condition">True</field>
+        </record>
+        <!-- from all states to cancel-->
+        <record id="workflow_transition_act_confirm_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_confirm"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_draft_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_draft"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_signed_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_sign"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_printable_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_printable"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_sent_customer_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_customer"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_sent_backup_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_backup"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_done_to_act_cancel" model="workflow.transition">
+            <field name="signal">action_cancel</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_done"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_cancel"/>
+            <field name="condition">True</field>
+        </record>
+
+    </data>
+</openerp>
