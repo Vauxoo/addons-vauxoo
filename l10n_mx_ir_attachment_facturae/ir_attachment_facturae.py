@@ -169,7 +169,6 @@ class ir_attachment_facturae_mx(osv.osv):
         type=self.browse(cr,uid,ids)[0].type
         invoice =self.browse(cr,uid,ids)[0].invoice_id
         msj =self.browse(cr,uid,ids)[0].msj
-        email_from = self.pool.get('ir.mail_server').browse(cr, uid, uid, context).smtp_user
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
         subject = 'Invoice '+invoice.number or False
@@ -178,7 +177,7 @@ class ir_attachment_facturae_mx(osv.osv):
             attach_name+=attach.name+ ', '
         if release.version >= '7':
             mail_compose_message_pool = self.pool.get('mail.compose.message')
-            mail_tmp_pool = self.pool.get('email.template')
+            """mail_tmp_pool = self.pool.get('email.template')
             tmp_id = mail_tmp_pool.search(cr, uid, [('name','=','FacturaE')], limit=1)
             tmp_id = tmp_id and tmp_id[0] or False
             message = mail_compose_message_pool.onchange_template_id(cr, uid, [], template_id=tmp_id, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
@@ -186,7 +185,7 @@ class ir_attachment_facturae_mx(osv.osv):
             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
             mssg['attachment_ids'] = [(6, 0, attachments)]
             mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
-            self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
+            self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)"""
 #            mail=self.pool.get('mail.mail').create(cr, uid, {
  #               'subject': subject+' '+type,
   #              'email_from': email_from,

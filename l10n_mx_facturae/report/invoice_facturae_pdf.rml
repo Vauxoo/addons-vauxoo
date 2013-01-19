@@ -81,6 +81,9 @@
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P27" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
+    <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
+    <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -162,16 +165,16 @@
           <td>
             <para style="P6">Receptor</para>
             <para style="Table Contents"><font face="Helvetica">Nombre: </font>[[ o.partner_id.name ]]</para>
-            <para style="P18"><font face="Helvetica">Dirección:</font> [[ o.partner_id.street ]] No. Ext: [[ o.partner_id.street3 ]] Int: [[ o.partner_id.street4 ]]</para>
-            <para style="terp_default_8"><font face="Helvetica">Colonia:</font> [[ o.partner_id.street2 or '' ]]</para>
-            <para style="terp_default_8"><font face="Helvetica">Ciudad:</font> [[ o.partner_id.city or '' ]] <font face="Helvetica">Estado: </font>[[ o.partner_id.state_id and o.partner_id.state_id.name or '' ]]</para>
-            <para style="terp_default_8"><font face="Helvetica">Localidad: </font>[[ o.partner_id.city2 or '' ]]</para>
-            <para style="terp_default_8"><font face="Helvetica">C.P.:</font> [[ o.partner_id.zip or '' ]] </para>
-            <para style="terp_default_8"><font face="Helvetica">R. F. C. :</font> [[ o.partner_id._columns.has_key('vat_split') and o.partner_id.vat_split or o.partner_id.vat ]]</para>
-            <para style="P24">Teléfono(s): </para>
-            <para style="P18">[[ o.partner_id.phone or removeParentNode('para') ]]</para>
-            <para style="P18">[[ o.partner_id.fax or removeParentNode('para') ]]</para>
-            <para style="P18">[[ o.partner_id.mobile or removeParentNode('para') ]]</para>
+            <para style="P28">Dirección: <font face="Helvetica" size="8.0">[[ invoice_address()['street'] or '' ]] </font>Nro. Ext: <font face="Helvetica" size="8.0">[[ invoice_address()['street3'] or '' ]]</font> Int: <font face="Helvetica" size="8.0">[[ invoice_address()['street4'] or '' ]]</font></para>
+            <para style="P28">Colonia: [[ invoice_address()['street2'] or '' ]]</para>
+            <para style="P29">Ciudad: [[ invoice_address()['city'] or '' ]] Estado: [[ invoice_address()['state_id'] and invoice_address()['state_id']['name'] or '' ]]</para>
+            <para style="P28">Localidad: [[ invoice_address()['city2'] or '' ]]</para>
+            <para style="P28">C.P.: [[ invoice_address()['zip'] or '' ]] </para>
+            <para style="P28">R. F. C. : [[ invoice_address()['vat_split'] or '' ]]</para>
+            <para style="P28">Teléfono(s): </para>
+            <para style="P27">[[ invoice_address()['phone'] or removeParentNode('para') ]]</para>
+            <para style="P27">[[ invoice_address()['fax'] or removeParentNode('para') ]]</para>
+            <para style="P27">[[ invoice_address()['mobile'] or removeParentNode('para') ]]</para>
           </td>
           <td>
             <para style="Table Contents">Condición de pago: [[ format(o.payment_term and (o.payment_term.note or o.payment_term.name) or removeParentNode('para') ) ]]</para>

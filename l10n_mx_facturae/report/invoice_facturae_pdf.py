@@ -46,6 +46,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             'split_string': self._split_string,
             'company_address': self._company_address,
             'subcompany_address': self._subcompany_address,
+            'invoice_address': self._invoice_address,
             'get_invoice_sequence': self._get_invoice_sequence,
             'get_approval': self._get_approval,
             'get_taxes': self._get_taxes,
@@ -177,6 +178,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
         #print "partner_id",partner_id
         #invoice = partner_obj.browse(cr, uid, invoice_id)
         address_id = partner_obj.address_get(self.cr, self.uid, [partner_id], ['invoice'])['invoice']
+        self.partner_invoice_address = partner_obj.browse(self.cr, self.uid, address_id)
         self.company_address_invoice = address_obj.browse(self.cr, self.uid, partner_id)
 
         subpartner_id = invoice.company_id.partner_id.id
@@ -198,6 +200,9 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
 
     def _subcompany_address(self):
         return self.subcompany_address_invoice
+
+    def _invoice_address(self):
+        return self.partner_invoice_address
 
     def _facturae_data_dict(self):
         #print "self.invoice_data_dict",self.invoice_data_dict
