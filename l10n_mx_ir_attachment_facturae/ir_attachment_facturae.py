@@ -41,7 +41,6 @@ class ir_attachment_facturae_mx(osv.osv):
         'name': fields.char('Name', size=128, required=True, readonly=True),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
         'company_id': fields.many2one('res.company', 'Company', readonly=True),
-        #'pac_id': ,Ver si no genera dependencia del modelo de pac
         'file_input': fields.many2one('ir.attachment', 'File input',readonly=True),
         'file_input_index': fields.text('File input'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',readonly=True),
@@ -51,7 +50,6 @@ class ir_attachment_facturae_mx(osv.osv):
         'identifier': fields.char('Identifier', size=128),
         'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
-        #'invoice_type': fields.ref(),#referencia al tipo de factura
         'msj': fields.text('Last Message', readonly=True),
         'last_date': fields.datetime('Last Modified', readonly=True),
         'state': fields.selection([
@@ -166,8 +164,10 @@ class ir_attachment_facturae_mx(osv.osv):
         msj=''
         attach_name=''
         state=''
-        type=self.browse(cr,uid,ids)[0].type
         invoice =self.browse(cr,uid,ids)[0].invoice_id
+        address_id = self.pool.get('res.partner').address_get(cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
+        partner_invoice_address = self.pool.get('res.partner').browse(cr, uid, address_id, context)
+        type=self.browse(cr,uid,ids)[0].type
         msj =self.browse(cr,uid,ids)[0].msj
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
