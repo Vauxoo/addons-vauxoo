@@ -106,8 +106,6 @@
     <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P30" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P31" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P32" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P33" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -204,12 +202,12 @@
             <para style="P3">Origen: [[ o.origin or removeParentNode('para') ]]</para>
             <para style="P3">Expedido en:</para>
             <para style="P3">[[ o. address_issued_id and o.address_issued_id.name or '' ]]</para>
-            <para style="P3">Calle: [[ o.address_issued_id.street or '' ]] Nro. Ext: [[ o.address_issued_id.street3 or '' ]] Int: [[ o.address_issued_id.street4 or '' ]]</para>
-            <para style="P3">Colonia: [[ o.address_issued_id.street2 or '' ]]</para>
-            <para style="P3">Ciudad: [[ o.address_issued_id.city or '' ]]</para>
-            <para style="P3">Localidad: [[ o.address_issued_id.city2 or '' ]]</para>
-            <para style="P3">Estado: [[ o.address_issued_id.state_id and o.address_issued_id.state_id.name or '' ]]</para>
-            <para style="P3">CP: [[ o.address_issued_id.zip or '' ]] </para>
+            <para style="P3">Calle: [[ o. address_issued_id and o.address_issued_id.street or '' ]] Nro. Ext: [[ o. address_issued_id and o.address_issued_id.street3 or '' ]] Int: [[ o. address_issued_id and o.address_issued_id.street4 or '' ]]</para>
+            <para style="P3">Colonia: [[ o. address_issued_id and o.address_issued_id.street2 or '' ]]</para>
+            <para style="P3">Ciudad: [[ o. address_issued_id and o.address_issued_id.city or '' ]]</para>
+            <para style="P3">Localidad: [[ o. address_issued_id and o.address_issued_id.city2 or '' ]]</para>
+            <para style="P3">Estado: [[ o. address_issued_id and o.address_issued_id.state_id and o.address_issued_id.state_id.name or '' ]]</para>
+            <para style="P3">CP: [[ o. address_issued_id and o.address_issued_id.zip or '' ]] </para>
           </td>
         </tr>
       </blockTable>
