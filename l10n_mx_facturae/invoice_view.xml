@@ -8,8 +8,8 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='currency_id']" position="after">
-                    <field name="rate" class="oe_inline"/>
+                <xpath expr="//field[@name='payment_term']" position="after">
+                    <field name="rate"/>
                 </xpath>
             </field>
         </record>
