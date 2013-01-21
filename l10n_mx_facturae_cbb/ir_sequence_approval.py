@@ -42,7 +42,7 @@ class ir_sequence_approval(osv.osv):
         'date_start': fields.date('Fecha de Aprobación', size=32,),
         'date_end': fields.date('Fecha de Vigencia', size=32,),
         'cbb_image': fields.binary('Imagen de Código de Barras Bidimensional'),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True,),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
     }
 ir_sequence_approval()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

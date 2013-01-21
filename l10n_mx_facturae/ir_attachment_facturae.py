@@ -39,7 +39,7 @@ class ir_attachment_facturae_mx(osv.osv):
         return types
 
     _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, help="Type of Electronic Invoice"),
     }
 ir_attachment_facturae_mx()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

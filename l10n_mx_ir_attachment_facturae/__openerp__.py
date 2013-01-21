@@ -30,7 +30,7 @@
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "mail",
+    "depends" : ["account", "mail", "email_template"
         ],
     "init_xml" : [],
     "demo_xml" : [],

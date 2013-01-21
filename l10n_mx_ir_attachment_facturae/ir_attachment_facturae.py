@@ -41,7 +41,6 @@ class ir_attachment_facturae_mx(osv.osv):
         'name': fields.char('Name', size=128, required=True, readonly=True),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
         'company_id': fields.many2one('res.company', 'Company', readonly=True),
-        #'pac_id': ,Ver si no genera dependencia del modelo de pac
         'file_input': fields.many2one('ir.attachment', 'File input',readonly=True),
         'file_input_index': fields.text('File input'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',readonly=True),
@@ -49,9 +48,8 @@ class ir_attachment_facturae_mx(osv.osv):
         'file_pdf': fields.many2one('ir.attachment', 'File PDF',readonly=True),
         'file_pdf_index': fields.text('File PDF Index'),
         'identifier': fields.char('Identifier', size=128),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
-        #'invoice_type': fields.ref(),#referencia al tipo de factura
         'msj': fields.text('Last Message', readonly=True),
         'last_date': fields.datetime('Last Modified', readonly=True),
         'state': fields.selection([
@@ -123,7 +121,7 @@ class ir_attachment_facturae_mx(osv.osv):
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
             fdata = base64.encodestring( xml_data )
             res = invoice_obj._upload_ws_file(cr, uid, [invoice.id], fdata, context={})
-            msj += res['msg'] + '\n'
+            msj += tools.ustr(res['msg']) + '\n'
             if res['status']=='500':
                 raise osv.except_osv(_('Warning'), _(res['msg']))
             data_attach = {
@@ -166,10 +164,11 @@ class ir_attachment_facturae_mx(osv.osv):
         msj=''
         attach_name=''
         state=''
-        type=self.browse(cr,uid,ids)[0].type
         invoice =self.browse(cr,uid,ids)[0].invoice_id
+        address_id = self.pool.get('res.partner').address_get(cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
+        partner_invoice_address = self.pool.get('res.partner').browse(cr, uid, address_id, context)
+        type=self.browse(cr,uid,ids)[0].type
         msj =self.browse(cr,uid,ids)[0].msj
-        email_from = self.pool.get('ir.mail_server').browse(cr, uid, uid, context).smtp_user
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
         subject = 'Invoice '+invoice.number or False
@@ -234,7 +233,7 @@ class ir_attachment_facturae_mx(osv.osv):
         if type=='cfdi32':
             get_file_cancel=invoice_obj._get_file_cancel(cr, uid, [invoice], context = {})
             sf_cancel=invoice_obj.sf_cancel(cr, uid, [invoice.id], context = {})
-            msj += tools.ustr(sf_cancel[u'message'])
+            msj += tools.ustr(sf_cancel['message'])
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
             ids2=attach_obj.write(cr, uid, attachment.id, { 'res_id': False, }, context={})
