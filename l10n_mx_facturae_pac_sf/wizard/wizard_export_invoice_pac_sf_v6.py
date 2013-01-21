@@ -59,9 +59,18 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._upload_ws_file(cr, uid, context['active_ids'])
         self.write(cr, uid, ids, {'message': res['msg'] }, context=None)
-        raise osv.except_osv(_('Warning'), _(res['msg']))
-        return True
-
+        return {
+                'type': 'ir.actions.act_window',
+                'name': 'Export invoice V6',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'res_model': 'wizard.export.invoice.pac.sf.v6',
+                'nodestroy': 'true',
+                'target' : 'new',
+                'res_id': ids[0], 
+                'views': [(False, 'form')],
+            }
+  
     _columns = {
         'file': fields.binary('File', readonly=True),
         'message': fields.text('text', readonly=True),

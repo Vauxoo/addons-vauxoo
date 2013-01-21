@@ -36,6 +36,7 @@
     "license" : "AGPL-3",
     "depends" : [
         "account",
+        "l10n_mx_company_multi_address",
     ],
     "init_xml" : [],
     "demo_xml" : [],

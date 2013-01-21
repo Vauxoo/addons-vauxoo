@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: isaac (isaac@vauxoo.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,17 +26,29 @@
 ##############################################################################
 
 {
-    "name" : "Agregado de moneda a res.partner.bank",
+    "name" : "Multiaddress para una misma compañia",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module add currency to model res.partner.bank
+    "description" : """This module allows the management of multiaddress for "factura electronica" whitout multicompany scheme
     """,
-    "website" : "www.vauxoo.com",
-    "depends" : ["base",],
+    "website" : "http://www.vauxoo.com/",
+    "license" : "AGPL-3",
+    "depends" : ["account",#"l10n_mx_facturae_22",
+        ],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["res_bank_view.xml",],
+    "update_xml" : [
+        #'security/ir.model.access.csv',
+        "invoice_view_address.xml",
+        
+        #"ir_sequence_view.xml",
+        #"res_company_view6.xml",
+        #"invoice_view.xml",
+        "res_company_view.xml",
+        "account_journal_view.xml",
+        #"partner_address_view.xml",
+    ],
     "installable" : True,
     "active" : False,
 }

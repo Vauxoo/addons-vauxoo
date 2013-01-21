@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: el_rodo_1 (rodo@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,23 +25,19 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_company_cif",
+    "name" : "l10n_mx_account_invoice_tax",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """ This module add binary field CIF (Cedula de Identificacion Fiscal) to company
-    """,
+    "description" : """This module add relation tax in account_invoice_tax
+     -You will need to apply the patch patch/account_invoice.patch, 
+      that is located in this module ( use:patch -b file.py  file.patch )""",
     "website" : "http://www.vauxoo.com/",
-    #"license" : "AGPL-3",
-    "depends" : [
-        "account",
-        "base",
-    ],
+    "license" : "AGPL-3",
+    "depends" : ["account"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
-        "res_company_view.xml",
-    ],
+    "update_xml" : [],
     "installable" : True,
     "active" : False,
 }

@@ -32,7 +32,7 @@
     "description" : """This module supports ftp, xml and pdf electronic invoice """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae_pac_sf","upload_ftp",],
+    "depends" : ["l10n_mx_facturae_pac_sf","l10n_mx_upload_ftp",],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [],

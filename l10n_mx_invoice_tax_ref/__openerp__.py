@@ -36,7 +36,7 @@
     "license" : "AGPL-3",
     "depends" : [
         "account",
-        "account_tax_category",
+        "l10n_mx_account_tax_category",
     ],
     "init_xml" : [],
     "demo_xml" : [],

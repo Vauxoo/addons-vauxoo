@@ -41,7 +41,7 @@ class account_invoice(osv.osv):
         for invoice in self.browse(cr, uid, ids, context=context):
             context.update( {'date_work': invoice.date_invoice} )
             certificate_id = False
-            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_id.id], context=context)[invoice.company_id.id]
+            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_emitter_id.id], context=context)[invoice.company_emitter_id.id]
             certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
             res[invoice.id] = certificate_id and certificate_id.id or False
         return res
