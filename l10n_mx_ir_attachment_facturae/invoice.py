@@ -46,8 +46,8 @@ class account_invoice(osv.osv):
         if invoice.invoice_sequence_id.approval_id:
             if invoice.invoice_sequence_id.approval_id.type=='cfdi32':
                 pac=self.pool.get('params.pac').search(cr, uid, [('active','=', True)], context)
-                if not pac:
-                    raise osv.except_osv(_('Warning !'),_('Not Params PAC.'))
+                #if not pac:
+                    #raise osv.except_osv(_('Warning !'),_('Not Params PAC.'))
             attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
             'name': invoice.fname_invoice,
             'invoice_id': ids[0],
