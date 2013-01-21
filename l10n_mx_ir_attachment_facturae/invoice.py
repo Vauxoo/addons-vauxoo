@@ -43,17 +43,22 @@ class account_invoice(osv.osv):
 
     def action_create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         invoice = self.browse(cr, uid, ids, context=context)[0]
-        attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
-        'name': invoice.fname_invoice,
-        'invoice_id': ids[0],
-        'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
-        wf_service = netsvc.LocalService("workflow")
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
-        return True
+        if invoice.invoice_sequence_id.approval_id:
+            if invoice.invoice_sequence_id.approval_id.type=='cfdi32':
+                pac=self.pool.get('params.pac').search(cr, uid, [('active','=', True)], context)
+                if not pac:
+                    raise osv.except_osv(_('Warning !'),_('Not Params PAC.'))
+            attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
+            'name': invoice.fname_invoice,
+            'invoice_id': ids[0],
+            'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
+            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
+            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
+            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
+            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
+            wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
+            return True
 
 account_invoice()
