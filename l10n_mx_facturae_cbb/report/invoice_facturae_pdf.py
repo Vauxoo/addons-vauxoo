@@ -58,6 +58,7 @@ class account_invoice_facturae_pdf2(report_sxw.rml_parse):
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
             'exists_key': self._exists_key,
+            'get_data_partner' : self._get_data_partner,
         })
         self.taxes = []
 
@@ -237,6 +238,29 @@ class account_invoice_facturae_pdf2(report_sxw.rml_parse):
             self.taxes_ret.append( retencion['Retencion'] )
         return ""
         """
+    
+    def _get_data_partner(self, partner_id):
+        partner_obj = self.pool.get('res.partner')
+        res = {}
+        address_invoice_id = partner_obj.search(self.cr, self.uid, [('parent_id', '=', partner_id.id), ('type', '=', 'invoice')])
+        if address_invoice_id:
+            address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id[0])
+            if address_invoice:
+                res.update({
+                    'street' : address_invoice.street or False,
+                    'street3' : address_invoice.street3 or False,
+                    'street4' : address_invoice.street4 or False,
+                    'street2' : address_invoice.street2 or False,
+                    'city' : address_invoice.city or False,
+                    'state' : address_invoice.state_id and address_invoice.state_id.name or False,
+                    'city2' : address_invoice.city2 or False,
+                    'zip' : address_invoice.zip or False,
+                    'vat' : address_invoice._columns.has_key('vat_split') and address_invoice.vat_split or address_invoice.vat or False,
+                    'phone' : address_invoice.phone or False,
+                    'fax' : address_invoice.fax or False,
+                    'mobile' : address_invoice.mobile or False,
+                    })
+        return res
 
 report_sxw.report_sxw(
     'report.account.invoice.facturae.pdf2',
