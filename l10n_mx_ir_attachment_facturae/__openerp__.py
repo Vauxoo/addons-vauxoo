@@ -39,6 +39,7 @@
         "l10n_mx_facturae_workflow.xml",
         "invoice_view.xml",
         "l10n_mx_facturae_email_demo.xml",
+        "res_partner.xml",
     ],
     "installable" : True,
     "active" : False,
