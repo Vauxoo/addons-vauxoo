@@ -43,7 +43,7 @@ Requires the following programs:
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["account", "base_vat", "document",
-            "l10n_mx_facturae_lib", "l10n_mx_partner_address",
+            "l10n_mx_facturae_lib", #"l10n_mx_partner_address",
             "l10n_mx_facturae_cer",
             "l10n_mx_invoice_datetime",
             "l10n_mx_invoice_tax_ref",

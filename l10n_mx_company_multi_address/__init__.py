@@ -1,8 +1,9 @@
+
 # -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
@@ -25,24 +26,6 @@
 #
 ##############################################################################
 
-{
-    "name" : "l10n_mx_address",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Add new fields of address
-    """,
-    "website" : "http://www.vauxoo.com",
-    #"license" : "AGPL-3",
-    "depends" : [
-            "base",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/openacademy_security.xml",
-        "partner_address_view5.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+import res_company
+import invoice
+import account_journal

@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: isaac (isaac@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#              Moises Lopez (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,27 +24,57 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import fields
+from osv import osv
 
-{
-    "name" : "Agregado del método de pago al partner y a la factura",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """Add "Payment Method" to partner and invoice, it's used by l10n_mx_facturae_22 module
-    """,
-    "website" : "www.vauxoo.com",
-    "depends" : ["account",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/payment_method.xml",
-        "security/ir.model.access.csv",
-        "pay_method_view_v5.xml",
-        "partner_view.xml",
-        "invoice_view_v5.xml",
-        "data/payment_method_data.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+class account_journal(osv.osv):
+    _inherit='account.journal'
+    
+    _columns = {
+        'address_invoice_company_id': fields.many2one('res.partner', 'Invoice Company Address', domain="[('type', '=', 'invoice')]"),
+        'company2_id': fields.many2one("res.company", 'Company Emitter', help="Si este campo es llenado, en la factura electonica se tomaran los datos de esta compañia."),
+    }
+account_journal()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

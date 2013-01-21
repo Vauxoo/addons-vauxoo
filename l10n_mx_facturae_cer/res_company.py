@@ -223,17 +223,13 @@ class res_company(osv.osv):
                 return res
         for company in self.browse(cr, uid, ids, context=context):
             current_company = company
-            while True:
-                certificate_ids = certificate_obj.search(cr, uid, [
-                        ('company_id', '=', company.id),
-                        ('date_start', '<=', date),
-                        ('date_end', '>=', date),
-                        ('active', '=', True),
-                    ], limit=1)
-                certificate_id = certificate_ids and certificate_ids[0] or False
-                company = company.parent_id
-                if certificate_id or not company:
-                    break
+            certificate_ids = certificate_obj.search(cr, uid, [
+                    ('company_id', '=', company.id),
+                    ('date_start', '<=', date),
+                    ('date_end', '>=', date),
+                    ('active', '=', True),
+                ], limit=1)
+            certificate_id = certificate_ids and certificate_ids[0] or False
             res[current_company.id] = certificate_id
         return res
     

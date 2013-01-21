@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2011 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#    Coded by: el_rodo_1 (rodo@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,19 +23,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name" : "Lectura se parámetros dinamicos a enviar al PAC del Factura Electronica para Mexico (CFDI-2011) ",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """TThis module reads the params required for PAC.""",
-    "website" : "http://www.vauxoo.com/",
-    #"license" : "AGPL-3",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["security/ir.model.access.csv", "params_pac_view.xml"],
-    "installable" : True,
-    "active" : False,
-}
+import wizard_facturae_ftp

@@ -119,7 +119,7 @@ class account_invoice(osv.osv):
             self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
         return True
 
-    """def action_cancel_draft(self, cr, uid, ids, *args):
+    """def action_cancel_draft(self, cr, uid, ids, context=None):
         attachment_obj = self.pool.get('ir.attachment')
         for invoice in self.browse(cr, uid, ids):
             try:
@@ -132,6 +132,7 @@ class account_invoice(osv.osv):
                 attachment_obj.unlink(cr, uid, attachment_pdf_id)
             except:
                 pass
-        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, args)"""
+        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, context=context)
+    """
 
 account_invoice()

@@ -8,9 +8,9 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <field name="payment_term" position="after">
+                <xpath expr="//field[@name='payment_term']" position="after">
                     <field name="rate"/>
-                </field>
+                </xpath>
             </field>
         </record>
 

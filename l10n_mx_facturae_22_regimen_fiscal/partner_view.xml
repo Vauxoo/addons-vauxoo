@@ -6,11 +6,11 @@
             <field name="name">view.partner.form.inh.xml22</field>
             <field name="type">form</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
             <field name="arch" type="xml">
-                <field name="lang" position="after">
+                <xpath expr="//field[@name='last_reconciliation_date']" position="after">
                     <field name="regimen_fiscal_id" colspan="2"/>
-                </field>
+                </xpath>
             </field>
         </record>
     </data>
