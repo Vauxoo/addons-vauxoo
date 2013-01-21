@@ -286,7 +286,7 @@ class compute_cost(osv.osv_memory):
                         date = aux2[5]
                         qty_aux = cost and qty
                         price_aux = cost and price
-                        aux[i].append((cost,aux2[5]))
+                        aux[i].append((cost,aux2[5],qty))
                         list.append((cost,aux2[5]))
                         aux2[6] and invoice_line_obj.write(cr, uid, aux2[6], 
                                                     {'aux_financial':cost*qty, 
@@ -303,7 +303,7 @@ class compute_cost(osv.osv_memory):
                         date = aux2[5]
                         qty_aux = cost and qty
                         price_aux = cost and price
-                        aux[i].append((cost,aux2[5]))
+                        aux[i].append((cost,aux2[5],qty))
                         list.append((cost,aux2[5]))
                         aux2[6] and invoice_line_obj.write(cr, uid, aux2[6],
                                                 {'aux_financial':cost*qty, 
@@ -497,11 +497,11 @@ class compute_cost(osv.osv_memory):
                                       aux_dic_nc_vent,invo_nc_ven_ids,
                                        True,context=context) or aux_dic_nc_vent
                 
-            for i in dic_comp:
-                if dic_comp.get(i,False) and len(dic_comp[i]) > 0:
+            for i in dic_comp:#Ciclo por cada uno de los productos
+                if dic_comp.get(i,False): #Validar valores en la compras
                     ids_inv = {} 
                     if context.get('invoice_cancel'):
-                        dic_comp[i] and dic_comp[i][0] \
+                        dic_comp[i] and dic_comp[i][0] \ #Calculo del costo anterior porque se cancelo la factura
                                 and (dic_comp[i][0][7] - dic_comp[i][0][2]) >= 0 and \
                                 dic_comp[i].insert(0,(False,
                                 ( (dic_comp[i][0][7] - dic_comp[i][0][2] ) / \
@@ -511,7 +511,7 @@ class compute_cost(osv.osv_memory):
                                  (dic_comp[i][0][8] - dic_comp[i][0][3]) , 
                                   dic_comp[i][0][4] , dic_comp[i][0][5],False, 0, 0  ))
                         
-                        len(dic_comp[i]) > 1 and  \
+                        len(dic_comp[i]) > 1 and  \ #Grabo en la factura el nuevo calculo 
                                 invo_line_obj.write(cr, uid, [dic_comp[i][1][6]],
                                {'aux_financial':(dic_comp[i][1][7] - dic_comp[i][1][2]),
                                 'aux_qty':(dic_comp[i][1][8] - dic_comp[i][1][3])},
@@ -521,13 +521,13 @@ class compute_cost(osv.osv_memory):
                         len(dic_comp[i]) > 1 and invo_obj.write(cr, uid, [dic_comp[i][1][0]],
                                         {'cancel_check':True},context=context) or invo_obj.write(cr, uid, [dic_comp[i][0][0]],
                                         {'cancel_check':True},context=context)
-                        len(dic_comp[i]) > 1 and dic_comp[i].pop(1)
+                        len(dic_comp[i]) > 1 and dic_comp[i].pop(1) # Grabo en la factura que ya fue cancelada
 
                     
                     
                     dic_comp[i][0][0] is not False and dic_comp[i][0][9] and dic_comp[i][0][7] > 0 and \
                     dic_comp[i].insert(0,(False,(dic_comp[i][0][7]/dic_comp[i][0][8]),dic_comp[i][0][7],dic_comp[i][0][8],dic_comp[i][0][4],
-                                          dic_comp[i][0][5],0.0,0.0  ))
+                                          dic_comp[i][0][5],0.0,0.0  )) #Inserto en la lista de la compra el calculo del costo anterior porque la factura fue cancelada
                     
                     if dic_comp[i][0][0] is not False and not dic_comp[i][0][9] and dic_comp[i][0][7] <= 0:
                         inv_ids = invo_obj.search(cr,uid,[('invoice_line.product_id','=', i),
