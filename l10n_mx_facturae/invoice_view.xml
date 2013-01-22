@@ -2,13 +2,12 @@
 <openerp>
     <data>
 
-        <record model="ir.ui.view" id="account_invoice_form_inh_l10n_mx_facturae_rate">
+        <record id="account_invoice_form_inh_l10n_mx_facturae_rate" model="ir.ui.view">
             <field name="name">account.invoice.form.inh.l10n.mx.facturae.rate</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='payment_term']" position="after">
+                <xpath expr="/form[@string='Invoice']/sheet[@string='Invoice']/notebook/page[@string='Invoice Lines']/group/field[@name='payment_term']" position="after">
                     <field name="rate"/>
                 </xpath>
             </field>

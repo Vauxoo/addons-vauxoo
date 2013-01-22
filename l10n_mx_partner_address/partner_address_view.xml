@@ -14,6 +14,9 @@
                 <xpath expr="//field[@name='country_id']" position="before">
                     <field name="city2" placeholder="City2" groups="l10n_mx_partner_address.group_address_mx"/>
                 </xpath>
+                <xpath expr="//notebook/page[@string='Contacts']/field[@name='child_ids']/form[@string='Contact']/div/group/field[@name='name']" position="after">
+                    <field name="type"/>
+                </xpath>
             </field>
         </record>
 

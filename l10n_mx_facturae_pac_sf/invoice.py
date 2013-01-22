@@ -199,7 +199,6 @@ class account_invoice(osv.osv):
                     wsdl_client.soapproxy.config.debug = 0
                     wsdl_client.soapproxy.config.dict_encoding='UTF-8'
                     resultado = wsdl_client.timbrar(*params)
-                    print resultado,'resultado'
                     msg += resultado['resultados'] and resultado['resultados']['mensaje'] or ''
                     status = resultado['resultados'] and resultado['resultados']['status'] or ''
                     if status == '200' or status == '307':
