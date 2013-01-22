@@ -33,6 +33,26 @@ class inherited_product(osv.osv):
     """
     M321 Customizations for product.product model
     """
+    def default_get(self, cr, uid, fields, context=None):
+        '''Overwrite to add taxes in the new products'''
+        if context is None:
+            context = {}
+        tax_obj = self.pool.get('account.tax')
+        
+        res = super(inherited_product, self).default_get(cr, uid, fields, context=context)
+        taxes_id = tax_obj.search(cr, uid, [('type_tax_use','=','sale'),
+                                            ('name','ilike','12')],
+                                            context=context)
+        
+        supplier_taxes_id = tax_obj.search(cr, uid, [('type_tax_use','=','purchase'),
+                                            ('name','ilike','12')],
+                                            context=context)
+        res.update({'taxes_id':taxes_id,
+                    'supplier_taxes_id':supplier_taxes_id,}) 
+    
+        return res
+    
+    
     _inherit = "product.product"
 
 

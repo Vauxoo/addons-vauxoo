@@ -501,7 +501,7 @@ class compute_cost(osv.osv_memory):
                 if dic_comp.get(i,False): #Validar valores en la compras
                     ids_inv = {} 
                     if context.get('invoice_cancel'):
-                        dic_comp[i] and dic_comp[i][0] \ #Calculo del costo anterior porque se cancelo la factura
+                        dic_comp[i] and dic_comp[i][0] \
                                 and (dic_comp[i][0][7] - dic_comp[i][0][2]) >= 0 and \
                                 dic_comp[i].insert(0,(False,
                                 ( (dic_comp[i][0][7] - dic_comp[i][0][2] ) / \
@@ -511,7 +511,7 @@ class compute_cost(osv.osv_memory):
                                  (dic_comp[i][0][8] - dic_comp[i][0][3]) , 
                                   dic_comp[i][0][4] , dic_comp[i][0][5],False, 0, 0  ))
                         
-                        len(dic_comp[i]) > 1 and  \ #Grabo en la factura el nuevo calculo 
+                        len(dic_comp[i]) > 1 and  \
                                 invo_line_obj.write(cr, uid, [dic_comp[i][1][6]],
                                {'aux_financial':(dic_comp[i][1][7] - dic_comp[i][1][2]),
                                 'aux_qty':(dic_comp[i][1][8] - dic_comp[i][1][3])},
