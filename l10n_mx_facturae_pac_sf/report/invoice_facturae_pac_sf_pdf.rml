@@ -24,11 +24,7 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-<<<<<<< TREE
-    <blockTableStyle id="Tabla7">
-=======
     <blockTableStyle id="Tabla4">
->>>>>>> MERGE-SOURCE
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
@@ -58,11 +54,7 @@
       <lineStyle kind="LINEAFTER" colorName="#000000" start="3,1" stop="3,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
     </blockTableStyle>
-<<<<<<< TREE
-    <blockTableStyle id="Table1">
-=======
     <blockTableStyle id="Tabla6">
->>>>>>> MERGE-SOURCE
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
@@ -76,11 +68,7 @@
       <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
     </blockTableStyle>
-<<<<<<< TREE
-    <blockTableStyle id="Tabla4">
-=======
     <blockTableStyle id="Tabla7">
->>>>>>> MERGE-SOURCE
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
@@ -92,15 +80,9 @@
     <paraStyle name="P3" fontName="Helvetica" fontSize="8.0" leading="10"/>
     <paraStyle name="P4" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT"/>
     <paraStyle name="P5" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
-<<<<<<< TREE
-    <paraStyle name="P6" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
-    <paraStyle name="P7" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="CENTER"/>
-    <paraStyle name="P8" fontName="Helvetica" fontSize="7.0" leading="9"/>
-=======
     <paraStyle name="P6" fontName="Helvetica" fontSize="7.0" leading="9"/>
     <paraStyle name="P7" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER"/>
     <paraStyle name="P8" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="CENTER"/>
->>>>>>> MERGE-SOURCE
     <paraStyle name="P9" fontName="Helvetica" textColor="#280099"/>
     <paraStyle name="P10" fontName="Helvetica" alignment="RIGHT" textColor="#280099"/>
     <paraStyle name="P11" fontName="Helvetica" textColor="#ff3333"/>
@@ -114,22 +96,12 @@
     <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P21" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-<<<<<<< TREE
-    <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-=======
     <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
->>>>>>> MERGE-SOURCE
     <paraStyle name="P23" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P24" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="18.0" leading="22" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P25" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P26" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
     <paraStyle name="P27" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#280099"/>
-<<<<<<< TREE
-    <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
-    <paraStyle name="P30" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
-    <paraStyle name="P31" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
-=======
     <paraStyle name="P28" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0" textColor="#000000"/>
     <paraStyle name="P29" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P30" fontName="Helvetica" textColor="#ff3333"/>
@@ -162,7 +134,6 @@
     <paraStyle name="P57" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P58" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P59" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
->>>>>>> MERGE-SOURCE
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -179,38 +150,14 @@
   </stylesheet>
   <story>
     <section>
-<<<<<<< TREE
-      <para style="P22">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="9.0">[[ set_global_data(o) ]]</font></para>
-      <para style="P24">[[ o.company_id.parent_id and o.company_id.parent_id.partner_id.name or o.company_id.partner_id.name ]]</para>
-=======
       <para style="P43">[[ repeatIn(objects,'o') ]] <font face="Helvetica" size="9.0">[[ set_global_data(o) ]]</font></para>
       <para style="P24">[[ o.company_emitter_id.address_invoice_parent_company_id.name or '' ]]</para>
->>>>>>> MERGE-SOURCE
       <blockTable colWidths="125.0,207.0,166.0" style="Tabla1">
         <tr>
           <td>
-<<<<<<< TREE
-            <para style="P28">[[ o.company_id.logo and setTag('para','image',{'width':'120.0','height':'80.0'}) ]] [[ o.company_id.logo ]]</para>
-=======
             <para style="P29">[[ o.company_emitter_id.logo and setTag('para','image',{'width':'120.0','height':'80.0'}) ]] [[ o.company_emitter_id.logo ]]</para>
->>>>>>> MERGE-SOURCE
           </td>
           <td>
-<<<<<<< TREE
-            <para style="P23">[[ company_address()['name'] or o.company_id.partner_id.name ]]</para>
-            <para style="P26">
-              <font color="white"> </font>
-            </para>
-            <para style="P23">Calle: [[ company_address()['street'] or '' ]] Nro. Ext: [[ company_address()['street3'] or '' ]] Int: [[ company_address()['street4'] or '' ]]</para>
-            <para style="P26">
-              <font color="white"> </font>
-            </para>
-            <para style="P23">Colonia: [[ company_address()['street2'] or '' ]]</para>
-            <para style="P26">
-              <font color="white"> </font>
-            </para>
-            <para style="P23">Ciudad: [[ company_address()['city'] or '' ]], Estado: [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] </para>
-=======
             <para style="P26">
               <font color="white"> </font>
             </para>
@@ -223,21 +170,9 @@
               <font color="white"> </font>
             </para>
             <para style="P23">Ciudad: [[ o.company_emitter_id.address_invoice_parent_company_id.city or '' ]] Estado: [[ o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or '' ]] </para>
->>>>>>> MERGE-SOURCE
             <para style="P27">
               <font color="white"> </font>
             </para>
-<<<<<<< TREE
-            <para style="P23">Localidad: [[ company_address()['city2'] or '' ]]</para>
-            <para style="P26">
-              <font color="white"> </font>
-            </para>
-            <para style="P23">CP: [[ company_address()['zip'] or '' ]]</para>
-            <para style="P26">
-              <font color="white"> </font>
-            </para>
-            <para style="P23">RFC: [[ o.company_id.partner_id._columns.has_key('vat_split') and o.company_id.partner_id.vat_split or o.company_id.partner_id.vat ]]</para>
-=======
             <para style="P23">Localidad: [[ o.company_emitter_id.address_invoice_parent_company_id.city2 or '' ]]</para>
             <para style="P26">
               <font color="white"> </font>
@@ -247,20 +182,13 @@
               <font color="white"> </font>
             </para>
             <para style="P23">RFC: [[ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat ]]</para>
->>>>>>> MERGE-SOURCE
             <para style="P26">
               <font color="white"> </font>
             </para>
             <para style="P25">Teléfono(s): </para>
-<<<<<<< TREE
-            <para style="P25">[[ company_address()['phone'] or removeParentNode('para') ]]</para>
-            <para style="P25">[[ company_address()['fax'] or removeParentNode('para') ]]</para>
-            <para style="P25">[[ company_address()['mobile'] or removeParentNode('para') ]]</para>
-=======
             <para style="P25">[[ o.company_emitter_id.address_invoice_parent_company_id.phone or removeParentNode('para') ]]</para>
             <para style="P25">[[ o.company_emitter_id.address_invoice_parent_company_id.fax or removeParentNode('para') ]]</para>
             <para style="P25">[[ o.company_emitter_id.address_invoice_parent_company_id.mobile or removeParentNode('para') ]]</para>
->>>>>>> MERGE-SOURCE
           </td>
           <td>
             <para style="P11">
@@ -273,11 +201,7 @@
             <para style="P13">
               <font color="white"> </font>
             </para>
-<<<<<<< TREE
-            <para style="Table Contents">[[ company_address()['city'] or '' ]], [[ company_address()['state_id'] and company_address()['state_id']['name'] or '' ]] a</para>
-=======
             <para style="Table Contents">[[ o. address_issued_id and o.address_issued_id.city or '' ]], [[ o.address_issued_id.state_id and o.address_issued_id.state_id.name or '' ]] a</para>
->>>>>>> MERGE-SOURCE
             <para style="Table Contents">[[ o.date_invoice_tz or '' ]]</para>
             <para style="Table Contents">Serie: [[ get_approval() and get_approval().serie or '' ]]</para>
             <para style="Table Contents">Aprobación: [[ get_approval() and get_approval().approval_number or '' ]]</para>
@@ -290,18 +214,6 @@
           <td>
             <para style="P9">Receptor</para>
             <para style="Table Contents"><font face="Helvetica">Nombre: </font>[[ o.partner_id.name ]]</para>
-<<<<<<< TREE
-            <para style="P29">Dirección: <font face="Helvetica" size="8.0">[[ invoice_address()['street'] or '' ]] </font>Nro. Ext: <font face="Helvetica" size="8.0">[[ invoice_address()['street3'] or '' ]]</font> Int: <font face="Helvetica" size="8.0">[[ invoice_address()['street4'] or '' ]]</font></para>
-            <para style="P29">Colonia: [[ invoice_address()['street2'] or '' ]]</para>
-            <para style="P30">Ciudad: [[ invoice_address()['city'] or '' ]] Estado: [[ invoice_address()['state_id'] and invoice_address()['state_id']['name'] or '' ]]</para>
-            <para style="P29">Localidad: [[ invoice_address()['city2'] or '' ]]</para>
-            <para style="P29">C.P.: [[ invoice_address()['zip'] or '' ]] </para>
-            <para style="P29">R. F. C. : [[ invoice_address()['vat_split'] or '' ]]</para>
-            <para style="P29">Teléfono(s): </para>
-            <para style="P31">[[ invoice_address()['phone'] or removeParentNode('para') ]]</para>
-            <para style="P31">[[ invoice_address()['fax'] or removeParentNode('para') ]]</para>
-            <para style="P31">[[ invoice_address()['mobile'] or removeParentNode('para') ]]</para>
-=======
             <para style="terp_default_8"><font face="Helvetica">Dirección:</font> [[ o.address_invoice_id.street ]] Nro. Ext: [[ o.address_invoice_id.street3 ]] Int: [[ o.address_invoice_id.street4 ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Colonia:</font> [[ o.address_invoice_id.street2 or '' ]]</para>
             <para style="terp_default_8"><font face="Helvetica">Ciudad:</font> [[ o.address_invoice_id.city or '' ]] <font face="Helvetica">Estado: </font>[[ o.address_invoice_id.state_id and o.address_invoice_id.state_id.name or '' ]]</para>
@@ -312,7 +224,6 @@
             <para style="P22">[[ o.address_invoice_id.phone or removeParentNode('para') ]]</para>
             <para style="P22">[[ o.address_invoice_id.fax or removeParentNode('para') ]]</para>
             <para style="P22">[[ o.address_invoice_id.mobile or removeParentNode('para') ]]</para>
->>>>>>> MERGE-SOURCE
           </td>
           <td>
             <para style="Table Contents">Condición de pago: [[ format(o.payment_term and (o.payment_term.note or o.payment_term.name) or removeParentNode('para') ) ]]</para>
@@ -361,9 +272,6 @@
           </td>
           <td>
             <para style="Table Contents">[[ l.name ]]</para>
-            <para style="P8">
-              <font color="white"> </font>
-            </para>
           </td>
           <td>
             <para style="Table Contents">[[ l.product_id and l.product_id.default_code ]]</para>
@@ -485,25 +393,9 @@
           </td>
         </tr>
       </blockTable>
-<<<<<<< TREE
-      <blockTable colWidths="159.0,170.0,170.0" style="Table1">
-=======
       <blockTable colWidths="159.0,170.0,170.0" style="Tabla6">
->>>>>>> MERGE-SOURCE
         <tr>
           <td>
-<<<<<<< TREE
-            <para style="P7">Régimen Fiscal:</para>
-            <para style="P6">[[o.company_id.partner_id.regimen_fiscal_id and o.company_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
-          </td>
-          <td>
-            <para style="P7">Método de Pago:</para>
-            <para style="P6">[[o.pay_method_id.name or 'No identificado']]</para>
-          </td>
-          <td>
-            <para style="P7">Últimos 4 dígitos de la cuenta bancaria:</para>
-            <para style="P6">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
-=======
             <para style="P8">Régimen Fiscal:</para>
             <para style="P7">[[o.company_emitter_id.partner_id.regimen_fiscal_id and o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado']]</para>
           </td>
@@ -514,25 +406,16 @@
           <td>
             <para style="P8">Últimos 4 dígitos de la cuenta bancaria:</para>
             <para style="P7">[[o.acc_payment.last_acc_number or 'No identificado']]</para>
->>>>>>> MERGE-SOURCE
           </td>
         </tr>
       </blockTable>
       <para style="P21">
         <font color="white"> </font>
       </para>
-<<<<<<< TREE
-      <blockTable colWidths="100.0,282.0,117.0" style="Tabla4">
-=======
       <blockTable colWidths="100.0,282.0,117.0" style="Tabla7">
->>>>>>> MERGE-SOURCE
         <tr>
           <td>
-<<<<<<< TREE
-            <para style="P2">[[ o.company_id.cif_file and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ o.company_id.cif_file ]]</para>
-=======
             <para style="P2">[[ o.company_emitter_id.cif_file and setTag('para','image',{'width':'98.0','height':'161.0'}) ]] [[ o.company_emitter_id.cif_file ]]</para>
->>>>>>> MERGE-SOURCE
           </td>
           <td>
             <para style="P14">Sello Digital Emisor:</para>
