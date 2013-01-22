@@ -30,3 +30,4 @@
 ##############################################################################
 
 import report_webkit_html
+import report_webkit_variation_group

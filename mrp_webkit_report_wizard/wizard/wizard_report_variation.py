@@ -37,6 +37,7 @@ class wizard_report_variation(osv.osv_memory):
         'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos', required=True),
         'date_start': fields.datetime('Start Date', select=True, required=True),
         'date_finished': fields.datetime('End Date', select=True, required=True),
+        'type': fields.selection([('single','Detail'),('group','Resume')], 'Priority', select=True),
     }
     
     _defaults = {

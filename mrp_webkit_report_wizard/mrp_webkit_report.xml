@@ -9,5 +9,14 @@
                 string="Variation report"
                 report_type="webkit"
                 webkit_header="ir_header_webkit_mrp_variation0"/>
+                
+        <report auto="False"
+                id="mrp_webkit_report_variation_group"
+                model="mrp.production"
+                name="webkitmrp.production_variation_group"
+                file="mrp_webkit_report_wizard/report/report_webkit_variation_group.mako"
+                string="Variation group"
+                report_type="webkit"
+                webkit_header="ir_header_webkit_mrp_variation0"/>
     </data>
 </openerp>
