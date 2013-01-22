@@ -185,7 +185,7 @@ class ir_attachment_facturae_mx(osv.osv):
             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
             mssg['attachment_ids'] = [(6, 0, attachments)]
             mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
-            self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
+            state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
 #            mail=self.pool.get('mail.mail').create(cr, uid, {
  #               'subject': subject+' '+type,
   #              'email_from': email_from,
