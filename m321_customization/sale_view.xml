@@ -20,6 +20,7 @@
       <field name="inherit_id" ref="sale.view_order_form" />
       <field name="type">form</field>
       <field name="arch" type="xml">
+        
         <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]' position="after">
           <page string="Future Stock">
             <field name='stock_move_ids'  nolabel="1">
@@ -40,6 +41,7 @@
         </xpath>
         <xpath expr='//field[@name="shipped"]' position="after">
             <field name="incoterm" />
+            <field name="pass_sale" groups='m321_customization.group_validate_sale_order'/>
         </xpath>
       </field>
     </record>

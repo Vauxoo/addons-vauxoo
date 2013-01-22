@@ -34,6 +34,29 @@ import decimal_precision as dp
 class inherited_sale_order(osv.osv):
     _inherit = "sale.order"
 
+    def price_unit_confirm(self,cr,uid,ids,context=None):
+        '''
+        Workflow condition does not allow the sale process if at least one
+        product is being sold in the price range set out in its cost structure
+        '''
+        if context is None:
+            context = {}
+        for sale in len(ids) == 1 and self.browse(cr, uid, ids, context=context) or []:
+            if sale.pass_sale:
+                return True
+
+            else:
+                res = super(inherited_sale_order, self).price_unit_confirm(cr, uid, ids, context=context)
+                return res     
+
+
+    _columns = {
+            'pass_sale': fields.boolean('Validate', help='If this field is true the sale is validate without validate price'), 
+            
+            }
+
+    
+    
     def default_get(self, cr, uid, fields, context=None):
         """
              To get default values for the object.
@@ -51,8 +74,10 @@ class inherited_sale_order(osv.osv):
         res.get('order_policy',False) and res.update({'order_policy':'picking'})
         return res
 
+    
     _defaults = {
-        'order_policy': 'picking'
+        'order_policy': 'picking',
+        'pass_sale':False,
     }
     
     def qty_confirm(self,cr,uid,ids,context=None):

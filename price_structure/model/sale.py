@@ -138,6 +138,7 @@ class sale_order(osv.osv):
     
     
     }
+    
     def price_unit_confirm(self,cr,uid,ids,context=None):
         '''
         Workflow condition does not allow the sale process if at least one product is being sold in the price range set out in its cost structure
@@ -148,7 +149,6 @@ class sale_order(osv.osv):
         context.update({'query':False})
         sale_brw = self.browse(cr,uid,ids and ids[0],context=context)
         pricelist_obj = self.pool.get('product.pricelist')
-        
         for line in len(ids) == 1 and sale_brw.order_line or []:
             property_cost_structure = line and line.product_id and line.product_id.property_cost_structure and line.product_id.property_cost_structure.id or False
             price_compute = line.product_id and [ pricelist_obj.price_get(cr, uid, [i.price_list_id and i.price_list_id.id ],
