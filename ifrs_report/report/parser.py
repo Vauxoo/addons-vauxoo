@@ -127,14 +127,17 @@ class ifrs_report(report_sxw.rml_parse):
 
         return self._period_info_list[column_num][2]
 
-    def _get_amount_value(self, ifrs_line, period_num=None, target_move=None, pd=None, undefined=None):
+    def _get_amount_value(self, ifrs_line, period_num=None, target_move=None, pd=None, undefined=None, two=None):
         
         '''devuelve la cantidad correspondiente al periodo'''
 
         context = {}
         if period_num:
-            period_id = self._period_info_list[period_num][1]
-            context = {'period_from': period_id, 'period_to': period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':self._fy}
+            if two:
+                context = {'period_from': period_num, 'period_to':period_num, 'state': target_move, 'partner_detail':pd, 'fiscalyear':self._fy}
+            else:
+                period_id = self._period_info_list[period_num][1]
+                context = {'period_from': period_id, 'period_to':period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':self._fy}
         else:
             context = {'whole_fy': 'True'} 
 

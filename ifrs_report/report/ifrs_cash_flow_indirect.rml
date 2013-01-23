@@ -114,8 +114,8 @@
             <para>[[ ifrs_l.invisible and removeParentNode('blockTable') ]]</para>
             <tr>
                 <td><para> [[ setTag('para','para', {'style': get_padding_level(ifrs_l.level) })]] [[ ifrs_l.name]] </para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and formatLang( get_amount_value(ifrs_l, data['period']), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
-                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='total' and  formatLang( get_amount_value(ifrs_l), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='detail' and formatLang( get_amount_value(ifrs_l, data['period'], two=True), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
+                <td><para style="numeric_data_table_style">[[ ifrs_l.type=='total' and  formatLang( get_amount_value(ifrs_l, data['period'], two=True), digits=2, date=False, date_time=False, grouping=3, monetary=False) ]]</para></td>
             </tr>
         </blockTable>
         </section>

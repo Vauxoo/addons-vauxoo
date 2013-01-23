@@ -131,8 +131,10 @@ class ifrs_lines(osv.osv):
         
         if brw.type == 'detail':
             if brw.acc_val=='init':
+                print c['period_from'],'impirmo period_from'
                 period_ids = period_obj.build_ctx_periods_initial(cr, uid, c['period_from'])
                 c['periods'] = period_ids
+                print c['periods'],'impprimo period'
                 period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
 ##                c['period_to']= period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
 #                period_to = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
