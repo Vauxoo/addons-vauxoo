@@ -14,6 +14,7 @@ class report_webkit_variation_group(report_sxw.rml_parse):
             'os':os,
             'platform':platform
         })
+        print self.localcontext, "fin local context"
 
 report_sxw.report_sxw('report.webkitmrp.production_variation_group',
                        'mrp.production', 

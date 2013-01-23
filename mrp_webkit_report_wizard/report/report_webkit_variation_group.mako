@@ -18,14 +18,10 @@
                     </table>
                 </td></tr>
             </table>
-         </div>
-         
-         <p><h3>Report of product variation group</h3></p>
-     </body>
-</html>
-
-        <%def name="all_prods(objs=None)">
-            llamando funcion
+        </div>
+        
+        <p><h3>Report of product variation group</h3></p>
+        ${data['query_dict'] or ''|entity} el bueno query_dict
         
         <table class="basic_table">
             <tr><td class="basic_td">Production main data</td><td class="basic_td"> &nbsp; </td><td class="basic_td"> &nbsp; </td><td class="basic_td"> &nbsp; </td></tr>
@@ -39,17 +35,7 @@
                 <td class="basic_td"><b>a</td>
             </tr>
         </table>
-        dict_data: ${dict_data or ''|entity}
-        group_dict: ${group_dict or ''|entity}
-
-for line in dict:
-    subdict = dict.get(line)
-    pid = subdict.get('product_id')
-    print pid
-        </%def>
-        
-        %for obje in objects:
-            ${all_prods([obje])}
-            <p style="page-break-after:always"></p>
-        %endfor
-        
+        <br/>
+        <p style="page-break-after:always"></p>
+     </body>
+</html>

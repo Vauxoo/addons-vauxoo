@@ -37,7 +37,7 @@ class wizard_report_variation(osv.osv_memory):
         'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos', required=True),
         'date_start': fields.datetime('Start Date'),
         'date_finished': fields.datetime('End Date', required=True),
-        'type': fields.selection([('single','Detail'),('group','Resume')], 'Type', required=True),
+        'type': fields.selection([('single','Detail'),('group','Resume')], 'Type', required=True, help="Only calculates for productions not in draft or cancelled"),
     }
     
     _defaults = {
@@ -96,7 +96,6 @@ class wizard_report_variation(osv.osv_memory):
             user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
             company_id = context.get('company_id', user.company_id.id)
             prod_ids = tuple(data.get('product_ids'))
-            print prod_ids, "prod ids"
             cr.execute("""
 SELECT product_id, sum(standard_price * quantity) AS mul FROM mrp_variation
 INNER JOIN product_product
@@ -109,12 +108,26 @@ WHERE production_id IN (
  WHERE mp.date_planned > %s
   AND mp.date_planned < %s
   AND mp.product_id in %s
-  AND state != 'cancel'
+  AND state NOT IN ('cancel' ,'draft')
   AND company_id = %s
  )
 GROUP BY product_id
             """, (data.get('date_start'), data.get('date_finished'), prod_ids, company_id))
             records = cr.fetchall()
-            print records
-            return {}
+            if not records:
+                raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
+            
+            datas = {
+                'ids': [],
+                'model': 'wizard.report.variation',
+                'form': data,
+                'uid': uid,
+                'query_dict': records
+            }
+            
+            return {
+                'type': 'ir.actions.report.xml',
+                'report_name': 'webkitmrp.production_variation_group',
+                'datas': datas,
+            }
 wizard_report_variation()
