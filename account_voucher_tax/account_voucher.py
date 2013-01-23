@@ -27,7 +27,7 @@
 from osv import osv, fields
 from tools.translate import _
 import release
-
+import decimal_precision as dp
 
 class account_voucher(osv.osv):
     _inherit = 'account.voucher'
@@ -64,9 +64,6 @@ class account_voucher(osv.osv):
         currency_obj = self.pool.get('res.currency')
         company_currency = self._get_company_currency(cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(cr, uid, voucher_id, context)
-        print company_currency,"com"
-        print current_currency,"curre"
-        
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             for line in voucher.line_ids:
                 for line_tax in line.tax_line_ids:
@@ -82,7 +79,7 @@ class account_voucher(osv.osv):
                     move_line={
                     'journal_id': voucher.journal_id.id,
                     'period_id': voucher.period_id.id,
-                    'name': line_tax.tax_id.account_collected_id.name or '/',
+                    'name': line_tax.tax_id.account_collected_voucher_id.name or '/',
                     'account_id': account_tax_voucher,
                     'move_id': int(move_id),
                     'partner_id': voucher.partner_id.id,
@@ -118,7 +115,46 @@ class account_voucher(osv.osv):
                     if company_currency!=current_currency:
                         move_line['amount_currency']=line_tax.amount_tax
                     move_line_obj.create(cr ,uid, move_line, context=context)
-        
+                    if line_tax.diff_amount_tax:
+                        amount_diff=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.diff_amount_tax)), round=False, context=context)
+                        debit_diff=0.0
+                        if voucher.type=='payment':
+                            amount_diff, debit_diff= debit_diff, amount_diff
+                        move_line={
+                            'journal_id': voucher.journal_id.id,
+                            'period_id': voucher.period_id.id,
+                            'name': 'change_tax: ' + str(line.name),
+                            'account_id':account_tax_collected, 
+                            'move_id': int(move_id),
+                            'partner_id': voucher.partner_id.id,
+                            'company_id':company_currency,
+                            #~ 'currency_id': voucher.journal_id.currency.id,
+                            'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
+                            'quantity': 1,
+                            'credit': amount_diff,
+                            'debit': debit_diff,
+                            #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
+                            'date': voucher.date,
+                            }
+                        move_line_obj.create(cr ,uid, move_line, context=context)
+                        amount_diff, debit_diff= debit_diff, amount_diff
+                        move_line={
+                            'journal_id': voucher.journal_id.id,
+                            'period_id': voucher.period_id.id,
+                            'name': 'change_tax: ' +  str(line.name),
+                            'account_id':line_tax.diff_account_id.id, 
+                            'move_id': int(move_id),
+                            'partner_id': voucher.partner_id.id,
+                            'company_id':company_currency,
+                            #~ 'currency_id': voucher.journal_id.currency.id,
+                            'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
+                            'quantity': 1,
+                            'credit': amount_diff,
+                            'debit': debit_diff,
+                            #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
+                            'date': voucher.date,
+                            }
+                        move_line_obj.create(cr ,uid, move_line, context=context)
         return move_id
         
         
@@ -288,7 +324,6 @@ class account_voucher(osv.osv):
         return res
         
     def compute_tax(self, cr, uid, ids, context=None):
-        print "compute"
         move_obj = self.pool.get('account.move')
         move_line_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
@@ -306,6 +341,7 @@ class account_voucher(osv.osv):
                     invoice_ids=invoice_obj.search(cr,uid,[('move_id','=',line.move_line_id.move_id.id)],context=context)
                     for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
                         for tax in invoice.tax_line:
+                            print tax.tax_id.name,tax.tax_id.tax_voucher_ok
                             if tax.tax_id.tax_voucher_ok:
                                 base_amount=self.get_partial_amount_tax_pay(cr, uid, tax.tax_id.amount, tax.base, context=context)
                                 move_ids=[]
@@ -317,23 +353,41 @@ class account_voucher(osv.osv):
                                     if abs(float('%.*f' % (2,credit_amount))+ (base_amount*(1-factor))-base_amount)<.02:
                                         credit_amount=credit_amount-abs(float('%.*f' % (2,credit_amount))+ (base_amount*(1-factor))-base_amount)
                                 #context['date']=invoice.date_invoice
+                                diff_amount_tax=0.0
+                                diff_account_id=False
+                                base_amount_curr=base_amount
                                 if company_currency==current_currency:
                                     rate_move=self.get_rate(cr,uid,line.move_line_id.move_id.id,context=context)
                                     credit_amount=credit_amount*rate_move
                                 else:
-                                    print "bonedas diferentes"
-                                    print company_currency,"com"
-                                    print current_currency, "curre"
-                                    print line.move_line_id.currency_id.id, "move"
                                     credit_amount=currency_obj.compute(cr, uid, invoice.currency_id.id,current_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
-                                    base_amount=currency_obj.compute(cr, uid, invoice.currency_id.id,current_currency, float('%.*f' % (2,base_amount)), round=False, context=context)
+                                    base_amount_curr=currency_obj.compute(cr, uid, invoice.currency_id.id,current_currency, float('%.*f' % (2,base_amount)), round=False, context=context)
+                                    context['date']=invoice.date_invoice
+                                    credit_orig=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
+                                    context['date']=voucher.date
+                                    credit_diff=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
+
+                                    diff_amount_tax=currency_obj.compute(cr, uid, company_currency,current_currency, float('%.*f' % (2,(credit_orig-credit_diff))), round=False, context=context)
+                                    if credit_orig>credit_diff:
+                                        if voucher.type=='receipt':
+                                            diff_account_id=tax.tax_id.account_expense_voucher_id.id
+                                        else:
+                                            diff_account_id=tax.tax_id.account_income_voucher_id.id
+                                    if credit_orig<credit_diff:
+                                        if voucher.type=='receipt':
+                                            diff_account_id=tax.tax_id.account_income_voucher_id.id
+                                        else:
+                                            diff_account_id=tax.tax_id.account_expense_voucher_id.id
+                                        
                                 debit_amount=0.0
                                 tax_line={
                                     'tax_id':tax.tax_id.id,
                                     'account_id':account,
                                     'amount_tax':credit_amount,
                                     'voucher_line_id':line.id,
-                                    'original_tax':base_amount,
+                                    'original_tax':base_amount_curr,
+                                    'diff_account_id':diff_account_id,
+                                    'diff_amount_tax':diff_amount_tax
                                     
                                 }
                                 tax_line_obj.create(cr, uid, tax_line, context=context)
@@ -359,7 +413,7 @@ class account_voucher_line_tax(osv.osv):
         'amount_tax':fields.float('Amount Tax'),
         'original_tax':fields.float('Original Import Tax'),
         'balance_tax':fields.float('Balance Import Tax'),
-        'diff_amount_tax':fields.float('Difference'),
+        'diff_amount_tax':fields.float('Difference',digits_compute= dp.get_precision('Account')),
         'diff_account_id':fields.many2one('account.account','Account Diff'),
         'voucher_line_id':fields.many2one('account.voucher.line', 'Voucher Line'),
         
