@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+
+    <record model="ir.ui.view" id="inherit_tasks_userstory_form_view">
+      <field name="name">inherit.userstory.sprint.kanban</field>
+      <field name="model">project.task</field>
+      <field name="type">form</field>
+      <field name="inherit_id" ref="project.view_task_form2" />
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='categ_ids']" position="after">
+          <field name="userstory_id" />
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</openerp>
