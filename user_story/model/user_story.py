@@ -46,16 +46,8 @@ class user_story(osv.osv):
 
     def _set_task(self, cr, uid, id, name, value, arg, ctx=None):
         
-        print 'NAME',name
-        print 'VALUE', value
-        print 'arg', arg
-        print 'ID',id
-        
         task_ids = self.pool.get('project.task').search(cr, uid , [("userstory_id",'=',id)])
-        print 'task_ids', task_ids
         task_id = list(set(value[0][2]) - set(task_ids))
-        print 'value[0][2]', value[0][2]
-        print 'task_id',task_id
         if task_id:
             for i in task_id:
                 sql_str = """UPDATE project_task set
@@ -81,7 +73,6 @@ class user_story(osv.osv):
         'accep_crit_ids':fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
         'info': fields.text('Other Info'),
         'asumption': fields.text('Asumptions'),
-        #~ 'task_ids':fields.many2many('project.task', 'userstory_task_rel', 'userstory_id', 'task_id', 'Task'),
         'date': fields.date('Date'),
         'user_id':fields.many2one('res.users', 'Create User'),
         'sk_id':fields.many2one('sprint.kanban', 'Sprint Kanban'),
@@ -95,8 +86,6 @@ class user_story(osv.osv):
         'user_id': lambda self,cr,uid,ctx: uid,
         'state':'draft',
     }
-
-
 
     
     def do_draft(self, cr, uid, ids, context=None):
@@ -144,7 +133,7 @@ class project_task(osv.osv):
     _inherit = 'project.task'
 
     _columns = {
-        'userstory_id':fields.many2one('user.story', 'User Story'),
+        'userstory_id':fields.many2one('user.story', 'User Story',help="Set hear the User Story related with this task"),
 
     }
 project_task()
