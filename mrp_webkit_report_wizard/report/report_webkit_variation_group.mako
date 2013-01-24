@@ -57,6 +57,7 @@
                 <td class="lastrow">$ ${round(total_consumed_cost,2) or '0.00'|entity}</td>
             </tr>
         </table>
+        
         <br/>
         %if data['finished_dict']:
             <table class="basic_table">
@@ -93,6 +94,87 @@
                     <td class="lastrow">Total:</td>
                     <td class="lastrow"></td>
                     <td class="lastrow">$ ${round(total_finished_cost,2) or '0.00'|entity}</td>
+                </tr>
+            </table>
+        %endif
+        
+        <br/>
+        %if data['child_consumed']:
+            <hr/>
+            <table class="basic_table">
+                <tr>
+                    <td class="basic_td">Variation in children consumed products</td>
+                    <td class="basic_td"> &nbsp; </td>
+                    <td class="basic_td"> &nbsp; </td>
+                    <td class="basic_td"> &nbsp; </td>
+                </tr>
+                <tr>
+                    <td class="basic_td"> <b>Reference:</b></td>
+                    <td class="basic_td"> Quantity:</td>
+                    <td class="basic_td"> Unit of M:</td>
+                    <td class="basic_td"> Variation cost:</td>
+                </tr>
+                <%row_count=1%>
+                <%total_child_consumed_cost=0%>
+                %for line in data['child_consumed']:
+                    %if (row_count%2==0):
+                        <tr  class="nonrow">
+                    %else:
+                        <tr>
+                    %endif
+                        <td class="basic_td"> ${line[0] or ''|entity}</td>
+                        <td class="number_td"> ${line[1] or '0.0'|entity}</td>
+                        <td class="basic_td"> ${line[2] or ''|entity}</td>
+                        <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+                    </tr>
+                <%total_child_consumed_cost+=line[3]%>
+                <%row_count+=1%>
+                %endfor
+                <tr>
+                    <td class="lastrow"></td>
+                    <td class="lastrow">Total:</td>
+                    <td class="lastrow"></td>
+                    <td class="lastrow">$ ${round(total_child_consumed_cost,2) or '0.00'|entity}</td>
+                </tr>
+            </table>
+        %endif
+        
+        <br/>
+        %if data['child_finished']:
+            <table class="basic_table">
+                <tr>
+                    <td class="basic_td">Variation in children finished products</td>
+                    <td class="basic_td"> &nbsp; </td>
+                    <td class="basic_td"> &nbsp; </td>
+                    <td class="basic_td"> &nbsp; </td>
+                </tr>
+                <tr>
+                    <td class="basic_td"> <b>Reference:</b></td>
+                    <td class="basic_td"> Quantity:</td>
+                    <td class="basic_td"> Unit of M:</td>
+                    <td class="basic_td"> Variation cost:</td>
+                </tr>
+                <%row_count=1%>
+                <%total_child_finished_cost=0%>
+                %for line in data['child_finished']:
+                    %if (row_count%2==0):
+                        <tr  class="nonrow">
+                    %else:
+                        <tr>
+                    %endif
+                        <td class="basic_td"> ${line[0] or ''|entity}</td>
+                        <td class="number_td"> ${line[1] or '0.0'|entity}</td>
+                        <td class="basic_td"> ${line[2] or ''|entity}</td>
+                        <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+                    </tr>
+                <%total_child_finished_cost+=line[3]%>
+                <%row_count+=1%>
+                %endfor
+                <tr>
+                    <td class="lastrow"></td>
+                    <td class="lastrow">Total:</td>
+                    <td class="lastrow"></td>
+                    <td class="lastrow">$ ${round(total_child_finished_cost,2) or '0.00'|entity}</td>
                 </tr>
             </table>
         %endif

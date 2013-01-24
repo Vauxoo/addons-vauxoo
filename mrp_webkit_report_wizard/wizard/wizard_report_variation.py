@@ -109,7 +109,6 @@ class wizard_report_variation(osv.osv_memory):
                 'child_finished' : datas2[0].get('finished_dict'),
                 'child_consumed' : datas2[0].get('query_dict'),
                 })
-            print "complete datas ------------>",datas
             
             return {
                 'type': 'ir.actions.report.xml',
