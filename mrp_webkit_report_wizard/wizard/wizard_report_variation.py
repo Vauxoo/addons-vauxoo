@@ -97,6 +97,7 @@ class wizard_report_variation(osv.osv_memory):
             user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
             company_id = context.get('company_id', user.company_id.id)
             prod_ids = tuple(data.get('product_ids'))
+            #obtain data for variation in consumed products
             cr.execute("""
 SELECT product_id, sum(quantity), sum(standard_price * quantity) FROM mrp_variation
 INNER JOIN product_product
@@ -119,15 +120,41 @@ GROUP BY product_id
                 raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
             consumed_variation = []
             for line in records:
-                variation_data = self.pool.get('mrp.variation').browse(cr, uid, line[0], context=context)
-                consumed_variation.append((variation_data.product_id.name, line[1], variation_data.product_id.uom_id.name, line[2]))
+                product_data = self.pool.get('product.product').browse(cr, uid, line[0], context=context)
+                consumed_variation.append((product_data.name, line[1], product_data.uom_id.name, line[2]))
+            
+            #obtain data for variation in finished products
+            cr.execute("""
+SELECT product_id, sum(quantity), sum(standard_price * quantity) FROM mrp_variation_finished_product
+INNER JOIN product_product
+   ON product_product.id = mrp_variation_finished_product.product_id
+INNER JOIN product_template
+   ON product_template.id = product_product.product_tmpl_id
+WHERE production_id IN (
+
+ SELECT id FROM mrp_production AS mp
+ WHERE mp.date_planned > %s
+  AND mp.date_planned < %s
+  AND mp.product_id in %s
+  AND state NOT IN ('cancel' ,'draft')
+  AND company_id = %s
+ )
+GROUP BY product_id
+            """, (data.get('date_start'), data.get('date_finished'), prod_ids, company_id))
+            records2 = cr.fetchall()
+            finished_variation = []
+            if records2:
+                for line in records2:
+                    finished_data = self.pool.get('product.product').browse(cr, uid, line[0], context=context)
+                    finished_variation.append((finished_data.name, line[1], finished_data.uom_id.name, line[2]))
+
             datas = {
                 'ids': ids,
                 'model': 'wizard.report.variation',
                 'form': data,
                 'uid': uid,
                 'query_dict': consumed_variation,
-                #'browse_recs': browse_recs
+                'finished_dict': finished_variation
             }
             
             return {
