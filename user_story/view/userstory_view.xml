@@ -58,7 +58,7 @@
             </page>
             <page string="Link">
               <separator string="Tasks" colspan='4' />
-              <field name="task_ids" colspan="4" nolabel="1" />
+              <field name="task_ids" colspan="4" nolabel="1" widget="many2many"/>
             </page>
           </notebook>
 		  </sheet>
@@ -77,6 +77,7 @@
           <field name="project_id" />
           <field name="user_id" />
           <field name="sk_id" />
+          <field name="task_ids" />
         </tree>
       </field>
     </record>
@@ -93,6 +94,7 @@
             <field name="owner" />
             <field name="user_id"/>
             <field name="sk_id"/>
+            <field name="task_ids"/>
           </group>
           <newline />
           <group expand="1" string="Group By...">
@@ -103,6 +105,8 @@
             <filter name="user_story_user_id" icon="terp-personal" string="User" context="{'group_by':'user_id'}" />
             <separator orientation="vertical" />
             <filter name="user_story_sk_id" icon="terp-personal" string="Sprint" context="{'group_by':'sk_id'}" />
+            <separator orientation="vertical" />
+            <filter name="user_story_task_ids" icon="terp-personal" string="Task" context="{'group_by':'task_ids'}" />
           </group>
         </search>
       </field>

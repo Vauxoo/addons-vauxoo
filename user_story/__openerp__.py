@@ -50,6 +50,7 @@
         "security/userstory_security.xml",
         "security/ir.model.access.csv",
         "view/userstory_view.xml",
+        "view/project_view.xml",
     ],
     "active": False,
     "images": [],
