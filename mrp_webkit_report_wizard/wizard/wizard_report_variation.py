@@ -94,70 +94,22 @@ class wizard_report_variation(osv.osv_memory):
             }
 
         if data.get('type') == 'group':
-            user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
-            company_id = context.get('company_id', user.company_id.id)
-            prod_ids = tuple(data.get('product_ids'))
-            mrp_obj = self.pool.get('mrp.production')
-            production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
-            ('product_id', 'in', data.get('product_ids')), ('date_planned', '>', data.get('date_start')), \
-            ('date_planned', '<', data.get('date_finished')), ('state', 'not in', ('draft', 'cancel')), ('company_id', '=', company_id)])
-
-            #obtain data for variation in consumed products
-            cr.execute("""
-SELECT product_id, sum(quantity), sum(standard_price * quantity) FROM mrp_variation
-INNER JOIN product_product
-   ON product_product.id = mrp_variation.product_id
-INNER JOIN product_template
-   ON product_template.id = product_product.product_tmpl_id
-WHERE production_id IN 
-%s
-GROUP BY product_id
-            """, (tuple(production_ids),))
-            records = cr.fetchall()
-            if not records:
-                raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
-            consumed_variation = []
-            for line in records:
-                product_data = self.pool.get('product.product').browse(cr, uid, line[0], context=context)
-                consumed_variation.append((product_data.name, line[1], product_data.uom_id.name, line[2]))
-            
-            #obtain data for variation in finished products
-            cr.execute("""
-SELECT product_id, sum(quantity), sum(standard_price * quantity) FROM mrp_variation_finished_product
-INNER JOIN product_product
-   ON product_product.id = mrp_variation_finished_product.product_id
-INNER JOIN product_template
-   ON product_template.id = product_product.product_tmpl_id
-WHERE production_id IN 
-%s
-GROUP BY product_id
-            """, (tuple(production_ids),))
-            records2 = cr.fetchall()
-            finished_variation = []
-            if records2:
-                for line in records2:
-                    finished_data = self.pool.get('product.product').browse(cr, uid, line[0], context=context)
-                    finished_variation.append((finished_data.name, line[1], finished_data.uom_id.name, line[2]))
-                    
+            data_tuple = self.generate_datas_dict(cr, uid, ids, context=None, child_dict=None)
+            datas = data_tuple[0]
             #obtain ids of the products of children productions.
-            mrp_data = mrp_obj.browse(cr, uid, production_ids, context=context)
+            mrp_obj = self.pool.get('mrp.production')
+            mrp_data = mrp_obj.browse(cr, uid, data_tuple[1], context=context)
             child_prod_ids = {}
             for mrp in mrp_data:
                 if mrp.subproduction_ids:
                     for subp in mrp.subproduction_ids:
                         child_prod_ids.setdefault(subp.product_id.id, subp.product_id.id)
-            print child_prod_ids.values(), "child"
-            
-            mandaerror.sss
-
-            datas = {
-                'ids': ids,
-                'model': 'wizard.report.variation',
-                'form': data,
-                'uid': uid,
-                'query_dict': consumed_variation,
-                'finished_dict': finished_variation
-            }
+                    datas2 = self.generate_datas_dict(cr, uid, ids, context, child_prod_ids.values())
+            datas.update({
+                'child_finished' : datas2[0].get('finished_dict'),
+                'child_consumed' : datas2[0].get('query_dict'),
+                })
+            print "complete datas ------------>",datas
             
             return {
                 'type': 'ir.actions.report.xml',
@@ -165,7 +117,66 @@ GROUP BY product_id
                 'datas': datas,
             }
 
-    def generate_datas_dict():
-        return report_datas
+    def generate_datas_dict(self, cr, uid, ids, context=None, child_dict=None):
+        if context is None:
+            context = {}
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        company_id = context.get('company_id', user.company_id.id)
+        data = self.read(cr, uid, ids)[0]
+        if child_dict is None:
+            prod_ids = data.get('product_ids')
+        else:
+            prod_ids = child_dict
+        mrp_obj = self.pool.get('mrp.production')
+        production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
+        ('product_id', 'in', prod_ids), ('date_planned', '>', data.get('date_start')), \
+        ('date_planned', '<', data.get('date_finished')), ('state', 'not in', ('draft', 'cancel')), ('company_id', '=', company_id)])
+
+        #obtain data for variation in consumed products
+        cr.execute("""
+SELECT product_id, sum(quantity), sum(standard_price * quantity) FROM mrp_variation
+INNER JOIN product_product
+    ON product_product.id = mrp_variation.product_id
+INNER JOIN product_template
+    ON product_template.id = product_product.product_tmpl_id
+WHERE production_id IN 
+%s
+GROUP BY product_id
+        """, (tuple(production_ids),))
+        records = cr.fetchall()
+        if not records:
+            raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
+        consumed_variation = []
+        for line in records:
+            product_data = self.pool.get('product.product').browse(cr, uid, line[0], context=context)
+            consumed_variation.append((product_data.name, line[1], product_data.uom_id.name, line[2]))
+        
+        #obtain data for variation in finished products
+        cr.execute("""
+SELECT product_id, sum(quantity), sum(standard_price * quantity) FROM mrp_variation_finished_product
+INNER JOIN product_product
+    ON product_product.id = mrp_variation_finished_product.product_id
+INNER JOIN product_template
+    ON product_template.id = product_product.product_tmpl_id
+WHERE production_id IN 
+%s
+GROUP BY product_id
+        """, (tuple(production_ids),))
+        records2 = cr.fetchall()
+        finished_variation = []
+        if records2:
+            for line in records2:
+                finished_data = self.pool.get('product.product').browse(cr, uid, line[0], context=context)
+                finished_variation.append((finished_data.name, line[1], finished_data.uom_id.name, line[2]))
+
+        report_datas = {
+            'ids': ids,
+            'model': 'wizard.report.variation',
+            'form': data,
+            'uid': uid,
+            'query_dict': consumed_variation,
+            'finished_dict': finished_variation
+        }
+        return (report_datas, production_ids)
     
 wizard_report_variation()
