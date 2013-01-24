@@ -101,14 +101,9 @@ class account_order_wizard(osv.osv_memory):
                     self._ordering(cr, uid, patron, len_patron, dict, dict[j][0], j, i+1)
 
     def _new_ordering(self, cr, uid, company_id, pattern, pattern_list, lpl, top_parent, parent_id,  pc=0, d={}):
-        print 'AHORA   PATRON, ', pattern
-        print 'AHORA   PARENT_ID, ', parent_id
         aa_obj = self.pool.get('account.account')
         cr.execute("SELECT id, code FROM account_account WHERE code like %s AND company_id = %s AND active = True",(pattern,company_id))
         ids_list_dict = cr.dictfetchall()
-        
-        if pattern == '1-1-02-01-%%':
-            print 'AHORA LOS DATOS SON: ',ids_list_dict
         
         if not ids_list_dict:
             return True
@@ -116,7 +111,6 @@ class account_order_wizard(osv.osv_memory):
         for ild in ids_list_dict:
             #~ dict[account_id] = ['code', parent_flag, parent_id]
             
-            print 'id: %s - code: %s'%(ild['id'],ild['code'])
             if ild['id']==top_parent:
                 continue
                 
@@ -136,25 +130,18 @@ class account_order_wizard(osv.osv_memory):
             
             #~ dict[account_id] = ['code', parent_flag, parent_id]
             if ild['id']==top_parent:
-                print 'salio por el top'
                 continue
             if ild['id']==parent_id:
-                print 'salio por el parent'
                 continue
             if pc == lpl -1: 
-                print 'salio por la longitud'
                 continue
             if len(ild['code'].strip())!=len(pattern):
-                print 'salio por la igual del codigo'
                 continue
             
             
             
-            print 'id: %s - code: %s'%(ild['id'],ild['code'])
-            print { 'parent_id' : parent_id , 'type' : 'view'}
             now = pattern_list[pc]
             nxt = pattern_list[pc+1]
-            print 'PROXIMO PATRON, ', nxt
             #~ code = ild['code']
             #~ minlen = min(map(len,[now,nxt,code]))
             #~ maxlen = max(map(len,[now,nxt,code]))
@@ -179,7 +166,6 @@ class account_order_wizard(osv.osv_memory):
                     else:
                         new_pattern+=nxt[ck]
                 ck+=1
-            print 'new pattern, ',new_pattern
             new_parent_id = ild['id']
             self._new_ordering(cr, uid, company_id, new_pattern, pattern_list, lpl, top_parent, new_parent_id, pc+1, {})
         #~ for ac_id in d:
@@ -202,9 +188,7 @@ class account_order_wizard(osv.osv_memory):
             #~ break
             
             pattern_list = self._get_list(cr, uid, id, context)
-            print 'pattern_list, ' ,pattern_list
             parent_id = self.browse(cr, uid, id, context).account_id.id
-            print 'PARENT ID ',parent_id
             d={}
             lpl = len(pattern_list)
             top_parent = parent_id
@@ -235,7 +219,6 @@ class account_order_wizard(osv.osv_memory):
     def get_code(self, cr, uid, ids, code, level=None, parent_id=None, context=None):
         if context is None:
             context = {}
-        print 'leve',level
         if parent_id:
             cr.execute('''select id, code 
                           from account_account 
