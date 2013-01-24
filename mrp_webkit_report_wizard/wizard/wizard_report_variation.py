@@ -35,13 +35,14 @@ class wizard_report_variation(osv.osv_memory):
 
     _columns = {
         'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos', required=True),
-        'date_start': fields.datetime('Start Date'),
+        'date_start': fields.datetime('Start Date', required=True),
         'date_finished': fields.datetime('End Date', required=True),
         'type': fields.selection([('single','Detail'),('group','Resume')], 'Type', required=True, help="Only calculates for productions not in draft or cancelled"),
     }
     
     _defaults = {
         'date_finished': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'date_start': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -97,7 +98,7 @@ class wizard_report_variation(osv.osv_memory):
             company_id = context.get('company_id', user.company_id.id)
             prod_ids = tuple(data.get('product_ids'))
             cr.execute("""
-SELECT product_id, sum(standard_price * quantity) AS mul FROM mrp_variation
+SELECT product_id, sum(quantity), sum(standard_price * quantity) FROM mrp_variation
 INNER JOIN product_product
    ON product_product.id = mrp_variation.product_id
 INNER JOIN product_template
@@ -116,13 +117,17 @@ GROUP BY product_id
             records = cr.fetchall()
             if not records:
                 raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
-            
+            consumed_variation = []
+            for line in records:
+                variation_data = self.pool.get('mrp.variation').browse(cr, uid, line[0], context=context)
+                consumed_variation.append((variation_data.product_id.name, line[1], variation_data.product_id.uom_id.name, line[2]))
             datas = {
-                'ids': [],
+                'ids': ids,
                 'model': 'wizard.report.variation',
                 'form': data,
                 'uid': uid,
-                'query_dict': records
+                'query_dict': consumed_variation,
+                #'browse_recs': browse_recs
             }
             
             return {
