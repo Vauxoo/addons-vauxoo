@@ -59,7 +59,9 @@ Requires the following programs:
     "update_xml" : [
         'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',
+        "data.xml",
         "l10n_mx_facturae_report.xml",
+        "l10n_mx_facturae_report_webkit.xml",
         "wizard/wizard_invoice_facturae_txt_v6_view.xml",
         "wizard/wizard_invoice_facturae_xml_v6_view.xml",
         "wizard/installer_view.xml",

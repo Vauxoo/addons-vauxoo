@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="ir_header_webkit_facturae" model="ir.header_webkit">
+            <field name="orientation">Portrait</field>
+            <field name="format">Letter</field>
+            <field name="html">
+                <![CDATA[<html>
+                    <head>
+                        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+                        <script>
+                            function subst() {
+                            var vars={};
+                            var x=document.location.search.substring(1).split('&');
+                            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+                            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+                            for(var i in x) {
+                            var y = document.getElementsByClassName(x[i]);
+                            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                                }
+                            }
+                        </script>
+                        <style type="text/css">
+                            ${css}
+                        </style>
+                    </head>
+                    <body style="border:0; margin: 0;" onload="subst()">
+                        ${_debug or ''|n} </body>
+                </html>]]>
+            </field>
+            <field eval="0.0" name="margin_top"/>
+            <field name="css" >
+                <![CDATA[
+                    td.td_data_exp
+                    {
+                    text-align:left;
+                    font-size:15;
+                    width:500px;
+                    }
+
+                    .title {
+                    font-size:16;
+                    font-weight: bold;
+                    color:#blue;
+                    }
+
+                    td.address{
+                    text-align:left;
+                    valign:top;
+                    width:500px;
+                    }
+                    td.totales{
+                    text-align:left;
+                    valign:top;
+                    width:500px;
+                    position:rigth;
+                    }
+                    ]]> 
+            </field>
+            <field name="name">Facturae</field>
+        </record>
+        <record id="ir_header_img_companylogo0" model="ir.header_img">
+            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+</openerp>
