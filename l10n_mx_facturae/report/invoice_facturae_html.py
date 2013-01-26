@@ -1,6 +1,33 @@
-import time
+# -*- encoding: utf-8 -*-
+###########################################################################
+#    Module Writen to OpenERP, Open Source Management Solution
+#
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    All Rights Reserved.
+#    info Vauxoo (info@vauxoo.com)
+############################################################################
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+############################################################################
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
 from report import report_sxw
-from osv import osv
+import pooler
+import tools
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -17,7 +44,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
             'exists_key': self._exists_key,
-            'get_data_partner' : self._get_data_partner
+            'get_data_partner' : self._get_data_partner,
+            'get_sum_total' : self._get_sum_total,
         })
         self.taxes = []
 
@@ -43,8 +71,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return ""
 
     def _get_approval(self):
-        #~ return self.approval
-        return '77'
+        return self.approval
 
     def _get_invoice_sequence(self):
         return self.sequence
@@ -136,6 +163,12 @@ class invoice_facturae_html(report_sxw.rml_parse):
                     'mobile' : address_invoice.mobile or False,
                     })
         return res
+        
+    def _get_sum_total(self, line_ids):
+        suma = 0.0
+        for line in line_ids:
+            suma += (line.price_unit or 0.0) * (line.quantity or 0.0)
+        return suma
         
 report_sxw.report_sxw('report.account.invoice.facturae.webkit',
                        'account.invoice', 
