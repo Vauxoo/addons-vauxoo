@@ -9,7 +9,7 @@
       <field name="arch" type="xml">
         <xpath expr='/search/filter[@string="Quotations"]' position="before">
           <filter icon="terp-go-month" string="   Today   " name="today" domain="[('date_order','=',(datetime.date.today()-relativedelta()).strftime('%%d-%%m-%%Y'))]" help="Sale order for today" />
-      <filter icon="terp-sale" string="Done" name="done" domain="[('invoice_ids.state','=','open')]" help="Sale order in done state" />
+      <filter icon="terp-sale" string="Done" name="done" domain="[('invoice_ids.state','in',('open','paid'))]" help="Sale order in done state" />
 
         </xpath>
       </field>
