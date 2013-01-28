@@ -39,6 +39,7 @@
         'product_view.xml',
         'invoice_view.xml',
         'sale_view.xml',
+        'product_pricelist_view.xml',
         'stock_view.xml',
         'wizard/cancel_order_view.xml',
         'wizard/cost_automatically_view.xml',
