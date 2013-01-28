@@ -47,7 +47,8 @@ class inherited_invoice_line(osv.osv):
         'net_discount': fields.float('Net Discount', required=False, \
         digits_compute= dp.get_precision('Account'), \
         help="""Loaded from data imported from Profit is equal to sale price minus real sold price"""),
-        'discount_code_profit': fields.char('Discount code from profit', size=7)
+        'discount_code_profit': fields.char('Discount code from profit', size=7),
+        'percent_com':fields.float('Percen Commision', help='Percent commision by price list'), 
     }
 
     _defaults = {

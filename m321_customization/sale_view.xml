@@ -36,6 +36,7 @@
         </xpath>
         <xpath expr='/form/notebook/page[@string="Sales Order"]/field[@name="order_line"]/form/notebook/page[@string="Order Line"]/field[@name="product_uom_qty"]' position="after">
              <field name="check_confirm" />
+             <field name="percent_com" invisible="1" />
         </xpath>
         <xpath expr='//field[@name="incoterm"]' position="replace">
         </xpath>
