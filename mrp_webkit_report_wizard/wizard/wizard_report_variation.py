@@ -129,7 +129,7 @@ class wizard_report_variation(osv.osv_memory):
         mrp_obj = self.pool.get('mrp.production')
         production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
         ('product_id', 'in', prod_ids), ('date_planned', '>', data.get('date_start')), \
-        ('date_planned', '<', data.get('date_finished')), ('state', 'not in', ('draft', 'cancel')), ('company_id', '=', company_id)])
+        ('date_planned', '<', data.get('date_finished')), ('company_id', '=', company_id)])
 
         #obtain data for variation in consumed products
         cr.execute("""
