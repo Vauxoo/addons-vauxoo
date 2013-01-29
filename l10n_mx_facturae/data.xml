@@ -31,30 +31,53 @@
             <field eval="0.0" name="margin_top"/>
             <field name="css" >
                 <![CDATA[
-                    td.td_data_exp
-                    {
-                    text-align:left;
-                    font-size:15;
-                    width:500px;
-                    }
+td.td_data_exp
+{
+text-align:center
+font-size:20px;
+width:50%;
+}
+.title{
+color: #280099;
+text-align: center;
+font-weight: Helvetica;
+font-size: 20pt;
+}
+.emitter{
+color: #280099;
+text-align: left;
+font-weight: Helvetica;
+font-size: 10pt;
+}
+.folio{
+color: red;
+text-align: left;
+font-weight: Helvetica;
+font-size: 20pt;
+}
 
-                    .title {
-                    font-size:16;
-                    font-weight: bold;
-                    color:#blue;
-                    }
+td.address{
+text-align:left;
+valign:top;
+width:500px;
+}
+.line{
+border-color:#280099;
+}
 
-                    td.address{
-                    text-align:left;
-                    valign:top;
-                    width:500px;
-                    }
-                    td.totales{
-                    text-align:left;
-                    valign:top;
-                    width:500px;
-                    position:rigth;
-                    }
+.cfdi{
+border: 2px groove #000000;
+}
+
+td.reg_fis{
+text-align:center;
+width:500px;
+}
+
+.font{
+font-family:Arial,Helvetica,sans-serif;
+font-size: 12pt;
+}
                     ]]> 
             </field>
             <field name="name">Facturae</field>

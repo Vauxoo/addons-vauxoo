@@ -10,7 +10,7 @@
         <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
         <table>
             <tr>
-                <td width=220>
+                <td width="25%">
                     ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),200, 150)}
                 </td>
                 <td class="td_data_exp">
@@ -29,13 +29,16 @@
                     ${o.company_emitter_id.address_invoice_parent_company_id.fax or ''|entity}
                     ${o.company_emitter_id.address_invoice_parent_company_id.mobile or ''|entity}</div>
                 </td>
-                <td width=250>
+                <td width="25%">
                     <div class="folio">${_("Folio:")}
-                    <%number = 'SIN FOLIO O ESTATUS NO VALIDO'%>
-                    <%  if o.type in ['out_invoice', 'out_refund']:
-                            if o.state in ['open', 'paid', 'cancel']:
-                                number=o.number%>
-                        ${number or ''|entity}</div>
+                    %if o.type in ['out_invoice', 'out_refund']:
+                        %if o.state in ['open', 'paid', 'cancel']:
+                            ${o.number or ''|entity}
+                        %endif
+                    %else:
+                        ${'SIN FOLIO O ESTATUS NO VALIDO'}
+                    %endif
+                    </div>
                     %if o.state == 'cancel': 
                         ${'FACTURA CANCELADA' |entity} 
                     %endif
@@ -154,8 +157,7 @@
                 </td>
             </tr>
         </table>
-        <br clear="all" />
-        <br/>
+        <br clear="all"/>
         <div>
             %if o.invoice_sequence_id.approval_id.type == 'cfd22':
                 <font class="font">“Este documento es una representacion impresa de un CFD”
@@ -196,42 +198,41 @@
                     </tr>
                 </table>
             %endif
-        %if o.invoice_sequence_id.approval_id.type != 'cbb':
-            <table rules="all">
-                <tr>
-                    <td class="reg_fis">
-                        <font class="font"><b>Régimen Fiscal:</b></font>
-                        <br/><font class="font">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</font>
-                    </td>
-                    <td class="reg_fis">
-                        <font class="font"><b>Método de Pago:</b></font>
-                        <br/><font class="font">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</font>
-                    </td>
-                    <td class="reg_fis">
-                        <font class="font"><b>Últimos 4 dígitos de la cuenta bancaria:</b></font>
-                        <br/><font class="font">${ o.acc_payment.last_acc_number or 'No identificado' }</font>
-                    </td>
-                </tr>
-            </table>
-        %endif
+            %if o.invoice_sequence_id.approval_id.type != 'cbb':
+                <table rules="all">
+                    <tr>
+                        <td class="reg_fis">
+                            <font class="font"><b>Régimen Fiscal:</b></font>
+                            <br/><font class="font">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</font>
+                        </td>
+                        <td class="reg_fis">
+                            <font class="font"><b>Método de Pago:</b></font>
+                            <br/><font class="font">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</font>
+                        </td>
+                        <td class="reg_fis">
+                            <font class="font"><b>Últimos 4 dígitos de la cuenta bancaria:</b></font>
+                            <br/><font class="font">${ o.acc_payment.last_acc_number or 'No identificado' }</font>
+                        </td>
+                    </tr>
+                </table>
+            %endif
         </div>
-        <br/>
         <div>
             %if o.invoice_sequence_id.approval_id.type == 'cbb':
                 <table frame="box">
                     <tr>
-                        <td width=180 valign="top" align="center">
+                        <td width="20%" valign="top" align="center">
                             %if get_approval():
                                 ${helper.embed_image('jpeg',str(get_approval().cbb_image),170, 170)}
                             %endif
                         </td>
-                        <td width=500 valign="top" align="left">
+                        <td width="50%" valign="top" align="left">
                             <font class="font">Número de aprobación SICOFI: ${get_approval().approval_number or '' |entity}</font>
-                            <br/><br/><font class="font">Pago en una sola exhibición</font>
-                            <br/><br/><font class="font">La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.</font>
-                            <br/><br/><font class="font">Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es ${get_approval().date_start or '' |entity}</font>
+                            <br/><font class="font">Pago en una sola exhibición</font>
+                            <br/><font class="font">La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.</font>
+                            <br/><font class="font">Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es ${get_approval().date_start or '' |entity}</font>
                         </td>
-                        <td width=220 valign="top" align="left">
+                        <td width="30%" valign="top" align="left">
                             ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 280)}
                         </td>
                     </tr>
@@ -240,14 +241,36 @@
             %if o.invoice_sequence_id.approval_id.type == 'cfd22':
                 <table frame="box">
                     <tr>
-                        <td width=180 valign="top" align="center">
+                        <td width="20%" valign="top" align="center">
                             ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 280)}
                         </td>
-                        <td width=700 valign="top" align="left">
+                        <td width="80%" valign="top" align="left">
                             <font class="font">Serie del Certificado :</font>
                             <br/><font class="font">${o.no_certificado or ''|entity}</font>
-                            <br/><br/><font class="font">Sello digital :</font>
-                            <br/><br/><font class="font">${split_string( o.sello ) or ''|entity}</font>
+                            <br/><font class="font">Sello digital:</font>
+                            <br/><font class="font">${split_string( o.sello ) or ''|entity}</font>
+                        </td>
+                    </tr>
+                </table>
+                <div align="center">
+                    <font class="font">Cadena original :</font>
+                    <font class="font">${split_string( o.cadena_original ) or '' |entity}</font>
+                </div>
+            %endif
+            %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
+                <table frame="box">
+                    <tr>
+                        <td width="25%" valign="top" align="center">
+                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 280)}
+                        </td>
+                        <td width="20%" valign="top" align="left">
+                            <font class="font">Sello Digital Emisor:</font>
+                            <br/><font class="font">${split_string( o.sello ) or ''|entity}</font>
+                            <br/><font class="font">Sello Digital SAT:</font>
+                            <br/><font class="font">${split_string( o.cfdi_sello or '') or ''|entity}</font>
+                        </td>
+                        <td width="25%" valign="top" align="center">
+                            ${helper.embed_image('jpeg',str(o.cfdi_cbb),200, 280)}
                         </td>
                     </tr>
                 </table>

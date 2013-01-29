@@ -52,7 +52,8 @@ Requires the following programs:
             "l10n_mx_partner_address",
             "l10n_mx_invoice_amount_to_text",
             "l10n_mx_ir_attachment_facturae",
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
+            "sale",
+            "report_webkit",#no depende de "sale" directamente, pero marca error en algunas versiones
         ],
     "init_xml" : [],
     "demo_xml" : [],
