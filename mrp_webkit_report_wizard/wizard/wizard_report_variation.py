@@ -64,8 +64,7 @@ class wizard_report_variation(osv.osv_memory):
             return res
         prod_list=[]
         for production in production_obj.browse(cr,uid,production_ids):
-            for line in production.move_lines:
-                prod_list.append(line.product_id.id)
+            prod_list.append(production.product_id.id)
         res['product_ids']=prod_list
         return res
         
@@ -100,15 +99,15 @@ class wizard_report_variation(osv.osv_memory):
             mrp_obj = self.pool.get('mrp.production')
             mrp_data = mrp_obj.browse(cr, uid, data_tuple[1], context=context)
             child_prod_ids = {}
+            datas2={}
             for mrp in mrp_data:
                 if mrp.subproduction_ids:
                     for subp in mrp.subproduction_ids:
+                        print mrp.name, "produccion que tiene hijos", subp.name
                         child_prod_ids.setdefault(subp.product_id.id, subp.product_id.id)
                     datas2 = self.generate_datas_dict(cr, uid, ids, context, child_prod_ids.values())
-            datas.update({
-                'child_finished' : datas2[0].get('finished_dict'),
-                'child_consumed' : datas2[0].get('query_dict'),
-                })
+            datas.setdefault('child_finished', datas2 and datas2[0].get('finished_dict') or [])
+            datas.setdefault('child_consumed', datas2 and datas2[0].get('child_consumed') or [])
             
             return {
                 'type': 'ir.actions.report.xml',
@@ -130,6 +129,8 @@ class wizard_report_variation(osv.osv_memory):
         production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
         ('product_id', 'in', prod_ids), ('date_planned', '>', data.get('date_start')), \
         ('date_planned', '<', data.get('date_finished')), ('company_id', '=', company_id)])
+        if not production_ids:
+            raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
 
         #obtain data for variation in consumed products
         cr.execute("""
@@ -143,8 +144,6 @@ WHERE production_id IN
 GROUP BY product_id
         """, (tuple(production_ids),))
         records = cr.fetchall()
-        if not records:
-            raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
         consumed_variation = []
         for line in records:
             product_data = self.pool.get('product.product').browse(cr, uid, line[0], context=context)
