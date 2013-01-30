@@ -7,93 +7,106 @@
 <body>
     %for o in objects :
         ${set_global_data(o)}
-        <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
+        <table>
+            <tr>
+                <td width="1200">
+                    <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
+                </td>
+                <td width="200">
+                    <div class="folio">${_("Folio:")}
+                    %if o.type in ['out_invoice', 'out_refund']:
+                        %if o.state in ['open', 'paid', 'cancel']:
+                            ${o.number or ''|entity}
+                            %else:
+                                <font size="2">${'SIN FOLIO O ESTATUS NO VALIDO'}</font>
+                        %endif
+                    %endif
+                    </div>
+                    %if o.state == 'cancel': 
+                        ${'FACTURA CANCELADA' |entity} 
+                    %endif
+                </td>
+            </tr>
+        </table>
         <table>
             <tr>
                 <td width="350" align="center">
                     ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),200, 150)}
                 </td>
                 <td class="td_data_exp" width="700">
-                    <div class="emitter">${_("Calle:")} ${o.company_emitter_id.address_invoice_parent_company_id.street or ''|entity}
-                    ${_("Nro. Ext:")} ${o.company_emitter_id.address_invoice_parent_company_id.street3 or ''|entity}
-                    ${_("Int:")} ${o.company_emitter_id.address_invoice_parent_company_id.street4 or ''|entity}
-                    <br />${_("Colonia:")} ${o.company_emitter_id.address_invoice_parent_company_id.street2 or ''|entity}
-                    <br />${_("Ciudad:")} ${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity} 
-                    ${_("Estado:")} ${o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or ''|entity}
-                    <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.city2 or ''|entity}
-                    <br />${_("CP:")} ${ o.company_emitter_id.address_invoice_parent_company_id.zip or ''|entity}
-                    <br/>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat|entity}
-                    <br/>${_("Teléfono(s):")}
-                    <br/>
-                    ${o.company_emitter_id.address_invoice_parent_company_id.phone or ''|entity}
-                    ${o.company_emitter_id.address_invoice_parent_company_id.fax or ''|entity}
-                    ${o.company_emitter_id.address_invoice_parent_company_id.mobile or ''|entity}</div>
-                </td>
-                <td width="350">
-                    <div class="folio">${_("Folio:")}
-                    %if o.type in ['out_invoice', 'out_refund']:
-                        %if o.state in ['open', 'paid', 'cancel']:
-                            ${o.number or ''|entity}
-                        %endif
-                    %else:
-                        ${'SIN FOLIO O ESTATUS NO VALIDO'}
-                    %endif
+                    <div class="emitter">
+                        <font>${_("Domicilio Fiscal:")}</font>
+                        <br/>${_("Calle:")} ${o.company_emitter_id.address_invoice_parent_company_id.street or ''|entity}
+                        ${_("Nro. Ext:")} ${o.company_emitter_id.address_invoice_parent_company_id.street3 or ''|entity}
+                        ${_("Int:")} ${o.company_emitter_id.address_invoice_parent_company_id.street4 or ''|entity}
+                        <br />${_("Colonia:")} ${o.company_emitter_id.address_invoice_parent_company_id.street2 or ''|entity}
+                        <br />${_("Ciudad:")} ${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity} 
+                        ${_("Estado:")} ${o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or ''|entity}
+                        <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.city2 or ''|entity}
+                        <br />${_("CP:")} ${ o.company_emitter_id.address_invoice_parent_company_id.zip or ''|entity}
+                        <br/>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat|entity}
+                        <br/>${_("Teléfono(s):")}
+                        <br/>
+                        ${o.company_emitter_id.address_invoice_parent_company_id.phone or ''|entity}
+                        ${o.company_emitter_id.address_invoice_parent_company_id.fax or ''|entity}
+                        ${o.company_emitter_id.address_invoice_parent_company_id.mobile or ''|entity}
                     </div>
-                    %if o.state == 'cancel': 
-                        ${'FACTURA CANCELADA' |entity} 
-                    %endif
-                    %if o.address_issued_id:
-                        ${o.address_issued_id.city or ''|entity}
-                        %if o.address_issued_id.state_id:
-                            , ${o.address_issued_id.state_id.name or ''|entity}
+                </td>
+                <td class="td_data_exp" width="350">
+                    <div class="emitter">
+                        %if o.payment_term.name:
+                            <font class="font">Condición de pago:
+                            <font class="font">${o.payment_term.note or o.payment_term.name or ''|entity}</font>
                         %endif
-                    %endif
-                    <br/>${"a"} ${o.date_invoice_tz or ''|entity}
-                    %if o.invoice_sequence_id.approval_id.type != 'cbb':
-                    <div>${_("Serie:")} ${get_approval().serie or ''|entity}
-                    <br/>${_("Aprobación:")} ${get_approval().approval_number or ''|entity}
-                    <br/>${_("Año Aprobación:")} ${get_approval().approval_year or ''|entity}</div> 
-                    %endif
+                        %if o.origin:
+                            <br/><font class="font">Origen: ${o.origin or ''|entity}</font>
+                        %endif
+                        <br/><font class="font">Expedido en:</font>
+                        %if o.address_issued_id:
+                            <br/><font class="font">${o.address_issued_id.name or ''|entity}</font>
+                            <br/><font class="font">Calle: ${o.address_issued_id.street or ''|entity}</font>
+                            <font class="font">Nro. Ext: ${o.address_issued_id.street3 or ''|entity}</font>
+                            <font class="font">Int: ${o.address_issued_id.street4 or ''|entity}</font>
+                            <br/><font class="font">Colonia: ${o.address_issued_id.street2 or ''|entity}</font>
+                            <br/><font class="font">Ciudad: ${o.address_issued_id.city or ''|entity}</font>
+                            <br/><font class="font">Localidad: ${o.address_issued_id.city2 or ''|entity}</font>
+                            <br/><font class="font">Estado: ${o.address_issued_id.state_id.name or ''|entity}</font>
+                            <br/><font class="font">CP: ${o.address_issued_id.zip or ''|entity}</font>
+                        %endif
+                        <div/>
                 </td>
             </tr>
         </table>
         <table class="line" width="100%" border="1"></table>
         <table>
             <tr>
-                <td class="address">
+                <td class="address" width="1200">
                     <font class="font" color="#280099"><b>Receptor</b></font>
                     <br/><font class="font">Nombre: ${o.partner_id.name or ''|entity}
                     <br/>Dirección: ${get_data_partner(o.partner_id)['street'] or ''|entity}
                     No. Ext: ${get_data_partner(o.partner_id)['street3'] or ''|entity}
                     Int: ${get_data_partner(o.partner_id)['street4'] or ''|entity}</font>
                     <br/><font class="font">Colonia: ${get_data_partner(o.partner_id)['street2'] or ''|entity}
-                    <br/>Localidad: ${get_data_partner(o.partner_id)['city2'] or ''|entity}
+                    , Localidad: ${get_data_partner(o.partner_id)['city2'] or ''|entity}
                     <br/>C.P.: ${get_data_partner(o.partner_id)['zip'] or ''|entity}
-                    <br/>R. F. C. : ${get_data_partner(o.partner_id)['vat'] or ''|entity}
+                    , R. F. C. : ${get_data_partner(o.partner_id)['vat'] or ''|entity}
                     <br/>Teléfono(s):
-                    <br/>${get_data_partner(o.partner_id)['phone'] or ''|entity}
-                    <br/>${get_data_partner(o.partner_id)['fax'] or ''|entity}
-                    <br/>${get_data_partner(o.partner_id)['mobile'] or ''|entity}</font>
+                    ${get_data_partner(o.partner_id)['phone'] or ''|entity}
+                    , ${get_data_partner(o.partner_id)['fax'] or ''|entity}
+                    , ${get_data_partner(o.partner_id)['mobile'] or ''|entity}</font>
                 </td>
-                <td class="address">
-                    <font class="font">Condición de pago:
-                    %if o.payment_term:
-                        <font class="font">${o.payment_term.note or o.payment_term.name or ''|entity}</font>
-                    %endif
-                    %if o.origin:
-                        <br/><font class="font">Origen: ${o.origin or ''|entity}</font>
-                    %endif
-                    <br/><font class="font">Expedido en:</font>
+                <td class="address" width="200">
                     %if o.address_issued_id:
-                        <br/><font class="font">${o.address_issued_id.name or ''|entity}</font>
-                        <br/><font class="font">Calle: ${o.address_issued_id.street or ''|entity}</font>
-                        <font class="font">Nro. Ext: ${o.address_issued_id.street3 or ''|entity}</font>
-                        <font class="font">Int: ${o.address_issued_id.street4 or ''|entity}</font>
-                        <br/><font class="font">Colonia: ${o.address_issued_id.street2 or ''|entity}</font>
-                        <br/><font class="font">Ciudad: ${o.address_issued_id.city or ''|entity}</font>
-                        <br/><font class="font">Localidad: ${o.address_issued_id.city2 or ''|entity}</font>
-                        <br/><font class="font">Estado: ${o.address_issued_id.state_id.name or ''|entity}</font>
-                        <br/><font class="font">CP: ${o.address_issued_id.zip or ''|entity}</font>
+                        <font class="font">${o.address_issued_id.city or ''|entity}<font/>
+                        %if o.address_issued_id.state_id:
+                            , <font class="font">${o.address_issued_id.state_id.name or ''|entity}</font>
+                        %endif
+                    %endif
+                    <br/><font class="font">${"a"} ${o.date_invoice_tz or ''|entity}</font>
+                    %if o.invoice_sequence_id.approval_id.type != 'cbb':
+                    <div><font class="font">${_("Serie:")} ${get_approval().serie or ''|entity}
+                    <br/>${_("Aprobación:")} ${get_approval().approval_number or ''|entity}
+                    <br/>${_("Año Aprobación:")} ${get_approval().approval_year or ''|entity}<font/></div>
                     %endif
                 </td>
             </tr>
