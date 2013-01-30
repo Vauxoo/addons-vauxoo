@@ -103,7 +103,6 @@ class wizard_report_variation(osv.osv_memory):
             for mrp in mrp_data:
                 if mrp.subproduction_ids:
                     for subp in mrp.subproduction_ids:
-                        print mrp.name, "produccion que tiene hijos", subp.name
                         child_prod_ids.setdefault(subp.product_id.id, subp.product_id.id)
                     datas2 = self.generate_datas_dict(cr, uid, ids, context, child_prod_ids.values())
             datas.setdefault('child_finished', datas2 and datas2[0].get('finished_dict') or [])

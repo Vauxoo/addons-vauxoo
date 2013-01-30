@@ -35,6 +35,44 @@
                 ${product_data.name_template or ''|entity}
                 <br>
             %endfor
+        
+        <%
+        production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
+            ('product_id', 'in', data['form']['product_ids']), ('date_planned', '>', data['form']['date_start']), \
+            ('date_planned', '<', data['form']['date_finished']), ('company_id', '=', company_id)])
+        cr.execute("""
+SELECT mrp_variation_finished_product.product_id, mrp_production.name ,standard_price * quantity AS mul, name_template FROM mrp_variation_finished_product
+INNER JOIN mrp_production
+ON mrp_production.id = mrp_variation_finished_product.production_id
+INNER JOIN product_product
+ON product_product.id = mrp_variation_finished_product.product_id
+INNER JOIN product_template
+ON product_template.id = product_product.product_tmpl_id
+WHERE production_id IN 
+%s
+ORDER BY mul
+        """, (tuple(production_ids),))
+
+        records = cr.fetchall()
+        %>
+        <%#Obtener los totales
+        mrp_data = mrp_obj.browse(cr, uid, production_ids, context)
+        %>
+        <p><h4>Productions matching your query:</h4></p>
+        <table class="basic_table">
+            <tr>
+                %for line in mrp_data:
+                    <td class="basic_td"> ${loop.index+1 or ''|entity} - ${line.name or ''|entity} </td>
+                    %if ((loop.index+1) %5 ==0):
+                        </tr>
+                        <tr>
+                    %endif
+                %endfor
+            </tr>
+        </table>
+        <br/>
+        
+        
         <table class="basic_table">
             <tr>
                 <td class="basic_td">Variation in consumed products</td>
@@ -42,7 +80,7 @@
                 <td class="basic_td"> &nbsp; </td>
                 <td class="basic_td"> &nbsp; </td>
             </tr>
-        
+
             <tr>
                 <th class="basic_th"> Reference:</th>
                 <th class="basic_th"> Quantity:</th>
@@ -72,37 +110,7 @@
                 <td class="lastrow">$ ${round(total_consumed_cost,2) or '0.00'|entity}</td>
             </tr>
         </table>
-        
-        <br/>
-        <%
-        production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
-            ('product_id', 'in', data['form']['product_ids']), ('date_planned', '>', data['form']['date_start']), \
-            ('date_planned', '<', data['form']['date_finished']), ('company_id', '=', company_id)])
-        cr.execute("""
-SELECT mrp_variation_finished_product.product_id, mrp_production.name ,standard_price * quantity AS mul, name_template FROM mrp_variation_finished_product
-INNER JOIN mrp_production
-ON mrp_production.id = mrp_variation_finished_product.production_id
-INNER JOIN product_product
-ON product_product.id = mrp_variation_finished_product.product_id
-INNER JOIN product_template
-ON product_template.id = product_product.product_tmpl_id
-WHERE production_id IN 
-%s
-ORDER BY mul
-        """, (tuple(production_ids),))
 
-        records = cr.fetchall()
-        %>
-        <%#Obtener los totales
-        mrp_data = mrp_obj.browse(cr, uid, production_ids, context)
-        %>
-        <table class="basic_table">
-            <tr>
-                %for line in mrp_data:
-                    <td class="basic_td"> ${line.name or ''|entity} </td>
-                %endfor
-            </tr>
-        </table>
 
         <br/>
         %if data['finished_dict']:
@@ -116,17 +124,19 @@ ORDER BY mul
                 
                 <%row_count=1%>
                 %for line in records:
-                    %if (row_count%2==0):
-                        <tr  class="nonrow">
-                    %else:
-                        <tr>
+                    %if line[2]:
+                        %if (row_count%2==0):
+                            <tr  class="nonrow">
+                        %else:
+                            <tr>
+                        %endif
+                            <td class="basic_td"> &nbsp; </td>
+                            <td class="basic_td"> ${line[3] or ''|entity} </td>
+                            <td class="basic_td"> ${line[1] or '0.0'|entity}</td>
+                            <td class="number_td"> $ ${round(line[2],2) or '0.0'|entity}</td>
+                        </tr>
+                    <%row_count+=1%>
                     %endif
-                        <td class="basic_td"> &nbsp; </td>
-                        <td class="basic_td"> ${line[3] or ''|entity} </td>
-                        <td class="basic_td"> ${line[1] or '0.0'|entity}</td>
-                        <td class="number_td"> $ ${round(line[2],2) or '0.0'|entity}</td>
-                    </tr>
-                <%row_count+=1%>
                 %endfor
                 
                 <tr>
@@ -156,24 +166,34 @@ ORDER BY mul
                 
                 <%#Obtener los totales
                 total_produced = 0
+                total_res_dict = {}
                 mrp_data = mrp_obj.browse(cr, uid, production_ids, context)
-                to_uom_converted = mrp_data[0].product_id.uom_id.name
                 for production in mrp_data:
-                    total_produced += product_uom_pool._compute_qty(cr, uid, production.product_uom.id, production.product_qty, to_uom_id=production.product_id.uom_id.id)
-                print total_produced, "total producido", to_uom_converted, "uom convertida"
+                    total_res_dict.setdefault(production.product_id.name, [0, production.product_id.uom_id.name])
+                    total_produced = product_uom_pool._compute_qty(cr, uid, production.product_uom.id, production.product_qty, to_uom_id=production.product_id.uom_id.id)
+                    total_res_dict[production.product_id.name][0] += total_produced
+                total_produced = 0
                 %>
-                
+
+                %for key, value in dict.items(total_res_dict):
+                    <tr>
+                        <td class="lastrow" style="text-align:left">Product: ${key or ''|entity}</td>
+                        <td class="lastrow">Total planned to produce:</td>
+                        <td class="lastrow">${value[0] or '0.00'|entity} ${value[1] or ''|entity}</td>
+                        %if (len(total_res_dict) == 1):
+                            <td class="lastrow">Really produced: ${value[0]+total_finished_qty or '0.00'|entity} ${value[1] or ''|entity}</td>
+                        %endif
+                    </tr>
+                    <%total_produced += value[0]%>
+                %endfor
                 <tr>
                     <td class="lastrow" style="text-align:left">Production eficiency: ${100 + round(total_finished_qty*100/total_produced, 2)or '0.00'|entity} %</td>
-                    <td class="lastrow">Total planned to produce</td>
-                    <td class="lastrow">${total_produced or '0.00'|entity} ${to_uom_converted or ''|entity}</td>
-                </tr>
-                <tr>
                     <td class="lastrow">Total variation cost</td>
                     <td class="lastrow">$ ${round(total_finished_cost,2) or '0.00'|entity}</td>
                 </tr>
             </table>
         %endif
+        
         
         <br/>
         %if data['child_consumed']:
@@ -216,6 +236,7 @@ ORDER BY mul
             </table>
         %endif
         
+        
         <br/>
         %if data['child_finished']:
             <table class="basic_table">
@@ -255,8 +276,6 @@ ORDER BY mul
                 </tr>
             </table>
         %endif
-        
-        <br/>
         
         <br/>
         <p style="page-break-after:always"></p>
