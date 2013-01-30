@@ -10,10 +10,10 @@
         <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
         <table>
             <tr>
-                <td width="25%">
+                <td width="350" align="center">
                     ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),200, 150)}
                 </td>
-                <td class="td_data_exp">
+                <td class="td_data_exp" width="700">
                     <div class="emitter">${_("Calle:")} ${o.company_emitter_id.address_invoice_parent_company_id.street or ''|entity}
                     ${_("Nro. Ext:")} ${o.company_emitter_id.address_invoice_parent_company_id.street3 or ''|entity}
                     ${_("Int:")} ${o.company_emitter_id.address_invoice_parent_company_id.street4 or ''|entity}
@@ -29,7 +29,7 @@
                     ${o.company_emitter_id.address_invoice_parent_company_id.fax or ''|entity}
                     ${o.company_emitter_id.address_invoice_parent_company_id.mobile or ''|entity}</div>
                 </td>
-                <td width="25%">
+                <td width="350">
                     <div class="folio">${_("Folio:")}
                     %if o.type in ['out_invoice', 'out_refund']:
                         %if o.state in ['open', 'paid', 'cancel']:
@@ -50,9 +50,9 @@
                     %endif
                     <br/>${"a"} ${o.date_invoice_tz or ''|entity}
                     %if o.invoice_sequence_id.approval_id.type != 'cbb':
-                    <div>${_("Serie:")} ${_("Falta")}
-                    <br/>${_("Aprobación:")} ${_("Falta")}
-                    <br/>${_("Año Aprobación:")} ${_("Falta")}</div> 
+                    <div>${_("Serie:")} ${get_approval().serie or ''|entity}
+                    <br/>${_("Aprobación:")} ${get_approval().approval_number or ''|entity}
+                    <br/>${_("Año Aprobación:")} ${get_approval().approval_year or ''|entity}</div> 
                     %endif
                 </td>
             </tr>
@@ -61,35 +61,39 @@
         <table>
             <tr>
                 <td class="address">
-                    Receptor
-                    <br/>Nombre: ${o.partner_id.name or ''|entity}
+                    <font class="font" color="#280099"><b>Receptor</b></font>
+                    <br/><font class="font">Nombre: ${o.partner_id.name or ''|entity}
                     <br/>Dirección: ${get_data_partner(o.partner_id)['street'] or ''|entity}
                     No. Ext: ${get_data_partner(o.partner_id)['street3'] or ''|entity}
-                    Int: ${get_data_partner(o.partner_id)['street4'] or ''|entity}
-                    <br/>Colonia: ${get_data_partner(o.partner_id)['street2'] or ''|entity}
+                    Int: ${get_data_partner(o.partner_id)['street4'] or ''|entity}</font>
+                    <br/><font class="font">Colonia: ${get_data_partner(o.partner_id)['street2'] or ''|entity}
                     <br/>Localidad: ${get_data_partner(o.partner_id)['city2'] or ''|entity}
                     <br/>C.P.: ${get_data_partner(o.partner_id)['zip'] or ''|entity}
                     <br/>R. F. C. : ${get_data_partner(o.partner_id)['vat'] or ''|entity}
                     <br/>Teléfono(s):
                     <br/>${get_data_partner(o.partner_id)['phone'] or ''|entity}
                     <br/>${get_data_partner(o.partner_id)['fax'] or ''|entity}
-                    <br/>${get_data_partner(o.partner_id)['mobile'] or ''|entity}
+                    <br/>${get_data_partner(o.partner_id)['mobile'] or ''|entity}</font>
                 </td>
                 <td class="address">
-                    Condición de pago: 
-                    ${o.payment_term.note or o.payment_term.name or ''|entity}
-                    <br/>Origen: ${o.origin or ''|entity}
-                    <br/>Expedido en:
+                    <font class="font">Condición de pago:
+                    %if o.payment_term:
+                        <font class="font">${o.payment_term.note or o.payment_term.name or ''|entity}</font>
+                    %endif
+                    %if o.origin:
+                        <br/><font class="font">Origen: ${o.origin or ''|entity}</font>
+                    %endif
+                    <br/><font class="font">Expedido en:</font>
                     %if o.address_issued_id:
-                        <br/>${o.address_issued_id.name or ''|entity}
-                        <br/>Calle: ${o.address_issued_id.street or ''|entity}
-                        Nro. Ext: ${o.address_issued_id.street3 or ''|entity}
-                        Int: ${o.address_issued_id.street4 or ''|entity} 
-                        <br/>Colonia: ${o.address_issued_id.street2 or ''|entity}
-                        <br/>Ciudad: ${o.address_issued_id.city or ''|entity}
-                        <br/>Localidad: ${o.address_issued_id.city2 or ''|entity}
-                        <br/>Estado: ${o.address_issued_id.state_id.name or ''|entity}
-                        <br/>CP: ${o.address_issued_id.zip or ''|entity}
+                        <br/><font class="font">${o.address_issued_id.name or ''|entity}</font>
+                        <br/><font class="font">Calle: ${o.address_issued_id.street or ''|entity}</font>
+                        <font class="font">Nro. Ext: ${o.address_issued_id.street3 or ''|entity}</font>
+                        <font class="font">Int: ${o.address_issued_id.street4 or ''|entity}</font>
+                        <br/><font class="font">Colonia: ${o.address_issued_id.street2 or ''|entity}</font>
+                        <br/><font class="font">Ciudad: ${o.address_issued_id.city or ''|entity}</font>
+                        <br/><font class="font">Localidad: ${o.address_issued_id.city2 or ''|entity}</font>
+                        <br/><font class="font">Estado: ${o.address_issued_id.state_id.name or ''|entity}</font>
+                        <br/><font class="font">CP: ${o.address_issued_id.zip or ''|entity}</font>
                     %endif
                 </td>
             </tr>
@@ -98,7 +102,7 @@
             <tr>
                 <td width=90><b><font color="#280099">${_("Cant.")}</font></b></td>
                 <td width=90><b><font color="#280099">${_("Unidad")}</font></b></td>
-                <td width=300><b><font color="#280099">${_("Descripción")}</font></b></td>
+                <td width=400><b><font color="#280099">${_("Descripción")}</font></b></td>
                 <td width=90><b><font color="#280099">${_("Clave")}</font></b></td>
                 <td width=90><b><font color="#280099">${_("P.Unitario")}</font></b></td>
                 <td width=90><b><font color="#280099">${_("Dto. %")}</font></b></td>
@@ -108,7 +112,7 @@
                 <tr>
                     <td width=90>${l.quantity}</td>
                     <td width=90>${l.uos_id.name or ''|entity}</td>
-                    <td width=300>${l.name or ''|entity}</td>
+                    <td width=400>${l.name or ''|entity}</td>
                     <td width=90>${l.product_id.default_code or ''|entity}</td>
                     <td width=90>${formatLang(l.price_unit) or ''|entity}</td>
                     <td width=90>${formatLang(l.discount) or ''|entity} %</td>
@@ -121,12 +125,6 @@
                 <td>${_("Suma $:")}</td>
                 <td>${get_sum_total(o.invoice_line) or 0.0 |entity}</td>
             </tr>
-            %if o.invoice_sequence_id.approval_id.type != 'cbb':
-                <tr>
-                    <td>${_("Descuento:")}</td>
-                    <td>${o.amount_untaxed or 0.0 |entity}</td>
-                </tr>
-            %endif
             <tr>
                 <td>${_("Sub Total:")} $</td>
                 <td>${formatLang(o.amount_untaxed) or ''|entity}</td>
@@ -144,8 +142,8 @@
                 </tr>
             %endfor
             <tr align="left">
-                <td><font class="font">${_("Total:")} $</font></td>
-                <td><font class="font">${formatLang(o.amount_total) or ''|entity}</font></td>
+                <td>${_("Total:")} $</td>
+                <td>${formatLang(o.amount_total) or ''|entity}</td>
             </tr>
         </table>
         <br clear="all" />
@@ -167,9 +165,9 @@
                 <font class="font">“Este documento es una representacion impresa de un CFDI”
                 <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
                 <br/>
-                <table rules="all" >
+                <table frame="box" rules="cols">
                     <tr>
-                        <td width=250>
+                        <td width=300>
                             <font class="font">Certificado del emisor</font>
                         </td>
                         <td width=200>
@@ -178,7 +176,7 @@
                         <td width=200>
                             <font class="font">Fecha de Timbrado</font>
                         </td>
-                        <td width=250>
+                        <td width=300>
                             <font class="font">Folio Fiscal</font>
                         </td>
                     </tr>
@@ -197,6 +195,7 @@
                         </td>
                     </tr>
                 </table>
+                <br/>
             %endif
             %if o.invoice_sequence_id.approval_id.type != 'cbb':
                 <table rules="all">
@@ -232,52 +231,42 @@
                             <br/><font class="font">La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.</font>
                             <br/><font class="font">Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es ${get_approval().date_start or '' |entity}</font>
                         </td>
-                        <td width="30%" valign="top" align="left">
-                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 280)}
-                        </td>
                     </tr>
                 </table>
             %endif
             %if o.invoice_sequence_id.approval_id.type == 'cfd22':
                 <table frame="box">
                     <tr>
-                        <td width="20%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 280)}
-                        </td>
-                        <td width="80%" valign="top" align="left">
-                            <font class="font">Serie del Certificado :</font>
-                            <br/><font class="font">${o.no_certificado or ''|entity}</font>
-                            <br/><font class="font">Sello digital:</font>
-                            <br/><font class="font">${split_string( o.sello ) or ''|entity}</font>
+                        <td width="100%" valign="top" align="left">
+                            <div><font class="facturae">Serie del Certificado :
+                            <br/>${o.no_certificado or ''|entity}</font>
+                            <br/><font class="facturae">Sello digital:
+                            <br/>${split_string( o.sello or '') or ''|entity}</font>
+                            </div>
+                            <div align="center">
+                                <font class="facturae">Cadena original :</font>
+                                <br/><font class="facturae">${split_string( o.cadena_original or '') or '' |entity}</font>
+                            </div>
                         </td>
                     </tr>
                 </table>
-                <div align="center">
-                    <font class="font">Cadena original :</font>
-                    <font class="font">${split_string( o.cadena_original ) or '' |entity}</font>
-                </div>
             %endif
             %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
                 <table frame="box">
                     <tr>
-                        <td width="25%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 280)}
+                        <td width="80%" valign="top" align="left">
+                            <font class="facturae"><b>Sello Digital Emisor:</b>
+                            <br/>${split_string( o.sello ) or ''|entity}</font>
+                            <br/><font class="facturae"><b>Sello Digital SAT:</b>
+                            <br/>${split_string( o.cfdi_sello or '') or ''|entity}</font>
+                            <br/><font class="facturae"><b>Cadena original:</b></font>
+                            <br/><font class="facturae">${split_string( o.cadena_original ) or '' |entity}</font>
                         </td>
-                        <td width="20%" valign="top" align="left">
-                            <font class="font">Sello Digital Emisor:</font>
-                            <br/><font class="font">${split_string( o.sello ) or ''|entity}</font>
-                            <br/><font class="font">Sello Digital SAT:</font>
-                            <br/><font class="font">${split_string( o.cfdi_sello or '') or ''|entity}</font>
-                        </td>
-                        <td width="25%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.cfdi_cbb),200, 280)}
+                        <td width="20%" valign="top" align="center">
+                            ${helper.embed_image('jpeg',str(o.cfdi_cbb),200, 200)}
                         </td>
                     </tr>
                 </table>
-                <div align="center">
-                    <font class="font">Cadena original :</font>
-                    <font class="font">${split_string( o.cadena_original ) or '' |entity}</font>
-                </div>
             %endif
         </div>
     %endfor
