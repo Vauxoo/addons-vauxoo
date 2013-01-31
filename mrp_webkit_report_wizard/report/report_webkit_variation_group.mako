@@ -57,12 +57,19 @@ ORDER BY mul
         %>
         <%#Obtener los totales
         mrp_data = mrp_obj.browse(cr, uid, production_ids, context)
+        no_children_flag = False
         %>
         <p><h4>Productions matching your query:</h4></p>
         <table class="basic_table">
             <tr>
                 %for line in mrp_data:
-                    <td class="basic_td"> ${loop.index+1 or ''|entity} - ${line.name or ''|entity} </td>
+                    %if line.subproduction_ids:
+                        <td class="basic_td">
+                    %else:
+                        <td class="basic_td" style="color:red">
+                        <%no_children_flag = True%>
+                    %endif
+                    ${loop.index+1 or ''|entity} - ${line.name or ''|entity} </td>
                     %if ((loop.index+1) %5 ==0):
                         </tr>
                         <tr>
@@ -70,56 +77,61 @@ ORDER BY mul
                 %endfor
             </tr>
         </table>
+        %if (no_children_flag == True):
+            <p class="basic_td" style="color:red">Productions marked in red don't have a subproduction children associated with them</p>
+        %endif
         <br/>
         
-        
-        <table class="basic_table">
-            <tr>
-                <td class="basic_td">Variation in consumed products</td>
-                <td class="basic_td"> &nbsp; </td>
-                <td class="basic_td"> &nbsp; </td>
-                <td class="basic_td"> &nbsp; </td>
-            </tr>
-
-            <tr>
-                <th class="basic_th"> Reference:</th>
-                <th class="basic_th"> Quantity:</th>
-                <th class="basic_th"> Unit of M:</th>
-                <th class="basic_th"> Variation cost:</th>
-            </tr>
-            <%row_count=1%>
-            <%total_consumed_cost=0%>
-            %for line in data['query_dict']:
-                %if (row_count%2==0):
-                    <tr  class="nonrow">
-                %else:
-                    <tr>
-                %endif
-                    <td class="basic_td"> ${line[0] or ''|entity}</td>
-                    <td class="number_td"> ${line[1] or '0.0'|entity}</td>
-                    <td class="basic_td"> ${line[2] or ''|entity}</td>
-                    <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+        %if data['query_dict']:
+            <table class="basic_table">
+                <tr>
+                    <td class="basic_td">Variation in consumed products</td>
+                    <td class="basic_td"> &nbsp; </td>
+                    <td class="basic_td"> &nbsp; </td>
+                    <td class="basic_td"> &nbsp; </td>
                 </tr>
-            <%total_consumed_cost+=line[3]%>
-            <%row_count+=1%>
-            %endfor
-            <tr>
-                <td class="lastrow"></td>
-                <td class="lastrow">Total:</td>
-                <td class="lastrow"></td>
-                <td class="lastrow">$ ${round(total_consumed_cost,2) or '0.00'|entity}</td>
-            </tr>
-        </table>
 
+                <tr>
+                    <th class="basic_th"> Reference:</th>
+                    <th class="basic_th"> Quantity:</th>
+                    <th class="basic_th"> Unit of M:</th>
+                    <th class="basic_th"> Variation cost:</th>
+                </tr>
+                <%row_count=1%>
+                <%total_consumed_cost=0%>
+                %for line in data['query_dict']:
+                    %if (row_count%2==0):
+                        <tr  class="nonrow">
+                    %else:
+                        <tr>
+                    %endif
+                        <td class="basic_td"> ${line[0] or ''|entity}</td>
+                        <td class="number_td"> ${line[1] or '0.0'|entity}</td>
+                        <td class="basic_td"> ${line[2] or ''|entity}</td>
+                        <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+                    </tr>
+                <%total_consumed_cost+=line[3]%>
+                <%row_count+=1%>
+                %endfor
+                <tr>
+                    <td class="lastrow"></td>
+                    <td class="lastrow">Total:</td>
+                    <td class="lastrow"></td>
+                    <td class="lastrow">$ ${round(total_consumed_cost,2) or '0.00'|entity}</td>
+                </tr>
+            </table>
+        %else:
+            <p>The consulted productions don't have variations</p>
+        %endif
 
         <br/>
         %if data['finished_dict']:
             <table class="basic_table">
                 <tr>
-                    <td class="basic_td">Variation in finished products</td>
-                    <th class="basic_th"> Detailed </th>
+                    <td class="basic_td">Variation in finished products / details</td>
                     <th class="basic_th"> Production name </th>
                     <th class="basic_th"> Variation price </th>
+                    <th class="basic_th"> Not consumed </th>
                 </tr>
                 
                 <%row_count=1%>
@@ -130,10 +142,10 @@ ORDER BY mul
                         %else:
                             <tr>
                         %endif
-                            <td class="basic_td"> &nbsp; </td>
                             <td class="basic_td"> ${line[3] or ''|entity} </td>
-                            <td class="basic_td"> ${line[1] or '0.0'|entity}</td>
-                            <td class="number_td"> $ ${round(line[2],2) or '0.0'|entity}</td>
+                            <td class="basic_td"> ${line[1] or '0.0'|entity} </td>
+                            <td class="basic_td"> $ ${round(line[2],2) or '0.0'|entity} </td>
+                            <td class="number_td"> </td>
                         </tr>
                     <%row_count+=1%>
                     %endif
@@ -167,7 +179,6 @@ ORDER BY mul
                 <%#Obtener los totales
                 total_produced = 0
                 total_res_dict = {}
-                mrp_data = mrp_obj.browse(cr, uid, production_ids, context)
                 for production in mrp_data:
                     total_res_dict.setdefault(production.product_id.name, [0, production.product_id.uom_id.name])
                     total_produced = product_uom_pool._compute_qty(cr, uid, production.product_uom.id, production.product_qty, to_uom_id=production.product_id.uom_id.id)

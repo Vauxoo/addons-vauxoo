@@ -106,7 +106,7 @@ class wizard_report_variation(osv.osv_memory):
                         child_prod_ids.setdefault(subp.product_id.id, subp.product_id.id)
                     datas2 = self.generate_datas_dict(cr, uid, ids, context, child_prod_ids.values())
             datas.setdefault('child_finished', datas2 and datas2[0].get('finished_dict') or [])
-            datas.setdefault('child_consumed', datas2 and datas2[0].get('child_consumed') or [])
+            datas.setdefault('child_consumed', datas2 and datas2[0].get('query_dict') or [])
             
             return {
                 'type': 'ir.actions.report.xml',
