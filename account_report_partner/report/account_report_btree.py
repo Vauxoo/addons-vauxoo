@@ -81,12 +81,18 @@ class reportes_btree_report(report_sxw.rml_parse):
         credit=0.0
         saldo_inicial=0.0
         saldo_final=0.0
+        filter_opt = ''
         obj_period = self.pool.get('account.period')
         account_ids = form and form[0]['account_ids'] or False
         nivel = form and form[0]['nivel']
         filter = form and form[0]['filter']
         partner = form and form[0]['partner']
         show = form and form[0]['show']
+        type_show = form and form[0]['type_show'] or ''
+        if type_show == 'only_for':
+            filter_opt = 'WHERE (subvw_final.saldo_inicial <> 0.0 or subvw_final.debit <> 0.0 or subvw_final.credit <> 0.0)'
+            
+        
         if show:
             join='RIGHT JOIN'
         else:
@@ -364,6 +370,7 @@ COALESCE(subvw_final.credit,0.0) as credit,
 
                   )subvw_inicial
                   ON subvw_level.id = subvw_inicial.id_inicial)subvw_final
+                    """+filter_opt+"""
                   ORDER BY subvw_final.code asc
                     """,(nivel,nivel,))
         res=self.cr.dictfetchall()
