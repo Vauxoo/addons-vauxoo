@@ -37,6 +37,7 @@ class wizard_account(osv.osv_memory):
         'date_ini' : fields.date('Fecha Inicial'),
         'date_fin' : fields.date('Fecha Final'),
         'nivel' : fields.integer('Nivel', required=True),
+        'type_show' : fields.selection([('all','Con Valores en 0.0'),('only_for','initial, debit, credit <> 0.0')], 'Filtro'),
         'account_ids': fields.many2many('account.account', 'account_account_balanza_rel', 'balanza_id', 'account_id', 'Accounts'),
     }
 

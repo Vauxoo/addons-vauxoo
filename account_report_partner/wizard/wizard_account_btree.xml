@@ -8,11 +8,12 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Auxiliar">
-                    <group>
-                    <field name="filter" on_change="onchange_filter(filter)"/>
-                    <field name="partner"/>
-                    <field name="nivel"/>
-                    <field name="show"/>
+                    <group colspan="2" col="4">
+                        <field name="filter" on_change="onchange_filter(filter)"/>
+                        <field name="partner"/>
+                        <field name="nivel"/>
+                        <field name="show"/>
+                        <field name="type_show" attrs="{'invisible':[('show','=',0)], 'required':[('show','=',1)]}"/>
                     </group>
                     <newline/>
                     <group>
