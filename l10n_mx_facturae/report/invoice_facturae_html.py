@@ -155,6 +155,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
                     'street2' : address_invoice.street2 or False,
                     'city' : address_invoice.city or False,
                     'state' : address_invoice.state_id and address_invoice.state_id.name or False,
+                    'country' : address_invoice.country_id and address_invoice.country_id.name or False,
                     'city2' : address_invoice.city2 or False,
                     'zip' : address_invoice.zip or False,
                     'vat' : address_invoice._columns.has_key('vat_split') and address_invoice.vat_split or address_invoice.vat or False,

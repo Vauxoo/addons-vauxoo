@@ -7,13 +7,14 @@
 <body>
     %for o in objects :
         ${set_global_data(o)}
-        <table>
+        <table width="100%">
             <tr>
-                <td width="1200">
+                <td width="20%"></td>
+                <td width="60%">
                     <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
                 </td>
-                <td width="200">
-                    <div class="folio">${_("Folio:")}
+                <td width="20%">
+                    <div class="folio">${_("Factura:")}
                     %if o.type in ['out_invoice', 'out_refund']:
                         %if o.state in ['open', 'paid', 'cancel']:
                             ${o.number or ''|entity}
@@ -28,79 +29,132 @@
                 </td>
             </tr>
         </table>
-        <table>
+        <table width="100%">
             <tr>
-                <td width="350" align="center">
-                    ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),200, 150)}
+                <td width="25%" align="center">
+                    ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),120, 120)}
                 </td>
-                <td class="td_data_exp" width="700">
+                <td class="td_data_exp" width="50%">
                     <div class="emitter">
-                        <font>${_("Domicilio Fiscal:")}</font>
-                        <br/>${_("Calle:")} ${o.company_emitter_id.address_invoice_parent_company_id.street or ''|entity}
-                        ${_("Nro. Ext:")} ${o.company_emitter_id.address_invoice_parent_company_id.street3 or ''|entity}
-                        ${_("Int:")} ${o.company_emitter_id.address_invoice_parent_company_id.street4 or ''|entity}
-                        <br />${_("Colonia:")} ${o.company_emitter_id.address_invoice_parent_company_id.street2 or ''|entity}
-                        <br />${_("Ciudad:")} ${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity} 
-                        ${_("Estado:")} ${o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or ''|entity}
-                        <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.city2 or ''|entity}
-                        <br />${_("CP:")} ${ o.company_emitter_id.address_invoice_parent_company_id.zip or ''|entity}
-                        <br/>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat|entity}
-                        <br/>${_("Teléfono(s):")}
-                        <br/>
-                        ${o.company_emitter_id.address_invoice_parent_company_id.phone or ''|entity}
-                        ${o.company_emitter_id.address_invoice_parent_company_id.fax or ''|entity}
-                        ${o.company_emitter_id.address_invoice_parent_company_id.mobile or ''|entity}
+                        %if o.company_emitter_id:
+                            %if o.company_emitter_id.address_invoice_parent_company_id:
+                                <br/>${o.company_emitter_id.address_invoice_parent_company_id.street or ''|entity}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.street3 or ''|entity}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.street4 or ''|entity}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.street2 or ''|entity}
+                                ${ o.company_emitter_id.address_invoice_parent_company_id.zip or ''|entity}
+                                <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.city2 or ''|entity}
+                                <br/>${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity} 
+                                , ${o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or ''|entity}
+                                , ${o.company_emitter_id.address_invoice_parent_company_id.country_id and o.company_emitter_id.address_invoice_parent_company_id.country_id.name or ''|entity}
+                                <br/><b>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat|entity}</b>
+                                <br/>Régimen Fiscal:
+                                ${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }
+                                <br/>${_("Teléfono(s):")}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.phone or ''|entity}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.fax  and ',' or ''|entity} ${o.company_emitter_id.address_invoice_parent_company_id.fax or ''|entity}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.mobile and ',' or ''|entity} ${o.company_emitter_id.address_invoice_parent_company_id.mobile or ''|entity}
+                            %endif
+                        %endif
                     </div>
                 </td>
-                <td class="td_data_exp" width="350">
-                    <div class="emitter">
+                <td class="td_data_exp" width="25%">
+                    <div class="fiscal_address">
                         %if o.payment_term.name:
                             <font class="font">Condición de pago:
                             <font class="font">${o.payment_term.note or o.payment_term.name or ''|entity}</font>
                         %endif
-                        %if o.origin:
-                            <br/><font class="font">Origen: ${o.origin or ''|entity}</font>
-                        %endif
                         <br/><font class="font">Expedido en:</font>
                         %if o.address_issued_id:
                             <br/><font class="font">${o.address_issued_id.name or ''|entity}</font>
-                            <br/><font class="font">Calle: ${o.address_issued_id.street or ''|entity}</font>
-                            <font class="font">Nro. Ext: ${o.address_issued_id.street3 or ''|entity}</font>
-                            <font class="font">Int: ${o.address_issued_id.street4 or ''|entity}</font>
-                            <br/><font class="font">Colonia: ${o.address_issued_id.street2 or ''|entity}</font>
-                            <br/><font class="font">Ciudad: ${o.address_issued_id.city or ''|entity}</font>
+                            <br/><font class="font">${o.address_issued_id.street or ''|entity}</font>
+                            <font class="font">${o.address_issued_id.street3 or ''|entity}</font>
+                            <font class="font">${o.address_issued_id.street4 or ''|entity}</font>
+                            <br/><font class="font">${o.address_issued_id.street2 or ''|entity}</font>
+                            <font class="font">${o.address_issued_id.zip or ''|entity}</font>
                             <br/><font class="font">Localidad: ${o.address_issued_id.city2 or ''|entity}</font>
-                            <br/><font class="font">Estado: ${o.address_issued_id.state_id.name or ''|entity}</font>
-                            <br/><font class="font">CP: ${o.address_issued_id.zip or ''|entity}</font>
+                            <br/><font class="font">${o.address_issued_id.city or ''|entity}</font>
+                            <font class="font">${o.address_issued_id.state_id.name and ',' or ''|entity} ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}</font>
+                            <font class="font">${o.address_issued_id.country_id.name and ',' or ''|entity} ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}</font>
                         %endif
-                        <div/>
+                    <div/>
                 </td>
             </tr>
         </table>
         <table class="line" width="100%" border="1"></table>
+        <font size="15"></font>
         <table>
             <tr>
                 <td class="address" width="1200">
-                    <font class="font" color="#280099"><b>Receptor</b></font>
-                    <br/><font class="font">Nombre: ${o.partner_id.name or ''|entity}
-                    <br/>Dirección: ${get_data_partner(o.partner_id)['street'] or ''|entity}
-                    No. Ext: ${get_data_partner(o.partner_id)['street3'] or ''|entity}
-                    Int: ${get_data_partner(o.partner_id)['street4'] or ''|entity}</font>
-                    <br/><font class="font">Colonia: ${get_data_partner(o.partner_id)['street2'] or ''|entity}
-                    , Localidad: ${get_data_partner(o.partner_id)['city2'] or ''|entity}
-                    <br/>C.P.: ${get_data_partner(o.partner_id)['zip'] or ''|entity}
-                    , R. F. C. : ${get_data_partner(o.partner_id)['vat'] or ''|entity}
-                    <br/>Teléfono(s):
-                    ${get_data_partner(o.partner_id)['phone'] or ''|entity}
-                    , ${get_data_partner(o.partner_id)['fax'] or ''|entity}
-                    , ${get_data_partner(o.partner_id)['mobile'] or ''|entity}</font>
+                    <div>
+                        <table class="table_cliente">
+                            <tr>
+                                <td width="7%" class="cliente"><font class="font"><b>Receptor:</b></font></td>
+                                <td width="50%" class="cliente"><font class="font">${o.partner_id.name or ''|entity}</font></td>
+                                <td width="7%" class="cliente"><font class="font"><b>R. F. C.:</b></font></td>
+                                <td width="16%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['vat'] or ''|entity}</font></td>
+                            </tr>
+                        </table>
+                    <div>
+                    </div>
+                        <table class="table_cliente">
+                            <tr>
+                                <td width="5%" class="cliente"><font class="font"><b>Calle:</b></font></td>
+                                <td width="52%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['street'] or ''|entity}</font></td>
+                                %if get_data_partner(o.partner_id)['street3']:
+                                    <td width="7%" class="cliente"><font class="font"><b>No. Ext:</b></font></td>
+                                    <td width="11%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['street3'] or ''|entity}</font></td>
+                                %endif
+                                %if get_data_partner(o.partner_id)['street4']:
+                                    <td width="5%" class="cliente"><font class="font"><b>Int:</b></font></td>
+                                    <td width="10%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['street4'] or ''|entity}</font></td>
+                                %endif
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table_cliente">
+                            <tr>
+                                <td width="7%" class="cliente"><font class="font"><b>Colonia:</b></font></td>
+                                <td width="40%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['street2'] or ''|entity}</font></td>
+                                <td width="5%" class="cliente"><font class="font"><b>C.P.:</b></font></td>
+                                <td width="8%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['zip'] or ''|entity}</font></td>
+                                <td width="10%" class="cliente"><font class="font"><b>Localidad:</b></font></td>
+                                <td width="20%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['city2'] or ''|entity}</font></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table_cliente">
+                            <tr>
+                                <td width="7%" class="cliente"><font class="font"><b>Ciudad:</b></font></td>
+                                <td width="25%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['city'] or ''|entity}</font></td>
+                                <td width="8%" class="cliente"><font class="font"><b>Estado:</b></font></td>
+                                <td width="25%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['state'] or ''|entity}</font></td>
+                                <td width="5%" class="cliente"><font class="font"><b>Pais:</b></font></td>
+                                <td width="25%" class="cliente"><font class="font">${get_data_partner(o.partner_id)['country'] or ''|entity}</font></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <table class="table_cliente">
+                            <tr>
+                                <td width="8%" class="cliente"><font class="font"><b>Telefono(s):</b></font></td>
+                                <td width="50%" class="cliente"><font class="font">
+                                   ${get_data_partner(o.partner_id)['phone'] or ''|entity}
+                                   ${get_data_partner(o.partner_id)['fax'] and ',' or ''|entity} ${get_data_partner(o.partner_id)['fax'] or ''|entity}
+                                   ${get_data_partner(o.partner_id)['mobile'] and ',' or ''|entity} ${get_data_partner(o.partner_id)['mobile'] or ''|entity}</font>
+                                <td width="8%" class="cliente"><font class="font"><b>Origen:</b></font></td>
+                                <td width="24%" class="cliente"><font class="font">${o.origin or ''|entity}</font></td>
+                            </tr>
+                        </table>
+                    </div>
                 </td>
-                <td class="address" width="200">
+                <td width="200">
                     %if o.address_issued_id:
                         <font class="font">${o.address_issued_id.city or ''|entity}<font/>
-                        %if o.address_issued_id.state_id:
-                            , <font class="font">${o.address_issued_id.state_id.name or ''|entity}</font>
-                        %endif
+                        , <font class="font">${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}</font>
+                        , <font class="font">${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}</font>
                     %endif
                     <br/><font class="font">${"a"} ${o.date_invoice_tz or ''|entity}</font>
                     %if o.invoice_sequence_id.approval_id.type != 'cbb':
@@ -111,60 +165,61 @@
                 </td>
             </tr>
         </table>
-        <table>
+        <font size="15"></font>
+        <table style="border-collapse:collapse">
             <tr>
-                <td width=90><b><font color="#280099">${_("Cant.")}</font></b></td>
-                <td width=90><b><font color="#280099">${_("Unidad")}</font></b></td>
-                <td width=400><b><font color="#280099">${_("Descripción")}</font></b></td>
-                <td width=90><b><font color="#280099">${_("Clave")}</font></b></td>
-                <td width=90><b><font color="#280099">${_("P.Unitario")}</font></b></td>
-                <td width=90><b><font color="#280099">${_("Dto. %")}</font></b></td>
-                <td width=90><b><font color="#280099">${_("Importe")}</font></b></td>
+                <td width=90 class="label_lines"><b><font color="#280099">${_("Cant.")}</font></b></td>
+                <td width=90 class="label_lines"><b><font color="#280099">${_("Unidad")}</font></b></td>
+                <td width=400 class="label_lines"><b><font color="#280099">${_("Descripción")}</font></b></td>
+                <td width=90 class="label_lines"><b><font color="#280099">${_("Clave")}</font></b></td>
+                <td width=90 class="label_lines"><b><font color="#280099">${_("P.Unitario")}</font></b></td>
+                <td width=90 class="label_lines"><b><font color="#280099">${_("Dto. %")}</font></b></td>
+                <td width=90 class="label_lines"><b><font color="#280099">${_("Importe")}</font></b></td>
             </tr>
             %for l in o.invoice_line: 
                 <tr>
-                    <td width=90>${l.quantity}</td>
-                    <td width=90>${l.uos_id.name or ''|entity}</td>
-                    <td width=400>${l.name or ''|entity}</td>
-                    <td width=90>${l.product_id.default_code or ''|entity}</td>
-                    <td width=90>${formatLang(l.price_unit) or ''|entity}</td>
-                    <td width=90>${formatLang(l.discount) or ''|entity} %</td>
-                    <td width=90>${formatLang(l.price_subtotal) or ''|entity}</td>
+                    <td width=90 class="label_data" align="right"><font class="lines">${l.quantity}</font></td>
+                    <td width=90 class="label_data" align="center"><font class="lines">${l.uos_id.name or ''|entity}</font></td>
+                    <td width=400 class="label_data"><font class="lines">${l.name or ''|entity}</font></td>
+                    <td width=90 class="label_data"><font class="lines">${l.product_id.default_code or ''|entity}</font></td>
+                    <td width=90 class="label_data" align="right"><font class="lines">${formatLang(l.price_unit) or ''|entity}</font></td>
+                    <td width=90 class="label_data" align="right"><font class="lines">${formatLang(l.discount) or ''|entity} %</font></td>
+                    <td width=90 class="label_data" align="right"><font class="lines">${formatLang(l.price_subtotal) or ''|entity}</font></td>
                 </tr>
             %endfor
         </table>
-        <table align="right">
+        <table align="right" class="label_lines">
             <tr>
-                <td>${_("Suma $:")}</td>
-                <td>${get_sum_total(o.invoice_line) or 0.0 |entity}</td>
+                <td><font class="lines">${_("Suma $:")}</font></td>
+                <td width=90 align="right"><font class="lines">${get_sum_total(o.invoice_line) or 0.0 |entity}</font></td>
             </tr>
             <tr>
-                <td>${_("Sub Total:")} $</td>
-                <td>${formatLang(o.amount_untaxed) or ''|entity}</td>
+                <td><font class="lines">${_("Sub Total:")} $</font></td>
+                <td width=90 align="right"><font class="lines">${formatLang(o.amount_untaxed) or ''|entity}</font></td>
             </tr>
             %for tax in get_taxes(): 
                 <tr>
-                    <td>${tax['name2']} ${round(float(tax['tax_percent']))} ${"% $"}</td>
-                    <td>${formatLang(float( tax['amount'] ) ) or ''|entity}</td>
+                    <td><font class="lines">${tax['name2']} ${round(float(tax['tax_percent']))} ${"% $"}</font></td>
+                    <td align="right"><font class="lines">${formatLang(float( tax['amount'] ) ) or ''|entity}</font></td>
                 </tr>
             %endfor
             %for tax_ret in get_taxes_ret():
                 <tr>
-                    <td>${tax_ret['name2']} ${"Ret"} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } ${"% $"}</td>
-                    <td>${formatLang( float( tax_ret['amount'] )*-1 ) or ''|entity}</td>
+                    <td><font class="lines">${tax_ret['name2']} ${"Ret"} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } ${"% $"}</font></td>
+                    <td width=90 align="right"><font class="lines">${formatLang( float( tax_ret['amount'] )*-1 ) or ''|entity}</font></td>
                 </tr>
             %endfor
             <tr align="left">
-                <td>${_("Total:")} $</td>
-                <td>${formatLang(o.amount_total) or ''|entity}</td>
+                <td><font class="lines"><b>${_("Total:")} $</b></font></td>
+                <td width=90 align="right"><font class="lines"><b>${formatLang(o.amount_total) or ''|entity}</b></font></td>
             </tr>
         </table>
         <br clear="all" />
-        <table align="left">
+        <table align="left" width="100%">
             <tr>
-                <td>
-                    <font class="font" color="#280099">${_("IMPORTE CON LETRA: ")}</font>
-                    <br/><font class="font">${o.amount_to_text or ''|entity}</font>
+                <td class="amount_2_text" width="100%">
+                    <font>Importe con Letra:</font>
+                    <font>${o.amount_to_text or ''|entity}</font>
                 </td>
             </tr>
         </table>
@@ -180,30 +235,24 @@
                 <br/>
                 <table frame="box" rules="cols">
                     <tr>
-                        <td width=300>
-                            <font class="font">Certificado del emisor</font>
-                        </td>
-                        <td width=200>
+                        <td class="reg_fis">
                             <font class="font">Certificado del SAT</font>
                         </td>
-                        <td width=200>
+                        <td class="reg_fis">
                             <font class="font">Fecha de Timbrado</font>
                         </td>
-                        <td width=300>
+                        <td class="reg_fis">
                             <font class="font">Folio Fiscal</font>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <font class="font">${ o.no_certificado or ''|entity }</font>
-                        </td>
-                        <td>
+                        <td class="reg_fis">
                             <font class="font">${ o.cfdi_no_certificado or ''|entity }</font>
                         </td>
-                        <td>
+                        <td class="reg_fis">
                             <font class="font">${ o.cfdi_fecha_timbrado or ''|entity }</font>
                         </td>
-                        <td>
+                        <td class="reg_fis">
                             <font class="font">${ o.cfdi_folio_fiscal or ''|entity }</font>
                         </td>
                     </tr>
@@ -214,8 +263,8 @@
                 <table rules="all">
                     <tr>
                         <td class="reg_fis">
-                            <font class="font"><b>Régimen Fiscal:</b></font>
-                            <br/><font class="font">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</font>
+                            <font class="font"><b>Certificado del emisor</b></font>
+                            <br/><font class="font">${ o.no_certificado or ''|entity }</font>
                         </td>
                         <td class="reg_fis">
                             <font class="font"><b>Método de Pago:</b></font>
@@ -250,7 +299,7 @@
             %if o.invoice_sequence_id.approval_id.type == 'cfd22':
                 <table frame="box">
                     <tr>
-                        <td width="100%" valign="top" align="left">
+                        <td width="80%" valign="top" align="left">
                             <div><font class="facturae">Serie del Certificado :
                             <br/>${o.no_certificado or ''|entity}</font>
                             <br/><font class="facturae">Sello digital:
@@ -267,11 +316,18 @@
             %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
                 <table frame="box">
                     <tr>
-                        <td width="80%" valign="top" align="left">
+                        <td width="20%" valign="top" align="center">
+                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 200)}
+                        </td>
+                        <td width="60%" valign="top" align="left">
                             <font class="facturae"><b>Sello Digital Emisor:</b>
+<!--
                             <br/>${split_string( o.sello ) or ''|entity}</font>
+-->
                             <br/><font class="facturae"><b>Sello Digital SAT:</b>
+<!--
                             <br/>${split_string( o.cfdi_sello or '') or ''|entity}</font>
+-->
                             <br/><font class="facturae"><b>Cadena original:</b></font>
                             <br/><font class="facturae">${split_string( o.cadena_original ) or '' |entity}</font>
                         </td>
