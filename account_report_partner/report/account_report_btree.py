@@ -315,7 +315,7 @@ COALESCE(subvw_final.credit,0.0) as credit,
                 node.id as id,node.name,node.type
                 FROM account_account AS node,account_account AS parent
                 WHERE node.parent_left BETWEEN parent.parent_left AND parent.parent_right
-                AND """+where_account_ids+"""
+                AND """+where_account_ids+""" AND node.active = True
                 ORDER BY parent.parent_left ) nivel
                 ) padres ON padres.id=nivel.id
             WHERE nivel.level <= %s
