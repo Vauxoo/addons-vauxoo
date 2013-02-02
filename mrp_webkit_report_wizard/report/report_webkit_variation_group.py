@@ -13,7 +13,8 @@ class report_webkit_variation_group(report_sxw.rml_parse):
             'uid': uid,
             'os':os,
             'platform':platform,
-            'this_self':self
+            'this_self':self,
+            'this_context':context
         })
 
 report_sxw.report_sxw('report.webkitmrp.production_variation_group',
