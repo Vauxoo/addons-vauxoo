@@ -137,12 +137,10 @@ ORDER BY mul
                 <%row_count=1%>
                 <%mrp_data = mrp_obj.browse(cr, uid, production_ids, this_context)%>
                 %for production in mrp_data:
-                    <%print this_context, "este es  nuevo context"%>
                     <%
                     total_produced = 0
                     if production.move_created_ids2:
                         for finished in production.move_created_ids2:
-                            print "cantidad a sumar kkkkk",finished.product_qty, "- ", production.name
                             if (finished.product_id.id == production.product_id.id and finished.state in ('done')):
                                 total_produced += product_uom_pool._compute_qty(cr, uid, finished.product_uom.id, finished.product_qty, to_uom_id=production.product_uom.id)
                     for subprods in production.subproduction_ids:
@@ -161,7 +159,7 @@ ORDER BY mul
                                 <td class="basic_td"> ${production.product_id.name or ''|entity} </td>
                                 <td class="basic_td"> ${production.name or ''|entity} </td>
                                 <td class="number_td"> $ ${round(variation.cost_variation,2) or '0.0'|entity} </td>
-                                <td class="number_td"> ${total_produced or '0.0'|entity} ${production.product_uom.name or ''|entity}</td>
+                                <td class="number_td"> ${round(total_produced,2) or '0.0'|entity} ${production.product_uom.name or ''|entity}</td>
                             </tr>
                             <%row_count+=1%>
                         %endif
