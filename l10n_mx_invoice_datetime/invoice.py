@@ -81,7 +81,7 @@ class account_invoice(osv.osv):
             if inv.move_id:
                 continue
             if not inv.date_invoice:
-				t=time.strftime('%Y-%m-%d %H:%M:%S')
+                t=time.strftime('%Y-%m-%d %H:%M:%S')
                 self.write(cr, uid, [inv.id], {'date_invoice': t, 'invoice_datetime': t })
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
 account_invoice()
