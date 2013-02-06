@@ -10,11 +10,11 @@
                 <tr><td style="text-align:center;">${helper.embed_logo_by_name('company_logo',75, 53)|n}</td>
                 <td class="basic_td">
                     <table class="basic_table">
-                        <tr><td class="basic_td">Company: ${company.name |entity}</td></tr>
-                        <tr><td class="basic_td">Address: ${company.partner_id.address and company.partner_id.address[0].street or ''|entity}</td></tr>
-                        <tr><td class="basic_td">Phone: ${company.partner_id.address and company.partner_id.address[0].phone or ''|entity}</td></tr>
-                        <tr><td class="basic_td">Mail: ${company.partner_id.address and company.partner_id.address[0].email or ''|entity}</td></tr>
-                        <tr><td class="basic_td">User: ${user.name or ''|entity}</td></tr>
+                        <tr><td class="basic_td">${_("Company:")} ${company.name |entity}</td></tr>
+                        <tr><td class="basic_td">${_("Address:")} ${company.partner_id.address and company.partner_id.address[0].street or ''|entity}</td></tr>
+                        <tr><td class="basic_td">${_("Phone:")} ${company.partner_id.address and company.partner_id.address[0].phone or ''|entity}</td></tr>
+                        <tr><td class="basic_td">${_("Mail:")} ${company.partner_id.address and company.partner_id.address[0].email or ''|entity}</td></tr>
+                        <tr><td class="basic_td">${_("User:")} ${user.name or ''|entity}</td></tr>
                     </table>
                 </td></tr>
             </table>
@@ -27,9 +27,9 @@
         product_uom_pool = this_self.pool.get('product.uom')
         %>
         
-        <p><h3>Report of product variation group</h3></p>
-        From: ${data['form'].get('date_start') or ''|entity} to: ${data['form'].get('date_finished') or ''|entity}
-        <br/>For products:<br/>
+        <p><h3>${_("Report of product variation group")}</h3></p>
+        ${_("From:")} ${formatLang(data['form'].get('date_start'), date=True)|entity} to: ${formatLang(data['form'].get('date_finished'), date=True)|entity}
+        <br/>${_("For products:")}<br/>
             %for line in data['form'].get('product_ids'):
                 <%product_data = this_self.pool.get('product.product').browse(cr, uid, line, context)%>
                 ${product_data.name_template or ''|entity}
@@ -59,7 +59,7 @@ ORDER BY mul
         mrp_data = mrp_obj.browse(cr, uid, production_ids, context=context)
         no_children_flag = False
         %>
-        <p><h4>Productions matching your query:</h4></p>
+        <p><h4>${_("Productions matching your query:")}</h4></p>
         <table class="basic_table">
             <tr>
                 %for line in mrp_data:
@@ -78,24 +78,24 @@ ORDER BY mul
             </tr>
         </table>
         %if (no_children_flag == True):
-            <p class="basic_td" style="color:red">Productions marked in red don't have a subproduction children associated with them</p>
+            <p class="basic_td" style="color:red">${_("Productions marked in red don't have a subproduction children associated with them")}</p>
         %endif
         <br/>
         
         %if data['query_dict']:
             <table class="basic_table">
                 <tr>
-                    <td class="basic_td">Variation in consumed products</td>
+                    <td class="basic_td">${_("Variation in consumed products")}</td>
                     <td class="basic_td"> &nbsp; </td>
                     <td class="basic_td"> &nbsp; </td>
                     <td class="basic_td"> &nbsp; </td>
                 </tr>
 
                 <tr>
-                    <th class="basic_th"> Reference:</th>
-                    <th class="basic_th"> Quantity:</th>
-                    <th class="basic_th"> Unit of M:</th>
-                    <th class="basic_th"> Variation cost:</th>
+                    <th class="basic_th">${_("Reference:")}</th>
+                    <th class="basic_th">${_("Quantity:")}</th>
+                    <th class="basic_th">${_("Unit of M:")}</th>
+                    <th class="basic_th">${_("Variation cost:")}</th>
                 </tr>
                 <%row_count=1%>
                 <%total_consumed_cost=0%>
@@ -106,32 +106,32 @@ ORDER BY mul
                         <tr>
                     %endif
                         <td class="basic_td"> ${line[0] or ''|entity}</td>
-                        <td class="number_td"> ${line[1] or '0.0'|entity}</td>
+                        <td class="number_td"> ${ formatLang(line[1]) }</td>
                         <td class="basic_td"> ${line[2] or ''|entity}</td>
-                        <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+                        <td class="number_td"> $ ${ formatLang(line[3]) }</td>
                     </tr>
                 <%total_consumed_cost+=line[3]%>
                 <%row_count+=1%>
                 %endfor
                 <tr>
                     <td class="lastrow"></td>
-                    <td class="lastrow">Total:</td>
+                    <td class="lastrow">${_("Total:")}</td>
                     <td class="lastrow"></td>
-                    <td class="lastrow">$ ${round(total_consumed_cost,2) or '0.00'|entity}</td>
+                    <td class="lastrow">$ ${ formatLang(total_consumed_cost) }</td>
                 </tr>
             </table>
         %else:
-            <p>The consulted productions don't have variations</p>
+            <p>${_("The consulted productions don't have variations.")}</p>
         %endif
 
         <br/>
         %if data['finished_dict']:
             <table class="basic_table">
                 <tr>
-                    <td class="basic_td">Variation in finished products / details</td>
-                    <th class="basic_th"> Production name </th>
-                    <th class="basic_th"> Variation price </th>
-                    <th class="basic_th"> Not consumed </th>
+                    <td class="basic_td">${_("Variation in finished products / details")}</td>
+                    <th class="basic_th">${_("Production name")} </th>
+                    <th class="basic_th">${_("Variation price")} </th>
+                    <th class="basic_th">${_("Not consumed")} </th>
                 </tr>
                 
                 <%row_count=1%>
@@ -156,10 +156,15 @@ ORDER BY mul
                             %else:
                                 <tr>
                             %endif
-                                <td class="basic_td"> ${production.product_id.name or ''|entity} </td>
+                                <td class="basic_td">
+                                    ${production.product_id.name or ''|entity} 
+                                    %if (production.product_id.name != variation.product_id.name): 
+                                        [${variation.product_id.name or ''|entity}] 
+                                    %endif
+                                </td>
                                 <td class="basic_td"> ${production.name or ''|entity} </td>
-                                <td class="number_td"> $ ${round(variation.cost_variation,2) or '0.0'|entity} </td>
-                                <td class="number_td"> ${round(total_produced,2) or '0.0'|entity} ${production.product_uom.name or ''|entity}</td>
+                                <td class="number_td"> $ ${ formatLang(variation.cost_variation) } </td>
+                                <td class="number_td"> ${ formatLang(total_produced) } ${production.product_uom.name or ''|entity}</td>
                             </tr>
                             <%row_count+=1%>
                         %endif
@@ -169,10 +174,10 @@ ORDER BY mul
                     <hr>
                 </tr>
                 <tr>
-                    <th class="basic_th"> Reference:</th>
-                    <th class="basic_th"> Quantity:</th>
-                    <th class="basic_th"> Unit of M:</th>
-                    <th class="basic_th"> Variation cost:</th>
+                    <th class="basic_th">${_("Reference:")}</th>
+                    <th class="basic_th">${_("Quantity:")}</th>
+                    <th class="basic_th">${_("Unit of M:")}</th>
+                    <th class="basic_th">${_("Variation cost:")}</th>
                 </tr>
                 <%row_count=1%>
                 <%total_finished_cost=0%>
@@ -184,9 +189,9 @@ ORDER BY mul
                         <tr>
                     %endif
                         <td class="basic_td"> ${line[0] or ''|entity}</td>
-                        <td class="number_td"> ${line[1] or '0.0'|entity}</td>
+                        <td class="number_td"> ${ formatLang(line[1]) }</td>
                         <td class="basic_td"> ${line[2] or ''|entity}</td>
-                        <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+                        <td class="number_td"> $ ${ formatLang(line[3]) }</td>
                     </tr>
                     <%total_finished_cost+=line[3]%>
                     <%total_finished_qty+=line[1]%>
@@ -205,19 +210,19 @@ ORDER BY mul
 
                 %for key, value in dict.items(total_res_dict):
                     <tr>
-                        <td class="lastrow" style="text-align:left">Product: ${key or ''|entity}</td>
-                        <td class="lastrow">Total planned to produce:</td>
-                        <td class="lastrow">${value[0] or '0.00'|entity} ${value[1] or ''|entity}</td>
+                        <td class="lastrow" style="text-align:left">${_("Product:")} ${key or ''|entity}</td>
+                        <td class="lastrow">${_("Total planned to produce:")}</td>
+                        <td class="lastrow">${ formatLang(value[0]) } ${value[1] or ''|entity}</td>
                         %if (len(total_res_dict) == 1):
-                            <td class="lastrow">Really produced: ${value[0]+total_finished_qty or '0.00'|entity} ${value[1] or ''|entity}</td>
+                            <td class="lastrow">${_("Really produced:")} ${ formatLang(value[0]+total_finished_qty) } ${value[1] or ''|entity}</td>
                         %endif
                     </tr>
                     <%total_produced += value[0]%>
                 %endfor
                 <tr>
-                    <td class="lastrow" style="text-align:left">Production eficiency: ${100 + round(total_finished_qty*100/total_produced, 2)or '0.00'|entity} %</td>
-                    <td class="lastrow">Total variation cost</td>
-                    <td class="lastrow">$ ${round(total_finished_cost,2) or '0.00'|entity}</td>
+                    <td class="lastrow" style="text-align:left">${_("Production eficiency:")} ${ formatLang(100 + (total_finished_qty*100/total_produced)) } %</td>
+                    <td class="lastrow">${_("Total variation cost")}</td>
+                    <td class="lastrow">$ ${ formatLang(total_finished_cost) }</td>
                 </tr>
             </table>
         %endif
@@ -228,16 +233,16 @@ ORDER BY mul
             <hr/>
             <table class="basic_table">
                 <tr>
-                    <td class="basic_td">Variation in children consumed products</td>
+                    <td class="basic_td">${_("Variation in children consumed products")}</td>
                     <td class="basic_td"> &nbsp; </td>
                     <td class="basic_td"> &nbsp; </td>
                     <td class="basic_td"> &nbsp; </td>
                 </tr>
                 <tr>
-                    <th class="basic_th"> Reference:</th>
-                    <th class="basic_th"> Quantity:</th>
-                    <th class="basic_th"> Unit of M:</th>
-                    <th class="basic_th"> Variation cost:</th>
+                    <th class="basic_th">${_("Reference:")}</th>
+                    <th class="basic_th">${_("Quantity:")}</th>
+                    <th class="basic_th">${_("Unit of M:")}</th>
+                    <th class="basic_th">${_("Variation cost:")}</th>
                 </tr>
                 <%row_count=1%>
                 <%total_child_consumed_cost=0%>
@@ -248,37 +253,36 @@ ORDER BY mul
                         <tr>
                     %endif
                         <td class="basic_td"> ${line[0] or ''|entity}</td>
-                        <td class="number_td"> ${line[1] or '0.0'|entity}</td>
+                        <td class="number_td"> ${ formatLang(line[1]) }</td>
                         <td class="basic_td"> ${line[2] or ''|entity}</td>
-                        <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+                        <td class="number_td"> $ ${ formatLang(line[3]) }</td>
                     </tr>
                 <%total_child_consumed_cost+=line[3]%>
                 <%row_count+=1%>
                 %endfor
                 <tr>
                     <td class="lastrow"></td>
-                    <td class="lastrow">Total:</td>
+                    <td class="lastrow">${_("Total:")}</td>
                     <td class="lastrow"></td>
-                    <td class="lastrow">$ ${round(total_child_consumed_cost,2) or '0.00'|entity}</td>
+                    <td class="lastrow">$ ${ formatLang(total_child_consumed_cost) }</td>
                 </tr>
             </table>
         %endif
-        
         
         <br/>
         %if data['child_finished']:
             <table class="basic_table">
                 <tr>
-                    <td class="basic_td">Variation in children finished products</td>
+                    <td class="basic_td">${_("Variation in children finished products")}</td>
                     <td class="basic_td"> &nbsp; </td>
                     <td class="basic_td"> &nbsp; </td>
                     <td class="basic_td"> &nbsp; </td>
                 </tr>
                 <tr>
-                    <th class="basic_th"> Reference:</th>
-                    <th class="basic_th"> Quantity:</th>
-                    <th class="basic_th"> Unit of M:</th>
-                    <th class="basic_th"> Variation cost:</th>
+                    <th class="basic_th">${_("Reference:")}</th>
+                    <th class="basic_th">${_("Quantity:")}</th>
+                    <th class="basic_th">${_("Unit of M:")}</th>
+                    <th class="basic_th">${_("Variation cost:")}</th>
                 </tr>
                 <%row_count=1%>
                 <%total_child_finished_cost=0%>
@@ -289,18 +293,18 @@ ORDER BY mul
                         <tr>
                     %endif
                         <td class="basic_td"> ${line[0] or ''|entity}</td>
-                        <td class="number_td"> ${line[1] or '0.0'|entity}</td>
+                        <td class="number_td"> ${ formatLang(line[1]) }</td>
                         <td class="basic_td"> ${line[2] or ''|entity}</td>
-                        <td class="number_td"> $ ${round(line[3],2) or '0.00'|entity}</td>
+                        <td class="number_td"> $ ${ formatLang(line[3]) }</td>
                     </tr>
                 <%total_child_finished_cost+=line[3]%>
                 <%row_count+=1%>
                 %endfor
                 <tr>
                     <td class="lastrow"></td>
-                    <td class="lastrow">Total:</td>
+                    <td class="lastrow">${_("Total:")}</td>
                     <td class="lastrow"></td>
-                    <td class="lastrow">$ ${round(total_child_finished_cost,2) or '0.00'|entity}</td>
+                    <td class="lastrow">$ ${ formatLang(total_child_finished_cost) }</td>
                 </tr>
             </table>
         %endif
