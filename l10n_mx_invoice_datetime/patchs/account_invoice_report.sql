@@ -2,10 +2,10 @@
 
 create or replace view account_invoice_report as (
                  select min(ail.id) as id,
-                    CAST( ai.date_invoice AS DATE) as date,
-                    to_char(ai.date_invoice, 'YYYY') as year,
-                    to_char(ai.date_invoice, 'MM') as month,
-                    to_char(ai.date_invoice, 'YYYY-MM-DD') as day,
+                    CAST( ai.invoice_datetime AS DATE) as date,
+                    to_char(ai.invoice_datetime, 'YYYY') as year,
+                    to_char(ai.invoice_datetime, 'MM') as month,
+                    to_char(ai.invoice_datetime, 'YYYY-MM-DD') as day,
                     ail.product_id,
                     ai.partner_id as partner_id,
                     ai.payment_term as payment_term,
@@ -75,7 +75,7 @@ create or replace view account_invoice_report as (
                         left join account_invoice as a ON (a.move_id=aml.move_id)
                         left join account_invoice_line as l ON (a.id=l.invoice_id)
                         where a.id=ai.id)) as delay_to_pay,
-                    sum((select extract(epoch from avg(date_trunc('day',a.date_due)-date_trunc('day',a.date_invoice)))/(24*60*60)::decimal(16,2)
+                    sum((select extract(epoch from avg(date_trunc('day',a.date_due)-date_trunc('day',a.invoice_datetime)))/(24*60*60)::decimal(16,2)
                         from account_move_line as aml
                         left join account_invoice as a ON (a.move_id=aml.move_id)
                         left join account_invoice_line as l ON (a.id=l.invoice_id)
@@ -100,14 +100,14 @@ create or replace view account_invoice_report as (
                 left join product_uom u on (u.id=ail.uos_id),
                 res_currency_rate cr
                 where cr.id in (select id from res_currency_rate cr2  where (cr2.currency_id = ai.currency_id)
-                and ((ai.date_invoice is not null and cr.name <= ai.date_invoice) or (ai.date_invoice is null and cr.name <= NOW())) limit 1)
+                and ((ai.invoice_datetime is not null and cr.name <= ai.invoice_datetime) or (ai.invoice_datetime is null and cr.name <= NOW())) limit 1)
                 group by ail.product_id,
-                    ai.date_invoice,
+                    ai.invoice_datetime,
                     ai.id,
                     cr.rate,
-                    to_char(ai.date_invoice, 'YYYY'),
-                    to_char(ai.date_invoice, 'MM'),
-                    to_char(ai.date_invoice, 'YYYY-MM-DD'),
+                    to_char(ai.invoice_datetime, 'YYYY'),
+                    to_char(ai.invoice_datetime, 'MM'),
+                    to_char(ai.invoice_datetime, 'YYYY-MM-DD'),
                     ai.partner_id,
                     ai.payment_term,
                     ai.period_id,
