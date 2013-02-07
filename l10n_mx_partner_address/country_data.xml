@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="base.mx" model="res.country">
+            <field name="address_format">%(street3)s%(street4)s%(city2)s</field>
+        </record>
+    </data>
+</openerp>

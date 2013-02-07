@@ -40,6 +40,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        'country_data.xml'
 #        "security/openacademy_security.xml",
  #       "partner_address_view.xml",
     ],
