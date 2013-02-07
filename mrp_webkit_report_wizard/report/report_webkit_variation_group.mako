@@ -58,6 +58,7 @@ ORDER BY mul
         <%#Obtener los totales
         mrp_data = mrp_obj.browse(cr, uid, production_ids, context=context)
         no_children_flag = False
+        row_count = 1
         %>
         <p><h4>${_("Productions matching your query:")}</h4></p>
         <table class="basic_table">
@@ -69,15 +70,12 @@ ORDER BY mul
                         <td class="basic_td" style="color:red">
                         <%no_children_flag = True%>
                     %endif
-                    % if loop is UNDEFINED:
-                        ${line.name or ''|entity}
-                    % else:
-                        ${loop.index+1 or ''|entity} - ${line.name or ''|entity}</td>
-                        %if ((loop.index+1) %5 ==0):
-                            </tr>
-                            <tr>
-                        %endif
+                    ${row_count or ''|entity} - ${line.name or ''|entity}</td>
+                    %if (row_count %5 ==0):
+                        </tr>
+                        <tr>
                     % endif
+                <%row_count+=1%>
                 %endfor
             </tr>
         </table>
