@@ -20,7 +20,6 @@
             </table>
         </div>
         
-        <%page enable_loop="True"/>
         <%
         wiz_user = this_self.pool.get('res.users').browse(cr, uid, uid, context=context)
         company_id = context.get('company_id', wiz_user.company_id.id)
@@ -70,11 +69,15 @@ ORDER BY mul
                         <td class="basic_td" style="color:red">
                         <%no_children_flag = True%>
                     %endif
-                    ${loop.index+1 or ''|entity} - ${line.name or ''|entity}</td>
-                    %if ((loop.index+1) %5 ==0):
-                        </tr>
-                        <tr>
-                    %endif
+                    % if loop is UNDEFINED:
+                        ${line.name or ''|entity}
+                    % else:
+                        ${loop.index+1 or ''|entity} - ${line.name or ''|entity}</td>
+                        %if ((loop.index+1) %5 ==0):
+                            </tr>
+                            <tr>
+                        %endif
+                    % endif
                 %endfor
             </tr>
         </table>
