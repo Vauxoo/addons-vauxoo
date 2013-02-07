@@ -35,31 +35,43 @@ td.td_data_exp
 {
 text-align:center
 font-size:20px;
-width:50%;
 }
 .title{
 color: #280099;
 text-align: center;
-font-weight: Helvetica;
 font-size: 20pt;
+}
+
+.title_data_bank{
+text-align: center;
+font-size: 8pt;
 }
 .emitter{
 color: #280099;
-text-align: left;
-font-weight: Helvetica;
+text-align: center;
 font-size: 10pt;
 }
-.folio{
+
+.fiscal_address{
+color: #280099;
+text-align: right;
+font-size: 10pt;
+}
+.invoice{
 color: red;
-text-align: left;
-font-weight: Helvetica;
+text-align: right;
 font-size: 20pt;
+}
+.refund{
+color: red;
+text-align: right;
+font-size: 13pt;
 }
 
 td.address{
 text-align:left;
 valign:top;
-width:500px;
+line-height:11px;
 }
 .line{
 border-color:#280099;
@@ -71,13 +83,82 @@ border: 2px groove #000000;
 
 td.reg_fis{
 text-align:center;
-width:500px;
 }
 
 .font{
-font-family:Arial,Helvetica,sans-serif;
-font-size: 12pt;
+font-size: 9pt;
+line-height:12px;
 }
+
+.facturae{
+font-family:Arial,Helvetica,sans-serif;
+font-size: 6pt;
+}
+
+.lines{
+font-size: 8pt;
+}
+
+.cliente{
+border: solid 2px #e6e6e6;
+}
+
+.data_inv{
+border-left: solid 2px #e6e6e6;
+text-align:left;
+valign:top;
+line-height:11px;
+}
+
+.table_cliente{
+border-collapse: collapse;
+width:100%;
+}                     
+
+.label_lines{
+border-collapse:collapse;
+border-bottom: solid 1.5px #000000;
+border-top: solid 1.5px #000000;
+}
+
+.total_line{
+border-collapse:collapse;
+border-top: solid 1.5px #000000;
+}
+
+.label_data{
+border-bottom: solid 1.5px #e6e6e6;
+}
+
+.data_bank_label{
+text-align: center;
+font-size: 8pt;
+background-color: #c0c0c0;
+}
+
+
+.data_bank{
+text-align: center;
+font-size: 8pt;
+}
+
+
+.border_separator{
+border-right: solid 1.5px #e6e6e6;
+}
+
+.lines_font{
+font-size: 9pt;
+color: #280099;
+}
+
+p.cadena{
+width:60em; 
+word-wrap:break-word;
+font-family:Arial,Helvetica,sans-serif;
+font-size: 6pt;
+}
+
                     ]]> 
             </field>
             <field name="name">Facturae</field>

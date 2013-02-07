@@ -193,34 +193,49 @@
                 </tr>
             %endfor
         </table>
-        <table align="right" class="label_lines" width="100%">
-            <tr>
-                <td><font class="lines">${_("Sub Total:")} $</font></td>
-                <td width="15%" align="right"><font class="lines">${formatLang(o.amount_untaxed) or ''|entity}</font></td>
-            </tr>
+        <table align="right" width="100%" style="border-collapse:collapse">
+            %if get_taxes() or get_taxes_ret():
+                <tr>
+                    <td width="75%"></td>
+                    <td width="10%" class="total_line"><font class="lines">${_("Sub Total:")} $</font></td>
+                    <td width="15%" align="right" class="total_line"><font class="lines">${formatLang(o.amount_untaxed) or ''|entity}</font></td>
+                </tr>
+            %endif
             %for tax in get_taxes(): 
                 <tr>
-                    <td><font class="lines">${tax['name2']} ${round(float(tax['tax_percent']))} ${"% $"}</font></td>
-                    <td align="right"><font class="lines">${formatLang(float( tax['amount'] ) ) or ''|entity}</font></td>
+                    <td width="75%"></td>
+                    <td width="10%"><font class="lines">${tax['name2']} ${round(float(tax['tax_percent']))} ${"% $"}</font></td>
+                    <td width="15%" align="right"><font class="lines">${formatLang(float( tax['amount'] ) ) or ''|entity}</font></td>
                 </tr>
             %endfor
             %for tax_ret in get_taxes_ret():
                 <tr>
-                    <td><font class="lines">${tax_ret['name2']} ${"Ret"} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } ${"% $"}</font></td>
+                    <td width="75%"></td>
+                    <td width="10%"><font class="lines">${tax_ret['name2']} ${"Ret"} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } ${"% $"}</font></td>
                     <td width="15%" align="right"><font class="lines">${formatLang( float( tax_ret['amount'] )*-1 ) or ''|entity}</font></td>
                 </tr>
             %endfor
             <tr align="left">
-                <td><font class="lines"><b>${_("Total:")} $</b></font></td>
-                <td width="15%" align="right"><font class="lines"><b>${formatLang(o.amount_total) or ''|entity}</b></font></td>
+                <td width="75%"></td>
+                <td width="10%" class="total_line"><font class="lines"><b>${_("Total:")} $</b></font></td>
+                <td width="15%" class="total_line" align="right"><font class="lines"><b>${formatLang(o.amount_total) or ''|entity}</b></font></td>
             </tr>
         </table>
         <br clear="all" />
         <table align="left" width="100%">
             <tr>
-                <td class="amount_2_text" width="100%">
-                    <font>IMPORTE CON LETRA:</font>
-                    <br/><font>${o.amount_to_text or ''|entity}</font>
+                <td align="left" width="100%">
+                    <font size="1">IMPORTE CON LETRA:</font>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <font size="1"><i>${o.amount_to_text or ''|entity}</i></font>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" width="100%">
+                    <font size="1">${_('PAGO EN UNA SOLA EXHIBICIÓN')}</font>
                 </td>
             </tr>
         </table>
@@ -229,49 +244,72 @@
             %if o.invoice_sequence_id.approval_id.type == 'cfd22':
                 <font class="font">“Este documento es una representacion impresa de un CFD”
                 <br/>CFD, Comprobante Fiscal Digital</font>
-            %endif
-            %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
+            %elif o.invoice_sequence_id.approval_id.type == 'cfdi32':
                 <font class="font">“Este documento es una representacion impresa de un CFDI”
                 <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
-                <br/>
-                <table frame="box" rules="cols">
+            %endif
+            <div>
+                <table rules="all" width="100%">
                     <tr>
-                        <td class="reg_fis">
+                        <td>
+                            <div class="title_data_bank">${_('Datos Bancarios')} ${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
+                        </td>
+                    </tr>
+                </table>
+                <table rules="all" width="100%">
+                    <tr>
+                        <td width="33%" class="data_bank_label"><b>Banco / Moneda</b></td>
+                        <td width="34%" class="data_bank_label"><b>Número de cuenta</b></td>
+                        <td width="33%" class="data_bank_label"><b>Clave Interbancaria Estandarizada (CLABE)</b></td>
+                    </tr>
+                    %for f in o.company_emitter_id.partner_id.bank_ids:
+                        <tr>
+                            <td width="33%" class="data_bank">${f.bank.name or ''|entity}</td>
+                            <td width="34%" class="data_bank">${f.acc_number or ''|entity}</td>
+                            <td width="33%" class="data_bank">${f.clabe or ''|entity}</td>
+                        </tr>
+                    %endfor
+                </table>
+                <br/>
+            </div>
+            %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
+                <table frame="box" rules="cols" width="100%">
+                    <tr>
+                        <td width="33%" class="reg_fis">
                             <font class="font"><b>Certificado del SAT</b></font>
                         </td>
-                        <td class="reg_fis">
+                        <td width="34%" class="reg_fis">
                             <font class="font"><b>Fecha de Timbrado</b></font>
                         </td>
-                        <td class="reg_fis">
+                        <td width="33%" class="reg_fis">
                             <font class="font"><b>Folio Fiscal</b></font>
                         </td>
                     </tr>
                     <tr>
-                        <td class="reg_fis">
+                        <td width="33%" class="reg_fis">
                             <font class="font">${ o.cfdi_no_certificado or ''|entity }</font>
                         </td>
-                        <td class="reg_fis">
+                        <td width="34%" class="reg_fis">
                             <font class="font">${ o.cfdi_fecha_timbrado or ''|entity }</font>
                         </td>
-                        <td class="reg_fis">
+                        <td width="33%" class="reg_fis">
                             <font class="font">${ o.cfdi_folio_fiscal or ''|entity }</font>
                         </td>
                     </tr>
                 </table>
-                <br/>
             %endif
             %if o.invoice_sequence_id.approval_id.type != 'cbb':
-                <table rules="all">
+                <table rules="all" width="100%">
                     <tr>
-                        <td class="reg_fis">
+                        <td width="33%" class="reg_fis">
                             <font class="font"><b>Certificado del emisor</b></font>
                             <br/><font class="font">${ o.no_certificado or ''|entity }</font>
                         </td>
-                        <td class="reg_fis">
+                        <td width="34%" class="reg_fis">
                             <font class="font"><b>Método de Pago:</b></font>
                             <br/><font class="font">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</font>
                         </td>
-                        <td class="reg_fis">
+                        <td width="33%" class="reg_fis">
                             <font class="font"><b>Últimos 4 dígitos de la cuenta bancaria:</b></font>
                             <br/><font class="font">${ o.acc_payment.last_acc_number or 'No identificado' }</font>
                         </td>
@@ -289,22 +327,6 @@
                             %endif
                         </td>
                         <td width="60%" valign="top" align="left">
-                            <div>
-                                <table rules="all" width="100%">
-                                    <tr>
-                                        <td width="25%" class="data_bank_label"><b>Banco / Moneda</b></td>
-                                        <td width="25%" class="data_bank_label"><b>Número de cuenta</b></td>
-                                        <td width="50%" class="data_bank_label"><b>Clave Interbancaria Estandarizada (CLABE)</b></td>
-                                    </tr>
-                                    %for f in o.company_emitter_id.partner_id.bank_ids:
-                                        <tr>
-                                            <td width="25%" class="data_bank">${f.bank.name or ''|entity}</td>
-                                            <td width="25%" class="data_bank">${f.acc_number or ''|entity}</td>
-                                            <td width="50%" class="data_bank">${f.clabe or ''|entity}</td>
-                                        </tr>
-                                    %endfor
-                                </table>
-                            </div>
                             <font class="font">Número de aprobación SICOFI: ${get_approval().approval_number or '' |entity}</font>
                             <br/><font class="font">Pago en una sola exhibición</font>
                             <br/><font class="font">La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.</font>
@@ -324,22 +346,6 @@
                                 <td width="20%" valign="top" align="center">
                                     ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 200)}
                                 </td>
-                                <div>
-                                    <table rules="all" width="100%">
-                                        <tr>
-                                            <td width="25%" class="data_bank_label"><b>Banco / Moneda</b></td>
-                                            <td width="25%" class="data_bank_label"><b>Número de cuenta</b></td>
-                                            <td width="50%" class="data_bank_label"><b>Clave Interbancaria Estandarizada (CLABE)</b></td>
-                                        </tr>
-                                        %for f in o.company_emitter_id.partner_id.bank_ids:
-                                            <tr>
-                                                <td width="25%" class="data_bank">${f.bank.name or ''|entity}</td>
-                                                <td width="25%" class="data_bank">${f.acc_number or ''|entity}</td>
-                                                <td width="50%" class="data_bank">${f.clabe or ''|entity}</td>
-                                            </tr>
-                                        %endfor
-                                    </table>
-                            </div>
                             </div>
                             <div><font class="facturae">Serie del Certificado :
                             <br/>${o.no_certificado or ''|entity}</font>
@@ -361,22 +367,6 @@
                             ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 200)}
                         </td>
                         <td valign="top" align="left" width="60%">
-                            <div>
-                                <table rules="all" width="100%">
-                                    <tr>
-                                        <td width="25%" class="data_bank_label"><b>Banco / Moneda</b></td>
-                                        <td width="25%" class="data_bank_label"><b>Número de cuenta</b></td>
-                                        <td width="50%" class="data_bank_label"><b>Clave Interbancaria Estandarizada (CLABE)</b></td>
-                                    </tr>
-                                    %for f in o.company_emitter_id.partner_id.bank_ids:
-                                        <tr>
-                                            <td width="25%" class="data_bank">${f.bank.name or ''|entity}</td>
-                                            <td width="25%" class="data_bank">${f.acc_number or ''|entity}</td>
-                                            <td width="50%" class="data_bank">${f.clabe or ''|entity}</td>
-                                        </tr>
-                                    %endfor
-                                </table>
-                            </div>
                             <div><font class="facturae"><b>Sello Digital Emisor:</b></font>
                             <p class="cadena">${split_string( o.sello ) or ''|entity}</p></div>
                             <div><font class="facturae"><b>Sello Digital SAT:</b></font>
