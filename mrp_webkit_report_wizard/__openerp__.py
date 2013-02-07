@@ -33,7 +33,7 @@
     in the selected range of time""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["mrp", "report_webkit", "mrp_variation", "mrp_subproduction, mrp_subproduct_pt_planified"],
+    "depends" : ["mrp", "report_webkit", "mrp_variation", "mrp_subproduction", "mrp_subproduct_pt_planified"],
     "data": [],
     "init_xml" : [],
     "demo_xml" : [],
