@@ -40,8 +40,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "security/openacademy_security.xml",
-        "partner_address_view.xml",
+#        "security/openacademy_security.xml",
+ #       "partner_address_view.xml",
     ],
     "installable" : True,
     "active" : False,
