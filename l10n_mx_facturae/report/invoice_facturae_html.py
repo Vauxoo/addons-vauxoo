@@ -46,6 +46,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'exists_key': self._exists_key,
             'get_data_partner' : self._get_data_partner,
             'get_sum_total' : self._get_sum_total,
+            'has_disc' : self._has_disc,
         })
         self.taxes = []
 
@@ -170,6 +171,15 @@ class invoice_facturae_html(report_sxw.rml_parse):
         for line in line_ids:
             suma += (line.price_unit or 0.0) * (line.quantity or 0.0)
         return suma
+        
+    def _has_disc(self, lines):
+        discount = False
+        for line in lines:
+            if line.discount > 0.0:
+                discount = True
+                break
+        return discount
+            
         
 report_sxw.report_sxw('report.account.invoice.facturae.webkit',
                        'account.invoice', 

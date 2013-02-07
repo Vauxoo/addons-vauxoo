@@ -54,6 +54,7 @@ Requires the following programs:
             "l10n_mx_ir_attachment_facturae",
             "sale",
             "report_webkit",#no depende de "sale" directamente, pero marca error en algunas versiones
+            "l10n_mx_res_partner_bank_clabe"
         ],
     "init_xml" : [],
     "demo_xml" : [],
