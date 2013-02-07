@@ -20,6 +20,7 @@
             </table>
         </div>
         
+        <%page enable_loop="True"/>
         <%
         wiz_user = this_self.pool.get('res.users').browse(cr, uid, uid, context=context)
         company_id = context.get('company_id', wiz_user.company_id.id)
