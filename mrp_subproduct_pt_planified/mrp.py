@@ -41,7 +41,7 @@ class mrp_production(osv.osv):
                 continue
             factor = uom_obj._compute_qty(cr, uid, production.product_uom.id, production.product_qty, bom_id.product_uom.id)
             result_subproducts =[]
-            res = bom_obj._bom_explode(cr, uid, bom_id, factor / bom_id.product_qty, properties=False, routing_id=False, result_subproducts=result_subproducts)
+            res = bom_obj._bom_explode(cr, uid, bom_id, factor / bom_id.product_qty, properties=False, routing_id=False)
             for sub_product in result_subproducts:
                 data = {
                     'product_id': sub_product['product_id'],
