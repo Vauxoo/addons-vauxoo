@@ -107,7 +107,8 @@ class res_partner(osv.osv):
                     tree = etree.fromstring(v)
                     node.getparent().replace(node, tree)
                 arch = etree.tostring(doc)
-                break
+            else:
+                arch = res
         return arch
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
