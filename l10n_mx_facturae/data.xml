@@ -158,6 +158,13 @@ word-wrap:break-word;
 font-family:Arial,Helvetica,sans-serif;
 font-size: 6pt;
 }
+
+.cadena_cfd{
+width:90em; 
+word-wrap:break-word;
+font-family:Arial,Helvetica,sans-serif;
+font-size: 6pt;
+}
                     ]]> 
             </field>
             <field name="name">Facturae</field>
