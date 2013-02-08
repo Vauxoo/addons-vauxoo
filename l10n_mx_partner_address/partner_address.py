@@ -45,7 +45,12 @@ class res_partner(osv.osv):
         'street4': fields.char('Street4', size=128),
         'city2': fields.char('City2', size=128),
     }
-
+    
+    def _get_address_field(self):
+        res = super(res_partner, self)._get_address_field()
+        res.extend(['street3','street4','city2'])
+        return res
+    
     def _get_default_country_id(self, cr, uid, context=None):
         country_obj = self.pool.get('res.country')
         #ids = country_obj.search(cr, uid, [ ( 'name', '=', 'México' ), ], limit=1)
