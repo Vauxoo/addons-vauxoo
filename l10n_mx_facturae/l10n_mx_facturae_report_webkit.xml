@@ -8,6 +8,8 @@
                 file="l10n_mx_facturae/report/invoice_facturae_html.mako"
                 string="Factura Electronica Report"
                 report_type="webkit"
+                attachment_use="1"
+                attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"
                 webkit_header="ir_header_webkit_facturae"/>
     </data>
 </openerp>
