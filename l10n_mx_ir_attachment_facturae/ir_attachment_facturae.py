@@ -143,12 +143,7 @@ class ir_attachment_facturae_mx(osv.osv):
         type=self.browse(cr,uid,ids)[0].type
         (fileno, fname) = tempfile.mkstemp('.pdf', 'openerp_' + (False or '') + '__facturae__' )
         os.close( fileno )
-        if type=='cfd22':
-            file = invoice_obj.create_report(cr, uid, [invoice.id], "account.invoice.facturae.pdf", fname)
-        if type=='cfdi32':
-            file = invoice_obj.create_report(cr, uid, [invoice.id], "account.invoice.facturae.pac.sf.pdf", fname)
-        if type=='cbb':
-            file = invoice_obj.create_report(cr, uid, [invoice.id], "account.invoice.facturae.pdf2", fname)
+        file = invoice_obj.create_report(cr, uid, [invoice.id], "account.invoice.facturae.webkit", fname)
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice),('datas_fname','=', invoice.fname_invoice+'.pdf')])
         for attachment in self.browse(cr, uid, adjuntos, context):
             aids= attachment.id
