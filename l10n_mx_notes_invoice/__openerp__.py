@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
@@ -26,52 +26,19 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFD)",
+    "name" : "l10n_mx_notes_invoice",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
-Requires the following programs:
-  xsltproc
-    Ubuntu insall with:
-        sudo apt-get install xsltproc
-
-  openssl
-      Ubuntu insall with:
-        sudo apt-get install openssl
+    "description" : """This module add field for notes in company for electrinic invoice report
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document",
-            "l10n_mx_facturae_lib", #"l10n_mx_partner_address",
-            "l10n_mx_facturae_cer",
-            "l10n_mx_invoice_datetime",
-            "l10n_mx_invoice_tax_ref",
-            "l10n_mx_facturae_seq",
-            "l10n_mx_company_cif",
-            "l10n_mx_partner_address",
-            "l10n_mx_invoice_amount_to_text",
-            "l10n_mx_ir_attachment_facturae",
-            "sale",
-            "report_webkit",#no depende de "sale" directamente, pero marca error en algunas versiones
-            "l10n_mx_res_partner_bank_clabe",
-            "l10n_mx_notes_invoice",
-        ],
+    "depends" : ['base'],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        'security/l10n_mx_facturae_security.xml',
-        #'security/ir.model.access.csv',
-        "data.xml",
-        "l10n_mx_facturae_report.xml",
-        "l10n_mx_facturae_report_webkit.xml",
-        "wizard/wizard_invoice_facturae_txt_v6_view.xml",
-        "wizard/wizard_invoice_facturae_xml_v6_view.xml",
-        "wizard/installer_view.xml",
-        #"ir_sequence_view.xml",
-        #"res_company_view6.xml",
-        "invoice_view.xml",
-        #"partner_address_view.xml",
+        "res_company_view.xml",
     ],
     "installable" : True,
     "active" : False,

@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="ir_header_webkit_facturae" model="ir.header_webkit">
+            <field name="orientation">Portrait</field>
+            <field name="format">Letter</field>
+            <field name="html">
+                <![CDATA[<html>
+                    <head>
+                        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+                        <script>
+                            function subst() {
+                            var vars={};
+                            var x=document.location.search.substring(1).split('&');
+                            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+                            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+                            for(var i in x) {
+                            var y = document.getElementsByClassName(x[i]);
+                            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                                }
+                            }
+                        </script>
+                        <style type="text/css">
+                            ${css}
+                        </style>
+                    </head>
+                    <body style="border:0; margin: 0;" onload="subst()">
+                        ${_debug or ''|n} </body>
+                </html>]]>
+            </field>
+            <field eval="0.0" name="margin_top"/>
+            <field name="css" >
+                <![CDATA[
+td.td_data_exp
+{
+text-align:center
+font-size:20px;
+}
+.title{
+color: #280099;
+text-align: center;
+font-size: 20pt;
+}
+
+.title_data_bank{
+text-align: center;
+font-size: 8pt;
+}
+.emitter{
+color: #280099;
+text-align: center;
+font-size: 10pt;
+}
+
+.fiscal_address{
+color: #280099;
+text-align: right;
+font-size: 10pt;
+}
+.invoice{
+color: red;
+text-align: right;
+font-size: 20pt;
+}
+.refund{
+color: red;
+text-align: right;
+font-size: 13pt;
+}
+
+td.address{
+text-align:left;
+valign:top;
+line-height:11px;
+}
+.line{
+border-color:#280099;
+}
+
+.cfdi{
+border: 2px groove #000000;
+}
+
+td.reg_fis{
+text-align:center;
+}
+
+.font{
+font-size: 9pt;
+line-height:12px;
+}
+
+.facturae{
+font-family:Arial,Helvetica,sans-serif;
+font-size: 6pt;
+}
+
+.lines{
+font-size: 8pt;
+}
+
+.cliente{
+border: solid 2px #e6e6e6;
+}
+
+.data_inv{
+border-left: solid 2px #e6e6e6;
+text-align:left;
+valign:top;
+line-height:11px;
+}
+
+.table_cliente{
+border-collapse: collapse;
+width:100%;
+}                     
+
+.label_lines{
+border-collapse:collapse;
+border-bottom: solid 1.5px #000000;
+border-top: solid 1.5px #000000;
+}
+
+.total_line{
+border-collapse:collapse;
+border-top: solid 1.5px #000000;
+}
+
+.label_data{
+border-bottom: solid 1.5px #e6e6e6;
+}
+
+.data_bank_label{
+text-align: center;
+font-size: 8pt;
+background-color: #c0c0c0;
+}
+
+
+.data_bank{
+text-align: center;
+font-size: 8pt;
+}
+
+
+.border_separator{
+border-right: solid 1.5px #e6e6e6;
+}
+
+.lines_font{
+font-size: 9pt;
+color: #280099;
+}
+
+p.cadena{
+width:60em; 
+word-wrap:break-word;
+font-family:Arial,Helvetica,sans-serif;
+font-size: 6pt;
+}
+                    ]]> 
+            </field>
+            <field name="name">Facturae</field>
+        </record>
+        <record id="ir_header_img_companylogo0" model="ir.header_img">
+            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+</openerp>

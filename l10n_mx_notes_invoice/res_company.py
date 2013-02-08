@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
@@ -25,5 +25,14 @@
 #
 ##############################################################################
 
-import invoice_facturae_pdf
-import invoice_facturae_html
+from osv import osv, fields
+
+class res_company(osv.osv):
+    _inherit = 'res.company'
+    
+    _columns = {
+        'promissory': fields.text('Text promissory facturae'),
+    }
+res_company()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
