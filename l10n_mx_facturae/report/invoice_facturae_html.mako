@@ -270,8 +270,10 @@
                         </tr>
                     %endfor
                 </table>
-                <br/>
             </div>
+            <table width="100%">
+                <tr><td align="center"><font size="1">${ o.company_emitter_id.promissory or ''|entity }</font></td></tr>
+            </table>
             %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
                 <table frame="box" rules="cols" width="100%">
                     <tr>
@@ -317,56 +319,55 @@
                 </table>
             %endif
         </div>
-        <div>
-            %if o.invoice_sequence_id.approval_id.type == 'cbb':
-                <table frame="box">
+        %if o.invoice_sequence_id.approval_id.type == 'cbb':
+            <table frame="box">
+                <tr>
+                    <td width="20%" valign="top" align="center">
+                        %if get_approval():
+                            ${helper.embed_image('jpeg',str(get_approval().cbb_image),170, 170)}
+                        %endif
+                    </td>
+                    <td width="60%" valign="top" align="left">
+                        <font class="font">Número de aprobación SICOFI: ${get_approval().approval_number or '' |entity}</font>
+                        <br/><font class="font">La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.</font>
+                        <br/><font class="font">Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es ${get_approval().date_start or '' |entity}</font>
+                    </td>
+                    <td width="20%" valign="top" align="center">
+                        ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),170, 170)}
+                    </td>
+                </tr>
+            </table>
+        %endif
+        %if o.invoice_sequence_id.approval_id.type == 'cfd22':
+            <table frame="box">
+                <tr>
+                    <td width="80%" valign="top" align="left">
+                        <div>
+                            <td width="20%" valign="top" align="center">
+                                ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 200)}
+                            </td>
+                        </div>
+                        <div><font class="facturae">Serie del Certificado :
+                        <br/>${o.no_certificado or ''|entity}</font>
+                        <br/><font class="facturae">Sello digital:
+                        <br/>${split_string( o.sello or '') or ''|entity}</font>
+                        </div>
+                        <div align="center">
+                            <font class="facturae">Cadena original :</font>
+                            <br/><font class="facturae">${split_string( o.cadena_original or '') or '' |entity}</font>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        %endif
+        %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
+            <div style="page-break-before:always;">
+                <table frame="box" rules="all" width="100%">
                     <tr>
-                        <td width="20%" valign="top" align="center">
-                            %if get_approval():
-                                ${helper.embed_image('jpeg',str(get_approval().cbb_image),170, 170)}
-                            %endif
+                        <td width="17%" valign="top" align="center">
+                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}
                         </td>
-                        <td width="60%" valign="top" align="left">
-                            <font class="font">Número de aprobación SICOFI: ${get_approval().approval_number or '' |entity}</font>
-                            <br/><font class="font">Pago en una sola exhibición</font>
-                            <br/><font class="font">La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.</font>
-                            <br/><font class="font">Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es ${get_approval().date_start or '' |entity}</font>
-                        </td>
-                        <td width="20%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),170, 170)}
-                        </td>
-                    </tr>
-                </table>
-            %endif
-            %if o.invoice_sequence_id.approval_id.type == 'cfd22':
-                <table frame="box">
-                    <tr>
-                        <td width="80%" valign="top" align="left">
-                            <div>
-                                <td width="20%" valign="top" align="center">
-                                    ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 200)}
-                                </td>
-                            </div>
-                            <div><font class="facturae">Serie del Certificado :
-                            <br/>${o.no_certificado or ''|entity}</font>
-                            <br/><font class="facturae">Sello digital:
-                            <br/>${split_string( o.sello or '') or ''|entity}</font>
-                            </div>
-                            <div align="center">
-                                <font class="facturae">Cadena original :</font>
-                                <br/><font class="facturae">${split_string( o.cadena_original or '') or '' |entity}</font>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            %endif
-            %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
-                <table frame="box">
-                    <tr>
-                        <td width="20%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),200, 200)}
-                        </td>
-                        <td valign="top" align="left" width="60%">
+                        <td valign="top" align="left" width="63%">
                             <div><font class="facturae"><b>Sello Digital Emisor:</b></font>
                             <p class="cadena">${split_string( o.sello ) or ''|entity}</p></div>
                             <div><font class="facturae"><b>Sello Digital SAT:</b></font>
@@ -375,12 +376,20 @@
                             <br/><font class="facturae">${split_string( o.cadena_original ) or '' |entity}</font>
                         </td>
                         <td width="20%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.cfdi_cbb),200, 200)}
+                            ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}
                         </td>
                     </tr>
                 </table>
-            %endif
-        </div>
+                <table width="100%" rules="all">
+                    <tr> 
+                        <td width = "20%"></td>
+                        <td width = "60%"></td>
+                        <td width = "20%"></td>
+                    </tr>
+                </table>
+            </div>
+        %endif
     %endfor
+    <div id="pie" align="center"><font size="2">Reporte Impreso en OpenERP con Webkit - Vauxoo</font></div> 
 </body>
 </html>
