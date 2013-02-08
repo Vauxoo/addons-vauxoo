@@ -22,20 +22,8 @@
             <field name="model">ir.attachment.facturae.mx</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Attachment Factura-E">
-                    <field name="name"/>
-                    <field name="invoice_id"/>
-                    <field name="type"/>
-                    <field name="company_id"/>
-                    <newline/>
-                    <field name="file_input"/>
-                    <field name="file_xml_sign"/>
-                    <newline/>
-                    <field name="file_pdf"/>
-                    <field name="identifier"/>
-                    <newline/>
-                    <group col="9" colspan="8">
-                        <field name="state"/>
+                <form string="Attachment Factura-E" version="7.0">
+                    <header>
                         <button name="action_confirm" states="draft" string="Confirm" type="workflow"/>
                         <button name="action_sign" states="confirmed" string="Sign" type="workflow"/>
                         <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow"/>
@@ -44,11 +32,24 @@
                         <button name="action_done" states="sent_customer" string="Done" type="workflow"/>
                         <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
-                    </group>
-                    <group colspan="4">
-                        <field name="msj"/>
-                        <field name="last_date"/>
-                    </group>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,invoiced,done" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                    </header>
+                    <sheet string="Attachment Factura-E">
+                        <group>
+                            <field name="name"/>
+                            <field name="invoice_id"/>
+                            <field name="type"/>
+                            <field name="company_id"/>
+                            <field name="file_input"/>
+                            <field name="file_xml_sign"/>
+                            <field name="file_pdf"/>
+                            <field name="identifier"/>
+                        </group>
+                        <group colspan="4">
+                            <field name="msj"/>
+                            <field name="last_date"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
