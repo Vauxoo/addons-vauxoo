@@ -64,7 +64,7 @@ class res_partner(osv.osv):
         fmt = user_obj.browse(cr, SUPERUSER_ID, uid, context).company_id.country_id
         fmt = fmt and fmt.address_format
         layouts = {
-            '%(street3)s%(street4)s%(city2)s': """
+            '%(street3)s\n%(street4)s\n%(city2)s': """
                     <group>
                         <group>
                             <label for="type" attrs="{'invisible': [('parent_id','=', False)]}"/>
