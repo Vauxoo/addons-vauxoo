@@ -32,7 +32,7 @@
                         <button name="action_done" states="sent_customer" string="Done" type="workflow"/>
                         <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,invoiced,done" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,printable,sent_customer,sent_backup,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
                     <sheet string="Attachment Factura-E">
                         <group>
