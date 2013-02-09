@@ -34,7 +34,7 @@
     """,
     "website" : "www.vauxoo.com",
     "license" : "AGPL-3",
-    "depends" : ["account"],
+    "depends" : ["base"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["res_bank_view.xml",],

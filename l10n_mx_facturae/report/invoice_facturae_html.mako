@@ -237,7 +237,7 @@
             </tr>
             <tr>
                 <td align="center" width="100%">
-                    <font size="1">${_('PAGO EN UNA SOLA EXHIBICIÓN')}</font>
+                    <font size="1">${_('PAGO EN UNA SOLA EXHIBICIÓN - EFECTO FISCAL AL PAGO')}</font>
                 </td>
             </tr>
         </table>
@@ -267,7 +267,7 @@
                         </tr>
                         %for f in o.company_emitter_id.partner_id.bank_ids:
                             <tr>
-                                <td width="33%" class="data_bank">${f.bank.name or ''|entity}</td>
+                                <td width="33%" class="data_bank">${f.bank.name or ''|entity} ${f.currency2_id and '/' or '' |entity} ${f.currency2_id and f.currency2_id.name or '' |entity}</td>
                                 <td width="34%" class="data_bank">${f.acc_number or ''|entity}</td>
                                 <td width="33%" class="data_bank">${f.clabe or ''|entity}</td>
                             </tr>
