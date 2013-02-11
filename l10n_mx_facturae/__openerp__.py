@@ -56,6 +56,7 @@ Requires the following programs:
             "report_webkit",#no depende de "sale" directamente, pero marca error en algunas versiones
             "l10n_mx_res_partner_bank_clabe",
             "l10n_mx_notes_invoice",
+            "l10n_mx_res_partner_bank_currency",
         ],
     "init_xml" : [],
     "demo_xml" : [],

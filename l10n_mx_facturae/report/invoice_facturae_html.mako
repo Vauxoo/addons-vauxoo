@@ -198,28 +198,28 @@
         <table align="right" width="100%" style="border-collapse:collapse">
             %if get_taxes() or get_taxes_ret():
                 <tr>
-                    <td width="75%"></td>
-                    <td width="10%" class="total_line"><font class="lines">${_("Sub Total:")} $</font></td>
+                    <td width="70%"></td>
+                    <td width="15%" class="total_line"><font class="lines">${_("Sub Total:")} $</font></td>
                     <td width="15%" align="right" class="total_line"><font class="lines">${formatLang(o.amount_untaxed) or ''|entity}</font></td>
                 </tr>
             %endif
             %for tax in get_taxes(): 
                 <tr>
-                    <td width="75%"></td>
-                    <td width="10%"><font class="lines">${tax['name2']} ${round(float(tax['tax_percent']))} ${"% $"}</font></td>
+                    <td width="70%"></td>
+                    <td width="15%"><font class="lines">${tax['name2']} ${round(float(tax['tax_percent']))} ${"% $"}</font></td>
                     <td width="15%" align="right"><font class="lines">${formatLang(float( tax['amount'] ) ) or ''|entity}</font></td>
                 </tr>
             %endfor
             %for tax_ret in get_taxes_ret():
                 <tr>
-                    <td width="75%"></td>
-                    <td width="10%"><font class="lines">${tax_ret['name2']} ${"Ret"} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } ${"% $"}</font></td>
+                    <td width="70%"></td>
+                    <td width="15%"><font class="lines">${tax_ret['name2']} ${"Ret"} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } ${"% $"}</font></td>
                     <td width="15%" align="right"><font class="lines">${formatLang( float( tax_ret['amount'] )*-1 ) or ''|entity}</font></td>
                 </tr>
             %endfor
             <tr align="left">
-                <td width="75%"></td>
-                <td width="10%" class="total_line"><font class="lines"><b>${_("Total:")} $</b></font></td>
+                <td width="70%"></td>
+                <td width="15%" class="total_line"><font class="lines"><b>${_("Total:")} $</b></font></td>
                 <td width="15%" class="total_line" align="right"><font class="lines"><b>${formatLang(o.amount_total) or ''|entity}</b></font></td>
             </tr>
         </table>
@@ -237,7 +237,7 @@
             </tr>
             <tr>
                 <td align="center" width="100%">
-                    <font size="1">${_('PAGO EN UNA SOLA EXHIBICIÓN')}</font>
+                    <font size="1">${_('PAGO EN UNA SOLA EXHIBICIÓN - EFECTO FISCAL AL PAGO')}</font>
                 </td>
             </tr>
         </table>
@@ -267,7 +267,7 @@
                         </tr>
                         %for f in o.company_emitter_id.partner_id.bank_ids:
                             <tr>
-                                <td width="33%" class="data_bank">${f.bank.name or ''|entity}</td>
+                                <td width="33%" class="data_bank">${f.bank.name or ''|entity} ${f.currency2_id and '/' or '' |entity} ${f.currency2_id and f.currency2_id.name or '' |entity}</td>
                                 <td width="34%" class="data_bank">${f.acc_number or ''|entity}</td>
                                 <td width="33%" class="data_bank">${f.clabe or ''|entity}</td>
                             </tr>
@@ -309,7 +309,7 @@
                     <tr>
                         <td width="33%" class="reg_fis">
                             <font class="font"><b>Certificado del emisor</b></font>
-                            <br/><font class="font">${ o.no_certificado or ''|entity }</font>
+                            <br/><font class="font">${ o.no_certificado or 'No identificado'|entity }</font>
                         </td>
                         <td width="34%" class="reg_fis">
                             <font class="font"><b>Método de Pago:</b></font>
@@ -348,13 +348,13 @@
                     <td width="15%" valign="top" align="center">
                         ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}
                     </td>
-                    <td width="85%">
+                    <td width="85%" valign="top">
                         <div><font class="facturae"><b>Serie del Certificado :</b></font>
-                        <p class="cadena">${o.no_certificado or ''|entity}</p></div>
+                        <p class="cadena_cfd">${o.no_certificado or ''|entity}</p></div>
                         <div><font class="facturae"><b>Sello digital:</b></font>
-                        <p class="cadena">${split_string( o.sello or '') or ''|entity}</p></div>
+                        <p class="cadena_cfd">${split_string( o.sello or '') or ''|entity}</p></div>
                         <div><font class="facturae"><b>Cadena original :</b></font>
-                        <p class="cadena">${split_string( o.cadena_original or '') or '' |entity}</p></div>
+                        <p class="cadena_cfd">${split_string( o.cadena_original or '') or '' |entity}</p></div>
                     </td>
                 </tr>
             </table>
@@ -372,18 +372,11 @@
                             <div><font class="facturae"><b>Sello Digital SAT:</b></font>
                             <p class="cadena">${split_string( o.cfdi_sello or '') or ''|entity}</p></div>
                             <font class="facturae"><b>Cadena original:</b></font>
-                            <br/><font class="facturae">${split_string( o.cadena_original ) or '' |entity}</font>
+                            <br/><font class="facturae">${split_string(o.cfdi_cadena_original) or ''|entity}</font>
                         </td>
                         <td width="20%" valign="top" align="center">
                             ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}
                         </td>
-                    </tr>
-                </table>
-                <table width="100%" rules="all">
-                    <tr> 
-                        <td width = "20%"></td>
-                        <td width = "60%"></td>
-                        <td width = "20%"></td>
                     </tr>
                 </table>
             </div>
