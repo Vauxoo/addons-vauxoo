@@ -67,7 +67,7 @@ class account_invoice(osv.osv):
     
     _columns = {
         ##Extract date_invoice from original, but add datetime
-        'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
+#        'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         'invoice_datetime': fields.datetime('Date Electronic Invoiced ', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True, type='datetime', string='Date Invoiced with TZ', store=True),
     }
@@ -80,9 +80,10 @@ class account_invoice(osv.osv):
         for inv in self.browse(cr, uid, ids):
             if inv.move_id:
                 continue
-            if not inv.date_invoice:
-                t=time.strftime('%Y-%m-%d %H:%M:%S')
-                self.write(cr, uid, [inv.id], {'date_invoice': t, 'invoice_datetime': t })
+            if not inv.invoice_datetime:
+                t1=time.strftime('%Y-%m-%d')
+                t2=time.strftime('%Y-%m-%d %H:%M:%S')
+                self.write(cr, uid, [inv.id], {'date_invoice': t1, 'invoice_datetime': t2 })
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
 account_invoice()
 
