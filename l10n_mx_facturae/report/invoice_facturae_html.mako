@@ -43,11 +43,11 @@
                         %if o.company_emitter_id:
                             %if o.company_emitter_id.address_invoice_parent_company_id:
                                 <br/>${o.company_emitter_id.address_invoice_parent_company_id.street or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.street3 or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.street4 or ''|entity}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.l10n_mx_street3 or ''|entity}
+                                ${o.company_emitter_id.address_invoice_parent_company_id.l10n_mx_street4 or ''|entity}
                                 ${o.company_emitter_id.address_invoice_parent_company_id.street2 or ''|entity}
                                 ${ o.company_emitter_id.address_invoice_parent_company_id.zip or ''|entity}
-                                <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.city2 or ''|entity}
+                                <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.l10n_mx_city2 or ''|entity}
                                 <br/>${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity} 
                                 , ${o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or ''|entity}
                                 , ${o.company_emitter_id.address_invoice_parent_company_id.country_id and o.company_emitter_id.address_invoice_parent_company_id.country_id.name or ''|entity}
@@ -73,11 +73,11 @@
                         %if o.address_issued_id:
                             <br/><font class="font">${o.address_issued_id.name or ''|entity}</font>
                             <br/><font class="font">${o.address_issued_id.street or ''|entity}</font>
-                            <font class="font">${o.address_issued_id.street3 or ''|entity}</font>
-                            <font class="font">${o.address_issued_id.street4 or ''|entity}</font>
+                            <font class="font">${o.address_issued_id.l10n_mx_street3 or ''|entity}</font>
+                            <font class="font">${o.address_issued_id.l10n_mx_street4 or ''|entity}</font>
                             <br/><font class="font">${o.address_issued_id.street2 or ''|entity}</font>
                             <font class="font">${o.address_issued_id.zip or ''|entity}</font>
-                            <br/><font class="font">Localidad: ${o.address_issued_id.city2 or ''|entity}</font>
+                            <br/><font class="font">Localidad: ${o.address_issued_id.l10n_mx_city2 or ''|entity}</font>
                             <br/><font class="font">${o.address_issued_id.city or ''|entity}</font>
                             <font class="font">${o.address_issued_id.state_id.name and ',' or ''|entity} ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}</font>
                             <font class="font">${o.address_issued_id.country_id.name and ',' or ''|entity} ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}</font>
@@ -106,13 +106,13 @@
                             <tr>
                                 <td width="10%" class="cliente"><font class="font"><b>Calle:</b></font></td>
                                 <td width="58%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street'] or ''|entity}</font></td>
-                                %if get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street3']:
+                                %if get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['l10n_mx_street3']:
                                     <td width="9%" class="cliente"><font class="font"><b>No. Ext:</b></font></td>
-                                    <td width="8%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street3'] or ''|entity}</font></td>
+                                    <td width="8%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['l10n_mx_street3'] or ''|entity}</font></td>
                                 %endif
-                                %if get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street4']:
+                                %if get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['l10n_mx_street4']:
                                     <td width="7%" class="cliente"><font class="font"><b>Int:</b></font></td>
-                                    <td width="8%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street4'] or ''|entity}</font></td>
+                                    <td width="8%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['l10n_mx_street4'] or ''|entity}</font></td>
                                 %endif
                             </tr>
                         </table>
@@ -125,7 +125,7 @@
                                 <td width="10%" class="cliente"><font class="font"><b>C.P.:</b></font></td>
                                 <td width="18%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['zip'] or ''|entity}</font></td>
                                 <td width="9%" class="cliente"><font class="font"><b>Localidad:</b></font></td>
-                                <td width="23%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['city2'] or ''|entity}</font></td>
+                                <td width="23%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['l10n_mx_city2'] or ''|entity}</font></td>
                             </tr>
                         </table>
                     </div>

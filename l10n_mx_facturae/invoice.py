@@ -774,10 +774,10 @@ class account_invoice(osv.osv):
 
                 'DomicilioFiscal': {
                     'calle': address_invoice_parent.street and address_invoice_parent.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': address_invoice_parent.street3 and address_invoice_parent.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
-                    'noInterior': address_invoice_parent.street4 and address_invoice_parent.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
+                    'noExterior': address_invoice_parent.l10n_mx_street3 and address_invoice_parent.l10n_mx_street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
+                    'noInterior': address_invoice_parent.l10n_mx_street4 and address_invoice_parent.l10n_mx_street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
                     'colonia':  address_invoice_parent.street2 and address_invoice_parent.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A' ,
-                    'localidad': address_invoice_parent.city2 and address_invoice_parent.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                    'localidad': address_invoice_parent.l10n_mx_city2 and address_invoice_parent.l10n_mx_city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
                     'municipio': address_invoice_parent.city and address_invoice_parent.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': address_invoice_parent.state_id and address_invoice_parent.state_id.name and address_invoice_parent.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': address_invoice_parent.country_id and address_invoice_parent.country_id.name and address_invoice_parent.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
@@ -785,10 +785,10 @@ class account_invoice(osv.osv):
                 },
                 'ExpedidoEn': {
                     'calle': address_invoice.street and address_invoice.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': address_invoice.street3 and address_invoice.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
-                    'noInterior': address_invoice.street4 and address_invoice.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
+                    'noExterior': address_invoice.l10n_mx_street3 and address_invoice.l10n_mx_street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
+                    'noInterior': address_invoice.l10n_mx_street4 and address_invoice.l10n_mx_street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
                     'colonia':  address_invoice.street2 and address_invoice.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A' ,
-                    'localidad': address_invoice.city2 and address_invoice.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                    'localidad': address_invoice.l10n_mx_city2 and address_invoice.l10n_mx_city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
                     'municipio': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': address_invoice.state_id and address_invoice.state_id.name and address_invoice.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': address_invoice.country_id and address_invoice.country_id.name and address_invoice.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
@@ -814,10 +814,10 @@ class account_invoice(osv.osv):
                 'nombre': (invoice.partner_id.name or ''),
                 'Domicilio': {
                     'calle': address_invoice.street and address_invoice.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': address_invoice.street3 and address_invoice.street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
-                    'noInterior': address_invoice.street4 and address_invoice.street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
+                    'noExterior': address_invoice.l10n_mx_street3 and address_invoice.l10n_mx_street3.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Exterior"
+                    'noInterior': address_invoice.l10n_mx_street4 and address_invoice.l10n_mx_street4.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A', #"Numero Interior"
                     'colonia':  address_invoice.street2 and address_invoice.street2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A' ,
-                    'localidad': address_invoice.city2 and address_invoice.city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                    'localidad': address_invoice.l10n_mx_city2 and address_invoice.l10n_mx_city2.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or 'N/A',
                     'municipio': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': address_invoice.state_id and address_invoice.state_id.name and address_invoice.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': address_invoice.country_id and address_invoice.country_id.name and address_invoice.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',

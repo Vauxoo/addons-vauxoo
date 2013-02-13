@@ -41,14 +41,14 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
 
     _columns = {
-        'street3': fields.char('Street3', size=128),
-        'street4': fields.char('Street4', size=128),
-        'city2': fields.char('City2', size=128),
+        'l10n_mx_street3': fields.char('Street3', size=128),
+        'l10n_mx_street4': fields.char('Street4', size=128),
+        'l10n_mx_city2': fields.char('City2', size=128),
     }
     
     def _get_address_field(self):
         res = super(res_partner, self)._get_address_field()
-        res.extend(['street3','street4','city2'])
+        res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
         return res
     
     def _get_default_country_id(self, cr, uid, context=None):
@@ -64,7 +64,7 @@ class res_partner(osv.osv):
         fmt = user_obj.browse(cr, SUPERUSER_ID, uid, context).company_id.country_id
         fmt = fmt and fmt.address_format
         layouts = {
-            '%(street3)s\n%(street4)s\n%(city2)s': """
+            '%(l10n_mx_street3)s\n%(l10n_mx_street4)s\n%(l10n_mx_city2)s': """
                     <group>
                         <group>
                             <label for="type" attrs="{'invisible': [('parent_id','=', False)]}"/>
@@ -80,14 +80,14 @@ class res_partner(osv.osv):
                             <div>
                                 <field name="street" placeholder="Street..."/>
                                 <field name="street2"/>
-                                <field name="street3" placeholder="Street3..."/>
-                                <field name="street4" placeholder="Street4..."/>
+                                <field name="l10n_mx_street3" placeholder="Street3..."/>
+                                <field name="l10n_mx_street4" placeholder="Street4..."/>
                                 <div class="address_format">
                                     <field name="city" placeholder="City" style="width: 40%%"/>
                                     <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
                                     <field name="zip" placeholder="ZIP" style="width: 20%%"/>
                                 </div>
-                                <field name="city2" placeholder="City2"/>
+                                <field name="l10n_mx_city2" placeholder="City2"/>
                                 <field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True}'/>
                             </div>
                             <field name="website" widget="url" placeholder="e.g. www.openerp.com"/>
@@ -121,7 +121,7 @@ class res_partner(osv.osv):
             view_id = self.pool.get('ir.model.data').get_object_reference(cr, user, 'base', 'view_partner_simple_form')[1]
         res = super(res_partner,self).fields_view_get(cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
-            fields_get = self.fields_get(cr, user, ['street3','street4','city2'], context)
+            fields_get = self.fields_get(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
             res['fields'].update(fields_get)
         return res
     
