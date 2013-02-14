@@ -108,6 +108,7 @@ class wizard_report_variation(osv.osv_memory):
             datas.setdefault('child_finished', datas2 and datas2[0].get('finished_dict') or [])
             datas.setdefault('child_consumed', datas2 and datas2[0].get('query_dict') or [])
             
+            ids = data_tuple[1] #for some reason, we need to overwrite the ids from the wizard with the productions ones
             return {
                 'type': 'ir.actions.report.xml',
                 'report_name': 'webkitmrp.production_variation_group',
@@ -167,7 +168,7 @@ GROUP BY product_id
                 finished_variation.append((finished_data.name, line[1], finished_data.uom_id.name, line[2]))
 
         report_datas = {
-            'ids': ids,
+            'ids': production_ids,
             'model': 'wizard.report.variation',
             'form': data,
             'uid': uid,
