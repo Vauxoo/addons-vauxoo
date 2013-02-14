@@ -90,12 +90,12 @@
         <font size="15"></font>
         <table>
             <tr>
-                <td class="address" width="1100">
+                <td class="address" width="80%">
                     <div>
                         <table class="table_cliente">
                             <tr>
-                                <td width="10%" class="cliente"><font class="font"><b>Receptor:</b></font></td>
-                                <td width="58%" class="cliente"><font class="font">${o.partner_id.name or ''|entity}</font></td>
+                                <td width="11%" class="cliente"><font class="font"><b>Receptor:</b></font></td>
+                                <td width="57%" class="cliente"><font class="font">${o.partner_id.name or ''|entity}</font></td>
                                 <td width="9%" class="cliente"><font class="font"><b>R. F. C.:</b></font></td>
                                 <td width="23%" class="cliente"><font class="font"><b>${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['vat'] or ''|entity}</b></font></td>
                             </tr>
@@ -104,8 +104,8 @@
                     </div>
                         <table class="table_cliente" style="border-collapse:collapse">
                             <tr>
-                                <td width="10%" class="cliente"><font class="font"><b>Calle:</b></font></td>
-                                <td width="58%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street'] or ''|entity}</font></td>
+                                <td width="11%" class="cliente"><font class="font"><b>Calle:</b></font></td>
+                                <td width="57%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street'] or ''|entity}</font></td>
                                 %if get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street3']:
                                     <td width="9%" class="cliente"><font class="font"><b>No. Ext:</b></font></td>
                                     <td width="8%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street3'] or ''|entity}</font></td>
@@ -120,20 +120,20 @@
                     <div>
                         <table class="table_cliente">
                             <tr>
-                                <td width="10%" class="cliente"><font class="font"><b>Colonia:</b></font></td>
-                                <td width="30%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street2'] or ''|entity}</font></td>
+                                <td width="11%" class="cliente"><font class="font"><b>Colonia:</b></font></td>
+                                <td width="29%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['street2'] or ''|entity}</font></td>
                                 <td width="10%" class="cliente"><font class="font"><b>C.P.:</b></font></td>
                                 <td width="18%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['zip'] or ''|entity}</font></td>
-                                <td width="9%" class="cliente"><font class="font"><b>Localidad:</b></font></td>
-                                <td width="23%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['city2'] or ''|entity}</font></td>
+                                <td width="12%" class="cliente"><font class="font"><b>Localidad:</b></font></td>
+                                <td width="20%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['city2'] or ''|entity}</font></td>
                             </tr>
                         </table>
                     </div>
                     <div>
                         <table class="table_cliente">
                             <tr>
-                                <td width="10%" class="cliente"><font class="font"><b>Ciudad:</b></font></td>
-                                <td width="30%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['city'] or ''|entity}</font></td>
+                                <td width="11%" class="cliente"><font class="font"><b>Ciudad:</b></font></td>
+                                <td width="29%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['city'] or ''|entity}</font></td>
                                 <td width="10%" class="cliente"><font class="font"><b>Estado:</b></font></td>
                                 <td width="18%" class="cliente"><font class="font">${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['state'] or ''|entity}</font></td>
                                 <td width="9%" class="cliente"><font class="font"><b>Pais:</b></font></td>
@@ -144,8 +144,8 @@
                     <div>
                         <table class="table_cliente">
                             <tr>
-                                <td width="10%" class="cliente"><font class="font"><b>Telefono(s):</b></font></td>
-                                <td width="58%" class="cliente"><font class="font">
+                                <td width="13%" class="cliente"><font class="font"><b>Telefono(s):</b></font></td>
+                                <td width="55%" class="cliente"><font class="font">
                                    ${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['phone'] or ''|entity}
                                    ${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['fax'] and ',' or ''|entity} ${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['fax'] or ''|entity}
                                    ${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['mobile'] and ',' or ''|entity} ${get_data_partner(o.partner_id) and get_data_partner(o.partner_id)['mobile'] or ''|entity}</font>
@@ -155,9 +155,8 @@
                         </table>
                     </div>
                 </td>
-                <td width="10"></td>
-                <td width="10"></td>
-                <td width="280" align="center">
+                <td width="1%"></td>
+                <td width="19%" align="center">
                     %if o.address_issued_id:
                         <font class="font">${o.address_issued_id.city or ''|entity}<font/>
                         , <font class="font">${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}</font>
@@ -360,26 +359,24 @@
             </table>
         %endif
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
-            <div style="page-break-before:always;">
-                <table frame="box" rules="all" width="100%">
-                    <tr>
-                        <td width="17%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}
-                        </td>
-                        <td valign="top" align="left" width="63%">
-                            <div><font class="facturae"><b>Sello Digital Emisor:</b></font>
-                            <p class="cadena">${split_string( o.sello ) or ''|entity}</p></div>
-                            <div><font class="facturae"><b>Sello Digital SAT:</b></font>
-                            <p class="cadena">${split_string( o.cfdi_sello or '') or ''|entity}</p></div>
-                            <font class="facturae"><b>Cadena original:</b></font>
-                            <br/><p class="cadena">${split_string(o.cfdi_cadena_original) or ''|entity}</p>
-                        </td>
-                        <td width="20%" valign="top" align="center">
-                            ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <table frame="box" rules="all" width="100%">
+                <tr>
+                    <td width="17%" valign="top" align="center">
+                        ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}
+                    </td>
+                    <td valign="top" align="left" width="63%">
+                        <div><font class="facturae"><b>Sello Digital Emisor:</b></font>
+                        <p class="cadena">${split_string( o.sello ) or ''|entity}</p></div>
+                        <div><font class="facturae"><b>Sello Digital SAT:</b></font>
+                        <p class="cadena">${split_string( o.cfdi_sello or '') or ''|entity}</p></div>
+                        <font class="facturae"><b>Cadena original:</b></font>
+                        <br/><p class="cadena">${split_string(o.cfdi_cadena_original) or ''|entity}</p>
+                    </td>
+                    <td width="20%" valign="top" align="center">
+                        ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}
+                    </td>
+                </tr>
+            </table>
         %endif
     %endfor
 </body>

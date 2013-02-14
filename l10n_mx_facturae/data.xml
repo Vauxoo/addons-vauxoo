@@ -161,12 +161,10 @@ font-size: 8pt;
 background-color: #c0c0c0;
 }
 
-
 .data_bank{
 text-align: center;
 font-size: 8pt;
 }
-
 
 .border_separator{
 border-right: solid 1.5px #e6e6e6;
@@ -185,7 +183,7 @@ font-size: 6pt;
 }
 
 .cadena_cfd{
-width:90em; 
+width:68em; 
 word-wrap:break-word;
 font-family:Arial,Helvetica,sans-serif;
 font-size: 6pt;
