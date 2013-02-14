@@ -38,8 +38,8 @@
         
         <%
         production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
-            ('product_id', 'in', data['form']['product_ids']), ('date_planned', '>', data['form']['date_start']), \
-            ('date_planned', '<', data['form']['date_finished']), ('company_id', '=', company_id)])
+            ('product_id', 'in', data['form']['product_ids']), ('date_finished', '>', data['form']['date_start']), \
+            ('date_finished', '<', data['form']['date_finished']), ('company_id', '=', company_id)])
         cr.execute("""
 SELECT mrp_variation_finished_product.product_id, mrp_production.name ,standard_price * quantity AS mul, name_template FROM mrp_variation_finished_product
 INNER JOIN mrp_production

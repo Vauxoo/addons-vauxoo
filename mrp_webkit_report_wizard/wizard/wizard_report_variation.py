@@ -74,7 +74,7 @@ class wizard_report_variation(osv.osv_memory):
             context = {}
         data = self.read(cr, uid, ids)[0]
         if data.get('type') == 'single':
-            myids = self.pool.get('mrp.production').search(cr, uid, [('product_id', 'in', data.get('product_ids')),('date_planned', '>', data.get('date_start')),('date_planned', '<', data.get('date_finished')),('state', '<>', 'cancel')])
+            myids = self.pool.get('mrp.production').search(cr, uid, [('product_id', 'in', data.get('product_ids')),('date_finished', '>', data.get('date_start')),('date_finished', '<', data.get('date_finished')),('state', '<>', 'cancel')])
             if not myids:
                 raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
             
@@ -127,8 +127,8 @@ class wizard_report_variation(osv.osv_memory):
             prod_ids = child_dict
         mrp_obj = self.pool.get('mrp.production')
         production_ids = mrp_obj.search(cr, uid , [('state', 'not in', ('draft', 'cancel')), \
-        ('product_id', 'in', prod_ids), ('date_planned', '>', data.get('date_start')), \
-        ('date_planned', '<', data.get('date_finished')), ('company_id', '=', company_id)])
+        ('product_id', 'in', prod_ids), ('date_finished', '>', data.get('date_start')), \
+        ('date_finished', '<', data.get('date_finished')), ('company_id', '=', company_id)])
         if not production_ids:
             raise osv.except_osv(_('Advice'), _('There is no production orders for the products you selected in the range of dates you specified.'))
 

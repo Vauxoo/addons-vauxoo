@@ -36,7 +36,7 @@
                     <tr>
                         <td class="basic_td"><b>${prod.name or ''|entity} - ${prod.product_id.name |entity}</td>
                         <td class="basic_td">${prod.product_qty or ''|entity}</td>
-                        <td class="basic_td">${prod.date_planned or ''|entity}</td>
+                        <td class="basic_td">${prod.date_finished or ''|entity}</td>
                         <td class="basic_td">${prod.product_uom.name or ''|entity}</td>
                     </tr>
                 </table>
@@ -183,7 +183,7 @@
                             <td class="basic_td"><b>--</td>
                             <td class="basic_td"><b>${superps.name or ''|entity} - ${superps.product_id.name |entity}</td>
                             <td class="basic_td">${superps.product_qty or ''|entity}</td>
-                            <td class="basic_td">${superps.date_planned or ''|entity}</td>
+                            <td class="basic_td">${superps.date_finished or ''|entity}</td>
                             <td class="basic_td">${superps.product_uom.name or ''|entity}</td>
                         </tr>
                     %endfor
@@ -209,7 +209,7 @@
                             <td class="basic_td"><b>--</td>
                             <td class="basic_td"><b>${subps.name or ''|entity} - ${subps.product_id.name |entity}</td>
                             <td class="basic_td">${subps.product_qty or ''|entity}</td>
-                            <td class="basic_td">${subps.date_planned or ''|entity}</td>
+                            <td class="basic_td">${subps.date_finished or ''|entity}</td>
                             <td class="basic_td">${subps.product_uom.name or ''|entity}</td>
                         </tr>
                     %endfor
