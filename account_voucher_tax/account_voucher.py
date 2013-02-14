@@ -94,13 +94,13 @@ class account_voucher(osv.osv):
                     if company_currency!=current_currency:
                         move_line['amount_currency']=line_tax.amount_tax
                     move_line_obj.create(cr ,uid, move_line, context=context)
-                    if line_tax.diff_amount_tax:
-                        context['date']=line.move_line_id.date
-                        amount=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.original_tax)), round=False, context=context)
-                        if credit:
-                            credit=amount
-                        else:
-                            debit=amount
+                    #~ if line_tax.diff_amount_tax:
+                    context['date']=line.move_line_id.date
+                    amount=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.original_tax)), round=False, context=context)
+                    if credit:
+                        credit=amount
+                    else:
+                        debit=amount
                     credit, debit=debit, credit
 
                     move_line={
