@@ -2,35 +2,60 @@
 <openerp>
     <data noupdate="1">
         <record id="ir_header_webkit_facturae" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        <table style="border-top: 1px solid black; width: 100%">
+            <tr >
+                <td style="text-align:right;font-size:12;" width="75%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
+            </tr>
+            <tr >
+                <td style="text-align:right;font-size:12;" width="75%">Reporte Impreso en OpenERP con Webkit - Vauxoo</td>
+            </tr>
+        </table>
+    </body>
+</html>]]></field>
             <field name="orientation">Portrait</field>
             <field name="format">Letter</field>
-            <field name="html">
-                <![CDATA[<html>
-                    <head>
-                        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
-                        <script>
-                            function subst() {
-                            var vars={};
-                            var x=document.location.search.substring(1).split('&');
-                            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-                            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-                            for(var i in x) {
-                            var y = document.getElementsByClassName(x[i]);
-                            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-                                }
-                            }
-                        </script>
-                        <style type="text/css">
-                            ${css}
-                        </style>
-                    </head>
-                    <body style="border:0; margin: 0;" onload="subst()">
-                        ${_debug or ''|n} </body>
-                </html>]]>
-            </field>
+            <field name="html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+        <style type="text/css">
+            ${css}
+        </style>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        ${_debug or ''|n} </body>
+</html>]]>
+</field>
             <field eval="0.0" name="margin_top"/>
-            <field name="css" >
-                <![CDATA[
+            <field name="css" ><![CDATA[
 td.td_data_exp
 {
 text-align:center
@@ -60,7 +85,7 @@ font-size: 10pt;
 .invoice{
 color: red;
 text-align: right;
-font-size: 20pt;
+font-size: 16pt;
 }
 .refund{
 color: red;
@@ -136,12 +161,10 @@ font-size: 8pt;
 background-color: #c0c0c0;
 }
 
-
 .data_bank{
 text-align: center;
 font-size: 8pt;
 }
-
 
 .border_separator{
 border-right: solid 1.5px #e6e6e6;
@@ -153,20 +176,19 @@ color: #280099;
 }
 
 p.cadena{
-width:60em; 
+width:47em; 
 word-wrap:break-word;
 font-family:Arial,Helvetica,sans-serif;
 font-size: 6pt;
 }
 
 .cadena_cfd{
-width:90em; 
+width:68em; 
 word-wrap:break-word;
 font-family:Arial,Helvetica,sans-serif;
 font-size: 6pt;
 }
-                    ]]> 
-            </field>
+]]> </field>
             <field name="name">Facturae</field>
         </record>
         <record id="ir_header_img_companylogo0" model="ir.header_img">
