@@ -249,7 +249,7 @@ class ir_attachment_facturae_mx(osv.osv):
         email_settings = self.pool.get('l10n.mx.email.config.settings')
         cr.execute(""" select max(id) as email_tmp_id from l10n_mx_email_config_settings """)
         dat = cr.dictfetchall()
-        email_tmp_id = email_settings.browse(cr, uid, dat[0]['email_tmp_id']).name
+        email_tmp_id = email_settings.browse(cr, uid, dat[0]['email_tmp_id']).email_tmp_id
         return email_tmp_id and email_tmp_id.id or False
     
 ir_attachment_facturae_mx()

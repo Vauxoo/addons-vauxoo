@@ -30,7 +30,6 @@
     "depends" : ['base'                                             ,
                  'stock'                                            ,
                  'product'                                          ,
-                 'l10n_mx_stock_count'                              ,
                 ]                                                   ,
     "author" : "Vauxoo"                                  ,
     "description" : """
