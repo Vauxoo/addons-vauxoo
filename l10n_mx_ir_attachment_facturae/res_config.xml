@@ -18,8 +18,8 @@
                         <div>
                             <div>
                                 <span class="oe_separate-from-text">
-                                    <label for="name"/>
-                                    <field name="name" class="oe_inline"/>
+                                    <label for="email_tmp_id"/>
+                                    <field name="email_tmp_id" class="oe_inline"/>
                                 </span>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
             <field name="target">inline</field>
         </record>
 
-        <menuitem id="menu_purchase_config" name="l10n_mx Email Template" parent="base.menu_config" action="action_email_template_configuration"/>
+        <menuitem id="menu_email_template_config" name="l10n_mx Email Template" parent="base.menu_config" action="action_email_template_configuration"/>
 
     </data>
 </openerp>
