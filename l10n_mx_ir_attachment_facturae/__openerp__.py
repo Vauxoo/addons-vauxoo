@@ -40,6 +40,7 @@
         "l10n_mx_facturae_workflow.xml",
         "invoice_view.xml",
         "l10n_mx_facturae_mail_server_data.xml",
+        "res_config.xml",
     ],
     "installable" : True,
     "active" : False,
