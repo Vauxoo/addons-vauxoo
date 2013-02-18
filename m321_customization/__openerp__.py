@@ -44,6 +44,7 @@
         'wizard/cancel_order_view.xml',
         'wizard/cost_automatically_view.xml',
         'wizard/supplier_asigner_view.xml',
+        'wizard/product_warranty_view.xml',
         'sale_workflow.xml',
     ],
     'demo' : [],
