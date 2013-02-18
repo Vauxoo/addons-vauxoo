@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <record id="wizard_product_warranty" model="ir.ui.view">
+      <field name="name">product.warranty.wizard.form</field>
+      <field name="model">product.warranty</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+        <form string="Product warranty">
+            <field name="name"  width="280"/>
+            <field name="clean" />
+            <button name="warranty_execute" string="Confirm" type="object" />
+        </form>
+      </field>
+    </record>
+    
+    
+    <act_window name = 'Product  Warranty'
+            src_model = 'product.product'
+  res_model = 'product.warranty'
+  id='product_warranty_records_wizard_action' view_mode='form,tree' view_type="form" target='new' key2='client_action_multi'/>
+    
+  </data>
+</openerp>
