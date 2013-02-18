@@ -87,7 +87,7 @@ def conv_ascii(text):
             try:
                 text = text.replace(old, new)
             except:
-                raise osv.except_osv(_('Warning !'), 'No se pudo re-codificar la cadena [%s] en la letra [%s]'%(text, old) )
+                raise osv.except_osv(_('Warning !'), _('No se pudo re-codificar la cadena [%s] en la letra [%s]')%(text, old) )
     return text
 
 #Cambiar el error
@@ -162,7 +162,7 @@ class account_invoice(osv.osv):
                                                                  'code=%s',
                                                                  context=tmp_context)
                 if not number:
-                    raise osv.except_osv('Warning !', 'No hay una secuencia de folios bien definida. !')
+                    raise osv.except_osv(_('Warning !'), _('No hay una secuencia de folios bien definida. !'))
                 if invtype in ('in_invoice', 'in_refund'):
                     ref = reference
                 else:
@@ -306,14 +306,14 @@ class account_invoice(osv.osv):
                 try:
                     fname_cer_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.cer.pem')
                 except:
-                    raise osv.except_osv('Error !', 'No se ha capturado un archivo CERTIFICADO en formato PEM, en la company!')
+                    raise osv.except_osv(_('Error !'), _('No se ha capturado un archivo CERTIFICADO en formato PEM, en la company!'))
                 file_globals['fname_cer'] = fname_cer_pem
 
                 fname_key_pem = False
                 try:
                     fname_key_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_key_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.key.pem')
                 except:
-                    raise osv.except_osv('Error !', 'No se ha capturado un archivo KEY en formato PEM, en la company!')
+                    raise osv.except_osv(_('Error !'), _('No se ha capturado un archivo KEY en formato PEM, en la company!'))
                 file_globals['fname_key'] = fname_key_pem
 
                 fname_cer_no_pem = False
@@ -346,14 +346,14 @@ class account_invoice(osv.osv):
                             file_globals['fname_xslt'] = my_path and os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' ) or ''
                             break
                 if not file_globals.get('fname_xslt', False):
-                    raise osv.except_osv('Warning !', 'No se ha definido fname_xslt. !')
+                    raise osv.except_osv(_('Warning !'), _('No se ha definido fname_xslt. !'))
 
                 if not os.path.isfile(file_globals.get('fname_xslt', ' ')):
-                    raise osv.except_osv('Warning !', 'No existe el archivo [%s]. !'%(file_globals.get('fname_xslt', ' ')))
+                    raise osv.except_osv(_('Warning !'), _('No existe el archivo [%s]. !')%(file_globals.get('fname_xslt', ' ')))
 
                 file_globals['serial_number'] = certificate_id.serial_number
             else:
-                raise osv.except_osv('Warning !', 'Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!'%(msg2))
+                raise osv.except_osv(_('Warning !'), _('Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!')%(msg2))
         return file_globals
 
     def _____________get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
@@ -503,9 +503,9 @@ class account_invoice(osv.osv):
                         #'noCertificado': "30001000000100000800",
                     }
                 else:
-                    raise osv.except_osv(u'Warning !', u'La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !'%(sequence_id, msg2))
+                    raise osv.except_osv(_('Warning !'), _('La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !')%(sequence_id, msg2))
             else:
-                raise osv.except_osv(u'Warning !', u'No se encontro un sequence de configuracion. %s !'%(msg2))
+                raise osv.except_osv(_('Warning !'), _('No se encontro un sequence de configuracion. %s !')%(msg2))
         return folio_data
 
     def _dict_iteritems_sort(self, data_dict):#cr=False, uid=False, ids=[], context={}):
@@ -595,7 +595,7 @@ class account_invoice(osv.osv):
         context.update( { 'fecha': data_dict['Comprobante']['fecha'] } )
         sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
         if not sign_str:
-            raise osv.except_osv('Error en Sello !', 'No se pudo generar el sello del comprobante.\nVerifique su configuracion.\ns%s'%(msg2))
+            raise osv.except_osv(_('Error en Sello !'), _('No se pudo generar el sello del comprobante.\nVerifique su configuracion.\ns%s')%(msg2))
 
         nodeComprobante = doc_xml.getElementsByTagName("Comprobante")[0]
         nodeComprobante.setAttribute("sello", sign_str)
@@ -603,13 +603,13 @@ class account_invoice(osv.osv):
 
         noCertificado = self._get_noCertificado( context['fname_cer'] )
         if not noCertificado:
-            raise osv.except_osv('Error en No Certificado !', 'No se pudo obtener el No de Certificado del comprobante.\nVerifique su configuracion.\n%s'%(msg2))
+            raise osv.except_osv(_('Error en No Certificado !'), _('No se pudo obtener el No de Certificado del comprobante.\nVerifique su configuracion.\n%s')%(msg2))
         nodeComprobante.setAttribute("noCertificado", noCertificado)
         data_dict['Comprobante']['noCertificado'] = noCertificado
 
         cert_str = self._get_certificate_str( context['fname_cer'] )
         if not cert_str:
-            raise osv.except_osv('Error en Certificado!', 'No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s'%(msg2))
+            raise osv.except_osv(_('Error en Certificado!'), _('No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s')%(msg2))
         cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
@@ -712,7 +712,7 @@ class account_invoice(osv.osv):
             elif invoice.type == 'out_refund':
                 tipoComprobante = 'egreso'
             else:
-                raise osv.except_osv('Warning !', 'Solo se puede emitir factura electronica a clientes.!')
+                raise osv.except_osv(_('Warning !'), _('Solo se puede emitir factura electronica a clientes.!'))
             #Inicia seccion: Comprobante
             invoice_data_parent['Comprobante'] = {}
             #default data
@@ -755,13 +755,13 @@ class account_invoice(osv.osv):
             address_invoice_parent = invoice.company_emitter_id and invoice.company_emitter_id.address_invoice_parent_company_id or False
             
             if not address_invoice:
-                raise osv.except_osv('Warning !', 'No se tiene definida la direccion emisora !')
+                raise osv.except_osv(_('Warning !'), _('No se tiene definida la direccion emisora !'))
                 
             if not address_invoice_parent:
-                raise osv.except_osv('Warning !', 'No se ha definido una compañia  !')
+                raise osv.except_osv(_('Warning !'), _('No se ha definido una compañia  !'))
 
             if not address_invoice_parent.vat:
-                raise osv.except_osv('Warning !', 'No se ha definido RFC para la direccion de factura de la compañia!')
+                raise osv.except_osv(_('Warning !'), _('No se ha definido RFC para la direccion de factura de la compañia!'))
             
             invoice_data = invoice_data_parent['Comprobante']
             invoice_data['Emisor'] = {}
@@ -798,7 +798,7 @@ class account_invoice(osv.osv):
             #Termina seccion: Emisor
             #Inicia seccion: Receptor
             if not invoice.partner_id.vat:
-                raise osv.except_osv('Warning !', 'No se tiene definido el RFC del partner [%s].\n%s !'%(invoice.partner_id.name, msg2))
+                raise osv.except_osv(_('Warning !'), ('No se tiene definido el RFC del partner [%s].\n%s !')%(invoice.partner_id.name, msg2))
             if invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat[0:2] <> 'MX':
                 rfc = 'XAXX010101000'
             else:
@@ -806,7 +806,7 @@ class account_invoice(osv.osv):
             
             address_invoice_id = partner_obj.search(cr, uid, [('parent_id', '=', invoice.partner_id.id), ('type', '=', 'invoice')])
             if not address_invoice_id:
-                raise osv.except_osv('Warning !', 'No se ha definido una dirección de factura para el cliente')
+                raise osv.except_osv(_('Warning !'), _('No se ha definido una dirección de factura para el cliente'))
             address_invoice = partner_obj.browse(cr, uid, address_invoice_id[0], context=context)
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
