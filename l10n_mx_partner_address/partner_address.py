@@ -41,9 +41,9 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
 
     _columns = {
-        'l10n_mx_street3': fields.char('Street3', size=128),
-        'l10n_mx_street4': fields.char('Street4', size=128),
-        'l10n_mx_city2': fields.char('City2', size=128),
+        'l10n_mx_street3': fields.char('No. Interior', size=128),
+        'l10n_mx_street4': fields.char('No. Exterior', size=128),
+        'l10n_mx_city2': fields.char('Localidad', size=128),
     }
     
     def _get_address_field(self):
@@ -80,14 +80,14 @@ class res_partner(osv.osv):
                             <div>
                                 <field name="street" placeholder="Street..."/>
                                 <field name="street2"/>
-                                <field name="l10n_mx_street3" placeholder="Street3..."/>
-                                <field name="l10n_mx_street4" placeholder="Street4..."/>
+                                <field name="l10n_mx_street3" placeholder="No. Interior..."/>
+                                <field name="l10n_mx_street4" placeholder="No. Exterior..."/>
                                 <div class="address_format">
                                     <field name="city" placeholder="City" style="width: 40%%"/>
                                     <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
                                     <field name="zip" placeholder="ZIP" style="width: 20%%"/>
                                 </div>
-                                <field name="l10n_mx_city2" placeholder="City2"/>
+                                <field name="l10n_mx_city2" placeholder="Localidad"/>
                                 <field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True}'/>
                             </div>
                             <field name="website" widget="url" placeholder="e.g. www.openerp.com"/>
