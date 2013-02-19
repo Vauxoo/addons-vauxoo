@@ -46,9 +46,21 @@ class res_partner(osv.osv):
         'l10n_mx_city2': fields.char('Localidad', size=128),
     }
     
-    def _get_address_field(self):
-        res = super(res_partner, self)._get_address_field()
+    def _get_display_address_field(self):
+        res = super(res_partner, self)._get_display_address_field()
         res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
+        return res
+
+    def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
+        
+        res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context=context)
+        def value_or_id(val):
+            """ return val or val.id if val is a browse record """
+            return val if isinstance(val, (bool, int, long, float, basestring)) else val.id
+
+        if use_parent_address and parent_id:
+            parent = self.browse(cr, uid, parent_id, context=context)
+            res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._get_display_address_field()))
         return res
     
     def _get_default_country_id(self, cr, uid, context=None):
