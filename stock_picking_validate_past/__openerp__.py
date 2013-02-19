@@ -31,7 +31,8 @@
     "website" : "http://www.vauxoo.com/",
     'depends': ['stock',],
     'description': """
-This module add the selection field "type_process_date", if its value = planned_date the field date_create takes the value from date_expected
+  This module add the selection field "type_process_date", if its value = planned_date the field date_create takes the value from date_expected.
+  It also writes the proper value on that field so it works correctly from the stock_inventory view
     """,
     'update_xml':[
         'stock_view.xml'],
