@@ -2,11 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: Luis Torres (luis_t@vauxoo.com)
+#              fernandoL (fernando_ld@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -33,9 +34,9 @@ class stock_move(osv.osv):
     
     _columns = {
         'type_process_date': fields.selection([
-            ('current_date','Current Date'),
-            ('planned_date','Planned Date'),
-        ], string='Type Process Date', readonly=True),
+            ('current_date', 'Current Date'),
+            ('planned_date', 'Planned Date'),
+        ], string = 'Type Process Date'),
     }
     
     _defaults = {
@@ -44,23 +45,23 @@ class stock_move(osv.osv):
     
     def action_confirm(self, cr, uid, ids, context=None):
         for id_move in ids:
-            move=self.browse(cr,uid,id_move)
-        res=super(stock_move,self).action_confirm(cr,uid,ids,context=context)
+            move = self.browse(cr, uid, id_move)
+        res = super(stock_move, self).action_confirm(cr, uid, ids, context=context)
         for id_move in ids:
-            move=self.browse(cr,uid,id_move)
-            type_pross_date=move.type_process_date
-            date_expect=move.date_expected
-            if type_pross_date=='planned_date':
+            move = self.browse(cr, uid, id_move)
+            type_pross_date = move.type_process_date
+            date_expect = move.date_expected
+            if type_pross_date == 'planned_date':
                 self.write(cr, uid, ids, {'create_date': date_expect})
         return res
         
     def action_done(self, cr, uid, ids, context=None):
-        res=super(stock_move,self).action_done(cr,uid,ids,context=context)
+        res = super(stock_move, self).action_done(cr, uid, ids, context=context)
         for id_move in ids:
-            move=self.browse(cr,uid,id_move)
-            type_pross_date=move.type_process_date
-            date_expect=move.date_expected
-            if type_pross_date=='planned_date':
+            move = self.browse(cr, uid, id_move)
+            type_pross_date = move.type_process_date
+            date_expect = move.date_expected
+            if type_pross_date == 'planned_date':
                 self.write(cr, uid, ids, {'date': date_expect})
         return res
     
@@ -70,13 +71,13 @@ class stock_inventory(osv.osv):
     
     _inherit = 'stock.inventory'
     
-    def action_done(self, cr, uid, ids, context=None):
+    def action_confirm(self, cr, uid, ids, context=None):
+        res = super(stock_inventory, self).action_confirm(cr, uid, ids, context=context)
         move_obj = self.pool.get('stock.move')
         for inv in self.browse(cr, uid, ids, context=context):
             for stk_move in inv.move_ids:
                 move_obj.write(cr, uid, stk_move.id, {'date_expected':stk_move.date, 'type_process_date': 'planned_date'}, context=context)
             
-        res=super(stock_inventory,self).action_done(cr,uid,ids,context=context)
         return res
     
 stock_inventory()
