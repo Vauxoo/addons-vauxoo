@@ -89,6 +89,7 @@ class ir_attachment_facturae_mx(osv.osv):
                 msj="Error XML CFD 2.2\n"
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '_V2_2.xml' or ''
+            print 'invoice', invoice
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
             attach=self.pool.get('ir.attachment').create(cr, uid, {
                 'name': fname_invoice,

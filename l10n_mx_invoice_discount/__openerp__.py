@@ -33,7 +33,7 @@
     "description" : """Add field discount to a partner and discount fields on invoice. It's apply discount in all lines when you press compute taxes button. Add discount and motive discount fields on xml(CFD and CFDI)""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["base","account","l10n_mx_facturae","l10n_mx_facturae_pac_sf"],
+    "depends" : ["l10n_mx_facturae_pac_sf"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["partner_view.xml",

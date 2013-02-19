@@ -30,11 +30,11 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add "Regimen Fiscal" to partner, it's used by l10n_mx_facturae_22 module
+    "description" : """Add "Regimen Fiscal" to partner, it's used by l10n_mx_facturae module
     """,
     "website" : "www.vauxoo.com",
     "license" : "AGPL-3",
-    "depends" : ["base",
+    "depends" : ["account",
         ],
     "init_xml" : [],
     "demo_xml" : [],

@@ -354,6 +354,18 @@ class account_invoice(osv.osv):
                 file_globals['serial_number'] = certificate_id.serial_number
             else:
                 raise osv.except_osv(_('Warning !'), _('Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!')%(msg2))
+                
+        date_invoice = self.browse(cr, uid,ids)[0].date_invoice
+        if date_invoice < '2012-07-01 00:00:00':
+            return file_globals
+        else:
+            #Search char "," for addons_path, now is multi-path
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir( os.path.join( my_path, 'l10n_mx_facturae', 'SAT' ) ):
+                    #If dir is in path, save it on real_path
+                    file_globals['fname_xslt'] = my_path and os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_2_l.xslt' ) or ''
+                    break
         return file_globals
 
     def _____________get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):
@@ -798,7 +810,7 @@ class account_invoice(osv.osv):
             #Termina seccion: Emisor
             #Inicia seccion: Receptor
             if not invoice.partner_id.vat:
-                raise osv.except_osv(_('Warning !'), ('No se tiene definido el RFC del partner [%s].\n%s !')%(invoice.partner_id.name, msg2))
+                raise osv.except_osv(_('Warning !'), _('No se tiene definido el RFC del partner [%s].\n%s !')%(invoice.partner_id.name, msg2))
             if invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat[0:2] <> 'MX':
                 rfc = 'XAXX010101000'
             else:
@@ -933,5 +945,43 @@ class account_invoice(osv.osv):
             #print "currency.rate",currency.rate
 
             invoice_data_parent['rate'] = rate
+            
+        date_invoice = invoice_data_parents[0].get('date_invoice',{}) and datetime.strptime( invoice_data_parents[0].get('date_invoice',{}), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') or False
+        if not date_invoice:
+            raise osv.except_osv(_('Fecha de Factura vacía'),_('No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía.'))
+        if date_invoice < '2012-07-01':
+            return invoice_data_parent
+        else:
+            invoice = self.browse(cr, uid, ids, context={'date':date_invoice})[0]
+            city = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('municipio', {}) or False
+            state = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('estado', {}) or False
+            country = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('pais', {}) or False
+            if city and state and country:
+                address = city +' '+ state +', '+ country
+            else:
+                raise osv.except_osv(_('Domicilio Incompleto!'),_('Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)'))
+            
+            if not invoice.company_emitter_id.partner_id.regimen_fiscal_id.name:
+                raise osv.except_osv(_('Regimen Fiscal Faltante!'),_('El Regimen Fiscal de la compañia emisora del comprobante fiscal es un dato requerido'))
+                
+            invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
+            invoice_data_parents[0]['Comprobante']['version'] = '2.2'
+            invoice_data_parents[0]['Comprobante']['TipoCambio'] = invoice.rate or 1
+            invoice_data_parents[0]['Comprobante']['Moneda'] = invoice.currency_id.name or ''
+            invoice_data_parents[0]['Comprobante']['NumCtaPago'] = invoice.acc_payment.last_acc_number or 'No identificado'
+            invoice_data_parents[0]['Comprobante']['metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
+            invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {'Regimen':invoice.company_emitter_id.partner_id.regimen_fiscal_id.name or ''}
+            invoice_data_parents[0]['Comprobante']['LugarExpedicion'] = address
         return invoice_data_parents
+        
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
+        partner_bank_obj = self.pool.get('res.partner.bank')
+        acc_partner_bank = False
+        if partner_id:
+            acc_partner_bank_ids = partner_bank_obj.search(cr, uid,[('partner_id', '=', partner_id)], limit = 1)
+            if acc_partner_bank_ids:
+                acc_partner_bank = acc_partner_bank_ids and partner_bank_obj.browse(cr, uid, acc_partner_bank_ids)[0] or False
+        res['value']['acc_payment'] = acc_partner_bank and acc_partner_bank.id or False
+        return res
 account_invoice()
