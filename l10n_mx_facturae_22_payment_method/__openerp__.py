@@ -30,7 +30,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add "Payment Method" to partner and invoice, it's used by l10n_mx_facturae_22 module
+    "description" : """Add "Payment Method" to partner and invoice, it's used by l10n_mx_facturae module
     """,
     "website" : "www.vauxoo.com",
     "license" : "AGPL-3",
