@@ -26,7 +26,7 @@
     "depends" : ["account"],
     "author" : "Vauxoo",
     "license" : "AGPL-3",
-    "description" : """This module add to the taxes category
+    "description" : """This module add to the taxes category & tax_percent
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
@@ -36,6 +36,7 @@
     "update_xml" : [
     'security/account_tax_category_security.xml',
     'security/ir.model.access.csv',
+    'invoice_view.xml',
     'account_tax_category_view.xml',
     ],
     "active": False,

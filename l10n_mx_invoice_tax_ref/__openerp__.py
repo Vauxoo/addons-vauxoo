@@ -41,7 +41,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        'invoice_view.xml',
+        ##'invoice_view.xml',
     ],
     "installable" : True,
     "active" : False,
