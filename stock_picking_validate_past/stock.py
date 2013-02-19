@@ -25,6 +25,7 @@
 #
 ##############################################################################
 from osv import fields, osv
+from tools.translate import _
 from lxml import etree
 
 
@@ -36,7 +37,7 @@ class stock_move(osv.osv):
         'type_process_date': fields.selection([
             ('current_date', 'Current Date'),
             ('planned_date', 'Planned Date'),
-        ], string = 'Type Process Date'),
+        ], string = 'Type Process Date', help = _("If Current date is selected, the move will be created with the server\'s current date. If Planned Date is selected, the move will be created with the date set on Scheduled date field.")),
     }
     
     _defaults = {

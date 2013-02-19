@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2013-02-19 17:18+0000\n"
-"PO-Revision-Date: 2013-02-19 11:29-0600\n"
+"POT-Creation-Date: 2013-02-19 18:08+0000\n"
+"PO-Revision-Date: 2013-02-19 12:10-0600\n"
 "Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,12 +41,19 @@ msgid "You try to assign a lot which is not from the same product"
 msgstr "Está intentando asignar un lote que no es del mismo producto"
 
 #. module: stock_picking_validate_past
-#: selection:stock.move,type_process_date:0
-msgid "Current Date"
-msgstr "Fecha actual (por defecto)"
-
-#. module: stock_picking_validate_past
 #: model:ir.model,name:stock_picking_validate_past.model_stock_inventory
 msgid "Inventory"
 msgstr "Inventario"
+
+#. module: stock_picking_validate_past
+#: code:addons/stock_picking_validate_past/stock.py:40
+#: help:stock.move,type_process_date:0
+#, python-format
+msgid "If Current date is selected, the move will be created with the server's current date. If Planned Date is selected, the move will be created with the date set on Scheduled date field."
+msgstr "Si fecha actual está seleccionado, el movimiento será creado con la fecha actual del servidor. Si fecha prevista esta seleccionado, el movimiento se creará con la fecha del campo fecha prevista."
+
+#. module: stock_picking_validate_past
+#: selection:stock.move,type_process_date:0
+msgid "Current Date"
+msgstr "Fecha actual (por defecto)"
 
