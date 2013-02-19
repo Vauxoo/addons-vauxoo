@@ -124,6 +124,8 @@ class ir_attachment_facturae_mx(osv.osv):
             msj += tools.ustr(res['msg']) + '\n'
             if res['status']=='500':
                 raise osv.except_osv(_('Warning'), _(res['msg']))
+            if res['status']=='301':
+                raise osv.except_osv(_('Warning'), _(res['msg']))
             data_attach = {
                     'name': fname_invoice,
                     'datas': base64.encodestring( res['cfdi_xml'] or '') or False,
@@ -133,7 +135,7 @@ class ir_attachment_facturae_mx(osv.osv):
                     'res_id': invoice.id,
                 }
             attach = attachment_obj.create(cr, uid, data_attach, context=context)
-        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
+        return self.write(cr, uid, ids, {'state': 'signed', 'file_xml_sign': attach, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
         aids=[]
