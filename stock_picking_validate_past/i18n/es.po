@@ -1,0 +1,59 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_validate_past
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.0.4\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2013-02-19 18:08+0000\n"
+"PO-Revision-Date: 2013-02-19 12:10-0600\n"
+"Last-Translator: fernando <fernando_ld@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_validate_past
+#: model:ir.model,name:stock_picking_validate_past.model_stock_move
+msgid "Stock Move"
+msgstr "Moviemiento de stock"
+
+#. module: stock_picking_validate_past
+#: field:stock.move,type_process_date:0
+msgid "Type Process Date"
+msgstr "Tipo de proceso de fecha"
+
+#. module: stock_picking_validate_past
+#: constraint:stock.move:0
+msgid "You must assign a production lot for this product"
+msgstr "Debe asignar un lote de producción para este producto"
+
+#. module: stock_picking_validate_past
+#: selection:stock.move,type_process_date:0
+msgid "Planned Date"
+msgstr "Fecha prevista"
+
+#. module: stock_picking_validate_past
+#: constraint:stock.move:0
+msgid "You try to assign a lot which is not from the same product"
+msgstr "Está intentando asignar un lote que no es del mismo producto"
+
+#. module: stock_picking_validate_past
+#: model:ir.model,name:stock_picking_validate_past.model_stock_inventory
+msgid "Inventory"
+msgstr "Inventario"
+
+#. module: stock_picking_validate_past
+#: code:addons/stock_picking_validate_past/stock.py:40
+#: help:stock.move,type_process_date:0
+#, python-format
+msgid "If Current date is selected, the move will be created with the server's current date. If Planned Date is selected, the move will be created with the date set on Scheduled date field."
+msgstr "Si fecha actual está seleccionado, el movimiento será creado con la fecha actual del servidor. Si fecha prevista esta seleccionado, el movimiento se creará con la fecha del campo fecha prevista."
+
+#. module: stock_picking_validate_past
+#: selection:stock.move,type_process_date:0
+msgid "Current Date"
+msgstr "Fecha actual (por defecto)"
+
