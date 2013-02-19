@@ -24,10 +24,9 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-import tools
-
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import pooler, tools
 import os
 import sys
 import time
@@ -60,14 +59,14 @@ if not os.path.isfile( app_openssl_fullpath ):
 app_xsltproc_fullpath = os.path.join( xsltproc_path, app_xsltproc )
 if not os.path.isfile( app_xsltproc_fullpath ):
     app_xsltproc_fullpath = tools.find_in_path( app_xsltproc )
-            
+
 
 #TODO: Validar que esta instalado openssl & xsltproc
 class facturae_certificate_library(osv.osv):
     _name = 'facturae.certificate.library'
     _auto = False
     #Agregar find subpath
-    
+
     def b64str_to_tempfile(self, b64_str="", file_suffix="", file_prefix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open( fname, 'wb' )
@@ -75,7 +74,7 @@ class facturae_certificate_library(osv.osv):
         f.close()
         os.close( fileno )
         return fname
-    
+
     def _read_file_attempts(self, file_obj, max_attempt=12, seconds_delay=0.5):
         fdata = False
         cont = 1
@@ -89,7 +88,7 @@ class facturae_certificate_library(osv.osv):
                 break
             cont += 1
         return fdata
-    
+
     def _transform_der_to_pem(self, fname_der, fname_out, fname_password_der=None, type_der='cer'):
         """"
         @type_der cer or key
@@ -97,10 +96,10 @@ class facturae_certificate_library(osv.osv):
         cmd = ''
         result = ''
         if type_der == 'cer':
-            cmd = '"%s" x509 -inform DER -outform PEM -in "%s" -pubkey -out "%s"'%( 
+            cmd = '"%s" x509 -inform DER -outform PEM -in "%s" -pubkey -out "%s"'%(
                 app_openssl_fullpath, fname_der, fname_out )
         elif type_der == 'key':
-            cmd = '"%s" pkcs8 -inform DER -outform PEM -in "%s" -passin file:%s -out "%s"'%( 
+            cmd = '"%s" pkcs8 -inform DER -outform PEM -in "%s" -passin file:%s -out "%s"'%(
                 app_openssl_fullpath, fname_der, fname_password_der, fname_out )
         if cmd:
             args = tuple( cmd.split(' ') )
@@ -110,12 +109,12 @@ class facturae_certificate_library(osv.osv):
             input.close()
             output.close()
         return result
-    
+
     def _get_param_serial(self, fname, fname_out=None, type='DER'):
         result = self._get_params(fname, params=['serial'], fname_out=fname_out, type=type)
         result = result and result.replace('serial=', '').replace('33', 'B').replace('3', '').replace('B', '3').replace(' ', '').replace('\r', '').replace('\n', '').replace('\r\n', '') or ''
         return result
-    
+
     def _transform_xml(self, fname_xml, fname_xslt, fname_out):
         cmd = '"%s" "%s" "%s" >"%s"'%(app_xsltproc_fullpath, fname_xslt, fname_xml, fname_out )
         args = tuple( cmd.split(' ') )
@@ -124,7 +123,7 @@ class facturae_certificate_library(osv.osv):
         input.close()
         output.close()
         return result
-    
+
     def _get_param_dates(self, fname, fname_out=None, date_fmt_return='%Y-%m-%d %H:%M:%S', type='DER'):
         result_dict = self._get_params_dict(fname, params=['dates'], fname_out=fname_out, type=type)
         translate_key = {
@@ -140,7 +139,7 @@ class facturae_certificate_library(osv.osv):
                 date_fmt = time.strftime(date_fmt_return, date_obj)
                 result2[ translate_key[key] ] = date_fmt
         return result2
-    
+
     def _get_params_dict(self, fname, params=None, fname_out=None, type='DER'):
         result = self._get_params(fname, params, fname_out, type)
         result = result.replace('\r\n', '\n').replace('\r', '\n')#.replace('\n', '\n)
@@ -160,7 +159,7 @@ class facturae_certificate_library(osv.osv):
         """
         cmd_params = ' -'.join(params)
         cmd_params = cmd_params and '-' + cmd_params or ''
-        cmd = '"%s" x509 -inform "%s" -in "%s" -noout "%s" -out "%s"'%( 
+        cmd = '"%s" x509 -inform "%s" -in "%s" -noout "%s" -out "%s"'%(
             app_openssl_fullpath, type, fname, cmd_params, fname_out )
         args = tuple( cmd.split(' ') )
         #input, output = tools.exec_command_pipe(*args)
@@ -169,7 +168,7 @@ class facturae_certificate_library(osv.osv):
         input.close()
         output.close()
         return result
-    
+
     def _sign(self, fname, fname_xslt, fname_key, fname_out, encrypt='sha1', type_key='PEM'):
         result = ""
         cmd = ''
@@ -185,7 +184,7 @@ class facturae_certificate_library(osv.osv):
             input.close()
             output.close()
         return result
-    
+
     #Funciones en desuso
     def binary2file(self, cr=False, uid=False, ids=[], binary_data=False, file_prefix="", file_suffix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)

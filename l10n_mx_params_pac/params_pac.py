@@ -26,9 +26,9 @@
 ##############################################################################
 
 import time
-from tools.translate import _
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
 
 class params_pac(osv.osv):
@@ -56,7 +56,7 @@ class params_pac(osv.osv):
         'active': 1,
         'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'params.pac', context=c),
         'sequence': 10,
-    
+
     }
 params_pac()
 

@@ -24,16 +24,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import pooler, tools
 import math
-import openerp
-from osv import osv, fields
 from openerp import SUPERUSER_ID
 import re
-import tools
-from tools.translate import _
 import logging
-import pooler
 import pytz
 from lxml import etree
 
@@ -45,12 +42,12 @@ class res_partner(osv.osv):
         'l10n_mx_street4': fields.char('Street4', size=128),
         'l10n_mx_city2': fields.char('City2', size=128),
     }
-    
+
     def _get_address_field(self):
         res = super(res_partner, self)._get_address_field()
         res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
         return res
-    
+
     def _get_default_country_id(self, cr, uid, context=None):
         country_obj = self.pool.get('res.country')
         #ids = country_obj.search(cr, uid, [ ( 'name', '=', 'México' ), ], limit=1)
@@ -124,7 +121,7 @@ class res_partner(osv.osv):
             fields_get = self.fields_get(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
             res['fields'].update(fields_get)
         return res
-    
+
     _defaults = {
         'country_id': _get_default_country_id,
     }

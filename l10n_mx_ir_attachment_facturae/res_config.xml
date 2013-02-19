@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    
+    <data>
+        <record id="view_email_tmplate_configuration" model="ir.ui.view">
+            <field name="name">l10n_mx Email Template settings</field>
+            <field name="model">l10n.mx.email.config.settings</field>
+            <field name="arch" type="xml">
+                <form string="Configure Email Template" class="oe_form_configuration" version="7.0">
+                    <header>
+                        <button string="Apply" type="object" name="execute" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header>
+                    <separator string="Email Template"/>
+                    <group>
+                        <label for="id" string="Email Template Settings"/>
+                        <div>
+                            <div>
+                                <span class="oe_separate-from-text">
+                                    <label for="email_tmp_id"/>
+                                    <field name="email_tmp_id" class="oe_inline"/>
+                                </span>
+                            </div>
+                        </div>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_email_template_configuration" model="ir.actions.act_window">
+            <field name="name">Configure Email Template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">l10n.mx.email.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem id="menu_email_template_config" name="l10n_mx Email Template" parent="base.menu_config" action="action_email_template_configuration"/>
+
+    </data>
+</openerp>
