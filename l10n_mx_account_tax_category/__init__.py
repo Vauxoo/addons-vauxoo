@@ -21,4 +21,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
+import invoice
 import account_tax_category
