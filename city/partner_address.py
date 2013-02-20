@@ -2,12 +2,12 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
-#              Isaac Lopez (isaac@vauxoo.com)
+#    Modify by: Juan Carlos Hernandez Funes (juan@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,24 +25,29 @@
 #
 ##############################################################################
 
-{
-    "name" : "l10n_mx_address",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates the city model similar to states model and adds the field city_id on res partner.
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
-            "base",
-        ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        'res_city_view.xml',
-        'partner_address_view.xml',
-    ],
-    "installable" : True,
-    "active" : False,
-}
+import math
+import openerp
+from osv import osv, fields
+from openerp import SUPERUSER_ID
+import re
+import tools
+from tools.translate import _
+import logging
+import pooler
+import pytz
+from lxml import etree
+
+class res_partner(osv.osv):
+    _inherit = 'res.partner'
+
+    _columns = {
+        'city_id': fields.many2one('res.country.state.city', 'City con id'),
+    }
+
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+        if (not view_id) and (view_type=='form') and context and context.get('force_email', False):
+            view_id = self.pool.get('ir.model.data').get_object_reference(cr, user, 'base', 'res_partner_form_city_01')[1]
+        res = super(res_partner,self).fields_view_get(cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
+        if view_type == 'form':
+            res['arch'] = self.fields_view_get_address(cr, user, res['arch'], context=context)
+        return res

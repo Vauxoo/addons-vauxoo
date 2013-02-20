@@ -3,7 +3,7 @@
     <data>
 
         <!--
-          Citie
+          City
         -->
 
         <record id="view_country_state_city_tree" model="ir.ui.view">

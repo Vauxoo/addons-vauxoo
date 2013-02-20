@@ -25,5 +25,5 @@
 #
 ##############################################################################
 
-#~ import partner_address
 import res_city
+import partner_address

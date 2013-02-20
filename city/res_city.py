@@ -43,8 +43,6 @@ class res_country_state_city(osv.osv):
         'name': fields.char('Name', size=64, required=True, select=True, help='Administrative divisions of a state.'),
         'state_id': fields.many2one('res.country.state', 'State',  required=True),
         'country_id': fields.related('state_id','country_id',type='many2one',relation='res.country',string='Country', store=True, readonly=True),
-        #~ 'company_id': fields.related('invoice_id','company_id',type='many2one',relation='res.company',string='Company', store=True, readonly=True),
-        #~ 'partner_id': fields.related('invoice_id','partner_id',type='many2one',relation='res.partner',string='Partner',store=True)
         'code': fields.char('City Code', size=5,
             help='The city code in max. five chars.'),
     }
