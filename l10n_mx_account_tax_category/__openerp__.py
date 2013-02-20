@@ -38,6 +38,8 @@
     'security/ir.model.access.csv',
     'invoice_view.xml',
     'account_tax_category_view.xml',
+    'data/account_tax_category_data.xml'
+
     ],
     "active": False,
     "installable": True,

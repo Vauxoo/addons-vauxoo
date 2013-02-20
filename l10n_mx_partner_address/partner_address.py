@@ -24,16 +24,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import pooler, tools
 import math
-import openerp
-from osv import osv, fields
 from openerp import SUPERUSER_ID
 import re
-import tools
-from tools.translate import _
 import logging
-import pooler
 import pytz
 from lxml import etree
 
@@ -52,7 +49,6 @@ class res_partner(osv.osv):
         return res
 
     def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
-        
         res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context=context)
         def value_or_id(val):
             """ return val or val.id if val is a browse record """
@@ -62,7 +58,7 @@ class res_partner(osv.osv):
             parent = self.browse(cr, uid, parent_id, context=context)
             res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._get_display_address_field()))
         return res
-    
+
     def _get_default_country_id(self, cr, uid, context=None):
         country_obj = self.pool.get('res.country')
         #ids = country_obj.search(cr, uid, [ ( 'name', '=', 'México' ), ], limit=1)
@@ -136,7 +132,7 @@ class res_partner(osv.osv):
             fields_get = self.fields_get(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
             res['fields'].update(fields_get)
         return res
-    
+
     _defaults = {
         'country_id': _get_default_country_id,
     }
