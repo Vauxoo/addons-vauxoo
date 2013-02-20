@@ -46,7 +46,7 @@ Requires the following programs:
             "l10n_mx_facturae_lib", #"l10n_mx_partner_address",
             "l10n_mx_facturae_cer",
             "l10n_mx_invoice_datetime",
-            "l10n_mx_invoice_tax_ref",
+            "l10n_mx_account_tax_category",
             "l10n_mx_facturae_seq",
             "l10n_mx_company_cif",
             "l10n_mx_partner_address",
