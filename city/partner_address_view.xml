@@ -8,10 +8,7 @@
             <field name="arch" type="xml">
                 
                 <xpath expr="//field[@name='country_id']" position="after">
-                    <field name="city_id" placeholder="Ciudad con id223333"/>
-<!--
-                    groups="l10n_mx_partner_address.group_address_mx"/>
--->
+                    <field name="city_id" placeholder="Ciudad"/>
                 </xpath>
             </field>
         </record>

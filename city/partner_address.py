@@ -51,3 +51,9 @@ class res_partner(osv.osv):
         if view_type == 'form':
             res['arch'] = self.fields_view_get_address(cr, user, res['arch'], context=context)
         return res
+
+    def onchange_city(self, cr, uid, ids, city_id, context=None):
+        if city_id:
+            city = self.pool.get('res.country.state.city').browse(cr, uid, city_id, context).name 
+            return {'value':{'city': city}}
+        return {}
