@@ -54,10 +54,8 @@ Requires the following programs:
             "l10n_mx_ir_attachment_facturae",
             "sale",
             "report_webkit",#no depende de "sale" directamente, pero marca error en algunas versiones
-            "l10n_mx_res_partner_bank_clabe",
             "l10n_mx_notes_invoice",
-            "l10n_mx_res_partner_bank_currency",
-            "l10n_mx_partner_bank_last_digits",
+            "l10n_mx_res_partner_bank",
             "l10n_mx_facturae_22_regimen_fiscal",
             "l10n_mx_payment_method",
             "l10n_mx_invoice_currency_chgdft",
