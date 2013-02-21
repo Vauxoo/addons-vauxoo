@@ -16,7 +16,7 @@ def add_node(node_name, attrs, parent_node, minidom_xml_obj, attrs_types,order=F
                 key_node.appendChild( text_node )
                 new_node.appendChild( key_node )
             elif attrs_types[key] == 'att_text':
-                new_node.setAttribute(key, 'name')
+                new_node.setAttribute('name', key)
                 text_node = minidom_xml_obj.createTextNode( attrs[key] )
                 
                 #~ key_node.appendChild( text_node )

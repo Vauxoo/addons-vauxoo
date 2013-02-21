@@ -3,41 +3,33 @@ import xml.etree.cElementTree as ET
 import os
 from crea_xml import add_node
 
-path = 'xml'
+data_path = 'data'
+source_path = 'source'
+file_source = 'l10n_mx_cities.xml'
 
-#~ tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/prueba_tree.xml')
+source_full_path = os.path.join(source_path, file_source)
+
+parser_states_codes={'01':'ags', '02':'bc','03':'bcs','04':'camp','05':'coah','06':'col' ,'07':'chis','08':'chih','09':'df','10':'dgo','11':'gto',
+'12':'gro','13':'hgo','14':'jal','15':'mex','16':'mich','17':'mor','18':'nay','19':'nl','20':'oax','21':'pue','22':'qro','23':'qr','24':'slp',
+'25':'sin','26':'son','27':'tab','28':'tamps','29':'talx','30':'ver','31':'yuc','32':'zac'}
+
+
 #~ tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/Guanajuato.xml')
-tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/CPdescarga.xml')
+#~ tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/CPdescarga.xml')
+tree = ET.ElementTree(file=source_full_path)
 
-
-print '--------tree.getroot()',tree.getroot()
 root = tree.getroot()
-print 'root.tag, root.attrib',root.tag, root.attrib
 
-#sin subhijos
-#~ for child_of_root in root:
-    #~ print child_of_root.tag, child_of_root.attrib
-#~ print 'antes del for'
-#directo a 
-#~ print 'root[1][3]',a.tag,'a.attrib',a.attrib,'a.text',a.text
-#~ for elem in tree2.iterfind('NewDataSet'):
-#~ for elem in tree.iterfind('branch/sub-branch'):
-    #~ print 'dentro del for'
-    #~ print 'isbn:', book.attrib['isbn']
-    #~ print elem.tag, elem.attrib, elem.text
 city = []
-print '-------------------------'
 doc2 = xml.dom.minidom.Document()
 openerp_node = doc2.createElement( 'openerp' )
 doc2.appendChild( openerp_node )
-print 'doc2',doc2
-print 'doc2 to xml',doc2.toxml('UTF-8')
 nodeComprobante2 = doc2.getElementsByTagName('openerp')[0]
-#~ print 'nodeComprobante2',nodeComprobante2
 nodeAddenda = add_node('data', {"noupdate":"True"}, nodeComprobante2, doc2, attrs_types={"noupdate":"attribute"})
 
+
 for elem in root[1:]: 
-    print 'el element sin text',elem[11],'con tag',elem[11].tag,'con text',elem[11].text
+    #~ print 'el element sin text',elem[11],'con tag',elem[11].tag,'con text',elem[11].text
     for a in elem:
         if a.tag == '{NewDataSet}c_mnpio':
             city_code = a.text and a.text or ''
@@ -49,10 +41,7 @@ for elem in root[1:]:
             state_code = a.text and a.text or ''
     
     if ciudad not in city:
-        #~ print 'element',elem[3].text
         city.append(ciudad)
-        #~ print 'despues de insertar en lista'
-        
         city_id = 'res_country_state_city_mx_'+state_code+'_'+city_code
         nodeDSCargaRemisionProv = add_node('record', {"id":city_id, "model":"res.country.state.city"}, nodeAddenda, doc2, attrs_types={"id":"attribute","model":"attribute"})
         nodeAddenda.appendChild(nodeDSCargaRemisionProv )
@@ -80,27 +69,20 @@ for elem in root[1:]:
         order = ['code' ]
         nodeRemision = add_node('field', nodeRemision_attrs, nodeDSCargaRemisionProv, doc2, nodeRemision_attrs_types,order)
         nodeDSCargaRemisionProv.appendChild( nodeRemision )
-        
-        nodeRemision_attrs = { "state_id": state,}
-        nodeRemision_attrs_types = { "state_id": 'att_text',}
-        order = ['state_id' ]
+                
+                
+        xml_id_states = 'l10n_mx_states.res_country_state_mx_'+parser_states_codes.get(state_code,'')
+        nodeRemision_attrs = { "name": 'state_id','ref': xml_id_states}
+        nodeRemision_attrs_types = { "name": 'attribute', "ref": "attribute",}
+        order = ['name','ref' ]
         nodeRemision = add_node('field', nodeRemision_attrs, nodeDSCargaRemisionProv, doc2, nodeRemision_attrs_types,order)
         nodeDSCargaRemisionProv.appendChild( nodeRemision )
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-print 'doc2 to xml',doc2.toxml('UTF-8')
-full_path = os.path.join(path, 'l10n_mx_cities.xml')
 
-f = open( full_path, 'wb' )
+print 'doc2 to xml',doc2.toxml('UTF-8')
+print 'xml generado con exito'
+data_full_path = os.path.join(data_path, 'l10n_mx_cities.xml')
+
+f = open( data_full_path, 'wb' )
 f.write(doc2.toxml('UTF-8'))
 f.close
