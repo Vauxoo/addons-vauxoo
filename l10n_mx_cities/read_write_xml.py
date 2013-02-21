@@ -20,6 +20,7 @@ print 'antes del for'
 #    print 'dentro del for'
  #   print elem.tag, elem.attrib, elem.text
 city = []
+
 for elem in root[1:]:
     ciudad = elem[3].text and elem[3].text or ''
     if ciudad not in city:
