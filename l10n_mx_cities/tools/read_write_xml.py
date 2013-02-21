@@ -1,10 +1,10 @@
 import xml.dom.minidom
 import xml.etree.cElementTree as ET
 import os
-from crea_xml import add_node
+from add_node import add_node
 
-data_path = 'data'
-source_path = 'source'
+data_path = '../data'
+source_path = '../source'
 file_source = 'l10n_mx_cities.xml'
 
 source_full_path = os.path.join(source_path, file_source)
