@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+        
+        <record id="stock.force_availability" model="res.groups">
+            <field name="name">Stock / Force Availability</field>
+        </record>
+        
+    </data>
+</openerp>
