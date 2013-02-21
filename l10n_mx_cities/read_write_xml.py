@@ -1,10 +1,13 @@
 import xml.dom.minidom
 import xml.etree.cElementTree as ET
+import os
 from crea_xml import add_node
 
+path = 'xml'
+
 #~ tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/prueba_tree.xml')
-tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/Guanajuato.xml')
-#~ tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/CPdescarga.xml')
+#~ tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/Guanajuato.xml')
+tree = ET.ElementTree(file='/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/wizard_xml_invoice/wizard/data/CPdescarga.xml')
 
 
 print '--------tree.getroot()',tree.getroot()
@@ -50,8 +53,8 @@ for elem in root[1:]:
         city.append(ciudad)
         #~ print 'despues de insertar en lista'
         
-        city_id = 'res_country_state_city_mx'+ciudad
-        nodeDSCargaRemisionProv = add_node('record', {"id":"city_id", "model":"res.country.state.city"}, nodeAddenda, doc2, attrs_types={"id":"attribute","model":"attribute"})
+        city_id = 'res_country_state_city_mx_'+state_code+'_'+city_code
+        nodeDSCargaRemisionProv = add_node('record', {"id":city_id, "model":"res.country.state.city"}, nodeAddenda, doc2, attrs_types={"id":"attribute","model":"attribute"})
         nodeAddenda.appendChild(nodeDSCargaRemisionProv )
         nodeRemision_attrs = {
             "name": "country_id",
@@ -96,4 +99,8 @@ for elem in root[1:]:
         
         
 print 'doc2 to xml',doc2.toxml('UTF-8')
-print 'listado de ciudades',city
+full_path = os.path.join(path, 'l10n_mx_cities.xml')
+
+f = open( full_path, 'wb' )
+f.write(doc2.toxml('UTF-8'))
+f.close
