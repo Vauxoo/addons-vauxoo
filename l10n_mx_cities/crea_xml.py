@@ -1,17 +1,6 @@
 import sys
 import xml.etree.cElementTree as ET
 import xml.dom.minidom
-#~ tree.write(sys.stdout)
-
-#~ a = ET.Element('elem')
-#~ c = ET.SubElement(a, 'child1')
-#~ c.text = "some text"
-#~ d = ET.SubElement(a, 'child2')
-#~ b = ET.Element('elem_b')
-#~ root = ET.Element('root')
-#~ root.extend((a, b))
-#~ tree = ET.ElementTree(root)
-#~ tree.write(sys.stdout)
 
 def add_node(node_name, attrs, parent_node, minidom_xml_obj, attrs_types,order=False):
         if not order:
@@ -37,8 +26,6 @@ def add_node(node_name, attrs, parent_node, minidom_xml_obj, attrs_types,order=F
         #~ print 'new_node',new_node
         return new_node
 
-#~ xml_inv=base64.decodestring( '/home/yzaack/instancias/7/addons_all/addons-mx-7-dev-julio-data-city/l10n_mx_cities/data/prueba_tree.xml' )
-#~ xml_2=xml_inv.replace(codecs.BOM_UTF8,'').replace('\n', '').replace('\r', '').replace('\r\n', '')
 
 doc2 = xml.dom.minidom.Document()
 openerp_node = doc2.createElement( 'openerp' )
@@ -49,7 +36,7 @@ nodeComprobante2 = doc2.getElementsByTagName('openerp')[0]
 #~ print 'nodeComprobante2',nodeComprobante2
 nodeAddenda = add_node('data', {"noupdate":"True"}, nodeComprobante2, doc2, attrs_types={"noupdate":"attribute"})
 
-nodeDSCargaRemisionProv = add_node('record', {"id":"base.mx", "model":"res.country"}, nodeAddenda, doc2, attrs_types={"id":"attribute","model":"attribute"})
+nodeDSCargaRemisionProv = add_node('record', {"id":"res_country_state_mx_ags", "model":"res.country.state"}, nodeAddenda, doc2, attrs_types={"id":"attribute","model":"attribute"})
 nodeAddenda.appendChild(nodeDSCargaRemisionProv )
 nodeRemision_attrs = {
     "name": "country_id",
@@ -64,20 +51,17 @@ order = ['name', 'ref', ]
 nodeRemision = add_node('field', nodeRemision_attrs, nodeDSCargaRemisionProv, doc2, nodeRemision_attrs_types,order)
 nodeDSCargaRemisionProv.appendChild( nodeRemision )
                 
-nodeRemision_attrs = {
-    "name": "agruas",
-    #~ "name2": "aguas",
-}
-nodeRemision_attrs_types = {
-    "name": 'att_text',
-    #~ "name2": 'textNode',
-}
+nodeRemision_attrs = { "name": "aguascalientes",}
+nodeRemision_attrs_types = { "name": 'att_text',}
 order = ['name' ]
-
 nodeRemision = add_node('field', nodeRemision_attrs, nodeDSCargaRemisionProv, doc2, nodeRemision_attrs_types,order)
 nodeDSCargaRemisionProv.appendChild( nodeRemision )
 
-
+nodeRemision_attrs = { "code": "AGS",}
+nodeRemision_attrs_types = { "code": 'att_text',}
+order = ['code' ]
+nodeRemision = add_node('field', nodeRemision_attrs, nodeDSCargaRemisionProv, doc2, nodeRemision_attrs_types,order)
+nodeDSCargaRemisionProv.appendChild( nodeRemision )
 
 
 print 'doc2 to xml',doc2.toxml('UTF-8')
