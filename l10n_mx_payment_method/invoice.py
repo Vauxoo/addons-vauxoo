@@ -25,8 +25,7 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+from osv import osv, fields
 import tools
 import time
 from xml.dom import minidom
@@ -55,5 +54,6 @@ class account_invoice(osv.osv):
 
     _columns = {
         'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', readonly=True, states={'draft':[('readonly',False)]}, help = 'Indica la forma en que se pagó o se pagará la factura, donde las opciones pueden ser: cheque, transferencia bancaria, depósito en cuenta bancaria, tarjeta de crédito, efectivo etc. Si no se sabe como va ser pagada la factura, dejarlo vacío y en el xml aparecerá “No identificado”.'),
+        'acc_payment': fields.many2one ('res.partner.bank', 'Numero de cuenta', readonly=True, states={'draft':[('readonly',False)]},help = 'Es la cuenta con la que el cliente pagará la factura, si no se sabe con cual cuenta se va pagar dejarlo vacío y en el xml aparecerá "No identificado".'),
     }
 account_invoice()

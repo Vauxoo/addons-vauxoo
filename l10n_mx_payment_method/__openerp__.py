@@ -26,11 +26,11 @@
 ##############################################################################
 
 {
-    "name" : "Agregado del método de pago al partner y a la factura",
+    "name" : "Agregado del método de pago al partner y a la factura, además del Número de Cuenta",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add "Payment Method" to partner and invoice, it's used by l10n_mx_facturae module
+    "description" : """Add "Payment Method" to partner and invoice, it's used by l10n_mx_facturae module and "acc_payment" to invoice
     """,
     "website" : "www.vauxoo.com",
     "license" : "AGPL-3",
