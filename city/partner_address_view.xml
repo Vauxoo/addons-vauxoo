@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 
                 <xpath expr="//field[@name='country_id']" position="after">
-                    <field name="city_id" placeholder="Ciudad"/>
+                    <field name="city_id" on_change="onchange_city(city_id)"  placeholder="Ciudad"/>
                 </xpath>
             </field>
         </record>

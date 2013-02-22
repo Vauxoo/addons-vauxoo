@@ -55,6 +55,6 @@ class res_partner(osv.osv):
 
     def onchange_city(self, cr, uid, ids, city_id, context=None):
         if city_id:
-            city = self.pool.get('res.country.state.city').browse(cr, uid, city_id, context).name 
-            return {'value':{'city': city}}
+            city = self.pool.get('res.country.state.city').browse(cr, uid, city_id, context)
+            return {'value':{'city': city.name, 'state_id':city.state_id.id, 'country_id':city.country_id and city.country_id.id or False }}
         return {}
