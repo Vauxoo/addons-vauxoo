@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!--
+          City
+        -->
+
+        <record id="view_country_state_city_tree" model="ir.ui.view">
+            <field name="name">res.country.state.city.tree</field>
+            <field name="model">res.country.state.city</field>
+            <field name="arch" type="xml">
+                <tree string="City">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state_id"/>
+                    <field name="country_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_country_state_city_form" model="ir.ui.view">
+            <field name="name">res.country.state.city.form</field>
+            <field name="model">res.country.state.city</field>
+            <field name="arch" type="xml">
+                <form string="State" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="state_id" options='{"no_open": True}'/>
+                        <field name="country_id" options='{"no_open": True}'/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_country_state_city" model="ir.actions.act_window">
+            <field name="name">Cities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.country.state.city</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_country_state_city_tree"/>
+        </record>
+
+          <menuitem action="action_country_state_city" id="menu_country_state_city_partner" parent="base.menu_localisation" sequence="1" groups="base.group_no_one"/>
+    </data>
+</openerp>

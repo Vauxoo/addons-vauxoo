@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record  model="ir.ui.view" id="res_partner_form_city_01">
+            <field name="name">res.partner.form_city_01</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                
+                <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="city_id" placeholder="Ciudad"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+
