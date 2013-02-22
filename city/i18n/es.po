@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-22 16:04+0000\n"
-"PO-Revision-Date: 2013-02-22 10:07-0600\n"
+"POT-Creation-Date: 2013-02-22 16:20+0000\n"
+"PO-Revision-Date: 2013-02-22 10:21-0600\n"
 "Last-Translator: Isaac Lopez <isaac@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,11 +32,6 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: city
-#: model:ir.actions.act_window,help:city.action_country_state_city
-msgid "This module adds the field city_id in partner."
-msgstr "Agrega el campo city_id en el partner"
-
-#. module: city
 #: model:ir.model,name:city.model_res_country_state_city
 msgid "Country state city"
 msgstr "Pais-estado-ciudad"
@@ -55,7 +50,7 @@ msgstr "Código de Ciudad"
 #: view:res.country.state.city:0
 #: field:res.country.state.city,state_id:0
 msgid "State"
-msgstr "EStado"
+msgstr "Estado"
 
 #. module: city
 #: help:res.country.state.city,code:0
