@@ -7,6 +7,7 @@
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
+#              Julio Serna (julio@vauxoo.com)
 #              Isaac Lopez (isaac@vauxoo.com)
 ############################################################################
 #

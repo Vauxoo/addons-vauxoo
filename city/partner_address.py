@@ -7,7 +7,8 @@
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
 #    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Modify by: Juan Carlos Hernandez Funes (juan@vauxoo.com)
+#              Julio Serna (julio@vauxoo.com)
+#              Isaac Lopez (isaac@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -41,7 +42,7 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
 
     _columns = {
-        'city_id': fields.many2one('res.country.state.city', 'City con id'),
+        'city_id': fields.many2one('res.country.state.city', 'City'),
     }
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
