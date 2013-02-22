@@ -6,7 +6,10 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: Luis Torres (luis@vauxoo.com)
+#    Coded by: Juan Carlos Funes (juan@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: isaac (isaac@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,5 +26,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import fields, osv
 
-import last_digits
+class res_partner_bank(osv.osv):
+    _inherit = 'res.partner.bank'
+    
+    def _get_take_digits(self, cr, uid, ids, field, args, context=None):
+        result = {}
+        res=''
+        n=-1
+        for last in self.browse(cr, uid, ids, context=context):
+            for digit in last.acc_number[::-1]:
+                if(digit.isdigit()==True) and len(res)<4:
+                    res = digit+res
+            result[last.id]=res
+        return result
+
+    _columns = {
+        'clabe': fields.char('Clabe Interbancaria',size=64, required=False),
+        'last_acc_number': fields.function(_get_take_digits,method=True, type='char', string="Ultimos 4 digitos", size=4, store=True ),
+        'currency2_id': fields.many2one('res.currency', 'Currency',),
+    }
+res_partner_bank()

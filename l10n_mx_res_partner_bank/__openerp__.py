@@ -6,6 +6,8 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
+#    Coded by: Juan Carlos Funes (juan@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 #    Coded by: moylop260 (moylop260@vauxoo.com)
 #    Coded by: isaac (isaac@vauxoo.com)
 ############################################################################
@@ -24,5 +26,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import res_bank
+{
+    "name" : "Agregado de Moneda, Clabe Interbancaria y los Ultimos Cuatro Dígitos de la Cuenta a res.partner.bank",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """This module add currency, field clabe interbancaria & the last 4 digits of the account to model res.partner.bank
+    """,
+    "website" : "www.vauxoo.com",
+    "license" : "AGPL-3",
+    "depends" : ["account"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : ["res_bank_view.xml",],
+    "installable" : True,
+    "active" : False,
+}
