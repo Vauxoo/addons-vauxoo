@@ -30,6 +30,35 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
     
     def _get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
+        data2 = super(account_invoice, self)._get_facturae_invoice_dict_data(cr, uid, ids, context=context)
+        data = data2
+        comprobante = data[0]['Comprobante']
+        rfc = comprobante['Emisor']['rfc']
+        nombre = comprobante['Emisor']['nombre']
+        dom_Fiscal = comprobante['Emisor']['DomicilioFiscal']
+        exp_en = comprobante['Emisor']['ExpedidoEn']
+        reg_Fiscal = comprobante['Emisor']['RegimenFiscal']
+        rfc_receptor = comprobante['Receptor']['rfc']
+        nombre_receptor = comprobante['Receptor']['nombre']
+        domicilio_receptor = comprobante['Receptor']['Domicilio']
+        totalImpuestosTrasladados = comprobante['Impuestos']['totalImpuestosTrasladados']
+        dict_cfdi_comprobante = {}
+        dict_cfdi_comprobante.update({
+            'cfdi:Comprobante' : {
+            'cfdi:Emisor' : {'rfc' : rfc, 'nombre' : nombre, 'cfdi:DomicilioFiscal' : dom_Fiscal, 'cfdi:ExpedidoEn' : exp_en, 'cfdi:RegimenFiscal' : reg_Fiscal},
+            'cfdi:Receptor' : {'rfc' : rfc_receptor, 'nombre' : nombre_receptor, 'cfdi:Domicilio' : domicilio_receptor},
+            'cfdi:Conceptos' : [],
+            'cfdi:Impuestos' : {'totalImpuestosTrasladados' : totalImpuestosTrasladados, 'cfdi:Traslados' : []},
+        }})
+        for concepto in comprobante['Conceptos']:
+            dict_cfdi_comprobante['cfdi:Comprobante']['cfdi:Conceptos'].append(dict({'cfdi:Concepto' : concepto['Concepto']}))
+        for traslado in comprobante['Impuestos']['Traslados']:
+            dict_cfdi_comprobante['cfdi:Comprobante']['cfdi:Impuestos']['cfdi:Traslados'].append(dict({'cfdi:Traslado' : traslado['Traslado']}))
+        print 'data2', data2
+        print 'dict_cfdi_comprobante', dict_cfdi_comprobante
+        return data2
+    
+    def ______get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):
         invoices = self.browse(cr, uid, ids, context=context)
         invoice_tax_obj = self.pool.get("account.invoice.tax")
         invoice_datas = []
@@ -279,7 +308,7 @@ class account_invoice(osv.osv):
         
         return invoice_data_parents
         
-    def _get_facturae_invoice_xml_data(self, cr, uid, ids, context={}):
+    def _______________get_facturae_invoice_xml_data(self, cr, uid, ids, context={}):
         if not context:
             context = {}
         data_dict = self._get_facturae_invoice_dict_data(cr, uid, ids, context=context)[0]
