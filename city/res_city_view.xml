@@ -40,7 +40,7 @@
             <field name="res_model">res.country.state.city</field>
             <field name="view_type">form</field>
             <field name="view_id" ref="view_country_state_city_tree"/>
-            <field name="help">If you are working on the American market, you can manage the different federal states you are working on from here. Each state is attached to one country.</field>
+            <field name="help">This module adds the field city_id in partner.</field>
         </record>
 
           <menuitem action="action_country_state_city" id="menu_country_state_city_partner" parent="base.menu_localisation" sequence="1" groups="base.group_no_one"/>

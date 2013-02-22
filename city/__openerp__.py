@@ -27,7 +27,7 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_address",
+    "name" : "City",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
