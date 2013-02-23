@@ -24,7 +24,7 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 import base64
-import addons
+from openerp import addons
 
 
 class facturae_config(osv.osv_memory):
