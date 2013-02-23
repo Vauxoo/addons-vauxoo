@@ -25,9 +25,10 @@
 #
 ##############################################################################
 
-import pooler
-import base64
+from openerp import pooler
 from openerp.tools.translate import _
+
+import base64
 import time
 
 _form = """<?xml version="1.0"?>

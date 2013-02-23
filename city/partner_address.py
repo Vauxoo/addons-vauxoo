@@ -29,12 +29,11 @@
 import math
 from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
-from openerp import tools
+from openerp import tools, pooler
 from openerp.tools.translate import _
 
 import re
 import logging
-import pooler
 import pytz
 from lxml import etree
 
