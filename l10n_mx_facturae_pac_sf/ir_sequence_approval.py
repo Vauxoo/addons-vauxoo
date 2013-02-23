@@ -25,8 +25,7 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+from openerp.osv import fields, osv
 
 class ir_sequence_approval(osv.osv):
     _inherit = 'ir.sequence.approval'

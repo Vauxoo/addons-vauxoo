@@ -34,7 +34,6 @@ import base64
 import hashlib
 import tempfile
 import netsvc
-from tools.translate import _
 import codecs
 import release
 from datetime import datetime

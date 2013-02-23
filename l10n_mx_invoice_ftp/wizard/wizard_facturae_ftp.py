@@ -24,9 +24,11 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+
 import netsvc
-import pooler
 import time
 import base64
 import StringIO

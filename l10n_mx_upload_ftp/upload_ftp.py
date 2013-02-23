@@ -30,13 +30,15 @@ import os
 from operator import itemgetter
 import tempfile
 import netsvc
-from osv import fields, osv
 import base64
+
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+
 from tools.misc import currency
-from tools.translate import _
-import pooler
-import release
-from tools import config
+from openerp import release
+from openerp.tools import config
 
 
 class ir_attachment(osv.osv):

@@ -26,12 +26,13 @@
 #
 ##############################################################################
 
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+
 import base64
-import netsvc
-from tools.translate import _
 import time
-from osv import osv, fields
+
 
 class wizard_invoice_facturae_xml_v6(osv.osv_memory):
     _name = 'wizard.invoice.facturae.xml.v6'

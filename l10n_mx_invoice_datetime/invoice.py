@@ -25,14 +25,14 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-import tools
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp import release
+
 import time
 import os
-import release
 
 class account_payment_term(osv.osv):
     _inherit = "account.payment.term"

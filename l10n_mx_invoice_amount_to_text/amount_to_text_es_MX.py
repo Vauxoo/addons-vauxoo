@@ -25,6 +25,9 @@
 #
 ##############################################################################
 
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
+
 class amount_to_text:
     """
     Transforma de una cantidad numerica a cantidad en letra

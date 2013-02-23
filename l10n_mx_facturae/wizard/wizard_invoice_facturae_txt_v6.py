@@ -26,13 +26,13 @@
 #
 ##############################################################################
 
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+
 #~ import wizard
 import base64
-import netsvc
-from tools.translate import _
 import time
-from osv import osv, fields
 import datetime
 from dateutil.relativedelta import relativedelta
 

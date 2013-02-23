@@ -25,9 +25,11 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-import tools
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+
 import time
 from xml.dom import minidom
 import os
@@ -35,8 +37,6 @@ import base64
 import hashlib
 import tempfile
 import os
-import netsvc
-from tools.translate import _
 import codecs
 import release
 from datetime import datetime

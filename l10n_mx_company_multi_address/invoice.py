@@ -23,8 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields
-from osv import osv
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'

@@ -26,9 +26,12 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-import netsvc
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp.tools.misc import ustr
+
 import time
 import base64
 import StringIO
@@ -37,7 +40,6 @@ import tempfile
 import os
 import sys
 import codecs
-from tools.misc import ustr
 try:
     from SOAPpy import WSDL
 except:

@@ -24,9 +24,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
-from openerp import pooler, tools
+from openerp.osv import fields, osv
+from openerp import tools
+
 import os
 import sys
 import time
@@ -70,7 +71,7 @@ class facturae_certificate_library(osv.osv):
     def b64str_to_tempfile(self, b64_str="", file_suffix="", file_prefix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open( fname, 'wb' )
-        f.write( base64.decodestring( b64_str ) )
+        f.write( base64.decodestring( b64_str or '' ) )
         f.close()
         os.close( fileno )
         return fname

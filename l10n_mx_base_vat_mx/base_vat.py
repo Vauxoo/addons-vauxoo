@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.misc import ustr
+
 import re
-from tools.misc import ustr
 import datetime
 
 class res_partner(osv.osv):

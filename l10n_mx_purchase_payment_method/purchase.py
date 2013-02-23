@@ -23,8 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import osv, fields
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
 class purchase_order(osv.osv):
     _inherit = 'purchase.order'

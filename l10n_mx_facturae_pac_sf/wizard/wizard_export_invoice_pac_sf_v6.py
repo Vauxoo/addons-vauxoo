@@ -26,7 +26,11 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp.tools.misc import ustr
+
 import netsvc
 import pooler
 import time
@@ -39,9 +43,7 @@ import sys
 import codecs
 import xml.dom.minidom
 from datetime import datetime, timedelta
-from tools.misc import ustr
 import time
-from openerp.tools.translate import _
 
 
 class wizard_export_invoice_pac_sf_v6(osv.osv_memory):

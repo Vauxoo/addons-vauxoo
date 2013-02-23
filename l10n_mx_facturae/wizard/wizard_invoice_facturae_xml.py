@@ -27,8 +27,7 @@
 
 import pooler
 import base64
-import netsvc
-from tools.translate import _
+from openerp.tools.translate import _
 import time
 
 _form = """<?xml version="1.0"?>

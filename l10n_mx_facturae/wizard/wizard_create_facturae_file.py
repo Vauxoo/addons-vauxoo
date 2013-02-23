@@ -24,12 +24,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
-import pooler
 import wizard
 import base64
 import netsvc
-from tools.translate import _
 import time
 
 _form = """<?xml version="1.0"?>
