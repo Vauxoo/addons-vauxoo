@@ -61,7 +61,7 @@ for elem in root[1:]:
             state = a.text and a.text or ''
         if a.tag == '{NewDataSet}c_estado':
             state_code = a.text and a.text or ''
-    city_state = city+state
+    city_state = city_code+state_code
     if city_state not in cities:
         cities.append(city_state)
         city_id = 'res_country_state_city_mx_'+state_code+'_'+city_code
