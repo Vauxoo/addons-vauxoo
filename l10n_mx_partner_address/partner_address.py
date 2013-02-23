@@ -71,6 +71,11 @@ class res_partner(osv.osv):
         user_obj = self.pool.get('res.users')
         fmt = user_obj.browse(cr, SUPERUSER_ID, uid, context).company_id.country_id
         fmt = fmt and fmt.address_format
+        city = '<field name="city" placeholder="City" style="width: 40%%"/>'
+        for name, field in self._columns.items():
+            if name == 'city_id':
+                city = '<field name="city" modifiers="{&quot;invisible&quot;: true}" placeholder="City....." style="width: 50%%"/><field name="city_id" on_change="onchange_city(city_id)" placeholder="City" style="width: 40%%"/>'
+                
         layouts = {
             '%(l10n_mx_street3)s\n%(l10n_mx_street4)s\n%(l10n_mx_city2)s': """
                     <group>
@@ -88,10 +93,10 @@ class res_partner(osv.osv):
                             <div>
                                 <field name="street" placeholder="Street..."/>
                                 <field name="street2"/>
-                                <field name="l10n_mx_street3" placeholder="No. Interior..."/>
+                                <field name="l10n_mx_street3" invisible="True" placeholder="No. Interior..."/>
                                 <field name="l10n_mx_street4" placeholder="No. Exterior..."/>
                                 <div class="address_format">
-                                    <field name="city" placeholder="City" style="width: 40%%"/>
+                                    %s
                                     <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
                                     <field name="zip" placeholder="ZIP" style="width: 20%%"/>
                                 </div>
@@ -111,7 +116,7 @@ class res_partner(osv.osv):
                                 options='{"no_open": True}' attrs="{'invisible': [('is_company','=', True)]}" />
                         </group>
                     </group>
-            """
+            """%(city)
         }
         for k,v in layouts.items():
             if fmt and (k in fmt):
