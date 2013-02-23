@@ -23,22 +23,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools, netsvc
+
+from openerp.tools.misc import currency
+from openerp import release
+from openerp.tools import config
 
 import ftplib
 import time
 import os
 from operator import itemgetter
 import tempfile
-import netsvc
 import base64
-
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
-from openerp import pooler, tools
-
-from tools.misc import currency
-from openerp import release
-from openerp.tools import config
 
 
 class ir_attachment(osv.osv):

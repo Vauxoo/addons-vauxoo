@@ -30,7 +30,6 @@ import time
 import tempfile
 import base64
 import os
-import tools
 
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'

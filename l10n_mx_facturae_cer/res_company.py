@@ -27,11 +27,10 @@
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from openerp import pooler, tools
-import tools
+from openerp import pooler, tools, release
+
 import os
 import time
-import release
 import tempfile
 import base64
 

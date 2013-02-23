@@ -18,7 +18,7 @@ import time
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import pooler, tools
-import release
+from openerp import release
 
 
 class stock_tracking(osv.osv):

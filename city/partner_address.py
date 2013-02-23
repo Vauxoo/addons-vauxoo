@@ -27,12 +27,12 @@
 ##############################################################################
 
 import math
-import openerp
-from osv import osv, fields
+from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
+from opeenrp import tools
+from openerp.tools.translate import _
+
 import re
-import tools
-from tools.translate import _
 import logging
 import pooler
 import pytz

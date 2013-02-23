@@ -28,7 +28,7 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import pooler, tools
-from openerp import netsvc
+from openerp import netsvc, release
 
 import time
 from xml.dom import minidom
@@ -38,7 +38,6 @@ import hashlib
 import tempfile
 import os
 import codecs
-import release
 from datetime import datetime
 import decimal_precision as dp
 

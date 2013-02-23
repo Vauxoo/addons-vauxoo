@@ -27,12 +27,12 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp import tools
+from openerp import netsvc
+from openerp.tools.misc import ustr
+import wizard
 
 import base64
 import xml.dom.minidom
-
-import wizard
-import netsvc
 import time
 import base64
 import StringIO
@@ -43,7 +43,7 @@ import sys
 import codecs
 import xml.dom.minidom
 from datetime import datetime, timedelta
-from openerp.tools.misc import ustr
+
 try:
     from SOAPpy import WSDL
 except:
