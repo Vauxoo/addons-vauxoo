@@ -29,7 +29,7 @@
 import math
 from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
-from openrp import tools
+from openerp import tools
 from openerp.tools.translate import _
 
 import re
