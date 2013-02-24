@@ -43,6 +43,8 @@
     "update_xml" : [
         'res_city_view.xml',
         'partner_address_view.xml',
+        'security/city_security.xml',
+        'security/ir.model.access.csv',
     ],
     "installable" : True,
     "active" : False,

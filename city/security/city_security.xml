@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="res.groups" id="group_res_country_state_city_manager">
+            <field name="name">City Manager</field>
+        </record>
+        
+    </data>
+</openerp>

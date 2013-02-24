@@ -38,8 +38,10 @@
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
-            "base","city","l10n_mx_states",
-        ],
+        "base",
+        "city",
+        "l10n_mx_states",
+    ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
