@@ -100,7 +100,7 @@ class account_invoice(osv.osv):
 
     def onchange_journal_id(self, cr, uid, ids, journal_id=False):
         result = super(account_invoice,self).onchange_journal_id(cr,uid,ids,journal_id)
-        address_id = self.pool.get('account.journal').browse(cr, uid, journal_id) or False
+        address_id = journal_id and self.pool.get('account.journal').browse(cr, uid, journal_id) or False
         if address_id and address_id.address_invoice_company_id:
             result['value'].update({'address_invoice_company_id': address_id.address_invoice_company_id.id})
         if address_id and address_id.company2_id:
@@ -108,46 +108,3 @@ class account_invoice(osv.osv):
         return result
         
 account_invoice()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
