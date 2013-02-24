@@ -769,7 +769,7 @@ class account_invoice(osv.osv):
                 raise osv.except_osv(_('Warning !'), _('No se tiene definida la direccion emisora !'))
                 
             if not address_invoice_parent:
-                raise osv.except_osv(_('Warning !'), _('No se ha definido una compañia  !'))
+                raise osv.except_osv(_('Warning !'), _('No se ha definido una dirección de facturación desde la compañia!'))
 
             if not address_invoice_parent.vat:
                 raise osv.except_osv(_('Warning !'), _('No se ha definido RFC para la direccion de factura de la compañia!'))
