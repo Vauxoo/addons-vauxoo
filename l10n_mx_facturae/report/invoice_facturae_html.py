@@ -25,9 +25,10 @@
 #
 ##############################################################################
 
-from report import report_sxw
-import pooler
-import tools
+from openerp.report import report_sxw
+from openerp import pooler
+from openerp import tools
+
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):

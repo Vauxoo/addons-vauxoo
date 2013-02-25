@@ -25,10 +25,9 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
-import release
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import release
 
 class ir_sequence_approval(osv.osv):
     _name = 'ir.sequence.approval'

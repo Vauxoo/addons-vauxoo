@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from osv import osv, fields
-from tools.translate import _
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'

@@ -25,10 +25,11 @@
 #
 ##############################################################################
 
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+
 import time
-from tools.translate import _
-from osv import fields, osv
-import pooler
 
 
 class pay_method(osv.osv):

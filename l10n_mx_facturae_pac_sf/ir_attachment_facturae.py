@@ -25,8 +25,8 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 class ir_attachment_facturae_mx(osv.osv):
     _inherit = 'ir.attachment.facturae.mx'

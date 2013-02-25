@@ -25,9 +25,9 @@
 #
 ##############################################################################
 
-from report import report_sxw
-import pooler
-import tools
+from openerp.report import report_sxw
+from openerp import pooler
+from openerp import tools
 #from amount_to_text_es import amount_to_text as amount_to_text_class
 
 #amount_to_text_obj = amount_to_text_class()

@@ -25,10 +25,9 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
-import release
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
+from openerp import tools, release
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'

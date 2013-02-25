@@ -15,10 +15,10 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 import time
-from osv import osv
-from osv import fields
-from tools.translate import _
-import release
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import release
 
 
 class stock_tracking(osv.osv):

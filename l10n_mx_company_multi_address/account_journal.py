@@ -24,8 +24,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields
-from osv import osv
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
 
 class account_journal(osv.osv):
     _inherit='account.journal'

@@ -25,11 +25,11 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-import tools
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+
 import time
 import os
 

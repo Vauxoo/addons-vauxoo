@@ -27,9 +27,11 @@
 ##############################################################################
 
 import time
-from tools.translate import _
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp import release
 
 
 class params_pac(osv.osv):

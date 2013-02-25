@@ -30,9 +30,9 @@
 #           La leyenda "Este comprobante tendrá una vigencia de dos años contados a partir de la fecha de aprobación de la asignación de folios, la cual es dd/mm/aaaa", misma que deberá ser impresa con letra no menor de 5 puntos.
 ##############################################################################
 
-from report import report_sxw
-import pooler
-import tools
+from openerp.report import report_sxw
+from openerp import pooler
+from openerp import tools
 import time
 #from amount_to_text_es import amount_to_text as amount_to_text_class
 

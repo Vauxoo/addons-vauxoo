@@ -20,7 +20,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-from osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
 
 class account_tax_category(osv.osv):
     _name='account.tax.category'

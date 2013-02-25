@@ -20,15 +20,16 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+from openerp.osv import fields, osv
 from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp import release
+
 import time
-from osv import fields, osv, orm
 import tempfile
 import base64
 import os
-import netsvc
-import tools
-import release
 
 class ir_attachment_facturae_mx(osv.osv):
     _name = 'ir.attachment.facturae.mx'
@@ -186,7 +187,10 @@ class ir_attachment_facturae_mx(osv.osv):
             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
             mssg['attachment_ids'] = [(6, 0, attachments)]
             mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
-            state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
+            print "mssg",mssg
+            print "mssg_id",mssg_id
+            state = "sin enviar email"
+            #state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
 #            mail=self.pool.get('mail.mail').create(cr, uid, {
  #               'subject': subject+' '+type,
   #              'email_from': email_from,

@@ -25,18 +25,20 @@
 #
 ##############################################################################
 
-from osv import osv, fields
-import tools
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
+from openerp import tools
+from openerp import netsvc
+from openerp import release
+
 import time
 from xml.dom import minidom
 import os
 import base64
 import hashlib
 import tempfile
-import netsvc
-from tools.translate import _
 import codecs
-import release
+
 from datetime import datetime
 
 class account_invoice(osv.osv):
