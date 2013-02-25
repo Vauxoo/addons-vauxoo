@@ -31,7 +31,7 @@
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """This module adds all Mexico's cities based in SEPOMEX
-    You can download the xml file from http://www.correosdemexico.gob.mx/ServiciosLinea/Paginas/DescargaCP.aspx, save it in source folder
+    You can download the xml file from http://www.correosdemexico.gob.mx/ServiciosLinea/Paginas/DescargaCP.aspx, save it in source folder with the name 'l10n_mx_cities.xml'
     and execute read_write_xml.py file for generate a xml compatible with OpenERP in the folder "data".
     When you install this module, OpenERP is going to import the cities from the xml file "data/l10n_mx_cities.xml"
     """,
