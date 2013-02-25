@@ -43,7 +43,7 @@ parser_states_codes={'01':'ags', '02':'bc','03':'bcs','04':'camp','05':'coah','0
 tree = ET.ElementTree(file=source_full_path)
 root = tree.getroot()
 
-city = []
+cities = []
 xml_doc = xml.dom.minidom.Document()
 openerp_node = xml_doc.createElement( 'openerp' )
 xml_doc.appendChild( openerp_node )
@@ -56,14 +56,14 @@ for elem in root[1:]:
         if a.tag == '{NewDataSet}c_mnpio':
             city_code = a.text and a.text or ''
         if a.tag == '{NewDataSet}D_mnpio':
-            ciudad = a.text and a.text or ''
+            city = a.text and a.text or ''
         if a.tag == '{NewDataSet}d_estado':
             state = a.text and a.text or ''
         if a.tag == '{NewDataSet}c_estado':
             state_code = a.text and a.text or ''
-    
-    if ciudad not in city:
-        city.append(ciudad)
+    city_state = city_code+state_code
+    if city_state not in cities:
+        cities.append(city_state)
         city_id = 'res_country_state_city_mx_'+state_code+'_'+city_code
         node_record = add_node('record', {"id":city_id, "model":"res.country.state.city"}, main_node, xml_doc, attrs_types={"id":"attribute","model":"attribute"})
         main_node.appendChild(node_record )
@@ -80,7 +80,7 @@ for elem in root[1:]:
         node_field = add_node('field', node_record_attrs, node_record, xml_doc, node_record_attrs_types,order)
         node_record.appendChild( node_field )
                         
-        node_city_attrs = { "name": ciudad,}
+        node_city_attrs = { "name": city,}
         node_city_attrs_types = { "name": 'att_text',}
         order = ['name' ]
         node_field_city = add_node('field', node_city_attrs, node_record, xml_doc, node_city_attrs_types,order)
