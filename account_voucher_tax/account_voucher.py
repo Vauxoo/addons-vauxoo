@@ -131,7 +131,8 @@ class account_voucher(osv.osv):
                         amount_diff=abs(credit_orig-credit_now)
                         debit_diff=0.0
                         if voucher.type=='payment':
-                            amount_diff, debit_diff= debit_diff, amount_diff
+                            if not credit_orig-credit_now < 0: 
+                                amount_diff, debit_diff= debit_diff, amount_diff
                             move_line={
                                 'journal_id': voucher.journal_id.id,
                                 'period_id': voucher.period_id.id,
@@ -150,7 +151,8 @@ class account_voucher(osv.osv):
                                 }
                             move_line_obj.create(cr ,uid, move_line, context=context)
                         else:
-                        #~ amount_diff, debit_diff= debit_diff, amount_diff
+                            if credit_orig-credit_now < 0:
+                                amount_diff, debit_diff= debit_diff, amount_diff
                             move_line={
                                 'journal_id': voucher.journal_id.id,
                                 'period_id': voucher.period_id.id,
@@ -399,7 +401,7 @@ class account_voucher(osv.osv):
                                     'voucher_line_id':line.id,
                                     'original_tax':base_amount_curr,
                                     'diff_account_id':diff_account_id,
-                                    'diff_amount_tax':diff_amount_tax
+                                    'diff_amount_tax':abs(diff_amount_tax)
                                     
                                 }
                                 tax_line_obj.create(cr, uid, tax_line, context=context)
