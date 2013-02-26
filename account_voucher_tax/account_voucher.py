@@ -354,7 +354,6 @@ class account_voucher(osv.osv):
                     invoice_ids=invoice_obj.search(cr,uid,[('move_id','=',line.move_line_id.move_id.id)],context=context)
                     for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
                         for tax in invoice.tax_line:
-                            print tax.tax_id.name,tax.tax_id.tax_voucher_ok
                             if tax.tax_id.tax_voucher_ok:
                                 base_amount=self.get_partial_amount_tax_pay(cr, uid, tax.tax_id.amount, tax.base, context=context)
                                 move_ids=[]
