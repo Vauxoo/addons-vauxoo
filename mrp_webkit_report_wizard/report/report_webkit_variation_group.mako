@@ -132,24 +132,28 @@ ORDER BY mul
                 <tr>
                     <td class="basic_td">${_("Variation in finished products / details")}</td>
                     <th class="basic_th">${_("Production name")} </th>
+                    <th class="basic_th">${_("Not consumed | Planned | Variation")} </th>
                     <th class="basic_th">${_("Variation price")} </th>
-                    <th class="basic_th">${_("Not consumed")} </th>
                 </tr>
                 
                 <%row_count=1%>
                 <%mrp_data = mrp_obj.browse(cr, uid, production_ids, this_context)%>
                 %for production in mrp_data:
                     <%
-                    total_produced = 0
+                    produced_qty = 0
+                    total_produced_dict = {}
                     if production.move_created_ids2:
                         for finished in production.move_created_ids2:
-                            if (finished.product_id.id == production.product_id.id and finished.state in ('done')):
-                                total_produced += product_uom_pool._compute_qty(cr, uid, finished.product_uom.id, finished.product_qty, to_uom_id=production.product_uom.id)
+                            if finished.state in ('done'):
+                                total_produced_dict.setdefault(finished.product_id.id, 0)
+                                produced_qty = product_uom_pool._compute_qty(cr, uid, finished.product_uom.id, finished.product_qty, to_uom_id=finished.product_id.uom_id.id)
+                                total_produced_dict.update({finished.product_id.id: total_produced_dict.get(finished.product_id.id) + produced_qty})
                     for subprods in production.subproduction_ids:
                         if subprods.move_lines2:
                             for consumed in subprods.move_lines2:
-                                if (consumed.product_id.id == production.product_id.id and consumed.state in ('done')):
-                                    total_produced -= product_uom_pool._compute_qty(cr, uid, consumed.product_uom.id, consumed.product_qty, to_uom_id=production.product_uom.id)
+                                if (total_produced_dict.has_key(consumed.product_id.id) and consumed.state in ('done')):
+                                    consumed_qty = product_uom_pool._compute_qty(cr, uid, consumed.product_uom.id, consumed.product_qty, to_uom_id=consumed.product_id.uom_id.id)
+                                    total_produced_dict.update({consumed.product_id.id: total_produced_dict.get(consumed.product_id.id) - consumed_qty})
                     %>
                     %for variation in production.variation_finished_product_ids:
                         %if variation.quantity:
@@ -165,8 +169,26 @@ ORDER BY mul
                                     %endif
                                 </td>
                                 <td class="basic_td"> ${production.name or ''|entity} </td>
+                                <td class="basic_td"> 
+                                    <table style="text-align:center; border-style:none; border-collapse: collapse; width:100%;">
+                                        <tr>
+                                            <td style="width:40%; border-style:none; text-align:right; font-family:helvetica; font-size:9; padding:2px max-height:15px;"> 
+                                                ${ formatLang(total_produced_dict.get(variation.product_id.id)) } ${variation.product_uom.name or ''|entity}
+                                            </td>
+                                            <td style="width:30%; border-style:none; text-align:right; font-family:helvetica; font-size:9; padding:2px max-height:15px;">  
+                                                %if (production.product_id.name == variation.product_id.name): 
+                                                    ${production.product_qty or '0.0'|entity} ${production.product_uom.name or ''|entity}
+                                                %else:
+                                                    ${_("NA")}
+                                                %endif
+                                            </td>
+                                            <td style="width:30%; border-style:none; text-align:right; font-family:helvetica; font-size:9; padding:2px max-height:15px;"> 
+                                                ${variation.quantity or '0.0'|entity} ${variation.product_uom.name or ''|entity}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
                                 <td class="number_td"> $ ${ formatLang(variation.cost_variation) } </td>
-                                <td class="number_td"> ${ formatLang(total_produced) } ${production.product_uom.name or ''|entity}</td>
                             </tr>
                             <%row_count+=1%>
                         %endif
@@ -202,12 +224,16 @@ ORDER BY mul
                 
                 <%#Obtener los totales
                 total_produced = 0
+                produced_qty = 0
                 total_res_dict = {}
                 for production in mrp_data:
                     total_res_dict.setdefault(production.product_id.name, [0, production.product_id.uom_id.name])
                     total_produced = product_uom_pool._compute_qty(cr, uid, production.product_uom.id, production.product_qty, to_uom_id=production.product_id.uom_id.id)
                     total_res_dict[production.product_id.name][0] += total_produced
-                total_produced = 0
+                    if production.move_created_ids2:
+                        for finished in production.move_created_ids2:
+                            if (finished.product_id.id == production.product_id.id and finished.state in ('done')):
+                                produced_qty += product_uom_pool._compute_qty(cr, uid, production.product_uom.id, finished.product_qty, to_uom_id=production.product_id.uom_id.id)
                 %>
 
                 %for key, value in dict.items(total_res_dict):
@@ -216,13 +242,13 @@ ORDER BY mul
                         <td class="lastrow">${_("Total planned to produce:")}</td>
                         <td class="lastrow">${ formatLang(value[0]) } ${value[1] or ''|entity}</td>
                         %if (len(total_res_dict) == 1):
-                            <td class="lastrow">${_("Really produced:")} ${ formatLang(value[0]+total_finished_qty) } ${value[1] or ''|entity}</td>
+                            <td class="lastrow">${_("Really produced:")} ${ formatLang(produced_qty) } ${value[1] or ''|entity}</td>
                         %endif
+                        <%total_finished_qty=value[0]%>
                     </tr>
-                    <%total_produced += value[0]%>
                 %endfor
                 <tr>
-                    <td class="lastrow" style="text-align:left">${_("Production eficiency:")} ${ formatLang(100 + (total_finished_qty*100/total_produced)) } %</td>
+                    <td class="lastrow" style="text-align:left">${_("Production eficiency:")} ${ formatLang(produced_qty*100/total_finished_qty) } %</td>
                     <td class="lastrow">${_("Total variation cost")}</td>
                     <td class="lastrow">$ ${ formatLang(total_finished_cost) }</td>
                 </tr>
