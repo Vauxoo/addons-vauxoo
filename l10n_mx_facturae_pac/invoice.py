@@ -46,7 +46,7 @@ class account_invoice(osv.osv):
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
         invoice = self.browse(cr, uid, ids[0], context=context)
         sequence_app_id = ir_seq_app_obj.search(cr, uid, [('sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
-        type_inv = 'cfd 2.2'
+        type_inv = 'cfd22'
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(cr, uid, sequence_app_id[0], context=context).type
         for data in datas:
@@ -93,7 +93,7 @@ class account_invoice(osv.osv):
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
         invoice = self.browse(cr, uid, ids[0], context=context)
         sequence_app_id = ir_seq_app_obj.search(cr, uid, [('sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
-        type_inv = 'cfd 2.2'
+        type_inv = 'cfd22'
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(cr, uid, sequence_app_id[0], context=context).type
         if type_inv == 'cfdi32':
@@ -168,7 +168,7 @@ class account_invoice(osv.osv):
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
         invoice = self.browse(cr, uid, inv_ids[0], context=context)
         sequence_app_id = ir_seq_app_obj.search(cr, uid, [('sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
-        type_inv = 'cfd 2.2'
+        type_inv = 'cfd22'
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(cr, uid, sequence_app_id[0], context=context).type
         if type_inv == 'cfdi32':
