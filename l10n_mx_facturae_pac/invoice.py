@@ -188,17 +188,14 @@ class account_invoice(osv.osv):
         currency_enc = currency.encode('UTF-8', 'strict')
         rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
         moneda = '''<Addenda>
-            <xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
             <sf:Partner xmlns:sf="http://timbrado.solucionfactible.com/partners" xsi:schemaLocation="http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd" id="150731"/>
         </Addenda> </cfdi:Comprobante>'''
         file = False
         msg = ''
         status = ''
         cfdi_xml = False
-
-        cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
+        cfd_data_adenda = cfd_data.replace('</"%s">'%(comprobante), moneda)
         pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar'), ('company_id', '=', invoice.company_emitter_id.id), ('active', '=', True)], limit=1, context=context)
-
         if pac_params_ids:
             pac_params = pac_params_obj.browse(cr, uid, pac_params_ids, context)[0]
             user = pac_params.user
@@ -208,7 +205,6 @@ class account_invoice(osv.osv):
             if 'testing' in wsdl_url:
                 msg += u'CUIDADO FIRMADO EN PRUEBAS!!!!\n\n'
             if cfd_data_adenda:
-
                 wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
                 if True:#if wsdl_client:
 
@@ -242,8 +238,8 @@ class account_invoice(osv.osv):
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
                         }
                         if cfdi_data.get('cfdi_xml', False):
-                            url_pac = '</cfdi:Comprobante><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->'
-                            cfdi_data['cfdi_xml'] = cfdi_data['cfdi_xml'].replace('</cfdi:Comprobante>', url_pac)
+                            url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->'%(comprobante)
+                            cfdi_data['cfdi_xml'] = cfdi_data['cfdi_xml'].replace('</"%s">'%(comprobante), url_pac)
                             file = base64.encodestring( cfdi_data['cfdi_xml'] or '' )
                             #self.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
