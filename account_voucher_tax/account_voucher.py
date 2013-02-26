@@ -128,7 +128,7 @@ class account_voucher(osv.osv):
                         credit_orig=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.original_tax)), round=True, context=context)
                         context['date']=voucher.date
                         credit_now=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.amount_tax)), round=False, context=context)
-                        amount_diff=credit_orig-credit_now
+                        amount_diff=abs(credit_orig-credit_now)
                         debit_diff=0.0
                         if voucher.type=='payment':
                             amount_diff, debit_diff= debit_diff, amount_diff
