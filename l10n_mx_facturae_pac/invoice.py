@@ -79,7 +79,8 @@ class account_invoice(osv.osv):
                 comprobante.pop('Impuestos')
                 comprobante.pop('Conceptos')
                 comprobante.pop('Receptor')
-                comprobante.update({'xmlns:cfdi' : "http://www.sat.gob.mx/cfd/3", 'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv32.xsd", 'version': "3.2",})
+                comprobante.pop('xsi:schemaLocation')
+                comprobante.update({'xmlns:cfdi' : "http://www.sat.gob.mx/cfd/3", 'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd", 'version': "3.2",})
                 comprobante.pop('xmlns')
                 dict_comprobante = comprobante
                 data.pop('Comprobante')
