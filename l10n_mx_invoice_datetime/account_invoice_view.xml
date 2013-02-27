@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record  model="ir.ui.view" id="account_invoice_datetime">
+            <field name="name">account.invoice.datetime</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_invoice']" position="after">
+                    <field name="invoice_datetime" on_change="onchange_datetime(invoice_datetime)"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
