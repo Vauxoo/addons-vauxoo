@@ -50,27 +50,32 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
     _order = 'invoice_datetime asc'
     
-    def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False, context={}):
-        if not context:
-            context = {}
-        res = {}
-        if release.version >= '6':
-            dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
-            tz = context.get('tz_invoice_mx', 'America/Mexico_City')
-            for invoice in self.browse(cr, uid, ids, context=context):
-                res[invoice.id] = invoice.invoice_datetime and tools.server_to_local_timestamp(invoice.invoice_datetime, dt_format, dt_format, tz) or False
-        elif release.version < '6':
-            #TODO: tz change for openerp5
-            for invoice in self.browse(cr, uid, ids, context=context):
-                res[invoice.id] = invoice.date_invoice
-        return res
+#    def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False, context={}):
+ #       if not context:
+  #          context = {}
+   #     res = {}
+    #    if release.version >= '6':
+     #       dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
+      #      tz = context.get('tz_invoice_mx', 'America/Mexico_City')
+       #     for invoice in self.browse(cr, uid, ids, context=context):
+        #        res[invoice.id] = invoice.invoice_datetime and tools.server_to_local_timestamp(invoice.invoice_datetime, dt_format, dt_format, tz) or False
+#        elif release.version < '6':
+ #           #TODO: tz change for openerp5
+  #          for invoice in self.browse(cr, uid, ids, context=context):
+   #             res[invoice.id] = invoice.date_invoice
+    #    return res
     
     _columns = {
         ##Extract date_invoice from original, but add datetime
 #        'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         'invoice_datetime': fields.datetime('Date Electronic Invoiced ', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
-        'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True, type='datetime', string='Date Invoiced with TZ', store=True),
+#        'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True, type='datetime', string='Date Invoiced with TZ', store=True),
     }
+    
+    def onchange_datetime(self, cr, uid, ids, inv_datetime):
+        if inv_datetime:
+            return {'value':{'date_invoice':inv_datetime}}
+        return {}
     
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
@@ -87,12 +92,12 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
 account_invoice()
 
-class account_invoice_refund(osv.osv_memory):
-    _inherit = 'account.invoice.refund'
-    _columns = {
-        'date': fields.datetime('Operation date', help='This date will be used as the invoice date for Refund Invoice and Period will be chosen accordingly!'),     
-    }
-    _defaults = {
-        'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-    }
-account_invoice_refund()
+#class account_invoice_refund(osv.osv_memory):
+ #   _inherit = 'account.invoice.refund'
+  #  _columns = {
+   #     'date': fields.datetime('Operation date', help='This date will be used as the invoice date for Refund Invoice and Period will be chosen accordingly!'),     
+   # }
+    #_defaults = {
+     #   'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+   # }
+#account_invoice_refund()
