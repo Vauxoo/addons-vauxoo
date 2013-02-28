@@ -51,7 +51,7 @@ account_payment_term()
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
     _order = 'invoice_datetime asc'
-    
+
     def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
@@ -119,12 +119,12 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
 account_invoice()
 
-class account_invoice_refund(osv.osv_memory):
-    _inherit = 'account.invoice.refund'
-    _columns = {
-        'date': fields.datetime('Operation date', help='This date will be used as the invoice date for Refund Invoice and Period will be chosen accordingly!'),     
-    }
-    _defaults = {
-        'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-    }
-account_invoice_refund()
+#class account_invoice_refund(osv.osv_memory):
+ #   _inherit = 'account.invoice.refund'
+  #  _columns = {
+   #     'date': fields.datetime('Operation date', help='This date will be used as the invoice date for Refund Invoice and Period will be chosen accordingly!'),     
+   # }
+    #_defaults = {
+     #   'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+   # }
+#account_invoice_refund()
