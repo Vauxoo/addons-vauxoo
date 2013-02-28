@@ -1,0 +1,148 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="ir_header_webkit_mrp_variation0" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        <table style="border-top: 1px solid black; width: 100%">
+            <tr >
+                <td style="text-align:right;font-size:12;" width="75%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
+            </tr>
+            <tr >
+                <td style="text-align:right;font-size:8;">Detalles del OS: ${os.name or ''|entity} ${platform.system() or ''|entity} - release: ${platform.release() or ''|entity} Vauxoo ® ${time.strftime("%Y-%m-%d %H:%M:%S") or ''|entity}</td>
+            </tr>
+        </table>
+    </body>
+</html>]]></field>
+            <field name="orientation">Portrait</field>
+			<field name="format">Letter</field>
+            <field name="html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+        <style type="text/css">
+            ${css}
+        </style>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        ${_debug or ''|n} </body>
+</html>]]>
+</field>
+            <field eval="0.0" name="margin_top"/>
+            <field name="css" ><![CDATA[
+body{
+font-family:helvetica;
+font-size:12;
+margin:0;
+padding:0;
+height:100%;
+}
+
+.basic_header
+{
+margin:auto;
+width:60%;
+background-color:AADDAA;
+color:#DDF0F0;
+min-height:65px
+}
+
+td.basic_td{
+border-bottom:0px solid black;
+border-left:0px solid black;
+border-right:0px solid black;
+text-align:left;
+font-size:9;
+padding-right:2px
+padding-left:2px
+padding-top:2px
+padding-bottom:2px
+}
+
+td.number_td
+{
+text-align:right;
+border-bottom:0px solid black;
+border-left:0px solid black;
+border-right:0px solid black;
+font-family:helvetica;
+font-size:9;
+padding-right:2px
+padding-left:2px
+padding-top:2px
+padding-bottom:2px
+max-height:15px;
+}
+
+th.basic_th
+{
+color:#201020;
+border-bottom:2px solid black;
+border-left:1px solid gray;
+text-align:center;
+font-size:10;
+font-weight:bold;
+padding-right:3px
+padding-left:3px
+}
+
+td.lastrow
+{
+text-align:right;
+font-size:10;
+background-color:#CCFFFF;
+border-bottom:0px solid black;
+border-left:0px solid black;
+border-right:0px solid black;
+}
+
+tr.nonrow
+{
+background-color:#FFDDFF;
+}
+tr
+{
+page-break-after:auto;
+}
+
+.basic_table{
+text-align:center;
+border:1px solid lightGrey;
+border-collapse: collapse;
+width:100%;
+}
+]]> </field>
+            <field name="name">MRP Var</field>
+        </record>
+        <record id="ir_header_img_companylogo0" model="ir.header_img">
+            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+</openerp>
