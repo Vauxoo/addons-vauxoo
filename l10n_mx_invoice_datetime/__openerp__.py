@@ -41,7 +41,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-    "account_invoice_view.xml"
+        "security/dateinvoice_security.xml",
+        "account_invoice_view.xml"
     ],
     "installable" : True,
     "active" : False,

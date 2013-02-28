@@ -30,6 +30,8 @@ from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
 from openerp import release
+import datetime
+import pytz
 
 import time
 import os
@@ -58,7 +60,7 @@ class account_invoice(osv.osv):
             dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
             tz = context.get('tz_invoice_mx', 'America/Mexico_City')
             for invoice in self.browse(cr, uid, ids, context=context):
-                res[invoice.id] = invoice.invoice_datetime and tools.server_to_local_timestamp(invoice.invoice_datetime, dt_format, dt_format, tz) or False
+                res[invoice.id] = invoice.invoice_datetime and tools.server_to_local_timestamp(invoice.invoice_datetime, tools.DEFAULT_SERVER_DATETIME_FORMAT, tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get('tz_invoice_mx', 'America/Mexico_City')) or False
         elif release.version < '6':
             #TODO: tz change for openerp5
             for invoice in self.browse(cr, uid, ids, context=context):
@@ -75,6 +77,36 @@ class account_invoice(osv.osv):
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+    def create(self, cr, uid, vals, context=None):
+        res = self.assigned_datetime(cr, uid, vals, context=context)
+        if res:
+            vals.update(res)
+        return super(account_invoice, self).create(cr, uid, vals, context)
+    
+    def write(self, cr, uid, ids, vals, context=None):
+        if context is None:
+            context = {}
+        res = self.assigned_datetime(cr, uid, vals, context=context)
+        if res:
+            vals.update(res)
+        return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
+    
+    def assigned_datetime(self, cr, uid, values, context=None):
+        res = {}
+        if 'date_invoice' in values:
+            if values['date_invoice']:
+                date_ts = tools.server_to_local_timestamp(values['date_invoice'], tools.DEFAULT_SERVER_DATETIME_FORMAT, tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get('tz_invoice_mx', 'America/Mexico_City'))
+                now = datetime.datetime.now()
+                time_invoice = datetime.time(now.hour, now.minute, now.second)
+                date_invoice = datetime.datetime.strptime(date_ts, '%Y-%m-%d').date()
+                dt_invoice = datetime.datetime.combine(date_invoice, time_invoice).strftime('%Y/%m/%d %H:%M:%S')
+                res['invoice_datetime'] = dt_invoice
+        if 'invoice_datetime' in values:
+            if values['invoice_datetime']:
+                date_ts = tools.server_to_local_timestamp(values['invoice_datetime'], tools.DEFAULT_SERVER_DATETIME_FORMAT, tools.DEFAULT_SERVER_DATETIME_FORMAT, context.get('tz_invoice_mx', 'America/Mexico_City'))
+                date_invoice = datetime.datetime.strptime(date_ts, '%Y-%m-%d %H:%M:%S').date().strftime('%Y/%m/%d')
+                res['date_invoice'] = date_invoice
+        return res
     
     def action_move_create(self, cr, uid, ids, *args):
         for inv in self.browse(cr, uid, ids):
