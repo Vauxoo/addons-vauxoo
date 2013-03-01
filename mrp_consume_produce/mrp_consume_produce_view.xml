@@ -9,7 +9,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                    <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
-            <button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" groups="mrp_consume_produce.group_mrp_button_produce"/>
+            <button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" invisible="1"/>
                     </xpath>
 
                     <xpath expr="/form/notebook/page[@string='Consumed Products']/group/button[@name='%(mrp.act_mrp_product_produce)d']" position="after">
