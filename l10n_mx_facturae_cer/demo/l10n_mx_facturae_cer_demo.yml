@@ -1,0 +1,38 @@
+-
+  In order to test the certificate in OpenERP, I create a new certificate
+-
+    !python {model: res.company.facturae.certificate}: |
+        import os
+        import tools
+        import base64
+        import time
+        context={}
+        cer_obj = self.pool.get('res.company.facturae.certificate')
+        cer = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'certificados', 'aaa010101aaa_csd_01.cer') or ''
+        key = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'certificados', 'aaa010101aaa_csd_01.key') or ''
+        password = os.path.join( tools.config["addons_path"], 'l10n_mx_facturae', 'SAT', 'certificados', 'password.txt') or ''
+        f = open(cer, "r")
+        cer = f.read()
+        f.close()
+        cer_der_b64str = base64.encodestring(cer or False)
+        f = open(key, "r")
+        key = f.read()
+        f.close()
+        key_der_b64str = base64.encodestring(key or False)
+        file = open( password ,"r")
+        password = file.readline()
+        res = self.onchange_certificate_info(cr, uid, [], cer_der_b64str, key_der_b64str, password, context=None)
+        vals = {
+            'certificate_file': cer_der_b64str,
+            'certificate_key_file': key_der_b64str,
+            'date_start': res['value']['date_start'],
+            'date_end': res['value']['date_end'],
+            'certificate_password': password,
+            'company_id': ref('base.main_company'),
+            'active': 1,
+            'serial_number': res['value']['serial_number'],
+            'certificate_file_pem': res['value']['certificate_file_pem'],
+            'certificate_key_file_pem': res['value']['certificate_key_file_pem']
+        }
+        id = self.create(cr, uid, vals)
+        assert id, 'The certificate has been created'
