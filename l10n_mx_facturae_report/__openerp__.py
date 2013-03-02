@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
@@ -25,4 +25,23 @@
 #
 ##############################################################################
 
-import invoice_facturae_pdf
+{
+    "name" : "Creacion del Reporte de Factura Electronica para Mexico",
+    "version" : "1.0",
+    "author" : "Vauxoo",
+    "category" : "Localization/Mexico",
+    "description" : """This module add a report for facturae, this includes report for
+        cfd, cfdi and cbb
+    """,
+    "website" : "http://www.vauxoo.com/",
+    "license" : "AGPL-3",
+    "depends" : ["account", "report_webkit",],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+        "data.xml",
+        "l10n_mx_facturae_report_webkit.xml",
+    ],
+    "installable" : True,
+    "active" : False,
+}
