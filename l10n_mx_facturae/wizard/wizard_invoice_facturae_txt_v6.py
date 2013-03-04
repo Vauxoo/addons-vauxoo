@@ -110,10 +110,10 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
             invoice_obj.search(cr, uid, [
                 ( 'type', 'in', ['out_invoice', 'out_refund'] ),
                 ( 'state', 'in', ['open', 'paid', 'cancel'] ),
-                ( 'date_invoice', '>=', date_start ),
-                ( 'date_invoice', '<', date_end ),
+                ( 'invoice_datetime', '>=', date_start ),
+                ( 'invoice_datetime', '<', date_end ),
                 ( 'number', '<>', False ),
-            ], order='date_invoice', context=context)
+            ], order='invoice_datetime', context=context)
         )
         invoice_ids.extend(
             invoice_obj.search(cr, uid, [
@@ -122,7 +122,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
                 ( 'date_invoice_cancel', '>=', date_start ),
                 ( 'date_invoice_cancel', '<', date_end ),
                 ( 'number', '<>', False ),
-            ], order='date_invoice', context=context)
+            ], order='invoice_datetime', context=context)
         )
         self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)
         return True
@@ -142,11 +142,11 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
             invoice_obj.search(cr, uid, [
                 ( 'type', 'in', ['out_invoice', 'out_refund'] ),
                 ( 'state', 'in', ['open', 'paid', 'cancel'] ),
-                ( 'date_invoice', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
-                ( 'date_invoice', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
+                ( 'invoice_datetime', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
+                ( 'invoice_datetime', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
                 #( 'number', '<>', False ),
                 ( 'internal_number', '<>', False ),
-                ], order='date_invoice', context=context)
+                ], order='invoice_datetime', context=context)
         )
         invoice_ids.extend(  
             invoice_obj.search(cr, uid, [
@@ -155,7 +155,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
                 ( 'date_invoice_cancel', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
                 ( 'date_invoice_cancel', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
                 ( 'internal_number', '<>', False ),
-                ], order='date_invoice', context=context)
+                ], order='invoice_datetime', context=context)
         )
         invoice_ids = list(set(invoice_ids))
         self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)

@@ -78,6 +78,7 @@ class account_invoice(osv.osv):
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
     def create(self, cr, uid, vals, context=None):
+        print vals,'<-<-<-<-<-<-<-<-<-<-<---imprimo vals'
         res = self.assigned_datetime(cr, uid, vals, context=context)
         if res:
             vals.update(res)

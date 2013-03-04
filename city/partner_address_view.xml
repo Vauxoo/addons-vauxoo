@@ -7,8 +7,8 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 
-                <xpath expr="//field[@name='date_invoice']" position="after">
-                    <field name="invoice_datetime"/>
+                <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="city_id" on_change="onchange_city(city_id)"  placeholder="Ciudad"/>
                 </xpath>
             </field>
         </record>
