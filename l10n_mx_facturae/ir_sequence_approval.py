@@ -31,8 +31,8 @@ from openerp.tools.translate import _
 class ir_sequence_approval(osv.osv):
     _inherit = 'ir.sequence.approval'
 
-    def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_sequence_approval, self)._get_type(cr, uid, ids, context=context)
+    def _get_type(self, cr, uid, context=None):
+        types = super(ir_sequence_approval, self)._get_type(cr, uid, context=context)
         types.extend([
             ('cfd22', 'CFD 2.2'),
         ])

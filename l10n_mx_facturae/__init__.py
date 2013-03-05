@@ -29,4 +29,4 @@ import invoice
 import wizard
 import report
 import ir_attachment_facturae
-import ir_sequence_approval
+#import ir_sequence_approval
