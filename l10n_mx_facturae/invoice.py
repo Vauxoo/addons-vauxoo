@@ -225,7 +225,7 @@ class account_invoice(osv.osv):
             raise osv.except_osv(_('Error !'),_('No hay moneda MXN.'))
         for id in ids:
             invoice = self.browse(cr, uid, [id])[0]
-            date_format = invoice.date_invoice or False
+            date_format = invoice.invoice_datetime or False
             context['date']=date_format
             invoice = self.browse(cr, uid, [id], context)[0]
             rate=self.pool.get('res.currency').compute(cr, uid, invoice.currency_id.id,currency_mxn_id, 1,)
@@ -354,8 +354,8 @@ class account_invoice(osv.osv):
             else:
                 raise osv.except_osv(_('Warning !'), _('Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!')%(msg2))
                 
-        date_invoice = self.browse(cr, uid,ids)[0].date_invoice
-        if date_invoice < '2012-07-01 00:00:00':
+        invoice_datetime = self.browse(cr, uid,ids)[0].invoice_datetime
+        if invoice_datetime < '2012-07-01 00:00:00':
             return file_globals
         else:
             #Search char "," for addons_path, now is multi-path
@@ -932,7 +932,7 @@ class account_invoice(osv.osv):
             invoice_data_parent['state'] = invoice.state
             invoice_data_parent['invoice_id'] = invoice.id
             invoice_data_parent['type'] = invoice.type
-            invoice_data_parent['date_invoice'] = invoice.date_invoice
+            invoice_data_parent['invoice_datetime'] = invoice.invoice_datetime
             invoice_data_parent['date_invoice_tz'] = invoice.date_invoice_tz
             invoice_data_parent['currency_id'] = invoice.currency_id.id
 
@@ -945,13 +945,13 @@ class account_invoice(osv.osv):
 
             invoice_data_parent['rate'] = rate
             
-        date_invoice = invoice_data_parents[0].get('date_invoice',{}) and datetime.strptime( invoice_data_parents[0].get('date_invoice',{}), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') or False
-        if not date_invoice:
+        invoice_datetime = invoice_data_parents[0].get('invoice_datetime',{}) and datetime.strptime( invoice_data_parents[0].get('invoice_datetime',{}), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') or False
+        if not invoice_datetime:
             raise osv.except_osv(_('Fecha de Factura vacía'),_('No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía.'))
-        if date_invoice < '2012-07-01':
+        if invoice_datetime < '2012-07-01':
             return invoice_data_parent
         else:
-            invoice = self.browse(cr, uid, ids, context={'date':date_invoice})[0]
+            invoice = self.browse(cr, uid, ids, context={'date':invoice_datetime})[0]
             city = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('municipio', {}) or False
             state = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('estado', {}) or False
             country = invoice_data_parents and invoice_data_parents[0].get('Comprobante',{}).get('Emisor', {}).get('ExpedidoEn',{}).get('pais', {}) or False

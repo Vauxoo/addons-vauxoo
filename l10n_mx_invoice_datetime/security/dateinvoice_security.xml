@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="res.groups" id="group_res_datetime_invoice_mx">
+            <field name="name">DateTime Invoice MX</field>
+        </record>
+
+        <record model="res.groups" id="group_res_date_invoice">
+            <field name="name">Date Invoice</field>
+        </record>
+        
+    </data>
+</openerp>

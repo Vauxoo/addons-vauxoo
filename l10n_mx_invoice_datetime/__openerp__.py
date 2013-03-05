@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com) modified by carlosecv74@gmail.com
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
@@ -30,7 +30,8 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add hour & minute to field date_invoice
+    "description" : """Add new field invoice_datetime for electronic invoice data
+            and add	hour & minute to field date_invoice
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
@@ -40,6 +41,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/dateinvoice_security.xml",
+        "account_invoice_view.xml"
     ],
     "installable" : True,
     "active" : False,

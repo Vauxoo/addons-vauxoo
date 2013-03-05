@@ -69,10 +69,8 @@ class res_company_facturae_certificate(osv.osv):
         key_der_b64str = certificate.certificate_key_file
         password = certificate.certificate_password
         data = self.onchange_certificate_info(cr, uid, ids, cer_der_b64str, key_der_b64str, password, context=context)
-        #print "data['serial_number']",data['serial_number']
-        #print "data",data
         if data['warning']:
-            osv.osv_except(data['warning']['title'], data['warning']['message'] )
+            raise osv.except_osv(data['warning']['title'], data['warning']['message'] )
         return self.write(cr, uid, ids, data['value'], context)
         
     def onchange_certificate_info(self, cr, uid, ids, cer_der_b64str, key_der_b64str, password, context=None):
