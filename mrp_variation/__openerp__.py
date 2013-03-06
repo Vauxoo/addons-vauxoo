@@ -32,7 +32,7 @@
     "website" : "http://www.vauxoo.com/",
     "description": """ Add table to veiw variation
     """,
-    'depends': ['mrp_consume_produce'],
+    'depends': ['mrp_consume_produce','mrp_pt_planified'],
     'init_xml': [],
     'update_xml': [
         'mrp_variation_view.xml',

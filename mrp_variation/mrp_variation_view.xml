@@ -6,9 +6,8 @@
             <field name="name">view.mrp.variation.inherit2</field>
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view" />
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                    <xpath expr="/form/notebook/page[@string='Work Orders']" position="after">
+                    <xpath expr="//page[@string='Work Orders']" position="after">
  			<page string="Product Variation">
 				<field name="variation_ids" nolabel="1">
 					<tree string="Variation Product Consumed">
