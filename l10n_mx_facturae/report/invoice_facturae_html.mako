@@ -182,8 +182,13 @@
                 <td width="8%" class="label_lines" align="right"><b><font class="lines_font">${has_disc(o.invoice_line) == 'True' and _("Dto. %") or ''}</font></b></td>
                 <td width="15%" class="label_lines" align="right"><b><font class="lines_font">${_("Importe")}</font></b></td>
             </tr>
+            <%row_count = 1%>
             %for l in o.invoice_line: 
-                <tr>
+                %if (row_count%2==0):
+                    <tr  class="nonrow">
+                %else:
+                    <tr>
+                %endif
                     <td width="10%" class="label_data" align="right"><font class="lines">${l.quantity or '0.0'}</font></td>
                     <td width="1%" class="label_data"></td>
                     <td width="10%" class="label_data"><font class="lines">${l.uos_id.name or ''|entity}</font></td>
@@ -192,6 +197,7 @@
                     <td width="8%" class="label_data" align="right"><font class="lines">${has_disc(o.invoice_line) == 'True' and formatLang(l.discount) or ''|entity} ${has_disc(o.invoice_line) == 'True' and '%' or ''|entity}</font></td>
                     <td width="15%" class="label_data" align="right"><font class="lines">${formatLang(l.price_subtotal) or '0.0'|entity}</font></td>
                 </tr>
+                <%row_count+=1%>
             %endfor
         </table>
         <table align="right" width="100%" style="border-collapse:collapse">
