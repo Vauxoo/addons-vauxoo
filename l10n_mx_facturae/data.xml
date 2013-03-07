@@ -54,6 +54,27 @@
 </field>
             <field eval="0.0" name="margin_top"/>
             <field name="css" ><![CDATA[
+.cliente{
+font-size:11;
+border-top:1px solid #002966;
+border-left:1px solid #99C2FF;
+border-right:1px solid #99C2FF;
+}
+
+body{
+font-family:helvetica;
+font-size:9;
+margin:0;
+padding:0;
+height:100%;
+line-height:12px;
+}
+
+tr.nonrow
+{
+background-color:#E6E6FF;
+}
+
 td.td_data_exp
 {
 text-align:center
@@ -185,11 +206,6 @@ width:68em;
 word-wrap:break-word;
 font-family:Arial,Helvetica,sans-serif;
 font-size: 6pt;
-}
-
-tr.nonrow
-{
-background-color:#E6E6FF;
 }
 ]]> </field>
             <field name="name">Facturae</field>
