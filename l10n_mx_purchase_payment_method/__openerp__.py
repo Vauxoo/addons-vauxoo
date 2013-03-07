@@ -24,7 +24,7 @@
 #
 ##############################################################################
 {
-    'name': 'Purchase Management',
+    'name': 'l10n_mx_purchase_payment_method',
     "version" : "1.1",
     'author': 'Vauxoo',
     'category' : "Localization/Mexico",
