@@ -66,21 +66,20 @@
                 <td class="td_data_exp" width="25%">
                     <div class="fiscal_address">
                         %if o.payment_term.name:
-                            <font class="font">Condición de pago:
-                            <font class="font">${o.payment_term.note or o.payment_term.name or ''|entity}</font>
+                            Condición de pago: ${o.payment_term.note or o.payment_term.name or ''|entity}
                         %endif
-                        <br/><font class="font">Expedido en:</font>
                         %if o.address_issued_id:
-                            <br/><font class="font">${o.address_issued_id.name or ''|entity}</font>
-                            <br/><font class="font">${o.address_issued_id.street or ''|entity}</font>
-                            <font class="font">${o.address_issued_id.l10n_mx_street3 or ''|entity}</font>
-                            <font class="font">${o.address_issued_id.l10n_mx_street4 or ''|entity}</font>
-                            <br/><font class="font">${o.address_issued_id.street2 or ''|entity}</font>
-                            <font class="font">${o.address_issued_id.zip or ''|entity}</font>
-                            <br/><font class="font">Localidad: ${o.address_issued_id.l10n_mx_city2 or ''|entity}</font>
-                            <br/><font class="font">${o.address_issued_id.city or ''|entity}</font>
-                            <font class="font">${o.address_issued_id.state_id.name and ',' or ''|entity} ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}</font>
-                            <font class="font">${o.address_issued_id.country_id.name and ',' or ''|entity} ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}</font>
+                        <br/>Expedido en:
+                            <br/>${o.address_issued_id.name or ''|entity}
+                            <br/>${o.address_issued_id.street or ''|entity}
+                            ${o.address_issued_id.l10n_mx_street3 or ''|entity}
+                            ${o.address_issued_id.l10n_mx_street4 or ''|entity}
+                            <br/>${o.address_issued_id.street2 or ''|entity}
+                            ${o.address_issued_id.zip or ''|entity}
+                            <br/>Localidad: ${o.address_issued_id.l10n_mx_city2 or ''|entity}
+                            <br/>${o.address_issued_id.city or ''|entity}
+                            ${o.address_issued_id.state_id.name and ',' or ''|entity} ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}
+                            ${o.address_issued_id.country_id.name and ',' or ''|entity} ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}
                         %endif
                     <div/>
                 </td>
@@ -168,59 +167,57 @@
         </table>
         <br/>
         <table style="border-collapse:collapse" width="100%">
-            <tr>
-                <td width="10%" class="label_lines"><b><font class="lines_font">${_("Cant.")}</font></b></td>
-                <td width="1%" class="label_lines"></td>
-                <td width="10%" class="label_lines"><b><font class="lines_font">${_("Unidad")}</font></b></td>
-                <td width="47%" class="label_lines"><b><font class="lines_font">${_("Descripción")}</font></b></td>
-                <td width="9%" class="label_lines" align="right"><b><font class="lines_font">${_("P.Unitario")}</font></b></td>
-                <td width="8%" class="label_lines" align="right"><b><font class="lines_font">${has_disc(o.invoice_line) == 'True' and _("Dto. %") or ''}</font></b></td>
-                <td width="15%" class="label_lines" align="right"><b><font class="lines_font">${_("Importe")}</font></b></td>
+            <tr class="firstrow">
+                <th width="10%">${_("Cant.")}</th>
+                <th width="10%">${_("Unidad")}</th>
+                <th>${_("Descripción")}</th>
+                <th width="9%" >${_("P.Unitario")}</th>
+                %if has_disc(o.invoice_line):
+                    <th width="8%" >${_("Dto. %") or ''}</th>
+                %endif
+                <th width="15%">${_("Importe")}</th>
             </tr>
             <%row_count = 1%>
-            %for l in o.invoice_line: 
+            %for line in o.invoice_line: 
                 %if (row_count%2==0):
                     <tr  class="nonrow">
                 %else:
                     <tr>
                 %endif
-                    <td width="10%" class="label_data" align="right"><font class="lines">${l.quantity or '0.0'}</font></td>
-                    <td width="1%" class="label_data"></td>
-                    <td width="10%" class="label_data"><font class="lines">${l.uos_id.name or ''|entity}</font></td>
-                    <td width="47%" class="label_data"><font class="lines">${l.name or ''|entity}</font></td>
-                    <td width="9%" class="label_data" align="right"><font class="lines">${formatLang(l.price_unit) or '0.0'|entity}</font></td>
-                    <td width="8%" class="label_data" align="right"><font class="lines">${has_disc(o.invoice_line) == 'True' and formatLang(l.discount) or ''|entity} ${has_disc(o.invoice_line) == 'True' and '%' or ''|entity}</font></td>
-                    <td width="15%" class="label_data" align="right"><font class="lines">${formatLang(l.price_subtotal) or '0.0'|entity}</font></td>
+                    <td width="10%" class="number_td">${line.quantity or '0.0'}</td>
+                    <td width="10%" class="basic_td">${line.uos_id.name or ''|entity}</td>
+                    <td class="basic_td">${line.name or ''|entity}</td>
+                    <td width="9%" class="number_td">$ ${formatLang(line.price_unit) or '0.0'|entity}</td>
+                    %if has_disc(o.invoice_line):
+                        <td width="8%" class="number_td">${formatLang(line.discount) or ''|entity} %</td>
+                    %endif
+                    <td width="15%" class="number_td">$ ${formatLang(line.price_subtotal) or '0.0'|entity}</td>
                 </tr>
                 <%row_count+=1%>
             %endfor
         </table>
-        <table align="right" width="100%" style="border-collapse:collapse">
+        <table align="right" width="30%" style="border-collapse:collapse">
             %if get_taxes() or get_taxes_ret():
                 <tr>
-                    <td width="70%"></td>
-                    <td width="15%" class="total_line"><font class="lines">${_("Sub Total:")} $</font></td>
-                    <td width="15%" align="right" class="total_line"><font class="lines">${formatLang(o.amount_untaxed) or ''|entity}</font></td>
+                    <td class="total_td">${_("Sub Total:")}</td>
+                    <td align="right" class="total_td">$ ${formatLang(o.amount_untaxed) or ''|entity}</td>
                 </tr>
             %endif
             %for tax in get_taxes(): 
                 <tr>
-                    <td width="70%"></td>
-                    <td width="15%"><font class="lines">${tax['name2']} ${round(float(tax['tax_percent']))} ${"% $"}</font></td>
-                    <td width="15%" align="right"><font class="lines">${formatLang(float( tax['amount'] ) ) or ''|entity}</font></td>
+                    <td class="tax_td">${tax['name2']} (${round(float(tax['tax_percent']))}) % </td>
+                    <td class="tax_td" align="right">$ ${formatLang(float( tax['amount'] ) ) or ''|entity}</td>
                 </tr>
             %endfor
             %for tax_ret in get_taxes_ret():
                 <tr>
-                    <td width="70%"></td>
-                    <td width="15%"><font class="lines">${tax_ret['name2']} ${"Ret"} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } ${"% $"}</font></td>
-                    <td width="15%" align="right"><font class="lines">${formatLang( float( tax_ret['amount'] )*-1 ) or ''|entity}</font></td>
+                    <td class="tax_td">${tax_ret['name2']} ${_("Ret")} ${round( float( tax_ret['tax_percent'] ), 2 )*-1 } % </td>
+                    <td class="tax_td" align="right">$ ${formatLang( float( tax_ret['amount'] )*-1 ) or ''|entity}</td>
                 </tr>
             %endfor
             <tr align="left">
-                <td width="70%"></td>
-                <td width="15%" class="total_line"><font class="lines"><b>${_("Total:")}</b></font></td>
-                <td width="15%" class="total_line" align="right"><font class="lines"><b>$ ${formatLang(o.amount_total) or ''|entity}</b></font></td>
+                <td class="total_td"><b>${_("Total:")}</b></td>
+                <td class="total_td" align="right"><b>$ ${formatLang(o.amount_total) or ''|entity}</b></td>
             </tr>
         </table>
         <br clear="all" />
