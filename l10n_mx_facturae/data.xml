@@ -121,6 +121,28 @@ padding-right:2px;
 padding-left:2px;
 }
 
+td.center_td
+{
+font-size: 11;
+padding-right:2px;
+padding-left:2px;
+text-align:center;
+}
+
+table.grid_table
+{
+border:1.5px solid grey;
+border-collapse: collapse;
+width:100%;
+}
+
+td.data_bank_label{
+text-align: center;
+font-size: 11;
+background-color: #d0d0d0;
+font-weight:bold;
+}
+
 td.td_data_exp
 {
 text-align:center
@@ -212,12 +234,6 @@ border-top: solid 1.5px #000000;
 
 .label_data{
 border-bottom: solid 1.5px #e6e6e6;
-}
-
-.data_bank_label{
-text-align: center;
-font-size: 8pt;
-background-color: #c0c0c0;
 }
 
 .data_bank{

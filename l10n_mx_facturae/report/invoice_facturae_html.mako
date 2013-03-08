@@ -7,7 +7,7 @@
 <body>
     %for o in objects :
         ${set_global_data(o)}
-        <table width="100%">
+        <table class="basic_table">
             <tr>
                 <td width="20%"></td>
                 <td width="60%">
@@ -33,7 +33,7 @@
                 </td>
             </tr>
         </table>
-        <table width="100%">
+        <table class="basic_table">
             <tr>
                 <td width="25%" align="center">
                     ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),120, 120)}
@@ -87,11 +87,11 @@
         </table>
         <table class="line" width="100%" border="1"></table>
         <font size="15"></font>
-        <table style="font-size:11;">
+        <table class="basic_table" style="font-size:11;">
             <tr>
                 <td width="80%">
                     <%res_client=get_data_partner(o.partner_id)%>
-                    <table class="table_cliente">
+                    <table class="basic_table">
                         <tr>
                             <td class="cliente"><b>Receptor:</b></td>
                             <td width="64%" class="cliente">${o.partner_id.name or ''|entity}</td>
@@ -99,7 +99,7 @@
                             <td width="16%" class="cliente"><b>${res_client['vat'] or ''|entity}SMA010116FC4</b></td>
                         </tr>
                     </table>
-                    <table class="table_cliente">
+                    <table class="basic_table">
                         <tr>
                             <td width="7%" class="cliente"><b>Calle:</b></td>
                             <td class="cliente">${res_client['street'] or ''|entity}</td>
@@ -113,7 +113,7 @@
                             %endif
                         </tr>
                     </table>
-                    <table class="table_cliente">
+                    <table class="basic_table">
                         <tr>
                             <td width="10%" class="cliente"><b>Colonia:</b></td>
                             <td class="cliente">${res_client['street2'] or ''|entity}</td>
@@ -125,7 +125,7 @@
                             %endif
                         </tr>
                     </table>
-                    <table class="table_cliente">
+                    <table class="basic_table">
                         <tr>
                             <td width="9%" class="cliente"><b>Lugar:</b></td>
                             <td class="cliente">
@@ -135,7 +135,7 @@
                             </td>
                         </tr>
                     </table>
-                    <table class="table_cliente" style="border-bottom:1px solid #002966;">
+                    <table class="basic_table" style="border-bottom:1px solid #002966;">
                         <tr>
                             <td width="13%" class="cliente"><b>Telefono(s):</b></td>
                             <td width="55%" class="cliente">
@@ -166,7 +166,7 @@
             </tr>
         </table>
         <br/>
-        <table style="border-collapse:collapse" width="100%">
+        <table class="basic_table">
             <tr class="firstrow">
                 <th width="10%">${_("Cant.")}</th>
                 <th width="10%">${_("Unidad")}</th>
@@ -221,105 +221,103 @@
             </tr>
         </table>
         <br clear="all" />
-        <table align="left" width="100%">
+        <table class="basic_table">
             <tr>
-                <td align="left" width="100%">
-                    <font size="1">IMPORTE CON LETRA:</font>
+                <td class="tax_td">
+                    ${_("IMPORTE CON LETRA:")}
                 </td>
             </tr>
             <tr>
-                <td align="center" width="100%">
-                    <font size="1"><i>${o.amount_to_text or ''|entity}</i></font>
+                <td class="center_td">
+                    <i>${o.amount_to_text or ''|entity}</i>
                 </td>
             </tr>
             <tr>
-                <td align="center" width="100%">
-                    <font size="1">${_('PAGO EN UNA SOLA EXHIBICIÓN - EFECTO FISCAL AL PAGO')}</font>
+                <td class="center_td">
+                    ${_('PAGO EN UNA SOLA EXHIBICIÓN - EFECTOS FISCALES AL PAGO')}
                 </td>
             </tr>
         </table>
         <br clear="all"/>
-        <div>
-            %if o.invoice_sequence_id.approval_id.type == 'cfd22':
-                <font class="font">“Este documento es una representacion impresa de un CFD”
-                <br/>CFD, Comprobante Fiscal Digital</font>
-            %elif o.invoice_sequence_id.approval_id.type == 'cfdi32':
-                <font class="font">“Este documento es una representacion impresa de un CFDI”
-                <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
-            %endif
-            %if o.company_emitter_id.partner_id.bank_ids:
-                <div>
-                    <table rules="all" width="100%">
-                        <tr>
-                            <td>
-                                <div class="title_data_bank">${_('Datos Bancarios')} ${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
-                            </td>
-                        </tr>
-                    </table>
-                    <table rules="all" width="100%">
-                        <tr>
-                            <td width="33%" class="data_bank_label"><b>Banco / Moneda</b></td>
-                            <td width="34%" class="data_bank_label"><b>Número de cuenta</b></td>
-                            <td width="33%" class="data_bank_label"><b>Clave Interbancaria Estandarizada (CLABE)</b></td>
-                        </tr>
-                        %for f in o.company_emitter_id.partner_id.bank_ids:
-                            <tr>
-                                <td width="33%" class="data_bank">${f.bank.name or ''|entity} ${f.currency2_id and '/' or '' |entity} ${f.currency2_id and f.currency2_id.name or '' |entity}</td>
-                                <td width="34%" class="data_bank">${f.acc_number or ''|entity}</td>
-                                <td width="33%" class="data_bank">${f.clabe or ''|entity}</td>
-                            </tr>
-                        %endfor
-                    </table>
-                </div>
-            %endif
-            <table width="100%">
-                <tr><td align="center"><font size="1">${ o.company_emitter_id.promissory or ''|entity }</font></td></tr>
+        <%print o.invoice_sequence_id.approval_id.type, "invoice_sequence_id"%>
+        <!--code for cfd-->
+        %if o.invoice_sequence_id.approval_id.type == 'cfd22':
+            <font class="font">“Este documento es una representacion impresa de un CFD”
+            <br/>CFD, Comprobante Fiscal Digital</font>
+        %elif o.invoice_sequence_id.approval_id.type == 'cfdi32':
+            <font class="font">“Este documento es una representacion impresa de un CFDI”
+            <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
+        %endif
+        <!-- bank info-->
+        %if o.company_emitter_id.partner_id.bank_ids:
+            <table class="basic_table">
+                <tr>
+                    <td class="center_td">
+                        ${_('Datos Bancarios')} ${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}
+                    </td>
+                </tr>
             </table>
-            %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
-                <table frame="box" rules="cols" width="100%">
+            <table class="basic_table">
+                <tr>
+                    <td class="data_bank_label">${_('Banco / Moneda')}</td>
+                    <td class="data_bank_label">${_('Número de cuenta')}</td>
+                    <td class="data_bank_label" width="34%">${_('Clave Interbancaria Estandarizada (CLABE)')}</td>
+                </tr>
+                %for f in o.company_emitter_id.partner_id.bank_ids:
                     <tr>
-                        <td width="33%" class="reg_fis">
-                            <font class="font"><b>Certificado del SAT</b></font>
-                        </td>
-                        <td width="34%" class="reg_fis">
-                            <font class="font"><b>Fecha de Timbrado</b></font>
-                        </td>
-                        <td width="33%" class="reg_fis">
-                            <font class="font"><b>Folio Fiscal</b></font>
-                        </td>
+                        <td class="center_td">${f.bank.name or ''|entity} ${f.currency2_id and '/' or '' |entity} ${f.currency2_id and f.currency2_id.name or '' |entity}</td>
+                        <td class="center_td">${f.acc_number or ''|entity}</td>
+                        <td class="center_td">${f.clabe or ''|entity}</td>
                     </tr>
-                    <tr>
-                        <td width="33%" class="reg_fis">
-                            <font class="font">${ o.cfdi_no_certificado or ''|entity }</font>
-                        </td>
-                        <td width="34%" class="reg_fis">
-                            <font class="font">${ o.cfdi_fecha_timbrado or ''|entity }</font>
-                        </td>
-                        <td width="33%" class="reg_fis">
-                            <font class="font">${ o.cfdi_folio_fiscal or ''|entity }</font>
-                        </td>
-                    </tr>
-                </table>
-            %endif
-            %if o.invoice_sequence_id.approval_id.type != 'cbb':
-                <table rules="all" width="100%">
-                    <tr>
-                        <td width="33%" class="reg_fis">
-                            <font class="font"><b>Certificado del emisor</b></font>
-                            <br/><font class="font">${ o.no_certificado or 'No identificado'|entity }</font>
-                        </td>
-                        <td width="34%" class="reg_fis">
-                            <font class="font"><b>Método de Pago:</b></font>
-                            <br/><font class="font">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</font>
-                        </td>
-                        <td width="33%" class="reg_fis">
-                            <font class="font"><b>Últimos 4 dígitos de la cuenta bancaria:</b></font>
-                            <br/><font class="font">${ o.acc_payment.last_acc_number or 'No identificado' }</font>
-                        </td>
-                    </tr>
-                </table>
-            %endif
-        </div>
+                %endfor
+            </table>
+        %endif
+        <table class="basic_table">
+            <tr><td class="center_td">${ o.company_emitter_id.promissory or ''|entity }</td></tr>
+        </table>
+        <!--code for cfd 3.2-->
+        %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
+            <table frame="box" rules="cols" width="100%">
+                <tr>
+                    <td width="33%" class="reg_fis">
+                        <font class="font"><b>Certificado del SAT</b></font>
+                    </td>
+                    <td width="34%" class="reg_fis">
+                        <font class="font"><b>Fecha de Timbrado</b></font>
+                    </td>
+                    <td width="33%" class="reg_fis">
+                        <font class="font"><b>Folio Fiscal</b></font>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="33%" class="reg_fis">
+                        <font class="font">${ o.cfdi_no_certificado or ''|entity }</font>
+                    </td>
+                    <td width="34%" class="reg_fis">
+                        <font class="font">${ o.cfdi_fecha_timbrado or ''|entity }</font>
+                    </td>
+                    <td width="33%" class="reg_fis">
+                        <font class="font">${ o.cfdi_folio_fiscal or ''|entity }</font>
+                    </td>
+                </tr>
+            </table>
+        %endif
+        <!--code for ! cbb-->
+        %if o.invoice_sequence_id.approval_id.type != 'cbb':
+            <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
+                <tr>
+                    <th width="33%">${_('Certificado del emisor')}</th>
+                    <th width="34%">${_('Método de Pago:')}</th>
+                    <th>${_('Últimos 4 dígitos de la cuenta bancaria:')}</th>
+                </tr>
+                <tr>
+                    <td class="center_td">${ o.no_certificado or 'No identificado'|entity }</td>
+                    <td class="center_td">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</td>
+                    <td class="center_td">${ o.acc_payment.last_acc_number or 'No identificado' }</td>
+                </tr>
+            </table>
+        %endif
+        <!--code for cbb-->
         %if o.invoice_sequence_id.approval_id.type == 'cbb':
             <table frame="box">
                 <tr>
@@ -339,6 +337,7 @@
                 </tr>
             </table>
         %endif
+        <!--code for cfd22-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
             <table frame="box" width="100%">
                 <tr>
@@ -356,6 +355,7 @@
                 </tr>
             </table>
         %endif
+        <!--code for cfd32-->
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
             <table frame="box" rules="all" width="100%">
                 <tr>
@@ -375,6 +375,11 @@
                     </td>
                 </tr>
             </table>
+        %endif
+        %if not o.invoice_sequence_id.approval_id.type:
+            <hr>
+            ${_('No se encontró la aprobación')}
+            <hr>
         %endif
     %endfor
 </body>
