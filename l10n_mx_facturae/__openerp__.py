@@ -56,7 +56,7 @@ Requires the following programs:
             "report_webkit",#no depende de "sale" directamente, pero marca error en algunas versiones
             "l10n_mx_notes_invoice",
             "l10n_mx_res_partner_bank",
-            "l10n_mx_facturae_22_regimen_fiscal",
+            "l10n_mx_regimen_fiscal",
             "l10n_mx_payment_method",
             "l10n_mx_invoice_currency_chgdft",
         ],
