@@ -117,7 +117,7 @@ class acceptability_criteria(osv.osv):
         'name':fields.char('Title', size=255, required=True, readonly=False),
         'scenario': fields.text('Scenario', required=True),
         'accep_crit_id':fields.many2one('user.story', 'User Story', required=True),
-
+        'accepted': fields.boolean('Accepted', help='Chek if this criteria apply'), 
     }
     _defaults = {
         'name': lambda *a: None,
