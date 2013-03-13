@@ -33,6 +33,7 @@ class user_story(osv.osv):
     """
 
     _name = 'user.story'
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
 
     def _get_tasks(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
