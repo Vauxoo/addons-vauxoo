@@ -8,9 +8,12 @@
       <field name="type">form</field>
       <field name="inherit_id" ref="project.view_task_form2" />
       <field name="arch" type="xml">
+        
+      
         <xpath expr="//field[@name='categ_ids']" position="after">
-          <field name="userstory_id" />
+          <field name="userstory_id" on_change="onchange_user_story_task(userstory_id)"/>
         </xpath>
+        
       </field>
     </record>
 

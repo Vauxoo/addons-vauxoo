@@ -62,7 +62,10 @@ class user_story(osv.osv):
                                 WHERE id=%s """ % (i)
                     cr.execute(sql_str)
         return True
-
+    
+  
+        
+        
     _columns = {
         'name':fields.char('Title', size=255, required=True, readonly=False),
         'owner':fields.char('Owner', size=255, required=True, readonly=False),
@@ -131,6 +134,23 @@ class project_task(osv.osv):
     """
 
     _inherit = 'project.task'
+
+
+    def onchange_user_story_task(self, cr, uid,ids,us_id, context=None):
+        v = {}
+        us_obj = self.pool.get('user.story')
+        
+        if us_id:
+            sprint = us_obj.browse(cr, uid, us_id, context=context)
+            if sprint.sk_id:
+                v['sprint_id'] = sprint.sk_id.id
+        
+        #~ if oper == 2:
+            #~ story = us_obj.search(cr, uid,[('sk_id', '=', sk_id)], context=context)
+            #~ if story:
+                #~ v['userstory_id'] = story[0]
+                
+        return {'value': v}
 
     _columns = {
         'userstory_id':fields.many2one('user.story', 'User Story',help="Set hear the User Story related with this task"),
