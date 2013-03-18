@@ -40,6 +40,7 @@ Relacion Movimientos con Polizas.
     'depends': ['stock','account'],
     'init_xml': [],
     'update_xml': [
+        'view/stock_move_entries_view.xml',
         ],
     'demo_xml': [],
     'test': [],
