@@ -40,12 +40,26 @@ class account_move_line(osv.osv):
 
 account_move_line()
 
+class account_move(osv.osv):
+    _inherit = "account.move"
+    
+    """
+    """
+    _columns = {
+        'sm_id': fields.many2one('stock.move', 'Stock move ID'),
+    }
+
+account_move()
+
 class stock_move(osv.osv):
     _inherit = "stock.move"
     
     """
     """
     
+    _columns = {
+        'am_id' : fields.many2one('account.move', 'Account move ID')
+    }
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
         res = super(stock_move,self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
         for line in res:
