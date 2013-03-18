@@ -45,8 +45,19 @@ class account_move(osv.osv):
     
     """
     """
+    def _get_sm(self, cr, uid, ids, field_name, args, context=None):
+        res = {}
+        for id in ids:
+            cr.execute('SELECT move_id, sm_id FROM account_move_line WHERE move_id = %s LIMIT 1 ', (id,))
+            if cr.rowcount:
+                id, sm_id = cr.fetchall()[0]
+                res[id] = sm_id
+            else:
+                res[id] = False
+        return res
+    
     _columns = {
-        'sm_id': fields.many2one('stock.move', 'Stock move ID'),
+        'sm_id': fields.function(_get_sm, method=True, type='many2one', relation='stock.move', string='Stock move ID', store=True),
     }
 
 account_move()
@@ -57,9 +68,22 @@ class stock_move(osv.osv):
     """
     """
     
+    def _get_am(self, cr, uid, ids, field_name, args, context=None):
+        res = {}
+        account_move_line_pool = self.pool.get('stock.move')
+        for id in ids:
+            cr.execute('SELECT sm_id, move_id FROM account_move_line WHERE sm_id = %s LIMIT 1 ', (id,))
+            if cr.rowcount:
+                id, am_id = cr.fetchall()[0]
+                res[id] = am_id
+            else:
+                res[id] = False
+        return res
+    
     _columns = {
-        'am_id' : fields.many2one('account.move', 'Account move ID')
+        'am_id': fields.function(_get_am, method=True, type='many2one', relation='account.move', string='Account move ID', store=True),
     }
+    
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
         res = super(stock_move,self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
         for line in res:
