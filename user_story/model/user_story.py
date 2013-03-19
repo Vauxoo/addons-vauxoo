@@ -64,8 +64,16 @@ class user_story(osv.osv):
                     cr.execute(sql_str)
         return True
     
-  
         
+    def write(self, cr, uid, ids, vals, context=None):
+       
+        task_obj = self.pool.get('project.task')
+        if vals.get('sk_id'):
+            
+            task_ids = task_obj.search(cr, uid , [('userstory_id','=',ids[0])])
+            task_obj.write(cr, uid,task_ids,{'sprint_id': vals.get('sk_id')}, context=context) 
+             
+        return  super(user_story, self).write(cr, uid, ids,vals, context=context)    
         
     _columns = {
         'name':fields.char('Title', size=255, required=True, readonly=False),
