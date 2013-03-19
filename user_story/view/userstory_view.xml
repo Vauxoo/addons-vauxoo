@@ -68,14 +68,7 @@
            
             <page string="Comments">
               <separator string="Posts" colspan='4' />
-<!--
-              <record model="ir.ui.view" id="view_user_story_message_inherit">
-                <field name="name">user.story.comments</field>
-                <field name="model">mail.message</field>
-                <field name="inherit_id" ref="mail.view_message_form"/>
-                <field name="arch" type="xml"></field>
-              </record>
--->
+
             </page>
           </notebook>
 		  </sheet>

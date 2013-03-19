@@ -33,7 +33,7 @@ class user_story(osv.osv):
     """
 
     _name = 'user.story'
-    _inherit = ['mail.thread', 'ir.needaction_mixin']
+    _inherit = ['mail.thread']
 
     def _get_tasks(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
@@ -145,11 +145,6 @@ class project_task(osv.osv):
             sprint = us_obj.browse(cr, uid, us_id, context=context)
             if sprint.sk_id:
                 v['sprint_id'] = sprint.sk_id.id
-        
-        #~ if oper == 2:
-            #~ story = us_obj.search(cr, uid,[('sk_id', '=', sk_id)], context=context)
-            #~ if story:
-                #~ v['userstory_id'] = story[0]
                 
         return {'value': v}
 
