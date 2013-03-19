@@ -70,7 +70,6 @@ class stock_move(osv.osv):
     
     def _get_am(self, cr, uid, ids, field_name, args, context=None):
         res = {}
-        account_move_line_pool = self.pool.get('stock.move')
         for id in ids:
             cr.execute('SELECT sm_id, move_id FROM account_move_line WHERE sm_id = %s LIMIT 1 ', (id,))
             if cr.rowcount:
