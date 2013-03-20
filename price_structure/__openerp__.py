@@ -23,37 +23,33 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 {
-    "name" : "Cost Structure",
+    "name" : "Price Structure",
     "version" : "0.1",
-    "depends" : ['account',"stock",'product','purchase','invoice_date_time'],
+    "depends" : ['product','sale','cost_structure'],
     "author" : "Vauxoo",
     "description" : """
-    Module that performs a calculation of average cost in products, 
-    this module performs a search of all movements made by you for goods 
-    and are assigned to cost structure.
-    This module creates a new tab in the product view, where we have the cost structure for product and price list.
-    The average cost is calculated automatically when validating an invoice or credit note, the price list is created 
-    by a wizard located in the sales configuration menu.
-    The product has a list price, the sale must respect the price structure proposed by the calculation, since you will
-    not be allowed the confirmation of an operation if any of the suggested prices is not in accordance with the established ragos product price list.
-    In the menu of sale may select which type of price you want to sell the product
-    
-    
-    
-    
+   This module adds a new functionality to manage price lists for products adding a new tab on the product 
+   view where you can see the price lists where this product is affected either by product or by category.
+
+   It also adds a new feature to the time of a sale, allowing you to choose a price list through which Live 
+   will calculate to give a product price depending on the price list q be selected, regardless of whether 
+   the list price selected at the beginning of the order.
+
+   This also adds a blockade preventing sold when selling a product at a price higher or lower than estimated 
+   by their price lists
     
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : ['data/data_load.xml'],
+    "init_xml" : [],
     "demo_xml" : [],
     "test": [ ],
     "update_xml" : [
-    'security/cost_structure_security.xml',
-    'security/ir.model.access.csv',
-    'wizard/update_price_list_view.xml',
-    'view/cost_structure.xml',
     'view/product_view.xml',
+    'view/sale_view.xml',
+    'view/product_pricelist_view.xml',
+    'workflow/sale_workflow.xml',
+    'wizard/create_list_price_view.xml',
     
     
     

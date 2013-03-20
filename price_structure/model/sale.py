@@ -43,41 +43,39 @@ class sale_order_line(osv.osv):
             
         if context is None:
             context ={}
+        price_obj = self.pool.get('product.pricelist')
         product_obj = self.pool.get('product.product')
         product_brw = product and product_obj.browse(cr,uid,product,context=context)
         res = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
             uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-            lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag)
-        
-        res.get('value',False) and product_brw and product_brw.property_cost_structure and res.get('value',False).update({'cost_structure_id':product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id })
+            lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag,context=context)
+        if context.get('price_change',False):
+            price = price_obj.price_get(cr, uid, [context.get('price_change',False)], product, qty, context=context)
+            res.get('value',{}).update({'price_unit': round(price.get(context.get('price_change',False)),2)})
+        res.get('value',False) and product_brw and product_brw.categ_id and res.get('value',False).update({'categ_id':product_brw.categ_id.id })
         res.get('value',False) and 'price_unit' in res.get('value',False)  and res['value'].pop('price_unit') 
         return res
     
     
-    def price_unit(self,cr,uid,ids,price_method,product_uom,qty,context=None):
+    def price_unit(self,cr,uid,ids,price_list,product_id,qty,context=None):
         '''
         Calculating the amount of model _compute_price method product.uom
         '''
         if context is None:
             context = {}
         res = {'value':{}}
-        
-        if price_method and product_uom:
-            price_obj = self.pool.get('method.price')
-            uom_obj = self.pool.get('product.uom')
-            uom_brw = uom_obj.browse(cr,uid,product_uom,context=context)
-            price_brw = price_obj.browse(cr,uid,price_method,context=context)
-            price = price_brw and price_brw.unit_price
-            price = uom_obj._compute_price(cr, uid, product_uom, price, to_uom_id=False)
-            
-            e = uom_obj._compute_qty(cr, uid, product_uom, qty, to_uom_id=product_uom)
-            res['value'].update({'price_unit': round(price,2)})
+        if price_list and product_id and qty:
+            price_obj = self.pool.get('product.pricelist')
+            price = price_obj.price_get(cr, uid, [price_list], product_id, qty, context=context)
+            res['value'].update({'price_unit': round(price.get(price_list),2)})
         return res
-    
+    #
     _inherit = 'sale.order.line'
     _columns = {
-        'price_structure_id':fields.many2one('method.price','Select Price'),
+        'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], change_default=True),
+        'price_list_ids':fields.many2one('product.pricelist','Select Price'),
         'cost_structure_id':fields.many2one('cost.structure','Cost Structure'),
+        'categ_id':fields.many2one('product.category','Category',help='Category by product selected'),
     
     }
     
@@ -97,19 +95,23 @@ class sale_order(osv.osv):
         '''
         if context is None:
             context = {}
-        if len(ids) == 0:
+        if not ids:
             return {}
         res = {}
         product = []
-        cost_obj = self.pool.get('cost.structure')
-        for order in self.browse(cr,uid,ids,context=context):
+        context.update({'query':False})
+        pricelist_obj = self.pool.get('product.pricelist')
+        for order in len(ids) == 1 and self.browse(cr,uid,ids,context=context) or []:
             for line in order.order_line:
+                price_compute = line.product_id and [ pricelist_obj.price_get(cr, uid, [i.price_list_id and i.price_list_id.id ],
+                                                      line.product_id.id, line.product_uom_qty, context=context).get(i.price_list_id.id) for i in line.product_id.price_list_item_ids or line.product_id.category_item_ids]
+                
                 property_cost_structure = line and line.product_id and line.product_id.property_cost_structure and line.product_id.property_cost_structure.id or False
-                if property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if round(line.price_unit,2) < round(i.unit_price,2)]):
+                if property_cost_structure and len(price_compute) == len([i for i in price_compute if round(line.price_unit,2) < round(i,2)]):
                     product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
                     res[order.id] = {'status_bool':True}
                 
-                elif property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if round(line.price_unit,2) > round(i.unit_price,2)]):
+                elif property_cost_structure and len(price_compute) == len([i for i in price_compute if round(line.price_unit,2) > round(i,2)]):
                     product.append(u'Intenta vender el producto %s a un precio mayor al estimado para su venta'%line.product_id.name)
                     res[order.id] = {'status_bool':True}
                 
@@ -133,7 +135,6 @@ class sale_order(osv.osv):
         'status_price':fields.function(_price_status, method=True,type="text", store=True, string='Status Price'),
         'status_bool':fields.function(_price_status, method=True,type="boolean", string='Status Price'),
         
-        
     }
     
     _defaults = {
@@ -141,6 +142,7 @@ class sale_order(osv.osv):
     
     
     }
+    
     def price_unit_confirm(self,cr,uid,ids,context=None):
         '''
         Workflow condition does not allow the sale process if at least one product is being sold in the price range set out in its cost structure
@@ -148,13 +150,18 @@ class sale_order(osv.osv):
         if context is None:
             context = {}
         product = []
+        context.update({'query':False})
         sale_brw = self.browse(cr,uid,ids and ids[0],context=context)
-        for line in sale_brw.order_line:
+        pricelist_obj = self.pool.get('product.pricelist')
+        for line in len(ids) == 1 and sale_brw.order_line or []:
             property_cost_structure = line and line.product_id and line.product_id.property_cost_structure and line.product_id.property_cost_structure.id or False
-            if property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if round(line.price_unit,2) < round(i.unit_price,2)]):
+            price_compute = line.product_id and [ pricelist_obj.price_get(cr, uid, [i.price_list_id and i.price_list_id.id ],
+                                                      line.product_id.id, line.product_uom_qty, context=context).get(i.price_list_id.id) for i in line.product_id.price_list_item_ids or line.product_id.category_item_ids]
+                            
+            if property_cost_structure and len(price_compute) == len([i for i in price_compute if round(line.price_unit,2) < round(i,2)]):
                 product.append(u'Intenta vender el producto %s a un precio menor al estimado para su venta'%line.product_id.name)
         
-            elif property_cost_structure and len(line.product_id.method_cost_ids) == len([i.id for i in line.product_id.method_cost_ids if round(line.price_unit,2) > round(i.unit_price,2)]):
+            elif property_cost_structure and len(price_compute) == len([i for i in price_compute if round(line.price_unit,2) > round(i,2)]):
                 product.append(u'Intenta vender el producto %s a un precio mayor al estimado para su venta'%line.product_id.name)
 
 

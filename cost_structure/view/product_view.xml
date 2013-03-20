@@ -15,7 +15,7 @@
             </group>
             <group colspan="6" col="4" string="Costos">
               <field name='cost_ult' groups="cost_structure.group_cost_structure_manager" />
-              <field name='date_cost_ult' groups="cost_structure.group_cost_structure_manager"/>
+              <field name='date_cost_ult' groups="cost_structure.group_cost_structure_manager" />
               <field name='cost_ant' groups="cost_structure.group_cost_structure_manager" />
               <field name='date_cost_ant' groups="cost_structure.group_cost_structure_manager" />
               <field name='cost_prom' colspan="1" groups="cost_structure.group_cost_structure_manager" />
@@ -29,26 +29,23 @@
               <field name='cost_suppler' groups="cost_structure.group_cost_structure_manager" />
               <field name='date_cost_suppler' groups="cost_structure.group_cost_structure_manager" />
               <!-- <field name='cost_to_price' /> -->
-<!--            <field name='date_cost_to_price' />-->
+              <!--            <field name='date_cost_to_price' />-->
             </group>
-            <field name='method_cost_ids' nolabel="1" context="{'property_cost_structure':property_cost_structure}">
-            <tree editable="bottom" >
-              <field name='sequence' />
+            <field name='method_cost_ids' nolabel="1" context="{'method_cost_ids':method_cost_ids,'property_cost_structure':property_cost_structure}">
+              <tree editable="bottom">
+                <field name='sequence' />
                 <field name='unit_price' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />
-              <field name='cost_structure_id' invisible="1" />
-              <field name='reference_cost_structure_id' invisible="1" />
-              <field name='date' />
-              <field name='price_referen' />
-              <field name='margin_reference' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />
-              <field name='date_prom_begin' />
-              <field name='date_prom_end' />
-              <field name='default_cost'  />
-            </tree>
+                <field name='cost_structure_id' invisible="1" />
+                <field name='reference_cost_structure_id' invisible="1" />
+                <field name='date' />
+                <field name='price_referen' />
+                <field name='margin_reference' on_change="onchange_marginprice(unit_price,margin_reference,reference_cost_structure_id)" />
+                <field name='date_prom_begin' />
+                <field name='date_prom_end' />
+                <field name='default_cost' />
+              </tree>
             </field>
           </page>
-        </xpath>
-        <xpath expr='//page[@string="Information"]' position="after">
-          <page string="Landing Information"><!-- <field name='arancel' /> --></page>
         </xpath>
       </field>
     </record>
