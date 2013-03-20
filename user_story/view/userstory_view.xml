@@ -43,28 +43,46 @@
                   <field name="name" colspan="4" nolabel="1" />
                   <separator string="Scenario" colspan='4' />
                   <field name="scenario" colspan="4" nolabel="1" />
+                  <separator string="Accepted" colspan='4' />
+                  <field name="accepted" colspan="4" nolabel="1" />
                 </form>
                 <tree string="Acceptability Criteria">
                   <field name="name" />
                   <field name="scenario" />
+                  <field name="accepted" />
                 </tree>
               </field>
             </page>
+          
             <page string="Other Info">
 			  <separator string="Information" colspan='4' />
               <field name="info" colspan="4" placeholder="Add a other info here ..."/> 
               <separator string="Asumptions" colspan='4' />
               <field name="asumption" colspan="4" placeholder="Add a asumptions here ..."/>
             </page>
+            
             <page string="Link">
               <separator string="Tasks" colspan='4' />
               <field name="task_ids" colspan="4" nolabel="1" widget="many2many"/>
             </page>
+           
+            <page string="Comments">
+              <separator string="Posts" colspan='4' />
+
+            </page>
           </notebook>
 		  </sheet>
+           <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+          
         </form>
       </field>
     </record>
+    
+
+    
     <record model="ir.ui.view" id="view_userstory_tree">
       <field name="name">user.story.tree</field>
       <field name="model">user.story</field>

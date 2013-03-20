@@ -33,6 +33,7 @@ class user_story(osv.osv):
     """
 
     _name = 'user.story'
+    _inherit = ['mail.thread']
 
     def _get_tasks(self, cr, uid, ids, field_name, arg, context=None):
         if context is None:
@@ -62,7 +63,18 @@ class user_story(osv.osv):
                                 WHERE id=%s """ % (i)
                     cr.execute(sql_str)
         return True
-
+    
+        
+    def write(self, cr, uid, ids, vals, context=None):
+       
+        task_obj = self.pool.get('project.task')
+        if vals.get('sk_id'):
+            
+            task_ids = task_obj.search(cr, uid , [('userstory_id','=',ids[0])])
+            task_obj.write(cr, uid,task_ids,{'sprint_id': vals.get('sk_id')}, context=context) 
+             
+        return  super(user_story, self).write(cr, uid, ids,vals, context=context)    
+        
     _columns = {
         'name':fields.char('Title', size=255, required=True, readonly=False),
         'owner':fields.char('Owner', size=255, required=True, readonly=False),
@@ -117,7 +129,7 @@ class acceptability_criteria(osv.osv):
         'name':fields.char('Title', size=255, required=True, readonly=False),
         'scenario': fields.text('Scenario', required=True),
         'accep_crit_id':fields.many2one('user.story', 'User Story', required=True),
-
+        'accepted': fields.boolean('Accepted', help='Chek if this criteria apply'), 
     }
     _defaults = {
         'name': lambda *a: None,
@@ -131,6 +143,18 @@ class project_task(osv.osv):
     """
 
     _inherit = 'project.task'
+
+
+    def onchange_user_story_task(self, cr, uid,ids,us_id, context=None):
+        v = {}
+        us_obj = self.pool.get('user.story')
+        
+        if us_id:
+            sprint = us_obj.browse(cr, uid, us_id, context=context)
+            if sprint.sk_id:
+                v['sprint_id'] = sprint.sk_id.id
+                
+        return {'value': v}
 
     _columns = {
         'userstory_id':fields.many2one('user.story', 'User Story',help="Set hear the User Story related with this task"),
