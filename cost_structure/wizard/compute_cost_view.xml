@@ -23,7 +23,7 @@
                         <group col="1">
                     <field name='product'/>
                 </group>
-                    <field name='product_ids'  editable="bottom" nolabel="1" attrs="{'readonly':[('all','=',True)],'invisible':[('product','=',False)],'required':[('all','=',False)]}">
+                    <field name='product_ids'  editable="buttom" nolabel="1" attrs="{'readonly':[('all','=',True)],'invisible':[('product','=',False)],'required':[('all','=',False)]}">
                         <tree>
                             <field name="name" />
                         
@@ -37,9 +37,17 @@
                             <field name='fiscalyear_id' domain="[('state','=','draft')]" required="1"/> 
                             <field name='period_id' domain="[('state','=','draft'),('fiscalyear_id','=',fiscalyear_id)]" required="1"/> 
                 </group>
+                       
+                
+                       
                         <group col="1">
                     <field name='all'/>
                 </group>
+                
+                
+             
+                
+                
                         <group col="2">
                <button string="Cancel"
                    special="cancel"
