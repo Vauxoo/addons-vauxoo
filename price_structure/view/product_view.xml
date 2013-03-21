@@ -4,7 +4,7 @@
     <record model="ir.ui.view" id="product_price_structure_view_form">
       <field name="name">product.normal.form</field>
       <field name="model">product.product</field>
-      <field name="inherit_id" ref="product.product_normal_form_view" />
+      <field name="inherit_id" ref="cost_structure.product_cost_structure" />
       <field name="type">form</field>
       <field name="arch" type="xml">
         <xpath expr='//page[@string="Advance Options"]' position="after">
