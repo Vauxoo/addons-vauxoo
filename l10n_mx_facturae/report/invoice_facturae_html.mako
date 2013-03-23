@@ -239,11 +239,11 @@
             </tr>
         </table>
         <br clear="all"/>
-        <%print o.invoice_sequence_id.approval_id.type, "invoice_sequence_id"%>
+        <%print o.invoice_sequence_id.approval_id.type, "invoice_sequence_id please delete after"%>
         <!--code for cfd-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
-            <font class="font">“Este documento es una representacion impresa de un CFD”
-            <br/>CFD, Comprobante Fiscal Digital</font>
+            ${_('“Este documento es una representacion impresa de un CFD”')}<br/>
+            ${_('CFD, Comprobante Fiscal Digital')}
         %elif o.invoice_sequence_id.approval_id.type == 'cfdi32':
             <font class="font">“Este documento es una representacion impresa de un CFDI”
             <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
@@ -312,14 +312,14 @@
                 </tr>
                 <tr>
                     <td class="center_td">${ o.no_certificado or 'No identificado'|entity }</td>
-                    <td class="center_td">${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or 'No identificado'|entity }</td>
+                    <td class="center_td">${ o.pay_method_id.name or 'No identificado'|entity }</td>
                     <td class="center_td">${ o.acc_payment.last_acc_number or 'No identificado' }</td>
                 </tr>
             </table>
         %endif
         <!--code for cbb-->
         %if o.invoice_sequence_id.approval_id.type == 'cbb':
-            <table frame="box">
+            <table class="basic_table" style="border:1.5px solid grey;">
                 <tr>
                     <td width="20%" valign="top" align="center">
                         %if get_approval():
@@ -339,21 +339,17 @@
         %endif
         <!--code for cfd22-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
-            <table frame="box" width="100%">
-                <tr>
-                    <td width="15%" valign="top" align="center">
-                        ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}
-                    </td>
-                    <td width="85%" valign="top">
-                        <div><font class="facturae"><b>Serie del Certificado :</b></font>
-                        <p class="cadena_cfd">${o.no_certificado or ''|entity}</p></div>
-                        <div><font class="facturae"><b>Sello digital:</b></font>
-                        <p class="cadena_cfd">${split_string( o.sello or '') or ''|entity}</p></div>
-                        <div><font class="facturae"><b>Cadena original :</b></font>
-                        <p class="cadena_cfd">${split_string( o.cadena_original or '') or '' |entity}</p></div>
-                    </td>
-                </tr>
-            </table>
+            <div style="page-break-inside:avoid; border:1.5px solid grey;">
+                <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}</div>
+                <span class="datos_fiscales">
+                    <b>${_('Serie del Certificado')}</b><br/>
+                    ${o.no_certificado or ''|entity}
+                    <br/><br/><b>${_('Sello digital')}:</b><br/>
+                    ${split_string( o.sello or '') or ''|entity}
+                    <br/><br/><b>${_('Cadena original')}:</b><br/>
+                    ${split_string( o.cadena_original or '') or '' |entity}
+                </span>
+            </div>
         %endif
         <!--code for cfd32-->
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
@@ -381,6 +377,7 @@
             ${_('No se encontró la aprobación')}
             <hr>
         %endif
+    <p style="page-break-after:always"></p>
     %endfor
 </body>
 </html>
