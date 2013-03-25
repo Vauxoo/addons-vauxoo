@@ -2,51 +2,46 @@
 <openerp>
     <data>
 <!--
-	View of wizard on mrp production
+    View of wizard on mrp production
 -->
         <record id="mrp_production_wizard_form" model="ir.ui.view">
             <field name="name">mrp.production.wizard.form</field>
             <field name="model">mrp.production.wizard</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Produce without BoM">
-			<field name="product_id"/>
-			<newline/>
-			<field colspan="2" name="wiz_data" nolabel="1" widget="one2many_list" mode="tree,form" height="275">
-			    <tree string="Products to consume">
-				<field name="product_id_consume" on_change="onchange_production_wizard_product_name(product_id_consume)"/>
-				<field name="product_qty" string="Qty"/>
-				<field name="name"/>
-				<field name="product_uom" string="UOM"/>
-			    </tree>
-			    <form string="Products to consume">
-				<field name="product_id_consume" on_change="onchange_production_wizard_product_name(product_id_consume)"/>
-				<field name="product_qty" string="Qty"/>
-				<field name="name"/>
-				<field name="product_uom" string="UOM"/>
-			    </form>
-			</field>
-			<group colspan="4">
-				<button string="Cancel" icon="gtk-cancel" type="object" special="cancel"/>
-				<button string="Create production order" icon="gtk-ok" name="pass_products_to_parent" type="object"/>
-			</group>
+                <form string="Produce without BoM" version="7.0">
+                    <header>
+                        <button string="Cancel" icon="gtk-cancel" type="object" special="cancel" class="oe_highlight"/>
+                        <button string="Create production order" icon="gtk-ok" name="pass_products_to_parent" type="object"/>
+                    </header>
+                    <sheet>
+                        <field name="product_id"/>
+                        <newline/>
+                        <field colspan="2" name="wiz_data" nolabel="1" widget="one2many_list" mode="tree" height="275">
+                            <tree string="Products to consume">
+                                <field name="product_id_consume" on_change="onchange_production_wizard_product_name(product_id_consume)"/>
+                                <field name="product_qty" string="Qty"/>
+                                <field name="name"/>
+                                <field name="product_uom" string="UOM"/>
+                            </tree>
+                        </field>
+                    </sheet>
                 </form>
             </field>
         </record>
-	
+    
 
-		  
-	<act_window id="mrp_production_wizard_act"
-		name="Special Order"
-		src_model="mrp.production"
-		res_model="mrp.production.wizard"
-		view_mode="form"
-		target="new"
-		key2="client_action_multi"
-		  />
-	
-	<menuitem action="mrp_production_wizard_act" id="mrp_production_wizard_action"
+          
+    <act_window id="mrp_production_wizard_act"
+        name="Special Order"
+        src_model="mrp.production"
+        res_model="mrp.production.wizard"
+        view_mode="form"
+        target="new"
+        key2="client_action_multi"
+          />
+    
+    <menuitem action="mrp_production_wizard_act" id="mrp_production_wizard_action"
             parent="mrp.menu_mrp_manufacturing" sequence="50"/>
-	    
+        
     </data>
 </openerp>

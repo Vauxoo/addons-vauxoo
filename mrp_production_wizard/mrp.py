@@ -30,7 +30,7 @@ import netsvc
 from tools.translate import _
 import tools
 import os
-from osv import osv, fields
+from openerp.osv import osv, fields
 import time
 from tools import ustr
 
