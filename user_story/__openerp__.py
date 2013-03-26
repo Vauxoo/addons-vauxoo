@@ -27,7 +27,11 @@
 {
     "name" : "User Story",
     "version" : "0.1",
-    "depends" : ["base","project","sprint_kanban"],
+    "depends" : [
+                 "base",
+                 "project",
+                 "sprint_kanban"
+                 ],
     "author" : "Vauxoo",
     "description" : """
 Este módulo registra requerimientos funcionales y técnicos de software a 

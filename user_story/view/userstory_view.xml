@@ -31,16 +31,17 @@
 					<field name="sk_id" />
 				</group>
 			</group>
-		    <label for="project_id" class="oe_edit_only" />
-		    <field name="project_id" 
-		    domain="[('child_ids','=',False)]"/>
+			<h3>
+		        <label for="project_id"/>
+			</h3>
             <div>
-                <p class="oe_edit_only">
-                </p>
                 <p class="oe_grey">
-                    All projects of lower level.
-                    Here you will attach your projects,
-                    that represent thumbs in your wbs
+		            <field name="project_id" 
+		            domain="[('child_ids','=',False)]"
+		            context="{'current_model': 'project.project'}"
+		            class="oe_inline"/>the link to the project, all projects listed here
+                    are of the lower level available in the Master WBS. This
+                    represent thumbs in your wbs
                 </p>
             </div>
           <notebook colspan="4">
