@@ -103,7 +103,7 @@ msgstr "¡La cantidad de la orden no puede ser negativa o cero!"
 #: model:ir.actions.act_window,name:mrp_production_wizard.mrp_production_wizard_act
 #: model:ir.ui.menu,name:mrp_production_wizard.mrp_production_wizard_action
 msgid "Special Order"
-msgstr "Orden especial"
+msgstr "Orden Especial"
 
 #. module: mrp_production_wizard
 #: field:mrp.production.wizard,wiz_data:0
