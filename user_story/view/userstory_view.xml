@@ -85,7 +85,7 @@
               </field>
             </page>
           
-            <page string="GAP analysis info">
+            <page string="GAP analysis results">
 			  <label for="info" colspan='4' string="5.- Conclusion of analysis"
                      class="oe_horizontal_separator oe_clear" />
               <field name="info" colspan="4" placeholder="Add a other info here ..."/> 
@@ -101,7 +101,7 @@
           </notebook>
 		  </sheet>
            <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this user story to automatically track the events associated to tasks and issues of the project related." groups="base.group_user"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
           
