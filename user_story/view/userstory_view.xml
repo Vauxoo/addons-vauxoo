@@ -17,6 +17,24 @@
 			<field name="state" widget="statusbar"/>
 		  </header>
 		  <sheet string="User Story">
+            <div class="oe_form_sheet_width">
+                <p class="oe_grey">
+                A deeper explanation about what an user story is can be 
+                found here.
+                <a href="http://dannorth.net/whats-in-a-story/" 
+                target="_NEW">Here more information</a>
+                </p>
+                <p class="oe_grey">
+                Please load as attachment, all documents that support 
+                your explanations 
+                here on xmind or other formats with the explanations 
+                that you need to fill here.
+                An example with all reference about topics you must consider 
+                is available
+                <a href="/user_story/static/src/demo/TestUS.xmind" 
+                target="_NEW">here</a>
+                </p>
+            </div>
 		  <h1><label for="name"  string="1.- Title of the Story"
 		       class="oe_horizontal_separator oe_clear"/></h1>
 			<h2><field name="name"/></h2>
