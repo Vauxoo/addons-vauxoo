@@ -27,15 +27,27 @@
 					<field name="code" />
 				</group>
 				<group>
-					<field name="project_id" />
 					<field name="planned_hours" />
 					<field name="sk_id" />
 				</group>
 			</group>
+		    <label for="project_id" class="oe_edit_only" />
+		    <field name="project_id" 
+		    domain="[('child_ids','=',False)]"/>
+            <div>
+                <p class="oe_edit_only">
+                </p>
+                <p class="oe_grey">
+                    All projects of lower level.
+                    Here you will attach your projects,
+                    that represent thumbs in your wbs
+                </p>
+            </div>
           <notebook colspan="4">
             <page string="Description">
               <separator string="Description" colspan='4' />
-              <field name="description" colspan="4" nolabel="1" placeholder="Add a description here ..."/>
+              <field name="description" colspan="4" nolabel="1" 
+              placeholder="Add a description here ..." widget="html"/>
               <separator string="Acceptability Criteria" colspan='4' />
               <field name="accep_crit_ids" colspan="4" nolabel="1" >
                 <form string="Acceptability Criteria">
@@ -68,7 +80,6 @@
            
             <page string="Comments">
               <separator string="Posts" colspan='4' />
-
             </page>
           </notebook>
 		  </sheet>
@@ -136,6 +147,17 @@
       <field name="view_mode">tree,form</field>
       <field name="context">{"search_default_current": uid}</field>
       <field name="search_view_id" ref="view_userstory_search" />
+      <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Behaviour-driven development is an 
+      “outside-in” methodology. It starts at the outside by identifying business 
+      outcomes, and then drills down into the feature set that will achieve 
+      those outcomes. Each feature is captured as a “story”, which defines the 
+      scope of the feature along with its acceptance criteria. 
+      This article introduces the BDD approach to defining and identifying 
+      stories and their acceptance criteria.</p><p>
+      <a href="http://dannorth.net/whats-in-a-story/" target="_NEW">Here more information</a>
+      </p>
+      </field>
     </record>
     <menuitem parent="project.menu_project_management" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" />
   </data>
