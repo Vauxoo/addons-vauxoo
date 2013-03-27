@@ -22,7 +22,7 @@
                     %if o.type in ['out_invoice', 'out_refund']:
                         %if o.state in ['open', 'paid', 'cancel']:
                             ${o.number or ''|entity}
-                            %else:
+                        %else:
                                 <font size="2">${'SIN FOLIO O ESTATUS NO VALIDO'}</font>
                         %endif
                     %endif
@@ -319,23 +319,26 @@
         %endif
         <!--code for cbb-->
         %if o.invoice_sequence_id.approval_id.type == 'cbb':
-            <table class="basic_table" style="border:1.5px solid grey;">
-                <tr>
-                    <td width="20%" valign="top" align="center">
-                        %if get_approval():
-                            ${helper.embed_image('jpeg',str(get_approval().cbb_image),180, 180)}
-                        %endif
-                    </td>
-                    <td width="70%" valign="top" align="left">
-                        <font class="font">Número de aprobación SICOFI: ${get_approval() and get_approval().approval_number or '' |entity}</font>
-                        <br/><font class="font">La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.</font>
-                        <br/><font class="font">Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es ${get_approval() and get_approval().date_start or '' |entity}</font>
-                    </td>
-                    <td width="15%" valign="top" align="center">
-                        ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}
-                    </td>
-                </tr>
-            </table>
+            %if get_approval():
+                <%cbb_approval_row = get_approval()%>
+                <table class="basic_table" style="page-break-inside:avoid; border:1.5px solid grey;">
+                    <tr>
+                        <td width="20%" valign="top">
+                                ${helper.embed_image('jpeg',str(cbb_approval_row.cbb_image),180, 180)}
+                        </td>
+                        <td valign="top" class="tax_td" style="padding-top:3px;">
+                            Número de aprobación SICOFI: ${cbb_approval_row.approval_number or '' |entity}<br/>
+                            La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.<br/>
+                            Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es: ${cbb_approval_row.date_start or '' |entity}
+                        </td>
+                        <td width="15%" valign="top">
+                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}
+                        </td>
+                    </tr>
+                </table>
+            %else:
+                <p> ${_('La aprobación CBB no pudo ser obtenida, por favor contacte a su administrador')}
+            %endif
         %endif
         <!--code for cfd22-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
