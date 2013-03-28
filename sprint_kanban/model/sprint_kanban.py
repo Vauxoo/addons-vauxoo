@@ -74,11 +74,9 @@ class sprint_kanban(osv.osv):
         return self.set_priority(cr, uid, ids, '2')
                     
     _defaults = {
-        
         'state': 'draft',
         'priority': '1',
-     
-    }            
+        }            
 
 class sprint_kanban_tasks(osv.osv):
 
@@ -91,5 +89,4 @@ class sprint_kanban_tasks(osv.osv):
 		'merge_proposal': fields.char('Merge Proposal',264),
 		'blueprint': fields.char('Blueprint',264),
 		'res_id': fields.char('Revno',64),
-             
- }
+        }
