@@ -29,15 +29,13 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module shows the tax actually paid/cashed in the move of payment
-     -You will nedd to aplly the patch patch/yaml_import.patch, 
-      that is located in this module  ( use:patch -b file.py  file.patch )""",
+    "description" : """This module shows the tax actually paid/cashed in the move of payment""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["account","account_voucher","account_invoice_tax"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["account_tax_view.xml"],
+    "update_xml" : ["account_tax_view.xml","account_voucher_tax_view.xml"],
     "test": [
         'test/account_voucher_taxes.yml',
         'test/account_voucher_taxes_partial.yml',
