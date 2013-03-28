@@ -30,7 +30,7 @@ class sprint_kanban(osv.osv):
         
     
     _name = 'sprint.kanban'
-    _inherit = ['mail.thread', 'ir.needaction_mixin','account.analytic.account']
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
     
     _columns = {
                 'use_phases': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),

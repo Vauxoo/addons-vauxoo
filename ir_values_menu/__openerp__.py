@@ -6,7 +6,8 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: el_rodo_1 (rodo@vauxoo.com)
+#    Coded by: Isaac Lopez (isaac@vauxoo.com)
+#              moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,20 +26,22 @@
 ##############################################################################
 
 {
-    "name" : "account_voucher_tax",
+    "name" : "Creacion del menu de ir_values con key == default",
     "version" : "1.0",
     "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module shows the tax actually paid/cashed in the move of payment""",
+    "category" : "Generic Modules",
+    "description" : """This module creates menu item to model ir.values
+    """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account","account_voucher","account_invoice_tax"],
+    "depends" : ["base"
+        ],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["account_tax_view.xml","account_voucher_tax_view.xml"],
-    "test": [
-        'test/account_voucher_taxes.yml',
-        'test/account_voucher_taxes_partial.yml',
+    "update_xml" : [
+        'security/ir.model.access.csv',
+        'security/ir.rule.csv',
+        'ir_values_view.xml',
     ],
     "installable" : True,
     "active" : False,
