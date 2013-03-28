@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from osv import fields
-from osv import osv
-from tools.translate import _
+from openerp.osv import fields
+from openerp.osv import osv
+from openerp.tools.translate import _
 import time
 import random
 from datetime import datetime
@@ -79,8 +79,6 @@ class sprint_kanban(osv.osv):
         'priority': '1',
      
     }            
-   
-sprint_kanban()    
 
 class sprint_kanban_tasks(osv.osv):
 
@@ -95,5 +93,3 @@ class sprint_kanban_tasks(osv.osv):
 		'res_id': fields.char('Revno',64),
              
  }
-sprint_kanban_tasks()
-
