@@ -17,8 +17,27 @@
 			<field name="state" widget="statusbar"/>
 		  </header>
 		  <sheet string="User Story">
-		  <label for="name" class="oe_edit_only" />
-			<h1><field name="name" /></h1>
+            <div class="oe_form_sheet_width">
+                <p class="oe_grey">
+                A deeper explanation about what an user story is can be 
+                found here.
+                <a href="http://dannorth.net/whats-in-a-story/" 
+                target="_NEW">Here more information</a>
+                </p>
+                <p class="oe_grey">
+                Please load as attachment, all documents that support 
+                your explanations 
+                here on xmind or other formats with the explanations 
+                that you need to fill here.
+                An example with all reference about topics you must consider 
+                is available
+                <a href="/user_story/static/src/demo/TestUS.xmind" 
+                target="_NEW">here</a>
+                </p>
+            </div>
+		  <h1><label for="name"  string="1.- Title of the Story"
+		       class="oe_horizontal_separator oe_clear"/></h1>
+			<h2><field name="name"/></h2>
 			<group>
 				<group>
 					<field name="owner" />
@@ -27,19 +46,49 @@
 					<field name="code" />
 				</group>
 				<group>
-					<field name="project_id" />
 					<field name="planned_hours" />
 					<field name="sk_id" />
 				</group>
 			</group>
+			<h3>
+		        <label for="project_id" string="2.- Project related"
+                     class="oe_horizontal_separator oe_clear" />
+			</h3>
+            <div>
+                <p class="oe_grey">
+		            <field name="project_id" 
+		            domain="[('child_ids','=',False)]"
+		            context="{'current_model': 'project.project'}"/>
+		            the link to the project, all projects listed here
+                    are of the lower level available in the Master WBS. This
+                    represent thumbs in your wbs
+                </p>
+            </div>
           <notebook colspan="4">
-            <page string="Description">
-              <separator string="Description" colspan='4' />
-              <field name="description" colspan="4" nolabel="1" placeholder="Add a description here ..."/>
-              <separator string="Acceptability Criteria" colspan='4' />
+            <page string="Details">
+              <h1><label for="description" 
+                     string="3.- Description" 
+                     colspan='4' 
+                     class="oe_horizontal_separator oe_clear"/></h1>
+                <div>
+                   <p class="oe_grey">
+                    Here in the description, you must be as explícit as you can,
+                    Remember you can upload a Youtube video, and insert 
+                    directly here, embeded as a webpage, you can use vimeo and 
+                    other elements as images, diagrams (using some 
+                    online services) you just must copy and paste the embebed code,
+                    you can see an example about how to do that 
+                    <a href="youtube">here</a>
+                    </p>
+                </div>
+              <field name="description" colspan="4" nolabel="1" 
+              placeholder="Add a description here ..." widget="html"/>
+		      <h1><label for="accep_crit_ids"  
+		           string="4.- Aceptability Criteria"
+		           class="oe_horizontal_separator oe_clear"/></h1>
               <field name="accep_crit_ids" colspan="4" nolabel="1" >
                 <form string="Acceptability Criteria">
-                  <separator string="Name" colspan='4' />
+                  <separator string="3.- Description" colspan='4' />
                   <field name="name" colspan="4" nolabel="1" />
                   <separator string="Scenario" colspan='4' />
                   <field name="scenario" colspan="4" nolabel="1" />
@@ -54,10 +103,12 @@
               </field>
             </page>
           
-            <page string="Other Info">
-			  <separator string="Information" colspan='4' />
+            <page string="GAP analysis results">
+			  <label for="info" colspan='4' string="5.- Conclusion of analysis"
+                     class="oe_horizontal_separator oe_clear" />
               <field name="info" colspan="4" placeholder="Add a other info here ..."/> 
-              <separator string="Asumptions" colspan='4' />
+              <label for="asumption" colspan='4' string="6.- Asumptions"
+                     class="oe_horizontal_separator oe_clear"/>
               <field name="asumption" colspan="4" placeholder="Add a asumptions here ..."/>
             </page>
             
@@ -65,15 +116,10 @@
               <separator string="Tasks" colspan='4' />
               <field name="task_ids" colspan="4" nolabel="1" widget="many2many"/>
             </page>
-           
-            <page string="Comments">
-              <separator string="Posts" colspan='4' />
-
-            </page>
           </notebook>
 		  </sheet>
            <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" help="Follow this project to automatically track the events associated to tasks and issues of this project." groups="base.group_user"/>
+                    <field name="message_follower_ids" widget="mail_followers" help="Follow this user story to automatically track the events associated to tasks and issues of the project related." groups="base.group_user"/>
                     <field name="message_ids" widget="mail_thread"/>
                 </div>
           
@@ -136,6 +182,17 @@
       <field name="view_mode">tree,form</field>
       <field name="context">{"search_default_current": uid}</field>
       <field name="search_view_id" ref="view_userstory_search" />
+      <field name="help" type="html">
+      <p class="oe_view_nocontent_create">Behaviour-driven development is an 
+      “outside-in” methodology. It starts at the outside by identifying business 
+      outcomes, and then drills down into the feature set that will achieve 
+      those outcomes. Each feature is captured as a “story”, which defines the 
+      scope of the feature along with its acceptance criteria. 
+      This article introduces the BDD approach to defining and identifying 
+      stories and their acceptance criteria.</p><p>
+      <a href="http://dannorth.net/whats-in-a-story/" target="_NEW">Here more information</a>
+      </p>
+      </field>
     </record>
     <menuitem parent="project.menu_project_management" id="menu_action_user_story" action="action_user_story" groups="user_story.group_user_story_manager,user_story.group_user_story_user" />
   </data>

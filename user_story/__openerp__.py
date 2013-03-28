@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution    
@@ -26,18 +27,25 @@
 {
     "name" : "User Story",
     "version" : "0.1",
-    "depends" : ["base","project","sprint_kanban"],
-    "author" : ["Vauxoo",],
+    "depends" : [
+                 "base",
+                 "project",
+                 "sprint_kanban"
+                 ],
+    "author" : "Vauxoo",
     "description" : """
-    What do this module:
-    Este módulo registra requerimientos funcionales y técnicos de software a través de Historias de Usuarios. 
+Este módulo registra requerimientos funcionales y técnicos de software a 
+través de Historias de Usuarios. 
     
-    Las historias se redactan siguiendo preceptos de las prácticas ágiles, y mas específicamente de una recomendación de Dan North
-    en su artículo 'What's in a Story?'. Este artículo representa la documentación funcionalde este módulo. Las fuentes en inglés
-    y español el artículo son las siguientes:
+Las historias se redactan siguiendo preceptos de las prácticas ágiles, y mas 
+específicamente de una recomendación de Dan North.
+
+En su artículo 'What's in a `Story`_ ?'. Este artículo representa la documentación 
+funcionalde este módulo. Las `fuentes`_  en inglés y español el artículo son las 
+siguientes:
     
-    http://dannorth.net/whats-in-a-story/
-    http://adrianmoya.com/2012/08/que-hay-en-una-historia/
+.. Story: http://dannorth.net/whats-in-a-story/
+.. fuentes: http://adrianmoya.com/2012/08/que-hay-en-una-historia/
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
