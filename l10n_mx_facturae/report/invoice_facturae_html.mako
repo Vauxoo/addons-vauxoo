@@ -86,7 +86,6 @@
             </tr>
         </table>
         <table class="line" width="100%" border="1"></table>
-        <font size="15"></font>
         <table class="basic_table" style="font-size:11;">
             <tr>
                 <td width="80%">
@@ -277,28 +276,16 @@
         </table>
         <!--code for cfd 3.2-->
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
-            <table frame="box" rules="cols" width="100%">
+            <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
-                    <td width="33%" class="reg_fis">
-                        <font class="font"><b>Certificado del SAT</b></font>
-                    </td>
-                    <td width="34%" class="reg_fis">
-                        <font class="font"><b>Fecha de Timbrado</b></font>
-                    </td>
-                    <td width="33%" class="reg_fis">
-                        <font class="font"><b>Folio Fiscal</b></font>
-                    </td>
+                    <th width="33%"> ${_('Certificado del SAT')}</th>
+                    <th> ${_('Fecha de Timbrado')}</th>
+                    <th width="33%"> ${_('Folio Fiscal')}</th>
                 </tr>
                 <tr>
-                    <td width="33%" class="reg_fis">
-                        <font class="font">${ o.cfdi_no_certificado or ''|entity }</font>
-                    </td>
-                    <td width="34%" class="reg_fis">
-                        <font class="font">${ o.cfdi_fecha_timbrado or ''|entity }</font>
-                    </td>
-                    <td width="33%" class="reg_fis">
-                        <font class="font">${ o.cfdi_folio_fiscal or ''|entity }</font>
-                    </td>
+                    <td width="33%" class="center_td"> ${ o.cfdi_no_certificado or ''|entity }</td>
+                    <td class="center_td"> ${ o.cfdi_fecha_timbrado or ''|entity }</td>
+                    <td width="33%" class="center_td"> ${ o.cfdi_folio_fiscal or ''|entity }</td>
                 </tr>
             </table>
         %endif
