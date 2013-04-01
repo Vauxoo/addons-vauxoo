@@ -47,6 +47,9 @@ import codecs
 from datetime import datetime, timedelta
 
 def exec_command_pipe(name, *args):
+    """
+    @param name :
+    """
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
     prog = tools.find_in_path(name)
     if not prog:
@@ -59,6 +62,10 @@ def exec_command_pipe(name, *args):
 
 #TODO: Eliminar esta funcionalidad, mejor agregar al path la aplicacion que deseamos
 def find_in_subpath(name, subpath):
+    """
+    @param name :
+    @param subpath :
+    """
     if os.path.isdir( subpath ):
         path = [dir for dir in map(lambda x: os.path.join(subpath, x), os.listdir(subpath) )
                 if os.path.isdir(dir)]
@@ -70,7 +77,10 @@ def find_in_subpath(name, subpath):
 
 #TODO: Agregar una libreria para esto
 def conv_ascii(text):
-    """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
+    """
+    @param text : text that need convert vowels accented & characters to ASCII
+    Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII
+    """
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
         'ô', 'û', 'Á', 'É', 'Í', 'Ó', 'Ú', 'À', 'È', 'Ì', 'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', \
         'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' ', 'Ã'
@@ -96,6 +106,10 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
+        """
+        @param report_name : Name of report with the name of object more type of report
+        @param file_name : Path where is save the report temporary more the name of report that is 'openerp___facturae__' more six random characters for no files duplicate
+        """
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
         #try:
@@ -250,15 +264,15 @@ class account_invoice(osv.osv):
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
         #'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
-        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice'),
+        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice', help='Name used for the XML of electronic invoice'),
         #'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
-        'no_certificado': fields.char('No. Certificado', size=64),
-        'certificado': fields.text('Certificado', size=64),
-        'sello': fields.text('Sello', size=512),
-        'cadena_original': fields.text('Cadena Original', size=512),
-        'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
-        'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML'),
-        'rate': fields.float('Tipo de cambio', readonly = True),
+        'no_certificado': fields.char('No. Certificado', size=64, help='Number of serie of certificate used for the invoice'),
+        'certificado': fields.text('Certificado', size=64, help='Certificate used in the invoice'),
+        'sello': fields.text('Sello', size=512, help='Digital Stamp'),
+        'cadena_original': fields.text('Cadena Original', size=512, help='Data stream with the information contained in the electronic invoice'),
+        'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True, help='If the invoice is cancelled, save the date when was cancel'),
+        'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML', help='Attachment that generated this invoice'),
+        'rate': fields.float('Tipo de cambio', readonly = True, help='Rate used in the date of invoice'),
     }
 
     _defaults = {
@@ -278,6 +292,11 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).copy(cr, uid, id, default, context=context)
 
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
+        """
+        @param binary_data : Field binary with the information of certificate of the company
+        @param file_prefix : Name to be used for create the file with the information of certificate
+        @file_suffix : Sufix to be used for the file that create in this function
+        """
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open( fname, 'wb' )
         f.write( base64.decodestring( binary_data ) )
@@ -520,6 +539,9 @@ class account_invoice(osv.osv):
         return folio_data
 
     def _dict_iteritems_sort(self, data_dict):#cr=False, uid=False, ids=[], context={}):
+        """
+        @param data_dict : Dictionary with data from invoice
+        """
         key_order = [
             'Emisor',
             'Receptor',
@@ -539,6 +561,11 @@ class account_invoice(osv.osv):
         return key_item_sort
 
     def dict2xml(self, data_dict, node=False, doc=False):
+        """
+        @param data_dict : Dictionary of attributes for add in the XML that will be generated
+        @param node : Node from XML where will be added data from the dictionary
+        @param doc : Document XML generated, where will be working
+        """
         parent = False
         if node:
             parent = True
@@ -638,6 +665,9 @@ class account_invoice(osv.osv):
         return fname_xml, data_xml
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
+        """
+        @param cfd_datas : Dictionary with data that is used in facturae CFD and CFDI
+        """
         if not cfd_datas:
             cfd_datas = {}
         ##obtener cfd_data con varios ids
@@ -660,6 +690,10 @@ class account_invoice(osv.osv):
         return True
 
     def _get_noCertificado(self, fname_cer, pem=True):
+        """
+        @param fname_cer : Path more name of file created whit information of certificate with suffix .pem
+        @param pem : Boolean that indicate if file is .pem
+        """
         certificate_lib = self.pool.get('facturae.certificate.library')
         fname_serial = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__serial__' )
         result = certificate_lib._get_param_serial(fname_cer, fname_out=fname_serial, type='PEM')
@@ -686,6 +720,9 @@ class account_invoice(osv.osv):
 
 #TODO: agregar esta funcionalidad con openssl
     def _get_certificate_str( self, fname_cer_pem = ""):
+        """
+        @param fname_cer_pem : Path and name the file .pem
+        """
         fcer = open( fname_cer_pem, "r")
         lines = fcer.readlines()
         fcer.close()
@@ -701,6 +738,10 @@ class account_invoice(osv.osv):
         return cer_str
 #TODO: agregar esta funcionalidad con openssl
     def _get_md5_cad_orig(self, cadorig_str, fname_cadorig_digest):
+        """
+        @param cadorig_str :
+        @fname cadorig_digest :
+        """
         cadorig_digest = hashlib.md5(cadorig_str).hexdigest()
         open(fname_cadorig_digest, "w").write(cadorig_digest)
         return cadorig_digest, fname_cadorig_digest
@@ -974,6 +1015,14 @@ class account_invoice(osv.osv):
         return invoice_data_parents
         
     def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+        """
+        @param type : Type of invoice 
+        @param parter_id : Id of partner in the data base
+        @param date_invoice : Date of invoice
+        @param payment_term : Id of payment term to the invoice
+        @param partner_bank_id : Id of bank account that is used in the invoice
+        @param company_id : Id of the company from invoice
+        """
         res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
         partner_bank_obj = self.pool.get('res.partner.bank')
         acc_partner_bank = False
