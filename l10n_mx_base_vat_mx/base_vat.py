@@ -41,7 +41,7 @@ class res_partner(osv.osv):
     
     def check_vat_mx(self, vat):
         """
-        @param vat : Vat to check
+        @param vat : Vat to check if is of Mexico
         """
         ''' Mexican VAT verification
         
