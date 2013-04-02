@@ -53,7 +53,7 @@ class res_company(osv.osv):
         return res
     
     _columns = {
-        'address_invoice_parent_company_id': fields.many2one("res.partner", 'Invoice Company Address Parent', help="En este campo se debe colocar la dirección de la compañia matriz, independientemente si se maneja un esquema Multi-company o Multi-Address.", domain="[('type', '=', 'invoice')]"),
+        'address_invoice_parent_company_id': fields.many2one("res.partner", 'Invoice Company Address Parent', help="In this field should placed the address of the parent company , independently if handled a scheme Multi-company o Multi-Address.", domain="[('type', '=', 'invoice')]"),
     }
 res_company()
 
