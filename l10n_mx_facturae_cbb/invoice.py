@@ -35,7 +35,7 @@ import os
 import tempfile
 import base64
 
-msg2= "Contacte a su administrador y/o a info@vauxoo.com"
+msg2= "Contact you administrator &/or info@vauxoo.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
@@ -70,7 +70,7 @@ class account_invoice(osv.osv):
         ##Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
-        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size='26', string='File Name Invoice'),
+        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size='26', string='File Name Invoice', help='Is a concatenation of VAT and number of invoice'),
     }
 
     _defaults = {
@@ -78,6 +78,10 @@ class account_invoice(osv.osv):
     }
 
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
+        """
+        @param report_name : Name of report with the name of object more type of report
+        @param file_name : Path where is save the report temporary more the name of report that is 'openerp___facturae__' more six random characters for no files duplicate
+        """
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
         #try:
