@@ -60,7 +60,7 @@ class account_invoice_tax(osv.osv):
         return res
     
     _columns = {
-        'name2': fields.function(_get_tax_data, method=True, type='char', size=64, string='Tax Short Name', multi='tax_percent', store=True),
-        'tax_percent': fields.function(_get_tax_data, method=True, type='float', string='Tax Percent', multi='tax_percent', store=True),
+        'name2': fields.function(_get_tax_data, method=True, type='char', size=64, string='Tax Short Name', multi='tax_percent', store=True, help="Is the code of category of the tax or name of tax but in uppers, without '.', '-', ' '"),
+        'tax_percent': fields.function(_get_tax_data, method=True, type='float', string='Tax Percent', multi='tax_percent', store=True,),
     }
 account_invoice_tax()

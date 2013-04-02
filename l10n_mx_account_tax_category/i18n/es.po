@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 18:32+0000\n"
-"PO-Revision-Date: 2013-04-02 18:32+0000\n"
+"POT-Creation-Date: 2013-04-02 19:31+0000\n"
+"PO-Revision-Date: 2013-04-02 19:31+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,6 +29,11 @@ msgstr "Categoria de Impuestos / Manager"
 #: help:account.tax.category,active:0
 msgid "Indicate if this category is active"
 msgstr "Indica si esta categoria es activa"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.invoice.tax,name2:0
+msgid "Is the code of category of the tax or name of tax but in uppers, without '.', '-', ' '"
+msgstr "Es el codigo de la categoria o el nombre del Impuesto pero en mayusculas y sin '.', '-', ' '"
 
 #. module: l10n_mx_account_tax_category
 #: field:account.invoice.tax,tax_percent:0
