@@ -31,7 +31,7 @@ class account_journal(osv.osv):
     _inherit='account.journal'
     
     _columns = {
-        'address_invoice_company_id': fields.many2one('res.partner', 'Invoice Company Address', domain="[('type', '=', 'invoice')]", help='If this field is fill, the electronic invoice will take this address as issuing address of the company'),
+        'address_invoice_company_id': fields.many2one('res.partner', 'Invoice Company Address', domain="[('type', '=', 'invoice')]", help='If this field is fill, the electronic invoice will take this address as issuing address'),
         'company2_id': fields.many2one("res.company", 'Company Emitter', help="If this field is fill, the electronic invoice will take the data of this company as emitter company."),
     }
 account_journal()
