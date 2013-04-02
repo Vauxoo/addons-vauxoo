@@ -38,7 +38,12 @@ class facturae_config(osv.osv_memory):
         defaults['config_logo'] = base64.encodestring(logo.read())
         return defaults
 
-    def _assign_vat(self, cr, uid, vat,company_id,context=None):
+    def _assign_vat(self, cr, uid, vat, company_id, context=None):
+        """
+        @param vat : VAT that will be set in the company
+        @param company_id : Id from the company that the user works
+        """
+        print 'company_id', company_id
         partner_id = self.pool.get('res.company').browse(cr,uid,company_id).partner_id.id
         partner_obj= self.pool.get('res.partner')
         if partner_obj.check_vat(cr,uid,[partner_id],context):

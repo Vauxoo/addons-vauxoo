@@ -41,28 +41,28 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
     
     def _get_month_selection(self, cr, uid, context=None):
         months_selection = [
-            (1,'Enero'),
-            (2,'Febrero'),
-            (3,'Marzo'),
-            (4,'Abril'),
-            (5,'Mayo'),
-            (6,'Junio'),
-            (7,'Julio'),
-            (8,'Agosto'),
-            (9,'Septiembre'),
-            (10,'Octubre'),
-            (11,'Noviembre'),
-            (12,'Diciembre'),
+            (1,'January'),
+            (2,'February'),
+            (3,'March'),
+            (4,'April'),
+            (5,'May'),
+            (6,'June'),
+            (7,'July'),
+            (8,'August'),
+            (9,'September'),
+            (10,'October'),
+            (11,'November'),
+            (12,'December'),
         ]
         return months_selection
         
     _columns = {
-        'month':fields.selection(_get_month_selection, 'Mes', type="integer"),
-        'year':fields.integer('Ano'),
-        'date_start':fields.datetime('Fecha Inicial'),
-        'date_end':fields.datetime('Fecha Final'),
-        'invoice_ids':fields.many2many('account.invoice', 'invoice_facturae_txt_rel', 'invoice_id', 'facturae_id', 'Facturas', domain="[('type', 'in', ['out_invoice', 'out_refund'] )]"),
-        'facturae':fields.binary('Facturae File', readonly=True),
+        'month':fields.selection(_get_month_selection, 'Mont', type="integer", help='Month to filter'),
+        'year':fields.integer('Year', help='Year to filter'),
+        'date_start':fields.datetime('Initial Date', help='Initial date for filter'),
+        'date_end':fields.datetime('Finished date', help='Finished date for filter'),
+        'invoice_ids':fields.many2many('account.invoice', 'invoice_facturae_txt_rel', 'invoice_id', 'facturae_id', "Invoice's", domain="[('type', 'in', ['out_invoice', 'out_refund'] )]", help="Invoice's that meet whit the filter"),
+        'facturae':fields.binary("File Electronic Invoice's", readonly=True),
         'facturae_fname':fields.char('File Name', size=64),
         'note':fields.text('Log', readonly=True),
     }
@@ -125,7 +125,17 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
             ], order='invoice_datetime', context=context)
         )
         self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)
-        return True
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Electronic Invoice - Report Monthly TXT',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'wizard.invoice.facturae.txt.v6',
+            'nodestroy': True,
+            'target' : 'new',
+            'res_id': ids[0], 
+            'views': [(False, 'form')],
+            }
         
     def get_invoices_month(self, cr, uid, ids, context=None):
         data = self.read(cr, uid, ids, context=context)[0]
@@ -159,7 +169,17 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         )
         invoice_ids = list(set(invoice_ids))
         self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)
-        return True
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Electronic Invoice - Report Monthly TXT',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'wizard.invoice.facturae.txt.v6',
+            'nodestroy': True,
+            'target' : 'new',
+            'res_id': ids[0], 
+            'views': [(False, 'form')],
+            }
 
     def create_facturae_txt(self, cr, uid, ids, context=None):
         obj_model = self.pool.get('ir.model.data')
@@ -172,7 +192,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
             txt_data, fname = invoice_obj._get_facturae_invoice_txt_data(cr, uid, invoice_ids, context=context)
             if txt_data:
                 txt_data = base64.encodestring( txt_data )
-                context.update({'facturae': txt_data, 'facturae_fname': fname, 'note': _('Abra el archivo y verfique que la informacion, este correcta. Folios, RFC, montos y estatus reportados.\nAsegurese de que no este reportando folios, que no pertenecen a facturas electronicas (se pueden eliminar directamente en el archivo).\nTIP: Recuerde que este archivo tambien contiene folios de nota de credito.')})
+                context.update({'facturae': txt_data, 'facturae_fname': fname, 'note': _("Open the file & check that the information is correct, folios, RFC, amounts & reported status. \nPlease make sure that not this reporting folios that not belong to electronic invoice's (you can delete in the file directly).\nTIP: Remember that this file too contains folios of credit note.")})
                 model_data_ids = obj_model.search(cr,uid,[('model','=','ir.ui.view'),('name','=','view_wizard_invoice_facturae_txt_v6_form2')])
                 resource_id = obj_model.read(cr, uid, model_data_ids, fields=['res_id'])[0]['res_id']
                 return {
