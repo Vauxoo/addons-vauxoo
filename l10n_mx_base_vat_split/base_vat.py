@@ -38,7 +38,7 @@ class res_partner(osv.osv):
         return res
     
     _columns = {
-        'vat_split': fields.function(_get_base_vat_split, method=True, type='char', size=64, string='VAT Split', store=True, help='Remove the preffix of the country of the VAT'),
+        'vat_split': fields.function(_get_base_vat_split, method=True, type='char', size=64, string='VAT Split', store=True, help='Remove the prefix of the country of the VAT'),
     }
 res_partner()
 
