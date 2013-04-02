@@ -810,10 +810,10 @@ class account_invoice(osv.osv):
                 raise osv.except_osv(_('Warning !'), _("Don't have defined the address issuing!"))
                 
             if not address_invoice_parent:
-                raise osv.except_osv(_('Warning !'), _("Don't have defined a address of invoicing from the company!"))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined an address of invoicing from the company!"))
 
             if not address_invoice_parent.vat:
-                raise osv.except_osv(_('Warning !'), _("Don't have defined RFC for the address of invoice to the company"))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined RFC for the address of invoice to the company!"))
             
             invoice_data = invoice_data_parent['Comprobante']
             invoice_data['Emisor'] = {}
@@ -850,7 +850,7 @@ class account_invoice(osv.osv):
             #Termina seccion: Emisor
             #Inicia seccion: Receptor
             if not invoice.partner_id.vat:
-                raise osv.except_osv(_('Warning !'), _('No se tiene definido el RFC del partner [%s].\n%s !')%(invoice.partner_id.name, msg2))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined RFC of the partner[%s].\n%s !")%(invoice.partner_id.name, msg2))
             if invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat[0:2] <> 'MX':
                 rfc = 'XAXX010101000'
             else:
@@ -858,7 +858,7 @@ class account_invoice(osv.osv):
             
             address_invoice_id = partner_obj.search(cr, uid, [('parent_id', '=', invoice.partner_id.id), ('type', '=', 'invoice')])
             if not address_invoice_id:
-                raise osv.except_osv(_('Warning !'), _('No se ha definido una dirección de factura para el cliente'))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined an address of invoice for the customer"))
             address_invoice = partner_obj.browse(cr, uid, address_invoice_id[0], context=context)
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
@@ -988,7 +988,7 @@ class account_invoice(osv.osv):
             
         invoice_datetime = invoice_data_parents[0].get('invoice_datetime',{}) and datetime.strptime( invoice_data_parents[0].get('invoice_datetime',{}), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') or False
         if not invoice_datetime:
-            raise osv.except_osv(_('Fecha de Factura vacía'),_('No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía.'))
+            raise osv.except_osv(_('Date Invoice Empty'),_("Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"))
         if invoice_datetime < '2012-07-01':
             return invoice_data_parent
         else:
@@ -999,10 +999,10 @@ class account_invoice(osv.osv):
             if city and state and country:
                 address = city +' '+ state +', '+ country
             else:
-                raise osv.except_osv(_('Domicilio Incompleto!'),_('Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)'))
+                raise osv.except_osv(_('Address Incomplete!'),_('Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)'))
             
             if not invoice.company_emitter_id.partner_id.regimen_fiscal_id.name:
-                raise osv.except_osv(_('Regimen Fiscal Faltante!'),_('El Regimen Fiscal de la compañia emisora del comprobante fiscal es un dato requerido'))
+                raise osv.except_osv(_('Missing Fiscal Regime!'),_('The Fiscal Regime of the company issuing of fiscal voucher is a data required'))
                 
             invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'

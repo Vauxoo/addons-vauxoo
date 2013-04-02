@@ -57,11 +57,11 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         return months_selection
         
     _columns = {
-        'month':fields.selection(_get_month_selection, 'Mont', type="integer", help='Month to filter'),
+        'month':fields.selection(_get_month_selection, 'Month', type="integer", help='Month to filter'),
         'year':fields.integer('Year', help='Year to filter'),
         'date_start':fields.datetime('Initial Date', help='Initial date for filter'),
         'date_end':fields.datetime('Finished date', help='Finished date for filter'),
-        'invoice_ids':fields.many2many('account.invoice', 'invoice_facturae_txt_rel', 'invoice_id', 'facturae_id', "Invoice's", domain="[('type', 'in', ['out_invoice', 'out_refund'] )]", help="Invoice's that meet whit the filter"),
+        'invoice_ids':fields.many2many('account.invoice', 'invoice_facturae_txt_rel', 'invoice_id', 'facturae_id', "Invoice's", domain="[('type', 'in', ['out_invoice', 'out_refund'] )]", help="Invoice's that meet with the filter"),
         'facturae':fields.binary("File Electronic Invoice's", readonly=True),
         'facturae_fname':fields.char('File Name', size=64),
         'note':fields.text('Log', readonly=True),

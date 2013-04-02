@@ -1,0 +1,847 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_facturae
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-02 17:05+0000\n"
+"PO-Revision-Date: 2013-04-02 17:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Localidad:"
+msgstr "Localidad:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:991
+#, python-format
+msgid "Date Invoice Empty"
+msgstr "Fecha de Factura Vacía"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Origen:"
+msgstr "Origen:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Últimos 4 dígitos de la cuenta bancaria:"
+msgstr "Últimos 4 dígitos de la cuenta bancaria:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Total $"
+msgstr "Total $"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Estado:"
+msgstr "Estado:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:1005
+#, python-format
+msgid "The Fiscal Regime of the company issuing of fiscal voucher is a data required"
+msgstr "El Regimen Fiscal de la compañia emisora del comprobante fiscal es un dato requerido"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Sello digital :"
+msgstr "Sello digital :"
+
+#. module: l10n_mx_facturae
+#: view:facturae.config:0
+msgid "Configure your data for Electronic Invoice"
+msgstr "Configure los datos de la Factura Electronica"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Nombre:"
+msgstr "Nombre:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "CP:"
+msgstr "CP:"
+
+#. module: l10n_mx_facturae
+#: field:facturae.config,company_id:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Sub Total $"
+msgstr "Sub Total $"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:627
+#, python-format
+msgid "Error en Cadena original!"
+msgstr "Error en Cadena original!"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Suma $"
+msgstr "Suma $"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "IMPORTANT"
+msgstr "IMPORTANTE"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Ret ("
+msgstr "Ret ("
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:195
+#, python-format
+msgid "Open the file & check that the information is correct, folios, RFC, amounts & reported status. \n"
+"Please make sure that not this reporting folios that not belong to electronic invoice's (you can delete in the file directly).\n"
+"TIP: Remember that this file too contains folios of credit note."
+msgstr "Abra el archivo y verfique que la informacion, este correcta. Folios, RFC, montos y estatus reportados.\n"
+"Asegurese de que no este reportando folios, que no pertenecen a facturas electronicas (se pueden eliminar directamente en el archivo).\n"
+"TIP: Recuerde que este archivo tambien contiene folios de nota de credito."
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "C.P.:"
+msgstr "C.P.:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Unidad"
+msgstr "Unidad"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+#: view:wizard.invoice.facturae.xml.v6:0
+msgid "Ok"
+msgstr "Ok"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "IMPORTE CON LETRA:"
+msgstr "IMPORTE CON LETRA:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Cant."
+msgstr "Cant."
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:536
+#, python-format
+msgid "The sequence don't have data of electronic invoice\n"
+"In the sequence_id [%d].\n"
+" %s !"
+msgstr "La secuencia no tiene datos de facturacion electronica\n"
+"En la sequence_id [%d].\n"
+" %s !"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,cadena_original:0
+msgid "Data stream with the information contained in the electronic invoice"
+msgstr "Secuencia de datos con la información contenida en la Factura Electronica"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:99
+#: code:addons/l10n_mx_facturae/invoice.py:178
+#: code:addons/l10n_mx_facturae/invoice.py:367
+#: code:addons/l10n_mx_facturae/invoice.py:370
+#: code:addons/l10n_mx_facturae/invoice.py:374
+#: code:addons/l10n_mx_facturae/invoice.py:521
+#: code:addons/l10n_mx_facturae/invoice.py:536
+#: code:addons/l10n_mx_facturae/invoice.py:538
+#: code:addons/l10n_mx_facturae/invoice.py:767
+#: code:addons/l10n_mx_facturae/invoice.py:810
+#: code:addons/l10n_mx_facturae/invoice.py:813
+#: code:addons/l10n_mx_facturae/invoice.py:816
+#: code:addons/l10n_mx_facturae/invoice.py:853
+#: code:addons/l10n_mx_facturae/invoice.py:861
+#, python-format
+msgid "Warning !"
+msgstr "Warning !"
+
+#. module: l10n_mx_facturae
+#: field:facturae.config,vat:0
+msgid "VAT"
+msgstr "VAT"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Colonia:"
+msgstr "Colonia:"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,no_certificado:0
+msgid "No. Certificate"
+msgstr "No. Certificate"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:521
+#, python-format
+msgid "The folio [%s] must be integer number, without letters"
+msgstr "El folio [%s] tiene que ser un número entero, sin letras"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "Get invoices by filter of Month"
+msgstr "Obtener Facturas por Filtro de Mes"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:374
+#, python-format
+msgid "Check date of invoice and the validity of certificate, & that the register of the certificate is active.\n"
+"%s!"
+msgstr "Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n"
+"%s!"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Año Aprobación:"
+msgstr "Año Aprobación:"
+
+#. module: l10n_mx_facturae
+#: model:ir.model,name:l10n_mx_facturae.model_facturae_config
+msgid "facturae.config"
+msgstr "facturae.config"
+
+#. module: l10n_mx_facturae
+#: model:ir.model,name:l10n_mx_facturae.model_ir_sequence_approval
+msgid "ir.sequence.approval"
+msgstr "ir.sequence.approval"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,certificado:0
+msgid "Certificate used in the invoice"
+msgstr "Certificado utilizado en la factura"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Serie del Certificado :"
+msgstr "Serie del Certificado :"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,rate:0
+msgid "Type of Change"
+msgstr "Tipo de cambio"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "Filter by dates"
+msgstr "Filtro por Fechas"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,sello:0
+msgid "Digital Stamp"
+msgstr "Sello Digital"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,fname_invoice:0
+msgid "File Name Invoice"
+msgstr "Nombre del Archivo de Factura"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Descuento:"
+msgstr "Descuento:"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "Filter by month"
+msgstr "Filtro por Mes"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:636
+#, python-format
+msgid "Error in Stamp !"
+msgstr "Error en Sello !"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:239
+#: code:addons/l10n_mx_facturae/invoice.py:327
+#: code:addons/l10n_mx_facturae/invoice.py:334
+#, python-format
+msgid "Error !"
+msgstr "Error !"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,no_certificado:0
+msgid "Number of serie of certificate used for the invoice"
+msgstr "Número de serie del certificado utilizado para la factura"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:853
+#, python-format
+msgid "Don't have defined RFC of the partner[%s].\n"
+"%s !"
+msgstr "No se tiene definido el RFC del partner[%s].\n"
+"%s !"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Cadena original :"
+msgstr "Cadena original :"
+
+#. module: l10n_mx_facturae
+#: model:ir.actions.act_window,name:l10n_mx_facturae.action_wizard_invoice_facturae_txt
+#: model:ir.ui.menu,name:l10n_mx_facturae.menu_wizard_invoice_facturae_txt_v6
+msgid "Electronic Invoice Report Monthly TXT"
+msgstr "Factura Electronica Reporte Mensual TXT"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "“Este documento es una representacion impresa de un CFD”"
+msgstr "“Este documento es una representacion impresa de un CFD”"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Notas:"
+msgstr "Notas:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:1005
+#, python-format
+msgid "Missing Fiscal Regime!"
+msgstr "Regimen Fiscal Faltante!"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,cadena_original:0
+msgid "String Original"
+msgstr "Cadena Original"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Receptor"
+msgstr "Receptor"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:630
+#, python-format
+msgid "Error in Folio!"
+msgstr "Error en Folio!"
+
+#. module: l10n_mx_facturae
+#: help:facturae.config,company_id:0
+msgid "Select company to assing vat and/or cif"
+msgstr "Seleccione la compañia a la que se asignará el VAT y/o CIF"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "FILTERS FOR EXTRACT INVOICES"
+msgstr "FILTROS PARA EXTRAER FACTURAS"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:1002
+#, python-format
+msgid "Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)"
+msgstr "Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)"
+
+#. module: l10n_mx_facturae
+#: model:res.groups,name:l10n_mx_facturae.group_facturae_mx_cfd_user
+msgid "FacturaE MX CFD / User"
+msgstr "FacturaE MX CFD / Usuario"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:644
+#, python-format
+msgid "Can't get the Certificate Number of the voucher.\n"
+"Ckeck your configuration.\n"
+"%s"
+msgstr "No se ha podido obtener el No. de Certificicado del Comprobante.\n"
+"Verifique su configuracion.\n"
+"%s"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "Electronic Invoice - Monthly Report TXT"
+msgstr "Factura Electronica - Reporte Mensual TXT"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:627
+#, python-format
+msgid "Can't get the string original of the voucher.\n"
+"Ckeck your configuration.\n"
+"%s"
+msgstr "No se pudo obtener el No de Certificado del comprobante.\n"
+"Verifique su configuracion.\n"
+"%s"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,fname_invoice:0
+msgid "Name used for the XML of electronic invoice"
+msgstr "Nombre utilizado para el XML de la factura electronica"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Aprobación:"
+msgstr "Aprobación:"
+
+#. module: l10n_mx_facturae
+#: help:wizard.invoice.facturae.txt.v6,date_end:0
+msgid "Finished date for filter"
+msgstr "Fecha final para el filtro"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:99
+#, python-format
+msgid "Can't recode the string [%s] in the letter [%s]"
+msgstr "No se pudo re-codificar la cadena [%s] en la letra [%s]"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt.py:87
+#, python-format
+msgid "Abra el archivo y verfique que la informacion, este correcta. Folios, RFC, montos y estatus reportados.\n"
+"Asegurese de que no este reportando folios, que no pertenecen a facturas electronicas (se pueden eliminar directamente en el archivo).\n"
+"TIP: Recuerde que este archivo tambien contiene folios de nota de credito."
+msgstr "Abra el archivo y verfique que la información, este correcta. Folios, RFC, montos y estatus reportados.\n"
+"Asegurese de que no este reportando folios, que no pertenecen a facturas electrónicas (se pueden eliminar directamente en el archivo).\n"
+"TIP: Recuerde que este archivo tambien contiene folios de nota de crédito.\n"
+"Después de tener el TXT, hay que subirlo a SICOFI.\n"
+"1. Ingresar a SICOFI\n"
+"http://www.sat.gob.mx/sitio_internet/e_sat/comprobantes_fiscales/15_15788.html\n"
+"2. Ingresar\n"
+"  RFC\n"
+"  Contraseña de Clave Privada"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "FILE TXT FOR THE SAT"
+msgstr "ARCHIVO TXT PARA EL SAT"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:178
+#, python-format
+msgid "No hay una secuencia de folios bien definida. !"
+msgstr "No hay una secuencia de folios bien definida. !"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:367
+#, python-format
+msgid "Not defined fname_xslt. !"
+msgstr "No definido fname_xslt. !"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:767
+#, python-format
+msgid "Only can issue electronic invoice to customers.!"
+msgstr "Solo se puede emitir factura electronica a clientes.!"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,note:0
+#: field:wizard.invoice.facturae.xml.v6,note:0
+msgid "Log"
+msgstr "Log"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,certificado:0
+msgid "Certificate"
+msgstr "Certificado"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "RFC:"
+msgstr "RFC:"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,sello:0
+msgid "Stamp"
+msgstr "Sello"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Expedido en:"
+msgstr "Expedido en:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:644
+#, python-format
+msgid "Error in No. Certificate !"
+msgstr "Error en No. Certificado !"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:538
+#, python-format
+msgid "Not found a sequence of configuration. %s !"
+msgstr "No se encontro un sequence de configuracionn. %s !"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "Get invoices by filter of Dates"
+msgstr "Obtener facturas por filtro de Fechas"
+
+#. module: l10n_mx_facturae
+#: model:ir.model,name:l10n_mx_facturae.model_ir_attachment_facturae_mx
+msgid "ir.attachment.facturae.mx"
+msgstr "ir.attachment.facturae.mx"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:816
+#, python-format
+msgid "Don't have defined RFC for the address of invoice to the company!"
+msgstr "No se ha definido RFC para la direccion de factura de la compañia!"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:991
+#, python-format
+msgid "Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"
+msgstr "No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía."
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,cfd_xml_id:0
+msgid "Attachment that generated this invoice"
+msgstr "Adjuntos que genero esta factura"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:327
+#, python-format
+msgid "Not captured a CERTIFICATE file in format PEM, in the company!"
+msgstr "No se ha capturado un archivo CERTIFICADO en formato PEM, en la company!"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,date_invoice_cancel:0
+msgid "If the invoice is cancelled, save the date when was cancel"
+msgstr "Si la factura es cancelada, guarda la fecha de cancelacion"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,date_end:0
+msgid "Finished date"
+msgstr "Fecha Final"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Int:"
+msgstr "Int:"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,cfd_xml_id:0
+msgid "XML"
+msgstr "XML"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Condición de pago:"
+msgstr "Condición de pago:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Vendedor:"
+msgstr "Vendedor:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "R. F. C. :"
+msgstr "R. F. C. :"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,rate:0
+msgid "Rate used in the date of invoice"
+msgstr "Tipo de Cambio de la fecha de la factura"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Método de Pago:"
+msgstr "Método de Pago:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:810
+#, python-format
+msgid "Don't have defined the address issuing!"
+msgstr "No se tiene definida la direccion emisora!"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Ciudad:"
+msgstr "Ciudad:"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,invoice_ids:0
+msgid "Invoice's"
+msgstr "Facturas"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Folio:"
+msgstr "Folio:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:813
+#, python-format
+msgid "Don't have defined an address of invoicing from the company!"
+msgstr "No se ha definido una dirección de facturación desde la compañia!"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:334
+#, python-format
+msgid "Not captured a KEY file in format PEM, in the company!"
+msgstr "No se ha capturado un archivo KEY en formato PEM, en la company!"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,date_start:0
+msgid "Initial Date"
+msgstr "Fecha Inicial"
+
+#. module: l10n_mx_facturae
+#: model:ir.model,name:l10n_mx_facturae.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "PAGO EN UNA SOLA EXHIBICIÓN"
+msgstr "PAGO EN UNA SOLA EXHIBICIÓN"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:650
+#, python-format
+msgid "Can't generate the Certificate of the voucher.\n"
+"Ckeck your configuration.\n"
+"%s"
+msgstr "No se pudo generar el certificado del comprobante.\n"
+"Verifique su configuracion.\n"
+"%s"
+
+#. module: l10n_mx_facturae
+#: model:res.groups,name:l10n_mx_facturae.group_facturae_mx_user
+msgid "FacturaE MX / User"
+msgstr "FacturaE MX / Usuario"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Importe"
+msgstr "Importe"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Teléfono(s):"
+msgstr "Teléfono(s):"
+
+#. module: l10n_mx_facturae
+#: field:account.invoice,date_invoice_cancel:0
+msgid "Date Invoice Cancelled"
+msgstr "Fecha de Cancelacion de Factura"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Calle:"
+msgstr "Calle:"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "INVOICES"
+msgstr "FACTURAS"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:861
+#, python-format
+msgid "Don't have defined an address of invoice for the customer"
+msgstr "No se ha definido una dirección de factura para el cliente"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Dto. %"
+msgstr "Dto. %"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:370
+#, python-format
+msgid "No exist file [%s]. !"
+msgstr "No existe archivo [%s]. !"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,month:0
+msgid "Month"
+msgstr "Mes"
+
+#. module: l10n_mx_facturae
+#: help:wizard.invoice.facturae.txt.v6,invoice_ids:0
+msgid "Invoice's that meet with the filter"
+msgstr "Facturas que cumplen con el filtro"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Serie:"
+msgstr "Serie:"
+
+#. module: l10n_mx_facturae
+#: help:wizard.invoice.facturae.txt.v6,date_start:0
+msgid "Initial date for filter"
+msgstr "Fecha inicial para filtrar"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.xml.v6,facturae:0
+msgid "Facturae File"
+msgstr "Archivo Facturae"
+
+#. module: l10n_mx_facturae
+#: help:wizard.invoice.facturae.txt.v6,month:0
+msgid "Month to filter"
+msgstr "Mes a Filtrar"
+
+#. module: l10n_mx_facturae
+#: model:ir.model,name:l10n_mx_facturae.model_wizard_invoice_facturae_xml_v6
+msgid "wizard.invoice.facturae.xml.v6"
+msgstr "wizard.invoice.facturae.xml.v6"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:239
+#, python-format
+msgid "No hay moneda MXN."
+msgstr "No hay moneda MXN."
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "%) $"
+msgstr "%) $"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Dirección:"
+msgstr "Dirección:"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Nro. Ext:"
+msgstr "Nro. Ext:"
+
+#. module: l10n_mx_facturae
+#: model:ir.actions.report.xml,name:l10n_mx_facturae.account_invoice_facturae_webkit
+msgid "Factura Electronica Report"
+msgstr "Reporte de Factura Electronica"
+
+#. module: l10n_mx_facturae
+#: model:ir.actions.report.xml,name:l10n_mx_facturae.account_invoice_facturae_pdf
+msgid "Factura Electronica PDF"
+msgstr "Reporte de Factura Elec. en PDF"
+
+#. module: l10n_mx_facturae
+#: help:wizard.invoice.facturae.txt.v6,year:0
+msgid "Year to filter"
+msgstr "Año a Filtrar"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,year:0
+msgid "Year"
+msgstr "Año"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:636
+#, python-format
+msgid "Can't generate the stamp of the voucher.\n"
+"Ckeck your configuration.\n"
+"s%s"
+msgstr "No se pudo generar el sello del comprobante.\n"
+"Verifique su configuracion.\n"
+"s%s"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.xml.v6:0
+msgid "Facturae Export"
+msgstr "Exportar Facturae"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:650
+#, python-format
+msgid "Error in Certificate!"
+msgstr "Error en Certificado!"
+
+#. module: l10n_mx_facturae
+#: model:ir.model,name:l10n_mx_facturae.model_wizard_invoice_facturae_txt_v6
+msgid "wizard.invoice.facturae.txt.v6"
+msgstr "wizard.invoice.facturae.txt.v6"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Descripción"
+msgstr "Descripción"
+
+#. module: l10n_mx_facturae
+#: help:facturae.config,vat:0
+msgid "Federal Register of Causes"
+msgstr "Registro Federal de Causantes"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,facturae_fname:0
+#: field:wizard.invoice.facturae.xml.v6,facturae_fname:0
+msgid "File Name"
+msgstr "Nombre de Archivo"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:630
+#, python-format
+msgid "Can't get the folio of the voucher.\n"
+"Before generating the XML, click on the button, generate invoice.\n"
+"Ckeck your configuration.\n"
+"%s"
+msgstr "No se pudo obtener el Folio del comprobante.\n"
+"Antes de generar el XML, de clic en el boton, generar factura.\n"
+"Verifique su configuracion.\n"
+"%s"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Régimen Fiscal:"
+msgstr "Régimen Fiscal:"
+
+#. module: l10n_mx_facturae
+#: model:ir.actions.act_window,name:l10n_mx_facturae.action_wizard_facturae_xml_v6_form
+msgid "Factura Electronica XML"
+msgstr "Factura Electronica XML"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Clave"
+msgstr "Clave"
+
+#. module: l10n_mx_facturae
+#: field:wizard.invoice.facturae.txt.v6,facturae:0
+msgid "File Electronic Invoice's"
+msgstr "Archivo Factura Elctonica"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "P.Unitario"
+msgstr "P.Unitario"
+
+#. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "CFD, Comprobante Fiscal Digital"
+msgstr "CFD, Comprobante Fiscal Digital"
+
+#. module: l10n_mx_facturae
+#: model:ir.actions.act_window,name:l10n_mx_facturae.action_config_invoice_electronic
+msgid "Configure Electronic Invoice"
+msgstr "Configurar Factura Electronica"
+
+#. module: l10n_mx_facturae
+#: view:wizard.invoice.facturae.txt.v6:0
+msgid "Generate Report Monthly TXT"
+msgstr "Generar Reporte Mensual TXT"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/invoice.py:1002
+#, python-format
+msgid "Address Incomplete!"
+msgstr "Direccion Incompleta!"
+
+#. module: l10n_mx_facturae
+#: model:res.groups,name:l10n_mx_facturae.group_facturae_mx_manager
+msgid "FacturaE MX / Manager"
+msgstr "FacturaE MX / Manager"
+
