@@ -165,7 +165,7 @@
             </tr>
         </table>
         <br/>
-        <table class="basic_table">
+        <table class="basic_table" style="color:#121212">
             <tr class="firstrow">
                 <th width="10%">${_("Cant.")}</th>
                 <th width="10%">${_("Unidad")}</th>
@@ -343,24 +343,18 @@
         %endif
         <!--code for cfd32-->
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
-            <table frame="box" rules="all" width="100%">
-                <tr>
-                    <td width="17%" valign="top" align="center">
-                        ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}
-                    </td>
-                    <td valign="top" align="left" width="63%">
-                        <div><font class="facturae"><b>Sello Digital Emisor:</b></font>
-                        <p class="cadena">${split_string( o.sello ) or ''|entity}</p></div>
-                        <div><font class="facturae"><b>Sello Digital SAT:</b></font>
-                        <p class="cadena">${split_string( o.cfdi_sello or '') or ''|entity}</p></div>
-                        <font class="facturae"><b>Cadena original:</b></font>
-                        <br/><p class="cadena">${split_string(o.cfdi_cadena_original) or ''|entity}</p>
-                    </td>
-                    <td width="20%" valign="top" align="center">
-                        ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}
-                    </td>
-                </tr>
-            </table>
+            <div style="page-break-inside:avoid; border:1.5px solid grey;">
+                <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}</div>
+                <div style="float: right;"> ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}</div>
+                <span class="datos_fiscales">
+                    <b>${_('Sello Digital Emisor:')} </b><br/>
+                    ${split_string( o.sello ) or ''|entity}
+                    <b>${_('Sello Digital SAT:')} </b><br/>
+                    ${split_string( o.cfdi_sello or '') or ''|entity}
+                    <b>${_('Cadena original:')} </b><br/>
+                    ${split_string(o.cfdi_cadena_original) or ''|entity}
+                <!--</span> si se activan, forzan un brinco de linea
+            </div>-->
         %endif
         %if not o.invoice_sequence_id.approval_id.type:
             <hr>
