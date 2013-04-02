@@ -27,12 +27,12 @@ class account_tax_category(osv.osv):
     _name='account.tax.category'
     
     _columns = {
-        'company_id': fields.many2one('res.company', 'Company', required=True),
-        'name': fields.char('Name', size=64, required=True),
-        'code': fields.char('Code', size=32, required=True),
-        'active': fields.boolean('Active'),
+        'company_id': fields.many2one('res.company', 'Company', required=True, help='Company where will add this category'),
+        'name': fields.char('Name', size=64, required=True, help='Name for this category'),
+        'code': fields.char('Code', size=32, required=True, help='Code for this category'),
+        'active': fields.boolean('Active', help='Indicate if this category is active'),
         'sign': fields.integer('Sign'),
-        'category_ids': fields.one2many('account.tax', 'tax_category_id', 'Category'),
+        'category_ids': fields.one2many('account.tax', 'tax_category_id', 'Category', help='Tax that belong of this category'),
         
     }
     
@@ -47,7 +47,7 @@ class account_tax(osv.osv):
     _inherit = 'account.tax'
 
     _columns = {
-        'tax_category_id': fields.many2one('account.tax.category','Tax Category',required=False),
+        'tax_category_id': fields.many2one('account.tax.category', 'Tax Category', required=False, help='Category of this tax'),
     }
 
 account_tax()
