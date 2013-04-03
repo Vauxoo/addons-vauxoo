@@ -47,7 +47,7 @@ class account_invoice(osv.osv):
         return res
     
     _columns = {
-        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
+        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True, help='Id of the certificate used for the invoice'),
     }
     
     
