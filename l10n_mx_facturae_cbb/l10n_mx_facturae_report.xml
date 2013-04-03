@@ -4,7 +4,7 @@
     
         <report id="account_invoice_facturae_pdf2"
             name="account.invoice.facturae.pdf2"
-            string="Factura Electronica CBB PDF"
+            string="Electronic Invoice CBB PDF"
             model="account.invoice"
             header="False"
             rml="l10n_mx_facturae_cbb/report/invoice_facturae_pdf.rml"

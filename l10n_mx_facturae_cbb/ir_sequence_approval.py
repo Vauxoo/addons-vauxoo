@@ -40,7 +40,7 @@ class ir_sequence_approval(osv.osv):
     _columns = {
         'date_start': fields.date('Date Approval', size=32, help='Date start of the folios'),
         'date_end': fields.date('Effective Date', size=32, help='Date end of the folios'),
-        'cbb_image': fields.binary('Image of Code of Dimensional Bar', help='This images will be used in the '),
+        'cbb_image': fields.binary('Image of Code of Dimensional Bar', help='This images will be used in the Report of Electronic Invoice'),
         'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
     }
 ir_sequence_approval()
