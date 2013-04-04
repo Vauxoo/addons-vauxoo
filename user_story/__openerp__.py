@@ -59,6 +59,7 @@ siguientes:
         "security/ir.model.access.csv",
         "view/userstory_view.xml",
         "view/project_view.xml",
+        "data/data.xml",
     ],
     "active": False,
     "images": [],
