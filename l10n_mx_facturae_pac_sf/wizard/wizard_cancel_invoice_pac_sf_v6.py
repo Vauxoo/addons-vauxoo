@@ -66,12 +66,12 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
 
     _columns = {
-        'file': fields.binary('File', readonly=True),
-        'message': fields.text('text', readonly=True),
+        'file': fields.binary('File', readonly=True, help='Shows the file returned'),
+        'message': fields.text('text', readonly=True, help='Shows the message that returned the function that upload the xml to sign'),
     }
 
     _defaults= {
-        'message': 'Seleccione el botón Cancelar Factura enviar la cancelacion al PAC',
+        'message': 'Choose the button Cancel Invoice for send the cancellation to PAC',
         'file': _get_cancel_invoice_id,
     }
 wizard_cancel_invoice_pac_sf()

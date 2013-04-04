@@ -46,7 +46,7 @@ class params_pac(osv.osv):
         return types
     
     _columns = {
-        'method_type': fields.selection(_get_method_type_selection, "Proceso a realizar", type='char', size=64, required=True),
+        'method_type': fields.selection(_get_method_type_selection, "Process to perform", type='char', size=64, required=True),
     }
 params_pac()
 

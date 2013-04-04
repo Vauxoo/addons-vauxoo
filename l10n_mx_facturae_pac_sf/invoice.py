@@ -56,15 +56,18 @@ class account_invoice(osv.osv):
 
     _columns = {
         'cfdi_cbb': fields.binary('CFD-I CBB'),
-        'cfdi_sello': fields.text('CFD-I Sello'),
-        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32),
-        'cfdi_cadena_original': fields.text('CFD-I Cadena Original'),
-        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado'),
-        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion'),
-        'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64),
+        'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
+        'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32, help='Serial Number of the Certificate'),
+        'cfdi_cadena_original': fields.text('CFD-I Cadena Original', help='Original String used in the electronic invoice'),
+        'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado', help='Date when is stamped the electronic invoice'),
+        'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion', help='If the invoice is cancel, this field saved the date when is cancel'),
+        'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64, help='Folio used in the electronic invoice'),
     }
 
     def cfdi_data_write(self, cr, uid, ids, cfdi_data, context={}):
+        """
+        @params cfdi_data : * TODO
+        """
         if not context:
             context = {}
         attachment_obj = self.pool.get('ir.attachment')
@@ -141,10 +144,13 @@ class account_invoice(osv.osv):
                     'res_id': invoice.id,
                 }, context=context)
         self.fdata = base64.encodestring( xml_data )
-        msg = "Presiona clic en el boton 'subir archivo'"
+        msg = "Press in the button  'Upload File'"
         return {'file': self.fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
 
     def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
+        """
+        @params fdata : File.xml codification in base64
+        """
         pac_params_obj = self.pool.get('params.pac')
         cfd_data = base64.decodestring( fdata or self.fdata )
         xml_res_str = xml.dom.minidom.parseString(cfd_data)
@@ -176,7 +182,7 @@ class account_invoice(osv.osv):
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
             if 'testing' in wsdl_url:
-                msg += u'CUIDADO FIRMADO EN PRUEBAS!!!!\n\n'
+                msg += u'WARNING, SIGNED IN TEST!!!!\n\n'
             if cfd_data_adenda:
 
                 #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  originales

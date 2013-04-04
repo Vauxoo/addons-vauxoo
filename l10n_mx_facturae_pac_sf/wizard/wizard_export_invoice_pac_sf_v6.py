@@ -72,12 +72,12 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
             }
   
     _columns = {
-        'file': fields.binary('File', readonly=True),
-        'message': fields.text('text', readonly=True),
+        'file': fields.binary('File', readonly=True, help='Shows the file returned'),
+        'message': fields.text('text', readonly=True, help='Shows the message that returned the function that upload the xml to sign'),
     }
 
     _defaults= {
-        'message': 'Seleccione el botón Subir Factura para exportar al PAC',
+        'message': 'Choose the button Upload Invoice for export to PAC',
         'file': _get_invoice_id,
     }
 
