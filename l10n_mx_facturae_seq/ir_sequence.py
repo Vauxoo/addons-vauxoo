@@ -39,14 +39,14 @@ class ir_sequence_approval(osv.osv):
         return types
 
     _columns = {
-        'company_id': fields.many2one('res.company', 'Company', required=True),
-        'approval_number': fields.char(u'Numero de Aprobacion', size=64, required=True),
-        'serie': fields.char(u'Serie de Folios', size=12, required=False, help="Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para notas de credito)"),
-        'approval_year': fields.char('Año de Aprobacion', size=32, required=True),
-        'number_start': fields.integer(u'Desde', required=False),
-        'number_end': fields.integer(u'Hasta', required=True),
-        'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade'),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
+        'company_id': fields.many2one('res.company', 'Company', required=True, help='Company where will add this approval'),
+        'approval_number': fields.char(u'Approval Number', size=64, required=True, help='Name of the type of Electronic Invoice to configure'),
+        'serie': fields.char(u'Serie of Folios', size=12, required=False, help="With which report to SAT, example. FA (for Invoices), NC (For Invoice Refund)"),
+        'approval_year': fields.char('Year Approval', size=32, required=True, help='Year of approval from the Certificate'),
+        'number_start': fields.integer(u'Since', required=False, help='Initial Number of folios purchased'),
+        'number_end': fields.integer(u'Until', required=True, help='Finished Number of folios purchased'),
+        'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade', help='Sequence where will add this approval'),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice", help='Type of Electronic Invoice to configure'),
     }
 
     _defaults = {
@@ -55,8 +55,8 @@ class ir_sequence_approval(osv.osv):
     }
 
     _sql_constraints = [
-        ('number_start', 'CHECK (number_start < number_end )', 'El numero inicial (Desde), tiene que ser menor al final (Hasta)!'),
-        ('number_end', 'CHECK (number_end > number_start )', 'El numero final (Hasta), tiene que ser mayor al inicial (Desde)!'),
+        ('number_start', 'CHECK (number_start < number_end )', 'The initial number (Since), must be less to end (Until)!'),
+        ('number_end', 'CHECK (number_end > number_start )', 'The finished number (Until), must be higher to initial (Since)!'),
         #('approval_number_uniq', 'UNIQUE (approval_number)', 'El numero de aprobacion tiene que ser unico'),
     ]
 
@@ -81,7 +81,7 @@ class ir_sequence_approval(osv.osv):
         return True
 
     _constraints = [
-        (_check_numbers_range, 'Error ! Hay rangos de numeros solapados entre aprobaciones.', ['sequence_id', 'number_start', 'number_end'])
+        (_check_numbers_range, 'Error ! There ranges of numbers underhand between approvals.', ['sequence_id', 'number_start', 'number_end'])
     ]
 ir_sequence_approval()
 
@@ -115,8 +115,8 @@ class ir_sequence(osv.osv):
         return res
 
     _columns = {
-        'approval_ids': fields.one2many('ir.sequence.approval', 'sequence_id', 'Sequences'),
-        'approval_id': fields.function(_get_current_approval, method=True, type='many2one', relation='ir.sequence.approval', string='Approval Current'),
+        'approval_ids': fields.one2many('ir.sequence.approval', 'sequence_id', 'Sequences', help='Approvals in this Sequence'),
+        'approval_id': fields.function(_get_current_approval, method=True, type='many2one', relation='ir.sequence.approval', string='Approval Current', help='Approval active in this sequence'),
         #'expiring_rate': fields.integer('Tolerancia de Advertencia', help='Tolerancia Cantidad Advertencia de Folios Aprobados por Terminarse'),
         #s'expiring'
     }
@@ -132,7 +132,7 @@ class ir_sequence(osv.osv):
                 if sequence_number_diff <= sequence_number_diff_rate:
                     warning = {
                         'title': 'Caution sequences!',
-                        'message': 'Los folios estan proximos a terminarse, del sequence %s'%( sequence.name )
+                        'message': 'The folios are close to finish, of the sequence %s'%( sequence.name )
                     }
                     data = {'warning': warning}
                     break

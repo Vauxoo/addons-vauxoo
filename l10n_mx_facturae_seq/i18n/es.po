@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.1\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 21:15+0000\n"
-"PO-Revision-Date: 2012-08-29 21:15+0000\n"
+"POT-Creation-Date: 2013-04-04 19:33+0000\n"
+"PO-Revision-Date: 2013-04-04 19:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,16 +16,19 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_mx_facturae_seq
-#: constraint:ir.sequence.approval:0
-msgid "Error ! Hay rangos de numeros solapados entre aprobaciones."
-msgstr "Error ! Hay rangos de numeros solapados entre aprobaciones."
+#: help:ir.sequence.approval,type:0
+msgid "Type of Electronic Invoice"
+msgstr "Tipo de Factura Electronica"
 
 #. module: l10n_mx_facturae_seq
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:133
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:161
-#, python-format
-msgid "You cannot remove/deactivate an account which is set as a property to any Partner!"
-msgstr "You cannot remove/deactivate an account which is set as a property to any Partner!"
+#: view:ir.sequence.approval:0
+msgid "Group By..."
+msgstr "Agrupar Por..."
+
+#. module: l10n_mx_facturae_seq
+#: field:ir.sequence.approval,type:0
+msgid "Type"
+msgstr "Tipo"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,approval_number:0
@@ -34,6 +37,7 @@ msgstr "Numero de Aprobacion"
 
 #. module: l10n_mx_facturae_seq
 #: view:ir.sequence:0
+#: view:ir.sequence.approval:0
 msgid "Aprobaciones"
 msgstr "Aprobaciones"
 
@@ -43,11 +47,20 @@ msgid "El numero inicial (Desde), tiene que ser menor al final (Hasta)!"
 msgstr "El numero inicial (Desde), tiene que ser menor al final (Hasta)!"
 
 #. module: l10n_mx_facturae_seq
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:133
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:161
-#, python-format
-msgid "Warning !"
-msgstr "Warning !"
+#: view:ir.sequence.approval:0
+msgid "Serie"
+msgstr "Serie"
+
+#. module: l10n_mx_facturae_seq
+#: constraint:ir.sequence.approval:0
+msgid "Error ! Hay rangos de numeros solapados entre aprobaciones."
+msgstr "Error ! Hay rangos de numeros solapados entre aprobaciones."
+
+#. module: l10n_mx_facturae_seq
+#: view:ir.sequence.approval:0
+#: field:ir.sequence.approval,company_id:0
+msgid "Company"
+msgstr "Compañia"
 
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,serie:0
@@ -65,9 +78,19 @@ msgid "FacturaE MX Seq / Manager"
 msgstr "FacturaE MX Seq / Manager"
 
 #. module: l10n_mx_facturae_seq
+#: help:account.invoice,invoice_sequence_id:0
+msgid "Sequence used in the invoice"
+msgstr "Secuencia utilizada en esta factura"
+
+#. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,serie:0
 msgid "Serie de Folios"
 msgstr "Serie de Folios"
+
+#. module: l10n_mx_facturae_seq
+#: field:ir.sequence,approval_ids:0
+msgid "Sequences"
+msgstr "Secuencias"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,number_end:0
@@ -75,19 +98,14 @@ msgid "Hasta"
 msgstr "Hasta"
 
 #. module: l10n_mx_facturae_seq
-#: field:ir.sequence,approval_id:0
-msgid "Approval Current"
-msgstr "Approval Current"
+#: view:ir.sequence:0
+msgid "Aprobaciones SAT"
+msgstr "Aprobaciones SAT"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,number_start:0
 msgid "Desde"
 msgstr "Desde"
-
-#. module: l10n_mx_facturae_seq
-#: field:ir.sequence.approval,approval_year:0
-msgid "Anio de Aprobacion"
-msgstr "Año de Aprobacion"
 
 #. module: l10n_mx_facturae_seq
 #: sql_constraint:ir.sequence.approval:0
@@ -97,23 +115,25 @@ msgstr "El numero final (Hasta), tiene que ser mayor al inicial (Desde)!"
 #. module: l10n_mx_facturae_seq
 #: field:account.invoice,invoice_sequence_id:0
 msgid "Invoice Sequence"
-msgstr "Invoice Sequence"
+msgstr "Secuencia Factura"
 
 #. module: l10n_mx_facturae_seq
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr "¡El número de factura debe ser único por compañía!"
+#: model:ir.actions.act_window,name:l10n_mx_facturae_seq.action_facturae_sequence_tree
+#: model:ir.ui.menu,name:l10n_mx_facturae_seq.menu_facturae_sequence
+msgid "FacturaE MX Secuencia de Aprovación"
+msgstr "FacturaE MX "
 
 #. module: l10n_mx_facturae_seq
 #: view:ir.sequence:0
+#: view:ir.sequence.approval:0
 #: field:ir.sequence.approval,sequence_id:0
 msgid "Sequence"
 msgstr "Secuencia"
 
 #. module: l10n_mx_facturae_seq
-#: view:ir.sequence:0
-msgid "Aprobaciones SAT"
-msgstr "Aprobaciones SAT"
+#: field:ir.sequence,approval_id:0
+msgid "Approval Current"
+msgstr "Aprobación Actual"
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.model,name:l10n_mx_facturae_seq.model_account_invoice
@@ -121,14 +141,14 @@ msgid "Invoice"
 msgstr "Factura"
 
 #. module: l10n_mx_facturae_seq
-#: field:ir.sequence,approval_ids:0
-msgid "Sequences"
-msgstr "Sequences"
+#: field:ir.sequence.approval,approval_year:0
+msgid "Año de Aprobacion"
+msgstr "Año de Aprobacion"
 
 #. module: l10n_mx_facturae_seq
-#: model:ir.actions.act_window,help:l10n_mx_facturae_seq.secuence_form_config_action
-msgid "Configure yours certificates for Electronic Invoice."
-msgstr "Configure los certificados para la Factura Electrónica."
+#: model:ir.actions.act_window,name:l10n_mx_facturae_seq.secuence_form_config_action
+msgid "Configure Secuences to Electronic Invoice"
+msgstr "Configure las Secuencias para la Factura Electrónica."
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.model,name:l10n_mx_facturae_seq.model_ir_sequence_approval
@@ -136,7 +156,7 @@ msgid "ir.sequence.approval"
 msgstr "ir.sequence.approval"
 
 #. module: l10n_mx_facturae_seq
-#: model:ir.actions.act_window,name:l10n_mx_facturae_seq.secuence_form_config_action
-msgid "Configure Secuences to Electronic Invoice"
-msgstr "Configure las Secuencias para la Factura Electrónica."
+#: model:ir.actions.act_window,help:l10n_mx_facturae_seq.secuence_form_config_action
+msgid "Configure yours Secuences for Electronic Invoice."
+msgstr "Configure las Secuencias para la Electronic Invoice."
 
