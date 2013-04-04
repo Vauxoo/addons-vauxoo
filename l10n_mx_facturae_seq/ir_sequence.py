@@ -46,7 +46,7 @@ class ir_sequence_approval(osv.osv):
         'number_start': fields.integer(u'Since', required=False, help='Initial Number of folios purchased'),
         'number_end': fields.integer(u'Until', required=True, help='Finished Number of folios purchased'),
         'sequence_id': fields.many2one('ir.sequence', u'Sequence', required=True, ondelete='cascade', help='Sequence where will add this approval'),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice", help='Type of Electronic Invoice to configure'),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
     }
 
     _defaults = {
