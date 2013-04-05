@@ -56,7 +56,7 @@ class wizard_facturae_ftp(osv.osv_memory):
         return atta_ids
         
     _columns = {
-        'files': fields.many2many('ir.attachment','ftp_wizard_attachment_rel', 'wizard_id', 'attachment_id', 'Attachments'),
+        'files': fields.many2many('ir.attachment','ftp_wizard_attachment_rel', 'wizard_id', 'attachment_id', 'Attachments', help='Attachments to upload on FTP Server'),
     }
 
     _defaults= {
