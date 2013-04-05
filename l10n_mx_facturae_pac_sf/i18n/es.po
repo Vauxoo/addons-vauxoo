@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-04 00:25+0000\n"
-"PO-Revision-Date: 2013-04-04 00:25+0000\n"
+"POT-Creation-Date: 2013-04-05 17:03+0000\n"
+"PO-Revision-Date: 2013-04-05 17:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -88,6 +88,11 @@ msgid "Sub Total $"
 msgstr "Sub Total $"
 
 #. module: l10n_mx_facturae_pac_sf
+#: help:wizard.export.invoice.pac.sf.v6,message:0
+msgid "Shows the message that returned after of upload the xml to sign"
+msgstr "Muestra el mensage que se regresa despues de subir el XML a firmar"
+
+#. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "Ret ("
 msgstr "Ret ("
@@ -136,11 +141,6 @@ msgstr "Año Aprobación:"
 #: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "Folio:"
 msgstr "Folio:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Folio Fiscal"
-msgstr "Folio Fiscal"
 
 #. module: l10n_mx_facturae_pac_sf
 #: model:ir.model,name:l10n_mx_facturae_pac_sf.model_ir_sequence_approval
@@ -193,15 +193,19 @@ msgid "Notas:"
 msgstr "Notas:"
 
 #. module: l10n_mx_facturae_pac_sf
-#: help:wizard.cancel.invoice.pac.sf,message:0
-#: help:wizard.export.invoice.pac.sf.v6,message:0
-msgid "Shows the message that returned the function that upload the xml to sign"
-msgstr "Muestra el mensaje que regresa la funcion que sube el XML a sellar"
+#: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Folio Fiscal"
+msgstr "Folio Fiscal"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "“Este documento es una representacion impresa de un CFDI”"
 msgstr "“Este documento es una representacion impresa de un CFDI”"
+
+#. module: l10n_mx_facturae_pac_sf
+#: help:wizard.cancel.invoice.pac.sf,message:0
+msgid "Shows the message that returned after of cancel the Electronic Invoice"
+msgstr "Muestra el mensaje que se regresa despues de cancelar la Factura Electronica"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0

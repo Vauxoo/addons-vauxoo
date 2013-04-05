@@ -231,17 +231,17 @@ class account_invoice(osv.osv):
                             if cfdi_xml:
                                 self.write(cr, uid, inv_ids, cfdi_data)
                                 cfdi_data['cfdi_xml'] = cfdi_xml
-                            msg = msg + "\nAsegurese de que su archivo realmente haya sido generado correctamente ante el SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                            msg = msg + "\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
                         else:
-                            msg = msg + "\nNo se pudo extraer el archivo XML del PAC"
+                            msg = msg + "\nCan't extract the file XML of PAC"
                     elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
-                        msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
+                        msg = "Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
                     else:
                         msg += '\n' + resultado['mensaje'] or ''
                         if not status:
                             status = 'parent_' + resultado['status']
         else:
-            msg = 'No se encontro informacion del webservices del PAC, verifique que la configuración del PAC sea correcta'
+            msg = 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
         return {'file': file, 'msg': msg, 'status': status, 'cfdi_xml': cfdi_xml }
 
 
@@ -255,7 +255,7 @@ class account_invoice(osv.osv):
             inv_xml = atta_brw.datas or False
         else:
             inv_xml = False
-            raise osv.except_osv(('Estado de Cancelación!'),('Esta factura no ha sido timbrada, por lo que no es posible cancelarse.'))
+            raise osv.except_osv(('State of Cancellation!'),("This invoice hasn't stamped, so that not possible cancel."))
         return {'file': inv_xml}
 
     def sf_cancel(self, cr, uid, inv_ids, context=None):
@@ -307,28 +307,28 @@ class account_invoice(osv.osv):
                 msg_status={}
                 if status =='200':
                     folio_cancel = result['resultados'] and result['resultados']['uuid'] or ''
-                    msg_global = '\n- El proceso de cancelación se ha completado correctamente.\n- El uuid cancelado es: ' + folio_cancel+'\n\nMensaje Técnico:\n'
+                    msg_global = '\n- The process of cancellation has not completed correctly.\n- The uuid cancelled is: ' + folio_cancel+'\n\nMessage Technical:\n'
                     msg_tecnical = 'Status:',status,' uuid:',uuid_nvo,' msg:',msg_nvo,'Status uuid:',status_uuid
                 else:
-                    msg_global = '\n- Han ocurrido errores que no han permitido completar el proceso de cancelación, asegurese de que la factura que intenta cancelar ha sido timbrada previamente.\n\nMensaje Técnico:\n'
+                    msg_global = '\n- Have occurred errors that not permit complete the process of cancellation, make sure that the invoice that tried cancel has been stamped previously.\n\nMessage Technical:\n'
                     msg_tecnical = 'status:',status,' uuidnvo:',uuid_nvo,' MENSJAE:NVO',msg_nvo,'STATUS UUID:',status_uuid
 
                 if status_uuid == '201':
-                    msg_SAT = '- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito.'
+                    msg_SAT = '- Status of response of the SAT: 201. The folio was canceled with success.'
                     self.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':time.strftime('%Y-%m-%d %H:%M:%S')})
                 elif status_uuid == '202':
-                    msg_SAT = '- Estatus de respuesta del SAT: 202. El folio ya se había cancelado previamente.'
+                    msg_SAT = '- Status of response of the SAT: 202. The folio already has cancelled previously.'
                 elif status_uuid == '203':
-                    msg_SAT = '- Estatus de respuesta del SAT: 203. El comprobante que intenta cancelar no corresponde al contribuyente con el que se ha firmado la solicitud de cancelación.'
+                    msg_SAT = '- Status of response of the SAT: 203. The voucher that tries cancel not corresponds the taxpayer with that signed the request of cancellation.'
                 elif status_uuid == '204':
-                    msg_SAT = '- Estatus de respuesta del SAT: 204. El CFDI no aplica para cancelación.'
+                    msg_SAT = '- Status of response of the SAT: 204. The CFDI not aply for cancellation.'
                 elif status_uuid == '205':
-                    msg_SAT = '- Estatus de respuesta del SAT: 205. No se encuentra el folio del CFDI para su cancelación.'
+                    msg_SAT = '- Status of response of the SAT: 205. Not found the folio of CFDI for his cancellation.'
                 else:
-                    msg_SAT = '- Estatus de respuesta del SAT desconocido'
+                    msg_SAT = '- Status of response of SAT unknown'
                 msg_global = msg_SAT + msg_global  + str(msg_tecnical)
         else:
-            msg_global='No se encontro información del webservices del PAC, verifique que la configuración del PAC sea correcta'
+            msg_global='Not found information of webservices of PAC, verify that the configuration of PAC is correct'
         return {'message': msg_global }
 
 account_invoice()

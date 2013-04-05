@@ -52,6 +52,9 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
     _name='wizard.cancel.invoice.pac.sf'
 
     def _get_cancel_invoice_id(self, cr, uid, data, context = {}):
+        """
+        @params data : Dictionary with information of the user, and active ids
+        """
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._get_file_cancel(cr, uid, data['active_ids'])
@@ -67,7 +70,7 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
     _columns = {
         'file': fields.binary('File', readonly=True, help='Shows the file returned'),
-        'message': fields.text('text', readonly=True, help='Shows the message that returned the function that upload the xml to sign'),
+        'message': fields.text('text', readonly=True, help='Shows the message that returned after of cancel the Electronic Invoice'),
     }
 
     _defaults= {

@@ -38,6 +38,6 @@ class account_invoice(osv.osv):
     # overwrite currency_id field in account_invoice to set change_default=True
     
     _columns = {
-        'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}, change_default=True),
+        'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}, change_default=True, help='Currency used in the invoice'),
     }
 account_invoice()
