@@ -71,14 +71,13 @@ class account_invoice(osv.osv):
         ##Extract date_invoice from original, but add datetime
 #        'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         'invoice_datetime': fields.datetime('Date Electronic Invoiced ', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
-        'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True, type='datetime', string='Date Invoiced with TZ', store=True),
+        'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True, type='datetime', string='Date Invoiced with TZ', store=True, help='Date of Invoice with Time Zone'),
     }
     
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
     def create(self, cr, uid, vals, context=None):
-        print vals,'<-<-<-<-<-<-<-<-<-<-<---imprimo vals'
         res = self.assigned_datetime(cr, uid, vals, context=context)
         if res:
             vals.update(res)
