@@ -45,6 +45,6 @@ class account_invoice(osv.osv):
         return res
     
     _columns = {
-        'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
+        'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True, help='Amount of the invoice in letter'),
     }
 account_invoice()
