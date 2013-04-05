@@ -41,18 +41,18 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
     
     def _get_month_selection(self, cr, uid, context=None):
         months_selection = [
-            (1,'January'),
-            (2,'February'),
-            (3,'March'),
-            (4,'April'),
-            (5,'May'),
-            (6,'June'),
-            (7,'July'),
-            (8,'August'),
-            (9,'September'),
-            (10,'October'),
-            (11,'November'),
-            (12,'December'),
+            (1,_('January')),
+            (2,_('February')),
+            (3,_('March')),
+            (4,_('April')),
+            (5,_('May')),
+            (6,_('June')),
+            (7,_('July')),
+            (8,_('August')),
+            (9,_('September')),
+            (10,_('October')),
+            (11,_('November')),
+            (12,_('December')),
         ]
         return months_selection
         

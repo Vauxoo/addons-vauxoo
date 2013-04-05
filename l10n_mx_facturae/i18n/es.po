@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-02 17:05+0000\n"
-"PO-Revision-Date: 2013-04-02 17:05+0000\n"
+"POT-Creation-Date: 2013-04-05 18:21+0000\n"
+"PO-Revision-Date: 2013-04-05 18:21+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,6 +66,12 @@ msgstr "Configure los datos de la Factura Electronica"
 #: report:account.invoice.facturae.pdf:0
 msgid "Nombre:"
 msgstr "Nombre:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:46
+#, python-format
+msgid "March"
+msgstr "Marzo"
 
 #. module: l10n_mx_facturae
 #: report:account.invoice.facturae.pdf:0
@@ -174,6 +180,12 @@ msgid "Warning !"
 msgstr "Warning !"
 
 #. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:50
+#, python-format
+msgid "July"
+msgstr "Julio"
+
+#. module: l10n_mx_facturae
 #: field:facturae.config,vat:0
 msgid "VAT"
 msgstr "VAT"
@@ -250,7 +262,7 @@ msgstr "Sello Digital"
 #. module: l10n_mx_facturae
 #: field:account.invoice,fname_invoice:0
 msgid "File Name Invoice"
-msgstr "Nombre del Archivo de Factura"
+msgstr "Nombre de Archivo de la Factura"
 
 #. module: l10n_mx_facturae
 #: report:account.invoice.facturae.pdf:0
@@ -280,6 +292,11 @@ msgstr "Error !"
 #: help:account.invoice,no_certificado:0
 msgid "Number of serie of certificate used for the invoice"
 msgstr "Número de serie del certificado utilizado para la factura"
+
+#. module: l10n_mx_facturae
+#: help:account.invoice,fname_invoice:0
+msgid "Is a concatenation of VAT and number of invoice"
+msgstr "Es una concatenación del VAT y el numero de factura"
 
 #. module: l10n_mx_facturae
 #: code:addons/l10n_mx_facturae/invoice.py:853
@@ -343,10 +360,9 @@ msgid "FILTERS FOR EXTRACT INVOICES"
 msgstr "FILTROS PARA EXTRAER FACTURAS"
 
 #. module: l10n_mx_facturae
-#: code:addons/l10n_mx_facturae/invoice.py:1002
-#, python-format
-msgid "Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)"
-msgstr "Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)"
+#: model:ir.model,name:l10n_mx_facturae.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
 
 #. module: l10n_mx_facturae
 #: model:res.groups,name:l10n_mx_facturae.group_facturae_mx_cfd_user
@@ -360,7 +376,7 @@ msgid "Can't get the Certificate Number of the voucher.\n"
 "Ckeck your configuration.\n"
 "%s"
 msgstr "No se ha podido obtener el No. de Certificicado del Comprobante.\n"
-"Verifique su configuracion.\n"
+"Verifique su configuración.\n"
 "%s"
 
 #. module: l10n_mx_facturae
@@ -379,14 +395,21 @@ msgstr "No se pudo obtener el No de Certificado del comprobante.\n"
 "%s"
 
 #. module: l10n_mx_facturae
-#: help:account.invoice,fname_invoice:0
-msgid "Name used for the XML of electronic invoice"
-msgstr "Nombre utilizado para el XML de la factura electronica"
-
-#. module: l10n_mx_facturae
 #: report:account.invoice.facturae.pdf:0
 msgid "Aprobación:"
 msgstr "Aprobación:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:52
+#, python-format
+msgid "September"
+msgstr "Septiembre"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:55
+#, python-format
+msgid "December"
+msgstr "Diciembre"
 
 #. module: l10n_mx_facturae
 #: help:wizard.invoice.facturae.txt.v6,date_end:0
@@ -493,10 +516,16 @@ msgid "Don't have defined RFC for the address of invoice to the company!"
 msgstr "No se ha definido RFC para la direccion de factura de la compañia!"
 
 #. module: l10n_mx_facturae
-#: code:addons/l10n_mx_facturae/invoice.py:991
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:51
 #, python-format
-msgid "Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"
-msgstr "No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía."
+msgid "August"
+msgstr "Agosto"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:49
+#, python-format
+msgid "June"
+msgstr "Junio"
 
 #. module: l10n_mx_facturae
 #: help:account.invoice,cfd_xml_id:0
@@ -515,14 +544,25 @@ msgid "If the invoice is cancelled, save the date when was cancel"
 msgstr "Si la factura es cancelada, guarda la fecha de cancelacion"
 
 #. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:54
+#, python-format
+msgid "November"
+msgstr "Noviembre"
+
+#. module: l10n_mx_facturae
 #: field:wizard.invoice.facturae.txt.v6,date_end:0
 msgid "Finished date"
 msgstr "Fecha Final"
 
 #. module: l10n_mx_facturae
-#: report:account.invoice.facturae.pdf:0
-msgid "Int:"
-msgstr "Int:"
+#: code:addons/l10n_mx_facturae/invoice.py:650
+#, python-format
+msgid "Can't generate the Certificate of the voucher.\n"
+"Ckeck your configuration.\n"
+"%s"
+msgstr "No se pudo generar el certificado del comprobante.\n"
+"Verifique su configuracion.\n"
+"%s"
 
 #. module: l10n_mx_facturae
 #: field:account.invoice,cfd_xml_id:0
@@ -530,9 +570,21 @@ msgid "XML"
 msgstr "XML"
 
 #. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:53
+#, python-format
+msgid "October"
+msgstr "Octubre"
+
+#. module: l10n_mx_facturae
 #: report:account.invoice.facturae.pdf:0
 msgid "Condición de pago:"
 msgstr "Condición de pago:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:44
+#, python-format
+msgid "January"
+msgstr "Enero"
 
 #. module: l10n_mx_facturae
 #: report:account.invoice.facturae.pdf:0
@@ -593,9 +645,10 @@ msgid "Initial Date"
 msgstr "Fecha Inicial"
 
 #. module: l10n_mx_facturae
-#: model:ir.model,name:l10n_mx_facturae.model_account_invoice
-msgid "Invoice"
-msgstr "Factura"
+#: code:addons/l10n_mx_facturae/invoice.py:1002
+#, python-format
+msgid "Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)"
+msgstr "Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)"
 
 #. module: l10n_mx_facturae
 #: view:wizard.invoice.facturae.txt.v6:0
@@ -608,14 +661,10 @@ msgid "PAGO EN UNA SOLA EXHIBICIÓN"
 msgstr "PAGO EN UNA SOLA EXHIBICIÓN"
 
 #. module: l10n_mx_facturae
-#: code:addons/l10n_mx_facturae/invoice.py:650
+#: code:addons/l10n_mx_facturae/invoice.py:991
 #, python-format
-msgid "Can't generate the Certificate of the voucher.\n"
-"Ckeck your configuration.\n"
-"%s"
-msgstr "No se pudo generar el certificado del comprobante.\n"
-"Verifique su configuracion.\n"
-"%s"
+msgid "Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"
+msgstr "No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía."
 
 #. module: l10n_mx_facturae
 #: model:res.groups,name:l10n_mx_facturae.group_facturae_mx_user
@@ -659,6 +708,11 @@ msgid "Dto. %"
 msgstr "Dto. %"
 
 #. module: l10n_mx_facturae
+#: report:account.invoice.facturae.pdf:0
+msgid "Int:"
+msgstr "Int:"
+
+#. module: l10n_mx_facturae
 #: code:addons/l10n_mx_facturae/invoice.py:370
 #, python-format
 msgid "No exist file [%s]. !"
@@ -678,6 +732,12 @@ msgstr "Facturas que cumplen con el filtro"
 #: report:account.invoice.facturae.pdf:0
 msgid "Serie:"
 msgstr "Serie:"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:48
+#, python-format
+msgid "May"
+msgstr "Mayo"
 
 #. module: l10n_mx_facturae
 #: help:wizard.invoice.facturae.txt.v6,date_start:0
@@ -721,6 +781,12 @@ msgid "Nro. Ext:"
 msgstr "Nro. Ext:"
 
 #. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:45
+#, python-format
+msgid "February"
+msgstr "Febrero"
+
+#. module: l10n_mx_facturae
 #: model:ir.actions.report.xml,name:l10n_mx_facturae.account_invoice_facturae_webkit
 msgid "Factura Electronica Report"
 msgstr "Reporte de Factura Electronica"
@@ -754,6 +820,12 @@ msgstr "No se pudo generar el sello del comprobante.\n"
 #: view:wizard.invoice.facturae.xml.v6:0
 msgid "Facturae Export"
 msgstr "Exportar Facturae"
+
+#. module: l10n_mx_facturae
+#: code:addons/l10n_mx_facturae/wizard/wizard_invoice_facturae_txt_v6.py:47
+#, python-format
+msgid "April"
+msgstr "Abril"
 
 #. module: l10n_mx_facturae
 #: code:addons/l10n_mx_facturae/invoice.py:650
