@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-04 19:42+0000\n"
-"PO-Revision-Date: 2013-04-04 19:42+0000\n"
+"POT-Creation-Date: 2013-04-05 17:41+0000\n"
+"PO-Revision-Date: 2013-04-05 17:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_mx_facturae_seq.action_facturae_sequence_tree
 #: model:ir.ui.menu,name:l10n_mx_facturae_seq.menu_facturae_sequence
 msgid "FacturaE MX Sequence Approval"
-msgstr "FacturaE MX Secuencia de Aprovación"
+msgstr "FacturaE MX Secuencia De Provación"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence,approval_id:0
@@ -76,7 +76,7 @@ msgstr "Secuencia donde se agregara esta aprovación"
 #: view:ir.sequence.approval:0
 #: field:ir.sequence.approval,company_id:0
 msgid "Company"
-msgstr "Compañia"
+msgstr "Company"
 
 #. module: l10n_mx_facturae_seq
 #: help:ir.sequence.approval,approval_year:0
@@ -131,7 +131,7 @@ msgstr "Nombre del tipo de Factura Electronica a configurar"
 #. module: l10n_mx_facturae_seq
 #: field:account.invoice,invoice_sequence_id:0
 msgid "Invoice Sequence"
-msgstr "Secuencia de la Factura"
+msgstr "Secuencia de factura"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence.approval,approval_year:0
@@ -198,5 +198,5 @@ msgstr "ir.sequence.approval"
 #. module: l10n_mx_facturae_seq
 #: model:ir.actions.act_window,help:l10n_mx_facturae_seq.secuence_form_config_action
 msgid "Configure yours Secuences for Electronic Invoice."
-msgstr "Configure las Secuencias para la Factura Electrónica."
+msgstr "Configuracion de las Secuencias para la Factura Electronica."
 
