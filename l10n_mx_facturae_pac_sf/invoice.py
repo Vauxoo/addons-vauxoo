@@ -182,7 +182,7 @@ class account_invoice(osv.osv):
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
             if 'testing' in wsdl_url:
-                msg += u_('WARNING, SIGNED IN TEST!!!!\n\n')
+                msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
             if cfd_data_adenda:
 
                 #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  originales

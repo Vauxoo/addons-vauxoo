@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-05 22:20+0000\n"
-"PO-Revision-Date: 2013-04-05 22:20+0000\n"
+"POT-Creation-Date: 2013-04-05 22:46+0000\n"
+"PO-Revision-Date: 2013-04-05 22:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -97,9 +97,14 @@ msgid "_Close"
 msgstr "_Cerrar"
 
 #. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Nombre:"
-msgstr "Nombre:"
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:310
+#, python-format
+msgid "\n"
+"- The process of cancellation has completed correctly.\n"
+"- The uuid cancelled is: "
+msgstr "\n"
+"- El proceso de cancelación se ha completado correctamente.\n"
+"- El uuid cancelado es: "
 
 #. module: l10n_mx_facturae_pac_sf
 #: field:account.invoice,cfdi_sello:0
@@ -255,6 +260,11 @@ msgstr "Folio Fiscal"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
+msgid "Nombre:"
+msgstr "Nombre:"
+
+#. module: l10n_mx_facturae_pac_sf
+#: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "“Este documento es una representacion impresa de un CFDI”"
 msgstr "“Este documento es una representacion impresa de un CFDI”"
 
@@ -281,14 +291,10 @@ msgid "Shows the file returned"
 msgstr "Muestra el archivo que se regresa"
 
 #. module: l10n_mx_facturae_pac_sf
-#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:310
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:317
 #, python-format
-msgid "\n"
-"- The process of cancellation has completed correctly.\n"
-"- The uuid cancelled is: "
-msgstr "\n"
-"- El proceso de cancelación se ha completado correctamente.\n"
-"- El uuid cancelado es: "
+msgid "- Status of response of the SAT: 201. The folio was canceled with success."
+msgstr "- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito."
 
 #. module: l10n_mx_facturae_pac_sf
 #: view:wizard.export.invoice.pac.sf.v6:0
@@ -396,7 +402,7 @@ msgstr "Ciudad:"
 #. module: l10n_mx_facturae_pac_sf
 #: model:res.groups,name:l10n_mx_facturae_pac_sf.group_facturae_mx_cfdi_pac_sf_user
 msgid "FacturaE MX CFD-I PAC SF / User"
-msgstr "FacturaE MX CFD-I PAC SF / Usuario"
+msgstr "FacturaE MX CFD-I PAC SF / User"
 
 #. module: l10n_mx_facturae_pac_sf
 #: view:wizard.cancel.invoice.pac.sf:0
@@ -464,12 +470,6 @@ msgstr "Presiona el botón  'Subir Archivo'"
 #: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "Serie:"
 msgstr "Serie:"
-
-#. module: l10n_mx_facturae_pac_sf
-#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:317
-#, python-format
-msgid "- Status of response of the SAT: 201. The folio was canceled with success."
-msgstr "- Estatus de respuesta del SAT: 201. El folio se ha cancelado con éxito."
 
 #. module: l10n_mx_facturae_pac_sf
 #: help:account.invoice,cfdi_sello:0
@@ -544,7 +544,7 @@ msgstr "Régimen Fiscal:"
 #. module: l10n_mx_facturae_pac_sf
 #: help:account.invoice,cfdi_fecha_timbrado:0
 msgid "Date when is stamped the electronic invoice"
-msgstr "Fecha cuando fue sellada la Factura Electronica"
+msgstr "Fecha cuando es sellada la Factura Electronica"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
@@ -574,4 +574,14 @@ msgstr "- Estatus de respuesta del SAT desconocido"
 #: field:account.invoice,cfdi_no_certificado:0
 msgid "CFD-I Certificado"
 msgstr "CFD-I Certificado"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:185
+#, python-format
+msgid "WARNING, SIGNED IN TEST!!!!\n"
+"\n"
+""
+msgstr "ADVERTENCIA, FIRMADO EN PRUEBAS!!!!\n"
+"\n"
+""
 

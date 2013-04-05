@@ -26,6 +26,7 @@
 ##############################################################################
 
 {
+    "name" : "FacturaE Notes Invoice",
     "name" : "l10n_mx_notes_invoice",
     "version" : "1.0",
     "author" : "Vauxoo",
