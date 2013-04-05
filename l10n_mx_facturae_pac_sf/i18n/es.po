@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-05 17:03+0000\n"
-"PO-Revision-Date: 2013-04-05 17:03+0000\n"
+"POT-Creation-Date: 2013-04-05 18:32+0000\n"
+"PO-Revision-Date: 2013-04-05 18:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -91,6 +91,12 @@ msgstr "Sub Total $"
 #: help:wizard.export.invoice.pac.sf.v6,message:0
 msgid "Shows the message that returned after of upload the xml to sign"
 msgstr "Muestra el mensage que se regresa despues de subir el XML a firmar"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/params_pac.py:44
+#, python-format
+msgid "PAC SF - Sign"
+msgstr "PAC SF - Firmar"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
@@ -312,7 +318,7 @@ msgstr "Ciudad:"
 #. module: l10n_mx_facturae_pac_sf
 #: model:res.groups,name:l10n_mx_facturae_pac_sf.group_facturae_mx_cfdi_pac_sf_user
 msgid "FacturaE MX CFD-I PAC SF / User"
-msgstr "FacturaE MX CFD-I PAC SF / User"
+msgstr "FacturaE MX CFD-I PAC SF / Usuario"
 
 #. module: l10n_mx_facturae_pac_sf
 #: view:wizard.cancel.invoice.pac.sf:0
@@ -333,6 +339,12 @@ msgstr "Receptor"
 #: model:ir.model,name:l10n_mx_facturae_pac_sf.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/params_pac.py:43
+#, python-format
+msgid "PAC SF - Cancel"
+msgstr "PAC SF - Cancelar"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0

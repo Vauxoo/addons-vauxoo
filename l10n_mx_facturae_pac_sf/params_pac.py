@@ -40,8 +40,8 @@ class params_pac(osv.osv):
     def _get_method_type_selection(self, cr, uid, context=None):
         types = super(params_pac, self)._get_method_type_selection(cr, uid, context=context)
         types.extend([
-            ('pac_sf_cancelar','PAC SF - Cancel'),
-            ('pac_sf_firmar','PAC SF - Sign'),
+            ('pac_sf_cancelar',_('PAC SF - Cancel')),
+            ('pac_sf_firmar',_('PAC SF - Sign')),
         ])
         return types
     
