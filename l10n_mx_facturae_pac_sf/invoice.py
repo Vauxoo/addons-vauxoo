@@ -144,7 +144,7 @@ class account_invoice(osv.osv):
                     'res_id': invoice.id,
                 }, context=context)
         self.fdata = base64.encodestring( xml_data )
-        msg = "Press in the button  'Upload File'"
+        msg = _("Press in the button  'Upload File'")
         return {'file': self.fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
 
     def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
@@ -182,7 +182,7 @@ class account_invoice(osv.osv):
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
             if 'testing' in wsdl_url:
-                msg += u'WARNING, SIGNED IN TEST!!!!\n\n'
+                msg += u_('WARNING, SIGNED IN TEST!!!!\n\n')
             if cfd_data_adenda:
 
                 #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  originales
@@ -231,11 +231,11 @@ class account_invoice(osv.osv):
                             if cfdi_xml:
                                 self.write(cr, uid, inv_ids, cfdi_data)
                                 cfdi_data['cfdi_xml'] = cfdi_xml
-                            msg = msg + "\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+                            msg = msg + _("\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                         else:
                             msg = msg + "\nCan't extract the file XML of PAC"
                     elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
-                        msg = "Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
+                        msg = _("Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n") + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
                     else:
                         msg += '\n' + resultado['mensaje'] or ''
                         if not status:
@@ -307,28 +307,28 @@ class account_invoice(osv.osv):
                 msg_status={}
                 if status =='200':
                     folio_cancel = result['resultados'] and result['resultados']['uuid'] or ''
-                    msg_global = '\n- The process of cancellation has not completed correctly.\n- The uuid cancelled is: ' + folio_cancel+'\n\nMessage Technical:\n'
+                    msg_global = _('\n- The process of cancellation has completed correctly.\n- The uuid cancelled is: ') + folio_cancel+_('\n\nMessage Technical:\n')
                     msg_tecnical = 'Status:',status,' uuid:',uuid_nvo,' msg:',msg_nvo,'Status uuid:',status_uuid
                 else:
-                    msg_global = '\n- Have occurred errors that not permit complete the process of cancellation, make sure that the invoice that tried cancel has been stamped previously.\n\nMessage Technical:\n'
+                    msg_global = _('\n- Have occurred errors that not permit complete the process of cancellation, make sure that the invoice that tried cancel has been stamped previously.\n\nMessage Technical:\n')
                     msg_tecnical = 'status:',status,' uuidnvo:',uuid_nvo,' MENSJAE:NVO',msg_nvo,'STATUS UUID:',status_uuid
 
                 if status_uuid == '201':
-                    msg_SAT = '- Status of response of the SAT: 201. The folio was canceled with success.'
+                    msg_SAT = _('- Status of response of the SAT: 201. The folio was canceled with success.')
                     self.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':time.strftime('%Y-%m-%d %H:%M:%S')})
                 elif status_uuid == '202':
-                    msg_SAT = '- Status of response of the SAT: 202. The folio already has cancelled previously.'
+                    msg_SAT = _('- Status of response of the SAT: 202. The folio already has cancelled previously.')
                 elif status_uuid == '203':
-                    msg_SAT = '- Status of response of the SAT: 203. The voucher that tries cancel not corresponds the taxpayer with that signed the request of cancellation.'
+                    msg_SAT = _('- Status of response of the SAT: 203. The voucher that tries cancel not corresponds the taxpayer with that signed the request of cancellation.')
                 elif status_uuid == '204':
-                    msg_SAT = '- Status of response of the SAT: 204. The CFDI not aply for cancellation.'
+                    msg_SAT = _('- Status of response of the SAT: 204. The CFDI not aply for cancellation.')
                 elif status_uuid == '205':
-                    msg_SAT = '- Status of response of the SAT: 205. Not found the folio of CFDI for his cancellation.'
+                    msg_SAT = _('- Status of response of the SAT: 205. Not found the folio of CFDI for his cancellation.')
                 else:
-                    msg_SAT = '- Status of response of SAT unknown'
+                    msg_SAT = _('- Status of response of SAT unknown')
                 msg_global = msg_SAT + msg_global  + str(msg_tecnical)
         else:
-            msg_global='Not found information of webservices of PAC, verify that the configuration of PAC is correct'
+            msg_global=_('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg_global }
 
 account_invoice()
