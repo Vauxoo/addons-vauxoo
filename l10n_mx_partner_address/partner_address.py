@@ -38,9 +38,9 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
 
     _columns = {
-        'l10n_mx_street3': fields.char('No. Interior', size=128),
-        'l10n_mx_street4': fields.char('No. Exterior', size=128),
-        'l10n_mx_city2': fields.char('Localidad', size=128),
+        'l10n_mx_street3': fields.char('No. Internal', size=128, help='Internal number of the partner address'),
+        'l10n_mx_street4': fields.char('No. External', size=128, help='External number of the partner address'),
+        'l10n_mx_city2': fields.char('Locality', size=128, help='Locality configurated for this partner'),
     }
     
     def _get_display_address_field(self):
