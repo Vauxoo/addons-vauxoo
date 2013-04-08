@@ -40,6 +40,9 @@ class res_partner(osv.osv):
                                     r"(?P<code>[A-Za-z0-9&\xd1\xf1]{3})$")
     
     def check_vat_mx(self, vat):
+        """
+        @param vat : Vat to check if is of Mexico
+        """
         ''' Mexican VAT verification
         
         Verificar RFC México

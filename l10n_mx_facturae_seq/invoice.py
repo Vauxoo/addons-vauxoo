@@ -65,7 +65,7 @@ class account_invoice(osv.osv):
         return res
     
     _columns = {
-        'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
+        'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True, help='Sequence used in the invoice'),
     }
     
     def action_number(self, cr, uid, ids, *args):
@@ -109,7 +109,7 @@ class account_invoice(osv.osv):
                 if sid:
                     number = self.pool.get('ir.sequence').get_id(cr, uid, sid, 'id=%s', context=tmp_context)
                 if not number:
-                    raise osv.except_osv('Warning !', 'No hay una secuencia de folios, definida !')
+                    raise osv.except_osv('Warning !', "Not defined a secuence of folios !")
 
                 if invtype in ('in_invoice', 'in_refund'):
                     ref = reference

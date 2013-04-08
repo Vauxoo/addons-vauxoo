@@ -7,7 +7,7 @@
             <field name="model">wizard.facturae.ftp</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="ftp invoice">
+                <form string="FTP invoice">
                     <separator colspan="4" string="File"/>
                         <field name='files' nolabel="1" colspan="4"/>
                         <newline/>
@@ -17,7 +17,7 @@
             </field>
         </record>
 
-        <act_window name="ftp Invoice"
+        <act_window name="FTP Invoice"
             res_model="wizard.facturae.ftp"
             src_model="account.invoice"
             view_mode="form"

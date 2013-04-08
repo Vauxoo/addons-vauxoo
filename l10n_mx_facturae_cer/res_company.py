@@ -40,20 +40,20 @@ class res_company_facturae_certificate(osv.osv):
     _rec_name = 'serial_number'
     
     _columns = {
-        'company_id': fields.many2one('res.company', 'Company', required=True),
-        'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True),
-        'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True),
-        'certificate_password': fields.char('Certificate Password', size=64, invisible=False, required=True),
-        'certificate_file_pem': fields.binary('Certificate File PEM', filters='*.pem,*.cer,*.certificate,*.cert'),
-        'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key'),
-        'date_start': fields.date('Date Start', required=False),
-        'date_end': fields.date('Date End', required=True),
-        'serial_number': fields.char('Serial Number', size=64, required=True),
+        'company_id': fields.many2one('res.company', 'Company', required=True, help='Company where you add this certificate'),
+        'certificate_file': fields.binary('Certificate File', filters='*.cer,*.certificate,*.cert', required=True, help='This file .cer is proportionate by the SAT'),
+        'certificate_key_file': fields.binary('Certificate Key File', filters='*.key', required=True, help='This file .key is proportionate by the SAT'),
+        'certificate_password': fields.char('Certificate Password', size=64, invisible=False, required=True, help='This password is proportionate by the SAT'),
+        'certificate_file_pem': fields.binary('Certificate File PEM', filters='*.pem,*.cer,*.certificate,*.cert', help='This file is generated with the file.cer'),
+        'certificate_key_file_pem': fields.binary('Certificate Key File PEM', filters='*.pem,*.key', help='This file is generated with the file.key'),
+        'date_start': fields.date('Date Start', required=False, help='Date start the certificate before the SAT'),
+        'date_end': fields.date('Date End', required=True, help='Date end of validity of the certificate'),
+        'serial_number': fields.char('Serial Number', size=64, required=True, help='Number of serie of the certificate'),
         'fname_xslt': fields.char('File XML Parser (.xslt)', size=256, required=False,
             help='Folder in server with XSLT file',
             #TODO, translate to english and later translate to spanish, que parsea al XML.\nPuedes ser la ruta completa o suponiendo el prefijo del "root_path\"\nDejar vacio para que el sistema tome el que esta por default.'
         ),
-        'active': fields.boolean('Active'),
+        'active': fields.boolean('Active', help='Indicate if this certificate is active'),
     }
     
     _defaults = {
@@ -74,7 +74,11 @@ class res_company_facturae_certificate(osv.osv):
         return self.write(cr, uid, ids, data['value'], context)
         
     def onchange_certificate_info(self, cr, uid, ids, cer_der_b64str, key_der_b64str, password, context=None):
-        #print "ENTRO A onchange_certificate_info"        
+        """
+        @param cer_der_b64str : File .cer in Base 64
+        @param key_der_b64str : File .key in Base 64
+        @param password : Password inserted in the certificate configuration
+        """
         certificate_lib = self.pool.get('facturae.certificate.library')
         value = {}
         warning = {}
@@ -240,8 +244,8 @@ class res_company(osv.osv):
     """
     
     _columns = {
-        'certificate_ids': fields.one2many('res.company.facturae.certificate', 'company_id', 'Certificates'),
-        'certificate_id': fields.function(_get_current_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Certificate Current'), 
+        'certificate_ids': fields.one2many('res.company.facturae.certificate', 'company_id', 'Certificates', help='Certificates configurated in this company'),
+        'certificate_id': fields.function(_get_current_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Certificate Current', help='Serial Number of the certificate active and inside of dates in this company'), 
         #'cif_file': fields.binary('Cedula de Identificacion Fiscal'),
         'invoice_out_sequence_id': fields.many2one('ir.sequence', 'Invoice Out Sequence', \
             help="The sequence used for invoice out numbers."),

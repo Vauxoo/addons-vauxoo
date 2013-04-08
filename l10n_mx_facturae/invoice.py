@@ -47,6 +47,9 @@ import codecs
 from datetime import datetime, timedelta
 
 def exec_command_pipe(name, *args):
+    """
+    @param name :
+    """
     #Agregue esta funcion, ya que con la nueva funcion original, de tools no funciona
     prog = tools.find_in_path(name)
     if not prog:
@@ -59,6 +62,10 @@ def exec_command_pipe(name, *args):
 
 #TODO: Eliminar esta funcionalidad, mejor agregar al path la aplicacion que deseamos
 def find_in_subpath(name, subpath):
+    """
+    @param name :
+    @param subpath :
+    """
     if os.path.isdir( subpath ):
         path = [dir for dir in map(lambda x: os.path.join(subpath, x), os.listdir(subpath) )
                 if os.path.isdir(dir)]
@@ -70,7 +77,10 @@ def find_in_subpath(name, subpath):
 
 #TODO: Agregar una libreria para esto
 def conv_ascii(text):
-    """Convierte vocales accentuadas, ñ y ç a sus caracteres equivalentes ASCII"""
+    """
+    @param text : text that need convert vowels accented & characters to ASCII
+    Converts accented vowels, ñ and ç to their ASCII equivalent characters
+    """
     old_chars = ['á', 'é', 'í', 'ó', 'ú', 'à', 'è', 'ì', 'ò', 'ù', 'ä', 'ë', 'ï', 'ö', 'ü', 'â', 'ê', 'î', \
         'ô', 'û', 'Á', 'É', 'Í', 'Ó', 'Ú', 'À', 'È', 'Ì', 'Ò', 'Ù', 'Ä', 'Ë', 'Ï', 'Ö', 'Ü', 'Â', 'Ê', 'Î', \
         'Ô', 'Û', 'ñ', 'Ñ', 'ç', 'Ç', 'ª', 'º', '°', ' ', 'Ã'
@@ -86,16 +96,20 @@ def conv_ascii(text):
             try:
                 text = text.replace(old, new)
             except:
-                raise osv.except_osv(_('Warning !'), _('No se pudo re-codificar la cadena [%s] en la letra [%s]')%(text, old) )
+                raise osv.except_osv(_('Warning !'), _("Can't recode the string [%s] in the letter [%s]")%(text, old) )
     return text
 
 #Cambiar el error
-msg2= "Contacte a su administrador y/o a info@vauxoo.com"
+msg2= "Contact you administrator &/or to info@vauxoo.com"
 
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
+        """
+        @param report_name : Name of report with the name of object more type of report
+        @param file_name : Path where is save the report temporary more the name of report that is 'openerp___facturae__' more six random characters for no files duplicate
+        """
         if not report_name or not res_ids:
             return (False,Exception('Report name and Resources ids are required !!!'))
         #try:
@@ -250,15 +264,15 @@ class account_invoice(osv.osv):
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
         #'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True),
-        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice'),
+        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size=26, string='File Name Invoice', help='Name used for the XML of electronic invoice'),
         #'amount_to_text':  fields.function(_get_amount_to_text, method=True, type='char', size=256, string='Amount to Text', store=True),
-        'no_certificado': fields.char('No. Certificado', size=64),
-        'certificado': fields.text('Certificado', size=64),
-        'sello': fields.text('Sello', size=512),
-        'cadena_original': fields.text('Cadena Original', size=512),
-        'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True),
-        'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML'),
-        'rate': fields.float('Tipo de cambio', readonly = True),
+        'no_certificado': fields.char('No. Certificate', size=64, help='Number of serie of certificate used for the invoice'),
+        'certificado': fields.text('Certificate', size=64, help='Certificate used in the invoice'),
+        'sello': fields.text('Stamp', size=512, help='Digital Stamp'),
+        'cadena_original': fields.text('String Original', size=512, help='Data stream with the information contained in the electronic invoice'),
+        'date_invoice_cancel': fields.datetime('Date Invoice Cancelled', readonly=True, help='If the invoice is cancelled, save the date when was cancel'),
+        'cfd_xml_id': fields.function(_get_cfd_xml_invoice, method=True, type='many2one', relation='ir.attachment', string='XML', help='Attachment that generated this invoice'),
+        'rate': fields.float('Type of Change', readonly = True, help='Rate used in the date of invoice'),
     }
 
     _defaults = {
@@ -278,6 +292,11 @@ class account_invoice(osv.osv):
         return super(account_invoice, self).copy(cr, uid, id, default, context=context)
 
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
+        """
+        @param binary_data : Field binary with the information of certificate of the company
+        @param file_prefix : Name to be used for create the file with the information of certificate
+        @file_suffix : Sufix to be used for the file that create in this function
+        """
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
         f = open( fname, 'wb' )
         f.write( base64.decodestring( binary_data ) )
@@ -305,14 +324,14 @@ class account_invoice(osv.osv):
                 try:
                     fname_cer_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.cer.pem')
                 except:
-                    raise osv.except_osv(_('Error !'), _('No se ha capturado un archivo CERTIFICADO en formato PEM, en la company!'))
+                    raise osv.except_osv(_('Error !'), _('Not captured a CERTIFICATE file in format PEM, in the company!'))
                 file_globals['fname_cer'] = fname_cer_pem
 
                 fname_key_pem = False
                 try:
                     fname_key_pem = self.binary2file(cr, uid, ids, certificate_id.certificate_key_file_pem, 'openerp_' + (certificate_id.serial_number or '') + '__certificate__', '.key.pem')
                 except:
-                    raise osv.except_osv(_('Error !'), _('No se ha capturado un archivo KEY en formato PEM, en la company!'))
+                    raise osv.except_osv(_('Error !'), _('Not captured a KEY file in format PEM, in the company!'))
                 file_globals['fname_key'] = fname_key_pem
 
                 fname_cer_no_pem = False
@@ -345,14 +364,14 @@ class account_invoice(osv.osv):
                             file_globals['fname_xslt'] = my_path and os.path.join( my_path, 'l10n_mx_facturae', 'SAT', 'cadenaoriginal_2_0_l.xslt' ) or ''
                             break
                 if not file_globals.get('fname_xslt', False):
-                    raise osv.except_osv(_('Warning !'), _('No se ha definido fname_xslt. !'))
+                    raise osv.except_osv(_('Warning !'), _('Not defined fname_xslt. !'))
 
                 if not os.path.isfile(file_globals.get('fname_xslt', ' ')):
-                    raise osv.except_osv(_('Warning !'), _('No existe el archivo [%s]. !')%(file_globals.get('fname_xslt', ' ')))
+                    raise osv.except_osv(_('Warning !'), _('No exist file [%s]. !')%(file_globals.get('fname_xslt', ' ')))
 
                 file_globals['serial_number'] = certificate_id.serial_number
             else:
-                raise osv.except_osv(_('Warning !'), _('Verique la fecha de la factura y la vigencia del certificado, y que el registro del certificado este activo.\n%s!')%(msg2))
+                raise osv.except_osv(_('Warning !'), _('Check date of invoice and the validity of certificate, & that the register of the certificate is active.\n%s!')%(msg2))
                 
         invoice_datetime = self.browse(cr, uid,ids)[0].invoice_datetime
         if invoice_datetime < '2012-07-01 00:00:00':
@@ -499,7 +518,7 @@ class account_invoice(osv.osv):
                         if number_work:
                             int(number_work)
                     except(ValueError):
-                        raise osv.except_osv(_('Warning !'), _('El folio [%s] tiene que ser un numero entero, sin letras.')%( number_work ) )
+                        raise osv.except_osv(_('Warning !'), _('The folio [%s] must be integer number, without letters')%( number_work ) )
                 context.update({ 'number_work': number_work or False })
                 approval_id = self.pool.get('ir.sequence')._get_current_approval(cr, uid, [sequence_id], field_names=None, arg=False, context=context)[sequence_id]
                 approval = approval_id and self.pool.get('ir.sequence.approval').browse(cr, uid, [approval_id], context=context)[0] or False
@@ -514,12 +533,15 @@ class account_invoice(osv.osv):
                         #'noCertificado': "30001000000100000800",
                     }
                 else:
-                    raise osv.except_osv(_('Warning !'), _('La secuencia no tiene datos de facturacion electronica.\nEn la sequence_id [%d].\n %s !')%(sequence_id, msg2))
+                    raise osv.except_osv(_('Warning !'), _("The sequence don't have data of electronic invoice\nIn the sequence_id [%d].\n %s !")%(sequence_id, msg2))
             else:
-                raise osv.except_osv(_('Warning !'), _('No se encontro un sequence de configuracion. %s !')%(msg2))
+                raise osv.except_osv(_('Warning !'), _('Not found a sequence of configuration. %s !')%(msg2))
         return folio_data
 
     def _dict_iteritems_sort(self, data_dict):#cr=False, uid=False, ids=[], context={}):
+        """
+        @param data_dict : Dictionary with data from invoice
+        """
         key_order = [
             'Emisor',
             'Receptor',
@@ -539,6 +561,11 @@ class account_invoice(osv.osv):
         return key_item_sort
 
     def dict2xml(self, data_dict, node=False, doc=False):
+        """
+        @param data_dict : Dictionary of attributes for add in the XML that will be generated
+        @param node : Node from XML where will be added data from the dictionary
+        @param doc : Document XML generated, where will be working
+        """
         parent = False
         if node:
             parent = True
@@ -597,16 +624,16 @@ class account_invoice(osv.osv):
         data_dict['cadena_original'] = txt_str
 
         if not txt_str:
-            raise osv.except_osv(_('Error en Cadena original!'), _('No se pudo obtener la cadena original del comprobante.\nVerifique su configuracion.\n%s'%(msg2)) )
+            raise osv.except_osv(_('Error en Cadena original!'), _("Can't get the string original of the voucher.\nCkeck your configuration.\n%s"%(msg2)) )
 
         if not data_dict['Comprobante'].get('folio', ''):
-            raise osv.except_osv(_('Error en Folio!'), _('No se pudo obtener el Folio del comprobante.\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
+            raise osv.except_osv(_('Error in Folio!'), _("Can't get the folio of the voucher.\nBefore generating the XML, click on the button, generate invoice.\nCkeck your configuration.\n%s"%(msg2)) )
 
         #time.strftime('%Y-%m-%dT%H:%M:%S', time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
         context.update( { 'fecha': data_dict['Comprobante']['fecha'] } )
         sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
         if not sign_str:
-            raise osv.except_osv(_('Error en Sello !'), _('No se pudo generar el sello del comprobante.\nVerifique su configuracion.\ns%s')%(msg2))
+            raise osv.except_osv(_('Error in Stamp !'), _("Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s")%(msg2))
 
         nodeComprobante = doc_xml.getElementsByTagName("Comprobante")[0]
         nodeComprobante.setAttribute("sello", sign_str)
@@ -614,13 +641,13 @@ class account_invoice(osv.osv):
 
         noCertificado = self._get_noCertificado( context['fname_cer'] )
         if not noCertificado:
-            raise osv.except_osv(_('Error en No Certificado !'), _('No se pudo obtener el No de Certificado del comprobante.\nVerifique su configuracion.\n%s')%(msg2))
+            raise osv.except_osv(_('Error in No. Certificate !'), _("Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s")%(msg2))
         nodeComprobante.setAttribute("noCertificado", noCertificado)
         data_dict['Comprobante']['noCertificado'] = noCertificado
 
         cert_str = self._get_certificate_str( context['fname_cer'] )
         if not cert_str:
-            raise osv.except_osv(_('Error en Certificado!'), _('No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s')%(msg2))
+            raise osv.except_osv(_('Error in Certificate!'), _("Can't generate the Certificate of the voucher.\nCkeck your configuration.\n%s")%(msg2))
         cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
@@ -638,6 +665,9 @@ class account_invoice(osv.osv):
         return fname_xml, data_xml
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
+        """
+        @param cfd_datas : Dictionary with data that is used in facturae CFD and CFDI
+        """
         if not cfd_datas:
             cfd_datas = {}
         ##obtener cfd_data con varios ids
@@ -660,6 +690,10 @@ class account_invoice(osv.osv):
         return True
 
     def _get_noCertificado(self, fname_cer, pem=True):
+        """
+        @param fname_cer : Path more name of file created whit information of certificate with suffix .pem
+        @param pem : Boolean that indicate if file is .pem
+        """
         certificate_lib = self.pool.get('facturae.certificate.library')
         fname_serial = certificate_lib.b64str_to_tempfile( base64.encodestring(''), file_suffix='.txt', file_prefix='openerp__' + (False or '') + '__serial__' )
         result = certificate_lib._get_param_serial(fname_cer, fname_out=fname_serial, type='PEM')
@@ -686,6 +720,9 @@ class account_invoice(osv.osv):
 
 #TODO: agregar esta funcionalidad con openssl
     def _get_certificate_str( self, fname_cer_pem = ""):
+        """
+        @param fname_cer_pem : Path and name the file .pem
+        """
         fcer = open( fname_cer_pem, "r")
         lines = fcer.readlines()
         fcer.close()
@@ -701,6 +738,10 @@ class account_invoice(osv.osv):
         return cer_str
 #TODO: agregar esta funcionalidad con openssl
     def _get_md5_cad_orig(self, cadorig_str, fname_cadorig_digest):
+        """
+        @param cadorig_str :
+        @fname cadorig_digest :
+        """
         cadorig_digest = hashlib.md5(cadorig_str).hexdigest()
         open(fname_cadorig_digest, "w").write(cadorig_digest)
         return cadorig_digest, fname_cadorig_digest
@@ -723,7 +764,7 @@ class account_invoice(osv.osv):
             elif invoice.type == 'out_refund':
                 tipoComprobante = 'egreso'
             else:
-                raise osv.except_osv(_('Warning !'), _('Solo se puede emitir factura electronica a clientes.!'))
+                raise osv.except_osv(_('Warning !'), _('Only can issue electronic invoice to customers.!'))
             #Inicia seccion: Comprobante
             invoice_data_parent['Comprobante'] = {}
             #default data
@@ -766,13 +807,13 @@ class account_invoice(osv.osv):
             address_invoice_parent = invoice.company_emitter_id and invoice.company_emitter_id.address_invoice_parent_company_id or False
             
             if not address_invoice:
-                raise osv.except_osv(_('Warning !'), _('No se tiene definida la direccion emisora !'))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined the address issuing!"))
                 
             if not address_invoice_parent:
-                raise osv.except_osv(_('Warning !'), _('No se ha definido una dirección de facturación desde la compañia!'))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined an address of invoicing from the company!"))
 
             if not address_invoice_parent.vat:
-                raise osv.except_osv(_('Warning !'), _('No se ha definido RFC para la direccion de factura de la compañia!'))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined RFC for the address of invoice to the company!"))
             
             invoice_data = invoice_data_parent['Comprobante']
             invoice_data['Emisor'] = {}
@@ -809,7 +850,7 @@ class account_invoice(osv.osv):
             #Termina seccion: Emisor
             #Inicia seccion: Receptor
             if not invoice.partner_id.vat:
-                raise osv.except_osv(_('Warning !'), _('No se tiene definido el RFC del partner [%s].\n%s !')%(invoice.partner_id.name, msg2))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined RFC of the partner[%s].\n%s !")%(invoice.partner_id.name, msg2))
             if invoice.partner_id._columns.has_key('vat_split') and invoice.partner_id.vat[0:2] <> 'MX':
                 rfc = 'XAXX010101000'
             else:
@@ -817,7 +858,7 @@ class account_invoice(osv.osv):
             
             address_invoice_id = partner_obj.search(cr, uid, [('parent_id', '=', invoice.partner_id.id), ('type', '=', 'invoice')])
             if not address_invoice_id:
-                raise osv.except_osv(_('Warning !'), _('No se ha definido una dirección de factura para el cliente'))
+                raise osv.except_osv(_('Warning !'), _("Don't have defined an address of invoice for the customer"))
             address_invoice = partner_obj.browse(cr, uid, address_invoice_id[0], context=context)
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
@@ -947,7 +988,7 @@ class account_invoice(osv.osv):
             
         invoice_datetime = invoice_data_parents[0].get('invoice_datetime',{}) and datetime.strptime( invoice_data_parents[0].get('invoice_datetime',{}), '%Y-%m-%d %H:%M:%S').strftime('%Y-%m-%d') or False
         if not invoice_datetime:
-            raise osv.except_osv(_('Fecha de Factura vacía'),_('No se puede generar una factura sin fecha, asegurese que la factura no este en estado borrador y que la fecha a la factura no este vacía.'))
+            raise osv.except_osv(_('Date Invoice Empty'),_("Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"))
         if invoice_datetime < '2012-07-01':
             return invoice_data_parent
         else:
@@ -958,10 +999,10 @@ class account_invoice(osv.osv):
             if city and state and country:
                 address = city +' '+ state +', '+ country
             else:
-                raise osv.except_osv(_('Domicilio Incompleto!'),_('Verifique que el domicilio de la compañia emisora del comprobante fiscal este completo (Ciudad - Estado - Pais)'))
+                raise osv.except_osv(_('Address Incomplete!'),_('Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)'))
             
             if not invoice.company_emitter_id.partner_id.regimen_fiscal_id.name:
-                raise osv.except_osv(_('Regimen Fiscal Faltante!'),_('El Regimen Fiscal de la compañia emisora del comprobante fiscal es un dato requerido'))
+                raise osv.except_osv(_('Missing Fiscal Regime!'),_('The Fiscal Regime of the company issuing of fiscal voucher is a data required'))
                 
             invoice_data_parents[0]['Comprobante']['xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'
@@ -974,6 +1015,14 @@ class account_invoice(osv.osv):
         return invoice_data_parents
         
     def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+        """
+        @param type : Type of invoice 
+        @param parter_id : Id of partner in the data base
+        @param date_invoice : Date of invoice
+        @param payment_term : Id of payment term to the invoice
+        @param partner_bank_id : Id of bank account that is used in the invoice
+        @param company_id : Id of the company from invoice
+        """
         res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
         partner_bank_obj = self.pool.get('res.partner.bank')
         acc_partner_bank = False

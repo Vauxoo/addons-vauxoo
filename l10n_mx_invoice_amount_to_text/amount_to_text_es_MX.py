@@ -48,6 +48,11 @@ class amount_to_text:
                 "setec","ochoc","novec")
     
     def amount_to_text_cheque(self, nNumero, intermedio="pesos ", sufijo="M. N." ):
+        """
+        @params nNumero : Amount for convert to text
+        @params intermedio : Name Divisa
+        @sufijo : Sufix of the currency
+        """
         nNumero = round( nNumero , 2)
         strCantEntera = self.amount_to_text(nNumero)
         intCantDecimal = self.extraeDecimales( nNumero )
@@ -59,6 +64,10 @@ class amount_to_text:
         return strCantEntera+' '+intermedio+' '+strCantDecimal+' '+sufijo
     
     def extraeDecimales(self, nNumero, max_digits=2):
+        """
+        @params nNumero : Number complete whit decimals
+        @params max_digits : Maximum number of decimals to take
+        """
         strDecimales = str( round(nNumero%1, 2) ).replace('0.','')
         strDecimales += "0"*max_digits
         strDecimales = strDecimales[0:max_digits]
@@ -66,15 +75,14 @@ class amount_to_text:
     
     def amount_to_text(self, nNumero, lFemenino=False):
         """
-        NOTA: Solo numeros ENTEROS, omite los DECIMALES.
+        NOTE: Only numbers integer, omittes the DECIMALS
         amount_to_text(nNumero, lFemenino) --> cLiteral
-            Convierte el numero a una cadena literal de caracteres
-        P.e.:       201     -->   "doscientos uno"
-                    1111     -->   "mil ciento once"
-
-            <nNumero>       Numero a convertir
-            <lFemenino>     = 'true' si el Literal es femenino
-                            P.e.:   201     -->    "doscientas una"
+            Converts the number to string literal of characters
+            example:  201   --> "Two thousand one"
+                      1111  --> "One thousand one hundred eleven"
+                      
+        @params nNumero : Number to conert
+        @params lFemenino : 'true' if the literal is female
         """
         # Nos aseguramos del tipo de <nNumero>
         # se podria adaptar para usar otros tipos (pe: float)
@@ -92,6 +100,10 @@ class amount_to_text:
     
     # Funcion auxiliar recursiva
     def _amount_to_text(self, n, lFemenino=0):
+        """
+        @params nNumero : Number to conert
+        @params lFemenino : '0' if the literal isn't female
+        """
     
         # Localizar los billones    
         prim,resto = divmod(n,10L**12)
@@ -148,6 +160,11 @@ class amount_to_text:
         return cRes
 
 def get_amount_to_text(self, amount, lang, currency=""):
+    """
+    @params amount : Amount for convert to text 
+    @params lang  : Language to used for the text converted
+    @params currency : Name of currency used in amount
+    """
     if currency.upper() in ('MXP', 'MXN', 'PESOS', 'PESOS MEXICANOS'):
         sufijo = 'M. N.'
         currency = 'PESOS'

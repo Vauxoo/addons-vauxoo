@@ -56,8 +56,8 @@ class account_invoice(osv.osv):
         return res
         
     _columns = {
-        'address_issued_id' : fields.function(_get_address_issued_invoice, type="many2one", relation='res.partner', string='Address Issued Invoice'),
-        'company_emitter_id' : fields.function(_get_company_emitter_invoice, type="many2one", relation='res.company', string='Company Emitter Invoice')
+        'address_issued_id' : fields.function(_get_address_issued_invoice, type="many2one", relation='res.partner', string='Address Issued Invoice', help='This address will be used as address that issued for electronic invoice'),
+        'company_emitter_id' : fields.function(_get_company_emitter_invoice, type="many2one", relation='res.company', string='Company Emitter Invoice', help='This company will be used as emitter company in the electronic invoice')
     }
             
     def ____________________________get_facturae_invoice_dict_data(self, cr, uid, ids, context={}):

@@ -35,7 +35,7 @@ import time
 class pay_method(osv.osv):
     _name = 'pay.method'
     _columns = {
-        'name': fields.char('Método de Pago', size = 128),
-        'description': fields.text('Descripción'),
+        'name': fields.char('Payment Method', size = 128),
+        'description': fields.text('Description'),
     }
 pay_method()

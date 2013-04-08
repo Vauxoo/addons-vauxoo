@@ -39,20 +39,20 @@ class ir_attachment_facturae_mx(osv.osv):
         return types
 
     _columns = {
-        'name': fields.char('Name', size=128, required=True, readonly=True),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
-        'company_id': fields.many2one('res.company', 'Company', readonly=True),
-        'file_input': fields.many2one('ir.attachment', 'File input',readonly=True),
-        'file_input_index': fields.text('File input'),
-        'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',readonly=True),
-        'file_xml_sign_index': fields.text('File XML Sign Index'),
-        'file_pdf': fields.many2one('ir.attachment', 'File PDF',readonly=True),
-        'file_pdf_index': fields.text('File PDF Index'),
-        'identifier': fields.char('Identifier', size=128),
+        'name': fields.char('Name', size=128, required=True, readonly=True, help='Name of attachment generated'),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True, help='Invoice to which it belongs this attachment'),
+        'company_id': fields.many2one('res.company', 'Company', readonly=True, help='Company to which it belongs this attachment'),
+        'file_input': fields.many2one('ir.attachment', 'File input',readonly=True, help='File input'),
+        'file_input_index': fields.text('File input', help='File input index'),
+        'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',readonly=True, help='File XML signed'),
+        'file_xml_sign_index': fields.text('File XML Sign Index', help='File XML sign index'),
+        'file_pdf': fields.many2one('ir.attachment', 'File PDF',readonly=True, help='Report PDF generated for the electronic Invoice'),
+        'file_pdf_index': fields.text('File PDF Index', help='Report PDF with index'),
+        'identifier': fields.char('Identifier', size=128, ),
         'type': fields.selection(_get_type, 'Type', type='char', size=64, readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
-        'msj': fields.text('Last Message', readonly=True),
-        'last_date': fields.datetime('Last Modified', readonly=True),
+        'msj': fields.text('Last Message', readonly=True, help='Message generated to upload XML to sign'),
+        'last_date': fields.datetime('Last Modified', readonly=True, help='Date when is generated the attachment'),
         'state': fields.selection([
                 ('draft', 'Draft'),
                 ('confirmed', 'Confirmed'),
@@ -62,7 +62,7 @@ class ir_attachment_facturae_mx(osv.osv):
                 ('sent_backup', 'Sent Backup'),
                 ('done', 'Done'),
                 ('cancel', 'Cancelled'),
-            ], 'State', readonly=True, required=True),
+            ], 'State', readonly=True, required=True, help='State of attachments'),
     }
 
     _defaults = {
@@ -100,11 +100,11 @@ class ir_attachment_facturae_mx(osv.osv):
                 #'res_id': invoice.id,
                 }, context=context)
             if not attach:
-                msj="Not Applicable XML CFD 2.2\n"
+                msj=_("Not Applicable XML CFD 2.2\n")
         if attach:
-            msj="Attached Successfully XML CFD 2.2\n"
+            msj=_("Attached Successfully XML CFD 2.2\n")
         else:
-            msj="Not Applicable XML CFD 2.2\n"
+            msj=_("Not Applicable XML CFD 2.2\n")
         return self.write(cr, uid, ids, {'state': 'confirmed', 'file_input': attach or False, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S'), 'msj': msj}, context=context)
 
     def action_sign(self, cr, uid, ids, context={}):
@@ -117,7 +117,7 @@ class ir_attachment_facturae_mx(osv.osv):
         type=self.browse(cr,uid,ids)[0].type
         if type=='cfd22':
             aids = self.browse(cr,uid,ids)[0].file_input
-            msj += 'Attached Successfully XML CFD 2.2\n'
+            msj += _('Attached Successfully XML CFD 2.2\n')
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
@@ -153,9 +153,9 @@ class ir_attachment_facturae_mx(osv.osv):
             aids= attachment.id
             self.pool.get('ir.attachment').write(cr, uid, attachment.id, { 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
-            msj+= "Attached Successfully PDF\n"
+            msj+= _("Attached Successfully PDF\n")
         else:
-            msj+= "Not Attached PDF\n"
+            msj+= _("Not Attached PDF\n")
         return self.write(cr, uid, ids, {'state': 'printable', 'file_pdf': aids or False, 'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
@@ -218,9 +218,9 @@ class ir_attachment_facturae_mx(osv.osv):
                 }, context=context)
             state = self.pool.get('mail.message').send(cr, uid, [mail], auto_commit=False, context=context)
         if not state:
-            msj +='Please Check the Email Configuration!\n'
+            msj +=_('Please Check the Email Configuration!\n')
         else :
-            msj +='Email Send Successfully\n'
+            msj +=_('Email Send Successfully\n')
         return self.write(cr, uid, ids, {'state': 'sent_customer', 'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):

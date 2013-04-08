@@ -33,7 +33,7 @@ class res_company(osv.osv):
     _inherit = 'res.company'
     
     _columns = {
-        'promissory': fields.text('Text promissory facturae'),
+        'promissory': fields.text('Text promissory facturae', help='This legend is used for the report of Electronic Invoice in the legend of promissory'),
     }
 res_company()
 

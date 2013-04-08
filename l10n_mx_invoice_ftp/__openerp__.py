@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name" : "attachment of invoice to ftp",
+    "name" : "Attachment of invoice to FTP",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",

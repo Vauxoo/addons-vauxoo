@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="l10n_mx_facturae_seq.ir_sequence_form_inh_l10n_mx_facturae"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@string='Aprobaciones SAT']/field[@name='approval_ids']/form/field[@name='number_end']" position="after">
-                    <group string="Codigo de Barras Bidimensional (CBB)" col="4" colspan="4" attrs="{'invisible':[('type','!=','cbb')]}">
+                    <group string="Code of Dimensional Bar (CBB)" col="4" colspan="4" attrs="{'invisible':[('type','!=','cbb')]}">
                     <newline/>
                     <field name="date_start" attrs="{'required':[('type','=','cbb')], 'invisible':[('type','!=','cbb')]}"/>
                     <field name="date_end" attrs="{'required':[('type','=','cbb')], 'invisible':[('type','!=','cbb')]}"/>
@@ -26,7 +26,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='type']" position="after">
                     <newline/>
-                    <group string="Codigo de Barras Bidimensional (CBB)" col="4" colspan="4" attrs="{'invisible':[('type','!=','cbb')]}">
+                    <group string="Code of Dimensional Bar (CBB)" col="4" colspan="4" attrs="{'invisible':[('type','!=','cbb')]}">
                     <newline/>
                     <field name="date_start" attrs="{'required':[('type','=','cbb')], 'invisible':[('type','!=','cbb')]}"/>
                     <field name="date_end" attrs="{'required':[('type','=','cbb')], 'invisible':[('type','!=','cbb')]}"/>
