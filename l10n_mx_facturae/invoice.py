@@ -832,7 +832,7 @@ class account_invoice(osv.osv):
                     'municipio': address_invoice_parent.city and address_invoice_parent.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': address_invoice_parent.state_id and address_invoice_parent.state_id.name and address_invoice_parent.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': address_invoice_parent.country_id and address_invoice_parent.country_id.name and address_invoice_parent.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
-                    'codigoPostal': address_invoice_parent.zip and address_invoice_parent.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'codigoPostal': address_invoice_parent.zip and address_invoice_parent.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ').replace(' ','') or '',
                 },
                 'ExpedidoEn': {
                     'calle': address_invoice.street and address_invoice.street.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
@@ -843,7 +843,7 @@ class account_invoice(osv.osv):
                     'municipio': address_invoice.city and address_invoice.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': address_invoice.state_id and address_invoice.state_id.name and address_invoice.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': address_invoice.country_id and address_invoice.country_id.name and address_invoice.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
-                    'codigoPostal': address_invoice.zip and address_invoice.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'codigoPostal': address_invoice.zip and address_invoice.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ').replace(' ','') or '',
                 },
             })
             #Termina seccion: Emisor
@@ -867,7 +867,7 @@ class account_invoice(osv.osv):
                     'municipio': invoice.address_invoice_id.city and invoice.address_invoice_id.city.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
                     'estado': invoice.address_invoice_id.state_id and invoice.address_invoice_id.state_id.name and invoice.address_invoice_id.state_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '' ,
                     'pais': invoice.address_invoice_id.country_id and invoice.address_invoice_id.country_id.name and invoice.address_invoice_id.country_id.name.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')or '',
-                    'codigoPostal': invoice.address_invoice_id.zip and invoice.address_invoice_id.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ') or '',
+                    'codigoPostal': invoice.address_invoice_id.zip and invoice.address_invoice_id.zip.replace('\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ').replace(' ','') or '',
                 },
             })
             #Termina seccion: Receptor
