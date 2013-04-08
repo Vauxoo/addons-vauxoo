@@ -4,10 +4,9 @@
         <record model="ir.ui.view" id="view_stock_move_inc_inherit_analytic_acc_form">
             <field name="name">view.stock.move.inc.inherit.analytic.acc.form</field>
             <field name="model">stock.move</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="stock.view_move_form_reception_picking"/>
+            <field name="inherit_id" ref="stock.view_move_tree_reception_picking"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/group/field[@name='address_id']" position="after">
+                <xpath expr="//field[@name='partner_id']" position="after">
                     <field name="analytic_acc" colspan="2"/>
                 </xpath>
             </field>
@@ -16,46 +15,9 @@
         <record model="ir.ui.view" id="view_stock_move_out_inherit_analytic_acc_form">
             <field name="name">view.stock.move.out.inherit.analytic.acc.form</field>
             <field name="model">stock.move</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/group/field[@name='address_id']" position="after">
-                    <field name="analytic_acc" colspan="2"/>
-                </xpath>
-            </field>
-        </record>
-        
-        <record model="ir.ui.view" id="view_stock_picking_out_inherit_analytic_acc_form">
-            <field name="name">view.stock.picking.out.inherit.analytic.acc.form</field>
-            <field name="model">stock.picking</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="stock.view_picking_out_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page/field[@name='move_lines']/form[@string='Stock Moves']/group/field[@name='location_dest_id']" position="after">
-                    <field name="analytic_acc" colspan="2"/>
-                </xpath>
-            </field>
-        </record>
-    
-        <record model="ir.ui.view" id="view_stock_move_lines_inc_inherit_analytic_acc_form">
-            <field name="name">view.stock.move.lines.inc.inherit.type.analytic.acc.form</field>
-            <field name="model">stock.picking</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="stock.view_picking_in_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page/field[@name='move_lines']/form[@string='Stock Moves']/group/field[@name='location_dest_id']" position="after">
-                    <field name="analytic_acc" colspan="2"/>
-                </xpath>
-            </field>
-        </record>
-        
-        <record model="ir.ui.view" id="view_stock_move_lines_int_inherit_analytic_acc_form">
-            <field name="name">view.stock.move.lines.int.inherit.analytic.acc.form</field>
-            <field name="model">stock.picking</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="stock.view_picking_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page/field[@name='move_lines']/form[@string='Stock Moves']/group/field[@name='location_dest_id']" position="after">
+                <xpath expr="//field[@name='location_id']" position="after">
                     <field name="analytic_acc" colspan="2"/>
                 </xpath>
             </field>

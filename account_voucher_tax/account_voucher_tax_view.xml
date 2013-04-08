@@ -2,31 +2,78 @@
 <openerp>
     <data>
 
-        <record id="view_account_voucher_move" model="ir.ui.view">
-                <field name="name">view.account.voucher.move</field>
+
+
+
+        <record model="ir.ui.view" id="view_voucher_line_tax">
+            <field name="name">voucher.line.tax</field>
+            <field name="model">account.voucher.line.tax</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Voucher Line Tax">
+                    <field name="tax_id"/>
+                    <field name="account_id"/>
+                    <field name="amount_tax"/>
+                    <field name="original_tax"/>
+                    <field name="balance_tax"/>
+                    <field name="diff_amount_tax"/>
+                    <field name="diff_account_id"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_voucher_line_tax_tree">
+            <field name="name">voucher.line.tax.tree</field>
+            <field name="model">account.voucher.line.tax</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Voucher Line Tax">
+                    <field name="tax_id"/>
+                    <field name="account_id"/>
+                    <field name="amount_tax"/>
+                    <field name="original_tax"/>
+                    <field name="balance_tax"/>
+                    <field name="diff_amount_tax"/>
+                    <field name="diff_account_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_account_voucher_compute_tax" model="ir.ui.view">
+                <field name="name">view.account.voucher.compute.tax</field>
                 <field name="model">account.voucher</field>
                 <field name="type">form</field>      
-                <field name="inherit_id" ref="account_voucher.view_voucher_form"/>
+                <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
                 <field name="arch" type="xml">
-                    <page string="Journal Items" position="after">
-                        <page string="Journal Items 2" groups="base.group_extended" attrs="{'invisible': [('state','!=','posted')]}">
-                            <field name="move_ids2" colspan="4" nolabel="1" readonly="1">
-                               <tree string="Journal Items">
-                                   <field name="move_id"/>
-                                   <field name="ref"/>
-                                   <field name="date"/>
-                                   <field name="statement_id"/>
-                                   <field name="partner_id"/>
-                                   <field name="account_id"/>
-                                   <field name="name"/>
-                                   <field name="debit"/>
-                                   <field name="credit"/>
-                                   <field name="state"/>
-                                   <field name="reconcile_id"/>
-                               </tree>
-                            </field>
-                        </page>
-                    </page>
+                     <field name="partner_id" position="after">
+                        <button name="compute_tax" string="Compute" type="object" icon="gtk-cancel"/>
+                     </field>
+                </field>
+        </record>
+
+        <record id="view_account_voucher_compute_tax2" model="ir.ui.view">
+                <field name="name">view.account.voucher.compute.tax2</field>
+                <field name="model">account.voucher</field>
+                <field name="type">form</field>      
+                <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+                <field name="arch" type="xml">
+                     <field name="partner_id" position="after">
+                        <button name="compute_tax" string="Compute" type="object" icon="gtk-cancel"/>
+                     </field>
+                </field>
+        </record>
+
+
+
+        <record id="view_account_voucher_line_tax" model="ir.ui.view">
+                <field name="name">view.account.voucher.line.tax</field>
+                <field name="model">account.voucher.line</field>
+                <field name="type">form</field>      
+                <field name="inherit_id" ref="account_voucher.view_voucher_line_form"/>
+                <field name="arch" type="xml">
+                     <field name="amount" position="after">
+                        <field name="tax_line_ids" colspan="4" nolabel="1"/>
+                     </field>
                 </field>
         </record>
 

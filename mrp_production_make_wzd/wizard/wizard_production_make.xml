@@ -6,14 +6,19 @@
             <field name="model">wizard.production.make</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Production Make">
-                    <field name="date_planned" />
-                    <newline/>
-                    <field name="location_src_id"/>
-                    <field name="location_dest_id"/>
-                    <field name="products_ids" nolabel="1" colspan="4"/>
-                    <button type="special" special="cancel" string="_Cancel" icon="gtk-cancel"/>
-                    <button type="object" string="Add Production" name="action_add_production" icon="gtk-ok"/>
+                <form string="Production Make" version="7.0">
+                    <header>
+                        <button type="object" string="Add Production" name="action_add_production" icon="gtk-ok" class="oe_link"/>
+                        or
+                        <button type="special" special="cancel" string="_Cancel" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <field name="date_planned" />
+                        <newline/>
+                        <field name="location_src_id" placeholder="Source Location"/>
+                        <field name="location_dest_id" placeholder="Destination Location"/>
+                        <field name="products_ids" nolabel="1" colspan="4"/>
+                    </sheet>
                 </form>
             </field>
         </record>

@@ -32,7 +32,7 @@
     "website" : "http://www.vauxoo.com/",
     "description": """ Add wizard to request or return product to the stock
     """,
-    'depends': ['mrp'],
+    'depends': ['mrp','mrp_consume_produce'],
     'init_xml': [],
     'update_xml': [
         'wizard/mrp_request_return_view.xml',

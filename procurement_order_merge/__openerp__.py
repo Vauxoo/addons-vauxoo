@@ -30,9 +30,10 @@
     "author" : "Vauxoo",
     "category": "Generic Modules/Procurement",
     "website" : "http://www.vauxoo.com/",
-    "description": """ Merge with wizard the procurement
+    "description": """ This module merges procurements with a wizard, grouping by
+    product, location and procure method.
     """,
-    'depends': ['procurement'],
+    'depends': ['procurement', 'mrp_production_procurement_order'],
     'init_xml': [],
     'update_xml': [
         'wizard/procurement_order_merge_view.xml',

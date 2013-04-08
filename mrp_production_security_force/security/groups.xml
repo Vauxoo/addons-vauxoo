@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+        
+        <record id="mrp.force_availability" model="res.groups">
+            <field name="name">Manufacturing / Force Availability</field>
+        </record>
+        
+    </data>
+</openerp>

@@ -61,7 +61,7 @@ class mrp_production(osv.osv):
                 val = {
                     'product_id' : pro.product_id and pro.product_id.id or False,
                     'quantity' : production.product_qty,
-                    'product_uom' : pro.product_uom.id,
+                    'product_uom' : production.product_uom.id,
                     'production_id' : production.id
                 }
                 mrp_pt.create(cr,uid,val)
@@ -74,11 +74,18 @@ class mrp_pt_planified(osv.osv):
     _rec_name='product_id'
     
     _columns = {
-        'product_id' : fields.many2one('product.product','Product'),
-        'quantity' : fields.float('quantity', digits_compute=dp.get_precision('Product UoM')),
+        'product_id' : fields.many2one('product.product','Product', required=True),
+        'quantity' : fields.float('quantity', digits_compute=dp.get_precision('Product UoM'), required=True),
         'production_id' : fields.many2one('mrp.production','production'),
-        'product_uom' : fields.many2one('product.uom','UoM')
+        'product_uom' : fields.many2one('product.uom','UoM', required=True)
     }
+    
+    def on_change_product_uom(self, cr, uid, ids, product_id):
+        product_product = self.pool.get('product.product')
+        if product_id:
+            product = product_product.browse(cr, uid, product_id)
+            return {'value' : { 'product_uom': product.uom_id and product.uom_id.id}}
+        return {'value' : { 'product_uom' : False}}
     
 mrp_pt_planified()
 
