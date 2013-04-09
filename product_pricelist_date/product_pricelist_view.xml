@@ -8,9 +8,8 @@
             <field name="name">view.product.pricelist.item.inherit1</field>
             <field name="model">product.pricelist.item</field>
             <field name="inherit_id" ref="product.product_pricelist_item_form_view" />
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                    <xpath expr="/form/field[@name='sequence']" position="after">
+                    <xpath expr="//field[@name='sequence']" position="after">
                         <field name="date"/>
                     </xpath>
             </field>
@@ -20,9 +19,8 @@
             <field name="name">view.product.pricelist.item.tree.inherit1</field>
             <field name="model">product.pricelist.item</field>
             <field name="inherit_id" ref="product.product_pricelist_item_tree_view" />
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                    <xpath expr="/tree/field[@name='sequence']" position="after">
+                    <xpath expr="//field[@name='sequence']" position="after">
                         <field name="date"/>
                     </xpath>
             </field>
