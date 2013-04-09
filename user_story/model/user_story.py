@@ -157,9 +157,9 @@ class project_task(osv.osv):
         return {'value': v}
 
     _columns = {
-                'userstory_id':fields.many2one('user.story', 'User Story', domain= "[('sk_id', '=', sprint_id)]", help="Set hear the User Story related with this task"),
-
-
+        'userstory_id':fields.many2one('user.story', 'User Story', 
+            domain= "[('sk_id', '=', sprint_id)]", 
+            help="Set here the User Story related with this task"),
     }
 project_task()
 
