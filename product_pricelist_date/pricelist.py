@@ -35,10 +35,6 @@ class product_pricelist_item(osv.osv):
     _columns={
         'date' : fields.date('Fecha',help="taken as the first criterion item's ranking of the most current date"),
     }
-    
-    _defaults={
-        'base' : lambda *a: 1
-    }
 product_pricelist_item()
 
 
