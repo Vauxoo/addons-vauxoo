@@ -115,7 +115,6 @@ class inherit_price_list_item(osv.osv):
     'base':2,
         }
 
-    _order='price_discount desc'
 
     def delete_record(self,cr,uid,ids,context=None):
         if context is None:

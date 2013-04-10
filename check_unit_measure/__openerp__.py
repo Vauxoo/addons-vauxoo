@@ -39,7 +39,7 @@ unit measure indicated on the product or diferent quantity compute on the unit m
     'website': 'http://www.vauxoo.com',
     'images' : [],
     'depends' : ['sale', 'purchase', 'product', 'stock','account'],
-    'data': [],
+    'data': ['wizard/stock_return_picking_view.xml',],
     'js': [],
     'qweb' : [],
     'css':[],
