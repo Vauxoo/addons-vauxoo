@@ -39,6 +39,7 @@ class inherit_move(osv.osv):
     _inherit = 'stock.move'
     
     def _check_unit_measure(self, cr, uid, ids, context=None):                                                                                                            
+        context = context or {}
         sm_brw = self.browse(cr, uid, ids[0], context=context)                  
         type = sm_brw.picking_id and sm_brw.picking_id.type
         if not context.get('pass_check',False) and sm_brw.picking_id and \
