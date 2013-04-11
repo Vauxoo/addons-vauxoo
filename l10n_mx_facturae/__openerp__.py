@@ -59,6 +59,7 @@ Requires the following programs:
             "l10n_mx_regimen_fiscal",
             "l10n_mx_payment_method",
             "l10n_mx_invoice_currency_chgdft",
+            "l10n_mx_base_vat_split",
         ],
     "init_xml" : [],
     "demo_xml" : [],

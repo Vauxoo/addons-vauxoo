@@ -41,7 +41,6 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
             "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
             "l10n_mx_partner_address",
             "l10n_mx_invoice_datetime",
-            "l10n_mx_invoice_tax_ref",
             "l10n_mx_facturae_seq",
             "l10n_mx_company_cif",
             "l10n_mx_invoice_amount_to_text",
