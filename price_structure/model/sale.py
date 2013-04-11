@@ -49,6 +49,7 @@ class sale_order_line(osv.osv):
         res = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
             uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
             lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag,context=context)
+        res.get('value',False) and product_brw and product_brw.uom_id and res.get('value',False).update({'product_uom':product_brw.uom_id.id })
         if context.get('price_change',False):
             price = price_obj.price_get(cr, uid, [context.get('price_change',False)], product, qty, context=context)
             res.get('value',{}).update({'price_unit': round(price.get(context.get('price_change',False)),2)})
