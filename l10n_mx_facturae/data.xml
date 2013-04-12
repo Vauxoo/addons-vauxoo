@@ -85,24 +85,25 @@ color: #280099;
 th
 {
 text-align:center;
-padding-right:2px
-padding-left:2px
+padding-right:3px;
+padding-left:3px;
+font-size: 12;
 }
 
 td.basic_td
 {
 border-bottom: solid 1.5px #e6e6e6;
-font-size: 9;
-padding-right:2px
-padding-left:2px
+font-size: 10;
+padding-right:3px;
+padding-left:3px;
 }
 
 td.number_td
 {
 border-bottom: solid 1.5px #e6e6e6;
 font-size:9;
-padding-right:2px
-padding-left:2px
+padding-right:2px;
+padding-left:2px;
 text-align:right;
 font-family:helvetica;
 }
@@ -129,18 +130,17 @@ padding-left:2px;
 text-align:center;
 }
 
-table.grid_table
-{
-border:1.5px solid grey;
-border-collapse: collapse;
-width:100%;
-}
-
 td.data_bank_label{
 text-align: center;
 font-size: 11;
 background-color: #d0d0d0;
 font-weight:bold;
+border:1.5px solid grey;
+}
+
+.data_bank{
+text-align: center;
+font-size: 8pt;
 }
 
 td.td_data_exp
@@ -148,6 +148,16 @@ td.td_data_exp
 text-align:center
 font-size:20px;
 }
+
+.datos_fiscales{
+font-size: 6pt;
+word-wrap:break-word;
+}
+
+div.float_left{
+float: left;
+}
+
 .title{
 color: #280099;
 text-align: center;
@@ -197,22 +207,9 @@ td.reg_fis{
 text-align:center;
 }
 
-.font{
-font-size: 9pt;
-line-height:12px;
-}
-
 .facturae{
 font-family:Arial,Helvetica,sans-serif;
 font-size: 6pt;
-}
-
-.lines{
-font-size: 8pt;
-}
-
-.cliente{
-border: solid 2px #e6e6e6;
 }
 
 .data_inv{
@@ -222,10 +219,16 @@ valign:top;
 line-height:11px;
 }
 
-.table_cliente{
+table.basic_table{
 border-collapse: collapse;
 width:100%;
 }                     
+
+.label_lines{
+border-collapse:collapse;
+border-bottom: solid 1.5px #000000;
+border-top: solid 1.5px #000000;
+}
 
 .total_line{
 border-collapse:collapse;
@@ -236,13 +239,13 @@ border-top: solid 1.5px #000000;
 border-bottom: solid 1.5px #e6e6e6;
 }
 
-.data_bank{
-text-align: center;
-font-size: 8pt;
-}
-
 .border_separator{
 border-right: solid 1.5px #e6e6e6;
+}
+
+.lines_font{
+font-size: 9pt;
+color: #280099;
 }
 
 p.cadena{
