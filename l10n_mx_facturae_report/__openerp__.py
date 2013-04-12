@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 #    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
 ############################################################################
 #
@@ -26,36 +26,21 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CBB)",
+    "name" : "Creacion del Reporte de Factura Electronica para Mexico",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CBB of Mexican SAT.
-Codigo de Barras Bidimensional.
-http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19204.html
-http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comprobantes_fiscales/66_19084.html
+    "description" : """This module add a report for facturae, this includes report for
+        cfd, cfdi and cbb
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "base_vat", "document",
-            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
-            "l10n_mx_partner_address",
-            "l10n_mx_invoice_datetime",
-            "l10n_mx_facturae_seq",
-            "l10n_mx_company_cif",
-            "l10n_mx_invoice_amount_to_text",
-            "l10n_mx_ir_attachment_facturae",
-            "l10n_mx_invoice_report",
-        ],
+    "depends" : ["account", "report_webkit",],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        'security/l10n_mx_facturae_cbb_security.xml',
-        'ir_sequence_view_v6.xml',
-        #'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
-        #"ir_sequence_view.xml",
-        #"res_company_view.xml",
+        "data.xml",
+        "l10n_mx_facturae_report_webkit.xml",
     ],
     "installable" : True,
     "active" : False,

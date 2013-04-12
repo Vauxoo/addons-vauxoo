@@ -52,23 +52,22 @@ Requires the following programs:
             "l10n_mx_partner_address",
             "l10n_mx_invoice_amount_to_text",
             "l10n_mx_ir_attachment_facturae",
-            "sale",
-            "report_webkit",#no depende de "sale" directamente, pero marca error en algunas versiones
+            "sale",#no depende de "sale" directamente, pero marca error en algunas versiones
             "l10n_mx_notes_invoice",
             "l10n_mx_res_partner_bank",
             "l10n_mx_regimen_fiscal",
             "l10n_mx_payment_method",
             "l10n_mx_invoice_currency_chgdft",
             "l10n_mx_base_vat_split",
+            "l10n_mx_invoice_report",
+
         ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
         'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',
-        "data.xml",
         "l10n_mx_facturae_report.xml",
-        "l10n_mx_facturae_report_webkit.xml",
         "wizard/wizard_invoice_facturae_txt_v6_view.xml",
         "wizard/wizard_invoice_facturae_xml_v6_view.xml",
         "wizard/installer_view.xml",

@@ -5,7 +5,7 @@
                 id="account_invoice_facturae_webkit"
                 model="account.invoice"
                 name="account.invoice.facturae.webkit"
-                file="l10n_mx_facturae/report/invoice_facturae_html.mako"
+                file="l10n_mx_facturae_report/report/invoice_facturae_html.mako"
                 string="Factura Electronica Report"
                 report_type="webkit"
                 attachment_use="1"

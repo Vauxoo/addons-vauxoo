@@ -184,7 +184,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         
 report_sxw.report_sxw('report.account.invoice.facturae.webkit',
                        'account.invoice', 
-                       'addons/l10n_mx_facturae/report/invoice_facturae_html.mako',
+                       'addons/l10n_mx_facturae_report/report/invoice_facturae_html.mako',
                        parser=invoice_facturae_html)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
