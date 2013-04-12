@@ -45,7 +45,7 @@ http://www.sat.gob.mx/sitio_internet/asistencia_contribuyente/principiantes/comp
             "l10n_mx_company_cif",
             "l10n_mx_invoice_amount_to_text",
             "l10n_mx_ir_attachment_facturae",
-            "l10n_mx_invoice_report",
+            "l10n_mx_facturae_report",
         ],
     "init_xml" : [],
     "demo_xml" : [],

@@ -59,7 +59,7 @@ Requires the following programs:
             "l10n_mx_payment_method",
             "l10n_mx_invoice_currency_chgdft",
             "l10n_mx_base_vat_split",
-            "l10n_mx_invoice_report",
+            "l10n_mx_facturae_report",
 
         ],
     "init_xml" : [],
