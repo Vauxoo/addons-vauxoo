@@ -21,10 +21,8 @@
     <body style="border:0; margin: 0;" onload="subst()">
         <table style="border-top: 1px solid black; width: 100%">
             <tr >
-                <td style="text-align:right;font-size:12;" width="75%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
-            </tr>
-            <tr >
-                <td style="text-align:right;font-size:12;" width="75%">Reporte Impreso en OpenERP con Webkit - Vauxoo</td>
+                <td style="text-align:right;font-size:9;" width="35%">Documento realizado en Webkit - OpenERP - Vauxoo</td>
+                <td style="text-align:right;font-size:12;" width="55%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
             </tr>
         </table>
     </body>
@@ -56,6 +54,95 @@
 </field>
             <field eval="0.0" name="margin_top"/>
             <field name="css" ><![CDATA[
+.cliente{
+font-size:11;
+border-top:1px solid #002966;
+border-left:1px solid #99C2FF;
+border-right:1px solid #99C2FF;
+}
+
+body{
+font-family:helvetica;
+font-size:9;
+margin:0;
+padding:0;
+height:100%;
+line-height:12px;
+}
+
+tr.nonrow
+{
+background-color:#E6E6FF;
+}
+
+tr.firstrow{
+border-bottom: solid 1.5px #000000;
+border-top: solid 1.5px #000000;
+font-size: 12;
+color: #280099;
+}
+
+th
+{
+text-align:center;
+padding-right:2px
+padding-left:2px
+}
+
+td.basic_td
+{
+border-bottom: solid 1.5px #e6e6e6;
+font-size: 9;
+padding-right:2px
+padding-left:2px
+}
+
+td.number_td
+{
+border-bottom: solid 1.5px #e6e6e6;
+font-size:9;
+padding-right:2px
+padding-left:2px
+text-align:right;
+font-family:helvetica;
+}
+
+td.total_td{
+border-top: solid 1.5px black;
+font-size: 11;
+padding-right:2px;
+padding-left:2px;
+}
+
+td.tax_td
+{
+font-size: 11;
+padding-right:2px;
+padding-left:2px;
+}
+
+td.center_td
+{
+font-size: 11;
+padding-right:2px;
+padding-left:2px;
+text-align:center;
+}
+
+table.grid_table
+{
+border:1.5px solid grey;
+border-collapse: collapse;
+width:100%;
+}
+
+td.data_bank_label{
+text-align: center;
+font-size: 11;
+background-color: #d0d0d0;
+font-weight:bold;
+}
+
 td.td_data_exp
 {
 text-align:center
@@ -140,12 +227,6 @@ border-collapse: collapse;
 width:100%;
 }                     
 
-.label_lines{
-border-collapse:collapse;
-border-bottom: solid 1.5px #000000;
-border-top: solid 1.5px #000000;
-}
-
 .total_line{
 border-collapse:collapse;
 border-top: solid 1.5px #000000;
@@ -155,12 +236,6 @@ border-top: solid 1.5px #000000;
 border-bottom: solid 1.5px #e6e6e6;
 }
 
-.data_bank_label{
-text-align: center;
-font-size: 8pt;
-background-color: #c0c0c0;
-}
-
 .data_bank{
 text-align: center;
 font-size: 8pt;
@@ -168,11 +243,6 @@ font-size: 8pt;
 
 .border_separator{
 border-right: solid 1.5px #e6e6e6;
-}
-
-.lines_font{
-font-size: 9pt;
-color: #280099;
 }
 
 p.cadena{
