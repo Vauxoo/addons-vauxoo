@@ -38,8 +38,9 @@ class inherits_sale(osv.osv):
     
 
     def _check_unit_measure(self, cr, uid, ids, context=None):                                                                                                            
+        print 'sale check'
         sol_brw = self.browse(cr, uid, ids[0], context=context)                  
-        if sol_brw.product_id and sol_brw.product_id.uom_id.id != sol_brw.product_uom.id:                                
+        if sol_brw.product_id and not sol_brw.product_id.uom_id.id == sol_brw.product_uom.id:                                
             raise osv.except_osv(_('Error !'),_("The Unit measure in the line will be the unit measure for this product %s .") % (sol_brw.product_id.name,))
         return True                                                             
 

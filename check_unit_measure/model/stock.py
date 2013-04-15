@@ -39,6 +39,7 @@ class inherit_move(osv.osv):
     _inherit = 'stock.move'
     
     def _check_unit_measure(self, cr, uid, ids, context=None):                                                                                                            
+        print 'stock check'
         context = context or {}
         sm_brw = self.browse(cr, uid, ids[0], context=context)                  
         type = sm_brw.picking_id and sm_brw.picking_id.type
@@ -53,7 +54,7 @@ class inherit_move(osv.osv):
                 hasattr(sm_brw.picking_id, 'purchase_id') and \
                 sm_brw.picking_id.purchase_id and \
                 sm_brw.picking_id.type == 'in':
-            if sm_brw.product_id and sm_brw.product_id.uom_id.id != sm_brw.product_uom.id:                                
+            if sm_brw.product_id and sm_brw.product_id.uom_po_id.id != sm_brw.product_uom.id:                                
                 raise osv.except_osv(_('Error !'),_("The Unit measure in the line will be the unit measure set on the product configuration to purchase %s .") % (sm_brw.product_id.name,))
         return True                                                             
 

@@ -41,11 +41,11 @@ class inherit_account_invocie_line(osv.osv):
     def _check_unit_measure(self, cr, uid, ids, context=None):                                                                                                            
         ail_brw = self.browse(cr, uid, ids[0], context=context)                  
         if ail_brw.invoice_id.type == 'out_invoice':
-            if ail_brw.product_id and ail_brw.product_id.uom_id.id != ail_brw.uos_id and ail_brw.uos_id.id:                                
+            if not ail_brw.product_id and ail_brw.product_id.uom_id.id == ail_brw.uos_id and ail_brw.uos_id.id:                                
                 raise osv.except_osv(_('Error !'),_("The Unit measure in the line will be the unit measure set on the product configuration to sale %s .") % (ail_brw.product_id.name,))
 
         if ail_brw.invoice_id.type == 'in_invoice':
-            if ail_brw.product_id and ail_brw.product_id.uom_id.id != ail_brw.uos_id and ail_brw.uos_id.id:                                
+            if not ail_brw.product_id and ail_brw.product_id.uom_po_id.id == ail_brw.uos_id and ail_brw.uos_id.id:                                
                 raise osv.except_osv(_('Error !'),_("The Unit measure in the line will be the unit measure set on the product configuration to purchase %s .") % (ail_brw.product_id.name,))
         return True                                                             
 
