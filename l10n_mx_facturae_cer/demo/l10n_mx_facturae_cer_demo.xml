@@ -3,8 +3,8 @@
     <data noupdate="1">
         <record id="demo_l10n_mx_facturae_cer_0" model="res.company.facturae.certificate">
             <field name="company_id" ref="base.main_company"/>
-            <field name="date_start">27/07/2012</field>
-            <field name="date_end">27/07/2016</field>
+            <field name="date_start">2012/07/27</field>
+            <field name="date_end">2016/07/27</field>
             <field name="certificate_file">MIIEdDCCA1ygAwIBAgIUMjAwMDEwMDAwMDAxMDAwMDU4NjcwDQYJKoZIhvcNAQEFBQAwggFvMRgw
 FgYDVQQDDA9BLkMuIGRlIHBydWViYXMxLzAtBgNVBAoMJlNlcnZpY2lvIGRlIEFkbWluaXN0cmFj
 acOzbiBUcmlidXRhcmlhMTgwNgYDVQQLDC9BZG1pbmlzdHJhY2nDs24gZGUgU2VndXJpZGFkIGRl
