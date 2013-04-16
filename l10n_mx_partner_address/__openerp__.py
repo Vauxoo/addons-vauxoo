@@ -38,9 +38,10 @@
     "license" : "AGPL-3",
     "depends" : [
             "base",
+            "l10n_mx_states",
         ],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ["demo/l10n_mx_partner_address_demo.xml",],
     "update_xml" : [
         'country_data.xml'
 #        "security/openacademy_security.xml",
