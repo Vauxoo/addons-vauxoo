@@ -34,14 +34,12 @@ import wizard
 import base64
 import xml.dom.minidom
 import time
-import base64
 import StringIO
 import csv
 import tempfile
 import os
 import sys
 import codecs
-import xml.dom.minidom
 from datetime import datetime, timedelta
 
 try:
@@ -146,15 +144,74 @@ class account_invoice(osv.osv):
         self.fdata = base64.encodestring( xml_data )
         msg = _("Press in the button  'Upload File'")
         return {'file': self.fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
-
+        
+    def add_node(self, node_name, attrs, parent_node, minidom_xml_obj, attrs_types,order=False):
+        if not order:
+            order=attrs
+        new_node = minidom_xml_obj.createElement(node_name)
+        for key in order:
+            if attrs_types[key] == 'attribute':
+                new_node.setAttribute(key, attrs[key])
+            elif attrs_types[key] == 'textNode':
+                key_node = minidom_xml_obj.createElement( key )
+                text_node = minidom_xml_obj.createTextNode( attrs[key] )
+                
+                key_node.appendChild( text_node )
+                new_node.appendChild( key_node )
+        parent_node.appendChild( new_node )
+        return new_node
+        
+    def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context={}):
+        if xml_res_str:
+            node_Addenda = xml_res_str.getElementsByTagName('Addenda')
+            if len(node_Addenda) == 0:
+                nodeComprobante = xml_res_str.getElementsByTagName(comprobante)[0]
+                node_Addenda = self.add_node('Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
+                node_Partner_attrs = {
+                    'xmlns:sf' : "http://timbrado.solucionfactible.com/partners",
+                    'xsi:schemaLocation' : "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    'id' : "150731"
+                }
+                node_Partner_attrs_types = {
+                    'xmlns:sf' : 'attribute',
+                    'xsi:schemaLocation' : 'attribute',
+                    'id' : 'attribute'
+                }
+                node_Partner = self.add_node('sf:Partner', node_Partner_attrs, node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+            else:
+                node_Partner_attrs = {
+                    'xmlns:sf' : "http://timbrado.solucionfactible.com/partners",
+                    'xsi:schemaLocation' : "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    'id' : "150731"
+                }
+                node_Partner_attrs_types = {
+                    'xmlns:sf' : 'attribute',
+                    'xsi:schemaLocation' : 'attribute',
+                    'id' : 'attribute'
+                }
+                node_Partner = self.add_node('sf:Partner', node_Partner_attrs, node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+        return xml_res_str
+        
     def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
         """
         @params fdata : File.xml codification in base64
         """
+                ir_seq_app_obj = self.pool.get('ir.sequence.approval')
+        invoice = self.browse(cr, uid, inv_ids[0], context=context)
+        sequence_app_id = ir_seq_app_obj.search(cr, uid, [('sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
+        type_inv = 'cfd22'
+        if sequence_app_id:
+            type_inv = ir_seq_app_obj.browse(cr, uid, sequence_app_id[0], context=context).type
+        if type_inv == 'cfdi32':
+            comprobante = 'cfdi:Comprobante'
+        else:
+            comprobante = 'Comprobante'
         pac_params_obj = self.pool.get('params.pac')
         cfd_data = base64.decodestring( fdata or self.fdata )
         xml_res_str = xml.dom.minidom.parseString(cfd_data)
-        compr = xml_res_str.getElementsByTagName('Comprobante')[0]
+        xml_res_addenda = self.add_addenta_xml(cr, uid, xml_res_str, comprobante, context=context)
+        xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
+        compr = xml_res_addenda.getElementsByTagName(comprobante)[0]
         date = compr.attributes['fecha'].value
         date_format = datetime.strptime( date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
         context['date']=date_format
@@ -163,18 +220,11 @@ class account_invoice(osv.osv):
         currency = invoice.currency_id.name
         currency_enc = currency.encode('UTF-8', 'strict')
         rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
-        moneda = '''<Addenda>
-            <sferp:Divisa codigoISO="%s" nombre="%s" tipoDeCambio="%s" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sferp="http://www.solucionfactible.com/cfd/divisas" xsi:schemaLocation="http://www.solucionfactible.com/cfd/divisas http://solucionfactible.com/addenda/divisas.xsd"/>
-            <sf:Partner xmlns:sf="http://timbrado.solucionfactible.com/partners" xsi:schemaLocation="http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd" id="150731"/>
-        </Addenda> </Comprobante>'''%(currency_enc,currency_enc,rate)
         file = False
         msg = ''
         status = ''
         cfdi_xml = False
-
-        cfd_data_adenda = cfd_data.replace('</Comprobante>', moneda)
         pac_params_ids = pac_params_obj.search(cr,uid,[('method_type','=','pac_sf_firmar'), ('company_id', '=', invoice.company_emitter_id.id), ('active', '=', True)], limit=1, context=context)
-
         if pac_params_ids:
             pac_params = pac_params_obj.browse(cr, uid, pac_params_ids, context)[0]
             user = pac_params.user
@@ -183,16 +233,8 @@ class account_invoice(osv.osv):
             namespace = pac_params.namespace
             if 'testing' in wsdl_url:
                 msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
-            if cfd_data_adenda:
-
-                #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/TimbradoCFD?wsdl'  originales
-                #~ namespace = 'http://timbradocfd.ws.cfdi.solucionfactible.com' originales
-                #~ user = 'testing@solucionfactible.com' originales
-                #~ password = 'timbrado.SF.16672' originales
-
                 wsdl_client = WSDL.SOAPProxy( wsdl_url, namespace )
                 if True:#if wsdl_client:
-
                     file_globals = self._get_file_globals(cr, uid, invoice_ids, context=context)
                     fname_cer_no_pem = file_globals['fname_cer']
                     cerCSD = fname_cer_no_pem and base64.encodestring( open(fname_cer_no_pem, "r" ).read() ) or ''
@@ -223,8 +265,8 @@ class account_invoice(osv.osv):
                             'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '' ,
                         }
                         if cfdi_data.get('cfdi_xml', False):
-                            url_pac = '</cfdi:Comprobante><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->'
-                            cfdi_data['cfdi_xml'] = cfdi_data['cfdi_xml'].replace('</cfdi:Comprobante>', url_pac)
+                            url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->'%(comprobante)
+                            cfdi_data['cfdi_xml'] = cfdi_data['cfdi_xml'].replace('</"%s">'%(comprobante), url_pac)
                             file = base64.encodestring( cfdi_data['cfdi_xml'] or '' )
                             #self.cfdi_data_write(cr, uid, [invoice.id], cfdi_data, context=context)
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
@@ -237,14 +279,17 @@ class account_invoice(osv.osv):
                     elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
                         msg = _("Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n") + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
                     else:
-                        msg += '\n' + resultado['mensaje'] or ''
-                        if not status:
-                            status = 'parent_' + resultado['status']
+                        msg = msg + "\nNo se pudo extraer el archivo XML del PAC"
+                elif status == '500' or status == '307':#documento no es un cfd version 2, probablemente ya es un CFD version 3
+                    msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + ( resultado['resultados']['mensaje'] or '') + ( resultado['mensaje'] or '' )
+                else:
+                    msg += '\n' + resultado['mensaje'] or ''
+                    if not status:
+                        status = 'parent_' + resultado['status']
         else:
             msg = 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
         return {'file': file, 'msg': msg, 'status': status, 'cfdi_xml': cfdi_xml }
-
-
+        
     def _get_file_cancel(self, cr, uid, inv_ids, context = {}):
         inv_ids = inv_ids[0]
         atta_obj = self.pool.get('ir.attachment')
