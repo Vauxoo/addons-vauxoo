@@ -24,9 +24,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
+from openerp.osv import osv, fields
 
-class account_analytic_account(osv.osv):
+class account_analytic_account(osv.Model):
     _inherit ='account.analytic.account'
 
     _order = "parent_left"
