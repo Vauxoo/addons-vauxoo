@@ -24,11 +24,12 @@
 #
 ##############################################################################
 import time
-from osv import osv, fields
+from openerp.osv import osv, fields
 import decimal_precision as dp
-from tools.translate import _
+from openerp.tools.translate import _
 
-class account_move_group(osv.osv_memory):
+
+class account_move_group(osv.TransientModel):
     _name='account.move.group'
     
     def move_group(self, cr, uid, ids, context=None):
