@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    
+
         <report id="account_invoice_facturae_pdf2"
             name="account.invoice.facturae.pdf2"
             string="Electronic Invoice CBB PDF"
@@ -11,7 +11,8 @@
             attachment_use="1"
             attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"
             groups="l10n_mx_facturae_cbb.group_facturae_mx_cbb_user"
+            menu="False"
         />
-        
+
     </data>
 </openerp>

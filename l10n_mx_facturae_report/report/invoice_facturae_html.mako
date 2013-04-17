@@ -95,7 +95,7 @@
                             <td class="cliente"><b>Receptor:</b></td>
                             <td width="64%" class="cliente">${o.partner_id.name or ''|entity}</td>
                             <td class="cliente"><b>R. F. C.:</b></td>
-                            <td width="16%" class="cliente"><b>${res_client['vat'] or ''|entity}SMA010116FC4</b></td>
+                            <td width="16%" class="cliente"><b>${res_client['vat'] or ''|entity}</b></td>
                         </tr>
                     </table>
                     <table class="basic_table">

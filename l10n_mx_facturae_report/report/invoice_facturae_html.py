@@ -27,7 +27,10 @@
 
 from openerp.report import report_sxw
 from openerp import pooler
+from openerp.tools.translate import _
 from openerp import tools
+from openerp.osv import osv
+from openerp import netsvc
 
 
 class invoice_facturae_html(report_sxw.rml_parse):
@@ -144,14 +147,20 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return ""
 
     def _get_data_partner(self, partner_id):
+        address_invoice=''
         partner_obj = self.pool.get('res.partner')
         res = {}
         address_invoice_id = partner_obj.search(self.cr, self.uid, [('parent_id', '=', partner_id.id), ('type', '=', 'invoice')])
         address_invoice_id2 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id),('type', '=', 'invoice')])
+        address_invoice_id3 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id)])
         if address_invoice_id:
             address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id[0])
         if address_invoice_id2:
             address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id2[0])
+        if address_invoice_id3:
+            address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id3[0])
+            print "Customer Invoice Address Not Type Invoice"
+            #raise osv.except_osv('Warning !', 'No hay una secuencia de folios bien definida. !')
         if address_invoice:
             res.update({
                     'street' : address_invoice.street or False,
@@ -168,6 +177,12 @@ class invoice_facturae_html(report_sxw.rml_parse):
                     'fax' : address_invoice.fax or False,
                     'mobile' : address_invoice.mobile or False,
                     })
+            if not res['vat']:
+                #raise osv.except_osv(_('Warning !'), _('Customer Invoice Address Not Vat.!'))
+                print "Not Vat"
+        else:
+            #raise osv.except_osv('Warning !', 'No hay una secuencia de folios bien definida. !')
+            print "Customer Invoice Address Not Vat"
         return res
 
     def _get_sum_total(self, line_ids):
