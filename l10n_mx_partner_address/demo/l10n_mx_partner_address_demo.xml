@@ -22,7 +22,7 @@
         </record>
 
         <record id="res_partner_address_vauxoo_1" model="res.partner">
-            <field name="name">Moises Lopez</field>
+            <field name="name">Vauxoo</field>
             <field eval="1" name="customer"/>
             <field name="street">valle de señora</field>
             <field name="street2">valle del campestre</field>
