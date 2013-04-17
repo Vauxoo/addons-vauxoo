@@ -24,12 +24,13 @@
 #
 ##############################################################################
 
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import release
 import decimal_precision as dp
 
-class account_voucher(osv.osv):
+class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     
     #~ _columns={
@@ -409,7 +410,7 @@ class account_voucher(osv.osv):
         
 account_voucher()
 
-class account_voucher_line(osv.osv):
+class account_voucher_line(osv.Model):
     _inherit = 'account.voucher.line'
     
     _columns={
@@ -418,7 +419,7 @@ class account_voucher_line(osv.osv):
 account_voucher_line()
 
 
-class account_voucher_line_tax(osv.osv):
+class account_voucher_line_tax(osv.Model):
     _name= 'account.voucher.line.tax'
     
     _columns={
