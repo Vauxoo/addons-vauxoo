@@ -24,15 +24,15 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-import tools
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+import openerp.tools as tools
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 import time
 import os
 
-class account_aged_partner_balance_vw(osv.osv):
+class account_aged_partner_balance_vw(osv.Model):
     _name = 'account.aged.partner.balance.vw'
     _rec_name = 'partner_id'
     _auto = False
