@@ -32,6 +32,7 @@
             <field name="code">CBB</field>
             <field name="type">sale</field>
             <field name="user_id" ref="base.user_root"/>
+            <field name="company2_id" ref="base.main_company"/>
         </record>
     </data>
 </openerp>
