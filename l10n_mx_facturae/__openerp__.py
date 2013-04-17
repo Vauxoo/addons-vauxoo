@@ -63,7 +63,7 @@ Requires the following programs:
 
         ],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ["demo/l10n_mx_facturae_seq_demo.xml",],
     "update_xml" : [
         'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',

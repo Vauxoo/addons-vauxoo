@@ -39,7 +39,7 @@
         "l10n_mx_company_multi_address",
     ],
     "init_xml" : [],
-    "demo_xml" : ["demo/l10n_mx_facturae_seq_demo.xml"],
+    "demo_xml" : [],
     "update_xml" : [
         "security/l10n_mx_facturae_seq_security.xml",
         "security/ir.model.access.csv",
