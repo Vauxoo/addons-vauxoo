@@ -24,11 +24,11 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 import re
 
 
-class stock_location(osv.osv):
+class stock_location(osv.Model):
     _inherit = 'stock.location'
     _columns = {
         'code': fields.char('Code', size=64)
@@ -51,4 +51,3 @@ class stock_location(osv.osv):
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
         return result
-stock_location()
