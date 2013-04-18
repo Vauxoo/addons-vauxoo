@@ -24,11 +24,12 @@
 #
 ##############################################################################
 
-from tools.translate import _
-from osv import osv, fields
+from openerp.tools.translate import _
+
+from openerp.osv import osv, fields
 
 
-class procurement_order(osv.osv):
+class procurement_order(osv.Model):
     _inherit = "procurement.order"
 
     _columns = {
@@ -46,4 +47,3 @@ class procurement_order(osv.osv):
             self.write(cr, uid, [line], {'production_created': res.get(line)})
         return res
 
-procurement_order()
