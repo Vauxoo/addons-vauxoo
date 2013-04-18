@@ -33,15 +33,17 @@ import zipimport
 import addons
 import pooler
 import release
-import tools
+import openerp.tools as tools
 
-from tools.parse_version import parse_version
-from tools.translate import _
+from openerp.tools.parse_version import parse_version
 
-from osv import fields, osv, orm
+from openerp.tools.translate import _
 
 
-class module(osv.osv):
+from openerp.osv import osv, fields, orm
+
+
+class module(osv.Model):
     _inherit = 'ir.module.module'
 
     def get_doc_inside(self, cr, uid, ids, context=None):
