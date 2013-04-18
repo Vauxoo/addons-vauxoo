@@ -28,12 +28,13 @@ from osv import osv, fields
 from tools.translate import _
 import decimal_precision as dp
 
+
 class mrp_subproduct(osv.osv):
     _inherit = 'mrp.subproduct'
-    
+
     def _calc_cost(self, cr, uid, ids, field_name, arg, context):
-        res={}
-        for i in self.browse(cr,uid,ids):
+        res = {}
+        for i in self.browse(cr, uid, ids):
             res[i.id] = self.compute_bom_cost(cr, uid, [i.id])
         return res
 
@@ -43,23 +44,24 @@ class mrp_subproduct(osv.osv):
         @cost = se almacena el costo unitario final.
         @res = diccionario usado para retornar el id y el costo unitario.
         '''
-        res={}
-        for i in self.browse(cr,uid,ids):
+        res = {}
+        for i in self.browse(cr, uid, ids):
             cost = 0.00
-            cost =  i.product_id.standard_price
-            res[i.id]= cost
+            cost = i.product_id.standard_price
+            res[i.id] = cost
         return res
-    
+
     _columns = {
-        'cost_t': fields.function(_calc_cost, method=True, type='float', digits_compute= dp.get_precision('Cost_Bom'), string='Cost', store=False),
-        'cost_u': fields.function(_calc_cost_u, method=True, type='float',digits_compute= dp.get_precision('Cost_Bom'), string='Unit Cost', store=False),
-        }
+        'cost_t': fields.function(_calc_cost, method=True, type='float', digits_compute=dp.get_precision('Cost_Bom'), string='Cost', store=False),
+        'cost_u': fields.function(_calc_cost_u, method=True, type='float', digits_compute=dp.get_precision('Cost_Bom'), string='Unit Cost', store=False),
+    }
 
     def compute_bom_cost(self, cr, uid, ids, *args):
-        for i in self.browse(cr,uid,ids):
+        for i in self.browse(cr, uid, ids):
             cost = 0.00
-            cost = i.product_id.standard_price*i.product_qty* i.product_uom.factor_inv * i.product_id.uom_id.factor
-                
+            cost = i.product_id.standard_price*i.product_qty * \
+                i.product_uom.factor_inv * i.product_id.uom_id.factor
+
         return cost
-        
+
 mrp_subproduct()
