@@ -19,14 +19,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 import decimal_precision as dp
 
 
-class baremo_book(osv.osv):
+class baremo_book(osv.Model):
     _name = 'baremo.book'
 
     _columns = {
@@ -37,10 +37,9 @@ class baremo_book(osv.osv):
     _defaults = {
         'name': lambda *a: 'DEBE ESCRIBIR UNA NOTA REFERENTE A ESTE BAREMO PARA SER USADO EN EL REPORTE DE COMISIONES, COMO POR EJEMPLO, LOS DESCUENTOS NEGATIVOS REPRESENTAN LOS SOBRE PRECIOS REALIZADOS A LOS PRODUCTOS PARA COMPENSAR EN PAGO RETARDADO POR PARTE DEL CLIENTE',
     }
-baremo_book()
 
 
-class baremo(osv.osv):
+class baremo(osv.Model):
     """
     OpenERP Model : baremo
     """
@@ -57,10 +56,9 @@ class baremo(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-baremo()
 
 
-class baremo_discount(osv.osv):
+class baremo_discount(osv.Model):
     """
     OpenERP Model : baremo_discount
     """
@@ -76,4 +74,3 @@ class baremo_discount(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-baremo_discount()
