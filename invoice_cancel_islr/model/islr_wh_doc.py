@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 import time
 from osv import fields, osv
@@ -29,31 +29,29 @@ import decimal_precision as dp
 from tools.translate import _
 import netsvc
 
+
 class islr_wh_doc(osv.osv):
     _inherit = 'islr.wh.doc'
 
     _columns = {
-    'prev_state':fields.char('Previos State',12,help="Field to keep the previous state of the invoice at the time of canceling")
-    
+        'prev_state': fields.char('Previos State', 12, help="Field to keep the previous state of the invoice at the time of canceling")
+
     }
-    
-    
+
     def check_state_draft(self, cr, uid, ids, context=None):
         '''
-        Modified to witholding vat validate 
+        Modified to witholding vat validate
         '''
         return True
-    
+
     def check_state_cancel(self, cr, uid, ids, context=None):
         '''
-        Modified to witholding vat validate 
+        Modified to witholding vat validate
         '''
-        islr_brw = self.browse(cr,uid,ids,context=context)[0]
+        islr_brw = self.browse(cr, uid, ids, context=context)[0]
         if islr_brw.invoice_id.state == 'cancel':
             return False
 
         return True
-    
+
 islr_wh_doc()
-
-
