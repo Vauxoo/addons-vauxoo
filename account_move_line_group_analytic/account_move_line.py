@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -19,11 +19,12 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from osv import osv, fields, orm
 from lxml import etree
 import tools
+
 
 class account_move_line(osv.osv):
     _inherit = 'account.move.line'
@@ -32,16 +33,16 @@ class account_move_line(osv.osv):
     }
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        result = super(account_move_line, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
-        #fields_get = self.fields_get(cr, uid, ['stock_move_id'], context)
+        result = super(account_move_line, self).fields_view_get(
+            cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
+        # fields_get = self.fields_get(cr, uid, ['stock_move_id'], context)
         xml_form = etree.fromstring(result['arch'])
         placeholder = xml_form.xpath("//field[@name='period_id']")
         placeholder[0].addnext(etree.Element('field', {'name': 'product_id'}))
-        result['arch'] =  etree.tostring(xml_form)
+        result['arch'] = etree.tostring(xml_form)
         result['fields'].update({
-        'product_id':{'domain': [], 'string': u'Product', 'readonly': False, 'relation': 'product.product', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}
-        })
+                                'product_id': {'domain': [], 'string': u'Product', 'readonly': False, 'relation': 'product.product', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}
+                                })
         return result
 
 account_move_line()
-
