@@ -23,21 +23,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class account_account(osv.osv):
+
+class account_account(osv.Model):
     _inherit = 'account.account'
 
     _columns = {
         'analytic_required': fields.boolean('Analytic Required'),
     }
 
-account_account()
 
 
-class account_move(osv.osv):
+class account_move(osv.Model):
     _inherit = 'account.move'
 
     def button_validate(self, cursor, user, ids, context=None):
