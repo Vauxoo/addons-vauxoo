@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Javier Duran <javieredm@gmail.com>,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -25,18 +25,20 @@
 
 from openerp.osv import osv, fields
 
+
 class account_move(osv.Model):
     _inherit = 'account.move'
 
     def action_update_period(self, cr, uid, ids, context={}):
         moves = self.browse(cr, uid, ids[0])
-        period_ids = self.pool.get('account.period').search(cr,uid,[('date_start','<=',moves.date),('date_stop','>=',moves.date)])
+        period_ids = self.pool.get('account.period').search(cr, uid, [(
+            'date_start', '<=', moves.date), ('date_stop', '>=', moves.date)])
         if len(period_ids):
             period_id = period_ids[0]
-            cr.execute('UPDATE account_move_line SET period_id=%s ' \
-                        'WHERE move_id =%s', (period_id, ids[0]))
+            cr.execute('UPDATE account_move_line SET period_id=%s '
+                       'WHERE move_id =%s', (period_id, ids[0]))
 
-            self.write(cr, uid, ids, {'period_id':period_id})
+            self.write(cr, uid, ids, {'period_id': period_id})
 
         return True
 
