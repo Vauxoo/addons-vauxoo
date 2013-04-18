@@ -29,8 +29,10 @@ from openerp.report import report_sxw
 from openerp import pooler
 from openerp.tools.translate import _
 from openerp import tools
+from openerp import tests
 from openerp.osv import osv
 from openerp import netsvc
+import openerp
 
 
 class invoice_facturae_html(report_sxw.rml_parse):
@@ -58,6 +60,11 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return self.invoice._columns.has_key(key)
 
     def _set_global_data(self, o):
+        try:
+            self._get_data_partner(o.partner_id)
+        except Exception, e:
+            print "exception: %s"%( e )
+            pass
         try:
             self.setLang(o.partner_id.lang)
         except Exception, e:
@@ -152,16 +159,15 @@ class invoice_facturae_html(report_sxw.rml_parse):
         res = {}
         address_invoice_id = partner_obj.search(self.cr, self.uid, [('parent_id', '=', partner_id.id), ('type', '=', 'invoice')])
         address_invoice_id2 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id),('type', '=', 'invoice')])
-        address_invoice_id3 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id)])
+        #address_invoice_id3 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id)])
         if address_invoice_id:
             address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id[0])
         if address_invoice_id2:
             address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id2[0])
-        if address_invoice_id3:
-            address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id3[0])
-            print "Customer Invoice Address Not Type Invoice"
-            msj=tools.ustr("Customer Invoice Address Not Type Invoice")
-            #raise osv.except_osv(_('Warning !'), _('%s.\nPlease create one.')%msj)
+        #if address_invoice_id3:
+            #address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id3[0])
+            #print "Customer Invoice Address Not Type Invoice"
+            #raise openerp.exceptions.Warning('Customer Address Not Invoice Type')
         if address_invoice:
             res.update({
                     'street' : address_invoice.street or False,
@@ -179,11 +185,11 @@ class invoice_facturae_html(report_sxw.rml_parse):
                     'mobile' : address_invoice.mobile or False,
                     })
             if not res['vat']:
-                #raise osv.except_osv(_('Warning !'), _('Customer Invoice Address Not Vat.!'))
-                print "Not Vat"
+                raise openerp.exceptions.Warning('Invoice Address Type Not Vat')
+                #print "Invoice Address Type Not Vat"
         else:
-            #raise osv.except_osv(_('Warning !'), _('Customer Invoice Address Not Address.!'))
-            print "Customer Invoice Address Not Vat"
+            #print "Customer Address Not Invoice Type"
+            raise openerp.exceptions.Warning('Customer Address Not Invoice Type')
         return res
 
     def _get_sum_total(self, line_ids):
