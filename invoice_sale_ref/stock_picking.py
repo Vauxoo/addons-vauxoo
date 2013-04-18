@@ -25,27 +25,34 @@
 ##############################################################################
 from osv import osv
 
+
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
-    
+
     def action_invoice_create(self, cursor, user, ids, journal_id=False,
-            group=False, type='out_invoice', context=None):
+                              group=False, type='out_invoice', context=None):
         if context is None:
             context = {}
         picking_obj = self.pool.get('stock.picking')
         invoice_obj = self.pool.get('account.invoice')
-        picking_id__invoice_id_dict = super(stock_picking, self).action_invoice_create(cursor, user,
-                ids, journal_id=journal_id, group=group, type=type,
-                context=context)
+        picking_id__invoice_id_dict = super(
+            stock_picking, self).action_invoice_create(cursor, user,
+                                                       ids, journal_id=journal_id, group=group, type=type,
+                                                       context=context)
         invoice_id__client_order_ref_dict = {}
         for picking_id in picking_id__invoice_id_dict.keys():
-            invoice_id = picking_id__invoice_id_dict[ picking_id ]
-            picking = picking_obj.browse(cursor, user, picking_id, context=context)
-            invoice_id__client_order_ref_dict.setdefault(invoice_id, []).append( picking.sale_id and picking.sale_id.client_order_ref or '' )
+            invoice_id = picking_id__invoice_id_dict[picking_id]
+            picking = picking_obj.browse(
+                cursor, user, picking_id, context=context)
+            invoice_id__client_order_ref_dict.setdefault(invoice_id, []).append(
+                picking.sale_id and picking.sale_id.client_order_ref or '')
         for invoice_id in invoice_id__client_order_ref_dict:
-            client_order_ref_list = invoice_id__client_order_ref_dict[invoice_id]
-            client_order_ref_str = ','.join( map( lambda x: str(x), client_order_ref_list))
-            invoice_obj.write(cursor, user, [invoice_id], {'name': client_order_ref_str}, context=context)
+            client_order_ref_list = invoice_id__client_order_ref_dict[
+                invoice_id]
+            client_order_ref_str = ','.join(map(
+                lambda x: str(x), client_order_ref_list))
+            invoice_obj.write(cursor, user, [invoice_id], {
+                              'name': client_order_ref_str}, context=context)
         return picking_id__invoice_id_dict
 
 stock_picking()
