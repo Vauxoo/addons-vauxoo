@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: javier@vauxoo.com
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -20,14 +20,14 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from osv import fields, osv
 
 
 class account_move_line(osv.osv):
     _inherit = 'account.move.line'
-    
+
     '''
     Check that the entry balance is greater than zero
     '''
@@ -39,12 +39,10 @@ class account_move_line(osv.osv):
                 return False
         return True
 
-
     _constraints = [
-        (_update_check_nonzero, 'You can not create an entry with zero balance ! Please set amount !', []),
+        (_update_check_nonzero,
+         'You can not create an entry with zero balance ! Please set amount !', []),
     ]
 
 
-
 account_move_line()
-
