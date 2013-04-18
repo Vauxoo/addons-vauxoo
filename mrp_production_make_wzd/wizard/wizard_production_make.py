@@ -26,10 +26,11 @@
 from openerp.osv import osv, fields
 import decimal_precision as dp
 import time
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class wizard_production_make(osv.osv_memory):
+
+class wizard_production_make(osv.TransientModel):
     _name = 'wizard.production.make'
 
     _columns = {
@@ -79,4 +80,3 @@ class wizard_production_make(osv.osv_memory):
             'domain': [('id', 'in', list_orders)],
         }
 
-wizard_production_make()
