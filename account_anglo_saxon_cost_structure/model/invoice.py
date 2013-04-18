@@ -24,7 +24,6 @@
 from openerp.tools.translate import _
 
 
-
 class account_invoice_line(osv.Model):
     _inherit = "account.invoice.line"
 
