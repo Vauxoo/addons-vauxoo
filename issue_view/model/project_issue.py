@@ -21,24 +21,22 @@
 
 from crm import crm
 from datetime import datetime
-from osv import fields,osv
+from osv import fields, osv
 from tools.translate import _
 import binascii
 import time
 import tools
 
 
-
-
 class project_issue(osv.osv):
 
     _inherit = 'project.issue'
-    
+
     _columns = {
         'task_id': fields.many2one('project.task', 'Task', domain="[('project_id','=',project_id)]"),
-        'product_backlog_id': fields.related('task_id', 'product_backlog_id',relation='project.scrum.product.backlog', type='many2one', string='Backlog',store=True),
-        'sprint_id': fields.related('task_id', 'sprint_id',relation='project.scrum.sprint', type='many2one', string='Sprint',store=True),
-        'planned_hours': fields.related('task_id', 'planned_hours',type='float', string='Horas',store=False),
+        'product_backlog_id': fields.related('task_id', 'product_backlog_id', relation='project.scrum.product.backlog', type='many2one', string='Backlog', store=True),
+        'sprint_id': fields.related('task_id', 'sprint_id', relation='project.scrum.sprint', type='many2one', string='Sprint', store=True),
+        'planned_hours': fields.related('task_id', 'planned_hours', type='float', string='Horas', store=False),
     }
 
 project_issue()
