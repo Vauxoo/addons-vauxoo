@@ -22,13 +22,13 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def search_asociated_invoice(self, cr, uid, ids, context=None):
@@ -64,4 +64,3 @@ class account_invoice(osv.osv):
             action.update({'nodestroy': True})
         return action
 
-account_invoice()
