@@ -20,10 +20,10 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class stock_move(osv.osv):
+class stock_move(osv.Model):
     _inherit = 'stock.move'
     _columns = {
         'sml_out_id': fields.many2one('stock.move', 'Out sml', select=True),
@@ -52,7 +52,6 @@ class stock_move(osv.osv):
                     res = (aml_cos_ids[0], aml_inv_ids[0])
         return res
 
-stock_move()
 
 
 

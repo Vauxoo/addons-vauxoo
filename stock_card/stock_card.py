@@ -29,15 +29,16 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
+
 import time
 import datetime
 from mx.DateTime import *
 import decimal_precision as dp
 
 
-class stock_card(osv.osv):
+class stock_card(osv.Model):
     _name = "stock.card"
     _description = "Move by Picking Line"
     _columns = {
@@ -1104,10 +1105,9 @@ class stock_card(osv.osv):
 ##                    inv_obj.write(cr, uid, line.invoice_id.id, {'retention':True}, context=context)
 #
 #        return True
-stock_card()
 
 
-class stock_card_line(osv.osv):
+class stock_card_line(osv.Model):
     _name = "stock.card.line"
     _description = "Move by Picking Line"
     _order = 'sequence'
@@ -1199,10 +1199,9 @@ class stock_card_line(osv.osv):
     }
 
 
-stock_card_line()
 
 
-class stock_card_product(osv.osv):
+class stock_card_product(osv.Model):
     _name = 'stock.card.product'
     _description = 'Products in Stock Card'
     _columns = {
@@ -1214,10 +1213,9 @@ class stock_card_product(osv.osv):
     }
     _rec_name = 'product_id'
 
-stock_card_product()
 
 
-class stock_card_account(osv.osv):
+class stock_card_account(osv.Model):
     _name = 'stock.card.account'
     _description = 'Accounts in Stock Card'
     _columns = {
@@ -1227,45 +1225,40 @@ class stock_card_account(osv.osv):
     }
     _rec_name = 'stock_card_id'
 
-stock_card_account()
 
 
-class stock_card_account_lines(osv.osv):
+class stock_card_account_lines(osv.Model):
     _name = 'stock.card.account.lines'
     _columns = {
             'sca_id': fields.many2one('stock.card.account', 'Product Group', ondelete='cascade'),
             'aml_id': fields.many2one('account.move.line', string='Account Entry', readonly=True, select=True),
     }
     _rec_name = 'sca_id'
-stock_card_account_lines()
 
 
-class stock_card_lines(osv.osv):
+class stock_card_lines(osv.Model):
     _inherit = 'stock.card.line'
     _columns = {
             'scp_id': fields.many2one('stock.card.product', 'Product Group'),
     }
-stock_card_lines()
 
 
-class stock_card_product_move_cost(osv.osv):
+class stock_card_product_move_cost(osv.Model):
     _name = 'stock.card.product.move.cost'
     _columns = {
             'scp_id': fields.many2one('stock.card.product', 'Product Group', ondelete='cascade'),
             'aml_id': fields.many2one('account.move.line', string='Account Entry', readonly=True, select=True),
     }
     _rec_name = 'scp_id'
-stock_card_product_move_cost()
 
 
-class stock_card_product_move_inv(osv.osv):
+class stock_card_product_move_inv(osv.Model):
     _name = 'stock.card.product.move.inv'
     _columns = {
             'scp_id': fields.many2one('stock.card.product', 'Product Group', ondelete='cascade'),
             'aml_id': fields.many2one('account.move.line', string='Account Entry', readonly=True, select=True),
     }
     _rec_name = 'scp_id'
-stock_card_product_move_inv()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

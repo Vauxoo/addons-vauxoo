@@ -28,15 +28,16 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
+
 import time
 import datetime
 from mx.DateTime import *
 import decimal_precision as dp
 
 
-class report_profit_picking(osv.osv):
+class report_profit_picking(osv.Model):
     def _get_invoice_line(self, cr, uid, ids, field_name, arg, context={}):
         result = {}
         aml_obj = self.pool.get('account.move.line')
@@ -506,7 +507,6 @@ class report_profit_picking(osv.osv):
             order by name
             )
         """)
-report_profit_picking()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
