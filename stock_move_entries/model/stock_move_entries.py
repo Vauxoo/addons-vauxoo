@@ -27,7 +27,7 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
     _inherit = "account.move.line"
 
     """
@@ -39,10 +39,9 @@ class account_move_line(osv.osv):
         'location_dest_id': fields.many2one('stock.location', 'Location Move', help="Location Move Destination")
     }
 
-account_move_line()
 
 
-class account_move(osv.osv):
+class account_move(osv.Model):
     _inherit = "account.move"
 
     """
@@ -63,10 +62,9 @@ class account_move(osv.osv):
         'sm_id': fields.function(_get_sm, method=True, type='many2one', relation='stock.move', string='Stock move ID', store=True),
     }
 
-account_move()
 
 
-class stock_move(osv.osv):
+class stock_move(osv.Model):
     _inherit = "stock.move"
 
     """
@@ -97,4 +95,3 @@ class stock_move(osv.osv):
             line[2]['location_dest_id'] = move.location_dest_id.id
         return res
 
-stock_move()
