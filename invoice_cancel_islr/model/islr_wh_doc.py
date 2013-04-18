@@ -24,13 +24,14 @@
 ##########################################################################
 
 import time
-from osv import fields, osv
+from openerp.osv import osv, fields
 import decimal_precision as dp
-from tools.translate import _
-import netsvc
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 
 
-class islr_wh_doc(osv.osv):
+class islr_wh_doc(osv.Model):
     _inherit = 'islr.wh.doc'
 
     _columns = {
@@ -54,4 +55,3 @@ class islr_wh_doc(osv.osv):
 
         return True
 
-islr_wh_doc()
