@@ -23,11 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class stock_picking(osv.osv):
+
+class stock_picking(osv.Model):
     _inherit = 'stock.inventory'
 
     def unlink(self, cr, uid, ids, context=None):
