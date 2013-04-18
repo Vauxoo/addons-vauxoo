@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class sale_order(osv.osv):
+
+class sale_order(osv.Model):
     """
     sale_order
     """
@@ -57,4 +57,3 @@ class sale_order(osv.osv):
     }
 
 
-sale_order()
