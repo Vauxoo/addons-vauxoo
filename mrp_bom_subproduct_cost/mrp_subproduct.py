@@ -24,12 +24,13 @@
 #
 ##############################################################################
 
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class mrp_subproduct(osv.osv):
+class mrp_subproduct(osv.Model):
     _inherit = 'mrp.subproduct'
 
     def _calc_cost(self, cr, uid, ids, field_name, arg, context):
@@ -64,4 +65,3 @@ class mrp_subproduct(osv.osv):
 
         return cost
 
-mrp_subproduct()
