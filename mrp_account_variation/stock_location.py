@@ -23,29 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv,fields
+from osv import osv, fields
+
 
 class stock_location(osv.osv):
-    _inherit='stock.location'
-    
-    _columns = {
-        'variation_in_account_id': fields.many2one('account.account', 'Stock Variation Account (Incoming)', domain = [('type','=','other')]),
-        'variation_out_account_id': fields.many2one('account.account', 'Stock Variation Account (Outgoing)', domain = [('type','=','other')]),
-        'property_account_in_production_price_difference': fields.property(
-            'account.account', 
-            type='many2one',
-            relation = 'account.account',
-            string = 'Price Production Variation Account (Incoming)',
-            view_load=True, 
-            domain = [('type','=','other')]),
-        'property_account_out_production_price_difference': fields.property(
-            'account.account', 
-            type='many2one',
-            relation = 'account.account',
-            string = 'Price Production Variation Account (Outgoing)',
-            view_load=True, 
-            domain = [('type','=','other')]),
-    }
-    
-stock_location()
+    _inherit = 'stock.location'
 
+    _columns = {
+        'variation_in_account_id': fields.many2one('account.account', 'Stock Variation Account (Incoming)', domain=[('type', '=', 'other')]),
+        'variation_out_account_id': fields.many2one('account.account', 'Stock Variation Account (Outgoing)', domain=[('type', '=', 'other')]),
+        'property_account_in_production_price_difference': fields.property(
+            'account.account',
+            type='many2one',
+            relation='account.account',
+            string='Price Production Variation Account (Incoming)',
+            view_load=True,
+            domain=[('type', '=', 'other')]),
+        'property_account_out_production_price_difference': fields.property(
+            'account.account',
+            type='many2one',
+            relation='account.account',
+            string='Price Production Variation Account (Outgoing)',
+            view_load=True,
+            domain=[('type', '=', 'other')]),
+    }
+
+stock_location()
