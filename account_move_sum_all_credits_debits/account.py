@@ -24,12 +24,13 @@
 #
 ##############################################################################
 
-from tools.translate import _
-from osv import osv, fields
+from openerp.tools.translate import _
+
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class account_move(osv.osv):
+class account_move(osv.Model):
     _inherit = "account.move"
 
     """example of query that get these fields ---
@@ -54,4 +55,3 @@ class account_move(osv.osv):
         'total_credit': fields.function(_sum_credit_debit, string='Total credit', method=True, digits_compute=dp.get_precision('Account'), type='float', multi="total_credit_debit"),
     }
 
-account_move()
