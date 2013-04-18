@@ -27,7 +27,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class stock_picking(osv.Model):
     _inherit = 'stock.inventory'
 
