@@ -23,16 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 
 
-class change_number(osv.osv_memory):
+class change_number(osv.TransientModel):
 
     _name = 'change.number'
     _columns = {
@@ -61,4 +62,3 @@ class change_number(osv.osv_memory):
         return {'type': 'ir.actions.act_window_close'}
 
 
-change_number()
