@@ -61,5 +61,3 @@ class account_move_line(osv.Model):
                 obj_move_line.reconcile_partial(
                     cr, uid, aml_ids, 'auto', context=context)
         return True
-
-
