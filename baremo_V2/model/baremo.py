@@ -20,13 +20,13 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class baremo_book(osv.osv):
+class baremo_book(osv.Model):
     def _get_rate(self, cr, uid, rate_brw, rate, context=None):
         if context is None:
             context = {}
@@ -114,10 +114,9 @@ made on products to compensate on overdue payments
 because of the customer.
 '''),
     }
-baremo_book()
 
 
-class baremo(osv.osv):
+class baremo(osv.Model):
     """
     OpenERP Model : baremo
     """
@@ -134,10 +133,9 @@ class baremo(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-baremo()
 
 
-class baremo_rate(osv.osv):
+class baremo_rate(osv.Model):
     """
     OpenERP Model : baremo_rate
     """
@@ -153,4 +151,3 @@ class baremo_rate(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-baremo_rate()

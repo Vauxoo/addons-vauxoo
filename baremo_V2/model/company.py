@@ -20,13 +20,11 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+from openerp.osv import fields, osv
 
 
-class res_company(osv.osv):
+class res_company(osv.Model):
     _inherit = "res.company"
     _columns = {
         'bar_id': fields.many2one('baremo.book', 'Bareme'),
     }
-res_company()
