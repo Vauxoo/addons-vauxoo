@@ -29,14 +29,16 @@ import decimal_precision as dp
 #----------------------------------------------------------
 # Partner
 #----------------------------------------------------------
+
+
 class partner_new(osv.osv):
     _inherit = 'res.partner'
     _columns = {
-        'alb_val': fields.boolean('Albarán valorado'), # Enviar albarán valorado
+        'alb_val': fields.boolean('Albarán valorado'),  # Enviar albarán valorado
         #'parent_id': fields.many2one('res.partner','Partner', select=True), # ???
-               }
+    }
     _defaults = {
-        'alb_val' : lambda *a: 1,
+        'alb_val': lambda *a: 1,
     }
 partner_new()
 
@@ -46,11 +48,11 @@ partner_new()
 #----------------------------------------------------------
 class stock_picking(osv.osv):
 
-##Esto es para que el picking salga valorado
+# Esto es para que el picking salga valorado
 
-    def _amount_untaxed(self, cr, uid, ids, prop, unknow_none,unknow_dict):
+    def _amount_untaxed(self, cr, uid, ids, prop, unknow_none, unknow_dict):
 
-        id_set=",".join(map(str,map(int, ids)))
+        id_set = ",".join(map(str, map(int, ids)))
         cr.execute("""  select
                             sp.id,
                             COALESCE(sum( sm.product_qty*sol.price_unit*(100-sol.discount))/100.0,0)::decimal(16,2) as amount
@@ -61,13 +63,13 @@ class stock_picking(osv.osv):
                         where
                             sp.id in ( %s ) and
                             sm.state != 'cancel'
-                        group by sp.id"""%id_set)
-        res=dict(cr.fetchall())
+                        group by sp.id""" % id_set)
+        res = dict(cr.fetchall())
 
         return res
 
     def _amount_tax(self, cr, uid, ids, field_name, arg, context):
-        id_set = ",".join(map(str, map(int,ids)))
+        id_set = ",".join(map(str, map(int, ids)))
         cr.execute("""
                    select
                         sp.id,
@@ -80,7 +82,7 @@ class stock_picking(osv.osv):
                    where
                         sp.id in ( %s )
                         and sm.state != 'cancel'
-                   group by sp.id"""%id_set )
+                   group by sp.id""" % id_set )
         res = dict(cr.fetchall())
         return res
 
@@ -96,25 +98,28 @@ class stock_picking(osv.osv):
     _description = "Picking list"
     _inherit = "stock.picking"
     _columns = {
-        'amount_untaxed': fields.function(_amount_untaxed, method=True, digits_compute=dp.get_precision('Account'),string='Untaxed Amount'),
-        'amount_tax': fields.function(_amount_tax,digits_compute=dp.get_precision('Account'), method=True, string='Taxes'),
-        'amount_total': fields.function(_amount_total,digits_compute=dp.get_precision('Account'), method=True, string='Total'),
+        'amount_untaxed': fields.function(_amount_untaxed, method=True, digits_compute=dp.get_precision('Account'), string='Untaxed Amount'),
+        'amount_tax': fields.function(_amount_tax, digits_compute=dp.get_precision('Account'), method=True, string='Taxes'),
+        'amount_total': fields.function(_amount_total, digits_compute=dp.get_precision('Account'), method=True, string='Total'),
         'tracking': fields.char('Tracking', size=64),
-            }
+    }
 
 stock_picking()
 
 #----------------------------------------------------------
 # Stock Move
 #----------------------------------------------------------
+
+
 class stock_move(osv.osv):
 
-    def _price_subtotal(self, cr, uid, ids, prop, unknow_none,unknow_dict):
+    def _price_subtotal(self, cr, uid, ids, prop, unknow_none, unknow_dict):
         res = {}
         cur_obj = self.pool.get('res.currency')
         for line in self.browse(cr, uid, ids):
             if line.sale_line_id:
-                res[line.id] = line.sale_line_id.price_unit * line.product_qty * (1 - (line.sale_line_id.discount or 0.0) / 100.0)
+                res[line.id] = line.sale_line_id.price_unit * line.product_qty * (
+                    1 - (line.sale_line_id.discount or 0.0) / 100.0)
                 cur = line.sale_line_id.order_id.pricelist_id.currency_id
                 res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
             #    res[line.id] = line.sale_line_id.price_subtotal
@@ -154,10 +159,9 @@ class stock_move(osv.osv):
     _inherit = "stock.move"
     _columns = {
         'sale_line_id': fields.many2one('sale.order.line', 'Sale Order Line'),
-        'price_subtotal': fields.function(_price_subtotal, method=True, digits=(16,2),string='Subtotal', select=True),
-        'price_net': fields.function(_price_net, method=True, digits=(16,2),string='Net', select=True), # Con descuento aplicado
-        'price_unit': fields.function(_price_unit, method=True, digits=(16,2),string='Price', select=True),
-        'discount': fields.function(_discount, method=True, digits=(16,2),string='Discount (%)', select=True),
-               }
+        'price_subtotal': fields.function(_price_subtotal, method=True, digits=(16, 2), string='Subtotal', select=True),
+        'price_net': fields.function(_price_net, method=True, digits=(16, 2), string='Net', select=True),  # Con descuento aplicado
+        'price_unit': fields.function(_price_unit, method=True, digits=(16, 2), string='Price', select=True),
+        'discount': fields.function(_discount, method=True, digits=(16, 2), string='Discount (%)', select=True),
+    }
 stock_move()
-
