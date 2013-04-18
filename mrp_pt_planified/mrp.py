@@ -23,12 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -72,10 +73,9 @@ class mrp_production(osv.osv):
         res = super(mrp_production, self).action_compute(
             cr, uid, ids, properties=properties, context=context)
         return res
-mrp_production()
 
 
-class mrp_pt_planified(osv.osv):
+class mrp_pt_planified(osv.Model):
     _name = 'mrp.pt.planified'
     _rec_name = 'product_id'
 
@@ -93,4 +93,3 @@ class mrp_pt_planified(osv.osv):
             return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
         return {'value': {'product_uom': False}}
 
-mrp_pt_planified()
