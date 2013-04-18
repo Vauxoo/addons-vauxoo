@@ -21,11 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv, orm
-from tools.translate import _
+from openerp.osv import osv, fields, orm
+from openerp.tools.translate import _
 
 
-class account_period(osv.osv):
+
+class account_period(osv.Model):
     _inherit = "account.period"
 
     def build_ctx_periods_initial(self, cr, uid, period_to_id):
@@ -37,4 +38,3 @@ class account_period(osv.osv):
         # Falta validar cuando el period_to_id es special, ya que puede tomar
         # enero cuando no es necesario.
 
-account_period()
