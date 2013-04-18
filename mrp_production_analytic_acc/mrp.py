@@ -25,76 +25,85 @@
 ##############################################################################
 from osv import fields, osv
 
+
 class mrp_production(osv.osv):
-    _inherit= "mrp.production"
-    
+    _inherit = "mrp.production"
+
     def product_id_change(self, cr, uid, ids, product_id, context=None):
-        bom_obj=self.pool.get('mrp.bom')
-        res=super(mrp_production, self).product_id_change(cr, uid, ids,product_id,context=context)
+        bom_obj = self.pool.get('mrp.bom')
+        res = super(mrp_production, self).product_id_change(
+            cr, uid, ids, product_id, context=context)
         if not product_id:
-            res['value']['analytic_acc_rm']=False
-            res['value']['analytic_acc_fg']=False
+            res['value']['analytic_acc_rm'] = False
+            res['value']['analytic_acc_fg'] = False
         if res['value']['bom_id']:
-            bom=bom_obj.browse(cr,uid,[res['value']['bom_id']],context=context)
-            res['value']['analytic_acc_rm']=bom and bom[0].analytic_acc_rm.id or False
-            res['value']['analytic_acc_fg']=bom and bom[0].analytic_acc_fg.id or False
+            bom = bom_obj.browse(cr, uid, [res[
+                                 'value']['bom_id']], context=context)
+            res['value']['analytic_acc_rm'] = bom and bom[
+                0].analytic_acc_rm.id or False
+            res['value']['analytic_acc_fg'] = bom and bom[
+                0].analytic_acc_fg.id or False
         return res
-        
+
     def bom_id_change(self, cr, uid, ids, bom_id, context=None):
-        bom_obj=self.pool.get('mrp.bom')
-        res=super(mrp_production, self).bom_id_change(cr, uid, ids, bom_id, context=context)
+        bom_obj = self.pool.get('mrp.bom')
+        res = super(mrp_production, self).bom_id_change(
+            cr, uid, ids, bom_id, context=context)
         if bom_id:
-            bom=bom_obj.browse(cr,uid,[bom_id],context=context)
-            res['value']['analytic_acc_rm']=bom and bom[0].analytic_acc_rm.id or False
-            res['value']['analytic_acc_fg']=bom and bom[0].analytic_acc_fg.id or False
+            bom = bom_obj.browse(cr, uid, [bom_id], context=context)
+            res['value']['analytic_acc_rm'] = bom and bom[
+                0].analytic_acc_rm.id or False
+            res['value']['analytic_acc_fg'] = bom and bom[
+                0].analytic_acc_fg.id or False
         else:
-            res['value']['analytic_acc_rm']= False
-            res['value']['analytic_acc_fg']= False
+            res['value']['analytic_acc_rm'] = False
+            res['value']['analytic_acc_fg'] = False
         return res
-        
-        
+
     def _make_production_internal_shipment_line(self, cr, uid, production_line, shipment_id, parent_move_id, destination_location_id=False, context=None):
         stock_move = self.pool.get('stock.move')
         production = production_line.production_id
-        res=super(mrp_production, self)._make_production_internal_shipment_line(cr, uid, production_line, shipment_id, parent_move_id, destination_location_id=destination_location_id, context=context)
+        res = super(
+            mrp_production, self)._make_production_internal_shipment_line(cr, uid, production_line,
+                                                                          shipment_id, parent_move_id, destination_location_id=destination_location_id, context=context)
         print res
         if parent_move_id and production.analytic_acc_rm:
-            stock_move.write(cr,uid,[parent_move_id],{'analytic_acc':production.analytic_acc_rm.id},context=context)
+            stock_move.write(cr, uid, [parent_move_id], {
+                             'analytic_acc': production.analytic_acc_rm.id}, context=context)
         if res and production.analytic_acc_rm:
-            stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm.id},context=context)
+            stock_move.write(cr, uid, [res], {
+                             'analytic_acc': production.analytic_acc_rm.id}, context=context)
         return res
-        
+
     def _make_production_produce_line(self, cr, uid, production, context=None):
         stock_move = self.pool.get('stock.move')
-        res=super(mrp_production, self)._make_production_produce_line(cr, uid, production, context=context)
+        res = super(mrp_production, self)._make_production_produce_line(
+            cr, uid, production, context=context)
         if production.analytic_acc_fg:
-            stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_fg.id},context=context)
+            stock_move.write(cr, uid, [res], {
+                             'analytic_acc': production.analytic_acc_fg.id}, context=context)
         return res
-        
-        
+
         def _make_production_consume_line(self, cr, uid, production_line, parent_move_id, source_location_id=False, context=None):
             stock_move = self.pool.get('stock.move')
             production = production_line.production_id
-            res=super(mrp_production, self)._make_production_consume_line(cr, uid, production_line, parent_move_id, source_location_id=False, context=context)
+            res = super(mrp_production, self)._make_production_consume_line(
+                cr, uid, production_line, parent_move_id, source_location_id=False, context=context)
             if production.analytic_acc_rm.id:
-                stock_move.write(cr,uid,[res],{'analytic_acc':production.analytic_acc_rm.id},context=context)
+                stock_move.write(cr, uid, [res], {
+                                 'analytic_acc': production.analytic_acc_rm.id}, context=context)
             return res
-        
-                
-    _columns={
-        'analytic_acc_rm': fields.many2one('account.analytic.account','Analytic Account RM', readonly=True, states={'draft':[('readonly',False)]}),
-        'analytic_acc_fg': fields.many2one('account.analytic.account','Analytic Account FG', readonly=True, states={'draft':[('readonly',False)]})
+
+    _columns = {
+        'analytic_acc_rm': fields.many2one('account.analytic.account', 'Analytic Account RM', readonly=True, states={'draft': [('readonly', False)]}),
+        'analytic_acc_fg': fields.many2one('account.analytic.account', 'Analytic Account FG', readonly=True, states={'draft': [('readonly', False)]})
     }
 
-        
+
 class mrp_bom(osv.osv):
-    _inherit= "mrp.bom"
-    
+    _inherit = "mrp.bom"
 
-    
-    _columns={
-        'analytic_acc_rm': fields.many2one('account.analytic.account','Analytic Account RM',),
-        'analytic_acc_fg': fields.many2one('account.analytic.account','Analytic Account FG',)
+    _columns = {
+        'analytic_acc_rm': fields.many2one('account.analytic.account', 'Analytic Account RM',),
+        'analytic_acc_fg': fields.many2one('account.analytic.account', 'Analytic Account FG',)
     }
-
-
