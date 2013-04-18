@@ -63,4 +63,3 @@ class account_move_line(osv.Model):
         return True
 
 
-account_move_line()
