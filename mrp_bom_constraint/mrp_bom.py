@@ -21,11 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 import time
-from tools.translate import _
-from osv import fields, osv
+from openerp.tools.translate import _
+
+from openerp.osv import osv, fields
 
 
-class mrp_bom(osv.osv):
+class mrp_bom(osv.Model):
     _inherit = 'mrp.bom'
 
     def check_uom(self, cr, uid, ids, context=None):
@@ -37,4 +38,3 @@ class mrp_bom(osv.osv):
     _constraints = [(check_uom, _(
         'No puedes agregar un UdM que pertenezca a otra categoría que la que tiene la unidad de medida default del producto'), ["product_uom"])]
 
-mrp_bom()
