@@ -2,7 +2,8 @@
 import time
 import pooler
 from report import report_sxw
-from tools.translate import _
+from openerp.tools.translate import _
+
 import smtplib
 import mimetypes
 import base64
