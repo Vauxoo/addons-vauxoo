@@ -26,11 +26,12 @@
 
 import time
 
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class wizard_report_process(osv.osv_memory):
+
+class wizard_report_process(osv.TransientModel):
     _name = 'wizard.report.process'
 
     _columns = {
@@ -87,4 +88,3 @@ class wizard_report_process(osv.osv_memory):
         }
 
 
-wizard_report_process()

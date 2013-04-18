@@ -21,10 +21,11 @@
 
 import time
 from report import report_sxw
-from osv import osv
 import pooler
-from tools.amount_to_text import amount_to_text
-from tools.translate import _
+from openerp.tools.amount_to_text import amount_to_text
+
+from openerp.tools.translate import _
+
 
 
 class process_report(report_sxw.rml_parse):
