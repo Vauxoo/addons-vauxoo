@@ -24,10 +24,10 @@
 ##########################################################################
 
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 
 
-class sale_double_validation_installer(osv.osv_memory):
+class sale_double_validation_installer(osv.TransientModel):
     _name = 'sale.double.validation.installer'
     _inherit = 'res.config'
     _columns = {
@@ -50,7 +50,6 @@ class sale_double_validation_installer(osv.osv_memory):
         transition_obj.write(cr, uid, waiting_id, {'group_id': group_id})
         return {}
 
-sale_double_validation_installer()
 
 
 
