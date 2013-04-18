@@ -23,11 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def action_move_create(self, cr, uid, ids, context=None):
@@ -41,4 +42,3 @@ class account_invoice(osv.osv):
         res = super(account_invoice, self).action_move_create(
             cr, uid, ids, context=context)
         return res
-account_invoice()
