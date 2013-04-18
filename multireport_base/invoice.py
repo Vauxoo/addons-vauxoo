@@ -20,12 +20,12 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     """
     account_invoice
     """
@@ -34,4 +34,3 @@ class account_invoice(osv.osv):
     _columns = {
         'payment_method_id': fields.many2one('payment.method', 'Payment Method', required=False, help="In this field selects the payment method with which to cancel the invoice"),
     }
-account_invoice()

@@ -20,12 +20,12 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class payment_method(osv.osv):
+
+class payment_method(osv.Model):
     """
     payment_method
     """
@@ -36,4 +36,3 @@ class payment_method(osv.osv):
         'name': fields.char('Payment method', size=64, required=False, translate=True),
     }
 
-payment_method()
