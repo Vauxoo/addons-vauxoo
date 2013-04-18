@@ -26,6 +26,7 @@
 
 from osv import fields, osv
 
+
 class account_invoice_tax(osv.osv):
     _inherit = 'account.invoice.tax'
     _columns = {
