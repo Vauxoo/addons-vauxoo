@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Miguel Delgado <miguel@openerp.com.ve>                      #
 #    Planified by: Nhomar Hernandez                                        #
 #    Finance by: Corporacion AMD                                           #
@@ -25,6 +25,7 @@
 from osv import fields, osv
 from tools.translate import _
 import decimal_precision as dp
+
 
 class product_product(osv.osv):
     _inherit = "product.product"

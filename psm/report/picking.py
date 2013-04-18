@@ -24,6 +24,7 @@ from report import report_sxw
 from osv import osv
 import pooler
 
+
 class spm_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context=None):
         if context is None:
@@ -31,46 +32,46 @@ class spm_report(report_sxw.rml_parse):
         super(spm_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
-            'get_psm':self.get_psm,
+            'get_psm': self.get_psm,
         })
-        
-    def get_psm(self,pickings):
+
+    def get_psm(self, pickings):
         pool = pooler.get_pool(self.cr.dbname)
-        products=[]
-        res=[]
-        aux=[]
+        products = []
+        res = []
+        aux = []
         for picking in pickings:
             ml_ids = picking.move_lines
 
             for ml_id in ml_ids:
                 products.append(ml_id.product_id)
                 products = list(set(products))
-            
+
             for product in products:
-                
-                aux = self._get_serial(picking,product)
+
+                aux = self._get_serial(picking, product)
                 if aux:
-                
+
                     val = {
-                                'product':pool.get('product.product').browse(self.cr, self.uid, [product.id])[0].name,
-                                'nro_prod':len(aux),
-                                'serial': ' | '.join(aux)
-                            }
+                        'product': pool.get('product.product').browse(self.cr, self.uid, [product.id])[0].name,
+                        'nro_prod': len(aux),
+                        'serial': ' | '.join(aux)
+                    }
                     if val:
                             res.append(val)
-                            val={}
+                            val = {}
             return res
-        
-    def _get_serial(self,picking,product):
-        res=[]
+
+    def _get_serial(self, picking, product):
+        res = []
         ml_ids = picking.move_lines
         for ml_id in ml_ids:
             if ml_id.product_id == product:
                 if ml_id.prodlot_id.name:
                     res.append(ml_id.prodlot_id.name)
         return res
-    
-    
+
+
 report_sxw.report_sxw('report.spm_report',
                       'stock.picking',
                       'addons/psm/report/picking.rml',
