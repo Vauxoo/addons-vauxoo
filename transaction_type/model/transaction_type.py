@@ -23,15 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 
 
-class transaction_type(osv.osv):
+class transaction_type(osv.Model):
     
     
     _name = 'transaction.type'
@@ -43,4 +44,3 @@ class transaction_type(osv.osv):
     }
     
     
-transaction_type()

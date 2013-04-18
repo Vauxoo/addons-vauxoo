@@ -23,15 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
     
     _inherit = 'account.move.line'
     _columns = {
@@ -40,4 +41,3 @@ class account_move_line(osv.osv):
     }
     
     
-account_move_line()
