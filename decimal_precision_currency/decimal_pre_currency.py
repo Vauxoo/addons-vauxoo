@@ -22,26 +22,25 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 import time
 import datetime
 import decimal_precision as dp
 
 
-class res_currency_rate(osv.osv):
+class res_currency_rate(osv.Model):
 
     _inherit = "res.currency.rate"
     _columns = {
         'rate': fields.float('Rate', digits_compute=dp.get_precision('Currency'), required=True, help='The rate of the currency to the currency of rate 1'),
     }
 
-res_currency_rate()
 
 
-class res_currency(osv.osv):
+class res_currency(osv.Model):
 
     def _current_rate(self, cr, uid, ids, name, arg, context=None):
         if context is None:
@@ -69,4 +68,3 @@ class res_currency(osv.osv):
 
     }
 
-res_currency()
