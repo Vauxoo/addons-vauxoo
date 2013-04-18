@@ -32,7 +32,7 @@ from openerp.tools.translate import _
 import math
 
 
-class inherit_move(osv.osv):
+class inherit_move(osv.Model):
 
     '''Inherit sotck.move to set unit measure for product in the line'''
 
@@ -66,4 +66,3 @@ class inherit_move(osv.osv):
     ]
 
 
-inherit_move()

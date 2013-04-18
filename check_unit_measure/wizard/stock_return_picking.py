@@ -27,7 +27,7 @@ from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 
 
-class stock_return_picking_memory(osv.osv_memory):
+class stock_return_picking_memory(osv.TransientModel):
     _inherit = "stock.return.picking.memory"
 
     _columns = {
@@ -35,10 +35,9 @@ class stock_return_picking_memory(osv.osv_memory):
 
     }
 
-stock_return_picking_memory()
 
 
-class stock_return_picking(osv.osv_memory):
+class stock_return_picking(osv.TransientModel):
     _inherit = 'stock.return.picking'
 
     def default_get(self, cr, uid, fields, context=None):
@@ -175,6 +174,5 @@ class stock_return_picking(osv.osv_memory):
             'context': context,
         }
 
-stock_return_picking()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

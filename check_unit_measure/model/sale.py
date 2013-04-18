@@ -30,7 +30,7 @@ from openerp.osv import fields
 from openerp.tools.translate import _
 
 
-class inherits_sale(osv.osv):
+class inherits_sale(osv.Model):
 
     '''Inherit sale orde line  model to add constraint and avoid add a prodct with a diferent unit measure'''
 
@@ -65,4 +65,3 @@ class inherits_sale(osv.osv):
             'value', {}).update({'product_uom': uom_id})
         return res
 
-inherits_sale()
