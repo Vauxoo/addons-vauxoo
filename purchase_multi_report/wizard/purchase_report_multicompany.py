@@ -26,14 +26,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import base64
-import netsvc
+import openerp.netsvc as netsvc
 
 
-class print_purchase_report(osv.osv_memory):
+class print_purchase_report(osv.TransientModel):
     """
     OpenERP Wizard : print.purchase.report
     """
@@ -93,4 +93,3 @@ class print_purchase_report(osv.osv_memory):
         'company': _get_company,
         'report_format': _get_report,
     }
-print_purchase_report()

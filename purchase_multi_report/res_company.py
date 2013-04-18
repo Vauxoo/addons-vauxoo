@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class invoice_multicompany_report(osv.osv):
+
+class invoice_multicompany_report(osv.Model):
     """
     invoice_multicompany_report
     """
@@ -38,4 +38,3 @@ class invoice_multicompany_report(osv.osv):
         'purchase_report_id': fields.many2one('ir.actions.report.xml', 'Purchase Report', required=False, domain="[('model','=','purchase.order')]"),
         'purchase_request_id': fields.many2one('ir.actions.report.xml', 'Purchase Request', required=False, domain="[('model','=','purchase.order')]"),
     }
-invoice_multicompany_report()
