@@ -34,9 +34,10 @@ from openerp.osv import osv, fields
 import time
 from tools import ustr
 
+
 class mrp_production(osv.osv):
     _inherit = "mrp.production"
-    
+
     """
     """
     def create_production_wizard(self, cr, uid, product, list_produce, context):
@@ -47,27 +48,32 @@ class mrp_production(osv.osv):
 
         total_weight = 0
         for line in list_produce:
-                product_obj_data = self.pool.get('product.product').browse(cr, uid, line['product_id'], context=None)
+                product_obj_data = self.pool.get('product.product').browse(
+                    cr, uid, line['product_id'], context=None)
                 if product_obj_data.weight:
-                    total_weight += (line['product_qty'] * product_obj_data.weight * (product.uom_id.factor / product_obj_data.uom_id.factor))
+                    total_weight += (line['product_qty'] * product_obj_data.weight * (
+                        product.uom_id.factor / product_obj_data.uom_id.factor))
                 else:
-                    total_weight += line['product_qty'] * (product.uom_id.factor / product_obj_data.uom_id.factor)
-        total_weight = total_weight / ((product.weight or 1) * product.uom_id.factor)
-        
-        default_location_dict = self.product_id_change(cr, uid, [], product.id, context)
+                    total_weight += line['product_qty'] * (
+                        product.uom_id.factor / product_obj_data.uom_id.factor)
+        total_weight = total_weight / ((
+            product.weight or 1) * product.uom_id.factor)
+
+        default_location_dict = self.product_id_change(
+            cr, uid, [], product.id, context)
         if (default_location_dict['value']['location_src_id'] & default_location_dict['value']['location_dest_id']):
             production_order_dict = {
-                'name' : self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
-                'date_planned' : time.strftime('%Y-%m-%d %H:%M:%S'),
-                'product_id' : product.id,
-                'product_qty' : total_weight,
-                'product_uom' : product.uom_id.id,
+                'name': self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
+                'date_planned': time.strftime('%Y-%m-%d %H:%M:%S'),
+                'product_id': product.id,
+                'product_qty': total_weight,
+                'product_uom': product.uom_id.id,
                 'location_src_id': default_location_dict['value']['location_src_id'],
                 'location_dest_id': default_location_dict['value']['location_dest_id'],
-                'state' : 'draft'
+                'state': 'draft'
             }
             new_id = self.create(cr, uid, production_order_dict)
-            
+
             for line in list_produce:
                 production_scheduled_dict = {
                     'name': line['name'],
@@ -76,17 +82,20 @@ class mrp_production(osv.osv):
                     'product_uom': line['product_uom'],
                     'production_id': new_id,
                 }
-                self.pool.get('mrp.production.product.line').create(cr, uid, production_scheduled_dict)
-            
+                self.pool.get('mrp.production.product.line').create(
+                    cr, uid, production_scheduled_dict)
+
             mrp_pt_planifed_dict = {
-                'product_id' : product.id,
-                'quantity' : total_weight,
-                'production_id' : new_id,
-                'product_uom' : product.uom_id.id,
+                'product_id': product.id,
+                'quantity': total_weight,
+                'production_id': new_id,
+                'product_uom': product.uom_id.id,
             }
-            self.pool.get('mrp.pt.planified').create(cr, uid, mrp_pt_planifed_dict)
+            self.pool.get('mrp.pt.planified').create(
+                cr, uid, mrp_pt_planifed_dict)
         else:
-            raise osv.except_osv(_('Error'), _("The category of the product to produce has not predefined locations "))
+            raise osv.except_osv(_('Error'), _(
+                "The category of the product to produce has not predefined locations "))
         return new_id
-    
+
 mrp_production()
