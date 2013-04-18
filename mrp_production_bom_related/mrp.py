@@ -27,7 +27,7 @@ from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     _columns = {
@@ -41,4 +41,3 @@ class mrp_production(osv.osv):
                                   help="BoM's UoM to change from production order"
                                   ),
     }
-mrp_production()
