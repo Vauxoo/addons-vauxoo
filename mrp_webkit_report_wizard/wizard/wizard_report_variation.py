@@ -30,7 +30,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class wizard_report_variation(osv.TransientModel):
     _name = 'wizard.report.variation'
 
@@ -192,4 +191,3 @@ GROUP BY product_id
             'finished_dict': finished_variation
         }
         return (report_datas, production_ids)
-
