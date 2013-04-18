@@ -25,16 +25,17 @@
 ##############################################################################
 
 import time
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 from tools import config
 import base64
 import csv
 import cStringIO
-import tools
+import openerp.tools as tools
 
 
-class sale_order(osv.osv):
+class sale_order(osv.Model):
     _inherit = 'sale.order'
 
     def import_data_line(self, cr, uid, ids, fdata, favalidate, context={}):
@@ -141,4 +142,3 @@ class sale_order(osv.osv):
         msg = tools.ustr(msg)+'%s ' % (msg2)
         return msg
 
-sale_order()

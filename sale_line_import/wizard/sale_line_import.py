@@ -28,14 +28,15 @@ import pooler
 import wizard
 import base64
 import cStringIO
-import netsvc
-from tools.translate import _
-import tools
+import openerp.netsvc as netsvc
+from openerp.tools.translate import _
+
+import openerp.tools as tools
 import os
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class wizard_import(osv.osv_memory):
+class wizard_import(osv.TransientModel):
     _name = 'wizard.import'
     _columns = {
         'name': fields.binary('File'),
@@ -57,4 +58,3 @@ class wizard_import(osv.osv_memory):
             return True
         return {}
 
-wizard_import()
