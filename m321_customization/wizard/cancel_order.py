@@ -25,13 +25,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import datetime
 
 
-class cancel_orders(osv.osv_memory):
+class cancel_orders(osv.TransientModel):
     """
     M321 Customizations to cancel orders that are confirmed but are not paid
     """
@@ -89,4 +89,3 @@ class cancel_orders(osv.osv_memory):
                 'Must select the 2 options to make sure the operation'))
         return {'type': 'ir.actions.act_window_close'}
 
-cancel_orders()

@@ -25,12 +25,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class ir_sequence(osv.osv):
+
+class ir_sequence(osv.Model):
     """
     Ir sequence inherit to assing secuence by company
     """
@@ -59,4 +59,3 @@ class ir_sequence(osv.osv):
                 return self._process(res['prefix']) + self._process(res['suffix'])
         return False
 
-ir_sequence()

@@ -25,13 +25,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class inherited_sale_order(osv.osv):
+class inherited_sale_order(osv.Model):
     _inherit = "sale.order"
 
     def default_get(self, cr, uid, fields, context=None):
@@ -76,10 +76,9 @@ class inherited_sale_order(osv.osv):
         return True
 
 
-inherited_sale_order()
 
 
-class sale_order_line(osv.osv):
+class sale_order_line(osv.Model):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
                           uom=False, qty_uos=0, uos=False, name='', partner_id=False,
@@ -109,4 +108,3 @@ class sale_order_line(osv.osv):
 
     }
 
-sale_order_line()

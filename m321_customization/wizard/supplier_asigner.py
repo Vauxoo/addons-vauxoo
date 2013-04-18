@@ -25,12 +25,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class suppliers_assigner(osv.osv_memory):
+
+class suppliers_assigner(osv.TransientModel):
     """
     M321 Customizations to assign suppliers in products
     """
@@ -69,4 +69,3 @@ class suppliers_assigner(osv.osv_memory):
 
         return {'type': 'ir.actions.act_window_close'}
 
-suppliers_assigner()

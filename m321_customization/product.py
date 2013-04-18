@@ -25,12 +25,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class inherited_product(osv.osv):
+
+class inherited_product(osv.Model):
     """
     M321 Customizations for product.product model
     """
@@ -242,4 +242,3 @@ class inherited_product(osv.osv):
     _constraints = [(_check_upc, 'ERROR, Invalid UPC', ['upc']), (
         _check_upc_reference_unique, 'ERROR, the upc or reference must by unique', ['upc', 'reference'])]
 
-inherited_product()

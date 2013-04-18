@@ -25,13 +25,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class inherited_invoice(osv.osv):
+class inherited_invoice(osv.Model):
     """
     M321 Customizations for account.invoice model
     """
@@ -40,10 +40,9 @@ class inherited_invoice(osv.osv):
         'profit_code': fields.integer("Code from profit", help="Invoice code from profit"),
     }
 
-inherited_invoice()
 
 
-class inherited_invoice_line(osv.osv):
+class inherited_invoice_line(osv.Model):
     _inherit = "account.invoice.line"
     _columns = {
         'net_discount': fields.float('Net Discount', required=False,
@@ -56,4 +55,3 @@ class inherited_invoice_line(osv.osv):
         'net_discount': 0.0
     }
 
-inherited_invoice_line()
