@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class sale_commission(osv.osv):
+class sale_commission(osv.Model):
 
     def _get_commission(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -29,10 +29,9 @@ class sale_commission(osv.osv):
                                       'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 25),
                                       'sale.order.line': (_get_order_line, ['gain', 'commission'], 15), })
     }
-sale_commission()
 
 
-class sale_commission_line(osv.osv):
+class sale_commission_line(osv.Model):
 
     def get_abs_commission(self, cr, uid, ids, name, args, context=None):
 
@@ -88,4 +87,3 @@ class sale_commission_line(osv.osv):
                                       }),
     }
 
-sale_commission_line()
