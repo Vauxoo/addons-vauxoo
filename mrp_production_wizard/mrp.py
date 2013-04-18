@@ -26,16 +26,17 @@
 
 import pooler
 import wizard
-import netsvc
-from tools.translate import _
-import tools
+import openerp.netsvc as netsvc
+from openerp.tools.translate import _
+
+import openerp.tools as tools
 import os
 from openerp.osv import osv, fields
 import time
 from tools import ustr
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = "mrp.production"
 
     """
@@ -98,4 +99,3 @@ class mrp_production(osv.osv):
                 "The category of the product to produce has not predefined locations "))
         return new_id
 
-mrp_production()

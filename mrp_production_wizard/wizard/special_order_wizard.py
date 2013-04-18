@@ -26,10 +26,11 @@
 import time
 from openerp.osv import osv, fields
 import decimal_precision as dp
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class mrp_production_wizard(osv.osv_memory):
+
+class mrp_production_wizard(osv.TransientModel):
     _name = 'mrp.production.wizard'
     _columns = {
         'product_id': fields.many2one('product.product', 'Product', required=True, ),
@@ -79,10 +80,9 @@ class mrp_production_wizard(osv.osv_memory):
     #    return res
 
 
-mrp_production_wizard()
 
 
-class wizard_data(osv.osv_memory):
+class wizard_data(osv.TransientModel):
     _name = 'wizard.data'
 
     _columns = {
@@ -111,4 +111,3 @@ class wizard_data(osv.osv_memory):
                     return {'value': val, 'domain': domain_uom}
         return {}
 
-wizard_data()
