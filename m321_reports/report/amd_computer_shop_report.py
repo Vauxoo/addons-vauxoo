@@ -25,7 +25,8 @@
 import time
 import pooler
 from report import report_sxw
-from tools.translate import _
+from openerp.tools.translate import _
+
 
 
 class m321_cs_report(report_sxw.rml_parse):
