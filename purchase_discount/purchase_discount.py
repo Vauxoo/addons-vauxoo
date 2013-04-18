@@ -21,17 +21,17 @@
 ##############################################################################
 
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import time
-import netsvc
+import openerp.netsvc as netsvc
 import ir
 from mx import DateTime
 import pooler
 
 
-class purchase_order_line(osv.osv):
+class purchase_order_line(osv.Model):
     _name = "purchase.order.line"
     _inherit = "purchase.order.line"
 
@@ -143,10 +143,9 @@ class purchase_order_line(osv.osv):
         res['domain'] = domain
         return res
 
-purchase_order_line()
 
 
-class purchase_order(osv.osv):
+class purchase_order(osv.Model):
     _name = "purchase.order"
     _inherit = "purchase.order"
 
@@ -163,10 +162,9 @@ class purchase_order(osv.osv):
                       'price_unit': ol.price_base or 0.0, })
         return res
 
-purchase_order()
 
 
-class stock_picking(osv.osv):
+class stock_picking(osv.Model):
     _inherit = 'stock.picking'
 
     def _get_discount_invoice(self, cursor, user, move_line):
@@ -176,10 +174,9 @@ class stock_picking(osv.osv):
             discount = move_line.purchase_line_id.discount
         return discount
 
-stock_picking()
 
 
-class account_invoice_line(osv.osv):
+class account_invoice_line(osv.Model):
     _inherit = 'account.invoice.line'
 
     def _get_price_wd(self, cr, uid, ids, prop, unknow_none, unknow_dict):
@@ -199,5 +196,4 @@ class account_invoice_line(osv.osv):
     _columns = {
         'price_wd': fields.function(_get_price_wd, method=True, string='Price With Discount', store=True, type="float", digits=(16, 4)),
     }
-account_invoice_line()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
