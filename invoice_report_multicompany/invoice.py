@@ -1,9 +1,9 @@
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class account_invoices(osv.osv):
+
+class account_invoices(osv.Model):
     """
     account_invoices
     """
@@ -27,4 +27,3 @@ class account_invoices(osv.osv):
         return {'type': 'ir.action.report.xml',
                 'report_name': 'account.invoice'}
 
-account_invoices()
