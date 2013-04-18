@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -165,10 +165,9 @@ class mrp_production(osv.osv):
                 cr, uid, lin) for lin in res]
         return True
 
-mrp_production()
 
 
-class mrp_variation(osv.osv):
+class mrp_variation(osv.Model):
     _name = 'mrp.variation'
     _rec_name = 'product_id'
 
@@ -187,10 +186,9 @@ class mrp_variation(osv.osv):
         'cost_variation': fields.function(_get_variation_cost, type='float', digits_compute=dp.get_precision('Purchase Price'), string='Variation Cost')
     }
 
-mrp_variation()
 
 
-class mrp_variation_finished_product(osv.osv):
+class mrp_variation_finished_product(osv.Model):
     _name = 'mrp.variation.finished.product'
     _rec_name = 'product_id'
 
@@ -209,4 +207,3 @@ class mrp_variation_finished_product(osv.osv):
         'cost_variation': fields.function(_get_variation_cost, type='float', digits_compute=dp.get_precision('Purchase Price'), string='Variation Cost')
     }
 
-mrp_variation_finished_product()
