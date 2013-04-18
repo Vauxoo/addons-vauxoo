@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Latinux Inc (http://www.latinux.com/) All Rights Reserved.
 #                    Javier Duran <jduran@corvus.com.ve>
-# 
+#
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -31,98 +31,94 @@
 from osv import fields, osv
 
 
-
-
 class account_move_line(osv.osv):
     _inherit = 'account.move.line'
     _description = "Entry lines"
 
-
-    def find(self, cr, uid, **kwargs):        
+    def find(self, cr, uid, **kwargs):
         res = []
-        cond_str=''
-        cond_val=[]
-        
+        cond_str = ''
+        cond_val = []
+
         if kwargs.get('dt', False):
             if cond_str:
-                cond_str+=' AND '            
-            cond_str+='aml.date=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.date=%s'
             cond_val.append(kwargs['dt'])
         if kwargs.get('acc_id', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.account_id=%s'
-            cond_val.append(kwargs['acc_id'])            
+                cond_str += ' AND '
+            cond_str += 'aml.account_id=%s'
+            cond_val.append(kwargs['acc_id'])
         if kwargs.get('prd_id', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.product_id=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.product_id=%s'
             cond_val.append(kwargs['prd_id'])
         if kwargs.get('mov_id', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.move_id=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.move_id=%s'
             cond_val.append(kwargs['mov_id'])
         if kwargs.get('per_id', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.period_id=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.period_id=%s'
             cond_val.append(kwargs['per_id'])
         if kwargs.get('jou_id', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.journal_id=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.journal_id=%s'
             cond_val.append(kwargs['jou_id'])
         if kwargs.get('par_id', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.partner_id=%s'
-            cond_val.append(kwargs['par_id'])            
+                cond_str += ' AND '
+            cond_str += 'aml.partner_id=%s'
+            cond_val.append(kwargs['par_id'])
         if kwargs.get('cur_id', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.currency_id=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.currency_id=%s'
             cond_val.append(kwargs['cur_id'])
         if kwargs.get('qty', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.quantity=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.quantity=%s'
             cond_val.append(kwargs['qty'])
         if kwargs.get('name', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.name=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.name=%s'
             cond_val.append(kwargs['name'])
         if kwargs.get('ref', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.ref=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.ref=%s'
             cond_val.append(kwargs['ref'])
         if kwargs.get('debit', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.debit=%s'
-            cond_val.append(kwargs['debit'])                                                
+                cond_str += ' AND '
+            cond_str += 'aml.debit=%s'
+            cond_val.append(kwargs['debit'])
         if kwargs.get('credit', False):
             if cond_str:
-                cond_str+=' AND '
-            cond_str+='aml.credit=%s'
+                cond_str += ' AND '
+            cond_str += 'aml.credit=%s'
             cond_val.append(kwargs['credit'])
 
         if cond_str:
-            cond_str=' WHERE ' + cond_str
+            cond_str = ' WHERE ' + cond_str
 
-#        print 'xxxxcondicion: ',cond_str   
-        
-        sql='SELECT aml.id FROM account_move_line aml'+cond_str % tuple(cond_val)
-#        print 'xxxxsql: ',sql 
+#        print 'xxxxcondicion: ',cond_str
+
+        sql = 'SELECT aml.id FROM account_move_line aml' + \
+            cond_str % tuple(cond_val)
+#        print 'xxxxsql: ',sql
         cr.execute(sql)
-        res = map(lambda x: x[0], cr.fetchall())                      
+        res = map(lambda x: x[0], cr.fetchall())
 
-        
         if not res:
             return False
         return res
 
 account_move_line()
-

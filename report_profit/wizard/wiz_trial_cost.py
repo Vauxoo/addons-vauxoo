@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
@@ -21,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from osv import fields, osv
 import tools
@@ -30,6 +30,7 @@ import netsvc
 import time
 import datetime
 from mx.DateTime import *
+
 
 class trial_cost(osv.osv_memory):
     logger = netsvc.Logger()
@@ -49,8 +50,7 @@ class trial_cost(osv.osv_memory):
         'period_length': lambda *a: 30,
     }
 
-
-    def action_print(self, cr, uid, ids,data, context=None):
+    def action_print(self, cr, uid, ids, data, context=None):
         if context is None:
             context = {}
 
@@ -59,23 +59,26 @@ class trial_cost(osv.osv_memory):
         data['model'] = context.get('active_model', 'ir.ui.menu')
         data['form'] = self.read(cr, uid, ids[0])
         form = data['form']
-        if not form['u_check']  and not form['p_check'] and not form['c_check']:
-            raise osv.except_osv(_('User Error'), _('You have to check one box !'))
+        if not form['u_check'] and not form['p_check'] and not form['c_check']:
+            raise osv.except_osv(_('User Error'), _(
+                'You have to check one box !'))
         res = {}
         period_length = data['form']['period_length']
-        if period_length<=0:
-            raise wizard.except_wizard(_('UserError'), _('You must enter a period length that cannot be 0 or below !'))
-        start = datetime.date.fromtimestamp(time.mktime(time.strptime(data['form']['date_start'],"%Y-%m-%d")))
-        start = DateTime(int(start.year),int(start.month),int(start.day))
+        if period_length <= 0:
+            raise wizard.except_wizard(_('UserError'), _(
+                'You must enter a period length that cannot be 0 or below !'))
+        start = datetime.date.fromtimestamp(time.mktime(
+            time.strptime(data['form']['date_start'], "%Y-%m-%d")))
+        start = DateTime(int(start.year), int(start.month), int(start.day))
 
         for i in range(4)[::-1]:
             stop = start - RelativeDateTime(days=period_length)
             res[str(i)] = {
-                'name' : str((4-(i+1))*period_length) + '-' + str((4-i)*period_length),
-                
+                'name': str((4-(i+1))*period_length) + '-' + str((4-i)*period_length),
+
                 'stop': start.strftime('%Y-%m-%d'),
-                'start' : stop.strftime('%Y-%m-%d'),
-                }
+                'start': stop.strftime('%Y-%m-%d'),
+            }
             start = stop - RelativeDateTime(days=1)
 
         data['form'].update(res)
