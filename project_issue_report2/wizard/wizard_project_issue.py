@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: author Miguel Delgado <miguel@openerp.com.ve>               #
 #    Planified by: Nhomar Hernandez                                        #
 #    Audited by: Humberto Arocha humberto@openerp.com.ve                   #
@@ -22,19 +22,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 
-from osv import osv,fields
+from osv import osv, fields
 import pooler
 import time
 
+
 class wizard_price_list_sequence_report(osv.osv_memory):
     _name = "wizard.project.issue.report"
-    
+
     _columns = {
         'task': fields.boolean('Task?', help="Select this option if you want to see task in the report", select=True,),
     }
 
     def print_report(self, cr, uid, ids, context=None):
-        
+
         if context is None:
             context = {}
         datas = {'ids': context.get('active_ids', [])}
@@ -42,9 +43,9 @@ class wizard_price_list_sequence_report(osv.osv_memory):
         res = res and res[0] or {}
         datas['form'] = res
         return {
-            'type': 'ir.actions.report.xml', 
+            'type': 'ir.actions.report.xml',
             'report_name': 'project.issuereport',
             'datas': datas
-            }
+        }
 
 wizard_price_list_sequence_report()
