@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 import os
 import random
 
 
-class document_storage(osv.osv):
+class document_storage(osv.Model):
     _inherit = 'document.storage'
 
     def recovery_attachments(self, cr, uid, ids, context=None):
