@@ -23,12 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import time
 
 
-class sale_order(osv.osv):
+class sale_order(osv.Model):
     _inherit = "sale.order"
 
     _columns = {
@@ -93,4 +94,3 @@ class sale_order(osv.osv):
                     'Exceeded Committed Products in Sale Order'), note+res['note'])
         return True
 
-sale_order()
