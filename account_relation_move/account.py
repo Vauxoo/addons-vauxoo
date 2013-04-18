@@ -28,12 +28,13 @@ from tools.translate import _
 from osv import osv, fields
 import decimal_precision as dp
 
+
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
-    
+
     """
     """
-    
+
     _columns = {
         'production_id': fields.many2one('mrp.production', 'Production ID'),
         'stock_move_id': fields.many2one('stock.move', 'Stock move ID'),
@@ -41,12 +42,13 @@ class account_move_line(osv.osv):
 
 account_move_line()
 
+
 class account_move(osv.osv):
     _inherit = "account.move"
-    
+
     """
     """
-    
+
     _columns = {
         'production_id': fields.many2one('mrp.production', 'Production ID'),
         'stock_move_id': fields.many2one('stock.move', 'Stock move ID'),
@@ -54,30 +56,38 @@ class account_move(osv.osv):
 
 account_move()
 
+
 class stock_move(osv.osv):
     _inherit = "stock.move"
-    
+
     """
     """
-    
+
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
-        res = super(stock_move,self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
-        cr.execute('SELECT production_id FROM mrp_production_move_ids WHERE move_id = %s', (move.id,))
+        res = super(stock_move, self)._create_account_move_line(
+            cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
+        cr.execute(
+            'SELECT production_id FROM mrp_production_move_ids WHERE move_id = %s', (move.id,))
         result = cr.dictfetchall()
         for line in res:
             line[2]['stock_move_id'] = move.id
-            line[2]['production_id'] = move.production_id and move.production_id.id or (result and result[0]['production_id'] or  False )
+            line[2]['production_id'] = move.production_id and move.production_id.id or (
+                result and result[0]['production_id'] or False)
         return res
 
     def action_consume(self, cr, uid, ids, product_qty, location_id=False, context=None):
         account_move_line_pool = self.pool.get('account.move.line')
-        res = super(stock_move, self).action_consume(cr, uid, ids, product_qty, location_id=location_id, context=context)
+        res = super(stock_move, self).action_consume(
+            cr, uid, ids, product_qty, location_id=location_id, context=context)
         for move_id in res:
-            cr.execute('SELECT production_id FROM mrp_production_move_ids WHERE move_id = %s', (move_id,))
+            cr.execute(
+                'SELECT production_id FROM mrp_production_move_ids WHERE move_id = %s', (move_id,))
             result = cr.dictfetchall()
-            account_move_line_id = account_move_line_pool.search(cr, uid, [('stock_move_id', '=', move_id)])
+            account_move_line_id = account_move_line_pool.search(
+                cr, uid, [('stock_move_id', '=', move_id)])
             if result and account_move_line_id:
-                account_move_line_pool.write(cr, uid, account_move_line_id, {'production_id':result[0]['production_id']})
+                account_move_line_pool.write(cr, uid, account_move_line_id, {
+                                             'production_id': result[0]['production_id']})
         return res
 
 stock_move()
