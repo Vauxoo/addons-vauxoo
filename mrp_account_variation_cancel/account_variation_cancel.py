@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
@@ -65,4 +65,3 @@ class mrp_production(osv.osv):
                 account_move.unlink(cr, uid, [lin[0]])
         return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
 
-mrp_production()
