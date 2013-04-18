@@ -23,18 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 import base64
 from migrate import loadProjectsTasks
 
 
-class load_issue(osv.osv_memory):
+class load_issue(osv.TransientModel):
 
     _name = 'load.issue'
     _columns = {
@@ -67,4 +68,3 @@ class load_issue(osv.osv_memory):
             return True
 
 
-load_issue()
