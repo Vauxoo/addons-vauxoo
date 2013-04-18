@@ -23,14 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 from datetime import datetime
 from DateTime import DateTime
 import time
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
 
     _inherit = 'account.invoice'
 
@@ -74,10 +75,9 @@ class account_invoice(osv.osv):
 #                            invoice_brw.period_id and \
 #                            invoice_brw.period_id.id,fifo=False,lifo=False,date=invoice_brw.date_invoice)
 #        return res
-account_invoice()
 
 
-class account_invoice_line(osv.osv):
+class account_invoice_line(osv.Model):
 
     _inherit = 'account.invoice.line'
     _columns = {
@@ -87,4 +87,3 @@ class account_invoice_line(osv.osv):
 
     }
 
-account_invoice_line()

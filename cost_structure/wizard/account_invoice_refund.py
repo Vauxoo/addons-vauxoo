@@ -23,18 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 import datetime
 invo_cost = {}
 
 
-class account_invoice_refund(osv.osv_memory):
+class account_invoice_refund(osv.TransientModel):
 
     _inherit = 'account.invoice.refund'
 
@@ -66,4 +67,3 @@ class account_invoice_refund(osv.osv_memory):
                        'date_invoice': date_2}, context=context)
         return res
 
-account_invoice_refund()

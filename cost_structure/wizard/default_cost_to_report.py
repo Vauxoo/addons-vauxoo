@@ -23,18 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 import datetime
 import re
 
 
-class default_price_to_report(osv.osv_memory):
+class default_price_to_report(osv.TransientModel):
 
     _name = 'default.price.to.report'
 
@@ -72,4 +73,3 @@ class default_price_to_report(osv.osv_memory):
         else:
             raise osv.except_osv(_('Error'), _('Please select sure option'))
         return {'type': 'ir.actions.act_window_close'}
-default_price_to_report()

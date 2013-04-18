@@ -23,11 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 from DateTime import DateTime
 import time
@@ -35,7 +36,7 @@ import datetime
 invo_cost = {}
 
 
-class compute_cost(osv.osv_memory):
+class compute_cost(osv.TransientModel):
 
     _name = 'compute.cost'
     _columns = {
@@ -611,4 +612,3 @@ class compute_cost(osv.osv_memory):
                                             aux_dic_nc_vent)
         return (cost, cost_acc)
 
-compute_cost()

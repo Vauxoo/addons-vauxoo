@@ -23,16 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
-from tools.sql import drop_view_if_exists
+from openerp.tools.sql import drop_view_if_exists
 
 
-class product_product(osv.osv):
+
+class product_product(osv.Model):
 
     _inherit = 'product.product'
 
@@ -189,10 +191,9 @@ class product_product(osv.osv):
         return res
 
 
-product_product()
 
 
-class report_cost(osv.osv):
+class report_cost(osv.Model):
     _name = "report.cost"
     _auto = False
     _order = "date desc"
@@ -258,4 +259,3 @@ class report_cost(osv.osv):
             where invo.state in ('open','paid')
         )''')
 
-report_cost()

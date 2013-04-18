@@ -23,18 +23,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 import datetime
 import re
 
 
-class update_price_list(osv.osv_memory):
+class update_price_list(osv.TransientModel):
 
     _name = 'update.price.list'
 
@@ -142,4 +143,3 @@ class update_price_list(osv.osv_memory):
 
         return {'type': 'ir.actions.act_window_close'}
 
-update_price_list()

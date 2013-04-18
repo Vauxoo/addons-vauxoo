@@ -23,15 +23,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 
 
-class cost_structure(osv.osv):
+class cost_structure(osv.Model):
 
     _name = 'cost.structure'
     _columns = {
@@ -70,10 +71,9 @@ class cost_structure(osv.osv):
     }
 
 
-cost_structure()
 
 
-class method_price(osv.osv):
+class method_price(osv.Model):
 
     def default_get(self, cr, uid, fields, context=None):
         '''
@@ -144,4 +144,3 @@ class method_price(osv.osv):
         return res
 
 
-method_price()
