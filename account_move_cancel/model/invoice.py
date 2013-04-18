@@ -53,5 +53,3 @@ class account_invoice(osv.Model):
             cr, uid, ids, context=context, invoice_ids=ids)
 
         return True
-
-
