@@ -24,12 +24,12 @@
 #
 ##############################################################################
 
-from osv import osv, fields, orm
+from openerp.osv import osv, fields, orm
 from lxml import etree
-import tools
+import openerp.tools as tools
 
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
     _inherit = 'account.move.line'
     _columns = {
         'address_id': fields.many2one('res.partner.address', 'Address', domain="[('partner_id','=',partner_id)]")
@@ -47,10 +47,9 @@ class account_move_line(osv.osv):
             'fields'].update({'address_id': {'domain': [], 'string': u'Sucursal', 'readonly': False,
                                              'relation': 'res.partner.address', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}})
         return result
-account_move_line()
 
 
-class account_entries_report(osv.osv):
+class account_entries_report(osv.Model):
     _inherit = 'account.entries.report'
     _columns = {
         'address_id': fields.many2one('res.partner.address', 'Address')
