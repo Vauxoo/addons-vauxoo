@@ -30,20 +30,22 @@ import ir
 from mx import DateTime
 import pooler
 
+
 class purchase_order_line(osv.osv):
     _name = "purchase.order.line"
     _inherit = "purchase.order.line"
 
-    def _amount_line(self, cr, uid, ids, prop, unknow_none,unknow_dict):
+    def _amount_line(self, cr, uid, ids, prop, unknow_none, unknow_dict):
         res = {}
         cur_obj = self.pool.get('res.currency')
         for line in self.browse(cr, uid, ids):
             cur = line.order_id.pricelist_id.currency_id
-            res[line.id] = cur_obj.round(cr, uid, cur, line.price_unit * line.product_qty )
+            res[line.id] = cur_obj.round(
+                cr, uid, cur, line.price_unit * line.product_qty)
         return res
 
     _columns = {
-        'discount': fields.float('Discount (%)', digits=(16,2), help="If you chose apply a discount for this way you will overide the option of calculate based on Price Lists, you will need to change again the product to update based on pricelists, this value must be between 0-100"),
+        'discount': fields.float('Discount (%)', digits=(16, 2), help="If you chose apply a discount for this way you will overide the option of calculate based on Price Lists, you will need to change again the product to update based on pricelists, this value must be between 0-100"),
         'price_unit': fields.float('Real Unit Price', required=True, digits=(16, 4), help="Price that will be used in the rest of accounting cycle"),
         'price_base': fields.float('Base Unit Price', required=True, digits=(16, 4), help="Price base taken to calc the discount, is an informative price to use it in the rest of the purchase cycle like reference for users"),
     }
@@ -53,13 +55,15 @@ class purchase_order_line(osv.osv):
 
     def discount_change(self, cr, uid, ids, product, discount, price_unit, product_qty, partner_id, price_base):
         if not product:
-            return {'value': {'price_unit': 0.0,}}
-        prod= self.pool.get('product.product').browse(cr, uid,product)
-        lang=False
-        res=[]
-        #TODO Improve pending to offer discounts based in price lists selected on order.
-        if res==[]:
-            res = {'value': {'price_unit': price_base*(1-discount/100),'price_base': price_base}}
+            return {'value': {'price_unit': 0.0, }}
+        prod = self.pool.get('product.product').browse(cr, uid, product)
+        lang = False
+        res = []
+        # TODO Improve pending to offer discounts based in price lists selected
+        # on order.
+        if res == []:
+            res = {'value': {'price_unit': price_base*(
+                1-discount/100), 'price_base': price_base}}
             return res
 
     def rpu_change(self, cr, uid, ids, rpu, discount):
@@ -67,22 +71,26 @@ class purchase_order_line(osv.osv):
         return res
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty, uom,
-            partner_id, date_order=False, fiscal_position=False, date_planned=False, name=False, price_unit=False, notes=False):
+                          partner_id, date_order=False, fiscal_position=False, date_planned=False, name=False, price_unit=False, notes=False):
         """Copied from purchase/purchase.py and modified to take discount"""
         if not pricelist:
-            raise osv.except_osv(_('No Pricelist !'), _('You have to select a pricelist in the purchase form !\nPlease set one before choosing a product.'))
-        if not  partner_id:
-            raise osv.except_osv(_('No Partner!'), _('You have to select a partner in the purchase form !\nPlease set one partner before choosing a product.'))
+            raise osv.except_osv(_('No Pricelist !'), _(
+                'You have to select a pricelist in the purchase form !\nPlease set one before choosing a product.'))
+        if not partner_id:
+            raise osv.except_osv(_('No Partner!'), _(
+                'You have to select a partner in the purchase form !\nPlease set one partner before choosing a product.'))
         if not product:
-            return {'value': {'price_unit': 0.0, 'name':'','notes':'', 'product_uom' : False}, 'domain':{'product_uom':[]}}
-        prod= self.pool.get('product.product').browse(cr, uid,product)
-        lang=False
+            return {'value': {'price_unit': 0.0, 'name': '', 'notes': '', 'product_uom': False}, 'domain': {'product_uom': []}}
+        prod = self.pool.get('product.product').browse(cr, uid, product)
+        lang = False
         if partner_id:
-            lang=self.pool.get('res.partner').read(cr, uid, partner_id)['lang']
-        context={'lang':lang}
+            lang = self.pool.get('res.partner').read(
+                cr, uid, partner_id)['lang']
+        context = {'lang': lang}
         context['partner_id'] = partner_id
 
-        prod = self.pool.get('product.product').browse(cr, uid, product, context=context)
+        prod = self.pool.get('product.product').browse(
+            cr, uid, product, context=context)
         prod_uom_po = prod.uom_po_id.id
         if not uom:
             uom = prod_uom_po
@@ -94,40 +102,49 @@ class purchase_order_line(osv.osv):
         for s in prod.seller_ids:
             if s.name.id == partner_id:
                 seller_delay = s.delay
-                temp_qty = s.qty # supplier _qty assigned to temp
-                if qty < temp_qty: # If the supplier quantity is greater than entered from user, set minimal.
+                temp_qty = s.qty  # supplier _qty assigned to temp
+                if qty < temp_qty:  # If the supplier quantity is greater than entered from user, set minimal.
                     qty = temp_qty
 
-        price = self.pool.get('product.pricelist').price_get(cr,uid,[pricelist],
-                product, qty or 1.0, partner_id, {
-                    'uom': uom,
-                    'date': date_order,
-                    })[pricelist]
-        dt = (DateTime.now() + DateTime.RelativeDateTime(days=int(seller_delay) or 0.0)).strftime('%Y-%m-%d %H:%M:%S')
+        price = self.pool.get(
+            'product.pricelist').price_get(cr, uid, [pricelist],
+                                           product, qty or 1.0, partner_id, {
+                                           'uom': uom,
+                                           'date': date_order,
+                                           })[pricelist]
+        dt = (DateTime.now() + DateTime.RelativeDateTime(days=int(
+            seller_delay) or 0.0)).strftime('%Y-%m-%d %H:%M:%S')
         prod_name = prod.partner_ref
 
-
-        res = {'value': {'price_unit': price, 'price_base': price, 'name':prod_name, 'taxes_id':map(lambda x: x.id, prod.supplier_taxes_id),
-            'date_planned': dt,'notes':prod.description_purchase,
+        res = {
+            'value': {'price_unit': price, 'price_base': price, 'name': prod_name, 'taxes_id': map(lambda x: x.id, prod.supplier_taxes_id),
+            'date_planned': dt, 'notes': prod.description_purchase,
             'product_qty': qty,
             'product_uom': uom}}
         domain = {}
 
         partner = self.pool.get('res.partner').browse(cr, uid, partner_id)
-        taxes = self.pool.get('account.tax').browse(cr, uid,map(lambda x: x.id, prod.supplier_taxes_id))
-        fpos = fiscal_position and self.pool.get('account.fiscal.position').browse(cr, uid, fiscal_position) or False
-        res['value']['taxes_id'] = self.pool.get('account.fiscal.position').map_tax(cr, uid, fpos, taxes)
+        taxes = self.pool.get('account.tax').browse(
+            cr, uid, map(lambda x: x.id, prod.supplier_taxes_id))
+        fpos = fiscal_position and self.pool.get(
+            'account.fiscal.position').browse(cr, uid, fiscal_position) or False
+        res['value']['taxes_id'] = self.pool.get(
+            'account.fiscal.position').map_tax(cr, uid, fpos, taxes)
 
-        res2 = self.pool.get('product.uom').read(cr, uid, [uom], ['category_id'])
+        res2 = self.pool.get('product.uom').read(
+            cr, uid, [uom], ['category_id'])
         res3 = prod.uom_id.category_id.id
-        domain = {'product_uom':[('category_id','=',res2[0]['category_id'][0])]}
+        domain = {'product_uom': [(
+            'category_id', '=', res2[0]['category_id'][0])]}
         if res2[0]['category_id'][0] != res3:
-            raise osv.except_osv(_('Wrong Product UOM !'), _('You have to select a product UOM in the same category than the purchase UOM of the product'))
+            raise osv.except_osv(_('Wrong Product UOM !'), _(
+                'You have to select a product UOM in the same category than the purchase UOM of the product'))
 
         res['domain'] = domain
         return res
 
 purchase_order_line()
+
 
 class purchase_order(osv.osv):
     _name = "purchase.order"
@@ -141,11 +158,13 @@ class purchase_order(osv.osv):
         return result.keys()
 
     def inv_line_create(self, cr, uid, a, ol):
-        res = super(purchase_order,self).inv_line_create(cr, uid, a, ol)
-        res[2].update({'discount': ol.discount, 'price_unit': ol.price_base or 0.0,})
+        res = super(purchase_order, self).inv_line_create(cr, uid, a, ol)
+        res[2].update({'discount': ol.discount,
+                      'price_unit': ol.price_base or 0.0, })
         return res
 
 purchase_order()
+
 
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
@@ -159,23 +178,26 @@ class stock_picking(osv.osv):
 
 stock_picking()
 
-class account_invoice_line(osv.osv):
-    _inherit='account.invoice.line'
 
-    def _get_price_wd(self, cr, uid, ids, prop, unknow_none,unknow_dict):
+class account_invoice_line(osv.osv):
+    _inherit = 'account.invoice.line'
+
+    def _get_price_wd(self, cr, uid, ids, prop, unknow_none, unknow_dict):
         res = {}
-        cur_obj=self.pool.get('res.currency')
+        cur_obj = self.pool.get('res.currency')
         for line in self.browse(cr, uid, ids):
             if line.invoice_id:
-                res[line.id] = line.price_unit * (1-(line.discount or 0.0)/100.0)
+                res[line.id] = line.price_unit * (
+                    1-(line.discount or 0.0)/100.0)
                 cur = line.invoice_id.currency_id
                 res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
             else:
-                res[line.id] = line.price_unit * (1-(line.discount or 0.0)/100.0)
+                res[line.id] = line.price_unit * (
+                    1-(line.discount or 0.0)/100.0)
         return res
 
-    _columns={
-    'price_wd': fields.function(_get_price_wd, method=True, string='Price With Discount',store=True, type="float", digits=(16, 4)),
+    _columns = {
+        'price_wd': fields.function(_get_price_wd, method=True, string='Price With Discount', store=True, type="float", digits=(16, 4)),
     }
 account_invoice_line()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
