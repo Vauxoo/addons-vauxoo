@@ -40,4 +40,3 @@ class account_move_group(osv.TransientModel):
         account_move_line._create_move_group(
             cr, uid, move_ids, context=context)
         return {}
-

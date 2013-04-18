@@ -78,4 +78,3 @@ class account_move_line(osv.Model):
             account_move_line.write(cr, uid, moves_line, {'move_id': move_id})
             account_move.unlink(cr, uid, ids)
         return move_id
-
