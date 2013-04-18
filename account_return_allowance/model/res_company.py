@@ -21,12 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class res_company(osv.osv):
+
+class res_company(osv.Model):
     """
     OpenERP Model : res_company
     """
@@ -67,4 +67,3 @@ class res_company(osv.osv):
             on out invoices and represent this amount as a counter part on credit
             for an income."""),
     }
-res_company()

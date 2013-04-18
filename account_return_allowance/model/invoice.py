@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##########################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     """
     OpenERP Model : account_invoice
     """
@@ -187,10 +187,9 @@ class account_invoice(osv.osv):
                      in tax_accounts]
                 print move_lines
         return move_lines
-account_invoice()
 
 
-class account_invoice_line(osv.osv):
+class account_invoice_line(osv.Model):
     """
     account_invoice_line
     """
@@ -203,4 +202,3 @@ False: discount on line will be considered a Trade Discount.
 From an accounting point of view it will be considered in a different manner.
         '''),
     }
-account_invoice_line()
