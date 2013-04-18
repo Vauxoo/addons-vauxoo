@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: javieredm@gmail.com,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -30,20 +30,20 @@ from mx import DateTime
 from tools.translate import _
 
 
-
 class sale_uom_group(osv.osv):
     _name = "sale.uom.group"
     _description = "Sum by Product Uom"
     _columns = {
         'sale_id': fields.many2one('sale.order', 'Sale order', ondelete='cascade', select=True),
         'name': fields.char('Uom Description', size=64),
-        'product_uom': fields.many2one('product.uom', 'Product UoM', required=True, readonly=True, states={'draft':[('readonly',False)]}),        
-        'amount': fields.float('Amount', digits=(16,2)),
+        'product_uom': fields.many2one('product.uom', 'Product UoM', required=True, readonly=True, states={'draft': [('readonly', False)]}),
+        'amount': fields.float('Amount', digits=(16, 2)),
     }
-    
+
     def compute(self, cr, uid, sale_id, context={}):
         uom_grouped = {}
-        sale_brw = self.pool.get('sale.order').browse(cr, uid, sale_id, context)
+        sale_brw = self.pool.get('sale.order').browse(
+            cr, uid, sale_id, context)
         res = {}
         for line in sale_brw.order_line:
             res.setdefault(line.product_uom.id, 0.0)
@@ -55,12 +55,11 @@ class sale_uom_group(osv.osv):
                 'product_uom': uom,
                 'amount': res[uom]
             }
-            
+
         return uom_grouped
 
 
 sale_uom_group()
-
 
 
 class sale_order(osv.osv):
@@ -68,7 +67,6 @@ class sale_order(osv.osv):
     _columns = {
         'puom_line': fields.one2many('sale.uom.group', 'sale_id', 'UOM Lines', readonly=True),
     }
-
 
     def button_reset_uom(self, cr, uid, ids, context=None):
         if not context:
@@ -78,29 +76,25 @@ class sale_order(osv.osv):
             cr.execute("DELETE FROM sale_uom_group WHERE sale_id=%s", (id,))
             for uom in sug_obj.compute(cr, uid, id, context=context).values():
                 sug_obj.create(cr, uid, uom)
-                
+
         return True
 
     def button_compute(self, cr, uid, ids, context=None):
         self.button_reset_uom(cr, uid, ids, context)
         return True
 
-
     def create(self, cr, uid, vals, context={}):
         sale_id = super(sale_order, self).create(cr, uid, vals, context)
         if 'order_line' in vals and vals['order_line']:
             self.button_compute(cr, uid, [sale_id])
-        
-        return sale_id
 
+        return sale_id
 
     def write(self, cr, uid, ids, vals, context=None):
         res = super(sale_order, self).write(cr, uid, ids, vals, context)
         if 'order_line' in vals and vals['order_line']:
-            self.button_compute(cr, uid, ids)    
+            self.button_compute(cr, uid, ids)
 
         return res
-        
+
 sale_order()
-
-
