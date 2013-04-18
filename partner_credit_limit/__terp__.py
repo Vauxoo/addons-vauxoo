@@ -21,10 +21,10 @@
 #
 ##############################################################################
 {
-    'name':'Partner Credit Limit',
-    'version':'1.0',
-    'depends':["base","account","sale"],
-    "author" : "Tiny",
+    'name': 'Partner Credit Limit',
+    'version': '1.0',
+    'depends': ["base", "account", "sale"],
+    "author": "Tiny",
     "description": """Partner Credit Limit'
     Checks for all over due payment and already paid amount
     if the differance is positive and acceptable then Salesman

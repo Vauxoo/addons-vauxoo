@@ -28,12 +28,12 @@ from mx import DateTime
 from tools import config
 from tools.translate import _
 
+
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     _columns = {
-        'over_credit':fields.boolean('Allow Over Credit?', required=False),
-        'maturity_over_credit':fields.boolean('Allow Maturity Over Credit?', required=False),
+        'over_credit': fields.boolean('Allow Over Credit?', required=False),
+        'maturity_over_credit': fields.boolean('Allow Maturity Over Credit?', required=False),
         'credit_maturity_limit': fields.float(string='Credit Maturity Limit'),
     }
 res_partner()
-
