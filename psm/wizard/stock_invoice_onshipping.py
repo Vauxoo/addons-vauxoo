@@ -19,12 +19,13 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class stock_invoice_onshipping_psm(osv.osv_memory):
+
+class stock_invoice_onshipping_psm(osv.TransientModel):
 
     _inherit = "stock.invoice.onshipping"
 
@@ -76,4 +77,3 @@ class stock_invoice_onshipping_psm(osv.osv_memory):
                     cr, uid, invoice.id, list(set(prod)), context=context)
         return res
 
-stock_invoice_onshipping_psm()

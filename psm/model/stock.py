@@ -22,12 +22,13 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class stock_production_lot(osv.osv):
+class stock_production_lot(osv.Model):
 
     def _serial_identification(self, cr, uid, ids, context=None):
         if context is None:
@@ -61,10 +62,9 @@ class stock_production_lot(osv.osv):
             ret.append((i[0], i[1].split(' ')[0]))
         return ret
 
-stock_production_lot()
 
 
-class stock_picking(osv.osv):
+class stock_picking(osv.Model):
     _inherit = "stock.picking"
 
     #~ def test_serial_outgoing(self, cr, uid, ids):
@@ -101,4 +101,3 @@ class stock_picking(osv.osv):
                             'This serial %s is not exist') % move.prodlot_id.name)
         return ok
 
-stock_picking()

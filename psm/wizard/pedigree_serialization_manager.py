@@ -19,12 +19,13 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class pedigree_serialization_manager(osv.osv_memory):
+class pedigree_serialization_manager(osv.TransientModel):
     _name = "pedigree.serialization.manager"
     _description = "Pedigree Serialization Manager"
 
@@ -262,4 +263,3 @@ class pedigree_serialization_manager(osv.osv_memory):
                     'These serial already exist %s ') % '\n'.join(res))
 
 
-pedigree_serialization_manager()

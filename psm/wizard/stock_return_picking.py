@@ -19,14 +19,15 @@
 #
 ##############################################################################
 
-import netsvc
+import openerp.netsvc as netsvc
 import time
 
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class stock_return_picking(osv.osv_memory):
+
+class stock_return_picking(osv.TransientModel):
     _inherit = 'stock.return.picking'
 
     def create_returns(self, cr, uid, ids, context=None):
@@ -46,6 +47,5 @@ class stock_return_picking(osv.osv_memory):
         return res
 
 
-stock_return_picking()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
