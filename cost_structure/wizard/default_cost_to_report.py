@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from osv import fields, osv
 import tools
@@ -33,39 +33,43 @@ import time
 import datetime
 import re
 
+
 class default_price_to_report(osv.osv_memory):
 
     _name = 'default.price.to.report'
 
-
     _columns = {
-        'list_price': fields.many2one('product.pricelist','List Price'),
+        'list_price': fields.many2one('product.pricelist', 'List Price'),
         'sure': fields.boolean('Sure?', help="Are sure this operation"),
     }
-    
 
-    def default_price(self,cr,uid,ids,context=None):
+    def default_price(self, cr, uid, ids, context=None):
         if context is None:
-            context={} 
-        
+            context = {}
+
         method_obj = self.pool.get('method.price')
         product_obj = self.pool.get('product.product')
-        wzr_brw = self.browse(cr,uid,ids,context=context)[0]
+        wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         if wzr_brw.sure:
             if context.get('active_ids'):
-                name =  wzr_brw.list_price and wzr_brw.list_price.name or False
+                name = wzr_brw.list_price and wzr_brw.list_price.name or False
                 name = name.split(' ')
-                name = name and name[0] == 'Precio' and name[1].isdigit() and name[1]
+                name = name and name[0] == 'Precio' and name[
+                    1].isdigit() and name[1]
                 print name
                 if name:
-                    cost_id = [i.property_cost_structure and i.property_cost_structure.id  for i in product_obj.browse(cr,uid,context.get('active_ids'),context=context) ]
-                    methods_ids = method_obj.search(cr,uid,[('cost_structure_id','in',cost_id),('default_cost','=',True)],context=context)
+                    cost_id = [i.property_cost_structure and i.property_cost_structure.id for i in product_obj.browse(
+                        cr, uid, context.get('active_ids'), context=context)]
+                    methods_ids = method_obj.search(cr, uid, [('cost_structure_id', 'in', cost_id), (
+                        'default_cost', '=', True)], context=context)
                     if methods_ids:
-                        raise osv.except_osv(_('Error'), _('The product already has a default_cost'))
-                    methods_ids = method_obj.search(cr,uid,[('cost_structure_id','in',cost_id),('sequence','=',int(name))],context=context)
-                    method_obj.write(cr,uid,methods_ids,{'default_cost':True},context=context)
+                        raise osv.except_osv(_('Error'), _(
+                            'The product already has a default_cost'))
+                    methods_ids = method_obj.search(cr, uid, [('cost_structure_id', 'in', cost_id), (
+                        'sequence', '=', int(name))], context=context)
+                    method_obj.write(cr, uid, methods_ids, {
+                                     'default_cost': True}, context=context)
         else:
             raise osv.except_osv(_('Error'), _('Please select sure option'))
-        return  {'type': 'ir.actions.act_window_close'}
+        return {'type': 'ir.actions.act_window_close'}
 default_price_to_report()
-
