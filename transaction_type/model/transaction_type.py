@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from openerp.osv import osv, fields
 import openerp.tools as tools
@@ -33,14 +33,11 @@ import decimal_precision as dp
 
 
 class transaction_type(osv.Model):
-    
-    
+
     _name = 'transaction.type'
     _columns = {
-    'name':fields.char('name',100,help="Name of transaction type"),
-    'code':fields.char('Code',100,help="Code of transaction type"),
-    
-    
+        'name': fields.char('name', 100, help="Name of transaction type"),
+        'code': fields.char('Code', 100, help="Code of transaction type"),
+
+
     }
-    
-    
