@@ -21,10 +21,10 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class product_customs_rate(osv.osv):
+class product_customs_rate(osv.Model):
 
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
@@ -101,4 +101,3 @@ class product_customs_rate(osv.osv):
     def child_get(self, cr, uid, ids):
         return [ids]
 
-product_customs_rate()
