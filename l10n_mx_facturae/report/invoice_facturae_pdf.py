@@ -266,6 +266,6 @@ report_sxw.report_sxw(
     'account.invoice',
     'addons/l10n_mx_facturae/report/invoice_facturae_pdf.rml',
     header=False,
-    parser=account_invoice_facturae_pdf,invisible=True
+    parser=account_invoice_facturae_pdf
 )
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

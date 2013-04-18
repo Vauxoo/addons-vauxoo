@@ -160,7 +160,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
         if address_invoice_id3:
             address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id3[0])
             print "Customer Invoice Address Not Type Invoice"
-            #raise osv.except_osv('Warning !', 'No hay una secuencia de folios bien definida. !')
+            msj=tools.ustr("Customer Invoice Address Not Type Invoice")
+            raise osv.except_osv(_('Warning !'), _('%s.\nPlease create one.')%msj)
         if address_invoice:
             res.update({
                     'street' : address_invoice.street or False,
