@@ -23,11 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class purchase_order(osv.osv):
+
+class purchase_order(osv.Model):
     _inherit = "purchase.order"
     _columns = {
         'validator2': fields.many2one('res.users', 'Second Validator', readonly=True)
@@ -39,4 +40,3 @@ class purchase_order(osv.osv):
         self.write(cr, uid, ids, {'validator2': uid})
         return res
 
-purchase_order()
