@@ -24,12 +24,13 @@
 #
 ##############################################################################
 import time
-from osv import osv, fields
+from openerp.osv import osv, fields
 import decimal_precision as dp
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class mrp_consume(osv.osv_memory):
+
+class mrp_consume(osv.TransientModel):
     _name = 'mrp.consume'
     _columns = {
         'consume_line_ids': fields.one2many('mrp.consume.line', 'wizard_id', 'Consume')
@@ -74,10 +75,9 @@ class mrp_consume(osv.osv_memory):
             'location_dest_id': move.location_dest_id.id,
         }
         return partial_move
-mrp_consume()
 
 
-class mrp_produce(osv.osv_memory):
+class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
     _columns = {
         'produce_line_ids': fields.one2many('mrp.consume.line', 'wizard2_id', 'Consume')
@@ -110,10 +110,9 @@ class mrp_produce(osv.osv_memory):
                 raw_product.move_id.action_consume(
                     raw_product.quantity, raw_product.location_id.id, context=context)
         return {}
-mrp_produce()
 
 
-class mrp_consume_line(osv.osv_memory):
+class mrp_consume_line(osv.TransientModel):
     _name = 'mrp.consume.line'
     _rec_name = 'product_id'
     _columns = {
@@ -127,4 +126,3 @@ class mrp_consume_line(osv.osv_memory):
         'wizard2_id': fields.many2one('mrp.produce', string="Wizard"),
     }
 
-mrp_consume_line()

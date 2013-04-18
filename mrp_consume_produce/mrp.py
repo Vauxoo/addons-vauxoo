@@ -23,12 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
-import netsvc
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def _check_boolean(self, cr, uid, ids, field_name, args, context={}):
@@ -90,4 +91,3 @@ class mrp_production(osv.osv):
                 pass
         return True
 
-mrp_production()
