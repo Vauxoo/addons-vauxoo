@@ -23,10 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     
     def action_move_create(self, cr, uid, ids, context=None):
@@ -46,4 +47,3 @@ class account_invoice(osv.osv):
             if (type_invoice == 'in_invoice' or type_invoice=='in_refound') and type_acc_invo != 'payable':
                 raise osv.except_osv(_('Error'), _("Type of account in invoice to Partner must be 'payable'"))
         return super(account_invoice, self).action_move_create(cr, uid, ids)
-account_invoice()
