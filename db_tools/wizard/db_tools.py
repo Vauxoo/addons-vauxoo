@@ -24,14 +24,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 import xmlrpclib
 import sys
 import os
 import time
 import base64
 import socket
-from tools.translate import _
+from openerp.tools.translate import _
+
 import service
 import tempfile
 
@@ -40,7 +41,7 @@ wait_count = 0
 wait_limit = 12
 
 
-class db_tools(osv.osv_memory):
+class db_tools(osv.TransientModel):
     _name = 'db.tools'
 
     def db(self, cr, uid, context=None):
@@ -118,4 +119,3 @@ class db_tools(osv.osv_memory):
 
     def cancel_action(self, cr, uid, ids, context=None):
         return {}
-db_tools()
