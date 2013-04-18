@@ -21,14 +21,15 @@
 
 from crm import crm
 from datetime import datetime
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import binascii
 import time
-import tools
+import openerp.tools as tools
 
 
-class project_issue(osv.osv):
+class project_issue(osv.Model):
 
     _inherit = 'project.issue'
 
@@ -39,4 +40,3 @@ class project_issue(osv.osv):
         'planned_hours': fields.related('task_id', 'planned_hours', type='float', string='Horas', store=False),
     }
 
-project_issue()
