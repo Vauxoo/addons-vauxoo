@@ -19,17 +19,17 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class product_product(osv.osv):
+class product_product(osv.Model):
     _inherit = "product.product"
     _columns = {
         'date_from_to': fields.dummy(string='Date From-To', type='datetime'),
     }
-product_product()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
