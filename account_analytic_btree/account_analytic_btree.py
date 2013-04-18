@@ -38,4 +38,3 @@ class account_analytic_account(osv.Model):
         'parent_right': fields.integer('Parent Right', select=1),
         'parent_left': fields.integer('Parent Left', select=1),
     }
-
