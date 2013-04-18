@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
@@ -21,10 +21,11 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 import time
 from report import report_sxw
+
 
 class stock_valued(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -39,21 +40,18 @@ class stock_valued(report_sxw.rml_parse):
         if not tnom:
             return []
 
-        
         tax_obj = self.pool.get('account.tax')
-        tax_ids = tax_obj.search(self.cr,self.uid,[('name','=',tnom)])
+        tax_ids = tax_obj.search(self.cr, self.uid, [('name', '=', tnom)])
         if not tax_ids:
-            tax_ids = tax_obj.search(self.cr,self.uid,[('description','=',tnom)])
-        tax = tax_obj.browse(self.cr,self.uid, tax_ids)[0]
+            tax_ids = tax_obj.search(self.cr, self.uid, [
+                                     ('description', '=', tnom)])
+        tax = tax_obj.browse(self.cr, self.uid, tax_ids)[0]
         return tax.amount*100
-
 
     def _get_rif(self, vat=''):
         if not vat:
             return []
         return vat[2:].replace(' ', '')
-
-
 
 
 report_sxw.report_sxw(

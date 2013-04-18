@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
@@ -21,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from osv import fields, osv
 
@@ -33,7 +33,7 @@ class stock_picking(osv.osv):
     _inherit = "stock.picking"
     _columns = {
         'number': fields.char('Delivery Order Number', size=32, readonly=True, help="Delivery Order Reference"),
-            }
+    }
 
 stock_picking()
 
