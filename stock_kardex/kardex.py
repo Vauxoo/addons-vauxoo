@@ -21,14 +21,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import osv, fields, orm
+from openerp.osv import osv, fields, orm
 import decimal_precision as dp
-from tools.translate import _
+from openerp.tools.translate import _
+
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-class product_product(osv.osv):
+class product_product(osv.Model):
     _inherit = "product.product"
 
     def _product_available_done(self, cr, uid, ids, field_names=None, arg=False, context=None):
@@ -82,4 +83,3 @@ class product_product(osv.osv):
                                          string='Stock Balance'),
     }
 
-product_product()
