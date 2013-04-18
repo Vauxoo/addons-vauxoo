@@ -23,9 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 
-class account_move(osv.osv):
+class account_move(osv.Model):
     _inherit = 'account.move'
 
     def action_update_period(self, cr, uid, ids, context={}):
@@ -40,6 +40,5 @@ class account_move(osv.osv):
 
         return True
 
-account_move()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
