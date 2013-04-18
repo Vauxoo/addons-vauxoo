@@ -27,30 +27,37 @@
 import wizard
 import pooler
 
+
 class wizard_open_move_line(wizard.interface):
     def _open_window(self, cr, uid, data, context={}):
         if not context:
             context = {}
         mod_obj = pooler.get_pool(cr.dbname).get('ir.model.data')
         act_obj = pooler.get_pool(cr.dbname).get('ir.actions.act_window')
-        aged_partner_balance_vw_obj = pooler.get_pool(cr.dbname).get('account.aged.partner.balance.vw')
-        partner_ids = [aged_partner_balance_vw.partner_id and aged_partner_balance_vw.partner_id.id or False for aged_partner_balance_vw in aged_partner_balance_vw_obj.browse(cr, uid, data['ids'], context=context)]
-        #result = mod_obj._get_id(cr, uid, 'account', 'action_account_moves_all_a')
+        aged_partner_balance_vw_obj = pooler.get_pool(
+            cr.dbname).get('account.aged.partner.balance.vw')
+        partner_ids = [aged_partner_balance_vw.partner_id and aged_partner_balance_vw.partner_id.id or False for aged_partner_balance_vw in aged_partner_balance_vw_obj.browse(
+            cr, uid, data['ids'], context=context)]
+        # result = mod_obj._get_id(cr, uid, 'account',
+        # 'action_account_moves_all_a')
         result = mod_obj._get_id(cr, uid, 'account', 'action_move_line_select')
         id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
         result = act_obj.read(cr, uid, [id])[0]
-        #result['context'] = {'partner_id': partner_ids}
-        #result['domain'] = [('partner_id','in',partner_ids), ('account_id.type','=','receivable')]
+        # result['context'] = {'partner_id': partner_ids}
+        # result['domain'] = [('partner_id','in',partner_ids),
+        # ('account_id.type','=','receivable')]
         where_query = []
         days_due_start = context.get('days_due_start', False)
         if not days_due_start is False:
-            where_query.append( 'days_due >= %d'%( days_due_start ) )
+            where_query.append('days_due >= %d' % (days_due_start))
 
         days_due_end = context.get('days_due_end', False)
         if not days_due_end is False:
-            where_query.append( 'days_due <= %d'%( days_due_end ) )
-        #where_query_str = (where_query and ' WHERE ' or '') + ' AND '.join( where_query )
-        where_query_str = (where_query and ' AND ' or '') + ' AND '.join( where_query )
+            where_query.append('days_due <= %d' % (days_due_end))
+        # where_query_str = (where_query and ' WHERE ' or '') + ' AND '.join(
+        # where_query )
+        where_query_str = (
+            where_query and ' AND ' or '') + ' AND '.join(where_query)
         query = """SELECT l.id as id--, l.partner_id, l.company_id
             FROM account_move_line l
             INNER JOIN
@@ -74,7 +81,8 @@ class wizard_open_move_line(wizard.interface):
         cr.execute(query)
         res = cr.fetchall()
         move_ids = [r[0] for r in res]
-        result['domain'] = [('partner_id','in',partner_ids), ('id','in',move_ids)]
+        result['domain'] = [('partner_id', 'in', partner_ids), (
+            'id', 'in', move_ids)]
         return result
 
     states = {
