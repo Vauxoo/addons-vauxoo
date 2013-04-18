@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ############################################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2010 Zikzakmedia S.L. (<http://www.zikzakmedia.com>). All Rights Reserved
 #    $Id$
 #
@@ -18,9 +18,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-############################################################################################
+##########################################################################
 
-from osv import fields,osv
+from osv import fields, osv
 from tools.translate import _
 
 import os
@@ -32,23 +32,24 @@ import urllib2
 from urllib2 import Request, urlopen, URLError, HTTPError
 from ftplib import FTP
 
+
 class product_icecat_wizard(osv.osv_memory):
     _name = 'product.icecat.wizard'
 
     _columns = {
-        'name':fields.boolean('Name'),
-        'description':fields.boolean('Description'),
-        'description_sale':fields.boolean('Description Śale'),
-        'attributes':fields.boolean('Attributes'),
-        'language_id': fields.many2one('res.lang','Language'),
-        'image':fields.boolean('Image'),
-        'html':fields.boolean('HTML Code'),
+        'name': fields.boolean('Name'),
+        'description': fields.boolean('Description'),
+        'description_sale': fields.boolean('Description Śale'),
+        'attributes': fields.boolean('Attributes'),
+        'language_id': fields.many2one('res.lang', 'Language'),
+        'image': fields.boolean('Image'),
+        'html': fields.boolean('HTML Code'),
         'result': fields.text('Result', readonly=True),
         'resimg': fields.text('Image', readonly=True),
-        'state':fields.selection([
-            ('first','First'),
-            ('done','Done'),
-        ],'State'),
+        'state': fields.selection([
+            ('first', 'First'),
+            ('done', 'Done'),
+        ], 'State'),
     }
 
     _defaults = {
@@ -64,10 +65,10 @@ class product_icecat_wizard(osv.osv_memory):
     # save XML file into product_icecat/xml dir
     # ==========================================
     def save_file(self, name, value):
-        path = os.path.abspath( os.path.dirname(__file__) )
+        path = os.path.abspath(os.path.dirname(__file__))
         path += '/icecat/%s' % name
         path = re.sub('wizard/', '', path)
-        f = open( path, 'w' )
+        f = open(path, 'w')
         try:
             f.write(value)
         finally:
@@ -77,28 +78,31 @@ class product_icecat_wizard(osv.osv_memory):
     # ==========================================
     # Convert HTML to text
     # ==========================================
-    def StripTags(self, text): 
-         finished = 0 
-         while not finished: 
-             finished = 1 
-             start = text.find("<") 
-             if start >= 0: 
-                 stop = text[start:].find(">") 
-                 if stop >= 0: 
-                     text = text[:start] + text[start+stop+1:] 
-                     finished = 0 
-         return text
+    def StripTags(self, text):
+        finished = 0
+        while not finished:
+            finished = 1
+            start = text.find("<")
+            if start >= 0:
+                stop = text[start:].find(">")
+                if stop >= 0:
+                    text = text[:start] + text[start+stop+1:]
+                    finished = 0
+        return text
 
     # ==========================================
     # Convert icecat values to OpenERP mapline
     # ==========================================
     def icecat2oerp(self, cr, uid, form, product, icecat, pathxml, language, data, context):
 
-        #check if attributes product exists. If exists, raise error. Not update attributes values
+        # check if attributes product exists. If exists, raise error. Not
+        # update attributes values
         if form.attributes:
-            attributes_ids = self.pool.get('product.manufacturer.attribute').search(cr, uid, [('product_id', '=', product.id)])
+            attributes_ids = self.pool.get('product.manufacturer.attribute').search(
+                cr, uid, [('product_id', '=', product.id)])
             if len(attributes_ids) > 0:
-                raise osv.except_osv(_('Error'),_("There are attributes avaible in this product. Delete this attributes or uncheck attributes option"))
+                raise osv.except_osv(_('Error'), _(
+                    "There are attributes avaible in this product. Delete this attributes or uncheck attributes option"))
 
         if form.language_id.code:
             language = form.language_id.code
@@ -112,8 +116,10 @@ class product_icecat_wizard(osv.osv_memory):
                     exit
 
         # product info
-        short_summary = doc.xpathEval('//SummaryDescription//ShortSummaryDescription')
-        long_summary = doc.xpathEval('//SummaryDescription//LongSummaryDescription')
+        short_summary = doc.xpathEval(
+            '//SummaryDescription//ShortSummaryDescription')
+        long_summary = doc.xpathEval(
+            '//SummaryDescription//LongSummaryDescription')
 
         short_description = short_summary[0].content
         description = long_summary[0].content
@@ -126,8 +132,8 @@ class product_icecat_wizard(osv.osv_memory):
                 description = prod.xpathEval('@LongDesc')[0].content
 
         # product details category
-        categoryId  = []
-        categoryName  = []
+        categoryId = []
+        categoryName = []
         for cat in doc.xpathEval('//CategoryFeatureGroup'):
             categoryId.append(cat.xpathEval('@ID')[0].content)
 
@@ -135,14 +141,15 @@ class product_icecat_wizard(osv.osv_memory):
             categoryName.append(cat.xpathEval('@Value')[0].content)
 
         # join categorys lists
-        category = zip(categoryId,categoryName)
+        category = zip(categoryId, categoryName)
 
         # product details feature
-        prodFeatureId  = []
+        prodFeatureId = []
         prodFeatureName = []
         values = {}
         for prod in doc.xpathEval('//ProductFeature'):
-            prodFeatureId.append(prod.xpathEval('@CategoryFeatureGroup_ID')[0].content+"#"+prod.xpathEval('@Presentation_Value')[0].content)
+            prodFeatureId.append(prod.xpathEval('@CategoryFeatureGroup_ID')[
+                                 0].content+"#"+prod.xpathEval('@Presentation_Value')[0].content)
 
         for prod in doc.xpathEval('//ProductFeature//Feature//Name'):
             prodFeatureName.append(prod.xpathEval('@Value')[0].content)
@@ -161,17 +168,21 @@ class product_icecat_wizard(osv.osv_memory):
                     value = values[1]
                 if values[0] not in prodFeature:
                     prodFeature[values[0]] = []
-                prodFeature[values[0]].append('<strong>'+prodFeatureName[i]+':</strong>'+' '+value)
+                prodFeature[values[0]].append(
+                    '<strong>'+prodFeatureName[i]+':</strong>'+' '+value)
             i += 1
 
-        mapline_ids = self.pool.get('product.icecat.mapline').search(cr, uid, [('icecat_id', '=', icecat.id)])
+        mapline_ids = self.pool.get('product.icecat.mapline').search(
+            cr, uid, [('icecat_id', '=', icecat.id)])
         mapline_fields = []
         for mapline_id in mapline_ids:
-            mapline = self.pool.get('product.icecat.mapline').browse(cr, uid, mapline_id)
-            mapline_fields.append({'icecat':mapline.name,'oerp':mapline.field_id.name})
+            mapline = self.pool.get(
+                'product.icecat.mapline').browse(cr, uid, mapline_id)
+            mapline_fields.append({
+                                  'icecat': mapline.name, 'oerp': mapline.field_id.name})
 
-        #show details product
-        #TODO: HTML template use Mako template for not hardcode HTML tags
+        # show details product
+        # TODO: HTML template use Mako template for not hardcode HTML tags
         mapline_values = []
         attributes_values = []
         sequence = 0
@@ -180,18 +191,20 @@ class product_icecat_wizard(osv.osv_memory):
             catID = cat[0]
             catName = cat[1]
 
-            #product_manufacturer
+            # product_manufacturer
             if form.attributes:
-                attributes_values.append({'name':catName,'icecat_category':catID,'product_id':product.id,'sequence':sequence})
+                attributes_values.append({
+                                         'name': catName, 'icecat_category': catID, 'product_id': product.id, 'sequence': sequence})
                 sequence+1
 
             if catID in prodFeature and len(prodFeature[catID]):
 
                 for feature in prodFeature[catID]:
                     prod_value = feature.split(":")
-                    if len(prod_value)>0:
-                        attributes_values.append({'name':'>'+self.StripTags(prod_value[0]),
-'value':self.StripTags(prod_value[1]),'icecat_category':catID,'product_id':product.id,'sequence':sequence})
+                    if len(prod_value) > 0:
+                        attributes_values.append(
+                            {'name': '>'+self.StripTags(prod_value[0]),
+                             'value': self.StripTags(prod_value[1]), 'icecat_category': catID, 'product_id': product.id, 'sequence': sequence})
                         sequence+1
 
                 for mapline_field in mapline_fields:
@@ -206,46 +219,57 @@ class product_icecat_wizard(osv.osv_memory):
                         source += '</ul>'
                         if not form.html:
                             source = self.StripTags(source)
-                        mapline_values.append({'field':mapline_field['oerp'],'source':source})
-                    # This is not hardcode. Short description is avaible in antother fields, for example meta_description website fields (magento, djnago,...)
+                        mapline_values.append({'field': mapline_field[
+                                              'oerp'], 'source': source})
+                    # This is not hardcode. Short description is avaible in
+                    # antother fields, for example meta_description website
+                    # fields (magento, djnago,...)
                     if mapline_field['icecat'] == 'ShortSummaryDescription':
-                        mapline_values.append({'field':mapline_field['oerp'],'source':short_description})
+                        mapline_values.append({'field': mapline_field[
+                                              'oerp'], 'source': short_description})
 
         # update icecat values at product
         # default values. It is not hardcode ;)
         values = {}
 
         if form.name:
-            trans_name_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language),('name','=','product.template,name'),('res_id','=',product.id)])
+            trans_name_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language), (
+                'name', '=', 'product.template,name'), ('res_id', '=', product.id)])
             if trans_name_id:
-                self.pool.get('ir.translation').write(cr, uid, trans_name_id, {'value': name}, context)
+                self.pool.get('ir.translation').write(
+                    cr, uid, trans_name_id, {'value': name}, context)
             else:
                 values['name'] = name
 
         if form.description_sale:
-            trans_descsale_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language),('name','=','product.template,description_sale'),('res_id','=',product.id)])
+            trans_descsale_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language), (
+                'name', '=', 'product.template,description_sale'), ('res_id', '=', product.id)])
             if trans_descsale_id:
-                self.pool.get('ir.translation').write(cr, uid, trans_descsale_id, {'value': short_description}, context)
+                self.pool.get('ir.translation').write(
+                    cr, uid, trans_descsale_id, {'value': short_description}, context)
             else:
                 values['description_sale'] = short_description
 
         if form.description:
             if not form.html:
                 description = self.StripTags(description)
-            trans_description_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language),('name','=','product.template,description'),('res_id','=',product.id)])
+            trans_description_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language), (
+                'name', '=', 'product.template,description'), ('res_id', '=', product.id)])
             if trans_description_id:
-                self.pool.get('ir.translation').write(cr, uid, trans_description_id, {'value': description}, context)
+                self.pool.get('ir.translation').write(
+                    cr, uid, trans_description_id, {'value': description}, context)
             else:
                 values['description'] = description
 
-        #manufacturer product
+        # manufacturer product
         manufacturers = []
         for supplier in doc.xpathEval('//Supplier'):
             manufacturers.append(supplier.xpathEval('@Name')[0].content)
-        if len(manufacturers)>0:
-            partner_id = self.pool.get('res.partner').search(cr, uid, [('name', 'ilike', manufacturers[len(manufacturers)-1])])
+        if len(manufacturers) > 0:
+            partner_id = self.pool.get('res.partner').search(cr, uid, [
+                                                             ('name', 'ilike', manufacturers[len(manufacturers)-1])])
             if len(partner_id) > 0:
-               values['manufacturer'] = partner_id[0]
+                values['manufacturer'] = partner_id[0]
         values['manufacturer_pname'] = name
         ref = []
         for prod in doc.xpathEval('//Product'):
@@ -255,13 +279,15 @@ class product_icecat_wizard(osv.osv_memory):
         # add mapline values calculated
         for mapline_value in mapline_values:
             values[mapline_value['field']] = mapline_value['source']
-        
-        self.pool.get('product.product').write(cr, uid, [product.id], values, context)
 
-        #create manufacturer attribute
+        self.pool.get('product.product').write(
+            cr, uid, [product.id], values, context)
+
+        # create manufacturer attribute
         if form.attributes:
             for values in attributes_values:
-                self.pool.get('product.manufacturer.attribute').create(cr, uid, values, context)
+                self.pool.get('product.manufacturer.attribute').create(
+                    cr, uid, values, context)
 
         result = _("Product %s XML Import successfully") % name
 
@@ -273,7 +299,7 @@ class product_icecat_wizard(osv.osv_memory):
     def iceimg2oerpimg(self, cr, uid, form, product, icecat, pathxml, data, context):
         doc = libxml2.parseFile(pathxml)
 
-        #product image
+        # product image
         for prod in doc.xpathEval('//Product'):
             if prod.xpathEval('@HighPic'):
                 image = prod.xpathEval('@HighPic')[0].content
@@ -282,24 +308,25 @@ class product_icecat_wizard(osv.osv_memory):
             fname = image.split('/')
             fname = fname[len(fname)-1]
 
-            path = os.path.abspath( os.path.dirname(__file__) )
+            path = os.path.abspath(os.path.dirname(__file__))
             path += '/icecat/%s' % fname
             path = re.sub('wizard/', '', path)
 
-            #download image
+            # download image
             urllib.urlretrieve(image, path)
 
-            #send ftp server
+            # send ftp server
             ftp = FTP(icecat.ftpip)
             ftp.login(icecat.ftpusername, icecat.ftppassword)
             ftp.cwd(icecat.ftpdirectory)
-            f=file(path,'rb')
-            ftp.storbinary('STOR '+os.path.basename(path),f)
+            f = file(path, 'rb')
+            ftp.storbinary('STOR '+os.path.basename(path), f)
             ftp.quit()
 
             # add values into product_image
             # product info
-            long_summary = doc.xpathEval('//SummaryDescription//LongSummaryDescription')
+            long_summary = doc.xpathEval(
+                '//SummaryDescription//LongSummaryDescription')
             description = long_summary[0].content
             name = description.split('.')[0]
 
@@ -318,16 +345,19 @@ class product_icecat_wizard(osv.osv_memory):
     # wizard
     # =========================================
     def import_xml(self, cr, uid, ids, data, context={}):
-        icecat_id = self.pool.get('product.icecat').search(cr, uid, [('active', '=', 1)])
+        icecat_id = self.pool.get('product.icecat').search(
+            cr, uid, [('active', '=', 1)])
         if not icecat_id:
-            raise osv.except_osv(_('Error'),_("Configure your icecat preferences!"))
+            raise osv.except_osv(_('Error'), _(
+                "Configure your icecat preferences!"))
 
         icecat = self.pool.get('product.icecat').browse(cr, uid, icecat_id[0])
 
         form = self.browse(cr, uid, ids[0])
 
         if not form.language_id:
-            language =  self.pool.get('res.users').browse(cr, uid, uid).context_lang
+            language = self.pool.get(
+                'res.users').browse(cr, uid, uid).context_lang
             lang = language.split('_')[0]
         else:
             language = form.language_id.code
@@ -340,12 +370,14 @@ class product_icecat_wizard(osv.osv_memory):
             ean = product.ean13
 
             if ean:
-                url = 'http://data.icecat.biz/xml_s3/xml_server3.cgi?ean_upc=%s;lang=%s;output=productxml' % (ean, lang)
+                url = 'http://data.icecat.biz/xml_s3/xml_server3.cgi?ean_upc=%s;lang=%s;output=productxml' % (
+                    ean, lang)
                 fileName = '%s.xml' % ean
 
                 passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
                 # this creates a password manager
-                passman.add_password(None, url, icecat.username, icecat.password)
+                passman.add_password(
+                    None, url, icecat.username, icecat.password)
 
                 authhandler = urllib2.HTTPBasicAuthHandler(passman)
                 # create the AuthHandler
@@ -360,13 +392,15 @@ class product_icecat_wizard(osv.osv_memory):
                     req = urllib2.Request(url)
                     handle = urllib2.urlopen(req)
                     content = handle.read()
-                    #save file
-                    pathxml = self.save_file( fileName, content )
-                    #import values icecat2oerp
-                    result = self.icecat2oerp(cr, uid, form, product, icecat, pathxml, language, data, context)
-                    #import image icecat2oerp
+                    # save file
+                    pathxml = self.save_file(fileName, content)
+                    # import values icecat2oerp
+                    result = self.icecat2oerp(
+                        cr, uid, form, product, icecat, pathxml, language, data, context)
+                    # import image icecat2oerp
                     if icecat.ftp and form.image:
-                        resimg += self.iceimg2oerpimg(cr, uid, form, product, icecat, pathxml, data, context)
+                        resimg += self.iceimg2oerpimg(
+                            cr, uid, form, product, icecat, pathxml, data, context)
                         resimg += "\n"
                     else:
                         resimg += _("Import image not avaible")
@@ -378,9 +412,9 @@ class product_icecat_wizard(osv.osv_memory):
                 resimg = False
 
         values = {
-            'state':'done',
-            'result':result,
-            'resimg':resimg,
+            'state': 'done',
+            'result': result,
+            'resimg': resimg,
         }
         self.write(cr, uid, ids, values)
 
