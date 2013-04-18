@@ -286,9 +286,9 @@ class account_bank_statement(osv.Model):
                                          'debit': bsl.debit and amount or 0.00,
                                          'partner_id': pcp_id,
                                          'stff_id': bsl.id,
-                              'amount_currency': bsl.debit and bsl.debit or bsl.credit,
-                                   'account_id': payrec_id, },
-                                  context=context)
+                                         'amount_currency': bsl.debit and bsl.debit or bsl.credit,
+                                         'account_id': payrec_id, },
+                               context=context)
             bsl.write({'move_id': am_id, 'counterpart_id': payrec_id,
                        'partnercounterpart_id': pcp_id and pcp_id or False})
 
@@ -371,17 +371,17 @@ class bank_statement_imported_lines(osv.Model):
         'company_id': fields.many2one('res.company', 'Company', required=False),
         'aml_ids': fields.one2many('account.move.line', 'stff_id', 'Account Move Lines'),
         'counterpart_id': fields.many2one('account.account', 'Account Counterpart', required=False,
-            help="This will be the account to make the account move line as counterpart."),
+                                          help="This will be the account to make the account move line as counterpart."),
         'partnercounterpart_id': fields.many2one('res.partner', 'Partner Counterpart', required=False,
-            help="This will be the partner to make written on the account move line as counterpart., if you change this value, the account payable or receivable will be automatic selected on Account Move Lines related, specially usefull when you pay several things in the same invoice, Petty cash for example, just select your partner petty cash"),
+                                                 help="This will be the partner to make written on the account move line as counterpart., if you change this value, the account payable or receivable will be automatic selected on Account Move Lines related, specially usefull when you pay several things in the same invoice, Petty cash for example, just select your partner petty cash"),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('done', 'Done')
-            ], 'State', help='If this bank statement line is confirmed or not, to help useability issues',
+        ], 'State', help='If this bank statement line is confirmed or not, to help useability issues',
             readonly=True, select=True),
         'invoice_ids': fields.many2many('account.invoice', 'bs_invoice_rel', 'st_id_id', 'invoice_id', 'Invoices',
-            help="Invoices to be reconciled with this line",
-            ),  # TODO: Resolve: We should use date as filter, is a question of POV
+                                        help="Invoices to be reconciled with this line",
+                                        ),  # TODO: Resolve: We should use date as filter, is a question of POV
         #'balance':fields.function(_balance,method=True,digits_compute=dp.get_precision('Account'),type='float',string='Balance',store=False),
     }
 
@@ -410,12 +410,12 @@ class bank_statement_imported_lines(osv.Model):
 
                 for aml in line.aml_ids:
                     acc_journal.append(line.bank_statement_id.journal_id and
-                                                                line.bank_statement_id.journal_id.default_debit_account_id and
-                                                                line.bank_statement_id.journal_id.default_debit_account_id.id)
+                                       line.bank_statement_id.journal_id.default_debit_account_id and
+                                       line.bank_statement_id.journal_id.default_debit_account_id.id)
 
                     acc_journal.append(line.bank_statement_id.journal_id and
-                                                                line.bank_statement_id.journal_id.default_credit_account_id and
-                                                                line.bank_statement_id.journal_id.default_credit_account_id.id)
+                                       line.bank_statement_id.journal_id.default_credit_account_id and
+                                       line.bank_statement_id.journal_id.default_credit_account_id.id)
 
                     if aml.account_id and aml.account_id.id not in acc_journal:
                         account_move_line_obj.copy(cr, uid, aml.id, {
@@ -444,8 +444,8 @@ class bank_statement_imported_lines(osv.Model):
             if aml:
 
                 aml_ids = [line.id for i in abs_brw.invoice_ids if i.state == 'open'
-                                   for line in i.move_id.line_id if i.account_id.id == line.account_id.id and not
-                                                                    line.reconcile_id]
+                           for line in i.move_id.line_id if i.account_id.id == line.account_id.id and not
+                           line.reconcile_id]
 
                 aml_ids += [i.id for i in abs_brw.acc_move_line_ids]
 
@@ -464,15 +464,15 @@ class bank_statement_imported_lines(osv.Model):
                                 res.append(
                                     (account_move_line_obj.copy(cr, uid, aml.id, {
                                         'partner_id': aml_id.partner_id and aml_id.partner_id.id,
-                                                                                      '%s' % (aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'): (aml_id.reconcile_partial_id and aml_id.invoice and aml_id.invoice.residual or aml_id[aml.debit and 'credit' or 'debit'])}),
-                                            aml_id.id))
+                                                                '%s' % (aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'): (aml_id.reconcile_partial_id and aml_id.invoice and aml_id.invoice.residual or aml_id[aml.debit and 'credit' or 'debit'])}),
+                                     aml_id.id))
 
                             elif total > 0 and (aml_id.reconcile_partial_id and aml_id.invoice and aml_id.invoice.residual or aml_id[aml.debit and 'credit' or 'debit']) >= total:
                                 res.append(
                                     (account_move_line_obj.copy(cr, uid, aml.id, {
                                         'partner_id': aml_id.partner_id and aml_id.partner_id.id,
-                                                                                      '%s' % (aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'): total}),
-                                            aml_id.id))
+                                                                '%s' % (aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'): total}),
+                                     aml_id.id))
                                 total = 0
 
                             elif total <= 0:
@@ -481,7 +481,7 @@ class bank_statement_imported_lines(osv.Model):
                 if total > 0 and res:
                     account_move_line_obj.copy(
                         cr, uid, aml.id, {'partner_id': partner_id,
-                                                              '%s' % (aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'): total})
+                                          '%s' % (aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'): total})
                 res and account_move_line_obj.unlink(
                     cr, uid, [aml.id], context=context)
 
@@ -493,15 +493,15 @@ class bank_statement_imported_lines(osv.Model):
                         res.append(
                             account_move_line_obj.search(
                                 cr, uid, [('move_id', '=', abs_brw.move_id.id),
-                                                                        ('account_id', '=', invoice.account_id.id)]))
+                                  ('account_id', '=', invoice.account_id.id)]))
 
                     else:
                         res.append(
                             account_move_line_obj.search(
                                 cr, uid, [('invoice', 'in', invoice_ids),
-                                                                    ('account_id', '=',
-                                                                     invoice.account_id.id),
-                                                                    ]))
+                                  ('account_id', '=',
+                                   invoice.account_id.id),
+                                ]))
                     res.append('%s' % (
                         aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
                     break
@@ -510,7 +510,7 @@ class bank_statement_imported_lines(osv.Model):
                     res.append(
                         account_move_line_obj.search(
                             cr, uid, [('move_id', '=', abs_brw.move_id.id),
-                                                                   ('account_id', '=', move.account_id.id)]))
+                              ('account_id', '=', move.account_id.id)]))
                     res.append('%s' % (
                         aml.debit > 0 and 'debit' or aml.credit > 0 and 'credit'))
                     break
@@ -606,5 +606,5 @@ class account_move_line(osv.Model):
 
     _inherit = 'account.move.line'
     _columns = {
-            'stff_id': fields.many2one('bank.statement.imported.lines', 'Statement from File line'),
-            }
+        'stff_id': fields.many2one('bank.statement.imported.lines', 'Statement from File line'),
+    }
