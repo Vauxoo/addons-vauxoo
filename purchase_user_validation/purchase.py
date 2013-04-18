@@ -30,13 +30,13 @@ from tools.translate import _
 class purchase_order(osv.osv):
     _inherit = "purchase.order"
     _columns = {
-        'validator2' : fields.many2one('res.users', 'Second Validator', readonly=True)
-        }
+        'validator2': fields.many2one('res.users', 'Second Validator', readonly=True)
+    }
+
     def wkf_approve_order(self, cr, uid, ids, context=None):
-        res =  super(purchase_order, self).wkf_approve_order(cr, uid, ids, context=context)
+        res = super(purchase_order, self).wkf_approve_order(
+            cr, uid, ids, context=context)
         self.write(cr, uid, ids, {'validator2': uid})
         return res
-    
+
 purchase_order()
-
-
