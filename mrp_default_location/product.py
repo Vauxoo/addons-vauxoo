@@ -35,10 +35,10 @@ import tools
 
 
 class product_category(osv.osv):
-    _inherit='product.category'
+    _inherit = 'product.category'
     _columns = {
-        'location_src_id' : fields.many2one('stock.location','Raw Materials Location'),
-        'location_dest_id' : fields.many2one('stock.location','Finished Products Location'),
+        'location_src_id': fields.many2one('stock.location', 'Raw Materials Location'),
+        'location_dest_id': fields.many2one('stock.location', 'Finished Products Location'),
     }
-        
+
 product_category()
