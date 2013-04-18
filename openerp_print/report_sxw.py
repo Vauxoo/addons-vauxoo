@@ -46,12 +46,12 @@ import mx.DateTime
 import re
 import time
 import ir
-import netsvc
+import openerp.netsvc as netsvc
 import osv
-import tools
+import openerp.tools as tools
 import warnings
 import zipfile
-import netsvc
+import openerp.netsvc as netsvc
 
 logger = netsvc.Logger()
 

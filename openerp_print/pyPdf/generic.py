@@ -102,7 +102,6 @@ class NullObject(PdfObject):
         nulltxt = stream.read(4)
         if nulltxt != "null":
             raise utils.PdfReadError, "error reading null object"
-        return NullObject()
     readFromStream = staticmethod(readFromStream)
 
 
@@ -136,7 +135,6 @@ class ArrayObject(list, PdfObject):
         stream.write(" ]")
 
     def readFromStream(stream, pdf):
-        arr = ArrayObject()
         tmp = stream.read(1)
         if tmp != "[":
             raise utils.PdfReadError, "error reading array"
@@ -566,7 +564,6 @@ class DictionaryObject(dict, PdfObject):
         if "__streamdata__" in data:
             return StreamObject.initializeFromDictionary(data)
         else:
-            retval = DictionaryObject()
             retval.update(data)
             return retval
     readFromStream = staticmethod(readFromStream)
@@ -590,9 +587,7 @@ class StreamObject(DictionaryObject):
 
     def initializeFromDictionary(data):
         if "/Filter" in data:
-            retval = EncodedStreamObject()
         else:
-            retval = DecodedStreamObject()
         retval._data = data["__streamdata__"]
         del data["__streamdata__"]
         del data["/Length"]

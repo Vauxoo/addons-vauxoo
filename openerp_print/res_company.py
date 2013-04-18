@@ -23,13 +23,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 
 
-class res_company(osv.osv):
+class res_company(osv.Model):
     _name = 'res.company'
     _inherit = 'res.company'
 
@@ -37,4 +37,3 @@ class res_company(osv.osv):
         'header_report': fields.text('Report Header', size=1024, help='Set the header to place the report when it is not suitable for print',),
     }
 
-res_company()

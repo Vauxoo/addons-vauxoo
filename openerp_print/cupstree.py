@@ -45,7 +45,6 @@ def getippqueue(dev, queue, depth):
     try:
         c = cups.Connection()
         printers = c.getPrinters()
-        classes = c.getClasses()
     except RuntimeError:
         # Failed to connect.
         return
@@ -98,7 +97,6 @@ def gethost(host=None, depth=0):
     cups.setServer(host)
     c = cups.Connection()
     printers = c.getPrinters()
-    classes = c.getClasses()
     indent = do_indent(depth)
     lista_impresoras = []
     for name, queue in printers.iteritems():
