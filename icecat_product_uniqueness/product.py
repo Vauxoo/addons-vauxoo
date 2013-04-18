@@ -29,6 +29,7 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+
 class product_inherited(osv.osv):
     """
     Checks if a loaded product already exists on the database
@@ -43,7 +44,8 @@ class product_inherited(osv.osv):
 
     def _check_uniqueness(self, cr, uid, ids, context=None):
         all_ids = self.search(cr, uid, [('id', '<>', ids[0])])
-        all_products = [p for p in self.browse(cr, uid, all_ids, [], context) if p.ean13 != False]
+        all_products = [p for p in self.browse(
+            cr, uid, all_ids, [], context) if p.ean13 != False]
         if all_products == []:
             return True
         for product in self.browse(cr, uid, ids, context):
@@ -55,6 +57,7 @@ class product_inherited(osv.osv):
                     return False
         return True
 
-    _constraints = [(_check_uniqueness, 'ERROR, product already exists for this company', ['ean13'])]
+    _constraints = [(
+        _check_uniqueness, 'ERROR, product already exists for this company', ['ean13'])]
 
 product_inherited()
