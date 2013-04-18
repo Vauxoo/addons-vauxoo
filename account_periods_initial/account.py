@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,11 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from osv import fields, osv, orm
 from tools.translate import _
+
 
 class account_period(osv.osv):
     _inherit = "account.period"
@@ -32,7 +33,8 @@ class account_period(osv.osv):
         period_date_start = period_to.date_start
         company_id = period_to.company_id.id
         fiscalyear_id = period_to.fiscalyear_id.id
-        return self.search(cr, uid, [('date_stop', '<=', period_date_start), ('company_id', '=', company_id), ('id','<>',period_to_id), ('fiscalyear_id', '=', fiscalyear_id)])
-        #Falta validar cuando el period_to_id es special, ya que puede tomar enero cuando no es necesario.
+        return self.search(cr, uid, [('date_stop', '<=', period_date_start), ('company_id', '=', company_id), ('id', '<>', period_to_id), ('fiscalyear_id', '=', fiscalyear_id)])
+        # Falta validar cuando el period_to_id es special, ya que puede tomar
+        # enero cuando no es necesario.
 
 account_period()
