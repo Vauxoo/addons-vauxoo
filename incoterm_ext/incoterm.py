@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    d$
 #
@@ -23,13 +23,14 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+
 class stock_incoterms(osv.osv):
     """
     stock_incoterm
     """
-    
+
     _inherit = 'stock.incoterms'
     _columns = {
-        'description':fields.text('Description', help='Formal description for this incoterm.'),
+        'description': fields.text('Description', help='Formal description for this incoterm.'),
     }
 stock_incoterms()
