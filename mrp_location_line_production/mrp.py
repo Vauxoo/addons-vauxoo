@@ -25,25 +25,31 @@
 ##############################################################################
 from osv import osv, fields
 
+
 class mrp_production(osv.osv):
-    _inherit='mrp.production'
-        
+    _inherit = 'mrp.production'
+
     def _make_production_produce_line(self, cr, uid, production, context=None):
-        res=super(mrp_production,self)._make_production_produce_line(cr,uid,production,context=context)
-        stock_obj=self.pool.get('stock.move')
-        product_obj=self.pool.get('product.product')
-        product=stock_obj.browse(cr,uid, res).product_id.id
-        location_prod=product_obj.browse(cr,uid, product).property_stock_production.id or False
+        res = super(mrp_production, self)._make_production_produce_line(
+            cr, uid, production, context=context)
+        stock_obj = self.pool.get('stock.move')
+        product_obj = self.pool.get('product.product')
+        product = stock_obj.browse(cr, uid, res).product_id.id
+        location_prod = product_obj.browse(
+            cr, uid, product).property_stock_production.id or False
         if location_prod:
-            stock_obj.write(cr, uid, res, {'location_id':location_prod})
+            stock_obj.write(cr, uid, res, {'location_id': location_prod})
         return res
-        
+
     def _make_production_consume_line(self, cr, uid, production_line, parent_move_id, source_location_id=False, context=None):
-        res=super(mrp_production,self)._make_production_consume_line(cr, uid, production_line, parent_move_id, source_location_id=source_location_id, context=context)
-        stock_obj=self.pool.get('stock.move')
-        product_obj=self.pool.get('product.product')
-        product=stock_obj.browse(cr,uid, res).product_id.id
-        location_dest_prod=product_obj.browse(cr,uid, product).property_stock_production.id or False
+        res = super(mrp_production, self)._make_production_consume_line(
+            cr, uid, production_line, parent_move_id, source_location_id=source_location_id, context=context)
+        stock_obj = self.pool.get('stock.move')
+        product_obj = self.pool.get('product.product')
+        product = stock_obj.browse(cr, uid, res).product_id.id
+        location_dest_prod = product_obj.browse(
+            cr, uid, product).property_stock_production.id or False
         if location_dest_prod:
-            stock_obj.write(cr, uid, res, {'location_dest_id':location_dest_prod})
-        return res    
+            stock_obj.write(cr, uid, res, {
+                            'location_dest_id': location_dest_prod})
+        return res
