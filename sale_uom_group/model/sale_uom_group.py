@@ -24,13 +24,14 @@
 ##############################################################################
 
 import time
-import netsvc
-from osv import fields, osv
+import openerp.netsvc as netsvc
+from openerp.osv import osv, fields
 from mx import DateTime
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class sale_uom_group(osv.osv):
+
+class sale_uom_group(osv.Model):
     _name = "sale.uom.group"
     _description = "Sum by Product Uom"
     _columns = {
@@ -59,10 +60,9 @@ class sale_uom_group(osv.osv):
         return uom_grouped
 
 
-sale_uom_group()
 
 
-class sale_order(osv.osv):
+class sale_order(osv.Model):
     _inherit = 'sale.order'
     _columns = {
         'puom_line': fields.one2many('sale.uom.group', 'sale_id', 'UOM Lines', readonly=True),
@@ -97,4 +97,3 @@ class sale_order(osv.osv):
 
         return res
 
-sale_order()
