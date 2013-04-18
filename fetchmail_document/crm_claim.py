@@ -3,6 +3,7 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+
 class crm_claim(osv.osv):
     """
     crm_claim
