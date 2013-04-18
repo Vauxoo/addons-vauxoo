@@ -24,13 +24,14 @@
 ##########################################################################
 
 import time
-from osv import fields, osv
+from openerp.osv import osv, fields
 import decimal_precision as dp
-from tools.translate import _
-import netsvc
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 
 
-class wh_iva_doc(osv.osv):
+class wh_iva_doc(osv.Model):
     _inherit = 'account.wh.iva'
 
     _columns = {
@@ -52,4 +53,3 @@ class wh_iva_doc(osv.osv):
 
         return True
 
-wh_iva_doc()

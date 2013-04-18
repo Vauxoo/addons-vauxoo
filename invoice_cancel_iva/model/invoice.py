@@ -24,13 +24,14 @@
 ##########################################################################
 
 import time
-from osv import fields, osv
+from openerp.osv import osv, fields
 import decimal_precision as dp
-from tools.translate import _
-import netsvc
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
 
     _inherit = 'account.invoice'
 
@@ -96,4 +97,3 @@ class account_invoice(osv.osv):
             return False
         return True
 
-account_invoice()
