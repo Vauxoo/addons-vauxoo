@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class invoice_commission(osv.osv):
+class invoice_commission(osv.Model):
 
     def _get_commission(self, cr, uid, ids, name, args, context=None):
         res = {}
@@ -29,10 +29,9 @@ class invoice_commission(osv.osv):
                                       'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['invoice_line', 'state'], 25),
                                       'account.invoice.line': (_get_invoice_line, ['gain', 'commission'], 15), })
     }
-invoice_commission()
 
 
-class invoice_commission_line(osv.osv):
+class invoice_commission_line(osv.Model):
 
     def get_abs_commission(self, cr, uid, ids, name, args, context=None):
         bar_obj = self.pool.get('baremo.book')
@@ -86,4 +85,3 @@ class invoice_commission_line(osv.osv):
                                       'account.invoice.line': (lambda self, cr, uid, ids, c={}: ids, None, 25),
                                       }),
     }
-invoice_commission_line()
