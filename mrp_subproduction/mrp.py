@@ -24,12 +24,13 @@
 #
 ##############################################################################
 
-from tools.translate import _
-from osv import osv, fields
+from openerp.tools.translate import _
+
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = "mrp.production"
 
     def _get_product_subproduction_qty(self, cr, uid, ids, field_names, args, context=None):
@@ -137,4 +138,3 @@ class mrp_production(osv.osv):
         })
         return super(mrp_production, self).copy(cr, uid, id, default, context)
 
-mrp_production()
