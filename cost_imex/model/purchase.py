@@ -126,4 +126,3 @@ class inherit_purchase(osv.Model):
                 self.write(cr, uid, [purchase.id], {'percent_imex_ids': lines,
                                                     'percent_imex_s_ids': lines_s}, context=context)
         return True
-
