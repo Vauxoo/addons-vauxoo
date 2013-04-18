@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class document(osv.osv):
+
+class document(osv.Model):
     """
     fetchmail
     """
@@ -31,4 +31,3 @@ class document(osv.osv):
         (_check_duplication, 'File name must be unique!', [
          'name', 'parent_id', 'res_model', 'res_id'])
     ]
-document()
