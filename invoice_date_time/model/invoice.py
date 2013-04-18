@@ -25,16 +25,16 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-import tools
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+import openerp.tools as tools
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 import time
 import os
 
 
-class account_payment_term(osv.osv):
+class account_payment_term(osv.Model):
     _inherit = "account.payment.term"
 
     def compute(self, cr, uid, id, value, date_ref=False, context={}):
@@ -45,10 +45,9 @@ class account_payment_term(osv.osv):
             except:
                 pass
         return super(account_payment_term, self).compute(cr, uid, id, value, date_ref, context=context)
-account_payment_term()
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     _order = 'date_invoice asc'
 
@@ -81,4 +80,3 @@ class account_invoice(osv.osv):
                 self.write(cr, uid, [inv.id], {
                            'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-account_invoice()
