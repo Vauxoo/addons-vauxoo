@@ -20,14 +20,14 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import time
 
 _US_STATE = [('draft', 'New'),('open', 'In Progress'),('pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
 
-class user_story(osv.osv):
+class user_story(osv.Model):
     """
     OpenERP Model : User Story
     """
@@ -115,10 +115,9 @@ class user_story(osv.osv):
     def do_cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state':'cancelled'}, context=context)
 
-user_story()
 
 
-class acceptability_criteria(osv.osv):
+class acceptability_criteria(osv.Model):
     """
     OpenERP Model : Acceptability Criteria
     """
@@ -134,10 +133,9 @@ class acceptability_criteria(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-acceptability_criteria()
 
 
-class project_task(osv.osv):
+class project_task(osv.Model):
     """
     OpenERP Model : Project Task
     """
@@ -161,6 +159,5 @@ class project_task(osv.osv):
             domain= "[('sk_id', '=', sprint_id)]", 
             help="Set here the User Story related with this task"),
     }
-project_task()
 
 
