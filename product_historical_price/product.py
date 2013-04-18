@@ -22,16 +22,16 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 import pooler
 import time
 import math
 
 
-class product_historical(osv.osv):
+class product_historical(osv.Model):
     """
     product_historical
     """
@@ -77,10 +77,9 @@ class product_historical(osv.osv):
         'cost_historical_ids': fields.one2many('product.historic.cost', 'product_id', 'Historical Prices'),
 
     }
-product_historical()
 
 
-class product_historic_price(osv.osv):
+class product_historic_price(osv.Model):
     _order = "name desc"
     _name = "product.historic.price"
     _description = "Historical Price List"
@@ -95,10 +94,9 @@ class product_historic_price(osv.osv):
     _defaults = {'name': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
                  }
 
-product_historic_price()
 
 
-class product_historic_cost(osv.osv):
+class product_historic_cost(osv.Model):
     _order = "name desc"
     _name = "product.historic.cost"
     _description = "Historical Price List"
@@ -113,4 +111,3 @@ class product_historic_cost(osv.osv):
     _defaults = {'name': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
                  }
 
-product_historic_cost()
