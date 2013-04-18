@@ -28,20 +28,24 @@ from tools.translate import _
 from openerp.osv import osv, fields
 import decimal_precision as dp
 
+
 class mrp_production_product_line(osv.osv):
     _inherit = "mrp.production.product.line"
-    
+
     _columns = {
-        
+
     }
-    
+
     def onchange_product_scheduled_line(self, cr, uid, ids, product_id):
         if product_id:
             product_product_obj = self.pool.get('product.product')
-            product_product_data = product_product_obj.browse(cr, uid, product_id, context=None)
+            product_product_data = product_product_obj.browse(
+                cr, uid, product_id, context=None)
             if product_product_data:
-                val = {'name' : product_product_data.name, 'product_uom' : product_product_data.uom_id.id, 'product_qty' : 1}
-                domain_uom = {'product_uom':[('category_id', '=', product_product_data.uom_id.category_id.id)]}
+                val = {'name': product_product_data.name, 'product_uom':
+                       product_product_data.uom_id.id, 'product_qty': 1}
+                domain_uom = {'product_uom': [(
+                    'category_id', '=', product_product_data.uom_id.category_id.id)]}
                 return {'value': val, 'domain': domain_uom}
         return {}
 
