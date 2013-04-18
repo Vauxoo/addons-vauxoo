@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
-#    
+#
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 #    Improved for this module for nhomar@vauxoo.com
@@ -16,16 +16,18 @@
 #    GNU Affero General Public License for more details.
 #
 #    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.     
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
 import time
 from report import report_sxw
 
+
 class ir_module_reference_print(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(ir_module_reference_print, self).__init__(cr, uid, name, context=context)
+        super(ir_module_reference_print, self).__init__(
+            cr, uid, name, context=context)
         self.localcontext.update({
             'time': time,
             'findobj': self._object_find,
@@ -33,13 +35,14 @@ class ir_module_reference_print(report_sxw.rml_parse):
             'objdoc2': self._object_doc2,
             'findflds': self._fields_find,
         })
+
     def _object_doc(self, obj):
         modobj = self.pool.get(obj)
-        strdocs= modobj.__doc__
+        strdocs = modobj.__doc__
         if not strdocs:
             return None
         else:
-            strdocs=strdocs.strip().splitlines(True)
+            strdocs = strdocs.strip().splitlines(True)
         res = ''
         for stre in strdocs:
             if not stre or stre.isspace():
@@ -49,11 +52,11 @@ class ir_module_reference_print(report_sxw.rml_parse):
 
     def _object_doc2(self, obj):
         modobj = self.pool.get(obj)
-        strdocs= modobj.__doc__
+        strdocs = modobj.__doc__
         if not strdocs:
             return None
         else:
-            strdocs=strdocs.strip().splitlines(True)
+            strdocs = strdocs.strip().splitlines(True)
         res = []
         fou = False
         for stre in strdocs:
@@ -64,7 +67,8 @@ class ir_module_reference_print(report_sxw.rml_parse):
         return res
 
     def _object_find(self, module):
-        ids2 = self.pool.get('ir.model.data').search(self.cr, self.uid, [('module','=',module), ('model','=','ir.model')])
+        ids2 = self.pool.get('ir.model.data').search(self.cr, self.uid, [
+                                                     ('module', '=', module), ('model', '=', 'ir.model')])
         ids = []
         for mod in self.pool.get('ir.model.data').browse(self.cr, self.uid, ids2):
             ids.append(mod.res_id)
@@ -78,9 +82,8 @@ class ir_module_reference_print(report_sxw.rml_parse):
         return res
 
 report_sxw.report_sxw('report.ir.module.vauxoo', 'ir.module.module',
-        'addons/deliver_project/report/ir_module_reference.rml',
-        parser=ir_module_reference_print, header=False)
+                      'addons/deliver_project/report/ir_module_reference.rml',
+                      parser=ir_module_reference_print, header=False)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
