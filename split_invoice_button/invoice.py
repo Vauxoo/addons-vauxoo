@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: nhomar@openerp.com.ve,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -27,6 +27,7 @@ from osv import fields
 from tools.translate import _
 import netsvc
 
+
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
@@ -44,17 +45,22 @@ class account_invoice(osv.osv):
         if not invoice_ids:
             raise osv.except_osv(_('Error'), _('No Invoices were created'))
         if inv_type == "out_invoice":
-            action_model,action_id = data_pool.get_object_reference(cr, uid, 'account', "action_invoice_tree1")
+            action_model, action_id = data_pool.get_object_reference(
+                cr, uid, 'account', "action_invoice_tree1")
         elif inv_type == "in_invoice":
-            action_model,action_id = data_pool.get_object_reference(cr, uid, 'account', "action_invoice_tree2")
+            action_model, action_id = data_pool.get_object_reference(
+                cr, uid, 'account', "action_invoice_tree2")
         elif inv_type == "out_refund":
-            action_model,action_id = data_pool.get_object_reference(cr, uid, 'account', "action_invoice_tree3")
+            action_model, action_id = data_pool.get_object_reference(
+                cr, uid, 'account', "action_invoice_tree3")
         elif inv_type == "in_refund":
-            action_model,action_id = data_pool.get_object_reference(cr, uid, 'account', "action_invoice_tree4")
+            action_model, action_id = data_pool.get_object_reference(
+                cr, uid, 'account', "action_invoice_tree4")
         if action_model:
             action_pool = self.pool.get(action_model)
             action = action_pool.read(cr, uid, action_id, context=context)
-            action['domain'] = "[('id','in', ["+','.join(map(str,invoice_ids))+"])]"
+            action['domain'] = "[('id','in', ["+','.join(
+                map(str, invoice_ids))+"])]"
             action.update({'nodestroy': True})
         return action
 
