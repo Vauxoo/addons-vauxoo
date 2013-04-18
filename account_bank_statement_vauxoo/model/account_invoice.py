@@ -20,10 +20,9 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+from openerp.osv import fields, osv
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
     """
     account_invoice
     """
@@ -56,4 +55,3 @@ class account_invoice(osv.osv):
         bsl_obj.button_cancel(cr, uid, res, context=context)
         return True
 
-account_invoice()

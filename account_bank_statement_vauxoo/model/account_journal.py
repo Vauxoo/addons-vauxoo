@@ -20,13 +20,13 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 import logging
 
-class account_journal(osv.osv):
+class account_journal(osv.Model):
     _inherit = 'account.journal'
     _columns = {
         'default_interim_account_id':fields.many2one('account.account','Interim Account',
@@ -47,9 +47,8 @@ in this field you configure this account."""),
             True: One Per Line False: One Per bank statement"""),
     }
 
-account_journal()
 
-class account_journal_bs_config(osv.osv):
+class account_journal_bs_config(osv.Model):
     _name='account.journal.bs.config'
     _order='sequence asc'
     logger = netsvc.Logger()

@@ -20,11 +20,11 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
+from openerp.osv import fields, osv
 import decimal_precision as dp
-import netsvc
-from tools.translate import _
+import openerp.netsvc as netsvc
+from openerp.tools.translate import _
+
 #Excel Stuff
 import xlrd
 import xlwt
@@ -33,7 +33,7 @@ from tempfile import NamedTemporaryFile
 from datetime import date, datetime, timedelta
 
 
-class account_bank_statement(osv.osv):
+class account_bank_statement(osv.Model):
     _inherit = 'account.bank.statement'
 
     def _fromto(self,cr,uid,ids,field,arg,context=None):
@@ -303,9 +303,8 @@ class account_bank_statement(osv.osv):
         file_xls_brw=att_obj.browse(cr,uid,file_xls_ids, context=context)
         return True
 
-account_bank_statement()
 
-class bank_statement_imported_lines(osv.osv):
+class bank_statement_imported_lines(osv.Model):
     """
     OpenERP Model : ClassName
     """
@@ -567,12 +566,10 @@ class bank_statement_imported_lines(osv.osv):
                 account_move.button_validate(cr,uid,[abs_brw.move_id and abs_brw.move_id.id ],context=context)
         return {}
 
-bank_statement_imported_lines()
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
 
     _inherit='account.move.line'
     _columns = {
             'stff_id':fields.many2one('bank.statement.imported.lines','Statement from File line'),
             }
-account_move_line()
