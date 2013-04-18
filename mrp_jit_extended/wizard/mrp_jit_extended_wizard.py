@@ -23,12 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
-import netsvc
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 
 
-class procurement_order_merge_jit_extended(osv.osv_memory):
+class procurement_order_merge_jit_extended(osv.TransientModel):
     _name = 'procurement.order.merge.jit.extended'
     _columns = {
         'date_planned': fields.datetime('Scheduled date', select=1),
@@ -88,4 +89,3 @@ class procurement_order_merge_jit_extended(osv.osv_memory):
             self.procurement_merge_jit(cr, uid, ids, context, new_ids)
         return {}
 
-procurement_order_merge_jit_extended()
