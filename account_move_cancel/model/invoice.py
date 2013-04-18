@@ -55,4 +55,3 @@ class account_invoice(osv.Model):
         return True
 
 
-account_invoice()

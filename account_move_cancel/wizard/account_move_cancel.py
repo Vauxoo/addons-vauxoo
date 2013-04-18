@@ -132,7 +132,6 @@ class account_move_cancel(osv.TransientModel):
         return True
 
 
-account_move_cancel()
 
 
 
