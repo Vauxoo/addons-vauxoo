@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    author.name@company.com
 #
@@ -24,15 +24,16 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+
 class payment_method(osv.osv):
     """
     payment_method
     """
-    
+
     _name = 'payment.method'
-    
+
     _columns = {
-        'name':fields.char('Payment method', size=64, required=False, translate=True),
-        }
+        'name': fields.char('Payment method', size=64, required=False, translate=True),
+    }
 
 payment_method()
