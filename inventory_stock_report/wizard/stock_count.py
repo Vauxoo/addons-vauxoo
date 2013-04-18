@@ -23,9 +23,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 
 ESTADO = [('desarrollo', 'En Desarrollo'),
           ('produccion', 'En Produccion'),
@@ -42,7 +43,7 @@ SUMINISTRO = [('comprar', 'Comprar'),
               ]
 
 
-class stock_count(osv.osv_memory):
+class stock_count(osv.TransientModel):
     """
     Conteo del Stock
     """
@@ -58,6 +59,5 @@ class stock_count(osv.osv_memory):
     }
 
 
-stock_count()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
