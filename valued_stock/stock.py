@@ -22,14 +22,14 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import time
 import decimal_precision as dp
 
 
-class stock_inventory_line(osv.osv):
+class stock_inventory_line(osv.Model):
     _inherit = 'stock.inventory.line'
     '''
 
@@ -77,7 +77,6 @@ class stock_inventory_line(osv.osv):
         costo = costo * inv_brw.product_qty * inv_brw.product_uom.factor_inv * inv_brw.product_id.uom_id.factor
         return costo
 
-stock_inventory_line()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
