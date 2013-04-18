@@ -25,6 +25,7 @@
 ##############################################################################
 from osv import osv, fields
 
+
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
     _columns = {
@@ -32,6 +33,6 @@ class stock_picking(osv.osv):
             ("invoiced", "Invoiced"),
             ("2binvoiced", "To Be Invoiced"),
             ("none", "Not Applicable")], "Invoice Control",
-            select=True, required=True, readonly=False),#, states={'draft': [('readonly', False)]}),
+            select=True, required=True, readonly=False),  # , states={'draft': [('readonly', False)]}),
     }
 stock_picking()
