@@ -23,13 +23,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 from datetime import datetime
-import netsvc
+import openerp.netsvc as netsvc
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = "mrp.production"
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -50,4 +51,3 @@ class mrp_production(osv.osv):
                                        x.id for x in production.move_created_ids2])
         return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
 
-mrp_production()
