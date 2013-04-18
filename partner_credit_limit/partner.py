@@ -22,18 +22,18 @@
 ##############################################################################
 
 import time
-import netsvc
-from osv import fields, osv
+import openerp.netsvc as netsvc
+from openerp.osv import osv, fields
 from mx import DateTime
 from tools import config
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class res_partner(osv.osv):
+
+class res_partner(osv.Model):
     _inherit = 'res.partner'
     _columns = {
         'over_credit': fields.boolean('Allow Over Credit?', required=False),
         'maturity_over_credit': fields.boolean('Allow Maturity Over Credit?', required=False),
         'credit_maturity_limit': fields.float(string='Credit Maturity Limit'),
     }
-res_partner()

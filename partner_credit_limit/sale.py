@@ -22,14 +22,15 @@
 ##############################################################################
 
 import time
-import netsvc
-from osv import fields, osv
+import openerp.netsvc as netsvc
+from openerp.osv import osv, fields
 from mx import DateTime
 from tools import config
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class sale_order(osv.osv):
+
+class sale_order(osv.Model):
     _inherit = "sale.order"
 
     def check_limit(self, cr, uid, ids, context={}):
@@ -84,4 +85,3 @@ class sale_order(osv.osv):
         else:
 
             return True
-sale_order()
