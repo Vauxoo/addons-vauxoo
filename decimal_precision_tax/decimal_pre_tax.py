@@ -23,19 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 import time
 import datetime
 import decimal_precision as dp
 
 
-class account_tax(osv.osv):
+class account_tax(osv.Model):
 
     _inherit = "account.tax"
     _columns = {
         'amount': fields.float('Amount', digits_compute=dp.get_precision('Tax'), required=True, help="For taxes of type percentage, enter % ratio between 0-1."),
     }
-account_tax()
