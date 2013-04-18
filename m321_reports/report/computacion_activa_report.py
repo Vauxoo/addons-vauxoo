@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Maria Gabriela Quilarque  <gabrielaquilarque97@gmail.com>   #
 #    Planified by: Nhomar Hernandez                                        #
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve            #
@@ -27,6 +27,7 @@ import pooler
 from report import report_sxw
 from tools.translate import _
 
+
 class m321_ca_report(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
@@ -38,29 +39,29 @@ class m321_ca_report(report_sxw.rml_parse):
             'get_wh': self._get_wh,
         })
 
-    def _get_date(self,obj,aux):
-        aux2= obj.date_invoice
-        DMY=str(aux2)
-        res= DMY.split('/')
+    def _get_date(self, obj, aux):
+        aux2 = obj.date_invoice
+        DMY = str(aux2)
+        res = DMY.split('/')
         if aux == 0:
             return res[0]
         if aux == 1:
             return res[1]
         if aux == 2:
             return res[2][0:4]
-            
-    def _get_wh(self,obj):
+
+    def _get_wh(self, obj):
         wh_ids = obj.tax_line
-        aux=[]
+        aux = []
         for wh in wh_ids:
             aux.append(wh.tax_id.amount*100)
         return aux[0]
 
 report_sxw.report_sxw(
-  'report.m321_reports.m321_ca_report',
-  'account.invoice',
-  'addons/m321_reports/report/computacion_activa_report.rml',
-  parser=m321_ca_report
+    'report.m321_reports.m321_ca_report',
+    'account.invoice',
+    'addons/m321_reports/report/computacion_activa_report.rml',
+    parser=m321_ca_report
 )
   # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
   # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner
