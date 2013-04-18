@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
@@ -21,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
@@ -34,30 +34,29 @@ class stock_inventory_line(osv.Model):
     '''
 
     '''
-    def _get_cost(self,cr,uid,ids,name,args,context={}):
+    def _get_cost(self, cr, uid, ids, name, args, context={}):
         res = {}
         for id in ids:
-            res[id]=self.compute_cost(cr,uid,[id])
+            res[id] = self.compute_cost(cr, uid, [id])
         return res
 
     _columns = {
-        'cost': fields.function(_get_cost,method=True,digits_compute=dp.get_precision('Account'),string='Costo'),
+        'cost': fields.function(_get_cost, method=True, digits_compute=dp.get_precision('Account'), string='Costo'),
     }
 
-
     def search_date_desc(self, cr, uid, ids, product_id, date):
-        cr.execute('SELECT price FROM product_historic_cost ' \
-                    'WHERE product_id=%s AND name <= %s ORDER BY name desc LIMIT 1', (product_id, date))
+        cr.execute('SELECT price FROM product_historic_cost '
+                   'WHERE product_id=%s AND name <= %s ORDER BY name desc LIMIT 1', (product_id, date))
         res = [x[0] for x in cr.fetchall()]
         if not res:
             res = 0.0
         else:
             res = res[0]
         return res
-        
+
     def search_date_asc(self, cr, uid, ids, product_id, date):
-        cr.execute('SELECT price FROM product_historic_cost ' \
-                    'WHERE product_id=%s AND name > %s ORDER BY name asc LIMIT 1', (product_id, date))
+        cr.execute('SELECT price FROM product_historic_cost '
+                   'WHERE product_id=%s AND name > %s ORDER BY name asc LIMIT 1', (product_id, date))
         res = [x[0] for x in cr.fetchall()]
         if not res:
             res = 0.0
@@ -65,19 +64,20 @@ class stock_inventory_line(osv.Model):
             res = res[0]
         return res
 
-
-    def compute_cost(self,cr,uid,ids,*args):
+    def compute_cost(self, cr, uid, ids, *args):
         prod_obj = self.pool.get('product.product')
-        costo= 0.0
+        costo = 0.0
         inv_brw = self.browse(cr, uid, ids, context=None)[0]
-        date  = inv_brw.inventory_id.date
-        costo = self.search_date_desc(cr,uid,ids,inv_brw.product_id.id,date)
+        date = inv_brw.inventory_id.date
+        costo = self.search_date_desc(
+            cr, uid, ids, inv_brw.product_id.id, date)
         if not costo:
-            costo = self.search_date_asc(cr,uid,ids,inv_brw.product_id.id,date)
-        costo = costo * inv_brw.product_qty * inv_brw.product_uom.factor_inv * inv_brw.product_id.uom_id.factor
+            costo = self.search_date_asc(
+                cr, uid, ids, inv_brw.product_id.id, date)
+        costo = costo * inv_brw.product_qty * \
+            inv_brw.product_uom.factor_inv * inv_brw.product_id.uom_id.factor
         return costo
 
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
