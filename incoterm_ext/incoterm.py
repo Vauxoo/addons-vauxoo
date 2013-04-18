@@ -19,12 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class stock_incoterms(osv.osv):
+
+class stock_incoterms(osv.Model):
     """
     stock_incoterm
     """
@@ -33,4 +33,3 @@ class stock_incoterms(osv.osv):
     _columns = {
         'description': fields.text('Description', help='Formal description for this incoterm.'),
     }
-stock_incoterms()
