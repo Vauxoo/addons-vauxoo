@@ -23,13 +23,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
-import netsvc
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 import time
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def action_finish(self, cr, uid, ids, context={}):
@@ -149,10 +150,9 @@ class mrp_production(osv.osv):
   #      self.action_finish(cr, uid, ids)
    #     return res
 
-mrp_production()
 
 
-class stock_move(osv.osv):
+class stock_move(osv.Model):
     _inherit = 'stock.move'
 
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
@@ -163,4 +163,3 @@ class stock_move(osv.osv):
                 move.product_id and move.product_id.name or '')
         return res
 
-stock_move()
