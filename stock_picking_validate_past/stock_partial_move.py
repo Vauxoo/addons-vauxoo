@@ -25,18 +25,20 @@
 ##############################################################################
 from osv import fields, osv
 
+
 class stock_partial_move(osv.osv_memory):
     _inherit = "stock.partial.move"
-    
+
     def do_partial(self, cr, uid, ids, context=None):
-        res=super(stock_partial_move,self).do_partial(cr, uid, ids, context=context)
-        stock_move_obj=self.pool.get('stock.move')
-        ids_validate=context.get('active_ids')
+        res = super(stock_partial_move, self).do_partial(
+            cr, uid, ids, context=context)
+        stock_move_obj = self.pool.get('stock.move')
+        ids_validate = context.get('active_ids')
         for id_move in ids_validate:
-            move=stock_move_obj.browse(cr,uid,id_move)
-            type_pross_date=move.type_process_date
-            date_expect=move.date_expected
-            if type_pross_date=='planned_date':
+            move = stock_move_obj.browse(cr, uid, id_move)
+            type_pross_date = move.type_process_date
+            date_expect = move.date_expected
+            if type_pross_date == 'planned_date':
                 stock_move_obj.write(cr, uid, id_move, {'date': date_expect})
-        
+
         return res
