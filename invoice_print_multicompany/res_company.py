@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: author NAME LASTNAME <email@openerp.com.ve>                 #
 #    Planified by: Nhomar Hernandez                                        #
 #    Finance by: COMPANY NAME <EMAIL-COMPANY>                              #
@@ -27,13 +27,14 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+
 class invoice_multicompany_report(osv.osv):
-  """
-  invoice_multicompany_report
-  """
-  
-  _inherit = 'res.company'
-  _columns = {
-    'invoice_report_id':fields.many2one('ir.actions.report.xml', 'Invoice Report', required=False, domain="[('model','=','account.invoice')]"),
-  }
+    """
+    invoice_multicompany_report
+    """
+
+    _inherit = 'res.company'
+    _columns = {
+        'invoice_report_id': fields.many2one('ir.actions.report.xml', 'Invoice Report', required=False, domain="[('model','=','account.invoice')]"),
+    }
 invoice_multicompany_report()
