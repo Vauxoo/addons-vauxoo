@@ -95,4 +95,3 @@ class picking_from_invoice(osv.TransientModel):
                     })
 
         return {'type': 'ir.actions.act_window_close'}
-
