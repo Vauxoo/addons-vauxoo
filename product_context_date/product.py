@@ -23,6 +23,7 @@ from osv import fields, osv
 from tools.translate import _
 import decimal_precision as dp
 
+
 class product_product(osv.osv):
     _inherit = "product.product"
     _columns = {
