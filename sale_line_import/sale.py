@@ -35,63 +35,68 @@ import tools
 
 
 class sale_order(osv.osv):
-    _inherit='sale.order'
-    
+    _inherit = 'sale.order'
+
     def import_data_line(self, cr, uid, ids, fdata, favalidate, context={}):
-        order=self.pool.get('sale.order').browse(cr,uid,ids)
-        input=cStringIO.StringIO(fdata)
+        order = self.pool.get('sale.order').browse(cr, uid, ids)
+        input = cStringIO.StringIO(fdata)
         input.seek(0)
         data = list(csv.reader(input, quotechar='"' or '"', delimiter=','))
         data[0].append('order_id.id')
         try:
-            list_prod=data[0].index('product_id')
-        except: 
-            list_prod=[]
-        msg=''
-        pmsg=''
-        not_products=[]
-        new_products_prices=[]
+            list_prod = data[0].index('product_id')
+        except:
+            list_prod = []
+        msg = ''
+        pmsg = ''
+        not_products = []
+        new_products_prices = []
         for dat in data[1:]:
-            datas=[]
-            data2=list(data[0])
+            datas = []
+            data2 = list(data[0])
             dat.append(ids)
             try:
-                prod_name=dat[list_prod]
+                prod_name = dat[list_prod]
             except:
-                prod_name=False
-            context.update({'partner_id':order.partner_id.id})
-            prod_name_search=prod_name and self.pool.get('product.product').name_search(cr,uid,prod_name,context=context) or False
+                prod_name = False
+            context.update({'partner_id': order.partner_id.id})
+            prod_name_search = prod_name and self.pool.get(
+                'product.product').name_search(cr, uid, prod_name, context=context) or False
             prod_id = prod_name_search and prod_name_search[0][0] or False
-            lines=prod_id and self.pool.get('sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id,prod_id,
-                                        qty=0,uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
-                                        lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value',False) or {}
+            lines = prod_id and self.pool.get(
+                'sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id, prod_id,
+                                                     qty=0, uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
+                                                     lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value', False) or {}
             if not lines and prod_name:
                 not_products.append(prod_name)
             if not prod_name:
-                self.pool.get('sale.order.line').import_data(cr, uid, data2, [dat], 'init', '')
+                self.pool.get('sale.order.line').import_data(
+                    cr, uid, data2, [dat], 'init', '')
             for lin in range(len(lines.keys())):
                 if lines.keys()[lin] not in data[0]:
-                    if lines.keys()[lin] in ('tax_id','product_uom','product_packaging'):
-                        field_val=str(lines.keys()[lin])
-                        field_val=field_val+'.id'
+                    if lines.keys()[lin] in ('tax_id', 'product_uom', 'product_packaging'):
+                        field_val = str(lines.keys()[lin])
+                        field_val = field_val+'.id'
                         data2.append(field_val)
-                        vals_many =str( lines[lines.keys()[lin]] ).replace('[','').replace(']','').replace('False','')
-                        dat.append( vals_many )
+                        vals_many = str(lines[lines.keys()[lin]]).replace(
+                            '[', '').replace(']', '').replace('False', '')
+                        dat.append(vals_many)
                     else:
                         data2.append(lines.keys()[lin])
                         dat.append(lines[lines.keys()[lin]])
                 else:
-                    val_str=dat[data[0].index(lines.keys()[lin])]
-                    val_str_2=lines[lines.keys()[lin]]
-                    if lines.keys()[lin]=='product_uom':
-                        val_str_2=self.pool.get('product.uom').browse(cr,uid,val_str_2).name
-                        val_str=dat[data[0].index(lines.keys()[lin])]
-                    if lines.keys()[lin]=='price_unit':
-                        product_price=[]
+                    val_str = dat[data[0].index(lines.keys()[lin])]
+                    val_str_2 = lines[lines.keys()[lin]]
+                    if lines.keys()[lin] == 'product_uom':
+                        val_str_2 = self.pool.get(
+                            'product.uom').browse(cr, uid, val_str_2).name
+                        val_str = dat[data[0].index(lines.keys()[lin])]
+                    if lines.keys()[lin] == 'price_unit':
+                        product_price = []
                         product_price.append(prod_name)
-                        val_str=float(dat[data[0].index(lines.keys()[lin])])
-                        val_str_2=float(lines[lines.keys()[lin]])
-                        if tools.ustr(val_str) <> tools.ustr(val_str_2):
+                        val_str = float(dat[data[0].index(lines.keys()[lin])])
+                        val_str_2 = float(lines[lines.keys()[lin]])
+                        if tools.ustr(val_str) != tools.ustr(val_str_2):
                             product_price.append(val_str)
                             product_price.append(val_str_2)
                             new_products_prices.append(product_price)
@@ -100,35 +105,40 @@ class sale_order(osv.osv):
                         val_str_2 = float(val_str_2)
                     except:
                         pass
-                    if val_str <> val_str_2:
-                        if not lines.keys()[lin]=='price_unit':
-                            pmsg+=_('%s , Field: %s, CSV: %s, OPEN: %s \n') % (tools.ustr(prod_name),lines.keys()[lin],tools.ustr(dat[data[0].index(lines.keys()[lin])]),tools.ustr(val_str_2))
+                    if val_str != val_str_2:
+                        if not lines.keys()[lin] == 'price_unit':
+                            pmsg += _('%s , Field: %s, CSV: %s, OPEN: %s \n') % (tools.ustr(prod_name), lines.keys()[
+                                                                                 lin], tools.ustr(dat[data[0].index(lines.keys()[lin])]), tools.ustr(val_str_2))
                         if favalidate:
                             dat[data[0].index(lines.keys()[lin])] = val_str_2
                         else:
-                            dat[data[0].index(lines.keys()[lin])] = val_str or val_str_2
+                            dat[data[0].index(lines.keys()[
+                                              lin])] = val_str or val_str_2
             datas.append(dat)
             try:
-                lines and self.pool.get('sale.order.line').import_data(cr, uid, data2, datas, 'init', '',context=context) or False
+                lines and self.pool.get('sale.order.line').import_data(
+                    cr, uid, data2, datas, 'init', '', context=context) or False
             except Exception, e:
                 return False
-            data2=[]
-        
-        msg+=_('Do not you find reference:')
-        msg+='\n'
+            data2 = []
+
+        msg += _('Do not you find reference:')
+        msg += '\n'
         for p in not_products:
-            msg+='%s \n'% (tools.ustr(p))
-        msg+='\n'
-        msg+=_('Warning of price difference, CSV VS System in the following products:')
-        msg+='\n'
+            msg += '%s \n' % (tools.ustr(p))
+        msg += '\n'
+        msg += _(
+            'Warning of price difference, CSV VS System in the following products:')
+        msg += '\n'
         for p in new_products_prices:
-            p2=(','.join(map(str,p)))
-            msg+='%s \n'%(p2)
-        msg+='\n'
-        msg+=_('Warning differences in other fields, CSV VS System in the following products and fields:')
-        msg+='\n %s '%(pmsg)
-        msg2=tools.ustr(pmsg)
-        msg=tools.ustr(msg)+'%s '%(msg2)
+            p2 = (','.join(map(str, p)))
+            msg += '%s \n' % (p2)
+        msg += '\n'
+        msg += _(
+            'Warning differences in other fields, CSV VS System in the following products and fields:')
+        msg += '\n %s ' % (pmsg)
+        msg2 = tools.ustr(pmsg)
+        msg = tools.ustr(msg)+'%s ' % (msg2)
         return msg
-        
+
 sale_order()
