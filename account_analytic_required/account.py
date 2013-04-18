@@ -27,14 +27,12 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class account_account(osv.Model):
     _inherit = 'account.account'
 
     _columns = {
         'analytic_required': fields.boolean('Analytic Required'),
     }
-
 
 
 class account_move(osv.Model):
