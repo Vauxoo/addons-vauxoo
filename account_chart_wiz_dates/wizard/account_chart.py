@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
+from openerp.osv import osv, fields
 import time
 
 
-class account_chart(osv.osv_memory):
+class account_chart(osv.TransientModel):
     _inherit = "account.chart"
 
     _columns = {
