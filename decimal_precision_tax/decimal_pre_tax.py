@@ -31,17 +31,11 @@ import time
 import datetime
 import decimal_precision as dp
 
+
 class account_tax(osv.osv):
 
     _inherit = "account.tax"
-    _columns= {
-        'amount': fields.float('Amount', digits_compute= dp.get_precision('Tax'), required=True, help="For taxes of type percentage, enter % ratio between 0-1."),
+    _columns = {
+        'amount': fields.float('Amount', digits_compute=dp.get_precision('Tax'), required=True, help="For taxes of type percentage, enter % ratio between 0-1."),
     }
 account_tax()
-
-
-
-
-
-
-
