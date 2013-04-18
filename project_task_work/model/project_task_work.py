@@ -24,11 +24,12 @@
 ##########################################################################
 
 import time
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class project_task(osv.osv):
+
+class project_task(osv.Model):
     _inherit = 'project.task'
 
     def _get_issue(self, cr, uid, ids, fieldname, arg, context=None):
@@ -61,10 +62,9 @@ class project_task(osv.osv):
                 'project.task': (lambda self, cr, uid, ids, c={}: ids, [], 45),
             }),
     }
-project_task()
 
 
-class project_task_work(osv.osv):
+class project_task_work(osv.Model):
     _inherit = 'project.task.work'
 
     def _get_project(self, cr, uid, ids, fieldname, arg, context=None):
@@ -181,4 +181,3 @@ class project_task_work(osv.osv):
         'state': 'draft',
     }
 
-project_task_work()
