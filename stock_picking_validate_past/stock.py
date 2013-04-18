@@ -23,11 +23,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
+from openerp.osv import osv, fields
 from lxml import etree
 
 
-class stock_move(osv.osv):
+class stock_move(osv.Model):
     _inherit = "stock.move"
 
     _columns = {
