@@ -23,10 +23,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def _product_produced(self, cr, uid, ids, field, args, context=None):
@@ -76,4 +76,3 @@ class mrp_production(osv.osv):
         'product_produced': fields.function(_product_produced, method=True, type="float", string='Total Produced'),
         'product_in_stock': fields.function(_product_in_stock, method=True, type="float", string='Total In Stock'),
     }
-mrp_production()
