@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Maria Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -28,13 +28,13 @@ from osv import fields
 from tools.translate import _
 from tools import config
 
+
 class res_company(osv.osv):
     _name = 'res.company'
     _inherit = 'res.company'
 
     _columns = {
-        'header_report':fields.text('Report Header', size=1024, help='Set the header to place the report when it is not suitable for print',),
+        'header_report': fields.text('Report Header', size=1024, help='Set the header to place the report when it is not suitable for print',),
     }
 
 res_company()
-
