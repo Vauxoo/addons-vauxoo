@@ -22,12 +22,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 import pooler
 import time
 
 
-class wizard_price_list_sequence_report(osv.osv_memory):
+class wizard_price_list_sequence_report(osv.TransientModel):
     _name = "wizard.project.issue.report"
 
     _columns = {
@@ -48,4 +48,3 @@ class wizard_price_list_sequence_report(osv.osv_memory):
             'datas': datas
         }
 
-wizard_price_list_sequence_report()
