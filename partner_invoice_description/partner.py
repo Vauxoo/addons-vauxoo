@@ -25,10 +25,11 @@
 ##############################################################################
 from osv import osv, fields
 
+
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     _columns = {
-        'description_invoice':  fields.text('Description Invoice',translate=True),
+        'description_invoice':  fields.text('Description Invoice', translate=True),
     }
 
 res_partner()
