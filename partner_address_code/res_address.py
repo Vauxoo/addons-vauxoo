@@ -24,10 +24,10 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class res_partner_address(osv.osv):
+class res_partner_address(osv.Model):
     _inherit = 'res.partner.address'
     _columns = {
         'code': fields.char('Code', size=64, help='En caso de que la dirección sea de una sucursal, se puede agregar el código de ésta.')
@@ -49,4 +49,3 @@ class res_partner_address(osv.osv):
         ids = list(ids)
         result = self.name_get(cr, user, ids, context=context)
         return result
-res_partner_address()
