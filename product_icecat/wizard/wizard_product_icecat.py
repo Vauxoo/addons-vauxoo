@@ -20,8 +20,9 @@
 #
 ##########################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 
 import os
 import re
@@ -33,7 +34,7 @@ from urllib2 import Request, urlopen, URLError, HTTPError
 from ftplib import FTP
 
 
-class product_icecat_wizard(osv.osv_memory):
+class product_icecat_wizard(osv.TransientModel):
     _name = 'product.icecat.wizard'
 
     _columns = {
@@ -420,4 +421,3 @@ class product_icecat_wizard(osv.osv_memory):
 
         return True
 
-product_icecat_wizard()

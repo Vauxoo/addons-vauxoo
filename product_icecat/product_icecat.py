@@ -20,21 +20,21 @@
 #
 ##########################################################################
 
-from osv import osv, fields
-from tools.translate import _
-import netsvc
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 
 from ftplib import FTP
 import os
 
 
-class product_icecat(osv.osv):
+class product_icecat(osv.Model):
     _name = "product.icecat"
 
-product_icecat()
 
 
-class product_icecat_mapline(osv.osv):
+class product_icecat_mapline(osv.Model):
     _name = "product.icecat.mapline"
     _description = "Icecat Mapline Configuration"
 
@@ -49,10 +49,9 @@ class product_icecat_mapline(osv.osv):
         'model_id': lambda self, cr, uid, c: self.pool.get('ir.model').search(cr, uid, [('model', '=', 'product.product')])[0],
     }
 
-product_icecat_mapline()
 
 
-class product_icecat(osv.osv):
+class product_icecat(osv.Model):
     _name = "product.icecat"
     _description = "Icecat Configuration"
 
@@ -105,4 +104,3 @@ class product_icecat(osv.osv):
                     'They are other icecat configuration with "Active" field checked. Only one configuration is avaible for active field.'))
         return super(product_icecat, self).create(cr, uid, vals, context)
 
-product_icecat()
