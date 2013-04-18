@@ -23,16 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 
 
-class ledger_report(osv.osv_memory):
+class ledger_report(osv.TransientModel):
     _inherit = "account.report.general.ledger"
     _name = "ledger.report"
     _columns = {
@@ -59,4 +60,3 @@ class ledger_report(osv.osv_memory):
         return res
 
 
-ledger_report()
