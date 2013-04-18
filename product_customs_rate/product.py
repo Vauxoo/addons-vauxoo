@@ -23,11 +23,12 @@
 
 from osv import osv, fields
 
+
 class product_template(osv.osv):
     _name = 'product.template'
     _inherit = 'product.template'
     _columns = {
-        'customs_rate_id' : fields.many2one('product.customs.rate','Customs Rate',domain=[('type','=','normal')]),
+        'customs_rate_id': fields.many2one('product.customs.rate', 'Customs Rate', domain=[('type', '=', 'normal')]),
     }
 
 product_template()
