@@ -30,32 +30,15 @@ from openerp.tools.translate import _
 
 
 class account_move_group(osv.TransientModel):
-    _name='account.move.group'
-    
+    _name = 'account.move.group'
+
     def move_group(self, cr, uid, ids, context=None):
         account_move_line = self.pool.get('account.move.line')
         if context is None:
             context = {}
         move_ids = context.get('active_ids', [])
-        account_move_line._create_move_group(cr, uid, move_ids, context=context)
+        account_move_line._create_move_group(
+            cr, uid, move_ids, context=context)
         return {}
-    
+
 account_move_group()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

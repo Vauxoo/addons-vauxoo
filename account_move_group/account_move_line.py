@@ -29,23 +29,24 @@ from openerp.tools.translate import _
 import openerp.netsvc as netsvc
 import time
 
+
 class account_move_line(osv.Model):
     _inherit = 'account.move.line'
-    
+
     def _create_move_group(self, cr, uid, ids, context=None):
         account_move = self.pool.get('account.move')
         account_move_line = self.pool.get('account.move.line')
-        
+
         res_journal = {}
         res_period = {}
         res_reference = {}
         moves = []
         moves_line = []
         ok = False
-        
+
         for move in account_move.browse(cr, uid, ids, context=context):
             moves.append(move.id)
-            if move.state <> 'draft':
+            if move.state != 'draft':
                 account_move.button_cancel(cr, uid, [move.id], context=context)
 #                ok = True
             for mov in move.line_id:
@@ -53,52 +54,29 @@ class account_move_line(osv.Model):
                 res_journal.setdefault(mov.journal_id.id, 0)
                 res_period.setdefault(mov.period_id.id, 0)
                 moves_line.append(mov.id)
-                
-        if len(moves) <= 1: 
-            raise osv.except_osv(_('Error'), _('You need at least two entries to merged') )
-        
+
+        if len(moves) <= 1:
+            raise osv.except_osv(_('Error'), _(
+                'You need at least two entries to merged'))
+
 #        if ok == True:
- #           raise osv.except_osv(_('Error'), _('Entries must be in state draft') )
-        
+ # raise osv.except_osv(_('Error'), _('Entries must be in state draft') )
+
         if len(res_journal) > 1:
-            raise osv.except_osv(_('Error'), _('Entries to merged must have the same journal') )
-        
+            raise osv.except_osv(_('Error'), _(
+                'Entries to merged must have the same journal'))
+
         if len(res_period) > 1:
-            raise osv.except_osv(_('Error'), _('Entries to merged must have the same period') )
+            raise osv.except_osv(_('Error'), _(
+                'Entries to merged must have the same period'))
         else:
             reference = ','.join(lin for lin in res_reference.keys())
             move_id = account_move.create(cr, uid, {
-                        'journal_id': res_journal.keys()[0],
-                        'ref': reference
-                        })
-            account_move_line.write(cr, uid, moves_line, {'move_id':move_id})
+                'journal_id': res_journal.keys()[0],
+                'ref': reference
+            })
+            account_move_line.write(cr, uid, moves_line, {'move_id': move_id})
             account_move.unlink(cr, uid, ids)
         return move_id
 
 account_move_line()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
