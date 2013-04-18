@@ -21,11 +21,11 @@
 #
 ##############################################################################
 
-from osv import osv
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class account_invoice_line(osv.osv):
+
+class account_invoice_line(osv.Model):
     _inherit = "account.invoice.line"
 
     def move_line_get(self, cr, uid, invoice_id, context=None):
@@ -62,5 +62,4 @@ class account_invoice_line(osv.osv):
         print "res", res
         return res
 
-account_invoice_line()
   # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
