@@ -26,14 +26,15 @@
 ##############################################################################
 
 import time
-import netsvc
-from osv import fields, osv
+import openerp.netsvc as netsvc
+from openerp.osv import osv, fields
 from mx import DateTime
 from tools import config
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = "account.invoice"
 
     def check_limit_credit(self, cr, uid, ids, context={}):
@@ -84,4 +85,3 @@ class account_invoice(osv.osv):
                 return True
         else:
             return True
-account_invoice()
