@@ -34,83 +34,74 @@ class inherited_stock(osv.osv):
     """
     M321 Customizations for product.picking model
     """
-    
+
     _inherit = 'stock.picking'
 
-    def default_get(self,cr,uid,fields,context=None):
+    def default_get(self, cr, uid, fields, context=None):
         if context is None:
             context = {}
-        print "cr",cr
-        
-        res = super(inherited_stock,self).default_get(cr,uid,fields,context=context)
+        print "cr", cr
+
+        res = super(inherited_stock, self).default_get(
+            cr, uid, fields, context=context)
         #~ res.update({'total_sale':'noooo'})
         return res
-    
-    
-    def _order_total(self,cr,uid,ids,name,arg,context=None):
-        
+
+    def _order_total(self, cr, uid, ids, name, arg, context=None):
+
         if context is None:
             context = {}
-        
+
         if not len(ids):
             return {}
         res = {}
-        picking_brw = self.browse(cr,uid,ids,context=context)
+        picking_brw = self.browse(cr, uid, ids, context=context)
         if hasattr(picking_brw[0], "sale_id"):
-            for picking in picking_brw: 
+            for picking in picking_brw:
                 total = picking.sale_id and picking.sale_id.amount_total or 0
-                res[picking.id] = total 
-        
+                res[picking.id] = total
+
         return res
 
     _columns = {
-            'pay_state': fields.selection([('paynot','Not Payed'),('2bpay','To pay'),('payed','Payed')],"Pay Control", help="The pay state for this picking"),
-            'total_sale':fields.function(_order_total,method=True, type='float',string='Total Sale'),
-            'sales_incoterm':fields.related('sale_id','incoterm',relation='stock.incoterms',type='many2one',string='Incoterm',readonly=True),
-        }
-   
+        'pay_state': fields.selection([('paynot', 'Not Payed'), ('2bpay', 'To pay'), ('payed', 'Payed')], "Pay Control", help="The pay state for this picking"),
+        'total_sale': fields.function(_order_total, method=True, type='float', string='Total Sale'),
+        'sales_incoterm': fields.related('sale_id', 'incoterm', relation='stock.incoterms', type='many2one', string='Incoterm', readonly=True),
+    }
+
     _defaults = {
-            'pay_state':'paynot',
-            
-            }
-            
-    def change_state(self,cr,uid,ids,context=None):
+        'pay_state': 'paynot',
+
+    }
+
+    def change_state(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        picking_brw = self.browse(cr,uid,ids,context=context) and self.browse(cr,uid,ids,context=context)[0]
+        picking_brw = self.browse(cr, uid, ids, context=context) and self.browse(
+            cr, uid, ids, context=context)[0]
         #~ print tuple([(i.product_id.name, i.product_qty) for i in picking_brw.move_lines if i.state != 'done' ])
-        if all([False for i in picking_brw.move_lines if i.state == 'confirmed' ]):
-            self.write(cr,uid,ids,{'pay_state':'payed'},context=context)
+        if all([False for i in picking_brw.move_lines if i.state == 'confirmed']):
+            self.write(cr, uid, ids, {'pay_state': 'payed'}, context=context)
         else:
-            e = '\n'.join(['The product %s with quantity %s is not available.' %(i.product_id.name, i.product_qty) for i in picking_brw.move_lines if i.state == 'confirmed' ])
-            raise osv.except_osv(_('Want to pay this without picking the availability of these products?'), _(e))
-            
-            
+            e = '\n'.join(['The product %s with quantity %s is not available.' % (
+                i.product_id.name, i.product_qty) for i in picking_brw.move_lines if i.state == 'confirmed'])
+            raise osv.except_osv(_(
+                'Want to pay this without picking the availability of these products?'), _(e))
+
         return True
-        
+
 inherited_stock()
 
 
-
 class stock_move(osv.osv):
-    
-    
+
     _inherit = 'stock.move'
     _columns = {
-        'id_sale':fields.many2one('sale.order','Sale Order'),
-        'product_upc':fields.related('product_id','upc',type='char',string='UPC'),
-        'product_ean13':fields.related('product_id','ean13',type='char',string='EAN13'),     
-    
+        'id_sale': fields.many2one('sale.order', 'Sale Order'),
+        'product_upc': fields.related('product_id', 'upc', type='char', string='UPC'),
+        'product_ean13': fields.related('product_id', 'ean13', type='char', string='EAN13'),
+
     }
-    
-    
+
+
 stock_move()
-
-
-
-
-
-
-
-
-
