@@ -23,10 +23,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class stock_picking(osv.osv):
+class stock_picking(osv.Model):
     _inherit = 'stock.picking'
     _columns = {
         'invoice_state': fields.selection([
@@ -35,4 +35,3 @@ class stock_picking(osv.osv):
             ("none", "Not Applicable")], "Invoice Control",
             select=True, required=True, readonly=False),  # , states={'draft': [('readonly', False)]}),
     }
-stock_picking()
