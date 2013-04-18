@@ -28,29 +28,34 @@ from osv import osv, fields, orm
 from lxml import etree
 import tools
 
+
 class account_move_line(osv.osv):
     _inherit = 'account.move.line'
     _columns = {
-        'address_id' : fields.many2one('res.partner.address', 'Address', domain = "[('partner_id','=',partner_id)]")
+        'address_id': fields.many2one('res.partner.address', 'Address', domain="[('partner_id','=',partner_id)]")
     }
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        result = super(account_move_line, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
+        result = super(account_move_line, self).fields_view_get(
+            cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
         fields_get = self.fields_get(cr, uid, ['address_id'], context)
         xml_form = etree.fromstring(result['arch'])
         placeholder = xml_form.xpath("//field[@name='partner_id']")
         placeholder[0].addnext(etree.Element('field', {'name': 'address_id'}))
-        result['arch'] =  etree.tostring(xml_form)
-        result['fields'].update({'address_id':{'domain': [], 'string': u'Sucursal', 'readonly': False, 'relation': 'res.partner.address', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}})
+        result['arch'] = etree.tostring(xml_form)
+        result[
+            'fields'].update({'address_id': {'domain': [], 'string': u'Sucursal', 'readonly': False,
+                                             'relation': 'res.partner.address', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}})
         return result
 account_move_line()
 
 
 class account_entries_report(osv.osv):
-    _inherit='account.entries.report'
+    _inherit = 'account.entries.report'
     _columns = {
-        'address_id' : fields.many2one('res.partner.address', 'Address')
+        'address_id': fields.many2one('res.partner.address', 'Address')
     }
+
     def init(self, cr):
         tools.drop_view_if_exists(cr, 'account_entries_report')
         cr.execute("""
