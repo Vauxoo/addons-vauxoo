@@ -26,21 +26,21 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_invoice_datetime",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
+    "name": "l10n_mx_invoice_datetime",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
     "description" : """
     """,
-    "website" : "http://www.vauxoo.com/",
+    "website": "http://www.vauxoo.com/",
     #"license" : "AGPL-3",
-    "depends" : [
+    "depends": [
         "account",
     ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": [
     ],
-    "installable" : True,
-    "active" : False,
+    "installable": True,
+    "active": False,
 }
