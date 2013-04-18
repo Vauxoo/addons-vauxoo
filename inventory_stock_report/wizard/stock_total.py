@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,26 +21,27 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 from osv import fields, osv
 import tools
 from tools.translate import _
 
 
-ESTADO =   [('desarrollo' , 'En Desarrollo')    ,
-            ('produccion', 'En Produccion')     ,
-            ('fin', 'Fin del Ciclo de Vida')    ,
-            ('obsoleto', 'Obsoleto')            ,
-            ('none', 'None')                    ,
-           ]
-TIPO =   [('almacenable' , 'Almacenable')       ,
-            ('consumible', 'Consumible')        ,
-            ('servicio', 'Servicio')            ,
-           ]
-SUMINISTRO =   [('comprar' , 'Comprar')         ,
-                ('producir', 'Producir')        ,
-           ]
+ESTADO = [('desarrollo', 'En Desarrollo'),
+          ('produccion', 'En Produccion'),
+          ('fin', 'Fin del Ciclo de Vida'),
+          ('obsoleto', 'Obsoleto'),
+          ('none', 'None'),
+          ]
+TIPO = [('almacenable', 'Almacenable'),
+        ('consumible', 'Consumible'),
+        ('servicio', 'Servicio'),
+        ]
+SUMINISTRO = [('comprar', 'Comprar'),
+              ('producir', 'Producir'),
+              ]
+
 
 class stock_total(osv.osv_memory):
     """
@@ -48,14 +49,14 @@ class stock_total(osv.osv_memory):
     """
     _name = "stock.total"
     _columns = {
-        'tipo':fields.selection(TIPO, 'Tipo')                                   , 
-        'categoria': fields.many2one('product.category', 'Categorias')          ,
-        'estado':fields.selection(ESTADO, 'Estado')                             , 
-        'suministro':fields.selection(SUMINISTRO, 'Metodo de Suministro')       , 
-        'vendible': fields.boolean("Vendible")                                  ,
-        'comprable': fields.boolean("Comprable")                                ,
-        'alquilable': fields.boolean("Alquilable")                              ,
-        'stockmayorcero': fields.boolean("Stock Mayor a Cero")                  ,
+        'tipo': fields.selection(TIPO, 'Tipo'),
+        'categoria': fields.many2one('product.category', 'Categorias'),
+        'estado': fields.selection(ESTADO, 'Estado'),
+        'suministro': fields.selection(SUMINISTRO, 'Metodo de Suministro'),
+        'vendible': fields.boolean("Vendible"),
+        'comprable': fields.boolean("Comprable"),
+        'alquilable': fields.boolean("Alquilable"),
+        'stockmayorcero': fields.boolean("Stock Mayor a Cero"),
     }
 
 stock_total()
