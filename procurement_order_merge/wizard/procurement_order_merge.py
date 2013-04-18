@@ -23,11 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class procurement_order_merge(osv.osv_memory):
+
+class procurement_order_merge(osv.TransientModel):
     _name = 'procurement.order.merge'
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
@@ -48,4 +49,3 @@ class procurement_order_merge(osv.osv_memory):
         procurement_order.do_merge(cr, uid, procurement_ids, context=context)
         return {}
 
-procurement_order_merge()

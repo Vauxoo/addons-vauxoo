@@ -23,13 +23,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
-import netsvc
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 from osv.orm import browse_record, browse_null
 
 
-class procurement_order(osv.osv):
+class procurement_order(osv.Model):
     _inherit = 'procurement.order'
 
     def do_merge(self, cr, uid, ids, context={}):
@@ -107,4 +108,3 @@ class procurement_order(osv.osv):
                     uid, 'procurement.order', old_id, 'button_cancel', cr)
 
         return neworders
-procurement_order()
