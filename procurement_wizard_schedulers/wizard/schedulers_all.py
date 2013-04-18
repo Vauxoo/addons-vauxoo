@@ -23,12 +23,12 @@
 
 import threading
 import pooler
-import netsvc
+import openerp.netsvc as netsvc
 import os
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class procurement_compute_all(osv.osv_memory):
+class procurement_compute_all(osv.TransientModel):
     _inherit = 'procurement.order.compute.all'
 
     _columns = {
@@ -43,6 +43,5 @@ class procurement_compute_all(osv.osv_memory):
             cr, uid, ids, context=context)
         return res
 
-procurement_compute_all()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
