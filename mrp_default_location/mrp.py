@@ -25,16 +25,17 @@
 ##############################################################################
 
 import time
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 from tools import config
 import base64
 import csv
 import cStringIO
-import tools
+import openerp.tools as tools
 
 
-class mrp_production(osv.osv):
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     def product_id_change(self, cr, uid, ids, product_id, context=None):
@@ -50,4 +51,3 @@ class mrp_production(osv.osv):
                                  'location_dest_id': False})
         return res
 
-mrp_production()
