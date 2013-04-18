@@ -14,10 +14,10 @@
 # You should have received a copy of the GNU General Public License      #
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class product_product(osv.osv):
+class product_product(osv.Model):
     _inherit = "product.product"
     _columns = {
         'image_ids': fields.one2many(
@@ -26,4 +26,3 @@ class product_product(osv.osv):
         'Product Images'
         )
     }
-product_product()

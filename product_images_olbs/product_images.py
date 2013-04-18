@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License      #
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 import base64
 import urllib
 
 
-class product_images(osv.osv):
+class product_images(osv.Model):
     "Products Image gallery"
     _name = "product.images"
     _description = __doc__
@@ -58,4 +58,3 @@ class product_images(osv.osv):
     _defaults = {
         'link': lambda *a: True,
     }
-product_images()
