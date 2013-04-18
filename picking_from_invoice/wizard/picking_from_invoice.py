@@ -23,16 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 
 
-class picking_from_invoice(osv.osv_memory):
+class picking_from_invoice(osv.TransientModel):
 
     _name = 'picking.from.invoice'
     _columns = {
@@ -95,4 +96,3 @@ class picking_from_invoice(osv.osv_memory):
 
         return {'type': 'ir.actions.act_window_close'}
 
-picking_from_invoice()
