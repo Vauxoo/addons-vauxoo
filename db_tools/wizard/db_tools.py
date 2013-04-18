@@ -39,18 +39,18 @@ waittime = 10
 wait_count = 0
 wait_limit = 12
 
+
 class db_tools(osv.osv_memory):
     _name = 'db.tools'
-    
 
     def db(self, cr, uid, context=None):
         ws_obj = service.web_services.db()
         db_list = ws_obj.exp_list()
         list_db = []
         for db in db_list:
-            list_db.append((db.lower(),db))
+            list_db.append((db.lower(), db))
         return list_db
-    
+
     def _db_default(self, cr, uid, context=None):
         res = self.db(cr, uid, context)
         list_db = []
@@ -58,25 +58,25 @@ class db_tools(osv.osv_memory):
             if ((cr.dbname, cr.dbname) == db):
                 list_db.append(db)
         return list_db
-        
+
     def db_default(self, cr, uid, context=None):
         return self._db_default(cr, uid, context)[0][0]
-        
+
     _columns = {
-        'filter' : fields.selection([ ('backup','Backup'), ('restore','Backup-Restore')], 'Filter', help='Backup creates a backup of the database and stored in the path indicated, Restore-Backup creates a backup of the database, and in turn restores the new name'),
+        'filter': fields.selection([('backup', 'Backup'), ('restore', 'Backup-Restore')], 'Filter', help='Backup creates a backup of the database and stored in the path indicated, Restore-Backup creates a backup of the database, and in turn restores the new name'),
         'password': fields.char('Password', size=64, required=True),
-        'list_db' : fields.selection(_db_default, 'Data Base Restore', required = True, readonly=True),
-        'name_db' : fields.char('Name DB', size=128, required = True),
-        'path_save_db' : fields.char('Path save DB', size=256, required = True)
+        'list_db': fields.selection(_db_default, 'Data Base Restore', required=True, readonly=True),
+        'name_db': fields.char('Name DB', size=128, required=True),
+        'path_save_db': fields.char('Path save DB', size=256, required=True)
     }
-    
+
     _defaults = {
-        'filter' : 'restore',
-        'list_db' : db_default,
-        'name_db' : lambda self, cr, uid, context=None : cr.dbname + time.strftime('_%Y%m%d_%H%M%S.backup'),
-        'path_save_db' : tempfile.gettempdir()
-        }
-                
+        'filter': 'restore',
+        'list_db': db_default,
+        'name_db': lambda self, cr, uid, context=None: cr.dbname + time.strftime('_%Y%m%d_%H%M%S.backup'),
+        'path_save_db': tempfile.gettempdir()
+    }
+
     def backup_db(self, cr, uid, ids, uri=False, dbname=''):
         ws_obj = service.web_services.db()
         data = self.browse(cr, uid, ids[0])
@@ -87,13 +87,13 @@ class db_tools(osv.osv_memory):
         file_db.write(dump)
         file_db.close()
         return filename
-    
+
     def backup_restore_db(self, cr, uid, ids, uri, dbname=''):
         res = self.backup_db(cr, uid, ids, uri, dbname)
         data = self.browse(cr, uid, ids[0])
         data_base = os.path.basename(res)
         name_db = data_base[:data_base.rfind(".")]
-        print 'name_db',name_db
+        print 'name_db', name_db
         f = file(res, 'r')
         data_b64 = base64.encodestring(f.read())
         f.close()
@@ -101,19 +101,21 @@ class db_tools(osv.osv_memory):
         ws_obj = service.web_services.db()
         ws_obj.exp_restore(name_db, data_b64)
         return True
-        
+
     def find_db(self, cr, uid, ids, context=None):
         return True
-    
+
     def confirm_action(self, cr, uid, ids, context=None):
-        uri=context.get('uri', False)
+        uri = context.get('uri', False)
         for lin in self.browse(cr, uid, ids, context=context):
-            if lin.filter=='backup':
-                self.backup_db(cr, uid, ids, context.get('uri', False), lin.list_db)
+            if lin.filter == 'backup':
+                self.backup_db(cr, uid, ids, context.get(
+                    'uri', False), lin.list_db)
             if lin.filter == 'restore':
-                self.backup_restore_db(cr, uid, ids, context.get('uri', False), lin.list_db)
+                self.backup_restore_db(cr, uid, ids, context.get(
+                    'uri', False), lin.list_db)
         return {}
-        
+
     def cancel_action(self, cr, uid, ids, context=None):
         return {}
 db_tools()
