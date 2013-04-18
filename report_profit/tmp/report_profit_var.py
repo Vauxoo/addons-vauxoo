@@ -28,11 +28,12 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
 
 
-class report_profit_uxp(osv.osv):
+
+class report_profit_uxp(osv.Model):
     _name = "report.profit.uxp"
     _description = "Profit by Products and User and Partner"
     _auto = False
@@ -63,10 +64,9 @@ class report_profit_uxp(osv.osv):
             group by user_id,partner_id,p_uom_c_id
             )
         """)
-report_profit_uxp()
 
 
-class report_profit_uxc(osv.osv):
+class report_profit_uxc(osv.Model):
     _name = "report.profit.uxc"
     _description = "Profit by Products and User and Category"
     _auto = False
@@ -97,10 +97,9 @@ class report_profit_uxc(osv.osv):
             group by user_id,cat_id,p_uom_c_id
             )
         """)
-report_profit_uxc()
 
 
-class report_profit_pxc(osv.osv):
+class report_profit_pxc(osv.Model):
     _name = "report.profit.pxc"
     _description = "Profit by Products and Partner and Category"
     _auto = False
@@ -131,10 +130,9 @@ class report_profit_pxc(osv.osv):
             group by partner_id,cat_id,p_uom_c_id
             )
         """)
-report_profit_pxc()
 
 
-class report_profit_upc(osv.osv):
+class report_profit_upc(osv.Model):
     _name = "report.profit.upc"
     _description = "Profit by Products and User,Partner and Category"
     _auto = False
@@ -167,7 +165,6 @@ class report_profit_upc(osv.osv):
             group by user_id,partner_id,cat_id,p_uom_c_id
             )
         """)
-report_profit_upc()
 
 
 

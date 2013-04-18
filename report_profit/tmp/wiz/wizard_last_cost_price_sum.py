@@ -31,7 +31,8 @@
 import wizard
 import osv
 import pooler
-from tools.translate import _
+from openerp.tools.translate import _
+
 
 
 _transaction_form = '''<?xml version="1.0"?>

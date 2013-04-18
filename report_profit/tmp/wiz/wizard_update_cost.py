@@ -31,7 +31,8 @@
 import wizard
 import osv
 import pooler
-from tools.translate import _
+from openerp.tools.translate import _
+
 import time
 import datetime
 from mx.DateTime import *

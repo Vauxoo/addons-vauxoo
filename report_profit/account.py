@@ -28,10 +28,10 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
     _inherit = 'account.move.line'
     _description = "Entry lines"
 
@@ -121,4 +121,3 @@ class account_move_line(osv.osv):
             return False
         return res
 
-account_move_line()

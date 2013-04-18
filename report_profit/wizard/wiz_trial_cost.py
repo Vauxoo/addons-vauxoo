@@ -23,16 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
-import netsvc
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 import time
 import datetime
 from mx.DateTime import *
 
 
-class trial_cost(osv.osv_memory):
+class trial_cost(osv.TransientModel):
     logger = netsvc.Logger()
     _name = "trial.cost"
     _columns = {
@@ -83,6 +84,5 @@ class trial_cost(osv.osv_memory):
 
         data['form'].update(res)
         return {'type': 'ir.actions.report.xml', 'report_name': 'profit.trial.cost', 'datas': data}
-trial_cost()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

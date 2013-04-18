@@ -24,12 +24,12 @@
 ##########################################################################
 
 import time
-from osv import fields, osv
+from openerp.osv import osv, fields
 import decimal_precision as dp
 from operator import itemgetter
 
 
-class account_invoice_line(osv.osv):
+class account_invoice_line(osv.Model):
     _inherit = 'account.invoice.line'
 
     def _compute_lines(self, cr, uid, ids, name, args, context=None):
@@ -176,10 +176,9 @@ class account_invoice_line(osv.osv):
 
         return True
 
-account_invoice_line()
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def button_reset_cost(self, cr, uid, ids, context=None):
@@ -199,6 +198,5 @@ class account_invoice(osv.osv):
         return True
 
 
-account_invoice()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

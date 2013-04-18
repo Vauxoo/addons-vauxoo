@@ -29,15 +29,14 @@
 ##############################################################################
 
 
-from osv import fields
-from osv import osv
+from openerp.osv import fields, osv
 import ir
 import pooler
 import time
 import decimal_precision as dp
 
 
-class product_supplierinfo(osv.osv):
+class product_supplierinfo(osv.Model):
     _inherit = 'product.supplierinfo'
     _name = "product.supplierinfo"
 
@@ -79,10 +78,9 @@ class product_supplierinfo(osv.osv):
         'last_inv': fields.function(_last_sup_invoice, type='many2one', relation='account.invoice', method=True, string='Last Invoice'),
         'last_inv_date': fields.function(_last_sup_invoice_date, type='date', method=True, string='Last Invoice date'),
     }
-product_supplierinfo()
 
 
-class product_product(osv.osv):
+class product_product(osv.Model):
     _name = 'product.product'
     _inherit = 'product.product'
 
@@ -203,6 +201,5 @@ class product_product(osv.osv):
         'last_cost': fields.function(_pur_inv_cost, type="float", method=True, string='Last Cost', digits_compute=dp.get_precision('Account')),
     }
 
-product_product()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -28,15 +28,16 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
+
 import time
 import datetime
 from mx.DateTime import *
 from tools import config
 
 
-class report_profit_invoice(osv.osv):
+class report_profit_invoice(osv.Model):
     def _get_prod_stock(self, cr, uid, ids, name, arg, context={}):
         res = {}
         prod_obj = self.pool.get('product.product')
@@ -95,7 +96,6 @@ class report_profit_invoice(osv.osv):
             order by name
             )
         """)
-report_profit_invoice()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

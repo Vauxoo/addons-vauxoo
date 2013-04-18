@@ -34,7 +34,6 @@ Fiscal Report For Venezuela
 
 import time
 from report import report_sxw
-from osv import osv
 import pooler
 
 

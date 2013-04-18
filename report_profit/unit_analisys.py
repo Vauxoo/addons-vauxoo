@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class product_uom_consol(osv.osv):
+
+class product_uom_consol(osv.Model):
     _name = 'product.uom.consol'
     _description = 'A third unit to consolidate the sales and purchase.'
     _columns = {
@@ -36,10 +36,9 @@ class product_uom_consol(osv.osv):
         'uom_line_ids': fields.one2many('product.uom.consol.line', 'p_uom_c_id', 'Units', required=False),
     }
 
-product_uom_consol()
 
 
-class product_uom_consol_line(osv.osv):
+class product_uom_consol_line(osv.Model):
     """
     Third Unit to consolidate sales and purchases!
     """
@@ -74,6 +73,5 @@ class product_uom_consol_line(osv.osv):
         'name': fields.char('Name', size=64, required=False),
     }
 
-product_uom_consol_line()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

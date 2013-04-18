@@ -28,11 +28,12 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
 
 
-class report_profit_user(osv.osv):
+
+class report_profit_user(osv.Model):
     _name = "report.profit.user"
     _description = "Profit by Products and User"
     _auto = False
@@ -61,7 +62,6 @@ class report_profit_user(osv.osv):
             group by user_id,p_uom_c_id
             )
         """)
-report_profit_user()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
