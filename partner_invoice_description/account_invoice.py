@@ -23,10 +23,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,
@@ -39,10 +39,9 @@ class account_invoice(osv.osv):
                 'res.partner').browse(cr, uid, partner_id).description_invoice
             res['value'].update({'comment': partner_invoice_description})
         return res
-account_invoice()
 
 
-class stock_invoice_onshipping(osv.osv_memory):
+class stock_invoice_onshipping(osv.TransientModel):
     _inherit = 'stock.invoice.onshipping'
 
     def create_invoice(self, cr, uid, ids, context=None):
@@ -58,10 +57,9 @@ class stock_invoice_onshipping(osv.osv_memory):
                 self.pool.get('account.invoice').write(cr, uid, res[
                                                        invoice_id], {'comment': invoice_description})
         return res
-stock_invoice_onshipping()
 
 
-class sale_make_invoice(osv.osv_memory):
+class sale_make_invoice(osv.TransientModel):
     _inherit = 'sale.make.invoice'
 
     def make_invoices(self, cr, uid, ids, context=None):
@@ -78,10 +76,9 @@ class sale_make_invoice(osv.osv_memory):
                 self.pool.get('account.invoice').write(
                     cr, uid, invoice_id, {'comment': invoice_description})
         return res
-sale_make_invoice()
 
 
-class sale_order(osv.osv):
+class sale_order(osv.Model):
     _inherit = 'sale.order'
 
     def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed', 'done', 'exception'], date_inv=False, context=None):
@@ -95,4 +92,3 @@ class sale_order(osv.osv):
             self.pool.get('account.invoice').write(
                 cr, uid, res, {'comment': invoice_description})
         return res
-sale_order()

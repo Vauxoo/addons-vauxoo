@@ -23,13 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class res_partner(osv.osv):
+class res_partner(osv.Model):
     _inherit = 'res.partner'
     _columns = {
         'description_invoice':  fields.text('Description Invoice', translate=True),
     }
 
-res_partner()
