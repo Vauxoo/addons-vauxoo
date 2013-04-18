@@ -23,13 +23,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv, orm
-from tools.translate import _
+from openerp.osv import osv, fields, orm
+from openerp.tools.translate import _
+
 from operator import itemgetter
 from lxml import etree
 
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
     _inherit = 'account.move.line'
 
     _columns = {
