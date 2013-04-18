@@ -37,4 +37,3 @@ class account_tax(osv.Model):
         'account_income_voucher_id': fields.many2one('account.account', 'Account Income Voucher'),
     }
 
-account_tax()

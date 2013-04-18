@@ -432,7 +432,6 @@ class account_voucher(osv.Model):
                                     cr, uid, tax_line, context=context)
         return True
 
-account_voucher()
 
 
 class account_voucher_line(osv.Model):
@@ -441,7 +440,6 @@ class account_voucher_line(osv.Model):
     _columns = {
         'tax_line_ids': fields.one2many('account.voucher.line.tax', 'voucher_line_id', 'Tax Lines'),
     }
-account_voucher_line()
 
 
 class account_voucher_line_tax(osv.Model):
@@ -458,4 +456,3 @@ class account_voucher_line_tax(osv.Model):
         'voucher_line_id': fields.many2one('account.voucher.line', 'Voucher Line'),
 
     }
-account_voucher_line_tax()
