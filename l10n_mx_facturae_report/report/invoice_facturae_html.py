@@ -182,7 +182,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
                 #raise osv.except_osv(_('Warning !'), _('Customer Invoice Address Not Vat.!'))
                 print "Not Vat"
         else:
-            #raise osv.except_osv('Warning !', 'No hay una secuencia de folios bien definida. !')
+            #raise osv.except_osv(_('Warning !'), _('Customer Invoice Address Not Address.!'))
             print "Customer Invoice Address Not Vat"
         return res
 
