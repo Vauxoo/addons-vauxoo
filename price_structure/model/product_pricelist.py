@@ -23,13 +23,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class inherit_price_list_item(osv.osv):
+class inherit_price_list_item(osv.Model):
     """ """
     def default_get(self, cr, uid, fields, context=None):
         '''test context '''
@@ -119,4 +120,3 @@ class inherit_price_list_item(osv.osv):
             context = {}
         return ids and self.unlink(cr, uid, ids, context=context)
 
-inherit_price_list_item()

@@ -23,12 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields
-from osv import osv
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class virtual_items(osv.osv_memory):
+
+class virtual_items(osv.TransientModel):
 
     '''Create items by product'''
 
@@ -40,10 +40,9 @@ class virtual_items(osv.osv_memory):
 
     }
 
-virtual_items()
 
 
-class create_price_list(osv.osv_memory):
+class create_price_list(osv.TransientModel):
 
     '''Create price list to new product'''
 
@@ -81,4 +80,3 @@ class create_price_list(osv.osv_memory):
 
         return {'value': {'version_ids': version_ids}}
 
-create_price_list()
