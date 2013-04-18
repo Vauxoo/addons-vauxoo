@@ -20,14 +20,14 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
-from tools.translate import _
-from osv import fields, osv
+from openerp.tools.translate import _
+
+from openerp.osv import osv, fields
 
 
-class mrp_bom(osv.osv):
+class mrp_bom(osv.Model):
     _inherit = 'mrp.bom'
 
     _columns = {
         'standard_price': fields.related('product_id', 'standard_price', type='float', relation='product.template', string='Cost price'),
     }
-mrp_bom()
