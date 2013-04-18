@@ -8,7 +8,7 @@ import random
 from datetime import datetime
 
 
-class sprint_kanban(osv.osv):
+class sprint_kanban(osv.Model):
 
     def set_done(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'done'}, context=context)
@@ -77,7 +77,7 @@ class sprint_kanban(osv.osv):
     }
 
 
-class sprint_kanban_tasks(osv.osv):
+class sprint_kanban_tasks(osv.Model):
 
     _inherit = 'project.task'
 
