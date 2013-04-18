@@ -30,22 +30,24 @@ class hr_department(osv.osv):
     _inherit = "hr.department"
 
     _columns = {
-        'analytic_account_id': fields.many2one('account.analytic.account','Analytic'),
+        'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic'),
     }
 
 hr_department()
 
+
 class hr_expense_line(osv.osv):
-    _inherit ="hr.expense.line"
-    
-    def _get_analytic(self,cr,uid,context={}):
+    _inherit = "hr.expense.line"
+
+    def _get_analytic(self, cr, uid, context={}):
         if context['depto']:
-            depto=self.pool.get('hr.department').browse(cr,uid,[context['depto']])[0]
+            depto = self.pool.get('hr.department').browse(
+                cr, uid, [context['depto']])[0]
             return depto.analytic_account_id.id
         return False
-    
-    _defaults= {
+
+    _defaults = {
         'analytic_account': _get_analytic
     }
-    
+
 hr_expense_line()
