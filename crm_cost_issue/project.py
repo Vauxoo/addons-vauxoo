@@ -26,11 +26,11 @@
 ##########################################################################
 
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class project_task(osv.osv):
+class project_task(osv.Model):
     _inherit = 'project.task'
 
     def _hours_get(self, cr, uid, ids, field_names, args, context=None):
@@ -80,4 +80,3 @@ class project_task(osv.osv):
 
     }
 
-project_task()
