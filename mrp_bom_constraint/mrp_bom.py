@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -19,21 +19,22 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 import time
 from tools.translate import _
 from osv import fields, osv
 
+
 class mrp_bom(osv.osv):
     _inherit = 'mrp.bom'
-    
+
     def check_uom(self, cr, uid, ids, context=None):
         for mrp_bom in self.browse(cr, uid, ids, context=context):
-            if mrp_bom.product_uom and mrp_bom.product_id.uom_id.category_id.id <> mrp_bom.product_uom.category_id.id:
+            if mrp_bom.product_uom and mrp_bom.product_id.uom_id.category_id.id != mrp_bom.product_uom.category_id.id:
                 return False
         return True
-    
-    _constraints = [(check_uom, _('No puedes agregar un UdM que pertenezca a otra categoría que la que tiene la unidad de medida default del producto'), ["product_uom"])]
-    
-mrp_bom()
 
+    _constraints = [(check_uom, _(
+        'No puedes agregar un UdM que pertenezca a otra categoría que la que tiene la unidad de medida default del producto'), ["product_uom"])]
+
+mrp_bom()
