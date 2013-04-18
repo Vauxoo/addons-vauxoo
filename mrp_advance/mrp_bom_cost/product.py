@@ -22,12 +22,12 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
-class product_template(osv.osv):
+
+class product_template(osv.Model):
     _inherit = 'product.template'
 
     _columns = {
@@ -36,4 +36,3 @@ class product_template(osv.osv):
     _defaults = {
         'product_active': lambda *a: 0,
     }
-product_template()

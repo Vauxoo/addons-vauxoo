@@ -23,13 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 
 
-class mrp_routing_workcenter(osv.osv):
+class mrp_routing_workcenter(osv.Model):
     _inherit = "mrp.routing.workcenter"
 
     def _calcular(self, cr, uid, ids, field_name, arg, context):
@@ -48,4 +48,3 @@ class mrp_routing_workcenter(osv.osv):
         'costo': lambda *a: 0.0,
     }
 
-mrp_routing_workcenter()

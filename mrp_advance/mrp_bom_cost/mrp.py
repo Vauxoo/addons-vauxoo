@@ -23,13 +23,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class mrp_bom(osv.osv):
+class mrp_bom(osv.Model):
     _inherit = 'mrp.bom'
 
     def _calc_cost(self, cr, uid, ids, field_name, arg, context):
@@ -113,4 +113,3 @@ class mrp_bom(osv.osv):
 
         return cost
 
-mrp_bom()
