@@ -23,16 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv,fields
+from osv import osv, fields
 from tools.translate import _
 import netsvc
 from osv.orm import browse_record, browse_null
 
+
 class procurement_order(osv.osv):
-    _inherit='procurement.order'
-    
+    _inherit = 'procurement.order'
+
     def do_merge(self, cr, uid, ids, context={}):
-        
+
         def make_key(br, fields):
             list_key = []
             for field in fields:
@@ -49,42 +50,47 @@ class procurement_order(osv.osv):
                 list_key.append((field, field_val))
             list_key.sort()
             return tuple(list_key)
-        
+
         new_orders = {}
         mrp_production_pool = self.pool.get('mrp.production')
         old_orders = []
-        
+
         for procurement in self.browse(cr, uid, ids):
             if procurement.state == 'draft':
-                order_key = make_key(procurement, ('product_id', 'location_id', 'procure_method'))
+                order_key = make_key(procurement, (
+                    'product_id', 'location_id', 'procure_method'))
                 new_order = new_orders.setdefault(order_key, ({}, []))
                 new_order[1].append(procurement.id)
                 order_infos = new_order[0]
                 if not order_infos:
                     order_infos.update({
-                        'name' : procurement.name,
-                        'origin' : procurement.origin,
-                        'product_id' : procurement.product_id.id,
-                        'location_id' : procurement.location_id.id,
-                        'product_qty' : self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id),
-                        'product_uom' : procurement.product_id.uom_id.id,
-                        'procure_method' : procurement.procure_method,
+                        'name': procurement.name,
+                        'origin': procurement.origin,
+                        'product_id': procurement.product_id.id,
+                        'location_id': procurement.location_id.id,
+                        'product_qty': self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id),
+                        'product_uom': procurement.product_id.uom_id.id,
+                        'procure_method': procurement.procure_method,
                         'production_ids': procurement.production_ids and [(4, procurement.production_ids[0].id)] or False
                     })
                 else:
                     if procurement.name:
-                        order_infos['name'] = (order_infos['name'] or '') + ',' + procurement.name
+                        order_infos['name'] = (order_infos[
+                                               'name'] or '') + ',' + procurement.name
                     if procurement.origin:
-                        order_infos['origin'] = (order_infos['origin'] or '') + ',' + procurement.origin
+                        order_infos['origin'] = (order_infos[
+                                                 'origin'] or '') + ',' + procurement.origin
                     if procurement.product_qty:
-                        order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
+                        order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(
+                            cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
                     if procurement.production_ids:
-                        order_infos['production_ids'].append((4, procurement.production_ids[0].id))
-            
+                        order_infos['production_ids'].append((
+                            4, procurement.production_ids[0].id))
+
         allorders = []
         neworders = []
         orders_info = {}
-        
+
         for order_key, (order_data, old_ids) in new_orders.iteritems():
         # skip merges with only one order
             if len(old_ids) < 2:
@@ -97,7 +103,8 @@ class procurement_order(osv.osv):
             neworders.append(neworder_id)
             for old_id in old_ids:
                 wf_service = netsvc.LocalService("workflow")
-                wf_service.trg_validate(uid, 'procurement.order', old_id, 'button_cancel', cr)
+                wf_service.trg_validate(
+                    uid, 'procurement.order', old_id, 'button_cancel', cr)
 
         return neworders
 procurement_order()
