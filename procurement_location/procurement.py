@@ -23,10 +23,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class procurement_order(osv.osv):
+class procurement_order(osv.Model):
     _inherit = 'procurement.order'
 
     def make_mo(self, cr, uid, ids, context=None):
