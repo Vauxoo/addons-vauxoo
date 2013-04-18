@@ -4,8 +4,8 @@
 #    VAUXOO, C.A.
 #    Copyright (C) VAUXOO, C.A. (<http://www.vauxoo.com>). All Rights Reserved
 #    hbto@vauxoo.com
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #    This program is free software: you can redistribute it and/or modify
@@ -54,9 +54,10 @@ class product_category(osv.osv):
 
 product_category()
 
+
 class product_template(osv.osv):
-    _inherit='product.template'
-    _columns={
+    _inherit = 'product.template'
+    _columns = {
         'property_account_allowance': fields.property(
             'account.account',
             type='many2one',
@@ -76,4 +77,3 @@ class product_template(osv.osv):
     }
 
 product_template()
-
