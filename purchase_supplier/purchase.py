@@ -26,14 +26,15 @@
 ##############################################################################
 
 import time
-import netsvc
-from osv import fields, osv
+import openerp.netsvc as netsvc
+from openerp.osv import osv, fields
 from mx import DateTime
 from tools import config
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class purchase_order(osv.osv):
+
+class purchase_order(osv.Model):
     _inherit = "purchase.order"
 
     def wkf_confirm_order(self, cr, uid, ids, context=None):
@@ -56,4 +57,3 @@ class purchase_order(osv.osv):
         else:
             return False
 
-purchase_order()
