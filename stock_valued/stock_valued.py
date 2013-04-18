@@ -23,7 +23,7 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
 #----------------------------------------------------------
@@ -31,7 +31,7 @@ import decimal_precision as dp
 #----------------------------------------------------------
 
 
-class partner_new(osv.osv):
+class partner_new(osv.Model):
     _inherit = 'res.partner'
     _columns = {
         'alb_val': fields.boolean('Albarán valorado'),  # Enviar albarán valorado
@@ -40,13 +40,12 @@ class partner_new(osv.osv):
     _defaults = {
         'alb_val': lambda *a: 1,
     }
-partner_new()
 
 
 #----------------------------------------------------------
 # Stock Picking
 #----------------------------------------------------------
-class stock_picking(osv.osv):
+class stock_picking(osv.Model):
 
 # Esto es para que el picking salga valorado
 
@@ -104,14 +103,13 @@ class stock_picking(osv.osv):
         'tracking': fields.char('Tracking', size=64),
     }
 
-stock_picking()
 
 #----------------------------------------------------------
 # Stock Move
 #----------------------------------------------------------
 
 
-class stock_move(osv.osv):
+class stock_move(osv.Model):
 
     def _price_subtotal(self, cr, uid, ids, prop, unknow_none, unknow_dict):
         res = {}
@@ -164,4 +162,3 @@ class stock_move(osv.osv):
         'price_unit': fields.function(_price_unit, method=True, digits=(16, 2), string='Price', select=True),
         'discount': fields.function(_discount, method=True, digits=(16, 2), string='Discount (%)', select=True),
     }
-stock_move()
