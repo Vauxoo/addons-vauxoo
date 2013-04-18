@@ -23,14 +23,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 
 
-class picking_valued(osv.osv_memory):
+class picking_valued(osv.TransientModel):
     logger = netsvc.Logger()
     _name = "picking.valued"
     _columns = {
@@ -180,6 +181,5 @@ class picking_valued(osv.osv_memory):
         return action
 
 
-picking_valued()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

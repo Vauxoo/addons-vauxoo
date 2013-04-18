@@ -23,18 +23,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 
 
 #----------------------------------------------------------
 # Stock Picking
 #----------------------------------------------------------
-class stock_picking(osv.osv):
+class stock_picking(osv.Model):
     _inherit = "stock.picking"
     _columns = {
         'number': fields.char('Delivery Order Number', size=32, readonly=True, help="Delivery Order Reference"),
     }
 
-stock_picking()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
