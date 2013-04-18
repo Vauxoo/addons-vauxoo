@@ -256,5 +256,3 @@ class account_order_wizard(osv.TransientModel):
                                                                 context, codex.get('code'), codex.get('id'))
 
         return True
-
-
