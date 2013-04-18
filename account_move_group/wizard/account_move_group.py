@@ -41,4 +41,3 @@ class account_move_group(osv.TransientModel):
             cr, uid, move_ids, context=context)
         return {}
 
-account_move_group()

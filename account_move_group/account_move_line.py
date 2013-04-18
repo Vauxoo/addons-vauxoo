@@ -79,4 +79,3 @@ class account_move_line(osv.Model):
             account_move.unlink(cr, uid, ids)
         return move_id
 
-account_move_line()
