@@ -21,12 +21,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##########################################################################
 
-from osv import osv, fields, orm
+from openerp.osv import osv, fields, orm
 from lxml import etree
-import tools
+import openerp.tools as tools
 
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
     _inherit = 'account.move.line'
     _columns = {
 
@@ -48,4 +48,3 @@ class account_move_line(osv.osv):
                                 'production_id': {'domain': [], 'string': u'Production', 'readonly': False, 'relation': 'mrp.production', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}})
         return result
 
-account_move_line()
