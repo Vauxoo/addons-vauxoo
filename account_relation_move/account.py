@@ -24,12 +24,13 @@
 #
 ##############################################################################
 
-from tools.translate import _
-from osv import osv, fields
+from openerp.tools.translate import _
+
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class account_move_line(osv.osv):
+class account_move_line(osv.Model):
     _inherit = "account.move.line"
 
     """
@@ -40,10 +41,9 @@ class account_move_line(osv.osv):
         'stock_move_id': fields.many2one('stock.move', 'Stock move ID'),
     }
 
-account_move_line()
 
 
-class account_move(osv.osv):
+class account_move(osv.Model):
     _inherit = "account.move"
 
     """
@@ -54,10 +54,9 @@ class account_move(osv.osv):
         'stock_move_id': fields.many2one('stock.move', 'Stock move ID'),
     }
 
-account_move()
 
 
-class stock_move(osv.osv):
+class stock_move(osv.Model):
     _inherit = "stock.move"
 
     """
@@ -90,4 +89,3 @@ class stock_move(osv.osv):
                                              'production_id': result[0]['production_id']})
         return res
 
-stock_move()
