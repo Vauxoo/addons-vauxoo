@@ -1,17 +1,19 @@
 import time
-import netsvc
-from osv import fields, osv
-from tools.translate import _
+import openerp.netsvc as netsvc
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 import mx.DateTime
 from mx.DateTime import RelativeDateTime, now, DateTime, localtime
-import tools
+import openerp.tools as tools
 from tools import config
-from tools.misc import currency
+from openerp.tools.misc import currency
 
 
-class salesman_commission_payment(osv.osv):
+
+class salesman_commission_payment(osv.Model):
     _name = 'salesman.commission.payment'
     _description = 'Salesman Commissions due to effective payments'
     _columns = {
@@ -226,10 +228,9 @@ class salesman_commission_payment(osv.osv):
         return True
 
 
-salesman_commission_payment()
 
 
-class salesman_commission_payment_line(osv.osv):
+class salesman_commission_payment_line(osv.Model):
     _name = 'salesman.commission.payment.line'
     _columns = {
         'commission_id': fields.many2one('salesman.commission.payment', 'Commission Lines', required=True),
@@ -246,7 +247,6 @@ class salesman_commission_payment_line(osv.osv):
         'user_id': fields.many2one('res.users', 'Salesman', required=True, states={'draft': [('readonly', False)]}),
         'commission_paid': fields.boolean('Paid Commission'),
     }
-salesman_commission_payment_line()
 
 # domain=[('code','<>','view'), ('code', '<>', 'closed')]
 #        'payment_ids': fields.many2many('account.move.line','hr_salesman_commission_payment','move_id','payment_id','Payments'),
