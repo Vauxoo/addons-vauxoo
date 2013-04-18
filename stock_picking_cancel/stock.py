@@ -23,12 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-import netsvc
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.netsvc as netsvc
+from openerp.tools.translate import _
 
 
-class stock_picking(osv.osv):
+
+class stock_picking(osv.Model):
     _inherit = 'stock.picking'
 
     def action_cancel_draft(self, cr, uid, ids, *args):
@@ -47,10 +48,9 @@ class stock_picking(osv.osv):
             message = _("Picking '%s' has been set in draft state.") % name
             self.log(cr, uid, id, message)
         return True
-stock_picking()
 
 
-class stock_move(osv.osv):
+class stock_move(osv.Model):
     _inherit = 'stock.move'
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -77,4 +77,3 @@ class stock_move(osv.osv):
                 account_move.unlink(cr, uid, [lin[0]])
         return True
 
-stock_move()
