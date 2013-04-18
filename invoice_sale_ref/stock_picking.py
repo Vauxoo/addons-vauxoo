@@ -23,10 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
 
 
-class stock_picking(osv.osv):
+class stock_picking(osv.Model):
     _inherit = 'stock.picking'
 
     def action_invoice_create(self, cursor, user, ids, journal_id=False,
@@ -55,4 +54,3 @@ class stock_picking(osv.osv):
                               'name': client_order_ref_str}, context=context)
         return picking_id__invoice_id_dict
 
-stock_picking()
