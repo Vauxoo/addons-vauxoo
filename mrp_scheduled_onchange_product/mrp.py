@@ -24,12 +24,13 @@
 #
 ##############################################################################
 
-from tools.translate import _
+from openerp.tools.translate import _
+
 from openerp.osv import osv, fields
 import decimal_precision as dp
 
 
-class mrp_production_product_line(osv.osv):
+class mrp_production_product_line(osv.Model):
     _inherit = "mrp.production.product.line"
 
     _columns = {
@@ -49,4 +50,3 @@ class mrp_production_product_line(osv.osv):
                 return {'value': val, 'domain': domain_uom}
         return {}
 
-mrp_production_product_line()
