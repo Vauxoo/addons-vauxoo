@@ -24,7 +24,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class payment_method(osv.Model):
     """
     payment_method
@@ -35,4 +34,3 @@ class payment_method(osv.Model):
     _columns = {
         'name': fields.char('Payment method', size=64, required=False, translate=True),
     }
-
