@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,14 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 import threading
 import pooler
 import netsvc
 import os
 from osv import osv, fields
+
 
 class procurement_compute_all(osv.osv_memory):
     _inherit = 'procurement.order.compute.all'
@@ -35,10 +36,11 @@ class procurement_compute_all(osv.osv_memory):
     }
 
     def procure_calculation(self, cr, uid, ids, context=None):
-        form = self.read(cr,uid,ids,[])
+        form = self.read(cr, uid, ids, [])
         products = form and form[0]['product_ids'] or False
         context.update({'product_ids': products})
-        res=super(procurement_compute_all, self).procure_calculation(cr, uid, ids, context=context)
+        res = super(procurement_compute_all, self).procure_calculation(
+            cr, uid, ids, context=context)
         return res
 
 procurement_compute_all()
