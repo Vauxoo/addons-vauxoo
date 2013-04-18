@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Maria Gabriela Quilarque  <gabriela@openerp.com.ve>
 #    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
 #    Audited by: Maria Gabriela Quilarque  <gabriela@openerp.com.ve>
@@ -30,14 +30,16 @@ import time
 import datetime
 import decimal_precision as dp
 
+
 class res_currency_rate(osv.osv):
 
     _inherit = "res.currency.rate"
-    _columns= {
-        'rate': fields.float('Rate', digits_compute= dp.get_precision('Currency'), required=True, help='The rate of the currency to the currency of rate 1'),
+    _columns = {
+        'rate': fields.float('Rate', digits_compute=dp.get_precision('Currency'), required=True, help='The rate of the currency to the currency of rate 1'),
     }
 
 res_currency_rate()
+
 
 class res_currency(osv.osv):
 
@@ -51,7 +53,8 @@ class res_currency(osv.osv):
             date = time.strftime('%Y-%m-%d')
         date = date or time.strftime('%Y-%m-%d')
         for id in ids:
-            cr.execute("SELECT currency_id, rate FROM res_currency_rate WHERE currency_id = %s AND name <= %s ORDER BY name desc LIMIT 1" ,(id, date))
+            cr.execute(
+                "SELECT currency_id, rate FROM res_currency_rate WHERE currency_id = %s AND name <= %s ORDER BY name desc LIMIT 1", (id, date))
             if cr.rowcount:
                 id, rate = cr.fetchall()[0]
                 res[id] = rate
@@ -59,18 +62,11 @@ class res_currency(osv.osv):
                 res[id] = 0
         return res
 
-
     _inherit = "res.currency"
-    _columns= {
-        'rate': fields.function(_current_rate, method=True, string='Current Rate', digits_compute= dp.get_precision('Currency'), help='The rate of the currency to the currency of rate 1'),
-        'rounding': fields.float('Rounding factor', digits_compute= dp.get_precision('Currency')),
+    _columns = {
+        'rate': fields.function(_current_rate, method=True, string='Current Rate', digits_compute=dp.get_precision('Currency'), help='The rate of the currency to the currency of rate 1'),
+        'rounding': fields.float('Rounding factor', digits_compute=dp.get_precision('Currency')),
 
     }
 
 res_currency()
-
-
-
-
-
-
