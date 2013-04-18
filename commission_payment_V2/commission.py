@@ -20,18 +20,19 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 import pooler
 import time
 import math
 import mx.DateTime
 
 from tools import config
-from tools.translate import _
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
 
-class commission_payment(osv.osv):
+class commission_payment(osv.Model):
     """
     OpenERP Model : commission_payment
     """
@@ -651,10 +652,9 @@ class commission_payment(osv.osv):
             'state': 'open',
         })
 
-commission_payment()
 
 
-class commission_uninvoiced(osv.osv):
+class commission_uninvoiced(osv.Model):
     """
     Commission Payment Uninvoiced : commission_uninvoiced
     """
@@ -669,10 +669,9 @@ class commission_uninvoiced(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_uninvoiced()
 
 
-class commission_sale_noid(osv.osv):
+class commission_sale_noid(osv.Model):
     """
     Commission Payment : commission_sale_noid
     """
@@ -687,10 +686,9 @@ class commission_sale_noid(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_sale_noid()
 
 
-class commission_noprice(osv.osv):
+class commission_noprice(osv.Model):
     """
     Commission Payment : commission_sale_noid
     """
@@ -709,10 +707,9 @@ class commission_noprice(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_noprice()
 
 
-class commission_lines(osv.osv):
+class commission_lines(osv.Model):
     """
     Commission Payment : commission_lines
     """
@@ -764,10 +761,9 @@ class commission_lines(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_lines()
 
 
-class commission_saleman(osv.osv):
+class commission_saleman(osv.Model):
     """
     Commission Payment : commission_saleman
     """
@@ -786,10 +782,9 @@ class commission_saleman(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_saleman()
 
 
-class commission_voucher(osv.osv):
+class commission_voucher(osv.Model):
     """
     Commission Payment : commission_voucher
     """
@@ -808,10 +803,9 @@ class commission_voucher(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_voucher()
 
 
-class commission_invoice(osv.osv):
+class commission_invoice(osv.Model):
     """
     Commission Payment : commission_invoice
     """
@@ -833,10 +827,9 @@ class commission_invoice(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_invoice()
 
 
-class commission_lines_2(osv.osv):
+class commission_lines_2(osv.Model):
     """
     Commission Payment : commission_lines_2
     """
@@ -846,10 +839,9 @@ class commission_lines_2(osv.osv):
     _columns = {
         'comm_invoice_id': fields.many2one('commission.invoice', 'Factura Relacional Interna'),
     }
-commission_lines_2()
 
 
-class commission_retention(osv.osv):
+class commission_retention(osv.Model):
     """
     Commission Payment : commission_retention
     """
@@ -870,10 +862,9 @@ class commission_retention(osv.osv):
     _defaults = {
         'name': lambda *a: None,
     }
-commission_retention()
 
 
-class VoucherLines(osv.osv):
+class VoucherLines(osv.Model):
     _inherit = 'account.voucher.line'
 
     _columns = {
@@ -884,9 +875,8 @@ class VoucherLines(osv.osv):
         'paid_comm': lambda *a: False,
     }
 
-VoucherLines()
 
-#~ class commission_users(osv.osv):
+#~ class commission_users(osv.Model):
     #~ _name='commission.users'
     #~ _columns={
         #~ 'name':fields.char('Nombre', size=8),
