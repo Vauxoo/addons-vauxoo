@@ -24,12 +24,13 @@
 #
 ##############################################################################
 import time
-from osv import osv, fields
+from openerp.osv import osv, fields
 import decimal_precision as dp
-from tools.translate import _
+from openerp.tools.translate import _
 
 
-class mrp_request_return(osv.osv_memory):
+
+class mrp_request_return(osv.TransientModel):
     _name = 'mrp.request.return'
     _columns = {
         're_line_ids': fields.one2many('mrp.request.return.line', 'wizard_id', 'Acreation'),
@@ -113,10 +114,9 @@ class mrp_request_return(osv.osv_memory):
             'production_id': move.production_id.id
         }
         return partial_move
-mrp_request_return()
 
 
-class mrp_request_return_line(osv.osv_memory):
+class mrp_request_return_line(osv.TransientModel):
     _name = 'mrp.request.return.line'
     _rec_name = 'product_id'
 
@@ -155,10 +155,9 @@ class mrp_request_return_line(osv.osv_memory):
         product = product_product.browse(cr, uid, product_id)
         return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
 
-mrp_request_return_line()
 
 
-class mrp_consume(osv.osv_memory):
+class mrp_consume(osv.TransientModel):
     _inherit = 'mrp.consume'
 
     def action_consume(self, cr, uid, ids, context=None):
@@ -203,4 +202,3 @@ class mrp_consume(osv.osv_memory):
                         cr, uid, fetch_record, pick_id, False)
         return super(mrp_consume, self).action_consume(cr, uid, ids, context)
 
-mrp_consume()

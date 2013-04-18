@@ -23,11 +23,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class mrp_production(osv.osv):
+
+class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     _columns = {
@@ -121,10 +122,9 @@ class mrp_production(osv.osv):
             'picking_ids': []
         })
         return super(mrp_production, self).copy(cr, uid, id, default, context)
-mrp_production()
 
 
-class stock_picking(osv.osv):
+class stock_picking(osv.Model):
     _inherit = 'stock.picking'
 
     _columns = {
