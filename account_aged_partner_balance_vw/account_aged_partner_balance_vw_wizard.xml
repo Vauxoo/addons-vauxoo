@@ -1,13 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         
-        <wizard id="wizard_open_move_line"
-            name="wizard.open.move.line"
-            string="Open Moves Lines"
-            model="account.invoice"
-            menu="False"
-        />
+        <wizard id="wizard_open_move_line" name="wizard.open.move.line" string="Open Moves Lines" model="account.invoice" menu="False"/>
         <!--
         <menuitem id="menu_wizard_open_move_line"
             name="Open Movew" parent="account.menu_finance_receivables"
