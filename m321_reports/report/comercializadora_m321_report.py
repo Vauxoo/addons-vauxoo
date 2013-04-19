@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Maria Gabriela Quilarque  <gabrielaquilarque97@gmail.com>   #
 #    Planified by: Nhomar Hernandez                                        #
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve            #
@@ -25,7 +25,9 @@
 import time
 import pooler
 from report import report_sxw
-from tools.translate import _
+from openerp.tools.translate import _
+
+
 
 class cm321_report(report_sxw.rml_parse):
 
@@ -34,25 +36,25 @@ class cm321_report(report_sxw.rml_parse):
             context = {}
         super(cm321_report, self).__init__(cr, uid, name, context=context)
         self.localcontext.update({
-        'get_discount': self._get_discount,
-        'get_date': self._get_date,
-        'get_wh': self._get_wh,
-        })
-        
-    def _get_discount(self,obj):
+                                 'get_discount': self._get_discount,
+                                 'get_date': self._get_date,
+                                 'get_wh': self._get_wh,
+                                 })
+
+    def _get_discount(self, obj):
         aux = 100
         aux2 = 0.0
         ppv = self.pool.get('product.pricelist.version')
-        date_invoice= str(obj.date_invoice)
+        date_invoice = str(obj.date_invoice)
         if obj.type == 'out_invoice':
             price_list = obj.partner_id.property_product_pricelist
             if price_list.active:
                 ppv_ids = price_list.version_id
                 for ppv in ppv_ids:
                     if ppv.date_start and ppv.date_end:
-                        date_start=str(ppv.date_start)
-                        date_end=str(ppv.date_end)
-                        if  ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
+                        date_start = str(ppv.date_start)
+                        date_end = str(ppv.date_end)
+                        if ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:
@@ -69,9 +71,9 @@ class cm321_report(report_sxw.rml_parse):
                 ppv_ids = price_list.version_id
                 for ppv in ppv_ids:
                     if ppv.date_start and ppv.date_end:
-                        date_start=str(ppv.date_start)
-                        date_end=str(ppv.date_end)
-                        if  ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
+                        date_start = str(ppv.date_start)
+                        date_end = str(ppv.date_end)
+                        if ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:
@@ -83,11 +85,11 @@ class cm321_report(report_sxw.rml_parse):
                     else:
                         return aux2
         return aux2
-    
-    def _get_date(self,obj,aux):
-        aux2= obj.date_invoice
-        DMY=str(aux2)
-        res= DMY.split('/')
+
+    def _get_date(self, obj, aux):
+        aux2 = obj.date_invoice
+        DMY = str(aux2)
+        res = DMY.split('/')
         if aux == 0:
             return res[0]
         if aux == 1:
@@ -95,18 +97,18 @@ class cm321_report(report_sxw.rml_parse):
         if aux == 2:
             return res[2][0:4]
 
-    def _get_wh(self,obj):
+    def _get_wh(self, obj):
         wh_ids = obj.tax_line
-        aux=[]
+        aux = []
         for wh in wh_ids:
             aux.append(wh.tax_id.amount*100)
         return aux[0]
 
 report_sxw.report_sxw(
-  'report.m321_reports.cm321_report',
-  'account.invoice',
-  'addons/m321_reports/report/comercializadora_m321_report.rml',
-  parser=cm321_report
+    'report.m321_reports.cm321_report',
+    'account.invoice',
+    'addons/m321_reports/report/comercializadora_m321_report.rml',
+    parser=cm321_report
 )
   # 1 addons/nombre del modulo/carpeta(report)/nombre del archivo rml
   # 2 A modo didactico vamos a poner que el modulo al que le vamos a poner el reporte es a res.partner

@@ -32,6 +32,7 @@ import openerp.netsvc as netsvc
 import time
 import os
 
+
 class account_aged_partner_balance_vw(osv.Model):
     _name = 'account.aged.partner.balance.vw'
     _rec_name = 'partner_id'
@@ -54,16 +55,17 @@ class account_aged_partner_balance_vw(osv.Model):
     }
 
     def init(self, cr):
-        ###FALTA AGREGAR INNER JOIN CON COMPANY, PARA CASAR LA MONEDA POR DEFAULT Y TRANSFORMAR TODO A LA MONEDA DE LA COMPANY.
+        # FALTA AGREGAR INNER JOIN CON COMPANY, PARA CASAR LA MONEDA POR
+        # DEFAULT Y TRANSFORMAR TODO A LA MONEDA DE LA COMPANY.
         move_obj = self.pool.get('account.move.line')
         ctx = {}
-        #ACCOUNT_TYPE = ['receivable']#customer
-        #ACCOUNT_TYPE = ['payable']#supplier
-        #ACCOUNT_TYPE = ['payable','receivable']#supplier & customer
-        #MOVE_STATE = ['posted']#, 'draft']
+        # ACCOUNT_TYPE = ['receivable']#customer
+        # ACCOUNT_TYPE = ['payable']#supplier
+        # ACCOUNT_TYPE = ['payable','receivable']#supplier & customer
+        # MOVE_STATE = ['posted']#, 'draft']
         move_query = move_obj._query_get(cr, 1, obj='l', context=ctx)
-        #print 'en aged partner balance nueva modificacion---------------------------------------'
-        ##########query en version 97 con errores
+        # print 'en aged partner balance nueva modificacion---------------------------------------'
+        # query en version 97 con errores
         #~ full_query ='''SELECT *
         #~ FROM (
             #~ SELECT MIN(l.id) as id, l.partner_id,
@@ -102,7 +104,7 @@ class account_aged_partner_balance_vw(osv.Model):
         #~ WHERE  total <> 0
         #~ and lcurrency is null '''%(move_query)
 
-    #modificado el 07/07/2011 Isaac
+    # modificado el 07/07/2011 Isaac
 
         full_query = '''select * from (
             SELECT MIN(l.id) as id, l.partner_id,
@@ -140,8 +142,8 @@ class account_aged_partner_balance_vw(osv.Model):
         ) vw
         WHERE  total <> 0'''
 
-        tools.drop_view_if_exists(cr, '%s'%(self._name.replace('.', '_')) )
+        tools.drop_view_if_exists(cr, '%s' % (self._name.replace('.', '_')))
         cr.execute("""CREATE OR REPLACE VIEW %s AS (
                 %s
-            )"""%( self._name.replace('.', '_'), full_query ) )
+            )""" % ( self._name.replace('.', '_'), full_query ) )
 account_aged_partner_balance_vw()

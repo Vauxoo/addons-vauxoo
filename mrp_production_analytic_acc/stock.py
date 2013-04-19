@@ -23,21 +23,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
+from openerp.osv import osv, fields
 
-class stock_move(osv.osv):
-    _inherit= "stock.move"
-    
+
+class stock_move(osv.Model):
+    _inherit = "stock.move"
+
     def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
-        res=super(stock_move, self)._create_account_move_line(cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None)
-        if self.pool.get('stock.move')._columns.has_key('analytic_acc'):
+        res = super(stock_move, self)._create_account_move_line(
+            cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None)
+        if 'analytic_acc' in self.pool.get('stock.move')._columns:
             for r in res:
-                r[2]['analytic_account_id']=move.analytic_acc and move.analytic_acc.id or False
+                r[2][
+                    'analytic_account_id'] = move.analytic_acc and move.analytic_acc.id or False
         return res
-        
-        
-        
-    _columns={
-        'analytic_acc': fields.many2one('account.analytic.account','Analytic Account', readonly=True, states={'draft':[('readonly',False)]})
-    }
 
+    _columns = {
+        'analytic_acc': fields.many2one('account.analytic.account', 'Analytic Account', readonly=True, states={'draft': [('readonly', False)]})
+    }

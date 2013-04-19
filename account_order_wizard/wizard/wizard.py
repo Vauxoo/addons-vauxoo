@@ -24,9 +24,9 @@
 ##########################################################################
 
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 from operator import itemgetter
 
@@ -41,17 +41,16 @@ Entonces escriba:  1, 12, 123, 1234, 1234567
 '''
 
 
-class account_order_wizard_pattern(osv.osv_memory):
+class account_order_wizard_pattern(osv.TransientModel):
     _name = 'account.order.wizard.pattern'
     _rec_name = 'pattern'
     _columns = {
         'pattern': fields.char('Account Pattern', size=1024, required=True, help=__HELP__,),
         'wzd_id': fields.many2one('account.order.wizard', 'Wizard')
     }
-account_order_wizard_pattern()
 
 
-class account_order_wizard(osv.osv_memory):
+class account_order_wizard(osv.TransientModel):
     _name = 'account.order.wizard'
     _columns = {
         'select_patter': fields.selection([('wp', 'With Pattern'),
@@ -257,6 +256,3 @@ class account_order_wizard(osv.osv_memory):
                                                                 context, codex.get('code'), codex.get('id'))
 
         return True
-
-
-account_order_wizard()

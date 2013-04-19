@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,22 +21,22 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################            
+##########################################################################
 
 UNIDADES = (
-    '',    
-    'UNO ', 
+    '',
+    'UNO ',
     'DOS ',
     'TRES ',
     'CUATRO ',
     'CINCO ',
-    'SEIS ', 
+    'SEIS ',
     'SIETE ',
-    'OCHO ', 
+    'OCHO ',
     'NUEVE ',
-    'DIEZ ', 
-    'ONCE ', 
-    'DOCE ', 
+    'DIEZ ',
+    'ONCE ',
+    'DOCE ',
     'TRECE ',
     'CATORCE ',
     'QUINCE ',
@@ -44,79 +44,81 @@ UNIDADES = (
     'DIECISIETE ',
     'DIECIOCHO ',
     'DIECINUEVE ',
-    'VEINTE '    
-)                
-DECENAS = (      
-    'VENTI',     
-    'TREINTA ',  
-    'CUARENTA ', 
+    'VEINTE '
+)
+DECENAS = (
+    'VENTI',
+    'TREINTA ',
+    'CUARENTA ',
     'CINCUENTA ',
-    'SESENTA ',  
-    'SETENTA ',  
-    'OCHENTA ',  
-    'NOVENTA ',  
-    'CIEN '      
-)                
-CENTENAS = (     
-    'CIENTO ',   
+    'SESENTA ',
+    'SETENTA ',
+    'OCHENTA ',
+    'NOVENTA ',
+    'CIEN '
+)
+CENTENAS = (
+    'CIENTO ',
     'DOSCIENTOS ',
     'TRESCIENTOS ',
     'CUATROCIENTOS ',
-    'QUINIENTOS ',  
-    'SEISCIENTOS ', 
-    'SETECIENTOS ', 
-    'OCHOCIENTOS ', 
-    'NOVECIENTOS '  
-)                   
-                    
+    'QUINIENTOS ',
+    'SEISCIENTOS ',
+    'SETECIENTOS ',
+    'OCHOCIENTOS ',
+    'NOVECIENTOS '
+)
+
+
 def Numero_a_Texto(number_in):
-                             
-    converted = ''                             
+
+    converted = ''
 
     if type(number_in) != 'str':
-      number = str(number_in)  
-    else:                      
-      number = number_in       
-                                                          
-    number_str=number                                     
-                                                          
-    try:                                                  
-      number_int, number_dec = number_str.split(".")      
-    except ValueError:                                    
-      number_int = number_str                             
-      number_dec = ""                                     
+        number = str(number_in)
+    else:
+        number = number_in
+
+    number_str = number
+
+    try:
+        number_int, number_dec = number_str.split(".")
+    except ValueError:
+        number_int = number_str
+        number_dec = ""
 
     number_str = number_int.zfill(9)
-    millones = number_str[:3]      
-    miles = number_str[3:6]        
-    cientos = number_str[6:]       
+    millones = number_str[:3]
+    miles = number_str[3:6]
+    cientos = number_str[6:]
 
     if(millones):
         if(millones == '001'):
             converted += 'UN MILLON '
-        elif(int(millones) > 0):    
+        elif(int(millones) > 0):
             converted += '%sMILLONES ' % __convertNumber(millones)
-                                                                 
-    if(miles):                                                   
-        if(miles == '001'):                                      
-            converted += 'MIL '                                  
-        elif(int(miles) > 0):                                    
-            converted += '%sMIL ' % __convertNumber(miles)       
-    if(cientos):                                                 
-        if(cientos == '001'):                                    
-            converted += 'UN '                                   
-        elif(int(cientos) > 0):                                  
-            converted += '%s ' % __convertNumber(cientos)        
+
+    if(miles):
+        if(miles == '001'):
+            converted += 'MIL '
+        elif(int(miles) > 0):
+            converted += '%sMIL ' % __convertNumber(miles)
+    if(cientos):
+        if(cientos == '001'):
+            converted += 'UN '
+        elif(int(cientos) > 0):
+            converted += '%s ' % __convertNumber(cientos)
 
     if number_dec == "":
-      number_dec = ""
+        number_dec = ""
 #    if (len(number_dec) < 2 ):
-#      number_dec+='0'        
+#      number_dec+='0'
 
     converted += number_dec
 
     return converted
-                   
+
+
 def __convertNumber(n):
     output = ''
 
@@ -138,4 +140,3 @@ def __convertNumber(n):
 """
 print Numero_a_Texto(9121234.2)
 """
-

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    author.name@company.com
 #
@@ -20,17 +20,16 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     """
     account_invoice
     """
-    
+
     _inherit = 'account.invoice'
     _columns = {
-        'payment_method_id':fields.many2one('payment.method', 'Payment Method', required=False, help="In this field selects the payment method with which to cancel the invoice"),
+        'payment_method_id': fields.many2one('payment.method', 'Payment Method', required=False, help="In this field selects the payment method with which to cancel the invoice"),
     }
-account_invoice()

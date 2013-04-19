@@ -19,11 +19,13 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 
-from tools.translate import _
+from openerp.tools.translate import _
 
-class stock_invoice_onshipping_psm(osv.osv_memory):
+
+
+class stock_invoice_onshipping_psm(osv.TransientModel):
 
     _inherit = "stock.invoice.onshipping"
 
@@ -34,7 +36,7 @@ class stock_invoice_onshipping_psm(osv.osv_memory):
     _defaults = {
         'group_by_product': True,
     }
-    
+
     def drop_duplicate_invoice_lines(self, cr, uid, invoice_id, product_ids, context=None):
         if context is None:
             context = {}
@@ -42,34 +44,36 @@ class stock_invoice_onshipping_psm(osv.osv_memory):
         for prod_id in product_ids:
             quantity = 0.0
             price_subtotal = 0.0
-            ail_search = ail.search(cr,uid,[('invoice_id','=',invoice_id),('product_id','=',prod_id)])
-            if len(ail_search)>1:
-                ail_brw = ail.browse(cr,uid,ail_search,context=context)
+            ail_search = ail.search(cr, uid, [(
+                'invoice_id', '=', invoice_id), ('product_id', '=', prod_id)])
+            if len(ail_search) > 1:
+                ail_brw = ail.browse(cr, uid, ail_search, context=context)
                 for ail_aux in ail_brw:
                     price_subtotal += ail_aux.price_subtotal
                     quantity += ail_aux.quantity
-                value={
-                    'price_subtotal':price_subtotal,
-                    'quantity':quantity
+                value = {
+                    'price_subtotal': price_subtotal,
+                    'quantity': quantity
                 }
-                ail.write(cr,uid,[ail_brw[0].id],value,context=context)
-                ail.unlink(cr,uid,[x.id for x in ail_brw[1:]])
+                ail.write(cr, uid, [ail_brw[0].id], value, context=context)
+                ail.unlink(cr, uid, [x.id for x in ail_brw[1:]])
 
-        
     def create_invoice(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        prod=[]
-        res = super(stock_invoice_onshipping_psm,self).create_invoice(cr, uid, ids, context=context)
+        prod = []
+        res = super(stock_invoice_onshipping_psm, self).create_invoice(
+            cr, uid, ids, context=context)
         onshipdata_obj = self.read(cr, uid, ids, ['group_by_product'])[0]
         if onshipdata_obj.get('group_by_product'):
-            acc_invoice= self.pool.get("account.invoice")
+            acc_invoice = self.pool.get("account.invoice")
             for r in res:
-                invoice = acc_invoice.browse(cr,uid,[res[r]],context=context)[0]
+                invoice = acc_invoice.browse(
+                    cr, uid, [res[r]], context=context)[0]
                 invoice_lines = invoice.invoice_line
                 for invoice_line in invoice_lines:
                         prod.append(invoice_line.product_id.id)
-                self.drop_duplicate_invoice_lines(cr, uid, invoice.id, list(set(prod)), context=context)
+                self.drop_duplicate_invoice_lines(
+                    cr, uid, invoice.id, list(set(prod)), context=context)
         return res
-        
-stock_invoice_onshipping_psm()
+

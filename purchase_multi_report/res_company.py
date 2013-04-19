@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: author NAME LASTNAME <email@openerp.com.ve>                 #
 #    Planified by: Nhomar Hernandez                                        #
 #    Finance by: COMPANY NAME <EMAIL-COMPANY>                              #
@@ -23,18 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
-class invoice_multicompany_report(osv.osv):
-  """
-  invoice_multicompany_report
-  """
-  
-  _inherit = 'res.company'
-  _columns = {
-    'purchase_report_id':fields.many2one('ir.actions.report.xml', 'Purchase Report', required=False, domain="[('model','=','purchase.order')]"),
-    'purchase_request_id':fields.many2one('ir.actions.report.xml', 'Purchase Request', required=False, domain="[('model','=','purchase.order')]"),
-  }
-invoice_multicompany_report()
+
+
+class invoice_multicompany_report(osv.Model):
+    """
+    invoice_multicompany_report
+    """
+
+    _inherit = 'res.company'
+    _columns = {
+        'purchase_report_id': fields.many2one('ir.actions.report.xml', 'Purchase Report', required=False, domain="[('model','=','purchase.order')]"),
+        'purchase_request_id': fields.many2one('ir.actions.report.xml', 'Purchase Request', required=False, domain="[('model','=','purchase.order')]"),
+    }

@@ -26,13 +26,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
-import base64
-import netsvc
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
-class print_sale_order_report(osv.osv_memory):
+import base64
+import openerp.netsvc as netsvc
+
+
+class print_sale_order_report(osv.TransientModel):
     """
     OpenERP Wizard : print.sale.order.report
     """
@@ -42,7 +43,8 @@ class print_sale_order_report(osv.osv_memory):
         user = self.pool.get('res.users').browse(cr, uid, uid)
         print user
         if not user.company_id:
-            raise except_osv(_('ERROR !'), _('There is no company configured for this user'))
+            raise except_osv(_('ERROR !'), _(
+                'There is no company configured for this user'))
         return user.company_id
 
     def _get_company(self, cr, uid, context=None):
@@ -51,31 +53,35 @@ class print_sale_order_report(osv.osv_memory):
     def _get_report(self, cr, uid, context=None):
         report = self.__get_company_object(cr, uid).sale_report_id
         if not report:
-            rep_id = self.pool.get("ir.actions.report.xml").search(cr, uid, [('model', '=', 'sale.order'),], order="id")[0]
-            report = self.pool.get("ir.actions.report.xml").browse(cr, uid, rep_id)
+            rep_id = self.pool.get("ir.actions.report.xml").search(
+                cr, uid, [('model', '=', 'sale.order'), ], order="id")[0]
+            report = self.pool.get(
+                "ir.actions.report.xml").browse(cr, uid, rep_id)
 
         service = netsvc.LocalService('report.' + report.report_name)
-        (result, format) = service.create(cr, uid, context['active_ids'], {'model': context['active_model']}, {})
+        (result, format) = service.create(cr, uid, context[
+                                          'active_ids'], {'model': context['active_model']}, {})
         return base64.encodestring(result)
 
     def _get_report_name(self, cr, uid, context):
         report = self.__get_company_object(cr, uid).sale_report_id
         if not report:
-            rep_id = self.pool.get("ir.actions.report.xml").search(cr, uid, [('model', '=', 'sale.order'),], order="id")[0]
-            report = self.pool.get("ir.actions.report.xml").browse(cr, uid, rep_id)
+            rep_id = self.pool.get("ir.actions.report.xml").search(
+                cr, uid, [('model', '=', 'sale.order'), ], order="id")[0]
+            report = self.pool.get(
+                "ir.actions.report.xml").browse(cr, uid, rep_id)
         return report.report_name
 
     def print_invoice(self, cr, uid, ids, context=None):
-        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid, context), 'datas': {'ids': context['active_ids']} }
+        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid, context), 'datas': {'ids': context['active_ids']}}
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),
         'report_format': fields.binary("Report", readonly=True, required=True),
-        'wa':fields.boolean('With Attachment?'),
+        'wa': fields.boolean('With Attachment?'),
     }
 
     _defaults = {
         'company': _get_company,
         'report_format': _get_report,
     }
-print_sale_order_report()

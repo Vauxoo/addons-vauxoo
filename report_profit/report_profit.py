@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
@@ -21,27 +21,30 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
-from osv import fields,osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
 
-class report_profit(osv.osv):
+
+
+class report_profit(osv.Model):
     _name = "report.profit"
     _description = "Profit by Products"
     _auto = False
-    _order= "name desc"    
+    _order = "name desc"
     _columns = {
         'name': fields.date('Name', readonly=True, select=True),
         'date': fields.date('Date Invoice', readonly=True),
         'year': fields.char('Year', size=4, readonly=True),
         'month': fields.selection([('01', 'January'), ('02', 'February'), ('03', 'March'), ('04', 'April'),
-            ('05', 'May'), ('06', 'June'), ('07', 'July'), ('08', 'August'), ('09', 'September'),
-            ('10', 'October'), ('11', 'November'), ('12', 'December')], 'Month', readonly=True),
+                                   ('05', 'May'), ('06', 'June'), ('07', 'July'), (
+                                   '08', 'August'), ('09', 'September'),
+                                   ('10', 'October'), ('11', 'November'), ('12', 'December')], 'Month', readonly=True),
         'day': fields.char('Day', size=128, readonly=True),
-        'product_id':fields.many2one('product.product', 'Product', readonly=True, select=True),
+        'product_id': fields.many2one('product.product', 'Product', readonly=True, select=True),
         'partner_id': fields.many2one('res.partner', 'Partner', readonly=True, select=True),
-        'user_id':fields.many2one('res.users', 'User', readonly=True, select=True),
+        'user_id': fields.many2one('res.users', 'User', readonly=True, select=True),
         'quantity': fields.float('# of Products', readonly=True),
         'price_unit': fields.float('Unit Price', readonly=True),
         'last_cost': fields.float('Last Cost', readonly=True),
@@ -50,21 +53,21 @@ class report_profit(osv.osv):
         'uom_id': fields.many2one('product.uom', ' UoM', readonly=True),
         'profit': fields.float('Profit', readonly=True),
         'perc': fields.float('Profit Percent', readonly=True),
-        'p_uom_c_id':fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
+        'p_uom_c_id': fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
         'qty_consol': fields.float('Consolidate qty', readonly=True),
-        'cat_id':fields.many2one('product.category', 'Category', readonly=True),
+        'cat_id': fields.many2one('product.category', 'Category', readonly=True),
         'type': fields.selection([
-            ('out_invoice','Customer Invoice'),
-            ('in_invoice','Supplier Invoice'),
-            ('out_refund','Customer Refund'),
-            ('in_refund','Supplier Refund'),
-            ],'Type', readonly=True, select=True),
-        'invoice_id':fields.many2one('account.invoice', 'Invoice', readonly=True, select=True),
+            ('out_invoice', 'Customer Invoice'),
+            ('in_invoice', 'Supplier Invoice'),
+            ('out_refund', 'Customer Refund'),
+            ('in_refund', 'Supplier Refund'),
+        ], 'Type', readonly=True, select=True),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True, select=True),
         'move_id': fields.many2one('account.move', 'Move', readonly=True, select=True),
         'acc_cost': fields.float('Cost', readonly=True, help="Valor que adquiere el elemento para estimacion de costo de inventario"),
-        'line_id':fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
-    
-    
+        'line_id': fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
+
+
     }
 
     def init(self, cr):
@@ -142,7 +145,7 @@ class report_profit(osv.osv):
                 left join product_uom_consol_line c on (m.id=c.p_uom_id)
                 left join product_product d on (d.id=l.product_id)
                 left join product_template t on (t.id=d.product_tmpl_id)
-            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid') 
+            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid')
                 and l.uos_id in (
                 select
                     u.id as id
@@ -154,8 +157,6 @@ class report_profit(osv.osv):
             order by i.date_invoice desc
             )
         """)
-report_profit()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

@@ -21,24 +21,25 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
-class product_product(osv.osv):
+
+
+class product_product(osv.Model):
     _inherit = 'product.product'
     _columns = {
-        'manufacturer_pname' : fields.char('Manufacturer Product Name', size=128),
+        'manufacturer_pname': fields.char('Manufacturer Product Name', size=128),
     }
-product_product()
 
-class product_attribute(osv.osv):
+
+class product_attribute(osv.Model):
     _inherit = 'product.manufacturer.attribute'
 
     _columns = {
         'name': fields.char('Attribute', size=128, required=True),
-        'value' : fields.char('Value', size=128),
-        'icecat_category':fields.char('Icecat Category', size=64),
+        'value': fields.char('Value', size=128),
+        'icecat_category': fields.char('Icecat Category', size=64),
         'sequence': fields.integer('Sequence'),
     }
 
@@ -48,4 +49,3 @@ class product_attribute(osv.osv):
         'sequence': lambda *a: 10,
     }
 
-product_attribute()

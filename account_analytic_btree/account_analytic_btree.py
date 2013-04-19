@@ -26,16 +26,15 @@
 ##############################################################################
 from openerp.osv import osv, fields
 
+
 class account_analytic_account(osv.Model):
-    _inherit ='account.analytic.account'
+    _inherit = 'account.analytic.account'
 
     _order = "parent_left"
     _parent_order = "code"
     _parent_store = True
 
-    _columns={
+    _columns = {
         'parent_right': fields.integer('Parent Right', select=1),
         'parent_left': fields.integer('Parent Left', select=1),
     }
-
-account_analytic_account()

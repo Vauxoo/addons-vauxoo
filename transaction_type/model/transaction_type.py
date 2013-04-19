@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,26 +21,23 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 
 
-class transaction_type(osv.osv):
-    
-    
+class transaction_type(osv.Model):
+
     _name = 'transaction.type'
     _columns = {
-    'name':fields.char('name',100,help="Name of transaction type"),
-    'code':fields.char('Code',100,help="Code of transaction type"),
-    
-    
+        'name': fields.char('name', 100, help="Name of transaction type"),
+        'code': fields.char('Code', 100, help="Code of transaction type"),
+
+
     }
-    
-    
-transaction_type()

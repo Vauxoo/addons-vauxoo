@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,182 +21,178 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 import time
 from report import report_sxw
-from osv import osv
 import pooler
 
-class rep_conteo_stock(report_sxw.rml_parse):
-    
 
+class rep_conteo_stock(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context):
-        super(rep_conteo_stock, self).__init__(cr, uid, name, context)    
+        super(rep_conteo_stock, self).__init__(cr, uid, name, context)
         self.localcontext.update({
-            'time': time                                ,
-            'get_data':self.get_data                    ,
-            'get_tipo':self.get_tipo                    ,
-            'get_category':self.get_category            ,
-            'get_state':self.get_state                  ,
-            'get_destinado':self.get_destinado          ,
-            'get_suministro':self.get_suministro        ,
-            'get_qty_available':self.get_qty_available  ,
-            'get_code':self.get_code                    ,
+            'time': time,
+            'get_data': self.get_data,
+            'get_tipo': self.get_tipo,
+            'get_category': self.get_category,
+            'get_state': self.get_state,
+            'get_destinado': self.get_destinado,
+            'get_suministro': self.get_suministro,
+            'get_qty_available': self.get_qty_available,
+            'get_code': self.get_code,
         })
 
-
-
     def get_tipo(self, stock=None):
-        product= self.pool.get('product.template')
-        cabeza=[]
-        boole=False
-        if stock.tipo=="almacenable" or stock.tipo=="consumible": 
+        product = self.pool.get('product.template')
+        cabeza = []
+        boole = False
+        if stock.tipo == "almacenable" or stock.tipo == "consumible":
             cabeza.append("Almacenable/Consumible")
-            boole=True
-        if stock.tipo=="servicio":
+            boole = True
+        if stock.tipo == "servicio":
             cabeza.append("Servicio")
-            boole=True
-        if boole==False:
+            boole = True
+        if boole == False:
             cabeza.append("Almacenable - Consumible / Servicio")
-        return cabeza    
-            
+        return cabeza
+
     def get_category(self, stock=None):
-        product= self.pool.get('product.template')
-        cabeza=[]
+        product = self.pool.get('product.template')
+        cabeza = []
         if stock.categoria:
-            cabeza.append(" %s"%(stock.categoria.name))
+            cabeza.append(" %s" % (stock.categoria.name))
         else:
-            cabeza.append("Todas las Categorias") 
-        return cabeza 
-    
+            cabeza.append("Todas las Categorias")
+        return cabeza
+
     def get_state(self, stock=None):
-        product= self.pool.get('product.template')
-        cabeza=[]       
+        product = self.pool.get('product.template')
+        cabeza = []
         if stock.estado:
-            cabeza.append(" %s"%(stock.estado))
+            cabeza.append(" %s" % (stock.estado))
         else:
             cabeza.append("Todas los Estados")
         return cabeza
-    
+
     def get_destinado(self, stock=None):
-        product= self.pool.get('product.template')
-        cabeza=" "
-        
+        product = self.pool.get('product.template')
+        cabeza = " "
+
         if stock.vendible:
-            cabeza="Vendible " 
-            
+            cabeza = "Vendible "
+
         if stock.comprable:
-            cabeza =cabeza+" Comprable"
+            cabeza = cabeza+" Comprable"
 
         if stock.alquilable:
-            cabeza=cabeza + "Alquilable"
+            cabeza = cabeza + "Alquilable"
 
         if not stock.vendible and not stock.comprable and not stock.alquilable:
-            cabeza="Vendible Comprable Alquilable"
+            cabeza = "Vendible Comprable Alquilable"
         return cabeza
-    
+
     def get_suministro(self, stock=None):
-        product= self.pool.get('product.template')
-        cabeza=[]
+        product = self.pool.get('product.template')
+        cabeza = []
         if stock.suministro:
-            cabeza.append(" %s"%(stock.suministro))
+            cabeza.append(" %s" % (stock.suministro))
         else:
-            cabeza.append("Todas los Tipos de Suministro")      
+            cabeza.append("Todas los Tipos de Suministro")
         return cabeza
-     
-    
-    
-    def get_data (self,stock=None ):
-        product= self.pool.get('product.template')
-        merge=[]
-        ##################para el tipo del producto####################
-        
-        if stock.tipo=="almacenable": 
-            merge.append( ('type', '=',"product"))  
-        if stock.tipo=="consumible": 
-            merge.append( ('type', '=',"consut"))
-        if stock.tipo=="servicio":
-             merge.append( ('type', '=',"service") ) 
-        
-        ##################para la categoria####################
+
+    def get_data(self, stock=None):
+        product = self.pool.get('product.template')
+        merge = []
+        # para el tipo del producto####################
+
+        if stock.tipo == "almacenable":
+            merge.append(('type', '=', "product"))
+        if stock.tipo == "consumible":
+            merge.append(('type', '=', "consut"))
+        if stock.tipo == "servicio":
+            merge.append(('type', '=', "service"))
+
+        # para la categoria####################
 
         if stock.categoria:
-            merge.append( ('categ_id', '=',stock.categoria.id) ) 
-            
-        ##################para el estado####################
+            merge.append(('categ_id', '=', stock.categoria.id))
+
+        # para el estado####################
         if stock.estado:
-            if stock.estado=="desarrollo":
-                merge.append( ('state', '=',"draft") ) 
-                
-            if stock.estado=="produccion":
-                merge.append( ('state', '=',"sellable") ) 
+            if stock.estado == "desarrollo":
+                merge.append(('state', '=', "draft"))
 
-            if stock.estado=="fin":
-                merge.append( ('state', '=',"end") )
+            if stock.estado == "produccion":
+                merge.append(('state', '=', "sellable"))
 
-            if stock.estado=="obsoleto":
-                merge.append( ('state', '=',"obsolete") )
-  
-            if stock.estado=="none":
-                merge.append( ('state', '=',None) )
-                
-        ##################destinado a ser: vendible, conyable, alquilable####################
+            if stock.estado == "fin":
+                merge.append(('state', '=', "end"))
+
+            if stock.estado == "obsoleto":
+                merge.append(('state', '=', "obsolete"))
+
+            if stock.estado == "none":
+                merge.append(('state', '=', None))
+
+        # destinado a ser: vendible, conyable, alquilable####################
         if stock.vendible:
-            merge.append( ('sale_ok', '=',True) )
+            merge.append(('sale_ok', '=', True))
 
         if stock.comprable:
-            merge.append( ('purchase_ok', '=',True) )
+            merge.append(('purchase_ok', '=', True))
 
         if stock.alquilable:
-            merge.append( ('rental', '=',True) )
-            
-        ##################tipo de suministro####################
+            merge.append(('rental', '=', True))
 
-        if stock.suministro=="comprar":
-            merge.append( ('supply_method', '=','produce') )
-            
-        if stock.suministro=="producir":
-            merge.append( ('supply_method', '=','buy') )
+        # tipo de suministro####################
 
-        id_productos=product.search(self.cr, self.uid, merge, order="name" )
-        data =product.browse(self.cr,self.uid, id_productos) #lista de product_template que cumplen la condicion
+        if stock.suministro == "comprar":
+            merge.append(('supply_method', '=', 'produce'))
+
+        if stock.suministro == "producir":
+            merge.append(('supply_method', '=', 'buy'))
+
+        id_productos = product.search(self.cr, self.uid, merge, order="name")
+        data = product.browse(
+            self.cr, self.uid, id_productos)  # lista de product_template que cumplen la condicion
         return data
 
-
-    def get_qty_available (self,id_template ):
-        qty=0.0
-        qty2=0.0
-        product= self.pool.get('product.product')
+    def get_qty_available(self, id_template):
+        qty = 0.0
+        qty2 = 0.0
+        product = self.pool.get('product.product')
         try:
-            id_producto=product.search(self.cr, self.uid, [('product_tmpl_id', '=',id_template.id)])
-            producto=product.browse(self.cr,self.uid, id_producto[0])
-            qty=producto.qty_available
-            qty2=producto.virtual_available
-            res=[qty,qty2]
+            id_producto = product.search(self.cr, self.uid, [
+                                         ('product_tmpl_id', '=', id_template.id)])
+            producto = product.browse(self.cr, self.uid, id_producto[0])
+            qty = producto.qty_available
+            qty2 = producto.virtual_available
+            res = [qty, qty2]
             return res
         except:
-            res=[qty,qty2]
+            res = [qty, qty2]
             return res
 
-    def get_code(self,id_template):
-        code="-"
-        product= self.pool.get('product.product')
+    def get_code(self, id_template):
+        code = "-"
+        product = self.pool.get('product.product')
         try:
-            id_producto=product.search(self.cr, self.uid, [('product_tmpl_id', '=',id_template.id)])
-            producto=product.browse(self.cr,self.uid, id_producto[0])
-            code=producto.code
+            id_producto = product.search(self.cr, self.uid, [
+                                         ('product_tmpl_id', '=', id_template.id)])
+            producto = product.browse(self.cr, self.uid, id_producto[0])
+            code = producto.code
             return code
         except:
             return code
 
 
 report_sxw.report_sxw(
-    'report.hoja.conteo.stock'                              ,  
-    'stock.count'                                           ,
-    'addons/inventory_stock_report/report/hoja_conteo.rml'     ,  
-    parser=rep_conteo_stock                                 ,
-)      
+    'report.hoja.conteo.stock',
+    'stock.count',
+    'addons/inventory_stock_report/report/hoja_conteo.rml',
+    parser=rep_conteo_stock,
+)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

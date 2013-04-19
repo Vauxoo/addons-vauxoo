@@ -23,12 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
-class stock_picking(osv.osv):
+
+class stock_picking(osv.Model):
     _inherit = 'stock.inventory'
-    
+
     def unlink(self, cr, uid, ids, context=None):
         stock_inventory = self.read(cr, uid, ids, ['state'], context=context)
         unlink_ids = []
@@ -36,6 +37,7 @@ class stock_picking(osv.osv):
             if s['state'] in ['draft']:
                 unlink_ids.append(s['id'])
             else:
-                raise osv.except_osv(_('Invalid action !'), _('Stocks can be removed only in draft.'))
+                raise osv.except_osv(_('Invalid action !'), _(
+                    'Stocks can be removed only in draft.'))
 
         return osv.osv.unlink(self, cr, uid, unlink_ids, context=context)

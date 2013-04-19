@@ -23,25 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv,fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
-class mrp_production(osv.osv):
-    _inherit='mrp.production'
-    
+
+
+class mrp_production(osv.Model):
+    _inherit = 'mrp.production'
+
     def action_compute(self, cr, uid, ids, properties=[], context=None):
         mrp_pt = self.pool.get('mrp.pt.planified')
         bom_obj = self.pool.get('mrp.bom')
-        res = super(mrp_production, self).action_compute(cr,uid,ids,properties=properties,context=context)
+        res = super(mrp_production, self).action_compute(
+            cr, uid, ids, properties=properties, context=context)
         bom_obj = self.pool.get('mrp.bom')
         uom_obj = self.pool.get('product.uom')
         for production in self.browse(cr, uid, ids):
             bom_id = production.bom_id
             if not bom_id:
                 continue
-            factor = uom_obj._compute_qty(cr, uid, production.product_uom.id, production.product_qty, bom_id.product_uom.id)
-            result_subproducts =[]
-            res = bom_obj._bom_explode(cr, uid, bom_id, factor / bom_id.product_qty, properties=False, routing_id=False)
+            factor = uom_obj._compute_qty(
+                cr, uid, production.product_uom.id, production.product_qty, bom_id.product_uom.id)
+            result_subproducts = []
+            res = bom_obj._bom_explode(
+                cr, uid, bom_id, factor / bom_id.product_qty, properties=False, routing_id=False)
             for sub_product in result_subproducts:
                 data = {
                     'product_id': sub_product['product_id'],
@@ -49,7 +54,5 @@ class mrp_production(osv.osv):
                     'product_uom': sub_product['product_uom'],
                     'production_id': production.id
                 }
-                mrp_pt.create(cr,uid,data)
+                mrp_pt.create(cr, uid, data)
         return res
-mrp_production()
-

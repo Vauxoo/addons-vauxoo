@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
 #                    Javier Duran <javier@vauxoo.com>
-# 
+#
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -31,7 +31,8 @@
 import wizard
 import osv
 import pooler
-from tools.translate import _
+from openerp.tools.translate import _
+
 
 
 _transaction_form = '''<?xml version="1.0"?>
@@ -53,76 +54,76 @@ _transaction_form = '''<?xml version="1.0"?>
         <field name="c_sel" nolabel="1" attrs="{'readonly':[('c_check','!=',True)]}"/>
     </group>
 
-    </group>  
+    </group>
 </form>'''
 
 _transaction_fields = {
-    'date_start': {'string':'Start Date','type':'date','required': True},
-    'date_end': {'string':'End Date','type':'date','required': True},
-    'user_res_id': {'string':'Salesman', 'type':'many2one', 'relation': 'res.users','required':False},
-    'partner_res_id': {'string':'Partner', 'type':'many2one', 'relation': 'res.partner','required':False},
-    'cat_res_id': {'string':'Category', 'type':'many2one', 'relation': 'product.category','required':False},
-    'u_check': {'string':'Check salesman?', 'type':'boolean'},
-    'p_check': {'string':'Check partner?', 'type':'boolean'},
-    'c_check': {'string':'Check category?', 'type':'boolean'},
-    'u_sel':{
-        'string':"Sequence",
-        'type':'selection',
-        'selection':[('one','1'),('two','2'),('three','3'),('none','No Filter')],
-        'default': lambda *a:'none'
+    'date_start': {'string': 'Start Date', 'type': 'date', 'required': True},
+    'date_end': {'string': 'End Date', 'type': 'date', 'required': True},
+    'user_res_id': {'string': 'Salesman', 'type': 'many2one', 'relation': 'res.users', 'required': False},
+    'partner_res_id': {'string': 'Partner', 'type': 'many2one', 'relation': 'res.partner', 'required': False},
+    'cat_res_id': {'string': 'Category', 'type': 'many2one', 'relation': 'product.category', 'required': False},
+    'u_check': {'string': 'Check salesman?', 'type': 'boolean'},
+    'p_check': {'string': 'Check partner?', 'type': 'boolean'},
+    'c_check': {'string': 'Check category?', 'type': 'boolean'},
+    'u_sel': {
+        'string': "Sequence",
+        'type': 'selection',
+        'selection': [('one', '1'), ('two', '2'), ('three', '3'), ('none', 'No Filter')],
+        'default': lambda *a: 'none'
     },
-    'p_sel':{
-        'string':"Sequence",
-        'type':'selection',
-        'selection':[('one','1'),('two','2'),('three','3'),('none','No Filter')],
-        'default': lambda *a:'none'
+    'p_sel': {
+        'string': "Sequence",
+        'type': 'selection',
+        'selection': [('one', '1'), ('two', '2'), ('three', '3'), ('none', 'No Filter')],
+        'default': lambda *a: 'none'
     },
-    'c_sel':{
-        'string':"Sequence",
-        'type':'selection',
-        'selection':[('one','1'),('two','2'),('three','3'),('none','No Filter')],
-        'default': lambda *a:'none'
+    'c_sel': {
+        'string': "Sequence",
+        'type': 'selection',
+        'selection': [('one', '1'), ('two', '2'), ('three', '3'), ('none', 'No Filter')],
+        'default': lambda *a: 'none'
     },
 
 
 }
 
+
 def _data_save(self, cr, uid, data, context):
     form = data['form']
-    if not form['u_check']  and not form['p_check'] and not form['c_check']:
-        raise wizard.except_wizard(_('User Error'), _('You have to check one box !'))
+    if not form['u_check'] and not form['p_check'] and not form['c_check']:
+        raise wizard.except_wizard(_('User Error'), _(
+            'You have to check one box !'))
     pool = pooler.get_pool(cr.dbname)
     prod_obj = pool.get('product.product')
     line_inv_obj = pool.get('account.invoice.line')
     updated_rep_line = []
-    cond=''
-    valor=''
+    cond = ''
+    valor = ''
 
-#TODO
+# TODO
 
     if form['u_check']:
-        vis=('user','user_id','user_id','user_id')
+        vis = ('user', 'user_id', 'user_id', 'user_id')
         xml_id = 'action_profit_user_product_tree'
         if form['user_res_id']:
             valor = form['user_res_id']
 
-
     if form['p_check']:
-        vis=('partner','partner_id','partner_id','partner_id')
+        vis = ('partner', 'partner_id', 'partner_id', 'partner_id')
         xml_id = 'action_profit_partner_product_tree'
         if form['partner_res_id']:
             valor = form['partner_res_id']
 
-
     if form['c_check']:
-        vis=('category','cat_id','cat_id','cat_id')
+        vis = ('category', 'cat_id', 'cat_id', 'cat_id')
         xml_id = 'action_profit_category_product_tree'
         if form['cat_res_id']:
             valor = form['cat_res_id']
 
-
     if form['u_check'] and form['p_check']:
-        vis=('uxp','((user_id*1000000)+partner_id)','user_id,partner_id','user_id,partner_id')
+        vis = ('uxp', '((user_id*1000000)+partner_id)',
+               'user_id,partner_id', 'user_id,partner_id')
         xml_id = 'action_profit_uxp_product_tree'
         valor = ''
         if form['user_res_id']:
@@ -130,11 +131,12 @@ def _data_save(self, cr, uid, data, context):
         if form['partner_res_id']:
             cond = ' and partner_id=%s' % form['partner_res_id']
         if form['user_res_id'] and form['partner_res_id']:
-            cond = ' and user_id=%s and partner_id=%s' % (form['user_res_id'],form['partner_res_id'])
-
+            cond = ' and user_id=%s and partner_id=%s' % (
+                form['user_res_id'], form['partner_res_id'])
 
     if form['u_check'] and form['c_check']:
-        vis=('uxc','((user_id*1000000)+cat_id)','user_id,cat_id','user_id,cat_id')
+        vis = ('uxc', '((user_id*1000000)+cat_id)',
+               'user_id,cat_id', 'user_id,cat_id')
         xml_id = 'action_profit_uxc_product_tree'
         valor = ''
         if form['user_res_id']:
@@ -142,11 +144,12 @@ def _data_save(self, cr, uid, data, context):
         if form['cat_res_id']:
             cond = ' and cat_id=%s' % form['cat_res_id']
         if form['user_res_id'] and form['cat_res_id']:
-            cond = ' and user_id=%s and cat_id=%s' % (form['user_res_id'],form['cat_res_id'])
-
+            cond = ' and user_id=%s and cat_id=%s' % (
+                form['user_res_id'], form['cat_res_id'])
 
     if form['p_check'] and form['c_check']:
-        vis=('pxc','((cat_id*1000000)+partner_id)','partner_id,cat_id','partner_id,cat_id')
+        vis = ('pxc', '((cat_id*1000000)+partner_id)',
+               'partner_id,cat_id', 'partner_id,cat_id')
         xml_id = 'action_profit_pxc_product_tree'
         valor = ''
         if form['partner_res_id']:
@@ -154,11 +157,12 @@ def _data_save(self, cr, uid, data, context):
         if form['cat_res_id']:
             cond = ' and cat_id=%s' % form['cat_res_id']
         if form['partner_res_id'] and form['cat_res_id']:
-            cond = ' and partner_id=%s and cat_id=%s' % (form['partner_res_id'],form['cat_res_id'])
-
+            cond = ' and partner_id=%s and cat_id=%s' % (
+                form['partner_res_id'], form['cat_res_id'])
 
     if form['u_check'] and form['p_check'] and form['c_check']:
-        vis=('upc','((user_id*100000000000)+(cat_id*1000000)+partner_id)','user_id,partner_id,cat_id','user_id,partner_id,cat_id')
+        vis = ('upc', '((user_id*100000000000)+(cat_id*1000000)+partner_id)',
+               'user_id,partner_id,cat_id', 'user_id,partner_id,cat_id')
         xml_id = 'action_profit_upc_product_tree'
         valor = ''
         if form['partner_res_id']:
@@ -166,21 +170,24 @@ def _data_save(self, cr, uid, data, context):
         if form['cat_res_id']:
             cond = ' and cat_id=%s' % form['cat_res_id']
         if form['partner_res_id'] and form['cat_res_id']:
-            cond = ' and partner_id=%s and cat_id=%s' % (form['partner_res_id'],form['cat_res_id'])
+            cond = ' and partner_id=%s and cat_id=%s' % (
+                form['partner_res_id'], form['cat_res_id'])
         if form['user_res_id'] and form['partner_res_id']:
-            cond = ' and user_id=%s and partner_id=%s' % (form['user_res_id'],form['partner_res_id'])
+            cond = ' and user_id=%s and partner_id=%s' % (
+                form['user_res_id'], form['partner_res_id'])
         if form['user_res_id'] and form['cat_res_id']:
-            cond = ' and user_id=%s and cat_id=%s' % (form['user_res_id'],form['cat_res_id'])
+            cond = ' and user_id=%s and cat_id=%s' % (
+                form['user_res_id'], form['cat_res_id'])
         if form['user_res_id'] and form['partner_res_id'] and form['cat_res_id']:
-            cond = ' and user_id=%s and partner_id=%s and cat_id=%s' % (form['user_res_id'],form['partner_res_id'],form['cat_res_id'])
-
+            cond = ' and user_id=%s and partner_id=%s and cat_id=%s' % (
+                form['user_res_id'], form['partner_res_id'], form['cat_res_id'])
 
     cond = valor and ' and '+vis[1]+'=%s' % valor or cond
     sql = """
         create or replace view report_profit_%s as (
         select
             %s as id,
-            %s,        
+            %s,
             SUM(last_cost) as sum_last_cost,
             SUM(price_subtotal) as sum_price_subtotal,
             SUM(qty_consol) as sum_qty_consol,
@@ -189,45 +196,44 @@ def _data_save(self, cr, uid, data, context):
         where p.name>='%s' and p.name<='%s'%s
         group by %s,p_uom_c_id
     )
-""" % (vis[0],vis[1],vis[2],form['date_start'],form['date_end'],cond,vis[3])
+""" % (vis[0], vis[1], vis[2], form['date_start'], form['date_end'], cond, vis[3])
 
     sql2 = """SELECT id FROM report_profit_%s""" % vis[0]
 
     cr.execute(sql)
     cr.execute(sql2)
     res = cr.fetchall()
-    updated_rep_line = map(lambda x:x[0],res)
+    updated_rep_line = map(lambda x: x[0], res)
 
     if None in updated_rep_line:
-        raise wizard.except_wizard(_('User Error'), _('You have to check salesman or product !'))
+        raise wizard.except_wizard(_('User Error'), _(
+            'You have to check salesman or product !'))
 
     mod_obj = pool.get('ir.model.data')
     act_obj = pool.get('ir.actions.act_window')
 
-
-    #we get the model
+    # we get the model
     result = mod_obj._get_id(cr, uid, 'report_profit', xml_id)
     id = mod_obj.read(cr, uid, result, ['res_id'])['res_id']
     # we read the act window
     result = act_obj.read(cr, uid, id)
     result['res_id'] = updated_rep_line
 
-
     return result
+
 
 class wiz_last_cost_sum(wizard.interface):
     states = {
         'init': {
             'actions': [],
-            'result': {'type': 'form', 'arch':_transaction_form, 'fields':_transaction_fields, 'state':[('end','Cancel'),('change','Update')]}
+            'result': {'type': 'form', 'arch': _transaction_form, 'fields': _transaction_fields, 'state': [('end', 'Cancel'), ('change', 'Update')]}
         },
         'change': {
             'actions': [],
-            'result': {'type': 'action', 'action':_data_save, 'state':'end'}
+            'result': {'type': 'action', 'action': _data_save, 'state': 'end'}
         }
     }
 wiz_last_cost_sum('profit.update.costprice.sum')
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

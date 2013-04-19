@@ -25,30 +25,32 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-import tools
-from tools.translate import _
-import netsvc
+from openerp.osv import fields, osv
+import openerp.tools as tools
+from openerp.tools.translate import _
+
+import openerp.netsvc as netsvc
 import time
 import os
 
-class account_payment_term(osv.osv):
+
+class account_payment_term(osv.Model):
     _inherit = "account.payment.term"
-    
+
     def compute(self, cr, uid, id, value, date_ref=False, context={}):
         if date_ref:
             try:
-                date_ref = time.strftime('%Y-%m-%d', time.strptime(date_ref, '%Y-%m-%d %H:%M:%S'))
+                date_ref = time.strftime('%Y-%m-%d', time.strptime(
+                    date_ref, '%Y-%m-%d %H:%M:%S'))
             except:
                 pass
         return super(account_payment_term, self).compute(cr, uid, id, value, date_ref, context=context)
-account_payment_term()
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     _order = 'date_invoice asc'
-    
+
     def _get_date_invoice_tz(self, cr, uid, ids, field_names=None, arg=False, context={}):
         if not context:
             context = {}
@@ -56,24 +58,25 @@ class account_invoice(osv.osv):
         dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
         tz = context.get('tz_invoice_ve', 'America/Caracas')
         for invoice in self.browse(cr, uid, ids, context=context):
-            res[invoice.id] = invoice.date_invoice and tools.server_to_local_timestamp(invoice.date_invoice, dt_format, dt_format, tz) or False
+            res[invoice.id] = invoice.date_invoice and tools.server_to_local_timestamp(
+                invoice.date_invoice, dt_format, dt_format, tz) or False
         return res
-    
+
     _columns = {
-        ##Extract date_invoice from original, but add datetime
-        'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
+        # Extract date_invoice from original, but add datetime
+        'date_invoice': fields.datetime('Date Invoiced', states={'open': [('readonly', True)], 'close': [('readonly', True)]}, help="Keep empty to use the current date"),
         'date_invoice_tz':  fields.function(_get_date_invoice_tz, method=True, type='datetime', string='Date Invoiced with TZ', store=True),
     }
-    
+
     _defaults = {
         #'date_invoice': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
-    
+
     def action_move_create(self, cr, uid, ids, *args):
         for inv in self.browse(cr, uid, ids):
             if inv.move_id:
                 continue
             if not inv.date_invoice:
-                self.write(cr, uid, [inv.id], {'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S')})
+                self.write(cr, uid, [inv.id], {
+                           'date_invoice': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_move_create(cr, uid, ids, *args)
-account_invoice()

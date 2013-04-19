@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution             #
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).            #
 #    All Rights Reserved                                                   #
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Miguel Delgado <miguel@openerp.com.ve>                      #
 #    Planified by: Nhomar Hernandez                                        #
 #    Finance by: Corporacion AMD                                           #
@@ -22,11 +22,13 @@
 #    You should have received a copy of the GNU General Public License     #
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>. #
 ############################################################################
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
-class product_product(osv.osv):
+
+class product_product(osv.Model):
     _inherit = "product.product"
 
     _columns = {
@@ -34,4 +36,3 @@ class product_product(osv.osv):
         'track_serial_outgoing': fields.boolean('Track Outgoing Serial Lots', help="Forces to specify a Production serial outgoing Lot for all moves containing this product"),
     }
 
-product_product()

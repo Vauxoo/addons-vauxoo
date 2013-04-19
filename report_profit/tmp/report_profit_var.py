@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
 #                    Javier Duran <javier@vauxoo.com>
-# 
+#
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -28,26 +28,26 @@
 #
 ##############################################################################
 
-from osv import fields,osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
 
 
-class report_profit_uxp(osv.osv):
+
+class report_profit_uxp(osv.Model):
     _name = "report.profit.uxp"
     _description = "Profit by Products and User and Partner"
     _auto = False
     _columns = {
-        'user_id':fields.many2one('res.users', 'User', readonly=True, select=True),
-        'partner_id':fields.many2one('res.partner', 'Partner', readonly=True, select=True),
+        'user_id': fields.many2one('res.users', 'User', readonly=True, select=True),
+        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True, select=True),
         'sum_last_cost': fields.float('Last Cost Sum', readonly=True),
         'sum_price_subtotal': fields.float('Subtotal Price Sum', readonly=True),
         'sum_qty_consol': fields.float('Consolidate qty Sum', readonly=True),
-        'p_uom_c_id':fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
+        'p_uom_c_id': fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
     }
 
-
-#            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid')
-
+# where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and
+# i.state in ('open', 'paid')
     def init(self, cr):
         drop_view_if_exists(cr, 'report_profit_uxp')
         cr.execute("""
@@ -55,7 +55,7 @@ class report_profit_uxp(osv.osv):
             select
                 ((user_id*1000000)+partner_id) as id,
                 user_id,
-                partner_id,        
+                partner_id,
                 SUM(last_cost) as sum_last_cost,
                 SUM(price_subtotal) as sum_price_subtotal,
                 SUM(qty_consol) as sum_qty_consol,
@@ -64,26 +64,23 @@ class report_profit_uxp(osv.osv):
             group by user_id,partner_id,p_uom_c_id
             )
         """)
-report_profit_uxp()
 
 
-
-class report_profit_uxc(osv.osv):
+class report_profit_uxc(osv.Model):
     _name = "report.profit.uxc"
     _description = "Profit by Products and User and Category"
     _auto = False
     _columns = {
-        'user_id':fields.many2one('res.users', 'User', readonly=True, select=True),
-        'cat_id':fields.many2one('product.category', 'Category', readonly=True, select=True),
+        'user_id': fields.many2one('res.users', 'User', readonly=True, select=True),
+        'cat_id': fields.many2one('product.category', 'Category', readonly=True, select=True),
         'sum_last_cost': fields.float('Last Cost Sum', readonly=True),
         'sum_price_subtotal': fields.float('Subtotal Price Sum', readonly=True),
         'sum_qty_consol': fields.float('Consolidate qty Sum', readonly=True),
-        'p_uom_c_id':fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
+        'p_uom_c_id': fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
     }
 
-
-#            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid')
-
+# where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and
+# i.state in ('open', 'paid')
     def init(self, cr):
         drop_view_if_exists(cr, 'report_profit_uxc')
         cr.execute("""
@@ -91,7 +88,7 @@ class report_profit_uxc(osv.osv):
             select
                 ((user_id*1000000)+cat_id) as id,
                 user_id,
-                cat_id,        
+                cat_id,
                 SUM(last_cost) as sum_last_cost,
                 SUM(price_subtotal) as sum_price_subtotal,
                 SUM(qty_consol) as sum_qty_consol,
@@ -100,25 +97,23 @@ class report_profit_uxc(osv.osv):
             group by user_id,cat_id,p_uom_c_id
             )
         """)
-report_profit_uxc()
 
 
-class report_profit_pxc(osv.osv):
+class report_profit_pxc(osv.Model):
     _name = "report.profit.pxc"
     _description = "Profit by Products and Partner and Category"
     _auto = False
     _columns = {
-        'partner_id':fields.many2one('res.partner', 'Partner', readonly=True, select=True),
-        'cat_id':fields.many2one('product.category', 'Category', readonly=True, select=True),
+        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True, select=True),
+        'cat_id': fields.many2one('product.category', 'Category', readonly=True, select=True),
         'sum_last_cost': fields.float('Last Cost Sum', readonly=True),
         'sum_price_subtotal': fields.float('Subtotal Price Sum', readonly=True),
         'sum_qty_consol': fields.float('Consolidate qty Sum', readonly=True),
-        'p_uom_c_id':fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
+        'p_uom_c_id': fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
     }
 
-
-#            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid')
-
+# where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and
+# i.state in ('open', 'paid')
     def init(self, cr):
         drop_view_if_exists(cr, 'report_profit_pxc')
         cr.execute("""
@@ -126,7 +121,7 @@ class report_profit_pxc(osv.osv):
             select
                 ((cat_id*1000000)+partner_id) as id,
                 partner_id,
-                cat_id,        
+                cat_id,
                 SUM(last_cost) as sum_last_cost,
                 SUM(price_subtotal) as sum_price_subtotal,
                 SUM(qty_consol) as sum_qty_consol,
@@ -135,26 +130,24 @@ class report_profit_pxc(osv.osv):
             group by partner_id,cat_id,p_uom_c_id
             )
         """)
-report_profit_pxc()
 
 
-class report_profit_upc(osv.osv):
+class report_profit_upc(osv.Model):
     _name = "report.profit.upc"
     _description = "Profit by Products and User,Partner and Category"
     _auto = False
     _columns = {
-        'user_id':fields.many2one('res.users', 'User', readonly=True, select=True),
-        'partner_id':fields.many2one('res.partner', 'Partner', readonly=True, select=True),
-        'cat_id':fields.many2one('product.category', 'Category', readonly=True, select=True),
+        'user_id': fields.many2one('res.users', 'User', readonly=True, select=True),
+        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True, select=True),
+        'cat_id': fields.many2one('product.category', 'Category', readonly=True, select=True),
         'sum_last_cost': fields.float('Last Cost Sum', readonly=True),
         'sum_price_subtotal': fields.float('Subtotal Price Sum', readonly=True),
         'sum_qty_consol': fields.float('Consolidate qty Sum', readonly=True),
-        'p_uom_c_id':fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
+        'p_uom_c_id': fields.many2one('product.uom.consol', 'Consolidate Unit', readonly=True),
     }
 
-
-#            where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and i.state in ('open', 'paid')
-
+# where l.quantity != 0 and i.type in ('out_invoice', 'out_refund') and
+# i.state in ('open', 'paid')
     def init(self, cr):
         drop_view_if_exists(cr, 'report_profit_upc')
         cr.execute("""
@@ -163,7 +156,7 @@ class report_profit_upc(osv.osv):
                 ((user_id*100000000000)+(cat_id*1000000)+partner_id) as id,
                 user_id,
                 partner_id,
-                cat_id,        
+                cat_id,
                 SUM(last_cost) as sum_last_cost,
                 SUM(price_subtotal) as sum_price_subtotal,
                 SUM(qty_consol) as sum_qty_consol,
@@ -172,9 +165,7 @@ class report_profit_upc(osv.osv):
             group by user_id,partner_id,cat_id,p_uom_c_id
             )
         """)
-report_profit_upc()
 
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

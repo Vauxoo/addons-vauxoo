@@ -23,29 +23,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class hr_department(osv.osv):
+class hr_department(osv.Model):
     _inherit = "hr.department"
 
     _columns = {
-        'analytic_account_id': fields.many2one('account.analytic.account','Analytic'),
+        'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic'),
     }
 
-hr_department()
 
-class hr_expense_line(osv.osv):
-    _inherit ="hr.expense.line"
-    
-    def _get_analytic(self,cr,uid,context={}):
+
+class hr_expense_line(osv.Model):
+    _inherit = "hr.expense.line"
+
+    def _get_analytic(self, cr, uid, context={}):
         if context['depto']:
-            depto=self.pool.get('hr.department').browse(cr,uid,[context['depto']])[0]
+            depto = self.pool.get('hr.department').browse(
+                cr, uid, [context['depto']])[0]
             return depto.analytic_account_id.id
         return False
-    
-    _defaults= {
+
+    _defaults = {
         'analytic_account': _get_analytic
     }
-    
-hr_expense_line()
+

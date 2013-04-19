@@ -21,6 +21,8 @@
 
 import time
 from report import report_sxw
+
+
 class account_invoice2(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(account_invoice2, self).__init__(cr, uid, name, context=context)
@@ -28,18 +30,19 @@ class account_invoice2(report_sxw.rml_parse):
             'time': time,
             'cg': self.context_get,
         })
+
     def context_get(self):
         """
         Description about method
-    
+
         @param obj: object passed from report to be process
-        
+
         @return: return a result
         """
         print "COLOOOOOOOOOOOOOOOOOO"
         return self.context
-        
-        
+
+
 report_sxw.report_sxw(
     'report.account.invoices.amd',
     'account.invoice',

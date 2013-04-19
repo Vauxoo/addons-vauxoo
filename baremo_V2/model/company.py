@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2011 Vauxoo (<http://www.vauxoo.com>). All Rights Reserved
 #    hbto@vauxoo.com / humbertoarocha@gmail.com
 #
@@ -20,11 +20,11 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-class res_company(osv.osv):
+from openerp.osv import fields, osv
+
+
+class res_company(osv.Model):
     _inherit = "res.company"
     _columns = {
-        'bar_id':fields.many2one('baremo.book', 'Bareme'),
+        'bar_id': fields.many2one('baremo.book', 'Bareme'),
     }
-res_company()

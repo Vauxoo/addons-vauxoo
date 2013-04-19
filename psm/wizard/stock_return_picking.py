@@ -19,31 +19,33 @@
 #
 ##############################################################################
 
-import netsvc
+import openerp.netsvc as netsvc
 import time
 
-from osv import osv,fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
-class stock_return_picking(osv.osv_memory):
+
+
+class stock_return_picking(osv.TransientModel):
     _inherit = 'stock.return.picking'
 
     def create_returns(self, cr, uid, ids, context=None):
         if context is None:
-            context={}
-        res = super(stock_return_picking,self).create_returns(cr, uid, ids, context=context)
-       
+            context = {}
+        res = super(stock_return_picking, self).create_returns(
+            cr, uid, ids, context=context)
+
         record_id = context and context.get('active_id', False) or False
         pick_obj = self.pool.get('stock.picking')
         spl_obj = self.pool.get('stock.production.lot')
         pick = pick_obj.browse(cr, uid, record_id, context=context)
         for move in pick.move_lines:
-            spl_obj.write(cr, uid, [move.prodlot_id.id], {'check_serial':False})
+            spl_obj.write(cr, uid, [
+                          move.prodlot_id.id], {'check_serial': False})
 
         return res
 
 
-stock_return_picking()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

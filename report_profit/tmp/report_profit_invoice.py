@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2010 Vauxoo C.A. (http://openerp.com.ve/) All Rights Reserved.
 #                    Javier Duran <javier@vauxoo.com>
-# 
+#
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -28,31 +28,34 @@
 #
 ##############################################################################
 
-from osv import fields,osv
-from tools.sql import drop_view_if_exists
+from openerp.osv import osv, fields
+from openerp.tools.sql import drop_view_if_exists
+
 import time
 import datetime
 from mx.DateTime import *
 from tools import config
 
 
-class report_profit_invoice(osv.osv):
+class report_profit_invoice(osv.Model):
     def _get_prod_stock(self, cr, uid, ids, name, arg, context={}):
         res = {}
         prod_obj = self.pool.get('product.product')
 
         loc_ids = 1
         for line in self.browse(cr, uid, ids, context=context):
-            startf = datetime.date.fromtimestamp(time.mktime(time.strptime(line.name,"%Y-%m-%d")))
-            start = DateTime(int(startf.year),1,1)
-            end = DateTime(int(startf.year),int(startf.month),int(startf.day))
+            startf = datetime.date.fromtimestamp(time.mktime(
+                time.strptime(line.name, "%Y-%m-%d")))
+            start = DateTime(int(startf.year), 1, 1)
+            end = DateTime(int(startf.year), int(
+                startf.month), int(startf.day))
             d1 = start.strftime('%Y-%m-%d %H:%M:%S')
             d2 = end.strftime('%Y-%m-%d %H:%M:%S')
             c = context.copy()
-            c.update({'location': loc_ids,'from_date':d1,'to_date':d2})
+            c.update({'location': loc_ids, 'from_date': d1, 'to_date': d2})
             res.setdefault(line.id, 0.0)
             if line.product_id and line.product_id.id:
-                prd = prod_obj.browse(cr, uid, line.product_id.id,context=c)
+                prd = prod_obj.browse(cr, uid, line.product_id.id, context=c)
                 res[line.id] = prd.qty_available
         return res
 
@@ -61,11 +64,11 @@ class report_profit_invoice(osv.osv):
     _auto = False
     _columns = {
         'name': fields.date('Month', readonly=True, select=True),
-        'invoice_id':fields.many2one('account.invoice', 'Invoice', readonly=True, select=True),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True, select=True),
         'move_id': fields.many2one('account.move', 'Move', readonly=True, select=True),
         'acc_cost': fields.float('Cost', readonly=True, help="Valor que adquiere el elemento para estimacion de costo de inventario"),
-        'product_id':fields.many2one('product.product', 'Product', readonly=True, select=True),
-        'line_id':fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
+        'product_id': fields.many2one('product.product', 'Product', readonly=True, select=True),
+        'line_id': fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
         'quantity': fields.float('Quantity', readonly=True, help="Valor que adquiere el elemento para estimacion de costo de inventario"),
         'stock': fields.function(_get_prod_stock, method=True, type='float', string='Existencia', digits=(16, int(config['price_accuracy']))),
 
@@ -93,8 +96,6 @@ class report_profit_invoice(osv.osv):
             order by name
             )
         """)
-report_profit_invoice()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

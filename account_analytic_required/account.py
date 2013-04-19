@@ -23,35 +23,36 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
-class account_account(osv.osv):
-    _inherit='account.account'
-    
+
+class account_account(osv.Model):
+    _inherit = 'account.account'
+
     _columns = {
         'analytic_required': fields.boolean('Analytic Required'),
     }
-    
-account_account()
 
 
-class account_move(osv.osv):
-    _inherit='account.move'
-    
+class account_move(osv.Model):
+    _inherit = 'account.move'
+
     def button_validate(self, cursor, user, ids, context=None):
-        account_move_obj=self.pool.get('account.move.line')
-        account_obj=self.pool.get('account.account')
-        moves=account_move_obj.search(cursor, user, [('move_id', 'in', ids)])
+        account_move_obj = self.pool.get('account.move.line')
+        account_obj = self.pool.get('account.account')
+        moves = account_move_obj.search(cursor, user, [('move_id', 'in', ids)])
         if moves:
             for move_id in moves:
-                move=account_move_obj.browse(cursor, user, move_id)
-                name_move=move.name or ''
-                analytic_st=move.account_id and move.account_id.analytic_required or False
+                move = account_move_obj.browse(cursor, user, move_id)
+                name_move = move.name or ''
+                analytic_st = move.account_id and move.account_id.analytic_required or False
                 if analytic_st is True:
-                    account_move_id=move.account_id and move.account_id.id or False
-                    analytic_acc_move=move.analytic_account_id and move.analytic_account_id.id or False
+                    account_move_id = move.account_id and move.account_id.id or False
+                    analytic_acc_move = move.analytic_account_id and move.analytic_account_id.id or False
                     if analytic_acc_move is False:
-                        raise osv.except_osv(_('Error'), _('Need add analytic account in move whit name '+ name_move + '.'))
-        res=super(account_move, self).button_validate(cursor, user, ids, context=context)
+                        raise osv.except_osv(_('Error'), _(
+                            'Need add analytic account in move whit name ' + name_move + '.'))
+        res = super(account_move, self).button_validate(
+            cursor, user, ids, context=context)
         return res

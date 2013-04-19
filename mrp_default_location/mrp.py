@@ -25,27 +25,29 @@
 ##############################################################################
 
 import time
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 from tools import config
 import base64
 import csv
 import cStringIO
-import tools
+import openerp.tools as tools
 
 
-class mrp_production(osv.osv):
-    _inherit='mrp.production'
+class mrp_production(osv.Model):
+    _inherit = 'mrp.production'
+
     def product_id_change(self, cr, uid, ids, product_id, context=None):
-        res = super(mrp_production, self).product_id_change(cr,uid,ids,product_id,context=context)
+        res = super(mrp_production, self).product_id_change(
+            cr, uid, ids, product_id, context=context)
         if product_id:
-            product = self.pool.get('product.product').browse(cr,uid,product_id,context=context)
-            res['value'].update({'location_src_id' : product.categ_id and product.categ_id.location_src_id.id or False,
-                        'location_dest_id' : product.categ_id and product.categ_id.location_dest_id.id or False})
+            product = self.pool.get('product.product').browse(
+                cr, uid, product_id, context=context)
+            res['value'].update({'location_src_id': product.categ_id and product.categ_id.location_src_id.id or False,
+                                 'location_dest_id': product.categ_id and product.categ_id.location_dest_id.id or False})
         else:
-            res['value'].update({'location_src_id' : False,
-                        'location_dest_id' : False})
+            res['value'].update({'location_src_id': False,
+                                 'location_dest_id': False})
         return res
-        
-mrp_production()
 

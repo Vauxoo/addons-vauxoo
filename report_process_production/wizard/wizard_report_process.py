@@ -26,21 +26,23 @@
 
 import time
 
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
 
-class wizard_report_process(osv.osv_memory):
+
+class wizard_report_process(osv.TransientModel):
     _name = 'wizard.report.process'
 
     _columns = {
-      'product_ids': fields.many2many('product.product','temp_product_rel','temp_id','product_id','Productos'),
-      'print':fields.selection([('sin','Sin Agrupar'),('agrupado','Agrupado'),('ambos','Ambos')],'Imprimir',required=True),
+        'product_ids': fields.many2many('product.product', 'temp_product_rel', 'temp_id', 'product_id', 'Productos'),
+        'print': fields.selection([('sin', 'Sin Agrupar'), ('agrupado', 'Agrupado'), ('ambos', 'Ambos')], 'Imprimir', required=True),
     }
 
-    _defaults={
-        'print':'ambos'
+    _defaults = {
+        'print': 'ambos'
     }
+
     def default_get(self, cr, uid, fields, context=None):
         """ To get default values for the object.
          @param self: The object pointer.
@@ -54,18 +56,18 @@ class wizard_report_process(osv.osv_memory):
             context = {}
         prod_obj = self.pool.get('product.product')
         production_obj = self.pool.get('mrp.production')
-        res = super(wizard_report_process, self).default_get(cr, uid, fields, context=context)
+        res = super(wizard_report_process, self).default_get(
+            cr, uid, fields, context=context)
         production_ids = context.get('active_ids', [])
         if not production_ids:
             return res
-        prod_list=[]
-        for production in production_obj.browse(cr,uid,production_ids):
+        prod_list = []
+        for production in production_obj.browse(cr, uid, production_ids):
             for line in production.move_lines:
                 prod_list.append(line.product_id.id)
-        res['product_ids']=prod_list
+        res['product_ids'] = prod_list
         return res
-        
-        
+
     def check_report(self, cr, uid, ids, context=None):
         datas = {}
         if context is None:
@@ -73,12 +75,12 @@ class wizard_report_process(osv.osv_memory):
         data = self.read(cr, uid, ids)[0]
 
         datas = {
-            'ids': context.get('active_ids',[]),
+            'ids': context.get('active_ids', []),
             'model': 'wizard.report.process',
             'form': data,
             'uid': uid,
         }
-        
+
         return {
             'type': 'ir.actions.report.xml',
             'report_name': 'process.report',
@@ -86,4 +88,3 @@ class wizard_report_process(osv.osv_memory):
         }
 
 
-wizard_report_process()

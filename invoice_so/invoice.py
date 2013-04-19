@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,17 +21,16 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
-from osv import osv
-from osv import fields
+from openerp.osv import fields, osv
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     _columns = {
         'sale_ids': fields.many2many('sale.order', 'sale_order_invoice_rel', 'invoice_id', 'order_id', 'Sale Orders', help='This is the list of sale orders that generated this invoice')
-}
+    }
 
-account_invoice()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

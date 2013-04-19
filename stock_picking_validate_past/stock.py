@@ -23,39 +23,42 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
+from openerp.osv import osv, fields
 from lxml import etree
 
-class stock_move(osv.osv):
-    _inherit= "stock.move"
-    
-    _columns={
-        'type_process_date':fields.selection([
-            ('current_date','Current Date'),
-            ('planned_date','Planned Date'),
-        ],readonly=True,string='Type Process Date',states={'draft': [('readonly', False)]}),
+
+class stock_move(osv.Model):
+    _inherit = "stock.move"
+
+    _columns = {
+        'type_process_date': fields.selection([
+            ('current_date', 'Current Date'),
+            ('planned_date', 'Planned Date'),
+        ], readonly=True, string='Type Process Date', states={'draft': [('readonly', False)]}),
     }
-    
+
     _defaults = {
         'type_process_date': 'current_date',
     }
-    
+
     def action_confirm(self, cr, uid, ids, context=None):
-        res=super(stock_move,self).action_confirm(cr,uid,ids,context=context)
+        res = super(stock_move, self).action_confirm(
+            cr, uid, ids, context=context)
         for id_move in ids:
-            move=self.browse(cr,uid,id_move)
-            type_pross_date=move.type_process_date
-            date_expect=move.date_expected
-            if type_pross_date=='planned_date':
+            move = self.browse(cr, uid, id_move)
+            type_pross_date = move.type_process_date
+            date_expect = move.date_expected
+            if type_pross_date == 'planned_date':
                 self.write(cr, uid, ids, {'create_date': date_expect})
         return res
-        
+
     def action_done(self, cr, uid, ids, context=None):
-        res=super(stock_move,self).action_done(cr,uid,ids,context=context)
+        res = super(stock_move, self).action_done(
+            cr, uid, ids, context=context)
         for id_move in ids:
-            move=self.browse(cr,uid,id_move)
-            type_pross_date=move.type_process_date
-            date_expect=move.date_expected
-            if type_pross_date=='planned_date':
+            move = self.browse(cr, uid, id_move)
+            type_pross_date = move.type_process_date
+            date_expect = move.date_expected
+            if type_pross_date == 'planned_date':
                 self.write(cr, uid, ids, {'date': date_expect})
         return res

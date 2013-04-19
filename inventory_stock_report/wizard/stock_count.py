@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,42 +21,43 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
 
-ESTADO =   [('desarrollo' , 'En Desarrollo')    ,
-            ('produccion', 'En Produccion')     ,
-            ('fin', 'Fin del Ciclo de Vida')    ,
-            ('obsoleto', 'Obsoleto')            ,
-            ('none', 'None')                    ,
-           ]
-TIPO =   [('almacenable' , 'Almacenable')       ,
-            ('consumible', 'Consumible')        ,
-            ('servicio', 'Servicio')            ,
-           ]
-SUMINISTRO =   [('comprar' , 'Comprar')         ,
-                ('producir', 'Producir')        ,
-           ]
 
-class stock_count(osv.osv_memory):
+ESTADO = [('desarrollo', 'En Desarrollo'),
+          ('produccion', 'En Produccion'),
+          ('fin', 'Fin del Ciclo de Vida'),
+          ('obsoleto', 'Obsoleto'),
+          ('none', 'None'),
+          ]
+TIPO = [('almacenable', 'Almacenable'),
+        ('consumible', 'Consumible'),
+        ('servicio', 'Servicio'),
+        ]
+SUMINISTRO = [('comprar', 'Comprar'),
+              ('producir', 'Producir'),
+              ]
+
+
+class stock_count(osv.TransientModel):
     """
     Conteo del Stock
     """
     _name = "stock.count"
     _columns = {
-        'tipo':fields.selection(TIPO, 'Tipo')                                   , 
-        'categoria': fields.many2one('product.category', 'Categorias')          ,
-        'estado':fields.selection(ESTADO, 'Estado')                             , 
-        'suministro':fields.selection(SUMINISTRO, 'Metodo de Suministro')       , 
-        'vendible': fields.boolean("Vendible")                                  ,
-        'comprable': fields.boolean("Comprable")                                ,
-        'alquilable': fields.boolean("Alquilable")                              ,
+        'tipo': fields.selection(TIPO, 'Tipo'),
+        'categoria': fields.many2one('product.category', 'Categorias'),
+        'estado': fields.selection(ESTADO, 'Estado'),
+        'suministro': fields.selection(SUMINISTRO, 'Metodo de Suministro'),
+        'vendible': fields.boolean("Vendible"),
+        'comprable': fields.boolean("Comprable"),
+        'alquilable': fields.boolean("Alquilable"),
     }
 
 
-stock_count()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

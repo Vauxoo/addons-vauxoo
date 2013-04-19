@@ -25,35 +25,34 @@
 ##############################################################################
 
 import pooler
-import wizard
 import base64
 import cStringIO
-import netsvc
-from tools.translate import _
-import tools
+import openerp.netsvc as netsvc
+from openerp.tools.translate import _
+
+import openerp.tools as tools
 import os
-from osv import osv, fields
+from openerp.osv import osv, fields
 
 
-class wizard_import(osv.osv_memory):
-    _name='wizard.import'
-    _columns={
-        'name' : fields.binary('File'),
-        'msg' : fields.text('Messages',readonly=True),
-        'validate' : fields.boolean('Validate?')
+class wizard_import(osv.TransientModel):
+    _name = 'wizard.import'
+    _columns = {
+        'name': fields.binary('File'),
+        'msg': fields.text('Messages', readonly=True),
+        'validate': fields.boolean('Validate?')
     }
-    
+
     def send_lines(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        form = self.read(cr,uid,ids,[])
-        order_id=context.get('active_id',False)
-        fdata = form and base64.decodestring( form[0]['name'] ) or False
+        form = self.read(cr, uid, ids, [])
+        order_id = context.get('active_id', False)
+        fdata = form and base64.decodestring(form[0]['name']) or False
         fvalidate = form and form[0]['validate'] or False
-        msg = self.pool.get('sale.order').import_data_line(cr, uid, order_id, fdata, fvalidate, context=context) 
+        msg = self.pool.get('sale.order').import_data_line(
+            cr, uid, order_id, fdata, fvalidate, context=context)
         if msg:
-            self.write(cr,uid,ids,{'msg':msg})
+            self.write(cr, uid, ids, {'msg': msg})
             return True
         return {}
-
-wizard_import()

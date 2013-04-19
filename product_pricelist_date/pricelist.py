@@ -24,30 +24,15 @@
 #
 ##############################################################################
 import time
-import netsvc
+import openerp.netsvc as netsvc
 import pooler
-from osv import fields, osv
+from openerp.osv import osv, fields
 
-class product_pricelist_item(osv.osv):
-    _inherit='product.pricelist.item'
+
+class product_pricelist_item(osv.Model):
+    _inherit = 'product.pricelist.item'
     _order = "date DESC, sequence, min_quantity desc"
-    
-    _columns={
-        'date' : fields.date('Fecha',help="taken as the first criterion item's ranking of the most current date"),
+
+    _columns = {
+        'date': fields.date('Fecha', help="taken as the first criterion item's ranking of the most current date"),
     }
-product_pricelist_item()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

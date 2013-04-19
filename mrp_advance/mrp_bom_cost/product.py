@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: nhomar@openerp.com.ve,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -22,17 +22,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
-class product_template(osv.osv):
-    _inherit = 'product.template' 
+
+
+class product_template(osv.Model):
+    _inherit = 'product.template'
 
     _columns = {
-        'product_active':fields.boolean('Assets', help="Determine if the product is of type active."),
+        'product_active': fields.boolean('Assets', help="Determine if the product is of type active."),
     }
     _defaults = {
         'product_active': lambda *a: 0,
     }
-product_template()

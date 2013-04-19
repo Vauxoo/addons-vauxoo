@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Humberto Arocha <hbto@vauxoo.com>           
+# Credits######################################################
+#    Coded by: Humberto Arocha <hbto@vauxoo.com>
 #    Planified by: Rafael Silva <rsilvam@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
@@ -21,17 +21,18 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 
-from osv import fields, osv
+from openerp.osv import osv, fields
 
-class sale_double_validation_installer(osv.osv_memory):
+
+class sale_double_validation_installer(osv.TransientModel):
     _name = 'sale.double.validation.installer'
     _inherit = 'res.config'
     _columns = {
-        'group_id': fields.many2one('res.groups','Required Group', required=False, 
-        help='''Setting this field to a group will only allow to that group to approve Sale Orders. 
+        'group_id': fields.many2one('res.groups', 'Required Group', required=False,
+        help='''Setting this field to a group will only allow to that group to approve Sale Orders.
         Leave blank to allow any group to approve to'''),
     }
 
@@ -49,7 +50,6 @@ class sale_double_validation_installer(osv.osv_memory):
         transition_obj.write(cr, uid, waiting_id, {'group_id': group_id})
         return {}
 
-sale_double_validation_installer()
 
 
 

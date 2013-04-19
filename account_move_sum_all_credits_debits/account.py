@@ -24,33 +24,34 @@
 #
 ##############################################################################
 
-from tools.translate import _
-from osv import osv, fields
+from openerp.tools.translate import _
+
+from openerp.osv import osv, fields
 import decimal_precision as dp
 
-class account_move(osv.osv):
+
+class account_move(osv.Model):
     _inherit = "account.move"
-    
+
     """example of query that get these fields ---
-    select sum(credit), sum(debit) 
-    from account_move_line 
+    select sum(credit), sum(debit)
+    from account_move_line
     where move_id=27
     """
-    
+
     def _sum_credit_debit(self, cr, uid, ids, field, arg, context=None):
         suma = []
         dict = {}
         for id in ids:
-            cr.execute("""select sum(credit), sum(debit) 
-                        from account_move_line 
-                        where move_id=%s""",(id,))
+            cr.execute("""select sum(credit), sum(debit)
+                        from account_move_line
+                        where move_id=%s""", (id,))
             suma = cr.fetchone()
-            dict[id] = {field[0]:suma[0],field[1]:suma[1]}
-        return dict#{25:{total_debit:1200},{total_credit:1200}}
-    
+            dict[id] = {field[0]: suma[0], field[1]: suma[1]}
+        return dict  # {25:{total_debit:1200},{total_credit:1200}}
+
     _columns = {
         'total_debit': fields.function(_sum_credit_debit, string='Total debit', method=True, digits_compute=dp.get_precision('Account'), type='float', multi="total_credit_debit"),
         'total_credit': fields.function(_sum_credit_debit, string='Total credit', method=True, digits_compute=dp.get_precision('Account'), type='float', multi="total_credit_debit"),
     }
 
-account_move()

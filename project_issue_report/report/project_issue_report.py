@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: María Gabriela Quilarque <gabriela@openerp.com.ve>
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -25,26 +25,26 @@
 
 import time
 import ir
-from osv import osv
 from report import report_sxw
 import pooler
+
 
 class Late_payments(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(Late_payments, self).__init__(cr, uid, name, context=context)
-        self.localcontext.update( {
-            'message' : self._message,
+        self.localcontext.update({
+            'message': self._message,
         })
         self.context = context
-        
+
     def _message(self, obj, company):
         company_pool = pooler.get_pool(self.cr.dbname).get('res.company')
-        message = company_pool.browse(self.cr, self.uid, company.id, {'lang':obj.lang}).overdue_msg 
+        message = company_pool.browse(self.cr, self.uid, company.id, {
+                                      'lang': obj.lang}).overdue_msg
         return message
 
 report_sxw.report_sxw('report.account.late.payments.l10n.ve', 'res.partner',
-        'addons/late_payments_report/report/late_payments.rml', parser=Late_payments)
+                      'addons/late_payments_report/report/late_payments.rml', parser=Late_payments)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

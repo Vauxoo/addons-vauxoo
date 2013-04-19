@@ -24,27 +24,30 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 import re
 
-class stock_location(osv.osv):
+
+class stock_location(osv.Model):
     _inherit = 'stock.location'
     _columns = {
-        'code' : fields.char('Code', size=64)
+        'code': fields.char('Code', size=64)
     }
-    
+
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         if not args:
             args = []
         if name:
-            ids = self.search(cr, user, [('code','=',name)]+ args, limit=limit, context=context)
+            ids = self.search(cr, user, [(
+                'code', '=', name)] + args, limit=limit, context=context)
             if not ids:
                 ids = set()
-                ids.update(self.search(cr, user, args + [('code',operator,name)], limit=limit, context=context))
-                ids.update(map(lambda a: a[0], super(stock_location, self).name_search(cr, user, name=name, args=args, operator=operator, context=context, limit=limit)))
+                ids.update(self.search(cr, user, args + [(
+                    'code', operator, name)], limit=limit, context=context))
+                ids.update(map(lambda a: a[0], super(stock_location, self).name_search(
+                    cr, user, name=name, args=args, operator=operator, context=context, limit=limit)))
                 ids = list(ids)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
         return result
-stock_location()

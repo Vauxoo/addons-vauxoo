@@ -24,6 +24,7 @@ import time
 from report import report_sxw
 import pooler
 
+
 class order(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(order, self).__init__(cr, uid, name, context=context)
@@ -33,8 +34,10 @@ class order(report_sxw.rml_parse):
             'get_tax': self._get_tax,
             'get_product_code': self._get_product_code,
         })
+
     def _get_line_tax(self, line_obj):
-        self.cr.execute("SELECT tax_id FROM purchase_order_taxe WHERE order_line_id=%s", (line_obj.id))
+        self.cr.execute(
+            "SELECT tax_id FROM purchase_order_taxe WHERE order_line_id=%s", (line_obj.id))
         res = self.cr.fetchall() or None
         if not res:
             return ""
@@ -42,7 +45,8 @@ class order(report_sxw.rml_parse):
             tax_ids = [t[0] for t in res]
         else:
             tax_ids = res[0]
-        res = [tax.description for tax in self.pool.get('account.tax').browse(self.cr, self.uid, tax_ids)]
+        res = [tax.description for tax in self.pool.get(
+            'account.tax').browse(self.cr, self.uid, tax_ids)]
         return ",\n ".join(res)
 
     def _get_tax(self, order_obj):
@@ -69,15 +73,16 @@ class order(report_sxw.rml_parse):
                 base = 0
                 for line in self.pool.get('purchase.order.line').browse(self.cr, self.uid, line_ids):
                     base += line.price_subtotal
-                res.append({'code':tax.name,
-                    'base':base,
-                    'amount':base*tax.amount})
+                res.append({'code': tax.name,
+                            'base': base,
+                            'amount': base*tax.amount})
         return res
+
     def _get_product_code(self, product_id, partner_id):
-        product_obj=pooler.get_pool(self.cr.dbname).get('product.product')
+        product_obj = pooler.get_pool(self.cr.dbname).get('product.product')
         return product_obj._product_code(self.cr, self.uid, [product_id], name=None, arg=None, context={'partner_id': partner_id})[product_id]
 
-report_sxw.report_sxw('report.purchase.discount.order','purchase.order','addons/purchase_discount/report/order.rml',parser=order)
+report_sxw.report_sxw('report.purchase.discount.order', 'purchase.order',
+                      'addons/purchase_discount/report/order.rml', parser=order)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

@@ -19,11 +19,13 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
-class pedigree_serialization_manager(osv.osv_memory):
+
+class pedigree_serialization_manager(osv.TransientModel):
     _name = "pedigree.serialization.manager"
     _description = "Pedigree Serialization Manager"
 
@@ -38,9 +40,11 @@ class pedigree_serialization_manager(osv.osv_memory):
         """
         if context is None:
             context = {}
-        res = super(pedigree_serialization_manager, self).default_get(cr, uid, fields, context=context)
+        res = super(pedigree_serialization_manager, self).default_get(
+            cr, uid, fields, context=context)
         if context.get('active_id'):
-            move = self.pool.get('stock.move').browse(cr, uid, context['active_id'], context=context)
+            move = self.pool.get('stock.move').browse(
+                cr, uid, context['active_id'], context=context)
             if 'product_id' in fields:
                 res.update({'product_id': move.product_id.id})
             if 'product_uom' in fields:
@@ -55,9 +59,9 @@ class pedigree_serialization_manager(osv.osv_memory):
         'qty': fields.float('Quantity', digits_compute=dp.get_precision('Product UoM')),
         'product_id': fields.many2one('product.product', 'Product', required=True, select=True),
         'product_uom': fields.many2one('product.uom', 'UoM'),
-        'psm':fields.text('Pedigree Serialization Manager'),
+        'psm': fields.text('Pedigree Serialization Manager'),
         'location_id': fields.many2one('stock.location', 'Source Location')
-     }
+    }
 
     def split_lot(self, cr, uid, ids, context=None):
         """ To split a lot
@@ -72,30 +76,31 @@ class pedigree_serialization_manager(osv.osv_memory):
             context = {}
         self.split(cr, uid, ids, context.get('active_ids'), context=context)
         return {'type': 'ir.actions.act_window_close'}
-#~ 
+#~
 
-    def check_serial(self,cr,uid,ids,data,context=None):
+    def check_serial(self, cr, uid, ids, data, context=None):
         if context is None:
-            context={}
-        seriales=[]
-        aux=[]
-        picking_id = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
+            context = {}
+        seriales = []
+        aux = []
+        picking_id = self.pool.get('stock.move').browse(
+            cr, uid, context.get('active_ids'), context=context)[0].picking_id
 
         for sm_line in picking_id.move_lines:
             if sm_line.product_id == data.product_id:
                 seriales.append(sm_line.prodlot_id.name)
 
-        psm=data.psm
+        psm = data.psm
         if psm:
-            lines=psm.split('\n')
+            lines = psm.split('\n')
             lines = list(set(lines))
             for i in lines:
                 if i in seriales:
                     aux.append(i)
         else:
-            lines=[]
-        
-        return  '\n'.join(aux)
+            lines = []
+
+        return '\n'.join(aux)
 
     def split(self, cr, uid, ids, move_ids, context=None):
         #~ """ To split stock moves into production lot
@@ -107,7 +112,7 @@ class pedigree_serialization_manager(osv.osv_memory):
         #~ @param context: A standard dictionary
         #~ @return:
         #~ """
-        check_aux=True
+        check_aux = True
         if context is None:
             context = {}
         inventory_id = context.get('inventory_id', False)
@@ -115,15 +120,15 @@ class pedigree_serialization_manager(osv.osv_memory):
         inventory_obj = self.pool.get('stock.inventory')
         move_obj = self.pool.get('stock.move')
         new_move = []
-        
-        
+
         for data in self.browse(cr, uid, ids, context=context):
-            
-            check = self.check_serial(cr,uid,ids,data,context=context)
-            
+
+            check = self.check_serial(cr, uid, ids, data, context=context)
+
             if check:
-                raise osv.except_osv(_("User Error"), _("These serial has already been used \n%s")%check)
-                        
+                raise osv.except_osv(_("User Error"), _(
+                    "These serial has already been used \n%s") % check)
+
             for move in move_obj.browse(cr, uid, move_ids, context=context):
                 move_qty = move.product_qty
                 quantity_rest = move.product_qty
@@ -132,36 +137,40 @@ class pedigree_serialization_manager(osv.osv_memory):
                 total_move_qty = 0.0
                 psm = data.psm
                 if psm:
-                    lines=psm.split('\n')
+                    lines = psm.split('\n')
                     lines = list(set(lines))
                     if '' in lines:
                         lines.remove('')
                 else:
-                    lines=[]
-                    
+                    lines = []
+
                 for line in lines:
                     if move.product_id.track_serial_incoming and move.product_id.track_serial_outgoing and move.picking_id.type == 'out':
-                        spl_ids = prodlot_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',line)])
+                        spl_ids = prodlot_obj.search(cr, uid, [(
+                            'product_id', '=', move.product_id.id), ('name', '=', line)])
                         if len(spl_ids) < 1:
-                            raise osv.except_osv(_('Error !'), _('This serial %s is not exist')% line)
-                
+                            raise osv.except_osv(_('Error !'), _(
+                                'This serial %s is not exist') % line)
+
                 if move.picking_id.type == "in":
-                    self.track_serial_incoming(cr, uid, ids,data.product_id.id,lines,context=context)
-                    check_aux=False
-                
-                
+                    self.track_serial_incoming(
+                        cr, uid, ids, data.product_id.id, lines, context=context)
+                    check_aux = False
+
                 for line in lines:
                     quantity = 1
                     total_move_qty += quantity
                     if total_move_qty > move_qty:
-                        precision = '%0.' + str(dp.get_precision('Product UoM')(cr)[1] or 0) + 'f'
-                        raise osv.except_osv(_('Processing Error'), _('Processing quantity %s for %s is larger than the available quantity %s!')\
-                                     % (precision % total_move_qty, move.product_id.name, precision % move_qty))
+                        precision = '%0.' + str(dp.get_precision(
+                            'Product UoM')(cr)[1] or 0) + 'f'
+                        raise osv.except_osv(_('Processing Error'), _('Processing quantity %s for %s is larger than the available quantity %s!')
+                                             % (precision % total_move_qty, move.product_id.name, precision % move_qty))
                     if quantity <= 0 or move_qty == 0:
                         continue
                     quantity_rest -= quantity
                     uos_qty = quantity / move_qty * move.product_uos_qty
-                    uos_qty_rest = quantity_rest / move_qty * move.product_uos_qty
+                    uos_qty_rest = quantity_rest / \
+                        move_qty * move.product_uos_qty
                     if quantity_rest < 0:
                         quantity_rest = quantity
                         break
@@ -171,54 +180,63 @@ class pedigree_serialization_manager(osv.osv_memory):
                         'state': move.state
                     }
                     if quantity_rest > 0:
-                        current_move = move_obj.copy(cr, uid, move.id, default_val, context=context)
+                        current_move = move_obj.copy(
+                            cr, uid, move.id, default_val, context=context)
                         if inventory_id and current_move:
-                            inventory_obj.write(cr, uid, inventory_id, {'move_ids': [(4, current_move)]}, context=context)
+                            inventory_obj.write(cr, uid, inventory_id, {
+                                                'move_ids': [(4, current_move)]}, context=context)
                         new_move.append(current_move)
 
                     if quantity_rest == 0:
                         current_move = move.id
-                        
-                    picking = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
-                    
-                    
+
+                    picking = self.pool.get('stock.move').browse(cr, uid, context.get(
+                        'active_ids'), context=context)[0].picking_id
+
                     if picking.type == 'out':
-                        
-                        spl_id = prodlot_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',line)])
+
+                        spl_id = prodlot_obj.search(cr, uid, [(
+                            'product_id', '=', move.product_id.id), ('name', '=', line)])
                         if spl_id:
-                            prodlot_obj.write(cr, uid, [spl_id], {'check_serial': True,'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name})
-                            
-                            prodlot_brw = prodlot_obj.browse(cr,uid,[spl_id],context=context)[0]
-                            
-                            if not prodlot_brw.check_serial: 
-                            
+                            prodlot_obj.write(cr, uid, [spl_id], {'check_serial': True, 'ref':  self.pool.get(
+                                'ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name})
+
+                            prodlot_brw = prodlot_obj.browse(
+                                cr, uid, [spl_id], context=context)[0]
+
+                            if not prodlot_brw.check_serial:
+
                                 prodlot_id = prodlot_brw.id
                             else:
-                                raise osv.except_osv(_('Error !'), _('These serial already by used in other outgoing picking %s ')%'\n'.join(res))
+                                raise osv.except_osv(_('Error !'), _(
+                                    'These serial already by used in other outgoing picking %s ') % '\n'.join(res))
                         else:
                             prodlot_id = False
                             if not prodlot_id:
-                                picking = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
+                                picking = self.pool.get('stock.move').browse(cr, uid, context.get(
+                                    'active_ids'), context=context)[0].picking_id
                                 prodlot_id = prodlot_obj.create(cr, uid, {
                                     'name': line,
                                     'product_id': move.product_id.id,
                                     'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
-                                    'check_serial':check_aux,
-                                    'company_id':picking.company_id.id,
-                                    },context=context)
+                                    'check_serial': check_aux,
+                                    'company_id': picking.company_id.id,
+                                }, context=context)
                     else:
                         prodlot_id = False
                         if not prodlot_id:
-                            picking = self.pool.get('stock.move').browse(cr,uid,context.get('active_ids'),context=context)[0].picking_id
+                            picking = self.pool.get('stock.move').browse(cr, uid, context.get(
+                                'active_ids'), context=context)[0].picking_id
                             prodlot_id = prodlot_obj.create(cr, uid, {
                                 'name': line,
                                 'product_id': move.product_id.id,
                                 'ref':  self.pool.get('ir.sequence').get(cr, uid, 'psm.stock.production.lot')+':'+picking.name,
-                                'check_serial':check_aux,
-                                'company_id':picking.company_id.id,
-                                },context=context)
+                                'check_serial': check_aux,
+                                'company_id': picking.company_id.id,
+                            }, context=context)
 
-                    move_obj.write(cr, uid, [current_move], {'prodlot_id': prodlot_id, 'state':move.state})
+                    move_obj.write(cr, uid, [current_move], {
+                                   'prodlot_id': prodlot_id, 'state': move.state})
 
                     update_val = {}
                     if quantity_rest > 0:
@@ -229,18 +247,19 @@ class pedigree_serialization_manager(osv.osv_memory):
 
         return new_move
 
-    def track_serial_incoming(self, cr, uid, ids,product_id,lines,context=None):
+    def track_serial_incoming(self, cr, uid, ids, product_id, lines, context=None):
         if context is None:
-            context={}
-        res=[]
-        spl_obj=self.pool.get('stock.production.lot')
-        spl_ids = spl_obj.search(cr,uid,[('product_id','=',product_id)],context=context)
-        if len(spl_ids)>=1:
+            context = {}
+        res = []
+        spl_obj = self.pool.get('stock.production.lot')
+        spl_ids = spl_obj.search(cr, uid, [(
+            'product_id', '=', product_id)], context=context)
+        if len(spl_ids) >= 1:
             for line in lines:
-                if line in [x.name for x in spl_obj.browse(cr,uid,spl_ids,context=context)]:
+                if line in [x.name for x in spl_obj.browse(cr, uid, spl_ids, context=context)]:
                     res.append(line)
             if res:
-                raise osv.except_osv(_('Error !'), _('These serial already exist %s ')%'\n'.join(res))
-        
+                raise osv.except_osv(_('Error !'), _(
+                    'These serial already exist %s ') % '\n'.join(res))
 
-pedigree_serialization_manager()
+

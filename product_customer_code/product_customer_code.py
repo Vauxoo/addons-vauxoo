@@ -23,30 +23,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
-class product_customer_code(osv.osv):
+
+
+class product_customer_code(osv.Model):
     _name = "product.customer.code"
     _description = "Add manies Code of Customer's"
-    
+
     _rec_name = 'product_code'
-    
+
     _columns = {
         'product_code': fields.char('Customer Product Code', size=64, required=True, help="This customer's product code will be used when searching into a request for quotation."),
         'product_name': fields.char('Customer Product Name', size=128, help="This customer's product name will be used when searching into a request for quotation."),
         'product_id': fields.many2one('product.product', 'Product', required=True),
         'partner_id': fields.many2one('res.partner', 'Customer', required=True),
-        'company_id': fields.many2one('res.company','Company', required=False),
+        'company_id': fields.many2one('res.company', 'Company', required=False),
     }
-    
+
     _defaults = {
         'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'product.customer.code', context=c),
     }
-    
+
     _sql_constraints = [
-        ('unique_code', 'unique(product_code,company_id,partner_id)', 'Product Code of customer must be unique'),
+        ('unique_code', 'unique(product_code,company_id,partner_id)',
+         'Product Code of customer must be unique'),
     ]
-    
-    #TODO: Add index to product_code, partner_id
-product_customer_code()
+
+    # TODO: Add index to product_code, partner_id

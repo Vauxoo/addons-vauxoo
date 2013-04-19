@@ -25,11 +25,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
-class product_inherited(osv.osv):
+
+class product_inherited(osv.Model):
     """
     Checks if a loaded product already exists on the database
     """
@@ -43,7 +43,8 @@ class product_inherited(osv.osv):
 
     def _check_uniqueness(self, cr, uid, ids, context=None):
         all_ids = self.search(cr, uid, [('id', '<>', ids[0])])
-        all_products = [p for p in self.browse(cr, uid, all_ids, [], context) if p.ean13 != False]
+        all_products = [p for p in self.browse(
+            cr, uid, all_ids, [], context) if p.ean13 != False]
         if all_products == []:
             return True
         for product in self.browse(cr, uid, ids, context):
@@ -55,6 +56,5 @@ class product_inherited(osv.osv):
                     return False
         return True
 
-    _constraints = [(_check_uniqueness, 'ERROR, product already exists for this company', ['ean13'])]
-
-product_inherited()
+    _constraints = [(
+        _check_uniqueness, 'ERROR, product already exists for this company', ['ean13'])]

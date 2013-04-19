@@ -23,25 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv, fields
-from tools.translate import _
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 from datetime import datetime
-import netsvc
-    
-class mrp_production(osv.osv):
+import openerp.netsvc as netsvc
+
+
+class mrp_production(osv.Model):
     _inherit = "mrp.production"
-    
+
     def action_cancel(self, cr, uid, ids, context=None):
 
         if context is None:
             context = {}
-            
+
         wf_service = netsvc.LocalService("workflow")
-        
+
         move_obj = self.pool.get('stock.move')
         for production in self.browse(cr, uid, ids, context=context):
             for line in production.picking_ids:
-                wf_service.trg_validate(uid, 'stock.picking', line.id, 'button_cancel', cr)
+                wf_service.trg_validate(
+                    uid, 'stock.picking', line.id, 'button_cancel', cr)
         return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
-    
-mrp_production()
+

@@ -21,14 +21,15 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 
-class product_customs_rate(osv.osv):
+
+class product_customs_rate(osv.Model):
 
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
             return []
-        reads = self.read(cr, uid, ids, ['name','code'], context=context)
+        reads = self.read(cr, uid, ids, ['name', 'code'], context=context)
         res = []
         for record in reads:
             name = record['name']
@@ -43,13 +44,17 @@ class product_customs_rate(osv.osv):
         args = args[:]
         ids = []
         if name:
-            ids = self.search(cr, user, [('code', '=like', name+"%")]+args, limit=limit)
+            ids = self.search(cr, user, [(
+                'code', '=like', name+"%")]+args, limit=limit)
             if not ids:
-                ids = self.search(cr, user, [('name', operator, name)]+ args, limit=limit)
+                ids = self.search(cr, user, [(
+                    'name', operator, name)] + args, limit=limit)
             if not ids and len(name.split()) >= 2:
-                #Separating code and name of account for searching
-                operand1,operand2 = name.split(': ',1) #name can contain spaces e.g. OpenERP S.A.
-                ids = self.search(cr, user, [('code', operator, operand1), ('name', operator, operand2)]+ args, limit=limit)
+                # Separating code and name of account for searching
+                operand1, operand2 = name.split(
+                    ': ', 1)  # name can contain spaces e.g. OpenERP S.A.
+                ids = self.search(cr, user, [('code', operator, operand1), (
+                    'name', operator, operand2)] + args, limit=limit)
         else:
             ids = self.search(cr, user, args, context=context, limit=limit)
         return self.name_get(cr, user, ids, context=context)
@@ -61,36 +66,38 @@ class product_customs_rate(osv.osv):
     _name = 'product.customs.rate'
     _description = 'Customs Rate'
     _columns = {
-        'code' : fields.char('Code', size=64),
+        'code': fields.char('Code', size=64),
         'name': fields.char('Name', size=2048, required=True, translate=True, select=True),
         'active': fields.boolean('Active'),
         'complete_name': fields.function(_name_get_fnc, method=True, type="char", string='Name'),
-        'parent_id': fields.many2one('product.customs.rate','Parent Customs Rate', select=True, domain=[('type','=','view')]),
+        'parent_id': fields.many2one('product.customs.rate', 'Parent Customs Rate', select=True, domain=[('type', '=', 'view')]),
         'child_ids': fields.one2many('product.customs.rate', 'parent_id', string='Child Customs Rate'),
-        'type': fields.selection([('view','View'), ('normal','Normal')], 'Customs Rate Type',required=True),
-        'tax_ids' : fields.many2many('account.tax','product_customs_rate_tax','customs_rate_id','tax_id','Taxes')
+        'type': fields.selection([('view', 'View'), ('normal', 'Normal')], 'Customs Rate Type', required=True),
+        'tax_ids': fields.many2many('account.tax', 'product_customs_rate_tax', 'customs_rate_id', 'tax_id', 'Taxes')
 
     }
     _defaults = {
         'active': 1,
         'type': 'normal',
-    }  
+    }
     _order = "code"
+
     def _check_recursion(self, cr, uid, ids, context=None):
         level = 100
         while len(ids):
-            cr.execute('select distinct parent_id from product_customs_rate where id IN %s',(tuple(ids),))
-            ids = filter(None, map(lambda x:x[0], cr.fetchall()))
+            cr.execute('select distinct parent_id from product_customs_rate where id IN %s', (
+                tuple(ids),))
+            ids = filter(None, map(lambda x: x[0], cr.fetchall()))
             if not level:
                 return False
             level -= 1
         return True
 
     _constraints = [
-        (_check_recursion, 'Error ! You can not create recursive Customs Rate.', ['parent_id'])
+        (_check_recursion, 'Error ! You can not create recursive Customs Rate.', [
+         'parent_id'])
     ]
+
     def child_get(self, cr, uid, ids):
         return [ids]
-
-product_customs_rate()
 

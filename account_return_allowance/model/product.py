@@ -4,8 +4,8 @@
 #    VAUXOO, C.A.
 #    Copyright (C) VAUXOO, C.A. (<http://www.vauxoo.com>). All Rights Reserved
 #    hbto@vauxoo.com
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #    This program is free software: you can redistribute it and/or modify
@@ -22,16 +22,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 
 #~ from random import randrange
 from datetime import datetime
 
 
-class product_category(osv.osv):
+class product_category(osv.Model):
     _inherit = 'product.category'
     _columns = {
         'property_account_allowance': fields.property(
@@ -52,11 +52,11 @@ class product_category(osv.osv):
             help="Comercial credit note, This account will be used to book Sale Returns when making Customer Refunds."),
     }
 
-product_category()
 
-class product_template(osv.osv):
-    _inherit='product.template'
-    _columns={
+
+class product_template(osv.Model):
+    _inherit = 'product.template'
+    _columns = {
         'property_account_allowance': fields.property(
             'account.account',
             type='many2one',
@@ -74,6 +74,4 @@ class product_template(osv.osv):
             view_load=True,
             help="Comercial credit note,This account will be used to book Sale Returns when making Customer Refunds."),
     }
-
-product_template()
 

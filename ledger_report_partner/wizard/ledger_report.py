@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,24 +21,25 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 import decimal_precision as dp
 import time
 
 
-class ledger_report(osv.osv_memory):
+class ledger_report(osv.TransientModel):
     _inherit = "account.report.general.ledger"
     _name = "ledger.report"
     _columns = {
-        'partner_id':fields.many2one('res.partner','Partner',help="Select the Partner"),
+        'partner_id': fields.many2one('res.partner', 'Partner', help="Select the Partner"),
     }
-    
+
     _defaults = {
         'initial_balance': True,
         'amount_currency': False,
@@ -48,14 +49,14 @@ class ledger_report(osv.osv_memory):
         if context is None:
             context = {}
         data = self.pre_print_report(cr, uid, ids, data, context=context)
-        data['form'].update(self.read(cr, uid, ids, ['landscape',  'initial_balance', 'amount_currency', 'sortby','partner_id'])[0])
-        if not data['form']['fiscalyear_id']:# GTK client problem onchange does not consider in save record
+        data['form'].update(self.read(cr, uid, ids, [
+                            'landscape',  'initial_balance', 'amount_currency', 'sortby', 'partner_id'])[0])
+        if not data['form']['fiscalyear_id']:  # GTK client problem onchange does not consider in save record
             data['form'].update({'initial_balance': False})
         res = data['form']['partner_id'] and ({ 'type': 'ir.actions.report.xml', 'report_name': 'report.ledger', 'datas': data}) or \
-                                       ({ 'type': 'ir.actions.report.xml', 'report_name': 'report.ledger_partner_field', 'datas': data}) 
+            ({'type': 'ir.actions.report.xml', 'report_name':
+              'report.ledger_partner_field', 'datas': data})
         print res
         return res
 
-
-ledger_report()
 

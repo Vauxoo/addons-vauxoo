@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -19,15 +19,15 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
-from tools.translate import _
-from osv import fields, osv
+##########################################################################
+from openerp.tools.translate import _
 
-class mrp_bom(osv.osv):
+from openerp.osv import osv, fields
+
+
+class mrp_bom(osv.Model):
     _inherit = 'mrp.bom'
-    
+
     _columns = {
         'standard_price': fields.related('product_id', 'standard_price', type='float', relation='product.template', string='Cost price'),
     }
-mrp_bom()
-

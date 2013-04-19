@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: javier@vauxoo.com
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
@@ -21,43 +21,44 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
-from osv import fields, osv
-import tools
-from tools.translate import _
+from openerp.osv import osv, fields
+import openerp.tools as tools
+from openerp.tools.translate import _
+
 from tools import config
-import netsvc
+import openerp.netsvc as netsvc
 
-class picking_valued(osv.osv_memory):
+
+class picking_valued(osv.TransientModel):
     logger = netsvc.Logger()
     _name = "picking.valued"
     _columns = {
         'type': fields.selection([
-            ('entrega','Nota de Entrega (Con Precios)'),
-            ('despacho','Nota de Entrega (Sin Precios)'),
-            ],'Type', required=True, select=True),
+            ('entrega', 'Nota de Entrega (Con Precios)'),
+            ('despacho', 'Nota de Entrega (Sin Precios)'),
+        ], 'Type', required=True, select=True),
         'sure': fields.boolean('Are you sure?'),
         'sure2': fields.boolean('Are you sure?'),
         'sure3': fields.boolean('Are you sure?'),
         'sure4': fields.boolean('Are you sure?'),
-        'note':fields.char('Note',size=256, required=False, readonly=False ),
-        'note2':fields.char('Note',size=256, required=False, readonly=False ),
+        'note': fields.char('Note', size=256, required=False, readonly=False),
+        'note2': fields.char('Note', size=256, required=False, readonly=False),
         'reason': fields.selection([
-            ('rep','Reparación'),
-            ('tdep','Traslado a depósito'),
-            ('talmo','Traslado almacenes o bodegas de otros'),
-            ('talmp','Traslado almacenes o bodegas propios'),
-            ('tdis','Traslado para su distribución'),
-            ('otr','Otros')
-            ],'Reason', select=True),
-        'nro':fields.char('Number', 32, readonly=True),
+            ('rep', 'Reparación'),
+            ('tdep', 'Traslado a depósito'),
+            ('talmo', 'Traslado almacenes o bodegas de otros'),
+            ('talmp', 'Traslado almacenes o bodegas propios'),
+            ('tdis', 'Traslado para su distribución'),
+            ('otr', 'Otros')
+        ], 'Reason', select=True),
+        'nro': fields.char('Number', 32, readonly=True),
     }
 
     _defaults = {
         'type': 'entrega'
     }
-
 
     def default_get(self, cr, uid, fields, context=None):
         """
@@ -71,15 +72,16 @@ class picking_valued(osv.osv_memory):
         """
         if context is None:
             context = {}
-        res = super(picking_valued, self).default_get(cr, uid, fields, context=context)
+        res = super(picking_valued, self).default_get(
+            cr, uid, fields, context=context)
         record_id = context and context.get('active_id', False) or False
         pick_obj = self.pool.get('picking.valued')
         pick = pick_obj.browse(cr, uid, record_id, context=context)
         if pick:
-            for field in ('type','note','nro'):
+            for field in ('type', 'note', 'nro'):
                 if context.get(field, False):
                     res[field] = context[field]
-                    if field=='note':
+                    if field == 'note':
                         res['note2'] = context[field]
         return res
 
@@ -89,12 +91,13 @@ class picking_valued(osv.osv_memory):
 
         data_pool = self.pool.get('ir.model.data')
         obj = self.browse(cr, uid, ids[0])
-        if obj.sure==False:
+        if obj.sure == False:
             raise osv.except_osv(_('Alert !'), _('Check the box!!!'))
         context.update({'type': obj.type})
 
         action = {}
-        action_model,action_id = data_pool.get_object_reference(cr, uid, 'l10n_ve_stock', "action_pick_trans")
+        action_model, action_id = data_pool.get_object_reference(
+            cr, uid, 'l10n_ve_stock', "action_pick_trans")
         if action_model:
             action_pool = self.pool.get(action_model)
             action = action_pool.read(cr, uid, action_id, context=context)
@@ -108,7 +111,7 @@ class picking_valued(osv.osv_memory):
 
         data_pool = self.pool.get('ir.model.data')
         obj = self.browse(cr, uid, ids[0])
-        if obj.sure2==False:
+        if obj.sure2 == False:
             raise osv.except_osv(_('Alert !'), _('Check the box!!!'))
 
         context.update({'note': obj.note})
@@ -116,9 +119,11 @@ class picking_valued(osv.osv_memory):
             return self.action_number(cr, uid, ids, context=context)
 
         action = {}
-        action_model,action_id = data_pool.get_object_reference(cr, uid, 'l10n_ve_stock', "action_pick_note")
-        if obj.type=='despacho':
-            action_model,action_id = data_pool.get_object_reference(cr, uid, 'l10n_ve_stock', "action_pick_reason")
+        action_model, action_id = data_pool.get_object_reference(
+            cr, uid, 'l10n_ve_stock', "action_pick_note")
+        if obj.type == 'despacho':
+            action_model, action_id = data_pool.get_object_reference(
+                cr, uid, 'l10n_ve_stock', "action_pick_reason")
         if action_model:
             action_pool = self.pool.get(action_model)
             action = action_pool.read(cr, uid, action_id, context=context)
@@ -127,15 +132,16 @@ class picking_valued(osv.osv_memory):
         return action
 
     def make_nro(self, cr, uid, ids, context=None):
-        cr.execute('SELECT id, number ' \
-                'FROM stock_picking ' \
-                'WHERE id IN  %s',(tuple(ids),))
+        cr.execute('SELECT id, number '
+                   'FROM stock_picking '
+                   'WHERE id IN  %s', (tuple(ids),))
 
         for (id, number) in cr.fetchall():
             if not number:
-                number = self.pool.get('ir.sequence').get(cr, uid, 'stock.valued')
-            cr.execute('UPDATE stock_picking SET number=%s ' \
-                    'WHERE id=%s', (number, id))
+                number = self.pool.get('ir.sequence').get(
+                    cr, uid, 'stock.valued')
+            cr.execute('UPDATE stock_picking SET number=%s '
+                       'WHERE id=%s', (number, id))
 
         return number
 
@@ -146,14 +152,14 @@ class picking_valued(osv.osv_memory):
         data_pool = self.pool.get('ir.model.data')
         obj = self.browse(cr, uid, ids[0])
         comment = obj.note2 or obj.note
-        razon = getattr(obj,'reason')
+        razon = getattr(obj, 'reason')
         motiv = {
-                'rep':'Reparación',
-                'tdep':'Traslado a depósito',
-                'talmo':'Traslado almacenes o bodegas de otros',
-                'talmp':'Traslado almacenes o bodegas propios',
-                'tdis':'Traslado para su distribución',
-                'otr':'Otros'
+            'rep': 'Reparación',
+            'tdep': 'Traslado a depósito',
+            'talmo': 'Traslado almacenes o bodegas de otros',
+            'talmp': 'Traslado almacenes o bodegas propios',
+            'tdis': 'Traslado para su distribución',
+            'otr': 'Otros'
         }
 
         record_id = context and context.get('active_id', False) or False
@@ -165,7 +171,8 @@ class picking_valued(osv.osv_memory):
 
         context.update({'nro': number})
         action = {}
-        action_model,action_id = data_pool.get_object_reference(cr, uid, 'l10n_ve_stock', "action_pick_end")
+        action_model, action_id = data_pool.get_object_reference(
+            cr, uid, 'l10n_ve_stock', "action_pick_end")
         if action_model:
             action_pool = self.pool.get(action_model)
             action = action_pool.read(cr, uid, action_id, context=context)
@@ -174,6 +181,5 @@ class picking_valued(osv.osv_memory):
         return action
 
 
-picking_valued()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -42,8 +42,10 @@ except ImportError:
 
 try:
     import zlib
+
     def decompress(data):
         return zlib.decompress(data)
+
     def compress(data):
         return zlib.compress(data)
 except ImportError:
@@ -51,16 +53,19 @@ except ImportError:
     # library from the .NET framework. (IronPython only)
     import System
     from System import IO, Collections, Array
+
     def _string_to_bytearr(buf):
         retval = Array.CreateInstance(System.Byte, len(buf))
         for i in range(len(buf)):
             retval[i] = ord(buf[i])
         return retval
+
     def _bytearr_to_string(bytes):
         retval = ""
         for i in range(bytes.Length):
             retval += chr(bytes[i])
         return retval
+
     def _read_bytes(stream):
         ms = IO.MemoryStream()
         buf = Array.CreateInstance(System.Byte, 2048)
@@ -73,23 +78,27 @@ except ImportError:
         retval = ms.ToArray()
         ms.Close()
         return retval
+
     def decompress(data):
         bytes = _string_to_bytearr(data)
         ms = IO.MemoryStream()
         ms.Write(bytes, 0, bytes.Length)
         ms.Position = 0  # fseek 0
-        gz = IO.Compression.DeflateStream(ms, IO.Compression.CompressionMode.Decompress)
+        gz = IO.Compression.DeflateStream(
+            ms, IO.Compression.CompressionMode.Decompress)
         bytes = _read_bytes(gz)
         retval = _bytearr_to_string(bytes)
         gz.Close()
         return retval
+
     def compress(data):
         bytes = _string_to_bytearr(data)
         ms = IO.MemoryStream()
-        gz = IO.Compression.DeflateStream(ms, IO.Compression.CompressionMode.Compress, True)
+        gz = IO.Compression.DeflateStream(
+            ms, IO.Compression.CompressionMode.Compress, True)
         gz.Write(bytes, 0, bytes.Length)
         gz.Close()
-        ms.Position = 0 # fseek 0
+        ms.Position = 0  # fseek 0
         bytes = ms.ToArray()
         retval = _bytearr_to_string(bytes)
         ms.Close()
@@ -113,7 +122,8 @@ class FlateDecode(object):
                 assert len(data) % rowlength == 0
                 prev_rowdata = (0,) * rowlength
                 for row in xrange(len(data) / rowlength):
-                    rowdata = [ord(x) for x in data[(row*rowlength):((row+1)*rowlength)]]
+                    rowdata = [ord(x) for x in data[(
+                        row*rowlength):((row+1)*rowlength)]]
                     filterByte = rowdata[0]
                     if filterByte == 0:
                         pass
@@ -125,19 +135,22 @@ class FlateDecode(object):
                             rowdata[i] = (rowdata[i] + prev_rowdata[i]) % 256
                     else:
                         # unsupported PNG filter
-                        raise PdfReadError("Unsupported PNG filter %r" % filterByte)
+                        raise PdfReadError(
+                            "Unsupported PNG filter %r" % filterByte)
                     prev_rowdata = rowdata
                     output.write(''.join([chr(x) for x in rowdata[1:]]))
                 data = output.getvalue()
             else:
                 # unsupported predictor
-                raise PdfReadError("Unsupported flatedecode predictor %r" % predictor)
+                raise PdfReadError(
+                    "Unsupported flatedecode predictor %r" % predictor)
         return data
     decode = staticmethod(decode)
 
     def encode(data):
         return compress(data)
     encode = staticmethod(encode)
+
 
 class ASCIIHexDecode(object):
     def decode(data, decodeParms=None):
@@ -160,6 +173,7 @@ class ASCIIHexDecode(object):
         return retval
     decode = staticmethod(decode)
 
+
 class ASCII85Decode(object):
     def decode(data, decodeParms=None):
         retval = ""
@@ -173,7 +187,7 @@ class ASCII85Decode(object):
             if len(retval) == 0 and c == "<" and data[x+1] == "~":
                 x += 2
                 continue
-            #elif c.isspace():
+            # elif c.isspace():
             #    x += 1
             #    continue
             elif c == 'z':
@@ -185,14 +199,14 @@ class ASCII85Decode(object):
                     # cannot have a final group of just 1 char
                     assert len(group) > 1
                     cnt = len(group) - 1
-                    group += [ 85, 85, 85 ]
+                    group += [85, 85, 85]
                     hitEod = cnt
                 else:
                     break
             else:
                 c = ord(c) - 33
                 assert c >= 0 and c < 85
-                group += [ c ]
+                group += [c]
             if len(group) >= 5:
                 b = group[0] * (85**4) + \
                     group[1] * (85**3) + \
@@ -211,6 +225,7 @@ class ASCII85Decode(object):
             x += 1
         return retval
     decode = staticmethod(decode)
+
 
 def decodeStreamData(stream):
     from generic import NameObject
@@ -231,7 +246,8 @@ def decodeStreamData(stream):
             if "/Name" not in decodeParams and "/Type" not in decodeParams:
                 pass
             else:
-                raise NotImplementedError("/Crypt filter with /Name or /Type not supported yet")
+                raise NotImplementedError(
+                    "/Crypt filter with /Name or /Type not supported yet")
         else:
             # unsupported filter
             raise NotImplementedError("unsupported filter %s" % filterType)
@@ -247,6 +263,5 @@ if __name__ == "__main__":
      l(DId<j@<?3r@:F%a+D58'ATD4$Bl@l3De:,-DJs`8ARoFb/0JMK@qB4^F!,R<AKZ&-DfTqBG%G
      >uD.RTpAKYo'+CT/5+Cei#DII?(E,9)oF*2M7/c~>
     """
-    ascii85_originalText="Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure."
+    ascii85_originalText = "Man is distinguished, not only by his reason, but by this singular passion from other animals, which is a lust of the mind, that by a perseverance of delight in the continued and indefatigable generation of knowledge, exceeds the short vehemence of any carnal pleasure."
     assert ASCII85Decode.decode(ascii85Test) == ascii85_originalText
-

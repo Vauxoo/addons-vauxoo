@@ -1,8 +1,8 @@
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    
+#
 
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,14 +20,16 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import time
 
-_US_STATE = [('draft', 'New'),('open', 'In Progress'),('pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
+_US_STATE = [('draft', 'New'), ('open', 'In Progress'), (
+    'pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
 
-class user_story(osv.osv):
+
+class user_story(osv.Model):
     """
     OpenERP Model : User Story
     """
@@ -41,19 +43,21 @@ class user_story(osv.osv):
         result = {}
         task_obj = self.pool.get('project.task')
         for orderpoint in self.browse(cr, uid, ids, context=context):
-            task_ids = task_obj.search(cr, uid , [('userstory_id', '=', orderpoint.id)])
+            task_ids = task_obj.search(cr, uid, [
+                                       ('userstory_id', '=', orderpoint.id)])
             result[orderpoint.id] = task_ids
         return result
 
     def _set_task(self, cr, uid, id, name, value, arg, ctx=None):
-        
-        task_ids = self.pool.get('project.task').search(cr, uid , [("userstory_id",'=',id)])
+
+        task_ids = self.pool.get('project.task').search(
+            cr, uid, [("userstory_id", '=', id)])
         task_id = list(set(value[0][2]) - set(task_ids))
         if task_id:
             for i in task_id:
                 sql_str = """UPDATE project_task set
                             userstory_id='%s'
-                            WHERE id=%s """ % (id,i)
+                            WHERE id=%s """ % (id, i)
                 cr.execute(sql_str)
         else:
             task_id = list(set(task_ids) - set(value[0][2]))
@@ -63,62 +67,60 @@ class user_story(osv.osv):
                                 WHERE id=%s """ % (i)
                     cr.execute(sql_str)
         return True
-    
-        
+
     def write(self, cr, uid, ids, vals, context=None):
-       
+
         task_obj = self.pool.get('project.task')
         if vals.get('sk_id'):
-            
-            task_ids = task_obj.search(cr, uid , [('userstory_id','=',ids[0])])
-            task_obj.write(cr, uid,task_ids,{'sprint_id': vals.get('sk_id')}, context=context) 
-             
-        return  super(user_story, self).write(cr, uid, ids,vals, context=context)    
-        
+
+            task_ids = task_obj.search(cr, uid, [
+                                       ('userstory_id', '=', ids[0])])
+            task_obj.write(cr, uid, task_ids, {
+                           'sprint_id': vals.get('sk_id')}, context=context)
+
+        return super(user_story, self).write(cr, uid, ids, vals, context=context)
+
     _columns = {
-        'name':fields.char('Title', size=255, required=True, readonly=False),
-        'owner':fields.char('Owner', size=255, required=True, readonly=False),
-        'code':fields.char('Code', size=64, readonly=False),
+        'name': fields.char('Title', size=255, required=True, readonly=False),
+        'owner': fields.char('Owner', size=255, required=True, readonly=False),
+        'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
-        'project_id':fields.many2one('project.project', 'Project', required=True),
-        'description':fields.text('Description'),
-        'accep_crit_ids':fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
+        'project_id': fields.many2one('project.project', 'Project', required=True),
+        'description': fields.text('Description'),
+        'accep_crit_ids': fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
         'info': fields.text('Other Info'),
         'asumption': fields.text('Asumptions'),
         'date': fields.date('Date'),
-        'user_id':fields.many2one('res.users', 'Create User'),
-        'sk_id':fields.many2one('sprint.kanban', 'Sprint Kanban'),
-        'state': fields.selection(_US_STATE, 'State',readonly=True),
-        'task_ids': fields.function(_get_tasks, type='many2many', relation="project.task", fnct_inv=_set_task, \
-                                string="Tasksss",help="Draft procurement of the product and location of that orderpoint"),
+        'user_id': fields.many2one('res.users', 'Create User'),
+        'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
+        'state': fields.selection(_US_STATE, 'State', readonly=True),
+        'task_ids': fields.function(_get_tasks, type='many2many', relation="project.task", fnct_inv=_set_task,
+                                    string="Tasksss", help="Draft procurement of the product and location of that orderpoint"),
     }
     _defaults = {
         'name': lambda *a: None,
         'date': lambda *a: time.strftime('%Y-%m-%d'),
-        'user_id': lambda self,cr,uid,ctx: uid,
-        'state':'draft',
+        'user_id': lambda self, cr, uid, ctx: uid,
+        'state': 'draft',
     }
 
-    
     def do_draft(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+        return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
 
     def do_progress(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'open'}, context=context)
-        
+        return self.write(cr, uid, ids, {'state': 'open'}, context=context)
+
     def do_pending(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'pending'}, context=context)
-        
+        return self.write(cr, uid, ids, {'state': 'pending'}, context=context)
+
     def do_done(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'done'}, context=context)
-        
+        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
+
     def do_cancel(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'cancelled'}, context=context)
-
-user_story()
+        return self.write(cr, uid, ids, {'state': 'cancelled'}, context=context)
 
 
-class acceptability_criteria(osv.osv):
+class acceptability_criteria(osv.Model):
     """
     OpenERP Model : Acceptability Criteria
     """
@@ -126,41 +128,36 @@ class acceptability_criteria(osv.osv):
     _name = 'acceptability.criteria'
 
     _columns = {
-        'name':fields.char('Title', size=255, required=True, readonly=False),
+        'name': fields.char('Title', size=255, required=True, readonly=False),
         'scenario': fields.text('Scenario', required=True),
-        'accep_crit_id':fields.many2one('user.story', 'User Story', required=True),
-        'accepted': fields.boolean('Accepted', help='Chek if this criteria apply'), 
+        'accep_crit_id': fields.many2one('user.story', 'User Story', required=True),
+        'accepted': fields.boolean('Accepted', help='Chek if this criteria apply'),
     }
     _defaults = {
         'name': lambda *a: None,
     }
-acceptability_criteria()
 
 
-class project_task(osv.osv):
+class project_task(osv.Model):
     """
     OpenERP Model : Project Task
     """
 
     _inherit = 'project.task'
 
-
-    def onchange_user_story_task(self, cr, uid,ids,us_id, context=None):
+    def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
         v = {}
         us_obj = self.pool.get('user.story')
-        
+
         if us_id:
             sprint = us_obj.browse(cr, uid, us_id, context=context)
             if sprint.sk_id:
                 v['sprint_id'] = sprint.sk_id.id
-                
+
         return {'value': v}
 
     _columns = {
-        'userstory_id':fields.many2one('user.story', 'User Story', 
-            domain= "[('sk_id', '=', sprint_id)]", 
-            help="Set here the User Story related with this task"),
+        'userstory_id': fields.many2one('user.story', 'User Story',
+                                        domain="[('sk_id', '=', sprint_id)]",
+                                        help="Set here the User Story related with this task"),
     }
-project_task()
-
-

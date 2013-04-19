@@ -24,25 +24,28 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 
-class res_partner_address(osv.osv):
+
+class res_partner_address(osv.Model):
     _inherit = 'res.partner.address'
     _columns = {
-        'code' : fields.char('Code', size=64, help='En caso de que la dirección sea de una sucursal, se puede agregar el código de ésta.')
+        'code': fields.char('Code', size=64, help='En caso de que la dirección sea de una sucursal, se puede agregar el código de ésta.')
     }
-    
+
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
         ids = []
         if not args:
             args = []
         if name:
-            ids = self.search(cr, user, [('code','=',name)] + args, limit=limit, context=context)
+            ids = self.search(cr, user, [(
+                'code', '=', name)] + args, limit=limit, context=context)
             if not ids:
-                ids = self.search(cr, user, [('code',operator,name)] + args, limit=limit, context=context)
-        ids += map(lambda a: a[0], super(res_partner_address, self).name_search(cr, user, name=name, args=args, operator=operator, context=context, limit=limit))
+                ids = self.search(cr, user, [(
+                    'code', operator, name)] + args, limit=limit, context=context)
+        ids += map(lambda a: a[0], super(res_partner_address, self).name_search(
+            cr, user, name=name, args=args, operator=operator, context=context, limit=limit))
         ids = set(ids)
         ids = list(ids)
         result = self.name_get(cr, user, ids, context=context)
         return result
-res_partner_address()

@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: nhomar@openerp.com.ve,
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -23,30 +23,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 from tools import config
 
 
-class mrp_routing_workcenter(osv.osv):
+class mrp_routing_workcenter(osv.Model):
     _inherit = "mrp.routing.workcenter"
 
     def _calcular(self, cr, uid, ids, field_name, arg, context):
-        res={}
-        for i in self.browse(cr,uid,ids):
+        res = {}
+        for i in self.browse(cr, uid, ids):
             cost = 0.00
-            cost=i.hour_nbr*i.costo
-            res[i.id]=cost
+            cost = i.hour_nbr*i.costo
+            res[i.id] = cost
         return res
 
-
-    _columns ={
-    'costo': fields.float('Costo Unitario', required=True) ,
-    'costo_total': fields.function(_calcular, method=True, type='float', string='Costo Total', store=False),
+    _columns = {
+        'costo': fields.float('Costo Unitario', required=True),
+        'costo_total': fields.function(_calcular, method=True, type='float', string='Costo Total', store=False),
     }
     _defaults = {
         'costo': lambda *a: 0.0,
     }
 
-mrp_routing_workcenter()

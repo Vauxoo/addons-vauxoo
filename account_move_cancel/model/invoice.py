@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,7 +21,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 import time
 from openerp.osv import osv, fields
@@ -30,35 +30,26 @@ from openerp.tools.translate import _
 
 import openerp.netsvc as netsvc
 
+
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     _columns = {
-        'cancel_true':fields.boolean('Invoice Cancel',help="Field that indicates whether the invoice was canceled earlier, to generate actions automatically")
-    
+        'cancel_true': fields.boolean('Invoice Cancel', help="Field that indicates whether the invoice was canceled earlier, to generate actions automatically")
+
     }
-    
+
     _defaults = {
-    'cancel_true':False,
-    
+        'cancel_true': False,
+
     }
-    
-    
-    def invoice_cancel(self,cr,uid,ids,context=None):
-        
+
+    def invoice_cancel(self, cr, uid, ids, context=None):
+
         if context is None:
             context = {}
         wizard_obj = self.pool.get('account.move.cancel')
-        wizard_obj.cancel_account_move(cr,uid,ids,context=context,invoice_ids=ids)
-        
-    
-        return True 
-    
+        wizard_obj.cancel_account_move(
+            cr, uid, ids, context=context, invoice_ids=ids)
 
-
-
-
-
-account_invoice()
-
-
+        return True

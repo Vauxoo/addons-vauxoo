@@ -3,7 +3,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: nhomar@openerp.com.ve,
 #    Coded by: rodo@vauxoo.com,
 #    Planified by: Nhomar Hernandez
@@ -23,17 +23,18 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
 import decimal_precision as dp
 
-class mrp_bom(osv.osv):
+
+class mrp_bom(osv.Model):
     _inherit = 'mrp.bom'
 
     def _calc_cost(self, cr, uid, ids, field_name, arg, context):
-        res={}
-        for i in self.browse(cr,uid,ids):
+        res = {}
+        for i in self.browse(cr, uid, ids):
             res[i.id] = self.compute_bom_cost(cr, uid, [i.id])
         return res
 
@@ -43,24 +44,27 @@ class mrp_bom(osv.osv):
         @cost = se almacena el costo unitario final.
         @res = diccionario usado para retornar el id y el costo unitario.
         '''
-        res={}
-        for i in self.browse(cr,uid,ids):
+        res = {}
+        for i in self.browse(cr, uid, ids):
             cost = 0.00
             cost = i.cost_t/i.product_qty
             for l in i.bom_lines:
                 if not l.bom_lines:
-                    cost =  l.product_id.standard_price*l.product_qty
-                    res[i.id]= cost
+                    cost = l.product_id.standard_price*l.product_qty
+                    res[i.id] = cost
                 else:
-                    cost = cost + self._calc_cost_u(cr,uid,[l.id],field_name,arg,context)[l.id]*l.product_qty
-                    res[i.id]=cost/l.product_qty
+                    cost = cost + self._calc_cost_u(cr, uid, [
+                                                    l.id], field_name, arg, context)[l.id]*l.product_qty
+                    res[i.id] = cost/l.product_qty
             res[i.id] = i.cost_t/i.product_qty
-            if i._columns.has_key('sub_products') and i.sub_products:
-                sum_amount_subproducts=0.0
+            if 'sub_products' in i._columns and i.sub_products:
+                sum_amount_subproducts = 0.0
                 product_uom_obj = self.pool.get('product.uom')
                 for sub_prod in i.sub_products:
-                    sum_amount_subproducts += (product_uom_obj._compute_price(cr, uid,sub_prod.product_id.uom_id.id , sub_prod.product_id.standard_price, sub_prod.product_uom.id) * sub_prod.product_qty) 
-                res[i.id] =  (i.cost_t - sum_amount_subproducts)/ i.product_qty #mrp.bom valida cantidades mayores a 0
+                    sum_amount_subproducts += (product_uom_obj._compute_price(
+                        cr, uid, sub_prod.product_id.uom_id.id, sub_prod.product_id.standard_price, sub_prod.product_uom.id) * sub_prod.product_qty)
+                res[i.id] =  (i.cost_t - sum_amount_subproducts) / \
+                    i.product_qty  # mrp.bom valida cantidades mayores a 0
         return res
 
     def _get_category(self, cr, uid, ids, field_name, arg, context):
@@ -68,45 +72,44 @@ class mrp_bom(osv.osv):
         funcion para obtener la categoria del producto y luego aplicarla para la filtracion
         de las categorias de los campos product_uom  y product_uos
         '''
-        res={}
-        for i in self.browse(cr,uid,ids):
-            res[i.id] = (i.product_id.uom_id.category_id.id,i.product_id.uom_id.category_id.name)
+        res = {}
+        for i in self.browse(cr, uid, ids):
+            res[i.id] = (i.product_id.uom_id.category_id.id,
+                         i.product_id.uom_id.category_id.name)
         return res
-        
-        
+
     def _get_category_prod(self, cr, uid, ids, field_name, arg, context):
         '''
         funcion para obtener la categoria del producto
         '''
-        res={}
-        for i in self.browse(cr,uid,ids):
-            res[i.id] = (i.product_id.product_tmpl_id.categ_id.id,i.product_id.product_tmpl_id.categ_id.name)
+        res = {}
+        for i in self.browse(cr, uid, ids):
+            res[i.id] = (i.product_id.product_tmpl_id.categ_id.id,
+                         i.product_id.product_tmpl_id.categ_id.name)
         return res
 
     _columns = {
-        'cost_t': fields.function(_calc_cost, method=True, type='float', digits_compute= dp.get_precision('Cost_Bom'), string='Cost', store=False),
-        'cost_u': fields.function(_calc_cost_u, method=True, type='float',digits_compute= dp.get_precision('Cost_Bom'), string='Unit Cost', store=False),
-        'category_id': fields.function(_get_category, method=True, type='many2one',relation='product.uom.categ',string='Category Uom'),
-        'category_prod_id': fields.function(_get_category_prod, method=True, type='many2one',relation='product.category',string='Category'),
+        'cost_t': fields.function(_calc_cost, method=True, type='float', digits_compute=dp.get_precision('Cost_Bom'), string='Cost', store=False),
+        'cost_u': fields.function(_calc_cost_u, method=True, type='float', digits_compute=dp.get_precision('Cost_Bom'), string='Unit Cost', store=False),
+        'category_id': fields.function(_get_category, method=True, type='many2one', relation='product.uom.categ', string='Category Uom'),
+        'category_prod_id': fields.function(_get_category_prod, method=True, type='many2one', relation='product.category', string='Category'),
         'product_uom_default_id': fields.related('product_id', 'uom_id', string="Uom Default", type='many2one', relation='product.uom'),
         #~ 'bom_assets':fields.boolean('Assets', help="Determine if the bom is of type assets."),
     }
-    
 
     def compute_bom_cost(self, cr, uid, ids, *args):
-        for i in self.browse(cr,uid,ids):
+        for i in self.browse(cr, uid, ids):
             cost = 0.00
             if i.bom_lines:
                 for l in i.bom_lines:
                     cost += self.compute_bom_cost(cr, uid, [l.id])
             else:
-                cost = i.product_id.standard_price*i.product_qty* i.product_uom.factor_inv * i.product_id.uom_id.factor
-                
+                cost = i.product_id.standard_price*i.product_qty * \
+                    i.product_uom.factor_inv * i.product_id.uom_id.factor
+
             if i.routing_id:
                 for j in i.routing_id.workcenter_lines:
                     cost += j.costo_total
-                
+
         return cost
-    
-mrp_bom()
 

@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
-#    Coded by: Vauxoo C.A.           
+# Credits######################################################
+#    Coded by: Vauxoo C.A.
 #    Planified by: Nhomar Hernandez
 #    Audited by: Vauxoo C.A.
 #############################################################################
@@ -21,50 +21,55 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
-from osv import fields, osv, orm
-from tools.translate import _
+from openerp.osv import osv, fields, orm
+from openerp.tools.translate import _
+
 from operator import itemgetter
 from lxml import etree
 
-class account_move_line(osv.osv):
-    _inherit = 'account.move.line'
 
+class account_move_line(osv.Model):
+    _inherit = 'account.move.line'
 
     _columns = {
         'ref2': fields.char('Second Reference', size=64, required=False, help="Account entry reference"),
     }
-    
-       
+
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         journal_pool = self.pool.get('account.journal')
         if context is None:
             context = {}
-        result = super(account_move_line, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
+        result = super(account_move_line, self).fields_view_get(
+            cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
         if view_type != 'tree':
-            #Remove the toolbar from the form view
+            # Remove the toolbar from the form view
             if view_type == 'form':
                 if result.get('toolbar', False):
                     result['toolbar']['action'] = []
-            #Restrict the list of journal view in search view
+            # Restrict the list of journal view in search view
             if view_type == 'search' and result['fields'].get('journal_id', False):
-                result['fields']['journal_id']['selection'] = journal_pool.name_search(cr, uid, '', [], context=context)
+                result['fields']['journal_id']['selection'] = journal_pool.name_search(
+                    cr, uid, '', [], context=context)
                 ctx = context.copy()
-                #we add the refunds journal in the selection field of journal
+                # we add the refunds journal in the selection field of journal
                 if context.get('journal_type', False) == 'sale':
                     ctx.update({'journal_type': 'sale_refund'})
-                    result['fields']['journal_id']['selection'] += journal_pool.name_search(cr, uid, '', [], context=ctx)
+                    result['fields']['journal_id'][
+                        'selection'] += journal_pool.name_search(cr, uid, '', [], context=ctx)
                 elif context.get('journal_type', False) == 'purchase':
                     ctx.update({'journal_type': 'purchase_refund'})
-                    result['fields']['journal_id']['selection'] += journal_pool.name_search(cr, uid, '', [], context=ctx)
+                    result['fields']['journal_id'][
+                        'selection'] += journal_pool.name_search(cr, uid, '', [], context=ctx)
             return result
         if context.get('view_mode', False):
             return result
         fld = []
         fields = {}
         flds = []
-        title = _("Accounting Entries") #self.view_header_get(cr, uid, view_id, view_type, context)
+        title = _("Accounting Entries")
+                  #self.view_header_get(cr, uid, view_id, view_type, context)
 
         ids = journal_pool.search(cr, uid, [])
         journals = journal_pool.browse(cr, uid, ids, context=context)
@@ -123,17 +128,21 @@ class account_move_line(osv.osv):
                 f.set('context', "{'journal_id': journal_id}")
 
             elif field == 'account_id' and journal.id:
-                f.set('domain', "[('journal_id', '=', journal_id),('type','!=','view'), ('type','!=','closed')]")
-                f.set('on_change', 'onchange_account_id(account_id, partner_id)')
+                f.set(
+                    'domain', "[('journal_id', '=', journal_id),('type','!=','view'), ('type','!=','closed')]")
+                f.set(
+                    'on_change', 'onchange_account_id(account_id, partner_id)')
 
             elif field == 'partner_id':
-                f.set('on_change', 'onchange_partner_id(move_id, partner_id, account_id, debit, credit, date, journal_id)')
+                f.set(
+                    'on_change', 'onchange_partner_id(move_id, partner_id, account_id, debit, credit, date, journal_id)')
 
             elif field == 'journal_id':
                 f.set('context', "{'journal_id': journal_id}")
 
             elif field == 'statement_id':
-                f.set('domain', "[('state', '!=', 'confirm'),('journal_id.type', '=', 'bank')]")
+                f.set(
+                    'domain', "[('state', '!=', 'confirm'),('journal_id.type', '=', 'bank')]")
                 f.set('invisible', 'True')
 
             elif field == 'date':
@@ -145,7 +154,8 @@ class account_move_line(osv.osv):
                 pass
 
             if field in ('amount_currency', 'currency_id'):
-                f.set('on_change', 'onchange_currency(account_id, amount_currency, currency_id, date, journal_id)')
+                f.set(
+                    'on_change', 'onchange_currency(account_id, amount_currency, currency_id, date, journal_id)')
                 f.set('attrs', "{'readonly': [('state', '=', 'valid')]}")
 
             if field in widths:
@@ -162,5 +172,5 @@ class account_move_line(osv.osv):
         result['arch'] = etree.tostring(document, pretty_print=True)
         result['fields'] = fields_get
         return result
-        
+
 account_move_line()
