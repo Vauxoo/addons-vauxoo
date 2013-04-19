@@ -38,26 +38,36 @@ class account_invoice_line(osv.Model):
         for i in invo_brw.invoice_line:
             if i.product_id:
 
-                account_out.append(i.product_id.categ_id and i.product_id.categ_id.property_stock_account_output_categ and
-                                   i.product_id.categ_id.property_stock_account_output_categ.id)
+                account_out.append(
+                    i.product_id.categ_id and
+                    i.product_id.categ_id.property_stock_account_output_categ
+                    and
+                    i.product_id.categ_id.property_stock_account_output_categ.
+                    id)
 
-                account_exp.append(i.product_id.categ_id and i.product_id.categ_id.property_account_expense_categ and
-                                   i.product_id.categ_id.property_account_expense_categ.id)
+                account_exp.append(
+                    i.product_id.categ_id and
+                    i.product_id.categ_id.property_account_expense_categ and
+                    i.product_id.categ_id.property_account_expense_categ.id)
 
-                account_out.append(i.product_id.property_stock_account_output and
-                                   i.product_id.property_stock_account_output.id)
+                account_out.append(
+                    i.product_id.property_stock_account_output and
+                    i.product_id.property_stock_account_output.id)
 
                 account_exp.append(i.product_id.property_account_expense and
                                    i.product_id.property_account_expense.id)
 
                 for dict in res:
                     if dict.get('account_id') in account_out:
-                        dict.update({'price_unit': i.product_id.cost_ult,
-                                     'price': i.product_id.cost_ult * i.quantity})
+                        dict.update({
+                            'price_unit': i.product_id.cost_ult,
+                            'price': i.product_id.cost_ult * i.quantity
+                        })
 
                     elif dict.get('account_id') in account_exp:
-                        dict.update({'price_unit': i.product_id.cost_ult,
-                                     'price': -(i.product_id.cost_ult * i.quantity)})
+                        dict.update({
+                            'price_unit': i.product_id.cost_ult,
+                            'price': -(i.product_id.cost_ult * i.quantity)})
 
         print "res", res
         return res
