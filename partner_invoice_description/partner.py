@@ -31,4 +31,3 @@ class res_partner(osv.Model):
     _columns = {
         'description_invoice':  fields.text('Description Invoice', translate=True),
     }
-
