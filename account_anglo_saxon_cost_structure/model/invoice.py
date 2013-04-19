@@ -22,6 +22,7 @@
 ##############################################################################
 
 from openerp.tools.translate import _
+from openerp.osv import fields, osv
 
 
 class account_invoice_line(osv.Model):
