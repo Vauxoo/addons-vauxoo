@@ -46,13 +46,17 @@ class account_move(osv.Model):
             for move_id in moves:
                 move = account_move_obj.browse(cursor, user, move_id)
                 name_move = move.name or ''
-                analytic_st = move.account_id and move.account_id.analytic_required or False
+                analytic_st = move.account_id and\
+                    move.account_id.analytic_required or False
                 if analytic_st is True:
-                    account_move_id = move.account_id and move.account_id.id or False
-                    analytic_acc_move = move.analytic_account_id and move.analytic_account_id.id or False
+                    account_move_id = move.account_id and\
+                        move.account_id.id or False
+                    analytic_acc_move = move.analytic_account_id and\
+                        move.analytic_account_id.id or False
                     if analytic_acc_move is False:
                         raise osv.except_osv(_('Error'), _(
-                            'Need add analytic account in move whit name ' + name_move + '.'))
+                            'Need add analytic account in move whit name '
+                                             + name_move + '.'))
         res = super(account_move, self).button_validate(
             cursor, user, ids, context=context)
         return res
