@@ -1,17 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_account_inherit_analytic_required_form">
             <field name="name">view.account.inherit.analytic.required.form</field>
             <field name="model">account.account</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="account.view_account_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/group/field[@name='active']" position="after">
+                <xpath expr="//field[@name='active']" position="after">
                     <field name="analytic_required"/>
                 </xpath>
             </field>
         </record>
     </data>
 </openerp>
-
