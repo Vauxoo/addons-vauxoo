@@ -66,7 +66,7 @@ class trial_cost(osv.TransientModel):
         res = {}
         period_length = data['form']['period_length']
         if period_length <= 0:
-            raise wizard.except_wizard(_('UserError'), _(
+            raise osv.RiseExcept(_('UserError'), _(
                 'You must enter a period length that cannot be 0 or below !'))
         start = datetime.date.fromtimestamp(time.mktime(
             time.strptime(data['form']['date_start'], "%Y-%m-%d")))
