@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_mx_facturae_seq
+#   * l10n_mx_facturae_seq
 #
 msgid ""
 msgstr ""
@@ -19,7 +19,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_mx_facturae_seq.action_facturae_sequence_tree
 #: model:ir.ui.menu,name:l10n_mx_facturae_seq.menu_facturae_sequence
 msgid "FacturaE MX Sequence Approval"
-msgstr "FacturaE MX Secuencia De Provación"
+msgstr "FacturaE MX Secuencia De Aprovación"
 
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence,approval_id:0

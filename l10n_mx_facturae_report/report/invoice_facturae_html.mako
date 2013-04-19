@@ -27,8 +27,8 @@
                         %endif
                     %endif
                     </div>
-                    %if o.state == 'cancel': 
-                        ${'FACTURA CANCELADA' |entity} 
+                    %if o.state == 'cancel':
+                        ${'FACTURA CANCELADA' |entity}
                     %endif
                 </td>
             </tr>
@@ -48,7 +48,7 @@
                                 ${o.company_emitter_id.address_invoice_parent_company_id.street2 or ''|entity}
                                 ${ o.company_emitter_id.address_invoice_parent_company_id.zip or ''|entity}
                                 <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.l10n_mx_city2 or ''|entity}
-                                <br/>${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity} 
+                                <br/>${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity}
                                 , ${o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or ''|entity}
                                 , ${o.company_emitter_id.address_invoice_parent_company_id.country_id and o.company_emitter_id.address_invoice_parent_company_id.country_id.name or ''|entity}
                                 <br/><b>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat or ''|entity}</b>
@@ -95,7 +95,7 @@
                             <td class="cliente"><b>Receptor:</b></td>
                             <td width="64%" class="cliente">${o.partner_id.name or ''|entity}</td>
                             <td class="cliente"><b>R. F. C.:</b></td>
-                            <td width="16%" class="cliente"><b>${res_client['vat'] or ''|entity}SMA010116FC4</b></td>
+                            <td width="16%" class="cliente"><b>${res_client['vat'] or ''|entity}</b></td>
                         </tr>
                     </table>
                     <table class="basic_table">
@@ -128,7 +128,7 @@
                         <tr>
                             <td width="9%" class="cliente"><b>Lugar:</b></td>
                             <td class="cliente">
-                                ${res_client['city'] or ''|entity}, 
+                                ${res_client['city'] or ''|entity},
                                 ${res_client['state'] or ''|entity},
                                 ${res_client['country'] or ''|entity}
                             </td>
@@ -151,8 +151,8 @@
                 <td width="1%"></td>
                 <td width="19%" align="center">
                     %if o.address_issued_id:
-                        ${o.address_issued_id.city or ''|entity}, 
-                        ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}, 
+                        ${o.address_issued_id.city or ''|entity},
+                        ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity},
                         ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}
                     %endif
                     <br/>${_("a")} ${o.date_invoice_tz or ''|entity}
@@ -177,7 +177,7 @@
                 <th width="15%">${_("Importe")}</th>
             </tr>
             <%row_count = 1%>
-            %for line in o.invoice_line: 
+            %for line in o.invoice_line:
                 %if (row_count%2==0):
                     <tr  class="nonrow">
                 %else:
@@ -202,7 +202,7 @@
                     <td align="right" class="total_td">$ ${formatLang(o.amount_untaxed) or ''|entity}</td>
                 </tr>
             %endif
-            %for tax in get_taxes(): 
+            %for tax in get_taxes():
                 <tr>
                     <td class="tax_td">${tax['name2']} (${round(float(tax['tax_percent']))}) % </td>
                     <td class="tax_td" align="right">$ ${formatLang(float( tax['amount'] ) ) or ''|entity}</td>
@@ -238,7 +238,6 @@
             </tr>
         </table>
         <br clear="all"/>
-        <%print o.invoice_sequence_id.approval_id.type, "invoice_sequence_id please delete after"%>
         <!--code for cfd-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
             ${_('“Este documento es una representacion impresa de un CFD”')}<br/>
@@ -256,7 +255,7 @@
                     </td>
                 </tr>
             </table>
-            <table class="basic_table">
+            <table class="basic_table" rules="all">
                 <tr>
                     <td class="data_bank_label">${_('Banco / Moneda')}</td>
                     <td class="data_bank_label">${_('Número de cuenta')}</td>
@@ -283,19 +282,19 @@
                     <th width="33%"> ${_('Folio Fiscal')}</th>
                 </tr>
                 <tr>
-                    <td width="33%" class="center_td"> ${ o.cfdi_no_certificado or ''|entity }</td>
-                    <td class="center_td"> ${ o.cfdi_fecha_timbrado or ''|entity }</td>
-                    <td width="33%" class="center_td"> ${ o.cfdi_folio_fiscal or ''|entity }</td>
+                    <td width="33%" class="center_td"> ${ o.cfdi_no_certificado or 'No identificado'|entity }</td>
+                    <td width="34%" class="center_td"> ${ o.cfdi_fecha_timbrado or 'No identificado'|entity }</td>
+                    <td width="33%" class="center_td"> ${ o.cfdi_folio_fiscal or 'No identificado'|entity }</td>
                 </tr>
             </table>
         %endif
         <!--code for ! cbb-->
-        %if o.invoice_sequence_id.approval_id.type != 'cbb':
+        %if o.invoice_sequence_id.approval_id.type != 'cbb' and o.invoice_sequence_id.approval_id.type != None:
             <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%">${_('Certificado del emisor')}</th>
-                    <th width="34%">${_('Método de Pago:')}</th>
-                    <th>${_('Últimos 4 dígitos de la cuenta bancaria:')}</th>
+                    <th width="34%">${_('Método de Pago')}</th>
+                    <th width="33%">${_('Últimos 4 dígitos de la cuenta bancaria')}</th>
                 </tr>
                 <tr>
                     <td class="center_td">${ o.no_certificado or 'No identificado'|entity }</td>
@@ -311,12 +310,20 @@
                 <table class="basic_table" style="page-break-inside:avoid; border:1.5px solid grey;">
                     <tr>
                         <td width="20%" valign="top">
-                                ${helper.embed_image('jpeg',str(cbb_approval_row.cbb_image),180, 180)}
+                            %if ( o.type  in ['out_invoice', 'out_refund'] ) and ( o.state in ['open', 'paid', 'cancel'] ):
+                                ${helper.embed_image('jpeg',str(o.invoice_sequence_id.approval_id.cbb_image),180, 180)}
+                            %else:
+                                <p> ${_('SIN FOLIO O ESTATUS NO VALIDO')}
+                            %endif
                         </td>
                         <td valign="top" class="tax_td" style="padding-top:3px;">
-                            Número de aprobación SICOFI: ${cbb_approval_row.approval_number or '' |entity}<br/>
+                            %if ( o.type  in ['out_invoice', 'out_refund'] ) and ( o.state in ['open', 'paid', 'cancel'] ):
+                                Número de aprobación SICOFI: ${o.invoice_sequence_id.approval_id.approval_number or '' |entity}<br/>
+                            %else:
+                                <p> ${_('SIN FOLIO O ESTATUS NO VALIDO')}</br>
+                            %endif
                             La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales.<br/>
-                            Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es: ${cbb_approval_row.date_start or '' |entity}
+                            Este comprobante tendrá una vigencia de dos años contados a partir de la fecha aprobación de la asignación de folios, la cual es: ${o.invoice_sequence_id.approval_id.date_start or '' |entity}
                         </td>
                         <td width="15%" valign="top">
                             ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}
@@ -344,13 +351,17 @@
         <!--code for cfd32-->
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
-                <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}</div>
-                <div style="float: right;"> ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}</div>
+                %if o.company_emitter_id.cif_file:
+                    <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}</div>
+                %endif
+                %if o.cfdi_cbb:
+                    <div style="float: right;"> ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}</div>
+                %endif
                 <span class="datos_fiscales">
                     <b>${_('Sello Digital Emisor:')} </b><br/>
-                    ${split_string( o.sello ) or ''|entity}
+                    ${split_string( o.sello ) or ''|entity}<br/>
                     <b>${_('Sello Digital SAT:')} </b><br/>
-                    ${split_string( o.cfdi_sello or '') or ''|entity}
+                    ${split_string( o.cfdi_sello or '') or ''|entity}<br/>
                     <b>${_('Cadena original:')} </b><br/>
                     ${split_string(o.cfdi_cadena_original) or ''|entity}
                 <!--</span> si se activan, forzan un brinco de linea

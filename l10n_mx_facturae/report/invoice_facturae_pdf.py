@@ -237,7 +237,7 @@ class account_invoice_facturae_pdf(report_sxw.rml_parse):
             self.taxes_ret.append( retencion['Retencion'] )
         return ""
         """
-        
+
     def _get_data_partner(self, partner_id):
         partner_obj = self.pool.get('res.partner')
         res = {}
@@ -266,6 +266,6 @@ report_sxw.report_sxw(
     'account.invoice',
     'addons/l10n_mx_facturae/report/invoice_facturae_pdf.rml',
     header=False,
-    parser=account_invoice_facturae_pdf,
+    parser=account_invoice_facturae_pdf
 )
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
