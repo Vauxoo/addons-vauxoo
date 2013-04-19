@@ -28,7 +28,11 @@
     "author" : "Vauxoo",
     "website" : "http://vauxoo.com",
     "category": 'Generic Modules/Accounting',
-    "description": """- Add a new field to be use as a reference in account move line
+    "description": """
+Add field ref2
+==============
+Add a new field to be use as a reference in account move line
+* **TODO analyzing method field_view_get migrate to version 7 to add field ref2 **
     """,
     'init_xml': [],
     "depends" : ["account"],
