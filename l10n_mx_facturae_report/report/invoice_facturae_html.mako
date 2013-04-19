@@ -255,7 +255,7 @@
                     </td>
                 </tr>
             </table>
-            <table class="basic_table">
+            <table class="basic_table" rules="all">
                 <tr>
                     <td class="data_bank_label">${_('Banco / Moneda')}</td>
                     <td class="data_bank_label">${_('Número de cuenta')}</td>
@@ -282,19 +282,19 @@
                     <th width="33%"> ${_('Folio Fiscal')}</th>
                 </tr>
                 <tr>
-                    <td width="33%" class="center_td"> ${ o.cfdi_no_certificado or ''|entity }</td>
-                    <td class="center_td"> ${ o.cfdi_fecha_timbrado or ''|entity }</td>
-                    <td width="33%" class="center_td"> ${ o.cfdi_folio_fiscal or ''|entity }</td>
+                    <td width="33%" class="center_td"> ${ o.cfdi_no_certificado or 'No identificado'|entity }</td>
+                    <td width="34%" class="center_td"> ${ o.cfdi_fecha_timbrado or 'No identificado'|entity }</td>
+                    <td width="33%" class="center_td"> ${ o.cfdi_folio_fiscal or 'No identificado'|entity }</td>
                 </tr>
             </table>
         %endif
         <!--code for ! cbb-->
-        %if o.invoice_sequence_id.approval_id.type != 'cbb':
+        %if o.invoice_sequence_id.approval_id.type != 'cbb' and o.invoice_sequence_id.approval_id.type != None:
             <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%">${_('Certificado del emisor')}</th>
-                    <th width="34%">${_('Método de Pago:')}</th>
-                    <th>${_('Últimos 4 dígitos de la cuenta bancaria:')}</th>
+                    <th width="34%">${_('Método de Pago')}</th>
+                    <th width="33%">${_('Últimos 4 dígitos de la cuenta bancaria')}</th>
                 </tr>
                 <tr>
                     <td class="center_td">${ o.no_certificado or 'No identificado'|entity }</td>
@@ -305,6 +305,8 @@
         %endif
         <!--code for cbb-->
         %if o.invoice_sequence_id.approval_id.type == 'cbb':
+            %if get_approval():
+                <%cbb_approval_row = get_approval()%>
                 <table class="basic_table" style="page-break-inside:avoid; border:1.5px solid grey;">
                     <tr>
                         <td width="20%" valign="top">
@@ -331,7 +333,7 @@
             %else:
                 <p> ${_('La aprobación CBB no pudo ser obtenida, por favor contacte a su administrador')}
             %endif
-
+        %endif
         <!--code for cfd22-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
@@ -349,13 +351,17 @@
         <!--code for cfd32-->
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
-                <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}</div>
-                <div style="float: right;"> ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}</div>
+                %if o.company_emitter_id.cif_file:
+                    <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}</div>
+                %endif
+                %if o.cfdi_cbb:
+                    <div style="float: right;"> ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}</div>
+                %endif
                 <span class="datos_fiscales">
                     <b>${_('Sello Digital Emisor:')} </b><br/>
-                    ${split_string( o.sello ) or ''|entity}
+                    ${split_string( o.sello ) or ''|entity}<br/>
                     <b>${_('Sello Digital SAT:')} </b><br/>
-                    ${split_string( o.cfdi_sello or '') or ''|entity}
+                    ${split_string( o.cfdi_sello or '') or ''|entity}<br/>
                     <b>${_('Cadena original:')} </b><br/>
                     ${split_string(o.cfdi_cadena_original) or ''|entity}
                 <!--</span> si se activan, forzan un brinco de linea
