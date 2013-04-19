@@ -62,11 +62,11 @@ class trial_cost(osv.TransientModel):
         form = data['form']
         if not form['u_check'] and not form['p_check'] and not form['c_check']:
             raise osv.except_osv(_('User Error'), _(
-                'You have to check one box !'))
+                'You must check one box !'))
         res = {}
         period_length = data['form']['period_length']
         if period_length <= 0:
-            raise osv.RiseExcept(_('UserError'), _(
+            raise osv.except_osv(_('UserError'), _(
                 'You must enter a period length that cannot be 0 or below !'))
         start = datetime.date.fromtimestamp(time.mktime(
             time.strptime(data['form']['date_start'], "%Y-%m-%d")))
