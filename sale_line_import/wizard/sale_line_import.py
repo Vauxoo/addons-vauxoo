@@ -25,7 +25,6 @@
 ##############################################################################
 
 import pooler
-import wizard
 import base64
 import cStringIO
 import openerp.netsvc as netsvc
