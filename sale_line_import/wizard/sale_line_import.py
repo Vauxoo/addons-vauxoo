@@ -56,4 +56,3 @@ class wizard_import(osv.TransientModel):
             self.write(cr, uid, ids, {'msg': msg})
             return True
         return {}
-

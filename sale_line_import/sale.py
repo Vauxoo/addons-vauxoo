@@ -141,4 +141,3 @@ class sale_order(osv.Model):
         msg2 = tools.ustr(pmsg)
         msg = tools.ustr(msg)+'%s ' % (msg2)
         return msg
-
