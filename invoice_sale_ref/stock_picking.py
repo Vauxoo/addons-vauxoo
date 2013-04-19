@@ -56,4 +56,3 @@ class stock_picking(osv.Model):
             invoice_obj.write(cursor, user, [invoice_id], {
                               'name': client_order_ref_str}, context=context)
         return picking_id__invoice_id_dict
-
