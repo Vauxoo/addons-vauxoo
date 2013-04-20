@@ -32,9 +32,11 @@ class account_move_line(osv.Model):
 
     }
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+                        context=None, toolbar=False, submenu=False):
         result = super(account_move_line, self).fields_view_get(
-            cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
+            cr, uid, view_id, view_type,
+            context=context, toolbar=toolbar, submenu=submenu)
         # fields_get = self.fields_get(cr, uid, ['stock_move_id'], context)
         xml_form = etree.fromstring(result['arch'])
         placeholder = xml_form.xpath("//field[@name='period_id']")
@@ -44,7 +46,22 @@ class account_move_line(osv.Model):
             'field', {'name': 'production_id'}))
         result['arch'] = etree.tostring(xml_form)
         result['fields'].update({
-                                'stock_move_id': {'domain': [], 'string': u'Stock Move', 'readonly': False, 'relation': 'stock.move', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2},
-                                'production_id': {'domain': [], 'string': u'Production', 'readonly': False, 'relation': 'mrp.production', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}})
+            'stock_move_id':
+            {'domain': [],
+             'string': u'Stock Move',
+             'readonly': False,
+             'relation': 'stock.move',
+             'context': {},
+             'selectable': True,
+             'type': 'many2one',
+             'select': 2},
+            'production_id':
+            {'domain': [],
+             'string': u'Production',
+             'readonly': False,
+             'relation': 'mrp.production',
+             'context': {},
+             'selectable': True,
+             'type': 'many2one',
+             'select': 2}})
         return result
-

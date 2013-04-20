@@ -30,5 +30,10 @@ class account_move_line(osv.Model):
     _inherit = 'account.move.line'
 
     _columns = {
-        'quantity': fields.float('Quantity', digits_compute=dp.get_precision('Product UoM'), help="The optional quantity expressed by this line, eg: number of product sold. The quantity is not a legal requirement but is very useful for some reports."),
+        'quantity': fields.float('Quantity',
+             digits_compute=dp.get_precision(
+                 'Product UoM'),
+             help="The optional quantity expressed by this line,\
+             eg: number of product sold. The quantity is not a legal\
+             requirement but is very useful for some reports."),
     }
