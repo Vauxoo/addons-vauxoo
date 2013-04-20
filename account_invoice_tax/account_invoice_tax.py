@@ -32,4 +32,3 @@ class account_invoice_tax(osv.Model):
     _columns = {
         'tax_id': fields.many2one('account.tax', 'Tax', help="Tax"),
     }
-
