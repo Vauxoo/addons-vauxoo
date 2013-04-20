@@ -27,7 +27,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
@@ -38,7 +37,8 @@ class account_invoice(osv.Model):
             for line in invoice.invoice_line:
                 if line.account_id.type != 'other':
                     raise osv.except_osv(_('Error!'), _(
-                        "Can not be used different types of accounts to 'other' in the lines of the invoice!"))
+                        "Can not be used different types of accounts\
+                         to 'other' in the lines of the invoice!"))
         res = super(account_invoice, self).action_move_create(
             cr, uid, ids, context=context)
         return res
