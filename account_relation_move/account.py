@@ -61,10 +61,11 @@ class stock_move(osv.Model):
     """
 
     def _create_account_move_line(self, cr, uid, move, src_account_id,
-        dest_account_id, reference_amount, reference_currency_id, context=None):
+        dest_account_id, reference_amount, reference_currency_id,
+        context=None):
         res = super(stock_move, self)._create_account_move_line(
             cr, uid, move, src_account_id, dest_account_id, reference_amount,
-                reference_currency_id, context=context)
+            reference_currency_id, context=context)
         cr.execute(
             'SELECT production_id FROM mrp_production_move_ids\
             WHERE move_id = %s', (move.id,))
@@ -73,15 +74,15 @@ class stock_move(osv.Model):
             line[2]['stock_move_id'] = move.id
             line[2]['production_id'] = move.production_id and\
                 move.production_id.id or (
-                result and result[0]['production_id'] or False)
+                    result and result[0]['production_id'] or False)
         return res
 
     def action_consume(self, cr, uid, ids, product_qty,
-        location_id=False, context=None):
+                       location_id=False, context=None):
         account_move_line_pool = self.pool.get('account.move.line')
         res = super(stock_move, self).action_consume(
-                cr, uid, ids, product_qty, location_id=location_id,
-                context=context)
+            cr, uid, ids, product_qty, location_id=location_id,
+            context=context)
         for move_id in res:
             cr.execute(
                 'SELECT production_id FROM mrp_production_move_ids\
@@ -91,5 +92,5 @@ class stock_move(osv.Model):
                 cr, uid, [('stock_move_id', '=', move_id)])
             if result and account_move_line_id:
                 account_move_line_pool.write(cr, uid, account_move_line_id, {
-                                'production_id': result[0]['production_id']})
+                    'production_id': result[0]['production_id']})
         return res
