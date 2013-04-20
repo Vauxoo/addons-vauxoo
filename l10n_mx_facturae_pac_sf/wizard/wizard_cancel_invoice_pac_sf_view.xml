@@ -5,7 +5,6 @@
         <record id="view_wizard_cancel_pac_sf_form" model="ir.ui.view">
             <field name="name">view.wizard.cancel.pac.sf.form</field>
             <field name="model">wizard.cancel.invoice.pac.sf</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Cancel invoice">
                     <separator colspan="4" string="File"/>

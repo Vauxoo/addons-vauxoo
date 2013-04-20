@@ -36,6 +36,7 @@
     "demo_xml" : ["demo/l10n_mx_facturae_email_demo.xml",
     ],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "ir_attachment_facturae_view.xml",
         "l10n_mx_facturae_workflow.xml",
         "invoice_view.xml",

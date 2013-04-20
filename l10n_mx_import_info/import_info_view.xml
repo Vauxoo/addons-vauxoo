@@ -11,14 +11,13 @@
             <field name="help">Here you are seeing the basical information need to track the packages aroun you importing information, it is used on Mexico and Latinamerica for put this information on every legal transport and transaction document (invoices, pickings, etc.)</field>
         </record>
         <menuitem
-            parent="stock.menu_traceability" 
-            id="menu_action_import_info_tree" 
+            parent="stock.menu_traceability"
+            id="menu_action_import_info_tree"
             action="action_import_info_tree"
             name="Import Information Packing"/>
         <record model="ir.ui.view" id="view_import_info_form">
             <field name="name">import.info.form</field>
             <field name="model">import.info</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Import Info">
                     <group col="4" colspan="4">
@@ -62,7 +61,6 @@
         <record model="ir.ui.view" id="view_import_info_tree">
             <field name="name">import.info.tree</field>
             <field name="model">import.info</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Import Info">
                         <field name="name"/>

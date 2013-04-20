@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
+
         <record id="view_res_company_facturae_certificate_form" model="ir.ui.view">
             <field name="name">view.res.company.facturae.certificate.form</field>
             <field name="model">res.company.facturae.certificate</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Certificates">
                     <separator string="Certificates DER FORMAT (Original)" colspan="4"/>
@@ -33,12 +32,11 @@
                 </form>
             </field>
         </record>
-        
-        
+
+
         <record id="view_res_company_facturae_certificate_tree" model="ir.ui.view">
             <field name="name">view.res.company.facturae.certificate.tree</field>
             <field name="model">res.company.facturae.certificate</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Certificates">
                     <field name="serial_number"/>
@@ -49,7 +47,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <record id="action_res_company_facturae_certificate_tree" model="ir.actions.act_window">
             <field name="name">FacturaE Certificate</field>
             <field name="res_model">res.company.facturae.certificate</field>
@@ -57,17 +55,16 @@
             <field name="view_type">form</field>
             <field name="view_id" ref="view_res_company_facturae_certificate_tree"/>
         </record>
-      
-        <menuitem action="action_res_company_facturae_certificate_tree" 
-                id="menu_res_company_facturae_certificate" sequence="50" 
+
+        <menuitem action="action_res_company_facturae_certificate_tree"
+                id="menu_res_company_facturae_certificate" sequence="50"
                 parent="base.menu_res_company_global"
                 groups="l10n_mx_facturae_cer.group_facturae_mx_cer_manager"/>
-                
-        
+
+
         <record id="view_res_company_facturae_certificate_search" model="ir.ui.view">
             <field name="name">view.res.company.facturae.certificate.search</field>
             <field name="model">res.company.facturae.certificate</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Certificates">
                     <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
@@ -82,7 +79,7 @@
                 </search>
             </field>
         </record>
-                
+
          <!--<field colspan="4" name="order_line" nolabel="1" widget="one2many_list">-->
 
         <!--Version OpenERP-->
@@ -90,7 +87,6 @@
             <field name="name">view.res.company.form.inh.l10n_mx_facturae</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                  <page string="Configuration" position="after">
                     <page string="Certificados SAT" groups="l10n_mx_facturae_cer.group_facturae_mx_cer_manager">
@@ -139,13 +135,12 @@
                 </page>
             </field>
         </record>
-        
+
         <!--Version TinyERP
         <record model="ir.ui.view" id="view_res_company_form_inh_l10n_mx_facturae">
             <field name="name">view.res.company.form.inh.l10n_mx_facturae</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="name" position="after">
                         <field name="certificate_ids" nolabel="1" colspan ="4"/>

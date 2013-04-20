@@ -4,7 +4,6 @@
 
         <record model="ir.ui.view" id="view_account_invoice_form_inh_payment_method_22">
             <field name="name">view.account.invoice.form.inh.payment_method_22</field>
-            <field name="type">form</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">

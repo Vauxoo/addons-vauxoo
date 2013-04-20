@@ -4,7 +4,6 @@
 
         <record model="ir.ui.view" id="view_partner_form_inh_xml22">
             <field name="name">view.partner.form.inh.xml22</field>
-            <field name="type">form</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="account.view_partner_property_form"/>
             <field name="arch" type="xml">

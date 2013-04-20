@@ -5,7 +5,6 @@
         <record id="view_ir_attachment_facturae_mx_filter" model="ir.ui.view">
             <field name="name">view.ir.attachment.facturae.mx.filter</field>
             <field name="model">ir.attachment.facturae.mx</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Attachment Factura-E">
                     <field name="name"/>
@@ -20,7 +19,6 @@
         <record id="view_ir_attachment_facturae_mx_form" model="ir.ui.view">
             <field name="name">view.ir.attachment.facturae.mx.form</field>
             <field name="model">ir.attachment.facturae.mx</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Attachment Factura-E" version="7.0">
                     <header>
@@ -56,7 +54,6 @@
         <record id="view_ir_attachment_facturae_mx_tree" model="ir.ui.view">
             <field name="name">view.ir.attachment.facturae.mx.tree</field>
             <field name="model">ir.attachment.facturae.mx</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Attachment Factura-E">
                     <field name="name"/>
