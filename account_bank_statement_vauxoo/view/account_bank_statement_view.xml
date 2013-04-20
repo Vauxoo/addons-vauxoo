@@ -131,7 +131,7 @@
                         <field name="move" readonly="True"/>
                     </group>
                     <newline/>
-                    <field name="bs_line_ids" nolabel="1" mode="tree,form" colspan="6">
+                    <field name="bs_line_ids" nolabel="1" colspan="6">
                     </field>
                 </page> 
               </xpath>
@@ -164,7 +164,7 @@
         </record>
 
 <record id="bank_statement_imported_lines_action" model="ir.actions.act_window">
-            <field name="name">Bank Statements Lines</field>
+
             <field name="res_model">bank.statement.imported.lines</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,search</field>
