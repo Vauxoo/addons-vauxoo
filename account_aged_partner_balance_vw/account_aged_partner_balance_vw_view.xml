@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
 
         <record model="ir.ui.view" id="view_account_aged_partner_balance_vw_tree">
             <field name="name">view.account.aged.partner.balance.vw.tree</field>
             <field name="model">account.aged.partner.balance.vw</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Aged Partner Balance View">
                     <field name="partner_id"/>
@@ -39,7 +38,7 @@
             <field name="view_mode">tree</field>
             <!--<field name="context">{'search_default_posted': 0}</field>-->
             <!--<field name="search_view_id" ref="account.view_account_move_line_filter"/>-->
-            <field name="help"></field>
+            <field name="help"/>
         </record>
         <menuitem action="action_account_aged_partner_balance_vw" id="menu_action_account_aged_partner_balance_vw" parent="account.menu_finance_legal_statement" sequence="100"/>
 

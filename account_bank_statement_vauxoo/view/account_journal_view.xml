@@ -1,17 +1,16 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_account_journal_bs_form_inherit">
             <field name="name">account.journal.form.inherit</field>
             <field name="model">account.journal</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">
-                    <xpath expr="/form/notebook/page[@string='General Information']" position="after">
+                    <xpath expr="//page[@string='Cash Registers']" position="after">
                             <page string="Concepts for Banks Statements">
                                 <separator string="Concepts to automate Import Banks Statements in this journal" colspan="4"/>
-                                <field name='concept_ids' nolabel='1' colspan="4">
-                                    <form string="Concept">
+                                <field name="concept_ids" nolabel="1" colspan="4">
+                                    <form string="Concept" version="7.0">
                                         <group col="8" colspan="4">
                                             <field name="expresion"/>
                                             <field name="sequence"/>
@@ -32,10 +31,10 @@
                                 <field name="moveper_line" colspan="4"/>
                             </page>
                     </xpath>
-                    <xpath expr='//field[@name="default_credit_account_id"]' position="after">
-                        <field name='default_interim_account_id'/>
-                        <field name='default_income_account_id'/>
-                        <field name='default_expense_account_id'/>
+                    <xpath expr="//field[@name=&quot;default_credit_account_id&quot;]" position="after">
+                        <field name="default_interim_account_id"/>
+                        <field name="default_income_account_id"/>
+                        <field name="default_expense_account_id"/>
                     </xpath>
             </field>
         </record>

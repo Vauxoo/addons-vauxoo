@@ -36,7 +36,7 @@ class account_move_line(osv.Model):
     _columns = {
         'ref2': fields.char('Second Reference', size=64, required=False, help="Account entry reference"),
     }
-
+"""
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         journal_pool = self.pool.get('account.journal')
         if context is None:
@@ -172,5 +172,5 @@ class account_move_line(osv.Model):
         result['arch'] = etree.tostring(document, pretty_print=True)
         result['fields'] = fields_get
         return result
-
+"""
 account_move_line()

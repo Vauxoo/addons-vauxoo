@@ -26,8 +26,8 @@
     "depends" : ["account",],
     "author" : "Vauxoo",
     "description" : """
-    Improve management of Bank Statement.
-    -------------------------------------
+Improve management of Bank Statement.
+=====================================
     1.- Import directly from files given by banks.
         a.- Costa Rica Banks.
             Banco Nacional (CRC).

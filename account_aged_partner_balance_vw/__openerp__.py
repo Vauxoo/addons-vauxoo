@@ -40,6 +40,6 @@
         "account_aged_partner_balance_vw_view.xml",
         'board_account_view.xml',
     ],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }
