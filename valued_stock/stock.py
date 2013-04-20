@@ -40,13 +40,17 @@ class stock_inventory_line(osv.Model):
             res[id] = self.compute_cost(cr, uid, [id])
         return res
 
+
     _columns = {
-        'cost': fields.function(_get_cost, method=True, digits_compute=dp.get_precision('Account'), string='Costo'),
+        'cost': fields.function(_get_cost, method=True, 
+            digits_compute=dp.get_precision('Account'), 
+            string='Costo'),
     }
 
     def search_date_desc(self, cr, uid, ids, product_id, date):
         cr.execute('SELECT price FROM product_historic_cost '
-                   'WHERE product_id=%s AND name <= %s ORDER BY name desc LIMIT 1', (product_id, date))
+                   'WHERE product_id=%s AND name <= %s ORDER BY' 
+                   'name desc LIMIT 1', (product_id, date))
         res = [x[0] for x in cr.fetchall()]
         if not res:
             res = 0.0
@@ -56,7 +60,8 @@ class stock_inventory_line(osv.Model):
 
     def search_date_asc(self, cr, uid, ids, product_id, date):
         cr.execute('SELECT price FROM product_historic_cost '
-                   'WHERE product_id=%s AND name > %s ORDER BY name asc LIMIT 1', (product_id, date))
+                   'WHERE product_id=%s AND name > %s ORDER BY'
+                   'name asc LIMIT 1', (product_id, date))
         res = [x[0] for x in cr.fetchall()]
         if not res:
             res = 0.0
@@ -77,7 +82,4 @@ class stock_inventory_line(osv.Model):
         costo = costo * inv_brw.product_qty * \
             inv_brw.product_uom.factor_inv * inv_brw.product_id.uom_id.factor
         return costo
-
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
