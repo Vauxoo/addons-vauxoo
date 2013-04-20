@@ -40,7 +40,7 @@
                         </page>
                         <page string="Products">
                             <field name="product_info_ids" nolabel="1" colspan="4"
-                                mode="tree,form" string="Products">
+                                mode="tree" string="Products">
                                 <form>
                                     <field name="product_id" on_change="onchange_product_id(product_id)"/>
                                     <field name="qty"/>

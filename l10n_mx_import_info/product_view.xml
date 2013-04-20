@@ -12,7 +12,7 @@
             src_model="product.product"/>
 
 
-            <record model="ir.ui.view" id="product_normal_form_view">
+            <record model="ir.ui.view" id="product_normal_view_inherit_form">
                 <field name="name">view.product.product.normal.inherit.form</field>
                 <field name="model">product.product</field>
                 <field name="inherit_id" ref="account.product_normal_form_view"/>
@@ -23,7 +23,7 @@
 <!--                            TODO for debug-->
                             <field name="has_import"/>
                             <field name="import_info_ids" nolabel="1" colspan="4"
-                            mode="tree,form" string="Import Relation"
+                            mode="tree" string="Import Relation"
                             attrs="{'invisible': ['|',('pack_control','=',0),('type','=','service')]}">
                                 <form>
                                     <group col="4" colspan="4">
