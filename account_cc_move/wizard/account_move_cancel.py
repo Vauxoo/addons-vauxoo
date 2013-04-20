@@ -40,11 +40,14 @@ class account_move_cancel(osv.TransientModel):
 
     _name = 'account.move.cancel'
     _columns = {
-        'invoice_ids': fields.many2many('account.invoice', 'invoice_rel', 'invoice1', 'invoice2', 'Invoices', help="Select the invoices to account move cancel"),
+        'invoice_ids': fields.many2many('account.invoice', 'invoice_rel',
+                            'invoice1', 'invoice2', 'Invoices',
+                            help="Select the invoices to account move cancel"),
 
     }
 
-    def cancel_account_move(self, cr, uid, ids, context=None, invoice_ids=False):
+    def cancel_account_move(self, cr, uid, ids, context=None,
+                            invoice_ids=False):
         '''
             Cancel invoices to delete account move
             @param invoice_ids, ids list of invoices to method apply
@@ -55,13 +58,18 @@ class account_move_cancel(osv.TransientModel):
             context = {}
         invo_obj = self.pool.get('account.invoice')
         journal_obj = self.pool.get('account.journal')
-        move_ids = invoice_ids and [i.move_id.id for i in invo_obj.browse(cr, uid, invoice_ids, context=context) if i.move_id] or [
-            i.move_id.id for i in self.browse(cr, uid, ids, context=context)[0].invoice_ids if i.move_id]
+        move_ids = invoice_ids and\
+            [i.move_id.id for i in invo_obj.browse(cr, uid, invoice_ids,
+                       context=context) if i.move_id] or [
+                           i.move_id.id for i in self.browse(
+                               cr, uid, ids,
+                               context=context)[0].invoice_ids if i.move_id]
         invo_ids = invoice_ids or [i.id for i in self.browse(
             cr, uid, ids, context=context)[0].invoice_ids if i.move_id]
 
         journal_ids = journal_obj.search(cr, uid, [], context=context)
-        hasattr(journal_obj.browse(cr, uid, journal_ids[0], context=context), 'update_posted') and \
+        hasattr(journal_obj.browse(cr, uid, journal_ids[0], context=context),
+                'update_posted') and \
             journal_obj.write(cr, uid, journal_ids, {
                               'update_posted': True}, context=context)
         account_move_obj = self.pool.get('account.move')
