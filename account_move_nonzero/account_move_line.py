@@ -41,7 +41,6 @@ class account_move_line(osv.Model):
 
     _constraints = [
         (_update_check_nonzero,
-         'You can not create an entry with zero balance ! Please set amount !', []),
+         'You can not create an entry with zero balance !\
+         Please set amount !', []),
     ]
-
-
