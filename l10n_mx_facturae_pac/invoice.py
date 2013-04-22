@@ -125,15 +125,15 @@ class account_invoice(osv.osv):
         data_dict['cadena_original'] = txt_str
 
         if not txt_str:
-            raise osv.except_osv(_('Error en Cadena original!'), _('No se pudo obtener la cadena original del comprobante.\nVerifique su configuracion.\n%s'%(msg2)) )
+            raise osv.except_osv(_('Error in Original String!'), _("Can't get the string original of the voucher.\nCkeck your configuration.\n%s"%(msg2)) )
 
         if not data_dict[comprobante].get('folio', ''):
-            raise osv.except_osv(_('Error en Folio!'), _('No se pudo obtener el Folio del comprobante.\nAntes de generar el XML, de clic en el boton, generar factura.\nVerifique su configuracion.\n%s'%(msg2)) )
+            raise osv.except_osv(_('Error in Folio!'), _("Can't get the folio of the voucher.\nBefore generating the XML, click on the button, generate invoice.\nCkeck your configuration.\n%s"%(msg2)) )
 
         context.update( { 'fecha': data_dict[comprobante]['fecha'] } )
         sign_str = self._get_sello(cr=False, uid=False, ids=False, context=context)
         if not sign_str:
-            raise osv.except_osv(_('Error en Sello !'), _('No se pudo generar el sello del comprobante.\nVerifique su configuracion.\ns%s')%(msg2))
+            raise osv.except_osv(_('Error in Stamp !'), _("Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s")%(msg2))
 
         nodeComprobante = doc_xml.getElementsByTagName(comprobante)[0]
         nodeComprobante.setAttribute("sello", sign_str)
@@ -141,13 +141,13 @@ class account_invoice(osv.osv):
 
         noCertificado = self._get_noCertificado( context['fname_cer'] )
         if not noCertificado:
-            raise osv.except_osv(_('Error en No Certificado !'), _('No se pudo obtener el No de Certificado del comprobante.\nVerifique su configuracion.\n%s')%(msg2))
+            raise osv.except_osv(_('Error in No. Certificate !'), _("Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s")%(msg2))
         nodeComprobante.setAttribute("noCertificado", noCertificado)
         data_dict[comprobante]['noCertificado'] = noCertificado
 
         cert_str = self._get_certificate_str( context['fname_cer'] )
         if not cert_str:
-            raise osv.except_osv(_('Error en Certificado!'), _('No se pudo generar el Certificado del comprobante.\nVerifique su configuracion.\n%s')%(msg2))
+            raise osv.except_osv(_('Error in Certificate!'), _("Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s")%(msg2))
         cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict[comprobante]['certificado'] = cert_str
