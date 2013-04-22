@@ -41,7 +41,6 @@ import os
 import sys
 import codecs
 from datetime import datetime, timedelta
-
 try:
     from SOAPpy import WSDL
 except:
@@ -145,9 +144,17 @@ class account_invoice(osv.osv):
         msg = _("Press in the button  'Upload File'")
         return {'file': self.fdata, 'fname': fname_invoice, 'name': fname_invoice, 'msg': msg}
         
-    def add_node(self, node_name, attrs, parent_node, minidom_xml_obj, attrs_types,order=False):
+    def add_node(self, node_name=None, attrs=None, parent_node=None, minidom_xml_obj=None, attrs_types=None, order=False):
+        """
+            @params node_name : Name node to added
+            @params attrs : Attributes to add in node
+            @params parent_node : Node parent where was add new node children
+            @params minidom_xml_obj : File XML where add nodes
+            @params attrs_types : Type of attributes added in the node
+            @params order : If need add the params in order in the XML, add a list with order to params
+        """
         if not order:
-            order=attrs
+            order = attrs
         new_node = minidom_xml_obj.createElement(node_name)
         for key in order:
             if attrs_types[key] == 'attribute':
@@ -162,6 +169,10 @@ class account_invoice(osv.osv):
         return new_node
         
     def add_addenta_xml(self, cr, ids, xml_res_str=None, comprobante=None, context={}):
+        """
+         @params xml_res_str : File XML
+         @params comprobante : Name to the Node that contain the information the XML
+        """
         if xml_res_str:
             node_Addenda = xml_res_str.getElementsByTagName('Addenda')
             if len(node_Addenda) == 0:
@@ -196,7 +207,7 @@ class account_invoice(osv.osv):
         """
         @params fdata : File.xml codification in base64
         """
-                ir_seq_app_obj = self.pool.get('ir.sequence.approval')
+        ir_seq_app_obj = self.pool.get('ir.sequence.approval')
         invoice = self.browse(cr, uid, inv_ids[0], context=context)
         sequence_app_id = ir_seq_app_obj.search(cr, uid, [('sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
         type_inv = 'cfd22'
@@ -240,7 +251,7 @@ class account_invoice(osv.osv):
                     cerCSD = fname_cer_no_pem and base64.encodestring( open(fname_cer_no_pem, "r" ).read() ) or ''
                     fname_key_no_pem = file_globals['fname_key']
                     keyCSD = fname_key_no_pem and base64.encodestring( open(fname_key_no_pem, "r" ).read() ) or ''
-                    cfdi = base64.encodestring( cfd_data_adenda.replace(codecs.BOM_UTF8,'') )
+                    cfdi = base64.encodestring( xml_res_str_addenda.replace(codecs.BOM_UTF8,'') )
                     zip = False#Validar si es un comprimido zip, con la extension del archivo
                     contrasenaCSD = file_globals.get('password', '')
                     params = [user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
