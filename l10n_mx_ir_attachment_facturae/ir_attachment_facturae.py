@@ -90,7 +90,6 @@ class ir_attachment_facturae_mx(osv.osv):
                 msj="Error XML CFD 2.2\n"
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '_V2_2.xml' or ''
-            print 'invoice', invoice
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
             attach=self.pool.get('ir.attachment').create(cr, uid, {
                 'name': fname_invoice,
@@ -116,8 +115,7 @@ class ir_attachment_facturae_mx(osv.osv):
         attachment_obj = self.pool.get('ir.attachment')
         type=self.browse(cr,uid,ids)[0].type
         if type=='cfd22':
-            aids = self.browse(cr,uid,ids)[0].file_input
-            msj += _('Attached Successfully XML CFD 2.2\n')
+            aids = self.browse(cr,uid,ids)[0].file_input or False
         if type=='cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, [invoice.id] , context=context)
@@ -181,14 +179,12 @@ class ir_attachment_facturae_mx(osv.osv):
  #           tmp_id = tmp_id and tmp_id[0] or False
 
             tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
-            
+
             message = mail_compose_message_pool.onchange_template_id(cr, uid, [], template_id=tmp_id, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
             mssg = message.get('value', False)
             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
             mssg['attachment_ids'] = [(6, 0, attachments)]
             mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
-            print "mssg",mssg
-            print "mssg_id",mssg_id
             state = "sin enviar email"
             #state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
 #            mail=self.pool.get('mail.mail').create(cr, uid, {
@@ -251,12 +247,12 @@ class ir_attachment_facturae_mx(osv.osv):
             wf_service.trg_delete(uid, 'ir.attachment.facturae.mx', row.id, cr)
             wf_service.trg_create(uid, 'ir.attachment.facturae.mx', row.id, cr)
         return self.write(cr, uid, ids, {'state': 'draft'})
-    
+
     def get_tmpl_email_id(self, cr, uid, ids, context=None):
         email_settings = self.pool.get('l10n.mx.email.config.settings')
         cr.execute(""" select max(id) as email_tmp_id from l10n_mx_email_config_settings """)
         dat = cr.dictfetchall()
         email_tmp_id = email_settings.browse(cr, uid, dat[0]['email_tmp_id']).email_tmp_id
         return email_tmp_id and email_tmp_id.id or False
-    
+
 ir_attachment_facturae_mx()

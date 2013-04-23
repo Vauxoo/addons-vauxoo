@@ -42,21 +42,19 @@ class res_partner(osv.osv):
         'l10n_mx_street4': fields.char('No. External', size=128, help='External number of the partner address'),
         'l10n_mx_city2': fields.char('Locality', size=128, help='Locality configurated for this partner'),
     }
-    
-    def _get_display_address_field(self):
-        res = super(res_partner, self)._get_display_address_field()
+
+    def _address_fields(self, cr, uid, context=None):
+        res = super(res_partner, self)._address_fields(cr, uid, context=None)
         res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
         return res
 
     def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
         res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context=context)
-        def value_or_id(val):
-            """ return val or val.id if val is a browse record """
-            return val if isinstance(val, (bool, int, long, float, basestring)) else val.id
-
-        if use_parent_address and parent_id:
+        print "entro----------------------------------------------"
+        if not use_parent_address:
             parent = self.browse(cr, uid, parent_id, context=context)
-            res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._get_display_address_field()))
+            res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._address_fields(cr, uid, context=None)))
+            print res
         return res
 
     def _get_default_country_id(self, cr, uid, context=None):
@@ -75,7 +73,7 @@ class res_partner(osv.osv):
         for name, field in self._columns.items():
             if name == 'city_id':
                 city = '<field name="city" modifiers="{&quot;invisible&quot;: true}" placeholder="City....." style="width: 50%%"/><field name="city_id" on_change="onchange_city(city_id)" placeholder="City" style="width: 40%%"/>'
-                
+
         layouts = {
             '%(l10n_mx_street3)s\n%(l10n_mx_street4)s\n%(l10n_mx_city2)s': """
                     <group>
