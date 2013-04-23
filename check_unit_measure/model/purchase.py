@@ -40,14 +40,16 @@ class inherit_purchase_order_line(osv.Model):
 
     def _check_unit_measure(self, cr, uid, ids, context=None):
         pol_brw = self.browse(cr, uid, ids[0], context=context)
-        if pol_brw.product_id and pol_brw.product_id.uom_po_id.id != pol_brw.product_uom.id:
+        if pol_brw.product_id and\
+                pol_brw.product_id.uom_po_id.id != pol_brw.product_uom.id:
             raise osv.except_osv(_('Error !'), _(
-                "The Unit measure in the line will be the unit measure set on the product configuration to purchase %s .") % (pol_brw.product_id.name,))
+                "The Unit measure in the line will be the unit measure set\
+                on the product configuration to purchase %s .") %
+                (pol_brw.product_id.name,))
         return True
 
     _constraints = [
-        (_check_unit_measure, 'Error!\nThe Unit measure in the line will be the unit measure for this product.', [
+        (_check_unit_measure, 'Error!\nThe Unit measure in the line will be\
+         the unit measure for this product.', [
          'product_uom'])
     ]
-
-
