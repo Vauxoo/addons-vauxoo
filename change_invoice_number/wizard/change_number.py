@@ -37,8 +37,10 @@ class change_number(osv.TransientModel):
 
     _name = 'change.number'
     _columns = {
-        'number': fields.char('New Number', 20, help="Enter the new number of the invoice"),
-        'sure': fields.boolean('Are sure?', help="Select to number change"),
+        'number': fields.char('New Number', 20,
+                              help="Enter the new number of the invoice"),
+        'sure': fields.boolean('Are sure?',
+                               help="Select to number change"),
 
     }
 
@@ -53,12 +55,12 @@ class change_number(osv.TransientModel):
                 invo_brw = invo_obj.browse(cr, uid, context.get(
                     'active_id'), context=context)
                 invo_brw.move_id and move_obj.write(cr, uid, [
-                                                    invo_brw.move_id.id], {'name': wzr_brw.number}, context=context)
+                    invo_brw.move_id.id],
+                    {'name': wzr_brw.number}, context=context)
                 invo_obj.write(cr, uid, [invo_brw.id], {
-                               'internal_number': wzr_brw.number}, context=context)
+                               'internal_number': wzr_brw.number},
+                               context=context)
             else:
                 raise osv.except_osv(_('Invalid action !'), _(
                     "Must be sure the operation"))
         return {'type': 'ir.actions.act_window_close'}
-
-
