@@ -29,8 +29,6 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import pooler, tools
-
-#~ import wizard
 import base64
 import time
 import datetime
@@ -38,7 +36,7 @@ from dateutil.relativedelta import relativedelta
 
 class wizard_invoice_facturae_txt_v6(osv.osv_memory):
     _name = 'wizard.invoice.facturae.txt.v6'
-    
+
     def _get_month_selection(self, cr, uid, context=None):
         months_selection = [
             (1,_('January')),
@@ -55,7 +53,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
             (12,_('December')),
         ]
         return months_selection
-        
+
     _columns = {
         'month':fields.selection(_get_month_selection, 'Month', type="integer", help='Month to filter'),
         'year':fields.integer('Year', help='Year to filter'),
@@ -66,12 +64,12 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         'facturae_fname':fields.char('File Name', size=64),
         'note':fields.text('Log', readonly=True),
     }
-    
+
     def _get_facturae_fname(self, cr, uid, context=None):
         if context is None:
             context = {}
         return context.get('facturae_fname', 0)
-        
+
     def _get_facturae(self, cr, uid, context=None):
         if context is None:
             context = {}
@@ -81,7 +79,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         if context is None:
             context = {}
         return context.get('note', 0)
-        
+
     _defaults = {
         'month':lambda*a: int(time.strftime("%m"))-1,
         'year':lambda*a: int(time.strftime("%Y")),
@@ -90,7 +88,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         'facturae_fname':_get_facturae_fname,
         'facturae':_get_facturae,
         'note':_get_note,
-    
+
     }
 
     def get_invoices_date(self, cr, uid, ids, context=None):
@@ -106,7 +104,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         date_start = data['date_start']
         date_end = data['date_end']
         #context.update( {'date': date_start.strftime("%Y-%m-%d")} )
-        invoice_ids.extend( 
+        invoice_ids.extend(
             invoice_obj.search(cr, uid, [
                 ( 'type', 'in', ['out_invoice', 'out_refund'] ),
                 ( 'state', 'in', ['open', 'paid', 'cancel'] ),
@@ -125,18 +123,19 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
             ], order='invoice_datetime', context=context)
         )
         self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)
+        ir_model_data = self.pool.get('ir.model.data')
+        form_res = ir_model_data.get_object_reference(cr, uid, 'l10n_mx_facturae', 'view_wizard_invoice_facturae_txt_v6_form')
+        form_id = form_res and form_res[1] or False
         return {
             'type': 'ir.actions.act_window',
             'name': 'Electronic Invoice - Report Monthly TXT',
-            'view_type': 'form',
-            'view_mode': 'form',
             'res_model': 'wizard.invoice.facturae.txt.v6',
             'nodestroy': True,
             'target' : 'new',
-            'res_id': ids[0], 
-            'views': [(False, 'form')],
+            'res_id': ids[0],
+            'views': [(form_id, 'form')],
             }
-        
+
     def get_invoices_month(self, cr, uid, ids, context=None):
         data = self.read(cr, uid, ids, context=context)[0]
         if not context:
@@ -158,7 +157,7 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
                 ( 'internal_number', '<>', False ),
                 ], order='invoice_datetime', context=context)
         )
-        invoice_ids.extend(  
+        invoice_ids.extend(
             invoice_obj.search(cr, uid, [
                 ( 'type', 'in', ['out_invoice', 'out_refund'] ),
                 ( 'state', 'in', ['cancel'] ),
@@ -169,16 +168,17 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
         )
         invoice_ids = list(set(invoice_ids))
         self.write(cr, uid, ids, {'invoice_ids': [(6, 0, invoice_ids)] }, context=None)
+        ir_model_data = self.pool.get('ir.model.data')
+        form_res = ir_model_data.get_object_reference(cr, uid, 'l10n_mx_facturae', 'view_wizard_invoice_facturae_txt_v6_form')
+        form_id = form_res and form_res[1] or False
         return {
             'type': 'ir.actions.act_window',
             'name': 'Electronic Invoice - Report Monthly TXT',
-            'view_type': 'form',
-            'view_mode': 'form',
             'res_model': 'wizard.invoice.facturae.txt.v6',
             'nodestroy': True,
             'target' : 'new',
-            'res_id': ids[0], 
-            'views': [(False, 'form')],
+            'res_id': ids[0],
+            'views': [(form_id, 'form')],
             }
 
     def create_facturae_txt(self, cr, uid, ids, context=None):
@@ -193,13 +193,13 @@ class wizard_invoice_facturae_txt_v6(osv.osv_memory):
             if txt_data:
                 txt_data = base64.encodestring( txt_data )
                 context.update({'facturae': txt_data, 'facturae_fname': fname, 'note': _("Open the file & check that the information is correct, folios, RFC, amounts & reported status. \nPlease make sure that not this reporting folios that not belong to electronic invoice's (you can delete in the file directly).\nTIP: Remember that this file too contains folios of credit note.")})
-                model_data_ids = obj_model.search(cr,uid,[('model','=','ir.ui.view'),('name','=','view_wizard_invoice_facturae_txt_v6_form2')])
-                resource_id = obj_model.read(cr, uid, model_data_ids, fields=['res_id'])[0]['res_id']
+                form_res = obj_model.get_object_reference(cr, uid, 'l10n_mx_facturae', 'view_wizard_invoice_facturae_txt_v6_form2')
+                form_id = form_res and form_res[1] or False
                 return {
-                        'view_type': 'form',
+                        'name': 'Monthly Report Ready',
                         'view_mode': 'form',
                         'res_model': 'wizard.invoice.facturae.txt.v6',
-                        'views': [(resource_id,'form')],
+                        'views': [(form_id,'form')],
                         'type': 'ir.actions.act_window',
                         'target': 'new',
                         'context': context,
