@@ -351,19 +351,37 @@
         <!--code for cfd32-->
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
-                %if o.company_emitter_id.cif_file:
-                    <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}</div>
-                %endif
-                %if o.cfdi_cbb:
-                    <div style="float: right;"> ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}</div>
-                %endif
-                <span class="datos_fiscales">
-                    <b>${_('Sello Digital Emisor:')} </b><br/>
-                    ${split_string( o.sello ) or ''|entity}<br/>
-                    <b>${_('Sello Digital SAT:')} </b><br/>
-                    ${split_string( o.cfdi_sello or '') or ''|entity}<br/>
-                    <b>${_('Cadena original:')} </b><br/>
-                    ${split_string(o.cfdi_cadena_original) or ''|entity}
+                <table width="100%" class="datos_fiscales">
+                    <tr>
+                        %if o.company_emitter_id.cif_file:
+                        <td align="left">
+                            ${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file), 140, 220)}
+                        </td>
+                        %endif
+                        <td valign="top" align="left">
+                            %if o.company_emitter_id.cif_file == False:
+                                <p class="cadena_without_cif">
+                            %elif o.cfdi_cbb == False:
+                                <p class="cadena_without_cbb">
+                            %elif o.cfdi_cbb == False and o.company_emitter_id.cif_file == False:
+                                <p class="cadena_without_cbb_cfd">
+                            %elif o.cfdi_cbb and o.company_emitter_id.cif_file:
+                                <p class="cadena_with_cbb_cfd">
+                            %endif
+                            <b>${_('Sello Digital Emisor:')} </b><br/>
+                            ${split_string( o.sello ) or ''|entity}<br/>
+                            <b>${_('Sello Digital SAT:')} </b><br/>
+                            ${split_string( o.cfdi_sello or '') or ''|entity}<br/>
+                            <b>${_('Cadena original:')} </b><br/>
+                            ${split_string(o.cfdi_cadena_original) or ''|entity}</p>
+                        </td>
+                        %if o.cfdi_cbb:
+                        <td align="right">
+                            ${helper.embed_image('jpeg',str(o.cfdi_cbb), 180, 180)}
+                        </td>
+                        %endif
+                    </tr>
+                </table>
                 <!--</span> si se activan, forzan un brinco de linea
             </div>-->
         %endif
