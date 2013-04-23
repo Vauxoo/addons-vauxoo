@@ -42,23 +42,28 @@
                     <div class="emitter">
                         %if o.company_emitter_id:
                             %if o.company_emitter_id.address_invoice_parent_company_id:
-                                <br/>${o.company_emitter_id.address_invoice_parent_company_id.street or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.l10n_mx_street3 or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.l10n_mx_street4 or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.street2 or ''|entity}
-                                ${ o.company_emitter_id.address_invoice_parent_company_id.zip or ''|entity}
-                                <br />${_("Localidad:")} ${ o.company_emitter_id.address_invoice_parent_company_id.l10n_mx_city2 or ''|entity}
-                                <br/>${o.company_emitter_id.address_invoice_parent_company_id.city or ''|entity}
-                                , ${o.company_emitter_id.address_invoice_parent_company_id.state_id and o.company_emitter_id.address_invoice_parent_company_id.state_id.name or ''|entity}
-                                , ${o.company_emitter_id.address_invoice_parent_company_id.country_id and o.company_emitter_id.address_invoice_parent_company_id.country_id.name or ''|entity}
+                                <%
+                                if o.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                                    address_emitter = o.company_emitter_id.address_invoice_parent_company_id.parent_id
+                                else:
+                                    address_emitter = o.company_emitter_id.address_invoice_parent_company_id%>
+                                <br/>${address_emitter.street or ''|entity}
+                                ${address_emitter.l10n_mx_street3 or ''|entity}
+                                ${address_emitter.l10n_mx_street4 or ''|entity}
+                                ${address_emitter.street2 or ''|entity}
+                                ${address_emitter.zip or ''|entity}
+                                <br />${_("Localidad:")} ${address_emitter.l10n_mx_city2 or ''|entity}
+                                <br/>${address_emitter.city or ''|entity}
+                                , ${address_emitter.state_id and address_emitter.state_id.name or ''|entity}
+                                , ${address_emitter.country_id and address_emitter.country_id.name or ''|entity}
                                 <br/><b>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat or ''|entity}</b>
                                 %if o.company_emitter_id.partner_id.regimen_fiscal_id:
                                     <br/>${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or ''|entity }
                                 %endif
-                                <br/>${o.company_emitter_id.address_invoice_parent_company_id.phone and _("Teléfono(s):") or o.company_emitter_id.address_invoice_parent_company_id.fax and _("Teléfono(s):") or o.company_emitter_id.address_invoice_parent_company_id.mobile and _("Teléfono(s):") or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.phone or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.fax  and ',' or ''|entity} ${o.company_emitter_id.address_invoice_parent_company_id.fax or ''|entity}
-                                ${o.company_emitter_id.address_invoice_parent_company_id.mobile and ',' or ''|entity} ${o.company_emitter_id.address_invoice_parent_company_id.mobile or ''|entity}
+                                <br/>${address_emitter.phone and _("Teléfono(s):") or address_emitter.fax and _("Teléfono(s):") or address_emitter.mobile and _("Teléfono(s):") or ''|entity}
+                                ${address_emitter.phone or ''|entity}
+                                ${address_emitter.fax  and ',' or ''|entity} ${address_emitter.fax or ''|entity}
+                                ${address_emitter.mobile and ',' or ''|entity} ${address_emitter.mobile or ''|entity}
                             %endif
                         %endif
                     </div>

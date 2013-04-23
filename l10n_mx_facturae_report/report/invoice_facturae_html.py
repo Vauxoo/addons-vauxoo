@@ -154,16 +154,17 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return ""
 
     def _get_data_partner(self, partner_id):
-        address_invoice=''
+        address_invoice = ''
         partner_obj = self.pool.get('res.partner')
         res = {}
         address_invoice_id = partner_obj.search(self.cr, self.uid, [('parent_id', '=', partner_id.id), ('type', '=', 'invoice')])
         address_invoice_id2 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id),('type', '=', 'invoice')])
-        #address_invoice_id3 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id)])
         if address_invoice_id:
             address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id[0])
         if address_invoice_id2:
             address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id2[0])
+        if address_invoice.use_parent_address:
+            address_invoice = address_invoice.parent_id
         #if address_invoice_id3:
             #address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id3[0])
             #print "Customer Invoice Address Not Type Invoice"
