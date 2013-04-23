@@ -42,7 +42,7 @@
         />
 
         <record id="view_wizard_invoice_facturae_txt_v6_form2" model="ir.ui.view">
-            <field name="name">view.wizard.invoice.facturae.txt.v6.form2</field>
+            <field name="name">view.wizard.invoice.facturae.txt.v6.v2.form</field>
             <field name="model">wizard.invoice.facturae.txt.v6</field>
             <field name="arch" type="xml">
                 <form string="FILE TXT FOR THE SAT">
