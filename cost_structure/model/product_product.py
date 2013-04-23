@@ -38,7 +38,8 @@ class product_product(osv.Model):
 
     _inherit = 'product.product'
 
-    def _structure_cost_status(self, cr, uid, ids, field_name, arg, context=None):
+    def _structure_cost_status(self, cr, uid, ids, field_name, arg,
+                                context=None):
         '''
         Variable indicating if the product already has a cost structure
         '''
@@ -78,38 +79,91 @@ class product_product(osv.Model):
             string="Cost and Price Structure",
             method=True,
             view_load=True,
-            help="For the current product, this cost and price strucuture will define how the behavior of the price and cost computation "),
-        'cost_ult': fields.related('property_cost_structure', 'cost_ult', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Last Cost', help="Last cost at which the product was obtained "),
-        'qty_ult': fields.related('property_cost_structure', 'qty_ult', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Last Amount', help='Last amount recorded at the time of calculation of average cost'),
-        'cost_prom': fields.related('property_cost_structure', 'cost_prom', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Average Cost', help='Average cost automatically calculated to validate a document that alters the same'),
-        'cost_suppler': fields.related('property_cost_structure', 'cost_suppler', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Supplier Cost', help='Average cost to supplier product'),
-        'cost_ant': fields.related('property_cost_structure', 'cost_ant', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Ant Cost', help='Penultimate recorded cost for this product, used as history'),
-        'qty_ant': fields.related('property_cost_structure', 'qty_ant', type='float', digits_compute=dp.get_precision('Cost Structure'), string='Ant Qty', help='Number of product when the penultimate been calculated cost recorded for this product, used as history'),
-        'ult_om': fields.related('property_cost_structure', 'ult_om', relation='product.uom', type='many2one', string='Ult UOM', help='Product Unit of measure when making the calculation of average cost '),
-        'prom_om': fields.related('property_cost_structure', 'prom_om', relation='product.uom', type='many2one', string='UOM Prom'),
-        'ant_om': fields.related('property_cost_structure', 'ant_om', relation='product.uom', type='many2one', string='UOM Ant', help='Product unit of measure when the penultimate been calculated cost recorded for this product, used as history'),
-        'cost_to_price': fields.related('property_cost_structure', 'cost_to_price', type='selection', string='Average Cost'),
-        'date_cost_ult': fields.related('property_cost_structure', 'date_cost_ult', type='datetime', string='Date', help='Date on which the average cost was calculated'),
-        'date_ult_om': fields.related('property_cost_structure', 'date_ult_om', type='datetime', string='Date', help='Date on which the average cost was calculated'),
-        'date_cost_prom': fields.related('property_cost_structure', 'date_cost_prom', type='datetime', string='Date', help='Date on which the average cost was calculated'),
-        'date_prom_om': fields.related('property_cost_structure', 'date_prom_om', type='datetime', string='Date', help='Date on which the average cost was calculated'),
-        'date_cost_suppler': fields.related('property_cost_structure', 'date_cost_suppler', type='datetime', string='Date', help='Date on which the average cost was calculated'),
-        'date_ant_om': fields.related('property_cost_structure', 'date_ant_om', type='datetime', string='Date', help='Date on which the penultimate average cost was calculated'),
-        'date_cost_ant': fields.related('property_cost_structure', 'date_cost_ant', type='datetime', string='Date', help='Date on which the penultimate average cost was calculated'),
-        'date_cost_to_price': fields.related('property_cost_structure', 'date_cost_to_price', type='datetime', string='Date', help='Date on which the penultimate average cost was calculated'),
-        'method_cost_ids': fields.related('property_cost_structure', 'method_cost_ids', relation='method.price', type='one2many', string='Method Cost',),
-        'status_bool': fields.function(_structure_cost_status, method=True, type="boolean", store=True, string='Status Price'),
+            help="For the current product, this cost and price strucuture will\
+                define how the behavior of the price and cost computation "),
+        'cost_ult': fields.related('property_cost_structure', 'cost_ult',
+            type='float', digits_compute=dp.get_precision('Cost Structure'),
+            string='Last Cost',
+            help="Last cost at which the product was obtained "),
+        'qty_ult': fields.related('property_cost_structure', 'qty_ult',
+            type='float', digits_compute=dp.get_precision('Cost Structure'),
+            string='Last Amount',
+            help='Last amount recorded at the time of calculation\
+                of average cost'),
+        'cost_prom': fields.related('property_cost_structure',
+            'cost_prom', type='float',
+            digits_compute=dp.get_precision('Cost Structure'),
+            string='Average Cost',
+            help='Average cost automatically calculated to validate a document\
+                that alters the same'),
+        'cost_suppler': fields.related('property_cost_structure',
+            'cost_suppler',
+            type='float', digits_compute=dp.get_precision('Cost Structure'),
+            string='Supplier Cost', help='Average cost to supplier product'),
+        'cost_ant': fields.related('property_cost_structure', 'cost_ant',
+            type='float', digits_compute=dp.get_precision('Cost Structure'),
+            string='Ant Cost',
+            help='Penultimate recorded cost for this\
+                product, used as history'),
+        'qty_ant': fields.related('property_cost_structure', 'qty_ant',
+            type='float', digits_compute=dp.get_precision('Cost Structure'),
+            string='Ant Qty',
+            help='Number of product when the penultimate been calculated cost\
+                recorded for this product, used as history'),
+        'ult_om': fields.related('property_cost_structure', 'ult_om',
+            relation='product.uom', type='many2one', string='Ult UOM',
+            help='Product Unit of measure when making the calculation\
+                of average cost '),
+        'prom_om': fields.related('property_cost_structure', 'prom_om',
+            relation='product.uom', type='many2one', string='UOM Prom'),
+        'ant_om': fields.related('property_cost_structure', 'ant_om',
+            relation='product.uom', type='many2one', string='UOM Ant',
+            help='Product unit of measure when the penultimate been\
+                calculated cost recorded for this product, used as history'),
+        'cost_to_price': fields.related('property_cost_structure',
+            'cost_to_price', type='selection', string='Average Cost'),
+        'date_cost_ult': fields.related('property_cost_structure',
+            'date_cost_ult', type='datetime', string='Date',
+            help='Date on which the average cost was calculated'),
+        'date_ult_om': fields.related('property_cost_structure', 'date_ult_om',
+            type='datetime', string='Date',
+            help='Date on which the average cost was calculated'),
+        'date_cost_prom': fields.related('property_cost_structure',
+            'date_cost_prom', type='datetime', string='Date',
+            help='Date on which the average cost was calculated'),
+        'date_prom_om': fields.related('property_cost_structure',
+            'date_prom_om', type='datetime', string='Date',
+            help='Date on which the average cost was calculated'),
+        'date_cost_suppler': fields.related('property_cost_structure',
+            'date_cost_suppler', type='datetime', string='Date',
+            help='Date on which the average cost was calculated'),
+        'date_ant_om': fields.related('property_cost_structure',
+            'date_ant_om', type='datetime', string='Date',
+            help='Date on which the penultimate average cost was calculated'),
+        'date_cost_ant': fields.related('property_cost_structure',
+            'date_cost_ant', type='datetime', string='Date',
+            help='Date on which the penultimate average cost was calculated'),
+        'date_cost_to_price': fields.related('property_cost_structure',
+            'date_cost_to_price', type='datetime', string='Date',
+            help='Date on which the penultimate average cost was calculated'),
+        'method_cost_ids': fields.related('property_cost_structure',
+            'method_cost_ids', relation='method.price', type='one2many',
+            string='Method Cost',),
+        'status_bool': fields.function(_structure_cost_status, method=True,
+            type="boolean", store=True, string='Status Price'),
     }
 
     _constraints = [(
-        _check_default_cost, 'ERROR, The product can only a default price', ['default_cost'])]
+        _check_default_cost, 'ERROR, The product can only a default price',
+            ['default_cost'])]
 
     def write(self, cr, uid, ids, vals, context=None):
         '''
         Overwritten the write method to manipulate the cost structure independently and make decisions when registering or modifying a cost structure
         '''
         product_brw = self.browse(cr, uid, ids and ids[0], context=context)
-        if product_brw.property_cost_structure and 'property_cost_structure' in vals:
+        if product_brw.property_cost_structure and\
+            'property_cost_structure' in vals:
             raise osv.except_osv(_('Error'), _(
                 'The product already has a cost structure'))
 
@@ -140,7 +194,10 @@ class product_product(osv.Model):
                         pass
                     else:
                         i[2] and i[2].update({
-                                             'cost_structure_id': product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id or []})
+                                'cost_structure_id': product_brw and
+                                    product_brw.property_cost_structure and
+                                    product_brw.property_cost_structure.id or
+                                    []})
                         method_id = i[2] and method_obj.create(
                             cr, uid, i[2], context=context)
 
@@ -150,7 +207,8 @@ class product_product(osv.Model):
             else:
                 'method_cost_ids' in vals and not vals[
                     'method_cost_ids'] and vals.pop('method_cost_ids')
-        return super(product_product, self).write(cr, uid, ids, vals, context=context)
+        return super(product_product, self).write(cr, uid, ids, vals,
+                                                    context=context)
 
     def price_get(self, cr, uid, ids, ptype='list_price', context=None):
         '''
@@ -173,12 +231,13 @@ class product_product(osv.Model):
             ptype = ptype == 'list_price' and 'list_price' or 'cost_ult'
             res[product.id] = product[ptype] or 0.0
             if ptype == 'list_price':
-                res[product.id] = (res[product.id] * (product.price_margin or 1.0)) + \
+                res[product.id] = (res[product.id] *\
+                    (product.price_margin or 1.0)) + \
                     product.price_extra
             if 'uom' in context:
                 uom = product.uos_id or product.uom_id
                 res[product.id] = product_uom_obj._compute_price(cr, uid,
-                                                                 uom.id, res[product.id], context['uom'])
+                                    uom.id, res[product.id], context['uom'])
             # Convert from price_type currency to asked one
             if 'currency_id' in context:
                 # Take the price_type currency from the product field
@@ -186,7 +245,8 @@ class product_product(osv.Model):
                 # currency
                 res[product.id] = self.pool.get(
                     'res.currency').compute(cr, uid, price_type_currency_id,
-                                            context['currency_id'], res[product.id], context=context)
+                                            context['currency_id'],
+                                            res[product.id], context=context)
 
         return res
 
@@ -199,7 +259,8 @@ class report_cost(osv.Model):
     _order = "date desc"
     _columns = {
         'date': fields.date('Date Invoice', readonly=True),
-        'product_id': fields.many2one('product.product', 'Product', readonly=True, select=True),
+        'product_id': fields.many2one('product.product', 'Product',
+                readonly=True, select=True),
         'quantity': fields.float('# of Products', readonly=True),
         'price_unit': fields.float('Unit Price', readonly=True),
         'last_cost': fields.float('Last Cost', readonly=True),
@@ -211,8 +272,10 @@ class report_cost(osv.Model):
             ('out_refund', 'Customer Refund'),
             ('in_refund', 'Supplier Refund'),
         ], 'Type', readonly=True, select=True),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True, select=True),
-        'line_id': fields.many2one('account.invoice.line', 'Linea', readonly=True, select=True),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice',
+                readonly=True, select=True),
+        'line_id': fields.many2one('account.invoice.line', 'Linea',
+                readonly=True, select=True),
     }
 
     _rec_name = 'date'

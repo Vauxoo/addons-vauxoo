@@ -48,7 +48,9 @@ class account_invoice_refund(osv.TransientModel):
         invo_obj = self.pool.get('account.invoice')
         res = super(account_invoice_refund, self).compute_refund(
             cr, uid, ids, mode=mode, context=context)
-        invo_brw = res.get('domain', False) and len(res.get('domain', False)[1]) > 2 and res.get('domain', False)[1][2] and \
+        invo_brw = res.get('domain', False) and\
+            len(res.get('domain', False)[1]) > 2 and\
+            res.get('domain', False)[1][2] and \
             invo_obj.browse(cr, uid, res.get(
                             'domain', False)[1][2], context=context)[0]
         date = time.strftime('%Y/%m/%d %H:%M:%S')
@@ -61,8 +63,12 @@ class account_invoice_refund(osv.TransientModel):
         date = date and date.split(' ')
         date = date and len(date) > 0 and date[1].split(":")
 
-        date_2 = date and time and datetime.datetime(int(date_2[0]), int(date_2[
-                                                     1]), int(date_2[2]), int(date[0]), int(date[1]), int(date[2])) or False
+        date_2 = date and time and datetime.datetime(int(date_2[0]),
+                                                    int(date_2[1]),
+                                                    int(date_2[2]),
+                                                    int(date[0]),
+                                                    int(date[1]),
+                                                    int(date[2])) or False
         invo_obj.write(cr, uid, [invo_brw and invo_brw.id], {
                        'date_invoice': date_2}, context=context)
         return res

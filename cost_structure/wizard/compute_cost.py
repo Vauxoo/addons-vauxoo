@@ -40,16 +40,26 @@ class compute_cost(osv.TransientModel):
 
     _name = 'compute.cost'
     _columns = {
-        'product_ids': fields.many2many('product.product', 'product_rel', 'product1', 'product2', 'Product', help="Select the product to compute cost"),
-        'product': fields.boolean('Product', help="To select compute by product"),
-        'categ': fields.boolean('Category', help="To select compute by category"),
+        'product_ids': fields.many2many('product.product', 'product_rel',
+            'product1', 'product2', 'Product',
+            help="Select the product to compute cost"),
+        'product': fields.boolean('Product',
+            help="To select compute by product"),
+        'categ': fields.boolean('Category',
+            help="To select compute by category"),
         'bolfili': fields.boolean('Boolean FIFO LIFO'),
-        'categ_ids': fields.many2many('product.category', 'categ_rel', 'categ1', 'categ2', 'Product Category', help="Select the category to compute cost"),
-        'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', help="Fiscal Year to search invoice between indicated period"),
-        'period_id': fields.many2one('account.period', 'Period', help="Period to search invoice between indicated period"),
+        'categ_ids': fields.many2many('product.category', 'categ_rel',
+            'categ1', 'categ2', 'Product Category',
+            help="Select the category to compute cost"),
+        'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year',
+            help="Fiscal Year to search invoice between indicated period"),
+        'period_id': fields.many2one('account.period', 'Period',
+            help="Period to search invoice between indicated period"),
         'all': fields.boolean('ALL', help="To compute cost for all products"),
-        'fifo': fields.boolean('FIFO', help="To compute cost FIFO for products"),
-        'lifo': fields.boolean('LIFO', help="To compute cost LIFO for products"),
+        'fifo': fields.boolean('FIFO',
+            help="To compute cost FIFO for products"),
+        'lifo': fields.boolean('LIFO',
+            help="To compute cost LIFO for products"),
 
     }
 
@@ -66,10 +76,12 @@ class compute_cost(osv.TransientModel):
         invoice_obj = self.pool.get('account.invoice')
         rec_com = {}
         rec_vent = {}
-        [rec_com.update({invoice_obj.browse(cr, uid, e[-1], context=context).parent_id.id:e[
-                        0]}) for i in dic_nc_com for e in dic_nc_com.get(i)]
-        [rec_vent.update({invoice_obj.browse(cr, uid, h[-1], context=context).parent_id.id:h[
-                         0]}) for g in dic_nc_vent for h in dic_nc_vent.get(g)]
+        [rec_com.update({invoice_obj.browse(cr, uid, e[-1],
+                            context=context).parent_id.id:e[0]})
+                            for i in dic_nc_com for e in dic_nc_com.get(i)]
+        [rec_vent.update({invoice_obj.browse(cr, uid, h[-1],
+                            context=context).parent_id.id:h[0]})
+                            for g in dic_nc_vent for h in dic_nc_vent.get(g)]
         cont = 0
         cont_qty = 0
         price = 0
@@ -79,14 +91,16 @@ class compute_cost(osv.TransientModel):
                 fifo = aux and aux.next()
             except:
                 raise osv.except_osv(_('Invalid action !'), _(
-                    "Impossible to calculate FIFO not have invoices in this period  "))
+                    "Impossible to calculate FIFO not have invoices\
+                    in this period  "))
             qty_aux = fifo and fifo[0] in rec_com.keys() and fifo[
                 3] - rec_com.get(fifo[0], False) or fifo[3]
             cost_aux = fifo and fifo[1]
 
             for d in dic_vent.get(i):
-                cont = d[-1] in rec_vent.keys() and (cont + d[
-                                                     0]) - rec_vent.get(d[-1], False) or cont + d[0]
+                cont = d[-1] in rec_vent.keys() and\
+                                            (cont + d[0]) - rec_vent.get(d[-1],
+                                            False) or cont + d[0]
 
                 if cont <= qty_aux:
                     price = (d[0] * cost_aux) + price
@@ -106,7 +120,8 @@ class compute_cost(osv.TransientModel):
             cost = price / (cont_qty > 0 and cont_qty or cont > 0 and cont)
         return True
 
-    def search_invoice(self, cr, uid, ids, dict, type, period, company, date, context=None):
+    def search_invoice(self, cr, uid, ids, dict, type, period, company, date,
+                        context=None):
         '''
         Return a list of invoices ids that have products sended in the dict
         #~ ('period_id','=',period),
@@ -135,7 +150,8 @@ class compute_cost(osv.TransientModel):
                 order='date_invoice')
         return invo_ids
 
-    def compute_actual_cost(self, cr, uid, ids, dic_comp, dic_vent, dic_nc_com, dic_nc_vent, context={}):
+    def compute_actual_cost(self, cr, uid, ids, dic_comp, dic_vent, dic_nc_com,
+                                                    dic_nc_vent, context={}):
         '''
         Method that performs the actual average cost, receiving the dictionaries of every movement,
         to perform the calculations for caesarean
@@ -176,8 +192,13 @@ class compute_cost(osv.TransientModel):
                     date = date and date.split('-') or False
                     time = date and date[2].split(' ')
                     time = time and time[1].split(":")
-                    date = date and time and datetime.datetime(int(date[0]), int(date[
-                                                               1]), int(date[2][0:2]), int(time[0]), int(time[1]), int(time[2])) or False
+                    date = date and time and datetime.datetime(
+                                                        int(date[0]),
+                                                        int(date[1]),
+                                                        int(date[2][0:2]),
+                                                        int(time[0]),
+                                                        int(time[1]),
+                                                        int(time[2])) or False
                     date = date and date + datetime.timedelta(
                         seconds=1) or dat.strftime('%Y/%m/%d %H:%M:%S')
 
@@ -194,22 +215,23 @@ class compute_cost(osv.TransientModel):
                                                'date_ult_om': date},
                                               context=context)
 
-                        if product_brw.property_cost_structure and product_brw.cost_ult > 0:
+                        if product_brw.property_cost_structure and\
+                        product_brw.cost_ult > 0:
                             product_obj.write(cr, uid, [product_brw.id],
-                                              {'cost_ult': cost,
-                                               'date_cost_ult': date,
-                                               'qty_ult': aux.get(i)
-                                               and aux.get(i)[1],
-                                               'cost_ant': product_brw.cost_ult,
-                                               'qty_ant': product_brw.qty_ult,
-                                               'date_cost_ant': product_brw.date_cost_ult,
-                                               'ult_om': aux.get(i)[-1] or [],
-                                               'date_ult_om': date,
-                                               'ant_om': product_brw.ult_om
-                                               and product_brw.ult_om.id
-                                               or [],
-                                               'date_ant_om': product_brw.date_ult_om},
-                                              context=context)
+                                  {'cost_ult': cost,
+                                   'date_cost_ult': date,
+                                   'qty_ult': aux.get(i)
+                                   and aux.get(i)[1],
+                                   'cost_ant': product_brw.cost_ult,
+                                   'qty_ant': product_brw.qty_ult,
+                                   'date_cost_ant': product_brw.date_cost_ult,
+                                   'ult_om': aux.get(i)[-1] or [],
+                                   'date_ult_om': date,
+                                   'ant_om': product_brw.ult_om
+                                   and product_brw.ult_om.id
+                                   or [],
+                                   'date_ant_om': product_brw.date_ult_om},
+                                  context=context)
                         else:
                             product_obj.write(cr, uid, [product_brw.id],
                                               {'cost_ult': cost,
@@ -217,10 +239,12 @@ class compute_cost(osv.TransientModel):
                                                'qty_ult': aux.get(i)
                                                and aux.get(i)[1],
                                                'ult_om': aux.get(i)[-1] or [],
-                                               'date_ult_om': date}, context=context)
+                                               'date_ult_om': date},
+                                                            context=context)
         return aux
 
-    def update_dictionary(self, cr, uid, ids, dict, inv_ids, purchase, context=None):
+    def update_dictionary(self, cr, uid, ids, dict, inv_ids, purchase,
+                            context=None):
         '''
         Update a dict send with move all this product
         '''
@@ -255,7 +279,8 @@ class compute_cost(osv.TransientModel):
 
         return dict
 
-    def compute_actual_cost_purchase(self, cr, uid, ids, dic_comp, dic_vent, dic_nc_com, dic_nc_vent, context={}):
+    def compute_actual_cost_purchase(self, cr, uid, ids, dic_comp, dic_vent,
+                                    dic_nc_com, dic_nc_vent, context={}):
         '''
         Method that performs the actual average cost, receiving the dictionaries of every movement,
         to perform the calculations for caesarean
@@ -319,8 +344,8 @@ class compute_cost(osv.TransientModel):
                         aux[i].append((cost, aux2[5], qty))
                         list.append((cost, aux2[5]))
                         aux2[6] and invoice_line_obj.write(cr, uid, aux2[6],
-                                                           {'aux_financial': cost*qty,
-                                                            'aux_qty': qty}, context=context)
+                                           {'aux_financial': cost*qty,
+                                            'aux_qty': qty}, context=context)
 
                         evalu = 'DateTime(a[5]) > DateTime(date) and  \
                                 DateTime(a[5]) <= DateTime(aux2[5])'
@@ -361,8 +386,8 @@ class compute_cost(osv.TransientModel):
                                'in_invoice'),
                               ('company_id',
                                '=', company_id),
-                                                    ('date_invoice', '<', invo_brw.parent_id.date_invoice)],
-                                                    order='date_invoice')
+                                ('date_invoice', '<', invo_brw.parent_id.date_invoice)],
+                                order='date_invoice')
 
                 inv_ids and [lista.append((d[3],
                                  line.aux_qty and (d[3] * (
@@ -398,7 +423,8 @@ class compute_cost(osv.TransientModel):
                                                             #~ the time of sale ")% (invo_brw.id))
         return lista
 
-    def compute_cost(self, cr, uid, ids, context=None, products=False, period=False, fifo=False, lifo=False, date=False):
+    def compute_cost(self, cr, uid, ids, context=None, products=False,
+                            period=False, fifo=False, lifo=False, date=False):
         '''
         Method to compute coste from porduct invoice from a wizard or called from other method
 

@@ -40,11 +40,17 @@ class update_price_list(osv.TransientModel):
     _name = 'update.price.list'
 
     _columns = {
-        'those_products': fields.boolean('Products', help='Select if wish update price list by specific product'),
-        'all': fields.boolean('All Price List', help="Select this options only if you wish update all price list"),
+        'those_products': fields.boolean('Products',
+            help='Select if wish update price list by specific product'),
+        'all': fields.boolean('All Price List',
+            help="Select this options only if you wish update all price list"),
         'sure': fields.boolean('Sure?', help="Are sure this operation"),
-        'price_list_id': fields.many2one('product.pricelist', string='Price List', help="Select the price list for price list Report", domain=[('type', '=', 'sale')]),
-        'product_ids': fields.many2many('product.product', 'product_in', 'product_out', 'Product', help='Product to update price list'),
+        'price_list_id': fields.many2one('product.pricelist',
+            string='Price List',
+            help="Select the price list for price list Report",
+            domain=[('type', '=', 'sale')]),
+        'product_ids': fields.many2many('product.product', 'product_in',
+            'product_out', 'Product', help='Product to update price list'),
 
     }
 
@@ -61,8 +67,10 @@ class update_price_list(osv.TransientModel):
         method_obj = self.pool.get('cost.structure')
         price_obj = self.pool.get('product.pricelist')
         wz_brw = self.browse(cr, uid, ids, context=context)[0]
-        product_ids = wz_brw.those_products and [i.id for i in wz_brw.product_ids] or product_obj.search(
-            cr, uid, [('cost_ult', '>', 0.0), ('virtual_available', '>', 0.0)], context=context)
+        product_ids = wz_brw.those_products and\
+            [i.id for i in wz_brw.product_ids] or product_obj.search(
+            cr, uid, [('cost_ult', '>', 0.0), ('virtual_available', '>', 0.0)],
+            context=context)
         price_brw = wz_brw and wz_brw.price_list_id and price_obj.browse(
             cr, uid, wz_brw.price_list_id.id, context=context)
         value = 'Precio|precio|price'
@@ -78,12 +86,18 @@ class update_price_list(osv.TransientModel):
                         if re.search(value, price_brw.name):
                             product_brw = product_obj.browse(
                                 cr, uid, product_id, context=context)
-                            property_id = product_brw and product_brw.property_cost_structure and product_brw.property_cost_structure.id
-                            price_dict = product_brw.virtual_available and self.pool.get(
-                                'product.pricelist').price_get(cr, uid, [price], product_id, qty, context=context)
-                            if price_dict and price_dict.get(price, 'False') or False:
+                            property_id = product_brw and\
+                                product_brw.property_cost_structure and\
+                                product_brw.property_cost_structure.id
+                            price_dict = product_brw.virtual_available and\
+                            self.pool.get(
+                                'product.pricelist').price_get(cr, uid,
+                                [price], product_id, qty, context=context)
+                            if price_dict and\
+                                price_dict.get(price, 'False') or False:
                                 [dicti.update({
-                                              i.sequence: i.id}) for i in product_brw.method_cost_ids]
+                                        i.sequence: i.id})
+                                        for i in product_brw.method_cost_ids]
                                 number = price_brw and price_brw.name.split(
                                     ' ')
                                 number and len(
@@ -93,9 +107,11 @@ class update_price_list(osv.TransientModel):
                                         ) and method_obj.write(
                                             cr, uid, [
                                                 property_id], {
-                                                    'method_cost_ids': [(1, dicti.get(int(number[1])), {'reference_cost_structure_id': property_id,
-                                                                                                        'unit_price': price_dict.get(price),
-                                                                                                        })]}, context=context) or \
+                                                    'method_cost_ids':
+                                                        [(1, dicti.get(int(number[1])),
+                                                    {'reference_cost_structure_id': property_id,
+                                                        'unit_price': price_dict.get(price),
+                                                        })]}, context=context) or \
                                     number and len(
                                         number) > 1 and number[1].isdigit(
                                         ) and product_obj.write(

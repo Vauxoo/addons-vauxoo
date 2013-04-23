@@ -36,7 +36,8 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     _columns = {
-        'cancel_check': fields.boolean('Cancel', help="Fenield to indicate if invoice was canceled "),
+        'cancel_check': fields.boolean('Cancel',
+            help="Fenield to indicate if invoice was canceled "),
     }
 
     _defaults = {
@@ -82,8 +83,12 @@ class account_invoice_line(osv.Model):
     _inherit = 'account.invoice.line'
     _columns = {
 
-        'aux_financial': fields.float('Total Financial aux', help="Total financial at the time of the calculation of cost through the validation of this invoice"),
-        'aux_qty': fields.float('Total Qty', help="Current Number of calculating the time cost to this invoice"),
+        'aux_financial': fields.float('Total Financial aux',
+            help="Total financial at the time of the calculation of cost\
+                through the validation of this invoice"),
+        'aux_qty': fields.float('Total Qty',
+            help="Current Number of calculating the time cost\
+                to this invoice"),
 
     }
 
