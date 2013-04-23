@@ -28,7 +28,7 @@ msgstr "Esta dirección será utilizada como la direccion que emite la Factura E
 #. module: l10n_mx_company_multi_address
 #: field:account.invoice,company_emitter_id:0
 msgid "Company Emitter Invoice"
-msgstr "Compañia Emissora de la Factura"
+msgstr "Compañia Emisora de la Factura"
 
 #. module: l10n_mx_company_multi_address
 #: help:account.invoice,company_emitter_id:0
