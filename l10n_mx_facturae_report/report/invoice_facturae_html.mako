@@ -337,14 +337,20 @@
         <!--code for cfd22-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
-                <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}</div>
-                <span class="datos_fiscales">
-                    <b>${_('Serie del Certificado')}</b><br/>
-                    ${o.no_certificado or ''|entity}
-                    <br/><br/><b>${_('Sello digital')}:</b><br/>
-                    ${split_string( o.sello or '') or ''|entity}
-                    <br/><br/><b>${_('Cadena original')}:</b><br/>
-                    ${split_string( o.cadena_original or '') or '' |entity}
+                <table>
+                    <tr>
+                        <td>
+                            <div class="float_left">${helper.embed_image('jpeg',str(o.company_emitter_id.cif_file),140, 220)}</div>
+                            <span class="datos_fiscales">
+                                <b>${_('Serie del Certificado')}</b><br/>
+                                ${o.no_certificado or ''|entity}
+                                <br/><br/><b>${_('Sello digital')}:</b><br/>
+                                ${split_string( o.sello or '') or ''|entity}
+                                <br/><br/><b>${_('Cadena original')}:</b><br/>
+                                ${split_string( o.cadena_original or '') or '' |entity}
+                            </td>
+                        </tr>
+                </table>
                 </span>
             </div>
         %endif
