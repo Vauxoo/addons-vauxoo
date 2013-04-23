@@ -203,12 +203,9 @@ class account_invoice(osv.osv):
                 node_Partner = self.add_node('sf:Partner', node_Partner_attrs, node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
         return xml_res_str
         
-    def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
-        """
-        @params fdata : File.xml codification in base64
-        """
+    def _get_type_sequence(self, cr, uid, ids, context=None):
         ir_seq_app_obj = self.pool.get('ir.sequence.approval')
-        invoice = self.browse(cr, uid, inv_ids[0], context=context)
+        invoice = self.browse(cr, uid, ids[0], context=context)
         sequence_app_id = ir_seq_app_obj.search(cr, uid, [('sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
         type_inv = 'cfd22'
         if sequence_app_id:
@@ -217,6 +214,13 @@ class account_invoice(osv.osv):
             comprobante = 'cfdi:Comprobante'
         else:
             comprobante = 'Comprobante'
+        return comprobante
+        
+    def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
+        """
+        @params fdata : File.xml codification in base64
+        """
+        comprobante = self._get_type_sequence(cr, uid, inv_ids, context=context)
         pac_params_obj = self.pool.get('params.pac')
         cfd_data = base64.decodestring( fdata or self.fdata )
         xml_res_str = xml.dom.minidom.parseString(cfd_data)
@@ -386,5 +390,31 @@ class account_invoice(osv.osv):
         else:
             msg_global=_('Not found information of webservices of PAC, verify that the configuration of PAC is correct')
         return {'message': msg_global }
+        
+    def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
+        """
+        @param cfd_datas : Dictionary with data that is used in facturae CFDI
+        """
+        if not cfd_datas:
+            cfd_datas = {}
+        comprobante = self._get_type_sequence(cr, uid, ids, context=context)
+        ##obtener cfd_data con varios ids
+        #for id in ids:
+        id = ids[0]
+        if True:
+            data = {}
+            cfd_data = cfd_datas
+            noCertificado = cfd_data.get(comprobante, {}).get('noCertificado', '')
+            certificado = cfd_data.get(comprobante, {}).get('certificado', '')
+            sello = cfd_data.get(comprobante, {}).get('sello', '')
+            cadena_original = cfd_data.get('cadena_original', '')
+            data = {
+                'no_certificado': noCertificado,
+                'certificado': certificado,
+                'sello': sello,
+                'cadena_original': cadena_original,
+            }
+            self.write(cr, uid, [id], data, context=context)
+        return True
 
 account_invoice()
