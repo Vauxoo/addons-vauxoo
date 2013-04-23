@@ -4,7 +4,6 @@
         <record id="view_account_tax_category_form" model="ir.ui.view">
             <field name="name">view.account.tax.category.form</field>
             <field name="model">account.tax.category</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Categories">
                     <separator string="Categories" colspan="4"/>
@@ -23,7 +22,6 @@
         <record id="view_account_tax_category_tree" model="ir.ui.view">
             <field name="name">view.account.tax.category.tree</field>
             <field name="model">account.tax.category</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Categories">
                     <field name="name" />
@@ -50,7 +48,6 @@
         <record id="view_account_tax_category_search" model="ir.ui.view">
             <field name="name">view.account.tax.category.search</field>
             <field name="model">account.tax.category</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Categories">
                     <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>

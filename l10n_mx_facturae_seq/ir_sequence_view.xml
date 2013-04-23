@@ -5,7 +5,6 @@
         <record id="view_facturae_ir_sequence_approval_form" model="ir.ui.view">
             <field name="name">view.facturae.ir.sequence.approval.form</field>
             <field name="model">ir.sequence.approval</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Aprobaciones">
                     <field name="sequence_id"/>
@@ -23,7 +22,6 @@
          <record id="view_facturae_ir_sequence_approval_tree" model="ir.ui.view">
             <field name="name">view.facturae.ir.sequence.approval.tree</field>
             <field name="model">ir.sequence.approval</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Aprobaciones">
                     <field name="sequence_id"/>
@@ -54,7 +52,6 @@
         <record id="view_facturae_sequence_search" model="ir.ui.view">
             <field name="name">view.facturae.sequence.search</field>
             <field name="model">ir.sequence.approval</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Aprobaciones">
                     <field name="approval_number"/>
@@ -77,7 +74,6 @@
         <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
             <field name="name">ir.sequence.form.inh.l10n_mx_facturae</field>
             <field name="model">ir.sequence</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="base.sequence_view"/>
             <field name="arch" type="xml">
                 <page string="Sequence" position="after">
@@ -110,7 +106,6 @@
         <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
             <field name="name">ir.sequence.form.inh.l10n_mx_facturae</field>
             <field name="model">ir.sequence</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="base.sequence_view"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">

@@ -3,7 +3,6 @@
     <data>
         <record model="ir.ui.view" id="view_partner_bank_clabe_form_inh_xml">
             <field name="name">view.partner.bank.clabe.form.inh.xml</field>
-            <field name="type">form</field>
             <field name="model">res.partner.bank</field>
             <field name="inherit_id" ref="base.view_partner_bank_form"/>
             <field name="arch" type="xml">
@@ -16,10 +15,9 @@
                 </xpath>
             </field>
         </record>
-        
+
         <record model="ir.ui.view" id="view_partner_bank_clabe_tree_inh_xml">
             <field name="name">view.partner.bank.clabe.form.inh.xml</field>
-            <field name="type">tree</field>
             <field name="model">res.partner.bank</field>
             <field name="inherit_id" ref="base.view_partner_bank_tree"/>
             <field name="arch" type="xml">
@@ -28,7 +26,7 @@
                 </xpath>
             </field>
         </record>
-        
+
          <record model="ir.ui.view" id="view_partner_clabe_tree_inh_xml22">
             <field name="name">view.partner.clabe.tree.inh.xml22</field>
             <field name="model">res.partner</field>
