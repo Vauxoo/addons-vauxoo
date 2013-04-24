@@ -126,6 +126,7 @@ class res_partner(osv.osv):
                 arch = etree.tostring(doc)
             else:
                 arch = res
+        #print "arch",arch
         return arch
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
@@ -136,7 +137,7 @@ class res_partner(osv.osv):
             fields_get = self.fields_view_get_address(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
             print fields_get
             res['fields'].update(fields_get)
-        print "fields",res
+        #print "fields",res
         return res
 
     _defaults = {
