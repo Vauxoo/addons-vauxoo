@@ -10,7 +10,7 @@
                     <xpath expr="//field[@name='name']" position="replace">
                         <field name="name" readonly="True"/>
                     </xpath>
-	    </field>
+        </field>
         </record>
 
     </data>
