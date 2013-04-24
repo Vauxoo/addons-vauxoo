@@ -33,9 +33,9 @@
             <field name="model">product.images</field>
             <field name="arch" type="xml">
                 <tree string="Product Images">
-                    <field name="name" select="1"/>
+                    <field name="name"/>
                     <field name="image"/>
-                    <field name="comments" select="2"/>
+                    <field name="comments"/>
                 </tree>
             </field>
         </record>
