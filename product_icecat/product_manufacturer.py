@@ -25,11 +25,11 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class product_product(osv.Model):
     _inherit = 'product.product'
     _columns = {
-        'manufacturer_pname': fields.char('Manufacturer Product Name', size=128),
+        'manufacturer_pname': fields.char('Manufacturer Product Name',
+            size=128),
     }
 
 
@@ -48,4 +48,3 @@ class product_attribute(osv.Model):
     _defaults = {
         'sequence': lambda *a: 10,
     }
-
