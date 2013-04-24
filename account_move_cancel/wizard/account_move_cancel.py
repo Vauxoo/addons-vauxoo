@@ -134,8 +134,8 @@ class account_move_cancel(osv.TransientModel):
                 raise osv.except_osv(_('Invalid action !'), _(
                     "Impossible invoice(s) cancel %s  because is/are paid!"
                     % (' '.join(names))))
-
-            invo_obj.action_cancel(cr, uid, invo_ids, ())
+            print invo_ids,'imprimo ids'
+            invo_obj.action_cancel(cr, uid, invo_ids, context=context)#correccion estaba llegando tupla () al unlink
             invo_obj.write(cr, uid, invo_ids, {
                            'cancel_true': True}, context=context)
             hasattr(journal_obj.browse(cr, uid, journal_ids[0],
