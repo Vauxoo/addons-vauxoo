@@ -48,14 +48,15 @@ class res_partner(osv.osv):
         res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
         return res
 
-    def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
-        res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context=context)
-        print "entro----------------------------------------------"
-        if not use_parent_address:
-            parent = self.browse(cr, uid, parent_id, context=context)
-            res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._address_fields(cr, uid, context=None)))
-            print res
-        return res
+    ##def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
+        ##res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context=context)
+        ##print "entro----------------------------------------------"
+        ##if not use_parent_address:
+            ##parent = self.browse(cr, uid, parent_id, context=context)
+            ##address_fields = self._address_fields(cr, uid, context=context)
+            ##res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._address_fields(cr, uid, context=None)))
+            ##print res
+        ##return res
 
     def _get_default_country_id(self, cr, uid, context=None):
         country_obj = self.pool.get('res.country')
@@ -132,8 +133,10 @@ class res_partner(osv.osv):
             view_id = self.pool.get('ir.model.data').get_object_reference(cr, user, 'base', 'view_partner_simple_form')[1]
         res = super(res_partner,self).fields_view_get(cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
-            fields_get = self.fields_get(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
+            fields_get = self.fields_view_get_address(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
+            print fields_get
             res['fields'].update(fields_get)
+        print "fields",res
         return res
 
     _defaults = {

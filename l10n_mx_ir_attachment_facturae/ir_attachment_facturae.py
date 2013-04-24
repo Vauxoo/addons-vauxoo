@@ -174,18 +174,19 @@ class ir_attachment_facturae_mx(osv.osv):
             attach_name+=attach.name+ ', '
         if release.version >= '7':
             mail_compose_message_pool = self.pool.get('mail.compose.message')
-#            mail_tmp_pool = self.pool.get('email.template')
-#            tmp_id = mail_tmp_pool.search(cr, uid, [('name','=','FacturaE')], limit=1)
- #           tmp_id = tmp_id and tmp_id[0] or False
-
+            #mail_tmp_pool = self.pool.get('email.template')
+            #tmp_id = mail_tmp_pool.search(cr, uid, [('name','=','FacturaE')], limit=1)
+            #tmp_id2 = tmp_id and tmp_id[0] or False
             tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
-
             message = mail_compose_message_pool.onchange_template_id(cr, uid, [], template_id=tmp_id, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
             mssg = message.get('value', False)
             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
             mssg['attachment_ids'] = [(6, 0, attachments)]
             mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
-            state = "sin enviar email"
+            if tmp_id:
+                msj +=_('Email Send Successfully\n')
+            else:
+                msj += _('Not Email Send\n')
             #state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
 #            mail=self.pool.get('mail.mail').create(cr, uid, {
  #               'subject': subject+' '+type,
@@ -213,10 +214,10 @@ class ir_attachment_facturae_mx(osv.osv):
                 'res_id': invoice.id,
                 }, context=context)
             state = self.pool.get('mail.message').send(cr, uid, [mail], auto_commit=False, context=context)
-        if not state:
-            msj +=_('Please Check the Email Configuration!\n')
-        else :
-            msj +=_('Email Send Successfully\n')
+        ##if not state:
+            ##msj +=_('Please Check the Email Configuration!\n')
+        ##else:
+            ##msj +=_('Email Send Successfully\n')
         return self.write(cr, uid, ids, {'state': 'sent_customer', 'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):
