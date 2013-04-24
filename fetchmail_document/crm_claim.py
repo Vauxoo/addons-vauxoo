@@ -3,7 +3,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class crm_claim(osv.Model):
     """
     crm_claim
