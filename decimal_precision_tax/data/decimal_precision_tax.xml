@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data noupdate="1">
         <!-- Decimal Precision -->
@@ -6,5 +6,5 @@
             <field name="name">Tax</field>
             <field name="digits">2</field>
         </record>
-	</data>
+    </data>
 </openerp>
