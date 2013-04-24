@@ -42,13 +42,19 @@ class account_invoice(osv.Model):
                 type_line = account_obj.browse(cr, uid, id_account).type
                 if type_line == 'receivable' or type_line == 'payable':
                     raise osv.except_osv(_('Error'), _(
-                        "Type of account in line's must be differt to 'receivable' and 'payable'"))
+                        """Type of account in line's must be differt
+                           to 'receivable' and 'payable'"""))
             type_acc_invo = self.browse(cr, uid, id_).account_id.type
             type_invoice = self.browse(cr, uid, id_).type
-            if (type_invoice == 'out_invoice' or type_invoice == 'out_refound') and type_acc_invo != 'receivable':
+            if (type_invoice == 'out_invoice' or
+                type_invoice == 'out_refound') and \
+               type_acc_invo != 'receivable':
                 raise osv.except_osv(_('Error'), _(
-                    "Type of account in invoice to Customer must be 'receivable'"))
-            if (type_invoice == 'in_invoice' or type_invoice == 'in_refound') and type_acc_invo != 'payable':
+                    """Type of account in invoice to Customer
+                       must be 'receivable'"""))
+            if (type_invoice == 'in_invoice' or
+               type_invoice == 'in_refound') and \
+               type_acc_invo != 'payable':
                 raise osv.except_osv(_('Error'), _(
                     "Type of account in invoice to Partner must be 'payable'"))
         return super(account_invoice, self).action_move_create(cr, uid, ids)
