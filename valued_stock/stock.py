@@ -10,8 +10,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -40,16 +40,15 @@ class stock_inventory_line(osv.Model):
             res[id] = self.compute_cost(cr, uid, [id])
         return res
 
-
     _columns = {
-        'cost': fields.function(_get_cost, method=True, 
-            digits_compute=dp.get_precision('Account'), 
-            string='Costo'),
+        'cost': fields.function(_get_cost, method=True,
+                                digits_compute=dp.get_precision('Account'),
+                                string='Costo'),
     }
 
     def search_date_desc(self, cr, uid, ids, product_id, date):
         cr.execute('SELECT price FROM product_historic_cost '
-                   'WHERE product_id=%s AND name <= %s ORDER BY' 
+                   'WHERE product_id=%s AND name <= %s ORDER BY'
                    'name desc LIMIT 1', (product_id, date))
         res = [x[0] for x in cr.fetchall()]
         if not res:
