@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
   <data>
 
     <record model="ir.ui.view" id="inherit_tasks_userstory_form_view">
       <field name="name">inherit.userstory.sprint.kanban</field>
       <field name="model">project.task</field>
-      <field name="type">form</field>
-      <field name="inherit_id" ref="project.view_task_form2" />
+      <field name="inherit_id" ref="project.view_task_form2"/>
       <field name="arch" type="xml">
         
       
@@ -22,7 +21,7 @@
                 <field name="model">project.task</field>
                 <field name="inherit_id" ref="project.view_task_search_form"/>
                 <field name="arch" type="xml">
-                        <xpath expr='//filter[@string="Stage"]' position='after'>
+                        <xpath expr="//filter[@string=&quot;Stage&quot;]" position="after">
                                 <filter string="User Story" name="group_user_story_id" icon="terp-stage" domain="[]" context="{'group_by':'userstory_id'}"/>
                         </xpath>
                 </field>
@@ -33,7 +32,7 @@
                 <field name="model">project.task</field>
                 <field name="inherit_id" ref="project.view_task_tree2"/>
                 <field name="arch" type="xml">
-                        <xpath expr='//field[@name="stage_id"]' position='after'>
+                        <xpath expr="//field[@name=&quot;stage_id&quot;]" position="after">
                                 <field name="userstory_id"/>
                         </xpath>
                 </field>
