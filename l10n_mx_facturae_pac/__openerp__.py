@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
+#    Coded by: Luis Torres (luis_t260@vauxoo.com)
 #    Financed by: http://www.sfsoluciones.com (aef@sfsoluciones.com)
 ############################################################################
 #
@@ -26,28 +26,19 @@
 ##############################################################################
 
 {
-    "name" : "Creacion de Factura Electronica para Mexico (CFDI-2011) - PAC Solucion Factible",
+    "name" : "Creacion del xml para facturae 3.2 - PAC Solucion Factible",
     "version" : "1.0",
-    "author" : "Vauxoo & Sfsoluciones",
+    "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates interface for e-invoice files from invoices with Solucion Factible.
-Ubuntu Package Depends:
-    sudo apt-get install python-soappy
+    "description" : """This module create xml for facturae 3.2, for send PAC
 """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_params_pac","l10n_mx_account_tax_category","l10n_mx_facturae_seq","l10n_mx_ir_attachment_facturae", "l10n_mx_facturae_pac"],
+    "depends" : ["l10n_mx_facturae"],
     "init_xml" : [],
     "demo_xml" : [
-        "demo/l10n_mx_facturae_pac_sf_demo.xml",
-        "demo/l10n_mx_facturae_seq_demo.xml",
     ],
     "update_xml" : [
-        "security/l10n_mx_facturae_pac_sf_security.xml",
-        #"invoice_wizard.xml",
-        "l10n_mx_facturae_pac_sf_report.xml",
-        "wizard/wizard_cancel_invoice_pac_sf_view.xml",
-        "wizard/wizard_export_invoice_pac_sf_view_v6.xml",
     ],
     "installable" : True,
     "active" : False,
