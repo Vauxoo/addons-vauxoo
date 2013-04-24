@@ -47,7 +47,9 @@ class product_images(osv.Model):
 
     _columns = {
         'name': fields.char('Image Title', size=100, required=True),
-        'link': fields.boolean('Link?', help="Images can be linked from files on your file system or remote (Preferred)"),
+        'link': fields.boolean('Link?',
+            help="Images can be linked from files on your file system or\
+                remote (Preferred)"),
         'image': fields.binary('Image', filters='*.png,*.jpg,*.gif'),
         'filename': fields.char('File Location', size=250),
         'preview': fields.function(_get_image, type="binary", method=True),
