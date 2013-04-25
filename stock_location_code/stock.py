@@ -34,7 +34,8 @@ class stock_location(osv.Model):
         'code': fields.char('Code', size=64)
     }
 
-    def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
+    def name_search(self, cr, user, name='', args=None,
+                    operator='ilike', context=None, limit=100):
         if not args:
             args = []
         if name:
@@ -44,8 +45,10 @@ class stock_location(osv.Model):
                 ids = set()
                 ids.update(self.search(cr, user, args + [(
                     'code', operator, name)], limit=limit, context=context))
-                ids.update(map(lambda a: a[0], super(stock_location, self).name_search(
-                    cr, user, name=name, args=args, operator=operator, context=context, limit=limit)))
+                ids.update(map(lambda a: a[0],
+                               super(stock_location, self).name_search(
+                             cr, user, name=name, args=args, operator=operator,
+                               context=context, limit=limit)))
                 ids = list(ids)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
