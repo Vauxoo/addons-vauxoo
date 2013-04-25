@@ -38,9 +38,10 @@ class stock_picking(osv.Model):
         picking_obj = self.pool.get('stock.picking')
         invoice_obj = self.pool.get('account.invoice')
         picking_id__invoice_id_dict = super(
-            stock_picking, self).action_invoice_create(cursor, user,
-                                                       ids, journal_id=journal_id, group=group, type=type,
-                                                       context=context)
+            stock_picking, self).action_invoice_create(cursor, user, ids,
+                                                        journal_id=journal_id,
+                                                        group=group, type=type,
+                                                        context=context)
         invoice_id__client_order_ref_dict = {}
         for picking_id in picking_id__invoice_id_dict.keys():
             invoice_id = picking_id__invoice_id_dict[picking_id]
