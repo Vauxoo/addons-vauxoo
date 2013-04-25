@@ -30,8 +30,12 @@ class stock_location(osv.Model):
     _inherit = 'stock.location'
 
     _columns = {
-        'variation_in_account_id': fields.many2one('account.account', 'Stock Variation Account (Incoming)', domain=[('type', '=', 'other')]),
-        'variation_out_account_id': fields.many2one('account.account', 'Stock Variation Account (Outgoing)', domain=[('type', '=', 'other')]),
+        'variation_in_account_id': fields.many2one('account.account',
+            'Stock Variation Account (Incoming)',
+            domain=[('type', '=', 'other')]),
+        'variation_out_account_id': fields.many2one('account.account',
+            'Stock Variation Account (Outgoing)',
+            domain=[('type', '=', 'other')]),
         'property_account_in_production_price_difference': fields.property(
             'account.account',
             type='many2one',
@@ -47,4 +51,3 @@ class stock_location(osv.Model):
             view_load=True,
             domain=[('type', '=', 'other')]),
     }
-
