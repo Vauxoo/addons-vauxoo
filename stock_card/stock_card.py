@@ -996,7 +996,7 @@ class stock_card_line(osv.Model):
                                      dp.get_precision('Account'),
                                      readonly=True),
         'invoice_price_unit': fields.float(string='Invoice price unit',
-                                           digits_compute=i
+                                           digits_compute=
                                                   dp.get_precision('Account'),
                                                   readonly=True),
         'aml_cost_price_unit': fields.float(string='Cost entry price unit',
