@@ -1,27 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
   <data>
-    <record model='ir.ui.view' id='xls_form_view'>
-      <field name='name'>XLS File</field>
-      <field name='model'>load.issue</field>
-      <field name='type'>form</field>
-      <field name='arch' type='xml'>
-        <form string="Xmind File">
-          <group  colspan="9" height="600" width="600" col="2">
+    <record model="ir.ui.view" id="xls_form_view">
+      <field name="name">XLS File</field>
+      <field name="model">load.issue</field>
+      <field name="arch" type="xml">
+        <form string="Xmind File" version="7.0">
+          <group colspan="9" height="600" width="600" col="2">
             <group colspan="1" col="1">
               <group col="1">
-                <field name="issue" required="1" nolabel="1" />
+                <field name="issue" required="1" nolabel="1"/>
               <group col="1">
-                <field name="host" required="1"  />
-                <field name="port" required="1"  />
-                <field name="db" required="1"  />
-                <field name="user" required="1"  />
-                <field name="passs" password="1" required="1"  />
+                <field name="host" required="1"/>
+                <field name="port" required="1"/>
+                <field name="db" required="1"/>
+                <field name="user" required="1"/>
+                <field name="passs" password="1" required="1"/>
               </group>
               </group>
               <group col="1">
-                <button string="Exit" special="cancel" icon="terp-stock_effects-object-colorize" />
-                <button name="xls_file" string="XLS File" type="object" icon="terp-stock_effects-object-colorize" />
+                <button string="Exit" special="cancel" icon="terp-stock_effects-object-colorize"/>
+                <button name="xls_file" string="XLS File" type="object" icon="terp-stock_effects-object-colorize"/>
               </group>
             </group>
           </group>
@@ -30,19 +29,12 @@
     </record>
     <record id="xls_action" model="ir.actions.act_window">
       <field name="name">XLS File</field>
-      <field name="type">ir.actions.act_window</field>
       <field name="res_model">load.issue</field>
       <field name="view_type">form</field>
       <field name="view_mode">form</field>
       <field name="target">new</field>
     </record>
-    <menuitem name = "XLS Load" 
-            id ="xls_wz" 
-  parent = 'account.menu_finance'
-  sequence ='50' />
-    <menuitem name = "XLS Load" 
-            id ="xls_wz2" sequence ='50' parent = 'xls_wz'
-  action = 'xls_action'
-  />
+    <menuitem name="XLS Load" id="xls_wz" parent="account.menu_finance" sequence="50"/>
+    <menuitem name="XLS Load" id="xls_wz2" sequence="50" parent="xls_wz" action="xls_action"/>
   </data>
 </openerp>
