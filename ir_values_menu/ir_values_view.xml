@@ -1,29 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record id="view_ir_values_default_form" model="ir.ui.view">
             <field name="name">view.ir.values.default.form</field>
             <field name="model">ir.values</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Defaults Values">
+                <form string="Defaults Values" version="7.0">
                     <field name="name"/>
                     <field name="model"/>
                     <field name="key"/>
                     <field name="key2"/>
-                    <field name="object"/>
                     <field name="res_id"/>
                     <field name="user_id"/>
                     <field name="company_id"/>
-                    <field name="value_unpickle"/>
-                    <field name="meta_unpickle"/>
                 </form>
             </field>
         </record>
         <record id="view_ir_values_default_tree" model="ir.ui.view">
             <field name="name">view.ir.values.default.tree</field>
             <field name="model">ir.values</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Defaults Values">
                     <field name="name"/>
