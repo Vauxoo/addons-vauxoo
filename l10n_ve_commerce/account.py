@@ -69,5 +69,5 @@ class wizard_multi_charts_accounts(osv.TransientModel):
         'code_digits': 10,
         'sale_tax': _get_sale_tax,
         'purchase_tax': _get_purchase_tax,
-        'seq_journal': True
+#        'seq_journal': True # no existe campo
     }

@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
-	<data noupdate="1">
-	
-		
-	<!-- Account Types -->
+    <data noupdate="1">
+    
+        
+    <!-- Account Types -->
 
-	<record model="account.account.type" id="account_type_receivable" >
+    <record model="account.account.type" id="account_type_receivable">
       <field name="name">Receivable</field>
       <field name="code">receivable</field>
       <field name="close_method">unreconciled</field>
     </record>
 
-    <record model="account.account.type" id="account_type_payable" >
+    <record model="account.account.type" id="account_type_payable">
       <field name="name">Payable</field>
       <field name="code">payable</field>
       <field name="close_method">unreconciled</field>
@@ -23,7 +23,7 @@
       <field name="close_method">none</field>
     </record>
 
-    <record model="account.account.type" id="account_type_income" >
+    <record model="account.account.type" id="account_type_income">
       <field name="name">Income</field>
       <field name="code">income</field>
       <field name="close_method">none</field>
