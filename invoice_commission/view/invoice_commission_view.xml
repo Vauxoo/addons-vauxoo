@@ -19,8 +19,8 @@
             <field name="model">account.invoice.line</field>
             <field name="inherit_id" ref="account.view_invoice_line_tree"/>
             <field name="arch" type="xml">
-                <xpath expr="//tree[@string='Invoice Line']/field[@name='price_subtotal']" position="after">
-                    <field name="gain"/>                    
+                <xpath expr="//field[@name='price_subtotal']" position="after">
+                    <field name="gain"/>
                     <field name="commission"/>
                 </xpath>
             </field>
@@ -31,7 +31,7 @@
             <field name="model">account.invoice.line</field>
             <field name="inherit_id" ref="account.view_invoice_line_form"/>
             <field name="arch" type="xml">
-               <xpath expr="//page[@string='Line']/field[@name='price_unit']" position="after">
+               <xpath expr="//field[@name='price_unit']" position="after">
                     <field name="commission"/>                    
                </xpath>
             </field>
