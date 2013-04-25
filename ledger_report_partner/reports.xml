@@ -1,24 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
-          <report
-            id="report_ledger_request" 
-            model="account.account" 
-            name="report.ledger" 
-            rml="ledger_report_partner/report/request_ledger_report.rml"
-            string="Request Ledger Report"
-            auto="False"
-            menu="False"
-            header="False" />
-          <report
-            id="report_ledger_request_partner_field" 
-            model="account.account" 
-            name="report.ledger_partner_field" 
-            rml="ledger_report_partner/report/request_ledger_report_partner_field.rml"
-            string="Request Ledger Report"
-            auto="False"
-            menu="False"
-            header="False" />
+          <report id="report_ledger_request" model="account.account" name="report.ledger" rml="ledger_report_partner/report/request_ledger_report.rml" string="Request Ledger Report" auto="False" menu="False" header="False"/>
+          <report id="report_ledger_request_partner_field" model="account.account" name="report.ledger_partner_field" rml="ledger_report_partner/report/request_ledger_report_partner_field.rml" string="Request Ledger Report" auto="False" menu="False" header="False"/>
             
             
     </data>
