@@ -44,30 +44,9 @@ class res_partner(osv.osv):
     }
 
     def _address_fields(self, cr, uid, context=None):
-        res = super(res_partner, self)._address_fields()
+        res = super(res_partner, self)._address_fields(cr, uid, context=None)
         res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
         return res
-
-    ##def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
-        ##res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context=context)
-        ##def value_or_id(val):
-            ##""" return val or val.id if val is a browse record """
-            ##return val if isinstance(val, (bool, int, long, float, basestring)) else val.id
-##
-        ##if parent_id:
-            ##parent = self.browse(cr, uid, parent_id, context=context)
-            ##res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._address_fields()))
-        ##return res
-
-    ##def onchange_address(self, cr, uid, ids, use_parent_address, parent_id, context=None):
-        ##res = super(res_partner, self).onchange_address(cr, uid, ids, use_parent_address, parent_id, context=context)
-        ##print "entro----------------------------------------------"
-        ##if not use_parent_address:
-            ##parent = self.browse(cr, uid, parent_id, context=context)
-            ##address_fields = self._address_fields(cr, uid, context=context)
-            ##res.get('value', False).update(dict((key, value_or_id(parent[key])) for key in self._address_fields(cr, uid, context=None)))
-            ##print res
-        ##return res
 
     def _get_default_country_id(self, cr, uid, context=None):
         country_obj = self.pool.get('res.country')
@@ -137,7 +116,6 @@ class res_partner(osv.osv):
                 arch = etree.tostring(doc)
             else:
                 arch = res
-        #print "arch",arch
         return arch
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
@@ -157,6 +135,5 @@ class res_partner(osv.osv):
     _defaults = {
         'country_id': _get_default_country_id,
     }
-
 
 res_partner()
