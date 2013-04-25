@@ -29,7 +29,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class inherited_stock(osv.Model):
     """
     M321 Customizations for product.picking model
@@ -64,9 +63,16 @@ class inherited_stock(osv.Model):
         return res
 
     _columns = {
-        'pay_state': fields.selection([('paynot', 'Not Payed'), ('2bpay', 'To pay'), ('payed', 'Payed')], "Pay Control", help="The pay state for this picking"),
-        'total_sale': fields.function(_order_total, method=True, type='float', string='Total Sale'),
-        'sales_incoterm': fields.related('sale_id', 'incoterm', relation='stock.incoterms', type='many2one', string='Incoterm', readonly=True),
+        'pay_state': fields.selection([
+            ('paynot', 'Not Payed'),
+            ('2bpay', 'To pay'),
+            ('payed', 'Payed')], "Pay Control",
+            help="The pay state for this picking"),
+        'total_sale': fields.function(_order_total, method=True,
+            type='float', string='Total Sale'),
+        'sales_incoterm': fields.related('sale_id', 'incoterm',
+            relation='stock.incoterms', type='many2one', string='Incoterm',
+            readonly=True),
     }
 
     _defaults = {
@@ -77,19 +83,22 @@ class inherited_stock(osv.Model):
     def change_state(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        picking_brw = self.browse(cr, uid, ids, context=context) and self.browse(
-            cr, uid, ids, context=context)[0]
+        picking_brw = self.browse(cr, uid, ids, context=context) and\
+            self.browse(cr, uid, ids, context=context)[0]
         #~ print tuple([(i.product_id.name, i.product_qty) for i in picking_brw.move_lines if i.state != 'done' ])
-        if all([False for i in picking_brw.move_lines if i.state == 'confirmed']):
+        if all([False for i in picking_brw.move_lines if\
+                                                    i.state == 'confirmed']):
             self.write(cr, uid, ids, {'pay_state': 'payed'}, context=context)
         else:
-            e = '\n'.join(['The product %s with quantity %s is not available.' % (
-                i.product_id.name, i.product_qty) for i in picking_brw.move_lines if i.state == 'confirmed'])
+            e = '\n'.join(['The product %s with quantity %s is not available.'\
+                % (
+                i.product_id.name, i.product_qty)\
+                for i in picking_brw.move_lines if i.state == 'confirmed'])
             raise osv.except_osv(_(
-                'Want to pay this without picking the availability of these products?'), _(e))
+                'Want to pay this without picking the availability\
+                of these products?'), _(e))
 
         return True
-
 
 
 class stock_move(osv.Model):
@@ -97,9 +106,9 @@ class stock_move(osv.Model):
     _inherit = 'stock.move'
     _columns = {
         'id_sale': fields.many2one('sale.order', 'Sale Order'),
-        'product_upc': fields.related('product_id', 'upc', type='char', string='UPC'),
-        'product_ean13': fields.related('product_id', 'ean13', type='char', string='EAN13'),
+        'product_upc': fields.related('product_id', 'upc', type='char',
+            string='UPC'),
+        'product_ean13': fields.related('product_id', 'ean13', type='char',
+            string='EAN13'),
 
     }
-
-

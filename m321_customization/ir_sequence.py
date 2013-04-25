@@ -29,7 +29,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class ir_sequence(osv.Model):
     """
     Ir sequence inherit to assing secuence by company
@@ -51,11 +50,15 @@ class ir_sequence(osv.Model):
         res = cr.dictfetchone()
 
         if res:
-            cr.execute('UPDATE ir_sequence SET number_next=number_next+number_increment WHERE id=%s AND active=true', (
+            cr.execute('UPDATE ir_sequence\
+                    SET number_next=number_next+number_increment\
+                    WHERE id=%s AND active=true', (
                 res['id'],))
             if res['number_next']:
-                return self._process(res['prefix']) + '%%0%sd' % res['padding'] % res['number_next'] + self._process(res['suffix'])
+                return self._process(res['prefix']) + '%%0%sd' %\
+                    res['padding'] % res['number_next'] +\
+                    self._process(res['suffix'])
             else:
-                return self._process(res['prefix']) + self._process(res['suffix'])
+                return self._process(res['prefix']) +\
+                    self._process(res['suffix'])
         return False
-
