@@ -30,9 +30,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add new fields of address,
-        Apply patch proposed in follow link:https://code.launchpad.net/~vauxoo/openobject-server/customization_address_field-dev-julio-v7/+merge/148511
-        to addons-server for the correct working of module
+    "description" : """Add new fields of address
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
@@ -44,8 +42,6 @@
     "demo_xml" : ["demo/l10n_mx_partner_address_demo.xml",],
     "update_xml" : [
         'country_data.xml'
-#        "security/openacademy_security.xml",
- #       "partner_address_view.xml",
     ],
     "installable" : True,
     "active" : False,
