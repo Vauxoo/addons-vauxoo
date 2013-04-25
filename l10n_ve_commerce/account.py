@@ -23,7 +23,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class wizard_multi_charts_accounts(osv.TransientModel):
     """
     wizard_multi_charts_accounts(osv.osv_memory):
@@ -47,8 +46,11 @@ class wizard_multi_charts_accounts(osv.TransientModel):
             cr, uid, [], order='create_date desc', context=context)
         if ids:
             chart_template_id = ids[0]
-            purchase_tax_ids = self.pool.get('account.tax.template').search(cr, uid, [(
-                "chart_template_id", "=", chart_template_id), ('type_tax_use', 'in', ('purchase', 'all'))], order="sequence")
+            purchase_tax_ids = self.pool.get('account.tax.template').search(cr,
+                        uid, [
+                        ("chart_template_id", "=", chart_template_id),
+                        ('type_tax_use', 'in', ('purchase', 'all'))],
+                        order="sequence")
             return purchase_tax_ids and purchase_tax_ids[0] or False
         return False
 
@@ -57,13 +59,17 @@ class wizard_multi_charts_accounts(osv.TransientModel):
             cr, uid, [], order='create_date desc', context=context)
         if ids:
             chart_template_id = ids[0]
-            sale_tax_ids = self.pool.get('account.tax.template').search(cr, uid, [(
-                "chart_template_id", "=", chart_template_id), ('type_tax_use', 'in', ('sale', 'all'))], order="sequence")
+            sale_tax_ids = self.pool.get('account.tax.template').search(cr,
+                        uid, [("chart_template_id", "=", chart_template_id),
+                                ('type_tax_use', 'in', ('sale', 'all'))],
+                                order="sequence")
             return sale_tax_ids and sale_tax_ids[0] or False
         return False
 
     _defaults = {
-        'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, [uid], c)[0].company_id.id,
+        'company_id': lambda self, cr, uid, c:\
+            self.pool.get('res.users').browse(cr, uid,
+                                                [uid], c)[0].company_id.id,
         'chart_template_id': _get_chart,
         'bank_accounts_id': _get_default_accounts,
         'code_digits': 10,
