@@ -1,38 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
 
         <record id="view_sale_uncommitted_product_form" model="ir.ui.view">
             <field name="name">sale.uncommitted.product.form</field>
             <field name="model">sale.order</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="priority">26</field>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Sales Order']/group/field[@name='state']" position="after">
-                    <button name="order_commit" states="draft" string="Commit Order" icon="gtk-go-forward"/>
-                    <button name="force_order_commit" states="draft" string="Force Commit Order" icon="gtk-go-forward"/>
+                <xpath expr="//field[@name='state']" position="before">
+                    <button name="order_commit"  states="draft" string="Commit Order"/>
+                    <button name="force_order_commit"  states="draft" string="Force Commit Order" />
                 </xpath>
-                <xpath expr="/form/notebook/page[@string='Sales Order']/group/button[@name='cancel']" position="replace">
-                    <button name="cancel" states="committed" string="Cancel Order" icon="gtk-cancel"/>
+                <xpath expr="//button[@name='cancel']" position="replace">
+                    <button name="cancel" states="committed"   string="Cancel Order" />
                 </xpath>
-                <xpath expr="/form/notebook/page[@string='Sales Order']/group/button[@name='order_confirm']" position="replace">
-                    <button name="order_confirm" states="committed" string="Confirm Order" icon="gtk-apply"/>
+                <xpath expr="//button[@name='action_button_confirm']" position="replace">
+                    <button name="order_confirm"   states="committed" string="Confirm Order" />
                 </xpath>
-                <field name='date_confirm' position='before'>
-                    <field name='date_committed'/>
-                </field>
             </field>
         </record>
 
         <record id="view_sale_uncommitted_product_search" model="ir.ui.view">
             <field name="name">sale.uncommitted.product.search</field>
             <field name="model">sale.order</field>
-            <field name="type">search</field>
             <field name="inherit_id" ref="sale.view_sales_order_filter"/>
             <field name="priority">26</field>
             <field name="arch" type="xml">
-                <xpath expr="/search/filter[@string='Quotations']" position="after">
+                <xpath expr="//filter[@string='Quotations']" position="after">
                     <filter icon="gtk-media-pause" string="Commitments" domain="[('state','=','committed')]" help="Sales Order that have been committed to the Customers"/>
                     <filter icon="gtk-cancel" string="Cancel" domain="[('state','=','cancel')]" help="Sales Order that have been cancelled"/>
                 </xpath>
@@ -44,11 +39,10 @@
         <record id="view_sale_uncommitted_product_tree" model="ir.ui.view">
             <field name="name">sale.uncommitted.product.tree</field>
             <field name="model">sale.order</field>
-            <field name="type">tree</field>
             <field name="inherit_id" ref="sale.view_order_tree"/>
             <field name="priority">26</field>
             <field name="arch" type="xml">
-                <xpath expr="/tree/field[@name='date_order']" position="after">
+                <xpath expr="//field[@name='date_order']" position="after">
                     <field name="date_committed"/>
                 </xpath>
             </field>
