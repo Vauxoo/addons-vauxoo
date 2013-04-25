@@ -30,14 +30,17 @@ from mx import DateTime
 from openerp.tools.translate import _
 
 
-
 class sale_uom_group(osv.Model):
     _name = "sale.uom.group"
     _description = "Sum by Product Uom"
     _columns = {
-        'sale_id': fields.many2one('sale.order', 'Sale order', ondelete='cascade', select=True),
+        'sale_id': fields.many2one('sale.order', 'Sale order',
+                                   ondelete='cascade', select=True),
         'name': fields.char('Uom Description', size=64),
-        'product_uom': fields.many2one('product.uom', 'Product UoM', required=True, readonly=True, states={'draft': [('readonly', False)]}),
+        'product_uom': fields.many2one('product.uom', 'Product UoM',
+                                       required=True, readonly=True,
+                                       states={'draft': [('readonly', False)]
+                                               }),
         'amount': fields.float('Amount', digits=(16, 2)),
     }
 
@@ -60,12 +63,11 @@ class sale_uom_group(osv.Model):
         return uom_grouped
 
 
-
-
 class sale_order(osv.Model):
     _inherit = 'sale.order'
     _columns = {
-        'puom_line': fields.one2many('sale.uom.group', 'sale_id', 'UOM Lines', readonly=True),
+        'puom_line': fields.one2many('sale.uom.group', 'sale_id',
+                                     'UOM Lines', readonly=True),
     }
 
     def button_reset_uom(self, cr, uid, ids, context=None):
@@ -96,4 +98,3 @@ class sale_order(osv.Model):
             self.button_compute(cr, uid, ids)
 
         return res
-
