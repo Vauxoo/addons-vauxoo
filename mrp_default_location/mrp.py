@@ -44,10 +44,12 @@ class mrp_production(osv.Model):
         if product_id:
             product = self.pool.get('product.product').browse(
                 cr, uid, product_id, context=context)
-            res['value'].update({'location_src_id': product.categ_id and product.categ_id.location_src_id.id or False,
-                                 'location_dest_id': product.categ_id and product.categ_id.location_dest_id.id or False})
+            res['value'].update({
+                'location_src_id': product.categ_id and
+                                product.categ_id.location_src_id.id or False,
+                'location_dest_id': product.categ_id and
+                                product.categ_id.location_dest_id.id or False})
         else:
             res['value'].update({'location_src_id': False,
                                  'location_dest_id': False})
         return res
-
