@@ -36,6 +36,10 @@ class ir_sequence(osv.Model):
 
     _inherit = 'ir.sequence'
 
+#marca error al abrir una orden de produccion
+#TODO: funcion _process no existe desde version 6, metodo parecido en
+#ir.sequence _interpolation_dict(self), adaptar a esta funcion
+"""
     def get_id(self, cr, uid, sequence_id, test='id', context=None):
         assert test in ('code', 'id')
         company_id = self.pool.get('res.company')._company_default_get(
@@ -62,3 +66,4 @@ class ir_sequence(osv.Model):
                 return self._process(res['prefix']) +\
                     self._process(res['suffix'])
         return False
+"""
