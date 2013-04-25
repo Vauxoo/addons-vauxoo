@@ -26,7 +26,7 @@
 {
     "name" : "Report Profit",
     "version" : "0.2",
-    "depends" : ["base","product", "purchase", "account"],
+    "depends" : ["base","product", "purchase", "account",'sale',],
     "author" : "Vauxoo",
     "description" : """
         Performs the equivalent of a third unit for the analysis of sales.

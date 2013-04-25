@@ -30,8 +30,6 @@
 
 
 from openerp.osv import fields, osv
-import ir
-import pooler
 import time
 import decimal_precision as dp
 
