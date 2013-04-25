@@ -39,10 +39,13 @@ class load_issue(osv.TransientModel):
 
     _name = 'load.issue'
     _columns = {
-        'issue': fields.binary('File XLS', requered=True, help="Put a xmind file"),
+        'issue': fields.binary('File XLS', requered=True,
+            help="Put a xmind file"),
         'db': fields.char('Date Base', 40, help="Name of data base"),
-        'port': fields.integer('XML-RPC Port', help="XML-RPC Port of server to load data"),
-        'passs': fields.char('Password', 60, help="Password of data base"),
+        'port': fields.integer('XML-RPC Port',
+            help="XML-RPC Port of server to load data"),
+        'passs': fields.char('Password', 60,
+            help="Password of data base"),
         'user': fields.char('User', 60, help="User of data base"),
         'host': fields.char('Host', 60, help="IP adreess of server"),
 
@@ -66,5 +69,3 @@ class load_issue(osv.TransientModel):
                 loadProjectsTasks(
                     '/tmp/load_issue.xls', wz_brw.host, wz_brw.port, wz_brw.db, wz_brw.user, wz_brw.passs)
             return True
-
-

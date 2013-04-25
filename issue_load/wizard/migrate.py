@@ -73,7 +73,8 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
         if issue[0] != 'ID':
             if issue[4]:
                 user_mail = object_proxy.execute(
-                    DB, uid, PASS, 'res.users', 'read', int(issue[4]), ['user_email'])
+                    DB, uid, PASS, 'res.users', 'read', int(issue[4]),
+                    ['user_email'])
             else:
                 user_mail['user_email'] = None
             addr = issue[7] and (int(issue[
@@ -96,8 +97,11 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
                 DB, uid, PASS, 'project.issue', 'create', values_issue)
             if project_id:
                 if issue[4]:
-                    object_proxy.execute(DB, uid, PASS, 'project.issue', 'write', [
-                                         project_id], {'assigned_to': int(issue[4]), 'user_id': int(issue[4])})
+                    object_proxy.execute(DB, uid, PASS, 'project.issue',
+                                        'write', [
+                                         project_id],
+                                         {'assigned_to': int(issue[4]),
+                                         'user_id': int(issue[4])})
                 project_tasks = searchTasks(int(issue[0]), tasks)
                 if project_tasks:
                     for task in project_tasks:
@@ -119,8 +123,10 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
                         task_id = object_proxy.execute(
                             DB, uid, PASS, 'project.task', 'create', values_tasks)
                         if task_id:
-                            object_proxy.execute(DB, uid, PASS, 'project.issue', 'write', [
-                                                 project_id], {'task_id': task_id})
+                            object_proxy.execute(DB, uid, PASS,
+                                                 'project.issue', 'write', [
+                                                 project_id],
+                                                 {'task_id': task_id})
                             task_works = searchWorks(int(task[0]), works)
                             if task_works:
                                 for work in task_works:
@@ -132,9 +138,11 @@ def loadProjectsTasks(fileName, HOST, PORT, DB, USER, PASS):
                                         'task_id': task_id,
                                     }
                                     work_id = object_proxy.execute(
-                                        DB, uid, PASS, 'project.task.work', 'create', values_works)
+                                        DB, uid, PASS, 'project.task.work',
+                                        'create', values_works)
                                     if work_id:
-                                        object_proxy.execute(DB, uid, PASS, 'project.task', 'write', [
-                                                             task_id], {'state': task[4]})
+                                        object_proxy.execute(DB, uid, PASS,
+                                                'project.task', 'write', [
+                                                task_id], {'state': task[4]})
                 object_proxy.execute(DB, uid, PASS, 'project.issue', 'write', [
                                      project_id], {'state': issue[9]})
