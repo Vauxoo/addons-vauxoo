@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
         
@@ -17,16 +17,7 @@
         </record>
 -->
 
-        <report             
-            id='project_task_work'
-            string='Project Task Work'
-            model='project.task.work' 
-            name='project_task_work' 
-            rml='project_task_work/report/project_task_work.rml'
-            auto='False' 
-            header='False'
-            menu='True'
-             />
+        <report id="project_task_work" string="Project Task Work" model="project.task.work" name="project_task_work" rml="project_task_work/report/project_task_work.rml" auto="False" header="False" menu="True"/>
 
 
     </data>
