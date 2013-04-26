@@ -41,6 +41,6 @@
     "update_xml" : [
         "document_view.xml",
     ],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }
