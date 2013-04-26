@@ -3,7 +3,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class sale_order(osv.Model):
     """
     sale_order
@@ -19,12 +18,29 @@ class sale_order(osv.Model):
         return result
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-                          uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-                          lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False):
-        res = super(
-            sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
-                                                     uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-                                                     lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag)
+                          uom=False, qty_uos=0, uos=False, name='',
+                          partner_id=False, lang=False, update_tax=True,
+                          date_order=False, packaging=False,
+                          fiscal_position=False, flag=False):
+        res = super(sale_order_line, self).product_id_change(cr, uid, ids,
+                                                             pricelist,
+                                                             product, qty=qty,
+                                                             uom=uom,
+                                                             qty_uos=qty_uos,
+                                                             uos=uos,
+                                                             name=name,
+                                                             partner_id=
+                                                             partner_id,
+                                                             lang=lang,
+                                                             update_tax=
+                                                             update_tax,
+                                                             date_order=
+                                                             date_order,
+                                                             packaging=
+                                                             packaging,
+                                                             fiscal_position=
+                                                             fiscal_position,
+                                                             flag=flag)
         frm_cur = self.pool.get('res.users').browse(
             cr, uid, uid).company_id.currency_id.id
         to_cur = self.pool.get('res.partner').browse(
@@ -43,17 +59,28 @@ class sale_order(osv.Model):
             res[line.id] = 0
             if line.product_id:
                 if line.purchase_price:
-                    res[line.id] = round((line.price_unit*line.product_uos_qty*(
-                        100.0-line.discount)/100.0) - (line.purchase_price*line.product_uos_qty), 2)
+                    res[line.id] = round((line.price_unit *
+                                          line.product_uos_qty *
+                                         (100.0-line.discount) / 100.0) -
+                                        (line.purchase_price *
+                                         line.product_uos_qty), 2)
                 else:
-                    res[line.id] = round((line.price_unit*line.product_uos_qty*(
-                        100.0-line.discount)/100.0) - (line.product_id.standard_price*line.product_uos_qty), 2)
+                    res[line.id] = round((line.price_unit*line.product_uos_qty
+                                          * (100.0-line.discount)/100.0) -
+                                        (line.product_id.standard_price *
+                                         line.product_uos_qty), 2)
         return res
 
     _inherit = 'sale.order'
     _columns = {
-        'commision': fields.function(_check_commision, method=True, type='float', string='Commision Rate', store=True,  help="It is the commision calculate based on baremos"),
-        'margin': fields.function(_check_commision, method=True, type='float', string='Margin', store=True,  help="It gives profitability by calculating the difference between the Unit Price and Cost Price."),
+        'commision': fields.function(_check_commision, method=True,
+                                     type='float', string='Commision Rate',
+                                     store=True,
+                                     help=i"""It is the commision calculate
+                                              based on baremos"""),
+        'margin': fields.function(_check_commision, method=True,
+                                  type='float', string='Margin', store=True,
+                                  help="""It gives profitability by
+                                          calculating the difference between
+                                          the Unit Price and Cost Price."""),
     }
-
-
