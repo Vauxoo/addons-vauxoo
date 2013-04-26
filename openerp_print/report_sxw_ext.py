@@ -37,7 +37,7 @@ import locale
 import mx.DateTime
 import re
 import time
-import ir
+
 import openerp.netsvc as netsvc
 import osv
 import openerp.tools as tools
