@@ -37,7 +37,9 @@ class picking_from_invoice(osv.TransientModel):
 
     _name = 'picking.from.invoice'
     _columns = {
-        'invoice_ids': fields.many2many('account.invoice', 'invoice_rel', 'invoice1', 'invoice2', 'Invoices', help="Select the invoices to account move cancel"),
+        'invoice_ids': fields.many2many('account.invoice', 'invoice_rel',
+            'invoice1', 'invoice2', 'Invoices',
+            help="Select the invoices to account move cancel"),
 
     }
 
@@ -51,27 +53,31 @@ class picking_from_invoice(osv.TransientModel):
             'company_id', '=', company_id)], context=context)
         if not ware_ids:
             raise osv.except_osv(_('Invalid action !'), _(
-                'You cannot  create picking because you not have a warehouse!'))
+                'You cannot  create picking because you not\
+                have a warehouse!'))
         ware_brw = ware_ids and warehouse_obj.browse(
             cr, uid, ware_ids[0], context=context) or False
         wzr_brw = self.browse(cr, uid, ids, context=context)[0]
         for invoice in wzr_brw.invoice_ids:
             for line in invoice.invoice_line:
                 if invoice.type in ('in_invoice', 'out_invoice'):
-                    pick_name = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.%s' % (invoice and
-                                                                          invoice.type == 'in_invoice' and
-                                                                          'in' or invoice.type == 'out_invoice' and
-                                                                          'out'))
+                    pick_name = self.pool.get('ir.sequence').get(cr,
+                                uid, 'stock.picking.%s' % (invoice and
+                                      invoice.type == 'in_invoice' and
+                                      'in' or invoice.type == 'out_invoice' and
+                                      'out'))
                     picking_id = self.pool.get('stock.picking').create(cr, uid, {
                         'name': pick_name,
                         'origin': invoice.name,
                         'type': invoice and
                         invoice.type == 'in_invoice' and
-                                        'in' or invoice.type == 'out_invoice' and
-                                        'out',
+                                        'in' or invoice.type == 'out_invoice'\
+                                        and 'out',
                         'state': 'auto',
                         'move_type': 'direct',
-                        'address_id': invoice.partner_id and invoice.partner_id.address and invoice.partner_id.address[0].id,
+                        'address_id': invoice.partner_id and
+                                        invoice.partner_id.address and
+                                        invoice.partner_id.address[0].id,
                         'note': invoice.comment,
                         'invoice_state': 'invoiced',
                         'company_id': invoice.company_id.id,
@@ -85,9 +91,14 @@ class picking_from_invoice(osv.TransientModel):
                         'product_uom': line.uos_id.id,
                         'product_qty': line.quantity,
                         'product_uos': line.uos_id and line.uos_id.id,
-                        'address_id': invoice.partner_id and invoice.partner_id.address and invoice.partner_id.address[0].id,
-                        'location_id': ware_brw and ware_brw.lot_stock_id and ware_brw.lot_stock_id.id,
-                        'location_dest_id': ware_brw and ware_brw.lot_output_id and ware_brw.lot_output_id.id,
+                        'address_id': invoice.partner_id and
+                                        invoice.partner_id.address and
+                                        invoice.partner_id.address[0].id,
+                        'location_id': ware_brw and ware_brw.lot_stock_id and
+                                        ware_brw.lot_stock_id.id,
+                        'location_dest_id': ware_brw and
+                                            ware_brw.lot_output_id and
+                                            ware_brw.lot_output_id.id,
                         'tracking_id': False,
                         'state': 'draft',
                         'note': line.note,
