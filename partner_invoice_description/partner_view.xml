@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         
         <record model="ir.ui.view" id="view_res_partner_form_inh_invoice_description">
             <field name="name">view.res.partner.form.invoice.description</field>
             <field name="model">res.partner</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Notes']" position="inside">
+                <xpath expr="//page[@string='Internal Notes']" position="inside">
                     <separator string="Description Invoice" colspan="4"/>
                         <field name="description_invoice" nolabel="1"/>
                 </xpath>
