@@ -27,18 +27,21 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class procurement_order_merge(osv.TransientModel):
     _name = 'procurement.order.merge'
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+                            context=None, toolbar=False, submenu=False):
         if context is None:
             context = {}
         res = super(procurement_order_merge, self).fields_view_get(
-            cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=False)
-        if context.get('active_model', '') == 'procurement.order' and len(context['active_ids']) < 2:
+            cr, uid, view_id=view_id, view_type=view_type, context=context,
+            toolbar=toolbar, submenu=False)
+        if context.get('active_model', '') == 'procurement.order' and\
+        len(context['active_ids']) < 2:
             raise osv.except_osv(_('Warning'),
-                                 _('Please select multiple order to merge in the list view.'))
+                                 _('Please select multiple order to merge\
+                                    in the list view.'))
         return res
 
     def procurement_merge(self, cr, uid, ids, context=None):
@@ -48,4 +51,3 @@ class procurement_order_merge(osv.TransientModel):
         procurement_ids = context.get('active_ids', [])
         procurement_order.do_merge(cr, uid, procurement_ids, context=context)
         return {}
-
