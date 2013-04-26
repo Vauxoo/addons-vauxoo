@@ -34,7 +34,7 @@ class sale_order(osv.Model):
 
     _columns = {
         'date_committed': fields.datetime('Commitment Date',
-                                          help=i'''Date when Sale Order was
+                                          help='''Date when Sale Order was
                                                    committed to the
                                                    Customer''',
                                           readonly=True),
