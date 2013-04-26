@@ -10,8 +10,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -75,7 +75,8 @@ class trial_cost(osv.TransientModel):
         for i in range(4)[::-1]:
             stop = start - RelativeDateTime(days=period_length)
             res[str(i)] = {
-                'name': str((4-(i+1))*period_length) + '-' + str((4-i)*period_length),
+                'name': str((4-(i+1))*period_length) +
+                '-' + str((4-i)*period_length),
 
                 'stop': start.strftime('%Y-%m-%d'),
                 'start': stop.strftime('%Y-%m-%d'),
@@ -83,6 +84,8 @@ class trial_cost(osv.TransientModel):
             start = stop - RelativeDateTime(days=1)
 
         data['form'].update(res)
-        return {'type': 'ir.actions.report.xml', 'report_name': 'profit.trial.cost', 'datas': data}
+        return {'type': 'ir.actions.report.xml',
+                'report_name': 'profit.trial.cost',
+                'datas': data}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

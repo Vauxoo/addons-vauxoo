@@ -10,8 +10,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -27,15 +27,14 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class product_uom_consol(osv.Model):
     _name = 'product.uom.consol'
     _description = 'A third unit to consolidate the sales and purchase.'
     _columns = {
         'name': fields.char('Name', size=64, required=True, translate=True),
-        'uom_line_ids': fields.one2many('product.uom.consol.line', 'p_uom_c_id', 'Units', required=False),
+        'uom_line_ids': fields.one2many('product.uom.consol.line',
+                                        'p_uom_c_id', 'Units', required=False),
     }
-
 
 
 class product_uom_consol_line(osv.Model):
@@ -57,19 +56,28 @@ class product_uom_consol_line(osv.Model):
                 res[uom.id] = 0.0
         return res
     _columns = {
-        'p_uom_c_id': fields.many2one('product.uom.consol', 'Consolidate Unit', required=False),
+        'p_uom_c_id': fields.many2one('product.uom.consol', 'Consolidate Unit',
+                                      required=False),
         'factor_consol': fields.float('Rate', digits=(12, 6), required=True,
                                       help='The coefficient for the formula:\n'
-                                      '1 (base unit) = coeff (this unit). Rate = 1 / Factor.'),
+                                      '1 (base unit) = coeff (this unit). Rate'
+                                      '= 1 / Factor.'),
         'factor_inv_consol': fields.function(_factor, digits=(12, 6),
                                              method=True, string='Factor inv',
-                                             help='The coefficient for the formula:\n'
-                                             'coeff (base unit) = 1 (this unit). Factor = 1 / Rate.'),
+                                             help='The coefficient for the
+                                             formula: \n'
+                                             'coeff (base unit) = 1'
+                                             '(this unit).Factor = 1 / Rate.'),
         'factor_inv_data_consol': fields.float('Factor', digits=(12, 6)),
-        'rounding_consol': fields.float('Rounding Precision', digits=(16, 3), required=True,
-                                        help="The computed quantity will be a multiple of this value. Use 1.0 for products that can not be split."),
+        'rounding_consol': fields.float('Rounding Precision', digits=(16, 3),
+                                        required=True,
+                                        help="""The computed quantity will be a
+                                        multiple of this value.  Use 1.0 for
+                                        products that can not be split."""),
         'analysis': fields.boolean('Active'),
-        'p_uom_id': fields.many2one('product.uom', 'Unit of measure', required=True, help="Unit of Measure used for compute."),
+        'p_uom_id': fields.many2one('product.uom', 'Unit of measure',
+                                    required=True,
+                                    help="Unit of Measure used for compute."),
         'name': fields.char('Name', size=64, required=False),
     }
 
