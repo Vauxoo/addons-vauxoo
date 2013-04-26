@@ -30,7 +30,7 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add new fields of address
+    "description" : """Add new fields l10n_mx_street3','l10n_mx_street4' and 'l10n_mx_city2', this fields 
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",

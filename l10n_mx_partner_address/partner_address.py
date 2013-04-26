@@ -44,6 +44,7 @@ class res_partner(osv.osv):
     }
 
     def _address_fields(self, cr, uid, context=None):
+        "Devuelve la lista de los campos de dirección que se sincronizan desde el padre cuando se establece la bandera `use_parent_address."
         res = super(res_partner, self)._address_fields(cr, uid, context=None)
         res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
         return res
