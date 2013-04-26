@@ -1,61 +1,61 @@
-<?xml version="1.0" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data noupdate="1">
         <record id="ir_header_webkit_mrp_variation0" model="ir.header_webkit">
-            <field name="footer_html"><![CDATA[<html>
-    <head>
-        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
-        <script>
+            <field name="footer_html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta content="text/html; charset=UTF-8" http-equiv="content-type"/&gt;
+        &lt;script&gt;
             function subst() {
             var vars={};
-            var x=document.location.search.substring(1).split('&');
+            var x=document.location.search.substring(1).split('&amp;');
             for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
             var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
             for(var i in x) {
             var y = document.getElementsByClassName(x[i]);
-            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+            for(var j=0; j&lt;y.length; ++j) y[j].textContent = vars[x[i]];
                 }
             }
-        </script>
-    </head>
-    <body style="border:0; margin: 0;" onload="subst()">
-        <table style="border-top: 1px solid black; width: 100%">
-            <tr >
-                <td style="text-align:right;font-size:12;" width="75%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
-            </tr>
-            <tr >
-                <td style="text-align:right;font-size:8;">Detalles del OS: ${os.name or ''|entity} ${platform.system() or ''|entity} - release: ${platform.release() or ''|entity} Vauxoo ® ${time.strftime("%Y-%m-%d %H:%M:%S") or ''|entity}</td>
-            </tr>
-        </table>
-    </body>
-</html>]]></field>
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body style="border:0; margin: 0;" onload="subst()"&gt;
+        &lt;table style="border-top: 1px solid black; width: 100%"&gt;
+            &lt;tr &gt;
+                &lt;td style="text-align:right;font-size:12;" width="75%"&gt;Page &lt;span class="page"/&gt;&lt;/td&gt;&lt;td style="text-align:left;font-size:12;"&gt;  of &lt;span class="topage"/&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr &gt;
+                &lt;td style="text-align:right;font-size:8;"&gt;Detalles del OS: ${os.name or ''|entity} ${platform.system() or ''|entity} - release: ${platform.release() or ''|entity} Vauxoo ® ${time.strftime("%Y-%m-%d %H:%M:%S") or ''|entity}&lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</field>
             <field name="orientation">Portrait</field>
 			<field name="format">Letter</field>
-            <field name="html"><![CDATA[<html>
-    <head>
-        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
-        <script>
+            <field name="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta content="text/html; charset=UTF-8" http-equiv="content-type"/&gt;
+        &lt;script&gt;
             function subst() {
             var vars={};
-            var x=document.location.search.substring(1).split('&');
+            var x=document.location.search.substring(1).split('&amp;');
             for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
             var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
             for(var i in x) {
             var y = document.getElementsByClassName(x[i]);
-            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+            for(var j=0; j&lt;y.length; ++j) y[j].textContent = vars[x[i]];
                 }
             }
-        </script>
-        <style type="text/css">
+        &lt;/script&gt;
+        &lt;style type="text/css"&gt;
             ${css}
-        </style>
-    </head>
-    <body style="border:0; margin: 0;" onload="subst()">
-        ${_debug or ''|n} </body>
-</html>]]>
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body style="border:0; margin: 0;" onload="subst()"&gt;
+        ${_debug or ''|n} &lt;/body&gt;
+&lt;/html&gt;
 </field>
             <field eval="0.0" name="margin_top"/>
-            <field name="css" ><![CDATA[
+            <field name="css">
 body{
 font-family:helvetica;
 font-size:12;
@@ -137,7 +137,7 @@ border:1px solid lightGrey;
 border-collapse: collapse;
 width:100%;
 }
-]]> </field>
+ </field>
             <field name="name">MRP Var</field>
         </record>
         <record id="ir_header_img_companylogo0" model="ir.header_img">
