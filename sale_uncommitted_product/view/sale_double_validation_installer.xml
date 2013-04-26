@@ -12,15 +12,14 @@
                 <form position="attributes" version="7.0">
                   <attribute name="string">Sale Application Configuration</attribute>
                 </form>
-                <separator string="title" position="attributes">
-                <attribute name="string">Configure Approval Group for Sale Orders</attribute>
+                <xpath expr='//button[@name="action_next"]' position="before">
                   <field name="group_id"/>
                   <newline/>
                   <field name="commit_group_id"/>
                   <newline/>
                   <field name="force_commit_group_id"/>
                   <newline/>
-                  </separator>
+                  </xpath>
               </data>
             </field>
         </record>

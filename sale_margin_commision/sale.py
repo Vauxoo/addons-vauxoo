@@ -76,7 +76,7 @@ class sale_order(osv.Model):
         'commision': fields.function(_check_commision, method=True,
                                      type='float', string='Commision Rate',
                                      store=True,
-                                     help=i"""It is the commision calculate
+                                     help="""It is the commision calculate
                                               based on baremos"""),
         'margin': fields.function(_check_commision, method=True,
                                   type='float', string='Margin', store=True,
