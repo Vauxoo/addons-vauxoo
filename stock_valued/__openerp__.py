@@ -38,6 +38,6 @@
         'stock_valued_report.xml',
                    ],
     "active": False,
-    "installable": True
+    "installable": False
 }
 
