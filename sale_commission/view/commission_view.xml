@@ -1,14 +1,13 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
     
         <record model="ir.ui.view" id="view_sale_commission_form_inherit">
             <field name="name">sale.order.form.inherit</field>
             <field name="model">sale.order</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='History']" position="after">
+                <xpath expr="//page[last()]" position="after">
                     <page string="Commission">
                         <field name="commission"/>                    
                     </page>
@@ -19,10 +18,9 @@
         <record model="ir.ui.view" id="view_sale_commission_form_inherit2">
             <field name="name">sale.order.form.inherit2</field>
             <field name="model">sale.order</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Sales Order']/field[@name='order_line']/tree[@string='Sales Order Lines']/field[@name='price_subtotal']" position="after">
+                <xpath expr="//field[@name='discount']" position="after">
                     <field name="gain"/>                    
                     <field name="commission"/>
                 </xpath>
@@ -32,10 +30,9 @@
         <record model="ir.ui.view" id="view_sale_commission_form_inherit3">
             <field name="name">sale.order.form.inherit3</field>
             <field name="model">sale.order</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Sales Order']/field[@name='order_line']/form[@string='Sales Order Lines']/notebook/page[@string='Order Line']/field[@name='product_packaging']" position="before">
+                <xpath expr="//field[@name='discount']" position="before">
                     <field name="commission"/>
                 </xpath>
             </field>
