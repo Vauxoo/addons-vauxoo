@@ -10,8 +10,8 @@
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -26,7 +26,6 @@
 import time
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
-
 
 
 class project_task(osv.Model):
@@ -48,7 +47,9 @@ class project_task(osv.Model):
         if context is None:
             context = {}
         pi_obj = self.pool.get('project.issue')
-        return [pi_brw.task_id.id for pi_brw in pi_obj.browse(cr, uid, ids, context=context) if pi_brw.task_id]
+        return [pi_brw.task_id.id for pi_brw in pi_obj.browse(cr, uid, ids,
+                                                              context=context)
+                if pi_brw.task_id]
 
     _columns = {
         'issue_id': fields.function(
@@ -75,9 +76,11 @@ class project_task_work(osv.Model):
 
             res[ptw_brw.id] = \
                 ptw_brw.task_id and \
-                (ptw_brw.task_id.issue_id and ptw_brw.task_id.issue_id.project_id and
+                (ptw_brw.task_id.issue_id and
+                 ptw_brw.task_id.issue_id.project_id and
                     ptw_brw.task_id.issue_id.project_id.id
-                    or ptw_brw.task_id.project_id and ptw_brw.task_id.project_id.id)\
+                    or ptw_brw.task_id.project_id and
+                 ptw_brw.task_id.project_id.id)\
                 or None
 
         return res
@@ -90,7 +93,9 @@ class project_task_work(osv.Model):
         ptw_brws = self.browse(cr, uid, ids, context=context)
         for ptw_brw in ptw_brws:
             pi_ids = ptw_brw.task_id and pi_obj.search(cr, uid, [
-                                                       ('task_id', '=', ptw_brw.task_id.id)]) or []
+                                                       ('task_id', '=',
+                                                        ptw_brw.task_id.id)])\
+                or []
 
             res[ptw_brw.id] = pi_ids and pi_ids[0] or None
         return res
@@ -103,12 +108,14 @@ class project_task_work(osv.Model):
 
             res[ptw_brw.id] = \
                 ptw_brw.task_id and \
-                (ptw_brw.task_id.issue_id and ptw_brw.task_id.issue_id.partner_id and
+                (ptw_brw.task_id.issue_id and
+                 ptw_brw.task_id.issue_id.partner_id and
                     ptw_brw.task_id.issue_id.partner_id.id
                     or ptw_brw.task_id.project_id and
                  ptw_brw.task_id.project_id.partner_id and
                  ptw_brw.task_id.project_id.partner_id.id
-                    or ptw_brw.task_id.partner_id and ptw_brw.task_id.partner_id.id
+                    or ptw_brw.task_id.partner_id and
+                 ptw_brw.task_id.partner_id.id
                  )\
                 or None
 
@@ -130,7 +137,9 @@ class project_task_work(osv.Model):
         pi_obj = self.pool.get('project.issue')
         pt_ids = [pi_brw.task_id.id for pi_brw in pi_obj.browse(
             cr, uid, ids, context=context) if pi_brw.task_id]
-        return self.pool.get('project.task.work')._get_work_in_task(cr, uid, pt_ids, context=context)
+        return self.pool.get('project.task.work')._get_work_in_task(cr, uid,
+                                                                    pt_ids,
+                                                                    context)
 
     _columns = {
         'project_id': fields.function(
@@ -140,8 +149,10 @@ class project_task_work(osv.Model):
             relation='project.project',
             string='Project',
             store={
-                'project.issue': (_get_work_in_issue, ['task_id', 'project_id'], 15),
-                'project.task.work': (lambda self, cr, uid, ids, c={}: ids, [], 45),
+                'project.issue': (_get_work_in_issue, ['task_id',
+                                                       'project_id'], 15),
+                'project.task.work': (lambda self, cr, uid, ids, c={}: ids,
+                                      [], 45),
             }
         ),
         'state': fields.selection([('done', 'Collected'),
@@ -159,7 +170,8 @@ class project_task_work(osv.Model):
             store={
                 'project.issue': (_get_work_in_issue, [], 15),
                 'project.task': (_get_work_in_task, [], 30),
-                'project.task.work': (lambda self, cr, uid, ids, c={}: ids, [], 45),
+                'project.task.work': (lambda self, cr, uid, ids, c={}: ids,
+                                      [], 45),
             }
         ),
         'partner_id': fields.function(
@@ -171,7 +183,8 @@ class project_task_work(osv.Model):
             store={
                 'project.issue': (_get_work_in_issue, [], 15),
                 'project.task': (_get_work_in_task, [], 30),
-                'project.task.work': (lambda self, cr, uid, ids, c={}: ids, [], 45),
+                'project.task.work': (lambda self, cr, uid, ids, c={}: ids,
+                                      [], 45),
             }
         ),
         'name': fields.text('Work summary'),
@@ -180,4 +193,3 @@ class project_task_work(osv.Model):
     _defaults = {
         'state': 'draft',
     }
-
