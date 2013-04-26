@@ -49,4 +49,3 @@ class mrp_production_product_line(osv.Model):
                     'category_id', '=', product_product_data.uom_id.category_id.id)]}
                 return {'value': val, 'domain': domain_uom}
         return {}
-
