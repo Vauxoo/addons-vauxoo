@@ -77,8 +77,8 @@ class product_historical(osv.Model):
                                          store={'product.product': ( lambda
                                              self, cr, uid, ids, c={}: ids, [
                                                  'list_price'], 50), },
-                                             help="Latest Recorded Historical
-                                             Value"),
+                                             help="""Latest Recorded Historical
+                                             Value"""),
         'cost_historical': fields.function(_get_historical_cost, method=True,
                                            string=' Latest Cost', type='float',
                                            digits_compute=dp.get_precision(
