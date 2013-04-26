@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
     
     <record id="view_sale_line_import" model="ir.ui.view">
             <field name="name">Import Lines</field>
             <field name="model">wizard.import</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-              <form string="Import Lines">
+              <form string="Import Lines" version="7.0">
 		
 	    <field name="validate"/>
             <field name="name" nolabel="1"/>
@@ -30,13 +29,6 @@
             <field name="target">new</field>
         </record>
             
-    <act_window name="Import Lines"
-            res_model="wizard.import"
-            src_model="sale.order"
-            view_mode="form"
-            target="new"
-            key2="client_action_multi"
-            id="action_sale_line_import"
-            groups="group_wizard_import_line"/>
+    <act_window name="Import Lines" res_model="wizard.import" src_model="sale.order" view_mode="form" target="new" key2="client_action_multi" id="action_sale_line_import" groups="group_wizard_import_line"/>
         </data>
 </openerp>
