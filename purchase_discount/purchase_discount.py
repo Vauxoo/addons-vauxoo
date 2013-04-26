@@ -52,17 +52,17 @@ class purchase_order_line(osv.Model):
                                  the product to update based on pricelists,
                                  this value must be between 0-100"""),
         'price_unit': fields.float('Real Unit Price', required=True,
-                                   digits=(16, 4), help="Price that will be
+                                   digits=(16, 4), help="""Price that will be
                                    used in the rest of
-                                   accounting cycle"),
+                                   accounting cycle"""),
         'price_base': fields.float('Base Unit Price', required=True,
-                                   digits=(16, 4), help="Price base taken to
+                                   digits=(16, 4), help="""Price base taken to
                                    calc the discount,
                                    is an informative
                                    price to use it in
                                    the rest of the
                                    purchase cycle like
-                                   reference for users"),
+                                   reference for users"""),
     }
     _defaults = {
         'discount': lambda *a: 0.0,
@@ -93,20 +93,21 @@ class purchase_order_line(osv.Model):
         """Copied from purchase/purchase.py and modified to take discount"""
         if not pricelist:
             raise osv.except_osv(_('No Pricelist !'), _(
-                                                        'You have to select a
+                                                        '''You have to select a
                                                         pricelist in the
                                                         purchase form !\n
                                                         Please set one before
-                                                        choosing a product.'))
+                                                        choosing a product.''')
+                                                        )
         if not partner_id:
-            raise osv.except_osv(_('No Partner!'), _('You have to select a
+            raise osv.except_osv(_('No Partner!'), _('''You have to select a
                                                       partner in the purchase
                                                       form !\nPlease set one
                                                       partner before choosing
-                                                      a product.'))
+                                                      a product.'''))
         if not product:
             return {'value': {'price_unit': 0.0,
-                              'name': '', i
+                              'name': '',
                               'notes': '',
                               'product_uom': False},
                     'domain': {'product_uom': []}}
@@ -171,12 +172,12 @@ class purchase_order_line(osv.Model):
         domain = {'product_uom': [(
             'category_id', '=', res2[0]['category_id'][0])]}
         if res2[0]['category_id'][0] != res3:
-            raise osv.except_osv(_('Wrong Product UOM !'), _('You have to
+            raise osv.except_osv(_('Wrong Product UOM !'), _('''You have to
                                                              select a product
                                                              UOM in the same
                                                              category than the
                                                              purchase UOM of
-                                                             the product'))
+                                                             the product'''))
 
         res['domain'] = domain
         return res
