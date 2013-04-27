@@ -64,7 +64,7 @@ class product_uom_consol_line(osv.Model):
                                       '= 1 / Factor.'),
         'factor_inv_consol': fields.function(_factor, digits=(12, 6),
                                              method=True, string='Factor inv',
-                                             help='The coefficient for the
+                                             help='The coefficient for the'
                                              formula: \n'
                                              'coeff (base unit) = 1'
                                              '(this unit).Factor = 1 / Rate.'),
