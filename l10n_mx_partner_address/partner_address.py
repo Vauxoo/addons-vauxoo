@@ -124,13 +124,8 @@ class res_partner(osv.osv):
             view_id = self.pool.get('ir.model.data').get_object_reference(cr, user, 'base', 'view_partner_simple_form')[1]
         res = super(res_partner,self).fields_view_get(cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
-            res['arch'] = self.fields_view_get_address(cr, user, res['arch'], context=context)
             fields_get = self.fields_get(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
             res['fields'].update(fields_get)
-        return res
-
-    def fields_get(self, cr, uid, allfields=None, context=None):
-        res = super(res_partner, self).fields_get(cr, uid, allfields=allfields, context=context)
         return res
 
     _defaults = {
