@@ -1,9 +1,10 @@
---- account/account_invoice.py	2012-03-29 15:43:31 +0000
-+++ account/account_invoice.py	2012-06-26 16:09:15 +0000
-@@ -1585,6 +1585,7 @@
+=== modified file 'account/account_invoice.py'
+--- account/account_invoice.py	2013-03-29 15:59:38 +0000
++++ account/account_invoice.py	2013-04-09 18:18:18 +0000
+@@ -1672,6 +1672,7 @@
                  val['manual'] = False
                  val['sequence'] = tax['sequence']
-                 val['base'] = tax['price_unit'] * line['quantity']
+                 val['base'] = cur_obj.round(cr, uid, cur, tax['price_unit'] * line['quantity'])
 +                val['tax_id']=tax['id']
  
                  if inv.type in ('out_invoice','in_invoice'):

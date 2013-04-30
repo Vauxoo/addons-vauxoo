@@ -38,7 +38,6 @@
     "update_xml" : ["account_tax_view.xml","account_voucher_tax_view.xml"],
     "test": [
         'test/account_voucher_taxes.yml',
-        'test/account_voucher_taxes_partial.yml',
     ],
     "installable" : True,
     "active" : False,

@@ -24,12 +24,12 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from osv import fields, osv
 
-
-class account_invoice_tax(osv.Model):
+class account_invoice_tax(osv.osv):
     _inherit = 'account.invoice.tax'
     _columns = {
         'tax_id': fields.many2one('account.tax', 'Tax', help="Tax"),
     }
 
+account_invoice_tax()

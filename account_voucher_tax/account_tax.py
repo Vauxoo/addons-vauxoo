@@ -23,17 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from osv import osv, fields
 
 
-class account_tax(osv.Model):
-    _inherit = "account.tax"
-
-    _columns = {
-        'tax_voucher_ok': fields.boolean('Tax Vocuher Ok', help='help'),
-        'account_collected_voucher_id': fields.many2one('account.account', 'Account Collected Voucher'),
-        'account_paid_voucher_id': fields.many2one('account.account', 'Account Paid Voucher'),
-        'account_expense_voucher_id': fields.many2one('account.account', 'Account Expense Voucher'),
-        'account_income_voucher_id': fields.many2one('account.account', 'Account Income Voucher'),
-    }
-
+class account_tax(osv.osv):
+     _inherit = "account.tax"
+     
+     _columns = {
+          'tax_voucher_ok': fields.boolean('Tax Vocuher Ok',help='help'),
+          'account_collected_voucher_id': fields.many2one('account.account','Account Collected Voucher'),
+          'account_paid_voucher_id': fields.many2one('account.account','Account Paid Voucher'),
+          'account_expense_voucher_id': fields.many2one('account.account','Account Expense Voucher'),
+          'account_income_voucher_id': fields.many2one('account.account','Account Income Voucher'),
+     }
+     
+account_tax()
