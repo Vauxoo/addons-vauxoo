@@ -30,7 +30,12 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add new fields l10n_mx_street3','l10n_mx_street4' and 'l10n_mx_city2', this fields 
+    "description" : """This module adds the fields: 'l10n_mx_street3','l10n_mx_street4','l10n_mx_city2' used in México address. 
+    You can see this fields in partner form following the next steps:
+        1.- The company's country needs to be México
+        2.- The user must be assigned a company with country México defined
+
+        This is very usable if you are working with multicompany schema.
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
