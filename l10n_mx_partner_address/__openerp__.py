@@ -30,9 +30,12 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add new fields of address,
-        Apply patch proposed in follow link:https://code.launchpad.net/~vauxoo/openobject-server/customization_address_field-dev-julio-v7/+merge/148511
-        to addons-server for the correct working of module
+    "description" : """This module adds the fields: 'l10n_mx_street3','l10n_mx_street4','l10n_mx_city2' used in México address. 
+    You can see this fields in partner form following the next steps:
+        1.- The company's country needs to be México
+        2.- The user must be assigned a company with country México defined
+
+        This is very usable if you are working with multicompany schema.
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
@@ -44,8 +47,6 @@
     "demo_xml" : ["demo/l10n_mx_partner_address_demo.xml",],
     "update_xml" : [
         'country_data.xml'
-#        "security/openacademy_security.xml",
- #       "partner_address_view.xml",
     ],
     "installable" : True,
     "active" : False,
