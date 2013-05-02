@@ -41,6 +41,6 @@
     "update_xml" : [
         'partner_view.xml'
     ],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }
