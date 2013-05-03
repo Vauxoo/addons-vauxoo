@@ -33,7 +33,8 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
 
     def action_cancel(self, cr, uid, ids, context=None):
-        id_attach = self.pool.get('ir.attachment.facturae.mx').search(
+        ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
+        id_attach = ir_attach_obj.search(
             cr, uid, [('invoice_id', '=', ids[0])], context)
         wf_service = netsvc.LocalService("workflow")
         inv_type_facturae = {
@@ -43,7 +44,8 @@ class account_invoice(osv.osv):
             'in_refund': False}
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False):
-                for attachment in self.pool.get('ir.attachment.facturae.mx').browse(cr, uid, id_attach, context):
+                for attachment in ir_attach_obj.browse(cr, uid, id_attach,
+                                                        context):
                     if attachment.state == 'done':
                         wf_service.trg_validate(
                             uid, 'ir.attachment.facturae.mx',
@@ -54,6 +56,7 @@ class account_invoice(osv.osv):
                                                                     context)
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
+        ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         invoice = self.browse(cr, uid, ids, context=context)[0]
         if invoice.invoice_sequence_id.approval_id:
             if invoice.invoice_sequence_id.approval_id.type == 'cfdi32':
@@ -61,10 +64,10 @@ class account_invoice(osv.osv):
                     cr, uid, [('active', '=', True)], context)
                 # if not pac:
                     # raise osv.except_osv(_('Warning !'),_('Not Params PAC.'))
-            attach_ids = self.pool.get('ir.attachment.facturae.mx').search(
+            attach_ids = ir_attach_obj.search(
                 cr, uid, [('invoice_id', '=', invoice.id)])
             if not attach_ids:
-                attach = self.pool.get('ir.attachment.facturae.mx').create(cr,
+                attach = ir_attach_obj.create(cr,
                     uid, {
                        'name': invoice.fname_invoice,
                        'invoice_id': ids[0],
