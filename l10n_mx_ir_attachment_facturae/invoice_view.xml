@@ -10,5 +10,17 @@
 
             />
 
+        <record model="ir.ui.view" id="view_invoice_form_create_attachment_inherit">
+            <field name="name">account.invoice.create.attachment.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//button[@name='invoice_print']" position="after">
+                    <button name="create_ir_attachment_facturae" string="Create Attachment FacturaE" type="object" attrs="{'invisible':['|',('sent','=',True), ('state', '!=', 'open')]}" class="oe_highlight" groups="base.group_user"/>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>
