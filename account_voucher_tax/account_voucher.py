@@ -97,12 +97,11 @@ class account_voucher(osv.osv):
                     #~ if line_tax.diff_amount_tax:
                     context['date']=line.move_line_id.date
                     amount=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.original_tax)), round=False, context=context)
-                    if credit:
+                    if credit and voucher.payment_option=='with_writeoff':
                         credit=amount
-                    else:
+                    if debit and voucher.payment_option=='with_writeoff':
                         debit=amount
                     credit, debit=debit, credit
-
                     move_line={
                     'journal_id': voucher.journal_id.id,
                     'period_id': voucher.period_id.id,
