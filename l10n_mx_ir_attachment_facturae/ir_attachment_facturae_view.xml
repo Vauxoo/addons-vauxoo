@@ -22,6 +22,7 @@
             <field name="arch" type="xml">
                 <form string="Attachment Factura-E" version="7.0">
                     <header>
+                        <button name="action_create_ir_attachment_facturae" states="draft" string="Validate Attachment" type="object"/>
                         <button name="action_confirm" states="draft" string="Confirm" type="workflow"/>
                         <button name="action_sign" states="confirmed" string="Sign" type="workflow"/>
                         <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow"/>
