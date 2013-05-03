@@ -50,10 +50,14 @@ class account_invoice(osv.osv):
                 pac=self.pool.get('params.pac').search(cr, uid, [('active','=', True)], context)
                 #if not pac:
                     #raise osv.except_osv(_('Warning !'),_('Not Params PAC.'))
-            attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
-            'name': invoice.fname_invoice,
-            'invoice_id': ids[0],
-            'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
+            attach_ids = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, [('invoice_id', '=', invoice.id)])
+            if not attach_ids:
+                attach=self.pool.get('ir.attachment.facturae.mx').create(cr, uid, {
+                'name': invoice.fname_invoice,
+                'invoice_id': ids[0],
+                'type': invoice.invoice_sequence_id.approval_id.type }, context=context)
+            else:
+                attach = attach_ids[0]
             ir_model_data = self.pool.get('ir.model.data')
             form_res = ir_model_data.get_object_reference(cr, uid, 'l10n_mx_ir_attachment_facturae', 'view_ir_attachment_facturae_mx_form')
             form_id = form_res and form_res[1] or False
