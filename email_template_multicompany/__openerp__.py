@@ -37,7 +37,7 @@ Add company_id field in model email.template
     'depends': ['email_template'],
     'init_xml': [],
     'update_xml': [
-        'security/email_template_security.xml'
+        'security/email_template_security.xml',
         'email_template_view.xml',
         ],
     'demo_xml': [],
