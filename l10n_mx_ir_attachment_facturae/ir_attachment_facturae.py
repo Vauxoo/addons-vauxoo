@@ -174,9 +174,6 @@ class ir_attachment_facturae_mx(osv.osv):
             attach_name+=attach.name+ ', '
         if release.version >= '7':
             mail_compose_message_pool = self.pool.get('mail.compose.message')
-            #mail_tmp_pool = self.pool.get('email.template')
-            #tmp_id = mail_tmp_pool.search(cr, uid, [('name','=','FacturaE')], limit=1)
-            #tmp_id2 = tmp_id and tmp_id[0] or False
             tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
             message = mail_compose_message_pool.onchange_template_id(cr, uid, [], template_id=tmp_id, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
             mssg = message.get('value', False)
@@ -184,23 +181,10 @@ class ir_attachment_facturae_mx(osv.osv):
             mssg['attachment_ids'] = [(6, 0, attachments)]
             mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
             if tmp_id:
+                state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
                 msj +=_('Email Send Successfully\n')
             else:
                 msj += _('Not Email Send\n')
-            #state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
-#            mail=self.pool.get('mail.mail').create(cr, uid, {
- #               'subject': subject+' '+type,
-  #              'email_from': email_from,
-   #             'email_to': invoice.partner_id.email,
-    #            'auto_delete': False,
-     #           'body_html': attach_name,
-      #          'attachment_ids': [(6, 0, attachments)],
-       #         'model': invoice._name,
-        #        'record_name': invoice.number,
-         #       'res_id': invoice.id,
-                #'partner_ids': invoice.partner_id,
-          #      }, context=context)
-#            state = self.pool.get('mail.mail').send(cr, uid, [mail], auto_commit=False, recipient_ids=None, context=context)
         elif release.version < '7':
             mail=self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject+' '+type,
@@ -250,10 +234,8 @@ class ir_attachment_facturae_mx(osv.osv):
         return self.write(cr, uid, ids, {'state': 'draft'})
 
     def get_tmpl_email_id(self, cr, uid, ids, context=None):
-        email_settings = self.pool.get('l10n.mx.email.config.settings')
-        cr.execute(""" select max(id) as email_tmp_id from l10n_mx_email_config_settings """)
-        dat = cr.dictfetchall()
-        email_tmp_id = email_settings.browse(cr, uid, dat[0]['email_tmp_id']).email_tmp_id
-        return email_tmp_id and email_tmp_id.id or False
+        email_pool = self.pool.get('email.template')
+        email_ids = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice')])
+        return email_ids and email_ids[0] or False
 
 ir_attachment_facturae_mx()
