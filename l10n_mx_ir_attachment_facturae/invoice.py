@@ -64,17 +64,16 @@ class account_invoice(osv.osv):
                     cr, uid, [('active', '=', True)], context)
                 # if not pac:
                     # raise osv.except_osv(_('Warning !'),_('Not Params PAC.'))
-            attach_ids = ir_attach_obj.search(
-                cr, uid, [('invoice_id', '=', invoice.id)])
-            if not attach_ids:
-                attach = ir_attach_obj.create(cr,
-                    uid, {
-                       'name': invoice.fname_invoice,
-                       'invoice_id': ids[0],
-                       'type': invoice.invoice_sequence_id.approval_id.type},
-                    context=context)
-            else:
-                attach = attach_ids[0]
+            attach = ir_attach_obj.create(cr,
+                uid, {
+                   'name': invoice.fname_invoice,
+                   'invoice_id': ids[0],
+                   'type': invoice.invoice_sequence_id.approval_id.type},
+                context=context)
+                
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(
+                uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
                 
             ir_model_data = self.pool.get('ir.model.data')
             
