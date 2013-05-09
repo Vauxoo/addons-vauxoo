@@ -240,59 +240,36 @@ class ir_attachment_facturae_mx(osv.osv):
             'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
-        attachments = []
-        msj = ''
-        attach_name = ''
-        state = ''
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        address_id = self.pool.get('res.partner').address_get(
-            cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
-        partner_invoice_address = self.pool.get(
-            'res.partner').browse(cr, uid, address_id, context)
-        type = self.browse(cr, uid, ids)[0].type
-        msj = self.browse(cr, uid, ids)[0].msj
-        fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
-            'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
+        attachments=[]
+        msj=''
+        attach_name=''
+        state=''
+        invoice =self.browse(cr,uid,ids)[0].invoice_id
+        address_id = self.pool.get('res.partner').address_get(cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
+        partner_invoice_address = self.pool.get('res.partner').browse(cr, uid, address_id, context)
+        type=self.browse(cr,uid,ids)[0].type
+        msj =self.browse(cr,uid,ids)[0].msj
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
+        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
         subject = 'Invoice '+invoice.number or False
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
             attachments.append(attach.id)
-            attach_name += attach.name + ', '
+            attach_name+=attach.name+ ', '
         if release.version >= '7':
             mail_compose_message_pool = self.pool.get('mail.compose.message')
-            # mail_tmp_pool = self.pool.get('email.template')
-            # tmp_id = mail_tmp_pool.search(cr, uid, [('name','=','FacturaE')], limit=1)
-            # tmp_id2 = tmp_id and tmp_id[0] or False
             tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
-            message = mail_compose_message_pool.onchange_template_id(
-                cr, uid, [], template_id=tmp_id, composition_mode=None,
-                model='account.invoice', res_id=invoice.id, context=context)
+            message = mail_compose_message_pool.onchange_template_id(cr, uid, [], template_id=tmp_id, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
             mssg = message.get('value', False)
             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
             mssg['attachment_ids'] = [(6, 0, attachments)]
-            mssg_id = self.pool.get(
-                'mail.compose.message').create(cr, uid, mssg)
+            mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
             if tmp_id:
-                msj += _('Email Send Successfully\n')
+                state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
+                msj +=_('Email Send Successfully\n')
             else:
                 msj += _('Not Email Send\n')
-            # state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
-#            mail=self.pool.get('mail.mail').create(cr, uid, {
- #               'subject': subject+' '+type,
-  #              'email_from': email_from,
-   #             'email_to': invoice.partner_id.email,
-    #            'auto_delete': False,
-     #           'body_html': attach_name,
-      #          'attachment_ids': [(6, 0, attachments)],
-       #         'model': invoice._name,
-        #        'record_name': invoice.number,
-         #       'res_id': invoice.id,
-                #'partner_ids': invoice.partner_id,
-          #      }, context=context)
-# state = self.pool.get('mail.mail').send(cr, uid, [mail],
-# auto_commit=False, recipient_ids=None, context=context)
         elif release.version < '7':
-            mail = self.pool.get('mail.message').create(cr, uid, {
+            mail=self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject+' '+type,
                 'date': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'email_from': email_from,
@@ -302,17 +279,13 @@ class ir_attachment_facturae_mx(osv.osv):
                 'attachment_ids': [(6, 0, attachments)],
                 'model': invoice._name,
                 'res_id': invoice.id,
-            }, context=context)
-            state = self.pool.get('mail.message').send(
-                cr, uid, [mail], auto_commit=False, context=context)
-        # if not state:
-            # msj +=_('Please Check the Email Configuration!\n')
-        # else:
-            # msj +=_('Email Send Successfully\n')
-        return self.write(cr, uid, ids,
-            {'state': 'sent_customer',
-            'msj': msj,
-            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                }, context=context)
+            state = self.pool.get('mail.message').send(cr, uid, [mail], auto_commit=False, context=context)
+        ##if not state:
+            ##msj +=_('Please Check the Email Configuration!\n')
+        ##else:
+            ##msj +=_('Email Send Successfully\n')
+        return self.write(cr, uid, ids, {'state': 'sent_customer', 'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'})
@@ -351,13 +324,8 @@ class ir_attachment_facturae_mx(osv.osv):
         return self.write(cr, uid, ids, {'state': 'draft'})
 
     def get_tmpl_email_id(self, cr, uid, ids, context=None):
-        email_settings = self.pool.get('l10n.mx.email.config.settings')
-        cr.execute(
-            """ select max(id) as email_tmp_id
-                from l10n_mx_email_config_settings """)
-        dat = cr.dictfetchall()
-        email_tmp_id = email_settings.browse(
-            cr, uid, dat[0]['email_tmp_id']).email_tmp_id
-        return email_tmp_id and email_tmp_id.id or False
+        email_pool = self.pool.get('email.template')
+        email_ids = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice')])
+        return email_ids and email_ids[0] or False
 
 ir_attachment_facturae_mx()
