@@ -26,20 +26,23 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 
-class res_partner(osv.osv):
+
+class res_partner(osv.Model):
     _inherit = 'res.partner'
-    
-    def _get_base_vat_split(self, cr, uid, ids, field_names=None, arg=False, context={}):
+
+    def _get_base_vat_split(self, cr, uid, ids, field_names=None, arg=False,
+                            context={}):
         if not context:
             context = {}
         res = {}
         for partner in self.browse(cr, uid, ids, context=context):
             res[partner.id] = partner.vat and partner.vat[2:] or False
         return res
-    
+
     _columns = {
-        'vat_split': fields.function(_get_base_vat_split, method=True, type='char', size=64, string='VAT Split', store=True, help='Remove the prefix of the country of the VAT'),
+        'vat_split': fields.function(_get_base_vat_split, method=True,
+                    type='char', size=64, string='VAT Split', store=True,
+                    help='Remove the prefix of the country of the VAT'),
     }
-res_partner()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
