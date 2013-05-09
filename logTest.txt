@@ -1,0 +1,659 @@
+------------------------------------------------------------
+revno: 52 [merge]
+revision-id: nhomae@gmail.com-20130416014106-o3n23he96s1pvaec
+parent: nhomae@gmail.com-20130415213525-m1flejc57jr1op60
+parent: julio@vauxoo.com-20130416010149-oex0miuij9t35a72
+committer: Nhomar Hernandez <nhomae@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-04-15 21:11:06 -0530
+message:
+  
+  [MERGE] Added given kanban wbs_codefield and off the field wbs
+    ------------------------------------------------------------
+    revno: 50.1.6
+    revision-id: julio@vauxoo.com-20130416010149-oex0miuij9t35a72
+    parent: julio@vauxoo.com-20130415213003-pi19rfwep88u5scs
+    committer: Julio Serna <julio@vauxoo.com>
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-15 20:01:49 -0500
+    message:
+      [IMP] added wbs_code field in kanban view
+------------------------------------------------------------
+revno: 51 [merge]
+revision-id: nhomae@gmail.com-20130415213525-m1flejc57jr1op60
+parent: ksa@tinyerp.co.in-20130415161256-xytzpcou1w6vzm7u
+parent: julio@vauxoo.com-20130415213003-pi19rfwep88u5scs
+committer: Nhomar Hernandez <nhomae@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-04-15 17:05:25 -0530
+message:
+  
+  [MERGE] WBS Code is autocomputing.
+  [TODO] Inv Field available as todo.
+    ------------------------------------------------------------
+    revno: 50.1.5
+    revision-id: julio@vauxoo.com-20130415213003-pi19rfwep88u5scs
+    parent: julio@vauxoo.com-20130415211204-yal2zg4p3fnk0jej
+    committer: Julio Serna <julio@vauxoo.com>
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-15 16:30:03 -0500
+    message:
+      [PEP8]
+    ------------------------------------------------------------
+    revno: 50.1.4
+    revision-id: julio@vauxoo.com-20130415211204-yal2zg4p3fnk0jej
+    parent: julio@vauxoo.com-20130415204857-rx511qtafoc2px7s
+    committer: Julio Serna <julio@vauxoo.com>
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-15 16:12:04 -0500
+    message:
+      [IMP] added depends to module account_analytic_btree
+    ------------------------------------------------------------
+    revno: 50.1.3
+    revision-id: julio@vauxoo.com-20130415204857-rx511qtafoc2px7s
+    parent: julio@vauxoo.com-20130415180040-olyf7ivgge8f7ufk
+    committer: Julio Serna <julio@vauxoo.com>
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-15 15:48:57 -0500
+    message:
+      [IMP] added function to calculate wbs automatic
+    ------------------------------------------------------------
+    revno: 50.1.2
+    revision-id: julio@vauxoo.com-20130415180040-olyf7ivgge8f7ufk
+    parent: julio@vauxoo.com-20130415161803-y30itmptfjhaq42y
+    committer: Julio Serna <julio@vauxoo.com>
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-15 13:00:40 -0500
+    message:
+      [IMP] validate param parent_id when is list or int
+    ------------------------------------------------------------
+    revno: 50.1.1
+    revision-id: julio@vauxoo.com-20130415161803-y30itmptfjhaq42y
+    parent: ksa@tinyerp.co.in-20130415161256-xytzpcou1w6vzm7u
+    committer: Julio Serna <julio@vauxoo.com>
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-15 11:18:03 -0500
+    message:
+      [IMP] comment field function
+------------------------------------------------------------
+revno: 50 [merge]
+revision-id: ksa@tinyerp.co.in-20130415161256-xytzpcou1w6vzm7u
+parent: oszckar@gmail.com-20130407013455-qffh3ssjsl7sci99
+parent: ksa@tinyerp.co.in-20130409004023-89uenyu2awzggk7s
+committer: ksa (Open ERP) < ksa@tinyerp.co.in >
+branch nick: xo
+timestamp: Mon 2013-04-15 11:42:56 -0530
+message:
+  [PEP8][BUG] MErge to update trunk
+    ------------------------------------------------------------
+    revno: 28.1.9
+    revision-id: ksa@tinyerp.co.in-20130409004023-89uenyu2awzggk7s
+    parent: ksa@tinyerp.co.in-20130409003750-q0agv8qcru65pwam
+    committer: ksa (Open ERP) < ksa@tinyerp.co.in >
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-08 17:40:23 -0700
+    message:
+      [PEP8]
+    ------------------------------------------------------------
+    revno: 28.1.8
+    revision-id: ksa@tinyerp.co.in-20130409003750-q0agv8qcru65pwam
+    parent: ksa@tinyerp.co.in-20130408223253-iiwuxpmkrix1swcl
+    committer: ksa (Open ERP) < ksa@tinyerp.co.in >
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-08 17:37:50 -0700
+    message:
+      [AUTOPEP8]
+    ------------------------------------------------------------
+    revno: 28.1.7
+    revision-id: ksa@tinyerp.co.in-20130408223253-iiwuxpmkrix1swcl
+    parent: ksa@tinyerp.co.in-20130408212851-yrwzffusn78b5gfm
+    committer: ksa (Open ERP) < ksa@tinyerp.co.in >
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-08 15:32:53 -0700
+    message:
+      [FIX] Position of field improved 
+    ------------------------------------------------------------
+    revno: 28.1.6 [merge]
+    revision-id: ksa@tinyerp.co.in-20130408212851-yrwzffusn78b5gfm
+    parent: nhomar@gmail.com-20130328073335-3467zn4lz611od03
+    parent: isaac@vauxoo.com-20130408212612-cwdrqjxkvbygqw72
+    committer: ksa (Open ERP) < ksa@tinyerp.co.in >
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-04-08 14:28:51 -0700
+    message:
+      [MERGE] With working branch in the cloud
+        ------------------------------------------------------------
+        revno: 49.1.2
+        revision-id: isaac@vauxoo.com-20130408212612-cwdrqjxkvbygqw72
+        parent: isaac@vauxoo.com-20130408080517-nkgmmf621ga4w4il
+        committer: server production agrinos <isaac@vauxoo.com>
+        branch nick: xmind-openerp
+        timestamp: Mon 2013-04-08 21:26:12 +0000
+        message:
+          [TMP] Commit to work locally
+        ------------------------------------------------------------
+        revno: 49.1.1
+        revision-id: isaac@vauxoo.com-20130408080517-nkgmmf621ga4w4il
+        parent: oszckar@gmail.com-20130407013455-qffh3ssjsl7sci99
+        author: Nhomar Hernandez <nhomar@gmail.com>
+        committer: server production agrinos <isaac@vauxoo.com>
+        branch nick: xmind-openerp
+        timestamp: Mon 2013-04-08 08:05:17 +0000
+        message:
+          [FIX] With vals['somthing']
+          Is incorrect if you use in if something[]:
+          The correct way is use .get ALWAYS.
+          [FIX] Context in method signature should be always = None by default.
+    ------------------------------------------------------------
+    revno: 28.1.5 [merge]
+    revision-id: nhomar@gmail.com-20130328073335-3467zn4lz611od03
+    parent: nhomar@gmail.com-20130327230858-lag58ntdfaxsppx2
+    parent: nhomar@gmail.com-20130328073254-0emxcu3pis69n16f
+    committer: Nhomar Hernandez <nhomar@gmail.com>
+    branch nick: xmind-openerp
+    timestamp: Thu 2013-03-28 03:03:35 -0530
+    message:
+      [MERGE] With trunk
+------------------------------------------------------------
+revno: 49
+revision-id: oszckar@gmail.com-20130407013455-qffh3ssjsl7sci99
+parent: oszckar@gmail.com-20130407013239-03f6vd0lxrjo6t5l
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sat 2013-04-06 19:34:55 -0600
+message:
+  [IMP] Removed unesessary fields on the views and the ones which are not used anymore
+------------------------------------------------------------
+revno: 48
+revision-id: oszckar@gmail.com-20130407013239-03f6vd0lxrjo6t5l
+parent: oszckar@gmail.com-20130405172008-ljxunrj5z9jmm1zs
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sat 2013-04-06 19:32:39 -0600
+message:
+  [IMP] Removed the name of the project from the complete_name field, to avoid visual redundancy
+------------------------------------------------------------
+revno: 47
+revision-id: oszckar@gmail.com-20130405172008-ljxunrj5z9jmm1zs
+parent: oszckar@gmail.com-20130405164733-ah86v394l0g6lo2t
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-04-05 11:20:08 -0600
+message:
+  [ADD] Some doc added
+------------------------------------------------------------
+revno: 46
+revision-id: oszckar@gmail.com-20130405164733-ah86v394l0g6lo2t
+parent: oszckar@gmail.com-20130405063230-940f5uf30euts2xv
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-04-05 10:47:33 -0600
+message:
+  [IMP] Removed the old lame wey to do the filtering, now its done using a the _task_count function which calculates the field itself
+------------------------------------------------------------
+revno: 45
+revision-id: oszckar@gmail.com-20130405063230-940f5uf30euts2xv
+parent: oszckar@gmail.com-20130405055254-wp24h7d3ognne9om
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-04-05 00:32:30 -0600
+message:
+  [ADD] string on the kanban view for the wbs string changed for the one in the parent
+------------------------------------------------------------
+revno: 44
+revision-id: oszckar@gmail.com-20130405055254-wp24h7d3ognne9om
+parent: oszckar@gmail.com-20130405030137-ppd9bfakmjzq5qcn
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Thu 2013-04-04 23:52:54 -0600
+message:
+  [ADD] Filters of projects with and whitout task, open in the last level, worst way to do it
+------------------------------------------------------------
+revno: 43
+revision-id: oszckar@gmail.com-20130405030137-ppd9bfakmjzq5qcn
+parent: oszckar@gmail.com-20130405013246-dirf91lfzl5nsrha
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Thu 2013-04-04 21:01:37 -0600
+message:
+  [ADD] Added the function which calculates the qty of childs, based on it its gives a predefined filter on the kanban view, filters only those projects which are opend and in the last level of the tree
+------------------------------------------------------------
+revno: 42
+revision-id: oszckar@gmail.com-20130405013246-dirf91lfzl5nsrha
+parent: oszckar@gmail.com-20130405004619-jvnupo28xgo28ea4
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Thu 2013-04-04 19:32:46 -0600
+message:
+  [ADD-MERGE] added the full name <analytic account name> to the kanban kard
+------------------------------------------------------------
+revno: 41 [merge]
+revision-id: oszckar@gmail.com-20130405004619-jvnupo28xgo28ea4
+parent: oszckar@gmail.com-20130405002109-7etr1bkm5jo071dl
+parent: nhomar@gmail.com-20130328073254-0emxcu3pis69n16f
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Thu 2013-04-04 18:46:19 -0600
+message:
+  [ADD-MERGE] added the wbs field to the Kanban view, and the dependency to user_story module
+    ------------------------------------------------------------
+    revno: 39.1.1 [merge]
+    revision-id: nhomar@gmail.com-20130328073254-0emxcu3pis69n16f
+    parent: oszckar@gmail.com-20130328060814-mw5d46z1zq92xyzc
+    parent: nhomar@gmail.com-20130327230858-lag58ntdfaxsppx2
+    committer: Nhomar Hernandez <nhomar@gmail.com>
+    branch nick: xo
+    timestamp: Thu 2013-03-28 03:02:54 -0530
+    message:
+      [MERGE] With local changes.... WIP
+        ------------------------------------------------------------
+        revno: 28.1.4 [merge]
+        revision-id: nhomar@gmail.com-20130327230858-lag58ntdfaxsppx2
+        parent: nhomar@gmail.com-20130326055109-4c22l7w1s91h77az
+        parent: oszckar@gmail.com-20130327222849-beo9196xw21j6xul
+        committer: Nhomar Hernandez <nhomar@gmail.com>
+        branch nick: xmind-openerp
+        timestamp: Wed 2013-03-27 18:38:58 -0530
+        message:
+          [MERGE]
+        ------------------------------------------------------------
+        revno: 28.1.3 [merge]
+        revision-id: nhomar@gmail.com-20130326055109-4c22l7w1s91h77az
+        parent: nhomar@gmail.com-20130326055001-jmkq4o49hjz18chu
+        parent: oszckar@gmail.com-20130326054906-6vt5ql3rxb784xns
+        committer: Nhomar Hernandez <nhomar@gmail.com>
+        branch nick: xmind-openerp
+        timestamp: Tue 2013-03-26 01:21:09 -0530
+        message:
+          [MERGE] With Oscar Changes
+        ------------------------------------------------------------
+        revno: 28.1.2
+        revision-id: nhomar@gmail.com-20130326055001-jmkq4o49hjz18chu
+        parent: nhomar@gmail.com-20130326033929-r4op4vpmngdqfswh
+        committer: Nhomar Hernandez <nhomar@gmail.com>
+        branch nick: xmind-openerp
+        timestamp: Tue 2013-03-26 01:20:01 -0530
+        message:
+          [FIX]
+------------------------------------------------------------
+revno: 40
+revision-id: oszckar@gmail.com-20130405002109-7etr1bkm5jo071dl
+parent: oszckar@gmail.com-20130328060814-mw5d46z1zq92xyzc
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Thu 2013-04-04 18:21:09 -0600
+message:
+  [ADD] added the wbs field to the Kanban view
+------------------------------------------------------------
+revno: 39
+revision-id: oszckar@gmail.com-20130328060814-mw5d46z1zq92xyzc
+parent: oszckar@gmail.com-20130327222849-beo9196xw21j6xul
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Thu 2013-03-28 00:08:14 -0600
+message:
+  [IMP] when switching a node from its parent or removing it calculates the whole WBS down
+------------------------------------------------------------
+revno: 38
+revision-id: oszckar@gmail.com-20130327222849-beo9196xw21j6xul
+parent: oszckar@gmail.com-20130327222517-nzuq6o4i62iohwxo
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Wed 2013-03-27 16:28:49 -0600
+message:
+  [IMP] removed some extra code not necessary by now
+------------------------------------------------------------
+revno: 37
+revision-id: oszckar@gmail.com-20130327222517-nzuq6o4i62iohwxo
+parent: oszckar@gmail.com-20130327221238-vv7fh336uqz25uu6
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Wed 2013-03-27 16:25:17 -0600
+message:
+  [ADD] the value 'priority' was needded in the keys
+------------------------------------------------------------
+revno: 36
+revision-id: oszckar@gmail.com-20130327221238-vv7fh336uqz25uu6
+parent: oszckar@gmail.com-20130327220529-dmqvqva0eemfrbw5
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Wed 2013-03-27 16:12:38 -0600
+message:
+  [ADD] Removed unecessary vainas
+------------------------------------------------------------
+revno: 35
+revision-id: oszckar@gmail.com-20130327220529-dmqvqva0eemfrbw5
+parent: oszckar@gmail.com-20130327212954-q5lf3mzn0obvd3hc
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Wed 2013-03-27 16:05:29 -0600
+message:
+  [ADD] Methods which create the wbs on the create feature. DONE Mother FOCAS 
+------------------------------------------------------------
+revno: 34
+revision-id: oszckar@gmail.com-20130327212954-q5lf3mzn0obvd3hc
+parent: oszckar@gmail.com-20130327180853-09nnngntld42vfw1
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Wed 2013-03-27 15:29:54 -0600
+message:
+  [ADD] Methods for getting the secuence automaticall done, needed to assign the wbs number 
+------------------------------------------------------------
+revno: 33
+revision-id: oszckar@gmail.com-20130327180853-09nnngntld42vfw1
+parent: oszckar@gmail.com-20130327012518-18t8i2pg1d3qiswi
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Wed 2013-03-27 12:08:53 -0600
+message:
+  [ADD] Methods for getting childs, parents, and brothers optimized
+------------------------------------------------------------
+revno: 32
+revision-id: oszckar@gmail.com-20130327012518-18t8i2pg1d3qiswi
+parent: oszckar@gmail.com-20130326175345-69vbai7m4ixzxg2s
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Tue 2013-03-26 19:25:18 -0600
+message:
+  [ADD] functions for getting the real parent_id and real child_ids done, still not working properly, just commiting
+------------------------------------------------------------
+revno: 31
+revision-id: oszckar@gmail.com-20130326175345-69vbai7m4ixzxg2s
+parent: oszckar@gmail.com-20130326054906-6vt5ql3rxb784xns
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Tue 2013-03-26 11:53:45 -0600
+message:
+  [ADD] files basic structure created for new feature wbs on projects
+------------------------------------------------------------
+revno: 30 [merge]
+revision-id: oszckar@gmail.com-20130326054906-6vt5ql3rxb784xns
+parent: oszckar@gmail.com-20130326054749-f06v126rd9h8uv9z
+parent: nhomar@gmail.com-20130326033929-r4op4vpmngdqfswh
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 23:49:06 -0600
+message:
+  [IMP-MERGE] Now Calculates correctly the node's level
+    ------------------------------------------------------------
+    revno: 28.1.1
+    revision-id: nhomar@gmail.com-20130326033929-r4op4vpmngdqfswh
+    parent: nhomar@gmail.com-20130325194041-8dnufd6y0gl7wryt
+    committer: Nhomar Hernandez <nhomar@gmail.com>
+    branch nick: xmind-openerp
+    timestamp: Mon 2013-03-25 23:09:29 -0530
+    message:
+      [ADD] Plands
+------------------------------------------------------------
+revno: 29
+revision-id: oszckar@gmail.com-20130326054749-f06v126rd9h8uv9z
+parent: nhomar@gmail.com-20130325194041-8dnufd6y0gl7wryt
+committer: OscarAlca <oszckar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 23:47:49 -0600
+message:
+  [IMP] Now Calculates correctly the node's level
+------------------------------------------------------------
+revno: 28
+revision-id: nhomar@gmail.com-20130325194041-8dnufd6y0gl7wryt
+parent: nhomar@gmail.com-20130325080843-1pn8clmwdjw1b281
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 15:10:41 -0530
+message:
+  [ADD] Button to document view. TODO: put it logic to manage the updating process.
+------------------------------------------------------------
+revno: 27
+revision-id: nhomar@gmail.com-20130325080843-1pn8clmwdjw1b281
+parent: nhomar@gmail.com-20130325073725-kerrzpxkok3jugv5
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 03:38:43 -0530
+message:
+  [TOFIX] Trying to get levels. With Oscar algorithm, it is doing just one level....
+------------------------------------------------------------
+revno: 26
+revision-id: nhomar@gmail.com-20130325073725-kerrzpxkok3jugv5
+parent: nhomar@gmail.com-20130325070700-quxx7b1zhwwrne06
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 03:07:25 -0530
+message:
+  [ADD] demo file, [IMP] Documentation
+------------------------------------------------------------
+revno: 25
+revision-id: nhomar@gmail.com-20130325070700-quxx7b1zhwwrne06
+parent: nhomar@gmail.com-20130325060452-hgmk0f0ke0ard6xx
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 02:37:00 -0530
+message:
+  [IMP] Forcing wirte in nodes, TODO/: Think in birectionality.
+------------------------------------------------------------
+revno: 24
+revision-id: nhomar@gmail.com-20130325060452-hgmk0f0ke0ard6xx
+parent: nhomar@gmail.com-20130325055031-z2ji9v8vb25f73yo
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 01:34:52 -0530
+message:
+  [IMP] Setting Notes
+------------------------------------------------------------
+revno: 23
+revision-id: nhomar@gmail.com-20130325055031-z2ji9v8vb25f73yo
+parent: nhomar@gmail.com-20130325035913-prqntp30jkhnaz3o
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Mon 2013-03-25 01:20:31 -0530
+message:
+  [IMP] Painting all in them color, [IMP] Adding description in projectview
+------------------------------------------------------------
+revno: 22
+revision-id: nhomar@gmail.com-20130325035913-prqntp30jkhnaz3o
+parent: nhomar@gmail.com-20130325025235-bevo63fxny792fc2
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sun 2013-03-24 23:29:13 -0530
+message:
+  [FIX] Correct name for variables.
+------------------------------------------------------------
+revno: 21
+revision-id: nhomar@gmail.com-20130325025235-bevo63fxny792fc2
+parent: nhomar@gmail.com-20130325013133-g2obpm8wdhj8kddz
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sun 2013-03-24 22:22:35 -0530
+message:
+  [IMP] recursive Method preparing for level get"
+------------------------------------------------------------
+revno: 20
+revision-id: nhomar@gmail.com-20130325013133-g2obpm8wdhj8kddz
+parent: nhomar@gmail.com-20130324215545-5u22ornuf4ur2c9j
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sun 2013-03-24 21:01:33 -0530
+message:
+  [IMP] Set colors per level.
+------------------------------------------------------------
+revno: 19
+revision-id: nhomar@gmail.com-20130324215545-5u22ornuf4ur2c9j
+parent: nhomar@gmail.com-20130324164033-2rgko9i2anxl7k6l
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sun 2013-03-24 17:25:45 -0530
+message:
+  
+  [IMP] Assign doc to project.
+  [IMP] Linking doc to project master.
+  [IMP] Documenting method
+------------------------------------------------------------
+revno: 18
+revision-id: nhomar@gmail.com-20130324164033-2rgko9i2anxl7k6l
+parent: nhomar@gmail.com-20130324083157-q9qoxeivec9y3tbp
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sun 2013-03-24 12:10:33 -0530
+message:
+  [IMP] Create attachment with the import xmind
+------------------------------------------------------------
+revno: 17
+revision-id: nhomar@gmail.com-20130324083157-q9qoxeivec9y3tbp
+parent: nhomar@gmail.com-20130324070418-xbw4y28lrg93szgi
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sun 2013-03-24 04:01:57 -0530
+message:
+  [IMP] Force Unlink if project comes from Xmind 
+------------------------------------------------------------
+revno: 16
+revision-id: nhomar@gmail.com-20130324070418-xbw4y28lrg93szgi
+parent: nhomar@gmail.com-20130324005644-3ldy3lmnnbfq6z2o
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sun 2013-03-24 02:34:18 -0530
+message:
+  [IMP] Creating projects, inherits is failing.
+------------------------------------------------------------
+revno: 15
+revision-id: nhomar@gmail.com-20130324005644-3ldy3lmnnbfq6z2o
+parent: nhomar@gmail.com-20130324002700-tffmxm77pjz4p8ln
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sat 2013-03-23 20:26:44 -0530
+message:
+  [IMP] commiting
+------------------------------------------------------------
+revno: 14
+revision-id: nhomar@gmail.com-20130324002700-tffmxm77pjz4p8ln
+parent: nhomar@gmail.com-20130324000051-dul3c8f42ug260l2
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sat 2013-03-23 19:57:00 -0530
+message:
+  [IMP] Logger with useful info.
+------------------------------------------------------------
+revno: 13
+revision-id: nhomar@gmail.com-20130324000051-dul3c8f42ug260l2
+parent: nhomar@gmail.com-20130323221631-goxohpfq7z68yfwf
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sat 2013-03-23 19:30:51 -0530
+message:
+  [IMP] Help to view
+------------------------------------------------------------
+revno: 12
+revision-id: nhomar@gmail.com-20130323221631-goxohpfq7z68yfwf
+parent: nhomar@gmail.com-20130323042739-0xts7unibyjt72in
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Sat 2013-03-23 17:46:31 -0530
+message:
+  
+  [IMP]
+  1.0 Add xmld_id to manage internal control to avoid load twice a wbs
+  2.0 Add logic to load and create all elements.
+  3.0 Improve views
+  4.0 Correct dependencies
+------------------------------------------------------------
+revno: 11
+revision-id: nhomar@gmail.com-20130323042739-0xts7unibyjt72in
+parent: nhomar@gmail.com-20130323035749-m7ccu9bu7y1egc4c
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-03-22 23:57:39 -0530
+message:
+  [NEW] Method to trat as a WBS specifically.
+------------------------------------------------------------
+revno: 10
+revision-id: nhomar@gmail.com-20130323035749-m7ccu9bu7y1egc4c
+parent: nhomar@gmail.com-20130323035656-9d0uyykrcqv8q4r5
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-03-22 23:27:49 -0530
+message:
+  [PEP8]
+------------------------------------------------------------
+revno: 9
+revision-id: nhomar@gmail.com-20130323035656-9d0uyykrcqv8q4r5
+parent: nhomar@gmail.com-20130323035608-2tjz9p02eri470k8
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-03-22 23:26:56 -0530
+message:
+  [PEP8]
+------------------------------------------------------------
+revno: 8
+revision-id: nhomar@gmail.com-20130323035608-2tjz9p02eri470k8
+parent: nhomar@gmail.com-20130323035321-fd2iet8qbipj1ivi
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-03-22 23:26:08 -0530
+message:
+  [PEP8]
+------------------------------------------------------------
+revno: 7
+revision-id: nhomar@gmail.com-20130323035321-fd2iet8qbipj1ivi
+parent: nhomar@gmail.com-20130323033218-secgg16pld71ux68
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-03-22 23:23:21 -0530
+message:
+  [PEP8]
+------------------------------------------------------------
+revno: 6
+revision-id: nhomar@gmail.com-20130323033218-secgg16pld71ux68
+parent: nhomar@gmail.com-20130323032741-vdri9xq8bh5avxgw
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-03-22 23:02:18 -0530
+message:
+  [FIX] In Help [ADD] Doc folder
+------------------------------------------------------------
+revno: 5
+revision-id: nhomar@gmail.com-20130323032741-vdri9xq8bh5avxgw
+parent: jose@vauxoo.com-20120611151610-d0cy9x7klaklw3f1
+committer: Nhomar Hernandez <nhomar@gmail.com>
+branch nick: xmind-openerp
+timestamp: Fri 2013-03-22 22:57:41 -0530
+message:
+  [MIG] Migration to v7.0
+------------------------------------------------------------
+revno: 4
+revision-id: jose@vauxoo.com-20120611151610-d0cy9x7klaklw3f1
+parent: jose@vauxoo.com-20120611150152-u37si3hmch53l6es
+committer: Jose Antonio <jose@vauxoo.com>
+branch nick: xmind-openerp
+timestamp: Mon 2012-06-11 10:46:10 -0530
+message:
+  
+  [IMP] Called of topic from method sub_topic
+------------------------------------------------------------
+revno: 3
+revision-id: jose@vauxoo.com-20120611150152-u37si3hmch53l6es
+parent: jose@vauxoo.com-20120603041731-nvyf02om3y5qvym4
+committer: Jose Antonio <jose@vauxoo.com>
+branch nick: xmind-openerp
+timestamp: Mon 2012-06-11 10:31:52 -0530
+message:
+  
+  [IMP] Added method to scroll through the topics of the main project and determine if there are sub projects and append a new key to Dicionario for these sub-projects
+  [IMP] Added new description in the method
+------------------------------------------------------------
+revno: 2
+revision-id: jose@vauxoo.com-20120603041731-nvyf02om3y5qvym4
+parent: jose@vauxoo.com-20120602210043-ibfab9qek3vhpmn0
+committer: Jose Antonio <jose@vauxoo.com>
+branch nick: xmind-openerp
+timestamp: Sat 2012-06-02 23:47:31 -0530
+message:
+  
+  [ADD] Added library to return a dictionary with default values that generate a project in openerp
+------------------------------------------------------------
+revno: 1
+revision-id: jose@vauxoo.com-20120602210043-ibfab9qek3vhpmn0
+committer: Jose Antonio <jose@vauxoo.com>
+branch nick: xmind-openerp
+timestamp: Sat 2012-06-02 16:30:43 -0530
+message:
+  
+  [ADD] Added module xmind to openerp
