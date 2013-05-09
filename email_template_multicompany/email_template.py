@@ -27,6 +27,7 @@
 
 from openerp.osv import osv, fields
 
+
 class email_template(osv.Model):
     _inherit = "email.template"
     _columns = {
@@ -35,7 +36,7 @@ class email_template(osv.Model):
     }
 
     _defaults = {
-        'company_id': lambda self,cr,uid,c:\
-            self.pool.get('res.company')._company_default_get(cr, uid,
-                                                'email.template', context=c),    
+        'company_id': lambda self, cr, uid, c:
+        self.pool.get('res.company')._company_default_get(cr, uid,
+                                            'email.template', context=c),
     }
