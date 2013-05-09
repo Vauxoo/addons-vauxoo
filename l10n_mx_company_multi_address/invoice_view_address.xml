@@ -12,7 +12,7 @@
                     <field name="company_emitter_id"/>
                 </xpath>
                 <xpath expr="//field[@name='journal_id']" position="replace">
-                    <field name="journal_id" groups="base.group_user" on_change="onchange_journal_id(journal_id)" widget="selection"/>
+                    <field name="journal_id" groups="base.group_user" on_change="onchange_journal_id(journal_id, context)" widget="selection"/>
                 </xpath>
             </field>
         </record>

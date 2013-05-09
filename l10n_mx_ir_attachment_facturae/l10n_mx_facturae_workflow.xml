@@ -177,7 +177,8 @@
 action_move_create()
 action_number()
 invoice_validate()
-action_create_ir_attachment_facturae()</field>
+create_ir_attachment_facturae()
+</field>
         </record>
 
     </data>
