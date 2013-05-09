@@ -100,7 +100,7 @@ class res_partner(osv.osv):
                                                     ('NV','NV - Nevis'),
                                                     ('NZ','NZ - Nueva Zelanda'),
                                                     ('OM','OM - Sultanía de Omán'),
-                                                    ('PA',' PA - República de Panamá'),
+                                                    ('PA','PA - República de Panamá'),
                                                     ('PE','PE - Peru'),
                                                     ('PY','PY - Paraguay'),
                                                     ('SV','SV - El Salvador'),
