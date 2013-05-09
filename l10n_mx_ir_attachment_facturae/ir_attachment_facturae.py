@@ -90,9 +90,6 @@ class ir_attachment_facturae_mx(osv.osv):
         attach = ir_attachment_fact.id
         wf_service = netsvc.LocalService("workflow")
         wf_service.trg_validate(
-            uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
-        cr.commit()
-        wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
         cr.commit()
         wf_service.trg_validate(
