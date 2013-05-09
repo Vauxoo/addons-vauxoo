@@ -21,19 +21,20 @@ def parse_metadata(section):
     subMerges = []
     if metadata.get('message', ''):
         separator = \
-'    ------------------------------------------------------------\n'
+            '    ------------------------------------------------------------\n'
         merges = metadata.get('message', '').split(separator)
         for m in merges:
-            subMerges.append( parse_metadata(m))
+            subMerges.append(parse_metadata(m))
     metadata['submerges'] = subMerges
     return metadata
 
+
 def parse_file(filepath):
     separator =\
-     '\n------------------------------------------------------------\n'
+        '\n------------------------------------------------------------\n'
     sections = open(filepath).read().split(separator)
     for s in sections:
-        pprint (parse_metadata(s), indent=2)
+        pprint(parse_metadata(s), indent=2)
 if __name__ == "__main__":
     if not len(sys.argv) == 2:
         section = '''
@@ -45,7 +46,7 @@ committer: Nhomar Hernandez <nhomae@gmail.com>
 branch nick: xmind-openerp
 timestamp: Mon 2013-04-15 21:11:06 -0530
 message:
-  
+
   [MERGE] Added given kanban wbs_codefield and off the field wbs
 '''
         md = parse_metadata(section)
