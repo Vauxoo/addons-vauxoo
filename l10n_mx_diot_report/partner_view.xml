@@ -8,15 +8,18 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <field name="vat_subjected" position="after">
-                    <newline/>
-                    <field name="number_fiscal_id_diot" groups="base.group_extended"/>
-                    <newline/>
-                    <field name="type_of_third" groups="base.group_extended"/>
-                    <field name="type_of_operation" groups="base.group_extended"/>
-                    <newline/>
-                    <field name="diot_country" groups="base.group_extended"/>
-                    <field name="nacionality_diot" groups="base.group_extended"/>
+                <field name="last_reconciliation_date" position="after">
+                    <group colspan="4">
+                        <separator string="DIOT Information" colspan="4"/>
+                        <newline/>
+                        <field name="number_fiscal_id_diot" />
+                        <newline/>
+                        <field name="type_of_third" />
+                        <field name="type_of_operation" />
+                        <newline/>
+                        <field name="diot_country" />
+                        <field name="nacionality_diot" />
+                    </group>
                 </field>
             </field>
         </record>
