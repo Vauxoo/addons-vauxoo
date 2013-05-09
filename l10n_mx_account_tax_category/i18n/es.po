@@ -1,0 +1,134 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_mx_account_tax_category
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-02 19:31+0000\n"
+"PO-Revision-Date: 2013-04-02 19:31+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.tax.category,category_ids:0
+msgid "Category"
+msgstr "Categoria"
+
+#. module: l10n_mx_account_tax_category
+#: model:res.groups,name:l10n_mx_account_tax_category.group_account_tax_category_manager
+msgid "Account Tax Category / Manager"
+msgstr "Categoria de Impuestos / Manager"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.tax.category,active:0
+msgid "Indicate if this category is active"
+msgstr "Indica si esta categoria es activa"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.invoice.tax,name2:0
+msgid "Is the code of category of the tax or name of tax but in uppers, without '.', '-', ' '"
+msgstr "Es el codigo de la categoria o el nombre del Impuesto pero en mayusculas y sin '.', '-', ' '"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.invoice.tax,tax_percent:0
+msgid "Tax Percent"
+msgstr "Porcentaje del Impuesto"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.tax.category,company_id:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.tax.category,active:0
+msgid "Active"
+msgstr "Activo"
+
+#. module: l10n_mx_account_tax_category
+#: view:account.tax.category:0
+msgid "Categories"
+msgstr "Categorias"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.invoice.tax,name2:0
+msgid "Tax Short Name"
+msgstr "Nombre Corto del Impuesto"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.tax.category,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.tax.category,company_id:0
+msgid "Company where will add this category"
+msgstr "Compañia Donde Se Agrega Esta Categoria"
+
+#. module: l10n_mx_account_tax_category
+#: model:ir.model,name:l10n_mx_account_tax_category.model_account_tax_category
+msgid "account.tax.category"
+msgstr "account.tax.category"
+
+#. module: l10n_mx_account_tax_category
+#: model:res.groups,name:l10n_mx_account_tax_category.group_account_tax_category_user
+msgid "Account Tax Category / User"
+msgstr "Categoria de Impuestos / Usuario"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.tax.category,name:0
+msgid "Name for this category"
+msgstr "Nombre para esta categoria"
+
+#. module: l10n_mx_account_tax_category
+#: model:ir.model,name:l10n_mx_account_tax_category.model_account_invoice_tax
+msgid "Invoice Tax"
+msgstr "Impuesto de factura"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.tax.category,code:0
+msgid "Code"
+msgstr "Codigo"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.tax,tax_category_id:0
+#: model:ir.actions.act_window,name:l10n_mx_account_tax_category.action_account_tax_category_tree
+#: model:ir.ui.menu,name:l10n_mx_account_tax_category.menu_account_tax_category
+msgid "Tax Category"
+msgstr "Categoria de Impuesto"
+
+#. module: l10n_mx_account_tax_category
+#: model:ir.model,name:l10n_mx_account_tax_category.model_account_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: l10n_mx_account_tax_category
+#: field:account.tax.category,sign:0
+msgid "Sign"
+msgstr "Firma"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.tax.category,category_ids:0
+msgid "Tax that belong of this category"
+msgstr "Impuestos que pertenecen a esta categoria"
+
+#. module: l10n_mx_account_tax_category
+#: view:account.tax.category:0
+msgid "Inactive"
+msgstr "Inactivo"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.tax,tax_category_id:0
+msgid "Category of this tax"
+msgstr "Categoria de este Impuesto"
+
+#. module: l10n_mx_account_tax_category
+#: help:account.tax.category,code:0
+msgid "Code for this category"
+msgstr "Codigo para esta categoria"
+

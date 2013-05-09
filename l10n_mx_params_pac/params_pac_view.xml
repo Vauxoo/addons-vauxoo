@@ -7,7 +7,6 @@
         <record id="view_pac_form" model="ir.ui.view">
             <field name="name">view.pac.form</field>
             <field name="model">pac</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Parametros PAC">
                     <field name="name" colspan="4"/>
@@ -23,7 +22,6 @@
         <record id="view_pac_tree" model="ir.ui.view">
             <field name="name">view.pac.tree</field>
             <field name="model">pac</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="PAC">
                     <field name="name"/>
@@ -45,7 +43,6 @@
         <record id="view_params_pac_search" model="ir.ui.view">
             <field name="name">view.params.pac.search</field>
             <field name="model">params.pac</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Parameters PAC">
                     <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
@@ -65,7 +62,6 @@
         <record id="view_params_pac_form" model="ir.ui.view">
             <field name="name">view.params.pac.form</field>
             <field name="model">params.pac</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Parameters PAC">
                     <field name="name"/>
@@ -83,7 +79,6 @@
         <record id="view_params_pac_tree" model="ir.ui.view">
             <field name="name">view.params.pac.tree</field>
             <field name="model">params.pac</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Parameters PAC">
                     <field name="name"/>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <act_window
+            context="{'search_default_invoice_id': [active_ids], 'default_invoice_id': [active_ids]}"
+            id="act_invoice_attachment"
+            name="Attachment Factura E MX"
+            res_model="ir.attachment.facturae.mx"
+            src_model="account.invoice"
+
+            />
+        
+    </data>
+</openerp>

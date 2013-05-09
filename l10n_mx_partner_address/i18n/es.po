@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.0.3\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-10-29 17:44+0000\n"
-"PO-Revision-Date: 2011-10-29 17:44+0000\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-06 00:16+0000\n"
+"PO-Revision-Date: 2013-04-06 00:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,31 +16,37 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_mx_partner_address
-#: field:res.partner.address,city2:0
-msgid "City2"
+#: field:res.partner,l10n_mx_city2:0
+msgid "Locality"
 msgstr "Localidad"
 
 #. module: l10n_mx_partner_address
-#: field:res.partner.address,street3:0
-msgid "Street3"
-msgstr "No Exterior"
+#: help:res.partner,l10n_mx_street3:0
+msgid "Internal number of the partner address"
+msgstr "No. Interior de la Dirección del Partner"
 
 #. module: l10n_mx_partner_address
-#: field:res.partner.address,street4:0
-msgid "Street4"
-msgstr "No Interior"
+#: help:res.partner,l10n_mx_city2:0
+msgid "Locality configurated for this partner"
+msgstr "Localidad configurada para este partner"
 
-#. module: base
-#: field:res.partner.address,street:0
-msgid "Street"
-msgstr "Calle"
+#. module: l10n_mx_partner_address
+#: field:res.partner,l10n_mx_street3:0
+msgid "No. Internal"
+msgstr "No. Interior"
 
-#. module: base
-#: field:res.partner.address,street2:0
-msgid "Street2"
-msgstr "Colonia"
+#. module: l10n_mx_partner_address
+#: model:ir.model,name:l10n_mx_partner_address.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
 
-#. module: base
-#: field:res.partner.address,state_id:0
-msgid "Fed. State"
-msgstr "Estado"
+#. module: l10n_mx_partner_address
+#: help:res.partner,l10n_mx_street4:0
+msgid "External number of the partner address"
+msgstr "No. Externo de la direccion del partner"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner,l10n_mx_street4:0
+msgid "No. External"
+msgstr "No. External"
+

@@ -220,10 +220,6 @@
           </td>
           <td>
             <para style="P2">[[ l.name ]]</para>
-            <para style="P4">
-              <font face="Helvetica" size="7.0">Notas:</font>
-              <font face="Helvetica" size="7.0">[[l.note or removeParentNode('para')]]</font>
-            </para>
           </td>
           <td>
             <para style="P2">[[ l.product_id and l.product_id.default_code ]]</para>

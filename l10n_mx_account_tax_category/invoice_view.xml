@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_account_invoice_tax_form_inh">
+            <field name="name">view.account.invoice.tax.form.inh</field>
+            <field name="model">account.invoice.tax</field>
+            <field name="inherit_id" ref="account.view_invoice_tax_form"/>
+            <field name="arch" type="xml">
+               <xpath expr='//field[@name="name"]' position="after">
+                    <field name='name2'/>
+                    <field name='tax_percent'/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_account_invoice_tree_inh">
+            <field name="name">view.account.invoice.tree.inh</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+<!--
+               <xpath expr="/sheet/notebook/page[@string='Other Info']/field[@name='tax_line']/tree/field[@name='name']" position="after">
+-->
+               <xpath expr="//field[@name='tax_line']/tree/field[@name='name']" position="after">
+                    <field name='name2'/>
+                    <field name='tax_percent'/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

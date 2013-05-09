@@ -26,22 +26,27 @@
 ##############################################################################
 
 {
-    "name" : "l10n_mx_address",
+    "name" : "l10n_mx_partner_address",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """Add new fields of address
+    "description" : """This module adds the fields: 'l10n_mx_street3','l10n_mx_street4','l10n_mx_city2' used in México address. 
+    You can see this fields in partner form following the next steps:
+        1.- The company's country needs to be México
+        2.- The user must be assigned a company with country México defined
+
+        This is very usable if you are working with multicompany schema.
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
             "base",
+            "l10n_mx_states",
         ],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ["demo/l10n_mx_partner_address_demo.xml",],
     "update_xml" : [
-        "security/openacademy_security.xml",
-        "partner_address_view.xml",
+        'country_data.xml'
     ],
     "installable" : True,
     "active" : False,

@@ -25,11 +25,12 @@
 #
 ##############################################################################
 
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools, netsvc
+
 import wizard
 import base64
-import netsvc
-from tools.translate import _
 import time
 import datetime
 from dateutil.relativedelta import relativedelta
@@ -129,10 +130,10 @@ def _get_invoices_month(self, cr, uid, data, context={}):
         invoice_obj.search(cr, uid, [
             ( 'type', 'in', ['out_invoice', 'out_refund'] ),
             ( 'state', 'in', ['open', 'paid', 'cancel'] ),
-            ( 'date_invoice', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
-            ( 'date_invoice', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
+            ( 'invoice_datetime', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
+            ( 'invoice_datetime', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'number', '<>', False ),
-            ], order='date_invoice', context=context)
+            ], order='invoice_datetime', context=context)
     )
     
     invoice_ids.extend(  
@@ -142,7 +143,7 @@ def _get_invoices_month(self, cr, uid, data, context={}):
             ( 'date_invoice_cancel', '>=', date_start.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'date_invoice_cancel', '<', date_end.strftime("%Y-%m-%d %H:%M:%S") ),
             ( 'number', '<>', False ),
-            ], order='date_invoice', context=context)
+            ], order='invoice_datetime', context=context)
     )
     invoice_ids = list(set(invoice_ids))
     return {'invoice_ids': invoice_ids}
@@ -165,10 +166,10 @@ def _get_invoices_date(self, cr, uid, data, context={}):
         invoice_obj.search(cr, uid, [
             ( 'type', 'in', ['out_invoice', 'out_refund'] ),
             ( 'state', 'in', ['open', 'paid', 'cancel'] ),
-            ( 'date_invoice', '>=', date_start ),
-            ( 'date_invoice', '<', date_end ),
+            ( 'invoice_datetime', '>=', date_start ),
+            ( 'invoice_datetime', '<', date_end ),
             ( 'internal_number', '<>', False ),
-        ], order='date_invoice', context=context)
+        ], order='invoice_datetime', context=context)
     )
     invoice_ids.extend(
         invoice_obj.search(cr, uid, [
@@ -177,7 +178,7 @@ def _get_invoices_date(self, cr, uid, data, context={}):
             ( 'date_invoice_cancel', '>=', date_start ),
             ( 'date_invoice_cancel', '<', date_end ),
             ( 'internal_number', '<>', False ),
-        ], order='date_invoice', context=context)
+        ], order='invoice_datetime', context=context)
     )
     return {'invoice_ids': invoice_ids}
 

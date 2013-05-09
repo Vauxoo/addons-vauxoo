@@ -26,10 +26,12 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-import wizard
-import netsvc
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp.tools.misc import ustr
+
 import time
 import base64
 import StringIO
@@ -38,7 +40,6 @@ import tempfile
 import os
 import sys
 import codecs
-from tools.misc import ustr
 try:
     from SOAPpy import WSDL
 except:
@@ -51,6 +52,9 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
     _name='wizard.cancel.invoice.pac.sf'
 
     def _get_cancel_invoice_id(self, cr, uid, data, context = {}):
+        """
+        @params data : Dictionary with information of the user, and active ids
+        """
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._get_file_cancel(cr, uid, data['active_ids'])
@@ -65,12 +69,12 @@ class wizard_cancel_invoice_pac_sf(osv.osv_memory):
 
 
     _columns = {
-        'file': fields.binary('File', readonly=True),
-        'message': fields.text('text', readonly=True),
+        'file': fields.binary('File', readonly=True, help='Shows the file returned'),
+        'message': fields.text('text', readonly=True, help='Shows the message that returned after of cancel the Electronic Invoice'),
     }
 
     _defaults= {
-        'message': 'Seleccione el botón Cancelar Factura enviar la cancelacion al PAC',
+        'message': 'Choose the button Cancel Invoice for send the cancellation to PAC',
         'file': _get_cancel_invoice_id,
     }
 wizard_cancel_invoice_pac_sf()

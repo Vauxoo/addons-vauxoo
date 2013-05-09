@@ -25,11 +25,10 @@
 #
 ##############################################################################
 
-import pooler
-import wizard
+from openerp import pooler
+from openerp.tools.translate import _
+
 import base64
-import netsvc
-from tools.translate import _
 import time
 
 _form = """<?xml version="1.0"?>
@@ -59,15 +58,16 @@ def _get_invoice_facturae_xml(self, cr, uid, data, context={}):
         if brow_rec.datas:
             xml_data = base64.decodestring(brow_rec.datas)
     else:
-        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, ids, context=context)
-        pool.get('ir.attachment').create(cr, uid, {
-            'name': fname_invoice,
-            'datas': base64.encodestring(xml_data),
-            'datas_fname': fname_invoice,
-            'res_model': 'account.invoice',
-            'res_id': invoice.id,
-            }, context=context
-        )
+        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, ids, context=context)#TODO: Del this line
+        #pool.get('ir.attachment').create(cr, uid, {
+            #'name': fname_invoice,
+            #'datas': base64.encodestring(xml_data),
+            #'datas_fname': fname_invoice,
+            #'res_model': 'account.invoice',
+            #'res_id': invoice.id,
+            #}, context=context
+        #)
+        id = invoice_obj._attach_invoice(cr, uid, ids, context=context)
     
     fdata = base64.encodestring( xml_data )
     return {'facturae': fdata, 'facturae_fname': fname_invoice,}

@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_mx_facturae_seq
+#   * l10n_mx_facturae_seq
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.1\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-29 21:15+0000\n"
-"PO-Revision-Date: 2012-08-29 21:15+0000\n"
+"POT-Creation-Date: 2013-04-05 17:41+0000\n"
+"PO-Revision-Date: 2013-04-05 17:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,43 +16,82 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_mx_facturae_seq
+#: model:ir.actions.act_window,name:l10n_mx_facturae_seq.action_facturae_sequence_tree
+#: model:ir.ui.menu,name:l10n_mx_facturae_seq.menu_facturae_sequence
+msgid "FacturaE MX Sequence Approval"
+msgstr "FacturaE MX Secuencia De Aprovación"
+
+#. module: l10n_mx_facturae_seq
+#: field:ir.sequence,approval_id:0
+msgid "Approval Current"
+msgstr "Aprovación Actual"
+
+#. module: l10n_mx_facturae_seq
+#: field:ir.sequence.approval,number_start:0
+msgid "Since"
+msgstr "Desde"
+
+#. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,type:0
+msgid "Type of Electronic Invoice"
+msgstr "Tipo de Factura Electronica"
+
+#. module: l10n_mx_facturae_seq
+#: view:ir.sequence.approval:0
+msgid "Group By..."
+msgstr "Agrupar Por..."
+
+#. module: l10n_mx_facturae_seq
 #: constraint:ir.sequence.approval:0
-msgid "Error ! Hay rangos de numeros solapados entre aprobaciones."
+msgid "Error ! There ranges of numbers underhand between approvals."
 msgstr "Error ! Hay rangos de numeros solapados entre aprobaciones."
 
 #. module: l10n_mx_facturae_seq
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:133
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:161
-#, python-format
-msgid "You cannot remove/deactivate an account which is set as a property to any Partner!"
-msgstr "You cannot remove/deactivate an account which is set as a property to any Partner!"
+#: field:ir.sequence.approval,type:0
+msgid "Type"
+msgstr "Tipo"
 
 #. module: l10n_mx_facturae_seq
-#: field:ir.sequence.approval,approval_number:0
-msgid "Numero de Aprobacion"
-msgstr "Numero de Aprobacion"
+#: field:ir.sequence.approval,number_end:0
+msgid "Until"
+msgstr "Hasta"
 
 #. module: l10n_mx_facturae_seq
 #: view:ir.sequence:0
+#: view:ir.sequence.approval:0
 msgid "Aprobaciones"
 msgstr "Aprobaciones"
 
 #. module: l10n_mx_facturae_seq
-#: sql_constraint:ir.sequence.approval:0
-msgid "El numero inicial (Desde), tiene que ser menor al final (Hasta)!"
-msgstr "El numero inicial (Desde), tiene que ser menor al final (Hasta)!"
+#: help:ir.sequence,approval_id:0
+msgid "Approval active in this sequence"
+msgstr "Aprovación activa en esta secuencia"
 
 #. module: l10n_mx_facturae_seq
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:133
-#: code:addons/l10n_mx_facturae_seq/ir_sequence.py:161
-#, python-format
-msgid "Warning !"
-msgstr "Warning !"
+#: help:ir.sequence.approval,sequence_id:0
+msgid "Sequence where will add this approval"
+msgstr "Secuencia donde se agregara esta aprovación"
 
 #. module: l10n_mx_facturae_seq
-#: help:ir.sequence.approval,serie:0
-msgid "Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para notas de credito)"
-msgstr "Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para notas de credito)"
+#: view:ir.sequence.approval:0
+#: field:ir.sequence.approval,company_id:0
+msgid "Company"
+msgstr "Company"
+
+#. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,approval_year:0
+msgid "Year of approval from the Certificate"
+msgstr "Año de aprovación del Certificado"
+
+#. module: l10n_mx_facturae_seq
+#: field:ir.sequence.approval,serie:0
+msgid "Serie of Folios"
+msgstr "Serie de Folios"
+
+#. module: l10n_mx_facturae_seq
+#: view:ir.sequence.approval:0
+msgid "Serie"
+msgstr "Serie"
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.model,name:l10n_mx_facturae_seq.model_ir_sequence
@@ -65,55 +104,76 @@ msgid "FacturaE MX Seq / Manager"
 msgstr "FacturaE MX Seq / Manager"
 
 #. module: l10n_mx_facturae_seq
-#: field:ir.sequence.approval,serie:0
-msgid "Serie de Folios"
-msgstr "Serie de Folios"
+#: help:account.invoice,invoice_sequence_id:0
+msgid "Sequence used in the invoice"
+msgstr "Secuencia utilizada en la factura"
 
 #. module: l10n_mx_facturae_seq
-#: field:ir.sequence.approval,number_end:0
-msgid "Hasta"
-msgstr "Hasta"
+#: help:ir.sequence.approval,company_id:0
+msgid "Company where will add this approval"
+msgstr "Compañia donde se agregara esta aprovación"
 
 #. module: l10n_mx_facturae_seq
-#: field:ir.sequence,approval_id:0
-msgid "Approval Current"
-msgstr "Approval Current"
-
-#. module: l10n_mx_facturae_seq
-#: field:ir.sequence.approval,number_start:0
-msgid "Desde"
-msgstr "Desde"
-
-#. module: l10n_mx_facturae_seq
-#: field:ir.sequence.approval,approval_year:0
-msgid "Anio de Aprobacion"
-msgstr "Año de Aprobacion"
-
-#. module: l10n_mx_facturae_seq
-#: sql_constraint:ir.sequence.approval:0
-msgid "El numero final (Hasta), tiene que ser mayor al inicial (Desde)!"
-msgstr "El numero final (Hasta), tiene que ser mayor al inicial (Desde)!"
-
-#. module: l10n_mx_facturae_seq
-#: field:account.invoice,invoice_sequence_id:0
-msgid "Invoice Sequence"
-msgstr "Invoice Sequence"
-
-#. module: l10n_mx_facturae_seq
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr "¡El número de factura debe ser único por compañía!"
-
-#. module: l10n_mx_facturae_seq
-#: view:ir.sequence:0
-#: field:ir.sequence.approval,sequence_id:0
-msgid "Sequence"
-msgstr "Secuencia"
+#: help:ir.sequence.approval,serie:0
+msgid "With which report to SAT, example. FA (for Invoices), NC (For Invoice Refund)"
+msgstr "Con la que se reporto al SAT, por ejemplo. FA (para facturas), NC (Para notas de credito)"
 
 #. module: l10n_mx_facturae_seq
 #: view:ir.sequence:0
 msgid "Aprobaciones SAT"
 msgstr "Aprobaciones SAT"
+
+#. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,approval_number:0
+msgid "Name of the type of Electronic Invoice to configure"
+msgstr "Nombre del tipo de Factura Electronica a configurar"
+
+#. module: l10n_mx_facturae_seq
+#: field:account.invoice,invoice_sequence_id:0
+msgid "Invoice Sequence"
+msgstr "Secuencia de factura"
+
+#. module: l10n_mx_facturae_seq
+#: field:ir.sequence.approval,approval_year:0
+msgid "Year Approval"
+msgstr "Año de Aprovación"
+
+#. module: l10n_mx_facturae_seq
+#: sql_constraint:ir.sequence.approval:0
+msgid "The finished number (Until), must be higher to initial (Since)!"
+msgstr "El numero final (Hasta), tiene que ser mayor al inicial (Desde)!"
+
+#. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,number_start:0
+msgid "Initial Number of folios purchased"
+msgstr "Número Inicial de Folios Comprados"
+
+#. module: l10n_mx_facturae_seq
+#: view:ir.sequence:0
+#: view:ir.sequence.approval:0
+#: field:ir.sequence.approval,sequence_id:0
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: l10n_mx_facturae_seq
+#: sql_constraint:ir.sequence.approval:0
+msgid "The initial number (Since), must be less to end (Until)!"
+msgstr "El numero inicial (Desde), tiene que ser menor al final (Hasta)!"
+
+#. module: l10n_mx_facturae_seq
+#: help:ir.sequence.approval,number_end:0
+msgid "Finished Number of folios purchased"
+msgstr "Número Final de Folios Comprados"
+
+#. module: l10n_mx_facturae_seq
+#: field:ir.sequence.approval,approval_number:0
+msgid "Approval Number"
+msgstr "Número de Aprovación"
+
+#. module: l10n_mx_facturae_seq
+#: help:ir.sequence,approval_ids:0
+msgid "Approvals in this Sequence"
+msgstr "Aprovación en esta Secuencia"
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.model,name:l10n_mx_facturae_seq.model_account_invoice
@@ -123,12 +183,12 @@ msgstr "Factura"
 #. module: l10n_mx_facturae_seq
 #: field:ir.sequence,approval_ids:0
 msgid "Sequences"
-msgstr "Sequences"
+msgstr "Secuencias"
 
 #. module: l10n_mx_facturae_seq
-#: model:ir.actions.act_window,help:l10n_mx_facturae_seq.secuence_form_config_action
-msgid "Configure yours certificates for Electronic Invoice."
-msgstr "Configure los certificados para la Factura Electrónica."
+#: model:ir.actions.act_window,name:l10n_mx_facturae_seq.secuence_form_config_action
+msgid "Configure Secuences to Electronic Invoice"
+msgstr "Configure las Secuencias para la Factura Electrónica."
 
 #. module: l10n_mx_facturae_seq
 #: model:ir.model,name:l10n_mx_facturae_seq.model_ir_sequence_approval
@@ -136,7 +196,7 @@ msgid "ir.sequence.approval"
 msgstr "ir.sequence.approval"
 
 #. module: l10n_mx_facturae_seq
-#: model:ir.actions.act_window,name:l10n_mx_facturae_seq.secuence_form_config_action
-msgid "Configure Secuences to Electronic Invoice"
-msgstr "Configure las Secuencias para la Factura Electrónica."
+#: model:ir.actions.act_window,help:l10n_mx_facturae_seq.secuence_form_config_action
+msgid "Configure yours Secuences for Electronic Invoice."
+msgstr "Configuracion de las Secuencias para la Factura Electronica."
 

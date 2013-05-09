@@ -20,9 +20,9 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
 
 class product_import_info(osv.osv):

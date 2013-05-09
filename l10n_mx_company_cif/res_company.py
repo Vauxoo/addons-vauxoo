@@ -25,9 +25,9 @@
 #
 ##############################################################################
 
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
 import os
 import time
 
@@ -35,7 +35,7 @@ class res_company(osv.osv):
     _inherit = 'res.company'
     
     _columns = {
-        'cif_file': fields.binary('Cedula de Identificacion Fiscal'),
+        'cif_file': fields.binary('Cedula de Identificacion Fiscal', help='This CIF is used for the Report of Electronic Invoice'),
     }
 res_company()
 

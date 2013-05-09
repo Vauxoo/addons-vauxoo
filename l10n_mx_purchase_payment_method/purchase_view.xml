@@ -4,11 +4,12 @@
         <record model="ir.ui.view" id="view_res_company_inherit_bank_form">
             <field name="name">view.res.company.inherit.bank.form</field>
             <field name="model">purchase.order</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Purchase Order']/field[@name='partner_address_id']" position="after">
+                <xpath expr="//field[@name='journal_id']" position="after">
                     <field name="acc_payment"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
                     <field name="pay_method_id" widget="selection" string="Payment Method"/>
                 </xpath>
             </field>

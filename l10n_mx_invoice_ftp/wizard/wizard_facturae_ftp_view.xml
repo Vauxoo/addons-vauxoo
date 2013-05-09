@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_facturae_ftp_form" model="ir.ui.view">
+            <field name="name">view.wizard.facturae.ftp.form</field>
+            <field name="model">wizard.facturae.ftp</field>
+            <field name="arch" type="xml">
+                <form string="FTP invoice">
+                    <separator colspan="4" string="File"/>
+                        <field name='files' nolabel="1" colspan="4"/>
+                        <newline/>
+                        <button special="cancel" string="_Close" icon="gtk-cancel"/>
+                        <button name="invoice_ftp" type="object" string="_Upload to FTP" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="FTP Invoice"
+            res_model="wizard.facturae.ftp"
+            src_model="account.invoice"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_wizard_facturae_ftp_form"/>
+
+    </data>
+</openerp>

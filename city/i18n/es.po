@@ -1,0 +1,70 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* city
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-02-22 16:20+0000\n"
+"PO-Revision-Date: 2013-02-22 10:21-0600\n"
+"Last-Translator: Isaac Lopez <isaac@vauxoo.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: city
+#: view:res.country.state.city:0
+#: field:res.partner,city_id:0
+msgid "City"
+msgstr "Ciudad"
+
+#. module: city
+#: help:res.country.state.city,name:0
+msgid "Administrative divisions of a state."
+msgstr "División administrativa de un estado"
+
+#. module: city
+#: field:res.country.state.city,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: city
+#: model:ir.model,name:city.model_res_country_state_city
+msgid "Country state city"
+msgstr "Pais-estado-ciudad"
+
+#. module: city
+#: field:res.country.state.city,country_id:0
+msgid "Country"
+msgstr "Pais"
+
+#. module: city
+#: field:res.country.state.city,code:0
+msgid "City Code"
+msgstr "Código de Ciudad"
+
+#. module: city
+#: view:res.country.state.city:0
+#: field:res.country.state.city,state_id:0
+msgid "State"
+msgstr "Estado"
+
+#. module: city
+#: help:res.country.state.city,code:0
+msgid "The city code in max. five chars."
+msgstr "Código de la ciudad, máximo 5 caracteres"
+
+#. module: city
+#: model:ir.model,name:city.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: city
+#: model:ir.actions.act_window,name:city.action_country_state_city
+#: model:ir.ui.menu,name:city.menu_country_state_city_partner
+msgid "Cities"
+msgstr "Ciudades"
+

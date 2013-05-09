@@ -23,8 +23,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import osv
-from osv import osv, fields
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
 class purchase_order(osv.osv):
     _inherit = 'purchase.order'
@@ -40,8 +41,8 @@ class purchase_order(osv.osv):
         return res
         
     _columns = {
-        'acc_payment': fields.many2one ('res.partner.bank', 'Numero de cuenta', readonly=True, states={'draft':[('readonly',False)]},help = 'Es la cuenta con la que el cliente pagará la factura, si no se sabe con cual cuenta se va pagar dejarlo vacío y en el xml aparecerá "No identificado".'),
-        'pay_method_id': fields.many2one('pay.method', 'Metodo de Pago', readonly=True, states={'draft':[('readonly',False)]}, help = 'Indica la forma en que se pagó o se pagará la factura, donde las opciones pueden ser: cheque, transferencia bancaria, depósito en cuenta bancaria, tarjeta de crédito, efectivo etc. Si no se sabe como va ser pagada la factura, dejarlo vacío y en el xml aparecerá “No identificado”.'),
+        'acc_payment': fields.many2one ('res.partner.bank', 'Account Number', readonly=True, states={'draft':[('readonly',False)]},help = 'Is the account with which the client pays the invoice, if not know which account will used for pay leave empty and the XML will show "Unidentified".'),
+        'pay_method_id': fields.many2one('pay.method', 'Payment Method', readonly=True, states={'draft':[('readonly',False)]}, help = 'Indicates the way it was paid or will be paid the invoice, where the options could be: check, bank transfer, reservoir in account bank, credit card, cash etc. If not know as will be paid the invoice, leave empty and the XML show “Unidentified”.'),
     }
     
     def action_invoice_create(self, cr, uid, ids, context=None):

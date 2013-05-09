@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 import time
-import pooler
-from report import report_sxw
-from tools.translate import _
+from openerp.report import report_sxw
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
 class label_report(report_sxw.rml_parse):
     def __init__(self, cr, user, name, context):

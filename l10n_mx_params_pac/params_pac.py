@@ -26,9 +26,9 @@
 ##############################################################################
 
 import time
-from tools.translate import _
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
 
 
 class params_pac(osv.osv):
@@ -40,15 +40,15 @@ class params_pac(osv.osv):
         return types
 
     _columns = {
-        'name': fields.char('Name', size=128, required=True),
-        'url_webservice': fields.char('URL WebService', size=256, required=True),
-        'namespace': fields.char('NameSpace', size=256),
-        'user': fields.char('User', size=128),
-        'password': fields.char('Password', size=128),
+        'name': fields.char('Name', size=128, required=True, help='Name for this param'),
+        'url_webservice': fields.char('URL WebService', size=256, required=True, help='URL of WebService used for send to sign the XML to PAC'),
+        'namespace': fields.char('NameSpace', size=256, help='NameSpace of XML of the page of WebService of the PAC'),
+        'user': fields.char('User', size=128, help='Name user for login to PAC'),
+        'password': fields.char('Password', size=128, help='Password user for login to PAC'),
         'method_type': fields.selection(_get_method_type_selection,"Type of method", type='char', size=64, required=True),
-        'company_id': fields.many2one('res.company', 'Company', required=True),
-        'active': fields.boolean('Active'),
-        'sequence': fields.integer('Sequence'),
+        'company_id': fields.many2one('res.company', 'Company', required=True, help='Company where will configurate this param'),
+        'active': fields.boolean('Active', help='Indicate if this param is active'),
+        'sequence': fields.integer('Sequence', help='If have more of a param, take the param with less sequence'),
 
        # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
     }
@@ -56,7 +56,7 @@ class params_pac(osv.osv):
         'active': 1,
         'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'params.pac', context=c),
         'sequence': 10,
-    
+
     }
 params_pac()
 

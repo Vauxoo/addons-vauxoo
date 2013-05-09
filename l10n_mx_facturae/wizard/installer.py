@@ -21,11 +21,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
-from osv import osv
-from osv import fields
-from tools.translate import _
+from openerp.tools.translate import _
+from openerp.osv import fields, osv
 import base64
-import addons
+from openerp import addons
 
 
 class facturae_config(osv.osv_memory):
@@ -39,7 +38,12 @@ class facturae_config(osv.osv_memory):
         defaults['config_logo'] = base64.encodestring(logo.read())
         return defaults
 
-    def _assign_vat(self, cr, uid, vat,company_id,context=None):
+    def _assign_vat(self, cr, uid, vat, company_id, context=None):
+        """
+        @param vat : VAT that will be set in the company
+        @param company_id : Id from the company that the user works
+        """
+        print 'company_id', company_id
         partner_id = self.pool.get('res.company').browse(cr,uid,company_id).partner_id.id
         partner_obj= self.pool.get('res.partner')
         if partner_obj.check_vat(cr,uid,[partner_id],context):
@@ -58,4 +62,4 @@ class facturae_config(osv.osv_memory):
         'company_id': fields.many2one('res.company',u'Company',help="Select company to assing vat and/or cif"),
     }
 
-facturae_config()
+#~ facturae_config()

@@ -1,0 +1,255 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="ir_header_webkit_facturae" model="ir.header_webkit">
+            <field name="footer_html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        <table style="border-top: 1px solid black; width: 100%">
+            <tr >
+                <td style="text-align:right;font-size:9;" width="35%">Documento realizado en Webkit - OpenERP - Vauxoo</td>
+                <td style="text-align:right;font-size:12;" width="55%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
+            </tr>
+        </table>
+    </body>
+</html>]]></field>
+            <field name="orientation">Portrait</field>
+            <field name="format">Letter</field>
+            <field name="html"><![CDATA[<html>
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <script>
+            function subst() {
+            var vars={};
+            var x=document.location.search.substring(1).split('&');
+            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+            for(var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+                }
+            }
+        </script>
+        <style type="text/css">
+            ${css}
+        </style>
+    </head>
+    <body style="border:0; margin: 0;" onload="subst()">
+        ${_debug or ''|n} </body>
+</html>]]>
+</field>
+            <field eval="0.0" name="margin_top"/>
+            <field name="css" ><![CDATA[
+
+.cliente{
+font-size:11;
+border-top:1px solid #002966;
+border-left:1px solid #99C2FF;
+border-right:1px solid #99C2FF;
+}
+
+body{
+font-family:helvetica;
+font-size:9;
+margin:0;
+padding:0;
+height:100%;
+line-height:12px;
+}
+
+tr.nonrow
+{
+background-color:#E6E6FF;
+}
+
+tr.firstrow{
+border-bottom: solid 1.5px #000000;
+border-top: solid 1.5px #000000;
+font-size: 12;
+color: #280099;
+}
+
+th
+{
+text-align:center;
+padding-right:3px;
+padding-left:3px;
+font-size: 12;
+}
+
+td.basic_td
+{
+border-bottom: solid 1.5px #e6e6e6;
+font-size: 10;
+padding-right:3px;
+padding-left:3px;
+}
+
+td.number_td
+{
+border-bottom: solid 1.5px #e6e6e6;
+font-size:9;
+padding-right:2px;
+padding-left:2px;
+text-align:right;
+font-family:helvetica;
+}
+
+td.total_td{
+border-top: solid 1.5px black;
+font-size: 11;
+padding-right:2px;
+padding-left:2px;
+}
+
+td.tax_td
+{
+font-size: 11;
+padding-right:2px;
+padding-left:2px;
+}
+
+td.center_td
+{
+font-size: 11;
+padding-right:2px;
+padding-left:2px;
+text-align:center;
+}
+
+td.data_bank_label{
+text-align: center;
+font-size: 11;
+background-color: #d0d0d0;
+font-weight:bold;
+border:1.5px solid grey;
+}
+
+.data_bank{
+text-align: center;
+font-size: 8pt;
+}
+
+td.td_data_exp
+{
+text-align:center
+font-size:20px;
+}
+
+.datos_fiscales{
+font-size: 6pt;
+word-wrap:break-word;
+}
+
+div.float_left{
+float: left;
+}
+
+div.float_right{
+float : right;
+}
+
+.title{
+color: #280099;
+text-align: center;
+font-size: 20pt;
+}
+
+.title_data_bank{
+text-align: center;
+font-size: 8pt;
+}
+.emitter{
+color: #280099;
+text-align: center;
+font-size: 10pt;
+}
+
+.fiscal_address{
+color: #280099;
+text-align: right;
+font-size: 10pt;
+}
+.invoice{
+color: red;
+text-align: right;
+font-size: 16pt;
+}
+.refund{
+color: red;
+text-align: right;
+font-size: 13pt;
+}
+
+td.address{
+text-align:left;
+valign:top;
+line-height:11px;
+}
+.line{
+border-color:#280099;
+}
+
+.cfdi{
+border: 2px groove #000000;
+}
+
+td.reg_fis{
+text-align:center;
+}
+
+.facturae{
+font-family:Arial,Helvetica,sans-serif;
+font-size: 6pt;
+}
+
+.data_inv{
+border-left: solid 2px #e6e6e6;
+text-align:left;
+valign:top;
+line-height:11px;
+}
+
+table.basic_table{
+border-collapse: collapse;
+width:100%;
+}                     
+
+p.cadena_without_cif{
+width:70em; 
+}
+
+p.cadena_without_cbb{
+width:70em; 
+}
+
+p.cadena_without_cbb_cfd{
+width:10em; 
+}
+
+p.cadena_with_cbb_cfd{
+width:55em;
+}
+]]> </field>
+            <field name="name">Facturae</field>
+        </record>
+        <record id="ir_header_img_companylogo0" model="ir.header_img">
+            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+</openerp>

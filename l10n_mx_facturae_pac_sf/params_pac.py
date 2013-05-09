@@ -27,9 +27,11 @@
 ##############################################################################
 
 import time
-from tools.translate import _
-from osv import fields, osv
-import pooler
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import pooler, tools
+from openerp import netsvc
+from openerp import release
 
 
 class params_pac(osv.osv):
@@ -38,13 +40,13 @@ class params_pac(osv.osv):
     def _get_method_type_selection(self, cr, uid, context=None):
         types = super(params_pac, self)._get_method_type_selection(cr, uid, context=context)
         types.extend([
-            ('pac_sf_cancelar','PAC SF - Cancelar'),
-            ('pac_sf_firmar','PAC SF - Firmar'),
+            ('pac_sf_cancelar',_('PAC SF - Cancel')),
+            ('pac_sf_firmar',_('PAC SF - Sign')),
         ])
         return types
     
     _columns = {
-        'method_type': fields.selection(_get_method_type_selection, "Proceso a realizar", type='char', size=64, required=True),
+        'method_type': fields.selection(_get_method_type_selection, "Process to perform", type='char', size=64, required=True, help='Type of process to configure in this pac'),
     }
 params_pac()
 

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_account_journal_view_form_inh_multisuc">
+            <field name="name">view.account.journal.view.form.inh.multisuc</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='group_invoice_lines']" position="after">
+                    <field name="address_invoice_company_id"/>
+                </xpath>
+                <xpath expr="//field[@name='sequence_id']" position="after">
+                    <field name="company2_id"/>
+                </xpath>
+            </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        
+
         <record id="view_wizard_invoice_facturae_txt_v6_form" model="ir.ui.view">
             <field name="name">view.wizard.invoice.facturae.txt.v6.form</field>
             <field name="model">wizard.invoice.facturae.txt.v6</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Factura Electronica - Reporte Mensual TXT">
-                    <separator string="FILTROS PARA EXTRAER FACTURAS" colspan="4"/>
-                    <separator string="Filtro por Mes" colspan="4"/>
+                <form string="Electronic Invoice - Monthly Report TXT">
+                    <separator string="FILTERS FOR EXTRACT INVOICES" colspan="4"/>
+                    <separator string="Filter by month" colspan="4"/>
                     <field name="month"/>
                     <field name="year"/>
-                    <separator string="Filtro por fechas" colspan="4"/>
+                    <separator string="Filter by dates" colspan="4"/>
                     <field name="date_start"/>
                     <field name="date_end"/>
-                    <separator string="FACTURAS" colspan="4"/>
+                    <separator string="INVOICES" colspan="4"/>
                     <field name="invoice_ids" colspan="4"/>
                     <button special="cancel" string="Cancel" colspan="2" icon="gtk-cancel"/>
-                    <button name="get_invoices_date" string="Obtener Facturas por filtro de Fechas" type="object" colspan="1" icon="gtk-execute"/>
-                    <button name="get_invoices_month" string="Obtener Facturas por filtro de Mes" type="object" colspan="1" icon="gtk-execute"/>
-                    <button name="create_facturae_txt" string="Generar Reporte Mensual TXT" colspan="2" type="object" icon="gtk-ok"/>
+                    <button name="get_invoices_date" string="Get invoices by filter of Dates" type="object" colspan="1" icon="gtk-execute"/>
+                    <button name="get_invoices_month" string="Get invoices by filter of Month" type="object" colspan="1" icon="gtk-execute"/>
+                    <button name="create_facturae_txt" string="Generate Report Monthly TXT" colspan="2" type="object" icon="gtk-ok"/>
                 </form>
             </field>
         </record>
         <record id="action_wizard_invoice_facturae_txt" model="ir.actions.act_window">
-             <field name="name">Factura Electronica Reporte Mensual TXT</field>
+             <field name="name">Electronic Invoice Report Monthly TXT</field>
              <field name="res_model">wizard.invoice.facturae.txt.v6</field>
              <field name="type">ir.actions.act_window</field>
              <field name="view_type">form</field>
@@ -36,25 +35,24 @@
              <field name="target">new</field>
        </record>
         <menuitem id="menu_wizard_invoice_facturae_txt_v6"
-            name="Factura Electronica Reporte Mensual TXT" parent="account.menu_finance_receivables"
+            name="Electronic Invoice Report Monthly TXT" parent="account.menu_finance_receivables"
             action="action_wizard_invoice_facturae_txt"
             sequence="150"
             groups="l10n_mx_facturae.group_facturae_mx_cfd_user"
         />
 
         <record id="view_wizard_invoice_facturae_txt_v6_form2" model="ir.ui.view">
-            <field name="name">view.wizard.invoice.facturae.txt.v6.form2</field>
+            <field name="name">view.wizard.invoice.facturae.txt.v6.v2.form</field>
             <field name="model">wizard.invoice.facturae.txt.v6</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="ARCHIVO TXT PARA EL SAT">
+                <form string="FILE TXT FOR THE SAT">
                     <newline/>
                     <separator/>
                     <newline/>
                     <field name="facturae_fname" invisible="1"/>
                     <field name="facturae" filename="facturae_fname" nolabel="1"/>
                     <newline/>
-                    <separator string="IMPORTANTE"/>
+                    <separator string="IMPORTANT"/>
                     <newline/>
                     <group  rowspan="10" colspan="4">
                         <field name="note" readonly="1" nolabel="1"/>
@@ -64,6 +62,6 @@
                 </form>
             </field>
         </record>
-        
+
     </data>
 </openerp>

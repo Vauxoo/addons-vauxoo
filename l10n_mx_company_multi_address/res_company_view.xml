@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_res_company_form_inh_facturae_form1">
+            <field name="name">view.res.company.form.inh.facturae_form1</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <field name="parent_id" position="after">
+                    <field name="address_invoice_parent_company_id"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

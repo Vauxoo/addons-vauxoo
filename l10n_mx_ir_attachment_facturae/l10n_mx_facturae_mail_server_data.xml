@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="True">
+
+        <record model="ir.mail_server" id="email_template_account_facturae_mx">
+            <field name="name">FacturaE</field>
+            <field name="smtp_host">smtp.gmail.com</field>
+            <field name="smtp_port">587</field>
+            <field name="smtp_user">tuemail@gmail.com</field>
+            <field name="smtp_pass">pass</field>
+            <field name="smtp_encryption">starttls</field>
+        </record>
+        <!--<field name="company" ref="base.main_company"/>-->
+        
+    </data>
+</openerp>

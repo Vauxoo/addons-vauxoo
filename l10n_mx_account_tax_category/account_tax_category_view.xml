@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_account_tax_category_form" model="ir.ui.view">
+            <field name="name">view.account.tax.category.form</field>
+            <field name="model">account.tax.category</field>
+            <field name="arch" type="xml">
+                <form string="Categories">
+                    <separator string="Categories" colspan="4"/>
+                    <field name="name" colspan="2"/>
+                    <field name="code" colspan="2"/>
+                    <newline/>
+                    <field name="active" colspan="2"/>
+                    <field name="sign" colspan="2"/>
+                    <newline/>
+                    <field name="company_id" widget="selection"/>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_account_tax_category_tree" model="ir.ui.view">
+            <field name="name">view.account.tax.category.tree</field>
+            <field name="model">account.tax.category</field>
+            <field name="arch" type="xml">
+                <tree string="Categories">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="active"/>
+                    <field name="sign" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_account_tax_category_tree" model="ir.actions.act_window">
+            <field name="name">Tax Category</field>
+            <field name="res_model">account.tax.category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_account_tax_category_tree"/>
+        </record>
+
+        <menuitem action="action_account_tax_category_tree"
+                id="menu_account_tax_category" sequence="50"
+                parent="account.next_id_27"
+                />
+
+        <record id="view_account_tax_category_search" model="ir.ui.view">
+            <field name="name">view.account.tax.category.search</field>
+            <field name="model">account.tax.category</field>
+            <field name="arch" type="xml">
+                <search string="Categories">
+                    <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="view_account_tax_category_form_inh">
+            <field name="name">view.account.tax.category.form.inh</field>
+            <field name="inherit_id" ref="account.view_tax_form"/>
+            <field name="model">account.tax</field>
+            <field name="arch" type="xml">
+               <xpath expr='//group/field[@name="company_id"]' position="after">
+                    <field name='tax_category_id' widget="selection"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
