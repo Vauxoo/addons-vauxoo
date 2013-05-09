@@ -31,12 +31,13 @@ from openerp import pooler, tools
 import os
 import time
 
-class res_company(osv.osv):
+
+class res_company(osv.Model):
     _inherit = 'res.company'
-    
+
     _columns = {
-        'cif_file': fields.binary('Cedula de Identificacion Fiscal', help='This CIF is used for the Report of Electronic Invoice'),
+        'cif_file': fields.binary('Cedula de Identificacion Fiscal',
+                help='This CIF is used for the Report of Electronic Invoice'),
     }
-res_company()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
