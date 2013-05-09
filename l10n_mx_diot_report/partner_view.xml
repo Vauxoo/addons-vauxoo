@@ -8,14 +8,14 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <field name="last_reconciliation_date" position="after">
-                    <group colspan="4">
+                <field name="bank_ids" position="before">
+                    <group colspan="4" col="4" attrs="{'invisible':[('supplier','=', False)]}">
                         <separator string="DIOT Information" colspan="4"/>
                         <newline/>
                         <field name="number_fiscal_id_diot" />
                         <newline/>
-                        <field name="type_of_third" />
-                        <field name="type_of_operation" />
+                        <field name="type_of_third" colspan="2"/>
+                        <field name="type_of_operation"  colspan="2"/>
                         <newline/>
                         <field name="diot_country" />
                         <field name="nacionality_diot" />
