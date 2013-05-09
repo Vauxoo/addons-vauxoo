@@ -29,13 +29,21 @@ def parse_metadata(section):
     return metadata
 
 
-def parse_file(filepath):
+def parse_file(filepath, logfromtext = False):
     separator =\
         '\n------------------------------------------------------------\n'
-    sections = open(filepath).read().split(separator)
+    sections = logfromtext and filepath or \
+            open(filepath).read().split(separator)
+    all_elements = []
     for s in sections:
+        s_parsed = parse_metadata(s)
         pprint(parse_metadata(s), indent=2)
+        all_elements.append(s)
+    return all_elements
 if __name__ == "__main__":
+    '''
+    This is the option if you need parse a file.
+    '''
     if not len(sys.argv) == 2:
         section = '''
 revno: 52 [merge]
@@ -50,8 +58,7 @@ message:
   [MERGE] Added given kanban wbs_codefield and off the field wbs
 '''
         md = parse_metadata(section)
-        print 'I am Just testing.'
-        print md
+        print "Test Passed , It return %s " % str(md)
     else:
         filepath = sys.argv[1]
         if os.path.isfile(filepath):
