@@ -9,6 +9,6 @@
             src_model="account.invoice"
 
             />
-
+        
     </data>
 </openerp>
