@@ -1,0 +1,16 @@
+=== modified file 'stock/stock.py'
+--- stock/stock.py	2012-10-22 09:29:02 +0000
++++ stock/stock.py	2013-05-09 20:35:01 +0000
+@@ -2153,8 +2153,9 @@
+         reference_currency_id = move.company_id.currency_id.id
+ 
+         default_uom = move.product_id.uom_id.id
+-        qty = product_uom_obj._compute_qty(cr, uid, move.product_uom.id, move.product_qty, default_uom)
+-
++        context.update({'product_name' : move.product_id.name})
++        qty = product_uom_obj._compute_qty(cr, uid, move.product_uom.id, move.product_qty, default_uom, context=context)
++        context.pop('product_name')
+         # if product is set to average price and a specific value was entered in the picking wizard,
+         # we use it
+         if move.product_id.cost_method == 'average' and move.price_unit:
+

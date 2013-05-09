@@ -31,7 +31,7 @@
     "category": "Generic Modules/Production",
     "website" : "http://www.vauxoo.com/",
     "description": """ Add wizard to consume and produce.It will be necesary to apply the patch 
-        patch/stock.patch located in this module ( useatch -b stock.py  stock.patch )
+        patch/stock.patch, product_py & stock_py located in this module ( useatch -b stock.py  stock.patch )
     """,
     'depends': ['mrp'],
     'init_xml': [],
