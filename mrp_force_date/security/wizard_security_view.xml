@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+    <record id="group_wizard_mrp_production" model="res.groups">
+        <field name="name">Mrp Production / Wizard Change Date</field>
+    </record>
+
+    </data>
+</openerp>
