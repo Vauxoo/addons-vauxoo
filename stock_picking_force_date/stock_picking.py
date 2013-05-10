@@ -40,7 +40,6 @@ class stock_picking(osv.Model):
              if picking.state not in ('cancel'):
                 picking.write({'date': new_date})
                 move_ids = [x.id for x in picking.move_lines if x.state not in ('cancel')]
-                print move_ids
                 self.pool.get('stock.move').stock_move_change_date(cr, uid, 
                     move_ids, new_date, context=context)
         return {}
@@ -53,6 +52,6 @@ class stock_move(osv.Model):
             context = {}
         for move in self.pool.get('stock.move').browse(cr, uid, 
             ids, context=context):
-            if move.state not in ('cancel'):
+            if move.state not in ('cancel', 'draft'):
                 move.write({'date': new_date})
         return {}

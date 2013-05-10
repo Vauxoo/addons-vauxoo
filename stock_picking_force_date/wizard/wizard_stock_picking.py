@@ -58,5 +58,3 @@ class wizard_stock_picking(osv.TransientModel):
         self.pool.get('stock.picking').picking_change_date(cr, uid, ids,
             new_date, context=context)
         return {}
-
-wizard_stock_picking()
