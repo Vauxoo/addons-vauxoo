@@ -54,7 +54,6 @@ class wizard_mrp_production(osv.TransientModel):
             context = {}
         data = self.read(cr, uid, ids, [])
         ids = data[0]['mrp_ids']
-        print "mrp",ids
         new_date = data[0]['new_date'] or False
         self.pool.get('mrp.production').mrp_change_date(cr, uid, ids,
             new_date, context=context)

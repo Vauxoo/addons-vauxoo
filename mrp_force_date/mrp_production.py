@@ -36,12 +36,24 @@ class mrp_production(osv.Model):
         if context is None:
             context = {}
         picking_ids = []
+        move_ids = []
+        moves = []
         for mrp_id in self.browse(cr, uid, ids, context=context):
              if mrp_id.state not in ('cancel', 'draft'):
                 mrp_id.write({'date_planned': new_date})
                 picking_ids.append(self.pool.get('stock.picking').search(
                 cr, uid, [('id', '=', mrp_id.picking_id.id)], 
                     context=context)[0])
+                moves = [x.id for x in mrp_id.move_lines if x.state not in ('cancel', 'draft')]
+                move_ids.extend(moves)
+                moves = [x.id for x in mrp_id.move_lines2 if x.state not in ('cancel', 'draft')]
+                move_ids.extend(moves)
+                moves = [x.id for x in mrp_id.move_created_ids if x.state not in ('cancel', 'draft')]
+                move_ids.extend(moves)
+                moves = [x.id for x in mrp_id.move_created_ids2 if x.state not in ('cancel', 'draft')]
+                move_ids.extend(moves)
         self.pool.get('stock.picking').picking_change_date(cr, uid, 
             picking_ids, new_date, context=context)
+        self.pool.get('stock.move').stock_move_change_date(cr, uid, 
+            move_ids, new_date, context=context)
         return {}
