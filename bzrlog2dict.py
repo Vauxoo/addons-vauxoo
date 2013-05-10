@@ -1,9 +1,6 @@
 #!/usr/bin/python
-
 import sys
 import os
-from pprint import pprint
-
 
 def parse_metadata(section):
     """Given the first part of a slide, returns metadata associated with it."""
@@ -37,7 +34,6 @@ def parse_file(filepath, logfromtext = False):
     all_elements = []
     for s in sections:
         s_parsed = parse_metadata(s)
-        pprint(parse_metadata(s), indent=2)
         all_elements.append(s)
     return all_elements
 if __name__ == "__main__":

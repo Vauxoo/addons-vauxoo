@@ -4,7 +4,7 @@ from oerplib import OERP
 from pprint import pprint
 import bzrlog2dict as b2dict
 
-def import_element(conn):
+def import_element(conn, section):
     '''
     TODO: Verify just one import per res_id.
     TODO: Send a message, how do i test it
@@ -15,10 +15,17 @@ def import_element(conn):
             'name': commit['message'][:60],
             'res_id': commit['revision-id'],
             'url_branch': 'https://launchpad.net/xmind-openerp',
-            'description': commit['message'],
-            'date_end': DateCommit[1]+' '+DateCommit[2],
+            'description': '''
+%s
+Commited at: %s
+            ''' % (commit['message'], commit['timestamp']),
+            'date_deadline': DateCommit[1],
             }
     return conn.create('project.task', vals)
+
+def runall(conn, filepath):
+    ae = b2dict.parse_file(filepath)
+    return [import_element(conn, i) for i in ae]
 
 if __name__ == '__main__':
     section = '''
@@ -38,6 +45,7 @@ message:
     password = sys.argv[3]
     port = sys.argv[4]
     dbname = sys.argv[5]
+    path = sys.argv[6]
     conn = OERP(server, dbname, 'xmlrpc', int(port), 120, '7.0')
     u = conn.login(user, password)
-    print import_element(conn) 
+    print runall(conn, path) 
