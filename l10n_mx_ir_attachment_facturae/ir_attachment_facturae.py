@@ -260,10 +260,10 @@ class ir_attachment_facturae_mx(osv.osv):
             tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
             message = mail_compose_message_pool.onchange_template_id(cr, uid, [], template_id=tmp_id, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
             mssg = message.get('value', False)
-            mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
-            mssg['attachment_ids'] = [(6, 0, attachments)]
-            mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
-            if tmp_id:
+            if mssg.get('partner_ids', False) and tmp_id:
+                mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
+                mssg['attachment_ids'] = [(6, 0, attachments)]
+                mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
                 state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
                 msj +=_('Email Send Successfully\n')
             else:
