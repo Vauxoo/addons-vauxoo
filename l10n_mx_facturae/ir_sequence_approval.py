@@ -28,18 +28,20 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
-class ir_sequence_approval(osv.osv):
+
+class ir_sequence_approval(osv.Model):
     _inherit = 'ir.sequence.approval'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_sequence_approval, self)._get_type(cr, uid, ids, context=context)
+        types = super(ir_sequence_approval, self)._get_type(
+            cr, uid, ids, context=context)
         types.extend([
             ('cfd22', 'CFD 2.2'),
         ])
         return types
 
     _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64,
+            required=True, help="Type of Electronic Invoice"),
     }
-ir_sequence_approval()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

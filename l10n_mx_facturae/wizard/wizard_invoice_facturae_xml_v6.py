@@ -34,13 +34,13 @@ import base64
 import time
 
 
-class wizard_invoice_facturae_xml_v6(osv.osv_memory):
+class wizard_invoice_facturae_xml_v6(osv.TransientModel):
     _name = 'wizard.invoice.facturae.xml.v6'
 
     _columns = {
-        'facturae':fields.binary('Facturae File', readonly=True),
-        'facturae_fname':fields.char('File Name', size=64),
-        'note':fields.text('Log'),
+        'facturae': fields.binary('Facturae File', readonly=True),
+        'facturae_fname': fields.char('File Name', size=64),
+        'note': fields.text('Log'),
     }
 
     def _get_facturae_fname(self, cr, uid, data, context=None):
@@ -56,8 +56,8 @@ class wizard_invoice_facturae_xml_v6(osv.osv_memory):
         return res['facturae']
 
     _defaults = {
-        'facturae_fname':_get_facturae_fname,
-        'facturae':_get_facturae,
+        'facturae_fname': _get_facturae_fname,
+        'facturae': _get_facturae,
     }
 
     def _get_invoice_facturae_xml(self, cr, uid, data, context=None):
@@ -67,23 +67,25 @@ class wizard_invoice_facturae_xml_v6(osv.osv_memory):
         ids = data['active_ids']
         id = ids[0]
         invoice = invoice_obj.browse(cr, uid, [id], context=context)[0]
-        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
-        aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',id)])
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
+            '.xml' or ''
+        aids = self.pool.get('ir.attachment').search(cr, uid, [('datas_fname',
+            '=', invoice.fname_invoice+'.xml'), (
+            'res_model', '=', 'account.invoice'), ('res_id', '=', id)])
         xml_data = ""
         if aids:
             brow_rec = self.pool.get('ir.attachment').browse(cr, uid, aids[0])
             if brow_rec.datas:
                 xml_data = base64.decodestring(brow_rec.datas)
         else:
-            fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, ids, context=context)
-            attach=self.pool.get('ir.attachment').create(cr, uid, {
+            fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
+                cr, uid, ids, context=context)
+            attach = self.pool.get('ir.attachment').create(cr, uid, {
                 'name': fname_invoice,
                 'datas': base64.encodestring(xml_data),
                 'datas_fname': fname_invoice,
                 'res_model': 'account.invoice',
                 'res_id': invoice.id,
-                }, context=context)
-        fdata = base64.encodestring( xml_data )
-        return {'facturae': fdata, 'facturae_fname': fname_invoice,}
-
-wizard_invoice_facturae_xml_v6()
+            }, context=context)
+        fdata = base64.encodestring(xml_data)
+        return {'facturae': fdata, 'facturae_fname': fname_invoice, }
