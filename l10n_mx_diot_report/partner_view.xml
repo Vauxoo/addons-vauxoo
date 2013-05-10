@@ -14,8 +14,8 @@
                         <newline/>
                         <field name="number_fiscal_id_diot" />
                         <newline/>
-                        <field name="type_of_third" colspan="2" attrs="{ 'required': [('supplier','=', True )]}" />
-                        <field name="type_of_operation"  colspan="2"  attrs="{ 'required': [('supplier','=', True)]}" />
+                        <field name="type_of_third" colspan="2" />
+                        <field name="type_of_operation"  colspan="2" />
                         <newline/>
                         <field name="diot_country" />
                         <field name="nacionality_diot" />
