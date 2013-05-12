@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_diot_report" model="ir.ui.view">
+            <field name="name">Account DIOT Report for Mexico</field>
+            <field name="model">account.diot.report</field>
+            <field name="arch" type="xml">
+             <form string="Create invoices" version="7.0">
+                <p class="oe_grey">
+                    Statement of transactions with third parties [DIOT]
+                </p>
+                <group string="DIOT Report" colspan="4">
+                    <field name="month_id" />
+                </group>
+                <footer>
+                    <button icon='gtk-cancel' special="cancel"  string="Cancel" />
+                    <button name="create_diot" string="Create file of DIOT" colspan="1" type="object" icon="gtk-ok"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_diot_delivery_report" model="ir.ui.view">
+            <field name="name">Delivery Report</field>
+            <field name="model">account.diot.report.delivery</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="DIOT Report" version="7.0">
+                    <label string="You DIOT report has been successfully created!" />
+                    <newline />
+                    <separator string="File"  colspan="4"/>
+                    <field name="filename" nolabel="1"/>
+                    <newline />
+                    <field name="file" nolabel="1"/>
+                    <newline />
+                    <separator string=""  colspan="4"/>
+                    <footer>
+                        <button special="cancel" string="Finish" icon="gtk-cancel" colspan="4"/>
+                    </footer>
+                 </form>
+            </field>
+        </record>
+
+
+        <record id="action_view_diot_delivery_report" model="ir.actions.act_window">
+            <field name="name">Delivery Report DIOT</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.diot.report.delivery</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <record id="action_account_diot_report" model="ir.actions.act_window">
+            <field name="name">Account DIOT Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.diot.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help"></field>
+        </record>
+
+        <menuitem   name="Transactions with third parties [ DIOT ] "
+                    parent="account.menu_finance_legal_statement"
+                    action="action_account_diot_report"
+                    id="menu_account_diot_declaration"
+            />
+
+
+    </data>
+</openerp>

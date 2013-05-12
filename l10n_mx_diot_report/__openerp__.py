@@ -37,6 +37,7 @@
     'init_xml': [],
     'update_xml': [
                     	"partner_view.xml",
+                    	"wizard/wizard_diot_report_view.xml",
                 ],
     'installable': True,
     'active': False,
