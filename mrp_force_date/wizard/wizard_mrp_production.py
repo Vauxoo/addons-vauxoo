@@ -53,9 +53,9 @@ class wizard_mrp_production(osv.TransientModel):
         if context is None:
             context = {}
         data = self.read(cr, uid, ids, [])
-        ids = data[0]['mrp_ids']
+        mrp_ids = data[0]['mrp_ids']
         new_date = data[0]['new_date'] or False
-        self.pool.get('mrp.production').mrp_change_date(cr, uid, ids,
+        self.pool.get('mrp.production').mrp_change_date(cr, uid, mrp_ids,
             new_date, context=context)
         return {}
 
