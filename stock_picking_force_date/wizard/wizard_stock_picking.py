@@ -53,8 +53,8 @@ class wizard_stock_picking(osv.TransientModel):
         if context is None:
             context = {}
         data = self.read(cr, uid, ids, [])
-        ids = data[0]['stock_picking_ids']
+        picking_ids = data[0]['stock_picking_ids']
         new_date = data[0]['new_date'] or False
-        self.pool.get('stock.picking').picking_change_date(cr, uid, ids,
+        self.pool.get('stock.picking').picking_change_date(cr, uid, picking_ids,
             new_date, context=context)
         return {}
