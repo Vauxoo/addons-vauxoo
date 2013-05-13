@@ -184,6 +184,5 @@ class wizard_account_diot_mx_delivery(osv.osv_memory):
     def finish_report_diot(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        print "Create report of diot 2", context
         return
 wizard_account_diot_mx_delivery()

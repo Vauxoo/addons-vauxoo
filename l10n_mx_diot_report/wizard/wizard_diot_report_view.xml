@@ -10,6 +10,7 @@
                 <p class="oe_grey">
                     Statement of transactions with third parties [DIOT]
                 </p>
+
                 <group string="DIOT Report" colspan="4">
                     <field name="month_id" />
                 </group>
@@ -27,14 +28,10 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="DIOT Report" version="7.0">
-                    <label string="You DIOT report has been successfully created!" />
-                    <newline />
-                    <separator string="File"  colspan="4"/>
-                    <field name="filename" nolabel="1"/>
-                    <newline />
-                    <field name="file" nolabel="1"/>
-                    <newline />
-                    <separator string=""  colspan="4"/>
+                    <div>
+                        <h2>You DIOT report has been successfully created!</h2>
+                        <p>Here is the exported DIOT Report file: <field name="file" readonly="1" filename="filename"/></p>
+                    </div>
                     <footer>
                         <button special="cancel" string="Finish" icon="gtk-cancel" colspan="4"/>
                     </footer>
