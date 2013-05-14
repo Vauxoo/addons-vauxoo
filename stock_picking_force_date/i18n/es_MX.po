@@ -1,0 +1,143 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* stock_picking_force_date
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-14 23:04+0000\n"
+"PO-Revision-Date: 2013-05-14 18:24-0600\n"
+"Last-Translator: juan <openerp1@hotmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: stock_picking_force_date
+#: constraint:account.move:0
+msgid "You can not create more than one move per period on centralized journal"
+msgstr "No se puede crear más de un movimiento por un periodo de un diario centralizado"
+
+#. module: stock_picking_force_date
+#: constraint:account.move.line:0
+msgid "Company must be the same for its related account and period."
+msgstr "Compañia debe ser la misma para su cuenta relacionada y periodo."
+
+#. module: stock_picking_force_date
+#: code:addons/stock_picking_force_date/stock_picking.py:89
+#: code:addons/stock_picking_force_date/stock_picking.py:110
+#, python-format
+msgid "No Period For This Date !"
+msgstr "No hay Periodo para esta Fecha !"
+
+#. module: stock_picking_force_date
+#: field:wizard.stock.picking,stock_picking_ids:0
+msgid "Pickings"
+msgstr "Pickings"
+
+#. module: stock_picking_force_date
+#: constraint:stock.move:0
+msgid "You must assign a production lot for this product"
+msgstr "Se debe asignar un lote de producción de este producto"
+
+#. module: stock_picking_force_date
+#: model:ir.model,name:stock_picking_force_date.model_stock_picking
+msgid "Picking List"
+msgstr "Lista de Picking"
+
+#. module: stock_picking_force_date
+#: constraint:stock.move:0
+msgid "You try to assign a lot which is not from the same product"
+msgstr "Intenta asignar una cantidad que no es del mismo producto"
+
+#. module: stock_picking_force_date
+#: constraint:stock.move:0
+msgid "You can not move products from or to a location of the type view."
+msgstr "No se puede mover productos desde o hacia un lugar de tipo vista."
+
+#. module: stock_picking_force_date
+#: code:addons/stock_picking_force_date/stock_picking.py:90
+#: code:addons/stock_picking_force_date/stock_picking.py:111
+#, python-format
+msgid "You must define a period of type special = False!"
+msgstr "Debe definir un período de tipo especial = False!"
+
+#. module: stock_picking_force_date
+#: model:ir.model,name:stock_picking_force_date.model_account_move_line
+msgid "Journal Items"
+msgstr "Libros de Diario"
+
+#. module: stock_picking_force_date
+#: constraint:account.move.line:0
+msgid "You can not create journal items on an account of type view."
+msgstr "No puede crear objetos de diario en una cuenta del tipo de vista."
+
+#. module: stock_picking_force_date
+#: model:ir.model,name:stock_picking_force_date.model_wizard_stock_picking
+msgid "wizard.stock.picking"
+msgstr "wizard.stock.picking"
+
+#. module: stock_picking_force_date
+#: field:wizard.stock.picking,new_date:0
+msgid "New Date"
+msgstr "Fecha Nueva"
+
+#. module: stock_picking_force_date
+#: sql_constraint:account.move.line:0
+msgid "Wrong credit or debit value in accounting entry !"
+msgstr "Valor del crédito o de débito incorrecto en la entrada de la contabilidad!"
+
+#. module: stock_picking_force_date
+#: sql_constraint:stock.picking:0
+msgid "Reference must be unique per Company!"
+msgstr "Referencia debe ser único por Empresa!"
+
+#. module: stock_picking_force_date
+#: constraint:account.move.line:0
+msgid "You can not create journal items on closed account."
+msgstr "No se pueden crear diarios sobre cuenta cerrada."
+
+#. module: stock_picking_force_date
+#: model:ir.model,name:stock_picking_force_date.model_account_move
+msgid "Account Entry"
+msgstr "Cuenta de Entrada"
+
+#. module: stock_picking_force_date
+#: model:ir.model,name:stock_picking_force_date.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento Stock"
+
+#. module: stock_picking_force_date
+#: model:ir.actions.act_window,name:stock_picking_force_date.action_stock_picking_wizard
+#: model:ir.actions.act_window,name:stock_picking_force_date.action_view_stock_picking_wizard
+#: view:wizard.stock.picking:0
+msgid "Change Picking Date"
+msgstr "Cambia Fecha Picking"
+
+#. module: stock_picking_force_date
+#: model:res.groups,name:stock_picking_force_date.group_wizard_stock_picking_force_date
+msgid "Stock Picking / Wizard Change Date"
+msgstr "Stock Picking / Wizard Cambia Fecha"
+
+#. module: stock_picking_force_date
+#: constraint:account.move.line:0
+msgid "The selected account of your Journal Entry forces to provide a secondary currency. You should remove the secondary currency on the account or select a multi-currency view on the journal."
+msgstr "La cuenta seleccionada de sus asientos contables de diario lo forza  a proporcionar una moneda secundaria. Debe eliminar la moneda secundaria en la cuenta o seleccione una vista multi-currency en el diario."
+
+#. module: stock_picking_force_date
+#: view:wizard.stock.picking:0
+msgid "Change Date"
+msgstr "Cambiar Fecha"
+
+#. module: stock_picking_force_date
+#: constraint:account.move.line:0
+msgid "The date of your Journal Entry is not in the defined period! You should change the date or remove this constraint from the journal."
+msgstr "La fecha de su entrada de diario no está en el período definido! Debe cambiar la fecha o quitar esta restricción de la revista."
+
+#. module: stock_picking_force_date
+#: view:wizard.stock.picking:0
+msgid "Cancel"
+msgstr "Cancelar"
+
