@@ -34,32 +34,40 @@ import logging
 import pytz
 from lxml import etree
 
-class res_partner(osv.osv):
+
+class res_partner(osv.Model):
     _inherit = 'res.partner'
 
     _columns = {
-        'l10n_mx_street3': fields.char('No. Internal', size=128, help='Internal number of the partner address'),
-        'l10n_mx_street4': fields.char('No. External', size=128, help='External number of the partner address'),
-        'l10n_mx_city2': fields.char('Locality', size=128, help='Locality configurated for this partner'),
+        'l10n_mx_street3': fields.char('No. Internal', size=128,
+            help='Internal number of the partner address'),
+        'l10n_mx_street4': fields.char('No. External', size=128,
+            help='External number of the partner address'),
+        'l10n_mx_city2': fields.char('Locality', size=128,
+            help='Locality configurated for this partner'),
     }
 
     def _address_fields(self, cr, uid, context=None):
-        "Devuelve la lista de los campos de dirección que se sincronizan desde el padre cuando se establece la bandera `use_parent_address."
+        "Devuelve la lista de los campos de dirección que se sincronizan\
+        desde el padre cuando se establece la bandera `use_parent_address."
         res = super(res_partner, self)._address_fields(cr, uid, context=None)
-        res.extend(['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'])
+        res.extend(['l10n_mx_street3', 'l10n_mx_street4', 'l10n_mx_city2'])
         return res
 
     def _get_default_country_id(self, cr, uid, context=None):
         country_obj = self.pool.get('res.country')
-        #ids = country_obj.search(cr, uid, [ ( 'name', '=', 'México' ), ], limit=1)
-        ids = country_obj.search(cr, uid, [ ( 'code', '=', 'MX' ), ], limit=1)
+        # ids = country_obj.search(cr, uid, [ ( 'name', '=', 'México' ), ],
+        # limit=1)
+        ids = country_obj.search(cr, uid, [('code', '=', 'MX'), ], limit=1)
         id = ids and ids[0] or False
         return id
 
     def fields_view_get_address(self, cr, uid, arch, context={}):
-        res = super(res_partner, self).fields_view_get_address(cr, uid, arch, context=context)
+        res = super(res_partner, self).fields_view_get_address(
+            cr, uid, arch, context=context)
         user_obj = self.pool.get('res.users')
-        fmt = user_obj.browse(cr, SUPERUSER_ID, uid, context).company_id.country_id
+        fmt = user_obj.browse(
+            cr, SUPERUSER_ID, uid, context).company_id.country_id
         fmt = fmt and fmt.address_format
         city = '<field name="city" placeholder="City" style="width: 40%%"/>'
         for name, field in self._columns.items():
@@ -106,9 +114,9 @@ class res_partner(osv.osv):
                                 options='{"no_open": True}' attrs="{'invisible': [('is_company','=', True)]}" />
                         </group>
                     </group>
-            """%(city)
+            """ % (city)
         }
-        for k,v in layouts.items():
+        for k, v in layouts.items():
             if fmt and (k in fmt):
                 doc = etree.fromstring(res)
                 for node in doc.xpath("//form/sheet/group"):
@@ -119,12 +127,17 @@ class res_partner(osv.osv):
                 arch = res
         return arch
 
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        if (not view_id) and (view_type=='form') and context and context.get('force_email', False):
-            view_id = self.pool.get('ir.model.data').get_object_reference(cr, user, 'base', 'view_partner_simple_form')[1]
-        res = super(res_partner,self).fields_view_get(cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
+    def fields_view_get(self, cr, user, view_id=None, view_type='form',
+        context=None, toolbar=False, submenu=False):
+        if (not view_id) and (view_type == 'form') and context and context.get(
+            'force_email', False):
+            view_id = self.pool.get('ir.model.data').get_object_reference(
+                cr, user, 'base', 'view_partner_simple_form')[1]
+        res = super(res_partner, self).fields_view_get(
+            cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
-            fields_get = self.fields_get(cr, user, ['l10n_mx_street3','l10n_mx_street4','l10n_mx_city2'], context)
+            fields_get = self.fields_get(cr, user, [
+                'l10n_mx_street3', 'l10n_mx_street4', 'l10n_mx_city2'], context)
             res['fields'].update(fields_get)
         return res
 
