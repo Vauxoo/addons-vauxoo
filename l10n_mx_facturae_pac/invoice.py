@@ -31,6 +31,7 @@ import codecs
 import base64
 import xml.dom.minidom
 from datetime import datetime, timedelta
+from openerp.tools.translate import _
 try:
     from SOAPpy import WSDL
 except:
