@@ -44,10 +44,10 @@ from datetime import datetime, timedelta
 import time
 
 
-class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
-    _name='wizard.export.invoice.pac.sf.v6'
+class wizard_export_invoice_pac_sf_v6(osv.TransientModel):
+    _name = 'wizard.export.invoice.pac.sf.v6'
 
-    def _get_invoice_id(self, cr, uid, data, context = {}):
+    def _get_invoice_id(self, cr, uid, data, context={}):
         """
         @params data : Dictionary with information of the user, and active ids
         """
@@ -57,32 +57,31 @@ class wizard_export_invoice_pac_sf_v6(osv.osv_memory):
         file_xml = res['file']
         return file_xml
 
-    def upload_to_pac(self, cr, uid, ids, context ={}):
+    def upload_to_pac(self, cr, uid, ids, context={}):
         res = {}
         invoice_obj = self.pool.get('account.invoice')
         res = invoice_obj._upload_ws_file(cr, uid, context['active_ids'])
-        self.write(cr, uid, ids, {'message': res['msg'] }, context=None)
+        self.write(cr, uid, ids, {'message': res['msg']}, context=None)
         return {
-                'type': 'ir.actions.act_window',
-                'name': 'Export invoice V6',
-                'view_mode': 'form',
-                'view_type': 'form',
-                'res_model': 'wizard.export.invoice.pac.sf.v6',
-                'nodestroy': 'true',
-                'target' : 'new',
-                'res_id': ids[0], 
-                'views': [(False, 'form')],
-            }
-  
+            'type': 'ir.actions.act_window',
+            'name': 'Export invoice V6',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_model': 'wizard.export.invoice.pac.sf.v6',
+            'nodestroy': 'true',
+            'target': 'new',
+            'res_id': ids[0],
+            'views': [(False, 'form')],
+        }
+
     _columns = {
-        'file': fields.binary('File', readonly=True, help='Shows the file returned'),
-        'message': fields.text('text', readonly=True, help='Shows the message that returned after of upload the xml to sign'),
+        'file': fields.binary('File', readonly=True,
+            help='Shows the file returned'),
+        'message': fields.text('text', readonly=True, help='Shows the message \
+            that returned after of upload the xml to sign'),
     }
 
-    _defaults= {
+    _defaults = {
         'message': 'Choose the button Upload Invoice for export to PAC',
         'file': _get_invoice_id,
     }
-
-wizard_export_invoice_pac_sf_v6()
-
