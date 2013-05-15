@@ -157,20 +157,12 @@ class invoice_facturae_html(report_sxw.rml_parse):
         address_invoice = ''
         partner_obj = self.pool.get('res.partner')
         res = {}
-        address_invoice_id = partner_obj.search(self.cr, self.uid, [('parent_id', '=', partner_id.id), ('type', '=', 'invoice')])
-        address_invoice_id2 = partner_obj.search(self.cr, self.uid, [('id', '=', partner_id.id),('type', '=', 'invoice')])
-        if address_invoice_id:
-            address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id[0])
-        if address_invoice_id2:
-            address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id2[0])
-        if address_invoice.use_parent_address:
-            address_invoice = address_invoice.parent_id
-        #if address_invoice_id3:
-            #address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id3[0])
-            #print "Customer Invoice Address Not Type Invoice"
-            #raise openerp.exceptions.Warning('Customer Address Not Invoice Type')
+        address_invoice = partner_obj.browse(self.cr, self.uid, partner_id.id)
+        address_parent = partner_obj.browse(self.cr, self.uid, partner_id.parent_id.id)
         if address_invoice:
             res.update({
+                    'name' : address_parent.name or False,
+                    'vat' : address_parent._columns.has_key('vat_split') and address_parent.vat_split or address_parent.vat or False,
                     'street' : address_invoice.street or False,
                     'l10n_mx_street3' : address_invoice.l10n_mx_street3 or False,
                     'l10n_mx_street4' : address_invoice.l10n_mx_street4 or False,
@@ -180,16 +172,13 @@ class invoice_facturae_html(report_sxw.rml_parse):
                     'country' : address_invoice.country_id and address_invoice.country_id.name or False,
                     'l10n_mx_city2' : address_invoice.l10n_mx_city2 or False,
                     'zip' : address_invoice.zip or False,
-                    'vat' : address_invoice._columns.has_key('vat_split') and address_invoice.vat_split or address_invoice.vat or False,
                     'phone' : address_invoice.phone or False,
                     'fax' : address_invoice.fax or False,
                     'mobile' : address_invoice.mobile or False,
                     })
             if not res['vat']:
                 raise openerp.exceptions.Warning('Invoice Address Type Not Vat')
-                #print "Invoice Address Type Not Vat"
         else:
-            #print "Customer Address Not Invoice Type"
             raise openerp.exceptions.Warning('Customer Address Not Invoice Type')
         return res
 
