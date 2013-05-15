@@ -76,7 +76,7 @@ class wizard_export_invoice_pac_sf_v6(osv.TransientModel):
 
     _columns = {
         'file': fields.binary('File', readonly=True,
-            help='Shows the file returned'),
+                              help='Shows the file returned'),
         'message': fields.text('text', readonly=True, help='Shows the message \
             that returned after of upload the xml to sign'),
     }

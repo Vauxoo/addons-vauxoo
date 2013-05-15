@@ -266,12 +266,12 @@ class account_invoice_facturae_pac_sf_pdf(report_sxw.rml_parse):
                     'street4': address_invoice.l10n_mx_street4 or False,
                     'street2': address_invoice.street2 or False,
                     'city': address_invoice.city or False,
-                    'state': address_invoice.state_id and address_invoice.\
-                        state_id.name or False,
+                    'state': address_invoice.state_id and address_invoice.
+                    state_id.name or False,
                     'city2': address_invoice.l10n_mx_city2 or False,
                     'zip': address_invoice.zip or False,
-                    'vat': 'vat_split' in address_invoice._columns and \
-                        address_invoice.vat_split or address_invoice.vat or False,
+                    'vat': 'vat_split' in address_invoice._columns and
+                    address_invoice.vat_split or address_invoice.vat or False,
                     'phone': address_invoice.phone or False,
                     'fax': address_invoice.fax or False,
                     'mobile': address_invoice.mobile or False,

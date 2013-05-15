@@ -70,8 +70,8 @@ class wizard_cancel_invoice_pac_sf(osv.TransientModel):
 
     _columns = {
         'file': fields.binary('File', readonly=True,
-            help='Shows the file returned'),
-        'message': fields.text('text', readonly=True,help='Shows the message \
+                              help='Shows the file returned'),
+        'message': fields.text('text', readonly=True, help='Shows the message \
             that returned after of cancel the Electronic Invoice'),
     }
 
