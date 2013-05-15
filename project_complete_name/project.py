@@ -30,7 +30,7 @@ from openerp.tools.translate import _
 
 
 class project_project(osv.Model):
-    
+
     _inherit = 'project.project'
 
     def _project_search(self, cr, uid, obj, name, args, context=None):
@@ -43,25 +43,26 @@ class project_project(osv.Model):
                 (
                     select tabla.id, tabla.full_name as name
                         from(
-                        Select 
+                        Select
                             node.id,node.name AS short_name,
                             cast ((count(parent.name)) as int) as nivel,
                             array_to_string( array_agg( distinct parent.name ), ' / ' ) as full_name
                             from account_analytic_account as node,account_analytic_account  as parent
-                            where node.parent_left between parent.parent_left and parent.parent_right 
+                            where node.parent_left between parent.parent_left and parent.parent_right
                             group by node.name,node.parent_left,node.id
                             order by node.parent_left)tabla
                         where tabla.full_name """ + str(args[0][1]) + """ '%s%%')tabla2
                         join project_project pp
-                        on pp.analytic_account_id = tabla2.id """%(str(args[0][2]),))
+                        on pp.analytic_account_id = tabla2.id """ % (str(args[0][2]),))
         datas = cr.dictfetchall()
         ids = [('id', 'in', [data['id'] for data in datas])]
         return ids
-    
+
     def _complete_name(self, cr, uid, ids, name, args, context=None):
-        return super(project_project, self)._complete_name(cr, uid, ids, name, args, context=context)
+        return super(project_project, self)._complete_name(cr, uid, ids, name,
+                        args, context=context)
     _columns = {
-        #'invoice_exists': fields.function(_invoice_exists, string='Invoiced', fnct_search=_invoiced_search, type='boolean', help="It indicates that sales order has at least one invoice."),
-        #'complete_name': fields.function(_complete_name, fnct_search=_project_search, string="Project Name", type='char', select=True, size=250, store=False),
-        'complete_name': fields.function(_complete_name, fnct_search=_project_search, string="Project Name", type='char', size=250),
+        'complete_name2': fields.function(_complete_name,
+                fnct_search=_project_search, string="Project Name",
+                type='char', size=250),
     }
