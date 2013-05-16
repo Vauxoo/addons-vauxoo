@@ -89,6 +89,14 @@ class user_story(osv.Model):
         'description': fields.text('Description'),
         'accep_crit_ids': fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
         'info': fields.text('Other Info'),
+        'priority_level':fields.selection([('urgent','Urgent'),
+                                           ('priority','Priority'),
+                                           ('secondary','Secondary')],
+                                           'Priority Level',
+                                           help='''User story level priority,\n
+                                                   used to define priority\n 
+                                                   for each user story'''), 
+        
         'asumption': fields.text('Asumptions'),
         'date': fields.date('Date'),
         'user_id': fields.many2one('res.users', 'Create User'),
@@ -102,6 +110,7 @@ class user_story(osv.Model):
         'date': lambda *a: time.strftime('%Y-%m-%d'),
         'user_id': lambda self, cr, uid, ctx: uid,
         'state': 'draft',
+        'priority_level':'secondary',
     }
 
     def do_draft(self, cr, uid, ids, context=None):

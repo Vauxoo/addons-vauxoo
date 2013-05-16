@@ -48,6 +48,7 @@
 				<group>
 					<field name="planned_hours" />
 					<field name="sk_id" />
+					<field name="priority_level" />
 				</group>
 			</group>
 			<h3>
