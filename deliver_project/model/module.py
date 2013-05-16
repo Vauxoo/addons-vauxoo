@@ -128,7 +128,8 @@ class module(osv.Model):
         # VIEWS AND REPORTS AND MENUS RELATED TO ONE SPECIFIC MODULE
         view_id = model_data_obj.search(
             cr, uid, [('module', 'in', mnames.keys()),
-                      ('model', 'in', ('ir.ui.view', 'ir.actions.report.xml', 'ir.ui.menu', 'ir.actions.act_window'))])
+                      ('model', 'in', ('ir.ui.view', 'ir.actions.report.xml',
+                                    'ir.ui.menu', 'ir.actions.act_window'))])
 #            ('model','in',('ir.ui.view','ir.actions.report.xml','ir.ui.menu','ir.actions.act_window'))])
         for data_id in model_data_obj.browse(cr, uid, view_id, context):
             # We use try except, because views or menus may not exist
@@ -143,16 +144,18 @@ class module(osv.Model):
                         if menu.action:
                             print "-.-.-.-.-.-.-.-.-.-.-.-.- %s" % data_id.name
                             res_mod_dic[
-                                'doc_on_module'].append("%s" % self.format_help(cr, uid,
-                                                                                {'MenuName': menu.name,
-                                                                                 'CompleteMenuName': menu.complete_name,
-                                                                                 'ActionHelp': menu.action.help,
-                                                                                 'ModuleName': data_id.module,
-                                                                                 'XmlId': data_id.name},
-                                                                                context=context))
+                                'doc_on_module'].append("%s" %
+                                    self.format_help(cr, uid,
+                                        {'MenuName': menu.name,
+                                         'CompleteMenuName': menu.complete_name,
+                                         'ActionHelp': menu.action.help,
+                                         'ModuleName': data_id.module,
+                                         'XmlId': data_id.name},
+                                        context=context))
                             res_mod_dic[
                                 'doc_on_module'].append(self.title_help(cr, uid,
-                                                                        mnames[data_id.module], data_id.module, context=context))
+                                        mnames[data_id.module],
+                                        data_id.module, context=context))
             except KeyError, e:
                 self.__logger.warning(
                     'Data not found for reference %s[%s:%s.%s]', data_id.model,
@@ -160,7 +163,8 @@ class module(osv.Model):
                 pass
             except Exception, e:
                 self.__logger.warning('Unknown error while browsing %s[%s]',
-                                      data_id.model, data_id.res_id, exc_info=True)
+                                        data_id.model, data_id.res_id,
+                                        exc_info=True)
                 pass
         # res_mod_dic['doc_on_module']=list(set(res_mod_dic['doc_on_module']))
         for key, value in res.iteritems():
@@ -172,7 +176,6 @@ class module(osv.Model):
         return res
 
     _columns = {
-        'doc_on_module': fields.function(_get_docs, method=True, string='Documentation', type='text', multi="meta", store=False),
+        'doc_on_module': fields.function(_get_docs, method=True,
+            string='Documentation', type='text', multi="meta", store=False),
     }
-
-module()

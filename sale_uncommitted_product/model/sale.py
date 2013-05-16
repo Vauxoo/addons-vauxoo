@@ -10,8 +10,8 @@
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -33,7 +33,11 @@ class sale_order(osv.Model):
     _inherit = "sale.order"
 
     _columns = {
-        'date_committed': fields.datetime('Commitment Date', help='Date when Sale Order was committed to the Customer', readonly=True),
+        'date_committed': fields.datetime('Commitment Date',
+                                          help='''Date when Sale Order was
+                                                   committed to the
+                                                   Customer''',
+                                          readonly=True),
         'state': fields.selection([
             ('draft', 'Quotation'),
             ('committed', 'Committed'),
@@ -44,12 +48,20 @@ class sale_order(osv.Model):
             ('invoice_except', 'Invoice Exception'),
             ('done', 'Done'),
             ('cancel', 'Cancelled')
-        ], 'Order State', readonly=True, help="Gives the state of the quotation or sales order. \nThe exception state is automatically set when a cancel operation occurs in the invoice validation (Invoice Exception) or in the picking list process (Shipping Exception). \nThe 'Waiting Schedule' state is set when the invoice is confirmed but waiting for the scheduler to run on the date 'Ordered Date'.", select=True),
+        ], 'Order State', readonly=True,
+            help="""Gives the state of the quotation or sales order. \n
+                The exception state is automatically set when a cancel
+                operation occurs in the invoice validation (Invoice Exception)
+                or in the picking list process (Shipping Exception). \n
+                The 'Waiting Schedule' state is set when the invoice is
+                confirmed but waiting for the scheduler to run on the date
+                'Ordered Date'.""", select=True),
     }
 
     def action_commit(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state': 'committed',  'date_committed': time.strftime(
-            '%Y-%m-%d %H:%M:%S')}, context=context)
+        self.write(cr, uid, ids, {'state': 'committed',
+                   'date_committed': time.strftime(
+                                  '%Y-%m-%d %H:%M:%S')}, context=context)
         return True
 
     def _check_so(self, cr, uid, id, context=None):
@@ -78,7 +90,8 @@ class sale_order(osv.Model):
             if res[p_id] > pp_brw.qty_uncommitted:
                 check = False
                 note += _('\n[%s] %s - requested: %s, available: %s') % (
-                    pp_brw.default_code or 'N/D', pp_brw.name, res[p_id], pp_brw.qty_uncommitted)
+                    pp_brw.default_code or 'N/D',
+                    pp_brw.name, res[p_id], pp_brw.qty_uncommitted)
 
         return {'note': note, 'check': check}
 
@@ -88,9 +101,10 @@ class sale_order(osv.Model):
         for id in ids:
             res = self._check_so(cr, uid, id, context=context)
             if not res['check']:
-                note = _('Sale Order No.: %s\nHas exceeded the uncommited quantity for:\n') % (
+                note = _('''Sale Order No.: %s\nHas exceeded the
+                            uncommited quantity for:\n''') % (
                     self.browse(cr, uid, id, context=context).name)
                 raise osv.except_osv(_(
-                    'Exceeded Committed Products in Sale Order'), note+res['note'])
+                    'Exceeded Committed Products in Sale Order'),
+                    note+res['note'])
         return True
-

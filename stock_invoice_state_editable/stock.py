@@ -33,5 +33,5 @@ class stock_picking(osv.Model):
             ("invoiced", "Invoiced"),
             ("2binvoiced", "To Be Invoiced"),
             ("none", "Not Applicable")], "Invoice Control",
-            select=True, required=True, readonly=False),  # , states={'draft': [('readonly', False)]}),
+            select=True, required=True, readonly=False),
     }

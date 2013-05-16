@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
         <!--  Move by Picking Line -->
@@ -6,12 +6,10 @@
         <record id="view_stock_card_line_tree" model="ir.ui.view">
             <field name="name">stock.card.line.tree</field>
             <field name="model">stock.card.line</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Move by Picking Line">
                     <field name="name"/>
                     <field name="date_inv"/>
-                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -52,13 +50,11 @@
         <record id="view_stock_card_line_form" model="ir.ui.view">
             <field name="name">stock.card.line.form</field>
             <field name="model">stock.card.line</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Move by Picking Line">
+                <form string="Move by Picking Line" version="7.0">
                 <group col="2" colspan="6">
                     <field name="name"/>
                     <field name="date_inv"/>
-                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -92,7 +88,7 @@
                     <field name="aml_cost_cor"/>
                 </group>    
                 <group col="1" colspan="6">
-                    <field name="in_sml_ids"  nolabel="1" widget='many2many'/>
+                    <field name="in_sml_ids" nolabel="1" widget="many2many"/>
                 </group>
                 </form>
             </field>
@@ -107,11 +103,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         
-        <menuitem 
-            action="action_stock_card_line_tree"
-            id="menu_stock_card_line"
-            parent="menu_account_costo"
-            name="Stock card line"/>
+        <menuitem action="action_stock_card_line_tree" id="menu_stock_card_line" parent="menu_account_costo" name="Stock card line"/>
 
 
 
@@ -121,7 +113,6 @@
         <record id="view_stock_card_tree" model="ir.ui.view">
             <field name="name">stock.card.tree</field>
             <field name="model">stock.card</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Move by Picking">
                     <field name="name"/>
@@ -134,9 +125,8 @@
         <record id="view_stock_card_form" model="ir.ui.view">
             <field name="name">stock.card.form</field>
             <field name="model">stock.card</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Move by Picking">
+                <form string="Move by Picking" version="7.0">
                 <group colspan="4" col="6">
                 <group col="4" colspan="2">
                     <field name="name"/>
@@ -160,11 +150,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         
-        <menuitem 
-            action="action_stock_card_tree"
-            id="menu_stock_card_"
-            parent="menu_account_costo"
-            name="Stock card"/>
+        <menuitem action="action_stock_card_tree" id="menu_stock_card_" parent="menu_account_costo" name="Stock card"/>
 
 
 

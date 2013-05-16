@@ -1,25 +1,18 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
     
-    <menuitem
-        id="commission" 
-        name="Commission Settings" 
-        parent="base.menu_base_config" 
-        groups="baremo.group_baremo_manager"
-        sequence="10"
-        />
+    <menuitem id="commission" name="Commission Settings" parent="base.menu_base_config" groups="baremo.group_baremo_manager" sequence="10"/>
 
     <record model="ir.ui.view" id="view_baremo_book_form">
         <field name="name">baremo.book.form</field>
         <field name="model">baremo.book</field>
-        <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Baremes">
-                <field name="name" colspan='6' nolabel="1"/>
-                <field name="bar_ids" nolabel="1" colspan='6'/>
+            <form string="Baremes" version="7.0">
+                <field name="name" colspan="6" nolabel="1"/>
+                <field name="bar_ids" nolabel="1" colspan="6"/>
                 <separator string="Notes"/>
-                <field name='notes' colspan='6' nolabel="1"/>
+                <field name="notes" colspan="6" nolabel="1"/>
             </form>
         </field>
     </record>
@@ -27,10 +20,9 @@
     <record model="ir.ui.view" id="view_baremo_book_tree">
         <field name="name">baremo.book.tree</field>
         <field name="model">baremo.book</field>
-        <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Baremes">
-                <field name="name" />
+                <field name="name"/>
             </tree>
         </field>
     </record>
@@ -38,7 +30,6 @@
         <record model="ir.actions.act_window" id="commision_baremo_act">
             <field name="name">Baremes</field>
             <field name="res_model">baremo.book</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,graph</field>
         </record>
@@ -56,23 +47,17 @@
         </record>
     
     
-    <menuitem 
-    name="Baremes"
-    parent="commission" 
-    id="menu_baremes_tree"
-    action="commision_baremo_act"
-    groups="baremo.group_baremo_manager"/>
+    <menuitem name="Baremes" parent="commission" id="menu_baremes_tree" action="commision_baremo_act" groups="baremo.group_baremo_manager"/>
     
     
     <record model="ir.ui.view" id="view_baremo_form">
         <field name="name">baremo.form</field>
         <field name="model">baremo</field>
-        <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Commission Days &amp; Discounts">
+            <form string="Commission Days &amp; Discounts" version="7.0">
                 <field name="name" colspan="2"/>
                 <field name="number" colspan="2"/>
-                <field name="disc_ids" nolabel='1' colspan='6'>
+                <field name="disc_ids" nolabel="1" colspan="6">
                     <tree string="Commission by Discount">
                         <field name="name"/>
                         <field name="porc_disc"/>
@@ -86,9 +71,8 @@
     <record model="ir.ui.view" id="view_baremo_tree">
         <field name="name">baremo.tree</field>
         <field name="model">baremo</field>
-        <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree  string="Commission Days &amp; Discounts">
+            <tree string="Commission Days &amp; Discounts">
                 <field name="name"/>
                 <field name="number"/>
                 <field name="disc_ids"/>
@@ -99,9 +83,8 @@
     <record model="ir.ui.view" id="view_baremo_discount_form">
         <field name="name">baremo.discount.tree</field>
         <field name="model">baremo.discount</field>
-        <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Commission by Discount">
+            <form string="Commission by Discount" version="7.0">
                 <group col="6">
                     <field name="name"/>
                     <field name="porc_disc"/>

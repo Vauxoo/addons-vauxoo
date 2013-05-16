@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
         <!-- configartion view -->
@@ -6,38 +6,26 @@
         <record id="view_config_sale_approval_group" model="ir.ui.view">
             <field name="name">Configure Approval Group for Sale </field>
             <field name="model">sale.double.validation.installer</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="base.res_config_view_base"/>
+            <field name="inherit_id" ref="base.res_config_installer"/>
             <field name="arch" type="xml">
               <data>
-                <form position="attributes">
+                <form position="attributes" version="7.0">
                   <attribute name="string">Sale Application Configuration</attribute>
                 </form>
-                <separator string="title" position="attributes">
-                <attribute name="string">Configure Approval Group for Sale Orders</attribute>
-                  </separator>
-                  <xpath expr="//label[@string='description']" position="attributes">
-                    <attribute name="string">Define the group which will approve the Sale Orders.</attribute>
-                  </xpath>
-                <xpath expr='//separator[@string="vsep"]' position='attributes'>
-                      <attribute name='rowspan'>15</attribute>
-                      <attribute name='string'></attribute>
-                  </xpath>
-                <group string="res_config_contents" position="replace">
+                <xpath expr='//button[@name="action_next"]' position="before">
                   <field name="group_id"/>
                   <newline/>
                   <field name="commit_group_id"/>
                   <newline/>
                   <field name="force_commit_group_id"/>
                   <newline/>
-                </group>
+                  </xpath>
               </data>
             </field>
         </record>
 
         <record id="action_config_sale_approval_group" model="ir.actions.act_window">
             <field name="name">Configure Approval Group for Sale </field>
-            <field name="type">ir.actions.act_window</field>
             <field name="res_model">sale.double.validation.installer</field>
             <field name="view_id" ref="view_config_sale_approval_group"/>
             <field name="view_type">form</field>
@@ -50,7 +38,7 @@
             <field name="action_id" ref="action_config_sale_approval_group"/>
             <field name="sequence">1</field>
             <field name="restart">always</field>
-            <field eval="[(6,0,[ref('base.group_extended')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('base.group_no_one')])]" name="groups_id"/>
         </record>
         
     </data>

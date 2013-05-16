@@ -40,8 +40,11 @@ class mrp_production(osv.Model):
         return super(mrp_production, self).copy(cr, uid, id, default, context)
 
     _columns = {
-        'variation_ids': fields.one2many('mrp.variation', 'production_id', 'Variation Product Consumed', readonly=True),
-        'variation_finished_product_ids': fields.one2many('mrp.variation.finished.product', 'production_id', 'Variation Product Finished', readonly=True),
+        'variation_ids': fields.one2many('mrp.variation', 'production_id',
+            'Variation Product Consumed', readonly=True),
+        'variation_finished_product_ids': fields.one2many(
+            'mrp.variation.finished.product', 'production_id',
+            'Variation Product Finished', readonly=True),
     }
 
     def action_finish(self, cr, uid, ids, context={}):
@@ -66,7 +69,8 @@ class mrp_production(osv.Model):
             for val_diff in res_diff.items():
                 val = {'product_id': val_diff[0],
                        'quantity': (val_diff[1])*-1,
-                       'product_uom': prod_product.browse(cr, uid, val_diff[0]).uom_id.id,
+                       'product_uom': prod_product.browse(cr, uid,
+                                        val_diff[0]).uom_id.id,
                        'production_id': production.id
                        }
                 list_val.append(val)
@@ -80,15 +84,17 @@ class mrp_production(osv.Model):
         for lin in dat:
             res.setdefault(lin['product_id'], 0)
             product = product_product.browse(cr, uid, lin['product_id'])
-            qty_uom_convert = self.pool.get('product.uom')._compute_qty(cr, uid, lin[
-                'product_uom'], lin['product_qty'], to_uom_id=product.uom_id.id)
+            qty_uom_convert = self.pool.get('product.uom')._compute_qty(cr,
+                                uid, lin['product_uom'], lin['product_qty'],
+                                to_uom_id=product.uom_id.id)
             res[lin['product_id']] += qty_uom_convert
         return res
 
     def create_consume_real(self, cr, uid, ids, context={}):
         for production in self.browse(cr, uid, ids, context=context):
             cr.execute("""
-                    SELECT sm.product_uom,sm.product_id,sum(COALESCE(sm.product_qty,0)) AS product_qty
+                    SELECT sm.product_uom,sm.product_id,
+                        sum(COALESCE(sm.product_qty,0)) AS product_qty
                         FROM mrp_production_move_ids mpmi JOIN stock_move sm
                         ON sm.id=mpmi.move_id
                     WHERE mpmi.production_id=%s
@@ -102,7 +108,8 @@ class mrp_production(osv.Model):
     def create_consume_planned(self, cr, uid, ids, context={}):
         for production in self.browse(cr, uid, ids, context=context):
             cr.execute("""
-                    SELECT product_id,sum(COALESCE(product_qty,0)) AS product_qty,product_uom
+                    SELECT product_id,sum(COALESCE(product_qty,0))
+                        AS product_qty,product_uom
                         FROM mrp_production_product_line
                     WHERE production_id=%s
                     GROUP BY product_id,product_uom
@@ -114,7 +121,8 @@ class mrp_production(osv.Model):
     def create_finished_product_real(self, cr, uid, ids, context={}):
         for production in self.browse(cr, uid, ids, context=context):
             cr.execute("""
-                    SELECT product_id,product_uom,sum(product_qty) AS product_qty
+                    SELECT product_id,product_uom,sum(product_qty)
+                        AS product_qty
                         FROM stock_move
                     WHERE production_id=%s
                     AND state='done'
@@ -166,7 +174,6 @@ class mrp_production(osv.Model):
         return True
 
 
-
 class mrp_variation(osv.Model):
     _name = 'mrp.variation'
     _rec_name = 'product_id'
@@ -180,12 +187,14 @@ class mrp_variation(osv.Model):
 
     _columns = {
         'product_id': fields.many2one('product.product', 'Product'),
-        'quantity': fields.float('Quantity', digits_compute=dp.get_precision('Product UoM')),
+        'quantity': fields.float('Quantity',
+            digits_compute=dp.get_precision('Product UoM')),
         'production_id': fields.many2one('mrp.production', 'production'),
         'product_uom': fields.many2one('product.uom', 'UoM'),
-        'cost_variation': fields.function(_get_variation_cost, type='float', digits_compute=dp.get_precision('Purchase Price'), string='Variation Cost')
+        'cost_variation': fields.function(_get_variation_cost, type='float',
+            digits_compute=dp.get_precision('Purchase Price'),
+            string='Variation Cost')
     }
-
 
 
 class mrp_variation_finished_product(osv.Model):
@@ -201,9 +210,11 @@ class mrp_variation_finished_product(osv.Model):
 
     _columns = {
         'product_id': fields.many2one('product.product', 'Product'),
-        'quantity': fields.float('Quantity', digits_compute=dp.get_precision('Product UoM')),
+        'quantity': fields.float('Quantity',
+            digits_compute=dp.get_precision('Product UoM')),
         'production_id': fields.many2one('mrp.production', 'production'),
         'product_uom': fields.many2one('product.uom', 'UoM'),
-        'cost_variation': fields.function(_get_variation_cost, type='float', digits_compute=dp.get_precision('Purchase Price'), string='Variation Cost')
+        'cost_variation': fields.function(_get_variation_cost, type='float',
+            digits_compute=dp.get_precision('Purchase Price'),
+            string='Variation Cost')
     }
-

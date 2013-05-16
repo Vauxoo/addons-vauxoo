@@ -68,9 +68,10 @@ class ir_module_reference_print(report_sxw.rml_parse):
 
     def _object_find(self, module):
         ids2 = self.pool.get('ir.model.data').search(self.cr, self.uid, [
-                                                     ('module', '=', module), ('model', '=', 'ir.model')])
+                        ('module', '=', module), ('model', '=', 'ir.model')])
         ids = []
-        for mod in self.pool.get('ir.model.data').browse(self.cr, self.uid, ids2):
+        for mod in self.pool.get('ir.model.data').browse(self.cr, self.uid,
+                                                                        ids2):
             ids.append(mod.res_id)
         modobj = self.pool.get('ir.model')
         return modobj.browse(self.cr, self.uid, ids)

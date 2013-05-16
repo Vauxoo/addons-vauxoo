@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
   <data>
-    <record model='ir.ui.view' id='ledger_report_form_view'>
-      <field name='name'>ledger.report.form</field>
-      <field name='model'>ledger.report</field>
-      <field name='type'>form</field>
-      <field name='inherit_id' ref="account.account_common_report_view"/>
-      <field name='arch' type='xml'>
+    <record model="ir.ui.view" id="ledger_report_form_view">
+      <field name="name">ledger.report.form</field>
+      <field name="model">ledger.report</field>
+      <field name="inherit_id" ref="account.account_common_report_view"/>
+      <field name="arch" type="xml">
             <data>
-            <xpath expr="/form/label[@string='']" position="replace">
+            <xpath expr="//label[@string='']" position="replace">
                 <separator string="General Ledger" colspan="4"/>
                 <label nolabel="1" colspan="4" string="This report allows you to print or generate a pdf of your general ledger with details of all your account journals"/>
             </xpath>
@@ -32,7 +31,6 @@
 
         <record id="action_ledger_report_menu" model="ir.actions.act_window">  <!-- rename id -->
             <field name="name">Ledger Report</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="res_model">ledger.report</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
@@ -41,11 +39,11 @@
         </record>
 
         <record model="ir.values" id="action_ledger_report_values">
-            <field name="model_id" ref="account.model_account_account" />
-            <field name="object" eval="1" />
+            <field name="model_id" ref="account.model_account_account"/>
+            <field name="object" eval="1"/>
             <field name="name">Ledger Report</field>
             <field name="key2">client_print_multi</field>
-            <field name="value" eval="'ir.actions.act_window,' +str(ref('action_ledger_report_menu'))" />
+            <field name="value" eval="'ir.actions.act_window,' +str(ref('action_ledger_report_menu'))"/>
             <field name="key">action</field>
             <field name="model">account.account</field>
         </record>

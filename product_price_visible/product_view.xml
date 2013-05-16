@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="product_normal_form_inh_visible_view">
             <field name="name">product.normal.form.inh.visible.view</field>
-            <field name="type">form</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
@@ -18,7 +17,6 @@
         
         <record model="ir.ui.view" id="view_product_standard_price_inh_visible_form">
             <field name="name">view.product.standard.price.inh.visible.form</field>
-            <field name="type">form</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="stock.view_product_standard_price_form"/>
             <field name="arch" type="xml">
@@ -28,8 +26,7 @@
 -->
                     <group col="2" colspan="1" groups="product_price_visible.group_product_visible">
                         <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}" nolabel="1" groups="product_price_visible.group_product_visible"/>
-                        <button name="%(stock.action_view_change_standard_price)d" string="Update"
-                            type="action" icon="gtk-execute" attrs="{'invisible':[('cost_method','&lt;&gt;','average')]}" groups="product_price_visible.group_product_visible"/>
+                        <button name="%(stock.action_view_change_standard_price)d" string="Update" type="action" icon="gtk-execute" attrs="{'invisible':[('cost_method','&lt;&gt;','average')]}" groups="product_price_visible.group_product_visible"/>
                     </group>
                 </field>
             </field>
@@ -37,7 +34,6 @@
         
         <record model="ir.ui.view" id="product_product_tree_inh_visible_view">
             <field name="name">product.product.tree.inh.visible.view</field>
-            <field name="type">tree</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_product_tree_view"/>
             <field name="arch" type="xml">

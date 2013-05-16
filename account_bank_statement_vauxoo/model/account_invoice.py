@@ -29,9 +29,13 @@ class account_invoice(osv.Model):
     """
     _inherit = 'account.invoice'
     _columns = {
-        'bank_statement_line_ids': fields.many2many('bank.statement.imported.lines', 'bs_invoice_rel', 'invoice_id', 'st_id_id', 'Invoices',
-                                                    help="Invoices to be reconciled with this line",
-                                                    ),  # TODO: Resolve: We should use date as filter, is a question of POV
+        'bank_statement_line_ids': fields.many2many(
+            'bank.statement.imported.lines',
+            'bs_invoice_rel',
+            'invoice_id', 'st_id_id',
+            'Invoices',
+            help="Invoices to be reconciled with this line",
+        ),  # TODO: Resolve: We should use date as filter, is a question of POV
     }
 
     def button_reconcile_bsl(self, cr, uid, ids, context=None):

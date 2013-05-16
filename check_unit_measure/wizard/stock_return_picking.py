@@ -36,7 +36,6 @@ class stock_return_picking_memory(osv.TransientModel):
     }
 
 
-
 class stock_return_picking(osv.TransientModel):
     _inherit = 'stock.return.picking'
 
@@ -69,8 +68,13 @@ class stock_return_picking(osv.TransientModel):
             for line in pick.move_lines:
                 qty = line.product_qty - return_history.get(line.id, 0)
                 if qty > 0:
-                    result1.append({'product_id': line.product_id.id, 'uom_id': line.product_uom.id, 'quantity':
-                                   qty, 'move_id': line.id, 'prodlot_id': line.prodlot_id and line.prodlot_id.id or False})
+                    result1.append(
+                        {'product_id': line.product_id.id,
+                            'uom_id': line.product_uom.id,
+                            'quantity': qty,
+                            'move_id': line.id,
+                            'prodlot_id': line.prodlot_id and
+                         line.prodlot_id.id or False})
             if 'product_return_moves' in fields:
                 res.update({'product_return_moves': result1})
         return res
@@ -138,7 +142,9 @@ class stock_return_picking(osv.TransientModel):
                 returned_lines += 1
                 new_move = move_obj.copy(cr, uid, move.id, {
                     'product_qty': new_qty,
-                    'product_uos_qty': uom_obj._compute_qty(cr, uid, move.product_uom.id, new_qty, move.product_uos.id),
+                    'product_uos_qty': uom_obj._compute_qty(cr, uid,
+                                        move.product_uom.id, new_qty,
+                                        move.product_uos.id),
                     'product_uom': uom_id,
                     'picking_id': new_picking,
                     'state': 'draft',
@@ -147,7 +153,8 @@ class stock_return_picking(osv.TransientModel):
                     'date': date_cur,
                 }, context=context)
                 move_obj.write(cr, uid, [move.id], {
-                               'move_history_ids2': [(4, new_move)]}, context=context)
+                               'move_history_ids2': [(4, new_move)]},
+                               context=context)
         if not returned_lines:
             raise osv.except_osv(_('Warning!'), _(
                 "Please specify at least one non-zero quantity."))

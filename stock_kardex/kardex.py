@@ -8,8 +8,8 @@
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -32,7 +32,8 @@ from dateutil.relativedelta import relativedelta
 class product_product(osv.Model):
     _inherit = "product.product"
 
-    def _product_available_done(self, cr, uid, ids, field_names=None, arg=False, context=None):
+    def _product_available_done(self, cr, uid, ids, field_names=None,
+                                arg=False, context=None):
         res = {}
         from_date = context.get('from_date', False)
         to_date = context.get('to_date', False)
@@ -42,13 +43,17 @@ class product_product(osv.Model):
             c = context.copy()
             if f == 'incoming_done_qty':
                 c.update({
-                    'from_date': from_date and from_date + ' 00:00:00' or False,
-                    'to_date': to_date and to_date + ' 23:59:59' or False, })
+                         'from_date': from_date and\
+                                      from_date + ' 00:00:00' or False,
+                         'to_date': to_date and to_date + ' 23:59:59' or \
+                                    False, })
                 c.update({'states': ('done',), 'what': ('in',)})
             if f == 'outgoing_done_qty':
                 c.update({
-                    'from_date': from_date and from_date + ' 00:00:00' or False,
-                    'to_date': to_date and to_date + ' 23:59:59' or False, })
+                         'from_date': from_date and \
+                                      from_date + ' 00:00:00' or False,
+                         'to_date': to_date and \
+                                    to_date + ' 23:59:59' or False, })
                 c.update({'states': ('done',), 'what': ('out',)})
             if f == 'stock_done_start':
                 if not from_date:
@@ -58,28 +63,44 @@ class product_product(osv.Model):
                         from_date, '%Y-%m-%d') - relativedelta(days=1)
                     new_to_date = new_to_date.strftime(
                         '%Y-%m-%d') + ' 23:59:59'
-                    c.update({'states': ('done',), 'what': (
-                        'in', 'out',), 'from_date': False, 'to_date': new_to_date})
+                    c.update({'states': ('done',),
+                              'what': ('in', 'out',),
+                              'from_date': False,
+                              'to_date': new_to_date})
             if f == 'stock_balance':
-                c.update({'states': ('done',), 'what': (
-                    'in', 'out',), 'from_date': False, 'to_date': to_date and to_date + ' 23:59:59' or False, })
+                c.update({'states': ('done',),
+                          'what': ('in', 'out',),
+                          'from_date': False,
+                          'to_date': to_date and to_date + ' 23:59:59' or \
+                                     False, })
             stock = self.get_product_available(cr, uid, ids, context=c)
             for id in ids:
                 res[id][f] = stock.get(id, 0.0)
         return res
 
     _columns = {
-        'incoming_done_qty': fields.function(_product_available_done, multi='incoming_done_qty',
-                                             type='float',  digits_compute=dp.get_precision('Product UoM'),
+        'incoming_done_qty': fields.function(_product_available_done,
+                                             multi='incoming_done_qty',
+                                             type='float',
+                                             digits_compute=
+                                             dp.get_precision('Product UoM'),
                                              string='Incoming'),
-        'outgoing_done_qty': fields.function(_product_available_done, multi='incoming_done_qty',
-                                             type='float',  digits_compute=dp.get_precision('Product UoM'),
+        'outgoing_done_qty': fields.function(_product_available_done,
+                                             multi='incoming_done_qty',
+                                             type='float',
+                                             digits_compute=
+                                             dp.get_precision('Product UoM'),
                                              string='Outgoing'),
-        'stock_done_start': fields.function(_product_available_done, multi='incoming_done_qty',
-                                            type='float',  digits_compute=dp.get_precision('Product UoM'),
+        'stock_done_start': fields.function(_product_available_done,
+                                            multi='incoming_done_qty',
+                                            type='float',
+                                            digits_compute=
+                                            dp.get_precision('Product UoM'),
                                             string='Stock_Start'),
-        'stock_balance': fields.function(_product_available_done, multi='incoming_done_qty',
-                                         type='float',  digits_compute=dp.get_precision('Product UoM'),
+        'stock_balance': fields.function(_product_available_done,
+                                         multi='incoming_done_qty',
+                                         type='float',
+                                         digits_compute=
+                                               dp.get_precision('Product UoM'),
                                          string='Stock Balance'),
     }
-

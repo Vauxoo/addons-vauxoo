@@ -29,12 +29,13 @@ import decimal_precision as dp
 from openerp.tools.translate import _
 
 
-
 class mrp_request_return(osv.TransientModel):
     _name = 'mrp.request.return'
     _columns = {
-        're_line_ids': fields.one2many('mrp.request.return.line', 'wizard_id', 'Acreation'),
-        'type': fields.selection([('request', 'Request')], 'Type', required=True)
+        're_line_ids': fields.one2many('mrp.request.return.line', 'wizard_id',
+            'Acreation'),
+        'type': fields.selection([('request', 'Request')], 'Type',
+            required=True)
     }
 
     _defaults = {
@@ -56,7 +57,8 @@ class mrp_request_return(osv.TransientModel):
                 pick_id = mrp_production._make_production_internal_shipment2(
                     cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id, {
-                                    'state': 'draft', 'production_id': production.id})
+                                    'state': 'draft',
+                                    'production_id': production.id})
                 for wiz_move in wizard_moves.re_line_ids:
                     if wiz_move.product_qty > 0.0:
                         shipment_move_id = mrp_production._make_production_internal_shipment_line2(
@@ -69,11 +71,15 @@ class mrp_request_return(osv.TransientModel):
                 pick_id_return = mrp_production._make_production_internal_shipment2(
                     cr, uid, production, context=context)
                 stock_picking.write(cr, uid, pick_id_return, {
-                                    'state': 'draft', 'auto_picking': False, 'production_id': production.id})
+                                    'state': 'draft',
+                                    'auto_picking': False,
+                                    'production_id': production.id})
                 for wiz_move2 in wizard_moves.re_line_ids:
                     if wiz_move2.product_qty > 0.0:
                         shipment_move_id = mrp_production._make_production_internal_shipment_line(
-                            cr, uid, production, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
+                            cr, uid, production, wiz_move2, pick_id_return,
+                            parent_move_id=False,
+                            destination_location_id=False)
                         stock_move.write(cr, uid, shipment_move_id, {
                                          'state': 'draft'})
 
@@ -107,8 +113,10 @@ class mrp_request_return(osv.TransientModel):
             'product_id': move.product_id.id,
             'product_qty': 0.0,
             'product_uom': move.product_uom.id,
-            'product_uos_qty': move.product_uos and move.product_uos_qty or False,
-            'product_uos': move.product_uos and move.product_uos.id or False,
+            'product_uos_qty': move.product_uos and
+                                move.product_uos_qty or False,
+            'product_uos': move.product_uos and
+                            move.product_uos.id or False,
             'location_id': production.location_src_id.id,
             'location_dest_id': production.location_src_id.id,
             'production_id': move.production_id.id
@@ -138,11 +146,16 @@ class mrp_request_return_line(osv.TransientModel):
         return res
 
     _columns = {
-        'product_id': fields.many2one('product.product', string="Product", required=True),
-        'product_qty': fields.float("Quantity", digits_compute=dp.get_precision('Product UoM'), required=True),
-        'product_uom': fields.many2one('product.uom', 'Unit of Measure', required=True,),
-        'location_id': fields.many2one('stock.location', 'Location', required=True),
-        'location_dest_id': fields.many2one('stock.location', 'Dest. Location', required=True),
+        'product_id': fields.many2one('product.product', string="Product",
+            required=True),
+        'product_qty': fields.float("Quantity",
+            digits_compute=dp.get_precision('Product UoM'), required=True),
+        'product_uom': fields.many2one('product.uom', 'Unit of Measure',
+            required=True,),
+        'location_id': fields.many2one('stock.location', 'Location',
+            required=True),
+        'location_dest_id': fields.many2one('stock.location', 'Dest. Location',
+            required=True),
         'move_id': fields.many2one('stock.move', "Move"),
         'production_id': fields.many2one('mrp.production', 'Production'),
         'product_uos': fields.many2one('product.uom', 'Product UOS'),
@@ -154,7 +167,6 @@ class mrp_request_return_line(osv.TransientModel):
         product_product = self.pool.get('product.product')
         product = product_product.browse(cr, uid, product_id)
         return {'value': {'product_uom': product.uom_id and product.uom_id.id}}
-
 
 
 class mrp_consume(osv.TransientModel):
@@ -178,18 +190,25 @@ class mrp_consume(osv.TransientModel):
                 fetch_record = stock_move_obj.browse(
                     cr, uid, line.move_id.id, context=context)
                 qty_to_consume = product_uom_pool._compute_qty(
-                    cr, uid, line.product_uom.id, line.quantity, to_uom_id=fetch_record.product_uom.id)
+                    cr, uid, line.product_uom.id, line.quantity,
+                    to_uom_id=fetch_record.product_uom.id)
                 current_qty = product_uom_pool._compute_qty(
-                    cr, uid, fetch_record.product_uom.id, fetch_record.product_qty, to_uom_id=fetch_record.product_uom.id)
+                    cr, uid, fetch_record.product_uom.id,
+                    fetch_record.product_qty,
+                    to_uom_id=fetch_record.product_uom.id)
                 if qty_to_consume > current_qty:
                     move_id = stock_move_obj.copy(cr, uid, line.move_id.id, {
-                                                  'product_qty': qty_to_consume-current_qty})
-                    mrp_production.write(cr, uid, context.get('active_ids', False), {
-                                         'move_lines': [(4, move_id)]}, context=context)
-                    stock_move_obj.action_consume(cr, uid, [
-                                                  move_id], qty_to_consume-current_qty, line.location_id.id, context=context)
+                                'product_qty': qty_to_consume-current_qty})
+                    mrp_production.write(cr, uid,
+                                context.get('active_ids', False), {
+                                'move_lines': [(4, move_id)]}, context=context)
+                    stock_move_obj.action_consume(cr, uid, [move_id],
+                                                qty_to_consume-current_qty,
+                                                line.location_id.id,
+                                                context=context)
                     mrp_consume_line.write(cr, uid, line.id, {
-                                           'quantity': current_qty, 'product_uom': fetch_record.product_uom.id})
+                                'quantity': current_qty,
+                                'product_uom': fetch_record.product_uom.id})
 
                     fetch_record.production_id = production
                     fetch_record.product_qty = qty_to_consume - current_qty
@@ -197,8 +216,8 @@ class mrp_consume(osv.TransientModel):
                         pick_id = mrp_production._make_production_internal_shipment2(
                             cr, uid, production, context=context)
                     stock_picking.write(cr, uid, pick_id, {
-                                        'state': 'draft', 'production_id': production.id})
+                                        'state': 'draft',
+                                        'production_id': production.id})
                     shipment_move_id = mrp_production._make_production_internal_shipment_line(
                         cr, uid, fetch_record, pick_id, False)
         return super(mrp_consume, self).action_consume(cr, uid, ids, context)
-

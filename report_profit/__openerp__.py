@@ -26,7 +26,7 @@
 {
     "name" : "Report Profit",
     "version" : "0.2",
-    "depends" : ["base","product", "purchase", "account"],
+    "depends" : ["base","product", "purchase", "account",'sale',],
     "author" : "Vauxoo",
     "description" : """
         Performs the equivalent of a third unit for the analysis of sales.
@@ -49,7 +49,7 @@
         'wizard/wiz_trial_cost.xml'
     ],
     "active": False,
-    "installable": True,
+    "installable": False,
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

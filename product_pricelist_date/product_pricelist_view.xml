@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
 <data>
 
@@ -7,7 +6,7 @@
         <record model="ir.ui.view" id="view_product_pricelist_item_inherit1">
             <field name="name">view.product.pricelist.item.inherit1</field>
             <field name="model">product.pricelist.item</field>
-            <field name="inherit_id" ref="product.product_pricelist_item_form_view" />
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='sequence']" position="after">
                         <field name="date"/>
@@ -18,7 +17,7 @@
         <record model="ir.ui.view" id="view_product_pricelist_item_tree_inherit1">
             <field name="name">view.product.pricelist.item.tree.inherit1</field>
             <field name="model">product.pricelist.item</field>
-            <field name="inherit_id" ref="product.product_pricelist_item_tree_view" />
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
             <field name="arch" type="xml">
                     <xpath expr="//field[@name='sequence']" position="after">
                         <field name="date"/>

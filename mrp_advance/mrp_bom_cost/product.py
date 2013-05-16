@@ -26,12 +26,12 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class product_template(osv.Model):
     _inherit = 'product.template'
 
     _columns = {
-        'product_active': fields.boolean('Assets', help="Determine if the product is of type active."),
+        'product_active': fields.boolean('Assets',
+            help="Determine if the product is of type active."),
     }
     _defaults = {
         'product_active': lambda *a: 0,

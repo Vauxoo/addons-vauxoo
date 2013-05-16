@@ -41,6 +41,6 @@
     "update_xml" : [
         'res_users_view.xml'
     ],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }

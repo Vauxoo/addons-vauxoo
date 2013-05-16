@@ -32,9 +32,13 @@ class stock_move(osv.Model):
 
     _columns = {
         'type_process_date': fields.selection([
-            ('current_date', 'Current Date'),
-            ('planned_date', 'Planned Date'),
-        ], readonly=True, string='Type Process Date', states={'draft': [('readonly', False)]}),
+                                              ('current_date', 'Current Date'),
+                                              ('planned_date', 'Planned Date'),
+                                              ], readonly=True,
+                                              string='Type Process Date',
+                                              states={
+                                              'draft': [('readonly', False)]
+                                              }),
     }
 
     _defaults = {

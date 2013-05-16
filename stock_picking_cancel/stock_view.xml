@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
         <record id="view_picking_inherit_picking_cancel_form" model="ir.ui.view">
@@ -36,7 +36,7 @@
                     <button name="button_cancel" states="assigned,confirmed,draft,done" string="_Cancel" icon="gtk-cancel" groups="base.group_picking_cancel"/>
                 </xpath>
                 <xpath expr="//button[@name='button_cancel']" position="after">
-                    <button name="action_cancel_draft" states="cancel" string="_Draft" type="object"  icon="gtk-go-forward"/>
+                    <button name="action_cancel_draft" states="cancel" string="_Draft" type="object" icon="gtk-go-forward"/>
                 </xpath>
             </field>
         </record>
@@ -44,9 +44,9 @@
 	<record model="ir.ui.view" id="view_stock_move_inherit2">
             <field name="name">view.stock.move.inherit2</field>
             <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock.view_move_form" />
+            <field name="inherit_id" ref="stock.view_move_form"/>
             <field name="arch" type="xml">
-                    <xpath expr="/form/header//button[@name='action_cancel']" position="replace">
+                <xpath expr="//button[@name='action_cancel']" position="replace">
  			<button name="action_cancel" states="assigned,confirmed,done" string="_Cancel" type="object" icon="gtk-cancel" groups="base.group_picking_cancel"/>
                     </xpath>
 	    </field>

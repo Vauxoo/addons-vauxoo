@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
 <data>
     <!-- Configuration -->
     <record model="ir.ui.view" id="product_icecat_tree">
         <field name="name">product.icecat.tree</field>
         <field name="model">product.icecat</field>
-        <field name="type">tree</field>
         <field name="priority" eval="8"/>
         <field name="arch" type="xml">
         <tree string="icecat">
@@ -19,35 +18,34 @@
     <record model="ir.ui.view" id="product_icecat_form">
         <field name="name">product.icecat.form</field>
         <field name="model">product.icecat</field>
-        <field name="type">form</field>
         <field name="priority" eval="8"/>
         <field name="arch" type="xml">
-        <form string="icecat">
-            <field name="name" />
-            <field name="active" />
-		    <notebook colspan="4">
-			    <page string="Icecat">
-                    <field name="username" />
-                    <field name="password" />
+        <form string="icecat" version="7.0">
+            <field name="name"/>
+            <field name="active"/>
+            <notebook colspan="4">
+                <page string="Icecat">
+                    <field name="username"/>
+                    <field name="password"/>
                 </page>
-			    <page string="FTP">
-                    <field name="ftp" /><newline />
-                    <field name="ftpip" attrs="{'required':[('ftp','=',True)]}" />
-                    <field name="ftpdirectory" attrs="{'required':[('ftp','=',True)]}" />
-                    <field name="ftpusername" attrs="{'required':[('ftp','=',True)]}" />
-                    <field name="ftppassword" attrs="{'required':[('ftp','=',True)]}" />
-                    <field name="ftpurl" attrs="{'required':[('ftp','=',True)]}" />
-				    <button name="check_ftp" string="Check FTP" colspan="4" type="object" />
+                <page string="FTP">
+                    <field name="ftp"/><newline/>
+                    <field name="ftpip" attrs="{'required':[('ftp','=',True)]}"/>
+                    <field name="ftpdirectory" attrs="{'required':[('ftp','=',True)]}"/>
+                    <field name="ftpusername" attrs="{'required':[('ftp','=',True)]}"/>
+                    <field name="ftppassword" attrs="{'required':[('ftp','=',True)]}"/>
+                    <field name="ftpurl" attrs="{'required':[('ftp','=',True)]}"/>
+                    <button name="check_ftp" string="Check FTP" colspan="4" type="object"/>
                 </page>
             </notebook>
-            <separator string="Icecat to OpenERP fields" colspan="4" />
+            <separator string="Icecat to OpenERP fields" colspan="4"/>
 <!--            <label string="Configure your mapping values from icecat to OpenERP (only category icecat)" colspan="4"/>-->
             <field name="mapline_ids" nolabel="1" colspan="4" mode="tree,form" height="260">
                 <tree string="Maping Lines">
                     <field name="name"/>
                     <field name="field_id"/>
                 </tree>
-                <form string="Maping Lines">
+                <form string="Maping Lines" version="7.0">
                     <field name="name"/>
                     <field name="model_id" invisible="1"/>
                     <field name="field_id" domain="[('model_id', '=', model_id)]"/>

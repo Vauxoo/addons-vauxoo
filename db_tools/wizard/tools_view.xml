@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_db_tools_wizard_form">
             <field name="name">view.db.tools.wizard.form</field>
             <field name="model">db.tools</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="DB Tools">
+                <form string="DB Tools" version="7.0">
                     <field name="filter"/>
                     <newline/>
                     <field name="path_save_db" colspan="4"/>

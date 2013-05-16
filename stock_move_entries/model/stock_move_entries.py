@@ -35,10 +35,11 @@ class account_move_line(osv.Model):
 
     _columns = {
         'sm_id': fields.many2one('stock.move', 'Stock move ID'),
-        'location_id': fields.many2one('stock.location', 'Location Move', help="Location Move Source"),
-        'location_dest_id': fields.many2one('stock.location', 'Location Move', help="Location Move Destination")
+        'location_id': fields.many2one('stock.location', 'Location Move',
+                                       help="Location Move Source"),
+        'location_dest_id': fields.many2one('stock.location', 'Location Move',
+                                            help="Location Move Destination")
     }
-
 
 
 class account_move(osv.Model):
@@ -50,7 +51,10 @@ class account_move(osv.Model):
         res = {}
         for id in ids:
             cr.execute(
-                'SELECT move_id, sm_id FROM account_move_line WHERE move_id = %s LIMIT 1 ', (id,))
+                '''SELECT move_id,
+                          sm_id
+                   FROM account_move_line
+                   WHERE move_id = %s LIMIT 1 ''' % (id,))
             if cr.rowcount:
                 id, sm_id = cr.fetchall()[0]
                 res[id] = sm_id
@@ -59,9 +63,10 @@ class account_move(osv.Model):
         return res
 
     _columns = {
-        'sm_id': fields.function(_get_sm, method=True, type='many2one', relation='stock.move', string='Stock move ID', store=True),
+        'sm_id': fields.function(_get_sm, method=True, type='many2one',
+                                 relation='stock.move',
+                                 string='Stock move ID', store=True),
     }
-
 
 
 class stock_move(osv.Model):
@@ -74,7 +79,10 @@ class stock_move(osv.Model):
         res = {}
         for id in ids:
             cr.execute(
-                'SELECT sm_id, move_id FROM account_move_line WHERE sm_id = %s LIMIT 1 ', (id,))
+                '''SELECT sm_id,
+                   move_id
+                   FROM account_move_line
+                   WHERE sm_id = %s LIMIT 1 ''' % (id,))
             if cr.rowcount:
                 id, am_id = cr.fetchall()[0]
                 res[id] = am_id
@@ -83,15 +91,23 @@ class stock_move(osv.Model):
         return res
 
     _columns = {
-        'am_id': fields.function(_get_am, method=True, type='many2one', relation='account.move', string='Account move ID', store=True),
+        'am_id': fields.function(_get_am, method=True, type='many2one',
+                                 relation='account.move',
+                                 string='Account move ID', store=True),
     }
 
-    def _create_account_move_line(self, cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=None):
-        res = super(stock_move, self)._create_account_move_line(
-            cr, uid, move, src_account_id, dest_account_id, reference_amount, reference_currency_id, context=context)
+    def _create_account_move_line(self, cr, uid, move, src_account_id,
+                                  dest_account_id,
+                                  reference_amount, reference_currency_id,
+                                  context=None):
+        res = super(stock_move, self).\
+            _create_account_move_line(cr, uid, move, src_account_id,
+                                      dest_account_id,
+                                      reference_amount,
+                                      reference_currency_id,
+                                      context=context)
         for line in res:
             line[2]['sm_id'] = move.id
             line[2]['location_id'] = move.location_id.id
             line[2]['location_dest_id'] = move.location_dest_id.id
         return res
-

@@ -27,12 +27,12 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     _columns = {
-        'picking_ids': fields.one2many('stock.picking', 'production_id', 'Picking')
+        'picking_ids': fields.one2many('stock.picking', 'production_id',
+            'Picking')
     }
 
     def action_finished_consume(self, cr, uid, ids, context=None):
@@ -50,18 +50,25 @@ class mrp_production(osv.Model):
             pick_id_return = mrp_production2._make_production_internal_shipment2(
                 cr, uid, production, context=context)
             stock_picking.write(cr, uid, pick_id_return, {
-                                'state': 'draft', 'auto_picking': False, 'production_id': production.id})
+                                'state': 'draft',
+                                'auto_picking': False,
+                                'production_id': production.id})
             for wiz_move2 in wizard_moves.move_lines:
                 if wiz_move2.product_qty > 0.0:
                     shipment_move_id = mrp_production2._make_production_internal_shipment_line2(
-                        cr, uid, production, wiz_move2, pick_id_return, parent_move_id=False, destination_location_id=False)
+                        cr, uid, production, wiz_move2, pick_id_return,
+                        parent_move_id=False, destination_location_id=False)
                     stock_move.write(cr, uid, shipment_move_id, {
                                      'state': 'draft'})
         res = super(mrp_production, self).action_finished_consume(
             cr, uid, ids, context=context)
         return res
 
-    def _make_production_internal_shipment_line2(self, cr, uid, production, production_line, shipment_id, parent_move_id, destination_location_id=False, context=None):
+    def _make_production_internal_shipment_line2(self, cr, uid, production,
+                                                production_line, shipment_id,
+                                                parent_move_id,
+                                                destination_location_id=False,
+                                                context=None):
         stock_move = self.pool.get('stock.move')
         date_planned = production.date_planned
         if production_line.product_id.type not in ('product', 'consu'):
@@ -77,8 +84,10 @@ class mrp_production(osv.Model):
             'product_id': production_line.product_id.id,
             'product_qty': production_line.product_qty,
             'product_uom': production_line.product_uom.id,
-            'product_uos_qty': production_line.product_uos and production_line.product_uos_qty or False,
-            'product_uos': production_line.product_uos and production_line.product_uos.id or False,
+            'product_uos_qty': production_line.product_uos and
+                                production_line.product_uos_qty or False,
+            'product_uos': production_line.product_uos and
+                            production_line.product_uos.id or False,
             'date': date_planned,
             'move_dest_id': parent_move_id,
             'location_id': source_location_id,
@@ -87,7 +96,8 @@ class mrp_production(osv.Model):
             'company_id': production.company_id.id,
         })
 
-    def _make_production_internal_shipment2(self, cr, uid, production, context=None):
+    def _make_production_internal_shipment2(self, cr, uid, production,
+                                            context=None):
         ir_sequence = self.pool.get('ir.sequence')
         stock_picking = self.pool.get('stock.picking')
         routing_loc = None
@@ -97,17 +107,20 @@ class mrp_production(osv.Model):
         # Take routing address as a Shipment Address.
         # If usage of routing location is a internal, make outgoing shipment
         # otherwise internal shipment
-        if production.bom_id.routing_id and production.bom_id.routing_id.location_id:
+        if production.bom_id.routing_id and\
+        production.bom_id.routing_id.location_id:
             routing_loc = production.bom_id.routing_id.location_id
             if routing_loc.usage != 'internal':
                 pick_type = 'out'
-            address_id = routing_loc.address_id and routing_loc.address_id.id or False
+            address_id = routing_loc.address_id and\
+                        routing_loc.address_id.id or False
 
         # Take next Sequence number of shipment base on type
         pick_name = ir_sequence.get(cr, uid, 'stock.picking')
         picking_id = stock_picking.create(cr, uid, {
             'name': pick_name + '-' + context.get('type', ''),
-            'origin': (production.origin or '').split(':')[0] + ':' + production.name,
+            'origin': (production.origin or '').split(':')[0]\
+                        + ':' + production.name,
             'type': pick_type,
             'state': 'draft',
             'address_id': address_id,

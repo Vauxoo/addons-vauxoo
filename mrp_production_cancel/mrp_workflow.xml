@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
 
         <record id="mrp.prod_act_done" model="workflow.activity">
-            <field name="flow_stop"></field>
+            <field name="flow_stop"/>
         </record>
 
         <record id="prod_trans_done2_cancel" model="workflow.transition">

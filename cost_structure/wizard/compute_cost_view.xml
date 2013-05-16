@@ -1,47 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
 
-        <record model='ir.ui.view' id='compute_costs_form_view'>
-            <field name='name'>Compute Costs</field>
-            <field name='model'>compute.cost</field>
-            <field name='type'>form</field>
-            <field name='arch' type='xml'>
-                <form string="Compute Costs">
-                    <group string="Compute Costs" colspan="9" height="800" width="600" col="2" >
+        <record model="ir.ui.view" id="compute_costs_form_view">
+            <field name="name">Compute Costs</field>
+            <field name="model">compute.cost</field>
+            <field name="arch" type="xml">
+                <form string="Compute Costs" version="7.0">
+                    <group string="Compute Costs" colspan="9" height="800" width="600" col="2">
                         <group colspan="6" col="2">
                                                 <group col="1">
-                        <field name="fifo" />
+                        <field name="fifo"/>
                         </group>
                                                 <group col="1">
-                        <field name="lifo" />
+                        <field name="lifo"/>
                         </group>
                         </group>
                         
                         <group col="1">
                         
                         <group col="1">
-                    <field name='product'/>
+                    <field name="product"/>
                 </group>
-                    <field name='product_ids'  editable="buttom" nolabel="1" attrs="{'readonly':[('all','=',True)],'invisible':[('product','=',False)],'required':[('all','=',False)]}">
+                    <field name="product_ids" editable="buttom" nolabel="1" attrs="{'readonly':[('all','=',True)],'invisible':[('product','=',False)],'required':[('all','=',False)]}">
                         <tree>
-                            <field name="name" />
+                            <field name="name"/>
                         
                         </tree>
                     </field>
                         <group col="1">
-                    <field name='categ'/>
+                    <field name="categ"/>
                 </group>
-                            <field name='categ_ids' nolabel="1" attrs="{'readonly':[('all','=',True)],'invisible':[('categ','=',False)],}"/>
+                            <field name="categ_ids" nolabel="1" attrs="{'readonly':[('all','=',True)],'invisible':[('categ','=',False)],}"/>
                         <group col="1">
-                            <field name='fiscalyear_id' domain="[('state','=','draft')]" required="1"/> 
-                            <field name='period_id' domain="[('state','=','draft'),('fiscalyear_id','=',fiscalyear_id)]" required="1"/> 
+                            <field name="fiscalyear_id" domain="[('state','=','draft')]" required="1"/> 
+                            <field name="period_id" domain="[('state','=','draft'),('fiscalyear_id','=',fiscalyear_id)]" required="1"/> 
                 </group>
                        
                 
                        
                         <group col="1">
-                    <field name='all'/>
+                    <field name="all"/>
                 </group>
                 
                 
@@ -49,14 +48,9 @@
                 
                 
                         <group col="2">
-               <button string="Cancel"
-                   special="cancel"
-                   icon="terp-stock_effects-object-colorize" />
+               <button string="Cancel" special="cancel" icon="terp-stock_effects-object-colorize"/>
                
-               <button name="compute_cost"
-                   string="Compute"
-                   type="object"
-                   icon="terp-stock_effects-object-colorize" />
+               <button name="compute_cost" string="Compute" type="object" icon="terp-stock_effects-object-colorize"/>
            </group>
            </group>
            </group>
@@ -66,29 +60,16 @@
   
         <record id="compute_costs_action" model="ir.actions.act_window">
             <field name="name">Compute Costs</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="res_model">compute.cost</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
         
-            <menuitem 
-            name = "Compute Costs" 
-            id ="compute_cost_wz"
-            icon = 'STOCK_FLOPPY'
-            parent = 'account.menu_finance'
-            sequence ='50'
-            />
+            <menuitem name="Compute Costs" id="compute_cost_wz" icon="STOCK_FLOPPY" parent="account.menu_finance" sequence="50"/>
             
             
-            <menuitem 
-            name = "Compute Costs" 
-            id ="compute_cost_wz2"
-            sequence ='50'
-            parent = 'compute_cost_wz'
-            action = 'compute_costs_action'
-            />
+            <menuitem name="Compute Costs" id="compute_cost_wz2" sequence="50" parent="compute_cost_wz" action="compute_costs_action"/>
             
             
        

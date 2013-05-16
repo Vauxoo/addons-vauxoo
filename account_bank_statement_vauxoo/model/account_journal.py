@@ -30,22 +30,31 @@ import logging
 class account_journal(osv.Model):
     _inherit = 'account.journal'
     _columns = {
-        'default_interim_account_id': fields.many2one('account.account', 'Interim Account',
-        help="""In banks you probably want send account move lines to a interim
-account before affect the default debit and credit account who will have the booked
-balance for this kind of operations, in this field you configure this account."""),
-        'default_income_account_id': fields.many2one('account.account', 'Extra Income Account',
-        help="""In banks you probably want as counter part for extra banking income money
-use an specific account in this field you can canfigure this account"""),
-        'default_expense_account_id': fields.many2one('account.account', 'Expense Account',
-        help="""In banks you probable wants send account move lines to an extra account
-to be able to record account move lines due to bank comisions and bank debit notes,
-in this field you configure this account."""),
+        'default_interim_account_id': fields.many2one('account.account',
+                                                      'Interim Account',
+                                                      help="""In banks you probably want send account move
+                 lines to a interim account before affect the default
+                 debit and credit account who
+                 will have the booked
+                 balance for this kind of operations, in this field
+                 you configure this account."""),
+        'default_income_account_id': fields.many2one('account.account',
+                                                     'Extra Income Account',
+                                                     help="""In banks you probably want as counter part for extra
+             banking income money use an specific account in this field
+             you can canfigure this account"""),
+        'default_expense_account_id': fields.many2one('account.account',
+                                                      'Expense Account',
+                                                      help="""In banks you probable wants send account move lines to an
+             extra account to be able to record account move lines due to bank
+             comisions and bank debit notes, in this field you configure this
+             account."""),
         'concept_ids': fields.one2many('account.journal.bs.config', 'bsl_id',
                                        'Concept Lines', required=False),
         'moveper_line': fields.boolean('One Move per Line', required=False,
-                                       help="""Do you want one move per line or one move per bank statement,
-            True: One Per Line False: One Per bank statement"""),
+                                       help="""Do you want one move per line or one move per bank
+                 statement,True: One Per Line False:
+                 One Per bank statement"""),
     }
 
 
@@ -56,11 +65,16 @@ class account_journal_bs_config(osv.Model):
 
     _columns = {
         'sequence': fields.integer('Label'),
-        'bsl_id': fields.many2one('account.journal', 'Journal', required=False),
-        'partner_id': fields.many2one('res.partner', 'Partner', required=False),
-        'account_id': fields.many2one('account.account', 'Account', required=False),
-        'expresion': fields.char('Text To be Compared', size=128, required=True, readonly=False),
-        'name': fields.char('Cancept Label', size=128, required=True, readonly=False),
+        'bsl_id': fields.many2one('account.journal', 'Journal',
+                                  required=False),
+        'partner_id': fields.many2one('res.partner', 'Partner',
+                                      required=False),
+        'account_id': fields.many2one('account.account', 'Account',
+                                      required=False),
+        'expresion': fields.char('Text To be Compared', size=128,
+                                 required=True, readonly=False),
+        'name': fields.char('Cancept Label', size=128, required=True,
+                            readonly=False),
     }
     _defaults = {
         'sequence': 10,

@@ -28,7 +28,6 @@ from report import report_sxw
 from openerp.tools.translate import _
 
 
-
 class cm321_report(report_sxw.rml_parse):
 
     def __init__(self, cr, uid, name, context=None):
@@ -54,7 +53,8 @@ class cm321_report(report_sxw.rml_parse):
                     if ppv.date_start and ppv.date_end:
                         date_start = str(ppv.date_start)
                         date_end = str(ppv.date_end)
-                        if ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
+                        if ppv.date_start <= obj.date_invoice and\
+                                            obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:
@@ -73,7 +73,8 @@ class cm321_report(report_sxw.rml_parse):
                     if ppv.date_start and ppv.date_end:
                         date_start = str(ppv.date_start)
                         date_end = str(ppv.date_end)
-                        if ppv.date_start <= obj.date_invoice and obj.date_invoice <= ppv.date_end:
+                        if ppv.date_start <= obj.date_invoice and\
+                                            obj.date_invoice <= ppv.date_end:
                             ppli = ppv.items_id
                             for ppl in ppli:
                                 if ppl.sequence < aux:

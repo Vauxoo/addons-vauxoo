@@ -29,5 +29,6 @@ class mrp_bom(osv.Model):
     _inherit = 'mrp.bom'
 
     _columns = {
-        'standard_price': fields.related('product_id', 'standard_price', type='float', relation='product.template', string='Cost price'),
+        'standard_price': fields.related('product_id', 'standard_price',
+            type='float', relation='product.template', string='Cost price'),
     }

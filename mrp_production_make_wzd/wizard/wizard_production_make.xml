@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_wizard_production_make_form">
             <field name="name">view.wizard.production.make.form</field>
             <field name="model">wizard.production.make</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Production Make" version="7.0">
                     <header>
@@ -13,7 +12,7 @@
                         <button type="special" special="cancel" string="_Cancel" class="oe_highlight"/>
                     </header>
                     <sheet>
-                        <field name="date_planned" />
+                        <field name="date_planned"/>
                         <newline/>
                         <field name="location_src_id" placeholder="Source Location"/>
                         <field name="location_dest_id" placeholder="Destination Location"/>
@@ -24,7 +23,6 @@
         </record>
         <record id="act_mrp_product_produce_wizard" model="ir.actions.act_window">
             <field name="name">Production Make</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="res_model">wizard.production.make</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>

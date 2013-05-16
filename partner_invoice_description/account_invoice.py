@@ -15,7 +15,8 @@
 #    License, or (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    but WITHOUT ANY WARRANTY; without even the implied warranty ofres.partner form
+
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU Affero General Public License for more details.
 #
@@ -30,10 +31,13 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,
-                            date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+                            date_invoice=False, payment_term=False,
+                            partner_bank_id=False, company_id=False):
         res = super(
-            account_invoice, self).onchange_partner_id(cr, uid, ids, type, partner_id,
-                                                       date_invoice=date_invoice, payment_term=payment_term, partner_bank_id=partner_bank_id, company_id=company_id)
+            account_invoice, self).onchange_partner_id(cr, uid, ids, type,
+                    partner_id, date_invoice=date_invoice,
+                    payment_term=payment_term, partner_bank_id=partner_bank_id,
+                    company_id=company_id)
         if partner_id:
             partner_invoice_description = self.pool.get(
                 'res.partner').browse(cr, uid, partner_id).description_invoice
@@ -55,7 +59,7 @@ class stock_invoice_onshipping(osv.TransientModel):
                 cr, uid, res[invoice_id]).partner_id.description_invoice
             if invoice_description:
                 self.pool.get('account.invoice').write(cr, uid, res[
-                                                       invoice_id], {'comment': invoice_description})
+                                invoice_id], {'comment': invoice_description})
         return res
 
 
@@ -81,11 +85,14 @@ class sale_make_invoice(osv.TransientModel):
 class sale_order(osv.Model):
     _inherit = 'sale.order'
 
-    def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed', 'done', 'exception'], date_inv=False, context=None):
+    def action_invoice_create(self, cr, uid, ids, grouped=False,
+                                states=['confirmed', 'done', 'exception'],
+                                date_inv=False, context=None):
         if not context:
             context = {}
-        res = super(sale_order, self).action_invoice_create(cr, uid, ids, grouped=False, states=[
-            'confirmed', 'done', 'exception'], date_inv=date_inv, context=context)
+        res = super(sale_order, self).action_invoice_create(cr, uid, ids,
+                    grouped=False, states=['confirmed', 'done', 'exception'],
+                    date_inv=date_inv, context=context)
         invoice_description = self.pool.get('account.invoice').browse(
             cr, uid, res).partner_id.description_invoice
         if invoice_description:

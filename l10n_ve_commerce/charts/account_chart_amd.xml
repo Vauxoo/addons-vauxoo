@@ -1,3 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
   <data noupdate="1">
     <record model="account.account.template" id="account_amd_computer_account_0">
@@ -361,7 +362,7 @@
     </record>
     <record model="account.account.template" id="account_amd_computer_account_258">
       <field name="code">258</field>
-      <field name="name">PASIVOS INTERCOMPA&#209;IAS</field>
+      <field name="name">PASIVOS INTERCOMPAÑIAS</field>
       <field ref="account_25" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">view</field>
@@ -593,7 +594,7 @@
     </record>
     <record model="account.account.template" id="account_amd_computer_account_1127">
       <field name="code">1127</field>
-      <field name="name">COMPA&#209;IAS AFILIADAS Y RELACIONADAS</field>
+      <field name="name">COMPAÑIAS AFILIADAS Y RELACIONADAS</field>
       <field ref="account_112" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">view</field>
@@ -721,7 +722,7 @@
     </record>
     <record model="account.account.template" id="account_amd_computer_account_2123">
       <field name="code">2123</field>
-      <field name="name">COMPA&#209;IAS AFILIADAS Y RELACIONADAS</field>
+      <field name="name">COMPAÑIAS AFILIADAS Y RELACIONADAS</field>
       <field ref="account_212" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">view</field>
@@ -825,7 +826,7 @@
     </record>
     <record model="account.account.template" id="account_amd_computer_account_2581">
       <field name="code">2581</field>
-      <field name="name">PASIVOS INTERCOMPA&#209;IAS</field>
+      <field name="name">PASIVOS INTERCOMPAÑIAS</field>
       <field ref="account_258" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">view</field>
@@ -2337,7 +2338,7 @@
     </record>
     <record model="account.account.template" id="account_amd_computer_account_2581001">
       <field name="code">2581001</field>
-      <field name="name">PASIVOS INTERCOMPA&#209;IAS</field>
+      <field name="name">PASIVOS INTERCOMPAÑIAS</field>
       <field ref="account_2581" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -3409,7 +3410,7 @@
     </record>
     <record model="account.account.template" id="account_amd_computer_account_9113007">
       <field name="code">9113007</field>
-      <field name="name">AJUSTE DE A&#209;OS ANTERIORES</field>
+      <field name="name">AJUSTE DE AÑOS ANTERIORES</field>
       <field ref="account_9113" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>
@@ -3505,7 +3506,7 @@
     </record>
     <record model="account.account.template" id="account_amd_computer_account_9212006">
       <field name="code">9212006</field>
-      <field name="name">AJUSTES A&#209;OS ANTERIORES</field>
+      <field name="name">AJUSTES AÑOS ANTERIORES</field>
       <field ref="account_9212" name="parent_id"/>
       <field name="reconcile" eval="True"/>
       <field name="type">other</field>

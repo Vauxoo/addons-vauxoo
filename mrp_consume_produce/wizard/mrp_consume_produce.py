@@ -29,21 +29,23 @@ import decimal_precision as dp
 from openerp.tools.translate import _
 
 
-
 class mrp_consume(osv.TransientModel):
     _name = 'mrp.consume'
     _columns = {
-        'consume_line_ids': fields.one2many('mrp.consume.line', 'wizard_id', 'Consume')
+        'consume_line_ids': fields.one2many('mrp.consume.line',
+            'wizard_id', 'Consume')
     }
 
     def action_consume(self, cr, uid, ids, context={}):
         for production in self.browse(cr, uid, ids, context=context):
             for raw_product in production.consume_line_ids:
-                context.update({'product_uom': raw_product.product_uom.id,
-                                'product_uom_move': raw_product.move_id.product_uom.id,
-                                'quantity': raw_product.quantity})
+                context.update({
+                    'product_uom': raw_product.product_uom.id,
+                    'product_uom_move': raw_product.move_id.product_uom.id,
+                    'quantity': raw_product.quantity})
                 raw_product.move_id.action_consume(
-                    raw_product.quantity, raw_product.location_id.id, context=context)
+                    raw_product.quantity, raw_product.location_id.id,
+                    context=context)
         return {}
 
     def default_get(self, cr, uid, fields, context=None):
@@ -59,8 +61,9 @@ class mrp_consume(osv.TransientModel):
         if 'consume_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(
                 cr, uid, mrp_id, context=context)
-            moves = [self._partial_move_for(
-                cr, uid, m) for m in mrp.move_lines if m.state not in ('done', 'cancel')]
+            moves = [self._partial_move_for(cr, uid, m)\
+                    for m in mrp.move_lines if m.state\
+                    not in ('done', 'cancel')]
             res.update(consume_line_ids=moves)
         return res
 
@@ -80,7 +83,8 @@ class mrp_consume(osv.TransientModel):
 class mrp_produce(osv.TransientModel):
     _name = 'mrp.produce'
     _columns = {
-        'produce_line_ids': fields.one2many('mrp.consume.line', 'wizard2_id', 'Consume')
+        'produce_line_ids': fields.one2many('mrp.consume.line',
+            'wizard2_id', 'Consume')
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -96,19 +100,22 @@ class mrp_produce(osv.TransientModel):
         if 'produce_line_ids' in fields:
             mrp = self.pool.get('mrp.production').browse(
                 cr, uid, mrp_id, context=context)
-            moves = [self.pool.get('mrp.consume')._partial_move_for(
-                cr, uid, m) for m in mrp.move_created_ids if m.state not in ('done', 'cancel')]
+            moves = [self.pool.get('mrp.consume')._partial_move_for(cr, uid, m) \
+                    for m in mrp.move_created_ids if m.state\
+                    not in ('done', 'cancel')]
             res.update(produce_line_ids=moves)
         return res
 
     def action_produce(self, cr, uid, ids, context={}):
         for production in self.browse(cr, uid, ids, context=context):
             for raw_product in production.produce_line_ids:
-                context.update({'product_uom': raw_product.product_uom.id,
-                                'product_uom_move': raw_product.move_id.product_uom.id,
-                                'quantity': raw_product.quantity})
+                context.update({
+                    'product_uom': raw_product.product_uom.id,
+                    'product_uom_move': raw_product.move_id.product_uom.id,
+                    'quantity': raw_product.quantity})
                 raw_product.move_id.action_consume(
-                    raw_product.quantity, raw_product.location_id.id, context=context)
+                    raw_product.quantity, raw_product.location_id.id,
+                    context=context)
         return {}
 
 
@@ -116,13 +123,17 @@ class mrp_consume_line(osv.TransientModel):
     _name = 'mrp.consume.line'
     _rec_name = 'product_id'
     _columns = {
-        'product_id': fields.many2one('product.product', string="Product", required=True),
-        'quantity': fields.float("Quantity", digits_compute=dp.get_precision('Product UoM'), required=True),
-        'product_uom': fields.many2one('product.uom', 'Unit of Measure', required=True,),
-        'location_id': fields.many2one('stock.location', 'Location', required=True),
-        'location_dest_id': fields.many2one('stock.location', 'Dest. Location', required=True),
+        'product_id': fields.many2one('product.product', string="Product",
+            required=True),
+        'quantity': fields.float("Quantity",
+            digits_compute=dp.get_precision('Product UoM'), required=True),
+        'product_uom': fields.many2one('product.uom', 'Unit of Measure',
+            required=True,),
+        'location_id': fields.many2one('stock.location', 'Location',
+            required=True),
+        'location_dest_id': fields.many2one('stock.location',
+            'Dest. Location', required=True),
         'move_id': fields.many2one('stock.move', "Move"),
         'wizard_id': fields.many2one('mrp.consume', string="Wizard"),
         'wizard2_id': fields.many2one('mrp.produce', string="Wizard"),
     }
-

@@ -69,21 +69,29 @@ class procurement_order(osv.Model):
                         'origin': procurement.origin,
                         'product_id': procurement.product_id.id,
                         'location_id': procurement.location_id.id,
-                        'product_qty': self.pool.get('product.uom')._compute_qty(cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id),
+                        'product_qty': self.pool.get('product.uom')._compute_qty(cr,
+                            uid, procurement.product_uom.id,
+                            procurement.product_qty,
+                            to_uom_id=procurement.product_id.uom_id.id),
                         'product_uom': procurement.product_id.uom_id.id,
                         'procure_method': procurement.procure_method,
-                        'production_ids': procurement.production_ids and [(4, procurement.production_ids[0].id)] or False
+                        'production_ids': procurement.production_ids and
+                            [(4, procurement.production_ids[0].id)] or False
                     })
                 else:
                     if procurement.name:
-                        order_infos['name'] = (order_infos[
-                                               'name'] or '') + ',' + procurement.name
+                        order_infos['name'] = (order_infos['name'] or '') +\
+                        ',' + procurement.name
                     if procurement.origin:
-                        order_infos['origin'] = (order_infos[
-                                                 'origin'] or '') + ',' + procurement.origin
+                        order_infos['origin'] = (order_infos['origin'] or '') +\
+                        ',' + procurement.origin
                     if procurement.product_qty:
-                        order_infos['product_qty'] = (order_infos['product_qty'] or 0) + self.pool.get('product.uom')._compute_qty(
-                            cr, uid, procurement.product_uom.id, procurement.product_qty, to_uom_id=procurement.product_id.uom_id.id)
+                        order_infos['product_qty'] =\
+                        (order_infos['product_qty'] or 0) +\
+                        self.pool.get('product.uom')._compute_qty(
+                            cr, uid, procurement.product_uom.id,
+                            procurement.product_qty,
+                            to_uom_id=procurement.product_id.uom_id.id)
                     if procurement.production_ids:
                         order_infos['production_ids'].append((
                             4, procurement.production_ids[0].id))
