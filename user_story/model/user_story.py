@@ -93,9 +93,9 @@ class user_story(osv.Model):
                                            ('priority','Priority'),
                                            ('secondary','Secondary')],
                                            'Priority Level',
-                                           help='''User story level priority,\n
-                                                   used to define priority\n 
-                                                   for each user story'''), 
+                                           help='User story level priority,'
+                                                   ' used to define priority'
+                                                   ' for each user story'), 
         
         'asumption': fields.text('Asumptions'),
         'date': fields.date('Date'),
@@ -153,17 +153,15 @@ class project_task(osv.Model):
     """
 
     _inherit = 'project.task'
+
     def default_get(self, cr, uid, fields, context=None):
         '''Owerwrite default get to add project in new task automatically'''
 
         if context is None:
             context = {}
-    
         res = super(project_task, self).default_get(cr, uid, fields, context=context)
         context.get('project_task',False) and \
                 res.update({'project_id':context.get('project_task')})
-    
-    
         return res
     
 
@@ -178,10 +176,13 @@ class project_task(osv.Model):
 
         return {'value': v}
 
+
     _columns = {
         'userstory_id': fields.many2one('user.story', 'User Story',
                                         domain="[('sk_id', '=', sprint_id)]",
                                         help="Set here the User Story related with this task"),
-        'branch_to_clone':fields.char('Branch to clone', 512, help='Branch source for clone and make merge proposal'), 
+        'branch_to_clone':fields.char('Branch to clone', 512,
+                                      help='Branch source for clone and'
+                                           ' make merge proposal'), 
         
     }

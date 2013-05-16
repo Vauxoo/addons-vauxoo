@@ -138,11 +138,13 @@
         <tree string="User Story">
           <field name="name" />
           <field name="owner" />
+          <field name="priority_level" />
           <field name="planned_hours" sum="Total hours"/>
           <field name="project_id" />
           <field name="user_id" />
           <field name="sk_id" />
           <field name="task_ids" />
+          <field name="state" />
         </tree>
       </field>
     </record>
@@ -172,6 +174,10 @@
             <filter name="user_story_sk_id" icon="terp-personal" string="Sprint" context="{'group_by':'sk_id'}" />
             <separator orientation="vertical" />
             <filter name="user_story_task_ids" icon="terp-personal" string="Task" context="{'group_by':'task_ids'}" />
+            <separator orientation="vertical" />
+            <filter name="priority_level" icon="terp-personal" string="Priority Level" context="{'group_by':'priority_level'}" />
+            <separator orientation="vertical" />
+            <filter name="state" icon="terp-personal" string="States" context="{'group_by':'state'}" />
           </group>
         </search>
       </field>
