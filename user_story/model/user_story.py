@@ -160,4 +160,6 @@ class project_task(osv.Model):
         'userstory_id': fields.many2one('user.story', 'User Story',
                                         domain="[('sk_id', '=', sprint_id)]",
                                         help="Set here the User Story related with this task"),
+        'branch_to_clone':fields.char('Branch to clone', 512, help='Branch source for clone and make merge proposal'), 
+        
     }
