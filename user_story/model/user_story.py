@@ -144,6 +144,19 @@ class project_task(osv.Model):
     """
 
     _inherit = 'project.task'
+    def default_get(self, cr, uid, fields, context=None):
+        '''Owerwrite default get to add project in new task automatically'''
+
+        if context is None:
+            context = {}
+    
+        res = super(project_task, self).default_get(cr, uid, fields, context=context)
+        context.get('project_task',False) and \
+                res.update({'project_id':context.get('project_task')})
+    
+    
+        return res
+    
 
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
         v = {}

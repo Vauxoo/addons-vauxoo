@@ -114,7 +114,7 @@
             
             <page string="Link">
               <separator string="Tasks" colspan='4' />
-              <field name="task_ids" colspan="4" nolabel="1" widget="many2many"/>
+              <field name="task_ids" context="{'project_task':project_id}" colspan="4" nolabel="1" widget="many2many"/>
             </page>
           </notebook>
 		  </sheet>
