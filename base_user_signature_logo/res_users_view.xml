@@ -7,8 +7,8 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='User']/group" position="after">
-                           <field name="signature_logo" widget="image"/>
+                <xpath expr="//field[@name='lang']" position="before">
+                    <field name="signature_logo" widget="image" class="oe_avatar oe_left" />
                 </xpath>
             </field>
         </record>
