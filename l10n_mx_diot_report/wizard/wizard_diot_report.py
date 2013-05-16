@@ -50,7 +50,6 @@ class wizard_account_diot_mx(osv.osv_memory):
         if context is None:
             context = {}
         acc_diot_obj = self.browse(cr, uid, ids, context=context)
-         
         for wiz_qty in self.browse(cr, uid, ids, context=context):
             print "Periodo elegido", wiz_qty.month_id.id
             period_id = wiz_qty.month_id.id
@@ -70,8 +69,10 @@ class wizard_account_diot_mx(osv.osv_memory):
             date_start = line.date_start
             date_stop = line.date_stop
             print date_start, date_stop
+
         account_invoice = pooler.get_pool(cr.dbname).get('account.invoice').search(cr, uid, [('type','=', 'in_invoice')])
-        print account_invoice, len(account_invoice)
+
+        print 'account_invoice', account_invoice, len(account_invoice)
         counter = 0
         dic_move_line = {}
         for items in account_invoice:
