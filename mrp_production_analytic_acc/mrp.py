@@ -60,19 +60,27 @@ class mrp_production(osv.Model):
             res['value']['analytic_acc_fg'] = False
         return res
 
-    def _make_production_internal_shipment_line(self, cr, uid, production_line, shipment_id, parent_move_id, destination_location_id=False, context=None):
+    def _make_production_internal_shipment_line(self, cr, uid, production_line,
+                                                shipment_id, parent_move_id,
+                                                destination_location_id=False,
+                                                context=None):
         stock_move = self.pool.get('stock.move')
         production = production_line.production_id
         res = super(
-            mrp_production, self)._make_production_internal_shipment_line(cr, uid, production_line,
-                                                                          shipment_id, parent_move_id, destination_location_id=destination_location_id, context=context)
+            mrp_production, self)._make_production_internal_shipment_line(cr,
+                        uid, production_line, shipment_id,
+                        parent_move_id,
+                        destination_location_id=destination_location_id,
+                        context=context)
         print res
         if parent_move_id and production.analytic_acc_rm:
             stock_move.write(cr, uid, [parent_move_id], {
-                             'analytic_acc': production.analytic_acc_rm.id}, context=context)
+                             'analytic_acc': production.analytic_acc_rm.id},
+                                            context=context)
         if res and production.analytic_acc_rm:
             stock_move.write(cr, uid, [res], {
-                             'analytic_acc': production.analytic_acc_rm.id}, context=context)
+                             'analytic_acc': production.analytic_acc_rm.id},
+                                            context=context)
         return res
 
     def _make_production_produce_line(self, cr, uid, production, context=None):
@@ -81,22 +89,30 @@ class mrp_production(osv.Model):
             cr, uid, production, context=context)
         if production.analytic_acc_fg:
             stock_move.write(cr, uid, [res], {
-                             'analytic_acc': production.analytic_acc_fg.id}, context=context)
+                             'analytic_acc': production.analytic_acc_fg.id},
+                                            context=context)
         return res
 
-        def _make_production_consume_line(self, cr, uid, production_line, parent_move_id, source_location_id=False, context=None):
+        def _make_production_consume_line(self, cr, uid, production_line,
+                    parent_move_id, source_location_id=False, context=None):
             stock_move = self.pool.get('stock.move')
             production = production_line.production_id
             res = super(mrp_production, self)._make_production_consume_line(
-                cr, uid, production_line, parent_move_id, source_location_id=False, context=context)
+                cr, uid, production_line, parent_move_id,
+                source_location_id=False, context=context)
             if production.analytic_acc_rm.id:
                 stock_move.write(cr, uid, [res], {
-                                 'analytic_acc': production.analytic_acc_rm.id}, context=context)
+                            'analytic_acc': production.analytic_acc_rm.id},
+                                            context=context)
             return res
 
     _columns = {
-        'analytic_acc_rm': fields.many2one('account.analytic.account', 'Analytic Account RM', readonly=True, states={'draft': [('readonly', False)]}),
-        'analytic_acc_fg': fields.many2one('account.analytic.account', 'Analytic Account FG', readonly=True, states={'draft': [('readonly', False)]})
+        'analytic_acc_rm': fields.many2one('account.analytic.account',
+            'Analytic Account RM', readonly=True,
+            states={'draft': [('readonly', False)]}),
+        'analytic_acc_fg': fields.many2one('account.analytic.account',
+            'Analytic Account FG', readonly=True,
+            states={'draft': [('readonly', False)]})
     }
 
 
@@ -104,6 +120,8 @@ class mrp_bom(osv.Model):
     _inherit = "mrp.bom"
 
     _columns = {
-        'analytic_acc_rm': fields.many2one('account.analytic.account', 'Analytic Account RM',),
-        'analytic_acc_fg': fields.many2one('account.analytic.account', 'Analytic Account FG',)
+        'analytic_acc_rm': fields.many2one('account.analytic.account',
+            'Analytic Account RM',),
+        'analytic_acc_fg': fields.many2one('account.analytic.account',
+            'Analytic Account FG',)
     }

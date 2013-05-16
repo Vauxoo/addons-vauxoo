@@ -62,12 +62,25 @@ class sale_order(osv.Model):
                 prod_name = False
             context.update({'partner_id': order.partner_id.id})
             prod_name_search = prod_name and self.pool.get(
-                'product.product').name_search(cr, uid, prod_name, context=context) or False
+                'product.product').name_search(cr, uid, prod_name,
+                                               context=context) or False
             prod_id = prod_name_search and prod_name_search[0][0] or False
             lines = prod_id and self.pool.get(
-                'sale.order.line').product_id_change(cr, uid, [], order.pricelist_id.id, prod_id,
-                                                     qty=0, uom=False, qty_uos=0, uos=False, name='', partner_id=order.partner_id.id,
-                                                     lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False,).get('value', False) or {}
+                'sale.order.line').product_id_change(cr, uid, [],
+                                                     order.pricelist_id.id,
+                                                     prod_id, qty=0, uom=False,
+                                                     qty_uos=0, uos=False,
+                                                     name='',
+                                                     partner_id=
+                                                     order.partner_id.id,
+                                                     lang=False,
+                                                     update_tax=True,
+                                                     date_order=False,
+                                                     packaging=False,
+                                                     fiscal_position=False,
+                                                     flag=False,).get('value',
+                                                                      False)\
+                or {}
             if not lines and prod_name:
                 not_products.append(prod_name)
             if not prod_name:
@@ -75,7 +88,8 @@ class sale_order(osv.Model):
                     cr, uid, data2, [dat], 'init', '')
             for lin in range(len(lines.keys())):
                 if lines.keys()[lin] not in data[0]:
-                    if lines.keys()[lin] in ('tax_id', 'product_uom', 'product_packaging'):
+                    if lines.keys()[lin] in ('tax_id', 'product_uom',
+                                             'product_packaging'):
                         field_val = str(lines.keys()[lin])
                         field_val = field_val+'.id'
                         data2.append(field_val)
@@ -108,8 +122,12 @@ class sale_order(osv.Model):
                         pass
                     if val_str != val_str_2:
                         if not lines.keys()[lin] == 'price_unit':
-                            pmsg += _('%s , Field: %s, CSV: %s, OPEN: %s \n') % (tools.ustr(prod_name), lines.keys()[
-                                                                                 lin], tools.ustr(dat[data[0].index(lines.keys()[lin])]), tools.ustr(val_str_2))
+                            pmsg += _('%s , Field: %s, CSV: %s, OPEN: %s \n')\
+                                % (tools.ustr(prod_name),
+                                   lines.keys()[lin],
+                                   tools.ustr(dat[data[0].
+                                                  index(lines.keys()[lin])]),
+                                   tools.ustr(val_str_2))
                         if favalidate:
                             dat[data[0].index(lines.keys()[lin])] = val_str_2
                         else:
@@ -118,7 +136,8 @@ class sale_order(osv.Model):
             datas.append(dat)
             try:
                 lines and self.pool.get('sale.order.line').import_data(
-                    cr, uid, data2, datas, 'init', '', context=context) or False
+                    cr, uid, data2, datas, 'init', '', context=context) or\
+                    False
             except Exception, e:
                 return False
             data2 = []
@@ -129,14 +148,16 @@ class sale_order(osv.Model):
             msg += '%s \n' % (tools.ustr(p))
         msg += '\n'
         msg += _(
-            'Warning of price difference, CSV VS System in the following products:')
+            '''Warning of price difference, CSV VS System in
+               the following products:''')
         msg += '\n'
         for p in new_products_prices:
             p2 = (','.join(map(str, p)))
             msg += '%s \n' % (p2)
         msg += '\n'
         msg += _(
-            'Warning differences in other fields, CSV VS System in the following products and fields:')
+            '''Warning differences in other fields,
+               CSV VS System in the following products and fields:''')
         msg += '\n %s ' % (pmsg)
         msg2 = tools.ustr(pmsg)
         msg = tools.ustr(msg)+'%s ' % (msg2)

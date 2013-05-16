@@ -37,9 +37,9 @@ class inherited_invoice(osv.Model):
     """
     _inherit = "account.invoice"
     _columns = {
-        'profit_code': fields.integer("Code from profit", help="Invoice code from profit"),
+        'profit_code': fields.integer("Code from profit",
+            help="Invoice code from profit"),
     }
-
 
 
 class inherited_invoice_line(osv.Model):
@@ -47,11 +47,12 @@ class inherited_invoice_line(osv.Model):
     _columns = {
         'net_discount': fields.float('Net Discount', required=False,
         digits_compute=dp.get_precision('Account'),
-        help="""Loaded from data imported from Profit is equal to sale price minus real sold price"""),
-        'discount_code_profit': fields.char('Discount code from profit', size=7)
+        help="""Loaded from data imported from Profit is equal to sale price
+            minus real sold price"""),
+        'discount_code_profit': fields.char('Discount code from profit',
+            size=7)
     }
 
     _defaults = {
         'net_discount': 0.0
     }
-

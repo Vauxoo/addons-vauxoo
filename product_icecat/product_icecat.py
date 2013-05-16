@@ -33,22 +33,24 @@ class product_icecat(osv.Model):
     _name = "product.icecat"
 
 
-
 class product_icecat_mapline(osv.Model):
     _name = "product.icecat.mapline"
     _description = "Icecat Mapline Configuration"
 
     _columns = {
-        'name': fields.char('XML Field', size=32, required=True, help='Insert ID Category from Icecat'),
+        'name': fields.char('XML Field', size=32, required=True,
+            help='Insert ID Category from Icecat'),
         'model_id': fields.many2one('ir.model', 'OpenERP Model'),
-        'field_id': fields.many2one('ir.model.fields', 'OpenERP Field', required=True),
+        'field_id': fields.many2one('ir.model.fields', 'OpenERP Field',
+            required=True),
         'icecat_id': fields.many2one('product.icecat', 'Icecat'),
     }
 
     _defaults = {
-        'model_id': lambda self, cr, uid, c: self.pool.get('ir.model').search(cr, uid, [('model', '=', 'product.product')])[0],
+        'model_id': lambda self, cr, uid, c:\
+            self.pool.get('ir.model').\
+                    search(cr, uid, [('model', '=', 'product.product')])[0],
     }
-
 
 
 class product_icecat(osv.Model):
@@ -83,13 +85,17 @@ class product_icecat(osv.Model):
         'username': fields.char('User Name', size=32, required=True),
         'password': fields.char('Password', size=32, required=True),
         'active': fields.boolean('Active'),
-        'mapline_ids': fields.one2many('product.icecat.mapline', 'icecat_id', 'Mapline'),
+        'mapline_ids': fields.one2many('product.icecat.mapline',
+            'icecat_id', 'Mapline'),
         'ftp': fields.boolean('Active'),
         'ftpip': fields.char('IP', size=256),
-        'ftpdirectory': fields.char('Directory', size=256, help='If not use directory, insert . (point). If use directory, path FTP dir'),
+        'ftpdirectory': fields.char('Directory', size=256, 
+            help='If not use directory, insert . (point). If use\
+                directory, path FTP dir'),
         'ftpusername': fields.char('Username', size=32),
         'ftppassword': fields.char('Password', size=32),
-        'ftpurl': fields.char('URL', size=256, help='URL FTP Dir: http://domain/directory/'),
+        'ftpurl': fields.char('URL', size=256,
+            help='URL FTP Dir: http://domain/directory/'),
     }
 
     _defaults = {
@@ -101,6 +107,7 @@ class product_icecat(osv.Model):
             actv_ids = self.search(cr, uid, [('active', '=', True)])
             if len(actv_ids):
                 raise osv.except_osv(_('Error!'), _(
-                    'They are other icecat configuration with "Active" field checked. Only one configuration is avaible for active field.'))
+                    'They are other icecat configuration with "Active" field\
+                    checked. Only one configuration is avaible for active\
+                    field.'))
         return super(product_icecat, self).create(cr, uid, vals, context)
-

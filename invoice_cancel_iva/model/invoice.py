@@ -57,14 +57,18 @@ class account_invoice(osv.Model):
         if invo_brw.cancel_true:
             if invo_brw.wh_iva_id:
                 iva_line_obj.load_taxes(cr, uid, [
-                                        i.id for i in invo_brw.wh_iva_id.wh_lines], context=context)
+                    i.id for i in invo_brw.wh_iva_id.wh_lines],
+                    context=context)
                 for d in state:
                     if invo_brw.wh_iva_id.prev_state == 'cancel':
                         break
 
-                    if not all([False for line in invo_brw.wh_iva_id.wh_lines if not line.invoice_id.move_id]):
-                        raise osv.except_osv(_('Error'), _(
-                            'One of the bills involved in the vat retention has not been validated, because it does not have an associated retention'))
+                    if not all([False for line in invo_brw.wh_iva_id.wh_lines
+                                if not line.invoice_id.move_id]):
+                            raise osv.except_osv(_('Error'), _(
+                                'One of the bills involved in the vat retention\
+                                has not been validated, because it does not\
+                                have an associated retention'))
                     wf_service.trg_validate(
                         uid, 'account.wh.iva', invo_brw.wh_iva_id.id, d[1], cr)
 
@@ -82,7 +86,8 @@ class account_invoice(osv.Model):
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         if invo_brw.wh_iva_id:
             iva_obj.write(cr, uid, [invo_brw.wh_iva_id.id], {
-                          'prev_state': invo_brw.wh_iva_id.state}, context=context)
+                'prev_state': invo_brw.wh_iva_id.state},
+                context=context)
 
         res = super(account_invoice, self).invoice_cancel(
             cr, uid, ids, context=context)
@@ -96,4 +101,3 @@ class account_invoice(osv.Model):
         if invo_brw.wh_iva_id:
             return False
         return True
-

@@ -1,23 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
 <!-- Salesman Commission Main Menu-->
  
-     <menuitem
-        id="commission" 
-        name="Salesmen Commissions" 
-        parent="baremo.commission"
-        groups="group_comm_payment_manager"
-        sequence="10"
-        />
+     <menuitem id="commission" name="Salesmen Commissions" parent="baremo.commission" groups="group_comm_payment_manager" sequence="10"/>
         <!-- View FORM Creation for the object salesman.commission.payment-->
         <record model="ir.ui.view" id="commission_payment_form">
             <field name="name">commission.payment.form</field>
             <field name="model">commission.payment</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
 
-            <form string="Pago de Comisiones">
+            <form string="Pago de Comisiones" version="7.0">
                     <notebook colspan="6">
                         <page string="Datos">
                             <group col="2" colspan="1">
@@ -36,7 +29,7 @@
                             </group>
                             <field name="user_ids" nolabel="1">
                                 <tree>
-                                    <field name="name" string='Asesor'/>
+                                    <field name="name" string="Asesor"/>
                                 </tree>
                             </field>
                             
@@ -71,7 +64,7 @@
 
                     <notebook colspan="6">
                         <page string="Comisiones x Vendedor">
-                             <field name="saleman_ids" nolabel="1" mode="graph,tree,form" widget="one2many_list"  colspan="4"/>  
+                             <field name="saleman_ids" nolabel="1" mode="graph,tree" widget="one2many_list" colspan="4"/>  
                         </page>
                         <page string="Comisiones x Producto">
                             <field name="comm_line_ids" nolabel="1" mode="tree,graph" widget="one2many_list" colspan="4"/>
@@ -138,7 +131,6 @@
         <record model="ir.ui.view" id="commission_payment_tree">
             <field name="name">commission.payment.tree</field>
             <field name="model">commission.payment</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Pago de Comisiones">
                     <field name="name"/>
@@ -160,12 +152,7 @@
 
         <!-- Creating a menu to use the action sales_commission_payment_all_act -->
 
-        <menuitem 
-            name="Todas las comisiones"
-            id="commission_all_mi" 
-            action="commission_payment_all_act"
-            icon="terp-project"
-            parent="commission" />
+        <menuitem name="Todas las comisiones" id="commission_all_mi" action="commission_payment_all_act" icon="terp-project" parent="commission"/>
 
 <!--
          Creating a menu to open the View FORM of the object salesman.commission.payment 
@@ -180,18 +167,13 @@
 <!--
          Creating a menu to use the action sales_commission_payment_new_act 
 -->
-        <menuitem 
-            name="Crear Nueva Comision"
-            id="commission_payment_new_mi" 
-            action="commission_payment_new_act" 
-            parent="commission_all_mi"/>
+        <menuitem name="Crear Nueva Comision" id="commission_payment_new_mi" action="commission_payment_new_act" parent="commission_all_mi"/>
             
         <record model="ir.ui.view" id="commission_saleman_graph">
             <field name="name">commission.saleman.graph</field>
             <field name="model">commission.saleman</field>
-            <field name="type">graph</field>
             <field name="arch" type="xml">
-                <graph type='bar' string="Pago de Comisiones">
+                <graph type="bar" string="Pago de Comisiones">
                     <field name="saleman_id"/>
                     <field name="comm_total" operator="+"/>
                 </graph>
@@ -201,7 +183,6 @@
         <record model="ir.ui.view" id="commission_saleman_tree">
             <field name="name">commission.saleman.tree</field>
             <field name="model">commission.saleman</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Pago de Comisiones">
                     <field name="saleman_id"/>
@@ -213,9 +194,8 @@
         <record model="ir.ui.view" id="commission_saleman_form">
             <field name="name">commission.saleman.form</field>
             <field name="model">commission.saleman</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Pago de Comisiones">
+                <form string="Pago de Comisiones" version="7.0">
                     <field name="saleman_id"/>
                     <field name="comm_total"/>
                 </form>
@@ -225,9 +205,8 @@
         <record model="ir.ui.view" id="commission_lines_graph">
             <field name="name">commission.lines.graph</field>
             <field name="model">commission.lines</field>
-            <field name="type">graph</field>
             <field name="arch" type="xml">
-                <graph string="Comisiones x Producto" type='bar'>
+                <graph string="Comisiones x Producto" type="bar">
                     <field name="days"/>
                     <field name="commission" operator="+"/>
                 </graph>
@@ -237,7 +216,6 @@
         <record model="ir.ui.view" id="commission_lines_tree">
             <field name="name">commission.lines.tree</field>
             <field name="model">commission.lines</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Aqui se muestran todos los productos y sus respectivas comisiones">
                                         <field name="name"/>
@@ -272,9 +250,8 @@
         <record model="ir.ui.view" id="commission_lines_form">
             <field name="name">commission.lines.form</field>
             <field name="model">commission.lines</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Pago de Comisiones">
+                <form string="Pago de Comisiones" version="7.0">
                     <field name="saleman_id"/>
                     <field name="item"/>
                     <field name="commission"/>

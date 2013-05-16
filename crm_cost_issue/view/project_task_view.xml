@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-  <openerp>
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
       <data>
           <record id="view_cost_task_form2" model="ir.ui.view">
               <field name="name">cost.task.form2</field>
               <field name="model">project.task</field>
-              <field name="type">form</field>
               <field name="inherit_id" ref="project.view_task_form2"/>
               <field name="arch" type="xml">
-                  <xpath expr="/form/group/field[@name='user_id']" position="after">
+                  <xpath expr="//field[@name='user_id']" position="after">
                       <field name="cost_per_task"/>
                   </xpath>
               </field>
@@ -16,10 +15,9 @@
           <record id="view_cost_task_tree2" model="ir.ui.view">
               <field name="name">cost.task.tree2</field>
               <field name="model">project.task</field>
-              <field name="type">tree</field>
               <field name="inherit_id" ref="project.view_task_tree2"/>
               <field name="arch" type="xml">
-                  <xpath expr="/tree/field[@name='remaining_hours']" position="after">
+                  <xpath expr="//field[@name='remaining_hours']" position="after">
                       <field name="cost_per_task" sum="Total Cost"/>
                   </xpath>
               </field>

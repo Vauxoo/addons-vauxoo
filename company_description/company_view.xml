@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_res_company_inherit_legend_form">
             <field name="name">view.res.company.inherit.legend.form</field>
             <field name="model">res.company</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Bank Accounts']" position="after">
+                <xpath expr="//page[@string='General Information']" position="after">
                     <page string="Descriptions">
                            <separator string="Invoice Description"/>
                            <field colspan="4" name="description_invoice" nolabel="1"/>
@@ -21,4 +20,3 @@
         </record>
     </data>
 </openerp>
-

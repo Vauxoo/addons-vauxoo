@@ -26,7 +26,7 @@ from openerp.tools.translate import _
 
 import time
 import openerp.netsvc as netsvc
-import ir
+
 from mx import DateTime
 import pooler
 
@@ -45,15 +45,31 @@ class purchase_order_line(osv.Model):
         return res
 
     _columns = {
-        'discount': fields.float('Discount (%)', digits=(16, 2), help="If you chose apply a discount for this way you will overide the option of calculate based on Price Lists, you will need to change again the product to update based on pricelists, this value must be between 0-100"),
-        'price_unit': fields.float('Real Unit Price', required=True, digits=(16, 4), help="Price that will be used in the rest of accounting cycle"),
-        'price_base': fields.float('Base Unit Price', required=True, digits=(16, 4), help="Price base taken to calc the discount, is an informative price to use it in the rest of the purchase cycle like reference for users"),
+        'discount': fields.float('Discount (%)', digits=(16, 2), help="""If you
+                                 chose apply a discount for this way you will
+                                 overide the option of calculate based on
+                                 Price Lists, you will need to change again
+                                 the product to update based on pricelists,
+                                 this value must be between 0-100"""),
+        'price_unit': fields.float('Real Unit Price', required=True,
+                                   digits=(16, 4), help="""Price that will be
+                                   used in the rest of
+                                   accounting cycle"""),
+        'price_base': fields.float('Base Unit Price', required=True,
+                                   digits=(16, 4), help="""Price base taken to
+                                   calc the discount,
+                                   is an informative
+                                   price to use it in
+                                   the rest of the
+                                   purchase cycle like
+                                   reference for users"""),
     }
     _defaults = {
         'discount': lambda *a: 0.0,
     }
 
-    def discount_change(self, cr, uid, ids, product, discount, price_unit, product_qty, partner_id, price_base):
+    def discount_change(self, cr, uid, ids, product, discount, price_unit,
+                        product_qty, partner_id, price_base):
         if not product:
             return {'value': {'price_unit': 0.0, }}
         prod = self.pool.get('product.product').browse(cr, uid, product)
@@ -71,16 +87,30 @@ class purchase_order_line(osv.Model):
         return res
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty, uom,
-                          partner_id, date_order=False, fiscal_position=False, date_planned=False, name=False, price_unit=False, notes=False):
+                          partner_id, date_order=False, fiscal_position=False,
+                          date_planned=False, name=False, price_unit=False,
+                          notes=False):
         """Copied from purchase/purchase.py and modified to take discount"""
         if not pricelist:
             raise osv.except_osv(_('No Pricelist !'), _(
-                'You have to select a pricelist in the purchase form !\nPlease set one before choosing a product.'))
+                                                        '''You have to select a
+                                                        pricelist in the
+                                                        purchase form !\n
+                                                        Please set one before
+                                                        choosing a product.''')
+                                                        )
         if not partner_id:
-            raise osv.except_osv(_('No Partner!'), _(
-                'You have to select a partner in the purchase form !\nPlease set one partner before choosing a product.'))
+            raise osv.except_osv(_('No Partner!'), _('''You have to select a
+                                                      partner in the purchase
+                                                      form !\nPlease set one
+                                                      partner before choosing
+                                                      a product.'''))
         if not product:
-            return {'value': {'price_unit': 0.0, 'name': '', 'notes': '', 'product_uom': False}, 'domain': {'product_uom': []}}
+            return {'value': {'price_unit': 0.0,
+                              'name': '',
+                              'notes': '',
+                              'product_uom': False},
+                    'domain': {'product_uom': []}}
         prod = self.pool.get('product.product').browse(cr, uid, product)
         lang = False
         if partner_id:
@@ -103,7 +133,7 @@ class purchase_order_line(osv.Model):
             if s.name.id == partner_id:
                 seller_delay = s.delay
                 temp_qty = s.qty  # supplier _qty assigned to temp
-                if qty < temp_qty:  # If the supplier quantity is greater than entered from user, set minimal.
+                if qty < temp_qty:
                     qty = temp_qty
 
         price = self.pool.get(
@@ -117,17 +147,22 @@ class purchase_order_line(osv.Model):
         prod_name = prod.partner_ref
 
         res = {
-            'value': {'price_unit': price, 'price_base': price, 'name': prod_name, 'taxes_id': map(lambda x: x.id, prod.supplier_taxes_id),
-            'date_planned': dt, 'notes': prod.description_purchase,
-            'product_qty': qty,
-            'product_uom': uom}}
+            'value': {'price_unit': price,
+                      'price_base': price,
+                      'name': prod_name,
+                      'taxes_id': map(lambda x: x.id, prod.supplier_taxes_id),
+                      'date_planned': dt,
+                      'notes': prod.description_purchase,
+                      'product_qty': qty,
+                      'product_uom': uom}}
         domain = {}
 
         partner = self.pool.get('res.partner').browse(cr, uid, partner_id)
         taxes = self.pool.get('account.tax').browse(
             cr, uid, map(lambda x: x.id, prod.supplier_taxes_id))
         fpos = fiscal_position and self.pool.get(
-            'account.fiscal.position').browse(cr, uid, fiscal_position) or False
+            'account.fiscal.position').browse(cr, uid, fiscal_position) or \
+                    False
         res['value']['taxes_id'] = self.pool.get(
             'account.fiscal.position').map_tax(cr, uid, fpos, taxes)
 
@@ -137,12 +172,15 @@ class purchase_order_line(osv.Model):
         domain = {'product_uom': [(
             'category_id', '=', res2[0]['category_id'][0])]}
         if res2[0]['category_id'][0] != res3:
-            raise osv.except_osv(_('Wrong Product UOM !'), _(
-                'You have to select a product UOM in the same category than the purchase UOM of the product'))
+            raise osv.except_osv(_('Wrong Product UOM !'), _('''You have to
+                                                             select a product
+                                                             UOM in the same
+                                                             category than the
+                                                             purchase UOM of
+                                                             the product'''))
 
         res['domain'] = domain
         return res
-
 
 
 class purchase_order(osv.Model):
@@ -152,7 +190,8 @@ class purchase_order(osv.Model):
     def _get_order(self, cr, uid, ids, context={}):
         """Copied from purchase/purchase.py"""
         result = {}
-        for line in self.pool.get('purchase.order.line').browse(cr, uid, ids, context=context):
+        for line in self.pool.get('purchase.order.line').browse(cr, uid,
+                                                                ids, context):
             result[line.order_id.id] = True
         return result.keys()
 
@@ -161,7 +200,6 @@ class purchase_order(osv.Model):
         res[2].update({'discount': ol.discount,
                       'price_unit': ol.price_base or 0.0, })
         return res
-
 
 
 class stock_picking(osv.Model):
@@ -173,7 +211,6 @@ class stock_picking(osv.Model):
         if move_line and move_line.purchase_line_id:
             discount = move_line.purchase_line_id.discount
         return discount
-
 
 
 class account_invoice_line(osv.Model):
@@ -194,6 +231,8 @@ class account_invoice_line(osv.Model):
         return res
 
     _columns = {
-        'price_wd': fields.function(_get_price_wd, method=True, string='Price With Discount', store=True, type="float", digits=(16, 4)),
+        'price_wd': fields.function(_get_price_wd, method=True,
+                                    string='Price With Discount',
+                                    store=True, type="float", digits=(16, 4)),
     }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

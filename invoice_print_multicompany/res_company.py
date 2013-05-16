@@ -27,7 +27,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class invoice_multicompany_report(osv.Model):
     """
     invoice_multicompany_report
@@ -35,5 +34,7 @@ class invoice_multicompany_report(osv.Model):
 
     _inherit = 'res.company'
     _columns = {
-        'invoice_report_id': fields.many2one('ir.actions.report.xml', 'Invoice Report', required=False, domain="[('model','=','account.invoice')]"),
+        'invoice_report_id': fields.many2one('ir.actions.report.xml',
+            'Invoice Report', required=False,
+            domain="[('model','=','account.invoice')]"),
     }

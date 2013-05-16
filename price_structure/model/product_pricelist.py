@@ -53,7 +53,8 @@ class inherit_price_list_item(osv.Model):
             context = {}
         res = {}
         for item in self.browse(cr, uid, ids, context=context):
-            res[item.id] = item.price_version_id and item.price_version_id.pricelist_id and \
+            res[item.id] = item.price_version_id and \
+                item.price_version_id.pricelist_id and \
                 item.price_version_id.pricelist_id.id
 
         return res
@@ -67,9 +68,9 @@ class inherit_price_list_item(osv.Model):
         pricelist_obj = self.pool.get('product.pricelist')
         if context.get('product', False):
             for item in self.browse(cr, uid, ids, context=context):
-                price = pricelist_obj.price_get(cr, uid, [item.price_list_id and
-                                                          item.price_list_id.id],
-                                                context.get('product'), 1, context=context)
+                price = pricelist_obj.price_get(cr, uid,
+                            [item.price_list_id and item.price_list_id.id],
+                            context.get('product'), 1, context=context)
 
                 price = item.price_list_id and price.get(item.price_list_id.id)
 
@@ -78,9 +79,9 @@ class inherit_price_list_item(osv.Model):
 
             for item in self.browse(cr, uid, ids, context=context):
                 if item.product_id:
-                    price = pricelist_obj.price_get(cr, uid, [item.price_list_id and
-                                                              item.price_list_id.id],
-                                                    item.product_id.id, 1, context=context)
+                    price = pricelist_obj.price_get(cr, uid,
+                                [item.price_list_id and item.price_list_id.id],
+                                item.product_id.id, 1, context=context)
 
                     price = item.price_list_id and price.get(
                         item.price_list_id.id)
@@ -88,10 +89,11 @@ class inherit_price_list_item(osv.Model):
                     res[item.id] = price
 
                 elif item.product_active_id:
-                    price = pricelist_obj.price_get(cr, uid, [item.price_list_id and
-                                                              item.price_list_id.id],
-                                                    item.product_active_id and item.product_active_id.id,
-                                                    1, context=context)
+                    price = pricelist_obj.price_get(cr, uid,
+                                [item.price_list_id and item.price_list_id.id],
+                                item.product_active_id and
+                                item.product_active_id.id,
+                                1, context=context)
                     price = item.price_list_id and price.get(
                         item.price_list_id.id)
 
@@ -102,12 +104,20 @@ class inherit_price_list_item(osv.Model):
     _inherit = 'product.pricelist.item'
 
     _columns = {
-        'price_list_id': fields.function(_get_price_list, method=True, type='many2one', relation='product.pricelist', string='Price LIst'),
-        'compute_price': fields.function(_compute_price, method=True, type='float', string='Price'),
-        'price_version_id': fields.many2one('product.pricelist.version', 'Price List Version', required=True, select=True, ondelete='cascade'),
-        'product_active_id': fields.many2one('product.product', 'product', help='Product active to list price'),
-        'date_start': fields.related('price_version_id', 'date_start', type='date', string='Date Start'),
-        'date_end': fields.related('price_version_id', 'date_end', type='date', string='Date End'),
+        'price_list_id': fields.function(_get_price_list, method=True,
+            type='many2one', relation='product.pricelist',
+            string='Price LIst'),
+        'compute_price': fields.function(_compute_price, method=True,
+            type='float', string='Price'),
+        'price_version_id': fields.many2one('product.pricelist.version',
+            'Price List Version', required=True, select=True,
+            ondelete='cascade'),
+        'product_active_id': fields.many2one('product.product', 'product',
+            help='Product active to list price'),
+        'date_start': fields.related('price_version_id', 'date_start',
+            type='date', string='Date Start'),
+        'date_end': fields.related('price_version_id', 'date_end',
+            type='date', string='Date End'),
     }
 
     _defaults = {
@@ -119,4 +129,3 @@ class inherit_price_list_item(osv.Model):
         if context is None:
             context = {}
         return ids and self.unlink(cr, uid, ids, context=context)
-

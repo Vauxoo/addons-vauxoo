@@ -40,7 +40,8 @@ class mrp_bom(osv.Model):
 
     def _calc_cost_u(self, cr, uid, ids, field_name, arg, context):
         '''
-        funcion para el calculo del costo unitario, el cual es: product cost/ product qty
+        funcion para el calculo del costo unitario, el cual es:
+        product cost/ product qty
         @cost = se almacena el costo unitario final.
         @res = diccionario usado para retornar el id y el costo unitario.
         '''
@@ -53,8 +54,9 @@ class mrp_bom(osv.Model):
                     cost = l.product_id.standard_price*l.product_qty
                     res[i.id] = cost
                 else:
-                    cost = cost + self._calc_cost_u(cr, uid, [
-                                                    l.id], field_name, arg, context)[l.id]*l.product_qty
+                    cost = cost + self._calc_cost_u(cr, uid, [l.id],
+                                                field_name, arg,
+                                                context)[l.id]*l.product_qty
                     res[i.id] = cost/l.product_qty
             res[i.id] = i.cost_t/i.product_qty
             if 'sub_products' in i._columns and i.sub_products:
@@ -62,14 +64,17 @@ class mrp_bom(osv.Model):
                 product_uom_obj = self.pool.get('product.uom')
                 for sub_prod in i.sub_products:
                     sum_amount_subproducts += (product_uom_obj._compute_price(
-                        cr, uid, sub_prod.product_id.uom_id.id, sub_prod.product_id.standard_price, sub_prod.product_uom.id) * sub_prod.product_qty)
+                        cr, uid, sub_prod.product_id.uom_id.id,
+                        sub_prod.product_id.standard_price,
+                        sub_prod.product_uom.id) * sub_prod.product_qty)
                 res[i.id] =  (i.cost_t - sum_amount_subproducts) / \
                     i.product_qty  # mrp.bom valida cantidades mayores a 0
         return res
 
     def _get_category(self, cr, uid, ids, field_name, arg, context):
         '''
-        funcion para obtener la categoria del producto y luego aplicarla para la filtracion
+        funcion para obtener la categoria del producto y luego aplicarla
+        para la filtracion
         de las categorias de los campos product_uom  y product_uos
         '''
         res = {}
@@ -89,11 +94,19 @@ class mrp_bom(osv.Model):
         return res
 
     _columns = {
-        'cost_t': fields.function(_calc_cost, method=True, type='float', digits_compute=dp.get_precision('Cost_Bom'), string='Cost', store=False),
-        'cost_u': fields.function(_calc_cost_u, method=True, type='float', digits_compute=dp.get_precision('Cost_Bom'), string='Unit Cost', store=False),
-        'category_id': fields.function(_get_category, method=True, type='many2one', relation='product.uom.categ', string='Category Uom'),
-        'category_prod_id': fields.function(_get_category_prod, method=True, type='many2one', relation='product.category', string='Category'),
-        'product_uom_default_id': fields.related('product_id', 'uom_id', string="Uom Default", type='many2one', relation='product.uom'),
+        'cost_t': fields.function(_calc_cost, method=True, type='float',
+            digits_compute=dp.get_precision('Cost_Bom'),
+            string='Cost', store=False),
+        'cost_u': fields.function(_calc_cost_u, method=True, type='float',
+            digits_compute=dp.get_precision('Cost_Bom'),
+            string='Unit Cost', store=False),
+        'category_id': fields.function(_get_category, method=True,
+            type='many2one', relation='product.uom.categ',
+            string='Category Uom'),
+        'category_prod_id': fields.function(_get_category_prod, method=True,
+            type='many2one', relation='product.category', string='Category'),
+        'product_uom_default_id': fields.related('product_id', 'uom_id',
+            string="Uom Default", type='many2one', relation='product.uom'),
         #~ 'bom_assets':fields.boolean('Assets', help="Determine if the bom is of type assets."),
     }
 
@@ -112,4 +125,3 @@ class mrp_bom(osv.Model):
                     cost += j.costo_total
 
         return cost
-

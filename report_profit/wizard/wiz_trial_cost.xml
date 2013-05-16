@@ -1,24 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
 
         <record id="view_trial_cost_form" model="ir.ui.view">
             <field name="name">trial.cost.form</field>
             <field name="model">trial.cost</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Last Cost Price Sum">
+                <form string="Last Cost Price Sum" version="7.0">
                     <separator string="Sum By?" colspan="4"/>
-                    <field name="date_start" />
+                    <field name="date_start"/>
                     <field name="period_length"/>
                     <newline/>
                     <group colspan="2" col="4">
                         <group col="3" colspan="2">
-                            <field name="u_check" />
+                            <field name="u_check"/>
                             <field name="user_res_id" nolabel="1" attrs="{'readonly':[('u_check','!=',True)]}"/>
-                            <field name="p_check" />
+                            <field name="p_check"/>
                             <field name="partner_res_id" nolabel="1" attrs="{'readonly':[('p_check','!=',True)]}"/>
-                            <field name="c_check" />
+                            <field name="c_check"/>
                             <field name="cat_res_id" nolabel="1" attrs="{'readonly':[('c_check','!=',True)]}"/>
                         </group>
                     </group>
@@ -40,12 +39,7 @@
             <field name="target">new</field>
         </record>
 
-        <menuitem
-            name="trial profitability"
-            action="action_trial_cost"
-            id="menu_trial_cost"
-            parent="account.menu_finance_receivables"
-            groups="base.group_extended"/>
+        <menuitem name="trial profitability" action="action_trial_cost" id="menu_trial_cost" parent="account.menu_finance_receivables"/>
 
 
     </data>

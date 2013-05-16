@@ -64,9 +64,15 @@ class db_tools(osv.TransientModel):
         return self._db_default(cr, uid, context)[0][0]
 
     _columns = {
-        'filter': fields.selection([('backup', 'Backup'), ('restore', 'Backup-Restore')], 'Filter', help='Backup creates a backup of the database and stored in the path indicated, Restore-Backup creates a backup of the database, and in turn restores the new name'),
+        'filter': fields.selection([
+            ('backup', 'Backup'),
+            ('restore', 'Backup-Restore')], 'Filter',
+            help='Backup creates a backup of the database and stored\
+                in the path indicated, Restore-Backup creates a backup\
+                of the database, and in turn restores the new name'),
         'password': fields.char('Password', size=64, required=True),
-        'list_db': fields.selection(_db_default, 'Data Base Restore', required=True, readonly=True),
+        'list_db': fields.selection(_db_default, 'Data Base Restore',
+                                    required=True, readonly=True),
         'name_db': fields.char('Name DB', size=128, required=True),
         'path_save_db': fields.char('Path save DB', size=256, required=True)
     }
@@ -74,7 +80,8 @@ class db_tools(osv.TransientModel):
     _defaults = {
         'filter': 'restore',
         'list_db': db_default,
-        'name_db': lambda self, cr, uid, context=None: cr.dbname + time.strftime('_%Y%m%d_%H%M%S.backup'),
+        'name_db': lambda self, cr, uid, context=None: cr.dbname +
+        time.strftime('_%Y%m%d_%H%M%S.backup'),
         'path_save_db': tempfile.gettempdir()
     }
 

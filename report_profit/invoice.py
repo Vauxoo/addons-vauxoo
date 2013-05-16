@@ -10,8 +10,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -40,7 +40,9 @@ class account_invoice_line(osv.Model):
         for il in self.browse(cr, uid, ids, context):
             am_lines = self.move_line_id_cost_get(cr, uid, [il.id])
             total = 0.0
-            for m in self.pool.get('account.move.line').browse(cr, uid, am_lines, context):
+            for m in self.pool.get('account.move.line').browse(cr, uid,
+                                                               am_lines,
+                                                               context):
                 total += (m.quantity and (m.debit/m.quantity) or 0.0) - (
                     m.quantity and (m.credit/m.quantity) or 0.0)
 
@@ -77,12 +79,22 @@ class account_invoice_line(osv.Model):
 
     _description = "Last Invoice Price"
     _columns = {
-        'last_price': fields.float('Last Price', digits_compute=dp.get_precision('Account')),
-        'acc_cost': fields.function(_compute_lines, method=True, string='Costo', type="float", digits_compute=dp.get_precision('Account'),
+        'last_price': fields.float('Last Price',
+                                   digits_compute=dp.get_precision('Account')),
+        'acc_cost': fields.function(_compute_lines, method=True,
+                                    string='Costo', type="float",
+                                    digits_compute=dp.get_precision('Account'),
                                     store={
-                                    'account.invoice': (_get_iline_from_invoice, ['state', 'invoice_line'], 50),
-                                    'account.move.line': (_get_iline_from_amline, ['debit', 'credit', 'quantity'], 50),
-                                    }, help="The account moves cost of the invoice line"),
+                                    'account.invoice':
+                                    (_get_iline_from_invoice,
+                                     ['state',
+                                                         'invoice_line'], 50),
+                                    'account.move.line':
+                                    (_get_iline_from_amline,
+                                     ['debit', 'credit',
+                                      'quantity'], 50),
+                                    }, help="""The account moves cost
+                                               of the invoice line"""),
     }
 
     def move_line_id_cost_get(self, cr, uid, ids, *args):
@@ -92,17 +104,22 @@ class account_invoice_line(osv.Model):
         res = []
         for l in self.browse(cr, uid, ids):
             if l.invoice_id.type in ('out_invoice', 'out_refund'):
-                src_account_id = l.product_id.property_account_expense and l.product_id.property_account_expense.id or False
+                src_account_id = l.product_id.property_account_expense and\
+                    l.product_id.property_account_expense.id or\
+                    False
 
                 if not src_account_id:
     # raise osv.except_osv('Accion Invalida !', "Producto sin cuenta de costo
     # o inventario asignada!: '%s'" % (l.product_id.name,))
                     continue
+
                 # FIXME - que pasa si la factura no tiene movimiento(draft) o
                 # esta cancelada
                 if l.invoice_id.move_id:
                     for aml in l.invoice_id.move_id.line_id:
-                        if aml.account_id.id == src_account_id and aml.product_id.id == l.product_id.id and aml.quantity == l.quantity:
+                        if aml.account_id.id == src_account_id and\
+                           aml.product_id.id == l.product_id.id and\
+                           aml.quantity == l.quantity:
                             res.append(aml.id)
 
         return res
@@ -116,9 +133,14 @@ class account_invoice_line(osv.Model):
         aml_ids = []
         for l in self.browse(cr, uid, ids):
             if l.invoice_id.type in ('out_invoice', 'out_refund'):
-                src_account_id = l.product_id.property_stock_account_output and l.product_id.property_stock_account_output.id or False
+                src_account_id = l.product_id.property_stock_account_output \
+                    and \
+                    l.product_id.property_stock_account_output.id\
+                    or False
             else:
-                src_account_id = l.product_id.property_stock_account_input and l.product_id.property_stock_account_input.id or False
+                src_account_id = l.product_id.property_stock_account_input and\
+                    l.product_id.property_stock_account_input.id or\
+                    False
 
             if not src_account_id:
 # raise osv.except_osv('Accion Invalida !', "Producto sin cuenta de costo
@@ -127,7 +149,8 @@ class account_invoice_line(osv.Model):
 
             if l.invoice_id.move_id:
                 aml_ids = aml_obj.find(cr, uid, mov_id=l.invoice_id.move_id.id,
-                                       acc_id=src_account_id, prd_id=l.product_id.id,
+                                       acc_id=src_account_id,
+                                       prd_id=l.product_id.id,
                                        qty=l.quantity)
 
                 if aml_ids:
@@ -137,7 +160,8 @@ class account_invoice_line(osv.Model):
 
     def _update_last_cost(self, cr, uid, ids=False, context=None):
         """
-        Function called by the scheduler to update the last purchase cost of invoice line
+        Function called by the scheduler to update the
+        last purchase cost of invoice line
 
         @param self: The object pointer
         @param cr: the current row, from the database cursor,
@@ -158,14 +182,23 @@ class account_invoice_line(osv.Model):
         res = cr.fetchall()
         for line in line_inv_obj.browse(cr, uid, map(lambda x: x[0], res)):
             if line.invoice_id.state in ('open', 'paid'):
-                inv_id = line.invoice_id.parent_id and line.invoice_id.parent_id.id or line.invoice_id.id
+                inv_id = line.invoice_id.parent_id and\
+                    line.invoice_id.parent_id.id or line.invoice_id.id
                 prod_price = prod_obj._product_get_price(cr, uid, [
-                                                         line.product_id.id], inv_id, False, line.invoice_id.date_invoice, context, ('open', 'paid'), 'in_invoice')
-                if (not prod_price[line.product_id.id]) and line.product_id.seller_ids:
+                                                         line.product_id.id],
+                                                         inv_id, False,
+                                                         line.invoice_id.
+                                                         date_invoice,
+                                                         context,
+                                                         ('open', 'paid'),
+                                                         'in_invoice')
+                if (not prod_price[line.product_id.id]) and\
+                        line.product_id.seller_ids:
                     supinfo_ids = []
                     for sup in line.product_id.seller_ids:
                         supinfo_ids.append(sup.id)
-                    cr.execute('select max(price) from pricelist_partnerinfo where suppinfo_id in %s', (
+                    cr.execute('''select max(price) from pricelist_partnerinfo
+                                  where suppinfo_id in %s''', (
                         tuple(ids),))
                     record = cr.fetchone()
                     prod_price[
@@ -177,7 +210,6 @@ class account_invoice_line(osv.Model):
         return True
 
 
-
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
@@ -185,15 +217,11 @@ class account_invoice(osv.Model):
         if not context:
             context = {}
 
-        for invoice in self.browse(cr, uid, ids):
-            for line in invoice.invoice_line:
-                if line.acc_cost:
-                    print 'La factura: ', line.invoice_id.name, '  Posee un costo: ', line.acc_cost
-
          # Update the stored value (fields.function), so we write to trigger
          # recompute
-        self.pool.get('account.invoice').write(
-            cr, uid, ids, {'invoice_line': []}, context=context)
+         self.pool.get('account.invoice').write(cr, uid, ids,
+                                                {'invoice_line': []},
+                                                context=context)
 
         return True
 

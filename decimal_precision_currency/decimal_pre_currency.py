@@ -35,9 +35,10 @@ class res_currency_rate(osv.Model):
 
     _inherit = "res.currency.rate"
     _columns = {
-        'rate': fields.float('Rate', digits_compute=dp.get_precision('Currency'), required=True, help='The rate of the currency to the currency of rate 1'),
+        'rate': fields.float('Rate',
+            digits_compute=dp.get_precision('Currency'), required=True,
+            help='The rate of the currency to the currency of rate 1'),
     }
-
 
 
 class res_currency(osv.Model):
@@ -53,7 +54,11 @@ class res_currency(osv.Model):
         date = date or time.strftime('%Y-%m-%d')
         for id in ids:
             cr.execute(
-                "SELECT currency_id, rate FROM res_currency_rate WHERE currency_id = %s AND name <= %s ORDER BY name desc LIMIT 1", (id, date))
+                "SELECT currency_id, rate\
+                    FROM res_currency_rate\
+                WHERE currency_id = %s\
+                AND name <= %s\
+                ORDER BY name desc LIMIT 1", (id, date))
             if cr.rowcount:
                 id, rate = cr.fetchall()[0]
                 res[id] = rate
@@ -63,8 +68,10 @@ class res_currency(osv.Model):
 
     _inherit = "res.currency"
     _columns = {
-        'rate': fields.function(_current_rate, method=True, string='Current Rate', digits_compute=dp.get_precision('Currency'), help='The rate of the currency to the currency of rate 1'),
-        'rounding': fields.float('Rounding factor', digits_compute=dp.get_precision('Currency')),
+        'rate': fields.function(_current_rate, method=True,
+            string='Current Rate', digits_compute=dp.get_precision('Currency'),
+            help='The rate of the currency to the currency of rate 1'),
+        'rounding': fields.float('Rounding factor',
+            digits_compute=dp.get_precision('Currency')),
 
     }
-

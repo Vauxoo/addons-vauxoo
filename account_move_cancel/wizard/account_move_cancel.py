@@ -38,11 +38,14 @@ class account_move_cancel(osv.TransientModel):
 
     _name = 'account.move.cancel'
     _columns = {
-        'invoice_ids': fields.many2many('account.invoice', 'invoice_rel', 'invoice1', 'invoice2', 'Invoices', help="Select the invoices to account move cancel"),
+        'invoice_ids': fields.many2many('account.invoice', 'invoice_rel',
+                            'invoice1', 'invoice2', 'Invoices',
+                            help="Select the invoices to account move cancel"),
 
     }
 
-    def cancel_account_move(self, cr, uid, ids, context=None, invoice_ids=False):
+    def cancel_account_move(self, cr, uid, ids, context=None,
+                            invoice_ids=False):
         '''
             Cancel invoices to delete account move
             @param invoice_ids, ids list of invoices to method apply
@@ -66,66 +69,76 @@ class account_move_cancel(osv.TransientModel):
             invo_brw = invo_brw[0].invoice_ids
             for invo in invo_brw:
                 invo_ids.append(invo.id)
-                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and islr_ids.append(
-                    invo.islr_wh_doc_id.id)
-                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and iva_ids.append(
-                    invo.wh_iva_id.id)
+                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and\
+                    islr_ids.append(invo.islr_wh_doc_id.id)
+                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and\
+                    iva_ids.append(invo.wh_iva_id.id)
                 invo.journal_id and journal_ids.append(invo.journal_id.id)
 
-                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and invo.islr_wh_doc_id.journal_id and \
+                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and\
+                    invo.islr_wh_doc_id.journal_id and \
                     journal_ids.append(invo.islr_wh_doc_id.journal_id.id)
 
-                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and invo.wh_iva_id.journal_id and \
+                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and \
+                    invo.wh_iva_id.journal_id and \
                     journal_ids.append(invo.wh_iva_id.journal_id.id)
 
         else:
             invo_brw = invo_obj.browse(cr, uid, invoice_ids, context=context)
             for invo in invo_brw:
                 invo_ids.append(invo.id)
-                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and islr_ids.append(
-                    invo.islr_wh_doc_id.id)
-                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and iva_ids.append(
-                    invo.wh_iva_id.id)
+                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and\
+                    islr_ids.append(invo.islr_wh_doc_id.id)
+                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and\
+                    iva_ids.append(invo.wh_iva_id.id)
                 invo.journal_id and journal_ids.append(invo.journal_id.id)
 
-                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and invo.islr_wh_doc_id.journal_id and \
+                hasattr(invo, 'islr_wh_doc_id') and invo.islr_wh_doc_id and\
+                    invo.islr_wh_doc_id.journal_id and \
                     journal_ids.append(invo.islr_wh_doc_id.journal_id.id)
 
-                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and invo.wh_iva_id.journal_id and \
+                hasattr(invo, 'wh_iva_id') and invo.wh_iva_id and\
+                    invo.wh_iva_id.journal_id and \
                     journal_ids.append(invo.wh_iva_id.journal_id.id)
 
-        hasattr(journal_obj.browse(cr, uid, journal_ids[0], context=context), 'update_posted') and \
+        hasattr(journal_obj.browse(cr, uid, journal_ids[0], context=context),
+                'update_posted') and \
             journal_obj.write(cr, uid, journal_ids, {
                               'update_posted': True}, context=context)
         if invo_ids:
             if iva_ids and context.get('iva'):
+                [cr.execute(
+                    "update wkf_instance set state='active' where res_id =%s" %
+                    i) for i in iva_ids]
 
-                [cr.execute("update wkf_instance set state='active' where res_id =%s" %
-                            i) for i in iva_ids]
-
-                len(iva_ids) == 1 and wf_service.trg_validate(uid, 'account.wh.iva', iva_ids[0], 'cancel', cr) or \
+                len(iva_ids) == 1 and wf_service.trg_validate(uid,
+                            'account.wh.iva', iva_ids[0], 'cancel', cr) or \
                     [wf_service.trg_validate(
                      uid, 'account.wh.iva', i, 'cancel', cr) for i in iva_ids]
 
             if islr_ids and context.get('islr'):
 
-                [cr.execute("update wkf_instance set state='active' where res_id =%s" %
-                            i) for i in islr_ids]
+                [cr.execute(
+                    "update wkf_instance set state='active' where res_id =%s" %
+                    i) for i in islr_ids]
 
-                len(islr_ids) == 1 and wf_service.trg_validate(uid, 'islr.wh.doc', islr_ids[0], 'act_cancel', cr) or \
+                len(islr_ids) == 1 and wf_service.trg_validate(uid,
+                            'islr.wh.doc', islr_ids[0], 'act_cancel', cr) or \
                     [wf_service.trg_validate(
-                     uid, 'islr.wh.doc', i, 'act_cancel', cr) for i in islr_ids]
+                        uid, 'islr.wh.doc', i, 'act_cancel', cr)
+                        for i in islr_ids]
 
             names = [invo.nro_ctrl for invo in invo_brw if invo.payment_ids]
 
             if names:
                 raise osv.except_osv(_('Invalid action !'), _(
-                    "Impossible invoice(s) cancel %s  because is/are paid!" % (' '.join(names))))
-
-            invo_obj.action_cancel(cr, uid, invo_ids, ())
+                    "Impossible invoice(s) cancel %s  because is/are paid!"
+                    % (' '.join(names))))
+            invo_obj.action_cancel(cr, uid, invo_ids, context=context)#correccion estaba llegando tupla () al unlink
             invo_obj.write(cr, uid, invo_ids, {
                            'cancel_true': True}, context=context)
-            hasattr(journal_obj.browse(cr, uid, journal_ids[0], context=context), 'update_posted') and \
+            hasattr(journal_obj.browse(cr, uid, journal_ids[0],
+                                       context=context), 'update_posted') and \
                 journal_obj.write(cr, uid, journal_ids, {
                                   'update_posted': False}, context=context)
 

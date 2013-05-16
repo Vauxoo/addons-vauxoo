@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
         <menuitem id="menu_account_costo" name="Analisis de Costo" parent="account.menu_finance"/>
@@ -8,23 +8,12 @@
         <record id="view_report_profit_picking_filter" model="ir.ui.view">
             <field name="name">report.profit.picking.search</field>
             <field name="model">report.profit.picking</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Search Profit Picking">
                    <group col="10" colspan="4">
-                    <filter icon="terp-go-year" string="  Year  "
-                        name="year"
-                        domain="[('date','&lt;=', time.strftime('%%Y-%%m-%%d')),('date','&gt;=',time.strftime('%%Y-01-01'))]"
-                        help="Send or received product in current year"/>
-                    <filter icon="terp-go-month" string="   Month   "
-                        name="month"
-                        domain="[('date','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"
-                        help="Send or received product in current month"/>
-                    <filter icon="terp-go-month"
-                         string="    Month-1    "
-                         separator="1"
-                         domain="[('date','&lt;=', (datetime.date.today() - relativedelta(day=31, months=1)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(datetime.date.today() - relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]"
-                         help="Send or received product in last month"/>
+                    <filter icon="terp-go-year" string="  Year  " name="year" domain="[('date','&lt;=', time.strftime('%%Y-%%m-%%d')),('date','&gt;=',time.strftime('%%Y-01-01'))]" help="Send or received product in current year"/>
+                    <filter icon="terp-go-month" string="   Month   " name="month" domain="[('date','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]" help="Send or received product in current month"/>
+                    <filter icon="terp-go-month" string="    Month-1    " separator="1" domain="[('date','&lt;=', (datetime.date.today() - relativedelta(day=31, months=1)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(datetime.date.today() - relativedelta(day=1,months=1)).strftime('%%Y-%%m-%%d'))]" help="Send or received product in last month"/>
                     <separator orientation="vertical"/>
                     <filter name="out_picking" icon="terp-document-new" string="Sending Goods" domain="[('type','=','out')]" help="Out Product"/>
                     <filter name="in_picking" icon="terp-gtk-media-pause" string="Getting Goods" domain="[('type','=','in')]" help="In Product"/>
@@ -59,7 +48,6 @@
         <record id="view_profit_picking_tree" model="ir.ui.view">
             <field name="name">report.profit.picking.tree</field>
             <field name="model">report.profit.picking</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Move by Picking">
                     <field name="name"/>
@@ -68,7 +56,6 @@
                     <field name="day" invisible="1"/>
                     <field name="month" invisible="1"/>
                     <field name="date_inv"/>
-                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -102,12 +89,10 @@
         <record id="view_profit_picking_form" model="ir.ui.view">
             <field name="name">report.profit.picking.form</field>
             <field name="model">report.profit.picking</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Move by Picking">
+                <form string="Move by Picking" version="7.0">
                     <field name="name"/>
                     <field name="date_inv"/>
-                    <field name="type"/>
                     <field name="picking_id"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_line_id"/>
@@ -148,11 +133,7 @@
             <field name="help">This report performs the stock move.</field>
         </record>
         
-        <menuitem 
-            action="action_profit_picking_tree" 
-            id="menu_profit_picking" 
-            parent="menu_account_costo" 
-            name="Analisis de Costo2"/>
+        <menuitem action="action_profit_picking_tree" id="menu_profit_picking" parent="menu_account_costo" name="Analisis de Costo2"/>
 
     </data>
 </openerp>

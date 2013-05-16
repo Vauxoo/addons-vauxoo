@@ -59,7 +59,7 @@ class print_account_invoice_report(osv.TransientModel):
 
         service = netsvc.LocalService('report.' + report.report_name)
         (result, format) = service.create(cr, uid, context[
-                                          'active_ids'], {'model': context['active_model']}, {})
+                        'active_ids'], {'model': context['active_model']}, {})
         return base64.encodestring(result)
 
     def _get_report_name(self, cr, uid, context):
@@ -72,7 +72,9 @@ class print_account_invoice_report(osv.TransientModel):
         return report.report_name
 
     def print_invoice(self, cr, uid, ids, context=None):
-        return {'type': 'ir.actions.report.xml', 'report_name': self._get_report_name(cr, uid, context), 'datas': {'ids': context['active_ids']}}
+        return {'type': 'ir.actions.report.xml',
+            'report_name': self._get_report_name(cr, uid, context),
+            'datas': {'ids': context['active_ids']}}
 
     _columns = {
         'company': fields.char('Company', 64, readonly=True, requied=True),

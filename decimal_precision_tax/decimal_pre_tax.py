@@ -36,5 +36,8 @@ class account_tax(osv.Model):
 
     _inherit = "account.tax"
     _columns = {
-        'amount': fields.float('Amount', digits_compute=dp.get_precision('Tax'), required=True, help="For taxes of type percentage, enter % ratio between 0-1."),
+        'amount': fields.float('Amount',
+            digits_compute=dp.get_precision('Tax'),
+            required=True,
+            help="For taxes of type percentage, enter % ratio between 0-1."),
     }

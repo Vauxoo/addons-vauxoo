@@ -1,120 +1,112 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
   <data>
-    <record model='ir.ui.view' id='metho_cost_form'>
-      <field name='name'>Method</field>
-      <field name='model'>method.price</field>
-      <field name='type'>form</field>
-      <field name='arch' type='xml'>
-        <form string="Method">
-            <field name='unit_price' />
-          <field name='sequence' />
-          <field name='cost_structure_id' invisible="1" />
-          <field name='date' />
-          <field name='price_referen' />
-          <field name='margin_reference' />
-          <field name='date_prom_begin' />
-          <field name='date_prom_end' />
-          <field name='default_cost' />
+    <record model="ir.ui.view" id="metho_cost_form">
+      <field name="name">Method</field>
+      <field name="model">method.price</field>
+      <field name="arch" type="xml">
+        <form string="Method" version="7.0">
+            <field name="unit_price"/>
+          <field name="sequence"/>
+          <field name="cost_structure_id" invisible="1"/>
+          <field name="date"/>
+          <field name="price_referen"/>
+          <field name="margin_reference"/>
+          <field name="date_prom_begin"/>
+          <field name="date_prom_end"/>
+          <field name="default_cost"/>
         </form>
       </field>
     </record>
-    <record model='ir.ui.view' id='metho_cost_tree'>
-      <field name='name'>Method</field>
-      <field name='model'>method.price</field>
-      <field name='type'>tree</field>
-      <field name='arch' type='xml'>
+    <record model="ir.ui.view" id="metho_cost_tree">
+      <field name="name">Method</field>
+      <field name="model">method.price</field>
+      <field name="arch" type="xml">
         <tree string="Method">
-          <field name='unit_price' />
-          <field name='sequence' />
-          <field name='cost_structure_id' invisible="1" />
-          <field name='date' />
-          <field name='price_referen' />
-          <field name='margin_reference' />
-          <field name='date_prom_begin' />
-          <field name='date_prom_end' />
-          <field name='default_cost' />
+          <field name="unit_price"/>
+          <field name="sequence"/>
+          <field name="cost_structure_id" invisible="1"/>
+          <field name="date"/>
+          <field name="price_referen"/>
+          <field name="margin_reference"/>
+          <field name="date_prom_begin"/>
+          <field name="date_prom_end"/>
+          <field name="default_cost"/>
         </tree>
       </field>
     </record>
-    <record model='ir.ui.view' id='cost_form_view'>
-      <field name='name'>Vendedor</field>
-      <field name='model'>cost.structure</field>
-      <field name='type'>form</field>
-      <field name='arch' type='xml'>
-        <form string="Cost and Price">
+    <record model="ir.ui.view" id="cost_form_view">
+      <field name="name">Vendedor</field>
+      <field name="model">cost.structure</field>
+      <field name="arch" type="xml">
+        <form string="Cost and Price" version="7.0">
           <group colspan="7">
             <group colspan="6">
-              <field name='type' colspan="1" />
-              <field name='serial' />
-              <field name='date_reg' />
+              <field name="serial"/>
+              <field name="date_reg"/>
             </group>
-            <field name='description' />
+            <field name="description"/>
           </group>
           <group colspan="6" col="4" string="Costos">
-            <field name='cost_ult' />
-            <field name='date_cost_ult' />
-            <field name='ult_om' />
-            <field name='date_ult_om' />
-            <field name='cost_prom' colspan="1" />
-            <field name='date_cost_prom' />
-            <field name='prom_om' />
-            <field name='date_prom_om' />
-            <field name='cost_suppler' />
-            <field name='date_cost_suppler' />
-            <field name='ant_om' />
-            <field name='date_ant_om' />
-            <field name='cost_ant' />
-            <field name='date_cost_ant' />
-            <field name='cost_to_price' />
-            <field name='date_cost_to_price' />
+            <field name="cost_ult"/>
+            <field name="date_cost_ult"/>
+            <field name="ult_om"/>
+            <field name="date_ult_om"/>
+            <field name="cost_prom" colspan="1"/>
+            <field name="date_cost_prom"/>
+            <field name="prom_om"/>
+            <field name="date_prom_om"/>
+            <field name="cost_suppler"/>
+            <field name="date_cost_suppler"/>
+            <field name="ant_om"/>
+            <field name="date_ant_om"/>
+            <field name="cost_ant"/>
+            <field name="date_cost_ant"/>
+            <field name="cost_to_price"/>
+            <field name="date_cost_to_price"/>
           </group>
           <group colspan="6" col="8">
-            <field name='method_cost_ids' nolabel="1">
+            <field name="method_cost_ids" nolabel="1">
               <tree string="Method Price" editable="buttom">
-                <field name='sequence' />
-                <field name='cost_structure_id' invisible="1"/>
-                <field name='unit_price' />
-                <field name='date' />
-                <field name='margin' />
-                <field name='price_referen' />
-                <field name='margin_reference' />
-                <field name='min_margin' />
-                <field name='date_prom_begin' />
-                <field name='date_prom_end' />
-                <field name='default_cost' />
+                <field name="sequence"/>
+                <field name="cost_structure_id" invisible="1"/>
+                <field name="unit_price"/>
+                <field name="date"/>
+                <field name="margin"/>
+                <field name="price_referen"/>
+                <field name="margin_reference"/>
+                <field name="min_margin"/>
+                <field name="date_prom_begin"/>
+                <field name="date_prom_end"/>
+                <field name="default_cost"/>
               </tree>
             </field>
           </group>
         </form>
       </field>
     </record>
-    <record model='ir.ui.view' id='cost_tree_view'>
-      <field name='name'>Comprador</field>
-      <field name='model'>cost.structure</field>
-      <field name='type'>tree</field>
-      <field name='arch' type='xml'>
+    <record model="ir.ui.view" id="cost_tree_view">
+      <field name="name">Comprador</field>
+      <field name="model">cost.structure</field>
+      <field name="arch" type="xml">
         <tree string="Cost and Price">
-          <field name='cost_ult' />
+          <field name="cost_ult"/>
           <!-- <field name='unit_price'/> <field name='cost_to_price'/> -->
         </tree>
       </field>
     </record>
-    <record model='ir.actions.act_window' id='cost_action'>
-      <field name='name'>Cost and Price</field>
-      <field name='res_model'>cost.structure</field>
-      <field name='view_type'>form</field>
-      <field name='vies_mode'>tree,form</field>
+    <record model="ir.actions.act_window" id="cost_action">
+      <field name="name">Cost and Price</field>
+      <field name="res_model">cost.structure</field>
+      <field name="view_type">form</field>
+      <field name="vies_mode">tree,form</field>
     </record>
-    <record model='ir.actions.act_window' id='method_action'>
-      <field name='name'>Cost Method</field>
-      <field name='res_model'>method.price</field>
-      <field name='view_type'>form</field>
-      <field name='vies_mode'>tree,form</field>
+    <record model="ir.actions.act_window" id="method_action">
+      <field name="name">Cost Method</field>
+      <field name="res_model">method.price</field>
+      <field name="view_type">form</field>
+      <field name="vies_mode">tree,form</field>
     </record>
-    <menuitem name = "Cost  and Prices" 
-            id ="cost_price" sequence ='50' parent = 'base.menu_sale_config_sales'
-  action = 'cost_action'
-  />
+    <menuitem name="Cost  and Prices" id="cost_price" sequence="50" parent="base.menu_sale_config_sales" action="cost_action"/>
   </data>
 </openerp>

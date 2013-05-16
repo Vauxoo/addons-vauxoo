@@ -1,18 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
-        <report             
-            id="account.account_move_vauxoo"
-            menu="True"  
-            model="account.move" 
-            name="account.move_vauxoo" 
-            rml="report_move_voucher/report/move_voucher.rml" 
-            string="Imprimir Comprobante"
-            auto="False" 
-            header="False" 
-            />
+        <report id="account.account_move_vauxoo" menu="True" model="account.move" name="account.move_vauxoo" rml="report_move_voucher/report/move_voucher.rml" string="Imprimir Comprobante" auto="False" header="False"/>
     </data>
 </openerp>
-
-
-

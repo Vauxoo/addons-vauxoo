@@ -10,8 +10,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -36,6 +36,8 @@ class account_move_line(osv.Model):
 
     _inherit = 'account.move.line'
     _columns = {
-        'type_id': fields.many2one('transaction.type', 'Transaction Type', help="Name of transaction type"),
+        'type_id': fields.many2one('transaction.type',
+                                   'Transaction Type',
+                                   help="Name of transaction type"),
 
     }

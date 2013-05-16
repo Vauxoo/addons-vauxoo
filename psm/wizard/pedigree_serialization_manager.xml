@@ -1,30 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
   <data>
     <record id="view_pedigree_serialization_manager" model="ir.ui.view">
       <field name="name">Pedigree Serialization Manager</field>
       <field name="model">pedigree.serialization.manager</field>
-      <field name="type">form</field>
       <field name="arch" type="xml">
-        <form string="Split in lots">
+        <form string="Split in lots" version="7.0">
           <group width="550" height="350">
-            <field name="product_id" readonly="1" />
-            <field name="qty" readonly="1" />
-            <field name="product_uom" readonly="1" />
-            <field name="location_id" invisible="1" />
+            <field name="product_id" readonly="1"/>
+            <field name="qty" readonly="1"/>
+            <field name="product_uom" readonly="1"/>
+            <field name="location_id" invisible="1"/>
             <group colspan="4" string="Production Lot Numbers">
                 <field name="psm" colspan="4" nolabel="1" height="200"/>
             </group>
             <separator colspan="4"/>
-            <button icon='gtk-cancel'  colspan="2" special="cancel" string="Cancel" />
-            <button name="split_lot"  colspan="2" string="Ok" type="object" icon="gtk-ok" />
+            <button icon="gtk-cancel" colspan="2" special="cancel" string="Cancel"/>
+            <button name="split_lot" colspan="2" string="Ok" type="object" icon="gtk-ok"/>
           </group>
         </form>
       </field>
     </record>
     <record id="track_line2" model="ir.actions.act_window">
       <field name="name">Pedigree Serialization Manager</field>
-      <field name="type">ir.actions.act_window</field>
       <field name="res_model">pedigree.serialization.manager</field>
       <field name="view_type">form</field>
       <field name="view_mode">form</field>

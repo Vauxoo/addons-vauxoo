@@ -27,7 +27,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class virtual_items(osv.TransientModel):
 
     '''Create items by product'''
@@ -36,10 +35,10 @@ class virtual_items(osv.TransientModel):
 
     _columns = {
         'price_create_id': fields.many2one('create.price.list', 'List'),
-        'items_id': fields.many2one('product.pricelist.item', 'List items', help='items by roduct'),
+        'items_id': fields.many2one('product.pricelist.item', 'List items',
+            help='items by roduct'),
 
     }
-
 
 
 class create_price_list(osv.TransientModel):
@@ -59,12 +58,17 @@ class create_price_list(osv.TransientModel):
     _name = 'create.price.list'
 
     _columns = {
-        'version_ids': fields.many2many('product.pricelist.version', 'version_to_item_create', 'wz_id', 'version_id', 'Versions', help='Version from price_list'),
-        'pricelist_id': fields.many2one('product.pricelist', 'Price List', help='Price list to create version'),
+        'version_ids': fields.many2many('product.pricelist.version',
+            'version_to_item_create', 'wz_id', 'version_id', 'Versions',
+            help='Version from price_list'),
+        'pricelist_id': fields.many2one('product.pricelist', 'Price List',
+            help='Price list to create version'),
 
-        'pricelist_ids': fields.one2many('virtual.items', 'price_create_id', 'Items', help='Create items for this product'),
+        'pricelist_ids': fields.one2many('virtual.items', 'price_create_id',
+            'Items', help='Create items for this product'),
 
-        'product_id': fields.many2one('product.product', 'Product', help='Product'),
+        'product_id': fields.many2one('product.product', 'Product',
+            help='Product'),
 
 
     }
@@ -79,4 +83,3 @@ class create_price_list(osv.TransientModel):
                 'pricelist_id', '=', pricelist)], context=context)
 
         return {'value': {'version_ids': version_ids}}
-

@@ -1,15 +1,14 @@
-<?xml version="1.0"?>
-  <openerp>
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
     <data>
     
       <record model="ir.ui.view" id="view_invoice_bst_sup_inherit">
         <field name="name">account.invoice.bstl.sup.form.inherit</field>
         <field name="model">account.invoice</field>
-        <field name="type">form</field>
         <field name="inherit_id" ref="account.invoice_supplier_form"/>
         <field name="arch" type="xml">
-            <xpath expr="/form/notebook/page[@string='Payments']" position="after">
-                <page string="Bank Statements Lines" >
+            <xpath expr="//page[@string='Payments']" position="after">
+                <page string="Bank Statements Lines">
                     <separator string="Bank Statements Lines" colspan="4"/>
                     <field name="bank_statement_line_ids" colspan="4" nolabel="1"/>
                     <button type="object" string="Reconcile Bank Statements Line" name="button_reconcile_bsl" states="open" icon="STOCK_FILE"/>
@@ -22,11 +21,10 @@
       <record model="ir.ui.view" id="view_invoice_bst_cus_inherit">
         <field name="name">account.invoice.bstl.cus.form.inherit</field>
         <field name="model">account.invoice</field>
-        <field name="type">form</field>
         <field name="inherit_id" ref="account.invoice_form"/>
         <field name="arch" type="xml">
-            <xpath expr="/form/notebook/page[@string='Payments']" position="after">
-                <page string="Bank Statements Lines" >
+            <xpath expr="//page[@string='Payments']" position="after">
+                <page string="Bank Statements Lines">
                     <separator string="Bank Statements Lines" colspan="4"/>
                     <field name="bank_statement_line_ids" colspan="4" nolabel="1"/>
                 </page>

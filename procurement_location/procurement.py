@@ -35,8 +35,10 @@ class procurement_order(osv.Model):
         mrp_prod_obj = self.pool.get('mrp.production')
         cat_prod = self.browse(
             cr, uid, ids, context=context)[0].product_id.categ_id
-        loc_src = cat_prod.location_src_id and cat_prod.location_src_id.id or False
-        loc_dest = cat_prod.location_dest_id and cat_prod.location_dest_id.id or False
+        loc_src = cat_prod.location_src_id and\
+                    cat_prod.location_src_id.id or False
+        loc_dest = cat_prod.location_dest_id and\
+                    cat_prod.location_dest_id.id or False
         if loc_src:
             mrp_prod_obj.write(cr, uid, res.values()[
                                0], {'location_src_id': loc_src})

@@ -36,18 +36,26 @@ class stock_move(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         for l in self.browse(cr, uid, ids):
             if l.picking_id.type == 'internal':
-                if getattr(l.location_id, 'account_id', False) and l.location_id.account_id.id:
+                if getattr(l.location_id, 'account_id', False) and\
+                        l.location_id.account_id.id:
                     acc_cost = l.location_id.account_id.id
-                    acc_inv = l.product_id.product_tmpl_id.property_stock_account_output.id
+                    acc_inv = l.product_id.product_tmpl_id.\
+                        property_stock_account_output.id
                 else:
                     acc_cost = getattr(
-                        l.location_dest_id, 'account_id', False) and l.location_dest_id.account_id.id
-                    acc_inv = l.product_id.product_tmpl_id.property_stock_account_input.id
+                        l.location_dest_id, 'account_id', False) and\
+                        l.location_dest_id.account_id.id
+                    acc_inv = l.product_id.product_tmpl_id.\
+                        property_stock_account_input.id
 
-                aml_cos_ids = aml_obj.find(
-                    cr, uid, ref="'%s'" % l.picking_id.name, prd_id=l.product_id.id, acc_id=acc_cost)
-                aml_inv_ids = aml_obj.find(
-                    cr, uid, ref="'%s'" % l.picking_id.name, prd_id=l.product_id.id, acc_id=acc_inv)
+                aml_cos_ids = aml_obj.find(cr, uid,
+                                           ref="'%s'" % l.picking_id.name,
+                                           prd_id=l.product_id.id,
+                                           acc_id=acc_cost)
+                aml_inv_ids = aml_obj.find(cr, uid,
+                                           ref="'%s'" % l.picking_id.name,
+                                           prd_id=l.product_id.id,
+                                           acc_id=acc_inv)
                 if aml_cos_ids and aml_inv_ids:
                     res = (aml_cos_ids[0], aml_inv_ids[0])
         return res

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
 <data>
 
@@ -9,7 +9,7 @@
             <field name="act_from" ref="l10n_ve_withholding.act_wh_router"/>
             <field name="act_to" ref="l10n_ve_withholding_iva.act_withold_vat"/>
             <field name="condition">check_wh_apply() and check_withholdable() and check_iva()</field>
-            <field name="signal"></field>
+            <field name="signal"/>
         </record>
         
         

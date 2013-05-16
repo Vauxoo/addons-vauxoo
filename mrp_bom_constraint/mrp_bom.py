@@ -31,10 +31,12 @@ class mrp_bom(osv.Model):
 
     def check_uom(self, cr, uid, ids, context=None):
         for mrp_bom in self.browse(cr, uid, ids, context=context):
-            if mrp_bom.product_uom and mrp_bom.product_id.uom_id.category_id.id != mrp_bom.product_uom.category_id.id:
+            if mrp_bom.product_uom and\
+                mrp_bom.product_id.uom_id.category_id.id !=\
+                    mrp_bom.product_uom.category_id.id:
                 return False
         return True
 
     _constraints = [(check_uom, _(
-        'No puedes agregar un UdM que pertenezca a otra categoría que la que tiene la unidad de medida default del producto'), ["product_uom"])]
-
+        'No puedes agregar un UdM que pertenezca a otra categoría que la que\
+        tiene la unidad de medida default del producto'), ["product_uom"])]

@@ -29,5 +29,6 @@ from openerp.osv import osv, fields
 class res_partner(osv.Model):
     _inherit = 'res.partner'
     _columns = {
-        'description_invoice':  fields.text('Description Invoice', translate=True),
+        'description_invoice':  fields.text('Description Invoice',
+            translate=True),
     }

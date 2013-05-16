@@ -49,7 +49,8 @@ class report_profit_picking(osv.Model):
         for rpp in self.browse(cr, uid, ids, context):
             result[rpp.id] = ()
             il_ids = []
-            if getattr(rpp, 'purchase_line_id', False) and rpp.purchase_line_id.id:
+            if getattr(rpp, 'purchase_line_id', False) and \
+                    rpp.purchase_line_id.id:
                 loc_ids = loc_obj.search(cr, uid, [('name', '=', 'Stock')])
                 supp_loc_ids = loc_obj.search(
                     cr, uid, [('name', '=', 'Suppliers')])
@@ -64,9 +65,11 @@ class report_profit_picking(osv.Model):
                     raise osv.except_osv(
                         'Error', 'No hay una ubicacion proveedor definida')
 
-                if getattr(rpp.purchase_line_id.order_id, 'invoice_ids', False):
+                if getattr(rpp.purchase_line_id.order_id,
+                           'invoice_ids', False):
                     inv_id = self.purchase_invoice_get(
-                        cr, uid, rpp.purchase_line_id.order_id.id, rpp.product_id.id)[0]
+                        cr, uid, rpp.purchase_line_id.order_id.id,
+                        rpp.product_id.id)[0]
                     inv = self.pool.get('account.invoice').browse(
                         cr, uid, inv_id, context=context)
 
@@ -88,8 +91,11 @@ class report_profit_picking(osv.Model):
                             select
                                 l.id as id
                             from account_invoice_line l
-                                inner join account_invoice i on (i.id=l.invoice_id)
-                            where i.id in (%s)  and i.type='%s' and l.product_id=%s and l.quantity=%s
+                                inner join account_invoice i on
+                                (i.id=l.invoice_id)
+                            where i.id in (%s)  and
+                            i.type='%s' and
+                            l.product_id=%s and l.quantity=%s
 ''' % (str_inv, inv_type, rpp.product_id.id, rpp.picking_qty)
                         cr.execute(sql)
                         il_ids = [x[0] for x in cr.fetchall()]
@@ -123,8 +129,12 @@ class report_profit_picking(osv.Model):
                             select
                                 l.id as id
                             from account_invoice_line l
-                                inner join account_invoice i on (i.id=l.invoice_id)
-                            where i.id in (%s)  and i.type='%s' and l.product_id=%s and l.quantity=%s
+                                inner join account_invoice i on
+                                (i.id=l.invoice_id)
+                            where i.id in (%s)  and
+                            i.type='%s' and
+                            l.product_id=%s and
+                            l.quantity=%s
 ''' % (str_inv, inv_type, rpp.product_id.id, rpp.picking_qty)
                         cr.execute(sql)
                         il_ids = [x[0] for x in cr.fetchall()]
@@ -184,9 +194,11 @@ class report_profit_picking(osv.Model):
             res[rpp.id] = 0.0
             if rpp.invoice_line_id and rpp.invoice_line_id.id:
                 res[rpp.id] = rpp.invoice_line_id.price_unit
-                if rpp.invoice_line_id.invoice_id.type in ['in_invoice', 'in_refund']:
+                if rpp.invoice_line_id.invoice_id.type in\
+                        ['in_invoice', 'in_refund']:
                     res[rpp.id] = rpp.invoice_line_id.price_subtotal / \
-                        rpp.invoice_line_id.quantity or rpp.invoice_line_id.price_unit
+                        rpp.invoice_line_id.quantity or \
+                        rpp.invoice_line_id.price_unit
         return res
 
     def _get_aml_cost_price(self, cr, uid, ids, name, arg, context={}):
@@ -320,20 +332,21 @@ class report_profit_picking(osv.Model):
             res.setdefault(line.id, 0.0)
 
             if line.invoice_id and line.invoice_id.id:
-                if line.location_dest_id.id == loc_ids and line.invoice_id.type == 'in_invoice':
+                if line.location_dest_id.id == loc_ids and \
+                        line.invoice_id.type == 'in_invoice':
                     subtot = line.picking_qty*line.invoice_price_unit
 
-                if line.location_id.id == loc_ids and line.invoice_id.type == 'out_invoice':
+                if line.location_id.id == loc_ids and \
+                   line.invoice_id.type == 'out_invoice':
                     subtot = line.picking_qty*avg
 
-                if line.location_dest_id.id == loc_ids and line.invoice_id.type == 'in_refund':
-                    if line.invoice_id.parent_id and line.invoice_id.parent_id.id:
+                if line.location_dest_id.id == loc_ids and\
+                        line.invoice_id.type == 'in_refund':
+                    if line.invoice_id.parent_id and\
+                            line.invoice_id.parent_id.id:
                         for il in line.invoice_id.parent_id.invoice_line:
                             if il.product_id.id == line.product_id.id:
                                 subtot = line.picking_qty*il.price_unit
-
-#                if line.location_id.id == loc_ids and line.invoice_id.type == 'out_refund':
-#                    subtot = line.picking_qty*avg
 
             res[line.id] = subtot
         return res
@@ -344,8 +357,6 @@ class report_profit_picking(osv.Model):
         loc_ids = 11
         avg = 1430.96
         q = 5.0
-        # total=7154,8
-#        total=avg*q
         tot = {}
         for line in self.browse(cr, uid, ids, context=context):
             tot.setdefault(line.product_id.id, 'xxx')
@@ -355,23 +366,17 @@ class report_profit_picking(osv.Model):
                 tot[line.product_id.id] = avg*q
 
             if line.invoice_id and line.invoice_id.id:
-                if line.location_dest_id.id == loc_ids and line.invoice_id.type == 'in_invoice':
+                if line.location_dest_id.id == loc_ids and\
+                        line.invoice_id.type == 'in_invoice':
                     tot[line.product_id.id] += line.subtotal
 
-                if line.location_id.id == loc_ids and line.invoice_id.type == 'out_invoice':
+                if line.location_id.id == loc_ids and\
+                        line.invoice_id.type == 'out_invoice':
                     tot[line.product_id.id] -= line.subtotal
 
-                if line.location_dest_id.id == loc_ids and line.invoice_id.type == 'in_refund':
+                if line.location_dest_id.id == loc_ids and\
+                        line.invoice_id.type == 'in_refund':
                     tot[line.product_id.id] -= line.subtotal
-#                    if line.invoice_id.parent_id and line.invoice_id.parent_id.id:
-#                        for il in line.invoice_id.parent_id.invoice_line:
-#                            if il.product_id.id == line.product_id.id:
-#                                subtot = line.picking_qty*il.price_unit
-
-#                if line.location_id.id == loc_ids and line.invoice_id.type == 'out_refund':
-#                    subtot = line.picking_qty*avg
-
-#            print 'total: ',tot
             res[line.id] = tot[line.product_id.id]
         return res
 
@@ -433,18 +438,35 @@ class report_profit_picking(osv.Model):
         'name': fields.char('Date', size=20, readonly=True, select=True),
         'date': fields.date('Date Done', readonly=True),
         'year': fields.char('Year', size=4, readonly=True),
-        'month': fields.selection([('01', 'January'), ('02', 'February'), ('03', 'March'), ('04', 'April'),
-                                   ('05', 'May'), ('06', 'June'), ('07', 'July'), (
-                                   '08', 'August'), ('09', 'September'),
-                                   ('10', 'October'), ('11', 'November'), ('12', 'December')], 'Month', readonly=True),
+        'month': fields.selection([('01', 'January'),
+                                   ('02', 'February'),
+                                   ('03', 'March'),
+                                   ('04', 'April'),
+                                   ('05', 'May'),
+                                   ('06', 'June'),
+                                   ('07', 'July'),
+                                   ('08', 'August'),
+                                   ('09', 'September'),
+                                   ('10', 'October'),
+                                   ('11', 'November'),
+                                   ('12', 'December')],
+                                  'Month', readonly=True),
         'day': fields.char('Day', size=128, readonly=True),
-        'picking_id': fields.many2one('stock.picking', 'Picking', readonly=True, select=True),
-        'purchase_line_id': fields.many2one('purchase.order.line', 'Purchase Line', readonly=True, select=True),
-        'sale_line_id': fields.many2one('sale.order.line', 'Sale Line', readonly=True, select=True),
-        'product_id': fields.many2one('product.product', 'Product', readonly=True, select=True),
-        'location_id': fields.many2one('stock.location', 'Source Location', readonly=True, select=True),
-        'location_dest_id': fields.many2one('stock.location', 'Dest. Location', readonly=True, select=True),
-        'stk_mov_id': fields.many2one('stock.move', 'Picking line', readonly=True, select=True),
+        'picking_id': fields.many2one('stock.picking', 'Picking',
+                                      readonly=True, select=True),
+        'purchase_line_id': fields.many2one('purchase.order.line',
+                                            'Purchase Line', readonly=True,
+                                            select=True),
+        'sale_line_id': fields.many2one('sale.order.line', 'Sale Line',
+                                        readonly=True, select=True),
+        'product_id': fields.many2one('product.product', 'Product',
+                                      readonly=True, select=True),
+        'location_id': fields.many2one('stock.location', 'Source Location',
+                                       readonly=True, select=True),
+        'location_dest_id': fields.many2one('stock.location', 'Dest. Location',
+                                            readonly=True, select=True),
+        'stk_mov_id': fields.many2one('stock.move', 'Picking line',
+                                      readonly=True, select=True),
         'picking_qty': fields.float('Picking quantity', readonly=True),
         'type': fields.selection([
             ('out', 'Sending Goods'),
@@ -460,22 +482,73 @@ class report_profit_picking(osv.Model):
             ('done', 'Done'),
             ('cancel', 'Cancelled')
         ], 'Status', readonly=True, select=True),
-        'aml_cost_id': fields.function(_get_aml_cost, method=True, type='many2one', relation='account.move.line', string='Cost entry'),
-        'invoice_line_id': fields.function(_get_invoice_line, method=True, type='many2one', relation='account.invoice.line', string='Invoice line'),
-        'invoice_qty': fields.function(_get_invoice_qty, method=True, type='float', string='Invoice quantity', digits_compute=dp.get_precision('Account')),
-        'aml_cost_qty': fields.function(_get_aml_cost_qty, method=True, type='float', string='Cost entry quantity', digits_compute=dp.get_precision('Account')),
-        'invoice_price_unit': fields.function(_get_invoice_price, method=True, type='float', string='Invoice price unit', digits_compute=dp.get_precision('Account')),
-        'aml_cost_price_unit': fields.function(_get_aml_cost_price, method=True, type='float', string='Cost entry price unit', digits_compute=dp.get_precision('Account')),
-        'invoice_id': fields.function(_get_invoice, method=True, type='many2one', relation='account.invoice', string='Invoice'),
-        'stock_before': fields.function(_get_prod_stock_before, method=True, type='float', string='Stock before', digits_compute=dp.get_precision('Account')),
-        'stock_after': fields.function(_get_prod_stock_after, method=True, type='float', string='Stock after', digits_compute=dp.get_precision('Account')),
-        'date_inv': fields.function(_get_date_invoice, method=True, type='char', string='Date invoice', size=20),
-        'stock_invoice': fields.function(_get_stock_invoice, method=True, type='float', string='Stock invoice', digits_compute=dp.get_precision('Account')),
-        'subtotal': fields.function(_compute_subtotal, method=True, type='float', string='Subtotal', digits_compute=dp.get_precision('Account')),
-        'total': fields.function(_compute_total, method=True, type='float', string='Total', digits_compute=dp.get_precision('Account')),
-        'aml_inv_id': fields.function(_get_aml_inv, method=True, type='many2one', relation='account.move.line', string='Inv entry'),
-        'aml_inv_price_unit': fields.function(_get_aml_inv_price, method=True, type='float', string='Inv entry price unit', digits_compute=dp.get_precision('Account')),
-        'aml_inv_qty': fields.function(_get_aml_inv_qty, method=True, type='float', string='Inv entry quantity', digits_compute=dp.get_precision('Account')),
+        'aml_cost_id': fields.function(_get_aml_cost, method=True,
+                                       type='many2one',
+                                       relation='account.move.line',
+                                       string='Cost entry'),
+        'invoice_line_id': fields.function(_get_invoice_line,
+                                           method=True, type='many2one',
+                                           relation='account.invoice.line',
+                                           string='Invoice line'),
+        'invoice_qty': fields.function(_get_invoice_qty, method=True,
+                                       type='float', string='Invoice quantity',
+                                       digits_compute=
+                                       dp.get_precision('Account')),
+        'aml_cost_qty': fields.function(_get_aml_cost_qty, method=True,
+                                        type='float',
+                                        string='Cost entry quantity',
+                                        digits_compute=
+                                        dp.get_precision('Account')),
+        'invoice_price_unit': fields.function(_get_invoice_price, method=True,
+                                              type='float',
+                                              string='Invoice price unit',
+                                              digits_compute=
+                                              dp.get_precision('Account')),
+        'aml_cost_price_unit': fields.function(_get_aml_cost_price,
+                                               method=True, type='float',
+                                               string='Cost entry price unit',
+                                               digits_compute=
+                                               dp.get_precision('Account')),
+        'invoice_id': fields.function(_get_invoice, method=True,
+                                      type='many2one',
+                                      relation='account.invoice',
+                                      string='Invoice'),
+        'stock_before': fields.function(_get_prod_stock_before, method=True,
+                                        type='float', string='Stock before',
+                                        digits_compute=
+                                        dp.get_precision('Account')),
+        'stock_after': fields.function(_get_prod_stock_after, method=True,
+                                       type='float', string='Stock after',
+                                       digits_compute=
+                                       dp.get_precision('Account')),
+        'date_inv': fields.function(_get_date_invoice, method=True,
+                                    type='char', string='Date invoice',
+                                    size=20),
+        'stock_invoice': fields.function(_get_stock_invoice, method=True,
+                                         type='float', string='Stock invoice',
+                                         digits_compute=
+                                         dp.get_precision('Account')),
+        'subtotal': fields.function(_compute_subtotal, method=True,
+                                    type='float', string='Subtotal',
+                                    digits_compute=
+                                    dp.get_precision('Account')),
+        'total': fields.function(_compute_total, method=True, type='float',
+                                 string='Total',
+                                 digits_compute=dp.get_precision('Account')),
+        'aml_inv_id': fields.function(_get_aml_inv, method=True,
+                                      type='many2one',
+                                      relation='account.move.line',
+                                      string='Inv entry'),
+        'aml_inv_price_unit': fields.function(_get_aml_inv_price, method=True,
+                                              type='float',
+                                              string='Inv entry price unit',
+                                              digits_compute=
+                                              dp.get_precision('Account')),
+        'aml_inv_qty': fields.function(_get_aml_inv_qty, method=True,
+                                       type='float',
+                                       string='Inv entry quantity',
+                                       digits_compute=
+                                       dp.get_precision('Account')),
     }
 
     def init(self, cr):

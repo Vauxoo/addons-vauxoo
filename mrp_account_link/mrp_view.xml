@@ -1,24 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
 <!--
-	modifiying view
+    modifiying view
 -->
-	<act_window
-            domain="[('production_id','=',active_id)]"
-            id="act_account_production"
-            name="Journal items"
-            res_model="account.move.line"
-            src_model="mrp.production"
-            context="{}" />
-	    
-	 <act_window
-            domain="[('line_id.production_id','in',[active_id])]"
-            id="act_account_line_production"
-            name="Journal entries"
-            res_model="account.move"
-            src_model="mrp.production"
-            context="{}" />
+    <act_window domain="[('production_id','=',active_id)]" id="act_account_production" name="Journal items" res_model="account.move.line" src_model="mrp.production" context="{}"/>
+        
+     <act_window domain="[('line_id.production_id','in',[active_id])]" id="act_account_line_production" name="Journal entries" res_model="account.move" src_model="mrp.production" context="{}"/>
 
     </data>
 </openerp>

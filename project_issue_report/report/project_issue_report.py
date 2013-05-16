@@ -24,7 +24,7 @@
 ##############################################################################
 
 import time
-import ir
+
 from report import report_sxw
 import pooler
 

@@ -44,12 +44,15 @@ class stock_production_lot(osv.Model):
 
     _columns = {
         'check_serial': fields.boolean('Check Serial'),
-        'ref': fields.char('Internal Reference', size=256, help="Internal reference number in case it differs from the manufacturer's serial number")
+        'ref': fields.char('Internal Reference', size=256,
+                           help="""Internal reference number in case it
+                                   differs from the manufacturer's
+                                   serial number""")
     }
 
     _constraints = [
-        (_serial_identification, _('Check this picking problem with serial'), [
-         'Check Serial (check_serial)', 'Stock Available (stock_available)']),
+        (_serial_identification, _('Check this picking problem with serial'),
+         ['Check Serial (check_serial)', 'Stock Available (stock_available)']),
     ]
 
     def name_get(self, cr, uid, ids, context=None):
@@ -63,41 +66,33 @@ class stock_production_lot(osv.Model):
         return ret
 
 
-
 class stock_picking(osv.Model):
     _inherit = "stock.picking"
-
-    #~ def test_serial_outgoing(self, cr, uid, ids):
-        #~ ok = True
-        #~ spl_obj=self.pool.get('stock.production.lot')
-        #~ for pick in self.browse(cr, uid, ids):
-            #~ for move in pick.move_lines:
-                #~ if move.product_id.track_serial_outgoing and not move.prodlot_id and pick.type == 'out':
-                    #~ raise osv.except_osv(_('Error !'), _('This product %s should be serialized')% move.product_id.name)
-                    #~
-                #~ if move.product_id.track_serial_incoming and move.product_id.track_serial_outgoing and pick.type == 'out':
-                    #~ spl_ids = spl_obj.search(cr,uid,[('product_id','=',move.product_id.id),('name','=',move.prodlot_id.name)])
-                    #~ if len(spl_ids) < 1:
-                        #~ raise osv.except_osv(_('Error !'), _('This serial %s is not exist')% move.prodlot_id.name)
-        #~ return ok
 
     def test_serial(self, cr, uid, ids):
         ok = True
         spl_obj = self.pool.get('stock.production.lot')
         for pick in self.browse(cr, uid, ids):
             for move in pick.move_lines:
-                if move.product_id.track_serial_incoming and not move.prodlot_id and pick.type == 'in':
+                if move.product_id.track_serial_incoming and not \
+                        move.prodlot_id and pick.type == 'in':
                     raise osv.except_osv(_('Error !'), _(
-                        'This product %s should be serialized') % move.product_id.name)
-                if move.product_id.track_serial_outgoing and not move.prodlot_id and pick.type == 'out':
+                        'This product %s should be serialized') %
+                        move.product_id.name)
+                if move.product_id.track_serial_outgoing and not \
+                        move.prodlot_id and pick.type == 'out':
                     raise osv.except_osv(_('Error !'), _(
-                        'This product %s should be serialized') % move.product_id.name)
+                        'This product %s should be serialized') %
+                        move.product_id.name)
 
-                if move.product_id.track_serial_incoming and move.product_id.track_serial_outgoing and pick.type == 'out':
+                if move.product_id.track_serial_incoming and \
+                    move.product_id.track_serial_outgoing and\
+                        pick.type == 'out':
                     spl_ids = spl_obj.search(cr, uid, [(
-                        'product_id', '=', move.product_id.id), ('name', '=', move.prodlot_id.name)])
+                        'product_id', '=', move.product_id.id),
+                        ('name', '=', move.prodlot_id.name)])
                     if len(spl_ids) < 1:
                         raise osv.except_osv(_('Error !'), _(
-                            'This serial %s is not exist') % move.prodlot_id.name)
+                            'This serial %s is not exist') %
+                            move.prodlot_id.name)
         return ok
-

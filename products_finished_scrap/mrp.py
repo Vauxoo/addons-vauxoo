@@ -35,15 +35,21 @@ class mrp_production(osv.Model):
         for id in ids:
             total = 0.0
             prod_id = self.browse(cr, uid, id)
-            loc_dest_prod = prod_id.location_dest_id and prod_id.location_dest_id.id or ''
-            product_prod = prod_id.product_id and prod_id.product_id.id or ''
+            loc_dest_prod = prod_id.location_dest_id and\
+                prod_id.location_dest_id.id or ''
+            product_prod = prod_id.product_id and\
+                prod_id.product_id.id or ''
             if prod_id.move_created_ids2:
                 for move in prod_id.move_created_ids2:
                     move_id = stock_obj.browse(cr, uid, move.id)
-                    product_move = move_id.product_id and move_id.product_id.id or ''
-                    loc_dest_move = move_id.location_dest_id and move_id.location_dest_id.id or ''
+                    product_move = move_id.product_id and\
+                        move_id.product_id.id or ''
+                    loc_dest_move = move_id.location_dest_id and\
+                        move_id.location_dest_id.id or ''
                     state_move = move_id.state or ''
-                    if loc_dest_move == loc_dest_prod and state_move == 'done' and product_prod == product_move:
+                    if loc_dest_move == loc_dest_prod and\
+                        state_move == 'done' and\
+                            product_prod == product_move:
                         total_move = move_id.product_qty or 0.0
                         total = total+total_move
             res[id] = total
@@ -56,15 +62,20 @@ class mrp_production(osv.Model):
             total_des = 0.0
             total = 0.0
             prod_id = self.browse(cr, uid, id)
-            loc_dest_prod = prod_id.location_dest_id and prod_id.location_dest_id.id or ''
+            loc_dest_prod = prod_id.location_dest_id and\
+                prod_id.location_dest_id.id or ''
             product_prod = prod_id.product_id and prod_id.product_id.id or ''
             if prod_id.move_created_ids2:
                 for move in prod_id.move_created_ids2:
                     move_id = stock_obj.browse(cr, uid, move.id)
-                    loc_dest_move = move_id.location_dest_id and move_id.location_dest_id.id or ''
+                    loc_dest_move = move_id.location_dest_id and\
+                        move_id.location_dest_id.id or ''
                     state_move = move_id.state or ''
-                    product_move = move_id.product_id and move_id.product_id.id or ''
-                    if loc_dest_move != loc_dest_prod and state_move == 'done' and product_prod == product_move:
+                    product_move = move_id.product_id and\
+                        move_id.product_id.id or ''
+                    if loc_dest_move != loc_dest_prod and\
+                        state_move == 'done' and\
+                            product_prod == product_move:
                         total_move = move_id.product_qty or 0.0
                         total_des = total_des+total_move
                     total_produced = prod_id.product_produced or 0.0
@@ -73,6 +84,10 @@ class mrp_production(osv.Model):
         return res
 
     _columns = {
-        'product_produced': fields.function(_product_produced, method=True, type="float", string='Total Produced'),
-        'product_in_stock': fields.function(_product_in_stock, method=True, type="float", string='Total In Stock'),
+        'product_produced': fields.function(_product_produced, method=True,
+                                            type="float",
+                                            string='Total Produced'),
+        'product_in_stock': fields.function(_product_in_stock, method=True,
+                                            type="float",
+                                            string='Total In Stock'),
     }

@@ -35,7 +35,9 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     _columns = {
-        'cancel_true': fields.boolean('Invoice Cancel', help="Field that indicates whether the invoice was canceled earlier, to generate actions automatically")
+        'cancel_true': fields.boolean('Invoice Cancel',
+            help="Field that indicates whether the invoice was canceled\
+             earlier, to generate actions automatically")
 
     }
 

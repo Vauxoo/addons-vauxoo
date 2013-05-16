@@ -38,7 +38,7 @@ class sale_commission_line(osv.Model):
         bar_obj = self.pool.get('baremo.book')
         res = {}
         for sol_brw in self.browse(cr, uid, ids):
-            bar_id = sol_brw.company_id.bar_id and sol_brw.company_id.bar_id.id or False
+            bar_id = hasattr(sol_brw.company_id,'bar_id') and sol_brw.company_id.bar_id  and sol_brw.company_id.bar_id.id or False
             print '--------------- bar_id -------------', bar_id
             if not bar_id:
                 # TODO: raise exception, levantar excepcion.

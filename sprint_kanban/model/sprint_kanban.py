@@ -31,22 +31,49 @@ class sprint_kanban(osv.Model):
     _inherit = ['mail.thread', 'ir.needaction_mixin']
 
     _columns = {
-        'use_phases': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),
+        'use_phases': fields.boolean('Phases',
+                                     help="""Check this field if you plan
+                                             to use phase-based scheduling"""),
         'name': fields.char('Name Sprint', 264, required=True),
-        'project_id': fields.many2one('project.project', 'Project', ondelete="cascade"),
+        'project_id': fields.many2one('project.project', 'Project',
+                                      ondelete="cascade"),
         'description': fields.text('Description'),
         'datestart': fields.date('Start Date'),
         'dateend': fields.date('End Date'),
         'color': fields.integer('Color Index'),
-        'members': fields.many2many('res.users', 'project_user_rel', 'project_id', 'uid', 'Project Members', states={'close': [('readonly', True)], 'cancelled': [('readonly', True)]}),
-        'priority': fields.selection([('4', 'Very Low'), ('3', 'Low'), ('2', 'Medium'), ('1', 'Important'), ('0', 'Very important')], 'Priority', select=True),
-        'state': fields.selection([('draft', 'New'), ('open', 'In Progress'), ('cancelled', 'Cancelled'), ('pending', 'Pending'), ('done', 'Done')], 'Status', required=True,),
+        'members': fields.many2many('res.users', 'project_user_rel',
+                                    'project_id', 'uid', 'Project Members',
+                                    states={'close': [('readonly', True)],
+                                            'cancelled': [('readonly', True)],
+                                            }),
+        'priority': fields.selection([('4', 'Very Low'),
+                                      ('3', 'Low'),
+                                      ('2', 'Medium'),
+                                      ('1', 'Important'),
+                                      ('0', 'Very important')],
+                                     'Priority', select=True),
+        'state': fields.selection([('draft', 'New'),
+                                   ('open', 'In Progress'),
+                                   ('cancelled', 'Cancelled'),
+                                   ('pending', 'Pending'),
+                                   ('done', 'Done')],
+                                  'Status', required=True,),
         'user_id': fields.many2one('res.users', 'Assigned to'),
-        'kanban_state': fields.selection([('normal', 'Normal'), ('blocked', 'Blocked'), ('done', 'Ready To Pull')], 'Kanban State',
-                                         help="A task's kanban state indicates special situations affecting it:\n"
-                                              " * Normal is the default situation\n"
-                                              " * Blocked indicates something is preventing the progress of this task\n"
-                                              " * Ready To Pull indicates the task is ready to be pulled to the next stage",
+        'kanban_state': fields.selection([('normal', 'Normal'),
+                                          ('blocked', 'Blocked'),
+                                          ('done', 'Ready To Pull')],
+                                         'Kanban State',
+                                         help="""A task's kanban state indicate
+                                                 special situations
+                                                 affecting it:\n
+                                               * Normal is the default
+                                                 situation\n"
+                                               * Blocked indicates something
+                                                 is preventing the progress
+                                                 of this task\n
+                                               * Ready To Pull indicates the
+                                                 task is ready to be pulled
+                                                 to the next stage""",
                                          readonly=True, required=False),
     }
 
@@ -82,8 +109,11 @@ class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
 
     _columns = {
-        'use_phases': fields.boolean('Phases', help="Check this field if you plan to use phase-based scheduling"),
-        'sprint_id': fields.many2one('sprint.kanban', 'Sprint', ondelete="cascade"),
+        'use_phases': fields.boolean('Phases',
+                                     help="""Check this field if you plan
+                                             to use phase-based scheduling"""),
+        'sprint_id': fields.many2one('sprint.kanban', 'Sprint',
+                                     ondelete="cascade"),
         'url_branch': fields.char('Url Branch', 264),
         'merge_proposal': fields.char('Merge Proposal', 264),
         'blueprint': fields.char('Blueprint', 264),

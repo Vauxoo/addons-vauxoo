@@ -65,37 +65,52 @@ class inherited_sale_order(osv.Model):
         for line in sale_brw.order_line:
             virtual = line.product_id.qty_available
             real = line.product_id.virtual_available
-            if virtual == real and line.product_uom_qty > virtual or line.product_uom_qty > virtual:
+            if virtual == real and\
+                line.product_uom_qty > virtual or\
+                line.product_uom_qty > virtual:
                 raise osv.except_osv(_('Error'), _(
-                    'The quantity in the line of the product %s is minor that quantity available ' % line.product_id.name))
+                    'The quantity in the line of the product %s is minor that\
+                    quantity available ' % line.product_id.name))
 
-            elif virtual > real and line.product_uom_qty > real and line.product_uom_qty < virtual and not line.check_confirm:
+            elif virtual > real and line.product_uom_qty > real and\
+                line.product_uom_qty < virtual and not line.check_confirm:
                 raise osv.except_osv(_('Error'), _(
-                    'The amount you want to sell is not available in the real stock of product %s, but if a shipment next, if you want to make this sale select Stock future sales line' % line.product_id.name))
+                    'The amount you want to sell is not available in the real\
+                    stock of product %s, but if a shipment next, if you want\
+                    to make this sale select Stock future sales line'
+                    % line.product_id.name))
 
         return True
-
-
 
 
 class sale_order_line(osv.Model):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-                          uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-                          lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False, flag=False, context=None):
+                            uom=False, qty_uos=0, uos=False, name='',
+                            partner_id=False,
+                            lang=False, update_tax=True, date_order=False,
+                            packaging=False, fiscal_position=False, flag=False,
+                            context=None):
         if context is None:
             context = {}
         product_obj = self.pool.get('product.product')
         res = super(
-            sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty=qty,
-                                                     uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
-                                                     lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag)
+            sale_order_line, self).product_id_change(cr, uid, ids, pricelist,
+                                 product, qty=qty,
+                                 uom=uom, qty_uos=qty_uos,
+                                 uos=uos, name=name,
+                                 partner_id=partner_id,
+                                 lang=lang,
+                                 update_tax=update_tax,
+                                 date_order=date_order,
+                                 packaging=packaging,
+                                 fiscal_position=fiscal_position, flag=flag)
 
         future_stock = product and self.pool.get(
             'stock.move').search(cr, uid, [('product_id', '=', product),
-                                           ('state', 'in', (
-                                            'assigned', 'confirmed', 'waiting')),
-                                           ('picking_id.type', '=', 'in')], context=context)
+                           ('state', 'in', (
+                            'assigned', 'confirmed', 'waiting')),
+                           ('picking_id.type', '=', 'in')], context=context)
         future_stock and res.get('value', False) and res.get(
             'value', False).update({'stock_move_ids': future_stock})
 
@@ -103,8 +118,13 @@ class sale_order_line(osv.Model):
 
     _inherit = 'sale.order.line'
     _columns = {
-        'stock_move_ids': fields.one2many('stock.move', 'id_sale', 'Future Stock', readonly=True, help="Stock move future to reference of salesman for knowing that product is available"),
-        'check_confirm': fields.boolean("Future Stock'", help="This field indicates if the salesman is in accordance with sale a product   that is not available but if in a future stock"),
+        'stock_move_ids': fields.one2many('stock.move', 'id_sale',
+            'Future Stock', readonly=True,
+            help="Stock move future to reference of salesman for knowing that\
+                product is available"),
+        'check_confirm': fields.boolean("Future Stock'",
+            help="This field indicates if the salesman is in accordance with\
+                sale a product   that is not available but if in a\
+                future stock"),
 
     }
-

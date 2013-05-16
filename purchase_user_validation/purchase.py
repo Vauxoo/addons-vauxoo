@@ -27,11 +27,11 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class purchase_order(osv.Model):
     _inherit = "purchase.order"
     _columns = {
-        'validator2': fields.many2one('res.users', 'Second Validator', readonly=True)
+        'validator2': fields.many2one('res.users', 'Second Validator',
+                                      readonly=True)
     }
 
     def wkf_approve_order(self, cr, uid, ids, context=None):
@@ -39,4 +39,3 @@ class purchase_order(osv.Model):
             cr, uid, ids, context=context)
         self.write(cr, uid, ids, {'validator2': uid})
         return res
-

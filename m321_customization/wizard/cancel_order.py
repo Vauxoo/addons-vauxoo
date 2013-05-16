@@ -39,8 +39,10 @@ class cancel_orders(osv.TransientModel):
 
     _columns = {
         'sure': fields.boolean("Sure?", help="Check if are sure"),
-        'are_sure': fields.boolean("Are Sure?", help="Check if really are sure"),
-        'n_days': fields.integer('Number Days', help="Number of day to cancel sales orders by defaults 2")
+        'are_sure': fields.boolean("Are Sure?",
+            help="Check if really are sure"),
+        'n_days': fields.integer('Number Days',
+            help="Number of day to cancel sales orders by defaults 2")
     }
     _defaults = {
         'n_days': 2
@@ -55,8 +57,11 @@ class cancel_orders(osv.TransientModel):
         invoice_obj = self.pool.get('account.invoice')
         journal_obj = self.pool.get('account.journal')
         journal_ids = journal_obj.search(cr, uid, [], context=context)
-        [journal_obj.write(cr, uid, [i.id], {'update_posted': True}, context=context) for i in journal_obj.browse(
-            cr, uid, journal_ids, context=context) if hasattr(i, "update_posted") if i.type in ('sale', 'sale_refund')]
+        [journal_obj.write(cr, uid, [i.id],
+            {'update_posted': True}, context=context)
+            for i in journal_obj.browse(cr, uid, journal_ids, context=context)
+            if hasattr(i, "update_posted")
+            if i.type in ('sale', 'sale_refund')]
         wz_brw = ids and self.browse(cr, uid, ids[0], context=context) or False
         evalu = wz_brw and 'wz_brw.sure and wz_brw.are_sure' or 'True'
         date = datetime.datetime.today()
@@ -71,15 +76,19 @@ class cancel_orders(osv.TransientModel):
         if eval(evalu) and sale_brw:
             for sale in sale_brw:
                 if sale.state in ('manual', 'progress'):
-                    pick = [False for pick in sale.picking_ids if pick and pick.state in (
-                        'confirmed', 'done')]
-                    invoice = [False for invoice in sale.invoice_ids if invoice and invoice.state in (
-                        'paid', 'open')]
+                    pick = [False for pick in sale.picking_ids
+                            if pick and pick.state in ('confirmed', 'done')]
+                    invoice = [False for invoice in sale.invoice_ids
+                                if invoice and invoice.state in
+                                ('paid', 'open')]
                     all(pick) and all(invoice) and sale_ids.append(sale.id)
 
-            sale_ids and picking_obj.action_cancel(cr, uid, [d.id for i in sale_obj.browse(
-                cr, uid, sale_ids, context=context) for d in i.picking_ids], context=context)
-            sale_ids and invoice_obj.action_cancel(cr, uid, [d.id for i in sale_obj.browse(
+            sale_ids and picking_obj.action_cancel(cr, uid,
+                [d.id for i in sale_obj.browse(
+                cr, uid, sale_ids, context=context) for d in i.picking_ids],
+                context=context)
+            sale_ids and invoice_obj.action_cancel(cr, uid,
+                [d.id for i in sale_obj.browse(
                 cr, uid, sale_ids, context=context) for d in i.invoice_ids],)
             sale_ids and sale_obj.action_cancel(
                 cr, uid, sale_ids, context=context)
@@ -88,4 +97,3 @@ class cancel_orders(osv.TransientModel):
             raise osv.except_osv(_('Processing Error'), _(
                 'Must select the 2 options to make sure the operation'))
         return {'type': 'ir.actions.act_window_close'}
-

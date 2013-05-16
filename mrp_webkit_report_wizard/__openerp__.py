@@ -40,6 +40,6 @@
     "update_xml" : ["data.xml",
         "mrp_webkit_report.xml",
         "wizard/wizard_report_variation.xml"],
-    "installable" : True,
+    "installable" : False,
     "active" : False,
 }
