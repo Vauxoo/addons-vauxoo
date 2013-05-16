@@ -89,14 +89,6 @@ class user_story(osv.Model):
         'description': fields.text('Description'),
         'accep_crit_ids': fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
         'info': fields.text('Other Info'),
-        'priority_level':fields.selection([('urgent','Urgent'),
-                                           ('priority','Priority'),
-                                           ('secondary','Secondary')],
-                                           'Priority Level',
-                                           help='User story level priority,'
-                                                   ' used to define priority'
-                                                   ' for each user story'), 
-        
         'asumption': fields.text('Asumptions'),
         'date': fields.date('Date'),
         'user_id': fields.many2one('res.users', 'Create User'),
@@ -110,7 +102,6 @@ class user_story(osv.Model):
         'date': lambda *a: time.strftime('%Y-%m-%d'),
         'user_id': lambda self, cr, uid, ctx: uid,
         'state': 'draft',
-        'priority_level':'secondary',
     }
 
     def do_draft(self, cr, uid, ids, context=None):
@@ -154,17 +145,6 @@ class project_task(osv.Model):
 
     _inherit = 'project.task'
 
-    def default_get(self, cr, uid, fields, context=None):
-        '''Owerwrite default get to add project in new task automatically'''
-
-        if context is None:
-            context = {}
-        res = super(project_task, self).default_get(cr, uid, fields, context=context)
-        context.get('project_task',False) and \
-                res.update({'project_id':context.get('project_task')})
-        return res
-    
-
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
         v = {}
         us_obj = self.pool.get('user.story')
@@ -176,13 +156,8 @@ class project_task(osv.Model):
 
         return {'value': v}
 
-
     _columns = {
         'userstory_id': fields.many2one('user.story', 'User Story',
                                         domain="[('sk_id', '=', sprint_id)]",
                                         help="Set here the User Story related with this task"),
-        'branch_to_clone':fields.char('Branch to clone', 512,
-                                      help='Branch source for clone and'
-                                           ' make merge proposal'), 
-        
     }
