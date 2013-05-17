@@ -28,23 +28,24 @@
 ##############################################################################
 from openerp.osv import fields, osv
 
-class res_partner_bank(osv.osv):
+
+class res_partner_bank(osv.Model):
     _inherit = 'res.partner.bank'
-    
+
     def _get_take_digits(self, cr, uid, ids, field, args, context=None):
         result = {}
-        res=''
-        n=-1
+        res = ''
+        n = -1
         for last in self.browse(cr, uid, ids, context=context):
             for digit in last.acc_number[::-1]:
-                if(digit.isdigit()==True) and len(res)<4:
+                if(digit.isdigit() == True) and len(res) < 4:
                     res = digit+res
-            result[last.id]=res
+            result[last.id] = res
         return result
 
     _columns = {
-        'clabe': fields.char('Clabe Interbancaria',size=64, required=False),
-        'last_acc_number': fields.function(_get_take_digits,method=True, type='char', string="Ultimos 4 digitos", size=4, store=True ),
+        'clabe': fields.char('Clabe Interbancaria', size=64, required=False),
+        'last_acc_number': fields.function(_get_take_digits, method=True,
+            type='char', string="Ultimos 4 digitos", size=4, store=True),
         'currency2_id': fields.many2one('res.currency', 'Currency',),
     }
-res_partner_bank()
