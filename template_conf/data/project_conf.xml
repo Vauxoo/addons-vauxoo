@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+    <!-- 
+    =====================================================
+    SERVERT OUT
+    =====================================================
+    -->
+        <record id="template_outgoing_mail_server" model="ir.mail_server">
+            <field name="name">SERVER OUT</field>
+            <field name="smtp_host">smtp.gmail.com</field>
+            <field name="sequence">15</field>
+            <field name="smtp_port">465</field>
+            <field name="smtp_encryption">ssl</field>
+            <field name="smtp_user">soporte@vauxoo.com</field>
+            <field name="smtp_pass">1*de3---</field>
+        </record>
+    <!-- 
+    =====================================================
+    EMAIL TEMPLATE
+    =====================================================
+    -->        
+        <record id="template_send_email_task_new" model="email.template">
+            <field name="name">Envio de Tarea por Email</field>
+            <field name="email_from">soporte@vauxoo.com</field>
+            <field name="model_id" ref="project.model_project_task" />
+            <field name="subject">Actividad (${object.id}). Asignada a: ${object.user_id.name}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="mail_server_id" ref="template_outgoing_mail_server"/>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="email_cc">nhomar@vauxoo.com,rafael@vauxoo.com,hbto@vauxoo.com,gabriela@vauxoo.com</field>
+            <field name="body_html"><![CDATA[<html>
+<head>
+<font> <font> <font> <font> <font> <font> <font> <font> <font>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Documento sin título</title>
+</font></font></font></font></font></font></font></font></font>
+</head>
+<body>
+<font face="courier new" size="2">
+<p>Estimado(a): <strong>${object.user_id.name}</strong>
+</p>
+<p>Se le ha asignado la siguiente actividad:</p>
+<p>Título: <strong>${object.name}</strong><br>
+Proyecto: <strong>${object.project_id.name}</strong><br>
+<font face="courier new" size="2"><font><font face="courier new"
+size="2"><font><font face="courier new" size="2">Id: <strong>${object.id}<br>
+</strong></font></font></font></font></font>Tipo de Tarea: <font><font
+face="courier new" size="2">
+% if object.parent_ids:
+<span style="font-weight: bold;">SUB-TAREA</span><font><font
+face="courier new" size="2"><strong></strong></font></font></font></font>
+% endif <span style="font-weight: bold;">PRINCIPAL</span><br>
+<strong></strong><font><font face="courier new" size="2"><font><font
+face="courier new" size="2"><strong></strong></font></font></font></font><strong></strong></p>
+<strong></strong>
+<p>Con la siguiente descripción:</p>
+<hr style="width: 100%; height: 2px; font-family: Ubuntu;"
+color="#333333">
+<pre>${object.description}</pre>
+<hr style="width: 100%; height: 2px; font-family: Ubuntu;"
+color="#333333">
+<br>
+<table border="1" width="812">
+<tbody>
+<tr>
+<td bordercolor="#333333" width="802"> Responsable del proyecto:
+${object.manager_id.name}<br>
+Acceso al sistema: http://herrera.localhost:81<br>
+Accede con tu usuario y contraseña: Project -&gt; Task (verifica los
+filtros pre-seleccionados)<br>
+<div style="text-align: center;">Si tiene alguna duda al respecto
+favor de manifestarla </div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong><br>
+<span>Proceso de la tarea:</span></strong></p>
+<table border="1" width="1870">
+<tbody>
+<tr>
+<td bordercolor="#333333" width="1860"> <span>1. Genera el
+post-it en el tablero kanban y el branch asociado en la pestaña
+"Tecnical </span><font face="courier new" size="2"><span>Features</span></font><span>"</span><br>
+<span> 2. Chequea la fecha límite para culminar la tarea.</span><br>
+<span> 3. De acuerdo al avance que lleves en la tarea
+(Design-Development-Merge-Functional Test - Done), cambia el estado en
+el kanban.</span><br>
+<span> 4. Registra el avance de la tarea en la sección "Trabajo
+de Tarea" en la pestaña "Información".</span><br>
+<span> 5. Al finalizar la actividad, agrega la solución o
+resultado de la tarea en el campo de texto libre en la pestaña de
+información. Añade tambien el link de la propuesta de merge.En caso de
+ser necesario agrega un adjunto a la </span><font face="courier new"
+size="2"><span>actividad</span></font><span>.</span><br>
+<span> 6. Envía email mediante el wizard de la tarea parcialmente
+completada y agrega explícitamente los adjuntos en caso de existir.</span><br>
+<span> 7. Dale seguimiento recurrente con el responsable de
+revisarla para que quede validada.</span><br>
+<span> 8. Hasta que la tarea no haya sido aprobada por el líder
+de proyecto no debe marcarse como lista.</span> </td>
+</tr>
+</tbody>
+</table>
+</font>
+</body>
+</html>
+            ]]></field>
+        </record>
+    </data>
+</openerp>
