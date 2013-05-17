@@ -29,10 +29,20 @@
     "depends" : ["base","project","email_template"],
     "author" : ["Vauxoo",],
     "description" : """
-    What do this module:
-    When you install this module, load the templates automatically.
-    This module contains the following template configured and done to use:
-    -Email Template to send email by task.
+What do this module
+===================
+
+When you install this module, load the templates automatically.
+This module contains the following template configured and done to use:
+ * Email Template to send email by task.
+ * Template to Outgoing mail server.
+
+What need you do after install this module: 
+
+ #. Go to the Menu: Setting->Technical->Email->Outgoing Mail Servers, and set password for username.
+ #. Go to the Menu: Setting->Technical->Email->Templates, select the template and action triggers **Act context action**.
+ 
+
 """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",

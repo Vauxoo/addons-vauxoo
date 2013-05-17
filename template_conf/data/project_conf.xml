@@ -13,7 +13,7 @@
             <field name="smtp_port">465</field>
             <field name="smtp_encryption">ssl</field>
             <field name="smtp_user">soporte@vauxoo.com</field>
-            <field name="smtp_pass">1*de3---</field>
+            <field name="smtp_pass"></field>
         </record>
     <!-- 
     =====================================================
