@@ -13,5 +13,16 @@
             </field>
         </record>
 
+        <record id="view_project_project_tree_inherit2" model="ir.ui.view">
+            <field name="name">project.project.tree.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="complete_name" string="Complete Name"/>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>
