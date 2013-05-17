@@ -40,9 +40,10 @@ This module contains the following template configured and done to use:
 
 What need you do after install this module: 
 
- #. For active any template go to the Menu: Setting->Technical->Email->Outgoing Mail Servers, and set password for username.
+ #. For active any template go to the Menu: Setting->Technical->Email->Outgoing Mail Servers, set password for username and Test Conecction.
  #. Go to the Menu: Setting->Technical->Email->Templates, select the template and action triggers **Act context action**.
- #. For template: **Envio de Reporte de Credenciales del Server**, you may replace words of blue colors with information real.
+ #. Go to the Users and set the Email.
+ #. For template: **Envio de Reporte de Credenciales del Server**, you may replace words blue colors with real information.
  
 
 """,
