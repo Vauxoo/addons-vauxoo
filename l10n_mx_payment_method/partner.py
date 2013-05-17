@@ -32,14 +32,14 @@ from openerp import pooler, tools
 from openerp import netsvc
 from openerp import release
 
-class res_partner(osv.osv):
+
+class res_partner(osv.Model):
     _inherit = 'res.partner'
 
     _columns = {
         'pay_method_id': fields.many2one('pay.method', 'Payment Method',
-            help = 'Indicates the way it was paid or will be paid the invoice, \
+                help='Indicates the way it was paid or will be paid the invoice, \
                 where the options could be: check, bank transfer, reservoir in \
                 account bank, credit card, cash etc. If not know as will be \
                 paid the invoice, leave empty and the XML show “Unidentified”.'),
     }
-res_partner()
