@@ -51,7 +51,7 @@ class project_project(osv.Model):
                             where node.parent_left between parent.parent_left and parent.parent_right
                             group by node.name,node.parent_left,node.id
                             order by node.parent_left)tabla
-                        where tabla.full_name """ + str(args[0][1]) + """ '%s%%')tabla2
+                        where tabla.full_name """ + str(args[0][1]) + """ '%%%s%%')tabla2
                         join project_project pp
                         on pp.analytic_account_id = tabla2.id """ % (str(args[0][2]),))
         datas = cr.dictfetchall()
