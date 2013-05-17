@@ -29,13 +29,14 @@
     "depends" : ["base","project","email_template"],
     "author" : ["Vauxoo",],
     "description" : """
-What do this module
+Load Templates Automatically
 ===================
 
 When you install this module, load the templates automatically.
 This module contains the following template configured and done to use:
- * Email Template to send email by task.
+ * Envio de Tarea por Email: Email Template to send email by task. 
  * Template to Outgoing mail server.
+ * Envio de Reporte de Credenciales del Server: After install server, the user should send this email.
 
 What need you do after install this module: 
 
