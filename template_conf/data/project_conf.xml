@@ -112,11 +112,11 @@ de proyecto no debe marcarse como lista.</span> </td>
 
     <!-- 
     =====================================================
-    EMAIL TEMPLATE
+    SERVER FUNCTIONAL TEMPLATE
     =====================================================
     -->
-        <record id="template_send_email_task_new" model="email.template">
-            <field name="name">Envio de Tarea por Email</field>
+        <record id="template_send_email_server" model="email.template">
+            <field name="name">Envio de Reporte de Credenciales del Server</field>
             <field name="email_from">soporte@vauxoo.com</field>
             <field name="model_id" ref="project.model_project_task" />
             <field name="subject">Actividad (${object.id}). Asignada a: ${object.user_id.name}</field>
@@ -124,8 +124,7 @@ de proyecto no debe marcarse como lista.</span> </td>
             <field name="mail_server_id" ref="template_outgoing_mail_server"/>
             <field name="email_to">${object.user_id.email}</field>
             <field name="email_cc">nhomar@vauxoo.com,rafael@vauxoo.com,hbto@vauxoo.com,gabriela@vauxoo.com</field>
-            <field name="body_html"><![CDATA[<html>
-
+            <field name="body_html">            
             </field>
          </record>
 
