@@ -19,7 +19,7 @@
             <field name="inherit_id" ref="project.view_project"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='state']" position="after">
-                    <field name="complete_name" string="Complete Name"/>
+                    <field name="complete_name" groups="project_complete_name.group_project_complete_name" string="Complete Name"/>
                 </xpath>
             </field>
         </record>
