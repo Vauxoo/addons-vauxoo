@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- wizard view -->
+        <record model="ir.ui.view" id="add_followers_wizard_invite_form">
+            <field name="name">Add Followers</field>
+            <field name="model">mail.wizard.invite</field>
+            <field name="priority">200</field>
+            <field name="arch" type="xml">
+                <form string="Add Followers" version="7.0">
+                    <group>
+                        <field name="groups" attrs="{'invisible':['|',('partners','=', True),
+                                                                      ('p_a_g','=',True)]}" on_change="load_partners(mail_groups,groups,p_a_g)"/>
+                        <field name="partners" attrs="{'invisible':['|',('groups','=', True),
+                                                                      ('p_a_g','=',True)]}"/>
+                        <field name="p_a_g" attrs="{'invisible':['|',('groups','=', True),
+                                                                      ('partners','=',True)]}" on_change="load_partners(mail_groups,groups,p_a_g)"/>
+                        <field name="mail_groups" on_change="load_partners(mail_groups,groups,p_a_g)"
+                            attrs="{'invisible':['|',('partners','=', True),
+                                                     ('p_a_g','=',False),
+                                                     ('groups','=',False)]}"
+                                                     widget="many2many_tags_email"/>
+                        <field name="res_model" invisible="1"/>
+                        <field name="res_id" invisible="1"/>
+                        <field name="partner_ids"  widget="many2many_tags_email"
+                                attrs="{'invisible':['|',('groups','=', True),
+                                ('p_a_g','=',False),
+                                ('partners','=',False)]}"
+                                placeholder="Add contacts to notify..."
+                                context="{'force_email':True, 'show_email':True}"/>
+                        <field name="message"/>
+                    </group>
+                    <footer>
+                        <button string="Add Followers"
+                            name="add_followers" context="{'second':True}" type="object" class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />    
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="Add Followers"
+            key2="client_action_multi"                                             
+            res_model="mail.wizard.invite"                                
+            src_model="project.task"                                            
+            view_type="form"                                                       
+            view_mode="form"                                                       
+            view_id="add_followers_wizard_invite_form"
+            target="new"                                                           
+            id="add_many_followers_task_id"/> 
+
+        <act_window name="Add Followers"
+            key2="client_action_multi"                                             
+            res_model="mail.wizard.invite"                                
+            src_model="project.project"                                            
+            view_type="form"                                                       
+            view_mode="form"                                                       
+            view_id="add_followers_wizard_invite_form"
+            target="new"                                                           
+            id="add_many_followers_project_id"/> 
+
+    </data>
+</openerp>
