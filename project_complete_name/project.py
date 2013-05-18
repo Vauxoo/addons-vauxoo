@@ -38,22 +38,31 @@ class project_project(osv.Model):
         @return: Ids of Projects
         """
         cr.execute("""
-            select pp.id, tabla2.name
-                from
-                (
-                    select tabla.id, tabla.full_name as name
-                        from(
-                        Select
-                            node.id,node.name AS short_name,
-                            cast ((count(parent.name)) as int) as nivel,
-                            array_to_string( array_agg( distinct parent.name ), ' / ' ) as full_name
-                            from account_analytic_account as node,account_analytic_account  as parent
-                            where node.parent_left between parent.parent_left and parent.parent_right
-                            group by node.name,node.parent_left,node.id
-                            order by node.parent_left)tabla
-                        where tabla.full_name """ + str(args[0][1]) + """ '%%%s%%')tabla2
-                        join project_project pp
-                        on pp.analytic_account_id = tabla2.id """ % (str(args[0][2]),))
+            SELECT pp.id,*
+            FROM (
+                Select 
+                    node.id, node.name AS short_name,
+                    --cast ((count(parent.name)) as int) as nivel
+                    replace( array_to_string( array_agg( parent.name order by parent.nivel asc), ' / ' ), '\n', ' ') as full_name
+                from account_analytic_account as node, ( SELECT vw.nivel, account_analytic_account.*
+                FROM (
+                        Select 
+                            node.id, node.name AS short_name,
+                            cast ((count(parent.name)) as int) as nivel
+                            --array_to_string( array_agg( distinct parent.name ), ' / ' ) as full_name
+                        from account_analytic_account as node,account_analytic_account  as parent
+                        where node.parent_left between parent.parent_left and parent.parent_right
+                        group by node.name,node.parent_left,node.id 
+                        order by node.parent_left
+                ) vw
+                inner join account_analytic_account
+                   ON vw.id = account_analytic_account.id) as parent
+                where node.parent_left between parent.parent_left and parent.parent_right
+                group by node.name,node.parent_left,node.id 
+                order by node.parent_left
+            ) vw join project_project pp
+            on pp.analytic_account_id = vw.id
+            WHERE vw.full_name """ + str(args[0][1]) + """ '%%%s%%' """ % (str(args[0][2]),))
         datas = cr.dictfetchall()
         ids = [('id', 'in', [data['id'] for data in datas])]
         return ids
