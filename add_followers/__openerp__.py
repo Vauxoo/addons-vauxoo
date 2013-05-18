@@ -65,6 +65,7 @@
     "init_xml": [],
     "demo_xml": [],
     "update_xml": [
+        'security/security_groups.xml',
         'wizard/add_followers_view.xml',
     ],
     "installable": True,

@@ -48,6 +48,7 @@
             view_type="form"                                                       
             view_mode="form"                                                       
             view_id="add_followers_wizard_invite_form"
+            groups="add_followers.group_add_followers"
             target="new"                                                           
             id="add_many_followers_task_id"/> 
 
@@ -57,6 +58,7 @@
             src_model="project.project"                                            
             view_type="form"                                                       
             view_mode="form"                                                       
+            groups="add_followers.group_add_followers"
             view_id="add_followers_wizard_invite_form"
             target="new"                                                           
             id="add_many_followers_project_id"/> 
