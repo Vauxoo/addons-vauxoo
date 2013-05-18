@@ -36,48 +36,51 @@ class invite_wizard(osv.osv_memory):
         time use and add in the message all documents to follow
         '''
 
-        result = super(invite_wizard, self).default_get(cr, uid, fields, context=context)
-        model_obj = self.pool.get(result.get('res_model',False) or \
+        result = super(invite_wizard, self).default_get(
+            cr, uid, fields, context=context)
+        model_obj = self.pool.get(result.get('res_model', False) or
                                   context.get('active_model'))
-        
 
-        if len(context.get('active_ids',[])) > 1:
-            result.update({'res_model':context.get('active_model')})
+        if len(context.get('active_ids', [])) > 1:
+            result.update({'res_model': context.get('active_model')})
             message = _('<div>You have been invited to follow are '
                         'documents: </div>')
-            for ids in context.get('active_ids',[]):
+            for ids in context.get('active_ids', []):
                 document_name = model_obj.name_get(cr, uid, [ids],
-                                                       context=context)[0][1]
+                                                   context=context)[0][1]
                 message = message + '\n<div>' + document_name + '</div>'
-                    
+
             result['message'] = message
-        elif 'message' in fields and result.get('res_model') and result.get('res_id'):
-            document_name = self.pool.get(result.get('res_model')).name_get(cr, uid, [result.get('res_id')], context=context)[0][1]
-            message = _('<div>You have been invited to follow %s.</div>' % document_name)
+        elif 'message' in fields and result.get('res_model') and \
+                result.get('res_id'):
+            document_name = self.pool.get(result.get('res_model')).name_get(
+                cr, uid, [result.get('res_id')], context=context)[0][1]
+            message = _(
+                '<div>You have been invited to follow %s.</div>' %
+                document_name)
             result['message'] = message
 
         return result
 
     _columns = {
 
-        'groups':fields.boolean('Groups', help='Used to add a followers '
-                                                    'group from mail group '
-                                                    'and not for Users '
-                                                    'directly'), 
-        'partners':fields.boolean('Partners', help='Used to add a followers '
-                                                    'group by users' ), 
-        'p_a_g':fields.boolean('Group and Partner', help='Used to add a '
-                                                    'followers for partner '
-                                                    'and group at the same '
-                                                    'time'), 
-        
+        'groups': fields.boolean('Groups', help='Used to add a followers '
+                                 'group from mail group '
+                                 'and not for Users '
+                                 'directly'),
+        'partners': fields.boolean('Partners', help='Used to add a followers '
+                                                    'group by users'),
+        'p_a_g': fields.boolean('Group and Partner', help='Used to add a '
+                                'followers for partner '
+                                'and group at the same '
+                                'time'),
 
-        'mail_groups':fields.many2many('mail.group', string='Mail Groups',
-                                       help='Select the mail.groups that you '
-                                            'want add with followers'), 
-        
+
+        'mail_groups': fields.many2many('mail.group', string='Mail Groups',
+                                        help='Select the mail.groups that you '
+                                        'want add with followers'),
+
     }
-
 
     def add_followers(self, cr, uid, ids, context=None):
         '''
@@ -88,57 +91,62 @@ class invite_wizard(osv.osv_memory):
         '''
         res = {'type': 'ir.actions.act_window_close'}
         for wizard in self.browse(cr, uid, ids, context=context):
-            if context.get('second',False):
-                for res_id in context.get('active_ids',[]):
+            if context.get('second', False):
+                for res_id in context.get('active_ids', []):
                     model_obj = self.pool.get(wizard.res_model)
                     document = model_obj.browse(cr, uid, res_id,
                                                 context=context)
-                    new_follower_ids = [p.id for p in wizard.partner_ids\
-                                                if p.id not in\
-                                                document.message_follower_ids]
+                    new_follower_ids = [p.id for p in wizard.partner_ids
+                                        if p.id not in
+                                        document.message_follower_ids]
 
-                    # filter partner_ids to get the new followers, to avoid sending email to already following partners
+                    # filter partner_ids to get the new followers, to avoid
+                    # sending email to already following partners
                     model_obj.message_subscribe(cr, uid, [res_id],
                                                 new_follower_ids,
                                                 context=context)
 
                     # send an email only if a personal message exists
-                    if wizard.message and not wizard.message == '<br>':  # when deleting the message, cleditor keeps a <br>
-                        # add signature
+                    # when deleting the message, cleditor keeps a <br>
+                    # add signature
+                    if wizard.message and not wizard.message == '<br>':
                         user_id = self.pool.get("res.users").\
-                                        read(cr, uid, [uid],
-                                             fields=["signature"],
-                                             context=context)[0]
+                            read(cr, uid, [uid],
+                                 fields=["signature"],
+                                 context=context)[0]
 
                         signature = user_id and user_id["signature"] or ''
                         if signature:
                             wizard.message = \
-                                   tools.append_content_to_html(wizard.message,
-                                                                signature,
-                                                                plaintext=True,
-                                                                container_tag=\
-                                                                        'div')
-                        # FIXME 8.0: use notification_email_send, send a wall message and let mail handle email notification + message box
+                                tools.append_content_to_html(wizard.message,
+                                                             signature,
+                                                             plaintext=True,
+                                                             container_tag=
+                                                             'div')
+                        # FIXME 8.0: use notification_email_send, send a wall
+                        # message and let mail handle email notification +
+                        # message box
                         for follower_id in new_follower_ids:
                             mail_mail = self.pool.get('mail.mail')
-                            # the invite wizard should create a private message not related to any object -> no model, no res_id
+                            # the invite wizard should create a private message
+                            # not related to any object -> no model, no res_id
                             mail_id = mail_mail.create(cr, uid, {
                                 'model': wizard.res_model,
                                 'res_id': res_id,
                                 'subject': 'Invitation to follow %s' %
-                                                     document.name_get()[0][1],
+                                                       document.name_get()[
+                                                       0][1],
                                 'body_html': '%s' % wizard.message,
                                 'auto_delete': True,
-                                }, context=context)
+                                                       }, context=context)
                             mail_mail.send(cr, uid, [mail_id],
                                            recipient_ids=[follower_id],
                                            context=context)
             else:
-                res = super(invite_wizard,self).add_followers(cr, uid, ids,
-                                                              context=context)
-                
-        return res
+                res = super(invite_wizard, self).add_followers(cr, uid, ids,
+                                                               context=context)
 
+        return res
 
     def load_partners(self, cr, uid, ids, mail_groups, check, check2,
                       context=None):
@@ -147,18 +155,18 @@ class invite_wizard(osv.osv_memory):
         '''
         if context is None:
             context = {}
-        res = {'value':{}}
+        res = {'value': {}}
         mail_obj = self.pool.get('mail.group')
         partner_ids = []
-        
+
         if check or check2:
-            for group in mail_groups: 
+            for group in mail_groups:
                 group_ids = group and len(group) == 3 and group[2] or []
                 for groups in mail_obj.read(cr, uid,
                                             group_ids,
                                             ['message_follower_ids'],
                                             context):
-                    partner_ids += groups.get('message_follower_ids',[])
+                    partner_ids += groups.get('message_follower_ids', [])
 
-        partner_ids and res['value'].update({'partner_ids':partner_ids})
+        partner_ids and res['value'].update({'partner_ids': partner_ids})
         return res
