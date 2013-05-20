@@ -37,7 +37,8 @@ import openerp
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(invoice_facturae_html, self).__init__(cr, uid, name, context=context)
+        super(invoice_facturae_html, self).__init__(
+            cr, uid, name, context=context)
         self.localcontext.update({
             'set_global_data': self._set_global_data,
             'facturae_data_dict': self._facturae_data_dict,
@@ -50,35 +51,35 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'get_taxes_ret': self._get_taxes_ret,
             'float': float,
             'exists_key': self._exists_key,
-            'get_data_partner' : self._get_data_partner,
-            'get_sum_total' : self._get_sum_total,
-            'has_disc' : self._has_disc,
+            'get_data_partner': self._get_data_partner,
+            'get_sum_total': self._get_sum_total,
+            'has_disc': self._has_disc,
         })
         self.taxes = []
 
     def _exists_key(self, key):
-        return self.invoice._columns.has_key(key)
+        return key in self.invoice._columns
 
     def _set_global_data(self, o):
         try:
             self._get_data_partner(o.partner_id)
         except Exception, e:
-            print "exception: %s"%( e )
+            print "exception: %s" % (e)
             pass
         try:
             self.setLang(o.partner_id.lang)
         except Exception, e:
-            print "exception: %s"%( e )
+            print "exception: %s" % (e)
             pass
         try:
             self._get_company_address(o.id)
         except Exception, e:
-            print "exception: %s"%( e )
+            print "exception: %s" % (e)
             pass
         try:
             self._get_facturae_data_dict(o)
         except Exception, e:
-            print "exception: %s"%( e )
+            print "exception: %s" % (e)
             pass
         return ""
 
@@ -93,7 +94,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
         pool = pooler.get_pool(self.cr.dbname)
         invoice_obj = pool.get('account.invoice')
         sequence_obj = pool.get('ir.sequence')
-        invoice = invoice_obj.browse(self.cr, self.uid, [invoice_id], context=context)[0]
+        invoice = invoice_obj.browse(self.cr, self.uid, [
+                                     invoice_id], context=context)[0]
         context.update({'number_work': invoice.number})
         sequence = invoice.invoice_sequence_id or False
         sequence_id = sequence and sequence.id or False
@@ -125,17 +127,22 @@ class invoice_facturae_html(report_sxw.rml_parse):
         partner_obj = pool.get('res.partner')
         address_obj = pool.get('res.partner')
         invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
-        partner_id = invoice.company_id.parent_id and invoice.company_id.parent_id.partner_id.id or invoice.company_id.partner_id.id
+        partner_id = invoice.company_id.parent_id and invoice.company_id.\
+            parent_id.partner_id.id or invoice.company_id.partner_id.id
         self.invoice = invoice
-        address_id = partner_obj.address_get(self.cr, self.uid, [partner_id], ['invoice'])['invoice']
-        self.company_address_invoice = address_obj.browse(self.cr, self.uid, partner_id)
+        address_id = partner_obj.address_get(
+            self.cr, self.uid, [partner_id], ['invoice'])['invoice']
+        self.company_address_invoice = address_obj.browse(
+            self.cr, self.uid, partner_id)
 
         subpartner_id = invoice.company_id.partner_id.id
         if partner_id == subpartner_id:
             self.subcompany_address_invoice = self.company_address_invoice
         else:
-            subaddress_id = partner_obj.address_get(self.cr, self.uid, [subpartner_id], ['invoice'])['invoice']
-            self.subcompany_address_invoice = address_obj.browse(self.cr, self.uid, subaddress_id)
+            subaddress_id = partner_obj.address_get(
+                self.cr, self.uid, [subpartner_id], ['invoice'])['invoice']
+            self.subcompany_address_invoice = address_obj.browse(
+                self.cr, self.uid, subaddress_id)
         return ""
 
     def _company_address(self):
@@ -148,38 +155,61 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return self.invoice_data_dict
 
     def _get_facturae_data_dict(self, invoice):
-        self._set_invoice_sequence_and_approval( invoice.id )
-        self.taxes = [tax for tax in invoice.tax_line if tax.tax_percent >= 0.0]
-        self.taxes_ret = [tax for tax in invoice.tax_line if tax.tax_percent < 0.0]
+        self._set_invoice_sequence_and_approval(invoice.id)
+        self.taxes = [
+            tax for tax in invoice.tax_line if tax.tax_percent >= 0.0]
+        self.taxes_ret = [
+            tax for tax in invoice.tax_line if tax.tax_percent < 0.0]
         return ""
 
     def _get_data_partner(self, partner_id):
         address_invoice = ''
         partner_obj = self.pool.get('res.partner')
         res = {}
-        address_invoice = partner_obj.browse(self.cr, self.uid, partner_id.id)
-        address_parent = partner_obj.browse(self.cr, self.uid, partner_id.parent_id.id)
+        address_invoice_id = partner_obj.search(self.cr, self.uid, [(
+            'parent_id', '=', partner_id.id), ('type', '=', 'invoice')])
+        address_invoice_id2 = partner_obj.search(self.cr, self.uid, [
+                        ('id', '=', partner_id.id), ('type', '=', 'invoice')])
+        if address_invoice_id:
+            address_invoice = partner_obj.browse(
+                self.cr, self.uid, address_invoice_id[0])
+        if address_invoice_id2:
+            address_invoice = partner_obj.browse(
+                self.cr, self.uid, address_invoice_id2[0])
+        if address_invoice.use_parent_address:
+            address_invoice = address_invoice.parent_id
+        # if address_invoice_id3:
+            # address_invoice = partner_obj.browse(self.cr, self.uid, address_invoice_id3[0])
+            # print "Customer Invoice Address Not Type Invoice"
+            # raise openerp.exceptions.Warning('Customer Address Not Invoice
+            # Type')
         if address_invoice:
             res.update({
-                    'name' : address_parent.name or False,
-                    'vat' : address_parent._columns.has_key('vat_split') and address_parent.vat_split or address_parent.vat or False,
-                    'street' : address_invoice.street or False,
-                    'l10n_mx_street3' : address_invoice.l10n_mx_street3 or False,
-                    'l10n_mx_street4' : address_invoice.l10n_mx_street4 or False,
-                    'street2' : address_invoice.street2 or False,
-                    'city' : address_invoice.city or False,
-                    'state' : address_invoice.state_id and address_invoice.state_id.name or False,
-                    'country' : address_invoice.country_id and address_invoice.country_id.name or False,
-                    'l10n_mx_city2' : address_invoice.l10n_mx_city2 or False,
-                    'zip' : address_invoice.zip or False,
-                    'phone' : address_invoice.phone or False,
-                    'fax' : address_invoice.fax or False,
-                    'mobile' : address_invoice.mobile or False,
-                    })
+                'street': address_invoice.street or False,
+                'l10n_mx_street3': address_invoice.l10n_mx_street3 or False,
+                'l10n_mx_street4': address_invoice.l10n_mx_street4 or False,
+                'street2': address_invoice.street2 or False,
+                'city': address_invoice.city or False,
+                'state': address_invoice.state_id and address_invoice.\
+                    state_id.name or False,
+                'country': address_invoice.country_id and address_invoice.\
+                    country_id.name or False,
+                'l10n_mx_city2': address_invoice.l10n_mx_city2 or False,
+                'zip': address_invoice.zip or False,
+                'vat': 'vat_split' in address_invoice._columns and\
+                    address_invoice.vat_split or address_invoice.vat or False,
+                'phone': address_invoice.phone or False,
+                'fax': address_invoice.fax or False,
+                'mobile': address_invoice.mobile or False,
+            })
             if not res['vat']:
-                raise openerp.exceptions.Warning('Invoice Address Type Not Vat')
+                raise openerp.exceptions.Warning(
+                    'Invoice Address Type Not Vat')
+                # print "Invoice Address Type Not Vat"
         else:
-            raise openerp.exceptions.Warning('Customer Address Not Invoice Type')
+            # print "Customer Address Not Invoice Type"
+            raise openerp.exceptions.Warning(
+                'Customer Address Not Invoice Type')
         return res
 
     def _get_sum_total(self, line_ids):
@@ -198,8 +228,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
 
 
 report_sxw.report_sxw('report.account.invoice.facturae.webkit',
-                       'account.invoice',
-                       'addons/l10n_mx_facturae_report/report/invoice_facturae_html.mako',
-                       parser=invoice_facturae_html)
+            'account.invoice',
+            'addons/l10n_mx_facturae_report/report/invoice_facturae_html.mako',
+            parser=invoice_facturae_html)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

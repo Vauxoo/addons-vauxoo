@@ -30,7 +30,8 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with standard CFD-2010 of Mexican SAT.
+    "description" : """This module creates e-invoice files from invoices with \
+    standard CFD-2010 of Mexican SAT.
 Requires the following programs:
   xsltproc
     Ubuntu insall with:

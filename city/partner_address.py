@@ -37,23 +37,32 @@ import logging
 import pytz
 from lxml import etree
 
-class res_partner(osv.osv):
+
+class res_partner(osv.Model):
     _inherit = 'res.partner'
 
     _columns = {
         'city_id': fields.many2one('res.country.state.city', 'City'),
     }
 
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        if (not view_id) and (view_type=='form') and context and context.get('force_email', False):
-            view_id = self.pool.get('ir.model.data').get_object_reference(cr, user, 'base', 'res_partner_form_city_01')[1]
-        res = super(res_partner,self).fields_view_get(cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
+    def fields_view_get(self, cr, user, view_id=None, view_type='form',
+                        context=None, toolbar=False, submenu=False):
+        if (not view_id) and (view_type == 'form') and context \
+            and context.get('force_email', False):
+            view_id = self.pool.get('ir.model.data').get_object_reference(
+                cr, user, 'base', 'res_partner_form_city_01')[1]
+        res = super(res_partner, self).fields_view_get(cr, user,
+            view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
-            res['arch'] = self.fields_view_get_address(cr, user, res['arch'], context=context)
+            res['arch'] = self.fields_view_get_address(
+                cr, user, res['arch'], context=context)
         return res
 
     def onchange_city(self, cr, uid, ids, city_id, context=None):
         if city_id:
-            city = self.pool.get('res.country.state.city').browse(cr, uid, city_id, context)
-            return {'value':{'city': city.name, 'state_id':city.state_id.id, 'country_id':city.country_id and city.country_id.id or False }}
+            city = self.pool.get('res.country.state.city').browse(
+                cr, uid, city_id, context)
+            return {'value': {'city': city.name,
+                    'state_id': city.state_id.id,
+                    'country_id': city.country_id and city.country_id.id or False}}
         return {}

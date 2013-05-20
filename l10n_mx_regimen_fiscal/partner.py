@@ -30,10 +30,10 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import pooler, tools
 
-class res_partner(osv.osv):
+
+class res_partner(osv.Model):
     _inherit = 'res.partner'
 
     _columns = {
         'regimen_fiscal_id': fields.many2one('regimen.fiscal', 'Regimen fiscal',),
     }
-res_partner()

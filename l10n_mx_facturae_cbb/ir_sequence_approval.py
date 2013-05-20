@@ -27,21 +27,26 @@
 
 from openerp.osv import fields, osv
 
-class ir_sequence_approval(osv.osv):
+
+class ir_sequence_approval(osv.Model):
     _inherit = 'ir.sequence.approval'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_sequence_approval, self)._get_type(cr, uid, ids, context=context)
+        types = super(ir_sequence_approval, self)._get_type(
+            cr, uid, ids, context=context)
         types.extend([
             ('cbb', 'CBB'),
         ])
         return types
 
     _columns = {
-        'date_start': fields.date('Date Approval', size=32, help='Date start of the folios'),
-        'date_end': fields.date('Effective Date', size=32, help='Date end of the folios'),
-        'cbb_image': fields.binary('Image of Code of Dimensional Bar', help='This images will be used in the Report of Electronic Invoice'),
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, help="Type of Electronic Invoice"),
+        'date_start': fields.date('Date Approval', size=32,
+            help='Date start of the folios'),
+        'date_end': fields.date('Effective Date', size=32,
+            help='Date end of the folios'),
+        'cbb_image': fields.binary('Image of Code of Dimensional Bar',
+            help='This images will be used in the Report of Electronic Invoice'),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64,
+            required=True, help="Type of Electronic Invoice"),
     }
-ir_sequence_approval()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
