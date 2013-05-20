@@ -30,7 +30,7 @@
             <field name="inherit_id" ref="project.view_task_tree2"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='project_id']" position="after">
-                    <field name="project_related_id" string="Complete Name Project"/>
+                    <field name="project_related_id" groups="project_complete_name.group_project_complete_name_project" string="Complete Name Project"/>
                 </xpath>
             </field>
         </record>
