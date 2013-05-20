@@ -42,6 +42,19 @@
                 </field>
         </record> 
 
+        <record id="view_project_form_descriptions" model="ir.ui.view">
+                <field name="name">project.description</field>
+                <field name="model">project.project</field>
+                <field name="inherit_id" ref="project.edit_project"/>
+                <field name="arch" type="xml">
+                        <xpath expr="//page[last()]" position="after">
+                            <page string="Description">
+                                <field name="descriptions" widget="html" attrs="{'readonly':[('state','=','done')]}" placeholder="Add Description .." />
+                            </page>
+                        </xpath>
+                </field>
+        </record>
+
         <record id="view_task_tree_us_m2o" model="ir.ui.view">
                 <field name="name">project.task.tree.us.m2o</field>
                 <field name="model">project.task</field>
