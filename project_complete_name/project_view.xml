@@ -23,6 +23,28 @@
                 </xpath>
             </field>
         </record>
+
+        <record id="view_project_task_tree_inherit" model="ir.ui.view">
+            <field name="name">project.task.tree.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="project_related_id" string="Complete Name Project"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_project_task_form_inherit" model="ir.ui.view">
+            <field name="name">project.task.tree.inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="project_related_id" string="Complete Name Project"/>
+                </xpath>
+            </field>
+        </record>
         
     </data>
 </openerp>

@@ -90,3 +90,11 @@ class project_project(osv.Model):
             ids = self.search(cr, user, args, limit=limit, context=context)
         result = self.name_get(cr, user, ids, context=context)
         return result
+
+
+class project_task(osv.Model):
+    _inherit = 'project.task'
+    
+    _columns = {
+        'project_related_id': fields.related('project_id', 'analytic_account_id', type='many2one', relation='account.analytic.account', string='Complete Name Project')
+    }
