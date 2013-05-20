@@ -15,9 +15,22 @@
             <field name="smtp_user">soporte@vauxoo.com</field>
             <field name="smtp_pass"></field>
         </record>
+
     <!-- 
     =====================================================
-    EMAIL TEMPLATE
+    TASK STAGE: BACKLOG
+    =====================================================
+    -->
+        <record id="project_tt_backlog" model="project.task.type">
+            <field name="sequence">0</field>
+            <field name="name">Backlog</field>
+            <field name="state">draft</field>
+            <field name="case_default" eval="True"/>
+        </record>
+    
+    <!-- 
+    =====================================================
+    SEND EMAIL TEMPLATE
     =====================================================
     -->        
         <record id="template_send_email_task_new" model="email.template">
