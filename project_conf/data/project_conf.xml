@@ -37,7 +37,7 @@
             <field name="name">Envio de Tarea por Email</field>
             <field name="email_from">soporte@vauxoo.com</field>
             <field name="model_id" ref="project.model_project_task" />
-            <field name="subject">ACTIVIDAD:${object.id}. ASIGNADA A: ${object.user_id.name}</field>
+            <field name="subject">#${object.id} - ${object.name} - ${object.partner_id.name and object.partner_id.name or ''}</field>
             <field name="auto_delete" eval="True"/>
             <field name="mail_server_id" ref="template_outgoing_mail_server"/>
             <field name="email_to">${object.user_id.email}</field>
@@ -555,7 +555,7 @@
             <field name="name">Envio de Reporte de Credenciales del Server</field>
             <field name="email_from">soporte@vauxoo.com</field>
             <field name="model_id" ref="project.model_project_task" />
-            <field name="subject">Reporte de Instalacion de Server: ${object.partner_id.name}</field>
+            <field name="subject">Reporte de Credenciales resultado de la Instalacion del Server - ${object.partner_id.name and object.partner_id.name or ''}</field>
             <field name="auto_delete" eval="True"/>
             <field name="mail_server_id" ref="template_outgoing_mail_server"/>
             <field name="email_to">${object.user_id.email}</field>
