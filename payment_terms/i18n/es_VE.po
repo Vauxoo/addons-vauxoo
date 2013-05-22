@@ -1,0 +1,130 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* payment_terms
+# <> <>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-05-22 05:00+0000\n"
+"PO-Revision-Date: 2013-05-22 00:34-0430\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"X-Generator: Gtranslator 2.91.6\n"
+
+#. module: payment_terms
+#: field:payment.terms.partner,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_stock_picking_in
+msgid "Incoming Shipments"
+msgstr "Albaranes de entrada"
+
+#. module: payment_terms
+#: help:res.partner,property_payment_term_p_customer:0
+msgid ""
+"This payment term will be used instead of the default one for sale orders "
+"and customer invoices"
+msgstr ""
+"Este termino de pago sera usado en lugar del que se encuentra por defecto en "
+"las ordenes de venta y facturas de clientes"
+
+#. module: payment_terms
+#: help:res.partner,property_payment_term_p_suppliers:0
+msgid ""
+"This payment term will be used instead of the default one for purchase "
+"orders and supplier invoices"
+msgstr ""
+"Este termino de pago sera usado en lugar del que se encuentra por defecto en "
+"las ordenes de compras y facturas de proveedor"
+
+#. module: payment_terms
+#: view:payment.terms.partner:0
+msgid "Payments Terms"
+msgstr "Terminos de Pago"
+
+#. module: payment_terms
+#: model:ir.ui.menu,name:payment_terms.payment_term_partner
+msgid "Payments Termns"
+msgstr "Teminos de Pago"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_stock_picking
+msgid "Picking List"
+msgstr "Albarán"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_payment_terms_partner
+msgid "payment.terms.partner"
+msgstr "payment.terms.partner"
+
+#. module: payment_terms
+#: help:account.invoice,payment_terms_id:0
+#: help:purchase.order,payment_terms_id:0 help:sale.order,payment_terms_id:0
+#: help:stock.picking,payment_terms_id:0
+#: help:stock.picking.in,payment_terms_id:0
+#: help:stock.picking.out,payment_terms_id:0
+msgid "Select the payment term agreed by company for this partner"
+msgstr ""
+"Seleccione el termino de pago establecido por la compañía para este cliente"
+
+#. module: payment_terms
+#: model:ir.actions.act_window,name:payment_terms.payment_term_partner_action
+msgid "payment.term.partner"
+msgstr "payment.term.partner"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: payment_terms
+#: help:payment.terms.partner,name:0
+msgid "Name to identify payment term"
+msgstr "Nombre para identificar el termino de pago"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_sale_order
+msgid "Sales Order"
+msgstr "Pedido de venta"
+
+#. module: payment_terms
+#: model:ir.model,name:payment_terms.model_stock_picking_out
+msgid "Delivery Orders"
+msgstr "Órdenes de entrega"
+
+#. module: payment_terms
+#: field:res.partner,property_payment_term_p_customer:0
+msgid "Payment Term Customer"
+msgstr "Terminos de Pago de Cliente"
+
+#. module: payment_terms
+#: field:account.invoice,payment_terms_id:0
+#: field:purchase.order,payment_terms_id:0 field:sale.order,payment_terms_id:0
+#: field:stock.picking,payment_terms_id:0
+#: field:stock.picking.in,payment_terms_id:0
+#: field:stock.picking.out,payment_terms_id:0
+msgid "Payment Terms"
+msgstr "Terminos de Pago"
+
+#. module: payment_terms
+#: field:res.partner,property_payment_term_p_suppliers:0
+msgid "Payment Term Supplier"
+msgstr "Terminos de Pago de Proveedor"

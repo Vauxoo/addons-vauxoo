@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    <!-- Inherit Stock Picking In Form -->
+    
+    <record model="ir.ui.view" id="inherited_stock_picking_in_new_payment_form">
+        <field name="name">stock.picking.in.form.inherit</field>
+        <field name="model">stock.picking.in</field>
+        <field name="inherit_id" ref="stock.view_picking_in_form" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="partner_id"]' position="after" >
+                <field name="payment_terms_id"  widget="selection" />
+            </xpath>
+        </field>
+    </record>
+    
+    <!-- Inherit Stock Picking Out Form -->
+    
+    <record model="ir.ui.view" id="inherited_stock_picking_add_paymenr_out_form">
+        <field name="name">stock.picking.out.form.inherit</field>
+        <field name="model">stock.picking.out</field>
+        <field name="inherit_id" ref="stock.view_picking_out_form" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="partner_id"]' position="after" >
+                <field name="payment_terms_id"  widget="selection" />
+            </xpath>
+        </field>
+    </record>
+    
+    </data>
+</openerp>
