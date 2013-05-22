@@ -167,7 +167,8 @@ class invoice_facturae_html(report_sxw.rml_parse):
         partner_obj = self.pool.get('res.partner')
         res = {}
         address_invoice = partner_obj.browse(self.cr, self.uid, partner_id.id)
-        address_parent = partner_obj.browse(self.cr, self.uid, partner_id.parent_id.id)
+        id_parent = partner_id.parent_id and partner_id.parent_id.id or partner_id.id
+        address_parent = partner_obj.browse(self.cr, self.uid, id_parent)
         if address_invoice:
             res.update({
                 'name' : address_parent.name or False,

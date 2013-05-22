@@ -1062,28 +1062,25 @@ class account_invoice(osv.Model):
             })
             # Termina seccion: Emisor
             # Inicia seccion: Receptor
-            if not invoice.partner_id.parent_id.vat:
+            parent_id = invoice.partner_id.parent_id and invoice.partner_id.parent_id.id or invoice.partner_id.id
+            parent_obj = partner_obj.browse(cr, uid, parent_id, context=context)
+            if not parent_obj.vat:
                 raise osv.except_osv(_('Warning !'), _(
                     "Don't have defined RFC of the partner[%s].\n%s !") % (
-                    invoice.partner_id.name, msg2))
-            if invoice.partner_id.parent_id._columns.has_key('vat_split') and\
-                invoice.partner_id.parent_id.vat[0:2] <> 'MX':
+                    parent_obj.name, msg2))
+            if parent_obj._columns.has_key('vat_split') and\
+                parent_obj.vat[0:2] <> 'MX':
                 rfc = 'XAXX010101000'
             else:
-                rfc = ((invoice.partner_id.parent_id._columns.has_key('vat_split')\
-                    and invoice.partner_id.parent_id.vat_split or invoice.partner_id.parent_id.vat)\
+                rfc = ((parent_obj._columns.has_key('vat_split')\
+                    and parent_obj.vat_split or parent_obj.vat)\
                     or '').replace('-', ' ').replace(' ','')
-            address_invoice_id = partner_obj.search(cr, uid, [(
-                'parent_id', '=', invoice.partner_id.id), ('type', '=', 'invoice')])
-            if not address_invoice_id:
-                raise osv.except_osv(_('Warning !'), _(
-                    "Don't have defined an address of invoice for the customer"))
             address_invoice = partner_obj.browse(cr, uid, \
                 invoice.partner_id.id, context=context)
             invoice_data['Receptor'] = {}
             invoice_data['Receptor'].update({
                 'rfc': rfc,
-                'nombre': (invoice.partner_id.parent_id.name or ''),
+                'nombre': (parent_obj.name or ''),
                 'Domicilio': {
                     'calle': address_invoice.street and address_invoice.\
                         street.replace('\n\r', ' ').replace('\r\n', ' ').replace(
