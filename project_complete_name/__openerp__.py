@@ -35,6 +35,7 @@
     'init_xml': [],
     'update_xml': [
         'project_view.xml',
+        'security/project_security.xml'
         ],
     'demo_xml': [],
     'test': [],
