@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="project_project_hierarchical_tree_view" model="ir.ui.view">
+            <field name="name">project.project.tree</field>
+            <field name="model">project.project</field>
+            <field name="field_parent">child_ids2</field>
+            <field name="arch" type="xml">
+                <tree toolbar="True" string="Product Categories">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="project_project_hierarchical_action" model="ir.actions.act_window">
+            <field name="name">Project Hierarchical</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.project</field>
+            <field name="domain">[('parent_id2','=',False)]</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="project_project_hierarchical_tree_view"/>
+            <field name="help" type="html">
+            </field>
+        </record>
+        
+        <menuitem
+            action="project_project_hierarchical_action"
+            id="project_btree.project_project_hierarchical_menu"
+            parent="project.menu_project_management"/>
+
+        <record id="view_project_project_tree_inherit21" model="ir.ui.view">
+            <field name="name">project.project.tree.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="parent_id2" invisible="1" string="Complete Name"/>
+                </xpath>
+            </field>
+        </record>
+    
+    </data>
+</openerp>
