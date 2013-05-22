@@ -40,25 +40,25 @@ class project_project(osv.Model):
         cr.execute("""
             SELECT pp.id,*
             FROM (
-                Select 
+                Select
                     node.id, node.name AS short_name,
                     --cast ((count(parent.name)) as int) as nivel
                     replace( array_to_string( array_agg( parent.name order by parent.nivel asc), ' / ' ), '\n', ' ') as full_name
                 from account_analytic_account as node, ( SELECT vw.nivel, account_analytic_account.*
                 FROM (
-                        Select 
+                        Select
                             node.id, node.name AS short_name,
                             cast ((count(parent.name)) as int) as nivel
                             --array_to_string( array_agg( distinct parent.name ), ' / ' ) as full_name
                         from account_analytic_account as node,account_analytic_account  as parent
                         where node.parent_left between parent.parent_left and parent.parent_right
-                        group by node.name,node.parent_left,node.id 
+                        group by node.name,node.parent_left,node.id
                         order by node.parent_left
                 ) vw
                 inner join account_analytic_account
                    ON vw.id = account_analytic_account.id) as parent
                 where node.parent_left between parent.parent_left and parent.parent_right
-                group by node.name,node.parent_left,node.id 
+                group by node.name,node.parent_left,node.id
                 order by node.parent_left
             ) vw join project_project pp
             on pp.analytic_account_id = vw.id
@@ -69,22 +69,32 @@ class project_project(osv.Model):
 
     def _complete_name(self, cr, uid, ids, name, args, context=None):
         return super(project_project, self)._complete_name(cr, uid, ids, name,
-                        args, context=context)
+                                                        args, context=context)
     _columns = {
         'complete_name2': fields.function(_complete_name,
-                fnct_search=_project_search, string="Project Name",
-                type='char', size=250),
+              fnct_search=_project_search, string="Project Name",
+              type='char', size=250),
     }
-    
-    def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=100):
+
+    def name_search(self, cr, user, name='', args=None, operator='ilike',
+                                                    context=None, limit=100):
         if not args:
             args = []
         if name:
-            ids = self.search(cr, user, [('complete_name2','=',name)]+ args, limit=limit, context=context)
+            ids = self.search(cr, user, [(
+                'complete_name2', '=', name)] + args,
+                limit=limit, context=context)
             if not ids:
                 ids = set()
-                ids.update(self.search(cr, user, args + [('complete_name2',operator,name)], limit=limit, context=context))
-                ids.update(map(lambda a: a[0], super(project_project, self).name_search(cr, user, name=name, args=args, operator=operator, context=context, limit=limit)))
+                ids.update(self.search(cr, user, args + [(
+                    'complete_name2', operator, name)],
+                    limit=limit, context=context))
+                ids.update(map(lambda a: a[0], super(project_project,
+                                                    self).name_search(cr, user,
+                                                        name=name, args=args,
+                                                        operator=operator,
+                                                        context=context,
+                                                        limit=limit)))
                 ids = list(ids)
         else:
             ids = self.search(cr, user, args, limit=limit, context=context)
@@ -94,7 +104,10 @@ class project_project(osv.Model):
 
 class project_task(osv.Model):
     _inherit = 'project.task'
-    
+
     _columns = {
-        'project_related_id': fields.related('project_id', 'analytic_account_id', type='many2one', relation='account.analytic.account', string='Complete Name Project')
+        'project_related_id': fields.related('project_id',
+            'analytic_account_id', type='many2one',
+            relation='account.analytic.account',
+            string='Complete Name Project')
     }
