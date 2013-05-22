@@ -30,10 +30,10 @@ from openerp import pooler, tools
 
 import time
 
-class regimen_fiscal(osv.osv):
+
+class regimen_fiscal(osv.Model):
     _name = 'regimen.fiscal'
     _columns = {
-        'name': fields.char('Regimen Fiscal', size = 128),
+        'name': fields.char('Regimen Fiscal', size=128),
         'description': fields.text('Descripcion'),
     }
-regimen_fiscal()

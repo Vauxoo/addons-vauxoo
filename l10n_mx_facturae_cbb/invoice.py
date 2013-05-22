@@ -35,30 +35,38 @@ import os
 import tempfile
 import base64
 
-msg2= "Contact you administrator &/or info@vauxoo.com"
+msg2 = "Contact you administrator &/or info@vauxoo.com"
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False, context={}):
+    def _get_fname_invoice(self, cr, uid, ids, field_names=None, arg=False,
+        context={}):
         if not context:
             context = {}
         res = {}
         sequence_obj = self.pool.get('ir.sequence')
 
-        invoice_id__sequence_id = self._get_invoice_sequence(cr, uid, ids, context=context)
+        invoice_id__sequence_id = self._get_invoice_sequence(
+            cr, uid, ids, context=context)
         for invoice in self.browse(cr, uid, ids, context=context):
             sequence_id = invoice_id__sequence_id[invoice.id]
             sequence = False
             if sequence_id:
-                sequence = sequence_obj.browse(cr, uid, [sequence_id], context)[0]
+                sequence = sequence_obj.browse(
+                    cr, uid, [sequence_id], context)[0]
             fname = ""
-            fname += (invoice.company_id.partner_id and (invoice.company_id.partner_id._columns.has_key('vat_split') and invoice.company_id.partner_id.vat_split or invoice.company_id.partner_id.vat) or '')
+            fname += (invoice.company_id.partner_id and (
+                'vat_split' in invoice.company_id.partner_id._columns and \
+                invoice.company_id.partner_id.vat_split or \
+                invoice.company_id.partner_id.vat) or '')
             fname += '_'
             number_work = invoice.number or invoice.internal_number
             try:
-                context.update({ 'number_work': int( number_work ) or False })
-                fname += sequence and sequence.approval_id and sequence.approval_id.serie or ''
+                context.update({'number_work': int(number_work) or False})
+                fname += sequence and sequence.approval_id and \
+                    sequence.approval_id.serie or ''
                 fname += '_'
             except:
                 pass
@@ -67,10 +75,12 @@ class account_invoice(osv.osv):
         return res
 
     _columns = {
-        ##Extract date_invoice from original, but add datetime
+        # Extract date_invoice from original, but add datetime
         #'date_invoice': fields.datetime('Date Invoiced', states={'open':[('readonly',True)],'close':[('readonly',True)]}, help="Keep empty to use the current date"),
         #'invoice_sequence_id': fields.function(_get_invoice_sequence, method=True, type='many2one', relation='ir.sequence', string='Invoice Sequence', store=True),
-        'fname_invoice':  fields.function(_get_fname_invoice, method=True, type='char', size='26', string='File Name Invoice', help='Is a concatenation of VAT and number of invoice'),
+        'fname_invoice':  fields.function(_get_fname_invoice, method=True,
+            type='char', size='26', string='File Name Invoice',
+            help='Is a concatenation of VAT and number of invoice'),
     }
 
     _defaults = {
@@ -79,32 +89,37 @@ class account_invoice(osv.osv):
 
     def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
         """
-        @param report_name : Name of report with the name of object more type of report
-        @param file_name : Path where is save the report temporary more the name of report that is 'openerp___facturae__' more six random characters for no files duplicate
+        @param report_name : Name of report with the name of object more type
+            of report
+        @param file_name : Path where is save the report temporary more the
+            name of report that is 'openerp___facturae__' more six random
+            characters for no files duplicate
         """
         if not report_name or not res_ids:
-            return (False,Exception('Report name and Resources ids are required !!!'))
-        #try:
+            return (False, Exception('Report name and Resources ids are required !!!'))
+        # try:
         ret_file_name = file_name+'.pdf'
-        service = netsvc.LocalService("report."+report_name);
-        (result,format) = service.create(cr, uid, res_ids, {}, {})
-        fp = open(ret_file_name,'wb+');
-        fp.write(result);
-        fp.close();
-        #except Exception,e:
-            #print 'Exception in create report:',e
-            #return (False,str(e))
-        return (True,ret_file_name)
+        service = netsvc.LocalService("report."+report_name)
+        (result, format) = service.create(cr, uid, res_ids, {}, {})
+        fp = open(ret_file_name, 'wb+')
+        fp.write(result)
+        fp.close()
+        # except Exception,e:
+            # print 'Exception in create report:',e
+            # return (False,str(e))
+        return (True, ret_file_name)
 
     def create_report_pdf(self, cr, uid, ids, context={}):
         if not context:
             context = {}
         id = ids[0]
 
-        (fileno, fname) = tempfile.mkstemp('.pdf', 'openerp_' + (False or '') + '__facturae__' )
-        os.close( fileno )
+        (fileno, fname) = tempfile.mkstemp(
+            '.pdf', 'openerp_' + (False or '') + '__facturae__')
+        os.close(fileno)
 
-        file = self.create_report(cr, uid, [id], "account.invoice.facturae.pdf2", fname)
+        file = self.create_report(cr, uid, [
+                                  id], "account.invoice.facturae.pdf2", fname)
         is_file = file[0]
         fname = file[1]
         if is_file and os.path.isfile(fname):
@@ -114,13 +129,14 @@ class account_invoice(osv.osv):
 
             data_attach = {
                 'name': context.get('fname'),
-                'datas': data and base64.encodestring( data ) or None,
+                'datas': data and base64.encodestring(data) or None,
                 'datas_fname': context.get('fname'),
                 'description': u'Factura-E CBB PDF',
                 'res_model': self._name,
                 'res_id': id,
             }
-            self.pool.get('ir.attachment').create(cr, uid, data_attach, context=context)
+            self.pool.get('ir.attachment').create(
+                cr, uid, data_attach, context=context)
         return True
 
     """def action_cancel_draft(self, cr, uid, ids, context=None):
@@ -128,7 +144,9 @@ class account_invoice(osv.osv):
         for invoice in self.browse(cr, uid, ids):
             try:
                 attachment_pdf_id = attachment_obj.search(cr, uid, [
-                    ('name','=',invoice.fname_invoice),###no se agrega.pdf, porque el generador de reportes, no lo hace asi, actualmente o agrega doble .pdf o nada
+                    ('name','=',invoice.fname_invoice),###no se agrega.pdf,
+                        ##porque el generador de reportes, no lo hace asi,
+                        ##actualmente o agrega doble .pdf o nada
                     ('datas_fname','=',invoice.fname_invoice+'.pdf'),
                     ('res_model','=','account.invoice'),
                     ('res_id','=',invoice.id)
@@ -136,7 +154,6 @@ class account_invoice(osv.osv):
                 attachment_obj.unlink(cr, uid, attachment_pdf_id)
             except:
                 pass
-        return super(account_invoice, self).action_cancel_draft(cr, uid, ids, context=context)
+        return super(account_invoice, self).action_cancel_draft(cr, uid, ids,
+            context=context)
     """
-
-account_invoice()

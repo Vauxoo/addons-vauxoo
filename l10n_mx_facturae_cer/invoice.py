@@ -29,26 +29,31 @@ from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp import tools
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
-    
-    def _get_invoice_certificate(self, cr, uid, ids, field_names=None, arg=False, context={}):
+
+    def _get_invoice_certificate(self, cr, uid, ids, field_names=None,
+        arg=False, context={}):
         if not context:
-            context={}
+            context = {}
         company_obj = self.pool.get('res.company')
         certificate_obj = self.pool.get('res.company.facturae.certificate')
         res = {}
         for invoice in self.browse(cr, uid, ids, context=context):
-            context.update( {'date_work': invoice.date_invoice} )
+            context.update({'date_work': invoice.date_invoice})
             certificate_id = False
-            certificate_id = company_obj._get_current_certificate(cr, uid, [invoice.company_emitter_id.id], context=context)[invoice.company_emitter_id.id]
-            certificate_id = certificate_id and certificate_obj.browse(cr, uid, [certificate_id], context=context)[0] or False
+            certificate_id = company_obj._get_current_certificate(cr, uid, [
+                invoice.company_emitter_id.id], context=context)[
+                invoice.company_emitter_id.id]
+            certificate_id = certificate_id and certificate_obj.browse(
+                cr, uid, [certificate_id], context=context)[0] or False
             res[invoice.id] = certificate_id and certificate_id.id or False
         return res
-    
+
     _columns = {
-        'certificate_id': fields.function(_get_invoice_certificate, method=True, type='many2one', relation='res.company.facturae.certificate', string='Invoice Certificate', store=True, help='Id of the certificate used for the invoice'),
+        'certificate_id': fields.function(_get_invoice_certificate, method=True,
+            type='many2one', relation='res.company.facturae.certificate',
+            string='Invoice Certificate', store=True,
+            help='Id of the certificate used for the invoice'),
     }
-    
-    
-account_invoice()

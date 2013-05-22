@@ -39,27 +39,29 @@ import ftplib
 import time
 
 
-class wizard_facturae_ftp(osv.osv_memory):
-    _name='wizard.facturae.ftp'
-    
+class wizard_facturae_ftp(osv.TransientModel):
+    _name = 'wizard.facturae.ftp'
+
     def invoice_ftp(self, cr, uid, ids, context=None):
-        ftp_id=False
-        data = self.read(cr,uid,ids)[0]
+        ftp_id = False
+        data = self.read(cr, uid, ids)[0]
         atta_obj = self.pool.get('ir.attachment')
         atta_obj.file_ftp(cr, uid, data['files'], context=context)
         return {}
 
-
     def _get_files(self, cr, uid, context):
         atta_obj = self.pool.get('ir.attachment')
-        atta_ids = atta_obj.search(cr, uid, [('res_id', 'in', context['active_ids']), ('res_model','=', context['active_model'])], context=context)
+        atta_ids = atta_obj.search(cr, uid, [('res_id', 'in', context[
+            'active_ids']), ('res_model', '=', context['active_model'])],
+            context=context)
         return atta_ids
-        
+
     _columns = {
-        'files': fields.many2many('ir.attachment','ftp_wizard_attachment_rel', 'wizard_id', 'attachment_id', 'Attachments', help='Attachments to upload on FTP Server'),
+        'files': fields.many2many('ir.attachment', 'ftp_wizard_attachment_rel',
+            'wizard_id', 'attachment_id', 'Attachments',
+            help='Attachments to upload on FTP Server'),
     }
 
-    _defaults= {
+    _defaults = {
         'files': _get_files,
     }
-wizard_facturae_ftp()

@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Mexico (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Maria Gabriela Quilarque  <gabriela@openerp.com.ve>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
@@ -27,14 +27,16 @@ import base64
 from openerp import addons
 
 
-class facturae_config(osv.osv_memory):
+class facturae_config(osv.TransientModel):
     _name = 'facturae.config'
     _inherit = 'res.config'
     _description = __doc__
 
     def default_get(self, cr, uid, fields_list=None, context=None):
-        defaults = super(facturae_config, self).default_get(cr, uid, fields_list=fields_list, context=context)
-        logo = open(addons.get_module_resource('l10n_mx_facturae', 'images', 'piramide_azteca.jpg'), 'rb')
+        defaults = super(facturae_config, self).default_get(
+            cr, uid, fields_list=fields_list, context=context)
+        logo = open(addons.get_module_resource(
+            'l10n_mx_facturae', 'images', 'piramide_azteca.jpg'), 'rb')
         defaults['config_logo'] = base64.encodestring(logo.read())
         return defaults
 
@@ -44,22 +46,23 @@ class facturae_config(osv.osv_memory):
         @param company_id : Id from the company that the user works
         """
         print 'company_id', company_id
-        partner_id = self.pool.get('res.company').browse(cr,uid,company_id).partner_id.id
-        partner_obj= self.pool.get('res.partner')
-        if partner_obj.check_vat(cr,uid,[partner_id],context):
-            partner_obj.write(cr, uid, partner_id,{ 
+        partner_id = self.pool.get('res.company').browse(
+            cr, uid, company_id).partner_id.id
+        partner_obj = self.pool.get('res.partner')
+        if partner_obj.check_vat(cr, uid, [partner_id], context):
+            partner_obj.write(cr, uid, partner_id, {
                 'vat': vat,
-            },context=context)
+            }, context=context)
 
     def execute(self, cr, uid, ids, context=None):
-        company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
+        company_id = self.pool.get('res.users').browse(
+            cr, uid, [uid], context)[0].company_id.partner_id.id
         wiz_data = self.read(cr, uid, ids[0])
         if wiz_data['vat']:
-            self._assign_vat(cr, uid, wiz_data["vat"],company_id,context)
-            
+            self._assign_vat(cr, uid, wiz_data["vat"], company_id, context)
+
     _columns = {
         'vat': fields.char('VAT', 64, help='Federal Register of Causes'),
-        'company_id': fields.many2one('res.company',u'Company',help="Select company to assing vat and/or cif"),
+        'company_id': fields.many2one('res.company', u'Company',
+            help="Select company to assing vat and/or cif"),
     }
-
-#~ facturae_config()

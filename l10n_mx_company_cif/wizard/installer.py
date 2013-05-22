@@ -26,23 +26,24 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 
-class cif_config(osv.osv_memory):
+
+class cif_config(osv.TransientModel):
     _name = 'cif.config'
     _inherit = 'res.config'
-        
-    def _write_company(self, cr, uid, cif_file,company_id,context=None):
-        self.pool.get('res.company').write(cr, uid, company_id,{
+
+    def _write_company(self, cr, uid, cif_file, company_id, context=None):
+        self.pool.get('res.company').write(cr, uid, company_id, {
             'cif_file': cif_file,
-            },context=context)
-            
+        }, context=context)
+
     def execute(self, cr, uid, ids, context=None):
-        company_id=self.pool.get('res.users').browse(cr,uid,[uid],context)[0].company_id.partner_id.id
+        company_id = self.pool.get('res.users').browse(
+            cr, uid, [uid], context)[0].company_id.partner_id.id
         wiz_data = self.read(cr, uid, ids[0])
         if wiz_data['cif_file']:
-            self._write_company(cr, uid, wiz_data["cif_file"],company_id,context)
-            
-    _columns={
-        'cif_file': fields.binary('CIF',help="Fiscal Identification Card"),
-    }
+            self._write_company(cr, uid, wiz_data[
+                                "cif_file"], company_id, context)
 
-cif_config()
+    _columns = {
+        'cif_file': fields.binary('CIF', help="Fiscal Identification Card"),
+    }
