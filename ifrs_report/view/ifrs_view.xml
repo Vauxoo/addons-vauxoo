@@ -22,7 +22,6 @@
 		<record model="ir.ui.view" id="view_ifrs_ifrs_form">
 		  <field name="name">ifrs.ifrs.form</field>
 		  <field name="model">ifrs.ifrs</field>
-		  <field name="type">form</field>
 		  <field name="arch" type="xml">
 			<form string="International Financial Reporting Standards">
 			<field name="name" />
@@ -36,7 +35,7 @@
               </group>
                 <notebook colspan='6'>
                     <page string='Report Lines'>
-                      <field name="ifrs_lines_ids"  nolabel="1" colspan="4" mode="tree,form">
+                      <field name="ifrs_lines_ids"  nolabel="1" colspan="4">
                         
                         <tree string="IFRS Lines">
                           <field name="id" />
@@ -194,8 +193,14 @@
 		<!-- MENUS -->
 
 		<menuitem
+			id="menu_parent_ifrs"
+			name="IFRS"
+		/>
+
+		<menuitem
 			id="menu_ifrs_ifrs"
 			name="IFRS"
+			parent="menu_parent_ifrs"
 		/>
 
 		<!-- SUB-MENU -->
