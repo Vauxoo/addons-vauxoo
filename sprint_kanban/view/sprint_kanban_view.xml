@@ -159,7 +159,7 @@
         <xpath expr="//field[@name='categ_ids']" position="after">
           <field name="sprint_id"/>
         </xpath>
-        <xpath expr='//sheet[@string="Task"]/h1/field[@name="name"]' position="after">
+        <xpath expr='//sheet[@string="Task"]/h1/field[@name="name"]' position="before">
 			<field name="id"/>
 		</xpath>
         <xpath expr="//page[@string='Extra Info']" position="after">
