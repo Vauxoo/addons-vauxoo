@@ -20,6 +20,9 @@
 			<xpath expr="//field[@name=&quot;stage_id&quot;]" position="after">
 				<field name="sprint_id"/>
 			</xpath>
+			<xpath expr='//field[@name="name"]' position="before">
+				<field name="id"/>
+			</xpath>
 		</field>
 	</record>
 	

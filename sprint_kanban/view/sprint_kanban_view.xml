@@ -159,6 +159,9 @@
         <xpath expr="//field[@name='categ_ids']" position="after">
           <field name="sprint_id"/>
         </xpath>
+        <xpath expr='//sheet[@string="Task"]/h1/field[@name="name"]' position="after">
+			<field name="id"/>
+		</xpath>
         <xpath expr="//page[@string='Extra Info']" position="after">
           <page string="Tecnical Features">
 			<group col="4">
