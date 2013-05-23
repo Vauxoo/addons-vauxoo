@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="0">
+
+		<!-- VISTAS -->
+
+		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
+		  <field name="name">ifrs.ifrs.tree</field>
+		  <field name="model">ifrs.ifrs</field>
+		  <field name="type">tree</field>
+		  <field name="arch" type="xml">
+			<tree string="International Financial Reporting Standards">
+			  <field name="name" />
+			  <field name="company_id" />
+			  <field name="title" />
+			  <field name="fiscalyear_id" />
+			  <field name="state" />
+			</tree>
+		  </field>
+		</record>
+
+		<record model="ir.ui.view" id="view_ifrs_ifrs_form">
+		  <field name="name">ifrs.ifrs.form</field>
+		  <field name="model">ifrs.ifrs</field>
+		  <field name="arch" type="xml">
+			<form string="International Financial Reporting Standards">
+			<field name="name" />
+			  <field name="company_id" required="1"/>
+              <field name="code" />
+              <field name="title" />
+			  <field name="fiscalyear_id" required="1"/>
+              <group colspan='2' col='3'>
+                  <field name="do_compute" />
+                  <button string="Compute" name='compute' type='object' icon='gtk-execute'/>
+              </group>
+                <notebook colspan='6'>
+                    <page string='Report Lines'>
+                      <field name="ifrs_lines_ids"  nolabel="1" colspan="4">
+                        
+                        <tree string="IFRS Lines">
+                          <field name="id" />
+                          <field name="sequence" />
+                          <field name="name" />
+                          <field name="type" />
+                          <field name="cons_ids" />
+                          <field name="total_ids" />
+                          <field name="amount" />
+                         <field name="value" />
+                          <field name="invisible" />
+                        </tree>
+                        <form string="IFRS Lines">
+
+                          <group colspan='4' col='6'>
+                              <field name="sequence" />
+                              <field name="name" />
+                              <field name="invisible" />
+                              <field name="type" />
+
+                              <group colspan='4' col='1'>
+                                  <group colspan='2' attrs="{'invisible':[('type','!=','constant')]}" >
+                                      <field name="constant_type" attrs="{'required':[('type','=','constant')]}" />
+                                  </group>
+                                  <group colspan='2' attrs="{'invisible':[('type','!=','detail')]}">
+                                      <field name="acc_val"/>
+                                      <field name="value" />
+                                  </group>
+                                  <group colspan='2' attrs="{'invisible':[('type','!=','total')]}">
+                                      <field name="operator" />
+                                      <field name="comparison" />
+                                  </group>
+                              </group>
+
+                           </group>
+
+                          <group colspan='6' col='6' attrs="{'invisible':[('type','=','abstract')]}">
+                            <field name="amount" />
+                            <field name="inv_sign" />
+                          </group>
+
+                          <group colspan='6'>
+                              <group
+                                colspan='6'
+                                attrs="{'invisible':[('type','!=','detail')]}" height="50" width="300">
+                                <separator string='Consolidated Accounts' colspan='6' />
+                                <field name="cons_ids" width="450" nolabel='1'/>
+                                <field name="analytic_ids" width="450" nolabel='1'/>
+                              </group>
+                              <group colspan='6'
+                                attrs="{'invisible':[('type','!=','total')]}">
+                                <group col='1'>
+                                    <separator string='Total' colspan='2' />
+                                    <field
+                                        name="total_ids" widget="many2many"
+                                        nolabel='1'
+                                        domain="['|',('ifrs_id','in', [len(k) and k[2] or False for k in parent.ifrs_ids]),('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
+                                    </field>
+                                </group>
+                                
+                                <group col='1' attrs="{'invisible':[('operator','=','without')]}">
+                                    <separator string='Operand' colspan='2' />
+                                    <field
+                                        name="operand_ids" widget="many2many"
+                                        nolabel='1'
+                                        domain="['|',('ifrs_id','in', [len(k) and k[2] or False for k in parent.ifrs_ids]),('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
+                                    </field>
+                                </group>
+                              </group>
+                          </group>
+
+                        </form>
+                      </field>
+                    </page>
+                    <page string='Based on Other Reports'>
+                        <field 
+                            name='ifrs_ids' 
+                            nolabel='1' 
+			    domain="[('id', '!=', [active_id])]"
+                            />
+                    </page>
+                    <page string='Other Info'>
+                        <field name="description" />
+                    </page>
+                </notebook>
+			  <field name="state" />
+			</form>
+		  </field>
+		</record>
+<!--
+		    <record id="view_board_search" model="ir.ui.view">
+			<field name="name">ifrs.lines.search</field>
+			<field name="model">ifrs.lines</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+			    <search string="Buscar">
+				<field name="name"/>
+				<field name="sequence"/>
+			    </search>
+			</field>
+		    </record> -->
+
+
+		<record model="ir.ui.view" id="view_ifrs_lines_form">
+			<field name="name">ifrs.lines.form</field>
+			<field name="model">ifrs.lines</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="IFRS Line">
+					<group col="6" colspan="4">
+						<field name="name" />
+						<field name="sequence"></field>
+						<field name="type" />
+						<field name="amount"></field>
+						<field name="invisible"></field>
+						<field name="ifrs_id"></field>
+					</group>
+				</form>
+			</field>
+		</record>
+        
+		<record model="ir.ui.view" id="view_ifrs_lines_tree">
+			<field name="name">ifrs.lines.tree</field>
+			<field name="model">ifrs.lines</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="IFRS Line">
+						<field name="sequence"></field>
+						<field name="name" />
+						<field name="type" />
+						<field name="amount"></field>
+						<field name="invisible"></field>
+						<field name="ifrs_id"></field>
+				</tree>
+			</field>
+		</record>
+
+		<!-- ACCIONES -->
+
+		<record model="ir.actions.act_window" id="action_ifrs_ifrs_form">
+		  <field name="name">IFRS</field>
+		  <field name="res_model">ifrs.ifrs</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_ifrs_lines_form">
+			<field name="name">IFRS Lines</field>
+			<field name="res_model">ifrs.lines</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">search</field>
+<!--			<field name="domain">[('type','=','total')]</field>-->
+		</record>
+
+		<!-- MENUS -->
+
+		<menuitem
+			id="menu_parent_ifrs"
+			name="IFRS"
+		/>
+
+		<menuitem
+			id="menu_ifrs_ifrs"
+			name="IFRS"
+			parent="menu_parent_ifrs"
+		/>
+
+		<!-- SUB-MENU -->
+
+		<menuitem
+			id="sub_menu_ifrs_ifrs"
+			name="IFRS"
+			parent="menu_ifrs_ifrs"
+			action="action_ifrs_ifrs_form"
+		/>
+
+	</data>
+</openerp>
