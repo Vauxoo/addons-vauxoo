@@ -33,13 +33,20 @@ class Partner(osv.osv):
         context = context or {}
         res = {}.fromkeys(ids,None)
         so_obj = self.pool.get('sale.order')
-        
+        inv_obj = self.pool.get('account.invoice')
         for id in ids:
             s_id = so_obj.search(cr, uid,
                     [('partner_id','=',id)],order='date_order asc',limit=1) or []
-            res[id] = s_id and \
+            i_id = inv_obj.search(cr, uid,
+                    [('partner_id','=',id),('type','=','out_invoice')],
+                    order='date_invoice asc',limit=1) or []
+            res[id]= {
+                'sale_order_date' : s_id and \
                     so_obj.browse(cr,uid,s_id[0],context=context).date_order \
-                    or None
+                    or None,
+                'invoice_date':  i_id and \
+                    inv_obj.browse(cr,uid,i_id[0],context=context).date_invoice \
+                    or None,}
         return res
 
     _columns = {
@@ -48,12 +55,14 @@ class Partner(osv.osv):
             method = True,
             type = 'date',
             string = 'First Sale Order',
+            multi='sale_invoice',
             ),
-        'sale_order_date':fields.function(
+        'invoice_date':fields.function(
             _fnct_get_date,
             method = True,
             type = 'date',
-            string = 'First Sale Order',
+            string = 'First Sale Invoice',
+            multi='sale_invoice',
             ),
     }
 Partner()

@@ -11,6 +11,9 @@
                     <field 
                         name='sale_order_date' 
                         />
+                    <field 
+                        name='invoice_date' 
+                        />
                 </xpath>
             </field>
         </record>
@@ -23,6 +26,9 @@
                 <xpath expr='//field[@name="user_id"]' position='after'>
                     <field 
                         name='sale_order_date' 
+                        />
+                    <field 
+                        name='invoice_date' 
                         />
                 </xpath>
             </field>
