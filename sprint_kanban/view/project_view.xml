@@ -26,6 +26,15 @@
 		</field>
 	</record>
 	
-	
+	<record id="view_task_kanban_inherit" model="ir.ui.view">
+		<field name="name">project.task.kanban</field>
+		<field name="model">project.task</field>
+		<field name="inherit_id" ref="project.view_task_kanban"/>
+		<field name="arch" type="xml">
+			<xpath expr='//div[@class="oe_kanban_content"]/div/b/field[@name="name"]' position="before">
+				<field name="id"/>
+			</xpath>
+		</field>
+	</record>		
   </data>
 </openerp>
