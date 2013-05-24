@@ -83,7 +83,7 @@ msgstr ""
 #. module: payment_terms
 #: model:ir.actions.act_window,name:payment_terms.payment_term_partner_action
 msgid "payment.term.partner"
-msgstr "payment.term.partner"
+msgstr "Terminos de Pago"
 
 #. module: payment_terms
 #: model:ir.model,name:payment_terms.model_account_invoice
