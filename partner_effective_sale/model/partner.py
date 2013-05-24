@@ -28,7 +28,52 @@ from tools.translate import _
 
 class Partner(osv.osv):
     _inherit = 'res.partner'
-    
+
+    def _fnct_search_date(self, cr, uid, obj, name, args, context=None):
+        if not len(args):                                                       
+            return []                                                           
+        context = context or {}
+        res = []
+        for arg in args:                                                        
+            if arg[1] == '=':                                                   
+                if arg[2]:                                                      
+                    ids = self.search(cr,uid,[],context=context)
+                    res = []
+                    for brw in self.browse(cr, uid, ids, context=context):
+                        if getattr(brw,name)==arg[2]:
+                            res.append(brw.id)
+            elif arg[1] == '>=':
+                if arg[2]:                                                      
+                    ids = self.search(cr,uid,[],context=context)
+                    res = []
+                    for brw in self.browse(cr, uid, ids, context=context):
+                        if getattr(brw,name)>=arg[2]:
+                            res.append(brw.id)
+            elif arg[1] == '<=':
+                if arg[2]:                                                      
+                    ids = self.search(cr,uid,[],context=context)
+                    res = []
+                    for brw in self.browse(cr, uid, ids, context=context):
+                        if getattr(brw,name)<=arg[2]:
+                            getattr(brw,name) and res.append(brw.id)
+            elif arg[1] == '>':
+                if arg[2]:                                                      
+                    ids = self.search(cr,uid,[],context=context)
+                    res = []
+                    for brw in self.browse(cr, uid, ids, context=context):
+                        if getattr(brw,name)>arg[2]:
+                            res.append(brw.id)
+            elif arg[1] == '<':
+                if arg[2]:                                                      
+                    ids = self.search(cr,uid,[],context=context)
+                    res = []
+                    for brw in self.browse(cr, uid, ids, context=context):
+                        if getattr(brw,name)<arg[2]:
+                            getattr(brw,name) and res.append(brw.id)
+        if not res:                                                                
+            return [('id', '=', 0)]                                                
+        return [('id', 'in', res)]    
+
     def _fnct_get_date(self, cr, uid, ids, fieldname, arg, context=None):
         context = context or {}
         res = {}.fromkeys(ids,None)
@@ -56,6 +101,7 @@ class Partner(osv.osv):
             type = 'date',
             string = 'First Sale Order',
             multi='sale_invoice',
+            fnct_search=_fnct_search_date,
             ),
         'invoice_date':fields.function(
             _fnct_get_date,
@@ -63,6 +109,7 @@ class Partner(osv.osv):
             type = 'date',
             string = 'First Sale Invoice',
             multi='sale_invoice',
+            fnct_search=_fnct_search_date,
             ),
     }
 Partner()
