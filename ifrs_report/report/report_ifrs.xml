@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- No sera necesario importar el parser -->
+        <report
+            id="ifrs_report"
+            name="ifrs"
+            string="Print IFRS"
+            model="ifrs.ifrs"
+            rml="ifrs_report/report/ifrs_cash_flow_indirect.rml"
+            multi="True"
+            header="False"
+            auto = "False"
+            menu="False"
+            />
+
+        <report
+            id="ifrs_report_12"
+            name="ifrs_12"
+            string="Print Monthly IFRS"
+            model="ifrs.ifrs"
+            rml="ifrs_report/report/ifrs_cash_flow_indirect_12.rml"
+            multi="True"
+            header="False"
+            auto = "False"
+            menu="False"
+            />
+
+        <report
+            id="ifrs_report_12_partner_detail"
+            name="ifrs_12_partner_detail"
+            string="Print Monthly IFRS"
+            model="ifrs.ifrs"
+            rml="ifrs_report/report/ifrs_cash_flow_indirect_12_partner_detail.rml"
+            multi="True"
+            header="False"
+            auto = "False"
+            menu="False"
+            />
+            
+            <report auto="False"
+                id="report_webkit_html_12"
+                model="ifrs.ifrs"
+                name="webkitaccount.ifrs_12"
+                file="ifrs_report/report/report_webkit_html_12.mako"
+                string="WebKit ifrs"
+                report_type="webkit"
+                webkit_header="ir_header_webkit_ifrsreport"
+                multi="True"/>
+                
+
+    </data>
+</openerp>
