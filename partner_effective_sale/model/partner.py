@@ -34,42 +34,30 @@ class Partner(osv.osv):
             return []                                                           
         context = context or {}
         res = []
+        ids = self.search(cr,uid,[],context=context)
+        if not ids:                                                                
+            return [('id', '=', 0)]                                                
+        model = 'sale_order_date' and 'sale_order' or 'account_invoice'
+        fieldname = 'sale_order_date' and 'date_order' or 'date_invoice'
+        query='''
+            SELECT partner_id as id, '''+fieldname+'''
+            FROM (
+                SELECT t2.partner_id, t2.'''+fieldname+'''
+                FROM '''+model+''' t2
+                WHERE (t2.partner_id,t2.'''+fieldname+''') IN (
+                    SELECT t1.partner_id,t1.'''+fieldname+'''
+                    FROM '''+model+''' t1
+                    WHERE t1.partner_id = t2.partner_id
+                    ORDER BY t1.'''+fieldname+'''
+                    LIMIT 1)
+            ) v
+            WHERE partner_id IN %s
+                AND '''+fieldname+'''%s\'%s\';'''
+
         for arg in args:                                                        
-            if arg[1] == '=':                                                   
-                if arg[2]:                                                      
-                    ids = self.search(cr,uid,[],context=context)
-                    res = []
-                    for brw in self.browse(cr, uid, ids, context=context):
-                        if getattr(brw,name)==arg[2]:
-                            res.append(brw.id)
-            elif arg[1] == '>=':
-                if arg[2]:                                                      
-                    ids = self.search(cr,uid,[],context=context)
-                    res = []
-                    for brw in self.browse(cr, uid, ids, context=context):
-                        if getattr(brw,name)>=arg[2]:
-                            res.append(brw.id)
-            elif arg[1] == '<=':
-                if arg[2]:                                                      
-                    ids = self.search(cr,uid,[],context=context)
-                    res = []
-                    for brw in self.browse(cr, uid, ids, context=context):
-                        if getattr(brw,name)<=arg[2]:
-                            getattr(brw,name) and res.append(brw.id)
-            elif arg[1] == '>':
-                if arg[2]:                                                      
-                    ids = self.search(cr,uid,[],context=context)
-                    res = []
-                    for brw in self.browse(cr, uid, ids, context=context):
-                        if getattr(brw,name)>arg[2]:
-                            res.append(brw.id)
-            elif arg[1] == '<':
-                if arg[2]:                                                      
-                    ids = self.search(cr,uid,[],context=context)
-                    res = []
-                    for brw in self.browse(cr, uid, ids, context=context):
-                        if getattr(brw,name)<arg[2]:
-                            getattr(brw,name) and res.append(brw.id)
+            if arg[1] in ('=','>=','<=','>','<') and arg[2]:
+                cr.execute(query%(str(tuple(ids)),arg[1],arg[2]))
+                res += [i[0] for i in cr.fetchall()]
         if not res:                                                                
             return [('id', '=', 0)]                                                
         return [('id', 'in', res)]    
@@ -83,6 +71,7 @@ class Partner(osv.osv):
             s_id = so_obj.search(cr, uid,
                     [('partner_id','=',id)],order='date_order asc',limit=1) or []
             i_id = inv_obj.search(cr, uid,
+                    #TODO: in the future set args for state in ['open','paid']
                     [('partner_id','=',id),('type','=','out_invoice')],
                     order='date_invoice asc',limit=1) or []
             res[id]= {
