@@ -73,9 +73,10 @@ class inherits_purchase(osv.Model):
                 'payment_term_id': False,
                 }}
         supplier = partner.browse(cr, uid, partner_id)
+        print 'aa',supplier.property_payment_term_p_suppliers
         res.get('value',{}).update({
             'payment_terms_id':supplier.property_payment_term_p_suppliers and \
-                               supplier.property_payment_term_p_suppliers.id })
+                               supplier.property_payment_term_p_suppliers.id or False})
 
         return res 
 

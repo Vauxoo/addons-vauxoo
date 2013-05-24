@@ -45,7 +45,7 @@
     </record>
 
   <record model='ir.actions.act_window' id='payment_term_partner_action'>
-    <field name='name'>payment.term.partner</field>
+    <field name='name'>Payments Terms</field>
     <field name='res_model'>payment.terms.partner</field>
     <field name='view_type'>form</field>
     <field name='view_type'>form</field>
