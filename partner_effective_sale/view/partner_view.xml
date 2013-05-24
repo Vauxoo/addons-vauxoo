@@ -33,5 +33,22 @@
                 </xpath>
             </field>
         </record>
+        <record id="view_res_partner_filter" model="ir.ui.view">
+            <field name="name">res.partner.effective.sale</field>
+            <field name="model">res.partner</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="user_id"]' position='after'>
+                    <newline/>
+                    <field 
+                        name='sale_order_date' 
+                        />
+                    <field 
+                        name='invoice_date' 
+                        />
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
