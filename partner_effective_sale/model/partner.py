@@ -37,8 +37,8 @@ class Partner(osv.osv):
         ids = self.search(cr,uid,[],context=context)
         if not ids:                                                                
             return [('id', '=', 0)]                                                
-        model = 'sale_order_date' and 'sale_order' or 'account_invoice'
-        fieldname = 'sale_order_date' and 'date_order' or 'date_invoice'
+        model = name=='sale_order_date' and 'sale_order' or 'account_invoice'
+        fieldname = name=='sale_order_date' and 'date_order' or 'date_invoice'
         query='''
             SELECT partner_id as id, '''+fieldname+'''
             FROM (
