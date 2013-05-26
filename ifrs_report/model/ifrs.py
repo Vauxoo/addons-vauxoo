@@ -33,22 +33,37 @@ class ifrs_ifrs(osv.osv):
 
     _name = 'ifrs.ifrs'
     _rec_name = 'code'
+
+    def onchange_company_id(self,cr,uid,ids,company_id,context=None):
+        context = context or {}
+        context['company_id']=company_id
+        res = {'value':{}}
+        
+        if not company_id: return res
+            
+        cur_id = self.pool.get('res.company').browse(
+                cr, uid, company_id, context=context).currency_id.id
+        fy_id = self.pool.get('account.fiscalyear').find(
+                cr, uid, context=context)
+
+        res['value'].update({'fiscalyear_id':fy_id})
+        res['value'].update({'currency_id':cur_id})
+        return res
+
     _columns = {
         'name' : fields.char('Name', 128, required = True ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade' ),
+        'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
         'title' : fields.char('Title', 128, required = True, translate = True ),
         'code' : fields.char('Code', 128, required = True ),
         'description' : fields.text('Description'),
-
         'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
-
         'state': fields.selection( [
             ('draft','Draft'),
             ('ready', 'Ready'),
             ('done','Done'),
             ('cancel','Cancel') ],
             'State', required=True ),
-
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year' ),
         'do_compute' : fields.boolean('Compute'),
         'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
@@ -56,6 +71,9 @@ class ifrs_ifrs(osv.osv):
 
     _defaults = {
         'state' : 'draft',
+        'company_id': lambda s,c,u,cx: s.pool.get('res.users').browse(
+            c,u,u,context=cx).company_id.id,
+        'fiscalyear_id': lambda s,c,u,cx: s.pool.get('account.fiscalyear').find(c, u),
     }
 
     def compute(self, cr, uid, ids, context=None):
@@ -131,10 +149,8 @@ class ifrs_lines(osv.osv):
         
         if brw.type == 'detail':
             if brw.acc_val=='init':
-                print c['period_from'],'impirmo period_from'
                 period_ids = period_obj.build_ctx_periods_initial(cr, uid, c['period_from'])
                 c['periods'] = period_ids
-                print c['periods'],'impprimo period'
                 period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
 ##                c['period_to']= period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
 #                period_to = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
@@ -165,16 +181,12 @@ class ifrs_lines(osv.osv):
             if brw.comparison <> 'without':
                 c2 = c.copy()
 
-                print "c2['period_from']",c2['period_from']
-                print "c2['period_to']",c2['period_to']
 
                 c2['period_from'] = period_obj.previous(cr, uid, c2['period_from'],context= c2)
                 if not c2['period_from']:
                     raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
                 c2['period_to']=c2['period_from']
                 
-                print "c2['period_from']",c2['period_from']
-                print "c2['period_to']",c2['period_to']
         
         
         #~ Stuffing the sum
@@ -212,11 +224,6 @@ class ifrs_lines(osv.osv):
                 brw = self.browse( cr, uid, id, context = c2 )
                 res2 = self._get_sum_total(cr, uid, brw, context = c2)
 
-                print 100*'*'
-                print 'RES 1 DE COMPARACION ', res
-                print 'RES 2 DE COMPARACION ', res2
-
-
                 if brw.comparison == 'subtract':
                     res -= res2
                 elif brw.comparison == 'percent':
@@ -224,7 +231,6 @@ class ifrs_lines(osv.osv):
                 elif brw.comparison == 'ratio':
                     res =  res2 != 0 and (res / res2) or 0.0
             
-                print 'RES DESPUES DE COMPARACION ', res
         return brw.inv_sign and (-1.0 * res) or res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
@@ -265,8 +271,6 @@ class ifrs_lines(osv.osv):
                     res.append(l.id)
                 #~ TODO: write back False to brw.do_compute with SQL
                 #~ INCLUDE A LOGGER
-        print 100*"*"
-        print 'RECOMPUTING LINES ',res
         return res
         
     _columns = {
@@ -295,25 +299,17 @@ class ifrs_lines(osv.osv):
             },
             help="This field will update when you click the compute button in the IFRS doc form"
             ),
-
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
         'analytic_ids' : fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts' ),
-
-        
         'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
-
         'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
-
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
-
     'level': fields.function(_get_level, string='Level', method=True, type='integer',
          store={
             'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
          }),
-
         'operand_ids' : fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands' ),
-
         'operator': fields.selection( [
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
@@ -323,7 +319,6 @@ class ifrs_lines(osv.osv):
             ],
             'Operator', required=False ,
             help='Leaving blank will not take into account Operands'),
-
         'comparison': fields.selection( [
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
@@ -331,25 +326,20 @@ class ifrs_lines(osv.osv):
             ('without','')],
             'Make Comparison', required=False ,
             help='Make a Comparison against the previous period.\nThat is, period X(n) minus period X(n-1)\nLeaving blank will not make any effects'),
-        
         'acc_val': fields.selection( [
             ('init', 'Initial Values'),
             ('var','Variation in Periods'),
             ('fy', ('FY All'))],
             'Accounting Spam', required=False,
             help='Leaving blank means YTD'),
-
         'value': fields.selection( [
             ('debit', 'Debit'),
             ('credit','Credit'),
             ('balance', 'Balance')],
             'Accounting Value', required=False,
             help='Leaving blank means Balance'),
-
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
-        
         'inv_sign' : fields.boolean('Change Sign to Amount'),
-        
         'invisible' : fields.boolean('Invisible'),
     }
 
