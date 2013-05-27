@@ -1,4 +1,4 @@
-<html>
+<html xmlns="http://www.w3.org/TR/REC-html40" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
 <head>
     <style type="text/css">
         ${css}
@@ -38,7 +38,7 @@
 		<thead>
 			<tr>
 				<th class="celda_border">Descripcion</th>
-				%for li in range(1, 13):
+				%for li in range(1, 3):
 					<th class="celda">
 						%try:
 							${ get_column_name(li) }
@@ -60,7 +60,7 @@
 				
 			<tr class="prueba">
 				<th class="celda3">${ifrs_l.name}</th>
-				%for lins in range(1, 13):
+				%for lins in range(1, 3):
 					<%
 						try:
 							res_total.setdefault('total_%s'%lins, 0)
