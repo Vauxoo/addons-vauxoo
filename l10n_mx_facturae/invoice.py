@@ -1062,7 +1062,7 @@ class account_invoice(osv.Model):
             })
             # Termina seccion: Emisor
             # Inicia seccion: Receptor
-            parent_id = invoice.partner_id.parent_id and invoice.partner_id.parent_id.id or invoice.partner_id.id
+            parent_id = invoice.partner_id.commercial_partner_id.id
             parent_obj = partner_obj.browse(cr, uid, parent_id, context=context)
             if not parent_obj.vat:
                 raise osv.except_osv(_('Warning !'), _(
