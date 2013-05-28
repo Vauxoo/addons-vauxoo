@@ -6,7 +6,7 @@
 
 </head>
 
-<body style="border:0; margin: 0;" onload="subst()">
+<body style="border:0; margin: 0;" onload="subst()" >
     %for ifrs in objects :
 	<table>
 		<tr>
@@ -37,7 +37,7 @@
 		%>
 		<thead>
 			<tr>
-				<th class="celda_border">Descripcion</th>
+				<th class="celda_border"></th>
 				%for li in range(1, 3):
 					<th class="celda">
 						%try:
@@ -56,7 +56,7 @@
 				res_total = {}
 				row_count = 1
 			%>
-			<tbody>
+			<tbody bgcolor="#dedede">
 				
 			<tr class="prueba">
 				<th class="celda3">${ifrs_l.name}</th>
@@ -122,6 +122,7 @@
 			%endif
 		%endfor
 		</tbody>
+		
     </table>
     %endfor
 </body>

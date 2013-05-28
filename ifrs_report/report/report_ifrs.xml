@@ -10,7 +10,7 @@
             file="ifrs_report/report/report_webkit_html_12.mako"
             multi="True"
             header="False"
-            auto = "False"
+            auto = "True"
             menu="False"
             report_type="webkit"
             />
