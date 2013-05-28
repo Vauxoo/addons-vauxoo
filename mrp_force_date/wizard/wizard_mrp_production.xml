@@ -39,7 +39,7 @@
             view_mode="form"
             target="new"
             multi="True"
-            key2="client_print_multi"
+            key2="client_action_multi"
             id="action_mrp_production_wizard"
             groups="group_wizard_mrp_production"/>
 
