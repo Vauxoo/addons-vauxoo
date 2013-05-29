@@ -7,13 +7,15 @@
             name="ifrs"
             string="Print IFRS"
             model="ifrs.ifrs"
-            rml="ifrs_report/report/ifrs_cash_flow_indirect.rml"
+            file="ifrs_report/report/report_webkit_html_12.mako"
             multi="True"
             header="False"
-            auto = "False"
+            auto = "True"
             menu="False"
+            report_type="webkit"
             />
 
+<!--
         <report
             id="ifrs_report_12"
             name="ifrs_12"
@@ -47,6 +49,7 @@
                 report_type="webkit"
                 webkit_header="ir_header_webkit_ifrsreport"
                 multi="True"/>
+-->
                 
 
     </data>
