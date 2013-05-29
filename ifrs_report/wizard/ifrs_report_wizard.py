@@ -60,8 +60,8 @@ class ifrs_report_wizard(osv.osv_memory):
             string='Type', required=True ),
         'columns': fields.selection( [
             ('ifrs','Two Columns'),
-            ('ifrs_12', 'Twelve Columns'),
-            ('webkitaccount.ifrs_12', 'With Partner Detail')],
+            ('webkitaccount.ifrs_12', 'Twelve Columns'),
+            ('ifrs_12_partner_detail', 'With Partner Detail')],
             string='Number of Columns' ),
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),

@@ -250,15 +250,7 @@ class ifrs_report(report_sxw.rml_parse):
 report_sxw.report_sxw(
     'report.ifrs',
     'ifrs.ifrs',
-    'ifrs_report/report/ifrs_cash_flow_indirect.rml',
-    parser=ifrs_report,
-    header = False
-)
-
-report_sxw.report_sxw(
-    'report.ifrs_12',
-    'ifrs.ifrs',
-    'ifrs_report/report/ifrs_cash_flow_indirect_12.rml',
+    'ifrs_report/report/report_webkit_html.mako',
     parser=ifrs_report,
     header = False
 )
@@ -266,7 +258,15 @@ report_sxw.report_sxw(
 report_sxw.report_sxw(
     'report.webkitaccount.ifrs_12',
     'ifrs.ifrs',
-    'addons/ifrs_report/report/report_webkit_html_12.mako',
+    'ifrs_report/report/report_webkit_html.mako',
+    parser=ifrs_report,
+    header = False
+)
+
+report_sxw.report_sxw(
+    'report.ifrs_12_partner_detail',
+    'ifrs.ifrs',
+    'ifrs_report/report/ifrs_cash_flow_indirect_12_partner_detail.rml',
     parser=ifrs_report,
     header = False
 )
