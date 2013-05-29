@@ -25,8 +25,9 @@
 		  <field name="arch" type="xml">
 			<form string="International Financial Reporting Standards">
 			<field name="name" />
-			  <field name="company_id" required="1"/>
+              <field name="company_id" on_change='onchange_company_id(company_id)' required="1"/>
               <field name="code" />
+			  <field name="currency_id" required="1"/>
               <field name="title" />
 			  <field name="fiscalyear_id" required="1"/>
               <group colspan='2' col='3'>

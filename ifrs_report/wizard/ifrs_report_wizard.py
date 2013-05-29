@@ -31,10 +31,29 @@ class ifrs_report_wizard(osv.osv_memory):
 
     _name = 'ifrs.report.wizard'
     _description = 'IFRS Report'
+
+    def onchange_company_id(self,cr,uid,ids,company_id,context=None):
+        context = context or {}
+        context['company_id']=company_id
+        res = {'value':{}}
+        
+        if not company_id: return res
+            
+        cur_id = self.pool.get('res.company').browse(
+                cr, uid, company_id, context=context).currency_id.id
+        fy_id = self.pool.get('account.fiscalyear').find(
+                cr, uid, context=context)
+
+        res['value'].update({'fiscalyear_id':fy_id})
+        res['value'].update({'currency_id':cur_id})
+        return res
+
     _columns = {
         'period': fields.many2one('account.period', 'Force period', help='Fiscal period to assign to the invoice. Keep empty to use the period of the current date.'),
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year' ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
+        'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
+        'exchange_date':fields.date('Exchange Date'),
         'report_type': fields.selection( [
             ('all','All Fiscalyear'),
             ('per', 'Force Period')],
@@ -53,7 +72,9 @@ class ifrs_report_wizard(osv.osv_memory):
         'report_type' : 'all',
         'target_move' : 'all',
         'company_id'  : lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).company_id.id,
-        'fiscalyear_id' : lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).fiscalyear_id.id
+        'fiscalyear_id' : lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).fiscalyear_id.id,
+        'exchange_date' : fields.date.today,
+        'columns': 'ifrs'
     }
 
     def _get_period(self, cr, uid, context={}):

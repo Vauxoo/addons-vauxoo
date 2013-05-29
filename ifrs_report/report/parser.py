@@ -127,9 +127,17 @@ class ifrs_report(report_sxw.rml_parse):
 
         return self._period_info_list[column_num][2]
 
+    def exchange(self, from_amount):
+        if self.from_currency_id == self.to_currency_id:
+            return from_amount
+        curr_obj = self.pool.get('res.currency')
+        return curr_obj.compute(self.cr, self.uid, self.from_currency_id, self.to_currency_id, from_amount)
+
     def _get_amount_value(self, ifrs_line, period_num=None, target_move=None, pd=None, undefined=None, two=None):
         
         '''devuelve la cantidad correspondiente al periodo'''
+        self.from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
+        self.to_currency_id = ifrs_line.ifrs_id.currency_id.id
 
         context = {}
         if period_num:
@@ -142,9 +150,14 @@ class ifrs_report(report_sxw.rml_parse):
             context = {'whole_fy': 'True'} 
 
         ifrs_l_obj = self.pool.get('ifrs.lines')
-
-        #~ print "\n_get_amount_value():" + str(ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context))
-        return ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
+        res = ifrs_l_obj._get_sum(self.cr, self.uid, ifrs_line.id, context = context)
+        if ifrs_line.type == 'detail':
+            res = self.exchange(res)
+        elif ifrs_line.type == 'total':
+            if ifrs_line.operator not in ('percent','ratio'):
+                if ifrs_line.comparison not in ('percent','ratio','product'):
+                    res = self.exchange(res)
+        return res
 
     def _get_fiscalyear_print_info(self, fiscalyear_id):
 
