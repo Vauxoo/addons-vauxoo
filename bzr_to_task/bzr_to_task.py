@@ -29,14 +29,18 @@ import datetime
 
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
-
+    _defaults = {
+        'res_id': 0,
+            }
     def get_works(self, cr, uid, ids, context=None):
+        tw_obj = self.pool.get('project.task.work')
         url = self.browse(cr, uid, ids)[0].url_branch
         res_id = self.browse(cr, uid, ids)[0].res_id
         if url:
             task_branch = branch.Branch.open(url)
+            b_revno = task_branch.revno()
             if res_id:
-                if res_id < task_branch.revno():
+                if res_id > b_revno:
                     repo = task_branch.repository
                     revision_map = task_branch.get_revision_id_to_revno_map()
                     if revision_map:
@@ -48,7 +52,9 @@ class sprint_kanban_tasks(osv.Model):
                                 'date': date,
                                 'revno': revision_map[k][0],
                                 }
-                            self.write(cr, uid, ids, {'res_id': task_branch.revno(), 'work_ids': [(0, 0, tw_data),],})
+                            tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
+                            if not tw_ids:
+                                self.write(cr, uid, ids, {'res_id': b_revno, 'work_ids': [(0, 0, tw_data),],})
 
 class project_task_work(osv.Model):
     _inherit = 'project.task.work'

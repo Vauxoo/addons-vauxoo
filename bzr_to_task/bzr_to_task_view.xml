@@ -11,5 +11,16 @@
                 </field>
             </field>
         </record>
+        
+        <record model="ir.ui.view" id="bzr_task_work_revno_view">
+            <field name="name">project.task.work.revno.view</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="before">
+                    <field name="revno" />
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
