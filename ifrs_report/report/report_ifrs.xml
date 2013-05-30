@@ -7,7 +7,7 @@
             name="ifrs"
             string="Print IFRS"
             model="ifrs.ifrs"
-            file="ifrs_report/report/report_webkit_html_12.mako"
+            file="ifrs_report/report/report_webkit_html.mako"
             multi="True"
             header="False"
             auto = "True"
@@ -15,6 +15,27 @@
             report_type="webkit"
             />
 
+            <report auto="False"
+                id="report_webkit_html_12"
+                model="ifrs.ifrs"
+                name="webkitaccount.ifrs_12"
+                file="ifrs_report/report/report_webkit_html_12.mako"
+                string="WebKit ifrs"
+                report_type="webkit"
+                webkit_header="ir_header_webkit_ifrsreport"
+                multi="True"/>
+            
+        <report
+            id="ifrs_report_12_partner_detail"
+            name="ifrs_12_partner_detail"
+            string="Print Monthly IFRS"
+            model="ifrs.ifrs"
+            rml="ifrs_report/report/ifrs_cash_flow_indirect_12_partner_detail.rml"
+            multi="True"
+            header="False"
+            auto = "False"
+            menu="False"
+            />
 <!--
         <report
             id="ifrs_report_12"
@@ -28,27 +49,7 @@
             menu="False"
             />
 
-        <report
-            id="ifrs_report_12_partner_detail"
-            name="ifrs_12_partner_detail"
-            string="Print Monthly IFRS"
-            model="ifrs.ifrs"
-            rml="ifrs_report/report/ifrs_cash_flow_indirect_12_partner_detail.rml"
-            multi="True"
-            header="False"
-            auto = "False"
-            menu="False"
-            />
             
-            <report auto="False"
-                id="report_webkit_html_12"
-                model="ifrs.ifrs"
-                name="webkitaccount.ifrs_12"
-                file="ifrs_report/report/report_webkit_html_12.mako"
-                string="WebKit ifrs"
-                report_type="webkit"
-                webkit_header="ir_header_webkit_ifrsreport"
-                multi="True"/>
 -->
                 
 
