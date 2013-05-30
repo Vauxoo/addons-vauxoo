@@ -25,6 +25,7 @@ from openerp import pooler, tools
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from bzrlib import branch
+import datetime
 
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
@@ -38,5 +39,9 @@ class sprint_kanban_tasks(osv.Model):
             if revision_map:
                 for k in revision_map.keys():
                     revision = repo.get_revision(k)
-                    print revision.message
-
+                    date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                    tw_data = {
+                            'name': revision.message,
+                            'date': date,
+                            }
+                    self.write(cr, uid, ids, {'res_id': task_branch.revno(), 'work_ids': [(0, 0, tw_data),],})
