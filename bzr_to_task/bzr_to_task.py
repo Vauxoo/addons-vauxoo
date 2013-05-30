@@ -32,16 +32,26 @@ class sprint_kanban_tasks(osv.Model):
 
     def get_works(self, cr, uid, ids, context=None):
         url = self.browse(cr, uid, ids)[0].url_branch
+        res_id = self.browse(cr, uid, ids)[0].res_id
         if url:
             task_branch = branch.Branch.open(url)
-            repo = task_branch.repository
-            revision_map = task_branch.get_revision_id_to_revno_map()
-            if revision_map:
-                for k in revision_map.keys():
-                    revision = repo.get_revision(k)
-                    date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
-                    tw_data = {
-                            'name': revision.message,
-                            'date': date,
-                            }
-                    self.write(cr, uid, ids, {'res_id': task_branch.revno(), 'work_ids': [(0, 0, tw_data),],})
+            if res_id:
+                if res_id < task_branch.revno():
+                    repo = task_branch.repository
+                    revision_map = task_branch.get_revision_id_to_revno_map()
+                    if revision_map:
+                        for k in revision_map.keys():
+                            revision = repo.get_revision(k)
+                            date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                            tw_data = {
+                                'name': revision.message,
+                                'date': date,
+                                'revno': revision_map[k][0],
+                                }
+                            self.write(cr, uid, ids, {'res_id': task_branch.revno(), 'work_ids': [(0, 0, tw_data),],})
+
+class project_task_work(osv.Model):
+    _inherit = 'project.task.work'
+    _columns = {
+            'revno':fields.integer('Revno'),
+            }
