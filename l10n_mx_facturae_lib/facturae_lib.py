@@ -120,12 +120,11 @@ class facturae_certificate_library(osv.Model):
         cmd = ''
         result = ''
         if type_der == 'cer':
-            cmd = '"%s" x509 -inform DER -outform PEM -in "%s" -pubkey -out \
-                "%s"' % (app_openssl_fullpath, fname_der, fname_out)
+            cmd = '"%s" x509 -inform DER -outform PEM -in "%s" -pubkey -out "%s"' % (
+                app_openssl_fullpath, fname_der, fname_out)
         elif type_der == 'key':
-            cmd = '"%s" pkcs8 -inform DER -outform PEM -in "%s" -passin \
-                file:%s -out "%s"' % (app_openssl_fullpath, fname_der,
-                fname_password_der, fname_out)
+            cmd = '"%s" pkcs8 -inform DER -outform PEM -in "%s" -passin file:%s -out "%s"' % (
+                app_openssl_fullpath, fname_der, fname_password_der, fname_out)
         if cmd:
             args = tuple(cmd.split(' '))
             # input, output = tools.exec_command_pipe(*args)
@@ -235,8 +234,7 @@ class facturae_certificate_library(osv.Model):
         result = ""
         cmd = ''
         if type_key == 'PEM':
-            cmd = '"%s" "%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc \
-                -base64 -A -out "%s"' % (
+            cmd = '"%s" "%s" "%s" | "%s" dgst -%s -sign "%s" | "%s" enc -base64 -A -out "%s"' % (
                 app_xsltproc_fullpath, fname_xslt, fname, app_openssl_fullpath,
                     encrypt, fname_key, app_openssl_fullpath, fname_out)
         elif type_key == 'DER':

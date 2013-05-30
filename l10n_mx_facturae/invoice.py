@@ -443,8 +443,7 @@ class account_invoice(osv.Model):
                 file_globals['serial_number'] = certificate_id.serial_number
             else:
                 raise osv.except_osv(_('Warning !'), _(
-                    'Check date of invoice and the validity of certificate, \
-                    & that the register of the certificate is active.\n%s!') % (msg2))
+                    'Check date of invoice and the validity of certificate, & that the register of the certificate is active.\n%s!') % (msg2))
 
         invoice_datetime = self.browse(cr, uid, ids)[0].invoice_datetime
         if invoice_datetime < '2012-07-01 00:00:00':
@@ -618,8 +617,8 @@ class account_invoice(osv.Model):
                             int(number_work)
                     except(ValueError):
                         raise osv.except_osv(_('Warning !'), _(
-                            'The folio [%s] must be integer number, without \
-                            letters') % (number_work))
+                            'The folio [%s] must be integer number, without letters')\
+                                % (number_work))
                 context.update({'number_work': number_work or False})
                 approval_id = self.pool.get('ir.sequence')._get_current_approval(
                     cr, uid, [sequence_id], field_names=None, arg=False,
@@ -639,9 +638,8 @@ class account_invoice(osv.Model):
                     }
                 else:
                     raise osv.except_osv(_('Warning !'), _(
-                        "The sequence don't have data of electronic \
-                        invoice\nIn the sequence_id [%d].\n %s !") % (
-                        sequence_id, msg2))
+                        "The sequence don't have data of electronic invoice\nIn the sequence_id [%d].\n %s !")\
+                            % (sequence_id, msg2))
             else:
                 raise osv.except_osv(_('Warning !'), _(
                     'Not found a sequence of configuration. %s !') % (msg2))
@@ -741,14 +739,11 @@ class account_invoice(osv.Model):
 
         if not txt_str:
             raise osv.except_osv(_('Error en Cadena original!'), _(
-                "Can't get the string original of the voucher.\nCkeck your \
-                configuration.\n%s" % (msg2)))
+                "Can't get the string original of the voucher.\nCkeck your configuration.\n%s" % (msg2)))
 
         if not data_dict['Comprobante'].get('folio', ''):
             raise osv.except_osv(_('Error in Folio!'), _(
-                "Can't get the folio of the voucher.\nBefore generating the \
-                XML, click on the button, generate invoice.\nCkeck your \
-                configuration.\n%s" % (msg2)))
+                "Can't get the folio of the voucher.\nBefore generating the XML, click on the button, generate invoice.\nCkeck your configuration.\n%s" % (msg2)))
 
         # time.strftime('%Y-%m-%dT%H:%M:%S',
         # time.strptime(invoice.date_invoice, '%Y-%m-%d %H:%M:%S'))
@@ -757,8 +752,7 @@ class account_invoice(osv.Model):
             cr=False, uid=False, ids=False, context=context)
         if not sign_str:
             raise osv.except_osv(_('Error in Stamp !'), _(
-                "Can't generate the stamp of the voucher.\nCkeck your \
-                configuration.\ns%s") % (msg2))
+                "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
 
         nodeComprobante = doc_xml.getElementsByTagName("Comprobante")[0]
         nodeComprobante.setAttribute("sello", sign_str)
@@ -767,16 +761,14 @@ class account_invoice(osv.Model):
         noCertificado = self._get_noCertificado(context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
-                "Can't get the Certificate Number of the voucher.\nCkeck your \
-                configuration.\n%s") % (msg2))
+                "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
         nodeComprobante.setAttribute("noCertificado", noCertificado)
         data_dict['Comprobante']['noCertificado'] = noCertificado
 
         cert_str = self._get_certificate_str(context['fname_cer'])
         if not cert_str:
             raise osv.except_osv(_('Error in Certificate!'), _(
-                "Can't generate the Certificate of the voucher.\nCkeck your \
-                configuration.\n%s") % (msg2))
+                "Can't generate the Certificate of the voucher.\nCkeck your configuration.\n%s") % (msg2))
         cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict['Comprobante']['certificado'] = cert_str
@@ -793,8 +785,7 @@ class account_invoice(osv.Model):
             data_dict['Comprobante'].get('serie', '') or '') + '.' + (
             data_dict['Comprobante'].get('folio', '') or '') + '.xml'
         data_xml = data_xml.replace(
-            '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" \
-            encoding="UTF-8"?>\n')
+            '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, data_xml
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
@@ -1242,8 +1233,7 @@ class account_invoice(osv.Model):
             '%Y-%m-%d') or False
         if not invoice_datetime:
             raise osv.except_osv(_('Date Invoice Empty'), _(
-                "Can't generate a invoice without date, make sure that the \
-                state of invoice not is draft & the date of invoice not is empty"))
+                "Can't generate a invoice without date, make sure that the state of invoice not is draft & the date of invoice not is empty"))
         if invoice_datetime < '2012-07-01':
             return invoice_data_parent
         else:
@@ -1262,25 +1252,22 @@ class account_invoice(osv.Model):
                 address = city + ' ' + state + ', ' + country
             else:
                 raise osv.except_osv(_('Address Incomplete!'), _(
-                    'Ckeck that the address of company issuing of fiscal \
-                    voucher is complete (City - State - Country)'))
+                    'Ckeck that the address of company issuing of fiscal voucher is complete (City - State - Country)'))
 
             if not invoice.company_emitter_id.partner_id.regimen_fiscal_id.name:
                 raise osv.except_osv(_('Missing Fiscal Regime!'), _(
-                    'The Fiscal Regime of the company issuing of fiscal \
-                    voucher is a data required'))
+                    'The Fiscal Regime of the company issuing of fiscal voucher is a data required'))
 
             invoice_data_parents[0]['Comprobante'][
-                'xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://\
-                www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
+                'xsi:schemaLocation'] = 'http://www.sat.gob.mx/cfd/2 http://www.sat.gob.mx/sitio_internet/cfd/2/cfdv22.xsd'
             invoice_data_parents[0]['Comprobante']['version'] = '2.2'
             invoice_data_parents[0]['Comprobante'][
                 'TipoCambio'] = invoice.rate or 1
             invoice_data_parents[0]['Comprobante'][
                 'Moneda'] = invoice.currency_id.name or ''
             invoice_data_parents[0]['Comprobante'][
-                'NumCtaPago'] = invoice.acc_payment.last_acc_number or 'No \
-                    identificado'
+                'NumCtaPago'] = invoice.acc_payment.last_acc_number\
+                    or 'No identificado'
             invoice_data_parents[0]['Comprobante'][
                 'metodoDePago'] = invoice.pay_method_id.name or 'No identificado'
             invoice_data_parents[0]['Comprobante']['Emisor']['RegimenFiscal'] = {
