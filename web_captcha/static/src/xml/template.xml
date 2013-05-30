@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+<t t-name="captcha">
+<html>
+        <head>
+<script type="text/javascript" src="http://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+      <!-- Wrapping the Recaptcha create method in a javascript function -->
+</head>
+<body>
+  <div id="recaptcha_div"></div>
+
+      <script type="text/javascript">
+         function showRecaptcha(element) { 
+           Recaptcha.create("6Ldf-uESAAAAAMPNMWa8dD6tFZey9w_1FrcpOmIe", element, {
+             theme: "red",
+             callback: Recaptcha.focus_response_field});
+        }
+      </script>
+ 
+<input type="button" value="Show reCAPTCHA" onclick="showRecaptcha('recaptcha_div');"/>
+</body>
+    </html>  
+</t>
+</templates>
