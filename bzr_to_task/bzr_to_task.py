@@ -122,10 +122,11 @@ class sprint_kanban_tasks(osv.Model):
 
     def get_works(self, cr, uid, ids, context=None):
         tw_obj = self.pool.get('project.task.work')
+        obj_self = self.browse(cr, uid, ids)[0]
         user_obj = self.pool.get('res.users')
-        url = self.browse(cr, uid, ids)[0].url_branch
-        res_id = self.browse(cr, uid, ids)[0].res_id
-        inferior = self.browse(cr, uid, ids)[0].from_revno
+        url = obj_self.url_branch
+        res_id = obj_self.res_id
+        inferior = obj_self.from_revno
         if url and res_id and inferior and int(res_id) > inferior:
             task_branch = branch.Branch.open(url)
             b_revno = task_branch.revno()
