@@ -40,6 +40,14 @@
             <field name="model">project.task</field>
             <field name="inherit_id" ref="project.view_task_form2"/>
             <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page/field/tree[@string='Task Work']" position="replace">
+                    <tree colors="blue:hours > 5;" string="Task Work" editable="top">
+                        <field name="name"/>
+                        <field name="hours" widget="float_time" sum="Spent Hours"/>
+                        <field name="date"/>
+                        <field name="user_id"/>
+                    </tree>
+                </xpath>
                 <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='name']" position="before">
                     <field name="revno" />
                 </xpath>
