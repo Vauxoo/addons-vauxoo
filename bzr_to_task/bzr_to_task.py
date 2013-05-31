@@ -79,6 +79,22 @@ class sprint_kanban_tasks(osv.Model):
     _defaults = {
         'res_id': 0,
             }
+    def set_work_time(self, cr, uid, ids, context=None):
+        rev_date = {}
+        task_work_obj = self.pool.get('project.task.work')
+        for task in self.browse(cr, uid, ids):
+            for tw in task.work_ids:
+                rev_date[tw.revno] = tw.date,
+            for tw in task.work_ids:
+                previous = tw.revno - 1
+                if rev_date.get(previous, False):
+                    p_date = datetime.datetime.strptime(rev_date[previous][0], '%Y-%m-%d %H:%M:%S')
+                    actual = datetime.datetime.strptime(tw.date, '%Y-%m-%d %H:%M:%S')
+                    result = actual - p_date
+                    task_work_obj.write(cr, uid, [tw.id], {'hours': float(result.seconds)/60/60})
+
+        return True
+
     def get_works(self, cr, uid, ids, context=None):
         tw_obj = self.pool.get('project.task.work')
         user_obj = self.pool.get('res.users')
@@ -109,6 +125,8 @@ class sprint_kanban_tasks(osv.Model):
                             tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
                             if not tw_ids:
                                 self.write(cr, uid, ids, {'res_id': b_revno, 'work_ids': [(0, 0, tw_data),],})
+                self.set_work_time(cr, uid, ids, context)
+
         return True
 
 class project_task_work(osv.Model):
