@@ -37,9 +37,45 @@ class project_project(osv.Model):
         'blueprint': fields.char('Blueprint', 264),
         'res_id': fields.char('Revno', 64),
             }
-
+    _defaults = {
+        'res_id': 0,
+            }
+    def get_works(self, cr, uid, ids, context=None):
+        user_obj = self.pool.get('res.users')
+        task_obj = self.pool.get('project.task')
+        url = self.browse(cr, uid, ids)[0].url_branch
+        res_id = self.browse(cr, uid, ids)[0].res_id
+        if url:
+            project_branch = branch.Branch.open(url)
+            b_revno = project_branch.revno()
+            if res_id:
+                if res_id > b_revno:
+                    repo = project_branch.repository
+                    revision_map = project_branch.get_revision_id_to_revno_map()
+                    if revision_map:
+                        for revision_id in revision_map.keys():
+                            task_data = {}
+                            revision = repo.get_revision(revision_id)
+                            date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                            splitted_revision_id = revision_id.split('-')
+                            email = revision_id[0]
+                            user_ids = user_obj.search(cr, uid, [('email','=',email)])
+                            task_data = {
+                                    'name': revision.message,
+                                    'date_deadline': date,
+                                    'revno': revision_map[revision_id][0],
+                                    }
+                            if user_ids:
+                                task_data['user_id'] = user_ids[0]
+                            task_ids = task_obj.search(cr, uid, [('project_id','=',ids[0]),('revno','=',task_data['revno'])])
+                            if not task_ids:
+                                self.write(cr, uid, ids, {'res_id': b_revno, 'tasks': [(0, 0, task_data)]})
+        return True
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
+    _columns = {
+            'revno':fields.integer('Revno'),
+            }
     _defaults = {
         'res_id': 0,
             }
