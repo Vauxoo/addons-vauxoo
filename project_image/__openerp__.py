@@ -38,8 +38,8 @@ Hierarchical View:
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Customization",
-    "data" : [
-        
+    "update_xml" : [
+        'view/project_image_view.xml',
     ],
     "active": False,
     "images": [],
