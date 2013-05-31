@@ -27,11 +27,13 @@ from openerp.tools.translate import _
 from bzrlib import branch
 import datetime
 
+
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
     _defaults = {
         'res_id': 0,
-            }
+    }
+
     def get_works(self, cr, uid, ids, context=None):
         tw_obj = self.pool.get('project.task.work')
         user_obj = self.pool.get('res.users')
@@ -48,25 +50,30 @@ class sprint_kanban_tasks(osv.Model):
                         for k in revision_map.keys():
                             tw_data = {}
                             revision = repo.get_revision(k)
-                            date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                            date = datetime.datetime.fromtimestamp(int(
+                                revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
                             revno = task_branch.revision_id_to_revno(k)
                             revision_id = k.split('-')
                             email = revision_id[0]
-                            user_ids = user_obj.search(cr, uid, [('email','=',email)])
+                            user_ids = user_obj.search(
+                                cr, uid, [('email', '=', email)])
                             tw_data = {
                                 'name': revision.message,
                                 'date': date,
                                 'revno': revno,
-                                }
+                            }
                             if user_ids:
                                 tw_data['user_id'] = user_ids[0]
-                            tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
+                            tw_ids = tw_obj.search(cr, uid, [('task_id', '=', ids[
+                                                   0]), ('revno', '=', tw_data['revno'])])
                             if not tw_ids:
-                                self.write(cr, uid, ids, {'res_id': b_revno, 'work_ids': [(0, 0, tw_data),],})
+                                self.write(cr, uid, ids, {
+                                           'res_id': b_revno, 'work_ids': [(0, 0, tw_data), ], })
         return True
+
 
 class project_task_work(osv.Model):
     _inherit = 'project.task.work'
     _columns = {
-            'revno':fields.integer('Revno'),
-            }
+        'revno': fields.integer('Revno'),
+    }
