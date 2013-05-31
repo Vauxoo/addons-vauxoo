@@ -36,6 +36,7 @@ class project_project(osv.Model):
         'merge_proposal': fields.char('Merge Proposal', 264),
         'blueprint': fields.char('Blueprint', 264),
         'res_id': fields.char('Revno', 64),
+        'from_revno':fields.integer('From Revno')
             }
     _defaults = {
         'res_id': 0,
@@ -75,6 +76,7 @@ class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
     _columns = {
             'revno':fields.integer('Revno'),
+            'from_revno':fields.integer('From Revno')
             }
     _defaults = {
         'res_id': 0,
