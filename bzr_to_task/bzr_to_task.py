@@ -93,9 +93,16 @@ class sprint_kanban_tasks(osv.Model):
                     p_date = datetime.datetime.strptime(rev_date[previous][0], '%Y-%m-%d %H:%M:%S')
                     actual = datetime.datetime.strptime(tw.date, '%Y-%m-%d %H:%M:%S')
                     result = actual - p_date
-                    task_work_obj.write(cr, uid, [tw.id], {'hours': float(result.seconds)/60/60})
+                    if float(result.seconds)/60/60 > 0.16:
+                        hours = float(result.seconds)/60/60
+                    else:
+                        hours = 0.16
+                    max_date = max(rev_date.itervalues())[0]
+                    deadline = datetime.datetime.strptime(max_date, '%Y-%m-%d %H:%M:%S')
+                    deadline = deadline + datetime.timedelta(days=1)
+                    task_work_obj.write(cr, uid, [tw.id], {'hours': hours})
 
-        return True
+        return deadline
 
     def get_works(self, cr, uid, ids, context=None):
         tw_obj = self.pool.get('project.task.work')
@@ -127,8 +134,8 @@ class sprint_kanban_tasks(osv.Model):
                             tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
                             if not tw_ids:
                                 self.write(cr, uid, ids, {'res_id': b_revno, 'work_ids': [(0, 0, tw_data),],})
-                self.set_work_time(cr, uid, ids, context)
-
+                deadline = self.set_work_time(cr, uid, ids, context)
+                self.write(cr, uid, ids,{'date_deadline': deadline})
         return True
 
 class project_task_work(osv.Model):
