@@ -27,6 +27,17 @@ from openerp.tools.translate import _
 from bzrlib import branch
 import datetime
 
+class project_project(osv.Model):
+    _inherit = 'project.project'
+    _columns = {
+        'sprint_id': fields.many2one('sprint.kanban', 'Sprint',
+                                     ondelete="cascade"),
+        'url_branch': fields.char('Url Branch', 264),
+        'merge_proposal': fields.char('Merge Proposal', 264),
+        'blueprint': fields.char('Blueprint', 264),
+        'res_id': fields.char('Revno', 64),
+            }
+
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
     _defaults = {
