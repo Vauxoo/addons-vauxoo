@@ -34,6 +34,7 @@ class sprint_kanban_tasks(osv.Model):
             }
     def get_works(self, cr, uid, ids, context=None):
         tw_obj = self.pool.get('project.task.work')
+        user_obj = self.pool.get('res.users')
         url = self.browse(cr, uid, ids)[0].url_branch
         res_id = self.browse(cr, uid, ids)[0].res_id
         if url:
@@ -45,16 +46,24 @@ class sprint_kanban_tasks(osv.Model):
                     revision_map = task_branch.get_revision_id_to_revno_map()
                     if revision_map:
                         for k in revision_map.keys():
+                            tw_data = {}
                             revision = repo.get_revision(k)
                             date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                            revno = task_branch.revision_id_to_revno(k)
+                            revision_id = k.split('-')
+                            email = revision_id[0]
+                            user_ids = user_obj.search(cr, uid, [('email','=',email)])
                             tw_data = {
                                 'name': revision.message,
                                 'date': date,
-                                'revno': revision_map[k][0],
+                                'revno': revno,
                                 }
+                            if user_ids:
+                                tw_data['user_id'] = user_ids[0]
                             tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
                             if not tw_ids:
                                 self.write(cr, uid, ids, {'res_id': b_revno, 'work_ids': [(0, 0, tw_data),],})
+        return True
 
 class project_task_work(osv.Model):
     _inherit = 'project.task.work'
