@@ -49,20 +49,24 @@ class purchase_requisition(osv.Model):
     def make_purchase_order(self, cr, uid, ids, partner_id, context=None):
         res = super(purchase_requisition, self).make_purchase_order(
             cr, uid, ids, partner_id, context=context)
-        obj_purchase_requisition_line = self.pool.get(
+        purchase_requisition_line_obj = self.pool.get(
             'purchase.requisition.line')
-        purchase_requisition_line_ids = obj_purchase_requisition_line.search(
-            cr, uid, [('requisition_id', '=', res.keys()[0])])
-        obj_order_line = self.pool.get('purchase.order.line')
-        obj_purchase_requisition_line_ = obj_purchase_requisition_line.browse(
-            cr, uid, purchase_requisition_line_ids, context=context)
-        for product_id in obj_purchase_requisition_line_:
-            purchase_requisition_line_id = obj_purchase_requisition_line.search(cr, uid, [(
-                'product_id', '=', int(product_id.product_id.id)), ('requisition_id', '=', res.keys()[0]), 
-                ('product_qty','=', product_id.product_qty) ])
-            name = obj_purchase_requisition_line.browse(
-                cr, uid, purchase_requisition_line_id[0], context=context).name
-            order_line_id_mod = obj_order_line.search(cr, uid, [('product_id', '=', int(
-                product_id.product_id.id)), ('order_id', '=', res[res.keys()[0]]), ('product_qty','=', product_id.product_qty)])
-            obj_order_line.write(cr, uid, order_line_id_mod, {'name': name})
+        item = len(res.keys())>=1 and res.keys()[0]  or False
+        if item:
+			purchase_requisition_line_ids = purchase_requisition_line_obj.search(
+				cr, uid, [('requisition_id', '=', res.keys()[0])])
+			order_line_obj = self.pool.get('purchase.order.line')
+			purchase_requisition_lines = purchase_requisition_line_obj.browse(
+				cr, uid, purchase_requisition_line_ids, context=context)
+			for purchase_requisition_lines in purchase_requisition_lines:
+				purchase_requisition_line_id = purchase_requisition_line_obj.search(cr, uid, [(
+					'product_id', '=', int(purchase_requisition_lines.product_id.id)), ('requisition_id', '=', res.keys()[0]), 
+					('product_qty','=', purchase_requisition_lines.product_qty) ])
+				item_line_id = len(purchase_requisition_line_id)>=1 and purchase_requisition_line_id[0]  or False
+				if item_line_id:
+					name = purchase_requisition_line_obj.browse(
+						cr, uid, purchase_requisition_line_id[0], context=context).name
+					order_line_id_mod = order_line_obj.search(cr, uid, [('product_id', '=', int(
+						purchase_requisition_lines.product_id.id)), ('order_id', '=', res.get(res.keys()[0], False)), ('product_qty','=', purchase_requisition_lines.product_qty)])
+					order_line_obj.write(cr, uid, order_line_id_mod, {'name': name})
         return res
