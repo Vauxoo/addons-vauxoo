@@ -46,31 +46,32 @@ class project_project(osv.Model):
         task_obj = self.pool.get('project.task')
         url = self.browse(cr, uid, ids)[0].url_branch
         res_id = self.browse(cr, uid, ids)[0].res_id
+        inferior = self.browse(cr, uid, ids)[0].from_revno
         if url:
             project_branch = branch.Branch.open(url)
             b_revno = project_branch.revno()
             if res_id:
-                if res_id > b_revno:
-                    repo = project_branch.repository
-                    revision_map = project_branch.get_revision_id_to_revno_map()
-                    if revision_map:
-                        for revision_id in revision_map.keys():
-                            task_data = {}
-                            revision = repo.get_revision(revision_id)
-                            date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
-                            splitted_revision_id = revision_id.split('-')
-                            email = revision_id[0]
-                            user_ids = user_obj.search(cr, uid, [('email','=',email)])
-                            task_data = {
-                                    'name': revision.message,
-                                    'date_deadline': date,
-                                    'revno': revision_map[revision_id][0],
-                                    }
-                            if user_ids:
-                                task_data['user_id'] = user_ids[0]
-                            task_ids = task_obj.search(cr, uid, [('project_id','=',ids[0]),('revno','=',task_data['revno'])])
-                            if not task_ids:
-                                self.write(cr, uid, ids, {'res_id': b_revno, 'tasks': [(0, 0, task_data)]})
+                repo = project_branch.repository
+                revision_map = project_branch.get_revision_id_to_revno_map()
+                if revision_map:
+                    for revision_id in revision_map.keys():
+                        task_data = {}
+                        revision = repo.get_revision(revision_id)
+                        date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                        splitted_revision_id = revision_id.split('-')
+                        email = revision_id[0]
+                        user_ids = user_obj.search(cr, uid, [('email','=',email)])
+                        task_data = {
+                                'name': revision.message,
+                                'date_deadline': date,
+                                'revno': revision_map[revision_id][0],
+                                }
+                        if user_ids:
+                            task_data['user_id'] = user_ids[0]
+                        task_ids = task_obj.search(cr, uid, [('project_id','=',ids[0]),('revno','=',task_data['revno'])])
+                        if not task_ids:
+                            if inferior and inferior <= task_data['revno'] and int(res_id) >= task_data['revno']:
+                                self.write(cr, uid, ids, {'tasks': [(0, 0, task_data)]})
         return True
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
@@ -109,33 +110,34 @@ class sprint_kanban_tasks(osv.Model):
         user_obj = self.pool.get('res.users')
         url = self.browse(cr, uid, ids)[0].url_branch
         res_id = self.browse(cr, uid, ids)[0].res_id
+        inferior = self.browse(cr, uid, ids)[0].from_revno
         if url:
             task_branch = branch.Branch.open(url)
             b_revno = task_branch.revno()
             if res_id:
-                if res_id > b_revno:
-                    repo = task_branch.repository
-                    revision_map = task_branch.get_revision_id_to_revno_map()
-                    if revision_map:
-                        for k in revision_map.keys():
-                            tw_data = {}
-                            revision = repo.get_revision(k)
-                            date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
-                            revision_id = k.split('-')
-                            email = revision_id[0]
-                            user_ids = user_obj.search(cr, uid, [('email','=',email)])
-                            tw_data = {
-                                'name': revision.message,
-                                'date': date,
-                                'revno': revision_map[k][0],
-                                }
-                            if user_ids:
-                                tw_data['user_id'] = user_ids[0]
-                            tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
-                            if not tw_ids:
-                                self.write(cr, uid, ids, {'res_id': b_revno, 'work_ids': [(0, 0, tw_data),],})
-                deadline = self.set_work_time(cr, uid, ids, context)
-                self.write(cr, uid, ids,{'date_deadline': deadline})
+                repo = task_branch.repository
+                revision_map = task_branch.get_revision_id_to_revno_map()
+                if revision_map:
+                    for k in revision_map.keys():
+                        tw_data = {}
+                        revision = repo.get_revision(k)
+                        date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                        revision_id = k.split('-')
+                        email = revision_id[0]
+                        user_ids = user_obj.search(cr, uid, [('email','=',email)])
+                        tw_data = {
+                            'name': revision.message,
+                            'date': date,
+                            'revno': revision_map[k][0],
+                            }
+                        if user_ids:
+                            tw_data['user_id'] = user_ids[0]
+                        tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
+                        if not tw_ids:
+                            if inferior and inferior <= tw_data['revno'] and int(res_id) >= tw_data['revno']:
+                                self.write(cr, uid, ids, {'work_ids': [(0, 0, tw_data),],})
+            deadline = self.set_work_time(cr, uid, ids, context)
+            self.write(cr, uid, ids,{'date_deadline': deadline})
         return True
 
 class project_task_work(osv.Model):
