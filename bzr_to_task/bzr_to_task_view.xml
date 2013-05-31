@@ -7,9 +7,6 @@
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
                 <xpath expr="/form/sheet/notebook/page[@string='Project Stages']" position="after">
-                    <page string="Tasks">
-                        <field name="tasks"/>
-                    </page>
                     <page string="Technical Features">
 			            <group col="4">
                             <field name="url_branch"/>
