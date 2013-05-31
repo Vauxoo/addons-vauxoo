@@ -47,7 +47,7 @@ class project_project(osv.Model):
         url = self.browse(cr, uid, ids)[0].url_branch
         res_id = self.browse(cr, uid, ids)[0].res_id
         inferior = self.browse(cr, uid, ids)[0].from_revno
-        if url and res_id and inferior:
+        if url and res_id and inferior and int(res_id) > inferior:
             project_branch = branch.Branch.open(url)
             b_revno = project_branch.revno()
             if res_id:
@@ -73,7 +73,8 @@ class project_project(osv.Model):
                             if inferior and inferior <= task_data['revno'] and int(res_id) >= task_data['revno']:
                                 self.write(cr, uid, ids, {'tasks': [(0, 0, task_data)]})
         else:
-            raise osv.except_osv(('Error'),('Fields: URL Branch, From Revno and Revno are required to execute this operation'))
+            raise osv.except_osv(('Error'),('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
+                also From Revno must be minor than Revno'))
         return True
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
@@ -113,7 +114,7 @@ class sprint_kanban_tasks(osv.Model):
         url = self.browse(cr, uid, ids)[0].url_branch
         res_id = self.browse(cr, uid, ids)[0].res_id
         inferior = self.browse(cr, uid, ids)[0].from_revno
-        if url and res_id and inferior:
+        if url and res_id and inferior and int(res_id) > inferior:
             task_branch = branch.Branch.open(url)
             b_revno = task_branch.revno()
             if res_id:
@@ -141,7 +142,8 @@ class sprint_kanban_tasks(osv.Model):
                     deadline = self.set_work_time(cr, uid, ids, context)
                     self.write(cr, uid, ids,{'date_deadline': deadline})
         else:
-            raise osv.except_osv(('Error'),('Fields: URL Branch, From Revno and Revno are required to execute this operation'))
+            raise osv.except_osv(('Error'),('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
+                also From Revno must be minor than Revno'))
         return True
 
 class project_task_work(osv.Model):
