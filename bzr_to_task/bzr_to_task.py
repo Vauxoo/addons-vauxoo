@@ -136,8 +136,8 @@ class sprint_kanban_tasks(osv.Model):
                         if not tw_ids:
                             if inferior and inferior <= tw_data['revno'] and int(res_id) >= tw_data['revno']:
                                 self.write(cr, uid, ids, {'work_ids': [(0, 0, tw_data),],})
-            deadline = self.set_work_time(cr, uid, ids, context)
-            self.write(cr, uid, ids,{'date_deadline': deadline})
+                    deadline = self.set_work_time(cr, uid, ids, context)
+                    self.write(cr, uid, ids,{'date_deadline': deadline})
         return True
 
 class project_task_work(osv.Model):
