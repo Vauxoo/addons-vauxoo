@@ -990,11 +990,11 @@ class account_invoice(osv.Model):
                         address_invoice_parent.street.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
                         '\r', ' ') or '',
-                    'noExterior': address_invoice_parent.l10n_mx_street3 and \
+                    'noInterior': address_invoice_parent.l10n_mx_street3 and \
                         address_invoice_parent.l10n_mx_street3.replace(
                         '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
                         replace('\r', ' ') or 'N/A',  # "Numero Exterior"
-                    'noInterior': address_invoice_parent.l10n_mx_street4 and \
+                    'noExterior': address_invoice_parent.l10n_mx_street4 and \
                         address_invoice_parent.l10n_mx_street4.replace(
                         '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
                         replace('\r', ' ') or 'N/A',  # "Numero Interior"
@@ -1029,11 +1029,11 @@ class account_invoice(osv.Model):
                     'calle': address_invoice.street and address_invoice.\
                         street.replace('\n\r', ' ').replace('\r\n', ' ').\
                         replace('\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': address_invoice.l10n_mx_street3 and \
+                    'noInterior': address_invoice.l10n_mx_street3 and \
                         address_invoice.l10n_mx_street3.replace(
                         '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
                         replace('\r', ' ') or 'N/A',  # "Numero Exterior"
-                    'noInterior': address_invoice.l10n_mx_street4 and \
+                    'noExterior': address_invoice.l10n_mx_street4 and \
                         address_invoice.l10n_mx_street4.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
                         '\r', ' ') or 'N/A',  # "Numero Interior"
@@ -1085,11 +1085,11 @@ class account_invoice(osv.Model):
                     'calle': address_invoice.street and address_invoice.\
                         street.replace('\n\r', ' ').replace('\r\n', ' ').replace(
                         '\n', ' ').replace('\r', ' ') or '',
-                    'noExterior': address_invoice.l10n_mx_street3 and \
+                    'noInterior': address_invoice.l10n_mx_street3 and \
                         address_invoice.l10n_mx_street3.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
                         '\r', ' ') or 'N/A',  # "Numero Exterior"
-                    'noInterior': address_invoice.l10n_mx_street4 and \
+                    'noExterior': address_invoice.l10n_mx_street4 and \
                         address_invoice.l10n_mx_street4.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
                         '\r', ' ') or 'N/A',  # "Numero Interior"

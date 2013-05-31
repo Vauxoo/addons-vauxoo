@@ -48,8 +48,8 @@
                                 else:
                                     address_emitter = o.company_emitter_id.address_invoice_parent_company_id%>
                                 <br/>${address_emitter.street or ''|entity}
-                                ${address_emitter.l10n_mx_street3 or ''|entity}
                                 ${address_emitter.l10n_mx_street4 or ''|entity}
+                                ${address_emitter.l10n_mx_street3 or ''|entity}
                                 ${address_emitter.street2 or ''|entity}
                                 ${address_emitter.zip or ''|entity}
                                 <br />${_("Localidad:")} ${address_emitter.l10n_mx_city2 or ''|entity}
@@ -77,8 +77,8 @@
                         <br/>Expedido en:
                             <br/>${o.address_issued_id.name or ''|entity}
                             <br/>${o.address_issued_id.street or ''|entity}
-                            ${o.address_issued_id.l10n_mx_street3 or ''|entity}
                             ${o.address_issued_id.l10n_mx_street4 or ''|entity}
+                            ${o.address_issued_id.l10n_mx_street3 or ''|entity}
                             <br/>${o.address_issued_id.street2 or ''|entity}
                             ${o.address_issued_id.zip or ''|entity}
                             <br/>Localidad: ${o.address_issued_id.l10n_mx_city2 or ''|entity}
@@ -107,13 +107,13 @@
                         <tr>
                             <td width="7%" class="cliente"><b>Calle:</b></td>
                             <td class="cliente">${res_client['street'] or ''|entity}</td>
-                            %if res_client['l10n_mx_street3']:
-                                <td width="9%" class="cliente"><b>No. Ext:</b></td>
-                                <td width="9%" class="cliente">${res_client['l10n_mx_street3'] or ''|entity}</td>
-                            %endif
                             %if res_client['l10n_mx_street4']:
-                                <td width="9%" class="cliente"><b>No. Int:</b></td>
+                                <td width="9%" class="cliente"><b>No. Ext:</b></td>
                                 <td width="9%" class="cliente">${res_client['l10n_mx_street4'] or ''|entity}</td>
+                            %endif
+                            %if res_client['l10n_mx_street3']:
+                                <td width="9%" class="cliente"><b>No. Int:</b></td>
+                                <td width="9%" class="cliente">${res_client['l10n_mx_street3'] or ''|entity}</td>
                             %endif
                         </tr>
                     </table>
