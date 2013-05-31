@@ -27,6 +27,7 @@ from openerp.tools.translate import _
 from bzrlib import branch
 import datetime
 
+
 class project_project(osv.Model):
     _inherit = 'project.project'
     _columns = {
@@ -36,11 +37,12 @@ class project_project(osv.Model):
         'merge_proposal': fields.char('Merge Proposal', 264),
         'blueprint': fields.char('Blueprint', 264),
         'res_id': fields.char('Revno', 64),
-        'from_revno':fields.integer('From Revno')
-            }
+        'from_revno': fields.integer('From Revno')
+    }
     _defaults = {
         'res_id': 0,
-            }
+    }
+
     def get_works(self, cr, uid, ids, context=None):
         user_obj = self.pool.get('res.users')
         task_obj = self.pool.get('project.task')
@@ -57,34 +59,41 @@ class project_project(osv.Model):
                     for revision_id in revision_map.keys():
                         task_data = {}
                         revision = repo.get_revision(revision_id)
-                        date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                        date = datetime.datetime.fromtimestamp(int(
+                            revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
                         splitted_revision_id = revision_id.split('-')
                         email = revision_id[0]
-                        user_ids = user_obj.search(cr, uid, [('email','=',email)])
+                        user_ids = user_obj.search(
+                            cr, uid, [('email', '=', email)])
                         task_data = {
-                                'name': revision.message,
-                                'date_deadline': date,
-                                'revno': revision_map[revision_id][0],
-                                }
+                            'name': revision.message,
+                            'date_deadline': date,
+                            'revno': revision_map[revision_id][0],
+                        }
                         if user_ids:
                             task_data['user_id'] = user_ids[0]
-                        task_ids = task_obj.search(cr, uid, [('project_id','=',ids[0]),('revno','=',task_data['revno'])])
+                        task_ids = task_obj.search(cr, uid, [('project_id', '=', ids[
+                                                   0]), ('revno', '=', task_data['revno'])])
                         if not task_ids:
                             if inferior and inferior <= task_data['revno'] and int(res_id) >= task_data['revno']:
-                                self.write(cr, uid, ids, {'tasks': [(0, 0, task_data)]})
+                                self.write(cr, uid, ids, {
+                                           'tasks': [(0, 0, task_data)]})
         else:
-            raise osv.except_osv(('Error'),('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
+            raise osv.except_osv(('Error'), ('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
                 also From Revno must be minor than Revno'))
         return True
+
+
 class sprint_kanban_tasks(osv.Model):
     _inherit = 'project.task'
     _columns = {
-            'revno':fields.integer('Revno'),
-            'from_revno':fields.integer('From Revno')
-            }
+        'revno': fields.integer('Revno'),
+        'from_revno': fields.integer('From Revno')
+    }
     _defaults = {
         'res_id': 0,
-            }
+    }
+
     def set_work_time(self, cr, uid, ids, context=None):
         rev_date = {}
         task_work_obj = self.pool.get('project.task.work')
@@ -94,15 +103,18 @@ class sprint_kanban_tasks(osv.Model):
             for tw in task.work_ids:
                 previous = tw.revno - 1
                 if rev_date.get(previous, False):
-                    p_date = datetime.datetime.strptime(rev_date[previous][0], '%Y-%m-%d %H:%M:%S')
-                    actual = datetime.datetime.strptime(tw.date, '%Y-%m-%d %H:%M:%S')
+                    p_date = datetime.datetime.strptime(
+                        rev_date[previous][0], '%Y-%m-%d %H:%M:%S')
+                    actual = datetime.datetime.strptime(
+                        tw.date, '%Y-%m-%d %H:%M:%S')
                     result = actual - p_date
-                    if float(result.seconds)/60/60 > 0.16:
-                        hours = float(result.seconds)/60/60
+                    if float(result.seconds) / 60 / 60 > 0.16:
+                        hours = float(result.seconds) / 60 / 60
                     else:
                         hours = 0.16
                     max_date = max(rev_date.itervalues())[0]
-                    deadline = datetime.datetime.strptime(max_date, '%Y-%m-%d %H:%M:%S')
+                    deadline = datetime.datetime.strptime(
+                        max_date, '%Y-%m-%d %H:%M:%S')
                     deadline = deadline + datetime.timedelta(days=1)
                     task_work_obj.write(cr, uid, [tw.id], {'hours': hours})
 
@@ -124,30 +136,35 @@ class sprint_kanban_tasks(osv.Model):
                     for k in revision_map.keys():
                         tw_data = {}
                         revision = repo.get_revision(k)
-                        date = datetime.datetime.fromtimestamp(int(revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
+                        date = datetime.datetime.fromtimestamp(int(
+                            revision.timestamp)).strftime('%Y-%m-%d %H:%M:%S')
                         revision_id = k.split('-')
                         email = revision_id[0]
-                        user_ids = user_obj.search(cr, uid, [('email','=',email)])
+                        user_ids = user_obj.search(
+                            cr, uid, [('email', '=', email)])
                         tw_data = {
                             'name': revision.message,
                             'date': date,
                             'revno': revision_map[k][0],
-                            }
+                        }
                         if user_ids:
                             tw_data['user_id'] = user_ids[0]
-                        tw_ids = tw_obj.search(cr, uid, [('task_id','=',ids[0]),('revno','=',tw_data['revno'])])
+                        tw_ids = tw_obj.search(cr, uid, [('task_id', '=', ids[
+                                               0]), ('revno', '=', tw_data['revno'])])
                         if not tw_ids:
                             if inferior and inferior <= tw_data['revno'] and int(res_id) >= tw_data['revno']:
-                                self.write(cr, uid, ids, {'work_ids': [(0, 0, tw_data),],})
+                                self.write(cr, uid, ids, {
+                                           'work_ids': [(0, 0, tw_data), ], })
                     deadline = self.set_work_time(cr, uid, ids, context)
-                    self.write(cr, uid, ids,{'date_deadline': deadline})
+                    self.write(cr, uid, ids, {'date_deadline': deadline})
         else:
-            raise osv.except_osv(('Error'),('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
+            raise osv.except_osv(('Error'), ('Fields: URL Branch, From Revno and Revno are required to execute this operation, \
                 also From Revno must be minor than Revno'))
         return True
+
 
 class project_task_work(osv.Model):
     _inherit = 'project.task.work'
     _columns = {
-            'revno':fields.integer('Revno'),
-            }
+        'revno': fields.integer('Revno'),
+    }
