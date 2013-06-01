@@ -32,41 +32,73 @@ class document_page(osv.Model):
 
     _name = 'document.page'
 
+    def _check_all(self, cr, uid, ids, field, context=None):
+
+        context = context or {}
+
+        return field == 'new' and ids.get('state') in context or \
+               field == 'changed' and ids.get('state') in context.get('states')
+
+    def _check_new(self, cr, uid, ids, context=None):
+
+        context = context or {}
+        context.update({'draft':True})
+        return self._check_all(cr, uid, ids, 'new', context)
+
+
+    def _check_changed(self, cr, uid, ids, context=None):
+
+        context = context or {}
+        context.update({'states':['review','menucreated','published']})
+        return self._check_all(cr, uid, ids, 'changed', context)
+
+
+ 
+
     _inherit = ['document.page','mail.thread', 'ir.needaction_mixin']
 
-    def write(self, cr, uid, ids, vals, context=None):
-        document_browse = self.browse(cr, uid, ids and type(ids) is list and \
-                                      ids[0] or ids, context=context)
-        
-        result = super(document_page, self).write(cr, uid, ids, vals, context)
-        if context.get('stop'):
-            return result
-        context.update({'default_body':_(u'The document %s has been modified' %
-                                         document_browse.name  ),
-                        'default_parent_id': False,
-                        'mail_post_autofollow_partner_ids': [],
-                        'default_attachment_ids': [],
-                        'mail_post_autofollow': True,
-                        'default_composition_mode': 'comment',
-                        'default_partner_ids': [],
-                        'default_model': 'document.page',
-                        'active_model': 'document.page',
-                        'default_res_id': ids and type(ids) is list and \
-                                          ids[0] or ids,
-                        'active_id': ids and type(ids) is list and \
-                                          ids[0] or ids,
-                        'active_ids': ids and type(ids) is list and \
-                                          ids or [ids],
-                        'stop':True,
-                        })
 
-        self.create_history(cr, uid, ids, vals, context)
-        mail_obj = self.pool.get('mail.compose.message')
-        fields = mail_obj.fields_get(cr, uid)
-        mail_dict = mail_obj.default_get(cr, uid,fields.keys() , context)
-        mail_ids = mail_obj.create(cr, uid, mail_dict, context=context)
-        mail_obj.send_mail(cr, uid, [mail_ids], context=context)
-        
-        
-        return result
+
+    _track = {
+        'state': {                                                              
+            'document_page_comments.document_page_changed':_check_changed,
+            'document_page_comments.document_page_new':_check_new,
+           }, 
+            }
+
+#    def write(self, cr, uid, ids, vals, context=None):
+#        document_browse = self.browse(cr, uid, ids and type(ids) is list and \
+#                                      ids[0] or ids, context=context)
+#        
+#        result = super(document_page, self).write(cr, uid, ids, vals, context)
+#        if context.get('stop'):
+#            return result
+#        context.update({'default_body':_(u'The document %s has been modified' %
+#                                         document_browse.name  ),
+#                        'default_parent_id': False,
+#                        'mail_post_autofollow_partner_ids': [],
+#                        'default_attachment_ids': [],
+#                        'mail_post_autofollow': True,
+#                        'default_composition_mode': 'comment',
+#                        'default_partner_ids': [],
+#                        'default_model': 'document.page',
+#                        'active_model': 'document.page',
+#                        'default_res_id': ids and type(ids) is list and \
+#                                          ids[0] or ids,
+#                        'active_id': ids and type(ids) is list and \
+#                                          ids[0] or ids,
+#                        'active_ids': ids and type(ids) is list and \
+#                                          ids or [ids],
+#                        'stop':True,
+#                        })
+#
+#        self.create_history(cr, uid, ids, vals, context)
+#        mail_obj = self.pool.get('mail.compose.message')
+#        fields = mail_obj.fields_get(cr, uid)
+#        mail_dict = mail_obj.default_get(cr, uid,fields.keys() , context)
+#        mail_ids = mail_obj.create(cr, uid, mail_dict, context=context)
+#        mail_obj.send_mail(cr, uid, [mail_ids], context=context)
+#        
+#        
+#        return result
 

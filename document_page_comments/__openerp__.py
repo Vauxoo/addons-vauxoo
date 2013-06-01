@@ -30,6 +30,7 @@
     "depends" : [
                  "base",
                  "document_page",
+                 "vauxoo_cms",
                  ],
     "author" : "Vauxoo",
     "description" : """
@@ -44,12 +45,11 @@ you are follower
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [
+    "demo" : [
     ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
+    "data" : [
     'view/document_page_view.xml',
+    'data/document_pages_data.xml',
     ],
     "active": False,
     "images": [],
