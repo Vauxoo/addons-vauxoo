@@ -29,6 +29,14 @@ from osv import fields
 
 from tools.translate import _
 
+_iter_record = 0
+_fy = False
+_total_record = 0
+_period_info_list = []    #~ [ 0 : period_enumerate, 1 : period_id, 2 : period_name ]
+_title_line = ' '
+_from_currency_id = 0
+_to_currency_id = 0
+
 class ifrs_ifrs(osv.osv):
 
     _name = 'ifrs.ifrs'
@@ -272,7 +280,105 @@ class ifrs_lines(osv.osv):
                 #~ TODO: write back False to brw.do_compute with SQL
                 #~ INCLUDE A LOGGER
         return res
+
+    def _get_period_print_info(self, cr, uid, ids, period_id, report_type, context=None):
+        if context is None: context = {}
+        ''' Return all the printable information about period'''
+
+        if report_type == 'all':
+            res = 'All Periods of the fiscalyear.'
+        else:
+            period = self.pool.get('account.period').browse(cr, uid, period_id, context = context)
+            res = str(period.name) + ' [' + str(period.code) + ']'
+
+        return res
+
+    def _get_column_name(self, cr, uid, ids, column_num, context=None):
+        if context is None: context = {}
+        """devuelve string con el nombre del periodo que debe titular ese numero de columna"""
+
+        return self._period_info_list[column_num][2]
+
+
+    def _get_periods_name_list(self, cr, uid, ids, ifrs_obj, fiscalyear_id, context=None):
+        if context is None: context = {}
+
+        """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
+
+        period_list = _period_info_list = []
+        period_list.append( ('0', None , _title_line ) ) 
+
+        fiscalyear_bwr = self.pool.get('account.fiscalyear').browse(cr, uid, fiscalyear_id, context=context)
         
+        periods_ids = fiscalyear_bwr._get_fy_period_ids()
+
+        periods = self.pool.get('account.period')
+        
+        for ii, period_id in enumerate(periods_ids, start=1):
+            period_list.append((str(ii), period_id, periods.browse(cr, uid, period_id, context=context).name ))
+
+        _period_info_list = period_list
+        _fy = fiscalyear_id
+
+
+    def exchange(self, cr, uid, ids, from_amount, context=None):
+        if _from_currency_id == _to_currency_id:
+            return from_amount
+        curr_obj = self.pool.get('res.currency')
+        return curr_obj.compute(cr, uid, _from_currency_id, _to_currency_id, from_amount)
+    
+    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+        
+        '''devuelve la cantidad correspondiente al periodo'''
+        _from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
+        _to_currency_id = ifrs_line.ifrs_id.currency_id.id
+
+        print "**************** %s " % ifrs_line
+
+        context = {}
+        if period_num:
+            if two:
+                context = {'period_from': period_num, 'period_to':period_num, 'state': target_move, 'partner_detail':pd, 'fiscalyear':_fy}
+            else:
+                period_id = _period_info_list[period_num][1]
+                context = {'period_from': period_id, 'period_to':period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':_fy}
+        else:
+            context = {'whole_fy': 'True'} 
+
+        ifrs_l_obj = self.pool.get('ifrs.lines')
+        res = ifrs_l_obj._get_sum(cr, uid, ifrs_line.id, context = context)
+        print "1. res %s" % res
+        if ifrs_line.type == 'detail':
+            res = self.exchange(res)
+            print "2. res %s" % res
+        elif ifrs_line.type == 'total':
+            if ifrs_line.operator not in ('percent','ratio'):
+                if ifrs_line.comparison not in ('percent','ratio','product'):
+                    res = self.exchange(res)
+        print "3. res %s" % res
+        return res
+
+    def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
+        ifrs = self.pool.get('ifrs.lines')
+        aml_obj = self.pool.get('account.move.line')
+        account_obj = self.pool.get('account.account')
+        partner_obj = self.pool.get('res.partner')
+        res = []
+        if ifrs_l.type =='detail':
+            ids2 = [lin.id for lin in ifrs_l.cons_ids]
+            ids3 = ids2 and account_obj._get_children_and_consol(cr, uid, ids2, context=context) or []
+            if ids3:
+                cr.execute(""" SELECT rp.id
+                    FROM account_move_line l JOIN res_partner rp ON rp.id = l.partner_id
+                    WHERE l.account_id IN %s
+                    GROUP BY rp.id 
+                    ORDER BY rp.name ASC""", ( tuple(ids3), ) 
+                    )
+                dat = cr.dictfetchall()
+                res = [lins for lins in partner_obj.browse( cr, uid, [li['id'] for li in dat], context=context )]
+                print "GET_PARTNER_DETAIL %s" % res
+        return res
+    
     _columns = {
         'sequence' : fields.integer( 'Sequence', required = True ),
         'name' : fields.char( 'Name', 128, required = True, translate = True ),
