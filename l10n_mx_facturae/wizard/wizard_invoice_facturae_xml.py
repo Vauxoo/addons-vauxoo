@@ -35,31 +35,37 @@ _form = """<?xml version="1.0"?>
 <form string="Factura Electronica XML">
     <label string="Deseas obtener la Factura Electronica XML?"/>
     <newline/>
-    <label string="NOTA: Recuerda que si ya existe un XML adjunto, te mostrara este xml anterior.\nPara regenerarlo, tendra que borrar el anterior."/>
+    <label string="NOTA: Recuerda que si ya existe un XML adjunto, te mostrara \
+    este xml anterior.\nPara regenerarlo, tendra que borrar el anterior."/>
 </form>"""
 
 _fields = {
 }
 
+
 def _get_invoice_facturae_xml(self, cr, uid, data, context={}):
     if not context:
         context = {}
-    #context.update( {'date': data['form']['date']} )
+    # context.update( {'date': data['form']['date']} )
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')
     ids = data['ids']
     id = ids[0]
     invoice = invoice_obj.browse(cr, uid, [id], context=context)[0]
-    fname_invoice = invoice.fname_invoice and invoice.fname_invoice + '.xml' or ''
-    aids = pool.get('ir.attachment').search(cr, uid, [('datas_fname','=',invoice.fname_invoice+'.xml'),('res_model','=','account.invoice'),('res_id','=',id)])
+    fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
+        '.xml' or ''
+    aids = pool.get('ir.attachment').search(cr, uid, [('datas_fname', '=',
+        invoice.fname_invoice+'.xml'), (
+        'res_model', '=', 'account.invoice'), ('res_id', '=', id)])
     xml_data = ""
     if aids:
         brow_rec = pool.get('ir.attachment').browse(cr, uid, aids[0])
         if brow_rec.datas:
             xml_data = base64.decodestring(brow_rec.datas)
     else:
-        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, ids, context=context)#TODO: Del this line
-        #pool.get('ir.attachment').create(cr, uid, {
+        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
+            cr, uid, ids, context=context)  # TODO: Del this line
+        # pool.get('ir.attachment').create(cr, uid, {
             #'name': fname_invoice,
             #'datas': base64.encodestring(xml_data),
             #'datas_fname': fname_invoice,
@@ -68,9 +74,9 @@ def _get_invoice_facturae_xml(self, cr, uid, data, context={}):
             #}, context=context
         #)
         id = invoice_obj._attach_invoice(cr, uid, ids, context=context)
-    
-    fdata = base64.encodestring( xml_data )
-    return {'facturae': fdata, 'facturae_fname': fname_invoice,}
+
+    fdata = base64.encodestring(xml_data)
+    return {'facturae': fdata, 'facturae_fname': fname_invoice, }
 
 end_form = """<?xml version="1.0"?>
 <form string="facturae export">
@@ -80,34 +86,34 @@ end_form = """<?xml version="1.0"?>
 </form>"""
 
 end_fields = {
-    'facturae' : {
-        'string':'facturae file',
-        'type':'binary',
+    'facturae': {
+        'string': 'facturae file',
+        'type': 'binary',
         'required': False,
-        'readonly':True,
+        'readonly': True,
     },
-    'facturae_fname': {'string':'File name', 'type':'char', 'size':64},
-    'note' : {'string':'Log', 'type':'text'},
+    'facturae_fname': {'string': 'File name', 'type': 'char', 'size': 64},
+    'note': {'string': 'Log', 'type': 'text'},
 }
+
 
 class wizard_invoice_facturae_xml(wizard.interface):
     states = {
-        'init' : {
-            'actions' : [ ],
-            'result' : {'type' : 'form',
-                        'arch' : _form,
-                        'fields' : _fields,
-                        'state' : [ ('end', 'Cancel'), ('export', 'Export', 'gtk-ok') ]}
+        'init': {
+            'actions': [],
+            'result': {'type': 'form',
+                       'arch': _form,
+                       'fields': _fields,
+                       'state': [('end', 'Cancel'), ('export', 'Export', 'gtk-ok')]}
         },
         'init': {
-            'actions' : [ _get_invoice_facturae_xml ],
-            'result' : {'type' : 'form',
-                        'arch' : end_form,
-                        'fields' : end_fields,
-                        'state' : [('end', 'Ok','gtk-ok') ]}
+            'actions': [_get_invoice_facturae_xml],
+            'result': {'type': 'form',
+                       'arch': end_form,
+                       'fields': end_fields,
+                       'state': [('end', 'Ok', 'gtk-ok')]}
         }
 
     }
 wizard_invoice_facturae_xml('wizard.invoice.facturae.xml')
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

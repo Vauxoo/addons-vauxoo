@@ -39,24 +39,25 @@ import tempfile
 import base64
 
 
-class ir_attachment(osv.osv):
+class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
-    
+
     def binary2file(self, cr, uid, ids, binary_data, file_prefix="", file_suffix=""):
         (fileno, fname) = tempfile.mkstemp(file_suffix, file_prefix)
-        f = open( fname, 'wb' )
-        f.write( base64.decodestring( binary_data ) )
+        f = open(fname, 'wb')
+        f.write(base64.decodestring(binary_data))
         f.close()
-        os.close( fileno )
+        os.close(fileno)
         return fname
-    
-    def file_ftp(self, cr, uid, ids,context={}):
+
+    def file_ftp(self, cr, uid, ids, context={}):
         ftp_id = False
         ftp_obj = pooler.get_pool(cr.dbname).get('ftp.server')
-        ftp_id = ftp_obj.search(cr,uid,[('name','!=',False)],context=None)
+        ftp_id = ftp_obj.search(cr, uid, [('name', '!=', False)], context=None)
         if not ftp_id:
-            raise osv.except_osv(('Error Servidor ftp!'),('No Existe Servidor ftp Configurado'))
-        ftp=ftp_obj.browse(cr,uid,ftp_id,context)[0]
+            raise osv.except_osv(('Error Servidor ftp!'), (
+                'No Existe Servidor ftp Configurado'))
+        ftp = ftp_obj.browse(cr, uid, ftp_id, context)[0]
         ftp_server = ftp.name
         ftp_user = ftp.ftp_user
         ftp_pwd = ftp.ftp_pwd
@@ -69,9 +70,10 @@ class ir_attachment(osv.osv):
                     file_binary = atta_brw.datas
                 else:
                     file_binary = base64.encodestring(atta_brw.db_datas)
-                file = self.binary2file(cr,uid,id_file,file_binary,"ftp","")
+                file = self.binary2file(
+                    cr, uid, id_file, file_binary, "ftp", "")
                 file_name = atta_brw.datas_fname
-                list_files.append({'source_file':file,'name':file_name})
+                list_files.append({'source_file': file, 'name': file_name})
         for a in list_files:
             try:
                 s = ftplib.FTP(ftp_server, ftp_user, ftp_pwd)
@@ -81,17 +83,18 @@ class ir_attachment(osv.osv):
                 f.close()
                 s.quit()
             except:
-                raise osv.except_osv(('Error ftp Configuration!'),('Check ftp Server Information'))
+                raise osv.except_osv(('Error ftp Configuration!'), (
+                    'Check ftp Server Information'))
         return True
-ir_attachment()
 
-class ftp_server(osv.osv):
-    _name='ftp.server'
-    
-    _columns={
-        'name':fields.char('ftp server',size=128,required=True),
-        'ftp_user':fields.char('ftp user',size=128,required=True),
-        'ftp_pwd':fields.char('ftp pwd',size=128,required=True),
-        'ftp_source':fields.char('ftp source',size=128,required=True,help='Format example "/done"'),
+
+class ftp_server(osv.Model):
+    _name = 'ftp.server'
+
+    _columns = {
+        'name': fields.char('ftp server', size=128, required=True),
+        'ftp_user': fields.char('ftp user', size=128, required=True),
+        'ftp_pwd': fields.char('ftp pwd', size=128, required=True),
+        'ftp_source': fields.char('ftp source', size=128, required=True,
+            help='Format example "/done"'),
     }
-ftp_server()

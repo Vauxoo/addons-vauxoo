@@ -27,18 +27,20 @@
 
 from openerp.osv import fields, osv
 
-class ir_attachment_facturae_mx(osv.osv):
+
+class ir_attachment_facturae_mx(osv.Model):
     _inherit = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
-        types = super(ir_attachment_facturae_mx, self)._get_type(cr, uid, ids, context=context)
+        types = super(ir_attachment_facturae_mx, self)._get_type(
+            cr, uid, ids, context=context)
         types.extend([
             ('cbb', 'CBB'),
         ])
         return types
 
     _columns = {
-        'type': fields.selection(_get_type, 'Type', type='char', size=64, required=True, readonly=True, help="Type of Electronic Invoice"),
+        'type': fields.selection(_get_type, 'Type', type='char', size=64,
+            required=True, readonly=True, help="Type of Electronic Invoice"),
     }
-ir_attachment_facturae_mx()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

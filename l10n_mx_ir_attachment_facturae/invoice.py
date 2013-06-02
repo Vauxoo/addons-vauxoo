@@ -29,7 +29,7 @@ from openerp import netsvc
 import time
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -45,7 +45,7 @@ class account_invoice(osv.osv):
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False):
                 for attachment in ir_attach_obj.browse(cr, uid, id_attach,
-                                                        context):
+                                                       context):
                     if attachment.state == 'done':
                         wf_service.trg_validate(
                             uid, 'ir.attachment.facturae.mx',
@@ -53,7 +53,7 @@ class account_invoice(osv.osv):
         self.write(cr, uid, ids, {
                    'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
         return super(account_invoice, self).action_cancel(cr, uid, ids,
-                                                                    context)
+                                                          context)
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
@@ -64,29 +64,27 @@ class account_invoice(osv.osv):
                     cr, uid, [('active', '=', True)], context)
                 # if not pac:
                     # raise osv.except_osv(_('Warning !'),_('Not Params PAC.'))
-            attach = ir_attach_obj.create(cr,
-                uid, {
-                   'name': invoice.fname_invoice,
-                   'invoice_id': ids[0],
-                   'type': invoice.invoice_sequence_id.approval_id.type},
+            attach = ir_attach_obj.create(cr, uid, {
+                'name': invoice.fname_invoice, 'invoice_id': ids[0],
+                'type': invoice.invoice_sequence_id.approval_id.type},
                 context=context)
-                
+
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(
                 uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
-                
+
             ir_model_data = self.pool.get('ir.model.data')
-            
+
             form_res = ir_model_data.get_object_reference(
                 cr, uid, 'l10n_mx_ir_attachment_facturae',
                 'view_ir_attachment_facturae_mx_form')
             form_id = form_res and form_res[1] or False
-            
+
             tree_res = ir_model_data.get_object_reference(
                 cr, uid, 'l10n_mx_ir_attachment_facturae',
                 'view_ir_attachment_facturae_mx_tree')
             tree_id = tree_res and tree_res[1] or False
-            
+
             return {
                 'name': _('Attachment Factura E MX'),
                 'view_type': 'form',
@@ -97,5 +95,3 @@ class account_invoice(osv.osv):
                 'views': [(form_id, 'form'), (tree_id, 'tree')],
                 'type': 'ir.actions.act_window',
             }
-
-account_invoice()

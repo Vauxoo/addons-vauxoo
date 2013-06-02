@@ -20,11 +20,12 @@ from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
 
-class account_invoice_line(osv.osv):
+
+class account_invoice_line(osv.Model):
     _inherit = "account.invoice.line"
-    
-    _columns={
-        'tracking_id': fields.many2one('stock.tracking', 'Pack', help="Logistical shipping unit: pallet, box, pack ..."),
+
+    _columns = {
+        'tracking_id': fields.many2one('stock.tracking', 'Pack',
+            help="Logistical shipping unit: pallet, box, pack ..."),
         'move_id': fields.many2one('stock.move', 'Stock Move'),
     }
-account_invoice_line()
