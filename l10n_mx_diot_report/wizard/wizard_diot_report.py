@@ -82,7 +82,9 @@ class wizard_account_diot_mx(osv.osv_memory):
             for payment in move_lines:
                 if payment.date >= date_start and payment.date <= date_stop:
                     amount_0 = amount_16 = amount_exe = amount_11 = 0
+                    print invo.tax_line
                     for tax in invo.tax_line:
+                        print "Tax Category", tax.tax_category_id.name
                         if tax.name == 'IVA(16.0%) Purchase':
                             amount_16 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_16", amount_16

@@ -27,4 +27,5 @@
 
 import wizard
 import partner
+import account_tax
 
