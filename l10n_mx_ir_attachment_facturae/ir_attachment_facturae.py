@@ -32,7 +32,7 @@ import base64
 import os
 
 
-class ir_attachment_facturae_mx(osv.osv):
+class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
 
     def _get_type(self, cr, uid, ids=None, context=None):
@@ -67,21 +67,21 @@ class ir_attachment_facturae_mx(osv.osv):
         'last_date': fields.datetime('Last Modified', readonly=True,
             help='Date when is generated the attachment'),
         'state': fields.selection([
-        ('draft', 'Draft'),
-        ('confirmed', 'Confirmed'),
-        ('signed', 'Signed'),
-        ('printable', 'Printable Format Generated'),
-        ('sent_customer', 'Sent Customer'),
-        ('sent_backup', 'Sent Backup'),
-        ('done', 'Done'),
-        ('cancel', 'Cancelled'),
-        ], 'State', readonly=True, required=True, help='State of attachments'),
+            ('draft', 'Draft'),
+            ('confirmed', 'Confirmed'),
+            ('signed', 'Signed'),
+            ('printable', 'Printable Format Generated'),
+            ('sent_customer', 'Sent Customer'),
+            ('sent_backup', 'Sent Backup'),
+            ('done', 'Done'),
+            ('cancel', 'Cancelled'),],
+            'State', readonly=True, required=True, help='State of attachments'),
     }
 
     _defaults = {
         'state': 'draft',
-        'company_id': lambda self, cr, uid, c:\
-            self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+        'company_id': lambda self, cr, uid, c:
+        self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
         'last_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
@@ -106,17 +106,17 @@ class ir_attachment_facturae_mx(osv.osv):
         cr.commit()
 
         ir_model_data = self.pool.get('ir.model.data')
-        
+
         form_res = ir_model_data.get_object_reference(
             cr, uid, 'l10n_mx_ir_attachment_facturae',
             'view_ir_attachment_facturae_mx_form')
         form_id = form_res and form_res[1] or False
-        
+
         tree_res = ir_model_data.get_object_reference(
             cr, uid, 'l10n_mx_ir_attachment_facturae',
             'view_ir_attachment_facturae_mx_tree')
         tree_id = tree_res and tree_res[1] or False
-        
+
         return {
             'name': _('Attachment Factura E MX'),
             'view_type': 'form',
@@ -166,10 +166,10 @@ class ir_attachment_facturae_mx(osv.osv):
         else:
             msj = _("Not Applicable XML CFD 2.2\n")
         return self.write(cr, uid, ids,
-            {'state': 'confirmed',
-            'file_input': attach or False,
-            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-            'msj': msj}, context=context)
+                          {'state': 'confirmed',
+                           'file_input': attach or False,
+                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                           'msj': msj}, context=context)
 
     def action_sign(self, cr, uid, ids, context={}):
         attach = ''
@@ -205,10 +205,10 @@ class ir_attachment_facturae_mx(osv.osv):
             attach = attachment_obj.create(
                 cr, uid, data_attach, context=context)
         return self.write(cr, uid, ids,
-            {'state': 'signed',
-            'file_xml_sign': attach,
-            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-            'msj': msj}, context=context)
+                          {'state': 'signed',
+                           'file_xml_sign': attach,
+                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                           'msj': msj}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
         aids = []
@@ -220,15 +220,14 @@ class ir_attachment_facturae_mx(osv.osv):
             '.pdf', 'openerp_' + (False or '') + '__facturae__')
         os.close(fileno)
         file = invoice_obj.create_report(cr, uid, [invoice.id],
-                        "account.invoice.facturae.webkit", fname)
+            "account.invoice.facturae.webkit", fname)
         adjuntos = self.pool.get('ir.attachment').search(cr, uid,
-                        [('res_model', '=', 'account.invoice'),
-                        ('res_id', '=', invoice),
-                        ('datas_fname', '=', invoice.fname_invoice+'.pdf')])
+            [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice),
+            ('datas_fname', '=', invoice.fname_invoice+'.pdf')])
         for attachment in self.browse(cr, uid, adjuntos, context):
             aids = attachment.id
             self.pool.get('ir.attachment').write(cr, uid, attachment.id, {
-                        'name': invoice.fname_invoice + '.pdf', }, context={})
+                'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
             msj += _("Attached Successfully PDF\n")
         else:
@@ -240,36 +239,43 @@ class ir_attachment_facturae_mx(osv.osv):
             'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
-        attachments=[]
-        msj=''
-        attach_name=''
-        state=''
-        invoice =self.browse(cr,uid,ids)[0].invoice_id
-        address_id = self.pool.get('res.partner').address_get(cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
-        partner_invoice_address = self.pool.get('res.partner').browse(cr, uid, address_id, context)
-        type=self.browse(cr,uid,ids)[0].type
-        msj =self.browse(cr,uid,ids)[0].msj
-        fname_invoice = invoice.fname_invoice and invoice.fname_invoice  or ''
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [('res_model','=','account.invoice'),('res_id','=',invoice)])
+        attachments = []
+        msj = ''
+        attach_name = ''
+        state = ''
+        invoice = self.browse(cr, uid, ids)[0].invoice_id
+        address_id = self.pool.get('res.partner').address_get(
+            cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
+        partner_invoice_address = self.pool.get(
+            'res.partner').browse(cr, uid, address_id, context)
+        type = self.browse(cr, uid, ids)[0].type
+        msj = self.browse(cr, uid, ids)[0].msj
+        fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
+        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
+            'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
         subject = 'Invoice '+invoice.number or False
         for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
             attachments.append(attach.id)
-            attach_name+=attach.name+ ', '
+            attach_name += attach.name + ', '
         if release.version >= '7':
             mail_compose_message_pool = self.pool.get('mail.compose.message')
             tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
-            message = mail_compose_message_pool.onchange_template_id(cr, uid, [], template_id=tmp_id, composition_mode=None, model='account.invoice', res_id=invoice.id, context=context)
+            message = mail_compose_message_pool.onchange_template_id(
+                cr, uid, [], template_id=tmp_id, composition_mode=None,
+                model='account.invoice', res_id=invoice.id, context=context)
             mssg = message.get('value', False)
-            mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
-            mssg['attachment_ids'] = [(6, 0, attachments)]
-            mssg_id = self.pool.get('mail.compose.message').create(cr, uid, mssg)
-            if tmp_id:
-                state = self.pool.get('mail.compose.message').send_mail(cr, uid, [mssg_id], context=context)
-                msj +=_('Email Send Successfully\n')
+            if mssg.get('partner_ids', False) and tmp_id:
+                mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
+                mssg['attachment_ids'] = [(6, 0, attachments)]
+                mssg_id = self.pool.get(
+                    'mail.compose.message').create(cr, uid, mssg)
+                state = self.pool.get('mail.compose.message').send_mail(
+                    cr, uid, [mssg_id], context=context)
+                msj += _('Email Send Successfully\n')
             else:
                 msj += _('Not Email Send\n')
         elif release.version < '7':
-            mail=self.pool.get('mail.message').create(cr, uid, {
+            mail = self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject+' '+type,
                 'date': time.strftime('%Y-%m-%d %H:%M:%S'),
                 'email_from': email_from,
@@ -279,13 +285,15 @@ class ir_attachment_facturae_mx(osv.osv):
                 'attachment_ids': [(6, 0, attachments)],
                 'model': invoice._name,
                 'res_id': invoice.id,
-                }, context=context)
-            state = self.pool.get('mail.message').send(cr, uid, [mail], auto_commit=False, context=context)
-        ##if not state:
-            ##msj +=_('Please Check the Email Configuration!\n')
-        ##else:
-            ##msj +=_('Email Send Successfully\n')
-        return self.write(cr, uid, ids, {'state': 'sent_customer', 'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+            }, context=context)
+            state = self.pool.get('mail.message').send(
+                cr, uid, [mail], auto_commit=False, context=context)
+        # if not state:
+            # msj +=_('Please Check the Email Configuration!\n')
+        # else:
+            # msj +=_('Email Send Successfully\n')
+        return self.write(cr, uid, ids, {'state': 'sent_customer', 'msj': msj,
+            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'})
@@ -311,9 +319,9 @@ class ir_attachment_facturae_mx(osv.osv):
             ids2 = attach_obj.write(cr, uid, attachment.id, {
                                     'res_id': False, }, context={})
         return self.write(cr, uid, ids,
-            {'state': 'cancel',
-            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-            'msj': msj, })
+                          {'state': 'cancel',
+                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                           'msj': msj, })
 
     def reset_to_draft(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
@@ -325,7 +333,6 @@ class ir_attachment_facturae_mx(osv.osv):
 
     def get_tmpl_email_id(self, cr, uid, ids, context=None):
         email_pool = self.pool.get('email.template')
-        email_ids = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice')])
+        email_ids = email_pool.search(cr, uid, [(
+            'model_id.model', '=', 'account.invoice')])
         return email_ids and email_ids[0] or False
-
-ir_attachment_facturae_mx()

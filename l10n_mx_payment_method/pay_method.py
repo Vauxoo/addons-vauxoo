@@ -32,10 +32,9 @@ from openerp import pooler, tools
 import time
 
 
-class pay_method(osv.osv):
+class pay_method(osv.Model):
     _name = 'pay.method'
     _columns = {
-        'name': fields.char('Payment Method', size = 128),
+        'name': fields.char('Payment Method', size=128),
         'description': fields.text('Description'),
     }
-pay_method()

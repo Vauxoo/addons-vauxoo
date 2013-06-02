@@ -41,21 +41,35 @@ import codecs
 
 from datetime import datetime
 
-class account_invoice(osv.osv):
+
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
-    
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id, date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
-        res = super(account_invoice,self).onchange_partner_id(cr, uid, ids, type, partner_id, date_invoice, payment_term, partner_bank_id, company_id)
+
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id,
+        date_invoice=False, payment_term=False, partner_bank_id=False,
+        company_id=False):
+        res = super(account_invoice, self).onchange_partner_id(cr, uid, ids,
+            type, partner_id, date_invoice, payment_term, partner_bank_id,
+            company_id)
         pay_method_id = False
         if partner_id:
             partner_obj = self.pool.get('res.partner')
             partner = partner_obj.browse(cr, uid, partner_id)
-            pay_method_id = partner and partner.pay_method_id and partner.pay_method_id.id or False
+            pay_method_id = partner and partner.pay_method_id and \
+                partner.pay_method_id.id or False
         res['value']['pay_method_id'] = pay_method_id
         return res
 
     _columns = {
-        'pay_method_id': fields.many2one('pay.method', 'Payment Method', readonly=True, states={'draft':[('readonly',False)]}, help = 'Indicates the way it was paid or will be paid the invoice, where the options could be: check, bank transfer, reservoir in account bank, credit card, cash etc. If not know as will be paid the invoice, leave empty and the XML show “Unidentified”.'),
-        'acc_payment': fields.many2one ('res.partner.bank', 'Account Number', readonly=True, states={'draft':[('readonly',False)]},help = 'Is the account with which the client pays the invoice, if not know which account will used for pay leave empty and the XML will show "“Unidentified”".'),
+        'pay_method_id': fields.many2one('pay.method', 'Payment Method',
+            readonly=True, states={'draft': [('readonly', False)]},
+                help='Indicates the way it was paid or will be paid the invoice,\
+                where the options could be: check, bank transfer, reservoir in \
+                account bank, credit card, cash etc. If not know as will be \
+                paid the invoice, leave empty and the XML show “Unidentified”.'),
+        'acc_payment': fields.many2one('res.partner.bank', 'Account Number',
+            readonly=True, states={'draft': [('readonly', False)]},
+                help='Is the account with which the client pays the invoice, \
+                if not know which account will used for pay leave empty and \
+                the XML will show "“Unidentified”".'),
     }
-account_invoice()

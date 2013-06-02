@@ -42,29 +42,32 @@ _fields = {
     'date': {'string': 'Mes a reportar', 'type': 'date'}
 }
 
-#end_form = """<?xml version="1.0"?>
+# end_form = """<?xml version="1.0"?>
 #<form string="Create facturae">
     #<label string="en desarrollo"/>
 #</form>"""
-#end_fields = {}
+# end_fields = {}
+
 
 def _create_facturae_file(self, cr, uid, data, context={}):
     if not context:
         context = {}
-    context.update( {'date': data['form']['date']} )
+    context.update({'date': data['form']['date']})
     pool = pooler.get_pool(cr.dbname)
     invoice_obj = pool.get('account.invoice')
     ids = data['ids']
     if len(ids) == 1:
-        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(cr, uid, ids, context=context)
+        fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
+            cr, uid, ids, context=context)
     else:
         fname = "facturae_mensual.txt"
-        xml_data, fname = invoice_obj._get_facturae_invoice_txt_data(cr, uid, ids, context=context)
-        #fname = "1" + rfc + time.strftime('%m-%Y', time.strptime(data['form']['date'], '%Y-%m-%d')) + '.txt'
-    #print xml_data
-    #print dict_datas
-    file = base64.encodestring( xml_data )
-    return {'facturae':file, 'facturae_fname': fname,}
+        xml_data, fname = invoice_obj._get_facturae_invoice_txt_data(
+            cr, uid, ids, context=context)
+        # fname = "1" + rfc + time.strftime('%m-%Y', time.strptime(data['form']['date'], '%Y-%m-%d')) + '.txt'
+    # print xml_data
+    # print dict_datas
+    file = base64.encodestring(xml_data)
+    return {'facturae': file, 'facturae_fname': fname, }
 
 end_form = """<?xml version="1.0"?>
 <form string="facturae export">
@@ -74,34 +77,34 @@ end_form = """<?xml version="1.0"?>
 </form>"""
 
 end_fields = {
-    'facturae' : {
-        'string':'facturae file',
-        'type':'binary',
+    'facturae': {
+        'string': 'facturae file',
+        'type': 'binary',
         'required': False,
-        'readonly':True,
+        'readonly': True,
     },
-    'facturae_fname': {'string':'File name', 'type':'char', 'size':64},
-    'note' : {'string':'Log', 'type':'text'},
+    'facturae_fname': {'string': 'File name', 'type': 'char', 'size': 64},
+    'note': {'string': 'Log', 'type': 'text'},
 }
+
 
 class wizard_create_facturae_file(wizard.interface):
     states = {
-        'init' : {
-            'actions' : [ ],
-            'result' : {'type' : 'form',
-                        'arch' : _form,
-                        'fields' : _fields,
-                        'state' : [ ('end', 'Cancel'), ('export', 'Export', 'gtk-ok') ]}
+        'init': {
+            'actions': [],
+            'result': {'type': 'form',
+                       'arch': _form,
+                       'fields': _fields,
+                       'state': [('end', 'Cancel'), ('export', 'Export', 'gtk-ok')]}
         },
         'export': {
-            'actions' : [ _create_facturae_file ],
-            'result' : {'type' : 'form',
-                        'arch' : end_form,
-                        'fields' : end_fields,
-                        'state' : [('end', 'Ok','gtk-ok') ]}
+            'actions': [_create_facturae_file],
+            'result': {'type': 'form',
+                       'arch': end_form,
+                       'fields': end_fields,
+                       'state': [('end', 'Ok', 'gtk-ok')]}
         }
 
     }
 wizard_create_facturae_file('wizard.create.facturae.file')
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
