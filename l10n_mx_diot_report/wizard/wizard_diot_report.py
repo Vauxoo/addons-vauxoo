@@ -84,8 +84,8 @@ class wizard_account_diot_mx(osv.osv_memory):
                     amount_0 = amount_16 = amount_exe = amount_11 = 0
                     print invo.tax_line
                     for tax in invo.tax_line:
-                        print "Tax Category", tax.tax_category_id.name
-                        if tax.name == 'IVA(16.0%) Purchase':
+                        print "Tax DIOT ID ----->>>>  ", tax.tax_id.tax_diot_id
+                        if tax.tax_id.tax_diot_id == '8':
                             amount_16 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_16", amount_16
                         if tax.name == 'IVA(11.0%) Purchase':
