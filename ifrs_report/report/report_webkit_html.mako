@@ -2,11 +2,59 @@
 <head>
     <style type="text/css">
         ${css}
+        <style type="text/css">
+html body {
+	margin:0;
+	overflow: hidden;
+}
+#contenedor {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+}	
+#cabecera {
+	width: 100%;
+	height: 10%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:18px;
+	background-color:#CCCCCC;
+	padding: 3px;
+	text-align: center;
+	overflow: hidden;
+}	
+#cuerpo {
+	width: 100%;
+	height: 83%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color:#ffffff;
+	padding: 3px;
+	text-align: center;
+	overflow: auto;
+}	
+#pie { 
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	width: 100%;
+	height: 7%;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color:#CC0000;
+	color:blue;
+	padding: 3px;
+	text-align: center;
+	overflow: hidden;
+}	
     </style>
 
 </head>
 
+
 <body style="border:0; margin: 0;" onload="subst()" >
+	<div id="pie">Reporte impreso en OpenErp</div>
     %for ifrs in objects :
 	<table>
 		<tr>
@@ -86,7 +134,7 @@
 						<tr>
 					%endif
 						<th class="justify">${ifrs_al.name or ''|entity}</th>
-						%for lin in range(1, 13):
+						%for lin in range(1, 3):
 							<%
 								try:
 									res.setdefault('total_%s'%lin, 0)
@@ -109,7 +157,7 @@
 			%if ifrs_l.type != 'total':
 				<tr> 
 					<th class="justify">Undefined</th>
-					%for line in range(1, 13):
+					%for line in range(1, 3):
 						<%
 							total_detail= abs(res.get('total_%s'%line, 0.0))
 							total_period = abs(res_total.get('total_%s'%line, 0.0))
