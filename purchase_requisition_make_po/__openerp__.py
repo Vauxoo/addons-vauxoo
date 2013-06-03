@@ -27,6 +27,9 @@
 This module allows you to manage your Purchase Requisition.
 ===========================================================
 Add description on product
+
+Technical warning
+Add method override to def make_purchase_order from purchase_requisition
 """,
     'depends' : ['purchase_requisition'],
     'data': [ 'purchase_requisition_description_view.xml',
