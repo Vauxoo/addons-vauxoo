@@ -88,21 +88,15 @@ class wizard_account_diot_mx(osv.osv_memory):
                         if tax.tax_id.tax_diot_id == '8':
                             amount_16 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_16", amount_16
-                        if tax.name == 'IVA(11.0%) Purchase':
+                        if tax.tax_id.tax_diot_id == '11':
                             amount_11 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_11", amount_11
-                        if tax.name == 'IVA(0%) Purchase':
+                        if tax.tax_id.tax_diot_id == '19':
                             amount_0 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_0", amount_0
-                        if tax.name == 'IVA( Exento ) Purchase':
+                        if tax.tax_id.tax_diot_id == '20':
                             amount_exe = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_exe", amount_exe
-#                        if tax.name == 'IVA( 16% ) Retencion Purchase':
-#                            amount_exe = tax.base
-#                        if tax.name == 'IVA( 11% ) Retencion  Purchase':
-#                            amount_exe = tax.base
-#                        if tax.name == 'IVA( 4% ) Retencion  Purchase':
-#                            amount_exe = tax.base
                         untax_amount += tax.amount
                     if (str(invo.partner_id.vat)) in dic_move_line:
                         print invo.partner_id.name
