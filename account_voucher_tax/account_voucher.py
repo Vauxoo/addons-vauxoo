@@ -28,6 +28,7 @@ from osv import osv, fields
 from tools.translate import _
 import release
 import decimal_precision as dp
+import time
 
 class account_voucher(osv.osv):
     _inherit = 'account.voucher'
@@ -96,6 +97,7 @@ class account_voucher(osv.osv):
                     'amount_tax_unround':amount_tax_unround,
                     #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                     'date': voucher.date,
+                    'tax_id': line_tax.id
                     }
                     if company_currency!=current_currency:
                         move_line['amount_currency']=line_tax.amount_tax
@@ -108,15 +110,20 @@ class account_voucher(osv.osv):
                     #~ if debit and voucher.payment_option=='with_writeoff' and line_tax.diff_amount_tax:
                         #~ debit=amount
                     credit, debit=debit, credit
-                    if line_tax.balance_tax + line_tax.amount_tax < line_tax.original_tax and voucher.payment_option=='with_writeoff':
-                        if debit:
-                            debit=line_tax.balance_tax
-                        else:
-                            credit=line_tax.balance_tax
+                    entrie_name = line_tax.tax_id.name
+                    #########borrado mientras se hizo en una funcion del writeoff
+                #    if voucher.payment_option=='with_writeoff':
+                 #       if debit:
+                  #          debit=line_tax.balance_tax
+                   #     else:
+                    #        credit=line_tax.balance_tax
+                     #   print debit,credit,'imprimo debit,credit'
+                      #  entrie_name = 'poliza de writeof'
+                    #############################################################
                     move_line={
                     'journal_id': voucher.journal_id.id,
                     'period_id': voucher.period_id.id,
-                    'name': line_tax.tax_id.name or '/',
+                    'name': entrie_name or '/',
                     'account_id':account_tax_collected, 
                     'move_id': int(move_id),
                     'partner_id': voucher.partner_id.id,
@@ -129,6 +136,7 @@ class account_voucher(osv.osv):
  #                   'amount_tax_unround':amount_tax_unround,
                     #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                     'date': voucher.date,
+                    'tax_id': line_tax.id
                     }
                     if company_currency!=current_currency:
                         move_line['amount_currency']=line_tax.amount_tax
@@ -159,6 +167,8 @@ class account_voucher(osv.osv):
                                 'debit': float('%.*f' % (2,debit_diff)),
                                 #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                 'date': voucher.date,
+                                'tax_id': line_tax.id,
+                                'amount_tax_unround':amount_tax_unround,
                                 }
                             move_line_obj.create(cr ,uid, move_line, context=context)
                         else:
@@ -179,10 +189,45 @@ class account_voucher(osv.osv):
                                 'debit': float('%.*f' % (2,debit_diff)),
                                 #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                                 'date': voucher.date,
+                                'tax_id': line_tax.id
                                 }
-                            move_line_obj.create(cr ,uid, move_line, context=context)
+                            #move_line_obj.create(cr ,uid, move_line, context=context)
+                    if voucher.writeoff_amount > 0:
+                        reference_amount = self.get_partial_amount_tax_pay(cr, uid, voucher.writeoff_amount, line_tax.original_tax, context=context)
+                        move_lines = self._get_move_writeoff(cr, uid, move_id, voucher, line, line_tax, company_currency, reference_amount, context=context)
+                        for move_line_w in move_lines:
+                            move_line_obj.create(cr ,uid, move_line_w, context=context)
         return move_ids
-        
+    
+    def _get_move_writeoff(self, cr, uid, move_id, voucher, line, line_tax, company_currency, reference_amount, context=None):
+        print reference_amount,'imprimo reference_amount'
+        debit_line_vals = {
+                    'name': line_tax.tax_id.name,
+                    'quantity': 1,
+                    'date': time.strftime('%Y-%m-%d'),
+                    'partner_id': voucher.partner_id.id,
+                    'debit': abs(reference_amount),
+                    'credit': 0.0,
+                    'account_id': voucher.writeoff_acc_id.id,
+                    'journal_id': voucher.journal_id.id,
+                    'period_id': voucher.period_id.id,
+                    'company_id':company_currency,
+                    'move_id': int(move_id),
+        }
+        credit_line_vals = {
+                    'name': line_tax.tax_id.name,
+                    'quantity': 1,
+                    'date': time.strftime('%Y-%m-%d'),
+                    'partner_id': voucher.partner_id.id,
+                    'credit': abs(reference_amount),
+                    'debit': 0.0,
+                    'account_id': line_tax.tax_id.account_collected_voucher_id.id,
+                    'journal_id': voucher.journal_id.id,
+                    'period_id': voucher.period_id.id,
+                    'company_id':company_currency,
+                    'move_id': int(move_id),
+        }
+        return [debit_line_vals, credit_line_vals]
     
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
         move_obj = self.pool.get('account.move')
@@ -191,12 +236,8 @@ class account_voucher(osv.osv):
         currency_obj = self.pool.get('res.currency')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
         new=self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
+        print new,'new'
         #~ res[1][0]=res[1][0]+new
-        return res
-    
-    def action_move_line_create(self, cr, uid, ids, context=None):
-        res = super(account_voucher, self).action_move_line_create(cr, uid, ids, context=context)
-        print res,'imprimo res'
         return res
         
     def compute_tax(self, cr, uid, ids, context=None):
@@ -223,8 +264,6 @@ class account_voucher(osv.osv):
                                 account=tax.tax_id.account_collected_voucher_id.id
                                 credit_amount= float('%.*f' % (2,(base_amount*factor)))
                                 credit_amount_original = (base_amount*factor)
-                                print credit_amount_original,'imprimo credit_amount_original'
-                                print base_amount,'imprimo base_amountbase_amountbase_amount'
                                 amount_unround= float(base_amount*factor)
                             ########## la comento para hacer pruebas sin el redondeo propuesto aqui
                             #    if credit_amount:
@@ -240,11 +279,8 @@ class account_voucher(osv.osv):
                                 diff_account_id=False
                                 base_amount_curr=base_amount
                                 if company_currency==current_currency:
-                                    print company_currency,current_currency,'imprimo current_currency'
                                     rate_move=self.get_rate(cr,uid,line.move_line_id.move_id.id,context=context)
-                                    print rate_move,'imprimo rate_move'
                                     credit_amount=credit_amount*rate_move
-                                    print credit_amount,'imprimo credit_amount111111111111111111111111'
                                     amount_unround=amount_unround*rate_move
                                 else:
                                     credit_amount=currency_obj.compute(cr, uid, invoice.currency_id.id,current_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
@@ -287,7 +323,6 @@ class account_voucher(osv.osv):
                                     
                                 }
                                 tax_line_compute = tax_line_obj.create(cr, uid, tax_line, context=context)
-                                print credit_amount,'imprimo credit_amount'
         return True
         
 account_voucher()
@@ -327,11 +362,12 @@ class account_move_line(osv.osv):
         res=super(account_move_line, self).reconcile(cr, uid, ids=ids, 
         type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id, 
         writeoff_journal_id=writeoff_journal_id, context=context)
-        context['round']=True
+#        if not writeoff_acc_id:
         dat = self._get_query_round(cr, uid, ids, context=context)
         res_round = {}
         res_without_round = {}
         res_ids = {}
+        print res,'imprimo res'
         for val_round in dat:
             print val_round,'imprimo val_round'
             res_round.setdefault(val_round['account_id'], 0)
@@ -343,23 +379,23 @@ class account_move_line(osv.osv):
         for res_diff_id in res_round.items():
             diff_val = abs(res_without_round[res_diff_id[0]]) - abs(res_round[res_diff_id[0]])
             diff_val = round(diff_val, 2)
-            if diff_val > 0.00:
-                print res_ids,'imprimo res_ids'
+            print diff_val,'imprimo diff_val'
+            if diff_val <> 0.00:
                 print diff_val,'imprimo diff_val'
-                print [res_diff_id[0]],'impimro [res_diff_id[0]]'
                 move_diff_id = [res_ids[res_diff_id[0]]]
-                print move_diff_id,'imprimo move_diff_id'
                 for move in self.browse(cr, uid, move_diff_id, context=context):
-                    move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id)])
-                    
-                    if move.debit == 0.0:
-                        self.write(cr, uid, [move.id], {'credit': res_round[res_diff_id[0]]+diff_val})
-                    if move.credit == 0.0:
-                        self.write(cr, uid, [move.id], {'debit': res_round[res_diff_id[0]]+diff_val})
-        return re
+                    move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id),('tax_id', '=', move.tax_id.id)])
+                    for diff_move in self.browse(cr, uid, move_line_ids, context=context):
+                        print diff_move.debit, diff_move.credit,'imprimo diff_move2222222222222222'
+                        if diff_move.debit == 0.0 and diff_move.credit :
+                            self.write(cr, uid, [diff_move.id], {'credit': diff_move.credit+diff_val})
+                        if diff_move.credit == 0.0 and diff_move.debit:
+                            self.write(cr, uid, [diff_move.id], {'debit': diff_move.debit+diff_val})
+        return res
     
     _columns={
         'amount_tax_unround':fields.float('Amount tax undound', digits=(12, 16)),
+        'tax_id': fields.many2one('account.voucher.line.tax', 'Tax')
         }
 account_move_line()
 
