@@ -38,31 +38,76 @@ class project_project(osv.Model):
         @return: Ids of Projects
         """
         cr.execute("""
-            select pp.id, tabla2.name
-                from
-                (
-                    select tabla.id, tabla.full_name as name
-                        from(
+            SELECT pp.id,*
+            FROM (
+                Select
+                    node.id, node.name AS short_name,
+                    --cast ((count(parent.name)) as int) as nivel
+                    replace( array_to_string( array_agg( parent.name order by parent.nivel asc), ' / ' ), '\n', ' ') as full_name
+                from account_analytic_account as node, ( SELECT vw.nivel, account_analytic_account.*
+                FROM (
                         Select
-                            node.id,node.name AS short_name,
-                            cast ((count(parent.name)) as int) as nivel,
-                            array_to_string( array_agg( distinct parent.name ), ' / ' ) as full_name
-                            from account_analytic_account as node,account_analytic_account  as parent
-                            where node.parent_left between parent.parent_left and parent.parent_right
-                            group by node.name,node.parent_left,node.id
-                            order by node.parent_left)tabla
-                        where tabla.full_name """ + str(args[0][1]) + """ '%s%%')tabla2
-                        join project_project pp
-                        on pp.analytic_account_id = tabla2.id """ % (str(args[0][2]),))
+                            node.id, node.name AS short_name,
+                            cast ((count(parent.name)) as int) as nivel
+                            --array_to_string( array_agg( distinct parent.name ), ' / ' ) as full_name
+                        from account_analytic_account as node,account_analytic_account  as parent
+                        where node.parent_left between parent.parent_left and parent.parent_right
+                        group by node.name,node.parent_left,node.id
+                        order by node.parent_left
+                ) vw
+                inner join account_analytic_account
+                   ON vw.id = account_analytic_account.id) as parent
+                where node.parent_left between parent.parent_left and parent.parent_right
+                group by node.name,node.parent_left,node.id
+                order by node.parent_left
+            ) vw join project_project pp
+            on pp.analytic_account_id = vw.id
+            WHERE vw.full_name """ + tools.ustr( args[0][1] ) + """ '%%%s%%' """ % ( tools.ustr( args[0][2] ),) )
         datas = cr.dictfetchall()
         ids = [('id', 'in', [data['id'] for data in datas])]
         return ids
 
     def _complete_name(self, cr, uid, ids, name, args, context=None):
         return super(project_project, self)._complete_name(cr, uid, ids, name,
-                        args, context=context)
+                                                        args, context=context)
     _columns = {
         'complete_name2': fields.function(_complete_name,
-                fnct_search=_project_search, string="Project Name",
-                type='char', size=250),
+              fnct_search=_project_search, string="Project Name",
+              type='char', size=250),
+    }
+
+    def name_search(self, cr, user, name='', args=None, operator='ilike',
+                                                    context=None, limit=100):
+        if not args:
+            args = []
+        if name:
+            ids = self.search(cr, user, [(
+                'complete_name2', '=', name)] + args,
+                limit=limit, context=context)
+            if not ids:
+                ids = set()
+                ids.update(self.search(cr, user, args + [(
+                    'complete_name2', operator, name)],
+                    limit=limit, context=context))
+                ids.update(map(lambda a: a[0], super(project_project,
+                                                    self).name_search(cr, user,
+                                                        name=name, args=args,
+                                                        operator=operator,
+                                                        context=context,
+                                                        limit=limit)))
+                ids = list(ids)
+        else:
+            ids = self.search(cr, user, args, limit=limit, context=context)
+        result = self.name_get(cr, user, ids, context=context)
+        return result
+
+
+class project_task(osv.Model):
+    _inherit = 'project.task'
+
+    _columns = {
+        'project_related_id': fields.related('project_id',
+            'analytic_account_id', type='many2one',
+            relation='account.analytic.account',
+            string='Complete Name Project')
     }
