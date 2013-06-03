@@ -76,7 +76,6 @@ class wizard_cancel_invoice_pac_sf(osv.TransientModel):
     }
 
     _defaults = {
-        'message': 'Choose the button Cancel Invoice for send the \
-            cancellation to PAC',
+        'message': 'Choose the button Cancel Invoice for send the cancellation to PAC',
         'file': _get_cancel_invoice_id,
     }

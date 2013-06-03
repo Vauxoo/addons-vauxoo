@@ -165,8 +165,7 @@ class res_company_facturae_certificate(osv.Model):
             if not key_pem_b64 or not cer_pem_b64:
                 warning = {
                     'title': _('Warning!'),
-                    'message': _('You certificate file, key file or password \
-                        is incorrect.\nVerify uppercase and lowercase')
+                    'message': _('You certificate file, key file or password is incorrect.\nVerify uppercase and lowercase')
                 }
                 value.update({
                     'certificate_file_pem': False,
@@ -181,10 +180,10 @@ class res_company_facturae_certificate(osv.Model):
 
     '''
     _sql_constraints = [
-        ('number_start', 'CHECK (number_start < number_end )', 'El numero \
-            inicial (Desde), tiene que ser menor al final (Hasta)!'),
-        ('number_end', 'CHECK (number_end > number_start )', 'El numero final \
-            (Hasta), tiene que ser mayor al inicial (Desde)!'),
+        ('number_start', 'CHECK (number_start < number_end )',\
+            'El numero inicial (Desde), tiene que ser menor al final (Hasta)!'),
+        ('number_end', 'CHECK (number_end > number_start )',\
+            'El numero final (Hasta), tiene que ser mayor al inicial (Desde)!'),
         ('approval_number_uniq', 'UNIQUE (approval_number)',
             'El numero de aprobacion tiene que ser unico'),
     ]

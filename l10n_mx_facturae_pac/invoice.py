@@ -92,9 +92,9 @@ class account_invoice(osv.Model):
                 comprobante.pop('Conceptos')
                 comprobante.pop('Receptor')
                 comprobante.pop('xsi:schemaLocation')
+                print 'comprobante', comprobante
                 comprobante.update({'xmlns:cfdi': "http://www.sat.gob.mx/cfd/3",
-                    'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/3 \
-                    http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd",
+                    'xsi:schemaLocation': "http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv32.xsd",
                     'version': "3.2", })
                 comprobante.pop('xmlns')
                 dict_comprobante = comprobante
@@ -148,22 +148,18 @@ class account_invoice(osv.Model):
 
         if not txt_str:
             raise osv.except_osv(_('Error in Original String!'), _(
-                "Can't get the string original of the voucher.\nCkeck your \
-                configuration.\n%s" % (msg2)))
+                "Can't get the string original of the voucher.\nCkeck your configuration.\n%s" % (msg2)))
 
         if not data_dict[comprobante].get('folio', ''):
             raise osv.except_osv(_('Error in Folio!'), _(
-                "Can't get the folio of the voucher.\nBefore generating the \
-                XML, click on the button, generate invoice.\nCkeck your \
-                configuration.\n%s" % (msg2)))
+                "Can't get the folio of the voucher.\nBefore generating the XML, click on the button, generate invoice.\nCkeck your configuration.\n%s" % (msg2)))
 
         context.update({'fecha': data_dict[comprobante]['fecha']})
         sign_str = self._get_sello(
             cr=False, uid=False, ids=False, context=context)
         if not sign_str:
             raise osv.except_osv(_('Error in Stamp !'), _(
-                "Can't generate the stamp of the voucher.\nCkeck your \
-                configuration.\ns%s") % (msg2))
+                "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
 
         nodeComprobante = doc_xml.getElementsByTagName(comprobante)[0]
         nodeComprobante.setAttribute("sello", sign_str)
@@ -172,16 +168,14 @@ class account_invoice(osv.Model):
         noCertificado = self._get_noCertificado(context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
-                "Can't get the Certificate Number of the voucher.\nCkeck \
-                your configuration.\n%s") % (msg2))
+                "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
         nodeComprobante.setAttribute("noCertificado", noCertificado)
         data_dict[comprobante]['noCertificado'] = noCertificado
 
         cert_str = self._get_certificate_str(context['fname_cer'])
         if not cert_str:
             raise osv.except_osv(_('Error in Certificate!'), _(
-                "Can't get the Certificate Number of the voucher.\nCkeck \
-                your configuration.\n%s") % (msg2))
+                "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
         cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict[comprobante]['certificado'] = cert_str
@@ -198,6 +192,5 @@ class account_invoice(osv.Model):
             data_dict[comprobante].get('serie', '') or '') + '.' + (
             data_dict[comprobante].get('folio', '') or '') + '.xml'
         data_xml = data_xml.replace(
-            '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" \
-            encoding="UTF-8"?>\n')
+            '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')
         return fname_xml, data_xml

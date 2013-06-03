@@ -99,8 +99,8 @@ class ir_sequence_approval(osv.Model):
         return True
 
     _constraints = [
-        (_check_numbers_range, 'Error ! There ranges of numbers underhand \
-            between approvals.', ['sequence_id', 'number_start', 'number_end'])
+        (_check_numbers_range, 'Error ! There ranges of numbers underhand between approvals.',\
+            ['sequence_id', 'number_start', 'number_end'])
     ]
 
 
@@ -157,8 +157,8 @@ class ir_sequence(osv.Model):
                 if sequence_number_diff <= sequence_number_diff_rate:
                     warning = {
                         'title': 'Caution sequences!',
-                        'message': 'The folios are close to finish, of the \
-                        sequence %s' % (sequence.name)
+                        'message': 'The folios are close to finish, of the sequence %s' % (
+                            sequence.name)
                     }
                     data = {'warning': warning}
                     break
