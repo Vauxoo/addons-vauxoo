@@ -140,7 +140,6 @@ class ifrs_lines(osv.osv):
         #~ Assembling context
         
         #~ Generic context applicable to the different types
-        
         if not c.get('fiscalyear'):
             c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
         
@@ -160,19 +159,8 @@ class ifrs_lines(osv.osv):
                 period_ids = period_obj.build_ctx_periods_initial(cr, uid, c['period_from'])
                 c['periods'] = period_ids
                 period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
-##                c['period_to']= period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
-#                period_to = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
- #               c['period_from'] = period_obj.search(cr, uid, [('company_id', '=', period_company_id),('special', '=', True), ('fiscalyear_id','=',context.get('fiscalyear'))], order='date_start', limit=1)[0]
-  #              period_from_to = period_obj.browse(cr, uid, [c['period_to'], c['period_from']], context=context)
-   #             if period_from_to[0].date_start <> period_from_to[1].date_start:
-    #                c['period_to'] = period_to
-     #           else:
-      #              c['period_to'] = c['period_from']
-##                c['period_from'] = period_obj.previous(cr, uid, c['period_from'],context= c) or c['period_from']
             if not c['period_from']:
                     raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
-##                c['period_to']=c['period_from']
-
 
             elif brw.acc_val=='var':
                 if context.get('whole_fy',False):
@@ -319,42 +307,42 @@ class ifrs_lines(osv.osv):
 
         _period_info_list = period_list
         _fy = fiscalyear_id
+        return _period_info_list
 
-
-    def exchange(self, cr, uid, ids, from_amount, context=None):
-        if _from_currency_id == _to_currency_id:
+    def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, context=None):
+        if from_currency_id == to_currency_id:
             return from_amount
         curr_obj = self.pool.get('res.currency')
-        return curr_obj.compute(cr, uid, _from_currency_id, _to_currency_id, from_amount)
+        return curr_obj.compute(cr, uid, from_currency_id, to_currency_id, from_amount)
     
-    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+        if context is None: context = {}
         
         '''devuelve la cantidad correspondiente al periodo'''
-        _from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
-        _to_currency_id = ifrs_line.ifrs_id.currency_id.id
+        from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
+        to_currency_id = ifrs_line.ifrs_id.currency_id.id
 
-        print "**************** %s " % ifrs_line
-
-        context = {}
+        #print "ifrs_line %s " % ifrs_line
+        #print "period_info_list %s _fy %s" % (period_info, fiscalyear)
+        print "period_num %s" % period_num
         if period_num:
             if two:
-                context = {'period_from': period_num, 'period_to':period_num, 'state': target_move, 'partner_detail':pd, 'fiscalyear':_fy}
+                context = {'period_from': period_num, 'period_to':period_num, 'state': target_move, 'partner_detail':pd, 'fiscalyear':fiscalyear}
             else:
-                period_id = _period_info_list[period_num][1]
-                context = {'period_from': period_id, 'period_to':period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':_fy}
+                period_id = period_info[period_num][1]
+                context = {'period_from': period_id, 'period_to':period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':fiscalyear}
         else:
             context = {'whole_fy': 'True'} 
-
-        ifrs_l_obj = self.pool.get('ifrs.lines')
-        res = ifrs_l_obj._get_sum(cr, uid, ifrs_line.id, context = context)
+       
+        res = self._get_sum(cr, uid, ifrs_line.id, context = context)
         print "1. res %s" % res
         if ifrs_line.type == 'detail':
-            res = self.exchange(res)
+            res = self.exchange(res, to_currency_id, from_currency_id)
             print "2. res %s" % res
         elif ifrs_line.type == 'total':
             if ifrs_line.operator not in ('percent','ratio'):
                 if ifrs_line.comparison not in ('percent','ratio','product'):
-                    res = self.exchange(res)
+                    res = self.exchange(res, to_currency_id, from_currency_id)
         print "3. res %s" % res
         return res
 

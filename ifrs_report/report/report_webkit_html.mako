@@ -33,7 +33,7 @@
 
     <table class="list_table"  width="90%">
 		<%
-			ifrs.ifrs_lines_ids[0]._get_periods_name_list(o,data['fiscalyear'])
+			period_name = ifrs.ifrs_lines_ids[0]._get_periods_name_list(o,data['fiscalyear'])
 		%>
 		<thead>
 			<tr>
@@ -64,15 +64,15 @@
 					<%
 						try:
 							res_total.setdefault('total_%s'%lins, 0)
-							res_total['total_%s'%lins] += ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, lins, data['target_move'])
+							res_total['total_%s'%lins] += ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'],lins, data['target_move'])
 						except:
 							pass
 					%>
 					<td class="celda2">
 						%try:
-							${formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, lins, data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+							${formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'],lins, data['target_move']), digits=2, date=False, date_time=False, grouping=3, monetary=False)}
 						%except:
-							1.0
+							0.0
 						%endtry
 					</td>
 				%endfor 
@@ -90,13 +90,13 @@
 							<%
 								try:
 									res.setdefault('total_%s'%lin, 0)
-									res['total_%s'%lin] += ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, lin, data['target_move'], ifrs_al.id)
+									res['total_%s'%lin] += ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], lin, data['target_move'], ifrs_al.id)
 								except:
 									pass
 							%>
 							<td class="celda_border">
 								%try:
-									${formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, lin, data['target_move'], ifrs_al.id), digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+									${formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], lin, data['target_move'], ifrs_al.id), digits=2, date=False, date_time=False, grouping=3, monetary=False)}
 								%except:
 									0.0
 								%endtry:
