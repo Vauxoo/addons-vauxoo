@@ -26,6 +26,9 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
+import time
 
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
