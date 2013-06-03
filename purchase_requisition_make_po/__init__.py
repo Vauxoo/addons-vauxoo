@@ -1,1 +1,1 @@
-import purchase_requisition_description 
+import purchase_requisition

@@ -32,7 +32,7 @@ Technical warning
 Add method override to def make_purchase_order from purchase_requisition
 """,
     'depends' : ['purchase_requisition'],
-    'data': [ 'purchase_requisition_description_view.xml',
+    'data': [ 'purchase_requisition_view.xml',
               
             ],
     
