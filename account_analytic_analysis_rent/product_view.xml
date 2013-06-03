@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="product_rentable">
+        <field name="name">product_rentable</field>
+        <field name="model">product.product</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="purchase_ok" position="after">
+                    <field name="rent_ok"/>
+                </field>
+            </field>
+    </record>
+    
+    <record model="ir.ui.view" id="product_rent">
+        <field name="name">product_rent</field>
+        <field name="model">product.product</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="active" position="after">
+                    <field name="rent"/>
+                    <field name="contract_id"/>
+                </field>
+            </field>
+    </record>
+    
+    <record model="ir.ui.view" id="product_rentable_search">
+        <field name="name">product_rentable_search</field>
+        <field name="model">product.product</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+                <filter string="Services" position="after">
+                    <filter string="Rent" icon="terp-accessories-archiver" domain="[('rent','=',True)]"/>
+                </filter>
+            </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="product_rent_action">
+        <field name="name">Rent Product</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('rent_ok','=',True)]</field>
+    </record>
+
+    <menuitem action="product_rent_action" id="product_rent_action_menu" parent="base.menu_sales"/>
+    
+    </data>
+</openerp>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            id="report_account_analytic_account"
+            string="Contract"
+            model="account.analytic.account"
+            name="account.analytic.account.report"
+            rml="account_analytic_analysis_rent/report/account_analytic_analysis_report.rml"
+            auto="False"/>
+    </data>
+</openerp>
+ 

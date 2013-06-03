@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="account_analytic_analysis_rent_product">
+        <field name="name">account.analytic.analysis.rent.product</field>
+        <field name="model">account.analytic.account</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Product">
+                        <field name="product_id"/>
+                    </page>
+                </notebook>
+            </field>
+    </record>
+
+    </data>
+</openerp>
+  
