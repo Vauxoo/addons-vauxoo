@@ -43,6 +43,7 @@ class wizard_account_diot_mx(osv.osv_memory):
     _name = 'account.diot.report'
     _description = 'Account - DIOT Report for Mexico'
     _columns = {
+        'company_id' : fields.many2one('res.company', 'Company', required=True),
         'month_id': fields.many2one('account.period', 'Month', help='Select month', required=True),
     }
 
@@ -85,16 +86,19 @@ class wizard_account_diot_mx(osv.osv_memory):
                     print invo.tax_line
                     for tax in invo.tax_line:
                         print "Tax DIOT ID ----->>>>  ", tax.tax_id.tax_diot_id
-                        if tax.tax_id.tax_diot_id == '8':
+                        if tax.tax_id.tax_category_id.code == 'IVA' and tax.tax_id.amount == 0.16:
                             amount_16 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_16", amount_16
-                        if tax.tax_id.tax_diot_id == '11':
+                        if tax.tax_id.tax_category_id.code == 'IVA' and tax.tax_id.amount == 0.11:
                             amount_11 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_11", amount_11
-                        if tax.tax_id.tax_diot_id == '19':
+                        if tax.tax_id.tax_category_id.code == 'IVA' and tax.tax_id.amount == 0:
                             amount_0 = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_0", amount_0
-                        if tax.tax_id.tax_diot_id == '20':
+                        if tax.tax_id.tax_category_id.code == 'IVA-EXENT' and tax.tax_id.amount == 0:
+                            amount_exe = tax.base * ((payment.debit) / ( invo.amount_total))
+                            print "amount_exe", amount_exe
+                        if tax.tax_id.tax_category_id.code == 'IVA-RET' and tax.tax_id.amount == 0:
                             amount_exe = tax.base * ((payment.debit) / ( invo.amount_total))
                             print "amount_exe", amount_exe
                         untax_amount += tax.amount

@@ -12,6 +12,7 @@
                 </p>
 
                 <group string="DIOT Report" colspan="4">
+                    <field name="company_id" />
                     <field name="month_id" />
                 </group>
                 <footer>
