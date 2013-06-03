@@ -20,7 +20,7 @@
 {
     'name': 'Purchase Requisitions Description',
     'version': '0.1',
-    'author': 'Vauxoo SA',
+    'author': 'Vauxoo',
     'category': 'Purchase Management',
     'website': 'http://www.vauxoo.com',
     'description': """
