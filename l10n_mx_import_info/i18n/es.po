@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_mx_partner_address
+#   * l10n_mx_import_info
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.0.3\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2011-10-29 17:44+0000\n"
-"PO-Revision-Date: 2011-10-29 17:44+0000\n"
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-05 17:41+0000\n"
+"PO-Revision-Date: 2013-04-05 17:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"

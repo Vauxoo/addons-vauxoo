@@ -50,3 +50,62 @@ msgstr "No. Externo de la direccion del partner"
 msgid "No. External"
 msgstr "No. External"
 
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,city2:0
+msgid "City2"
+msgstr "Localidad"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street3:0
+msgid "Street3"
+msgstr "No Exterior"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street4:0
+msgid "Street4"
+msgstr "No Interior"
+
+#. module: base
+#: field:res.partner.address,street:0
+msgid "Street"
+msgstr "Calle"
+
+#. module: base
+#: field:res.partner.address,street2:0
+msgid "Street2"
+msgstr "Colonia"
+
+#. module: base
+#: field:res.partner.address,state_id:0
+msgid "Fed. State"
+msgstr "Estado"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,city2:0
+msgid "City2"
+msgstr "Localidad"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street3:0
+msgid "Street3"
+msgstr "No Exterior"
+
+#. module: l10n_mx_partner_address
+#: field:res.partner.address,street4:0
+msgid "Street4"
+msgstr "No Interior"
+
+#. module: base
+#: field:res.partner.address,street:0
+msgid "Street"
+msgstr "Calle"
+
+#. module: base
+#: field:res.partner.address,street2:0
+msgid "Street2"
+msgstr "Colonia"
+
+#. module: base
+#: field:res.partner.address,state_id:0
+msgid "Fed. State"
+msgstr "Estado"
