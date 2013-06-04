@@ -29,7 +29,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class inherited_product(osv.Model):
     """
     M321 Customizations for product.product model
@@ -58,7 +57,8 @@ class inherited_product(osv.Model):
         default.update({'upc': False,
                         })
 
-        return super(inherited_product, self).copy(cr, uid, id, default, context)
+        return super(inherited_product, self).copy(cr, uid, id, default,
+                                                                    context)
 
     def _stock_available(self, cr, uid, ids, field_name, arg, context):
         if context is None:
@@ -97,7 +97,8 @@ class inherited_product(osv.Model):
             return []
         product = []
 
-        for sale in self.pool.get('sale.order').browse(cr, uid, ids, context=context):
+        for sale in self.pool.get('sale.order').browse(cr, uid, ids,
+                                                            context=context):
             for line in sale.order_line:
                 sale.product_id and product.append(sale.product_id.id)
         return product
@@ -111,7 +112,8 @@ class inherited_product(osv.Model):
             return []
         product = []
 
-        for purchase in self.pool.get('purchase.order').browse(cr, uid, ids, context=context):
+        for purchase in self.pool.get('purchase.order').browse(cr, uid, ids,
+                                                            context=context):
             for line in purchase.order_line:
                 purchase.product_id and product.append(purchase.product_id.id)
         return product
@@ -158,13 +160,16 @@ class inherited_product(osv.Model):
 
         for product in self.browse(cr, uid, ids):
             product_code_ids = product.default_code and self.search(cr, uid, [(
-                'default_code', '=', product.default_code)], context=context) or [product.id]
+                'default_code', '=', product.default_code)],
+                context=context) or [product.id]
             product_upc_ids = product.upc and self.search(cr, uid, [(
                 'upc', '=', product.upc)], context=context) or [product.id]
             if not product.default_code and not product.upc:
                 return True
 
-            elif len(product_code_ids) > 1 or len(product_upc_ids) > 1 or product.id not in product_code_ids or product.id not in product_upc_ids:
+            elif len(product_code_ids) > 1 or len(product_upc_ids) > 1 or\
+                product.id not in product_code_ids or product.id not in\
+                product_upc_ids:
                 return False
 
         return True
@@ -181,7 +186,8 @@ class inherited_product(osv.Model):
         default.update({'upc': False, 'ean13': False, 'default_code': False,
                         })
 
-        return super(inherited_product, self).copy(cr, uid, id, default, context)
+        return super(inherited_product, self).copy(cr, uid, id, default,
+                                                                    context)
 
     def name_get(self, cr, user, ids, context=None):
         if context is None:
@@ -234,11 +240,15 @@ class inherited_product(osv.Model):
         return result
 
     _columns = {
-        'upc': fields.char("UPC", size=12, help="Universal Product Code (12 digits)"),
-        'available_boolean': fields.function(_stock_available, type='boolean', method=True, fnct_search=_search_virtual_available),
-        'profit_code': fields.char("Code from profit", size=20, help="Code from profit database"),
+        'upc': fields.char("UPC", size=12,
+            help="Universal Product Code (12 digits)"),
+        'available_boolean': fields.function(_stock_available,
+            type='boolean', method=True,
+            fnct_search=_search_virtual_available),
+        'profit_code': fields.char("Code from profit", size=20,
+            help="Code from profit database"),
     }
 
     _constraints = [(_check_upc, 'ERROR, Invalid UPC', ['upc']), (
-        _check_upc_reference_unique, 'ERROR, the upc or reference must by unique', ['upc', 'reference'])]
-
+        _check_upc_reference_unique,
+        'ERROR, the upc or reference must by unique', ['upc', 'reference'])]

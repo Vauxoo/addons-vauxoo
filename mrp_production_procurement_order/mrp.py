@@ -33,16 +33,20 @@ import decimal_precision as dp
 class mrp_production(osv.Model):
     _inherit = "mrp.production"
 
-    def _make_production_line_procurement(self, cr, uid, production_line, shipment_move_id, context=None):
-        procurement_id = super(mrp_production, self)._make_production_line_procurement(
+    def _make_production_line_procurement(self, cr, uid, production_line,
+                                            shipment_move_id, context=None):
+        procurement_id = super(mrp_production,
+            self)._make_production_line_procurement(
             cr, uid, production_line, shipment_move_id, context=context)
         procurement_order_pool = self.pool.get('procurement.order')
         procurement_order_pool.write(cr, uid, procurement_id, {
-                                     'production_ids': [(4, production_line.production_id.id)]})
+                 'production_ids': [(4, production_line.production_id.id)]})
         return procurement_id
 
     _columns = {
-        'procurement_ids': fields.many2many('procurement.order', 'mrp_production_procurement_order_rel', 'production_id', 'procurement_id', 'Production orders'),
+        'procurement_ids': fields.many2many('procurement.order',
+            'mrp_production_procurement_order_rel', 'production_id',
+            'procurement_id', 'Production orders'),
     }
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -52,4 +56,3 @@ class mrp_production(osv.Model):
             'procurement_ids': [],
         })
         return super(mrp_production, self).copy(cr, uid, id, default, context)
-

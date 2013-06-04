@@ -31,7 +31,9 @@ class account_chart(osv.TransientModel):
     _inherit = "account.chart"
 
     _columns = {
-        'filter': fields.selection([('filter_no', 'Unfiltered'), ('periods', 'Periods'), ('dates', 'Dates')], 'Filter',),
+        'filter': fields.selection([('filter_no', 'Unfiltered'),
+                                    ('periods', 'Periods'), ('dates', 'Dates')
+                                    ], 'Filter',),
         'initial_date': fields.date('Initial date',),
         'end_date': fields.date('End date',),
     }
@@ -40,18 +42,23 @@ class account_chart(osv.TransientModel):
         'filter': 'filter_no',
     }
 
-    def onchange_fiscalyear(self, cr, uid, ids, fiscalyear_id=False, val_filter=False, context=None):
+    def onchange_fiscalyear(self, cr, uid, ids, fiscalyear_id=False,
+                            val_filter=False, context=None):
         res = {}
         if val_filter == 'periods':
             res = super(account_chart, self).onchange_fiscalyear(
                 cr, uid, ids, fiscalyear_id=fiscalyear_id, context=context)
         return res
 
-    def onchange_val_filter(self, cr, uid, ids, val_filter=False, fiscalyear_id=False, context=None):
+    def onchange_val_filter(self, cr, uid, ids, val_filter=False,
+                            fiscalyear_id=False, context=None):
         res = {}
         if val_filter == 'dates':
-            res['value'] = {'period_from': False, 'period_to': False, 'initial_date': time.strftime(
-                '%Y-01-01'), 'end_date': time.strftime('%Y-%m-%d')}
+            res['value'] = {
+                'period_from': False,
+                'period_to': False,
+                'initial_date': time.strftime('%Y-01-01'),
+                'end_date': time.strftime('%Y-%m-%d')}
         elif val_filter == 'periods':
             res = super(account_chart, self).onchange_fiscalyear(
                 cr, uid, ids, fiscalyear_id=fiscalyear_id, context=context)

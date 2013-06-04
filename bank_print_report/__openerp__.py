@@ -46,7 +46,7 @@
     ],
     'demo_xml': [],
     'test': [],
-    'installable': True,
+    'installable': False,
     'active': False,
     'external_dependencies': {},
 }

@@ -31,13 +31,16 @@ class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
     _columns = {
-        'bom_qty': fields.related('bom_id', 'product_qty', type='float', string='Bom Qty',
-                                  store=True, digits_compute=dp.get_precision('Product UoM'), readonly=True, states={'draft': [('readonly', False)]},
-                                  help="BoM's Quantity to change from production order"
+        'bom_qty': fields.related('bom_id', 'product_qty', type='float',
+                string='Bom Qty', store=True,
+                digits_compute=dp.get_precision('Product UoM'),
+                readonly=True, states={'draft': [('readonly', False)]},
+                help="BoM's Quantity to change from production order"
                                   ),
-        'bom_uom': fields.related('bom_id', 'product_uom', type='many2one', relation='product.uom', string='Bom UoM',
-                                  store=True, readonly=True, states={
-                                  'draft': [('readonly', False)]},
-                                  help="BoM's UoM to change from production order"
+        'bom_uom': fields.related('bom_id', 'product_uom', type='many2one',
+                relation='product.uom', string='Bom UoM',
+                store=True, readonly=True,
+                states={'draft': [('readonly', False)]},
+                help="BoM's UoM to change from production order"
                                   ),
     }

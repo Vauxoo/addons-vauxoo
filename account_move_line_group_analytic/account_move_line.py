@@ -32,16 +32,25 @@ class account_move_line(osv.Model):
 
     }
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form',
+                        context=None, toolbar=False, submenu=False):
         result = super(account_move_line, self).fields_view_get(
-            cr, uid, view_id, view_type, context=context, toolbar=toolbar, submenu=submenu)
+            cr, uid, view_id, view_type, context=context, toolbar=toolbar,
+            submenu=submenu)
         # fields_get = self.fields_get(cr, uid, ['stock_move_id'], context)
         xml_form = etree.fromstring(result['arch'])
         placeholder = xml_form.xpath("//field[@name='period_id']")
         placeholder[0].addnext(etree.Element('field', {'name': 'product_id'}))
         result['arch'] = etree.tostring(xml_form)
         result['fields'].update({
-                                'product_id': {'domain': [], 'string': u'Product', 'readonly': False, 'relation': 'product.product', 'context': {}, 'selectable': True, 'type': 'many2one', 'select': 2}
-                                })
+            'product_id': {
+            'domain': [],
+            'string': u'Product',
+            'readonly': False,
+            'relation': 'product.product',
+            'context': {},
+            'selectable': True,
+            'type': 'many2one',
+                    'select': 2}
+        })
         return result
-

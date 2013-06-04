@@ -30,13 +30,16 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 
-
 class wizard_report_process(osv.TransientModel):
     _name = 'wizard.report.process'
 
     _columns = {
-        'product_ids': fields.many2many('product.product', 'temp_product_rel', 'temp_id', 'product_id', 'Productos'),
-        'print': fields.selection([('sin', 'Sin Agrupar'), ('agrupado', 'Agrupado'), ('ambos', 'Ambos')], 'Imprimir', required=True),
+        'product_ids': fields.many2many('product.product', 'temp_product_rel',
+                                        'temp_id', 'product_id', 'Productos'),
+        'print': fields.selection([('sin', 'Sin Agrupar'),
+                                   ('agrupado', 'Agrupado'),
+                                   ('ambos', 'Ambos')], 'Imprimir',
+                                  required=True),
     }
 
     _defaults = {
@@ -86,5 +89,3 @@ class wizard_report_process(osv.TransientModel):
             'report_name': 'process.report',
             'datas': datas,
         }
-
-

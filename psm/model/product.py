@@ -32,7 +32,16 @@ class product_product(osv.Model):
     _inherit = "product.product"
 
     _columns = {
-        'track_serial_incoming': fields.boolean('Track Incoming Serial Lots', help="Forces to specify a Production serial incoming Lot for all moves containing this product"),
-        'track_serial_outgoing': fields.boolean('Track Outgoing Serial Lots', help="Forces to specify a Production serial outgoing Lot for all moves containing this product"),
+        'track_serial_incoming': fields.boolean('Track Incoming Serial Lots',
+                                                help="""Forces to specify a
+                                                        Production serial
+                                                        incoming Lot for all
+                                                        moves containing this
+                                                        product"""),
+        'track_serial_outgoing': fields.boolean('Track Outgoing Serial Lots',
+                                                help="""Forces to specify a
+                                                        Production serial
+                                                        outgoing Lot for all
+                                                        moves containing this
+                                                        product"""),
     }
-

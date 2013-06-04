@@ -3,7 +3,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class document(osv.Model):
     """
     fetchmail

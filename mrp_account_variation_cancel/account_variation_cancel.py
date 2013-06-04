@@ -30,12 +30,15 @@ import decimal_precision as dp
 class mrp_production(osv.Model):
     _inherit = 'mrp.production'
 
-    def create_account_variation_move_line(self, cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=None):
+    def create_account_variation_move_line(self, cr, uid, prod_variation,
+        src_account_id, dest_account_id, reference_amount, context=None):
         res = super(mrp_production, self).create_account_variation_move_line(
-            cr, uid, prod_variation, src_account_id, dest_account_id, reference_amount, context=context)
+            cr, uid, prod_variation, src_account_id, dest_account_id,
+            reference_amount, context=context)
         for lin in res:
             lin[2][
-                'production_id'] = prod_variation.production_id and prod_variation.production_id.id or False
+                'production_id'] = prod_variation.production_id and\
+                                    prod_variation.production_id.id or False
         return res
 
     def action_cancel(self, cr, uid, ids, context=None):
@@ -50,7 +53,8 @@ class mrp_production(osv.Model):
         for production in self.browse(cr, uid, ids, context=context):
             account_move_line_id = account_move_line.search(
                 cr, uid, [('production_id', '=', production.id)])
-            for move_line in account_move_line.browse(cr, uid, account_move_line_id, context=context):
+            for move_line in account_move_line.browse(cr, uid,
+                                        account_move_line_id, context=context):
                 result.setdefault(move_line.move_id.id, production.id)
                 account_move_line.unlink(cr, uid, [move_line.id])
         for lin in result.items():
@@ -63,5 +67,5 @@ class mrp_production(osv.Model):
                 except:
                     pass
                 account_move.unlink(cr, uid, [lin[0]])
-        return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
-
+        return super(mrp_production, self).action_cancel(cr, uid, ids,
+                                                            context=context)

@@ -10,8 +10,8 @@
 #    Audited by: Vauxoo C.A.
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
 #    This program is distributed in the hope that it will be useful,
@@ -62,11 +62,11 @@ class trial_cost(osv.TransientModel):
         form = data['form']
         if not form['u_check'] and not form['p_check'] and not form['c_check']:
             raise osv.except_osv(_('User Error'), _(
-                'You have to check one box !'))
+                'You must check one box !'))
         res = {}
         period_length = data['form']['period_length']
         if period_length <= 0:
-            raise wizard.except_wizard(_('UserError'), _(
+            raise osv.except_osv(_('UserError'), _(
                 'You must enter a period length that cannot be 0 or below !'))
         start = datetime.date.fromtimestamp(time.mktime(
             time.strptime(data['form']['date_start'], "%Y-%m-%d")))
@@ -75,7 +75,8 @@ class trial_cost(osv.TransientModel):
         for i in range(4)[::-1]:
             stop = start - RelativeDateTime(days=period_length)
             res[str(i)] = {
-                'name': str((4-(i+1))*period_length) + '-' + str((4-i)*period_length),
+                'name': str((4-(i+1))*period_length) +
+                '-' + str((4-i)*period_length),
 
                 'stop': start.strftime('%Y-%m-%d'),
                 'start': stop.strftime('%Y-%m-%d'),
@@ -83,6 +84,8 @@ class trial_cost(osv.TransientModel):
             start = stop - RelativeDateTime(days=1)
 
         data['form'].update(res)
-        return {'type': 'ir.actions.report.xml', 'report_name': 'profit.trial.cost', 'datas': data}
+        return {'type': 'ir.actions.report.xml',
+                'report_name': 'profit.trial.cost',
+                'datas': data}
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

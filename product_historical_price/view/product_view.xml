@@ -1,11 +1,10 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data noupdate="1">
         
         <record id="product_historical_price_tree" model="ir.ui.view">
             <field name="name">product.historical.price.tree</field>
             <field name="model">product.historic.price</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Historical List Price">
                     <field name="name"/>
@@ -18,9 +17,8 @@
         <record id="product_historical_price_form" model="ir.ui.view">
             <field name="name">product.historical.price.form</field>
             <field name="model">product.historic.price</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Historical List Price">
+                <form string="Historical List Price" version="7.0">
                     <field name="name"/>
                     <field name="price"/>
                     <field name="product_uom"/>
@@ -30,7 +28,6 @@
         <record id="product_historical_cost_tree" model="ir.ui.view">
             <field name="name">product.historical.cost.tree</field>
             <field name="model">product.historic.cost</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Historical Cost">
                     <field name="name"/>
@@ -43,9 +40,8 @@
         <record id="product_historical_cost_form" model="ir.ui.view">
             <field name="name">product.historical.cost.form</field>
             <field name="model">product.historic.cost</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Historical Cost">
+                <form string="Historical Cost" version="7.0">
                     <field name="name"/>
                     <field name="price"/>
                     <field name="product_uom"/>
@@ -57,10 +53,9 @@
         <record model="ir.ui.view" id="product_historical_price">
             <field name="name">product.historical.price</field>
             <field name="model">product.product</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="account.product_normal_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Accounting']" position="after">
+                <xpath expr="//page[@string='Accounting']" position="after">
                     <page string="Historical Cost Price">
                         <group colspan="2" col="4">
                             <separator string="Historical Costs" colspan="2"/>
@@ -69,7 +64,7 @@
                         </group>
                         <group colspan="2" col="4">
                             <separator string="Historical Prices" nolabel="1" colspan="2"/>
-                            <field name="list_price_historical"   colspan="2"/>
+                            <field name="list_price_historical" colspan="2"/>
                             <newline/>
                             <field name="list_price_historical_ids" nolabel="1" colspan="4"/>
                         </group>

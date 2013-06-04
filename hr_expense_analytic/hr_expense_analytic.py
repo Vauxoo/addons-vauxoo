@@ -30,9 +30,9 @@ class hr_department(osv.Model):
     _inherit = "hr.department"
 
     _columns = {
-        'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic'),
+        'analytic_account_id': fields.many2one('account.analytic.account',
+                                               'Analytic'),
     }
-
 
 
 class hr_expense_line(osv.Model):
@@ -48,4 +48,3 @@ class hr_expense_line(osv.Model):
     _defaults = {
         'analytic_account': _get_analytic
     }
-

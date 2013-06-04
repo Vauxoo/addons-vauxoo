@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
 
         <record model="ir.ui.view" id="view_mrp_production_inherit2">
             <field name="name">view.mrp.production.inherit2</field>
             <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
                    <xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
             <button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" groups="mrp_consume_produce.group_mrp_button_produce" invisible="1"/>
                     </xpath>
 
                     <xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="after">
-            <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action"  attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
+            <button name="%(create_consume_action)d" states="in_production" string="Consumed" icon="gtk-ok" type="action" attrs="{'invisible': ['|',('consumed','=',True),('state','!=','in_production')]}" groups="mrp_consume_produce.group_mrp_button_consume_produce"/>
                     </xpath>
 
                     <xpath expr="//field[@name='origin']" position="after">
@@ -42,24 +42,20 @@
         <record model="ir.ui.view" id="view_mrp_production_colors_inherit">
             <field name="name">view.mrp.production.colors.inherit</field>
             <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='move_created_ids2']" position="replace">
-                     <field colspan="2" name="move_created_ids2" nolabel="1"  domain="[('state','in', ('done', 'cancel'))]"
-                                       widget="one2many_list"  height="275">
+                     <field colspan="2" name="move_created_ids2" nolabel="1" domain="[('state','in', ('done', 'cancel'))]" widget="one2many_list" height="275">
                         <tree colors="red:scrapped==True;blue:state == 'draft';black:state in('picking_except','confirmed','ready','in_production');gray:state in('cancel');black:state == 'done' " string="Finished Products">
                            <field name="product_id" readonly="1"/>
                            <field name="product_qty" readonly="1" string="Qty"/>
                            <field name="product_uom" readonly="1" string="UOM"/>
-                           <field name="location_dest_id"  readonly="1" string="Destination Loc." widget="selection"/>
+                           <field name="location_dest_id" readonly="1" string="Destination Loc." widget="selection"/>
                            <field name="prodlot_id" context="{'product_id': product_id}"/>
                            <field name="scrapped" invisible="1"/>
                            <field name="state" invisible="1"/>
-                           <button name="%(stock.track_line)d"
-                                string="Split in production lots" type="action" icon="gtk-justify-fill" states="done,cancel"/>
-                           <button name="%(stock.move_scrap)d"
-                               string="Scrap Products" type="action" icon="gtk-convert"
-                               states="done,cancel" />
+                           <button name="%(stock.track_line)d" string="Split in production lots" type="action" icon="gtk-justify-fill" states="done,cancel"/>
+                           <button name="%(stock.move_scrap)d" string="Scrap Products" type="action" icon="gtk-convert" states="done,cancel"/>
                        </tree>
                     </field>
                 </xpath>

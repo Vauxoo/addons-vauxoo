@@ -57,4 +57,5 @@ class product_inherited(osv.Model):
         return True
 
     _constraints = [(
-        _check_uniqueness, 'ERROR, product already exists for this company', ['ean13'])]
+        _check_uniqueness, 'ERROR, product already exists for this company',
+            ['ean13'])]

@@ -36,7 +36,9 @@ class wh_iva_doc(osv.Model):
 
     _columns = {
 
-        'prev_state': fields.char('Previos State', 12, help="Field to keep the previous state of the invoice at the time of canceling")
+        'prev_state': fields.char('Previos State', 12,
+                                  help="Field to keep the previous state of\
+                                    the invoice at the time of canceling")
 
     }
 
@@ -52,4 +54,3 @@ class wh_iva_doc(osv.Model):
                 return False
 
         return True
-

@@ -35,7 +35,9 @@ class islr_wh_doc(osv.Model):
     _inherit = 'islr.wh.doc'
 
     _columns = {
-        'prev_state': fields.char('Previos State', 12, help="Field to keep the previous state of the invoice at the time of canceling")
+        'prev_state': fields.char('Previos State', 12,
+            help="Field to keep the previous state of the invoice at\
+                the time of canceling")
 
     }
 
@@ -54,4 +56,3 @@ class islr_wh_doc(osv.Model):
             return False
 
         return True
-

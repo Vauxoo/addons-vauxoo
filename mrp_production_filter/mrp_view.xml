@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_state_mrp_inherit_filter">
@@ -6,7 +6,7 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="/search/filter[@string='Late']" position="after">
+                <xpath expr="//filter[@string='Late']" position="after">
                     <filter icon="terp-document-new" string="Done" domain="[('state','=','done')]" name="done"/>
                     <filter icon="terp-document-new" string="Active" domain="[('state','&lt;&gt;','done'),('state','&lt;&gt;','cancel')]" name="active"/>
                 </xpath>

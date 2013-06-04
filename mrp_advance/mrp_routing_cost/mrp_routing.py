@@ -42,9 +42,9 @@ class mrp_routing_workcenter(osv.Model):
 
     _columns = {
         'costo': fields.float('Costo Unitario', required=True),
-        'costo_total': fields.function(_calcular, method=True, type='float', string='Costo Total', store=False),
+        'costo_total': fields.function(_calcular, method=True, type='float',
+            string='Costo Total', store=False),
     }
     _defaults = {
         'costo': lambda *a: 0.0,
     }
-

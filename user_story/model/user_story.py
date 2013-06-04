@@ -69,39 +69,63 @@ class user_story(osv.Model):
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
-
         task_obj = self.pool.get('project.task')
+        
+        if vals.get('categ_ids'):
+            for tag_id in self.browse(cr, uid, ids, context=context):
+                for task in tag_id.task_ids:
+                    task_obj.write(cr, uid, [task.id], {'categ_ids': vals['categ_ids']})
+                   
         if vals.get('sk_id'):
-
             task_ids = task_obj.search(cr, uid, [
                                        ('userstory_id', '=', ids[0])])
             task_obj.write(cr, uid, task_ids, {
                            'sprint_id': vals.get('sk_id')}, context=context)
-
-        return super(user_story, self).write(cr, uid, ids, vals, context=context)
-
+        return super(user_story, self).write(cr, uid, ids,
+                                             vals, context=context)
+        
+     
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False),
         'owner': fields.char('Owner', size=255, required=True, readonly=False),
         'code': fields.char('Code', size=64, readonly=False),
         'planned_hours': fields.float('Planned Hours'),
-        'project_id': fields.many2one('project.project', 'Project', required=True),
+        'project_id': fields.many2one('project.project', 'Project',
+                                      required=True),
         'description': fields.text('Description'),
-        'accep_crit_ids': fields.one2many('acceptability.criteria', 'accep_crit_id', 'Acceptability Criteria', required=False),
+        'accep_crit_ids': fields.one2many('acceptability.criteria',
+                                          'accep_crit_id',
+                                          'Acceptability Criteria',
+                                          required=False),
         'info': fields.text('Other Info'),
+        'priority_level':fields.selection([('urgent','Urgent'),
+                                           ('priority','Priority'),
+                                           ('secondary','Secondary')],
+                                           'Priority Level',
+                                           help='User story level priority,'
+                                                   ' used to define priority'
+                                                   ' for each user story'), 
+        
         'asumption': fields.text('Asumptions'),
         'date': fields.date('Date'),
         'user_id': fields.many2one('res.users', 'Create User'),
         'sk_id': fields.many2one('sprint.kanban', 'Sprint Kanban'),
         'state': fields.selection(_US_STATE, 'State', readonly=True),
-        'task_ids': fields.function(_get_tasks, type='many2many', relation="project.task", fnct_inv=_set_task,
-                                    string="Tasksss", help="Draft procurement of the product and location of that orderpoint"),
+        'task_ids': fields.function(_get_tasks, type='many2many',
+                                    relation="project.task",
+                                    fnct_inv=_set_task,
+                                    string="Tasksss",
+                                    help="""Draft procurement of
+                                            the product and location
+                                            of that orderpoint"""),
+        'categ_ids': fields.many2many('project.category','project_category_user_story_rel','userstory_id','categ_id', string="Tags"),
     }
     _defaults = {
         'name': lambda *a: None,
         'date': lambda *a: time.strftime('%Y-%m-%d'),
         'user_id': lambda self, cr, uid, ctx: uid,
         'state': 'draft',
+        'priority_level':'secondary',
     }
 
     def do_draft(self, cr, uid, ids, context=None):
@@ -117,7 +141,8 @@ class user_story(osv.Model):
         return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def do_cancel(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'cancelled'}, context=context)
+        return self.write(cr, uid, ids, {'state': 'cancelled'},
+                          context=context)
 
 
 class acceptability_criteria(osv.Model):
@@ -130,8 +155,11 @@ class acceptability_criteria(osv.Model):
     _columns = {
         'name': fields.char('Title', size=255, required=True, readonly=False),
         'scenario': fields.text('Scenario', required=True),
-        'accep_crit_id': fields.many2one('user.story', 'User Story', required=True),
-        'accepted': fields.boolean('Accepted', help='Chek if this criteria apply'),
+        'accep_crit_id': fields.many2one('user.story',
+                                         'User Story',
+                                         required=True),
+        'accepted': fields.boolean('Accepted',
+                                   help='Chek if this criteria apply'),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -142,22 +170,48 @@ class project_task(osv.Model):
     """
     OpenERP Model : Project Task
     """
-
     _inherit = 'project.task'
+
+    def default_get(self, cr, uid, fields, context=None):
+        '''Owerwrite default get to add project in new task automatically'''
+        if context is None:
+            context = {}
+        res = super(project_task, self).default_get(cr, uid, fields, context=context)
+        context.get('project_task',False) and \
+                res.update({'project_id':context.get('project_task'),'categ_ids':context.get('categ_task'),
+                            'sprint_id':context.get('sprint_task'),'userstory_id':context.get('userstory_task')})
+        return res
+    
 
     def onchange_user_story_task(self, cr, uid, ids, us_id, context=None):
         v = {}
         us_obj = self.pool.get('user.story')
-
         if us_id:
             sprint = us_obj.browse(cr, uid, us_id, context=context)
             if sprint.sk_id:
                 v['sprint_id'] = sprint.sk_id.id
-
+            categs = us_obj.browse(cr, uid, us_id, context=context)
+            if categs.categ_ids:
+                v['categ_ids'] = [cat.id for cat in categs.categ_ids]
         return {'value': v}
 
     _columns = {
         'userstory_id': fields.many2one('user.story', 'User Story',
-                                        domain="[('sk_id', '=', sprint_id)]",
+                                        #domain="[('sk_id', '=', sprint_id)]",
                                         help="Set here the User Story related with this task"),
+        'branch_to_clone':fields.char('Branch to clone', 512,
+                                      help='Branch source for clone and'
+                                           ' make merge proposal'), 
+        
     }
+class inherit_project(osv.Model):
+    
+    '''Inheirt project model to a new Descripcion field'''
+    
+    _inherit = 'project.project'
+    
+    _columns = {
+            'descriptions':fields.text('Description',
+                                       help="reference on what the project "
+                                            "is about"),
+            }

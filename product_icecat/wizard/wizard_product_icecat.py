@@ -94,7 +94,8 @@ class product_icecat_wizard(osv.TransientModel):
     # ==========================================
     # Convert icecat values to OpenERP mapline
     # ==========================================
-    def icecat2oerp(self, cr, uid, form, product, icecat, pathxml, language, data, context):
+    def icecat2oerp(self, cr, uid, form, product, icecat, pathxml, language,
+                    data, context):
 
         # check if attributes product exists. If exists, raise error. Not
         # update attributes values
@@ -103,7 +104,8 @@ class product_icecat_wizard(osv.TransientModel):
                 cr, uid, [('product_id', '=', product.id)])
             if len(attributes_ids) > 0:
                 raise osv.except_osv(_('Error'), _(
-                    "There are attributes avaible in this product. Delete this attributes or uncheck attributes option"))
+                    "There are attributes avaible in this product.\
+                    Delete this attributes or uncheck attributes option"))
 
         if form.language_id.code:
             language = form.language_id.code
@@ -150,7 +152,7 @@ class product_icecat_wizard(osv.TransientModel):
         values = {}
         for prod in doc.xpathEval('//ProductFeature'):
             prodFeatureId.append(prod.xpathEval('@CategoryFeatureGroup_ID')[
-                                 0].content+"#"+prod.xpathEval('@Presentation_Value')[0].content)
+             0].content+"#"+prod.xpathEval('@Presentation_Value')[0].content)
 
         for prod in doc.xpathEval('//ProductFeature//Feature//Name'):
             prodFeatureName.append(prod.xpathEval('@Value')[0].content)
@@ -180,7 +182,8 @@ class product_icecat_wizard(osv.TransientModel):
             mapline = self.pool.get(
                 'product.icecat.mapline').browse(cr, uid, mapline_id)
             mapline_fields.append({
-                                  'icecat': mapline.name, 'oerp': mapline.field_id.name})
+                                    'icecat': mapline.name,
+                                    'oerp': mapline.field_id.name})
 
         # show details product
         # TODO: HTML template use Mako template for not hardcode HTML tags
@@ -195,7 +198,10 @@ class product_icecat_wizard(osv.TransientModel):
             # product_manufacturer
             if form.attributes:
                 attributes_values.append({
-                                         'name': catName, 'icecat_category': catID, 'product_id': product.id, 'sequence': sequence})
+                                         'name': catName,
+                                         'icecat_category': catID,
+                                         'product_id': product.id,
+                                         'sequence': sequence})
                 sequence+1
 
             if catID in prodFeature and len(prodFeature[catID]):
@@ -205,7 +211,10 @@ class product_icecat_wizard(osv.TransientModel):
                     if len(prod_value) > 0:
                         attributes_values.append(
                             {'name': '>'+self.StripTags(prod_value[0]),
-                             'value': self.StripTags(prod_value[1]), 'icecat_category': catID, 'product_id': product.id, 'sequence': sequence})
+                             'value': self.StripTags(prod_value[1]),
+                             'icecat_category': catID,
+                             'product_id': product.id,
+                             'sequence': sequence})
                         sequence+1
 
                 for mapline_field in mapline_fields:
@@ -226,16 +235,18 @@ class product_icecat_wizard(osv.TransientModel):
                     # antother fields, for example meta_description website
                     # fields (magento, djnago,...)
                     if mapline_field['icecat'] == 'ShortSummaryDescription':
-                        mapline_values.append({'field': mapline_field[
-                                              'oerp'], 'source': short_description})
+                        mapline_values.append({'field': mapline_field['oerp'],
+                                                'source': short_description})
 
         # update icecat values at product
         # default values. It is not hardcode ;)
         values = {}
 
         if form.name:
-            trans_name_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language), (
-                'name', '=', 'product.template,name'), ('res_id', '=', product.id)])
+            trans_name_id = self.pool.get('ir.translation').search(cr, uid
+                [('lang', '=', language),
+                ('name', '=', 'product.template,name'),
+                ('res_id', '=', product.id)])
             if trans_name_id:
                 self.pool.get('ir.translation').write(
                     cr, uid, trans_name_id, {'value': name}, context)
@@ -243,22 +254,28 @@ class product_icecat_wizard(osv.TransientModel):
                 values['name'] = name
 
         if form.description_sale:
-            trans_descsale_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language), (
-                'name', '=', 'product.template,description_sale'), ('res_id', '=', product.id)])
+            trans_descsale_id = self.pool.get('ir.translation').search(cr, uid,
+                [('lang', '=', language),
+                ('name', '=', 'product.template,description_sale'),
+                ('res_id', '=', product.id)])
             if trans_descsale_id:
                 self.pool.get('ir.translation').write(
-                    cr, uid, trans_descsale_id, {'value': short_description}, context)
+                    cr, uid, trans_descsale_id, {'value': short_description},
+                    context)
             else:
                 values['description_sale'] = short_description
 
         if form.description:
             if not form.html:
                 description = self.StripTags(description)
-            trans_description_id = self.pool.get('ir.translation').search(cr, uid, [('lang', '=', language), (
-                'name', '=', 'product.template,description'), ('res_id', '=', product.id)])
+            trans_description_id = self.pool.get('ir.translation').search(cr,
+                uid, [('lang', '=', language),
+                ('name', '=', 'product.template,description'), 
+                ('res_id', '=', product.id)])
             if trans_description_id:
                 self.pool.get('ir.translation').write(
-                    cr, uid, trans_description_id, {'value': description}, context)
+                    cr, uid, trans_description_id, {'value': description},
+                    context)
             else:
                 values['description'] = description
 
@@ -268,7 +285,8 @@ class product_icecat_wizard(osv.TransientModel):
             manufacturers.append(supplier.xpathEval('@Name')[0].content)
         if len(manufacturers) > 0:
             partner_id = self.pool.get('res.partner').search(cr, uid, [
-                                                             ('name', 'ilike', manufacturers[len(manufacturers)-1])])
+                                         ('name', 'ilike',
+                                         manufacturers[len(manufacturers)-1])])
             if len(partner_id) > 0:
                 values['manufacturer'] = partner_id[0]
         values['manufacturer_pname'] = name
@@ -297,7 +315,8 @@ class product_icecat_wizard(osv.TransientModel):
     # ==========================================
     # Convert icecat values to OpenERP mapline
     # ==========================================
-    def iceimg2oerpimg(self, cr, uid, form, product, icecat, pathxml, data, context):
+    def iceimg2oerpimg(self, cr, uid, form, product, icecat, pathxml, data,
+                        context):
         doc = libxml2.parseFile(pathxml)
 
         # product image
@@ -397,11 +416,13 @@ class product_icecat_wizard(osv.TransientModel):
                     pathxml = self.save_file(fileName, content)
                     # import values icecat2oerp
                     result = self.icecat2oerp(
-                        cr, uid, form, product, icecat, pathxml, language, data, context)
+                        cr, uid, form, product, icecat, pathxml, language,
+                        data, context)
                     # import image icecat2oerp
                     if icecat.ftp and form.image:
                         resimg += self.iceimg2oerpimg(
-                            cr, uid, form, product, icecat, pathxml, data, context)
+                            cr, uid, form, product, icecat, pathxml, data,
+                            context)
                         resimg += "\n"
                     else:
                         resimg += _("Import image not avaible")
@@ -420,4 +441,3 @@ class product_icecat_wizard(osv.TransientModel):
         self.write(cr, uid, ids, values)
 
         return True
-

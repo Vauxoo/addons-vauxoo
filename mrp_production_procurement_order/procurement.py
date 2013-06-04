@@ -33,8 +33,11 @@ class procurement_order(osv.Model):
     _inherit = "procurement.order"
 
     _columns = {
-        'production_ids': fields.many2many('mrp.production', 'mrp_production_procurement_order_rel', 'procurement_id', 'production_id', 'Production orders'),
-        'production_created': fields.many2one('mrp.production', 'Production order'),
+        'production_ids': fields.many2many('mrp.production',
+            'mrp_production_procurement_order_rel', 'procurement_id',
+            'production_id', 'Production orders'),
+        'production_created': fields.many2one('mrp.production',
+            'Production order'),
     }
 
     def make_mo(self, cr, uid, ids, context=None):
@@ -46,4 +49,3 @@ class procurement_order(osv.Model):
         for line in res:
             self.write(cr, uid, [line], {'production_created': res.get(line)})
         return res
-

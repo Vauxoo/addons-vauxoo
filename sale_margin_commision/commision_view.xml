@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
 
     <record model="ir.ui.view" id="sale_commision_sale_order">
         <field name="name">sale.order.commision.view.form</field>
-        <field name="type">form</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="/form/notebook/page/group/field[@name='amount_total']" position="after">
+            <xpath expr="//field[@name='amount_total']" position="after">
                 <field name="commision"/>
                 <!-- <field name="margin"/> -->
             </xpath>

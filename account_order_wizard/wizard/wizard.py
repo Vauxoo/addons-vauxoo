@@ -45,7 +45,8 @@ class account_order_wizard_pattern(osv.TransientModel):
     _name = 'account.order.wizard.pattern'
     _rec_name = 'pattern'
     _columns = {
-        'pattern': fields.char('Account Pattern', size=1024, required=True, help=__HELP__,),
+        'pattern': fields.char('Account Pattern', size=1024, required=True,
+                               help=__HELP__,),
         'wzd_id': fields.many2one('account.order.wizard', 'Wizard')
     }
 
@@ -53,19 +54,23 @@ class account_order_wizard_pattern(osv.TransientModel):
 class account_order_wizard(osv.TransientModel):
     _name = 'account.order.wizard'
     _columns = {
-        'select_patter': fields.selection([('wp', 'With Pattern'),
-                                          ('fp', 'Free Pattern')], 'Select pattern type',
-                                          help='Select pattern type by account'),
+        'select_patter': fields.selection([
+            ('wp', 'With Pattern'),
+            ('fp', 'Free Pattern')],
+            'Select pattern type',
+            help='Select pattern type by account'),
         'account_id': fields.many2one('account.account',
                                       'Parent Account',
                                       required=True),
-        'company_id': fields.many2one('res.company', 'Compania', required=True,),
+        'company_id': fields.many2one('res.company', 'Compania',
+                                      required=True,),
         'account_ids': fields.many2many(
             'account.account',
             'rel_wizard_account',
             'account_list', 'account_id',
             'Accounts to order', required=False),
-        'patterns': fields.one2many('account.order.wizard.pattern', 'wzd_id', 'Patterns'),
+        'patterns': fields.one2many('account.order.wizard.pattern',
+                                    'wzd_id', 'Patterns'),
     }
 
     _defaults = {
@@ -76,7 +81,8 @@ class account_order_wizard(osv.TransientModel):
 
         def t(s, p='x'):
             return s.replace(p, '_')
-        return [t(i.pattern.strip()) for i in self.browse(cr, uid, id, context).patterns]
+        return [t(i.pattern.strip()) for i in self.browse(cr,
+                                                    uid, id, context).patterns]
 
     def _get_pattern(self, lista):
         patron = []
@@ -88,24 +94,28 @@ class account_order_wizard(osv.TransientModel):
         '''
         patron: es una lista de enteros indicando la longitud de cada patron
         len_patron: es el numero de patrones con el cual se estara trabajando
-        dict: es un diccionario con una lista en cada clave [codigo, parent_flag, parent_id]
-        dict_i0: codigo que se envia para hacer el ordenamiento, funge de codigo padre
+        dict: es un diccionario con una lista en cada clave
+        [codigo, parent_flag, parent_id] dict_i0: codigo que se envia para
+        hacer el ordenamiento, funge de codigo padre
         k:  es el id del codigo padre,
         i: es el contador para hacer el recorrido sobre el patron
         '''
         for j in dict.keys():
             #~ la similitud del codigo con la similutud del patron
             #~
-            if len(dict[j][0]) == patron[i+1] and dict[j][0][:patron[i]] == dict_i0:
+            if len(dict[j][0]) == patron[i+1] and\
+                    dict[j][0][:patron[i]] == dict_i0:
                 dict[j][1] = True
                 dict[j][2] = k
                 if i+1 < len_patron:
                     self._ordering(
                         cr, uid, patron, len_patron, dict, dict[j][0], j, i+1)
 
-    def _new_ordering(self, cr, uid, company_id, pattern, pattern_list, lpl, top_parent, parent_id,  pc=0, d={}):
+    def _new_ordering(self, cr, uid, company_id, pattern, pattern_list,
+                      lpl, top_parent, parent_id,  pc=0, d={}):
         aa_obj = self.pool.get('account.account')
-        cr.execute("SELECT id, code FROM account_account WHERE code like %s AND company_id = %s AND active = True", (
+        cr.execute("SELECT id, code FROM account_account\
+                WHERE code like %s AND company_id = %s AND active = True", (
             pattern, company_id))
         ids_list_dict = cr.dictfetchall()
 
@@ -126,10 +136,13 @@ class account_order_wizard(osv.TransientModel):
 
             if pc == lpl - 1:
                 aa_obj.write(cr, uid, [ild['id']], {
-                             'parent_id': parent_id, 'code': ild['code'].strip()})
+                             'parent_id': parent_id,
+                             'code': ild['code'].strip()})
                 continue
             aa_obj.write(cr, uid, [ild['id']], {
-                         'parent_id': parent_id, 'code': ild['code'].strip(), 'type': 'view'})
+                         'parent_id': parent_id,
+                         'code': ild['code'].strip(),
+                         'type': 'view'})
 
         for ild in ids_list_dict:
 
@@ -171,7 +184,8 @@ class account_order_wizard(osv.TransientModel):
                 ck += 1
             new_parent_id = ild['id']
             self._new_ordering(cr, uid, company_id, new_pattern,
-                               pattern_list, lpl, top_parent, new_parent_id, pc+1, {})
+                               pattern_list, lpl, top_parent,
+                               new_parent_id, pc+1, {})
         #~ for ac_id in d:
             #~ print 'IMPRIMIENDO UN DIC id: %s - parent_id %s'%(ac_id,d[ac_id],)
             #~ aa_obj.write(cr, uid, [ac_id], d[ac_id])
@@ -216,23 +230,27 @@ class account_order_wizard(osv.TransientModel):
 
         return cr.fetchall()
 
-    def get_code(self, cr, uid, ids, code, level=None, parent_id=None, context=None):
+    def get_code(self, cr, uid, ids, code, level=None,
+                 parent_id=None, context=None):
         if context is None:
             context = {}
         if parent_id:
             cr.execute('''select id, code
                           from account_account
                           where id <> %s and code like '%s'
-                          order by code''' % (parent_id, str(code).ljust(int(level), '_') ))
+                          order by code''' %
+                      (parent_id, str(code).ljust(int(level), '_')))
         else:
             cr.execute('''select id, code
                           from account_account
                           where code like '%s'
-                          order by code''' % (str(code).ljust(int(level), '_') ))
+                          order by code''' %
+                      (str(code).ljust(int(level), '_')))
 
         return cr.dictfetchall()
 
-    def order_without_pattern(self, cr, uid, ids, context=None, code='', pid=None):
+    def order_without_pattern(self, cr, uid, ids, context=None,
+                              code='', pid=None):
         if context is None:
             context = {}
         wz_brw = self.browse(cr, uid, ids[0], context)
@@ -253,6 +271,6 @@ class account_order_wizard(osv.TransientModel):
                 codex = codes.pop(0)
                 codex.get(
                     'code') != 0 and self.order_without_pattern(cr, uid, ids,
-                                                                context, codex.get('code'), codex.get('id'))
+                                context, codex.get('code'), codex.get('id'))
 
         return True

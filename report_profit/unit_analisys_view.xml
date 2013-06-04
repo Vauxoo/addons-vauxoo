@@ -1,11 +1,10 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <openerp>
     <data>
 
         <record id="view_product_uom_consol_filter" model="ir.ui.view">
             <field name="name">product.uom.consol.search</field>
             <field name="model">product.uom.consol</field>
-            <field name="type">search</field>
             <field name="arch" type="xml">
                 <search string="Search UOM Consolidate">
                    <group colspan="4">
@@ -18,9 +17,8 @@
         <record model="ir.ui.view" id="view_product_uom_consol_form">
             <field name="name">product.uom.consol.form</field>
             <field name="model">product.uom.consol</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="UOM third to Consolidate">
+                <form string="UOM third to Consolidate" version="7.0">
                     <group col="6" colspan="4">
                        <field name="name"/> 
                     </group>
@@ -34,7 +32,7 @@
                                 <field name="factor_inv_consol"/>
                                 <field name="rounding_consol"/>
                             </tree>
-                            <form>
+                            <form version="7.0">
                                 <field name="name"/>
                                 <field name="p_uom_id"/>
                                 <field name="factor_consol"/>
@@ -50,7 +48,6 @@
         <record model="ir.ui.view" id="view_product_uom_consol_tree">
             <field name="name">product.uom.consol.tree</field>
             <field name="model">product.uom.consol</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="UOM third to Consolidate">
                        <field name="name"/>
@@ -60,7 +57,6 @@
 
         <record id="action_product_unit_analysis" model="ir.actions.act_window">
             <field name="name">Products Unit Analysis</field>
-            <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.uom.consol</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -79,12 +75,7 @@
             <field name="act_window_id" ref="action_product_unit_analysis"/>
         </record>
 
-        <menuitem 
-            id="menu_product_unit_analysis"
-            action="action_product_unit_analysis"
-            parent="product.next_id_16"
-            sequence="11"
-            name="Analisys Unit."/>
+        <menuitem id="menu_product_unit_analysis" action="action_product_unit_analysis" parent="product.next_id_16" sequence="11" name="Analisys Unit."/>
 
     </data>
 </openerp>

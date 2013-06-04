@@ -1,8 +1,0 @@
-"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"access_baremo_span_user","baremo.span.user","model_baremo_span","baremo.group_baremo_user",1,0,0,0
-"access_baremo_rate_user","baremo.rate.user","model_baremo_rate","baremo.group_baremo_user",1,0,0,0
-"access_baremo_book_user","baremo.book.user","model_baremo_book","baremo.group_baremo_user",1,0,0,0
-"access_baremo_rate_manager","baremo.rate.manager","model_baremo_rate","baremo.group_baremo_manager",1,1,1,1
-"access_baremo_span_manager","baremo.span.manager","model_baremo_span","baremo.group_baremo_manager",1,1,1,1
-"access_baremo_book_manager","baremo.book.manager","model_baremo_book","baremo.group_baremo_manager",1,1,1,1
-

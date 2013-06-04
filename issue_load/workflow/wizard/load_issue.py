@@ -66,5 +66,3 @@ class load_issue(osv.TransientModel):
                 loadProjectsTasks(
                     '/tmp/load_issue.xls', wz_brw.host, wz_brw.port, wz_brw.db, wz_brw.user, wz_brw.passs)
             return True
-
-

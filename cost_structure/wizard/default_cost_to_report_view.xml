@@ -1,18 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
 <data>
 
         <record id="default_price_list_form" model="ir.ui.view">
               <field name="name">Price List update</field>
               <field name="model">default.price.to.report</field>
-              <field name="type">form</field>
               <field name="arch" type="xml">
-                <form string="Default price to Report">
+                <form string="Default price to Report" version="7.0">
                 
-                <field name="list_price" widget="selection" />
-                <field name="sure" />
+                <field name="list_price" widget="selection"/>
+                <field name="sure"/>
                 <button icon="gtk-cancel" special="cancel" string="Close"/>
-                <button name="default_price" string="Default Price to Report" type="object" />
+                <button name="default_price" string="Default Price to Report" type="object"/>
 <!--
                     <separator colspan="4" string="Update List Price"/>
                     <field name="price_list_id" widget="selection" attrs="{'required':[('all','=',False)]}"/>
@@ -40,14 +39,7 @@
 -->
 
 
-<act_window name="Default price to Report"
-            key2="client_action_multi"
-            res_model="default.price.to.report"
-            src_model="product.product"
-            view_mode="form"
-            view_type="form" 
-            target="new"
-            id="default_price_list_action"/>
+<act_window name="Default price to Report" key2="client_action_multi" res_model="default.price.to.report" src_model="product.product" view_mode="form" view_type="form" target="new" id="default_price_list_action"/>
 
 <!--
 

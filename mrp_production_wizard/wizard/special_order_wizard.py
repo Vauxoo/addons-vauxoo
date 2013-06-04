@@ -29,14 +29,15 @@ import decimal_precision as dp
 from openerp.tools.translate import _
 
 
-
 class mrp_production_wizard(osv.TransientModel):
     _name = 'mrp.production.wizard'
     _columns = {
-        'product_id': fields.many2one('product.product', 'Product', required=True, ),
+        'product_id': fields.many2one('product.product', 'Product',
+            required=True, ),
         #'product_qty': fields.float('Product Qty', required=True),
         #'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
-        'wiz_data': fields.one2many('wizard.data', 'mrp_production_wiz', 'Prod lines'),
+        'wiz_data': fields.one2many('wizard.data', 'mrp_production_wiz',
+            'Prod lines'),
     }
 
     def pass_products_to_parent(self, cr, uid, ids, context={}):
@@ -80,20 +81,22 @@ class mrp_production_wizard(osv.TransientModel):
     #    return res
 
 
-
-
 class wizard_data(osv.TransientModel):
     _name = 'wizard.data'
 
     _columns = {
-        'mrp_production_wiz': fields.many2one('mrp.production.wizard', 'Padre'),
+        'mrp_production_wiz': fields.many2one('mrp.production.wizard',
+            'Padre'),
         'name': fields.char('Name', size=64, required=True),
-        'product_id_consume': fields.many2one('product.product', 'Product', required=True),
+        'product_id_consume': fields.many2one('product.product', 'Product',
+            required=True),
         'product_qty': fields.float('Product Qty', required=True),
-        'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
+        'product_uom': fields.many2one('product.uom', 'Product UOM',
+            required=True),
     }
 
-    def onchange_production_wizard_product_name(self, cr, uid, ids, product_id):
+    def onchange_production_wizard_product_name(self, cr, uid, ids,
+                                                product_id):
         if product_id:
             new_product_id = [product_id]
             product_product_obj = self.pool.get('product.product')
@@ -110,4 +113,3 @@ class wizard_data(osv.TransientModel):
                         'category_id', '=', line.uom_id.category_id.id)]}
                     return {'value': val, 'domain': domain_uom}
         return {}
-

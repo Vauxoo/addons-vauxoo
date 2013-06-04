@@ -29,7 +29,30 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module shows the tax actually paid/cashed in the move of payment""",
+    "description" : """
+
+The tax actually paid/cashed in the move of payment,
+====================================================
+
+Creditable VAT.
+
+It is the charge to all your payments i.e: 
+
+Bought a desktop that charge VAT on this desk is the creditable taxes
+
+Retained VAT is retained by suppliers
+
+- The rule is that only a natural person can hold a moral person.
+
+- The exception to this rule is for freight and rental.
+
+Caused VAT is that actually charged to customers.
+
+- When you make a cash sale that VAT is caused
+
+- When you make a sale on credit is transferred iva but when you pay that sale becomes caused VAT
+
+    """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["account","account_voucher","account_invoice_tax","analytic"],

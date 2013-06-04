@@ -23,7 +23,6 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 
-
 class stock_incoterms(osv.Model):
     """
     stock_incoterm
@@ -31,5 +30,6 @@ class stock_incoterms(osv.Model):
 
     _inherit = 'stock.incoterms'
     _columns = {
-        'description': fields.text('Description', help='Formal description for this incoterm.'),
+        'description': fields.text('Description',
+            help='Formal description for this incoterm.'),
     }

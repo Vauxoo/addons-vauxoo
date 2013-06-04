@@ -63,7 +63,8 @@ class account_invoice(osv.Model):
                         break
 
                     wf_service.trg_validate(
-                        uid, 'islr.wh.doc', invo_brw.islr_wh_doc_id.id, i[1], cr)
+                        uid, 'islr.wh.doc', invo_brw.islr_wh_doc_id.id, i[1],
+                        cr)
 
                     if i[0] == invo_brw.islr_wh_doc_id.prev_state:
                         break
@@ -79,7 +80,8 @@ class account_invoice(osv.Model):
         invo_brw = self.browse(cr, uid, ids, context=context)[0]
         if invo_brw.islr_wh_doc_id:
             islr_obj.write(cr, uid, [invo_brw.islr_wh_doc_id.id], {
-                           'prev_state': invo_brw.islr_wh_doc_id.state}, context=context)
+                           'prev_state': invo_brw.islr_wh_doc_id.state},
+                            context=context)
         res = super(account_invoice, self).invoice_cancel(
             cr, uid, ids, context=context)
 
@@ -92,5 +94,3 @@ class account_invoice(osv.Model):
         if invo_brw.islr_wh_doc_id:
             return False
         return True
-
-

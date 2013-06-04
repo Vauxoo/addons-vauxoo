@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="view_stock_incoterm_form_inherit">
             <field name="name">stock.incoterms.form.inherit</field>
             <field name="model">stock.incoterms</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="stock.stock_incoterms_form"/>
             <field name="arch" type="xml">
                 <field name="active" position="after">
@@ -15,7 +14,7 @@
         </record>
 <!--Data-->
     </data>
-    <data noupdate='1'>
+    <data noupdate="1">
         <record id="stock.incoterm_EXW" model="stock.incoterms">
             <field name="description">EXW: ( "EX WORKS" / "EN FÁBRICA") EL VENDEDOR CUMPLE SU OBLIGACIÓN DE ENTREGA CUANDO PONE LAS MERCANCÍAS A DISPOSICIÓN DEL COMPRADOR EN EL ESTABLECIMIENTO DEL VENDEDOR O EN OTRO LUGAR CONVENIDO ( FÁBRICA, FACTORÍA, ALMACÉN, ETC) SIN DESPACHARLAS PARA LA EXPORTACIÓN NI CARGARLAS EN EL MEDIO DE TRANSPORTE EL COMPRADOR ASUME TODOS LOS COSTES Y RIESGOS DESDE LA ENTREGA DE LA MERCADERÍA.</field>
         </record>

@@ -45,5 +45,5 @@ class mrp_production(osv.Model):
             for line in production.picking_ids:
                 wf_service.trg_validate(
                     uid, 'stock.picking', line.id, 'button_cancel', cr)
-        return super(mrp_production, self).action_cancel(cr, uid, ids, context=context)
-
+        return super(mrp_production, self).action_cancel(cr, uid, ids,
+                                                            context=context)

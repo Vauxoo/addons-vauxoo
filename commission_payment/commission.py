@@ -19,22 +19,51 @@ class commission_payment(osv.Model):
     _description = __doc__
 
     _columns = {
-        'name': fields.char('Concepto de Comisiones', size=256, required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'bar_id': fields.many2one('baremo.book', 'Baremo', required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'date_start': fields.date('Desde', required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'date_stop': fields.date('Hasta', required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'total_comm': fields.float('Total a Pagar', digits_compute=dp.get_precision('Commission'), readonly=True, states={'write': [('readonly', False)]}),
-        'ret_notes': fields.text('Notas para las Retenciones', readonly=True, states={'draft': [('readonly', False)], 'open': [('readonly', False)]}),
-        'uninvoiced_ids': fields.one2many('commission.uninvoiced', 'commission_id', 'Transacciones sin Facturas', readonly=True, states={'write': [('readonly', False)]}),
-        'sale_noids': fields.one2many('commission.sale.noid', 'commission_id', 'Articulos sin asociacion', readonly=True, states={'write': [('readonly', False)]}),
-        'noprice_ids': fields.one2many('commission.noprice', 'commission_id', 'Productos sin precio de lista historico', readonly=True, states={'write': [('readonly', False)]}),
-        'comm_line_ids': fields.one2many('commission.lines', 'commission_id', 'Comision por productos', readonly=True, states={'write': [('readonly', False)]}),
-        'saleman_ids': fields.one2many('commission.saleman', 'commission_id', 'Total de Comisiones por Vendedor', readonly=True, states={'write': [('readonly', False)]}),
-        'user_ids': fields.many2many('res.users', 'commission_users', 'commission_id', 'user_id', 'Vendedores', required=True, readonly=True, states={'draft': [('readonly', False)]}),
-        'voucher_ids': fields.many2many('account.voucher', 'commission_account_voucher', 'commission_id', 'voucher_id', 'Vouchers', readonly=True, states={'draft': [('readonly', False)], 'open': [('readonly', False)], }),
-        'comm_voucher_ids': fields.one2many('commission.voucher', 'commission_id', 'Vouchers afectados en esta comision', readonly=True, states={'write': [('readonly', False)]}),
-        'comm_invoice_ids': fields.one2many('commission.invoice', 'commission_id', 'Facturas afectadas en esta comision', readonly=True, states={'write': [('readonly', False)]}),
-        'comm_retention_ids': fields.one2many('commission.retention', 'commission_id', 'Facturas con Problemas de Retencion', readonly=True, states={'write': [('readonly', False)]}),
+        'name': fields.char('Concepto de Comisiones', size=256, required=True,
+            readonly=True, states={'draft': [('readonly', False)]}),
+        'bar_id': fields.many2one('baremo.book', 'Baremo', required=True,
+            readonly=True, states={'draft': [('readonly', False)]}),
+        'date_start': fields.date('Desde', required=True, readonly=True,
+            states={'draft': [('readonly', False)]}),
+        'date_stop': fields.date('Hasta', required=True, readonly=True,
+            states={'draft': [('readonly', False)]}),
+        'total_comm': fields.float('Total a Pagar',
+            digits_compute=dp.get_precision('Commission'),
+            readonly=True, states={'write': [('readonly', False)]}),
+        'ret_notes': fields.text('Notas para las Retenciones', readonly=True,
+            states={'draft': [('readonly', False)], 'open': [('readonly', False)]}),
+        'uninvoiced_ids': fields.one2many('commission.uninvoiced',
+            'commission_id', 'Transacciones sin Facturas', readonly=True,
+            states={'write': [('readonly', False)]}),
+        'sale_noids': fields.one2many('commission.sale.noid', 'commission_id',
+            'Articulos sin asociacion', readonly=True,
+            states={'write': [('readonly', False)]}),
+        'noprice_ids': fields.one2many('commission.noprice', 'commission_id',
+            'Productos sin precio de lista historico', readonly=True,
+            states={'write': [('readonly', False)]}),
+        'comm_line_ids': fields.one2many('commission.lines', 'commission_id',
+            'Comision por productos', readonly=True,
+            states={'write': [('readonly', False)]}),
+        'saleman_ids': fields.one2many('commission.saleman', 'commission_id',
+            'Total de Comisiones por Vendedor', readonly=True,
+            states={'write': [('readonly', False)]}),
+        'user_ids': fields.many2many('res.users', 'commission_users',
+            'commission_id', 'user_id', 'Vendedores', required=True,
+            readonly=True, states={'draft': [('readonly', False)]}),
+        'voucher_ids': fields.many2many('account.voucher',
+            'commission_account_voucher', 'commission_id', 'voucher_id',
+            'Vouchers', readonly=True,
+            states={'draft': [('readonly', False)],
+                    'open': [('readonly', False)], }),
+        'comm_voucher_ids': fields.one2many('commission.voucher',
+            'commission_id', 'Vouchers afectados en esta comision',
+            readonly=True, states={'write': [('readonly', False)]}),
+        'comm_invoice_ids': fields.one2many('commission.invoice',
+            'commission_id', 'Facturas afectadas en esta comision',
+            readonly=True, states={'write': [('readonly', False)]}),
+        'comm_retention_ids': fields.one2many('commission.retention',
+            'commission_id', 'Facturas con Problemas de Retencion',
+            readonly=True, states={'write': [('readonly', False)]}),
         'state': fields.selection([
             ('draft', 'Inicial'),
             ('open', 'En Proceso'),
@@ -48,7 +77,19 @@ class commission_payment(osv.Model):
         'name': lambda *a: None,
         'total_comm': lambda *a: 0.00,
         'state': lambda *a: 'draft',
-        'ret_notes': lambda *a: 'Las Facturas que se mencionan ya tienen un pago registrado, pero presentan problemas con una o mas de las retenciones que se indican en el cuadro, se ha tratado bajo los medios existentes de identificar cuales son los porcentajes de retenciones pero no ha sido posible, para generar la comision sobre el pago de las mismas, es necesario el conocimiento de estos valores, por lo que le increpamos a que contacte a sus asociados para obtener esta informacion, su falta no afectara el calculo de la comision pero retardara su ejecucion. Si considera que ha habido un error por favor hable sobre el tema con el personal Administrativo y de Sistemas para determinar las causas del mismo y encontrar una solucion. De otra forma haga caso omiso de este mensaje y su contenido',
+        'ret_notes': lambda *a: 'Las Facturas que se mencionan ya tienen un\
+            pago registrado, pero presentan problemas con una o mas de las\
+            retenciones que se indican en el cuadro, se ha tratado bajo los\
+            medios existentes de identificar cuales son los porcentajes de\
+            retenciones pero no ha sido posible, para generar la comision\
+            sobre el pago de las mismas, es necesario el conocimiento de estos\
+            valores, por lo que le increpamos a que contacte a sus asociados\
+            para obtener esta informacion, su falta no afectara el calculo de\
+            la comision pero retardara su ejecucion. Si considera que ha\
+            habido un error por favor hable sobre el tema con el personal\
+            Administrativo y de Sistemas para determinar las causas del mismo\
+            y encontrar una solucion. De otra forma haga caso omiso de este\
+            mensaje y su contenido',
     }
 
     def prepare(self, cr, user, ids, context={}):
@@ -637,7 +678,6 @@ class commission_payment(osv.Model):
         return True
 
 
-
 class commission_uninvoiced(osv.Model):
     """
     Commission Payment Uninvoiced : commission_uninvoiced
@@ -665,7 +705,8 @@ class commission_sale_noid(osv.Model):
     _columns = {
         'name': fields.char('Comentario', size=256),
         'commission_id': fields.many2one('commission.payment', 'Comision'),
-        'inv_line_id': fields.many2one('account.invoice.line', 'Descripcion de Articulo'),
+        'inv_line_id': fields.many2one('account.invoice.line',
+            'Descripcion de Articulo'),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -702,10 +743,12 @@ class commission_lines(osv.Model):
     _order = 'saleman_id'
 
     _columns = {
-        'commission_id': fields.many2one('commission.payment', 'Comision', required=True),
+        'commission_id': fields.many2one('commission.payment', 'Comision',
+            required=True),
         'name': fields.char('Transaccion', size=256, required=True),
         'pay_date': fields.date('Fecha', required=True),
-        'pay_off': fields.float('Pago', digits_compute=dp.get_precision('Commission')),
+        'pay_off': fields.float('Pago',
+            digits_compute=dp.get_precision('Commission')),
 
         'voucher_id': fields.many2one('account.voucher', 'Voucher'),
 
@@ -715,31 +758,46 @@ class commission_lines(osv.Model):
         'partner_id': fields.many2one('res.partner', 'Empresa'),
         'saleman_name': fields.char('Vendedor', size=256, required=True),
         'saleman_id': fields.many2one('res.users', 'Vendedor', required=True),
-        'pay_inv': fields.float('Abono Fact.', digits_compute=dp.get_precision('Commission')),
+        'pay_inv': fields.float('Abono Fact.',
+            digits_compute=dp.get_precision('Commission')),
 
         'inv_date': fields.date('Fecha Doc.'),
-        'days': fields.float('Dias', digits_compute=dp.get_precision('Commission')),
+        'days': fields.float('Dias',
+            digits_compute=dp.get_precision('Commission')),
 
-        'inv_subtotal': fields.float('SubTot. Doc.', digits_compute=dp.get_precision('Commission')),
+        'inv_subtotal': fields.float('SubTot. Doc.',
+            digits_compute=dp.get_precision('Commission')),
 
         'item': fields.char('Item', size=256, required=True),
-        'price_unit': fields.float('Prec. Unit.', digits_compute=dp.get_precision('Commission')),
-        'price_subtotal': fields.float('SubTot. Item', digits_compute=dp.get_precision('Commission')),
+        'price_unit': fields.float('Prec. Unit.',
+            digits_compute=dp.get_precision('Commission')),
+        'price_subtotal': fields.float('SubTot. Item',
+            digits_compute=dp.get_precision('Commission')),
 
-        'price_list': fields.float('Precio Lista', digits_compute=dp.get_precision('Commission')),
+        'price_list': fields.float('Precio Lista',
+            digits_compute=dp.get_precision('Commission')),
         'price_date': fields.date('Fecha Lista'),
 
-        'perc_ret_islr': fields.float('Ret ISLR (%)', digits_compute=dp.get_precision('Commission')),
-        'perc_ret_im': fields.float('Ret IM (%)', digits_compute=dp.get_precision('Commission')),
-        'perc_ret_iva': fields.float('Ret IVA (%)', digits_compute=dp.get_precision('Commission')),
-        'perc_iva': fields.float('IVA (%)', digits_compute=dp.get_precision('Commission')),
+        'perc_ret_islr': fields.float('Ret ISLR (%)',
+            digits_compute=dp.get_precision('Commission')),
+        'perc_ret_im': fields.float('Ret IM (%)',
+            digits_compute=dp.get_precision('Commission')),
+        'perc_ret_iva': fields.float('Ret IVA (%)',
+            digits_compute=dp.get_precision('Commission')),
+        'perc_iva': fields.float('IVA (%)',
+            digits_compute=dp.get_precision('Commission')),
 
-        'rate_item': fields.float('Dcto. (%)', digits_compute=dp.get_precision('Commission')),
+        'rate_item': fields.float('Dcto. (%)',
+            digits_compute=dp.get_precision('Commission')),
 
-        'rate_number': fields.float('Bar. Rate (%)', digits_compute=dp.get_precision('Commission')),
-        'timespan': fields.float('Bar. Dias', digits_compute=dp.get_precision('Commission')),
-        'baremo_comm': fields.float('Baremo %Comm.', digits_compute=dp.get_precision('Commission')),
-        'commission': fields.float('Comm. / Item', digits_compute=dp.get_precision('Commission')),
+        'rate_number': fields.float('Bar. Rate (%)',
+            digits_compute=dp.get_precision('Commission')),
+        'timespan': fields.float('Bar. Dias',
+            digits_compute=dp.get_precision('Commission')),
+        'baremo_comm': fields.float('Baremo %Comm.',
+            digits_compute=dp.get_precision('Commission')),
+        'commission': fields.float('Comm. / Item',
+            digits_compute=dp.get_precision('Commission')),
     }
 
     _defaults = {
@@ -760,8 +818,11 @@ class commission_saleman(osv.Model):
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'saleman_name': fields.char('Vendedor', size=256, required=True),
         'saleman_id': fields.many2one('res.users', 'Vendedor', required=True),
-        'comm_total': fields.float('Comision a pagar', digits_compute=dp.get_precision('Commission')),
-        'comm_voucher_ids': fields.one2many('commission.voucher', 'comm_sale_id', 'Vouchers afectados en esta comision', required=False),
+        'comm_total': fields.float('Comision a pagar',
+            digits_compute=dp.get_precision('Commission')),
+        'comm_voucher_ids': fields.one2many('commission.voucher',
+            'comm_sale_id', 'Vouchers afectados en esta comision',
+            required=False),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -781,7 +842,9 @@ class commission_voucher(osv.Model):
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'comm_sale_id': fields.many2one('commission.saleman', 'Vendedor'),
         'voucher_id': fields.many2one('account.voucher', 'Voucher'),
-        'comm_invoice_ids': fields.one2many('commission.invoice', 'comm_voucher_id', 'Facturas afectadas en esta comision', required=False),
+        'comm_invoice_ids': fields.one2many('commission.invoice',
+            'comm_voucher_id', 'Facturas afectadas en esta comision',
+            required=False),
         'date': fields.date('Fecha'),
     }
     _defaults = {
@@ -802,11 +865,16 @@ class commission_invoice(osv.Model):
         'commission_id': fields.many2one('commission.payment', 'Comision'),
         'comm_voucher_id': fields.many2one('commission.voucher', 'Voucher'),
         'invoice_id': fields.many2one('account.invoice', 'Factura'),
-        'comm_line_ids': fields.one2many('commission.lines', 'comm_invoice_id', 'Comision por productos', required=False),
-        'pay_inv': fields.float('Abono Fact.', digits_compute=dp.get_precision('Commission')),
-        'ret_iva': fields.float('% Ret. IVA', digits_compute=dp.get_precision('Commission')),
-        'ret_islr': fields.float('% Ret. ISLR', digits_compute=dp.get_precision('Commission')),
-        'ret_im': fields.float('% Ret. IM', digits_compute=dp.get_precision('Commission')),
+        'comm_line_ids': fields.one2many('commission.lines',
+            'comm_invoice_id', 'Comision por productos', required=False),
+        'pay_inv': fields.float('Abono Fact.',
+            digits_compute=dp.get_precision('Commission')),
+        'ret_iva': fields.float('% Ret. IVA',
+            digits_compute=dp.get_precision('Commission')),
+        'ret_islr': fields.float('% Ret. ISLR',
+            digits_compute=dp.get_precision('Commission')),
+        'ret_im': fields.float('% Ret. IM',
+            digits_compute=dp.get_precision('Commission')),
     }
     _defaults = {
         'name': lambda *a: None,
@@ -821,7 +889,8 @@ class commission_lines_2(osv.Model):
     _inherit = 'commission.lines'
 
     _columns = {
-        'comm_invoice_id': fields.many2one('commission.invoice', 'Factura Relacional Interna'),
+        'comm_invoice_id': fields.many2one('commission.invoice',
+            'Factura Relacional Interna'),
     }
 
 
@@ -853,7 +922,9 @@ class VoucherLines(osv.Model):
 
     _columns = {
         'paid_comm': fields.boolean('Comision Pagada?'),
-        'partner_id': fields.related('voucher_id', 'partner_id', type='many2one', relation='res.partner', string='Partner', store=True),
+        'partner_id': fields.related('voucher_id', 'partner_id',
+            type='many2one', relation='res.partner',
+            string='Partner', store=True),
     }
     _defaults = {
         'paid_comm': lambda *a: False,

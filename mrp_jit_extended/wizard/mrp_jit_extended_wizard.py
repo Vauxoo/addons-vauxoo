@@ -49,7 +49,8 @@ class procurement_order_merge_jit_extended(osv.TransientModel):
             production_data = mrp_production_pool.browse(
                 cr, uid, production_id, context=context)
             for line in production_data.procurement_ids:
-                if (line.state == 'draft') and (line.product_id.supply_method == 'produce'):
+                if (line.state == 'draft') and\
+                (line.product_id.supply_method == 'produce'):
                     procurement_ids.append(line.id)
 
         res = procurement_order_pool.do_merge(
@@ -59,7 +60,9 @@ class procurement_order_merge_jit_extended(osv.TransientModel):
         draft_procurements = procurement_order_pool.browse(
             cr, uid, procurement_ids, context=context)
         for line in draft_procurements:
-            if (line.state == 'draft') and (line.product_id.supply_method == 'produce') and (line.product_id.type != 'service'):
+            if (line.state == 'draft') and\
+            (line.product_id.supply_method == 'produce') and\
+            (line.product_id.type != 'service'):
                 res.append(line.id)
         # forwards procurements that were merged
         wf_service = netsvc.LocalService("workflow")
@@ -79,13 +82,16 @@ class procurement_order_merge_jit_extended(osv.TransientModel):
                 subproduction_ids = subproductions.get('production_ids')
                 for wiz_data in self.browse(cr, uid, ids, context):
                     if wiz_data.date_planned:
-                        mrp_production_pool.write(cr, uid, new_production_id[0], {'subproduction_ids': [
-                                                  (6, 0, subproduction_ids)], 'date_planned': wiz_data.date_planned})
+                        mrp_production_pool.write(cr, uid,
+                            new_production_id[0], {
+                                'subproduction_ids':
+                                    [(6, 0, subproduction_ids)],
+                                'date_planned': wiz_data.date_planned})
                     else:
-                        mrp_production_pool.write(cr, uid, new_production_id[
-                                                  0], {'subproduction_ids': [(6, 0, subproduction_ids)]})
+                        mrp_production_pool.write(cr, uid,
+                            new_production_id[0],
+                            {'subproduction_ids': [(6, 0, subproduction_ids)]})
 
         if new_ids:
             self.procurement_merge_jit(cr, uid, ids, context, new_ids)
         return {}
-
