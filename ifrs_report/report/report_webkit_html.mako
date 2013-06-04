@@ -41,7 +41,7 @@
 				%for li in range(1, 3):
 					<th class="celda">
 						%try:
-							${ ifrs.ifrs_lines_ids[0]._get_column_name(li) }
+							${ period_name[li][2] }
 						%except:
 							/
 						%endtry
@@ -86,7 +86,7 @@
 						<tr>
 					%endif
 						<th class="justify">${ifrs_al.name or ''|entity}</th>
-						%for lin in range(1, 13):
+						%for lin in range(1, 3):
 							<%
 								try:
 									res.setdefault('total_%s'%lin, 0)
@@ -109,7 +109,7 @@
 			%if ifrs_l.type != 'total':
 				<tr> 
 					<th class="justify">Undefined</th>
-					%for line in range(1, 13):
+					%for line in range(1, 3):
 						<%
 							total_detail= abs(res.get('total_%s'%line, 0.0))
 							total_period = abs(res_total.get('total_%s'%line, 0.0))

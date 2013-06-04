@@ -336,13 +336,13 @@ class ifrs_lines(osv.osv):
        
         res = self._get_sum(cr, uid, ifrs_line.id, context = context)
         print "1. res %s" % res
-        if ifrs_line.type == 'detail':
-            res = self.exchange(res, to_currency_id, from_currency_id)
-            print "2. res %s" % res
-        elif ifrs_line.type == 'total':
-            if ifrs_line.operator not in ('percent','ratio'):
-                if ifrs_line.comparison not in ('percent','ratio','product'):
-                    res = self.exchange(res, to_currency_id, from_currency_id)
+        #if ifrs_line.type == 'detail':
+        #    res = self.exchange(res, to_currency_id, from_currency_id)
+        #    print "2. res %s" % res
+        #elif ifrs_line.type == 'total':
+        #    if ifrs_line.operator not in ('percent','ratio'):
+        #        if ifrs_line.comparison not in ('percent','ratio','product'):
+        #            res = self.exchange(res, to_currency_id, from_currency_id)
         print "3. res %s" % res
         return res
 
