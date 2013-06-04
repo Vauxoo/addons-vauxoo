@@ -15,7 +15,6 @@
             report_type="webkit"
             />
 
-<!--
             <report auto="False"
                 id="report_webkit_html_12"
                 model="ifrs.ifrs"
@@ -25,7 +24,6 @@
                 report_type="webkit"
                 webkit_header="ir_header_webkit_ifrsreport"
                 multi="True"/>
--->
 <!--
             
         <report
@@ -55,7 +53,5 @@
 
             
 -->
-                
-
     </data>
 </openerp>

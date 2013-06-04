@@ -1,60 +1,21 @@
 <html xmlns="http://www.w3.org/TR/REC-html40" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
 <head>
+	
     <style type="text/css">
         ${css}
-        <style type="text/css">
-html body {
-	margin:0;
-	overflow: hidden;
-}
-#contenedor {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	width: 100%;
-	height: 100%;
-}	
-#cabecera {
-	width: 100%;
-	height: 10%;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size:18px;
-	background-color:#CCCCCC;
-	padding: 3px;
-	text-align: center;
-	overflow: hidden;
-}	
-#cuerpo {
-	width: 100%;
-	height: 83%;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size:11px;
-	background-color:#ffffff;
-	padding: 3px;
-	text-align: center;
-	overflow: auto;
-}	
-#pie { 
-	position: absolute;
-	left: 0px;
-	bottom: 0px;
-	width: 100%;
-	height: 7%;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size:11px;
-	background-color:#CC0000;
-	color:blue;
-	padding: 3px;
-	text-align: center;
-	overflow: hidden;
-}	
+       
     </style>
-
+<table>
+	<tr>
+		
+<td width="30%" rowspan="5"><b>Reporte Impreso en OpenErp con Webkit</b></td>
+<td width="30%" rowspan="5"><b>Fecha de Impresi&oacute;n:${formatLang(time.strftime('%Y-%m-%d'),date=True)} ${time.strftime('%H:%m')}</b></td>
+</tr>
+</table>
 </head>
 
 
 <body style="border:0; margin: 0;" onload="subst()" >
-	<div id="pie">Reporte impreso en OpenErp</div>
     %for ifrs in objects :
 	<table>
 		<tr>
