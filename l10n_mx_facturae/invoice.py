@@ -1051,6 +1051,14 @@ class account_invoice(osv.Model):
                         '\n', ' ').replace('\r', ' ').replace(' ', '') or '',
                 },
             })
+            if invoice_data['Emisor']['DomicilioFiscal'].get('colonia') == 'N/A':
+                invoice_data['Emisor']['DomicilioFiscal'].pop('colonia')
+            if invoice_data['Emisor']['ExpedidoEn'].get('colonia') == 'N/A':
+                invoice_data['Emisor']['ExpedidoEn'].pop('colonia')
+            if invoice_data['Emisor']['DomicilioFiscal'].get('localidad') == 'N/A':
+                invoice_data['Emisor']['DomicilioFiscal'].pop('localidad')
+            if invoice_data['Emisor']['ExpedidoEn'].get('localidad') == 'N/A':
+                invoice_data['Emisor']['ExpedidoEn'].pop('localidad')
             # Termina seccion: Emisor
             # Inicia seccion: Receptor
             parent_id = invoice.partner_id.commercial_partner_id.id
@@ -1107,6 +1115,10 @@ class account_invoice(osv.Model):
                         '\n', ' ').replace('\r', ' ') or '',
                 },
             })
+            if invoice_data['Receptor']['Domicilio'].get('colonia') == 'N/A':
+                invoice_data['Receptor']['Domicilio'].pop('colonia')
+            if invoice_data['Receptor']['Domicilio'].get('localidad') == 'N/A':
+                invoice_data['Receptor']['Domicilio'].pop('localidad')
             # Termina seccion: Receptor
             # Inicia seccion: Conceptos
             invoice_data['Conceptos'] = []
