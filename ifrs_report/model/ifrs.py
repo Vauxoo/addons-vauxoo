@@ -29,14 +29,6 @@ from osv import fields
 
 from tools.translate import _
 
-_iter_record = 0
-_fy = False
-_total_record = 0
-_period_info_list = []    #~ [ 0 : period_enumerate, 1 : period_id, 2 : period_name ]
-_title_line = ' '
-_from_currency_id = 0
-_to_currency_id = 0
-
 class ifrs_ifrs(osv.osv):
 
     _name = 'ifrs.ifrs'
@@ -281,20 +273,13 @@ class ifrs_lines(osv.osv):
 
         return res
 
-    def _get_column_name(self, cr, uid, ids, column_num, context=None):
-        if context is None: context = {}
-        """devuelve string con el nombre del periodo que debe titular ese numero de columna"""
-
-        return self._period_info_list[column_num][2]
-
-
     def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
         if context is None: context = {}
 
         """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
 
-        period_list = _period_info_list = []
-        period_list.append( ('0', None , _title_line ) ) 
+        period_list = []
+        period_list.append( ('0', None , ' ' ) ) 
 
         fiscalyear_bwr = self.pool.get('account.fiscalyear').browse(cr, uid, fiscalyear_id, context=context)
         
@@ -305,9 +290,7 @@ class ifrs_lines(osv.osv):
         for ii, period_id in enumerate(periods_ids, start=1):
             period_list.append((str(ii), period_id, periods.browse(cr, uid, period_id, context=context).name ))
 
-        _period_info_list = period_list
-        _fy = fiscalyear_id
-        return _period_info_list
+        return period_list
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None: context = {}
