@@ -75,7 +75,7 @@
                         %endif
                         %if o.address_issued_id:
                         <br/>Expedido en:
-                            <br/>${o.address_issued_id.name or ''|entity}
+                            ${o.address_issued_id.name or ''|entity}
                             <br/>${o.address_issued_id.street or ''|entity}
                             ${o.address_issued_id.l10n_mx_street3 or ''|entity}
                             ${o.address_issued_id.l10n_mx_street4 or ''|entity}

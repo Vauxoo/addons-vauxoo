@@ -181,8 +181,8 @@ font-size: 10pt;
 
 .fiscal_address{
 color: #280099;
-text-align: right;
-font-size: 10pt;
+text-align: left;
+font-size: 8pt;
 }
 .invoice{
 color: red;
