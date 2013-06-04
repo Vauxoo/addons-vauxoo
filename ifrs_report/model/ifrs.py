@@ -309,14 +309,15 @@ class ifrs_lines(osv.osv):
         _fy = fiscalyear_id
         return _period_info_list
 
-    def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, context=None):
+    def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None: context = {}
         if from_currency_id == to_currency_id:
             return from_amount
         curr_obj = self.pool.get('res.currency')
-        return curr_obj.compute(cr, uid, from_currency_id, to_currency_id, from_amount)
+        context['date'] = exchange_date
+        return curr_obj.compute(cr, uid, from_currency_id, to_currency_id, from_amount, context=context)
     
-    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
         if context is None: context = {}
         
         '''devuelve la cantidad correspondiente al periodo'''
@@ -334,11 +335,11 @@ class ifrs_lines(osv.osv):
        
         res = self._get_sum(cr, uid, ifrs_line.id, context = context)
         if ifrs_line.type == 'detail':
-            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, context=context)
+            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         elif ifrs_line.type == 'total':
             if ifrs_line.operator not in ('percent','ratio'):
                 if ifrs_line.comparison not in ('percent','ratio','product'):
-                    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, context=context)
+                    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
 
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):

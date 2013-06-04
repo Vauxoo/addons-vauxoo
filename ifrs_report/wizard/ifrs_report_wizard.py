@@ -109,6 +109,7 @@ class ifrs_report_wizard(osv.osv_memory):
         datas['company'] = wizard_ifrs.company_id.id
         datas['columns'] = str(wizard_ifrs.columns)
         datas['target_move'] = wizard_ifrs.target_move
+        datas['exchange_date'] = wizard_ifrs.exchange_date
 
         if datas['report_type'] == 'all':
             datas['fiscalyear'] = wizard_ifrs.fiscalyear_id.id or self._get_fiscalyear(cr, uid, context=context)
@@ -117,7 +118,7 @@ class ifrs_report_wizard(osv.osv_memory):
             datas['columns'] = 'ifrs'
             datas['period'] = wizard_ifrs.period.id or self._get_period( cr, uid, context=context )
             datas['fiscalyear'] = self._get_fiscalyear(cr, uid, context=context, period_id=datas['period'])
-
+        
         return {
             'type': 'ir.actions.report.xml',
             'report_name': datas['columns'],

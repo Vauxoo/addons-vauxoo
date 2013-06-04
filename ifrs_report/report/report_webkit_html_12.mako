@@ -64,7 +64,7 @@
                     <%
                         try:
                             res_total.setdefault('total_%s'%lins, 0)
-                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'],lins, data['target_move']) 
+                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], lins, data['target_move']) 
                             res_total['total_%s'%lins] += amount_value 
                         except:
                             pass
@@ -91,7 +91,7 @@
                             <%
                                 try:
                                     res.setdefault('total_%s'%lin, 0)
-                                    amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], lin, data['target_move'], ifrs_al.id)
+                                    amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'],data['exchange_date'], lin, data['target_move'], ifrs_al.id)
                                     res['total_%s'%lin] += amount_value
                                 except:
                                     pass
