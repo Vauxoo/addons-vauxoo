@@ -288,7 +288,7 @@ class ifrs_lines(osv.osv):
         return self._period_info_list[column_num][2]
 
 
-    def _get_periods_name_list(self, cr, uid, ids, ifrs_obj, fiscalyear_id, context=None):
+    def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
         if context is None: context = {}
 
         """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""

@@ -33,7 +33,7 @@
 
     <table class="list_table"  width="90%">
         <%
-            period_name = ifrs.ifrs_lines_ids[0]._get_periods_name_list(o,data['fiscalyear'])
+            period_name = ifrs.ifrs_lines_ids[0]._get_periods_name_list(data['fiscalyear'])
         %>
         <thead>
             <tr>
