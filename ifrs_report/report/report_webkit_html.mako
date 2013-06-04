@@ -50,7 +50,7 @@
 				%for li in range(1, 3):
 					<th class="celda">
 						%try:
-							${ ifrs.ifrs_lines_ids[0]._get_column_name(li) }
+							${ period_name[li][2] }
 						%except:
 							/
 						%endtry
