@@ -5,7 +5,7 @@
         <record model="ir.ui.view" id="view_partner_form_inh_xml22">
             <field name="name">view.partner.form.inh.xml22</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base_vat.view_partner_form"/>
+            <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <field name="property_payment_term" position="before">
                     <field name="pay_method_id" colspan="2"/>
