@@ -36,7 +36,7 @@
         <table class="basic_table">
             <tr>
                 <td width="25%" align="center">
-                    ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),120, 120)}
+                    ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),180, 85)}
                 </td>
                 <td class="td_data_exp" width="50%">
                     <div class="emitter">
