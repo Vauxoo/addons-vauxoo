@@ -95,7 +95,7 @@ class account_voucher(osv.osv):
                     'credit': float('%.*f' % (2,abs(credit))),
                     'debit': float('%.*f' % (2,abs(debit))),
                     'amount_tax_unround':amount_tax_unround,
-                    #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
+#                    'analytic_account_id': line_tax.analytic_account_id and line_tax.analytic_account_id.id or False,
                     'date': voucher.date,
                     'tax_id': line_tax.id
                     }
@@ -134,7 +134,7 @@ class account_voucher(osv.osv):
                     'credit': float('%.*f' % (2,abs(credit))),
                     'debit': float('%.*f' % (2,abs(debit))),
  #                   'amount_tax_unround':amount_tax_unround,
-                    #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
+                    'analytic_account_id': line_tax.analytic_account_id and line_tax.analytic_account_id.id or False,
                     'date': voucher.date,
                     'tax_id': line_tax.id
                     }
@@ -319,7 +319,8 @@ class account_voucher(osv.osv):
                                     'original_tax':base_amount_curr,
                                     'diff_account_id':diff_account_id,
                                     'diff_amount_tax':abs(diff_amount_tax),
-                                    'move_line_id': move_line_id
+                                    'move_line_id': move_line_id,
+                                    'analytic_account_id': tax.account_analytic_id and tax.account_analytic_id.id or False
                                     
                                 }
                                 tax_line_compute = tax_line_obj.create(cr, uid, tax_line, context=context)
@@ -433,6 +434,7 @@ class account_voucher_line_tax(osv.osv):
         'diff_account_id':fields.many2one('account.account','Account Diff'),
         'voucher_line_id':fields.many2one('account.voucher.line', 'Voucher Line'),
         'move_line_id':fields.many2one('account.move.line','Move'),
+        'analytic_account_id': fields.many2one('account.analytic.account', 'Account Analytic')
         
     }
 account_voucher_line_tax()
