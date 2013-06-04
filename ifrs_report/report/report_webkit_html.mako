@@ -51,10 +51,10 @@
 				${ifrs_l.name}
 			</td>
 			<td>
-				${ifrs_l.type=='detail' and formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['period'], two=True), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+				${ifrs_l.type=='detail' and formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['period'], two=True), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
 			</td>
 			<td>
-				${ifrs_l.type=='total' and  formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['period'], two=True), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+				${ifrs_l.type=='total' and  formatLang( ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['period'], two=True), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
 			</td>
 		  %endif
 

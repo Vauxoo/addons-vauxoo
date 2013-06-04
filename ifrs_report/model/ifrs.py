@@ -300,12 +300,12 @@ class ifrs_lines(osv.osv):
         context['date'] = exchange_date
         return curr_obj.compute(cr, uid, from_currency_id, to_currency_id, from_amount, context=context)
     
-    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
         if context is None: context = {}
         
         '''devuelve la cantidad correspondiente al periodo'''
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
-        to_currency_id = ifrs_line.ifrs_id.currency_id.id
+        to_currency_id = currency_wizard
 
         if period_num:
             if two:

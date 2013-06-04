@@ -110,6 +110,7 @@ class ifrs_report_wizard(osv.osv_memory):
         datas['columns'] = str(wizard_ifrs.columns)
         datas['target_move'] = wizard_ifrs.target_move
         datas['exchange_date'] = wizard_ifrs.exchange_date
+        datas['currency_wizard'] = wizard_ifrs.currency_id.id 
 
         if datas['report_type'] == 'all':
             datas['fiscalyear'] = wizard_ifrs.fiscalyear_id.id or self._get_fiscalyear(cr, uid, context=context)
