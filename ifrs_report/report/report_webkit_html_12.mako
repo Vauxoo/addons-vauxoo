@@ -108,20 +108,6 @@
                 %endif
                 <%row_count+=1%>
             %endfor
-            %if ifrs_l.type != 'total':
-                <tr> 
-                    <th class="justify">Undefined</th>
-                    %for line in range(1, 13):
-                        <%
-                            total_detail= abs(res.get('total_%s'%line, 0.0))
-                            total_period = abs(res_total.get('total_%s'%line, 0.0))
-                            total_undefined = total_period - total_detail
-                            total_undefined = abs(total_undefined)
-                        %>
-                        <td class="celda_border">${formatLang( total_undefined, digits=2, date=False, date_time=False, grouping=3, monetary=False)}</td>
-                    %endfor
-                </tr>
-            %endif
         %endfor
         </tbody>
     </table>
