@@ -53,7 +53,7 @@ class ifrs_ifrs(osv.osv):
     _columns = {
         'name' : fields.char('Name', 128, required = True ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade' ),
-        'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
+        'currency_id': fields.related('company_id', 'currency_id', type='many2one', relation='res.currency', string='Company Currency',help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
         'title' : fields.char('Title', 128, required = True, translate = True ),
         'code' : fields.char('Code', 128, required = True ),
         'description' : fields.text('Description'),
