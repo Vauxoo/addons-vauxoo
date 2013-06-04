@@ -35,4 +35,7 @@ class inherited_product(osv.Model):
     """
     _inherit = "product.product"
     _columns = {
+            'product_rfq':fields.boolean('RFQ', help='This field indicate if '
+                                                     'this product will have '
+                                                     'a requisition'), 
     }

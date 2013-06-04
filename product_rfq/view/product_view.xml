@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+    <record model="ir.ui.view" id="inherited_product_product_form_rfq">
+            <field name="name">product.product.form.inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="purchase_requisition.product_normal_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='purchase_requisition']" position="after">
+                        <field name="product_rfq"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
