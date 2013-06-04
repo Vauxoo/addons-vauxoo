@@ -310,6 +310,7 @@ class ifrs_lines(osv.osv):
         return _period_info_list
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, context=None):
+        if context is None: context = {}
         if from_currency_id == to_currency_id:
             return from_amount
         curr_obj = self.pool.get('res.currency')
@@ -322,9 +323,6 @@ class ifrs_lines(osv.osv):
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
         to_currency_id = ifrs_line.ifrs_id.currency_id.id
 
-        #print "ifrs_line %s " % ifrs_line
-        #print "period_info_list %s _fy %s" % (period_info, fiscalyear)
-        print "period_num %s" % period_num
         if period_num:
             if two:
                 context = {'period_from': period_num, 'period_to':period_num, 'state': target_move, 'partner_detail':pd, 'fiscalyear':fiscalyear}
@@ -335,15 +333,12 @@ class ifrs_lines(osv.osv):
             context = {'whole_fy': 'True'} 
        
         res = self._get_sum(cr, uid, ifrs_line.id, context = context)
-        print "1. res %s" % res
-        #if ifrs_line.type == 'detail':
-        #    res = self.exchange(res, to_currency_id, from_currency_id)
-        #    print "2. res %s" % res
-        #elif ifrs_line.type == 'total':
-        #    if ifrs_line.operator not in ('percent','ratio'):
-        #        if ifrs_line.comparison not in ('percent','ratio','product'):
-        #            res = self.exchange(res, to_currency_id, from_currency_id)
-        print "3. res %s" % res
+        if ifrs_line.type == 'detail':
+            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, context=context)
+        elif ifrs_line.type == 'total':
+            if ifrs_line.operator not in ('percent','ratio'):
+                if ifrs_line.comparison not in ('percent','ratio','product'):
+                    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, context=context)
         return res
 
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
@@ -364,7 +359,6 @@ class ifrs_lines(osv.osv):
                     )
                 dat = cr.dictfetchall()
                 res = [lins for lins in partner_obj.browse( cr, uid, [li['id'] for li in dat], context=context )]
-                print "GET_PARTNER_DETAIL %s" % res
         return res
     
     _columns = {
