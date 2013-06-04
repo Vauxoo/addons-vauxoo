@@ -10,6 +10,11 @@
                 <xpath expr="//page[@string='General Information']" position="before">
                     <page string="Cedula (RFC)" >
                     <field colspan="4" name="cif_file" widget="image"/>
+                    <p  class="oe_grey">
+                        Federal Taxpayers Registry is a key that you get to
+                        identify when making statements or tax payments 
+                        This CIF is used for report of electronic invoice          
+                    </p>     
                     </page>
                 </xpath>
             </field>
