@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
+#    Coded by: jorge (jorge_nr@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,25 +24,18 @@
 #
 ##############################################################################
 
-{
-    "name": "Email Template Multi-Company",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "website" : "http://www.vauxoo.com/",
-    "description": """
-Email Multi-Company
-===================
-Add company_id field in model email.template
-    """,
-    'depends': ['email_template',],
-    'init_xml': [],
-    'update_xml': [
-        'security/email_template_security.xml',
-        'email_template_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+from openerp.osv import osv, fields
+
+
+class ir_mail_company(osv.Model):
+    _inherit = "ir.mail_server"
+    _columns = {
+        'company_id': fields.many2one('res.company', 'Company'),
+    }
+
+    _defaults = {
+        'company_id': lambda self, cr, uid, c:
+        self.pool.get('res.company')._company_default_get(cr, uid,
+                                            'email.template', context=c),
+    }
