@@ -90,7 +90,7 @@ class res_partner(osv.Model):
                             <label for="street" string="Address"/>
                             <div>
                                 <field name="street" placeholder="Street..."/>
-                                <field name="street2"/>
+                                <field name="street2" placeholder="Colonia..."/>
                                 <field name="l10n_mx_street3" invisible="True" placeholder="No. Interior..."/>
                                 <field name="l10n_mx_street4" placeholder="No. Exterior..."/>
                                 <div class="address_format">
