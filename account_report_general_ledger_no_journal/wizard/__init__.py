@@ -1,0 +1,1 @@
+import account_reporte_general_ledger_no_journal
