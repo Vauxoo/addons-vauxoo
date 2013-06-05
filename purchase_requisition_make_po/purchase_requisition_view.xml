@@ -12,6 +12,12 @@
                 <xpath expr="//field[@name='line_ids']//form//field[@name='product_qty']" position="before">
                     <field name="name"/>
                 </xpath>
+                <xpath expr="//field[@name='line_ids']//form//field[@name='name']" position="after">
+                    <field name="account_analytic_id"/>                                        
+                </xpath>
+                <xpath expr="//field[@name='line_ids']//tree//field[@name='name']" position="after">
+                    <field name="account_analytic_id"/>                                        
+                </xpath> 
             </field>
         </record>      
     </data>
