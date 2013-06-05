@@ -23,10 +23,18 @@
 {
     "name" : "Grouped by product,move_id y analytic in model account_move_line",
     "version" : "1.0",
-    "depends" : ['account'],
+    "depends" : [
+        'account',
+        'analytic'
+        ],
     "author" : "Vauxoo",
     #"license" : "AGPL-3",
-    "description" : """This  module Grouped by product,move_id y analytic in model account_move_line
+    "description" : """
+Improvements in account.move.line view:
+=======================================
+
+On search view for journal items (account_move_line) we add group by product,
+move_id and analytic_id.
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
