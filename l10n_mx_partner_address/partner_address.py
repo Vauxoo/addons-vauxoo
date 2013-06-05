@@ -90,9 +90,9 @@ class res_partner(osv.Model):
                             <label for="street" string="Address"/>
                             <div>
                                 <field name="street" placeholder="Street..."/>
-                                <field name="street2" placeholder="Colonia..."/>
-                                <field name="l10n_mx_street3" invisible="True" placeholder="No. Exterior..."/>
                                 <field name="l10n_mx_street4" placeholder="No. Interior..."/>
+                                <field name="l10n_mx_street3" invisible="True" placeholder="No. Exterior..."/>
+                                <field name="street2" placeholder="Colonia..."/>
                                 <div class="address_format">
                                     %s
                                     <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
