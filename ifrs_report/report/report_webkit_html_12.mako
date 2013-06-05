@@ -54,7 +54,6 @@
             <%
                 res = {}
                 res_total = {}
-                row_count = 1
             %>
             <tbody>
                 
