@@ -38,6 +38,7 @@ Purchase Manager Payment Approve
 
 This module, allows to Purchase Manager Approve or Disapproves the pay to one invoice, through two buttons added in the supplier invoice.
 Also added permissions to buttons.
+Added message to block the invoice messaging when the invoice is Approve to Pay or Desapproves to Pay.
 
 The description of two buttons:
     
