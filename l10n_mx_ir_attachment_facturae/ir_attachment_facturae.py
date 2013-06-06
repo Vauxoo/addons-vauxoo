@@ -34,6 +34,8 @@ import os
 
 class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
+    _inherit = ['mail.thread', 'ir.needaction_mixin']
+
 
     def _get_type(self, cr, uid, ids=None, context=None):
         types = []
@@ -63,6 +65,7 @@ class ir_attachment_facturae_mx(osv.Model):
             readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
         'msj': fields.text('Last Message', readonly=True,
+            track_visibility='onchange',
             help='Message generated to upload XML to sign'),
         'last_date': fields.datetime('Last Modified', readonly=True,
             help='Date when is generated the attachment'),
@@ -189,7 +192,7 @@ class ir_attachment_facturae_mx(osv.Model):
             fdata = base64.encodestring(xml_data)
             res = invoice_obj._upload_ws_file(
                 cr, uid, [invoice.id], fdata, context={})
-            msj += tools.ustr(res['msg']) + '\n'
+            msj = tools.ustr(res['msg']) + '\n'
             if res['status'] == '500':
                 raise osv.except_osv(_('Warning'), _(res['msg']))
             if res['status'] == '301':
@@ -229,9 +232,9 @@ class ir_attachment_facturae_mx(osv.Model):
             self.pool.get('ir.attachment').write(cr, uid, attachment.id, {
                 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
-            msj += _("Attached Successfully PDF\n")
+            msj = _("Attached Successfully PDF\n")
         else:
-            msj += _("Not Attached PDF\n")
+            msj = _("Not Attached PDF\n")
         return self.write(cr, uid, ids, {
             'state': 'printable',
             'file_pdf': aids or False,
@@ -271,9 +274,9 @@ class ir_attachment_facturae_mx(osv.Model):
                     'mail.compose.message').create(cr, uid, mssg)
                 state = self.pool.get('mail.compose.message').send_mail(
                     cr, uid, [mssg_id], context=context)
-                msj += _('Email Send Successfully\n')
+                msj = _('Email Send Successfully\n')
             else:
-                msj += _('Not Email Send\n')
+                msj = _('Not Email Send\n')
         elif release.version < '7':
             mail = self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject+' '+type,
@@ -312,7 +315,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 cr, uid, [invoice], context={})
             sf_cancel = invoice_obj.sf_cancel(
                 cr, uid, [invoice.id], context={})
-            msj += tools.ustr(sf_cancel['message'])
+            msj = tools.ustr(sf_cancel['message'])
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
