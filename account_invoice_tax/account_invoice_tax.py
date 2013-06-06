@@ -99,6 +99,8 @@ class account_invoice_tax(osv.Model):
                     val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
                     val['account_id'] = tax['account_paid_id'] or line.account_id.id
                     val['account_analytic_id'] = tax['account_analytic_paid_id']
+                print val['base_amount'],'val base_amount'
+                print val['tax_amount'],'val tax_amount'
                 #start custom change
                 #key = (val['tax_code_id'], val['base_code_id'], val['account_id'], val['account_analytic_id'])
                 key = (val['tax_id'])

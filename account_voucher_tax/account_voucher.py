@@ -30,6 +30,8 @@ from openerp.tools.translate import _
 import release
 import decimal_precision as dp
 
+import time
+
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
@@ -67,8 +69,21 @@ class account_voucher(osv.Model):
         company_currency = self._get_company_currency(cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(cr, uid, voucher_id, context)
         move_ids=[]
+        print company_currency, current_currency,'imprimo company_currency'
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             for line in voucher.line_ids:
+                
+                amount_exchange = self._convert_amount(cr, uid, line.untax_amount or line.amount, voucher.id, context=context)
+                print amount_exchange,'imprimo amount_exchange'
+                if line.amount == line.amount_unreconciled:
+                    if not line.move_line_id:
+                        raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
+                    sign = voucher.type in ('payment', 'purchase') and -1 or 1
+                    currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
+                else:
+                    currency_rate_difference = 0.0
+                print currency_rate_difference,'imprimo currency_rate_differencecurrency_rate_differencecurrency_rate_difference'
+                
                 for line_tax in line.tax_line_ids:
                     move_ids=[]
                     credit=line_tax.amount_tax
@@ -100,9 +115,9 @@ class account_voucher(osv.Model):
                     'date': voucher.date,
                     'tax_id': line_tax.id
                     }
-                    if company_currency!=current_currency:
-                        move_line['amount_currency']=line_tax.amount_tax
-                    move_ids.append(move_line_obj.create(cr ,uid, move_line, context=context))
+#                    if company_currency!=current_currency:
+ #                       move_line['amount_currency']=line_tax.amount_tax
+   #                 move_ids.append(move_line_obj.create(cr ,uid, move_line, context=context))
                     #~ if line_tax.diff_amount_tax:
                     context['date']=line.move_line_id.date
                     #~ amount=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.original_tax)), round=False, context=context)
@@ -139,9 +154,9 @@ class account_voucher(osv.Model):
                     'date': voucher.date,
                     'tax_id': line_tax.id
                     }
-                    if company_currency!=current_currency:
-                        move_line['amount_currency']=line_tax.amount_tax
-                    move_ids.append(move_line_obj.create(cr ,uid, move_line, context=context))
+#                    if company_currency!=current_currency:
+ #                       move_line['amount_currency']=line_tax.amount_tax
+   #                 move_ids.append(move_line_obj.create(cr ,uid, move_line, context=context))
                     
                     if line_tax.balance_tax + line_tax.amount_tax < line_tax.original_tax and voucher.payment_option=='with_writeoff':
                         context['date']=line.move_line_id.date
@@ -193,14 +208,38 @@ class account_voucher(osv.Model):
                                 'tax_id': line_tax.id
                                 }
                             #move_line_obj.create(cr ,uid, move_line, context=context)
+                    reference_amount = line_tax.amount_tax
+                    move_lines_tax = self._get_move_writeoff(cr, uid,
+                        account_tax_voucher, account_tax_collected,
+                        move_id, voucher, line, line_tax, company_currency,
+                        reference_amount, amount_tax_unround,
+                        current_currency, context=context)
+                    for move_line_tax in move_lines_tax:
+                        move_line_obj.create(cr ,uid, move_line_tax,
+                                                context=context)
+                        
                     if voucher.writeoff_amount > 0:
-                        reference_amount = self.get_partial_amount_tax_pay(cr, uid, voucher.writeoff_amount, line_tax.original_tax, context=context)
-                        move_lines = self._get_move_writeoff(cr, uid, move_id, voucher, line, line_tax, company_currency, reference_amount, context=context)
-                        for move_line_w in move_lines:
-                            move_line_obj.create(cr ,uid, move_line_w, context=context)
+                        reference_amount_w = self.get_partial_amount_tax_pay(cr,
+                            uid, voucher.writeoff_amount,
+                            line_tax.original_tax, context=context)
+                        print reference_amount_w,'imprimo reference_amount_w'
+                        move_lines_w = self._get_move_writeoff(cr, uid,
+                            line_tax.tax_id.account_collected_voucher_id.id,
+                            voucher.writeoff_acc_id.id,
+                            move_id, voucher, line, line_tax,
+                            company_currency, reference_amount_w,
+                            None, current_currency,
+                            context=context)
+                        for move_line_w in move_lines_w:
+                            move_line_obj.create(cr ,uid, move_line_w,
+                                                    context=context)
+                            
         return move_ids
     
-    def _get_move_writeoff(self, cr, uid, move_id, voucher, line, line_tax, company_currency, reference_amount, context=None):
+    def _get_move_writeoff(self, cr, uid, src_account_id, dest_account_id,
+                            move_id, voucher, line, line_tax, company_currency,
+                            reference_amount, amount_tax_unround,
+                            reference_currency_id, context=None):
         print reference_amount,'imprimo reference_amount'
         debit_line_vals = {
                     'name': line_tax.tax_id.name,
@@ -209,11 +248,13 @@ class account_voucher(osv.Model):
                     'partner_id': voucher.partner_id.id,
                     'debit': abs(reference_amount),
                     'credit': 0.0,
-                    'account_id': voucher.writeoff_acc_id.id,
+                    'account_id': dest_account_id,
                     'journal_id': voucher.journal_id.id,
                     'period_id': voucher.period_id.id,
                     'company_id':company_currency,
                     'move_id': int(move_id),
+                    'tax_id': line_tax.id,
+                    'analytic_account_id': line_tax.analytic_account_id and line_tax.analytic_account_id.id or False,
         }
         credit_line_vals = {
                     'name': line_tax.tax_id.name,
@@ -222,12 +263,34 @@ class account_voucher(osv.Model):
                     'partner_id': voucher.partner_id.id,
                     'credit': abs(reference_amount),
                     'debit': 0.0,
-                    'account_id': line_tax.tax_id.account_collected_voucher_id.id,
+                    'account_id': src_account_id,
                     'journal_id': voucher.journal_id.id,
                     'period_id': voucher.period_id.id,
                     'company_id':company_currency,
                     'move_id': int(move_id),
+                    'amount_tax_unround':amount_tax_unround,
+                    'tax_id': line_tax.id,
         }
+        if not amount_tax_unround:
+            credit_line_vals.pop('amount_tax_unround')
+            credit_line_vals.pop('tax_id')
+            debit_line_vals.pop('tax_id')
+        account_obj = self.pool.get('account.account')
+        src_acct, dest_acct = account_obj.browse(cr, uid, [src_account_id, dest_account_id], context=context)
+        src_main_currency_id = src_acct.currency_id and src_acct.currency_id.id or src_acct.company_id.currency_id.id
+        dest_main_currency_id = dest_acct.currency_id and dest_acct.currency_id.id or dest_acct.company_id.currency_id.id
+        cur_obj = self.pool.get('res.currency')
+        if reference_currency_id != src_main_currency_id:
+            # fix credit line:
+            credit_line_vals['credit'] = cur_obj.compute(cr, uid, reference_currency_id, src_main_currency_id, reference_amount, context=context)
+            credit_line_vals['amount_tax_unround'] = cur_obj.compute(cr, uid, reference_currency_id, src_main_currency_id, reference_amount, round=False, context=context)
+            if (not src_acct.currency_id) or src_acct.currency_id.id == reference_currency_id:
+                credit_line_vals.update(currency_id=reference_currency_id, amount_currency=-reference_amount)
+        if reference_currency_id != dest_main_currency_id:
+            # fix debit line:
+            debit_line_vals['debit'] = cur_obj.compute(cr, uid, reference_currency_id, dest_main_currency_id, reference_amount, context=context)
+            if (not dest_acct.currency_id) or dest_acct.currency_id.id == reference_currency_id:
+                debit_line_vals.update(currency_id=reference_currency_id, amount_currency=reference_amount)
         return [debit_line_vals, credit_line_vals]
     
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
@@ -350,7 +413,7 @@ class account_move_line(osv.Model):
                         then sum(debit)
                     end as round, id
                 from account_move_line
-                where move_id in (
+                where move_id in ( 
                 select move_id from account_move_line aml
                 where id in %s)
                 and amount_tax_unround is not null
@@ -363,12 +426,13 @@ class account_move_line(osv.Model):
         res=super(account_move_line, self).reconcile(cr, uid, ids=ids, 
         type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id, 
         writeoff_journal_id=writeoff_journal_id, context=context)
+        print context,'imprimo context'
 #        if not writeoff_acc_id:
         dat = self._get_query_round(cr, uid, ids, context=context)
         res_round = {}
         res_without_round = {}
         res_ids = {}
-        print res,'imprimo res'
+        print ids,'imprimo ids'
         for val_round in dat:
             print val_round,'imprimo val_round'
             res_round.setdefault(val_round['account_id'], 0)
