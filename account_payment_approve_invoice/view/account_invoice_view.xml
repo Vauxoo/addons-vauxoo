@@ -9,11 +9,11 @@
       <field name="arch" type="xml">
         
         <xpath expr="//button[@name='invoice_open']" position="before">
-          <button name="payment_approve" states="draft,proforma2" string="Mark to Pay" groups="group_account_invoice_approve_manager"/>
+          <button name="payment_approve" states="draft,proforma2" string="Mark to Pay" groups="account_payment_approve_invoice.group_account_invoice_approve_manager"/>
         </xpath>
        
 	<xpath expr="//field[@name='period_id']" position="after">
-           <field name="to_pay" string="To Pay" />
+           <field name="to_pay" string="To Pay"/>
         </xpath>
  
       </field>
