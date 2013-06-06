@@ -43,6 +43,8 @@ Por realizar decsription
     ],
     "update_xml" : [
         "view/account_invoice_view.xml",
+        "security/account_security.xml",
+        "security/ir.model.access.csv",
     ],
     "active": False,
     "images": [],
