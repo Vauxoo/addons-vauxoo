@@ -28,7 +28,7 @@
 {
     "name" : "DIOT Report for mexico",
     "version" : "1.0",
-    "depends" : ["base", "base_vat","account" ],
+    "depends" : ["base", "base_vat","account", "account_tax_category", "account_invoice_tax" ],
     "author" : "Federico Manuel Echeverri Choux",
     "description": """Module DIOT for  Mexico:
     """,
