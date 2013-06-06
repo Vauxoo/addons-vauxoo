@@ -33,7 +33,7 @@ class purchase_requisition_line(osv.Model):
 
     _columns = {
         'name': fields.text('Description', required=True),
-        'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account'),
+        'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', help='This field is used to assign the selected analytic account to the line of the purchase order'),
     }
 
     def onchange_product_id(self, cr, uid, ids, product_id, \
@@ -103,7 +103,7 @@ class purchase_requisition(osv.Model):
                     'price_unit': seller_price,
                     'date_planned': date_planned,
                     'taxes_id': [(6, 0, taxes)],
-                    'account_analytic_id': line.account_analytic_id.id,
+                    'account_analytic_id': line.account_analytic_id and line.account_analytic_id.id or False,
                 }, context=context)
                 
         return res
