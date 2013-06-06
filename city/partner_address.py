@@ -66,3 +66,13 @@ class res_partner(osv.Model):
                     'state_id': city.state_id.id,
                     'country_id': city.country_id and city.country_id.id or False}}
         return {}
+
+    def onchange_state_city(self, cr, uid, ids, state_id, city_id, context=None):
+
+        res = super(res_partner, self).onchange_state(cr, uid, ids, state_id, context)
+        if city_id and state_id and self.pool.get('res.country.state.city').browse(cr, uid, city_id, context).state_id.id != state_id:
+            if res and 'value' in res:
+                res['value']['city'] = None
+                res['value']['city_id'] = None
+        return res
+
