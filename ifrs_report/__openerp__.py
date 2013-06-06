@@ -32,10 +32,10 @@
     "description": ''' International Financial Reporting Standards Module''',
     "depends" : ['base','account_periods_initial','account','report_webkit'],
     "data" : [
+        'data/data.xml',
         'view/ifrs_view.xml',
         'report/report_ifrs.xml',
         'wizard/ifrs_report_wizard_view.xml',
-        'data/data.xml',
         'data/data_ifrs.xml',
         ],
     "active": False,
