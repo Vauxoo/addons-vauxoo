@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        
+        <record id="mail_server_rule" model="ir.rule">
+            <field name="name">Mail Server</field>
+            <field name="model_id" ref="model_ir_mail_server"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">['|',('company_id','child_of',[user.company_id.id]),('company_id','=',False)]</field>
+        </record>
+        
+    </data>
+</openerp>

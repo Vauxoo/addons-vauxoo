@@ -28,7 +28,7 @@
 from openerp.osv import osv, fields
 
 
-class ir_mail_company(osv.Model):
+class ir_mail_server(osv.Model):
     _inherit = "ir.mail_server"
     _columns = {
         'company_id': fields.many2one('res.company', 'Company'),
@@ -37,5 +37,5 @@ class ir_mail_company(osv.Model):
     _defaults = {
         'company_id': lambda self, cr, uid, c:
         self.pool.get('res.company')._company_default_get(cr, uid,
-                                            'email.template', context=c),
+                                            'ir.mail_server', context=c),
     }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_mail_server_form_inherit" model="ir.ui.view">
+            <field name="name">mail.server.form.inherit</field>
+            <field name="model">ir.mail_server</field>
+            <field name="inherit_id" ref="base.ir_mail_server_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']" position="after">
+                    <field name="company_id"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>
