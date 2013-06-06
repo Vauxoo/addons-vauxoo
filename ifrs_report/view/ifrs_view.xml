@@ -56,7 +56,7 @@
                               <field name="name" />
                               <field name="invisible" />
                               <field name="type" />
-
+                              <field name="comment"></field>
                               <group colspan='4' col='1'>
                                   <group colspan='2' attrs="{'invisible':[('type','!=','constant')]}" >
                                       <field name="constant_type" attrs="{'required':[('type','=','constant')]}" />
@@ -153,6 +153,7 @@
 						<field name="amount"></field>
 						<field name="invisible"></field>
 						<field name="ifrs_id"></field>
+						<field name="comment"></field>
 					</group>
 				</form>
 			</field>
@@ -170,6 +171,7 @@
 						<field name="amount"></field>
 						<field name="invisible"></field>
 						<field name="ifrs_id"></field>
+						<field name="comment"></field>
 				</tree>
 			</field>
 		</record>

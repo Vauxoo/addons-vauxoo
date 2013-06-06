@@ -413,6 +413,7 @@ class ifrs_lines(osv.osv):
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
         'inv_sign' : fields.boolean('Change Sign to Amount'),
         'invisible' : fields.boolean('Invisible'),
+        'comment' : fields.text( 'Comments/Question', help='Comments or questions about this ifrs line' ),
     }
 
     _defaults = {
