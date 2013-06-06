@@ -12,8 +12,8 @@
           <button name="payment_approve" states="draft,proforma2" string="Mark to Pay"/>
         </xpath>
        
-	<xpath expr="//field[@name='payment_term']" position="after">
-           <button name="to_pay" string="To Pay" />
+	<xpath expr="//field[@name='period_id']" position="after">
+           <field name="to_pay" string="To Pay" />
         </xpath>
  
       </field>
