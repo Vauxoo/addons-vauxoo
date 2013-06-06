@@ -26,14 +26,11 @@ from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
 class account_invoice(osv.osv):
-    """
-    OpenERP Model : Account Invoice
-    """
 
     _inherit = 'account.invoice'
 
     _columns = {
-        'to_pay': fields.boolean('To Pay',readonly=True, help="This field was mark when the purchase manager approve this invoice to be pay"),
+        'to_pay': fields.boolean('To Pay',readonly=True, help="This field will be marked when the purchase manager approve this invoice to be paid, and unmarked if the invoice will be blocked to pay"),
     }
     _defaults = {
         'to_pay': False,

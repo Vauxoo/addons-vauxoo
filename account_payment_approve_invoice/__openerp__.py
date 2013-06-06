@@ -52,14 +52,14 @@ The description of two buttons:
 """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
+    "data" : [
         "view/account_invoice_view.xml",
         "security/account_security.xml",
         "security/ir.model.access.csv",
+    ],
+    "demo" : [
+    ],
+    "test" : [
     ],
     "active": False,
     "images": [],
