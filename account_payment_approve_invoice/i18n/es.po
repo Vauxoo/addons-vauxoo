@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-06 16:25+0000\n"
-"PO-Revision-Date: 2013-06-06 16:25+0000\n"
+"POT-Creation-Date: 2013-06-06 19:32+0000\n"
+"PO-Revision-Date: 2013-06-06 19:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,12 +18,13 @@ msgstr ""
 #. module: account_payment_approve_invoice
 #: model:res.groups,name:account_payment_approve_invoice.group_account_invoice_approve_manager
 msgid "Approve To Pay Supplier Invoice / Manager"
-msgstr "Aprueba Pagar Factura Proveedor/Responsable"
+msgstr "Aprueba Pago Factura Proveedor/Responsable"
 
 #. module: account_payment_approve_invoice
-#: help:account.invoice,to_pay:0
-msgid "This field was mark when the purchase manager approve this invoice to be pay"
-msgstr "Este campo será marcado cuando el Responsable de Compras apruebe esta factura para ser pagada."
+#: code:addons/account_payment_approve_invoice/model/account_invoice.py:48
+#, python-format
+msgid "Invoice Approved to Pay"
+msgstr "Factura Aprobada para Pago"
 
 #. module: account_payment_approve_invoice
 #: view:account.invoice:0
@@ -37,6 +38,11 @@ msgid "To Pay"
 msgstr "A Pagar"
 
 #. module: account_payment_approve_invoice
+#: help:account.invoice,to_pay:0
+msgid "This field will be marked when the purchase manager approve this invoice to be paid, and unmarked if the invoice will be blocked to pay"
+msgstr "Este campo sera marcado cuando el responsable de la compra apruebe esta factura para ser pagada, y será desmarcado si se bloquea la factura para pago"
+
+#. module: account_payment_approve_invoice
 #: model:ir.model,name:account_payment_approve_invoice.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
@@ -45,4 +51,10 @@ msgstr "Factura"
 #: view:account.invoice:0
 msgid "Approve to Pay"
 msgstr "Aprobar Pago"
+
+#. module: account_payment_approve_invoice
+#: code:addons/account_payment_approve_invoice/model/account_invoice.py:82
+#, python-format
+msgid "Invoice Disapproved to Pay"
+msgstr "Factura No Aprobada para Pago"
 
