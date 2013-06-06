@@ -39,3 +39,17 @@ class account_invoice(osv.osv):
         'to_pay': False,
     }
 
+
+    def payment_approve(self, cr, uid, ids, context=None):
+        '''
+        Mark boolean as True, to approve invoice to be pay.
+        '''
+    	context = context or {}
+        return self.write(cr,uid,ids,{'to_pay':True})
+
+    def payment_disapprove(self, cr, uid, ids, context=None):
+        '''
+        Mark boolean as False, to Disapprove invoice to be pay.
+        '''
+        context = context or {}
+        return self.write(cr,uid,ids,{'to_pay':False})
