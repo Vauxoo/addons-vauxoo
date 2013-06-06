@@ -992,11 +992,11 @@ class account_invoice(osv.Model):
                     'colonia':  address_invoice_parent.street2 and \
                         address_invoice_parent.street2.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or 'N/A',
+                        '\r', ' ') or False,
                     'localidad': address_invoice_parent.l10n_mx_city2 and \
                         address_invoice_parent.l10n_mx_city2.replace(
                         '\n\r', ' ').replace('\r\n', ' ').replace('\n', ' ').\
-                        replace('\r', ' ') or 'N/A',
+                        replace('\r', ' ') or False,
                     'municipio': address_invoice_parent.city and \
                         address_invoice_parent.city.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
@@ -1030,11 +1030,11 @@ class account_invoice(osv.Model):
                         '\r', ' ') or 'N/A',  # "Numero Interior"
                     'colonia':  address_invoice.street2 and address_invoice.\
                         street2.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                        replace('\n', ' ').replace('\r', ' ') or False,
                     'localidad': address_invoice.l10n_mx_city2 and \
                         address_invoice.l10n_mx_city2.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or 'N/A',
+                        '\r', ' ') or False,
                     'municipio': address_invoice.city and address_invoice.\
                         city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
                         '\n', ' ').replace('\r', ' ') or '',
@@ -1051,6 +1051,14 @@ class account_invoice(osv.Model):
                         '\n', ' ').replace('\r', ' ').replace(' ', '') or '',
                 },
             })
+            if invoice_data['Emisor']['DomicilioFiscal'].get('colonia') == False:
+                invoice_data['Emisor']['DomicilioFiscal'].pop('colonia')
+            if invoice_data['Emisor']['ExpedidoEn'].get('colonia') == False:
+                invoice_data['Emisor']['ExpedidoEn'].pop('colonia')
+            if invoice_data['Emisor']['DomicilioFiscal'].get('localidad') == False:
+                invoice_data['Emisor']['DomicilioFiscal'].pop('localidad')
+            if invoice_data['Emisor']['ExpedidoEn'].get('localidad') == False:
+                invoice_data['Emisor']['ExpedidoEn'].pop('localidad')
             # Termina seccion: Emisor
             # Inicia seccion: Receptor
             parent_id = invoice.partner_id.commercial_partner_id.id
@@ -1086,11 +1094,11 @@ class account_invoice(osv.Model):
                         '\r', ' ') or 'N/A',  # "Numero Interior"
                     'colonia':  address_invoice.street2 and address_invoice.\
                         street2.replace('\n\r', ' ').replace('\r\n', ' ').\
-                        replace('\n', ' ').replace('\r', ' ') or 'N/A',
+                        replace('\n', ' ').replace('\r', ' ') or False,
                     'localidad': address_invoice.l10n_mx_city2 and \
                         address_invoice.l10n_mx_city2.replace('\n\r', ' ').\
                         replace('\r\n', ' ').replace('\n', ' ').replace(
-                        '\r', ' ') or 'N/A',
+                        '\r', ' ') or False,
                     'municipio': address_invoice.city and address_invoice.\
                         city.replace('\n\r', ' ').replace('\r\n', ' ').replace(
                         '\n', ' ').replace('\r', ' ') or '',
@@ -1107,6 +1115,10 @@ class account_invoice(osv.Model):
                         '\n', ' ').replace('\r', ' ') or '',
                 },
             })
+            if invoice_data['Receptor']['Domicilio'].get('colonia') == False:
+                invoice_data['Receptor']['Domicilio'].pop('colonia')
+            if invoice_data['Receptor']['Domicilio'].get('localidad') == False:
+                invoice_data['Receptor']['Domicilio'].pop('localidad')
             # Termina seccion: Receptor
             # Inicia seccion: Conceptos
             invoice_data['Conceptos'] = []

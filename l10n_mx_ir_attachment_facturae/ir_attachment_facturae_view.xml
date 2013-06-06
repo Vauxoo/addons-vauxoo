@@ -45,10 +45,14 @@
                             <field name="identifier"/>
                         </group>
                         <group colspan="4">
-                            <field name="msj"/>
-                            <field name="last_date"/>
+                            <field name="msj" invisible="1"/>
+                            <field name="last_date" invisible="1"/>
                         </group>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
