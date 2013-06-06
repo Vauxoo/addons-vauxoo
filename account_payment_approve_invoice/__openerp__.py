@@ -25,7 +25,7 @@
 ##############################################################################
 
 {
-    "name" : "Purchase Manager Payment Approve",
+    "name" : "Payment Approve",
     "version" : "0.1",
     "depends" : [
                  "base",
@@ -33,8 +33,23 @@
                  ],
     "author" : "Vauxoo",
     "description" : """
-Por realizar decsription    
-                """,
+Purchase Manager Payment Approve 
+================================                
+
+This module, allows to Purchase Manager Approve or Disapproves the pay to one invoice. 
+Also added permissions to buttons.
+
+The description of two buttons:
+    
+    * Approve to Pay: Mark boolean To Pay when is activated.
+
+.. image:: account_payment_approve_invoice/static/src/demo/button_approve.png
+.
+    * Disapproves to Pay: Uncheck boolean To Pay when is activated.
+
+.. image:: account_payment_approve_invoice/static/src/demo/button_disapproves.png
+
+""",
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "init_xml" : [
