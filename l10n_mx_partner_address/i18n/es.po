@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-06 00:16+0000\n"
-"PO-Revision-Date: 2013-04-06 00:16+0000\n"
+"POT-Creation-Date: 2013-06-05 22:01+0000\n"
+"PO-Revision-Date: 2013-06-05 22:01+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,9 +21,9 @@ msgid "Locality"
 msgstr "Localidad"
 
 #. module: l10n_mx_partner_address
-#: help:res.partner,l10n_mx_street3:0
+#: help:res.partner,l10n_mx_street4:0
 msgid "Internal number of the partner address"
-msgstr "No. Interior de la Dirección del Partner"
+msgstr "Número interior de la direccion del partner"
 
 #. module: l10n_mx_partner_address
 #: help:res.partner,l10n_mx_city2:0
@@ -31,7 +31,7 @@ msgid "Locality configurated for this partner"
 msgstr "Localidad configurada para este partner"
 
 #. module: l10n_mx_partner_address
-#: field:res.partner,l10n_mx_street3:0
+#: field:res.partner,l10n_mx_street4:0
 msgid "No. Internal"
 msgstr "No. Interior"
 
@@ -41,14 +41,14 @@ msgid "Partner"
 msgstr "Empresa"
 
 #. module: l10n_mx_partner_address
-#: help:res.partner,l10n_mx_street4:0
+#: help:res.partner,l10n_mx_street3:0
 msgid "External number of the partner address"
-msgstr "No. Externo de la direccion del partner"
+msgstr "Número exterior de la direccion del partner"
 
 #. module: l10n_mx_partner_address
-#: field:res.partner,l10n_mx_street4:0
+#: field:res.partner,l10n_mx_street3:0
 msgid "No. External"
-msgstr "No. External"
+msgstr "No. Externo"
 
 #. module: l10n_mx_partner_address
 #: field:res.partner.address,city2:0
