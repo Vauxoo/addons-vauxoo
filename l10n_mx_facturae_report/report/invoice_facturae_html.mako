@@ -309,7 +309,7 @@
                     <td class="center_td">${ o.no_certificado or 'No identificado'|entity }</td>
                     <td class="center_td">${ o.pay_method_id.name or 'No identificado'|entity }</td>
                     <td class="center_td">
-                        ${ o.acc_payment.bank_name or '' }
+                        ${ o.acc_payment and o.acc_payment.bank_name or '' }
                         ${ o.acc_payment.last_acc_number or 'No identificado' }</td>
                 </tr>
             </table>
