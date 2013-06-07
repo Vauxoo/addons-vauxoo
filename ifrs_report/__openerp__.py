@@ -32,6 +32,8 @@
     "description": ''' International Financial Reporting Standards Module''',
     "depends" : ['base','account_periods_initial','account','report_webkit'],
     "data" : [
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'data/data.xml',
         'view/ifrs_view.xml',
         'report/report_ifrs.xml',
