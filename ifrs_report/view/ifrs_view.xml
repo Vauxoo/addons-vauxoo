@@ -28,15 +28,19 @@
                 <button string="Compute" name='compute' type='object' icon='gtk-execute' class="oe_inline_header"/>
 			    <field name="state" widget="statusbar" statusbar_visible="draft,ready,done,cancel" class="oe_inline_header" />
               </header>  
-			<field name="name" />
-              <field name="company_id" on_change='onchange_company_id(company_id)' required="1"/>
-              <field name="code" />
-			  <field name="currency_id" required="1" readonly="1"/>
-              <field name="title" />
-			  <field name="fiscalyear_id" required="1"/>
-              <group colspan='2' col='3'>
-                  <field name="do_compute" />
-              </group>
+                <group>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="title" />
+                    </group>    
+                <group>
+                        <field name="company_id" on_change='onchange_company_id(company_id)' required="1"/>
+                        <field name="currency_id" required="1" readonly="1"/>
+                        <field name="fiscalyear_id" required="1"/>
+                        <field name="do_compute" />
+                    </group>
+                </group>
                 <notebook colspan='6'>
                     <page string='Report Lines'>
                       <field name="ifrs_lines_ids"  nolabel="1" colspan="4">
