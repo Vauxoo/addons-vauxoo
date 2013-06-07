@@ -221,6 +221,7 @@ class account_voucher(osv.Model):
                     account_tax_collected=line_tax.tax_id.account_collected_id.id
                     
                     reference_amount = line_tax.amount_tax
+                    context['writeoff'] =  False
                     move_lines_tax = self._get_move_writeoff(cr, uid,
                         account_tax_voucher, account_tax_collected,
                         move_id, voucher, line, line_tax, company_currency,
@@ -234,11 +235,9 @@ class account_voucher(osv.Model):
                         reference_amount_w = self.get_partial_amount_tax_pay(cr,
                             uid, voucher.writeoff_amount,
                             line_tax.original_tax, context=context)
-                        print reference_amount_w,'imprimo reference_amount_w'
-                        
+                        context['writeoff'] =  True
                         move_lines_w = self._get_move_writeoff(cr, uid,
-                            line_tax.tax_id.account_collected_voucher_id.id,
-                            voucher.writeoff_acc_id.id,
+                            account_tax_voucher, voucher.writeoff_acc_id.id,
                             move_id, voucher, line, line_tax,
                             company_currency, reference_amount_w,
                             None, current_currency,
@@ -254,12 +253,11 @@ class account_voucher(osv.Model):
                             reference_amount, amount_tax_unround,
                             reference_currency_id, context=None):
         print reference_amount,'imprimo reference_amount'
+        
         if voucher.type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         if voucher.type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
-        print src_account_id, 'imprimo src_account_id'
-        print dest_account_id,'imprimo dest_account_id'
         debit_line_vals = {
                     'name': line_tax.tax_id.name,
                     'quantity': 1,
@@ -273,7 +271,8 @@ class account_voucher(osv.Model):
                     'company_id':company_currency,
                     'move_id': int(move_id),
                     'tax_id': line_tax.id,
-                    'analytic_account_id': line_tax.analytic_account_id and line_tax.analytic_account_id.id or False,
+                    'analytic_account_id': line_tax.analytic_account_id and\
+                                    line_tax.analytic_account_id.id or False,
         }
         credit_line_vals = {
                     'name': line_tax.tax_id.name,
@@ -289,18 +288,29 @@ class account_voucher(osv.Model):
                     'move_id': int(move_id),
                     'amount_tax_unround':amount_tax_unround,
                     'tax_id': line_tax.id,
-                    'analytic_account_id': line_tax.analytic_account_id and line_tax.analytic_account_id.id or False,
+                    'analytic_account_id': line_tax.analytic_account_id and\
+                                    line_tax.analytic_account_id.id or False,
         }
+        if context.get('writeoff', False):
+            debit_line_vals.pop('analytic_account_id')
+            credit_line_vals.pop('analytic_account_id')
+        else:
+            if voucher.type in ('payment','purchase'): 
+                reference_amount < 0 and\
+                    credit_line_vals.pop('analytic_account_id') or\
+                    debit_line_vals.pop('analytic_account_id')
+            else:
+                reference_amount < 0 and\
+                    debit_line_vals.pop('analytic_account_id') or\
+                    credit_line_vals.pop('analytic_account_id')
+            
         if not amount_tax_unround:
             credit_line_vals.pop('amount_tax_unround')
             credit_line_vals.pop('tax_id')
             debit_line_vals.pop('tax_id')
             
-        voucher.type == 'payment' and\
-            debit_line_vals.pop('analytic_account_id') or\
-            credit_line_vals.pop('analytic_account_id')
-            
         account_obj = self.pool.get('account.account')
+        reference_amount = abs(reference_amount)
         src_acct, dest_acct = account_obj.browse(cr, uid, [src_account_id, dest_account_id], context=context)
         src_main_currency_id = src_acct.currency_id and src_acct.currency_id.id or src_acct.company_id.currency_id.id
         dest_main_currency_id = dest_acct.currency_id and dest_acct.currency_id.id or dest_acct.company_id.currency_id.id
@@ -308,7 +318,7 @@ class account_voucher(osv.Model):
         if reference_currency_id != src_main_currency_id:
             # fix credit line:
             credit_line_vals['credit'] = cur_obj.compute(cr, uid, reference_currency_id, src_main_currency_id, reference_amount, context=context)
-            credit_line_vals['amount_tax_unround'] = cur_obj.compute(cr, uid, reference_currency_id, src_main_currency_id, reference_amount, round=False, context=context)
+            credit_line_vals['amount_tax_unround'] = cur_obj.compute(cr, uid, reference_currency_id, src_main_currency_id, abs(reference_amount), round=False, context=context)
             if (not src_acct.currency_id) or src_acct.currency_id.id == reference_currency_id:
                 credit_line_vals.update(currency_id=reference_currency_id, amount_currency=-reference_amount)
         if reference_currency_id != dest_main_currency_id:
