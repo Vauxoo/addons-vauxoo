@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+<data noupdate="0">
+
+    <record id="group_account_invoice_approve_manager" model="res.groups">
+        <field name="name">Approve To Pay Supplier Invoice / Manager</field>
+    </record>
+
+</data>
+</openerp>

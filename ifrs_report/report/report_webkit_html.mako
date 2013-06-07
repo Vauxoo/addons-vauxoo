@@ -30,7 +30,7 @@
 			<td>
 			<table>
 				%try:
-					<tr><td>${helper.embed_logo_by_name('company_logo',80,60)|n}</td></tr>
+					<tr><td>${helper.embed_logo_by_name('company_logo',40,60)|n}</td></tr>
 				%except:
 					<tr><td></td></tr>
 				%endtry

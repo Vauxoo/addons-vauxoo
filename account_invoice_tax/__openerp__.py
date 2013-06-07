@@ -29,15 +29,17 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module add relation tax in account_invoice_tax
-     -You will need to apply the patch patch/account_invoice.patch, 
-      that is located in this module ( use:patch -b file.py  file.patch )""",
+    "description" : """This module add tax relation to original tax, to be able to take off all data from invoices.
+Technical Warning - This module add method override
+     def check_tax_lines from account_invoice
+     def compute from account_invoice_tax
+""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["account"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [],
+    "update_xml" : [],#TODO Add field to view account.invoice
     "installable" : True,
     "active" : False,
 }

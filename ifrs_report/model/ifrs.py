@@ -260,7 +260,7 @@ class ifrs_lines(osv.osv):
                 #~ TODO: write back False to brw.do_compute with SQL
                 #~ INCLUDE A LOGGER
         return res
-
+    
     def _get_period_print_info(self, cr, uid, ids, period_id, report_type, context=None):
         if context is None: context = {}
         ''' Return all the printable information about period'''

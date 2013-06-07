@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+  <data>
+
+    <record model="ir.ui.view" id="invoice_supplier_form_approve">
+      <field name="name">invoice.supplier.form.approve</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_supplier_form"/>
+      <field name="arch" type="xml">
+ 
+        <xpath expr="//field[@name='period_id']" position="after">
+           <field name="to_pay" string="To Pay"/>
+        </xpath>
+ 
+        <xpath expr="//button[@name='invoice_open']" position="before">
+          <button class="oe_highlight" name="payment_approve" type="object" attrs="{'invisible':['|',('state','!=','open'),('to_pay','=',True)]}" string="Approve to Pay" groups="account_payment_approve_invoice.group_account_invoice_approve_manager"/>
+        </xpath>
+      
+        <xpath expr="//button[@name='payment_approve']" position="after">
+          <button name="payment_disapproves" type="object" string="Disapproves to Pay" attrs="{'invisible':['|',('reconciled','=',True),'|',('to_pay','=',False),('state','=','cancel')]}" groups="account_payment_approve_invoice.group_account_invoice_approve_manager"/>
+        </xpath>
+ 
+      </field>
+    </record>
+
+</data>
+</openerp>
