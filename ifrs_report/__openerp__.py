@@ -31,15 +31,13 @@
     "website": "http://www.vauxoo.com",
     "description": ''' International Financial Reporting Standards Module''',
     "depends" : ['base','account_periods_initial','account','report_webkit'],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        'view/data.xml',
+    "data" : [
+        'data/data.xml',
         'view/ifrs_view.xml',
         'report/report_ifrs.xml',
         'wizard/ifrs_report_wizard_view.xml',
-        'view/ifrs_demo.xml',
-    ],
+        'data/data_ifrs.xml',
+        ],
     "active": False,
     "installable": True
 }
