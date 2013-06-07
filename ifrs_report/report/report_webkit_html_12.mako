@@ -54,7 +54,6 @@
             <%
                 res = {}
                 res_total = {}
-                row_count = 1
             %>
             <tbody>
                 
@@ -73,41 +72,11 @@
                         %try:
                             ${formatLang(amount_value, digits=2, date=False, date_time=False, grouping=3, monetary=False)}
                         %except:
-                            22.22
+                            0.0
                         %endtry
                     </td>
                 %endfor 
             </tr>
-            
-            %for ifrs_al in ifrs.ifrs_lines_ids[0]._get_partner_detail(ifrs_l):
-                %if ifrs_al:
-                    %if (row_count%2==0):
-                        <tr class="nonrow">
-                    %else:
-                        <tr>
-                    %endif
-                        <th class="justify">${ifrs_al.name or ''|entity}</th>
-                        %for lin in range(1, 13):
-                            <%
-                                try:
-                                    res.setdefault('total_%s'%lin, 0)
-                                    amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'],data['exchange_date'], data['currency_wizard'], lin, data['target_move'], ifrs_al.id)
-                                    res['total_%s'%lin] += amount_value
-                                except:
-                                    pass
-                            %>
-                            <td class="celda_border">
-                                %try:
-                                    ${formatLang( amount_value, digits=2, date=False, date_time=False, grouping=3, monetary=False)}
-                                %except:
-                                    0.0
-                                %endtry:
-                            </td>
-                        %endfor
-                    </tr>
-                %endif
-                <%row_count+=1%>
-            %endfor
         %endfor
         </tbody>
     </table>
