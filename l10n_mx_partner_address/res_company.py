@@ -28,11 +28,38 @@ from openerp.osv import osv, fields
 
 class res_company(osv.Model):
     _inherit = 'res.company'
+    
+    def _get_address_data(self, cr, uid, ids, field_names, arg, context=None):
+        """ Read the 'address' functional fields. """
+        result = {}
+        part_obj = self.pool.get('res.partner')
+        for company in self.browse(cr, uid, ids, context=context):
+            result[company.id] = {}.fromkeys(field_names, False)
+            if company.partner_id:
+                address_data = part_obj.address_get(cr, openerp.SUPERUSER_ID, [company.partner_id.id], adr_pref=['default'])
+                if address_data['default']:
+                    address = part_obj.read(cr, openerp.SUPERUSER_ID, address_data['default'], field_names, context=context)
+                    for field in field_names:
+                        result[company.id][field] = address[field] or False
+        return result
+
+    def _set_address_data(self, cr, uid, company_id, name, value, arg, context=None):
+        """ Write the 'address' functional fields. """
+        company = self.browse(cr, uid, company_id, context=context)
+        if company.partner_id:
+            part_obj = self.pool.get('res.partner')
+            address_data = part_obj.address_get(cr, uid, [company.partner_id.id], adr_pref=['default'])
+            address = address_data['default']
+            if address:
+                part_obj.write(cr, uid, [address], {name: value or False}, context=context)
+            else:
+                part_obj.create(cr, uid, {name: value or False, 'parent_id': company.partner_id.id}, context=context)
+        return True
+        
     _columns={
-        'l10n_mx_street3': fields.char('No. External', size=128,
-            help='External number of the partner address'),
-        'l10n_mx_street4': fields.char('No. Internal', size=128,
-            help='Internal number of the partner address'),
-        'l10n_mx_city2': fields.char('Locality', size=128,
-            help='Locality configurated for this partner'),
+        'l10n_mx_street3': fields.function(_get_address_data, fnct_inv=_set_address_data, size=128, type='char', string="No. External", multi='address', help='External number of the partner address'),
+        'l10n_mx_street4': fields.function(_get_address_data, fnct_inv=_set_address_data, size=128, type='char', string="No. Internal", multi='address', help='Internal number of the partner address'),
+        'l10n_mx_city2': fields.function(_get_address_data, fnct_inv=_set_address_data, size=128, type='char', string="Locality", multi='address', help='Locality configurated for this partner'),
     }
+
+   
