@@ -73,17 +73,6 @@ class account_voucher(osv.Model):
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             for line in voucher.line_ids:
                 
-                amount_exchange = self._convert_amount(cr, uid, line.untax_amount or line.amount, voucher.id, context=context)
-                print amount_exchange,'imprimo amount_exchange'
-                if line.amount == line.amount_unreconciled:
-                    if not line.move_line_id:
-                        raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
-                    sign = voucher.type in ('payment', 'purchase') and -1 or 1
-                    currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
-                else:
-                    currency_rate_difference = 0.0
-                print currency_rate_difference,'imprimo currency_rate_differencecurrency_rate_differencecurrency_rate_difference'
-                
                 for line_tax in line.tax_line_ids:
                     move_ids=[]
                     credit=line_tax.amount_tax
@@ -230,7 +219,28 @@ class account_voucher(osv.Model):
                     for move_line_tax in move_lines_tax:
                         move_line_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
-                        
+                                                
+                    amount_exchange = self._convert_amount(cr, uid, line.untax_amount or line.amount, voucher.id, context=context)
+                    tax_amount_exchange = self._convert_amount(cr, uid, line.amount_original, voucher.id, context=context)
+                    base_exchange = self._convert_amount(cr, uid, 2.88, voucher.id, context=context)
+                    if line.amount == line.amount_unreconciled:
+                        if not line.move_line_id:
+                            raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
+                        sign = voucher.type in ('payment', 'purchase') and -1 or 1
+                        currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
+                        if currency_rate_difference:
+                            factor=self.get_percent_pay_vs_invoice(cr ,uid, tax_amount_exchange, currency_rate_difference,context=context)
+                            base_amount=self.get_partial_amount_tax_pay(cr, uid, line_tax.tax_id.amount, base_exchange, context=context)
+                            move_lines_tax = self._get_move_writeoff(cr, uid,
+                                account_tax_voucher, account_tax_collected,
+                                move_id, voucher, line, line_tax, company_currency,
+                                factor * base_amount, None,
+                                company_currency, context=context)
+                            for move_line_tax in move_lines_tax:
+                                move_line_obj.create(cr ,uid, move_line_tax,
+                                                        context=context)
+                    print currency_rate_difference,'imprimo currency_rate_differencecurrency_rate_differencecurrency_rate_difference'
+                    
                     if voucher.writeoff_amount > 0:
                         reference_amount_w = self.get_partial_amount_tax_pay(cr,
                             uid, voucher.writeoff_amount,
