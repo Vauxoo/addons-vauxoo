@@ -2,12 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
+#    Coded by: jorge_nr (jorge_nr@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,5 +24,15 @@
 #
 ##############################################################################
 
-import partner_address
-import res_company
+from openerp.osv import osv, fields
+
+class res_company(osv.Model):
+    _inherit = 'res.company'
+    _columns={
+        'l10n_mx_street3': fields.char('No. External', size=128,
+            help='External number of the partner address'),
+        'l10n_mx_street4': fields.char('No. Internal', size=128,
+            help='Internal number of the partner address'),
+        'l10n_mx_city2': fields.char('Locality', size=128,
+            help='Locality configurated for this partner'),
+    }
