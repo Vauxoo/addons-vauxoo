@@ -48,4 +48,5 @@ class res_partner_bank(osv.Model):
         'last_acc_number': fields.function(_get_take_digits, method=True,
             type='char', string="Ultimos 4 digitos", size=4, store=True),
         'currency2_id': fields.many2one('res.currency', 'Currency',),
+        'reference' :fields.char('Reference', size=64, help='Reference used in this bank'),
     }

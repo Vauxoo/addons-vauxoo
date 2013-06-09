@@ -7,86 +7,88 @@
 <body>
     %for o in objects :
         ${set_global_data(o)}
-        <table class="basic_table">
+        <table>
             <tr>
-                <td width="20%"></td>
-                <td width="60%">
-                    <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
+                <td style="vertical-align: top;">
+                    ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),180, 85)}
                 </td>
-                <td width="20%">
-                    %if o.type == 'out_invoice':
-                        <div class="invoice">${_("Factura:")}
-                    %elif o.type == 'out_refund':
-                        <div class="refund">${_("NOTA DE CREDITO:")}
-                    %endif
-                    %if o.type in ['out_invoice', 'out_refund']:
-                        %if o.state in ['open', 'paid', 'cancel']:
-                            ${o.number or ''|entity}
-                        %else:
-                                <font size="2">${'SIN FOLIO O ESTATUS NO VALIDO'}</font>
-                        %endif
-                    %endif
-                    </div>
-                    %if o.state == 'cancel':
-                        ${'FACTURA CANCELADA' |entity}
-                    %endif
-                </td>
-            </tr>
-        </table>
-        <table class="basic_table">
-            <tr>
-                <td width="25%" align="center">
-                    ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),120, 120)}
-                </td>
-                <td class="td_data_exp" width="50%">
-                    <div class="emitter">
-                        %if o.company_emitter_id:
-                            %if o.company_emitter_id.address_invoice_parent_company_id:
-                                <%
-                                if o.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
-                                    address_emitter = o.company_emitter_id.address_invoice_parent_company_id.parent_id
-                                else:
-                                    address_emitter = o.company_emitter_id.address_invoice_parent_company_id%>
-                                <br/>${address_emitter.street or ''|entity}
-                                ${address_emitter.l10n_mx_street3 or ''|entity}
-                                ${address_emitter.l10n_mx_street4 or ''|entity}
-                                ${address_emitter.street2 or ''|entity}
-                                ${address_emitter.zip or ''|entity}
-                                <br />${_("Localidad:")} ${address_emitter.l10n_mx_city2 or ''|entity}
-                                <br/>${address_emitter.city or ''|entity}
-                                , ${address_emitter.state_id and address_emitter.state_id.name or ''|entity}
-                                , ${address_emitter.country_id and address_emitter.country_id.name or ''|entity}
-                                <br/><b>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat or ''|entity}</b>
-                                %if o.company_emitter_id.partner_id.regimen_fiscal_id:
-                                    <br/>${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or ''|entity }
+                <td>
+                    <table>
+                        <tr>
+                            <td width='50%'>
+                                <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
+                            </td>
+                            <td width='20%'>
+                                %if o.type == 'out_invoice':
+                                    <div class="invoice">${_("Factura:")}
+                                %elif o.type == 'out_refund':
+                                    <div class="refund">${_("NOTA DE CREDITO:")}
                                 %endif
-                                <br/>${address_emitter.phone and _("Teléfono(s):") or address_emitter.fax and _("Teléfono(s):") or address_emitter.mobile and _("Teléfono(s):") or ''|entity}
-                                ${address_emitter.phone or ''|entity}
-                                ${address_emitter.fax  and ',' or ''|entity} ${address_emitter.fax or ''|entity}
-                                ${address_emitter.mobile and ',' or ''|entity} ${address_emitter.mobile or ''|entity}
-                            %endif
-                        %endif
-                    </div>
-                </td>
-                <td class="td_data_exp" width="25%">
-                    <div class="fiscal_address">
-                        %if o.payment_term.name:
-                            Condición de pago: ${o.payment_term.note or o.payment_term.name or ''|entity}
-                        %endif
-                        %if o.address_issued_id:
-                        <br/>Expedido en:
-                            <br/>${o.address_issued_id.name or ''|entity}
-                            <br/>${o.address_issued_id.street or ''|entity}
-                            ${o.address_issued_id.l10n_mx_street3 or ''|entity}
-                            ${o.address_issued_id.l10n_mx_street4 or ''|entity}
-                            <br/>${o.address_issued_id.street2 or ''|entity}
-                            ${o.address_issued_id.zip or ''|entity}
-                            <br/>Localidad: ${o.address_issued_id.l10n_mx_city2 or ''|entity}
-                            <br/>${o.address_issued_id.city or ''|entity}
-                            ${o.address_issued_id.state_id.name and ',' or ''|entity} ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}
-                            ${o.address_issued_id.country_id.name and ',' or ''|entity} ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}
-                        %endif
-                    <div/>
+                                %if o.type in ['out_invoice', 'out_refund']:
+                                    %if o.state in ['open', 'paid', 'cancel']:
+                                        ${o.number or ''|entity}
+                                    %else:
+                                        <font size="2">${'SIN FOLIO O ESTATUS NO VALIDO'}</font>
+                                    %endif
+                                %endif
+                                %if o.state == 'cancel':
+                                    ${'FACTURA CANCELADA' |entity}
+                                %endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_data_exp">
+                                <div class="emitter">
+                                    %if o.company_emitter_id:
+                                        %if o.company_emitter_id.address_invoice_parent_company_id:
+                                            <%
+                                            if o.company_emitter_id.address_invoice_parent_company_id.use_parent_address:
+                                                address_emitter = o.company_emitter_id.address_invoice_parent_company_id.parent_id
+                                            else:
+                                                address_emitter = o.company_emitter_id.address_invoice_parent_company_id%>
+                                            <br/>${address_emitter.street or ''|entity}
+                                            ${address_emitter.l10n_mx_street3 or ''|entity}
+                                            ${address_emitter.l10n_mx_street4 or ''|entity}
+                                            ${address_emitter.street2 or ''|entity}
+                                            ${address_emitter.zip or ''|entity}
+                                            <br />${_("Localidad:")} ${address_emitter.l10n_mx_city2 or ''|entity}
+                                            <br/>${address_emitter.city or ''|entity}
+                                            , ${address_emitter.state_id and address_emitter.state_id.name or ''|entity}
+                                            , ${address_emitter.country_id and address_emitter.country_id.name or ''|entity}
+                                            <br/><b>${_("RFC:")} ${ o.company_emitter_id.partner_id._columns.has_key('vat_split') and o.company_emitter_id.partner_id.vat_split or o.company_emitter_id.partner_id.vat or ''|entity}</b>
+                                            %if o.company_emitter_id.partner_id.regimen_fiscal_id:
+                                                <br/>${ o.company_emitter_id.partner_id.regimen_fiscal_id.name or ''|entity }
+                                            %endif
+                                            <br/>${address_emitter.phone and _("Teléfono(s):") or address_emitter.fax and _("Teléfono(s):") or address_emitter.mobile and _("Teléfono(s):") or ''|entity}
+                                            ${address_emitter.phone or ''|entity}
+                                            ${address_emitter.fax  and ',' or ''|entity} ${address_emitter.fax or ''|entity}
+                                            ${address_emitter.mobile and ',' or ''|entity} ${address_emitter.mobile or ''|entity}
+                                        %endif
+                                    %endif
+                                </div>
+                            </td>
+                            <td class="td_data_exp">
+                                <div class="fiscal_address">
+                                    %if o.payment_term.name:
+                                        Condición de pago: ${o.payment_term.note or o.payment_term.name or ''|entity}
+                                    %endif
+                                    %if o.address_issued_id:
+                                    <br/>Expedido en:
+                                        ${o.address_issued_id.name or ''|entity}
+                                        <br/>${o.address_issued_id.street or ''|entity}
+                                        ${o.address_issued_id.l10n_mx_street3 or ''|entity}
+                                        ${o.address_issued_id.l10n_mx_street4 or ''|entity}
+                                        <br/>${o.address_issued_id.street2 or ''|entity}
+                                        ${o.address_issued_id.zip or ''|entity}
+                                        <br/>Localidad: ${o.address_issued_id.l10n_mx_city2 or ''|entity}
+                                        <br/>${o.address_issued_id.city or ''|entity}
+                                        ${o.address_issued_id.state_id.name and ',' or ''|entity} ${o.address_issued_id.state_id and o.address_issued_id.state_id.name or ''|entity}
+                                        ${o.address_issued_id.country_id.name and ',' or ''|entity} ${o.address_issued_id.country_id and o.address_issued_id.country_id.name or ''|entity}
+                                    %endif
+                                <div/>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
         </table>
@@ -264,13 +266,15 @@
                 <tr>
                     <td class="data_bank_label">${_('Banco / Moneda')}</td>
                     <td class="data_bank_label">${_('Número de cuenta')}</td>
-                    <td class="data_bank_label" width="34%">${_('Clave Interbancaria Estandarizada (CLABE)')}</td>
+                    <td class="data_bank_label" width="30%">${_('Clave Interbancaria Estandarizada (CLABE)')}</td>
+                    <td class="data_bank_label">${_('Referencia')}</td>
                 </tr>
                 %for f in o.company_emitter_id.partner_id.bank_ids:
                     <tr>
                         <td class="center_td">${f.bank.name or ''|entity} ${f.currency2_id and '/' or '' |entity} ${f.currency2_id and f.currency2_id.name or '' |entity}</td>
                         <td class="center_td">${f.acc_number or ''|entity}</td>
                         <td class="center_td">${f.clabe or ''|entity}</td>
+                        <td class="center_td">${f.reference or ''|entity}</td>
                     </tr>
                 %endfor
             </table>
@@ -304,7 +308,9 @@
                 <tr>
                     <td class="center_td">${ o.no_certificado or 'No identificado'|entity }</td>
                     <td class="center_td">${ o.pay_method_id.name or 'No identificado'|entity }</td>
-                    <td class="center_td">${ o.acc_payment.last_acc_number or 'No identificado' }</td>
+                    <td class="center_td">
+                        ${ o.acc_payment and o.acc_payment.bank_name or '' }
+                        ${ o.acc_payment.last_acc_number or 'No identificado' }</td>
                 </tr>
             </table>
         %endif
