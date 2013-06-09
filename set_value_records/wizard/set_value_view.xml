@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+<data>
+
+        <record id="set_values_form" model="ir.ui.view">
+              <field name="name">Change Values</field>
+              <field name="model">set.values</field>
+              <field name="arch" type="xml">
+                <form string="Change Values" version="7.0">
+                <field name="sure"/>
+                <field name="confirm"/>
+               <p class="oe_view_nocontent_create">
+                     You need select both confirmation checkbox
+               </p>
+               <label for='fields' string='Fields' />
+                <field name="fields" context="{'model':self}"/>
+               <label for='value' string='Value' />
+                <field name="value" context="{'model':self}"/>
+               <p class="oe_view_nocontent_create">
+                   Set the value for change if is a relational field set 
+                   search paramete like: name = Test
+                   with spaces and logic operator
+
+               </p>
+                <button icon="gtk-cancel" special="cancel" string="Close"/>
+                <button name="change_values" string="Change Values" type="object"/>
+                    </form>
+              </field>
+        </record>
+
+<act_window name="Change values"
+            key2="client_action_multi"
+            res_model="set.values"
+            src_model="product.product"
+            groups="base.group_erp_manager"
+            view_mode="form"
+            view_type="form"
+            target="new"
+            id="set_value_action"/>
+
+</data>
+</openerp>
