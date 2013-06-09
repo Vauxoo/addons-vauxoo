@@ -38,7 +38,6 @@ class invoice(osv.osv):
         inv_ids=[]
         result = mod_obj.get_object_reference(cr, uid, 'account_voucher', 'action_voucher_list')
         id = result and result[1] or False
-        print inv.type,"pos por esoooo"
         if inv.type == 'out_invoice' or inv.type=='out_refund':
             view_type='view_vendor_receipt_form'
         else:
@@ -57,5 +56,3 @@ class invoice(osv.osv):
             }
         result['res_id'] = inv_ids and inv_ids[0] or False
         return result
-
- 

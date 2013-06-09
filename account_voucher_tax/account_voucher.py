@@ -69,7 +69,6 @@ class account_voucher(osv.Model):
         company_currency = self._get_company_currency(cr, uid, voucher_id, context)
         current_currency = self._get_current_currency(cr, uid, voucher_id, context)
         move_ids=[]
-        print company_currency, current_currency,'imprimo company_currency'
         for voucher in self.browse(cr, uid, [voucher_id], context=context):
             for line in voucher.line_ids:
                 
@@ -124,7 +123,6 @@ class account_voucher(osv.Model):
                   #          debit=line_tax.balance_tax
                    #     else:
                     #        credit=line_tax.balance_tax
-                     #   print debit,credit,'imprimo debit,credit'
                       #  entrie_name = 'poliza de writeof'
                     #############################################################
 
@@ -239,7 +237,6 @@ class account_voucher(osv.Model):
                             for move_line_tax in move_lines_tax:
                                 move_line_obj.create(cr ,uid, move_line_tax,
                                                         context=context)
-                    print currency_rate_difference,'imprimo currency_rate_differencecurrency_rate_differencecurrency_rate_difference'
                     
                     if voucher.writeoff_amount > 0:
                         reference_amount_w = self.get_partial_amount_tax_pay(cr,
@@ -262,7 +259,6 @@ class account_voucher(osv.Model):
                             move_id, voucher, line, line_tax, company_currency,
                             reference_amount, amount_tax_unround,
                             reference_currency_id, context=None):
-        print reference_amount,'imprimo reference_amount'
         
         if voucher.type == 'payment' or reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
@@ -345,7 +341,6 @@ class account_voucher(osv.Model):
         currency_obj = self.pool.get('res.currency')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
         new=self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
-        print new,'new'
         #~ res[1][0]=res[1][0]+new
         return res
         
@@ -471,15 +466,12 @@ class account_move_line(osv.Model):
         res=super(account_move_line, self).reconcile(cr, uid, ids=ids, 
         type='auto', writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id, 
         writeoff_journal_id=writeoff_journal_id, context=context)
-        print context,'imprimo context'
 #        if not writeoff_acc_id:
         dat = self._get_query_round(cr, uid, ids, context=context)
         res_round = {}
         res_without_round = {}
         res_ids = {}
-        print ids,'imprimo ids'
         for val_round in dat:
-            print val_round,'imprimo val_round'
             res_round.setdefault(val_round['account_id'], 0)
             res_without_round.setdefault(val_round['account_id'], 0)
             res_ids.setdefault(val_round['account_id'], 0)
@@ -489,14 +481,11 @@ class account_move_line(osv.Model):
         for res_diff_id in res_round.items():
             diff_val = abs(res_without_round[res_diff_id[0]]) - abs(res_round[res_diff_id[0]])
             diff_val = round(diff_val, 2)
-            print diff_val,'imprimo diff_val'
             if diff_val <> 0.00:
-                print diff_val,'imprimo diff_val'
                 move_diff_id = [res_ids[res_diff_id[0]]]
                 for move in self.browse(cr, uid, move_diff_id, context=context):
                     move_line_ids = self.search(cr, uid, [('move_id', '=', move.move_id.id),('tax_id', '=', move.tax_id.id)])
                     for diff_move in self.browse(cr, uid, move_line_ids, context=context):
-                        print diff_move.debit, diff_move.credit,'imprimo diff_move2222222222222222'
                         if diff_move.debit == 0.0 and diff_move.credit :
                             self.write(cr, uid, [diff_move.id], {'credit': diff_move.credit+diff_val})
                         if diff_move.credit == 0.0 and diff_move.debit:
