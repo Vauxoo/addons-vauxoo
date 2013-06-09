@@ -72,9 +72,12 @@ class account_fiscalyear(osv.osv):
 
     def _get_fy_month(self, cr, uid, id, period_id, special=False, context=None):
         if context is None: context = {}
+        ap_obj = self.pool.get('account.period')
+        ap_brw = ap_obj.browse(cr, uid, period_id, context=context)
+        start_date = ap_brw.date_start
         #~ TODO: ERASE LINE BEFORE GO-LIVE
 #        return 1.0
-        return self._get_fy_period_ids(cr, uid, id, special=special, context=context).index(period_id)+1
+        return time.strptime(start_date, '%Y-%m-%d').tm_mon
 
 account_fiscalyear()
 

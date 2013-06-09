@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_product_ref_inherit" model="ir.ui.view">
+            <field name="name">product.product.ref.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                 
+                 <xpath expr="//field[@name='purchase_ok']" position="replace" ></xpath>
+
+                 <xpath expr="//label[@for='purchase_ok']" position="replace" ></xpath>
+
+                 
+                <xpath expr="//div[@name='options']" position="after">
+                    <field name="purchase_ok" />
+                    <label for="purchase_ok"/>
+                </xpath>
+                
+            </field>
+            
+        </record>
+        
+    </data>
+</openerp>

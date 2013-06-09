@@ -23,7 +23,10 @@
 {
     "name" : "Grouped by product,move_id y analytic in model account_move_line",
     "version" : "1.0",
-    "depends" : ['account'],
+    "depends" : [
+        'account',
+        'analytic'
+        ],
     "author" : "Vauxoo",
     #"license" : "AGPL-3",
     "description" : """
