@@ -34,7 +34,7 @@
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["mrp_subproduct",
+    "depends" : ["mrp_byproduct",
         ],
     "init_xml" : [],
     "demo_xml" : [],
