@@ -4,7 +4,7 @@
         <record id="view_product_ref_inherit" model="ir.ui.view">
             <field name="name">product.product.ref.form</field>
             <field name="model">product.product</field>
-            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="inherit_id" ref="purchase.view_product_supplier_inherit"/>
             <field name="arch" type="xml">
                  
                  <xpath expr="//field[@name='purchase_ok']" position="replace" ></xpath>
