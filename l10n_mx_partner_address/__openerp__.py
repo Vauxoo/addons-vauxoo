@@ -46,7 +46,8 @@
     "init_xml" : [],
     "demo_xml" : ["demo/l10n_mx_partner_address_demo.xml",],
     "update_xml" : [
-        'country_data.xml'
+        'country_data.xml',
+        'res_company_view_inherit.xml',
     ],
     "installable" : True,
     "active" : False,
