@@ -28,7 +28,7 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, osv
 from openerp import tools, release
-
+from openerp import SUPERUSER_ID
 
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
@@ -38,7 +38,7 @@ class account_invoice(osv.Model):
         if not context:
             context = {}
         res = {}
-        for invoice in self.browse(cr, uid, ids):
+        for invoice in self.browse(cr, SUPERUSER_ID, ids):
             sequence_id = False
             company = invoice.company_id
             while True:
