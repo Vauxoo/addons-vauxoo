@@ -38,5 +38,5 @@
     "demo_xml" : [],
     "update_xml" : ['groups_view.xml'],
     "installable" : True,
-    "active" : True,
+    "active" : False,
 }
