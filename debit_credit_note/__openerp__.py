@@ -36,8 +36,12 @@
     "website": "http://vauxoo.com",
     "category": "Generic Modules/Accounting",
     "description": '''
-This module ads credit a debit notes on each invoices
+This module add credit a debit notes on each invoices
 =====================================================
+This module add:
+- A new button on invoice to generate debit note
+- Parent_id field to set principal invoice from which the credit note
+
 ''',
     "init_xml": [],
     "depends": ["base", "account"],
