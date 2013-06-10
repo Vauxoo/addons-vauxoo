@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+      <menuitem id="menu_purchase_ev_requisition" name="Purchase Requisitions"
+            parent="base.menu_purchase_root" sequence="1" groups="purchase_requisition_for_everybody.purchase_requisition_user_ev_groups,purchase_requisition_for_everybody.purchase_requisition_manager_ev_groups" />                    
+
+    <menuitem                                                                   
+        id="purchase_requisition.menu_purchase_requisition_pro_mgt"                                  
+        sequence="10"                                                           
+        parent="menu_purchase_ev_requisition"                           
+        action="purchase_requisition.action_purchase_requisition"/> 
+
+
+
+    </data>
+</openerp>
