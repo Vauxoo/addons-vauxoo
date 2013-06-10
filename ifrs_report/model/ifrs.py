@@ -1,5 +1,5 @@
-#!/usr/bin/python
 # -*- encoding: utf-8 -*-
+#!/usr/bin/python
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
@@ -90,6 +90,7 @@ class ifrs_ifrs(osv.osv):
             'do_compute' : False,
         })
         res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
+
         return res
 
 ifrs_ifrs()
@@ -103,14 +104,13 @@ class ifrs_lines(osv.osv):
 
     def _get_sum_total(self, cr, uid, brw, context = None):
         if context is None: context = {}
-        c = context.copy()
         res = 0
         for t in brw.total_ids:
-            res += self._get_sum( cr, uid, t.id, context = c )
+            res += self._get_sum( cr, uid, t.id, context=context )
         if brw.operator <> 'without':
             res2=0
             for o in brw.operand_ids:
-                res2 += self._get_sum( cr, uid, o.id, context = c )
+                res2 += self._get_sum( cr, uid, o.id, context=context )
             if brw.operator == 'subtract':
                 res -= res2
             elif brw.operator == 'percent':
@@ -126,75 +126,72 @@ class ifrs_lines(osv.osv):
         period_obj = self.pool.get('account.period')
         if context is None: context = {}
         res = 0
-        c = context.copy()
-        brw = self.browse( cr, uid, id, context = c )
+        #c = context.copy()
+        brw = self.browse( cr, uid, id, context = context )
         
         #~ Assembling context
-        
         #~ Generic context applicable to the different types
-        if not c.get('fiscalyear'):
-            c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
+        if not context.get('fiscalyear'):
+            context['fiscalyear'] = fy_obj.find(cr,uid,dt=None,context=context)
         
-        if not c.get('period_from',False) and not c.get('period_to',False):
+        if not context.get('period_from',False) and not context.get('period_to',False):
             if context.get('whole_fy',False):
-                c['period_from'] = period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear']),('special','=',True)])
-                if not c['period_from']:
-                    raise osv.except_osv(_('Error !'), _('There are no special period in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
-                c['period_from']=c['period_from'][0]
-            c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
+                context['period_from'] = period_obj.search(cr,uid,[('fiscalyear_id','=',context['fiscalyear']),('special','=',True)])
+                if not context.get('period_from', False):
+                    raise osv.except_osv(_('Error !'), _('There are no special period in %s') % (fy_obj.browse(cr,uid,context['fiscalyear'],context=context).name))
+                context['period_from']=context['period_from'][0]
+            context['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',context['fiscalyear'])])[-1]
         
-        c.get('periods') and c.pop('periods')
-        c.get('initial_bal') and c.pop('initial_bal')
+        #c.get('periods') and c.pop('periods')
+        #c.get('initial_bal') and c.pop('initial_bal')
         
         if brw.type == 'detail':
             if brw.acc_val=='init':
-                period_ids = period_obj.build_ctx_periods_initial(cr, uid, c['period_from'])
-                c['periods'] = period_ids
-                period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
-            if not c['period_from']:
-                    raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
+                period_ids = period_obj.build_ctx_periods_initial(cr, uid, context['period_from'])
+                context['periods'] = period_ids
+                period_company_id = period_obj.browse(cr, uid, context['period_from'], context=context).company_id.id
+            if not context['period_from']:
+                    raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,context['period_from'],context=context).name))
 
             elif brw.acc_val=='var':
                 if context.get('whole_fy',False):
-                    c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])
-                    if not c['period_from']:
-                        raise osv.except_osv(_('Error !'), _('There are no periods in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
+                    context['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',context['fiscalyear'],)])
+                    if not context['period_from']:
+                        raise osv.except_osv(_('Error !'), _('There are no periods in %s')%(fy_obj.browse(cr,uid,context['fiscalyear'],context=context).name))
                     
-                if isinstance( c['period_from'], (int, long) ):
-                    c['period_from']=c['period_from']
+                if isinstance( context['period_from'], (int, long) ):
+                    context['period_from']=context['period_from']
                 else:
-                    c['period_from']=c['period_from'][1]
+                    context['period_from']=context['period_from'][1]
                     
         elif brw.type == 'total':
             if brw.comparison <> 'without':
-                c2 = c.copy()
-
-
-                c2['period_from'] = period_obj.previous(cr, uid, c2['period_from'],context= c2)
-                if not c2['period_from']:
-                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
-                c2['period_to']=c2['period_from']
+                context['period_from'] = period_obj.previous(cr, uid, context['period_from'],context= context)
+                if not context['period_from']:
+                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,context['period_from'],context=context).name))
+                context['period_to']=context['period_from']
                 
         
         
         #~ Stuffing the sum
-        brw = self.browse( cr, uid, id, context = c )
+        brw = self.browse( cr, uid, id, context = context )
         
         if brw.type == 'abstract':
             pass
         elif brw.type == 'constant':
             if brw.constant_type == 'period_days':
-                res = period_obj._get_period_days(cr, uid, c['period_from'], c['period_to'])
+                res = period_obj._get_period_days(cr, uid, context['period_from'], context['period_to'])
             elif brw.constant_type == 'fy_periods':
-                res = fy_obj._get_fy_periods(cr, uid, c['fiscalyear'])
+                res = fy_obj._get_fy_periods(cr, uid, context['fiscalyear'])
             elif brw.constant_type == 'fy_month':
-                res = fy_obj._get_fy_month(cr, uid, c['fiscalyear'],c['period_to'])
-        elif brw.type == 'detail':
-            analytic = [an.id for an in brw.analytic_ids]
-            if analytic:
-                c['analytic'] = analytic
-            c['partner_detail'] = c.get('partner_detail')
-            for a in brw.cons_ids:
+                res = fy_obj._get_fy_month(cr, uid, context['fiscalyear'],context['period_to'])
+        elif brw.type == 'detail': 
+            #Si es de tipo detail
+            analytic = [an.id for an in brw.analytic_ids] #Tomo los ids de las cuentas analiticas de las lineas
+            if analytic: #Si habian cuentas analiticas en la linea, se guardan en el context y se usan en algun metodo dentro del modulo de account
+                context['analytic'] = analytic
+            context['partner_detail'] = context.get('partner_detail')
+            for a in brw.cons_ids: #Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
                 if brw.value == 'debit':
                     res += a.debit
                 elif brw.value == 'credit':
@@ -203,14 +200,14 @@ class ifrs_lines(osv.osv):
                     res += a.balance
                     
         elif brw.type == 'total':
-            res = self._get_sum_total(cr, uid, brw, context = c)
+            res = self._get_sum_total(cr, uid, brw, context = context)
             if brw.comparison <> 'without':
                 res2=0
                 #~ TODO: Write definition for previous periods
                 #~ that will be the arguments for the new brw.
                 
-                brw = self.browse( cr, uid, id, context = c2 )
-                res2 = self._get_sum_total(cr, uid, brw, context = c2)
+                brw = self.browse( cr, uid, id, context = context )
+                res2 = self._get_sum_total(cr, uid, brw, context = context)
 
                 if brw.comparison == 'subtract':
                     res -= res2
@@ -222,6 +219,7 @@ class ifrs_lines(osv.osv):
         return brw.inv_sign and (-1.0 * res) or res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
+        #Se hace la suma de las cuentas y se guarda en el campo amount
         if context is None: context = {}
         res = {}
         for id in ids:
@@ -241,14 +239,35 @@ class ifrs_lines(osv.osv):
 
     def _get_children_and_total(self, cr, uid, ids, context=None):
         #this function search for all the children and all consolidated children (recursively) of the given total ids
-        ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)], context=context)
+        #~ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)], context=context)
+        import pdb
+        #pdb.set_trace()
         ids3 = []
-        for rec in self.browse(cr, uid, ids2, context=context):
+        ids2 = []
+        sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(map(str, ids)) + ')' 
+        print sql
+        cr.execute(sql)
+        print "ids %s " % ids
+        childs =  cr.fetchall()
+        print childs
+        for rec in childs:
+            print "***********************************rec"
+            print rec
+            ids2.append(rec[1])
+            self.write(cr, uid, rec[1], {'parent_id':rec[0]})
+            rec = self.browse(cr, uid, rec[1], context=context)
             for child in rec.total_ids:
                 ids3.append(child.id)
         if ids3:
-            ids3 = self._get_children_and_total(cr, uid, ids3, context)
+            ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
+
+        #~for rec in self.browse(cr, uid, ids2, context=context):
+        #~    for child in rec.total_ids:
+        #~        ids3.append(child.id)
+        #~if ids3:
+        #~    ids3 = self._get_children_and_total(cr, uid, ids3, context)
         return ids2 + ids3
+    
     def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
         if context is None: context = {}
         res = []
@@ -309,14 +328,19 @@ class ifrs_lines(osv.osv):
 
         if period_num:
             if two:
-                context = {'period_from': period_num, 'period_to':period_num, 'state': target_move, 'partner_detail':pd, 'fiscalyear':fiscalyear}
+                context = {'period_from': period_num, 'period_to':period_num}
             else:
                 period_id = period_info[period_num][1]
-                context = {'period_from': period_id, 'period_to':period_id, 'state': target_move, 'partner_detail':pd, 'fiscalyear':fiscalyear}
+                context = {'period_from': period_id, 'period_to':period_id}
         else:
             context = {'whole_fy': 'True'} 
-       
+
+        context['partner_detail'] = pd 
+        context['fiscalyear'] = fiscalyear
+        context['state'] = target_move
+
         res = self._get_sum(cr, uid, ifrs_line.id, context = context)
+        
         if ifrs_line.type == 'detail':
             res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         elif ifrs_line.type == 'total':
@@ -372,14 +396,14 @@ class ifrs_lines(osv.osv):
             help="This field will update when you click the compute button in the IFRS doc form"
             ),
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
-        'analytic_ids' : fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts' ),
-        'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
+        'analytic_ids' : fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
+        'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','total'),('id','!=',id)]"),
         'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
-    'level': fields.function(_get_level, string='Level', method=True, type='integer',
+        'level': fields.function(_get_level, string='Level', method=True, type='integer',
          store={
-            'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
+            'ifrs.lines': (_get_children_and_total, ['total_ids','parent_id'], 10),
          }),
         'operand_ids' : fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands' ),
         'operator': fields.selection( [
@@ -420,7 +444,8 @@ class ifrs_lines(osv.osv):
         'type' : 'abstract',
         'invisible' : False,
         'acc_val' : 'fy',
-        'value' : 'balance'
+        'value' : 'balance',
+        'level' : 0,
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 

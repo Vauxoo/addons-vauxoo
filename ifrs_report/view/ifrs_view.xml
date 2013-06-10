@@ -99,9 +99,9 @@
                                     <separator string='Total' colspan='2' />
                                     <field
                                         name="total_ids" widget="many2many"
-                                        nolabel='1'
-                                        domain="['|',('ifrs_id','in', [len(k) and k[2] or False for k in parent.ifrs_ids]),('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
-                                    </field>
+                                        nolabel="1"
+                                        domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
+                                        />
                                 </group>
                                 
                                 <group col='1' attrs="{'invisible':[('operator','=','without')]}">
