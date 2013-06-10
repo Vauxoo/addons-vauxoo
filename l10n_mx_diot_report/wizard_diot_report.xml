@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+<!-- wizard for obligaciones -->
+
+	<record id="action_wz_declar_diot" model="ir.actions.wizard">
+	  <field name="name">Calcular Declaracion de operaciones con terceros [ DIOT ] </field>
+	  <field name="wiz_name">wizard.declar.diot</field>
+	</record>
+
+	<menuitem 
+		action="action_wz_declar_diot" 
+		id="menu_declar_diot_wz" 
+		parent="account.menu_finance_legal_statement" 
+		type="wizard" 
+		/>
+
+
+	
+	</data>
+</openerp>
