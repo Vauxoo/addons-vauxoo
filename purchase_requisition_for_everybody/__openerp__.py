@@ -24,7 +24,6 @@
     'author' : 'Vauxoo C.A.',
     'category' : 'Security',
     'description' : """
-
 Records Rule for Purchase_Requisition Module
 ============================================
 
