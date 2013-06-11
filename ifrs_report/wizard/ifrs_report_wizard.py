@@ -77,19 +77,11 @@ class ifrs_report_wizard(osv.osv_memory):
         'exchange_date' : fields.date.today,
         'columns': 'ifrs'
     }
-
-    def _optimal_calculations_lines(self, cr, uid, context=None):
-        if context is None: context = {}
-        ifrs_lines = self.pool.get('ifrs.lines')
-        ifrs_lines_brws = ifrs_lines.browse(cr, uid, ifrs_lines.search(cr, uid, [],context=context), context=context)
-        for ifrs_l in ifrs_lines_brws:
-            print ifrs_l.name
-     
+                
     def default_get(self, cr, uid, fields, context=None):
         if context is None: 
             context = {}                                                        
         res = super(ifrs_report_wizard, self).default_get(cr, uid, fields, context=context)
-        self._optimal_calculations_lines(cr, uid, context=context)
         #res.update({'uid_country': self._get_country_code(cr,uid,context=context)})
         return res
 
