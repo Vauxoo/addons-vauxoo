@@ -35,7 +35,7 @@
     "license" : "AGPL-3",
     "depends" : ["procurement","sale_stock","purchase"],
     "demo_xml" : [],
-    "update_xml" : ['procurement_so2po_shiping_address_view.xml'],
+    "update_xml" : ['procurement_so2po_shiping_address_view.xml','security/groups.xml'],
     "installable" : True,
     "active" : False,
 }
