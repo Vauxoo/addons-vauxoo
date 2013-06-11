@@ -134,3 +134,13 @@ msgstr "Inactivo"
 msgid "Name user for login to PAC"
 msgstr "Nombre de usuario para iniciar sesión en el PAC"
 
+#. module: l10n_mx_params_pac
+#: help:params.pac,certificate_link:0
+msgid "PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF"
+msgstr "Los PAC tienen un certificado público que es necesario para que los clientes comprueben la validez del XML y del PDF"
+
+#. module: l10n_mx_params_pac
+#: field:params.pac,certificate_link:0
+msgid "Certificate link"
+msgstr "Enlace al certificado"
+

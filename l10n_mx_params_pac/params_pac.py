@@ -56,7 +56,8 @@ class params_pac(osv.Model):
         'active': fields.boolean('Active', help='Indicate if this param is active'),
         'sequence': fields.integer('Sequence',
             help='If have more of a param, take the param with less sequence'),
-
+        'certificate_link': fields.char('Certificate link', size=256 , 
+            help='PAC have a public certificate that is necessary by customers to check the validity of the XML and PDF'),
         # 'link_type': fields.selection([('production','Produccion'),('test','Pruebas')],"Tipo de ligas"),
     }
     _defaults = {

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_diot_report" model="ir.ui.view">
+            <field name="name">Account DIOT Report for Mexico</field>
+            <field name="model">account.diot.report</field>
+            <field name="arch" type="xml">
+             <form string="Create invoices" version="7.0">
+                <field invisible="1" name="state"/>
+                <field name="name" invisible="1"/>
+                <group  states="choose" string="DIOT Report - Statement of transactions with third parties [DIOT]" colspan="4">
+                    <field name="company_id" />
+                    <field name="month_id" />
+                </group>
+                <div states="get">
+                    <h2>You DIOT report has been successfully created!</h2>
+                    <p>Here is the exported DIOT Report file: <field name="file" readonly="1" filename="filename"/></p>
+                </div>
+
+                <footer  states="choose">
+                    <button icon='gtk-cancel' special="cancel"  string="Cancel" />
+                    <button name="create_diot" string="Create file of DIOT" colspan="1" type="object" icon="gtk-ok"/>
+                </footer>
+                <footer states="get">
+                    <button special="cancel" string="Close" type="object"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_account_diot_report" model="ir.actions.act_window">
+            <field name="name">Account DIOT Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.diot.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="help"></field>
+        </record>
+
+        <menuitem   name="Transactions with third parties [ DIOT ] "
+                    parent="account.menu_finance_legal_statement"
+                    action="action_account_diot_report"
+                    id="menu_account_diot_declaration"
+            />
+
+
+    </data>
+</openerp>
