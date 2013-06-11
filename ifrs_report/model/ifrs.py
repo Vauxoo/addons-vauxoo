@@ -126,7 +126,6 @@ class ifrs_lines(osv.osv):
         period_obj = self.pool.get('account.period')
         if context is None: context = {}
         res = 0
-        #c = context.copy()
         brw = self.browse( cr, uid, id, context = context )
         
         #~ Assembling context
@@ -239,20 +238,13 @@ class ifrs_lines(osv.osv):
 
     def _get_children_and_total(self, cr, uid, ids, context=None):
         #this function search for all the children and all consolidated children (recursively) of the given total ids
-        #~ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)], context=context)
-        import pdb
-        #pdb.set_trace()
         ids3 = []
         ids2 = []
         sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(map(str, ids)) + ')' 
-        print sql
         cr.execute(sql)
-        print "ids %s " % ids
         childs =  cr.fetchall()
         print childs
         for rec in childs:
-            print "***********************************rec"
-            print rec
             ids2.append(rec[1])
             self.write(cr, uid, rec[1], {'parent_id':rec[0]})
             rec = self.browse(cr, uid, rec[1], context=context)
@@ -260,12 +252,6 @@ class ifrs_lines(osv.osv):
                 ids3.append(child.id)
         if ids3:
             ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
-
-        #~for rec in self.browse(cr, uid, ids2, context=context):
-        #~    for child in rec.total_ids:
-        #~        ids3.append(child.id)
-        #~if ids3:
-        #~    ids3 = self._get_children_and_total(cr, uid, ids3, context)
         return ids2 + ids3
     
     def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
