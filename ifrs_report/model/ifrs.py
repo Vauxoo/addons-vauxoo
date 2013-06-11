@@ -335,6 +335,151 @@ class ifrs_lines(osv.osv):
                     res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
 
+    def _get_sum_total_2(self, cr, uid, brw, context = None):
+        if context is None: context = {}
+        res = 0
+        for t in brw.total_ids:
+            res += self._get_sum_2( cr, uid, t.id, context=context )
+        if brw.operator <> 'without':
+            res2=0
+            for o in brw.operand_ids:
+                res2 += self._get_sum_2( cr, uid, o.id, context=context )
+            if brw.operator == 'subtract':
+                res -= res2
+            elif brw.operator == 'percent':
+                res =  res2 != 0 and (100 * res / res2) or 0.0
+            elif brw.operator == 'ratio':
+                res =  res2 != 0 and (res / res2) or 0.0
+            elif brw.operator == 'product':
+                res =  res * res2
+        return res
+
+    def _get_sum_2( self, cr, uid, id, context = None ):
+        fy_obj = self.pool.get('account.fiscalyear')
+        period_obj = self.pool.get('account.period')
+        if context is None: context = {}
+        res = 0
+        brw = self.browse( cr, uid, id, context = context )
+        
+        #~ Assembling context
+        #~ Generic context applicable to the different types
+        if not context.get('fiscalyear'):
+            context['fiscalyear'] = fy_obj.find(cr,uid,dt=None,context=context)
+        
+        if not context.get('period_from',False) and not context.get('period_to',False):
+            if context.get('whole_fy',False):
+                context['period_from'] = period_obj.search(cr,uid,[('fiscalyear_id','=',context['fiscalyear']),('special','=',True)])
+                if not context.get('period_from', False):
+                    raise osv.except_osv(_('Error !'), _('There are no special period in %s') % (fy_obj.browse(cr,uid,context['fiscalyear'],context=context).name))
+                context['period_from']=context['period_from'][0]
+            context['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',context['fiscalyear'])])[-1]
+        
+        #c.get('periods') and c.pop('periods')
+        #c.get('initial_bal') and c.pop('initial_bal')
+        
+        if brw.type == 'detail':
+            if brw.acc_val=='init':
+                period_ids = period_obj.build_ctx_periods_initial(cr, uid, context['period_from'])
+                context['periods'] = period_ids
+                period_company_id = period_obj.browse(cr, uid, context['period_from'], context=context).company_id.id
+            if not context['period_from']:
+                    raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,context['period_from'],context=context).name))
+
+            elif brw.acc_val=='var':
+                if context.get('whole_fy',False):
+                    context['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',context['fiscalyear'],)])
+                    if not context['period_from']:
+                        raise osv.except_osv(_('Error !'), _('There are no periods in %s')%(fy_obj.browse(cr,uid,context['fiscalyear'],context=context).name))
+                    
+                if isinstance( context['period_from'], (int, long) ):
+                    context['period_from']=context['period_from']
+                else:
+                    context['period_from']=context['period_from'][1]
+                    
+        elif brw.type == 'total':
+            if brw.comparison <> 'without':
+                context['period_from'] = period_obj.previous(cr, uid, context['period_from'],context= context)
+                if not context['period_from']:
+                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,context['period_from'],context=context).name))
+                context['period_to']=context['period_from']
+                
+        
+        
+        #~ Stuffing the sum
+        brw = self.browse( cr, uid, id, context = context )
+        
+        if brw.type == 'abstract':
+            pass
+        elif brw.type == 'constant':
+            if brw.constant_type == 'period_days':
+                res = period_obj._get_period_days(cr, uid, context['period_from'], context['period_to'])
+            elif brw.constant_type == 'fy_periods':
+                res = fy_obj._get_fy_periods(cr, uid, context['fiscalyear'])
+            elif brw.constant_type == 'fy_month':
+                res = fy_obj._get_fy_month(cr, uid, context['fiscalyear'],context['period_to'])
+        elif brw.type == 'detail': 
+            #Si es de tipo detail
+            analytic = [an.id for an in brw.analytic_ids] #Tomo los ids de las cuentas analiticas de las lineas
+            if analytic: #Si habian cuentas analiticas en la linea, se guardan en el context y se usan en algun metodo dentro del modulo de account
+                context['analytic'] = analytic
+            context['partner_detail'] = context.get('partner_detail')
+            for a in brw.cons_ids: #Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
+                if brw.value == 'debit':
+                    res += a.debit
+                elif brw.value == 'credit':
+                    res += a.credit
+                else:
+                    res += a.balance
+                    
+        elif brw.type == 'total':
+            res = self._get_sum_total_2(cr, uid, brw, context = context)
+            if brw.comparison <> 'without':
+                res2=0
+                #~ TODO: Write definition for previous periods
+                #~ that will be the arguments for the new brw.
+                
+                brw = self.browse( cr, uid, id, context = context )
+                res2 = self._get_sum_total_2(cr, uid, brw, context = context)
+
+                if brw.comparison == 'subtract':
+                    res -= res2
+                elif brw.comparison == 'percent':
+                    res =  res2 != 0 and (100 * res / res2) or 0.0
+                elif brw.comparison == 'ratio':
+                    res =  res2 != 0 and (res / res2) or 0.0
+            
+        return brw.inv_sign and (-1.0 * res) or res 
+    
+    def _get_amount_value_2(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+        if context is None: context = {}
+        
+        '''devuelve la cantidad correspondiente al periodo'''
+        from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
+        to_currency_id = currency_wizard
+
+        if period_num:
+            if two:
+                context = {'period_from': period_num, 'period_to':period_num}
+            else:
+                period_id = period_info[period_num][1]
+                context = {'period_from': period_id, 'period_to':period_id}
+        else:
+            context = {'whole_fy': 'True'} 
+
+        context['partner_detail'] = pd 
+        context['fiscalyear'] = fiscalyear
+        context['state'] = target_move
+
+        res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
+        
+        if ifrs_line.type == 'detail':
+            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+        elif ifrs_line.type == 'total':
+            if ifrs_line.operator not in ('percent','ratio'):
+                if ifrs_line.comparison not in ('percent','ratio','product'):
+                    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+        return res
+    
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
         ifrs = self.pool.get('ifrs.lines')
         aml_obj = self.pool.get('account.move.line')
