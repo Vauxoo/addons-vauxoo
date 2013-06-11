@@ -9,6 +9,7 @@
             <field name="user">testing@solucionfactible.com</field>
             <field name="password">timbrado.SF.16672</field>
             <field name="name">PAC SF - Cancelar - Test</field>
+            <field name="certificate_link">http://solucionfactible.com/sfic/resources/files/csdSAT-SF/testing/20001000000100005761.zip</field>
         </record>
         
         <record id="params_pac_sf_firmar_test" model="params.pac">
@@ -18,6 +19,7 @@
             <field name="user">testing@solucionfactible.com</field>
             <field name="password">timbrado.SF.16672</field>
             <field name="name">PAC SF - Firmar - Test</field>
+            <field name="certificate_link">http://solucionfactible.com/sfic/resources/files/csdSAT-SF/testing/20001000000100005761.zip</field>
         </record>
         <!--
         <record id="params_pac_sf_cancelar_prod" model="params.pac">
