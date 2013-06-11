@@ -226,7 +226,8 @@ class account_voucher(osv.Model):
                             raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
                         sign = voucher.type in ('payment', 'purchase') and -1 or 1
                         currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
-                        if currency_rate_difference:
+                        if round(currency_rate_difference, 2):
+                            print currency_rate_difference,'currency_rate_difference'
                             factor=self.get_percent_pay_vs_invoice(cr ,uid, tax_amount_exchange, currency_rate_difference,context=context)
                             base_amount=self.get_partial_amount_tax_pay(cr, uid, line_tax.tax_id.amount, base_exchange, context=context)
                             move_lines_tax = self._get_move_writeoff(cr, uid,
