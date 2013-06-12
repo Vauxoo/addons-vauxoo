@@ -144,6 +144,16 @@ class ifrs_ifrs(osv.osv):
             period_list.append((str(ii), period_id, periods.browse(cr, uid, period_id, context=context).name ))
 
         return period_list
+    
+    def _get_period_print_info(self, cr, uid, ids, period_id, report_type, context=None):
+        if context is None: context = {}
+        ''' Return all the printable information about period'''
+        if report_type == 'all':
+            res = 'All Periods of the fiscalyear.'
+        else:
+            period = self.pool.get('account.period').browse(cr, uid, period_id, context = context)
+            res = str(period.name) + ' [' + str(period.code) + ']'
+        return res
 
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
@@ -336,17 +346,6 @@ class ifrs_lines(osv.osv):
                 #~ INCLUDE A LOGGER
         return res
     
-    def _get_period_print_info(self, cr, uid, ids, period_id, report_type, context=None):
-        if context is None: context = {}
-        ''' Return all the printable information about period'''
-
-        if report_type == 'all':
-            res = 'All Periods of the fiscalyear.'
-        else:
-            period = self.pool.get('account.period').browse(cr, uid, period_id, context = context)
-            res = str(period.name) + ' [' + str(period.code) + ']'
-
-        return res
 
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):

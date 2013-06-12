@@ -24,7 +24,7 @@
 					<tr><td><b>[${ifrs.code or ''|entity}] ${ifrs.name or ''|entity}</b></td></tr>
 					<tr><td>${ifrs.company_id.name or ''|entity}</td></tr>
 					<tr><td>${ifrs.fiscalyear_id.name or ''|entity}</td></tr>
-					<tr><td>${ ifrs.ifrs_lines_ids[0]._get_period_print_info(data['period'],data['report_type']) }</td></tr>
+					<tr><td>${ ifrs._get_period_print_info(data['period'],data['report_type']) }</td></tr>
 				</table>
 			</td>
 			<td>
