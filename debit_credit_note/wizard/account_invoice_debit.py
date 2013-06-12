@@ -211,8 +211,14 @@ class account_invoice_debit(osv.TransientModel):
                                        context=context)
                 invoice = invoice[0]
                 del invoice['id']
-                invoice_lines = []
-                tax_lines = []
+                invoice_lines = inv_line_obj.browse(
+                    cr, uid, invoice['invoice_line'], context=context)
+                invoice_lines = inv_obj._refund_cleanup_lines(
+                    cr, uid, invoice_lines, context=context)
+                tax_lines = inv_tax_obj.browse(
+                    cr, uid, invoice['tax_line'], context=context)
+                tax_lines = inv_obj._refund_cleanup_lines(
+                    cr, uid, tax_lines, context=context)
                 # Add origin, parent and comment values
                 orig = self._get_orig(cr, uid, inv, invoice[
                                       'reference'], context)
