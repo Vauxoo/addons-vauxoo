@@ -33,12 +33,11 @@
 
     <table class="list_table"  width="90%">
         <%
-            period_name = ifrs.ifrs_lines_ids[0]._get_periods_name_list(data['fiscalyear'])
+            period_name = ifrs._get_periods_name_list(data['fiscalyear'])
         %>
         <thead>
             <tr>
-                <th class="celda_border">Descripcion</th>
-                %for li in range(1, 13):
+                %for li in range(0, 13):
                     <th class="celda">
                         %try:
                             ${ period_name[li][2] }
@@ -53,7 +52,6 @@
         %for ifrs_l in ifrs.ifrs_lines_ids:
             <%
                 res = {}
-                res_total = {}
             %>
             <tbody>
                 
@@ -61,20 +59,19 @@
                 <th class="celda3">${ifrs_l.name}</th>
                 %for lins in range(1, 13):
                     <%
+                        amount_value = 0.0
                         try:
-                            res_total.setdefault('total_%s'%lins, 0)
                             amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move']) 
-                            res_total['total_%s'%lins] += amount_value 
                         except:
                             pass
                     %>
-                    <td class="celda2">
+                    <th class="celda2">
                         %try:
                             ${formatLang(amount_value, digits=2, date=False, date_time=False, grouping=3, monetary=False)}
                         %except:
                             0.0
                         %endtry
-                    </td>
+                    </th>
                 %endfor 
             </tr>
         %endfor

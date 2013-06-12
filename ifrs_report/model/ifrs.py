@@ -121,9 +121,29 @@ class ifrs_ifrs(osv.osv):
         list_level = self._list_lines_per_level(cr, uid, ids, context=context)
         for ifrs_l in list_level:
             ifrs_l_brw = ifrs_lines.browse(cr, uid, ifrs_l, context=context)
-            #print ifrs_l_brw._get_sum_2
+            #ifrs_l_brw._get_amount_value_2(cr, uid, ifrs_l.id, context=context)
 
-        return self.write(cr,uid,ids,{'do_compute':True},context=context)
+        return True
+        #return self.write(cr,uid,ids,{'do_compute':True},context=context)
+    
+    def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
+        if context is None: context = {}
+
+        """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
+
+        period_list = []
+        period_list.append( ('0', None , ' ' ) ) 
+
+        fiscalyear_bwr = self.pool.get('account.fiscalyear').browse(cr, uid, fiscalyear_id, context=context)
+        
+        periods_ids = fiscalyear_bwr._get_fy_period_ids()
+
+        periods = self.pool.get('account.period')
+        
+        for ii, period_id in enumerate(periods_ids, start=1):
+            period_list.append((str(ii), period_id, periods.browse(cr, uid, period_id, context=context).name ))
+
+        return period_list
 
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
@@ -328,24 +348,6 @@ class ifrs_lines(osv.osv):
 
         return res
 
-    def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
-        if context is None: context = {}
-
-        """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
-
-        period_list = []
-        period_list.append( ('0', None , ' ' ) ) 
-
-        fiscalyear_bwr = self.pool.get('account.fiscalyear').browse(cr, uid, fiscalyear_id, context=context)
-        
-        periods_ids = fiscalyear_bwr._get_fy_period_ids()
-
-        periods = self.pool.get('account.period')
-        
-        for ii, period_id in enumerate(periods_ids, start=1):
-            period_list.append((str(ii), period_id, periods.browse(cr, uid, period_id, context=context).name ))
-
-        return period_list
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None: context = {}
@@ -393,16 +395,16 @@ class ifrs_lines(osv.osv):
         to_currency_id = currency_wizard
 
         if period_num:
-            if two:
-                context = {'period_from': period_num, 'period_to':period_num}
-            else:
-                period_id = period_info[period_num][1]
-                context = {'period_from': period_id, 'period_to':period_id}
-        else:
-            context = {'whole_fy': 'True'} 
+            #if two:
+            #    context = {'period_from': period_num, 'period_to':period_num}
+            #else:
+            period_id = period_info[period_num][1]
+            context = {'period_from': period_id, 'period_to':period_id}
+        #else:
+        #    context = {'whole_fy': 'True'} 
 
-        context['partner_detail'] = pd 
-        context['fiscalyear'] = fiscalyear
+        #context['partner_detail'] = pd 
+        #context['fiscalyear'] = fiscalyear
         context['state'] = target_move
         
         res = self._get_sum(cr, uid, ifrs_line.id, context = context)

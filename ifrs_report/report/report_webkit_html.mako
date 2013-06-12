@@ -41,7 +41,7 @@
 
 <table class="list_table" width="90%">
     <%
-        period_name = ifrs.ifrs_lines_ids[0]._get_periods_name_list(data['fiscalyear'])
+        period_name = ifrs._get_periods_name_list(data['fiscalyear'])
     %>
     
 	 %for ifrs_l in ifrs.ifrs_lines_ids:
