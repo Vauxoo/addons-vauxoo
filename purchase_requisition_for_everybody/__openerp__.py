@@ -41,6 +41,7 @@ You need any of those 2 groups for you can see the new purchase requisition menu
     'data': [
         'security/requisition_security.xml',
         'view/purchase_requisition_view.xml',
+        'security/ir.model.access.csv',
     ],
     'js': [
     ],
