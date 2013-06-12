@@ -76,11 +76,49 @@ class ifrs_ifrs(osv.osv):
         'fiscalyear_id': lambda s,c,u,cx: s.pool.get('account.fiscalyear').find(c, u),
     }
 
+    def _list_lines_per_level(self, cr, uid, ids, context=None):
+        '''
+        Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
+        mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
+        primero, por eso se posicionan en primer lugar de la lista.
+        '''
+        if context is None: context = {}
+
+        for ifrs_id in ids:
+            ifrs_lines = self.pool.get('ifrs.lines')
+            
+            #THE maximum level is determined
+            
+            ifrs_lines_ids =  ifrs_lines.search(cr, uid, [('ifrs_id','=',ifrs_id)],context=context)
+            res = []
+            
+            #ifrs_lines_brws = ifrs_lines.browse(cr, uid, ifrs_lines.search(cr, uid, [('ifrs_id','=',ifrs_id)],context=context), context=context)
+            #
+            #for linea in ifrs_lines_brws:
+            #    if linea.type == 'total':
+            #        for l in linea.total_ids:
+            #            ifrs_lines_ids_2.append(l.id)
+            #                 
+            #ifrs_lines_ids = set(ifrs_lines_ids_2 + ifrs_lines_ids) 
+            
+            sql_max_level = "select max(level) from ifrs_lines where id in %s" % str(tuple(ifrs_lines_ids))
+            cr.execute(sql_max_level)
+            max_level = cr.fetchone()[0]
+            
+            for level in range(max_level, 0, -1):
+                res += ifrs_lines.search(cr, uid, [('id','in',ifrs_lines_ids),('level','=',level)], context=context)
+                print "Nivel %s" % level
+                print res
+            
+            return res
+
     def compute(self, cr, uid, ids, context=None):
         if context is None: context = {}
         fy = self.browse(cr, uid, ids, context=context)[0]
         context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         
+        self._list_lines_per_level(cr, uid, ids, context=context)
+
         return self.write(cr,uid,ids,{'do_compute':True},context=context)
     
     def copy(self, cr, uid, id, default=None, context=None):
@@ -254,39 +292,6 @@ class ifrs_lines(osv.osv):
             ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
         return ids2 + ids3
    
-    def _list_lines_per_level(self, cr, uid, ifrs_id, context=None):
-        '''
-        Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
-        mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
-        primero, por eso se posicionan en primer lugar de la lista.
-        '''
-        if context is None: context = {}
-        ifrs_lines = self.pool.get('ifrs.lines')
-        
-        #THE maximum level is determined
-        
-        ifrs_lines_ids =  ifrs_lines.search(cr, uid, [('ifrs_id','=',ifrs_id)],context=context)
-        res = []
-        
-        #ifrs_lines_brws = ifrs_lines.browse(cr, uid, ifrs_lines.search(cr, uid, [('ifrs_id','=',ifrs_id)],context=context), context=context)
-        #
-        #for linea in ifrs_lines_brws:
-        #    if linea.type == 'total':
-        #        for l in linea.total_ids:
-        #            ifrs_lines_ids_2.append(l.id)
-        #                 
-        #ifrs_lines_ids = set(ifrs_lines_ids_2 + ifrs_lines_ids) 
-        
-        sql_max_level = "select max(level) from ifrs_lines where id in %s" % str(tuple(ifrs_lines_ids))
-        cr.execute(sql_max_level)
-        max_level = cr.fetchone()[0]
-        
-        for level in range(max_level, 0, -1):
-            res += ifrs_lines.search(cr, uid, [('id','in',ifrs_lines_ids),('level','=',level)], context=context)
-            print "Nivel %s" % level
-            print res
-        
-        return res
 
     def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
         if context is None: context = {}
