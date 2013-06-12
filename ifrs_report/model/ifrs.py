@@ -107,8 +107,8 @@ class ifrs_ifrs(osv.osv):
             
             for level in range(max_level, 0, -1):
                 res += ifrs_lines.search(cr, uid, [('id','in',ifrs_lines_ids),('level','=',level)], context=context)
-                print "Nivel %s" % level
-                print res
+                #print "Nivel %s" % level
+                #print res
             
             return res
 
@@ -117,10 +117,15 @@ class ifrs_ifrs(osv.osv):
         fy = self.browse(cr, uid, ids, context=context)[0]
         context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         
-        self._list_lines_per_level(cr, uid, ids, context=context)
+        ifrs_lines = self.pool.get('ifrs.lines')
+        list_level = self._list_lines_per_level(cr, uid, ids, context=context)
+        for ifrs_l in list_level:
+            ifrs_l_brw = ifrs_lines.browse(cr, uid, ifrs_l, context=context)
+            #print ifrs_l_brw._get_sum_2
 
-        return self.write(cr,uid,ids,{'do_compute':True},context=context)
-    
+        #return self.write(cr,uid,ids,{'do_compute':True},context=context)
+        return True 
+
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
