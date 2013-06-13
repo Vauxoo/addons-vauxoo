@@ -50,20 +50,27 @@
         </thead>
         
         %for ifrs_l in ifrs.list_lines_per_level():
-            <%
-                res = {}
-            %>
-            <tbody>
-                
-            <tr class="prueba">
-                <th class="celda3">${ifrs_l.name}</th>
                 %for lins in range(1, 13):
                     <%
                         amount_value = 0.0
                         try:
-                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value_2(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move']) 
+                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value_2(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
                         except:
                             pass
+                    
+                    %>
+                %endfor
+          %endfor
+
+        %for ifrs_l in ifrs.list_lines_per_level():
+            <tbody>
+            <tr class="prueba">
+                <th class="celda3">${ifrs_l.name}</th>
+                %for lins in range(1, 13):
+                    <%
+
+                        amount_value = ifrs.ifrs_lines_ids[0]._get_amount_difference(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
+
                     %>
                     <th class="celda2">
                         %try:

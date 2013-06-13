@@ -123,9 +123,9 @@ class ifrs_ifrs(osv.osv):
         for ifrs_l in list_level:
             ifrs_l_brw = ifrs_lines.browse(cr, uid, ifrs_l, context=context)
             #ifrs_l_brw._get_amount_value_2(cr, uid, ifrs_l.id, context=context)
-
-        return True
-        #return self.write(cr,uid,ids,{'do_compute':True},context=context)
+        #HACER OTRO CICLO ACA PARA CALCULAR LOS OPENRAD_IDS
+        #return True
+        return self.write(cr,uid,ids,{'do_compute':True},context=context)
     
     def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
         if context is None: context = {}
@@ -544,6 +544,53 @@ class ifrs_lines(osv.osv):
                     res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
     
+    def _get_amount_difference(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+        if context is None: context = {}
+        
+        '''devuelve la cantidad correspondiente al periodo'''
+        from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
+        to_currency_id = currency_wizard
+
+        if period_num:
+            #if two:
+            #    context = {'period_from': period_num, 'period_to':period_num}
+            #else:
+            period_id = period_info[period_num][1]
+            context = {'period_from': period_id, 'period_to':period_id}
+        #else:
+        #    context = {'whole_fy': 'True'} 
+
+        #context['partner_detail'] = pd 
+        #context['fiscalyear'] = fiscalyear
+        context['state'] = target_move
+        res = getattr(ifrs_line, 'period_%s' % period_num) 
+        
+        if ifrs_line.type == 'total':
+            context['period_from'] = period_num
+            print period_num
+            res = self._get_sum_total_2(cr, uid, ifrs_line, context = context)
+        
+        if ifrs_line.operator <> 'without':
+            res2=0
+            for o in ifrs_line.operand_ids:
+                res2 += getattr(o, 'period_%s' % period_num)
+
+            if ifrs_line.operator == 'subtract':
+                res -= res2
+            elif ifrs_line.operator == 'percent':
+                res =  res2 != 0 and (100 * res / res2) or 0.0
+            elif ifrs_line.operator == 'ratio':
+                res =  res2 != 0 and (res / res2) or 0.0
+            elif ifrs_line.operator == 'product':
+                res =  res * res2
+        name_period = 'period_%s' % str(period_num)
+        self.write(cr, uid, ifrs_line.id, {name_period : res})
+
+            #res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
+
+        #res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
+        return res
+
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
         ifrs = self.pool.get('ifrs.lines')
         aml_obj = self.pool.get('account.move.line')
