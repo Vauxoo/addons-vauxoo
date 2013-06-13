@@ -77,11 +77,11 @@ class ifrs_ifrs(osv.osv):
     }
 
     def list_lines_per_level(self, cr, uid, ids, context=None):
-        '''
+        """
         Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
         mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
         primero, por eso se posicionan en primer lugar de la lista.
-        '''
+        """
         if context is None: context = {}
 
         for ifrs_id in ids:
@@ -110,8 +110,6 @@ class ifrs_ifrs(osv.osv):
             
             for level in range(max_level, -1, -1):
                 res += ifrs_lines.browse(cr, uid, ifrs_lines.search(cr, uid, [('id','in',ifrs_lines_ids),('level','=',level)], context=context) , context=context)
-                print "Nivel %s" % level
-                print res
                      
             return res
 
@@ -303,12 +301,12 @@ class ifrs_lines(osv.osv):
         if context is None: context = {}
         c = context.copy()
         res = 0
-        print brw.name
+        #print brw.name
         period_num = context.get('period_from')
         name_period = 'period_%s' % str(period_num)
         for t in brw.total_ids:
             res += getattr(t, name_period)
-            print res 
+            #print res 
             #self.write(cr, uid, brw.id, {name_period : res})
 
         #    res += self._get_sum_2( cr, uid, t.id, context = c )
@@ -460,7 +458,7 @@ class ifrs_lines(osv.osv):
         sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(map(str, ids)) + ')' 
         cr.execute(sql)
         childs =  cr.fetchall()
-        print childs
+        #print childs
         for rec in childs:
             ids2.append(rec[1])
             self.write(cr, uid, rec[1], {'parent_id':rec[0]})
@@ -545,12 +543,12 @@ class ifrs_lines(osv.osv):
         res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
         
         
-        #if ifrs_line.type == 'detail':
-        #    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
-        #elif ifrs_line.type == 'total':
-        #    if ifrs_line.operator not in ('percent','ratio'):
-        #        if ifrs_line.comparison not in ('percent','ratio','product'):
-        #            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+        if ifrs_line.type == 'detail':
+            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+        elif ifrs_line.type == 'total':
+            if ifrs_line.operator not in ('percent','ratio'):
+                if ifrs_line.comparison not in ('percent','ratio','product'):
+                    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
     
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
