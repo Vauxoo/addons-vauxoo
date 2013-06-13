@@ -1,0 +1,86 @@
+# -*- encoding: utf-8 -*-
+###########################################################################
+#    Module Writen to OpenERP, Open Source Management Solution
+#
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
+#    All Rights Reserved.
+#    info Vauxoo (info@vauxoo.com)
+############################################################################
+#    Coded by: Julio Serna (julio@vauxoo.com)
+############################################################################
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+
+from openerp.osv import fields, osv, orm
+
+class configure_account_partner(osv.TransientModel):
+    _name = 'configure.account.partner'
+    _columns = {
+        'name' : fields.many2one('account.account', 'Accounts Payable',
+            domain="[('type', '=', 'payable'),\
+            ('company_id', '=', company_id)]",),
+        'account_recivable': fields.many2one('account.account',
+            'Accounts Receivable',
+            domain="[('type', '=', 'receivable'),\
+            ('company_id', '=', company_id)]",),
+        'company_id': fields.many2one('res.company', 'Company')
+    }
+
+    _defaults = {
+        'company_id': lambda s,cr,uid,c:\
+            s.pool.get('res.company')._company_default_get(cr, uid,
+                                    'configure.account.partner', context=c),
+    }
+    
+    def create_or_modified(self, cr, uid ,ids, form, context=None):
+        ir_property_obj = self.pool.get('ir.property')
+        ir_model_fields_obj = self.pool.get('ir.model.fields')
+        payable_ids = ir_model_fields_obj.search(cr, uid, [
+            ('name', '=', 'property_account_payable'),
+            ('model', '=', 'res.partner')])
+            
+        receivable_ids = ir_model_fields_obj.search(cr, uid, [
+            ('name', '=', 'property_account_receivable'),
+            ('model', '=', 'res.partner')])
+            
+        ir_property_receivable_ids = ir_property_obj.search(cr, uid, [
+                ('fields_id', '=', receivable_ids and receivable_ids[0] or None),
+                ('company_id', '=', form.company_id.id)])
+
+        ir_property_payable_ids = ir_property_obj.search(cr, uid, [
+                ('fields_id', '=', payable_ids and payable_ids[0] or None),
+                ('company_id', '=', form.company_id.id)])
+        print ir_property_receivable_ids,'ir_property_receivable_ids'
+        print ir_property_payable_ids,'imprimo ir_property_payable_ids'
+        if ir_property_receivable_ids:
+            ir_property_obj.write(cr, uid, ir_property_receivable_ids, {'value_referece': 'account.account,%s'%form.account_recivable.id})
+        if ir_property_payable_ids:
+            ir_property_obj.write(cr, uid, ir_property_payable_ids, {'value_referece': 'account.account,%s'%form.name.id})
+        return True
+    
+    def conf_accounts(self, cr, uid, ids, context=None):
+        res_partner_obj = self.pool.get('res.partner')
+        partner_ids = res_partner_obj.search(cr, uid, [] )
+        form = self.browse(cr, uid, ids, context=context)[0]
+#        for partner in res_partner_obj.browse(cr, uid, partner_ids, context=context):
+        res_partner_obj.write(cr, uid, partner_ids,
+            {'property_account_payable':form.name.id,
+            'property_account_receivable': form.account_recivable.id})
+        self.create_or_modified(cr, uid, ids, form, context=context)
+        
+        print context,'imprimo context'
+        return True
