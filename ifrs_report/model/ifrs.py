@@ -301,15 +301,10 @@ class ifrs_lines(osv.osv):
         if context is None: context = {}
         c = context.copy()
         res = 0
-        #print brw.name
         period_num = context.get('period_from')
         name_period = 'period_%s' % str(period_num)
         for t in brw.total_ids:
             res += getattr(t, name_period)
-            #print res 
-            #self.write(cr, uid, brw.id, {name_period : res})
-
-        #    res += self._get_sum_2( cr, uid, t.id, context = c )
         #if brw.operator <> 'without':
         #    res2=0
         #    for o in brw.operand_ids:
@@ -427,7 +422,6 @@ class ifrs_lines(osv.osv):
         res = brw.inv_sign and (-1.0 * res) or res    
         # guardar amount del periodo que corresponde
         name_period = 'period_%s' % str(period_num)
-        #print "ifrs_line: %s , periodo: %s, valor: %s" % (ifrs_line.name, name_period, str(res))
         self.write(cr, uid, brw.id, {name_period : res})
         
         return res 
@@ -458,7 +452,6 @@ class ifrs_lines(osv.osv):
         sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(map(str, ids)) + ')' 
         cr.execute(sql)
         childs =  cr.fetchall()
-        #print childs
         for rec in childs:
             ids2.append(rec[1])
             self.write(cr, uid, rec[1], {'parent_id':rec[0]})

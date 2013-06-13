@@ -109,7 +109,7 @@
                                     <field
                                         name="operand_ids" widget="many2many"
                                         nolabel='1'
-                                        domain="['|',('ifrs_id','in', [len(k) and k[2] or False for k in parent.ifrs_ids]),('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
+                                        domain="['|',('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
                                     </field>
                                 </group>
                               </group>
