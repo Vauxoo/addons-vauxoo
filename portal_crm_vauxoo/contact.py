@@ -47,13 +47,9 @@ class crm_contact_us(osv.TransientModel):
     _inherit = 'crm.lead'
     _columns = {
         'company_ids': fields.many2many('res.company', string='Companies', readonly=True),
-        'captcha': fields.function(_get_captcha, type='text'), 
+        'captcha': fields.text('Captcha'), 
         'recaptcha_challenge_field': fields.text('Challenge Field', translate=True),
         'recaptcha_response_field': fields.text('Respose Field', translate=True),
-    }
-
-    _defaults = {
-        'captcha': lambda self, cr, uid, c: self._get_captcha_code(), 
     }
 
     def _get_companies(self, cr, uid, context=None):
@@ -101,6 +97,7 @@ class crm_contact_us(osv.TransientModel):
         'email_from': _get_user_email,
         'phone': _get_user_phone,
         'company_ids': _get_companies,
+        'captcha': lambda self, cr, uid, c: self._get_captcha_code(), 
     }
 
     def create(self, cr, uid, values, context=None):
