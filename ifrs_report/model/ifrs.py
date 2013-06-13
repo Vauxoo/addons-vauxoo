@@ -76,7 +76,7 @@ class ifrs_ifrs(osv.osv):
         'fiscalyear_id': lambda s,c,u,cx: s.pool.get('account.fiscalyear').find(c, u),
     }
 
-    def _list_lines_per_level(self, cr, uid, ids, context=None):
+    def list_lines_per_level(self, cr, uid, ids, context=None):
         '''
         Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
         mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
@@ -91,25 +91,28 @@ class ifrs_ifrs(osv.osv):
             
             ifrs_lines_ids =  ifrs_lines.search(cr, uid, [('ifrs_id','=',ifrs_id)],context=context)
             res = []
-            
-            #ifrs_lines_brws = ifrs_lines.browse(cr, uid, ifrs_lines.search(cr, uid, [('ifrs_id','=',ifrs_id)],context=context), context=context)
+##
+            #ifrs_lines_ids_2 = []
+            #ifrs_lines_brws = ifrs_lines.browse(cr, uid, ifrs_lines_ids, context=context)
             #
             #for linea in ifrs_lines_brws:
             #    if linea.type == 'total':
             #        for l in linea.total_ids:
             #            ifrs_lines_ids_2.append(l.id)
             #                 
-            #ifrs_lines_ids = set(ifrs_lines_ids_2 + ifrs_lines_ids) 
-            
+            #ifrs_lines_ids = list(set(ifrs_lines_ids_2 + ifrs_lines_ids))
+            #ifrs_lines_ids = map(lambda x: x, [idd for idd in ifrs_lines_ids] )no es necesario
+
+##            
             sql_max_level = "select max(level) from ifrs_lines where id in %s" % str(tuple(ifrs_lines_ids))
             cr.execute(sql_max_level)
             max_level = cr.fetchone()[0]
             
-            for level in range(max_level, 0, -1):
-                res += ifrs_lines.search(cr, uid, [('id','in',ifrs_lines_ids),('level','=',level)], context=context)
-                #print "Nivel %s" % level
-                #print res
-            
+            for level in range(max_level, -1, -1):
+                res += ifrs_lines.browse(cr, uid, ifrs_lines.search(cr, uid, [('id','in',ifrs_lines_ids),('level','=',level)], context=context) , context=context)
+                print "Nivel %s" % level
+                print res
+                     
             return res
 
     def compute(self, cr, uid, ids, context=None):
@@ -118,7 +121,7 @@ class ifrs_ifrs(osv.osv):
         context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         
         ifrs_lines = self.pool.get('ifrs.lines')
-        list_level = self._list_lines_per_level(cr, uid, ids, context=context)
+        list_level = self.list_lines_per_level(cr, uid, ids, context=context)
         for ifrs_l in list_level:
             ifrs_l_brw = ifrs_lines.browse(cr, uid, ifrs_l, context=context)
             #ifrs_l_brw._get_amount_value_2(cr, uid, ifrs_l.id, context=context)
@@ -296,6 +299,141 @@ class ifrs_lines(osv.osv):
             
         return brw.inv_sign and (-1.0 * res) or res 
 
+    def _get_sum_total_2(self, cr, uid, brw, context = None):
+        if context is None: context = {}
+        c = context.copy()
+        res = 0
+        print brw.name
+        period_num = context.get('period_from')
+        name_period = 'period_%s' % str(period_num)
+        for t in brw.total_ids:
+            res += getattr(t, name_period)
+            print res 
+            #self.write(cr, uid, brw.id, {name_period : res})
+
+        #    res += self._get_sum_2( cr, uid, t.id, context = c )
+        #if brw.operator <> 'without':
+        #    res2=0
+        #    for o in brw.operand_ids:
+        #        res2 += self._get_sum_2( cr, uid, o.id, context = c )
+        #    if brw.operator == 'subtract':
+        #        res -= res2
+        #    elif brw.operator == 'percent':
+        #        res =  res2 != 0 and (100 * res / res2) or 0.0
+        #    elif brw.operator == 'ratio':
+        #        res =  res2 != 0 and (res / res2) or 0.0
+        #    elif brw.operator == 'product':
+        #        res =  res * res2
+        return res
+    
+    def _get_sum_2( self, cr, uid, id, context = None ):
+        fy_obj = self.pool.get('account.fiscalyear')
+        period_obj = self.pool.get('account.period')
+        if context is None: context = {}
+        res = 0
+        c = context.copy()
+        brw = self.browse( cr, uid, id, context = c )
+        period_num = context['period_from']
+
+        #~ Assembling context
+        #~ Generic context applicable to the different types
+        if not c.get('fiscalyear'):
+            c['fiscalyear']=fy_obj.find(cr,uid,dt=None,context=c)
+        
+        if not c.get('period_from',False) and not c.get('period_to',False):
+            if context.get('whole_fy',False):
+                c['period_from'] = period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear']),('special','=',True)])
+                if not c['period_from']:
+                    raise osv.except_osv(_('Error !'), _('There are no special period in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
+                c['period_from']=c['period_from'][0]
+            c['period_to'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'])])[-1]
+        
+        c.get('periods') and c.pop('periods')
+        c.get('initial_bal') and c.pop('initial_bal')
+        
+        if brw.type == 'detail':
+            if brw.acc_val=='init':
+                period_ids = period_obj.build_ctx_periods_initial(cr, uid, c['period_from'])
+                c['periods'] = period_ids
+                period_company_id = period_obj.browse(cr, uid, c['period_from'], context=context).company_id.id
+            if not c['period_from']:
+                    raise osv.except_osv(_('Error !'), _('prueba001 %s')%(period_obj.browse(cr,uid,context['period_from'],context=c).name))
+
+            elif brw.acc_val=='var':
+                if context.get('whole_fy',False):
+                    c['period_from'] =period_obj.search(cr,uid,[('fiscalyear_id','=',c['fiscalyear'],)])
+                    if not c['period_from']:
+                        raise osv.except_osv(_('Error !'), _('There are no periods in %s')%(fy_obj.browse(cr,uid,c['fiscalyear'],context=c).name))
+                    
+                if isinstance( c['period_from'], (int, long) ):
+                    c['period_from']=c['period_from']
+                else:
+                    c['period_from']=c['period_from'][1]
+                    
+        elif brw.type == 'total':
+            if brw.comparison <> 'without':
+                c2 = c.copy()
+
+
+
+
+                c2['period_from'] = period_obj.previous(cr, uid, c2['period_from'],context= c2)
+                if not c2['period_from']:
+                    raise osv.except_osv(_('Error !'), _('There are previous period to %s')%(period_obj.browse(cr,uid,c['period_from'],context=c).name))
+                c2['period_to']=c2['period_from']
+                
+        
+        
+        #~ Stuffing the sum
+        brw = self.browse( cr, uid, id, context = c )
+        
+        if brw.type == 'abstract':
+            pass
+        elif brw.type == 'constant':
+            if brw.constant_type == 'period_days':
+                res = period_obj._get_period_days(cr, uid, c['period_from'], c['period_to'])
+            elif brw.constant_type == 'fy_periods':
+                res = fy_obj._get_fy_periods(cr, uid, c['fiscalyear'])
+            elif brw.constant_type == 'fy_month':
+                res = fy_obj._get_fy_month(cr, uid, c['fiscalyear'],c['period_to'])
+        elif brw.type == 'detail': 
+            #Si es de tipo detail
+            analytic = [an.id for an in brw.analytic_ids] #Tomo los ids de las cuentas analiticas de las lineas
+            if analytic: #Si habian cuentas analiticas en la linea, se guardan en el context y se usan en algun metodo dentro del modulo de account
+                c['analytic'] = analytic
+            c['partner_detail'] = c.get('partner_detail')
+            for a in brw.cons_ids: #Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
+                if brw.value == 'debit':
+                    res += a.debit
+                elif brw.value == 'credit':
+                    res += a.credit
+                else:
+                    res += a.balance
+                    
+        elif brw.type == 'total':
+            res = self._get_sum_total_2(cr, uid, brw, context = c)
+            if brw.comparison <> 'without':
+                res2=0
+                #~ TODO: Write definition for previous periods
+                #~ that will be the arguments for the new brw.
+                
+                brw = self.browse( cr, uid, id, context = c2 )
+                res2 = self._get_sum_total_2(cr, uid, brw, context = c2)
+
+                if brw.comparison == 'subtract':
+                    res -= res2
+                elif brw.comparison == 'percent':
+                    res =  res2 != 0 and (100 * res / res2) or 0.0
+                elif brw.comparison == 'ratio':
+                    res =  res2 != 0 and (res / res2) or 0.0
+        res = brw.inv_sign and (-1.0 * res) or res    
+        # guardar amount del periodo que corresponde
+        name_period = 'period_%s' % str(period_num)
+        #print "ifrs_line: %s , periodo: %s, valor: %s" % (ifrs_line.name, name_period, str(res))
+        self.write(cr, uid, brw.id, {name_period : res})
+        
+        return res 
+
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
         #Se hace la suma de las cuentas y se guarda en el campo amount
         if context is None: context = {}
@@ -345,8 +483,6 @@ class ifrs_lines(osv.osv):
                 #~ TODO: write back False to brw.do_compute with SQL
                 #~ INCLUDE A LOGGER
         return res
-    
-
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None: context = {}
@@ -406,20 +542,15 @@ class ifrs_lines(osv.osv):
         #context['fiscalyear'] = fiscalyear
         context['state'] = target_move
         
-        res = self._get_sum(cr, uid, ifrs_line.id, context = context)
-        # guardar amount del periodo que corresponde
-        name_period = 'period_%s' % str(period_num)
-        print "ifrs_line: %s , periodo: %s, valor: %s" % (ifrs_line.name, name_period, str(res))
-        #print name_period
-        self.write(cr, uid, ifrs_line.id, {name_period : res})
+        res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
         
         
-        if ifrs_line.type == 'detail':
-            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
-        elif ifrs_line.type == 'total':
-            if ifrs_line.operator not in ('percent','ratio'):
-                if ifrs_line.comparison not in ('percent','ratio','product'):
-                    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+        #if ifrs_line.type == 'detail':
+        #    res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+        #elif ifrs_line.type == 'total':
+        #    if ifrs_line.operator not in ('percent','ratio'):
+        #        if ifrs_line.comparison not in ('percent','ratio','product'):
+        #            res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
     
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):

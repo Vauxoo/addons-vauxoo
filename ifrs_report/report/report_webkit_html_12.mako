@@ -49,7 +49,7 @@
             </tr>
         </thead>
         
-        %for ifrs_l in ifrs.ifrs_lines_ids:
+        %for ifrs_l in ifrs.list_lines_per_level():
             <%
                 res = {}
             %>
@@ -61,7 +61,7 @@
                     <%
                         amount_value = 0.0
                         try:
-                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move']) 
+                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value_2(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move']) 
                         except:
                             pass
                     %>
