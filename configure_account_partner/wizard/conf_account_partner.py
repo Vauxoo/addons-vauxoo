@@ -49,27 +49,35 @@ class configure_account_partner(osv.TransientModel):
     def create_or_modified(self, cr, uid ,ids, form, context=None):
         ir_property_obj = self.pool.get('ir.property')
         ir_model_fields_obj = self.pool.get('ir.model.fields')
+        
         payable_ids = ir_model_fields_obj.search(cr, uid, [
             ('name', '=', 'property_account_payable'),
             ('model', '=', 'res.partner')])
-            
+        print payable_ids,'payable_ids'
+        
         receivable_ids = ir_model_fields_obj.search(cr, uid, [
             ('name', '=', 'property_account_receivable'),
             ('model', '=', 'res.partner')])
+        print receivable_ids,'imprimo receivable_ids'
             
         ir_property_receivable_ids = ir_property_obj.search(cr, uid, [
                 ('fields_id', '=', receivable_ids and receivable_ids[0] or None),
                 ('company_id', '=', form.company_id.id)])
+        print ir_property_receivable_ids,'imprimo ir_property_receivable_ids'
 
         ir_property_payable_ids = ir_property_obj.search(cr, uid, [
                 ('fields_id', '=', payable_ids and payable_ids[0] or None),
                 ('company_id', '=', form.company_id.id)])
-        print ir_property_receivable_ids,'ir_property_receivable_ids'
-        print ir_property_payable_ids,'imprimo ir_property_payable_ids'
+        print ir_property_payable_ids,'ir_property_payable_ids'
+                
         if ir_property_receivable_ids:
-            ir_property_obj.write(cr, uid, ir_property_receivable_ids, {'value_referece': 'account.account,%s'%form.account_recivable.id})
+            print form.account_recivable.id,'imprimo form.account_recivable.id'
+            ir_property_obj.write(cr, uid, ir_property_receivable_ids,
+                {'value_reference': 'account.account,%s'%form.account_recivable.id})
         if ir_property_payable_ids:
-            ir_property_obj.write(cr, uid, ir_property_payable_ids, {'value_referece': 'account.account,%s'%form.name.id})
+            print form.name.id,'imprimo form.name.id'
+            ir_property_obj.write(cr, uid, ir_property_payable_ids,
+                {'value_reference': 'account.account,%s'%form.name.id})
         return True
     
     def conf_accounts(self, cr, uid, ids, context=None):
