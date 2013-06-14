@@ -37,7 +37,11 @@ class configure_account_partner(osv.TransientModel):
             'Accounts Receivable',
             domain="[('type', '=', 'receivable'),\
             ('company_id', '=', company_id)]",),
-        'company_id': fields.many2one('res.company', 'Company')
+        'company_id': fields.many2one('res.company', 'Company'),
+        'webkit_partner': fields.boolean(
+            'Configure Property Webkit And Partner',
+            help="Check this field to configure\
+                partner and webkit, if not only configures webkit")
     }
 
     _defaults = {
@@ -53,42 +57,56 @@ class configure_account_partner(osv.TransientModel):
         payable_ids = ir_model_fields_obj.search(cr, uid, [
             ('name', '=', 'property_account_payable'),
             ('model', '=', 'res.partner')])
-        print payable_ids,'payable_ids'
         
         receivable_ids = ir_model_fields_obj.search(cr, uid, [
             ('name', '=', 'property_account_receivable'),
             ('model', '=', 'res.partner')])
-        print receivable_ids,'imprimo receivable_ids'
             
         ir_property_receivable_ids = ir_property_obj.search(cr, uid, [
-                ('fields_id', '=', receivable_ids and receivable_ids[0] or None),
+                ('fields_id', '=', receivable_ids and\
+                                    receivable_ids[0] or None),
                 ('company_id', '=', form.company_id.id)])
-        print ir_property_receivable_ids,'imprimo ir_property_receivable_ids'
 
         ir_property_payable_ids = ir_property_obj.search(cr, uid, [
-                ('fields_id', '=', payable_ids and payable_ids[0] or None),
+                ('fields_id', '=', payable_ids and\
+                                    payable_ids[0] or None),
                 ('company_id', '=', form.company_id.id)])
-        print ir_property_payable_ids,'ir_property_payable_ids'
                 
         if ir_property_receivable_ids:
-            print form.account_recivable.id,'imprimo form.account_recivable.id'
             ir_property_obj.write(cr, uid, ir_property_receivable_ids,
-                {'value_reference': 'account.account,%s'%form.account_recivable.id})
+                {'value_reference': 'account.account,%s'
+                                            %form.account_recivable.id})
         if ir_property_payable_ids:
-            print form.name.id,'imprimo form.name.id'
             ir_property_obj.write(cr, uid, ir_property_payable_ids,
                 {'value_reference': 'account.account,%s'%form.name.id})
+        return True
+    
+    def webkit_property(self, cr, uid, ids, form, context=None):
+        ir_property_obj = self.pool.get('ir.property')
+        ir_model_fields_obj = self.pool.get('ir.model.fields')
+        
+        webkit_ids = ir_model_fields_obj.search(cr, uid, [
+            ('name', '=', 'webkit_header'),
+            ('model', '=', 'ir.actions.report.xml')])
+
+        webkit_header_ids = ir_property_obj.search(cr, uid, [
+                ('fields_id', '=', webkit_ids and webkit_ids[0] or None),
+                ('company_id', '=', form.company_id.id)])
+
+        if webkit_header_ids:
+            ir_property_obj.write(cr, uid, webkit_header_ids,
+                {'company_id': None})
         return True
     
     def conf_accounts(self, cr, uid, ids, context=None):
         res_partner_obj = self.pool.get('res.partner')
         partner_ids = res_partner_obj.search(cr, uid, [] )
         form = self.browse(cr, uid, ids, context=context)[0]
-#        for partner in res_partner_obj.browse(cr, uid, partner_ids, context=context):
-        res_partner_obj.write(cr, uid, partner_ids,
-            {'property_account_payable':form.name.id,
-            'property_account_receivable': form.account_recivable.id})
-        self.create_or_modified(cr, uid, ids, form, context=context)
-        
-        print context,'imprimo context'
+        if form.webkit_partner:
+            res_partner_obj.write(cr, uid, partner_ids,
+                {'property_account_payable':form.name.id,
+                'property_account_receivable': form.account_recivable.id})
+            self.create_or_modified(cr, uid, ids, form, context=context)
+        self.webkit_property(cr, uid, ids, form, context=context)
+
         return True
