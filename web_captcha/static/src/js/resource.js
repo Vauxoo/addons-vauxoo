@@ -16,9 +16,12 @@ openerp.web_captcha = function (openerp)
             this._super();
         },
         start: function () {
-               Recaptcha.create("6Ldf-uESAAAAAMPNMWa8dD6tFZey9w_1FrcpOmIe", "or_recaptcha", {
-               theme: "red",
-               callback: Recaptcha.focus_response_field});
+               var ds = new openerp.web.DataSetSearch(null, "res.company");                  
+               var reads = ds.read_slice(['recaptcha_key'], {}).then(function(models){
+                   Recaptcha.create(models[0].recaptcha_key, "or_recaptcha", {
+                       theme: "red",
+                       callback: Recaptcha.focus_response_field});
+                   });
                return this._super();
           },
         render_value: function() {
