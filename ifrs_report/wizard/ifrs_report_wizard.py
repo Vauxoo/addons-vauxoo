@@ -60,8 +60,9 @@ class ifrs_report_wizard(osv.osv_memory):
             string='Type', required=True ),
         'columns': fields.selection( [
             ('ifrs','Two Columns'),
-            ('ifrs_12', 'Twelve Columns'),
-            ('webkitaccount.ifrs_12', 'With Partner Detail')],
+            ('webkitaccount.ifrs_12', 'Twelve Columns'),
+            #('ifrs_12_partner_detail', 'With Partner Detail')
+            ],
             string='Number of Columns' ),
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
@@ -76,6 +77,13 @@ class ifrs_report_wizard(osv.osv_memory):
         'exchange_date' : fields.date.today,
         'columns': 'ifrs'
     }
+                
+    def default_get(self, cr, uid, fields, context=None):
+        if context is None: 
+            context = {}                                                        
+        res = super(ifrs_report_wizard, self).default_get(cr, uid, fields, context=context)
+        #res.update({'uid_country': self._get_country_code(cr,uid,context=context)})
+        return res
 
     def _get_period(self, cr, uid, context={}):
 
@@ -108,6 +116,8 @@ class ifrs_report_wizard(osv.osv_memory):
         datas['company'] = wizard_ifrs.company_id.id
         datas['columns'] = str(wizard_ifrs.columns)
         datas['target_move'] = wizard_ifrs.target_move
+        datas['exchange_date'] = wizard_ifrs.exchange_date
+        datas['currency_wizard'] = wizard_ifrs.currency_id.id 
 
         if datas['report_type'] == 'all':
             datas['fiscalyear'] = wizard_ifrs.fiscalyear_id.id or self._get_fiscalyear(cr, uid, context=context)
@@ -116,7 +126,7 @@ class ifrs_report_wizard(osv.osv_memory):
             datas['columns'] = 'ifrs'
             datas['period'] = wizard_ifrs.period.id or self._get_period( cr, uid, context=context )
             datas['fiscalyear'] = self._get_fiscalyear(cr, uid, context=context, period_id=datas['period'])
-
+        
         return {
             'type': 'ir.actions.report.xml',
             'report_name': datas['columns'],
