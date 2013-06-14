@@ -302,13 +302,13 @@ class ifrs_lines(osv.osv):
         c = context.copy()
         res = 0
         if context.get('whole_fy',False):
-            name_period = 'amount'
+            field_name = 'amount'
         else:
             period_num = context.get('period_from')
-            name_period = 'period_%s' % str(period_num)
+            field_name = 'period_%s' % str(period_num)
 
         for t in brw.total_ids:
-            res += getattr(t, name_period)
+            res += getattr(t, field_name)
         return res
     
     def _get_sum_2( self, cr, uid, id, context = None ):
@@ -416,11 +416,11 @@ class ifrs_lines(osv.osv):
         res = brw.inv_sign and (-1.0 * res) or res    
         # guardar amount del periodo que corresponde
         if context.get('whole_fy', False):
-            name_period = 'amount'
+            field_name = 'amount'
         else:
-            name_period = 'period_%s' % str(period_num)
-        #self.write(cr, uid, brw.id, {name_period : res})
-        sql = "update ifrs_lines set %s = %s where id = %s" %(name_period, res, brw.id)
+            field_name = 'period_%s' % str(period_num)
+        #self.write(cr, uid, brw.id, {field_name : res})
+        sql = "update ifrs_lines set %s = %s where id = %s" %(field_name, res, brw.id)
         cr.execute(sql)
              
         return res 
@@ -567,22 +567,17 @@ class ifrs_lines(osv.osv):
         context['state'] = target_move
         
         if context.get('whole_fy', False):
-            name_period = 'amount'
+            field_name = 'amount'
         else:
-            name_period = 'period_%s' % str(period_num)
+            field_name = 'period_%s' % str(period_num)
              
         res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num, target_move, context=context)
         
-        print "Nombre de la line a", ifrs_line.name
         band = True
         if ifrs_line.operator in ('subtract','percent','ratio','product'):
-            print "Tiene un operands_id"
-            print "Valor viejo " , res, " En el periodo ", period_num
-            print "3**************" , period_num
             res2=0
-            
             for o in ifrs_line.operand_ids:
-                res2 += getattr(o, name_period)
+                res2 += getattr(o, field_name)
             
             if ifrs_line.operator == 'subtract':
                 res -= res2
@@ -592,28 +587,14 @@ class ifrs_lines(osv.osv):
                 res =  res2 != 0 and (res / res2) or 0.0
             elif ifrs_line.operator == 'product':
                 res =  res * res2
-            print name_period, "3**************" , period_num
-            print "Valor A RESTAR ", res2, " en el periodo ", name_period
-            sql = "update ifrs_lines set %s = %s where id = %s" %(name_period, res, ifrs_line.id)
+            sql = "update ifrs_lines set %s = %s where id = %s" %(field_name, res, ifrs_line.id)
             cr.execute(sql)
-            #self.write(cr, uid, ifrs_line.id, {name_period : res})
+            #self.write(cr, uid, ifrs_line.id, {field_name : res})
             ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
-            print "valor nuevo" , ifrs_line.amount
             band = False 
         
         if band and ifrs_line.type == 'total':
-            print "Recalculando valor del total"
             res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num, target_move, context=context)
-            #sql = "update ifrs_lines set %s = %s where id = %s" %(name_period, res, ifrs_line.id)
-            #cr.execute(sql)
-            
-            #self.write(cr, uid, ifrs_line.id, {name_period : res})
-            print "Valor recalculado" , res
-        print ifrs_line.name
-        print res
-            #res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
-
-        #res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
         return res
 
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
