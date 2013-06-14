@@ -34,6 +34,9 @@ This module adds a contact page (with a contact form creating a lead when submit
     'data': [
         'contact_view.xml',
     ],
+    'update_xml': [
+        'company_view.xml',
+        ],
     'test': [
         'test/contact_form.yml',
     ],

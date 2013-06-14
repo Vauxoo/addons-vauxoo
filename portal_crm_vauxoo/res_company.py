@@ -1,8 +1,14 @@
-# -*- coding: utf-8 -*-
-##############################################################################
+
+# -*- encoding: utf-8 -*-
+###########################################################################
+#    Module Writen to OpenERP, Open Source Management Solution
 #
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2011 OpenERP S.A (<http://www.openerp.com>).
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    All Rights Reserved.
+#    info Vauxoo (info@vauxoo.com)
+############################################################################
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
+############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,6 +24,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.osv import osv, fields
 
-import contact
-import res_company
+
+class res_company(osv.Model):
+    _inherit = 'res.company'
+    _columns = {
+        'recaptcha_key': fields.char('Recaptcha Key', size=64, help='Campo para registrar el Key del recaptcha'), 
+    }
