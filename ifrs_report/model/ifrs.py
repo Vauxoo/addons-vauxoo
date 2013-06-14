@@ -301,22 +301,14 @@ class ifrs_lines(osv.osv):
         if context is None: context = {}
         c = context.copy()
         res = 0
-        period_num = context.get('period_from')
-        name_period = 'period_%s' % str(period_num)
+        if context.get('whole_fy',False):
+            name_period = 'amount'
+        else:
+            period_num = context.get('period_from')
+            name_period = 'period_%s' % str(period_num)
+
         for t in brw.total_ids:
             res += getattr(t, name_period)
-        #if brw.operator <> 'without':
-        #    res2=0
-        #    for o in brw.operand_ids:
-        #        res2 += self._get_sum_2( cr, uid, o.id, context = c )
-        #    if brw.operator == 'subtract':
-        #        res -= res2
-        #    elif brw.operator == 'percent':
-        #        res =  res2 != 0 and (100 * res / res2) or 0.0
-        #    elif brw.operator == 'ratio':
-        #        res =  res2 != 0 and (res / res2) or 0.0
-        #    elif brw.operator == 'product':
-        #        res =  res * res2
         return res
     
     def _get_sum_2( self, cr, uid, id, context = None ):
@@ -326,7 +318,9 @@ class ifrs_lines(osv.osv):
         res = 0
         c = context.copy()
         brw = self.browse( cr, uid, id, context = c )
-        period_num = context['period_from']
+        
+        if not context.get('whole_fy', False):
+            period_num = context.get('period_from', False)
 
         #~ Assembling context
         #~ Generic context applicable to the different types
@@ -421,9 +415,14 @@ class ifrs_lines(osv.osv):
                     res =  res2 != 0 and (res / res2) or 0.0
         res = brw.inv_sign and (-1.0 * res) or res    
         # guardar amount del periodo que corresponde
-        name_period = 'period_%s' % str(period_num)
-        self.write(cr, uid, brw.id, {name_period : res})
-        
+        if context.get('whole_fy', False):
+            name_period = 'amount'
+        else:
+            name_period = 'period_%s' % str(period_num)
+        #self.write(cr, uid, brw.id, {name_period : res})
+        sql = "update ifrs_lines set %s = %s where id = %s" %(name_period, res, brw.id)
+        cr.execute(sql)
+             
         return res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
@@ -523,12 +522,13 @@ class ifrs_lines(osv.osv):
         if period_num:
             #if two:
             #    context = {'period_from': period_num, 'period_to':period_num}
+            #    period_id = period_num
             #else:
             period_id = period_info[period_num][1]
             period_id = period_num
             context = {'period_from': period_id, 'period_to':period_id}
-        #else:
-        #    context = {'whole_fy': 'True'} 
+        else:
+            context = {'whole_fy': 'True'} 
 
         #context['partner_detail'] = pd 
         #context['fiscalyear'] = fiscalyear
@@ -559,33 +559,31 @@ class ifrs_lines(osv.osv):
             period_id = period_info[period_num][1]
             period_id = period_num
             context = {'period_from': period_id, 'period_to':period_id}
-        #else:
-        #    context = {'whole_fy': 'True'} 
+        else:
+            context = {'whole_fy': 'True'} 
 
         #context['partner_detail'] = pd 
         #context['fiscalyear'] = fiscalyear
         context['state'] = target_move
-        print "1**************" , period_num
-        res = getattr(ifrs_line, 'period_%s' % period_num) 
-        print "2**************" , period_num
-        import pdb
-        #pdb.set_trace()
         
-        #if ifrs_line.type == 'total':
-        #    context['period_from'] = period_id
-        #    print period_id
-        #    res = self._get_sum_total_2(cr, uid, ifrs_line, context = context)
-        band = True
+        if context.get('whole_fy', False):
+            name_period = 'amount'
+        else:
+            name_period = 'period_%s' % str(period_num)
+             
+        res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num, target_move, context=context)
+        
         print "Nombre de la line a", ifrs_line.name
-
+        band = True
         if ifrs_line.operator in ('subtract','percent','ratio','product'):
             print "Tiene un operands_id"
             print "Valor viejo " , res, " En el periodo ", period_num
             print "3**************" , period_num
             res2=0
+            
             for o in ifrs_line.operand_ids:
-                res2 += getattr(o, 'period_%s' % period_num)
-
+                res2 += getattr(o, name_period)
+            
             if ifrs_line.operator == 'subtract':
                 res -= res2
             elif ifrs_line.operator == 'percent':
@@ -594,15 +592,22 @@ class ifrs_lines(osv.osv):
                 res =  res2 != 0 and (res / res2) or 0.0
             elif ifrs_line.operator == 'product':
                 res =  res * res2
-            band = False
-            name_period = 'period_%s' % str(period_num)
-            print "3**************" , period_num
-            print "Valor nuevo ", res2, " en el periodo ", name_period
-            self.write(cr, uid, ifrs_line.id, {name_period : res})
+            print name_period, "3**************" , period_num
+            print "Valor A RESTAR ", res2, " en el periodo ", name_period
+            sql = "update ifrs_lines set %s = %s where id = %s" %(name_period, res, ifrs_line.id)
+            cr.execute(sql)
+            #self.write(cr, uid, ifrs_line.id, {name_period : res})
+            ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
+            print "valor nuevo" , ifrs_line.amount
+            band = False 
         
-        if ifrs_line.type == 'total':
+        if band and ifrs_line.type == 'total':
             print "Recalculando valor del total"
             res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num, target_move, context=context)
+            #sql = "update ifrs_lines set %s = %s where id = %s" %(name_period, res, ifrs_line.id)
+            #cr.execute(sql)
+            
+            #self.write(cr, uid, ifrs_line.id, {name_period : res})
             print "Valor recalculado" , res
         print ifrs_line.name
         print res
