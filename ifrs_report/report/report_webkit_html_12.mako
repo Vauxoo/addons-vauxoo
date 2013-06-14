@@ -62,7 +62,7 @@
                 %endfor
           %endfor
 
-        %for ifrs_l in ifrs.list_lines_per_level():
+        %for ifrs_l in ifrs.ifrs_lines_ids:
             <tbody>
             <tr class="prueba">
                 <th class="celda3">${ifrs_l.name}</th>
