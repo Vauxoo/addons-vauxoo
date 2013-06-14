@@ -297,21 +297,24 @@ class ifrs_lines(osv.osv):
             
         return brw.inv_sign and (-1.0 * res) or res 
 
-    def _get_sum_total_2(self, cr, uid, brw, context = None):
+    def _get_sum_total_2(self, cr, uid, brw, number_month,context = None):
+        """ Calculates the sum of the line total_ids the current ifrs.line
+        """
         if context is None: context = {}
-        c = context.copy()
         res = 0
+
+        #If the report is two or twelve columns, will choose the field needed to make the sum
         if context.get('whole_fy',False):
             field_name = 'amount'
         else:
-            period_num = context.get('period_from')
-            field_name = 'period_%s' % str(period_num)
+            field_name = 'period_%s' % str(number_month)
 
+        #It takes the sum of the total_ids
         for t in brw.total_ids:
             res += getattr(t, field_name)
         return res
     
-    def _get_sum_2( self, cr, uid, id, context = None ):
+    def _get_sum_2( self, cr, uid, id, number_month, context = None ):
         fy_obj = self.pool.get('account.fiscalyear')
         period_obj = self.pool.get('account.period')
         if context is None: context = {}
@@ -319,9 +322,6 @@ class ifrs_lines(osv.osv):
         c = context.copy()
         brw = self.browse( cr, uid, id, context = c )
         
-        if not context.get('whole_fy', False):
-            period_num = context.get('period_from', False)
-
         #~ Assembling context
         #~ Generic context applicable to the different types
         if not c.get('fiscalyear'):
@@ -398,14 +398,14 @@ class ifrs_lines(osv.osv):
                     res += a.balance
                     
         elif brw.type == 'total':
-            res = self._get_sum_total_2(cr, uid, brw, context = c)
+            res = self._get_sum_total_2(cr, uid, brw, number_month,context = c)
             if brw.comparison <> 'without':
                 res2=0
                 #~ TODO: Write definition for previous periods
                 #~ that will be the arguments for the new brw.
                 
                 brw = self.browse( cr, uid, id, context = c2 )
-                res2 = self._get_sum_total_2(cr, uid, brw, context = c2)
+                res2 = self._get_sum_total_2(cr, uid, brw, number_month,context = c2)
 
                 if brw.comparison == 'subtract':
                     res -= res2
@@ -418,7 +418,7 @@ class ifrs_lines(osv.osv):
         if context.get('whole_fy', False):
             field_name = 'amount'
         else:
-            field_name = 'period_%s' % str(period_num)
+            field_name = 'period_%s' % str(number_month)
         #self.write(cr, uid, brw.id, {field_name : res})
         sql = "update ifrs_lines set %s = %s where id = %s" %(field_name, res, brw.id)
         cr.execute(sql)
@@ -495,6 +495,7 @@ class ifrs_lines(osv.osv):
             else:
                 period_id = period_info[period_num][1]
                 context = {'period_from': period_id, 'period_to':period_id}
+        
         else:
             context = {'whole_fy': 'True'} 
 
@@ -512,30 +513,27 @@ class ifrs_lines(osv.osv):
                     res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
 
-    def _get_amount_value_2(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+    def _get_amount_value_2(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month=None, target_move=None, pd=None, undefined=None, two=None, context=None):
         if context is None: context = {}
-        
-        '''devuelve la cantidad correspondiente al periodo'''
+        """ Returns the amount corresponding to the period of fiscal year
+        """
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
         to_currency_id = currency_wizard
 
-        if period_num:
-            #if two:
-            #    context = {'period_from': period_num, 'period_to':period_num}
-            #    period_id = period_num
-            #else:
-            period_id = period_info[period_num][1]
-            period_id = period_num
-            context = {'period_from': period_id, 'period_to':period_id}
+        if number_month:
+            if two:
+                context = {'period_from': number_month, 'period_to':number_month}
+            else:
+                period_id = period_info[number_month][1]
+                context = {'period_from': period_id, 'period_to':period_id}
         else:
             context = {'whole_fy': 'True'} 
 
-        #context['partner_detail'] = pd 
-        #context['fiscalyear'] = fiscalyear
+        context['partner_detail'] = pd 
+        context['fiscalyear'] = fiscalyear
         context['state'] = target_move
         
-        res = self._get_sum_2(cr, uid, ifrs_line.id, context = context)
-        
+        res = self._get_sum_2(cr, uid, ifrs_line.id, number_month,context = context)
         
         if ifrs_line.type == 'detail':
             res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
@@ -545,33 +543,20 @@ class ifrs_lines(osv.osv):
                     res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
     
-    def _get_amount_difference(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+    def _get_amount_difference(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month=None, target_move=None, pd=None, undefined=None, two=None, context=None):
         if context is None: context = {}
+        """ Integrate operand_ids field in the calculation of the amounts for each line 
+        """
         
-        '''devuelve la cantidad correspondiente al periodo'''
-        from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
-        to_currency_id = currency_wizard
-
-        if period_num:
-            #if two:
-            #    context = {'period_from': period_num, 'period_to':period_num}
-            #else
-            period_id = period_info[period_num][1]
-            period_id = period_num
-            context = {'period_from': period_id, 'period_to':period_id}
-        else:
+        if not number_month:
             context = {'whole_fy': 'True'} 
 
-        #context['partner_detail'] = pd 
-        #context['fiscalyear'] = fiscalyear
-        context['state'] = target_move
-        
         if context.get('whole_fy', False):
             field_name = 'amount'
         else:
-            field_name = 'period_%s' % str(period_num)
+            field_name = 'period_%s' % str(number_month)
              
-        res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num, target_move, context=context)
+        res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month, target_move, pd, undefined, two, context=context)
         
         band = True
         if ifrs_line.operator in ('subtract','percent','ratio','product'):
@@ -594,7 +579,8 @@ class ifrs_lines(osv.osv):
             band = False 
         
         if band and ifrs_line.type == 'total':
-            res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, period_num, target_move, context=context)
+            res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month, target_move, pd, undefined, two, context=context)
+        
         return res
 
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
