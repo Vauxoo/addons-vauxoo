@@ -29,15 +29,11 @@ class crm_contact_us(osv.TransientModel):
 
     def _get_captcha_code(self):
         r = captcha.displayhtml('6Lf5I-ISAAAAAD1SI45aWOBQkS4kFDSZaOqPxwzl')
-        print "********3*******"
-        print r
         return r
 
     def _get_captcha(self, cr, uid, ids, name, arg, context=None):
         res = {}
-        print "********1*******"
         if ids:
-            print "******2*********"
             for i in ids:
                 res.update({i: self._get_captcha_code()})
         return res
@@ -46,9 +42,11 @@ class crm_contact_us(osv.TransientModel):
     _description = 'Contact form for the portal'
     _inherit = 'crm.lead'
     _columns = {
-        'company_ids': fields.many2many('res.company', string='Companies', readonly=True),
+        'company_ids': fields.many2many('res.company', string='Companies',
+            readonly=True),
         'captcha': fields.text('Captcha'), 
-        'recaptcha_challenge_field': fields.text('Challenge Field', translate=True),
+        'recaptcha_challenge_field': fields.text('Challenge Field',
+            translate=True),
         'recaptcha_response_field': fields.text('Respose Field', translate=True),
     }
 

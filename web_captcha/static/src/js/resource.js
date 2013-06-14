@@ -11,29 +11,22 @@ openerp.web_captcha = function (openerp)
         template : "orp_captcha",
         init: function (view, code) {
             this._super(view, code);
-            console.log(view); 
-            console.log(code); 
-            console.log('loading...');
         },
         initialize_content: function() {
             this._super();
         },
         start: function () {
-               console.log("Hola");
-               console.log(this.$el);
                Recaptcha.create("6Ldf-uESAAAAAMPNMWa8dD6tFZey9w_1FrcpOmIe", "or_recaptcha", {
                theme: "red",
                callback: Recaptcha.focus_response_field});
                return this._super();
           },
         render_value: function() {
-                 console.log("tttt");
                  this._super();
                  var val = this.get('value').split(",");
                  var torender = this.$el.find('div.oe_recaptcha');
                  //torender.text(val[0]);
                  $(val[0]).appendTo(torender);
-                 console.log(torender);
         }
     });
 
