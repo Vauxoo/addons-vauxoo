@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_res_company_inherit_recaptcha_form">
+            <field name="name">view.res.company.inherit.recaptcha.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                     <label for="recaptcha_key"/>
+                     <field name="recaptcha_key" nolabel="1" class="oe_captcha_field"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
