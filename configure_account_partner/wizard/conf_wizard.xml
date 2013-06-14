@@ -14,9 +14,11 @@
                     <sheet>
                         <group>
                             <field name="webkit_partner"/>
-                            <field name="name"/>
-                            <field name="account_recivable"/>
-                            <field name="company_id"/>
+                        </group>
+                        <group attrs="{'invisible': [('webkit_partner','=',False)]}">
+                            <field name="name" required="1"/>
+                            <field name="account_recivable" required="1"/>
+                            <field name="company_id" required="1"/>
                         </group>
                     </sheet>
                 </form>

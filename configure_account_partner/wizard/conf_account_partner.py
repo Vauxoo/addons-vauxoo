@@ -40,8 +40,8 @@ class configure_account_partner(osv.TransientModel):
         'company_id': fields.many2one('res.company', 'Company'),
         'webkit_partner': fields.boolean(
             'Configure Property Webkit And Partner',
-            help="Check this field to configure\
-                partner and webkit, if not only configures webkit")
+            help='Check this field to configure '\
+                'partner and webkit, if not only configures webkit')
     }
 
     _defaults = {
