@@ -23,17 +23,24 @@
 		  <field name="name">ifrs.ifrs.form</field>
 		  <field name="model">ifrs.ifrs</field>
 		  <field name="arch" type="xml">
-			<form string="International Financial Reporting Standards">
-			<field name="name" />
-              <field name="company_id" on_change='onchange_company_id(company_id)' required="1"/>
-              <field name="code" />
-			  <field name="currency_id" required="1"/>
-              <field name="title" />
-			  <field name="fiscalyear_id" required="1"/>
-              <group colspan='2' col='3'>
-                  <field name="do_compute" />
-                  <button string="Compute" name='compute' type='object' icon='gtk-execute'/>
-              </group>
+			<form string="International Financial Reporting Standards" version="7.0">
+              <header>
+                <button string="Compute" name='compute' type='object' icon='gtk-execute' class="oe_inline_header"/>
+			    <field name="state" widget="statusbar" statusbar_visible="draft,ready,done,cancel" class="oe_inline_header" />
+              </header>  
+                <group>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="title" />
+                    </group>    
+                <group>
+                        <field name="company_id" on_change='onchange_company_id(company_id)' required="1"/>
+                        <field name="currency_id" required="1" readonly="1"/>
+                        <field name="fiscalyear_id" required="1"/>
+                        <field name="do_compute" />
+                    </group>
+                </group>
                 <notebook colspan='6'>
                     <page string='Report Lines'>
                       <field name="ifrs_lines_ids"  nolabel="1" colspan="4">
@@ -56,7 +63,7 @@
                               <field name="name" />
                               <field name="invisible" />
                               <field name="type" />
-
+                              <field name="comment"></field>
                               <group colspan='4' col='1'>
                                   <group colspan='2' attrs="{'invisible':[('type','!=','constant')]}" >
                                       <field name="constant_type" attrs="{'required':[('type','=','constant')]}" />
@@ -122,7 +129,6 @@
                         <field name="description" />
                     </page>
                 </notebook>
-			  <field name="state" />
 			</form>
 		  </field>
 		</record>
@@ -153,6 +159,7 @@
 						<field name="amount"></field>
 						<field name="invisible"></field>
 						<field name="ifrs_id"></field>
+						<field name="comment"></field>
 					</group>
 				</form>
 			</field>
@@ -170,6 +177,7 @@
 						<field name="amount"></field>
 						<field name="invisible"></field>
 						<field name="ifrs_id"></field>
+						<field name="comment"></field>
 				</tree>
 			</field>
 		</record>

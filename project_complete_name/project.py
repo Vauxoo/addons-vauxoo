@@ -62,7 +62,7 @@ class project_project(osv.Model):
                 order by node.parent_left
             ) vw join project_project pp
             on pp.analytic_account_id = vw.id
-            WHERE vw.full_name """ + str(args[0][1]) + """ '%%%s%%' """ % (str(args[0][2]),))
+            WHERE vw.full_name """ + tools.ustr( args[0][1] ) + """ '%%%s%%' """ % ( tools.ustr( args[0][2] ),) )
         datas = cr.dictfetchall()
         ids = [('id', 'in', [data['id'] for data in datas])]
         return ids
