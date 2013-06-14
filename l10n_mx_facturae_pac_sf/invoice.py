@@ -40,6 +40,13 @@ import tempfile
 import os
 import sys
 import codecs
+from xml.dom import minidom
+import urllib
+import pooler
+from tools.translate import _
+from datetime import datetime, timedelta
+from pytz import timezone
+import pytz
 from datetime import datetime, timedelta
 try:
     from SOAPpy import WSDL
@@ -241,6 +248,25 @@ class account_invoice(osv.Model):
         else:
             comprobante = 'Comprobante'
         return comprobante
+        
+        
+    def _get_time_zone(self, cr, uid, invoice_id, context=None):
+        res_users_obj = self.pool.get('res.users')
+        userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
+        a=0
+        if userstz:
+            hours = timezone(userstz)
+            fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+            loc_dt = hours.localize(datetime(2013, 1, 1, 0, 0, 0))
+            timezone_loc=(loc_dt.strftime(fmt))
+            diff_timezone_original=timezone_loc[-5:-2]
+            timezone_original=int(diff_timezone_original)
+            s= str(datetime.now(pytz.timezone(userstz)))
+            s=s[-6:-3]
+            timezone_actual=int(s)*-1
+            a=  timezone_original + ((timezone_actual + timezone_original)*-1)
+        return a
+
 
     def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
         """
@@ -302,6 +328,7 @@ class account_invoice(osv.Model):
                     wsdl_client.soapproxy.config.debug = 0
                     wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = wsdl_client.timbrar(*params)
+                    htz=int(self._get_time_zone(cr, uid, inv_ids, context=context))
                     msg += resultado['resultados'] and resultado[
                         'resultados']['mensaje'] or ''
                     status = resultado['resultados'] and resultado[
@@ -314,7 +341,7 @@ class account_invoice(osv.Model):
                             fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                         fecha_timbrado = fecha_timbrado and datetime.strptime(
                             fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
-                            hours=-6) or False
+                            hours=htz) or False
                         cfdi_data = {
                             'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                             'cfdi_sello': resultado['resultados'][
