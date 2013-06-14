@@ -22,14 +22,12 @@ openerp.web_captcha = function (openerp)
                        theme: "red",
                        callback: Recaptcha.focus_response_field});
                    });
+               var spantotal=$('<span>').addClass('oe_form_field oe_form_field_char oe_luis'); 
+               spantotal.appendTo(this.$el);
                return this._super();
           },
         render_value: function() {
                  this._super();
-                 var val = this.get('value').split(",");
-                 var torender = this.$el.find('div.oe_recaptcha');
-                 //torender.text(val[0]);
-                 $(val[0]).appendTo(torender);
         }
     });
 

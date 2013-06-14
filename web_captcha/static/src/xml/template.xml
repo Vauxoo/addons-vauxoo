@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
 <t t-name="orp_captcha">
-  <div id="or_recaptcha" class="oe_recaptcha"></div>
+    <span id="or_recaptcha" 
+          t-att-class="'oe_form_field '+widget.widget_class +' oe_recaptcha'" 
+          t-att-style="widget.node.attrs.style"> 
+    </span>
 </t>
 </templates>

@@ -44,13 +44,13 @@ class crm_contact_us(osv.TransientModel):
     _columns = {
         'company_ids': fields.many2many('res.company', string='Companies',
             readonly=True),
-        'captcha': fields.text('Captcha'), 
+        'captcha': fields.dummy(string='Captcha', type='char'), 
         'recaptcha_challenge_field': fields.text('Challenge Field',
             translate=True),
         'recaptcha_response_field': fields.text('Respose Field', translate=True),
     }
 
-    def _get_companies(self, cr, uid, context=None):
+    def  _get_companies(self, cr, uid, context=None):
         """
         Fetch companies in order to display them in the wizard view
 
@@ -130,16 +130,10 @@ class crm_contact_us(osv.TransientModel):
     def submit(self, cr, uid, ids, context=None):
         """ When the form is submitted, redirect the user to a "Thanks" message """
         spl_brw = self.browse(cr, uid, ids, context=context)
-
-        for spl in spl_brw:
-            print ("%s challenge_field" % (spl.recaptcha_challenge_field))
-            print ("%s recaptcha_response_field" % (spl.recaptcha_response_field))
-
         response = captcha.submit(
             spl.recaptcha_challenge_field,
             spl.recaptcha_response_field,
             "6Lf5I-ISAAAAAD1SI45aWOBQkS4kFDSZaOqPxwzl","vauxoo.com")
-        print ("%s"% response.is_valid)
         if response.is_valid :
             return {
                 'type': 'ir.actions.act_window',

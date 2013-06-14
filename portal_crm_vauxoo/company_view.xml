@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='currency_id']" position="after">
                      <label for="recaptcha_key"/>
-                     <field name="recaptcha_key" nolabel="1"/>
+                     <field name="recaptcha_key" nolabel="1" class="oe_captcha_field"/>
                 </xpath>
             </field>
         </record>
