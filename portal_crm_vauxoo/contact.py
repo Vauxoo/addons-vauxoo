@@ -131,6 +131,9 @@ class crm_contact_us(osv.TransientModel):
         empty_values = dict((k, False) if k != 'name' else (k, '') for k, v in values.iteritems())
         return super(crm_contact_us, self).create(cr, SUPERUSER_ID, empty_values, {'mail_create_nosubscribe': True})
 
+    def _get_private_key(cr, uid, ids, context=None):
+        return ""
+
     def submit(self, cr, uid, ids, context=None):
         """ When the form is submitted, redirect the user to a "Thanks" message """
         spl_brw = self.browse(cr, uid, ids, context=context)
@@ -138,7 +141,6 @@ class crm_contact_us(osv.TransientModel):
             spl_brw[0].captcha_response,
             spl_brw[0].captcha_challenge,
             "6LcN4uISAAAAAOziG2VrotfbKJuqqg7aXy97kStz","agrinos.local")
-        print "REsponse.................", spl_brw[0].captcha
         if response.is_valid :
             return {
                 'type': 'ir.actions.act_window',
