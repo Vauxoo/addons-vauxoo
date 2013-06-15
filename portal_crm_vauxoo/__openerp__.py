@@ -26,8 +26,13 @@
     'category': 'Tools',
     'complexity': 'easy',
     'description': """
-This module adds a contact page (with a contact form creating a lead when submitted) to your portal if crm and portal are installed.
-====================================================================================================================================
+Contact page with Captcha widget.
+=================================
+
+You will need to install recaptcha and recaptcha client::
+    
+    $ sudo pip install recaptcha
+    $ sudo pip install recaptcha-client
     """,
     'author': 'OpenERP SA',
     'depends': ['crm','portal'],
