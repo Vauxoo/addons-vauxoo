@@ -25,32 +25,21 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
-from openerp import SUPERUSER_ID, tools
-from openerp.tools.translate import _
 
-class res_company(osv.Model):
-    _inherit = 'res.company'
-    
-    def _get_captcha(self, cr, uid, ids, field_names, arg, context=None):
-        if context is None:
-            context = {}
-        res = {}
-        obj_captcha = self.pool.get('res.captcha')
-        captcha_ids = obj_captcha.search(cr, SUPERUSER_ID, 
-                [('company_id', '=', 1)], context=context)
-        if not captcha_ids:
-            raise osv.except_osv(_('Configuration Problems'),
-                    _('You must set a public key to be able to use the captcha widget.'))
-        obj_captcha.browse(cr, SUPERUSER_ID, captcha_ids, context=context)
-        for i in ids:
-            res[i] = 'ksdfhj'
-        return res
 
+class res_captcha(osv.Model):
+    '''
+    For security reasons, we can not allow have access to private key trought 
+    any objets, due to this we create an extra model to manage both keys
+    per company, and with functional fields we can set the keys to the object 
+    that we need open to portal.
+    '''
+    _name = 'res.captcha'
+    _rec_name = 'company_id'
+    _description = 'Captcha Object'
     _columns = {
-        'recaptcha_id': fields.function(_get_captcha, 
-            'Captcha Public Key',
-            type='char',
-            help="Computed captcha"),
+        'company_id': fields.many2one('res.company', 'Company',
+            help="Company that will use those captcha key"),
         'recaptcha_key': fields.char('Recaptcha Public Key', size=64,
             help='Public key generated on http://code.google.com/recaptcha'), 
         'recaptcha_private_key': fields.char('Recaptcha Private Key', size=64,
