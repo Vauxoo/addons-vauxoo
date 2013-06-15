@@ -41,7 +41,6 @@ You will need to install recaptcha and recaptcha client::
     ],
     'data': [
         'contact_view.xml',
-        'company_view.xml',
     ],
     'test': [
         'test/contact_form.yml',

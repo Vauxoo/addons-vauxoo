@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    Financed and Planified by Vauxoo
 #    developed by: nhomar@vauxoo.com
+#    developed by: luis@vauxoo.com
+#    developed by: tulio@vauxoo.com
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -38,10 +38,14 @@ You will need to go to the main company of your Openerp installation and
 set the "Public Key" as the key for you.
     """,
     'version': "1.0",
-    'depends': ['portal',
+    'depends': [
+        'portal',
     ],
     'js': [
         'static/src/js/resource.js',
+    ],
+    'data': [
+        'view/company_view.xml',
     ],
     'css': [
 
