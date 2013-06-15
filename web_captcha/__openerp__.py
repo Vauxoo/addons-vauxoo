@@ -46,6 +46,8 @@ set the "Public Key" as the key for you.
     ],
     'data': [
         'view/company_view.xml',
+        'view/res_captcha_view.xml',
+        'view/ir_config_view.xml',
     ],
     'css': [
 
