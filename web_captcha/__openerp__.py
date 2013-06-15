@@ -26,7 +26,16 @@
     'author': "Vauxoo",
     'category': "Tools",
     'description': """
-    Some customizations for OpenERP web client made by Vauxoo
+Some customizations for OpenERP web client made by Vauxoo
+
+To use the Captcha Widget you should go to:
+
+https://www.google.com/recaptcha
+
+And generate a public and a private key.
+
+You will need to go to the main company of your Openerp installation and
+set the "Public Key" as the key for you.
     """,
     'version': "1.0",
     'depends': ['portal',
