@@ -41,7 +41,9 @@ class res_captcha(osv.Model):
         'company_id': fields.many2one('res.company', 'Company',
             help="Company that will use those captcha key"),
         'recaptcha_key': fields.char('Recaptcha Public Key', size=64,
+            required = True,
             help='Public key generated on http://code.google.com/recaptcha'), 
         'recaptcha_private_key': fields.char('Recaptcha Private Key', size=64,
+            required = True,
             help='Private key generated on http://code.google.com/recaptcha'), 
     }

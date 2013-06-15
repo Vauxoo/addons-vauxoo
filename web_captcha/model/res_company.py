@@ -40,19 +40,15 @@ class res_company(osv.Model):
                 [('company_id', '=', 1)], context=context)
         if not captcha_ids:
             raise osv.except_osv(_('Configuration Problems'),
-                    _('You must set a public key to be able to use the captcha widget.'))
-        obj_captcha.browse(cr, SUPERUSER_ID, captcha_ids, context=context)
+                    _('You must set a public key to be able to use the captcha widget. go to Settings > Config > General Settings > Captcha Section'))
+        c_brw = obj_captcha.browse(cr, SUPERUSER_ID, captcha_ids, context=context)
         for i in ids:
-            res[i] = 'ksdfhj'
+            res[i] = c_brw and c_brw[0].recaptcha_key or 'CONFIGURE YOUR CAPTCHA'
         return res
 
     _columns = {
         'recaptcha_id': fields.function(_get_captcha, 
-            'Captcha Public Key',
+            string='Captcha Public Key',
             type='char',
             help="Computed captcha"),
-        'recaptcha_key': fields.char('Recaptcha Public Key', size=64,
-            help='Public key generated on http://code.google.com/recaptcha'), 
-        'recaptcha_private_key': fields.char('Recaptcha Private Key', size=64,
-            help='Private key generated on http://code.google.com/recaptcha'), 
     }

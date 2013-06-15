@@ -18,8 +18,8 @@ openerp.web_captcha = function (openerp)
         start: function () {
                var ds = new openerp.web.DataSetSearch(null, "res.company");                  
                console.log(openerp.web);
-               var reads = ds.read_slice(['recaptcha_key'], {}).then(function(models){
-                   Recaptcha.create(models[0].recaptcha_key, "or_recaptcha", {
+               var reads = ds.read_slice(['recaptcha_id'], {}).then(function(models){
+                   Recaptcha.create(models[0].recaptcha_id, "or_recaptcha", {
                        theme: "red",
                        callback: Recaptcha.focus_response_field});
                    });

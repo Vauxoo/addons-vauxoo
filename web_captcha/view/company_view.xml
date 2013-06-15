@@ -7,10 +7,6 @@
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='currency_id']" position="after">
-                     <label for="recaptcha_key"/>
-                     <field name="recaptcha_key" nolabel="1" class="oe_captcha_field"/>
-                     <label for="recaptcha_private_key"/>
-                     <field name="recaptcha_private_key" nolabel="1" class="oe_captcha_field"/>
                      <label for="recaptcha_id"/>
                      <field name="recaptcha_id" nolabel="1" class="oe_captcha_field"/>
                 </xpath>
