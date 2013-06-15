@@ -21,8 +21,14 @@
 
 from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
-from recaptcha.client import captcha
+import logging
 
+_logger = logging.getLogger(__name__)
+
+try:
+    from recaptcha.client import captcha
+except ImportError, e:
+    _logger.error("You must install recaptcha to use the recaptcha module")    
 
 class crm_contact_us(osv.TransientModel):
     """ Create new leads through the "contact us" form """
