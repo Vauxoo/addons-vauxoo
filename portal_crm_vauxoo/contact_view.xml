@@ -7,7 +7,7 @@
             <field name="model">portal_crm.crm_contact_us</field>
             <field name="arch" type="xml">
                 <form string="Contact form" version="7.0" class="oe_portal_crm_contact">
-                    <h1>Contact UUus</h1>
+                    <h1>Contact Us</h1>
                     <div style="width: 300px; float:right;">
                         <field name="company_ids" nolabel="1" widget="many2many_kanban" class="oe_portal_crm_office" colspan="2">
                             <kanban>
@@ -47,19 +47,32 @@
                         </div>
                     </div>
                     <div  style="margin-right: 320px; max-width: 900px;">
-                        <group>
                             <group>
                                 <field name="partner_name" string="Name" placeholder="Your name..." required="True"/>
                                 <field name="email_from" placeholder="Your email..." required="True"/>
                                 <field name="phone" placeholder="Your phone number..."/>
+                                <field name="name" placeholder="Subject..."/>
                             </group>
-                            <field name="name" placeholder="Subject..." nolabel="1" colspan="2"/>
-                            <field name= "captcha" string= "Captcha... :" widget= "captcha"  nolabel="1" colspan="2"/>
-                            <field name="description" String="Content" placeholder="Content..." nolabel="1" colspan="2"/>
-                        </group>
+                            <newline/>
+                            <group>
+                                <field name="description" String="Content"
+                                    placeholder="Content..." nolabel="1"/>
+                            </group>
+                            <newline/>
+                            <group>
+                                <field name= "captcha"
+                                    widget="captcha"
+                                    nolabel="1"/>
+                            </group>
+                            <newline/>
+                            <group>
+                            <field nolabel="1" name= "captcha_response"/>
+                            <field nolabel="1" name= "captcha_challenge"/>
+                            </group>
                     </div>
                     <div>
-                        <button string="Submit" name="submit" type="object" class="oe_highlight"/>
+                        <button string="Submit" name="submit" type="object" 
+                            class="oe_highlight"/>
                     </div>
                 </form>
             </field>

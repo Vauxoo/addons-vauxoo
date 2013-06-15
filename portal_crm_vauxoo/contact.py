@@ -50,10 +50,9 @@ class crm_contact_us(osv.TransientModel):
     _columns = {
         'company_ids': fields.many2many('res.company', string='Companies',
             readonly=True),
-        'captcha': fields.dummy(string='Captcha', type='char'), 
-        'recaptcha_challenge_field': fields.text('Challenge Field',
-            translate=True),
-        'recaptcha_response_field': fields.text('Respose Field', translate=True),
+        'captcha': fields.char('Captcha Widget', 64),
+        'captcha_response': fields.char('Captcha Response', 64),
+        'captcha_challenge': fields.char('Captcha Challenge', 64), 
     }
 
     def  _get_companies(self, cr, uid, context=None):
@@ -101,7 +100,6 @@ class crm_contact_us(osv.TransientModel):
         'email_from': _get_user_email,
         'phone': _get_user_phone,
         'company_ids': _get_companies,
-        'captcha': lambda self, cr, uid, c: self._get_captcha_code(), 
     }
 
     def create(self, cr, uid, values, context=None):
@@ -137,9 +135,10 @@ class crm_contact_us(osv.TransientModel):
         """ When the form is submitted, redirect the user to a "Thanks" message """
         spl_brw = self.browse(cr, uid, ids, context=context)
         response = captcha.submit(
-            spl.recaptcha_challenge_field,
-            spl.recaptcha_response_field,
-            "6Lf5I-ISAAAAAD1SI45aWOBQkS4kFDSZaOqPxwzl","vauxoo.com")
+            spl_brw[0].captcha_response,
+            spl_brw[0].captcha_challenge,
+            "6LcN4uISAAAAAOziG2VrotfbKJuqqg7aXy97kStz","agrinos.local")
+        print "REsponse.................", spl_brw[0].captcha
         if response.is_valid :
             return {
                 'type': 'ir.actions.act_window',
