@@ -131,16 +131,30 @@ class crm_contact_us(osv.TransientModel):
         empty_values = dict((k, False) if k != 'name' else (k, '') for k, v in values.iteritems())
         return super(crm_contact_us, self).create(cr, SUPERUSER_ID, empty_values, {'mail_create_nosubscribe': True})
 
-    def _get_private_key(cr, uid, ids, context=None):
-        return ""
+    def _get_private_key(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        captcha_obj = self.pool.get('res.captcha')
+        captcha_ids = captcha_obj.search(cr, SUPERUSER_ID,
+                [('company_id','=',1)], context=context)
+        if captcha_ids:
+            private_key = captcha_obj.browse(cr, SUPERUSER_ID, captcha_ids[0],
+                    context=context)
+        return private_key.recaptcha_private_key
 
     def submit(self, cr, uid, ids, context=None):
-        """ When the form is submitted, redirect the user to a "Thanks" message """
+        """ When the form is submitted, redirect the user to a "Thanks" message
+        verifying first the captcha.
+        """
+        if context is None:
+            context = {}
         spl_brw = self.browse(cr, uid, ids, context=context)
         response = captcha.submit(
             spl_brw[0].captcha_response,
             spl_brw[0].captcha_challenge,
-            "6LcN4uISAAAAAOziG2VrotfbKJuqqg7aXy97kStz","agrinos.local")
+            self._get_private_key(cr, uid, ids, context=context),
+            "agrinos.local")
+
         if response.is_valid :
             return {
                 'type': 'ir.actions.act_window',
