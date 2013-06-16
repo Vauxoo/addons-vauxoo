@@ -16,8 +16,9 @@
                             <field name="webkit_partner"/>
                         </group>
                         <group attrs="{'invisible': [('webkit_partner','=',False)]}">
-                            <field name="name" required="1"/>
-                            <field name="account_recivable" required="1"/>
+                            <field name="partner_ids" nolabel="1" colspan="4"/>
+                            <field name="name" required="0" invisible="1"/>
+                            <field name="account_receivable" required="1"/>
                             <field name="company_id" required="1"/>
                         </group>
                     </sheet>

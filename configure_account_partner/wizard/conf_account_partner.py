@@ -33,7 +33,7 @@ class configure_account_partner(osv.TransientModel):
         'name' : fields.many2one('account.account', 'Accounts Payable',
             domain="[('type', '=', 'payable'),\
             ('company_id', '=', company_id)]",),
-        'account_recivable': fields.many2one('account.account',
+        'account_receivable': fields.many2one('account.account',
             'Accounts Receivable',
             domain="[('type', '=', 'receivable'),\
             ('company_id', '=', company_id)]",),
@@ -41,7 +41,9 @@ class configure_account_partner(osv.TransientModel):
         'webkit_partner': fields.boolean(
             'Configure Property Webkit And Partner',
             help='Check this field to configure '\
-                'partner and webkit, if not only configures webkit')
+                'partner and webkit, if not only configures webkit'),
+        'partner_ids': fields.many2many('res.partner', 'configure_partner_rel',
+            'wiz_id', 'partner_id', 'Partners')
     }
 
     _defaults = {
@@ -75,10 +77,10 @@ class configure_account_partner(osv.TransientModel):
         if ir_property_receivable_ids:
             ir_property_obj.write(cr, uid, ir_property_receivable_ids,
                 {'value_reference': 'account.account,%s'
-                                            %form.account_recivable.id})
-        if ir_property_payable_ids:
-            ir_property_obj.write(cr, uid, ir_property_payable_ids,
-                {'value_reference': 'account.account,%s'%form.name.id})
+                                            %form.account_receivable.id})
+#        if ir_property_payable_ids:
+ #           ir_property_obj.write(cr, uid, ir_property_payable_ids,
+  #              {'value_reference': 'account.account,%s'%form.name.id})
         return True
     
     def webkit_property(self, cr, uid, ids, form, context=None):
@@ -103,9 +105,11 @@ class configure_account_partner(osv.TransientModel):
         partner_ids = res_partner_obj.search(cr, uid, [] )
         form = self.browse(cr, uid, ids, context=context)[0]
         if form.webkit_partner:
-            res_partner_obj.write(cr, uid, partner_ids,
-                {'property_account_payable':form.name.id,
-                'property_account_receivable': form.account_recivable.id})
+            res_partner_obj.write(cr, uid,
+                [partner.id for partner in form.partner_ids],
+                {
+                #'property_account_payable':form.name.id,
+                'property_account_receivable': form.account_receivable.id})
             self.create_or_modified(cr, uid, ids, form, context=context)
         self.webkit_property(cr, uid, ids, form, context=context)
 
