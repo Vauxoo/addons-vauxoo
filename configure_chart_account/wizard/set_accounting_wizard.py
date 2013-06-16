@@ -35,7 +35,6 @@ class set_accounting_data_wizard(osv.osv_memory):
             'Account'),
         'parent_id': fields.many2one('account.account', 'Parent',
             ondelete='cascade', domain=[('type','=','view')], required=True),
-        'create_journal': fields.boolean('Create Journals?')
     }
 
     def set_accounting_company(self, cr, uid, ids, context=None):
@@ -47,42 +46,15 @@ class set_accounting_data_wizard(osv.osv_memory):
         obj_wizard = self.browse(cr, uid, ids[0])
         account_id = obj_wizard.account_ids
         form = self.read(cr, uid, ids, context=context)
-        if obj_wizard.create_journal:
-            cr.execute("""
-                SELECT 
-                    nivel.id,
-                    nivel.name,
-                    nivel.type,
-                    nivel.company_id
-                    FROM
-                    ( SELECT node.company_id,node.type,node.id as id,node.name
-                        FROM account_account AS node,account_account AS parent
-                        WHERE node.parent_left BETWEEN parent.parent_left
-                        AND parent.parent_right
-                        AND parent.id = %s
-                        ORDER BY parent.parent_left ) nivel
-                    WHERE nivel.id<> %s
-                    AND nivel.type <> 'view'
-                  """,(obj_wizard.parent_id.id, obj_wizard.parent_id.id,))
-            dat = cr.dictfetchall()
-            for acc_j in dat:
-                journal_obj.create(cr, uid, {
-                    'name': acc_j['name'],
-                    'code': str(acc_j['id']),
-                    'type': 'bank',
-                    'default_debit_account_id': acc_j['id'],
-                    'default_credit_account_id': acc_j['id'],
-                })
-        else:
-            account_ids = form[0]['account_ids']
-            cr.execute("""
-                UPDATE account_account SET type='view' WHERE id IN
-                (SELECT DISTINCT id
-                    FROM account_account WHERE type <> 'view' AND id IN
-                        (SELECT DISTINCT parent_id FROM account_account
-                            WHERE parent_id IS NOT NULL))""")
-            for acc in account_ids:
-                self.pool.get('account.account').write(cr, uid, [acc],
-                    {'parent_id': obj_wizard.parent_id.id})
+        account_ids = form[0]['account_ids']
+        cr.execute("""
+            UPDATE account_account SET type='view' WHERE id IN
+            (SELECT DISTINCT id
+                FROM account_account WHERE type <> 'view' AND id IN
+                    (SELECT DISTINCT parent_id FROM account_account
+                        WHERE parent_id IS NOT NULL))""")
+        for acc in account_ids:
+            self.pool.get('account.account').write(cr, uid, [acc],
+                {'parent_id': obj_wizard.parent_id.id})
         return False
     
