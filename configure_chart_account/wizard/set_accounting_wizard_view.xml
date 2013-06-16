@@ -1,5 +1,16 @@
 <openerp>
     <data>
+
+    <record model="ir.ui.view" id="account_account_inherit1_search">
+            <field name="name">account.account.inherit1.search</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                        <filter name="type2" domain="[('type','=','view')]" string="Account Type"/>
+                </xpath>
+            </field>
+        </record>
         
         <record model="ir.ui.view" id="view_accounting_data_wizard">
             <field name="name">accounting.data.wizard.form</field>
@@ -10,7 +21,7 @@
                         <p class="oe_grey">
                             Seleccione las cuentas para configarles un padre.
                         </p>
-                        <field name="account_ids" colspan="4" nolabel="1" >
+                        <field name="account_ids" colspan="4" nolabel="1" context="{'search_default_type2':1}">
                             <tree string="Account">
                                 <field name="code"/>
                                 <field name="name"/>
