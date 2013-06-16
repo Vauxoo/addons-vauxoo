@@ -34,6 +34,8 @@ class set_accounting_data_wizard(osv.osv_memory):
             'account_account_partner_rel', 'parent_id', 'account_id',
             'Account'),
         'parent_id': fields.many2one('account.account', 'Parent',
+            help='Esta cuenta sera asignada como padre a '\
+                'las cuentas seleccionadas en el campo anterior',
             ondelete='cascade', domain=[('type','=','view')], required=True),
     }
 

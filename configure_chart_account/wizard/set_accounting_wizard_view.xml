@@ -6,12 +6,9 @@
             <field name="model">set.accounting.data.wizard</field>
             <field name="arch" type="xml">
                  <form string="Configure Set Accounting" version="7.0">
-                     <group>
-                        <field name="create_journal"/>
-                    </group>
-                    <group attrs="{'invisible':[('create_journal','=',True)]}">
+                    <group>
                         <p class="oe_grey">
-                            Select  accounts to set up automatically your chart of accounts by company.
+                            Seleccione las cuentas para configarles un padre.
                         </p>
                         <field name="account_ids" colspan="4" nolabel="1" >
                             <tree string="Account">
