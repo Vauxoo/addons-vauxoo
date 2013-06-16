@@ -7,7 +7,7 @@
         <field name="implied_ids" 
         eval="[(6,0, [ref('purchase_requisition.group_purchase_requisition_manager')])]"/>
     </record> 
-    <record id="purchase_requisition_user_ev_groups" model="res.groups">            
+    <record id="purchase_requisition_user_ev_groups" model="res.groups">
         <field name="name">Requisition - User</field>
         <field name="implied_ids"
         eval="[(6,0, [ref('purchase_requisition.group_purchase_requisition_user')])]"/>
