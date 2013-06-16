@@ -124,19 +124,17 @@ class ifrs_ifrs(osv.osv):
         levels.reverse()
         xlevel=False
         for n in levels:
-            xlevel = tree[n].get(l.id) and n or xlevel 
+            xlevel = isinstance(tree[n].get(l.id),(set)) and n or xlevel 
         if not xlevel:
-            tree[level][l.id]=True
+            tree[level][l.id]=set()
         elif xlevel < level:
+            tree[level][l.id]=tree[xlevel][l.id]
             del tree[xlevel][l.id]
-            tree[level][l.id]=True
-        else:
-            level = xlevel
-
-        for j in l.total_ids:
+        else:# xlevel >= level
+            return True
+        for j in set(l.total_ids + l.operand_ids):
+            tree[level][l.id].add(j.id)
             self._get_level(cr,uid,j,level+1,tree,context=context) 
-        for k in l.operand_ids:
-            self._get_level(cr,uid,k,level+1,tree,context=context) 
         return True
     
     def compute(self, cr, uid, ids, context=None):
@@ -150,6 +148,16 @@ class ifrs_ifrs(osv.osv):
         for l in ifrs_brw.ifrs_lines_ids:
             self._get_level(cr,uid,l,level,tree,context=context) 
         print 'TREE ', tree
+        levels = tree.keys()
+        levels.sort()
+        levels.reverse()
+        ids_o = [i.id for i in ifrs_brw.ifrs_lines_ids]
+        ids_x = []
+        for i in levels:
+            ids_x += tree[i].keys()
+        print 'ids_x, ',ids_x
+        print 'ids_o, ',ids_o
+        print set(ids_x)-set(ids_o)
         ifrs_lines = self.pool.get('ifrs.lines')
         list_level = self.list_lines_per_level(cr, uid, ids, context=context)
         for ifrs_l in list_level:
