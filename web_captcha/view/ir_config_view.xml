@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_general_configuration_web_captcha" model="ir.ui.view">
+            <field name="model">base.config.settings</field>
+            <field name="inherit_id" ref="base_setup.view_general_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[last()]" position="after">
+                    <group>
+                        <label for="id" string="Captcha"/>
+                        <div name="web_captcha">
+                            <div>
+                                <button type="action"
+                                    name="%(web_captcha.action_web_captcha_tree)d"
+                                    string="Configure Captcha" class="oe_link"/>
+                            </div>
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
