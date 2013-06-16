@@ -16,6 +16,13 @@
                             <field name="webkit_partner"/>
                         </group>
                         <group attrs="{'invisible': [('webkit_partner','=',False)]}">
+                            <p class="oe_view_nocontent_create">                             
+                                You can set Receivable Account to multiples partners, you need select one or many partners and define 
+                                company and account for this company, at the time you press Configure button the account selected will be put in
+                                all partners selected previously  
+                            </p>    
+                        </group>
+                        <group attrs="{'invisible': [('webkit_partner','=',False)]}">
                             <field name="partner_ids" nolabel="1" colspan="4"/>
                             <field name="name" required="0" invisible="1"/>
                             <field name="account_receivable" required="1"/>

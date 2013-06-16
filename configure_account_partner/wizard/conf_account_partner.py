@@ -32,18 +32,27 @@ class configure_account_partner(osv.TransientModel):
     _columns = {
         'name' : fields.many2one('account.account', 'Accounts Payable',
             domain="[('type', '=', 'payable'),\
-            ('company_id', '=', company_id)]",),
+            ('company_id', '=', company_id)]",
+            help="Account of payable type which will set in partners "
+                 "selected previously"),
         'account_receivable': fields.many2one('account.account',
             'Accounts Receivable',
             domain="[('type', '=', 'receivable'),\
-            ('company_id', '=', company_id)]",),
-        'company_id': fields.many2one('res.company', 'Company'),
+            ('company_id', '=', company_id)]",
+            help="Account of receivable type which will set in partners "
+                 "selected previously"),
+        'company_id': fields.many2one('res.company', 'Company',
+                                     help="Company used to define account by "
+                                          "company and set in the partners "
+                                          "selected"),
         'webkit_partner': fields.boolean(
             'Configure Property Webkit And Partner',
             help='Check this field to configure '\
                 'partner and webkit, if not only configures webkit'),
         'partner_ids': fields.many2many('res.partner', 'configure_partner_rel',
-            'wiz_id', 'partner_id', 'Partners')
+            'wiz_id', 'partner_id', 'Partners',
+            help="Select partners to set receivable account for company "
+                 "selected ")
     }
 
     _defaults = {
