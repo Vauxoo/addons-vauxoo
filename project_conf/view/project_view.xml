@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+  <data>
+    <!-- Vista -->
+    <record model="ir.ui.view" id="inherit_project_task_project_conf_view">
+      <field name="name">inherit.project.task.project.conf.view</field>
+      <field name="model">project.task</field>
+      <field name="inherit_id" ref="project.view_task_form2"/>
+      <field name="arch" type="xml">
+        <xpath expr='//page[@string="Extra Info"]/field[@name="partner_id"]' position="after">
+                <field name="project_leader"/>
+        </xpath>
+      </field>
+    </record>
+
+  </data>
+</openerp>

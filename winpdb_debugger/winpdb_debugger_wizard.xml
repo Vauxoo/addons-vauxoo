@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <!--
+        Winpdb debugger start wizard
+        -->
+
+        <record model="ir.ui.view" id="winpdb_debugger_form_view2">
+            <field name="name">winpdb.debugger.wizard.form</field>
+            <field name="model">winpdb.debugger.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Winpdb debugger">
+                    <label string="Winpdb attached or timeout." colspan="4"/>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="winpdb_debugger_form_view">
+            <field name="name">winpdb.debugger.wizard.form</field>
+            <field name="model">winpdb.debugger.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Winpdb debugger">
+                    <label string="Open Winpdb and set the password to the OpenERP server administrator password. Then clic 'Start Winpdb debugger'." colspan="4"/>
+                    <label string="The system will wait for 5 minutes until you open a connection. If no connection is opened, the server will continue." colspan="4"/>
+                    <button type="special" special="cancel"
+                            string="Cancel" icon="gtk-cancel"/>
+                    <button type="object" name="action_start_debugger"
+                            string="start debugger" icon="gtk-ok"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="winpdb_debugger_open_wizard">
+            <field name="name">Winpdb Open Wizard</field>
+            <field name="res_model">winpdb.debugger.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="winpdb_debugger_form_view"/>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem  name= "Winpdb Debugger" id="winpdb_debugger_menu" parent="base.menu_administration" sequence="100" />
+        <menuitem  name= "Star Winpdb debugger" action="winpdb_debugger_open_wizard" id="winpdb_debugger_menu_action" parent="winpdb_debugger_menu" sequence="100" />
+    
+    <record model="ir.actions.act_window" id="winpdb_debugger_close__wizard">
+            <field name="name">winpdb_close_wizard</field>
+            <field name="res_model">winpdb.debugger.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="winpdb_debugger_form_view2"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>

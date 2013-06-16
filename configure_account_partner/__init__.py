@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Rodo (rodo@vauxoo.com)
+#    Coded by: Julio Serna (julio@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,18 +24,5 @@
 #
 ##############################################################################
 
-{
-    "name" : "Groups xml_id",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Generic Modules",
-    "description" : """This module add xml_id field in groups
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["base"],
-    "demo_xml" : [],
-    "update_xml" : ['groups_view.xml'],
-    "installable" : True,
-    "active" : False,
-}
+
+import wizard
