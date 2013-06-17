@@ -54,7 +54,7 @@
                     <%
                         amount_value = 0.0
                         try:
-                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value_2(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
+                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
                         except:
                             pass
                     
@@ -62,6 +62,8 @@
                 %endfor
           %endfor
 
+        <% ifrs.get_report_data( data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['target_move'])
+        %>
         %for ifrs_l in ifrs._get_ordered_lines():
             <tbody>
             <tr class="prueba">
