@@ -53,7 +53,7 @@
 			<td>
                 <%
                 ifrs.ifrs_lines_ids[0]._get_amount_value_2(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['period'], two=True)
-                amount = ifrs.ifrs_lines_ids[0]._get_amount_difference(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['period'], two=True)
+                amount = ifrs.ifrs_lines_ids[0]._get_amount_with_operands(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['period'], two=True)
                 %>
 				${ifrs_l.type=='detail' and formatLang( amount, digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
 			</td>

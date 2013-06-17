@@ -69,7 +69,7 @@
                 %for lins in range(1, 13):
                     <%
 
-                        amount_value = ifrs.ifrs_lines_ids[0]._get_amount_difference(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
+                        amount_value = ifrs.ifrs_lines_ids[0]._get_amount_with_operands(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
 
                     %>
                     <th class="celda2">

@@ -543,7 +543,7 @@ class ifrs_lines(osv.osv):
                     res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
     
-    def _get_amount_difference(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+    def _get_amount_with_operands(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month=None, target_move=None, pd=None, undefined=None, two=None, context=None):
         if context is None: context = {}
         """ Integrate operand_ids field in the calculation of the amounts for each line 
         """
