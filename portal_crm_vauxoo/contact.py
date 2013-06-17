@@ -21,28 +21,13 @@
 
 from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
+from openerp.tools.translate import _
 import logging
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from recaptcha.client import captcha
-except ImportError, e:
-    _logger.error("You must install recaptcha to use the recaptcha module")    
-
 class crm_contact_us(osv.TransientModel):
     """ Create new leads through the "contact us" form """
-
-    def _get_captcha_code(self):
-        r = captcha.displayhtml('6Lf5I-ISAAAAAD1SI45aWOBQkS4kFDSZaOqPxwzl')
-        return r
-
-    def _get_captcha(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        if ids:
-            for i in ids:
-                res.update({i: self._get_captcha_code()})
-        return res
 
     _name = 'portal_crm.crm_contact_us'
     _description = 'Contact form for the portal'
@@ -51,8 +36,6 @@ class crm_contact_us(osv.TransientModel):
         'company_ids': fields.many2many('res.company', string='Companies',
             readonly=True),
         'captcha': fields.char('Captcha Widget', 64),
-        'captcha_response': fields.char('Captcha Response', 64),
-        'captcha_challenge': fields.char('Captcha Challenge', 64), 
     }
 
     def  _get_companies(self, cr, uid, context=None):
@@ -113,6 +96,16 @@ class crm_contact_us(osv.TransientModel):
         crm_lead = self.pool.get('crm.lead')
 
         """
+        In order to manage the validation of the captcha stuff we add this
+        part before creation to be able to be sure that the creation
+        is done by a human been.
+        """
+        captcha_valid = self.pool.get('res.captcha')._valid_captcha(cr, uid, 
+            values['captcha'], context=context)
+        if not captcha_valid:
+            raise osv.except_osv(_('ERROR!'),_('YOUR CAPTCHA DEAL FAIL!!!!'))
+
+        """
         Because of the complex inheritance of the crm.lead model and the other
         models implied (like mail.thread, among others, that performs a read
         when its create() method is called (in method message_get_subscribers()),
@@ -121,7 +114,7 @@ class crm_contact_us(osv.TransientModel):
         """
         values['contact_name'] = values['partner_name']
         crm_lead.create(cr, SUPERUSER_ID, dict(values, user_id=False), context)
-
+            
         """
         Create an empty record in the contact table.
         Since the 'name' field is mandatory, give an empty string to avoid an integrity error.
@@ -131,18 +124,11 @@ class crm_contact_us(osv.TransientModel):
         empty_values = dict((k, False) if k != 'name' else (k, '') for k, v in values.iteritems())
         return super(crm_contact_us, self).create(cr, SUPERUSER_ID, empty_values, {'mail_create_nosubscribe': True})
 
-    def _get_private_key(cr, uid, ids, context=None):
-        return ""
-
     def submit(self, cr, uid, ids, context=None):
-        """ When the form is submitted, redirect the user to a "Thanks" message """
-        spl_brw = self.browse(cr, uid, ids, context=context)
-        response = captcha.submit(
-            spl_brw[0].captcha_response,
-            spl_brw[0].captcha_challenge,
-            "6LcN4uISAAAAAOziG2VrotfbKJuqqg7aXy97kStz","agrinos.local")
-        if response.is_valid :
-            return {
+        """ When the form is submitted, redirect the user to a "Thanks" message
+        verifying first the captcha.
+        """
+        return {
                 'type': 'ir.actions.act_window',
                 'view_mode': 'form',
                 'view_type': 'form',
@@ -150,9 +136,8 @@ class crm_contact_us(osv.TransientModel):
                 'res_id': ids[0],
                 'view_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'portal_crm', 'wizard_contact_form_view_thanks')[1],
                 'target': 'new',
-            }
-        return False
-
+                }
+       
     def _needaction_domain_get(self, cr, uid, context=None):
         """
         This model doesn't need the needactions mechanism inherited from

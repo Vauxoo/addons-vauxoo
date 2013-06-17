@@ -1,14 +1,11 @@
 var script = document.createElement("script");
-console.log();
 script.type = "text/javascript";
 script.src = "http://www.google.com/recaptcha/api/js/recaptcha_ajax.js";
 $("head").append(script);
-openerp.web_captcha = function (openerp)
-{
+openerp.web_captcha = function (openerp){
     openerp.web.form.widgets.add('captcha', 'openerp.web.form.CaptchaWidget');
-    openerp.web.form.CaptchaWidget = openerp.web.form.FieldChar.extend(
-        {
-        template : "orp_captcha",
+    openerp.web.form.CaptchaWidget = openerp.web.form.FieldChar.extend({
+        template : "oerp_captcha",
         init: function (view, code) {
             this._super(view, code);
         },
@@ -17,19 +14,26 @@ openerp.web_captcha = function (openerp)
         },
         start: function () {
                var ds = new openerp.web.DataSetSearch(null, "res.company");                  
-               console.log(openerp.web);
                var reads = ds.read_slice(['recaptcha_id'], {}).then(function(models){
-                   Recaptcha.create(models[0].recaptcha_id, "or_recaptcha", {
-                       theme: "red",
+                   Recaptcha.create(models[0].recaptcha_id, "oerp_recaptcha", {
+                       theme: "clean",
                        callback: Recaptcha.focus_response_field});
                    });
-               var spantotal=$('<span>').addClass('oe_form_field oe_form_field_char oe_luis'); 
-               spantotal.appendTo(this.$el);
                return this._super();
-          },
+        },
         render_value: function() {
                  this._super();
-        }
+        },
+        store_dom_value: function () {
+            if (!this.get('effective_readonly')
+                    && this.$('input#recaptcha_response_field').length
+                    && this.is_syntax_valid()) {
+                var challenge = this.$('input#recaptcha_challenge_field').val();
+                var response = this.$('input#recaptcha_response_field').val();
+                this.internal_set_value(
+                    this.parse_value(
+                        challenge+','+response));
+            }
+        }, 
     });
-
 }
