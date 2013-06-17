@@ -137,10 +137,8 @@ class ifrs_ifrs(osv.osv):
         list_level = self._get_ordered_lines(cr, uid, ids, context=context)
         
         for ifrs_l in list_level:
-            ifrs_l_brw = ifrs_lines.browse(cr, uid, ifrs_l, context=context)
-            #ifrs_l_brw._get_amount_value_2(cr, uid, ifrs_l.id, context=context)
+            ifrs_lines._get_sum_2(cr, uid, ifrs_l.id, False, context=context)
         return True
-        #return self.write(cr,uid,ids,{'do_compute':True},context=context)
     
     def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
         if context is None: context = {}
@@ -485,12 +483,7 @@ class ifrs_lines(osv.osv):
             string = 'Constant Type',
             required = False ),
         'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
-        'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
-            store={
-                    'ifrs.ifrs':(_get_changes_on_ifrs,['do_compute'],15)
-            },
-            help="This field will update when you click the compute button in the IFRS doc form"
-            ),
+        'amount' : fields.float(string='Amount', help='Total of all periods amount for line'),
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
         'analytic_ids' : fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
         'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','total'),('id','!=',id)]"),
