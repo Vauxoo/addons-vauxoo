@@ -54,7 +54,7 @@ class ifrs_ifrs(osv.osv):
         'name' : fields.char('Name', 128, required = True, help='Report name' ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', help='Company name' ),
         'currency_id': fields.related('company_id', 'currency_id', type='many2one', relation='res.currency', string='Company Currency',help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
-        'title' : fields.char('Title', 128, required = True, translate = True, help='Title that will be printed on reports' ),
+        'title' : fields.char('Title', 128, required = True, translate = True, help='Report title that will be printed' ),
         'code' : fields.char('Code', 128, required = True, help='Report code' ),
         'description'  : fields.text('Description'),
         'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
@@ -65,7 +65,7 @@ class ifrs_ifrs(osv.osv):
             ('cancel','Cancel') ],
             'State', required=True ),
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year' ),
-        'do_compute' : fields.boolean('Compute', help='Allows the amount calculted field run automatically'),
+        'do_compute' : fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'), 
         'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
 
@@ -346,8 +346,8 @@ class ifrs_lines(osv.osv):
         return res
     
     _columns = {
-        'sequence' : fields.integer( 'Sequence', required = True, help='Indicates the order in which the line is within the report. It must be unique and unrepeatable' ),
-        'name' : fields.char( 'Name', 128, required = True, translate = True, help='Line name. It is a translatable value, if there are multiple languages ​​loaded it can be translated' ),
+        'sequence' : fields.integer( 'Sequence', required = True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable' ),
+        'name' : fields.char( 'Name', 128, required = True, translate = True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated' ),
         'type': fields.selection(
            [
                 ('abstract','Abstract'),
@@ -356,7 +356,8 @@ class ifrs_lines(osv.osv):
                 ('total','Total') ] ,
             string = 'Type',
             required = True,
-            help='Line type of report' ),
+            help='Line type of report:'
+             " -Abstract(A),-Detail(D),-Constant(C),-Total(T)" ),
         'constant_type': fields.selection(
            [
                 ('period_days','Days of Period'),

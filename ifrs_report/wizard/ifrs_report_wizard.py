@@ -53,7 +53,7 @@ class ifrs_report_wizard(osv.osv_memory):
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year' ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True, help='Company name' ),
         'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
-        'exchange_date':fields.date('Exchange Date', help='Date of change that reports are to be printed, with respect to the currency of the company'),
+        'exchange_date':fields.date('Exchange Date', help='Date of change that will be printed in the report, with respect to the currency of the company'),
         'report_type': fields.selection( [
             ('all','All Fiscalyear'),
             ('per', 'Force Period')],
@@ -64,10 +64,11 @@ class ifrs_report_wizard(osv.osv_memory):
             #('ifrs_12_partner_detail', 'With Partner Detail')
             ],
             string='Number of Columns',
-            help='Number of columns that will be printed in the report' ),
+            help='Number of columns that will be printed in the report:'
+            " -Two Colums(02),-Twelve Columns(12)" ),
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
-                                        ], 'Target Moves', help='Seats that will be printed in the report'),
+                                        ], 'Target Moves', help='It will be printed Accounting Entries or Entries Posted'),
     }
 
     _defaults = {
