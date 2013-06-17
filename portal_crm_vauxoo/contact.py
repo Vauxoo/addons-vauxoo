@@ -21,6 +21,7 @@
 
 from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
+from openerp.tools.translate import _
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -32,17 +33,6 @@ except ImportError, e:
 
 class crm_contact_us(osv.TransientModel):
     """ Create new leads through the "contact us" form """
-
-    def _get_captcha_code(self):
-        r = captcha.displayhtml('6Lf5I-ISAAAAAD1SI45aWOBQkS4kFDSZaOqPxwzl')
-        return r
-
-    def _get_captcha(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        if ids:
-            for i in ids:
-                res.update({i: self._get_captcha_code()})
-        return res
 
     _name = 'portal_crm.crm_contact_us'
     _description = 'Contact form for the portal'
@@ -118,8 +108,11 @@ class crm_contact_us(osv.TransientModel):
         Therefore, user SUPERUSER_ID will perform the creation.
         """
         values['contact_name'] = values['partner_name']
-        crm_lead.create(cr, SUPERUSER_ID, dict(values, user_id=False), context)
-
+        if self._valid_captcha(cr, uid, values['captcha'], context=context):
+            crm_lead.create(cr, SUPERUSER_ID, dict(values, user_id=False), context)
+        else:
+            raise osv.except_osv(_('ERROR!'),_('YOUR CAPTCHA DEAL FAIL!!!!'))
+            
         """
         Create an empty record in the contact table.
         Since the 'name' field is mandatory, give an empty string to avoid an integrity error.
@@ -129,7 +122,7 @@ class crm_contact_us(osv.TransientModel):
         empty_values = dict((k, False) if k != 'name' else (k, '') for k, v in values.iteritems())
         return super(crm_contact_us, self).create(cr, SUPERUSER_ID, empty_values, {'mail_create_nosubscribe': True})
 
-    def _get_private_key(self, cr, uid, ids, context=None):
+    def _get_private_key(self, cr, uid, context=None):
         if context is None:
             context = {}
         captcha_obj = self.pool.get('res.captcha')
@@ -140,36 +133,32 @@ class crm_contact_us(osv.TransientModel):
                     context=context)
         return private_key.recaptcha_private_key
 
+    def _valid_captcha(self, cr, uid, capt, context=None):
+        
+        r = capt.split(',')
+        print r
+        response = captcha.submit(
+            r[0],r[1],
+            self._get_private_key(cr, uid, context=context),
+            "agrinos.local")
+        if response.is_valid :
+            return True
+        return False
+
     def submit(self, cr, uid, ids, context=None):
         """ When the form is submitted, redirect the user to a "Thanks" message
         verifying first the captcha.
         """
-        if context is None:
-            context = {}
-
-        spl_brw = self.browse(cr, uid, ids[0], context=context)
-        print "%s\n%s\n" % (spl_brw.name,
-                spl_brw.captcha)
-        resp = spl_brw.captcha
-         
-        if isinstance(resp, str):
-            r = resp.split(',')
-            response = captcha.submit(
-                r[1],r[0],
-                self._get_private_key(cr, uid, ids, context=context),
-                "agrinos.local")
-            if response.is_valid :
-                return {
-                    'type': 'ir.actions.act_window',
-                    'view_mode': 'form',
-                    'view_type': 'form',
-                    'res_model': self._name,
-                    'res_id': ids[0],
-                    'view_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'portal_crm', 'wizard_contact_form_view_thanks')[1],
-                    'target': 'new',
+        return {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'view_type': 'form',
+                'res_model': self._name,
+                'res_id': ids[0],
+                'view_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'portal_crm', 'wizard_contact_form_view_thanks')[1],
+                'target': 'new',
                 }
-        return False
-
+       
     def _needaction_domain_get(self, cr, uid, context=None):
         """
         This model doesn't need the needactions mechanism inherited from
