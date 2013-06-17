@@ -51,8 +51,6 @@ class crm_contact_us(osv.TransientModel):
         'company_ids': fields.many2many('res.company', string='Companies',
             readonly=True),
         'captcha': fields.char('Captcha Widget', 64),
-        'captcha_response': fields.char('Captcha Response', 64),
-        'captcha_challenge': fields.char('Captcha Challenge', 64), 
     }
 
     def  _get_companies(self, cr, uid, context=None):
@@ -148,23 +146,28 @@ class crm_contact_us(osv.TransientModel):
         """
         if context is None:
             context = {}
-        spl_brw = self.browse(cr, uid, ids, context=context)
-        response = captcha.submit(
-            spl_brw[0].captcha_response,
-            spl_brw[0].captcha_challenge,
-            self._get_private_key(cr, uid, ids, context=context),
-            "agrinos.local")
 
-        if response.is_valid :
-            return {
-                'type': 'ir.actions.act_window',
-                'view_mode': 'form',
-                'view_type': 'form',
-                'res_model': self._name,
-                'res_id': ids[0],
-                'view_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'portal_crm', 'wizard_contact_form_view_thanks')[1],
-                'target': 'new',
-            }
+        spl_brw = self.browse(cr, uid, ids[0], context=context)
+        print "%s\n%s\n" % (spl_brw.name,
+                spl_brw.captcha)
+        resp = spl_brw.captcha
+         
+        if isinstance(resp, str):
+            r = resp.split(',')
+            response = captcha.submit(
+                r[1],r[0],
+                self._get_private_key(cr, uid, ids, context=context),
+                "agrinos.local")
+            if response.is_valid :
+                return {
+                    'type': 'ir.actions.act_window',
+                    'view_mode': 'form',
+                    'view_type': 'form',
+                    'res_model': self._name,
+                    'res_id': ids[0],
+                    'view_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'portal_crm', 'wizard_contact_form_view_thanks')[1],
+                    'target': 'new',
+                }
         return False
 
     def _needaction_domain_get(self, cr, uid, context=None):
