@@ -9,11 +9,11 @@
                 <xpath expr="/form/sheet/notebook/page[@string='Project Stages']" position="after">
                     <page string="Technical Features">
 			            <group col="4">
-                            <field name="url_branch" widget="html"/>
+                            <field name="url_branch" widget="url"/>
                             <newline/>
-                            <field name="merge_proposal" widget="html"/>
+                            <field name="merge_proposal" widget="url"/>
                             <newline/>
-                            <field name="blueprint" widget="html"/>
+                            <field name="blueprint" widget="url"/>
                             <newline/>
                             <field name="from_revno"/>
                             <newline/>
