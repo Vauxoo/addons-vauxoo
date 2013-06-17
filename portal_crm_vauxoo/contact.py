@@ -26,6 +26,7 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class crm_contact_us(osv.TransientModel):
     """ Create new leads through the "contact us" form """
 
@@ -34,11 +35,11 @@ class crm_contact_us(osv.TransientModel):
     _inherit = 'crm.lead'
     _columns = {
         'company_ids': fields.many2many('res.company', string='Companies',
-            readonly=True),
+                                        readonly=True),
         'captcha': fields.char('Captcha Widget', 64),
     }
 
-    def  _get_companies(self, cr, uid, context=None):
+    def _get_companies(self, cr, uid, context=None):
         """
         Fetch companies in order to display them in the wizard view
 
@@ -55,7 +56,8 @@ class crm_contact_us(osv.TransientModel):
 
         @return current user's name if the user isn't "anonymous", None otherwise
         """
-        user = self.pool.get('res.users').read(cr, uid, uid, ['login'], context)
+        user = self.pool.get('res.users').read(
+            cr, uid, uid, ['login'], context)
 
         if (user['login'] != 'anonymous'):
             return self.pool.get('res.users').name_get(cr, uid, uid, context)[0][1]
@@ -63,7 +65,8 @@ class crm_contact_us(osv.TransientModel):
             return None
 
     def _get_user_email(self, cr, uid, context=None):
-        user = self.pool.get('res.users').read(cr, uid, uid, ['login', 'email'], context)
+        user = self.pool.get('res.users').read(
+            cr, uid, uid, ['login', 'email'], context)
 
         if (user['login'] != 'anonymous' and user['email']):
             return user['email']
@@ -71,7 +74,8 @@ class crm_contact_us(osv.TransientModel):
             return None
 
     def _get_user_phone(self, cr, uid, context=None):
-        user = self.pool.get('res.users').read(cr, uid, uid, ['login', 'phone'], context)
+        user = self.pool.get('res.users').read(
+            cr, uid, uid, ['login', 'phone'], context)
 
         if (user['login'] != 'anonymous' and user['phone']):
             return user['phone']
@@ -100,10 +104,10 @@ class crm_contact_us(osv.TransientModel):
         part before creation to be able to be sure that the creation
         is done by a human been.
         """
-        captcha_valid = self.pool.get('res.captcha')._valid_captcha(cr, uid, 
-            values['captcha'], context=context)
+        captcha_valid = self.pool.get('res.captcha')._valid_captcha(cr, uid,
+                                                                    values['captcha'], context=context)
         if not captcha_valid:
-            raise osv.except_osv(_('ERROR!'),_('YOUR CAPTCHA DEAL FAIL!!!!'))
+            raise osv.except_osv(_('ERROR!'), _('YOUR CAPTCHA DEAL FAIL!!!!'))
 
         """
         Because of the complex inheritance of the crm.lead model and the other
@@ -114,14 +118,15 @@ class crm_contact_us(osv.TransientModel):
         """
         values['contact_name'] = values['partner_name']
         crm_lead.create(cr, SUPERUSER_ID, dict(values, user_id=False), context)
-            
+
         """
         Create an empty record in the contact table.
         Since the 'name' field is mandatory, give an empty string to avoid an integrity error.
         Pass mail_create_nosubscribe key in context because otherwise the inheritance
         leads to a message_subscribe_user, that triggers access right issues.
         """
-        empty_values = dict((k, False) if k != 'name' else (k, '') for k, v in values.iteritems())
+        empty_values = dict((k, False) if k != 'name' else (
+            k, '') for k, v in values.iteritems())
         return super(crm_contact_us, self).create(cr, SUPERUSER_ID, empty_values, {'mail_create_nosubscribe': True})
 
     def submit(self, cr, uid, ids, context=None):
@@ -129,15 +134,15 @@ class crm_contact_us(osv.TransientModel):
         verifying first the captcha.
         """
         return {
-                'type': 'ir.actions.act_window',
-                'view_mode': 'form',
-                'view_type': 'form',
-                'res_model': self._name,
-                'res_id': ids[0],
-                'view_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'portal_crm', 'wizard_contact_form_view_thanks')[1],
-                'target': 'new',
-                }
-       
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'res_model': self._name,
+            'res_id': ids[0],
+            'view_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'portal_crm', 'wizard_contact_form_view_thanks')[1],
+            'target': 'new',
+        }
+
     def _needaction_domain_get(self, cr, uid, context=None):
         """
         This model doesn't need the needactions mechanism inherited from
