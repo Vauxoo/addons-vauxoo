@@ -65,7 +65,6 @@ class ifrs_ifrs(osv.osv):
             ('cancel','Cancel') ],
             'State', required=True ),
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year' ),
-        'do_compute' : fields.boolean('Compute'),
         'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
 
@@ -314,57 +313,6 @@ class ifrs_lines(osv.osv):
              
         return res 
 
-    def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
-        """Se hace la suma de las cuentas y se guarda en el campo amount
-        """
-        if context is None: context = {}
-        res = {}
-        for id in ids:
-            res[id] = self._get_sum( cr, uid, id, context = context )
-        return res
-
-    def _get_level(self, cr, uid, ids, field_name, arg, context=None):
-        res = {}
-        for ifrs_line in self.browse(cr, uid, ids, context=context):
-            level = 0
-            parent = ifrs_line.parent_id
-            while parent:
-                level += 1
-                parent = parent.parent_id
-            res[ifrs_line.id] = level
-        return res
-
-    def _get_children_and_total(self, cr, uid, ids, context=None):
-        """this function search for all the children and all consolidated children (recursively) of the given total ids
-        """
-        ids3 = []
-        ids2 = []
-        sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(map(str, ids)) + ')' 
-        cr.execute(sql)
-        childs =  cr.fetchall()
-        for rec in childs:
-            ids2.append(rec[1])
-            self.write(cr, uid, rec[1], {'parent_id':rec[0]})
-            rec = self.browse(cr, uid, rec[1], context=context)
-            for child in rec.total_ids:
-                ids3.append(child.id)
-        if ids3:
-            ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
-        return ids2 + ids3
-   
-
-    def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
-        if context is None: context = {}
-        res = []
-        ifrs_brws = self.pool.get('ifrs.ifrs').browse(cr, uid, ids, context = context)
-        for brw in ifrs_brws:
-            if brw.do_compute:
-                for l in brw.ifrs_lines_ids:
-                    res.append(l.id)
-                #~ TODO: write back False to brw.do_compute with SQL
-                #~ INCLUDE A LOGGER
-        return res
-
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None: context = {}
         if from_currency_id == to_currency_id:
@@ -373,7 +321,7 @@ class ifrs_lines(osv.osv):
         context['date'] = exchange_date
         return curr_obj.compute(cr, uid, from_currency_id, to_currency_id, from_amount, context=context)
     
-    def _get_amount_value_2(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month=None, target_move=None, pd=None, undefined=None, two=None, context=None):
+    def _get_amount_value(self, cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month=None, target_move=None, pd=None, undefined=None, two=None, context=None):
         if context is None: context = {}
         """ Returns the amount corresponding to the period of fiscal year
         """
@@ -416,7 +364,7 @@ class ifrs_lines(osv.osv):
         else:
             field_name = 'period_%s' % str(number_month)
              
-        res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month, target_move, pd, undefined, two, context=context)
+        res = self._get_amount_value(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month, target_move, pd, undefined, two, context=context)
         
         band = True
         if ifrs_line.operator in ('subtract','percent','ratio','product'):
@@ -437,7 +385,7 @@ class ifrs_lines(osv.osv):
             band = False 
         
         if band and ifrs_line.type == 'total':
-            res = self._get_amount_value_2(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month, target_move, pd, undefined, two, context=context)
+            res = self._get_amount_value(cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date, currency_wizard, number_month, target_move, pd, undefined, two, context=context)
         
         return res
 
@@ -488,10 +436,6 @@ class ifrs_lines(osv.osv):
         'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
         'parent_right' : fields.integer('Parent Right', select=1 ),
         'parent_left' : fields.integer('Parent Left', select=1 ),
-        'level': fields.function(_get_level, string='Level', method=True, type='integer',
-         store={
-            'ifrs.lines': (_get_children_and_total, ['total_ids','parent_id'], 10),
-         }),
         'operand_ids' : fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands' ),
         'operator': fields.selection( [
             ('subtract', 'Subtraction'),
@@ -544,7 +488,6 @@ class ifrs_lines(osv.osv):
         'invisible' : False,
         'acc_val' : 'fy',
         'value' : 'balance',
-        'level' : 0,
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 
