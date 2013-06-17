@@ -30,15 +30,15 @@ Contact page with Captcha widget.
 =================================
 
 You will need to install recaptcha and recaptcha client::
-    
+
     $ sudo pip install recaptcha
     $ sudo pip install recaptcha-client
     """,
     'author': 'OpenERP SA',
     'depends': ['crm',
-           'portal',
-           'web_captcha',
-    ],
+                'portal',
+                'web_captcha',
+                ],
     'data': [
         'contact_view.xml',
     ],
@@ -48,7 +48,7 @@ You will need to install recaptcha and recaptcha client::
     'installable': True,
     'auto_install': False,
     'css': [
-       'static/src/css/portal_crm.css'
+        'static/src/css/portal_crm.css'
     ],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
