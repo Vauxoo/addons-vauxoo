@@ -310,9 +310,7 @@ class ifrs_lines(osv.osv):
             field_name = 'amount'
         else:
             field_name = 'period_%s' % str(number_month)
-        #self.write(cr, uid, brw.id, {field_name : res})
-        sql = "update ifrs_lines set %s = %s where id = %s" %(field_name, res, brw.id)
-        cr.execute(sql)
+        self.write(cr, uid, brw.id, {field_name : res})
              
         return res 
 
@@ -432,9 +430,7 @@ class ifrs_lines(osv.osv):
                 res =  res2 != 0 and (res / res2) or 0.0
             elif ifrs_line.operator == 'product':
                 res =  res * res2
-            sql = "update ifrs_lines set %s = %s where id = %s" %(field_name, res, ifrs_line.id)
-            cr.execute(sql)
-            #self.write(cr, uid, ifrs_line.id, {field_name : res})
+            self.write(cr, uid, ifrs_line.id, {field_name : res})
             ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
             band = False 
         
