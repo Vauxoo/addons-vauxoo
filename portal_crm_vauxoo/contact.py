@@ -26,11 +26,6 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from recaptcha.client import captcha
-except ImportError, e:
-    _logger.error("You must install recaptcha to use the recaptcha module")    
-
 class crm_contact_us(osv.TransientModel):
     """ Create new leads through the "contact us" form """
 
@@ -101,6 +96,16 @@ class crm_contact_us(osv.TransientModel):
         crm_lead = self.pool.get('crm.lead')
 
         """
+        In order to manage the validation of the captcha stuff we add this
+        part before creation to be able to be sure that the creation
+        is done by a human been.
+        """
+        captcha_valid = self.pool.get('res.captcha')._valid_captcha(cr, uid, 
+            values['captcha'], context=context)
+        if not captcha_valid:
+            raise osv.except_osv(_('ERROR!'),_('YOUR CAPTCHA DEAL FAIL!!!!'))
+
+        """
         Because of the complex inheritance of the crm.lead model and the other
         models implied (like mail.thread, among others, that performs a read
         when its create() method is called (in method message_get_subscribers()),
@@ -108,10 +113,7 @@ class crm_contact_us(osv.TransientModel):
         Therefore, user SUPERUSER_ID will perform the creation.
         """
         values['contact_name'] = values['partner_name']
-        if self._valid_captcha(cr, uid, values['captcha'], context=context):
-            crm_lead.create(cr, SUPERUSER_ID, dict(values, user_id=False), context)
-        else:
-            raise osv.except_osv(_('ERROR!'),_('YOUR CAPTCHA DEAL FAIL!!!!'))
+        crm_lead.create(cr, SUPERUSER_ID, dict(values, user_id=False), context)
             
         """
         Create an empty record in the contact table.
@@ -121,29 +123,6 @@ class crm_contact_us(osv.TransientModel):
         """
         empty_values = dict((k, False) if k != 'name' else (k, '') for k, v in values.iteritems())
         return super(crm_contact_us, self).create(cr, SUPERUSER_ID, empty_values, {'mail_create_nosubscribe': True})
-
-    def _get_private_key(self, cr, uid, context=None):
-        if context is None:
-            context = {}
-        captcha_obj = self.pool.get('res.captcha')
-        captcha_ids = captcha_obj.search(cr, SUPERUSER_ID,
-                [('company_id','=',1)], context=context)
-        if captcha_ids:
-            private_key = captcha_obj.browse(cr, SUPERUSER_ID, captcha_ids[0],
-                    context=context)
-        return private_key.recaptcha_private_key
-
-    def _valid_captcha(self, cr, uid, capt, context=None):
-        
-        r = capt.split(',')
-        print r
-        response = captcha.submit(
-            r[0],r[1],
-            self._get_private_key(cr, uid, context=context),
-            "agrinos.local")
-        if response.is_valid :
-            return True
-        return False
 
     def submit(self, cr, uid, ids, context=None):
         """ When the form is submitted, redirect the user to a "Thanks" message
