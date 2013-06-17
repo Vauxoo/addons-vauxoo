@@ -315,7 +315,8 @@ class ifrs_lines(osv.osv):
         return res 
 
     def _consolidated_accounts_sum( self, cr, uid, ids, field_name, arg, context = None ):
-        #Se hace la suma de las cuentas y se guarda en el campo amount
+        """Se hace la suma de las cuentas y se guarda en el campo amount
+        """
         if context is None: context = {}
         res = {}
         for id in ids:
@@ -334,7 +335,8 @@ class ifrs_lines(osv.osv):
         return res
 
     def _get_children_and_total(self, cr, uid, ids, context=None):
-        #this function search for all the children and all consolidated children (recursively) of the given total ids
+        """this function search for all the children and all consolidated children (recursively) of the given total ids
+        """
         ids3 = []
         ids2 = []
         sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(map(str, ids)) + ')' 
