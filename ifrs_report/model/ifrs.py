@@ -113,11 +113,51 @@ class ifrs_ifrs(osv.osv):
                      
             return res
 
+    def _get_level(self,cr,uid,l,level,tree,context=None):
+        context = context or {}
+        if not tree.get(level):
+            tree[level]={}
+        #The search through level should be backwards from the deepest level to
+        #the outmost level
+        levels = tree.keys()
+        levels.sort()
+        levels.reverse()
+        xlevel=False
+        for n in levels:
+            xlevel = isinstance(tree[n].get(l.id),(set)) and n or xlevel 
+        if not xlevel:
+            tree[level][l.id]=set()
+        elif xlevel < level:
+            tree[level][l.id]=tree[xlevel][l.id]
+            del tree[xlevel][l.id]
+        else:# xlevel >= level
+            return True
+        for j in set(l.total_ids + l.operand_ids):
+            tree[level][l.id].add(j.id)
+            self._get_level(cr,uid,j,level+1,tree,context=context) 
+        return True
+    
     def compute(self, cr, uid, ids, context=None):
-        if context is None: context = {}
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         fy = self.browse(cr, uid, ids, context=context)[0]
         context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
-        
+        ifrs_brw = self.browse(cr,uid,ids[0],context=context)
+        tree = {1:{}}
+        level = 1
+        for l in ifrs_brw.ifrs_lines_ids:
+            self._get_level(cr,uid,l,level,tree,context=context) 
+        print 'TREE ', tree
+        levels = tree.keys()
+        levels.sort()
+        levels.reverse()
+        ids_o = [i.id for i in ifrs_brw.ifrs_lines_ids]
+        ids_x = []
+        for i in levels:
+            ids_x += tree[i].keys()
+        print 'ids_x, ',ids_x
+        print 'ids_o, ',ids_o
+        print set(ids_x)-set(ids_o)
         ifrs_lines = self.pool.get('ifrs.lines')
         list_level = self.list_lines_per_level(cr, uid, ids, context=context)
         for ifrs_l in list_level:
@@ -166,7 +206,6 @@ class ifrs_ifrs(osv.osv):
 
         return res
 
-ifrs_ifrs()
 
 class ifrs_lines(osv.osv):
 
