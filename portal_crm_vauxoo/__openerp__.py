@@ -18,42 +18,37 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+
 {
-    'name' : 'Purchase Requisition for Everybody',
-    'version' : '1.0',
-    'author' : 'Vauxoo C.A.',
-    'category' : 'Security',
-    'description' : """
-Records Rule for Purchase_Requisition Module
-============================================
+    'name': 'Portal CRM with Captcha',
+    'version': '0.1',
+    'category': 'Tools',
+    'complexity': 'easy',
+    'description': """
+Contact page with Captcha widget.
+=================================
 
-Created 2 groups which are Requisition / User and Requisition / Manager and new purchase requisition menu to separate from purchase menu
-
-With Requisition / User we can see only your own requisition and modify these
-With Requisition / Manage  we can see whole requisition and modify these
-
-You need any of those 2 groups for you can see the new purchase requisition menu
-
+You will need to install recaptcha and recaptcha client::
+    
+    $ sudo pip install recaptcha
+    $ sudo pip install recaptcha-client
     """,
-    'website': 'http://www.vauxoo.com',
-    'images' : [],
-    'depends' : ['base','purchase','purchase_requisition'],
+    'author': 'OpenERP SA',
+    'depends': ['crm',
+           'portal',
+           'web_captcha',
+    ],
     'data': [
-        'security/requisition_security.xml',
-        'view/purchase_requisition_view.xml',
-        'security/ir.model.access.csv',
+        'contact_view.xml',
     ],
-    'js': [
-    ],
-    'qweb' : [
-    ],
-    'css':[
-    ],
-    'demo': [
-],
     'test': [
-],
+        'test/contact_form.yml',
+    ],
     'installable': True,
     'auto_install': False,
+    'css': [
+       'static/src/css/portal_crm.css'
+    ],
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
