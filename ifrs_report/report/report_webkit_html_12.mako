@@ -49,7 +49,7 @@
             </tr>
         </thead>
         
-        %for ifrs_l in ifrs.list_lines_per_level():
+        %for ifrs_l in ifrs._get_ordered_lines():
                 %for lins in range(1, 13):
                     <%
                         amount_value = 0.0
@@ -62,7 +62,7 @@
                 %endfor
           %endfor
 
-        %for ifrs_l in ifrs.ifrs_lines_ids:
+        %for ifrs_l in ifrs._get_ordered_lines():
             <tbody>
             <tr class="prueba">
                 <th class="celda3">${ifrs_l.name}</th>

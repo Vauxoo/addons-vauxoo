@@ -76,43 +76,6 @@ class ifrs_ifrs(osv.osv):
         'fiscalyear_id': lambda s,c,u,cx: s.pool.get('account.fiscalyear').find(c, u),
     }
 
-    def list_lines_per_level(self, cr, uid, ids, context=None):
-        """
-        Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
-        mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
-        primero, por eso se posicionan en primer lugar de la lista.
-        """
-        if context is None: context = {}
-
-        for ifrs_id in ids:
-            ifrs_lines = self.pool.get('ifrs.lines')
-            
-            #THE maximum level is determined
-            
-            ifrs_lines_ids =  ifrs_lines.search(cr, uid, [('ifrs_id','=',ifrs_id)],context=context)
-            res = []
-##
-            #ifrs_lines_ids_2 = []
-            #ifrs_lines_brws = ifrs_lines.browse(cr, uid, ifrs_lines_ids, context=context)
-            #
-            #for linea in ifrs_lines_brws:
-            #    if linea.type == 'total':
-            #        for l in linea.total_ids:
-            #            ifrs_lines_ids_2.append(l.id)
-            #                 
-            #ifrs_lines_ids = list(set(ifrs_lines_ids_2 + ifrs_lines_ids))
-            #ifrs_lines_ids = map(lambda x: x, [idd for idd in ifrs_lines_ids] )no es necesario
-
-##            
-            sql_max_level = "select max(level) from ifrs_lines where id in %s" % str(tuple(ifrs_lines_ids))
-            cr.execute(sql_max_level)
-            max_level = cr.fetchone()[0]
-            
-            for level in range(max_level, -1, -1):
-                res += ifrs_lines.browse(cr, uid, ifrs_lines.search(cr, uid, [('id','in',ifrs_lines_ids),('level','=',level)], context=context) , context=context)
-                     
-            return res
-
     def _get_level(self,cr,uid,l,level,tree,context=None):
         context = context or {}
         if not tree.get(level):
@@ -138,6 +101,13 @@ class ifrs_ifrs(osv.osv):
         return True
     
     def _get_ordered_lines(self, cr, uid, ids, context=None):
+        """ Return list of browse ifrs_lines per level in order ASC, for can
+        calculate in order of depending.
+        
+        Retorna la lista de ifrs.lines del ifrs_id organizados desde el nivel
+        mas bajo hasta el mas alto. Lo niveles mas bajos se deben calcular
+        primero, por eso se posicionan en primer lugar de la lista.
+        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         ifrs_brw = self.browse(cr,uid,ids[0],context=context)
@@ -145,15 +115,17 @@ class ifrs_ifrs(osv.osv):
         level = 1
         for l in ifrs_brw.ifrs_lines_ids:
             self._get_level(cr,uid,l,level,tree,context=context) 
-        #print 'TREE ', tree
         levels = tree.keys()
         levels.sort()
         levels.reverse()
         ids_o = [i.id for i in ifrs_brw.ifrs_lines_ids]
-        ids_x = []
+        ids_x = [] #List of ids per level in order ASC
         for i in levels:
             ids_x += tree[i].keys()
-        return ids_x 
+        ifrs_lines = self.pool.get('ifrs.lines')
+        res = []
+        res = ifrs_lines.browse(cr, uid, ids_x , context=context)#List of browse per level in order ASC
+        return res
 
     def compute(self, cr, uid, ids, context=None):
         context = context or {}
@@ -167,7 +139,6 @@ class ifrs_ifrs(osv.osv):
         for ifrs_l in list_level:
             ifrs_l_brw = ifrs_lines.browse(cr, uid, ifrs_l, context=context)
             #ifrs_l_brw._get_amount_value_2(cr, uid, ifrs_l.id, context=context)
-        #HACER OTRO CICLO ACA PARA CALCULAR LOS OPENRAD_IDS
         return True
         #return self.write(cr,uid,ids,{'do_compute':True},context=context)
     
@@ -562,7 +533,7 @@ class ifrs_lines(osv.osv):
         """
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
         to_currency_id = currency_wizard
-
+        
         if number_month:
             if two:
                 context = {'period_from': number_month, 'period_to':number_month}

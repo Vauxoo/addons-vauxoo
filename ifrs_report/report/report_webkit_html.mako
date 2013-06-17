@@ -44,7 +44,7 @@
         period_name = ifrs._get_periods_name_list(data['fiscalyear'])
     %>
     
-	 %for ifrs_l in ifrs.ifrs_lines_ids:
+	 %for ifrs_l in ifrs._get_ordered_lines():
 	<tbody>
 		 %if not ifrs_l.invisible:
 			<td>
