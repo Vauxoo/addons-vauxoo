@@ -47,6 +47,7 @@ from tools.translate import _
 from datetime import datetime, timedelta
 from pytz import timezone
 import pytz
+import time
 from datetime import datetime, timedelta
 try:
     from SOAPpy import WSDL
@@ -257,14 +258,15 @@ class account_invoice(osv.Model):
         if userstz:
             hours = timezone(userstz)
             fmt = '%Y-%m-%d %H:%M:%S %Z%z'
-            loc_dt = hours.localize(datetime(2013, 1, 1, 0, 0, 0))
+            now = datetime.now()
+            loc_dt = hours.localize(datetime(now.year,now.month,now.day,now.hour,now.minute,now.second))
             timezone_loc=(loc_dt.strftime(fmt))
             diff_timezone_original=timezone_loc[-5:-2]
             timezone_original=int(diff_timezone_original)
             s= str(datetime.now(pytz.timezone(userstz)))
             s=s[-6:-3]
-            timezone_actual=int(s)*-1
-            a=  timezone_original + ((timezone_actual + timezone_original)*-1)
+            timezone_present=int(s)*-1
+            a=  timezone_original + ((timezone_present + timezone_original)*-1)
         return a
 
 
