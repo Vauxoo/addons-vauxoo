@@ -137,11 +137,9 @@ class ifrs_ifrs(osv.osv):
             self._get_level(cr,uid,j,level+1,tree,context=context) 
         return True
     
-    def compute(self, cr, uid, ids, context=None):
+    def _get_ordered_lines(self, cr, uid, ids, values, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
-        fy = self.browse(cr, uid, ids, context=context)[0]
-        context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         ifrs_brw = self.browse(cr,uid,ids[0],context=context)
         tree = {1:{}}
         level = 1
@@ -155,9 +153,13 @@ class ifrs_ifrs(osv.osv):
         ids_x = []
         for i in levels:
             ids_x += tree[i].keys()
-        print 'ids_x, ',ids_x
-        print 'ids_o, ',ids_o
-        print set(ids_x)-set(ids_o)
+        return ids_x 
+
+    def compute(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        fy = self.browse(cr, uid, ids, context=context)[0]
+        context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         ifrs_lines = self.pool.get('ifrs.lines')
         list_level = self.list_lines_per_level(cr, uid, ids, context=context)
         for ifrs_l in list_level:
