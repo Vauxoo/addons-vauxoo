@@ -137,7 +137,7 @@ class ifrs_ifrs(osv.osv):
         list_level = self._get_ordered_lines(cr, uid, ids, context=context)
         
         for ifrs_l in list_level:
-            ifrs_lines._get_sum_2(cr, uid, ifrs_l.id, False, context=context)
+            ifrs_lines._get_sum(cr, uid, ifrs_l.id, False, context=context)
         return True
     
     def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
@@ -188,7 +188,7 @@ class ifrs_lines(osv.osv):
     _order = 'sequence, type'
 
 
-    def _get_sum_total_2(self, cr, uid, brw, number_month,context = None):
+    def _get_sum_total(self, cr, uid, brw, number_month,context = None):
         """ Calculates the sum of the line total_ids the current ifrs.line
         """
         if context is None: context = {}
@@ -205,7 +205,7 @@ class ifrs_lines(osv.osv):
             res += getattr(t, field_name)
         return res
     
-    def _get_sum_2( self, cr, uid, id, number_month, context = None ):
+    def _get_sum( self, cr, uid, id, number_month, context = None ):
         fy_obj = self.pool.get('account.fiscalyear')
         period_obj = self.pool.get('account.period')
         if context is None: context = {}
@@ -289,14 +289,14 @@ class ifrs_lines(osv.osv):
                     res += a.balance
                     
         elif brw.type == 'total':
-            res = self._get_sum_total_2(cr, uid, brw, number_month,context = c)
+            res = self._get_sum_total(cr, uid, brw, number_month,context = c)
             if brw.comparison <> 'without':
                 res2=0
                 #~ TODO: Write definition for previous periods
                 #~ that will be the arguments for the new brw.
                 
                 brw = self.browse( cr, uid, id, context = c2 )
-                res2 = self._get_sum_total_2(cr, uid, brw, number_month,context = c2)
+                res2 = self._get_sum_total(cr, uid, brw, number_month,context = c2)
 
                 if brw.comparison == 'subtract':
                     res -= res2
@@ -393,7 +393,7 @@ class ifrs_lines(osv.osv):
         context['fiscalyear'] = fiscalyear
         context['state'] = target_move
         
-        res = self._get_sum_2(cr, uid, ifrs_line.id, number_month,context = context)
+        res = self._get_sum(cr, uid, ifrs_line.id, number_month,context = context)
         
         if ifrs_line.type == 'detail':
             res = self.exchange(cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
