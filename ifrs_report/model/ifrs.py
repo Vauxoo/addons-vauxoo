@@ -76,6 +76,12 @@ class ifrs_ifrs(osv.osv):
     }
 
     def _get_level(self,cr,uid,l,level,tree,context=None):
+        """ Calcula los niveles de los ifrs.lines, tomando en cuenta que sera
+        un mismo arbol para los campos total_ids y operand_ids.
+        @param l: objeto a un ifrs.lines
+        @param level: Nivel actual de la recursion
+        @param tree: Arbol de dependencias entre lineas construyendose
+        """
         context = context or {}
         if not tree.get(level):
             tree[level]={}
@@ -127,20 +133,25 @@ class ifrs_ifrs(osv.osv):
         return res
 
     def compute(self, cr, uid, ids, context=None):
+        """ Se encarga de calcular los montos para visualizarlos desde
+        el formulario del ifrs, hace una llamada al get_report_data, el
+        cual se encarga de realizar los calculos.
+        """
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         fy = self.browse(cr, uid, ids, context=context)[0]
         context.update({'whole_fy':True, 'fiscalyear':fy.fiscalyear_id.id})
         ifrs_lines = self.pool.get('ifrs.lines')
-       
-        
         self.get_report_data(cr, uid, ids, is_compute=True, context=context)
         return True
     
     def _get_periods_name_list(self, cr, uid, ids, fiscalyear_id, context=None):
+        """ Devuelve una lista con la info de los periodos fiscales 
+        (numero mes, id periodo, nombre periodo)
+        @param fiscalyear_id: Año fiscal escogido desde el wizard encargada
+        de preparar el reporte para imprimir
+        """
         if context is None: context = {}
-
-        """devuelve una lista con la info de los periodos fiscales (numero mes, id periodo, nombre periodo)"""
 
         period_list = []
         period_list.append( ('0', None , ' ' ) ) 
@@ -157,8 +168,16 @@ class ifrs_ifrs(osv.osv):
         return period_list
     
     def _get_period_print_info(self, cr, uid, ids, period_id, report_type, context=None):
+        """ Return all the printable information about period
+        @param period_id: Dependiendo del report_type, en el caso que sea 'per',
+        este campo indica el periodo a tomar en cuenta, en caso de que el
+        report_type sea 'all', es Falso.
+        @param report_type: Su valor se establece desde el wizard que se encarga
+        de preparar al reporte para imprimir, el report_type puede ser 'all' (incluir
+        todo el año fiscal en el reporte) o 'per' (tomar en cuenta solo un periodo
+        determinado en el reporte)
+        """
         if context is None: context = {}
-        ''' Return all the printable information about period'''
         if report_type == 'all':
             res = 'All Periods of the fiscalyear.'
         else:
@@ -203,7 +222,7 @@ class ifrs_ifrs(osv.osv):
                 print period_name[li][2]
 
         for ifrs_l in self._get_ordered_lines(cr, uid, ids, context=context):
-            if is_compute:
+            if is_compute: #Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
                 ifrs_line._get_amount_value(cr, uid,
                         ids, ifrs_l, is_compute=True, context=context)
             else:
@@ -220,17 +239,20 @@ class ifrs_ifrs(osv.osv):
                                     context=context)
 
         for ifrs_l in self._get_ordered_lines(cr, uid, ids, context=context):
-            if is_compute:
+            if is_compute: #Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
                 ifrs_line._get_amount_with_operands(cr, uid,
                         ids, ifrs_l, is_compute=True, context=context)
             else:
-                if two:
+                if two: #Cuando el reporte es de 2 columnas, se retornara una lista de diccionario
+                    #[{'sequence':1, 'id':id_de_la_linea, 'name':nombre_de_la_linea, 
+                    #'invisible':mostrar_campo_en_reporte, 'type':tipo_de_linea, 'amount':monto_de_suma_total_de_todos_los_periodos}]
                     amount_value = ifrs_line._get_amount_with_operands(cr, uid,
                             ids, ifrs_l, period_name, fiscalyear, exchange_date,
                             currency_wizard, period, target_move, two=two,
                             context=context)
                     line = {'sequence':int(ifrs_l.sequence),'id':ifrs_l.id, 'name':ifrs_l.name, 'invisible':ifrs_l.invisible, 'type':str(ifrs_l.type), 'amount':amount_value}
-                else:
+                else: #Cuando el reporte es de 12 columnas no se tendra el campo amount sino que tendra un campo 'period',
+                    #que sera un diccionario con el valor que corresponde a cada uno de los 12 periodos por linea
                     line = {'sequence':int(ifrs_l.sequence), 'id':ifrs_l.id, 'name':ifrs_l.name,
                             'invisible':ifrs_l.invisible, 'type':ifrs_l.type,
                             'period':{1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0}}
@@ -257,6 +279,8 @@ class ifrs_lines(osv.osv):
 
     def _get_sum_total(self, cr, uid, brw, number_month=None, is_compute=None, context = None):
         """ Calculates the sum of the line total_ids the current ifrs.line
+        @param number_month: periodo a calcular
+        @param is_compute: si el metodo actualizara el campo amount para la vista
         """
         if context is None: context = {}
         res = 0
@@ -276,6 +300,10 @@ class ifrs_lines(osv.osv):
         return res
     
     def _get_sum( self, cr, uid, id=None, number_month=None, is_compute=None, context = None ):
+        """ Calculates the amount sum of the line
+        @param number_month: periodo a calcular
+        @param is_compute: si el metodo actualizara el campo amount para la vista
+        """
         fy_obj = self.pool.get('account.fiscalyear')
         period_obj = self.pool.get('account.period')
         if context is None: context = {}
@@ -398,6 +426,14 @@ class ifrs_lines(osv.osv):
     def _get_amount_value(self, cr, uid, ids, ifrs_line=None, period_info=None, fiscalyear=None, exchange_date=None, currency_wizard=None, number_month=None, target_move=None, pd=None, undefined=None, two=None, is_compute=None, context=None):
         if context is None: context = {}
         """ Returns the amount corresponding to the period of fiscal year
+        @param ifrs_line: linea a calcular monto
+        @param period_info: informacion de los periodos del fiscal year
+        @param fiscalyear: selected fiscal year
+        @param exchange_date: date of change currency
+        @param currency_wizard: currency in the report
+        @param number_month: period number
+        @param target_move: target move to consider
+        @param is_compute: si el metodo actualizara el campo amount para la vista
         """
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
         to_currency_id = currency_wizard
@@ -428,6 +464,14 @@ class ifrs_lines(osv.osv):
     def _get_amount_with_operands(self, cr, uid, ids, ifrs_line, period_info=None, fiscalyear=None, exchange_date=None, currency_wizard=None, number_month=None, target_move=None, pd=None, undefined=None, two=None, is_compute=None, context=None):
         if context is None: context = {}
         """ Integrate operand_ids field in the calculation of the amounts for each line 
+        @param ifrs_line: linea a calcular monto
+        @param period_info: informacion de los periodos del fiscal year
+        @param fiscalyear: selected fiscal year
+        @param exchange_date: date of change currency
+        @param currency_wizard: currency in the report
+        @param number_month: period number
+        @param target_move: target move to consider
+        @param is_compute: si el metodo actualizara el campo amount para la vista
         """
         
         if not number_month:
