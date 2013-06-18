@@ -104,7 +104,7 @@
         </record>
 
         <!-- attach it to the portal menu -->
-        <menuitem name="Contact 2" id="portal_company_contact"
+        <menuitem name="Contact Us" id="portal_company_contact"
             parent="portal.portal_company" action="action_contact_us" sequence="40"/>
 
     </data>
