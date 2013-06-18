@@ -228,10 +228,6 @@ class ifrs_ifrs(osv.osv):
             period_name = self._get_periods_name_list(
                 cr, uid, ids, fiscalyear, context=context)
 
-            # Fecha de cada periodo
-            for li in range(0, 13):
-                print period_name[li][2]
-
         for ifrs_l in self._get_ordered_lines(cr, uid, ids, context=context):
             if is_compute:  # Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
                 ifrs_line._get_amount_value(cr, uid,
