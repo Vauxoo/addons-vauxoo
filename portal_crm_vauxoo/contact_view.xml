@@ -64,11 +64,6 @@
                                     widget="captcha"
                                     nolabel="1"/>
                             </group>
-                            <newline/>
-                            <group>
-                            <field nolabel="1" name= "captcha_response"/>
-                            <field nolabel="1" name= "captcha_challenge"/>
-                            </group>
                     </div>
                     <div>
                         <button string="Submit" name="submit" type="object" 
