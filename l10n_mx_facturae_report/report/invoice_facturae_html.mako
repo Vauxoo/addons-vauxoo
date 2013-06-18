@@ -243,6 +243,7 @@
                     ${_('PAGO EN UNA SOLA EXHIBICIÓN - EFECTOS FISCALES AL PAGO')}
                 </td>
             </tr>
+            
         </table>
         <br clear="all"/>
         <!--code for cfd-->
@@ -369,6 +370,7 @@
         %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
                 <table width="100%" class="datos_fiscales">
+                    <%data_certificate=get_data_certificate(o.id)%>
                     <tr>
                         %if o.company_emitter_id.cif_file:
                         <td align="left">
@@ -390,7 +392,9 @@
                             <b>${_('Sello Digital SAT:')} </b><br/>
                             ${split_string( o.cfdi_sello or '') or ''|entity}<br/>
                             <b>${_('Cadena original:')} </b><br/>
-                            ${split_string(o.cfdi_cadena_original) or ''|entity}</p>
+                            ${split_string(o.cfdi_cadena_original) or ''|entity}</br>
+                            <b>${_('Enlace al certificado: ')}</b></br>
+                            ${data_certificate['certificate_link'] or ''|entity}</p>
                         </td>
                         %if o.cfdi_cbb:
                         <td align="right">
@@ -407,7 +411,9 @@
             ${_('No se encontró la aprobación')}
             <hr>
         %endif
+                                 
     <p style="page-break-after:always"></p>
     %endfor
+
 </body>
 </html>
