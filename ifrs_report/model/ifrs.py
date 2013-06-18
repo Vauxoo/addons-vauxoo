@@ -219,19 +219,22 @@ class ifrs_ifrs(osv.osv):
                         ids, ifrs_l, period_name, fiscalyear, exchange_date,
                         currency_wizard, period, target_move, two=two,
                         context=context)
-                line = {'sequence':ifrs_l.sequence,'id':ifrs_l.id, 'name':ifrs_l.name, 'invisible':ifrs_l.invisible, 'type':ifrs_l.type, 'monto':amount_value}
-                data.append( line )
+                line = {'sequence':int(ifrs_l.sequence),'id':ifrs_l.id, 'name':ifrs_l.name, 'invisible':ifrs_l.invisible, 'type':str(ifrs_l.type), 'amount':amount_value}
             else:
+                line = {'sequence':int(ifrs_l.sequence), 'id':ifrs_l.id, 'name':ifrs_l.name,
+                        'invisible':ifrs_l.invisible, 'type':ifrs_l.type,
+                        'period':{1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0}}
                 for lins in range(1, 13):
                     amount_value = ifrs_line._get_amount_with_operands(cr, uid,\
                         ids, ifrs_l, period_name, fiscalyear, exchange_date,
                         currency_wizard, lins, target_move, context=context)
-                    line = {'sequence':ifrs_l.sequence, 'id':ifrs_l.id, 'name':ifrs_l.name, 'invisible':ifrs_l.invisible, 'type':ifrs_l.type, 'monto':amount_value, 'period':lins}
-                    data.append( line )
-
-        data.sort(key=lambda x: x['sequence'])
-        print data 
-        return True
+                    line['period'][lins] = amount_value 
+            
+            if ifrs_l.ifrs_id.id == ids[0]:#Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
+                data.append( line )
+        data.sort(key=lambda x: int(x['sequence']))
+        #print data
+        return data
 
 class ifrs_lines(osv.osv):
 

@@ -42,48 +42,34 @@
                         %try:
                             ${ period_name[li][2] }
                         %except:
-                            /
+                            pass
                         %endtry
                     </th>
                 %endfor
             </tr>
         </thead>
         
-        %for ifrs_l in ifrs._get_ordered_lines():
-                %for lins in range(1, 13):
-                    <%
-                        amount_value = 0.0
-                        try:
-                            amount_value = ifrs.ifrs_lines_ids[0]._get_amount_value(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
-                        except:
-                            pass
-                    
-                    %>
-                %endfor
-          %endfor
-
-        <% ifrs.get_report_data( data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['target_move'])
+        <%
+            info = ifrs.get_report_data( data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['target_move'])
+            i = 0
         %>
-        %for ifrs_l in ifrs._get_ordered_lines():
+
+        %while i < len(info):
             <tbody>
             <tr class="prueba">
-                <th class="celda3">${ifrs_l.name}</th>
-                %for lins in range(1, 13):
-                    <%
-
-                        amount_value = ifrs.ifrs_lines_ids[0]._get_amount_with_operands(ifrs_l, period_name, data['fiscalyear'], data['exchange_date'], data['currency_wizard'], lins, data['target_move'])
-
-                    %>
+                <th class="celda3">${info[i].get('name')}</th>
+                    %for moth in range(1, 13): 
                     <th class="celda2">
                         %try:
-                            ${formatLang(amount_value, digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                            ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
                         %except:
                             0.0
                         %endtry
                     </th>
-                %endfor 
+                    %endfor
+                <% i +=1 %>
             </tr>
-        %endfor
+        %endwhile
         </tbody>
     </table>
     %endfor
