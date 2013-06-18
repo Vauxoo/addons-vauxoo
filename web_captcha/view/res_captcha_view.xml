@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_res_captcha" model="ir.ui.view">
+            <field name="name">Captcha General Settings</field>
+            <field name="model">res.captcha</field>
+            <field name="arch" type="xml">
+                <form string="Captcha General Settings" version="7.0" 
+                    class="oe_form_configuration">
+                    <h1>
+                        <label for="company_id" string="Company"/>
+                    </h1>
+                    <field name="company_id"/>
+                    <label for="recaptcha_key" string="Public Key"/>
+                    <field name="recaptcha_key"/>
+                    <label for="recaptcha_private_key" string="Private Key"/>
+                    <field name="recaptcha_private_key"/>
+                </form>
+            </field>
+        </record>
+        <record id="view_res_captcha_tree" model="ir.ui.view">
+            <field name="name">Captcha General Settings</field>
+            <field name="model">res.captcha</field>
+            <field name="arch" type="xml">
+                <tree string="Captcha General Settings" version="7.0"
+                    class="oe_form_configuration">
+                    <field name="company_id"/>
+                    <field name="recaptcha_key"/>
+                    <field name="recaptcha_private_key"/>
+                </tree>
+            </field>
+         </record>
+         <record id="action_web_captcha_tree" model="ir.actions.act_window">
+            <field name="name">Captcha Settings</field>
+            <field name="res_model">res.captcha</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_res_captcha_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_company_id': 1}</field>
+            <!--<field name="search_view_id" ref="account.view_account_move_line_filter"/>-->
+            <field name="help"/>
+         </record>
+    </data>
+</openerp>
+ 

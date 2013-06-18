@@ -19,29 +19,26 @@
 #
 ##############################################################################
 {
-    'name' : 'Purchase Requisition for Everybody',
+    'name' : 'Overwrite field standard_price',
     'version' : '1.0',
     'author' : 'Vauxoo C.A.',
     'category' : 'Security',
     'description' : """
-Records Rule for Purchase_Requisition Module
-============================================
+Fixed groups on field standard_price
+====================================
 
-Created 2 groups which are Requisition / User and Requisition / Manager and new purchase requisition menu to separate from purchase menu
+This module is created because in the definiton of field **standard_price* on the module product.product, 
+the asignation of groups is made in file product.py in model definition:
 
-With Requisition / User we can see only your own requisition and modify these
-With Requisition / Manage  we can see whole requisition and modify these
+'standard_price': fields.float('Cost', digits_compute=dp.get_precision('Product Price'), help="Cost price of the product used for standard stock valuation in accounting and used as a base price on purchase orders.", groups="base.group_user"),
 
-You need any of those 2 groups for you can see the new purchase requisition menu
+This way forces to allows work with the groups **base.group_user**.
 
     """,
     'website': 'http://www.vauxoo.com',
     'images' : [],
-    'depends' : ['base','purchase','purchase_requisition'],
+    'depends' : ['base','product'],
     'data': [
-        'security/requisition_security.xml',
-        'view/purchase_requisition_view.xml',
-        'security/ir.model.access.csv',
     ],
     'js': [
     ],

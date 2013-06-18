@@ -3,10 +3,14 @@
 
 <data noupdate="0">
     <record id="purchase_requisition_manager_ev_groups" model="res.groups">            
-        <field name="name">Requisition / Manager</field>                                         
+        <field name="name">Requisition - Manager</field>
+        <field name="implied_ids" 
+        eval="[(6,0, [ref('purchase_requisition.group_purchase_requisition_manager')])]"/>
     </record> 
-    <record id="purchase_requisition_user_ev_groups" model="res.groups">            
-        <field name="name">Requisition / User</field>                                         
+    <record id="purchase_requisition_user_ev_groups" model="res.groups">
+        <field name="name">Requisition - User</field>
+        <field name="implied_ids"
+        eval="[(6,0, [ref('purchase_requisition.group_purchase_requisition_user')])]"/>
     </record> 
     <record id="requisition_modify_ev_rule" model="ir.rule">
         <field name="name">Modify Purchase Requisition</field>
