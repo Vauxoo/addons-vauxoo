@@ -309,86 +309,86 @@ class account_invoice(osv.Model):
             namespace = pac_params.namespace
             if 'testing' in wsdl_url:
                 msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
-                wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
-                if True:  # if wsdl_client:
-                    file_globals = self._get_file_globals(
-                        cr, uid, invoice_ids, context=context)
-                    fname_cer_no_pem = file_globals['fname_cer']
-                    cerCSD = fname_cer_no_pem and base64.encodestring(
-                        open(fname_cer_no_pem, "r").read()) or ''
-                    fname_key_no_pem = file_globals['fname_key']
-                    keyCSD = fname_key_no_pem and base64.encodestring(
-                        open(fname_key_no_pem, "r").read()) or ''
-                    cfdi = base64.encodestring(
-                        xml_res_str_addenda.replace(codecs.BOM_UTF8, ''))
-                    zip = False  # Validar si es un comprimido zip, con la extension del archivo
-                    contrasenaCSD = file_globals.get('password', '')
-                    params = [
-                        user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
-                    wsdl_client.soapproxy.config.dumpSOAPOut = 0
-                    wsdl_client.soapproxy.config.dumpSOAPIn = 0
-                    wsdl_client.soapproxy.config.debug = 0
-                    wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
-                    resultado = wsdl_client.timbrar(*params)
-                    htz=int(self._get_time_zone(cr, uid, inv_ids, context=context))
-                    msg += resultado['resultados'] and resultado[
-                        'resultados']['mensaje'] or ''
-                    status = resultado['resultados'] and resultado[
-                        'resultados']['status'] or ''
-                    if status == '200' or status == '307':
-                        fecha_timbrado = resultado[
-                            'resultados']['fechaTimbrado'] or False
-                        fecha_timbrado = fecha_timbrado and time.strftime(
-                            '%Y-%m-%d %H:%M:%S', time.strptime(
-                            fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
-                        fecha_timbrado = fecha_timbrado and datetime.strptime(
-                            fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
-                            hours=htz) or False
-                        cfdi_data = {
-                            'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
-                            'cfdi_sello': resultado['resultados'][
-                                'selloSAT'] or False,
-                            'cfdi_no_certificado': resultado['resultados'][
-                                'certificadoSAT'] or False,
-                            'cfdi_cadena_original': resultado['resultados'][
-                                'cadenaOriginal'] or False,
-                            'cfdi_fecha_timbrado': fecha_timbrado,
-                            'cfdi_xml': base64.decodestring(resultado[
-                                'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
-                            'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
-                        }
-                        if cfdi_data.get('cfdi_xml', False):
-                            url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
-                                comprobante)
-                            cfdi_data['cfdi_xml'] = cfdi_data[
-                                'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
-                            file = base64.encodestring(
-                                cfdi_data['cfdi_xml'] or '')
-                            # self.cfdi_data_write(cr, uid, [invoice.id],
-                            # cfdi_data, context=context)
-                            cfdi_xml = cfdi_data.pop('cfdi_xml')
-                            if cfdi_xml:
-                                self.write(cr, uid, inv_ids, cfdi_data)
-                                cfdi_data['cfdi_xml'] = cfdi_xml
-                            msg = msg + _(
-                                "\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
-                        else:
-                            msg = msg + "\nCan't extract the file XML of PAC"
-                    elif status == '500' or status == '307':  # documento no es un cfd version 2, probablemente ya es un CFD version 3
-                        msg = _("Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n") + (
-                            resultado['resultados']['mensaje'] or '') + (
-                            resultado['mensaje'] or '')
+            wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
+            if True:  # if wsdl_client:
+                file_globals = self._get_file_globals(
+                    cr, uid, invoice_ids, context=context)
+                fname_cer_no_pem = file_globals['fname_cer']
+                cerCSD = fname_cer_no_pem and base64.encodestring(
+                    open(fname_cer_no_pem, "r").read()) or ''
+                fname_key_no_pem = file_globals['fname_key']
+                keyCSD = fname_key_no_pem and base64.encodestring(
+                    open(fname_key_no_pem, "r").read()) or ''
+                cfdi = base64.encodestring(
+                    xml_res_str_addenda.replace(codecs.BOM_UTF8, ''))
+                zip = False  # Validar si es un comprimido zip, con la extension del archivo
+                contrasenaCSD = file_globals.get('password', '')
+                params = [
+                    user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
+                wsdl_client.soapproxy.config.dumpSOAPOut = 0
+                wsdl_client.soapproxy.config.dumpSOAPIn = 0
+                wsdl_client.soapproxy.config.debug = 0
+                wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
+                resultado = wsdl_client.timbrar(*params)
+                htz=int(self._get_time_zone(cr, uid, inv_ids, context=context))
+                msg += resultado['resultados'] and resultado[
+                    'resultados']['mensaje'] or ''
+                status = resultado['resultados'] and resultado[
+                    'resultados']['status'] or ''
+                if status == '200' or status == '307':
+                    fecha_timbrado = resultado[
+                        'resultados']['fechaTimbrado'] or False
+                    fecha_timbrado = fecha_timbrado and time.strftime(
+                        '%Y-%m-%d %H:%M:%S', time.strptime(
+                        fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
+                    fecha_timbrado = fecha_timbrado and datetime.strptime(
+                        fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
+                        hours=htz) or False
+                    cfdi_data = {
+                        'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
+                        'cfdi_sello': resultado['resultados'][
+                            'selloSAT'] or False,
+                        'cfdi_no_certificado': resultado['resultados'][
+                            'certificadoSAT'] or False,
+                        'cfdi_cadena_original': resultado['resultados'][
+                            'cadenaOriginal'] or False,
+                        'cfdi_fecha_timbrado': fecha_timbrado,
+                        'cfdi_xml': base64.decodestring(resultado[
+                            'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
+                        'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
+                    }
+                    if cfdi_data.get('cfdi_xml', False):
+                        url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
+                            comprobante)
+                        cfdi_data['cfdi_xml'] = cfdi_data[
+                            'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
+                        file = base64.encodestring(
+                            cfdi_data['cfdi_xml'] or '')
+                        # self.cfdi_data_write(cr, uid, [invoice.id],
+                        # cfdi_data, context=context)
+                        cfdi_xml = cfdi_data.pop('cfdi_xml')
+                        if cfdi_xml:
+                            self.write(cr, uid, inv_ids, cfdi_data)
+                            cfdi_data['cfdi_xml'] = cfdi_xml
+                        msg = msg + _(
+                            "\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                     else:
-                        msg = msg + \
-                            "\nNo se pudo extraer el archivo XML del PAC"
+                        msg = msg + "\nCan't extract the file XML of PAC"
                 elif status == '500' or status == '307':  # documento no es un cfd version 2, probablemente ya es un CFD version 3
-                    msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + \
-                        (resultado['resultados']['mensaje'] or '') + (
-                            resultado['mensaje'] or '')
+                    msg = _("Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n") + (
+                        resultado['resultados']['mensaje'] or '') + (
+                        resultado['mensaje'] or '')
                 else:
-                    msg += '\n' + resultado['mensaje'] or ''
-                    if not status:
-                        status = 'parent_' + resultado['status']
+                    msg = msg + \
+                        "\nNo se pudo extraer el archivo XML del PAC"
+            elif status == '500' or status == '307':  # documento no es un cfd version 2, probablemente ya es un CFD version 3
+                msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + \
+                    (resultado['resultados']['mensaje'] or '') + (
+                        resultado['mensaje'] or '')
+            else:
+                msg += '\n' + resultado['mensaje'] or ''
+                if not status:
+                    status = 'parent_' + resultado['status']
         else:
             msg = 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
         return {'file': file, 'msg': msg, 'status': status, 'cfdi_xml': cfdi_xml}
