@@ -75,7 +75,8 @@ Project Configuration
     "demo_xml" : [
     ],
     "update_xml" : [
-      "data/project_conf.xml"
+      "data/project_conf.xml",
+      "view/project_view.xml",
     ],
     "active": False,
     "images": [],

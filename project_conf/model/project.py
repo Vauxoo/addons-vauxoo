@@ -3,7 +3,6 @@
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #
-
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -71,10 +70,10 @@ class project_task(osv.osv):
     _track= {'stage_id':{'project.mt_task_stage': send_mail_task,} }
 
 
-#    _columns = {
-#        'project_leader': fields.char('Project Leader', size=255,readonly=True,help="""Person responsible of task create and task management."""),
-#    }
-#    _defaults = {
-#        'project_leader': lambda self, cr, uid, ctx: uid,
-#    }
+    _columns = {
+        'project_leader': fields.char('Project Leader', size=255,readonly=True,help="""Person responsible of task create and task management."""),
+    }
+    _defaults = {
+        'project_leader': lambda self, cr, uid, ctx: uid,
+    }
 
