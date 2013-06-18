@@ -481,7 +481,7 @@
                                                                         <div mc:edit="std_content01" >
                                                                             <strong>Acesso Sistema</strong>
                                                                             <br />
-                                                                            http://erp.vauxoo.com/
+                                                                            http://erp.vauxoo.com/vauxoo_documentation/static/html/OperationManuals/project_and_task.html
                                                                             <br />
                                                                             <br />
                                                                             %if object.date_deadline:
