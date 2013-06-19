@@ -21,7 +21,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################ 
 {
-    "name" : "Wizard that disables accounts daughters ",
+    "name" : "Wizard that disables accounts childs ",
     "version" : "1.0",
     "depends" : ["account",
     ],
@@ -30,7 +30,7 @@
     daughters inactive accounts, accounts selected parent
     """,
     "website" : "http://vauxoo.com",
-    "category" : "Agrinos",
+    "category" : "Accounting",
     "demo": [],
     "test": [],
     "data" : [
