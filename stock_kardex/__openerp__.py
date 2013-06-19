@@ -31,7 +31,6 @@
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
     "init_xml" : [],
-    "demo_xml" : [],
     "test": [],
     "update_xml" : ['kardex.xml',
     ],

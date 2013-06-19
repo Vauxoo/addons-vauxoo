@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
 
@@ -7,12 +7,12 @@
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_search_form_view"/>
             <field name="arch" type="xml">
-                   <field name="pricelist_id" position="after">
-                        <field name="date_from_to" widget="date" context="{'from_date':self, 'to_date':self2}"/>
-                   </field>
+                <field name="pricelist_id" position="after">
+                    <field name="date_from" context="{'from_date' : self}"  widget="date" string='Date From'/>
+                    <field name="date_to" context="{'to_date' : self}"  widget="date" string='Date To'/>
+                </field>
             </field>
         </record>
-
 
     </data>
 </openerp>

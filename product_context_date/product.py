@@ -19,16 +19,16 @@
 #
 ##############################################################################
 
-from openerp.osv import osv, fields
+from openerp.osv import fields, osv
 from openerp.tools.translate import _
-
 import decimal_precision as dp
 
-
-class product_product(osv.Model):
+class product_product(osv.osv):
     _inherit = "product.product"
+    
     _columns = {
-        'date_from_to': fields.dummy(string='Date From-To', type='datetime'),
+        'date_from': fields.dummy(string='Date From', type='date'),
+        'date_to': fields.dummy(string='Date To', type='date'),
     }
 
 
