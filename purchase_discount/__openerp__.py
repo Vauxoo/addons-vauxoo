@@ -25,8 +25,12 @@
     "version" : "2.0",
     "category" : "Generic Modules/Sales & Purchases",
     "depends" : ["stock", "purchase","account"],
-    "demo_xml" : [],
-    "update_xml" : ["purchase_discount_view.xml", "purchase_discount_report.xml"],
+    "demo" : [],
+    "data" : ["purchase_discount_view.xml", "purchase_discount_report.xml"],
+    'js': [],
+    'qweb' : [],
+    'css':[],
+    'test': [],
     "active": False,
     "installable": True
 }
