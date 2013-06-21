@@ -50,23 +50,25 @@ class ifrs_report_wizard(osv.osv_memory):
 
     _columns = {
         'period': fields.many2one('account.period', 'Force period', help='Fiscal period to assign to the invoice. Keep empty to use the period of the current date.'),
-        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year' ),
-        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
+        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year' ),
+        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True, help='Company name' ),
         'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
-        'exchange_date':fields.date('Exchange Date'),
+        'exchange_date':fields.date('Exchange Date', help='Date of change that will be printed in the report, with respect to the currency of the company'),
         'report_type': fields.selection( [
             ('all','All Fiscalyear'),
             ('per', 'Force Period')],
-            string='Type', required=True ),
+            string='Type', required=True, help='Indicates if the report it will be printed for the entire fiscal year, or for a particular period' ),
         'columns': fields.selection( [
             ('ifrs','Two Columns'),
             ('webkitaccount.ifrs_12', 'Twelve Columns'),
             #('ifrs_12_partner_detail', 'With Partner Detail')
             ],
-            string='Number of Columns' ),
+            string='Number of Columns',
+            help='Number of columns that will be printed in the report:'
+            " -Two Colums(02),-Twelve Columns(12)" ),
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
-                                        ], 'Target Moves'),
+                                        ], 'Target Moves', help='Print All Accounting Entries or just Posted Accounting Entries'),
     }
 
     _defaults = {
