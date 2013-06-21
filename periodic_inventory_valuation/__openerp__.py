@@ -35,8 +35,10 @@ Periodic Inventory Valuation.
 
 To generate journal items per period inventory valuation
 """,
-    "depends": [],
-    "data": [],
+    "depends": ['account'],
+    "data": [
+        'view/periodic_inventory_valuation_view.xml',
+        ],
     "js": [],
     "qweb": [],
     "css": [],
