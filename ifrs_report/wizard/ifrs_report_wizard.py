@@ -68,7 +68,7 @@ class ifrs_report_wizard(osv.osv_memory):
             " -Two Colums(02),-Twelve Columns(12)" ),
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
-                                        ], 'Target Moves', help='It will be printed Accounting Entries or Entries Posted'),
+                                        ], 'Target Moves', help='Print All Accounting Entries or just Posted Accounting Entries'),
     }
 
     _defaults = {

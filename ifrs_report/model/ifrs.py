@@ -366,7 +366,7 @@ class ifrs_lines(osv.osv):
             ],
             string = 'Constant Type',
             required = False,
-            help='Constants Type' ),
+            help='Constant Type' ),
         'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
         'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
             store={
@@ -415,7 +415,7 @@ class ifrs_lines(osv.osv):
             help='Leaving blank means Balance'),
         'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
         'inv_sign' : fields.boolean('Change Sign to Amount', help='Allows a change of sign'),
-        'invisible' : fields.boolean('Invisible', help='Allows the line of the report is printed or not'),
+        'invisible' : fields.boolean('Invisible', help='Allows whether the line of the report is printed or not'),
         'comment' : fields.text( 'Comments/Question', help='Comments or questions about this ifrs line' ),
     }
 
