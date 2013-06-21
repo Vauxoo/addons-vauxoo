@@ -39,9 +39,6 @@
             <field name="name">product.product.tree.inh</field>
             <field name="model">product.product</field>
             <field name="priority">100</field>
-<!--
-            <field eval="7" name="priority"/>
--->
             <field name="arch" type="xml">
                 <tree string="Products">
                     <field name="default_code"/>
