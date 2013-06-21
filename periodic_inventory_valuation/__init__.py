@@ -4,8 +4,8 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-##################Credits######################################################
-#    Coded by: Yanina Aular <yanina.aular@vauxoo.com> 
+# Credits######################################################
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <humbertoarocha@gmail.com>
 #    Audited by: Nhomar Hernandez <nhomar@gmail.com>
 ###############################################################################

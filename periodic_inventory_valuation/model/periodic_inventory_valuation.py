@@ -23,25 +23,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    "name": "Periodic Inventory Valuation",
-    "version": "1.0",
-    "author": "Vauxoo C.A",
-    "website": "http://vauxoo.com",
-    "category": 'Accounting',
-    "description": """
-Periodic Inventory Valuation.
-=============================
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+from openerp import tools
 
-To generate journal items per period inventory valuation
-""",
-    "depends": [],
-    "data": [],
-    "js": [],
-    "qweb": [],
-    "css": [],
-    "demo": [],
-    "test": [],
-    "installable": True,
-    "active": False,
-}
+#----------------------------------------------------------
+# Periodic Inventory Valuation
+#----------------------------------------------------------
+
+
+class periodic_inventory_valuation(osv.osv):
+    _name = "periodic.inventory.valuation"
+    _description = "Periodic Inventory Valuation"
+    _columns = {
+        'name': fields.char('Name', size=64, required=True, help=""),
+    }
