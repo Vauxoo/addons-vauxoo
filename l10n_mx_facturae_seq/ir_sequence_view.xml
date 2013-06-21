@@ -47,7 +47,8 @@
         <menuitem action="action_facturae_sequence_tree"
                 id="menu_facturae_sequence" sequence="50"
                 parent="base.next_id_5"
-                groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager, l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
+                groups="l10n_mx_facturae_seq.group_facturae_mx_seq_manager,l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"
+        />
 
         <record id="view_facturae_sequence_search" model="ir.ui.view">
             <field name="name">view.facturae.sequence.search</field>
