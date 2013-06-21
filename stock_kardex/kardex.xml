@@ -5,6 +5,7 @@
        <record id="product_search_form_view_inh" model="ir.ui.view">
             <field name="name">product.search.form.inh</field>
             <field name="model">product.product</field>
+            <field name="priority">100</field>
             <field name="arch" type="xml">
                 <search string="Product">
                    <field name="name" string="Product" filter_domain="['|',('name','ilike',self),('default_code','ilike',self)]"/>
@@ -37,8 +38,10 @@
         <record id="product_product_tree_view_inh" model="ir.ui.view">
             <field name="name">product.product.tree.inh</field>
             <field name="model">product.product</field>
-            <field name="type">tree</field>
+            <field name="priority">100</field>
+<!--
             <field eval="7" name="priority"/>
+-->
             <field name="arch" type="xml">
                 <tree string="Products">
                     <field name="default_code"/>
@@ -63,7 +66,7 @@
         <record id="product_normal_form_view_inh" model="ir.ui.view">
             <field name="name">product.normal.form.inh</field>
             <field name="model">product.product</field>
-            <field eval="7" name="priority"/>
+            <field name="priority">100</field>
             <field name="arch" type="xml">
                 <form string="Product">
                    <group colspan="4" col="8">
@@ -222,7 +225,7 @@
         <record id="view_normal_stock_property_form_inh" model="ir.ui.view">
             <field name="name">product.normal.stock.form.inherit2</field>
             <field name="model">product.product</field>
-            <field name="type">form</field>
+            <field name="priority">100</field>
             <field name="inherit_id" ref="product_normal_form_view_inh"/>
             <field name="arch" type="xml">
                 <group name="status" position="after">
