@@ -72,9 +72,9 @@ class inactive_account_wizard(osv.osv_memory):
             conc_acc = conc_acc + '\nIds Property:'
             for proper in partner_prop_acc:
                 conc_acc = conc_acc + '\n- ' + str(proper)
-            raise osv.except_osv(_('Warning!'), _('You cannot \
-            remove/deactivate an account which is set on a customer \
-            or supplier.') + conc_acc)
+            raise osv.except_osv(_('Warning!'), _('You cannot'\
+            'remove/deactivate an account which is set on a customer' \
+            'or supplier.') + conc_acc)
         return True
             
     _columns = {
