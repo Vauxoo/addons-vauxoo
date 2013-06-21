@@ -40,11 +40,13 @@ class set_accounting_data_wizard(osv.osv_memory):
         'account_analytic_ids' : fields.many2many('account.analytic.account',
             'account__analytic_account_partner_rel', 'parent_id', 'account_id',
             'Account'),
-        'parent_analytic_id': fields.many2one('account.analytic.account', 'Parent',
-            help='This account will be assigned as parent for '\
+        'parent_analytic_id': fields.many2one('account.analytic.account',
+            'Parent', help='This account will be assigned as parent for '\
             'the analytic accounts selects in the previous field.',
             ondelete='cascade', domain=[('type','=','view')]),
-        'type_accounts' : fields.selection([('accounts', 'Accounts'),('analytic_accounts', 'Analytic Accounts')],'Type Accounts', required=True),
+        'type_accounts' : fields.selection([('accounts', 'Accounts')
+            ('analytic_accounts', 'Analytic Accounts')],'Type Accounts',
+            required=True),
     }
 
     _defaults = {
@@ -73,7 +75,7 @@ class set_accounting_data_wizard(osv.osv_memory):
              account_ids = data['account_analytic_ids']
              for acc in account_ids:
                 if acc != data['parent_analytic_id'][0]:
-                    self.pool.get('account.analytic.account').write(cr, uid, [acc],
-                        {'parent_id': data['parent_analytic_id'][0]})
+                    self.pool.get('account.analytic.account').write(cr, uid,
+                        [acc], {'parent_id': data['parent_analytic_id'][0]})
         return False
         
