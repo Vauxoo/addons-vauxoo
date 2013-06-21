@@ -44,7 +44,7 @@ class set_accounting_data_wizard(osv.osv_memory):
             'Parent', help='This account will be assigned as parent for '\
             'the analytic accounts selects in the previous field.',
             ondelete='cascade', domain=[('type','=','view')]),
-        'type_accounts' : fields.selection([('accounts', 'Accounts')
+        'type_accounts' : fields.selection([('accounts', 'Accounts'),
             ('analytic_accounts', 'Analytic Accounts')],'Type Accounts',
             required=True),
     }
@@ -58,24 +58,23 @@ class set_accounting_data_wizard(osv.osv_memory):
         This wizard assigns a partner account and change your account
         type to root/view .
         '''
-        data = self.read(cr, uid, ids, context=context)[0]
-        if data['type_accounts'] == 'accounts':
-            account_ids = data['account_ids']
+        data = self.browse(cr, uid, ids, context=context)[0]
+        if data.type_accounts == 'accounts':
             cr.execute("""
                 UPDATE account_account SET type='view' WHERE id IN
                 (SELECT DISTINCT id
                     FROM account_account WHERE type <> 'view' AND id IN
                         (SELECT DISTINCT parent_id FROM account_account
                             WHERE parent_id IS NOT NULL))""")
-            for acc in account_ids:
-                if acc != data['parent_id'][0]:
-                    self.pool.get('account.account').write(cr, uid, [acc],
-                        {'parent_id': data['parent_id'][0]})
-        if data['type_accounts'] == 'analytic_accounts':
-             account_ids = data['account_analytic_ids']
-             for acc in account_ids:
-                if acc != data['parent_analytic_id'][0]:
+            for acc in data.account_ids:
+                if acc.id != data.parent_id.id:
+                    self.pool.get('account.account').write(cr, uid, [acc.id],
+                        {'parent_id': data.parent_id.id})
+                        
+        if data.type_accounts == 'analytic_accounts':
+             for acc in data.account_analytic_ids:
+                if acc != data.parent_analytic_id.id:
                     self.pool.get('account.analytic.account').write(cr, uid,
-                        [acc], {'parent_id': data['parent_analytic_id'][0]})
-        return False
+                        [acc.id], {'parent_id': data.parent_analytic_id.id})
+        return True
         
