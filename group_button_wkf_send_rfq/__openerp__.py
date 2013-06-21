@@ -26,19 +26,23 @@
 
 {
     "name": "Purchase / Group for button send email",
-    "version": "1.1",
+    "version": "1.0",
     "author" : "Vauxoo",
-    "category": "Generic Modules/Account",
+    "category": "Purchase",
     "website" : "http://www.vauxoo.com/",
-    "description": """ Add group for button send email
+    "description": """ 
+Group for button send email:
+============================
+
+Group that hides the button "send by email" sales order
+
     """,
     'depends': ['purchase'],
-    'init_xml': [],
-    'update_xml': [
+    'data': [
         'security/purchase_security.xml',
         'purchase_view.xml',
         ],
-    'demo_xml': [],
+    'demo': [],
     'test': [],
     'installable': True,
     'active': False,
