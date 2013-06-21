@@ -35,10 +35,14 @@
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["account"],
-    "demo_xml" : [],
-    "update_xml" : [
+    "demo" : [],
+    "data" : [
         "account_invoice_view.xml",
     ],
+    'js': [],
+    'qweb' : [],
+    'css':[],
+    'test': [],
     "installable" : True,
     "active" : False,
 }
