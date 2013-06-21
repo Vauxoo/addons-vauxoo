@@ -36,7 +36,7 @@
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
-            "base", 'group_l10n_mx_facturae_user'
+            "base",
         ],
     "demo" : [],
     "data" : [

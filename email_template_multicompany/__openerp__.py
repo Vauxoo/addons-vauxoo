@@ -34,7 +34,7 @@ Email Multi-Company
 ===================
 Add company_id field in model email.template
     """,
-    'depends': ['email_template','base','group_l10n_mx_facturae_user'],
+    'depends': ['email_template','base'],
     'data': [
         'security/email_template_security.xml',
         'security/mail_server_security.xml',
