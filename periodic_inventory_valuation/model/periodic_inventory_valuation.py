@@ -37,4 +37,9 @@ class periodic_inventory_valuation(osv.osv):
     _description = "Periodic Inventory Valuation"
     _columns = {
         'name': fields.char('Name', size=64, required=True, help=""),
+        'move_id':fields.many2one('account.move', 'Journal Entry', help='Journal Entry For this Periodic Inventory Valuation Document, it will be created when Document is Posted'), 
+        'company_id':fields.many2one('res.company', 'Company', help='Company for this Document'), 
+        'period_id':fields.many2one('account.period', 'Period', help='Accounting Period to be used when creating Journal Entries and Accounting Entries'), 
+        'journal_id':fields.many2one('account.journal', 'Journal', help='Accounting Journal to be used when creating Journal Entries and Accounting Entries'),         
+        'currency_id':fields.many2one('res.currency', 'Currency', help='Currency to be used when creating Journal Entries and Accounting Entries'),                 
     }
