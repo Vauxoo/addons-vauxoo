@@ -37,13 +37,12 @@
     "depends" : [
         "account",
         "l10n_mx_facturae_lib",
+        "l10n_mx_facturae_groups",
     ],
-    "init_xml" : [],
-    "demo_xml" : [
-        #"demo/l10n_mx_facturae_cer_demo.yml"
+    "demo" : [
         "demo/l10n_mx_facturae_cer_demo.xml"
     ],
-    "update_xml" : [
+    "data" : [
         "security/l10n_mx_facturae_cer_security.xml",
         "security/ir.model.access.csv",
         "res_company_view.xml",

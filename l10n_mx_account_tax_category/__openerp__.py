@@ -23,22 +23,21 @@
 {
     "name" : "Add category to taxes",
     "version" : "1.0",
-    "depends" : ["account"],
+    "depends" : ["account", "l10n_mx_facturae_groups"],
     "author" : "Vauxoo",
     "license" : "AGPL-3",
     "description" : """This module add to the taxes category & tax_percent
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
+    "demo" : [],
     "test": [],
-    "update_xml" : [
-    'security/account_tax_category_security.xml',
-    'security/ir.model.access.csv',
-    'invoice_view.xml',
-    'account_tax_category_view.xml',
-    'data/account_tax_category_data.xml'
+    "data" : [
+        'security/account_tax_category_security.xml',
+        'security/ir.model.access.csv',
+        'invoice_view.xml',
+        'account_tax_category_view.xml',
+        'data/account_tax_category_data.xml'
 
     ],
     "active": False,

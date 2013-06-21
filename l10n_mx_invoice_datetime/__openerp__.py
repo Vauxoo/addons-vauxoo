@@ -31,16 +31,17 @@
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """Add new field invoice_datetime for electronic invoice data
-            and add	hour & minute to field date_invoice
+            and add hour & minute to field date_invoice
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
         "account",
+        "l10n_mx_facturae_groups",
+        
     ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "demo" : [],
+    "data" : [
         "security/dateinvoice_security.xml",
         "account_invoice_view.xml"
     ],

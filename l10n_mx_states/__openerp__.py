@@ -27,7 +27,7 @@
 {
     "name" : "Mexican States",
     "version" : "0.1",
-    "depends" : ["base"],
+    "depends" : ["base", "l10n_mx_facturae_groups"],
     "author" : "Vauxoo",
     "description" : """
     What do this module:
@@ -35,12 +35,8 @@
                     """,
     "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "l10n_mx_states.xml",
+    "demo" : [],
+    "data" : ["l10n_mx_states.xml",
     ],
     "active": False,
     "installable": True,

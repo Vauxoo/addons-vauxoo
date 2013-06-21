@@ -33,10 +33,10 @@
     "description" : """This module reads the params required for PAC.""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "depends" : ["base",
+                "l10n_mx_facturae_groups"],
+    "demo" : [],
+    "data" : [
         "security/ir.model.access.csv",
         "params_pac_view.xml",
         "security/params_pac_security.xml"
