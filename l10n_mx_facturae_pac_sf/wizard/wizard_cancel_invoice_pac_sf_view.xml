@@ -27,7 +27,7 @@
             target="new"
             key2="client_action_multi"
             id="action_wizard_cancel_pac_sf_form"
-            groups="l10n_mx_facturae_pac_sf.group_invoice_facturae_sf_cancel"/>
+            groups="l10n_mx_facturae_pac_sf.group_invoice_facturae_sf_cancel,l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
 
     </data>
 </openerp>

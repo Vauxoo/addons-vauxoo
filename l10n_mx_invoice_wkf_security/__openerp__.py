@@ -35,8 +35,8 @@
                        Asignados a los botones cancel y set_to_draft respectivamente. """,
     "depends" : ["base", "account", "l10n_mx_facturae_groups",],
     "demo" : [],
-    "data" : ['security/invoice_wkf_security_data.xml', 'invoice_wkf_security_view.xml'],
+    "data" : ['security/invoice_wkf_security_data.xml', 
+        'invoice_wkf_security_view.xml'],
     "active": False,
-    "test":[],
     "installable": True,
 }
