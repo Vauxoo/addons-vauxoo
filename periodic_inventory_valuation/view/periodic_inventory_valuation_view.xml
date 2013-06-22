@@ -40,6 +40,7 @@
             id="periodic_inventory_valuation_menu"
             name="Inventory Valuation"
             parent="inventory_valuation"
+            action="periodic_inventory_valuation_action"
             sequence="100"
             />
 
