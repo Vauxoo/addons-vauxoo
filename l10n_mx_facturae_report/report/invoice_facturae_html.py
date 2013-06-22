@@ -54,6 +54,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'get_data_partner': self._get_data_partner,
             'get_sum_total': self._get_sum_total,
             'has_disc': self._has_disc,
+            'get_data_certificate': self._get_data_certificate,
         })
         self.taxes = []
 
@@ -78,6 +79,11 @@ class invoice_facturae_html(report_sxw.rml_parse):
             pass
         try:
             self._get_facturae_data_dict(o)
+        except Exception, e:
+            print "exception: %s" % (e)
+            pass
+        try:
+            self._get_data_certificate(o.id)
         except Exception, e:
             print "exception: %s" % (e)
             pass
@@ -213,6 +219,25 @@ class invoice_facturae_html(report_sxw.rml_parse):
                 break
         return discount
 
+    def _get_data_certificate(self, invoice_id):
+        pool = pooler.get_pool(self.cr.dbname)
+        invoice_obj = pool.get('account.invoice')
+        pac_params_obj = self.pool.get('params.pac')
+        res={}
+        invoice = invoice_obj.browse(self.cr, self.uid, invoice_id)
+        pac_params_ids = pac_params_obj.search(self.cr, self.uid, [
+            ('method_type', '=', 'pac_sf_firmar'),
+            ('company_id', '=', invoice.company_id.id), 
+            ('active', '=', True)], limit=1, context={})
+        pac_params_id = pac_params_ids and pac_params_ids[0] or False
+        if pac_params_id:
+            data_pac = pac_params_obj.browse(self.cr, self.uid, pac_params_id)
+            res.update({
+                'certificate_link' : data_pac.certificate_link or False,
+            })
+        return res
+        
+        
 
 report_sxw.report_sxw('report.account.invoice.facturae.webkit',
             'account.invoice',

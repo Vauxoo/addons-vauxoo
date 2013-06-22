@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_mx_ir_attachment_facturae
+#   * l10n_mx_ir_attachment_facturae
 #
 msgid ""
 msgstr ""
@@ -171,6 +171,11 @@ msgstr "l10n.mx.email.config.settings"
 #: field:ir.attachment.facturae.mx,identifier:0
 msgid "Identifier"
 msgstr "Identificador"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: view:ir.attachment.facturae.mx:0
+msgid "Validate Attachment"
+msgstr "Validar Adjunto"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,msj:0
