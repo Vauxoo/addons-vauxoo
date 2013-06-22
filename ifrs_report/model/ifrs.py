@@ -31,7 +31,6 @@ from tools.translate import _
 
 
 class ifrs_ifrs(osv.osv):
-
     _name = 'ifrs.ifrs'
     _rec_name = 'code'
 
@@ -53,15 +52,15 @@ class ifrs_ifrs(osv.osv):
         return res
 
     _columns = {
-        'name': fields.char('Name', 128, required=True),
-        'company_id': fields.many2one('res.company', string='Company', ondelete='cascade'),
-        'currency_id': fields.related('company_id', 'currency_id', type='many2one', relation='res.currency', string='Company Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
-        'title': fields.char('Title', 128, required=True, translate=True),
-        'code': fields.char('Code', 128, required=True),
-        'description': fields.text('Description'),
-        'ifrs_lines_ids': fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines'),
-        'state': fields.selection([
-            ('draft', 'Draft'),
+        'name' : fields.char('Name', 128, required = True, help='Report name' ),
+        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', help='Company name' ),
+        'currency_id': fields.related('company_id', 'currency_id', type='many2one', relation='res.currency', string='Company Currency',help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
+        'title' : fields.char('Title', 128, required = True, translate = True, help='Report title that will be printed' ),
+        'code' : fields.char('Code', 128, required = True, help='Report code' ),
+        'description'  : fields.text('Description'),
+        'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
+        'state': fields.selection( [
+            ('draft','Draft'),
             ('ready', 'Ready'),
             ('done', 'Done'),
             ('cancel', 'Cancel')],
