@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="periodic_inventory_valuation_form" model="ir.ui.view">
+            <field name="name">Inventory Valuation</field>
+            <field name="model">periodic.inventory.valuation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Inventory Valuation" version="7.0">
+                    <h2><label for="name"/></h2> 
+                    <field name="name" nolabel="1"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="periodic_inventory_valuation_tree" model="ir.ui.view">
+            <field name="name">Inventory Valuation</field>
+            <field name="model">periodic.inventory.valuation</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Inventory Valuation" version="7.0">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="periodic_inventory_valuation_action">
+            <field name="name">Inventory Valuation</field>
+            <field name="res_model">periodic.inventory.valuation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help">Periodic Inventory Valuation Help</field>
+        </record>
+        
+        <menuitem id="inventory_valuation" name="Inventory Valuation" 
+            parent="account.menu_finance" sequence="20" 
+            />
+        <menuitem 
+            id="periodic_inventory_valuation_menu"
+            name="Inventory Valuation"
+            parent="inventory_valuation"
+            sequence="100"
+            />
+
+
+        <!--groups="account_financial_report.group_afreport"
+            action="account_financial_report_action"
+            -->
+    </data>
+</openerp>
