@@ -79,7 +79,10 @@ class periodic_inventory_valuation(osv.osv):
         context = context or {} 
         ids = isinstance(ids, (int, long)) and [ids] or ids
         prod_obj = self.pool.get('product.product')
-        prod_ids = prod_obj.search(cr,uid,[('type','=','product')],context=context)
+
+        prod_ids = prod_obj.search(cr,uid,[
+            ('type','=','product'),('valuation','=','manual_periodic'),
+            ],context=context)
         
         period_obj = self.pool.get('account.period')
         piv_brw = self.browse(cr,uid,ids[0],context=context)
