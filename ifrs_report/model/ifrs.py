@@ -569,16 +569,19 @@ class ifrs_lines(osv.osv):
         return res
 
     _columns = {
-        'sequence': fields.integer('Sequence', required=True),
-        'name': fields.char('Name', 128, required=True, translate=True),
+        'sequence' : fields.integer( 'Sequence', required = True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable' ),
+        'name' : fields.char( 'Name', 128, required = True, translate = True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated' ),
+
         'type': fields.selection(
             [
                 ('abstract', 'Abstract'),
                 ('detail', 'Detail'),
                 ('constant', 'Constant'),
-                ('total', 'Total')],
-            string='Type',
-            required=True),
+                ('total','Total') ] ,
+            string = 'Type',
+            required = True,
+            help='Line type of report:'
+             " -Abstract(A),-Detail(D),-Constant(C),-Total(T)" ),
         'constant_type': fields.selection(
             [
                 ('period_days', 'Days of Period'),
