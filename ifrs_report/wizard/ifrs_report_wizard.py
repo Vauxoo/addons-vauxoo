@@ -71,7 +71,6 @@ class ifrs_report_wizard(osv.osv_memory):
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
                                         ], 'Target Moves', help='Print All Accounting Entries or just Posted Accounting Entries'),
-
     }
 
     _defaults = {
