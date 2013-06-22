@@ -31,7 +31,7 @@ from openerp import tools
 # Periodic Inventory Valuation
 #----------------------------------------------------------
 
-class periodic_inventory_valuation(osv.osv):
+class periodic_inventory_valuation_line(osv.osv):
     _name = "periodic.inventory.valuation.line"
     _description = "Periodic Inventory Valuation Lines"
     _rec_name='product_id'
@@ -67,5 +67,10 @@ class periodic_inventory_valuation(osv.osv):
         'stock_move_ids':fields.many2many('stock.move', 'piv_sm_rel', 'stock_move_id', 'piv_id', 'Stock Moves', help='Stock Moves to be used as Control Sample'), 
         'ail_ids':fields.many2many('account.invoice.line', 'piv_ail_rel', 'ail_id', 'piv_id', 'Account Invoice Lines', help='Account Invoice Lines to be used to Valuate Inventory'), 
         'aml_ids':fields.many2many('account.move.line', 'piv_aml_rel', 'aml_id', 'piv_id', 'Account Move Lines', help='Account Move Lines to be Created to Valuate Inventory'), 
-        'pivl_ids':fields.many2one('periodic.inventory.valuation.line', 'piv_id', 'Periodic Inventory Valuation Lines', help='Periodic Inventory Valuation Lines created to valuate Inventory'), 
+        'pivl_ids':fields.one2many('periodic.inventory.valuation.line', 'piv_id', 'Periodic Inventory Valuation Lines', help='Periodic Inventory Valuation Lines created to valuate Inventory'), 
     }
+    _defaults = {
+        'state': 'draft',
+        'company_id': lambda s, c, u, ctx: \
+            s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
+        }
