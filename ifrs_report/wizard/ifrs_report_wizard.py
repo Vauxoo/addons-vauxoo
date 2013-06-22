@@ -64,8 +64,10 @@ class ifrs_report_wizard(osv.osv_memory):
             ('ifrs','Two Columns'),
             ('webkitaccount.ifrs_12', 'Twelve Columns'),
             #('ifrs_12_partner_detail', 'With Partner Detail')
-        ],
-            string='Number of Columns'),
+            ],
+            string='Number of Columns',
+            help='Number of columns that will be printed in the report:'
+            " -Two Colums(02),-Twelve Columns(12)" ),
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
                                          ], 'Target Moves'),
