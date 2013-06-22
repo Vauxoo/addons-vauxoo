@@ -107,6 +107,8 @@ class account_invoice(osv.Model):
         return super(account_invoice, self).write(cr, uid, ids, vals, context=context)
 
     def assigned_datetime(self, cr, uid, values, context=None):
+        if context is None:
+            context = {}
         res = {}
         if 'date_invoice' in values:
             if values['date_invoice']:
