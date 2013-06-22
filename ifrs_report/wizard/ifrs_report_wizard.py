@@ -52,8 +52,8 @@ class ifrs_report_wizard(osv.osv_memory):
 
     _columns = {
         'period': fields.many2one('account.period', 'Force period', help='Fiscal period to assign to the invoice. Keep empty to use the period of the current date.'),
-        'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year'),
-        'company_id': fields.many2one('res.company', string='Company', ondelete='cascade', required=True),
+        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year' ),
+        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True, help='Company name' ),
         'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
         'exchange_date': fields.date('Exchange Date'),
         'report_type': fields.selection([
