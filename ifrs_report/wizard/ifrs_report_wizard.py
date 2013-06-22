@@ -55,9 +55,9 @@ class ifrs_report_wizard(osv.osv_memory):
         'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year' ),
         'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True, help='Company name' ),
         'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
-        'exchange_date': fields.date('Exchange Date'),
-        'report_type': fields.selection([
-            ('all', 'All Fiscalyear'),
+        'exchange_date':fields.date('Exchange Date', help='Date of change that will be printed in the report, with respect to the currency of the company'),
+        'report_type': fields.selection( [
+            ('all','All Fiscalyear'),
             ('per', 'Force Period')],
             string='Type', required=True),
         'columns': fields.selection([
