@@ -26,11 +26,10 @@
 
 from osv import osv
 from osv import fields
-
 from tools.translate import _
 
-
 class ifrs_ifrs(osv.osv):
+
     _name = 'ifrs.ifrs'
     _rec_name = 'code'
 
