@@ -26,6 +26,7 @@
 from openerp.osv import osv, fields
 import openerp.tools as tools
 from openerp.tools.translate import _
+from openerp import SUPERUSER_ID
 
 from tools import config
 import openerp.netsvc as netsvc
@@ -50,12 +51,16 @@ class clean_groups(osv.TransientModel):
 
         for wzr_brw in self.browse(cr, uid, ids, context=context):
             if wzr_brw.sure and wzr_brw.confirm:
-                if context.get('active_ids'):
+                if context.get('active_ids') and SUPERUSER_ID not in context.get('active_ids',[]):
                     self.pool.get('res.users').write(cr, uid,
                                                      context.get('active_ids'),
                                                      {'groups_id':[(6,0,[])]},
                                                      context=context)
                     
+                else:
+                    raise osv.except_osv(_('Error'),
+                                               _('You can"t delete groups to '
+                                                 'admin user'))
             else:
                 raise osv.except_osv(_('Error'),
                                                _('Please select the checkbox'))

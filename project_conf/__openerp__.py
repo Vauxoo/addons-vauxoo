@@ -66,7 +66,7 @@ Project Configuration
           * Backlog.
           * Project Leader.
     - For template: **Envio de Reporte de Credenciales del Server**, you may replace words blue colors with real information.
-
+    - For template "New Task", you should replace the piece of codigo: http://erp.vauxoo.com to your url.
 """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
@@ -75,7 +75,8 @@ Project Configuration
     "demo_xml" : [
     ],
     "update_xml" : [
-      "data/project_conf.xml"
+      "data/project_conf.xml",
+      "view/project_view.xml",
     ],
     "active": False,
     "images": [],
