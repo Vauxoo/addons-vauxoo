@@ -62,11 +62,12 @@ class ifrs_ifrs(osv.osv):
         'state': fields.selection( [
             ('draft','Draft'),
             ('ready', 'Ready'),
-            ('done', 'Done'),
-            ('cancel', 'Cancel')],
-            'State', required=True),
-        'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year'),
-        'ifrs_ids': fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
+            ('done','Done'),
+            ('cancel','Cancel') ],
+            'State', required=True ),
+        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year' ),
+        'do_compute' : fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'), 
+        'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
 
     _defaults = {
