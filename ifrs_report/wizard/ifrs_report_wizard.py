@@ -59,9 +59,9 @@ class ifrs_report_wizard(osv.osv_memory):
         'report_type': fields.selection( [
             ('all','All Fiscalyear'),
             ('per', 'Force Period')],
-            string='Type', required=True),
-        'columns': fields.selection([
-            ('ifrs', 'Two Columns'),
+            string='Type', required=True, help='Indicates if the report it will be printed for the entire fiscal year, or for a particular period' ),
+        'columns': fields.selection( [
+            ('ifrs','Two Columns'),
             ('webkitaccount.ifrs_12', 'Twelve Columns'),
             #('ifrs_12_partner_detail', 'With Partner Detail')
         ],
