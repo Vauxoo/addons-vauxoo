@@ -7,14 +7,29 @@
             <field name="arch" type="xml">
                 <form string="Inventory Valuation" version="7.0">
                     <header>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done" statusbar_colors="{&quot;draft&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
+                        <button 
+                            name="load_valuation_items" 
+                            type="object" 
+                            string="Update Valuation" 
+                            states="draft" 
+                            class="oe_highlight"/>
+                        <field name="state" 
+                            widget="statusbar" 
+                            statusbar_visible="draft,confirmed,done" 
+                            statusbar_colors="{&quot;draft&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
                     </header>
                     <h2><label for="name"/></h2> 
                     <field name="name" nolabel="1"/>
                     <field name="date"/>
                     <notebook>
                         <page string='Products to Valuate'>
-                            <field name='product_ids' nolabel='1'/>
+                            <field name='product_ids' nolabel='1'>
+                                <tree>
+                                    <field name='default_code'/>
+                                    <field name='name'/>
+                                    <field name='uom_id'/>
+                                </tree>
+                            </field>
                         </page>
                         <page string='Stock Moves'>
                             <field name='stock_move_ids' nolabel='1'/>

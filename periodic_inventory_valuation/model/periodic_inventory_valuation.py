@@ -74,3 +74,67 @@ class periodic_inventory_valuation(osv.osv):
         'company_id': lambda s, c, u, ctx: \
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
         }
+
+    def load_valuation_items(self, cr, uid, ids, context=None):
+        context = context or {} 
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        prod_obj = self.pool.get('product.product')
+        prod_ids = prod_obj.search(cr,uid,[('type','=','product')],context=context)
+        
+        period_obj = self.pool.get('account.period')
+        piv_brw = self.browse(cr,uid,ids[0],context=context)
+        date = piv_brw.date
+        company_id = piv_brw.company_id.id 
+        period_ids = period_obj.find(cr,uid,dt=date,context=context)
+        period_ids = period_obj.search(cr,uid,[
+            ('id','in',period_ids),('special','=',False)],context=context)
+        period_ids = period_ids and period_ids[0] or False
+        if not period_ids:
+            raise osv.except_osv(_('Error!'), _('There is no fiscal year defined for this date.\nPlease create one from the configu     ration of the accounting menu.'))
+
+
+        inv_obj = self.pool.get('account.invoice')
+        inv_ids = inv_obj.search(cr,uid,[
+            ('state','in',('open','paid')),('period_id','=',period_ids),
+            ('company_id','=',company_id)
+            ],context=context)
+        if not inv_ids:
+            raise osv.except_osv(_('Error!'), _('There are no invoices defined for this period.\nMake sure you are using the right date.'))
+        ail_obj = self.pool.get('account.invoice.line')
+        ail_ids = ail_obj.search(cr,uid,[
+            ('invoice_id','in',inv_ids),('product_id','in',prod_ids)
+            ],context=context)
+        if not ail_ids:
+            raise osv.except_osv(_('Error!'), _('There are no invoices defined for this period.\nMake sure you are using the right date.'))
+
+        period_brw = period_obj.browse(cr,uid,period_ids,context=context)
+        date_start = period_brw.date_start
+        date_stop = period_brw.date_stop
+
+
+        sl_obj = self.pool.get('stock.location')
+        int_sl_ids = sl_obj.search(cr,uid,[('usage','=','internal')],context=context)
+        ext_sl_ids = sl_obj.search(cr,uid,[('usage','!=','internal')],context=context)
+
+        sm_obj = self.pool.get('stock.move')
+        incoming_sm_ids = sm_obj.search(cr,uid,[
+            ('state','=','done'),('company_id','=',company_id),
+            ('location_id','in',ext_sl_ids),('location_dest_id','in',int_sl_ids),
+            ('date','>=',date_start),('date','<=',date_stop),
+            ],context=context)
+        outgoing_sm_ids = sm_obj.search(cr,uid,[
+            ('state','=','done'),('company_id','=',company_id),
+            ('location_id','in',int_sl_ids),('location_dest_id','in',ext_sl_ids),
+            ('date','>=',date_start),('date','<=',date_stop),
+            ],context=context)
+
+        self.write(cr,uid,ids[0],{
+            'product_ids':[(6,0,prod_ids)],
+            'ail_ids':[(6,0,ail_ids)],
+            'period_id':period_ids,
+            'date':date or fields.date.today(),
+            'stock_move_ids':[(6,0,incoming_sm_ids+outgoing_sm_ids)]
+        },context=context)
+    
+        return True
+    
