@@ -590,10 +590,7 @@ class ifrs_lines(osv.osv):
             required = False,
             help='Constant Type' ),
         'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
-        'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
-            store={
-                    'ifrs.ifrs':(_get_changes_on_ifrs,['do_compute'],15)
-            },
+        'amount': fields.float(string='Amount',
             help="This field will update when you click the compute button in the IFRS doc form"
             ),
         'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
