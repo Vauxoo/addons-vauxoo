@@ -31,6 +31,25 @@ from openerp import tools
 # Periodic Inventory Valuation
 #----------------------------------------------------------
 
+class periodic_inventory_valuation(osv.osv):
+    _name = "periodic.inventory.valuation.line"
+    _description = "Periodic Inventory Valuation Lines"
+    _rec_name='product_id'
+    _columns = {
+        'piv_id':fields.many2one('periodic.inventory.valuation', 'Valuation Document', help='Valuation Document to which this line belogs'), 
+        'product_id':fields.many2one('product.product', 'Product', help='Product to be Valuated in this Document'), 
+        'qty':fields.float('Quantity', help='Product Quantity'), 
+        'uom_id':fields.many2one('product.uom', 'Unit of Measure', help='Product Unit of Measure being used to compute Inventory Valuation'), 
+        'valuation':fields.float('Product Valuation', help='Product Valuation'), 
+        'company_id':fields.related('piv_id', 'company_id', string='Company',
+            relation='res.company', type='many2one', store=True, help='Company for this Document Line'), 
+        'currency_id':fields.related('piv_id', 'company_id', 'currency_id', string='Company',
+            relation='res.currency', type='many2one', store=True, help='Currency to be used when creating Journal Entries and Accounting Entries'), 
+        'period_id':fields.related('piv_id', 'period_id', string='Company',
+            relation='account.period', type='many2one', store=True, help='Company for this Document Line'), 
+        'date':fields.related('piv_id', 'date', string='Company',
+            type='date', store=True, help='Date to be used when creating Journal Entries and Accounting Entries'), 
+    }
 
 class periodic_inventory_valuation(osv.osv):
     _name = "periodic.inventory.valuation"
