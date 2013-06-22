@@ -571,7 +571,6 @@ class ifrs_lines(osv.osv):
     _columns = {
         'sequence' : fields.integer( 'Sequence', required = True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable' ),
         'name' : fields.char( 'Name', 128, required = True, translate = True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated' ),
-
         'type': fields.selection(
             [
                 ('abstract', 'Abstract'),
@@ -588,18 +587,28 @@ class ifrs_lines(osv.osv):
                 ('fy_periods', "FY's Periods"),
                 ('fy_month', "FY's Month"),
             ],
-            string='Constant Type',
-            required=False),
-        'ifrs_id': fields.many2one('ifrs.ifrs', 'IFRS', required=True),
-        'amount': fields.float(string='Amount', help='Total of all periods amount for line'),
-        'cons_ids': fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts'),
-        'analytic_ids': fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
-        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id),('type','=','total'),('id','!=',id)]"),
-        'parent_abstract_id': fields.many2one('ifrs.lines', 'Parent Abstract', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
-        'parent_right': fields.integer('Parent Right', select=1),
-        'parent_left': fields.integer('Parent Left', select=1),
-        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands'),
-        'operator': fields.selection([
+            string = 'Constant Type',
+            required = False,
+            help='Constant Type' ),
+        'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
+        'amount' : fields.function( _consolidated_accounts_sum, method = True, type='float', string='Amount', 
+            store={
+                    'ifrs.ifrs':(_get_changes_on_ifrs,['do_compute'],15)
+            },
+            help="This field will update when you click the compute button in the IFRS doc form"
+            ),
+        'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
+        'analytic_ids' : fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts' ),
+        'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
+        'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
+        'parent_right' : fields.integer('Parent Right', select=1 ),
+        'parent_left' : fields.integer('Parent Left', select=1 ),
+    'level': fields.function(_get_level, string='Level', method=True, type='integer',
+         store={
+            'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
+         }),
+        'operand_ids' : fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands' ),
+        'operator': fields.selection( [
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
             ('ratio', 'Ratio'),
@@ -627,23 +636,10 @@ class ifrs_lines(osv.osv):
             ('balance', 'Balance')],
             'Accounting Value', required=False,
             help='Leaving blank means Balance'),
-        'total_ids': fields.many2many('ifrs.lines', 'ifrs_lines_rel', 'parent_id', 'child_id', string='Total'),
-        'inv_sign': fields.boolean('Change Sign to Amount'),
-        'invisible': fields.boolean('Invisible'),
-        'comment': fields.text('Comments/Question', help='Comments or questions about this ifrs line'),
-        'ytd': fields.float('YTD', help='amount control field, functions to prevent repeated computes'),
-        'period_1': fields.float('Periodo 1', help='1st period amount control field, functions to prevent repeated computes'),
-        'period_2': fields.float('Periodo 2', help='2nd period amount control field, functions to prevent repeated computes'),
-        'period_3': fields.float('Periodo 3', help='3rd period amount control field, functions to prevent repeated computes'),
-        'period_4': fields.float('Periodo 4', help='4th period amount control field, functions to prevent repeated computes'),
-        'period_5': fields.float('Periodo 5', help='5th period amount control field, functions to prevent repeated computes'),
-        'period_6': fields.float('Periodo 6', help='6th period amount control field, functions to prevent repeated computes'),
-        'period_7': fields.float('Periodo 7', help='7th period amount control field, functions to prevent repeated computes'),
-        'period_8': fields.float('Periodo 8', help='8th period amount control field, functions to prevent repeated computes'),
-        'period_9': fields.float('Periodo 9', help='9th period amount control field, functions to prevent repeated computes'),
-        'period_10': fields.float('Periodo 10', help='10th period amount control field, functions to prevent repeated computes'),
-        'period_11': fields.float('Periodo 11', help='11th period amount control field, functions to prevent repeated computes'),
-        'period_12': fields.float('Periodo 12', help='12th period amount control field, functions to prevent repeated computes'),
+        'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
+        'inv_sign' : fields.boolean('Change Sign to Amount', help='Allows a change of sign'),
+        'invisible' : fields.boolean('Invisible', help='Allows whether the line of the report is printed or not'),
+        'comment' : fields.text( 'Comments/Question', help='Comments or questions about this ifrs line' ),
     }
 
     _defaults = {
