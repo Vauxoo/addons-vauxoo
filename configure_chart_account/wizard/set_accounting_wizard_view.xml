@@ -70,7 +70,7 @@
             <field name="target">new</field>
         </record>
 
-    <menuitem action="action_set_accounting_data_wizard" id="menu_action_set_accounting_data_wizard" parent="account.menu_finance_configuration" sequence="100"/>
+    <menuitem action="action_set_accounting_data_wizard" id="menu_action_set_accounting_data_wizard" parent="account.menu_finance_configuration" sequence="100" groups="group_configurations_account.group_wizard_configure_accounting"/>
  
         </data>
 </openerp>
