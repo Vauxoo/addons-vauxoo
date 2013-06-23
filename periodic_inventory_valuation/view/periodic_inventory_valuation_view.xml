@@ -4,11 +4,68 @@
         <record id="periodic_inventory_valuation_form" model="ir.ui.view">
             <field name="name">Inventory Valuation</field>
             <field name="model">periodic.inventory.valuation</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Inventory Valuation" version="7.0">
+                    <header>
+                        <button 
+                            name="load_valuation_items" 
+                            type="object" 
+                            string="Update Valuation" 
+                            states="draft" 
+                            class="oe_highlight"/>
+                        <field name="state" 
+                            widget="statusbar" 
+                            statusbar_visible="draft,confirmed,done" 
+                            statusbar_colors="{&quot;draft&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
+                    </header>
                     <h2><label for="name"/></h2> 
                     <field name="name" nolabel="1"/>
+                    <field name="date"/>
+                    <notebook>
+                        <page string='Products to Valuate'>
+                            <field name='product_ids' nolabel='1'>
+                                <tree>
+                                    <field name='default_code'/>
+                                    <field name='name'/>
+                                    <field name='uom_id'/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string='Stock Moves'>
+                            <field name='stock_move_ids' nolabel='1'/>
+                        </page>
+                        <page string='Invoice Lines'>
+                            <field name='ail_ids' nolabel='1'/>
+                        </page>
+                        <page string='Valuation Lines'>
+                            <field name='pivl_ids' nolabel='1'>
+                                <tree>
+                                    <field name='product_id'/>
+                                    <field name='qty'/>
+                                    <field name='uom_id'/>
+                                    <field name='valuation'/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string='Accounting Entries'>
+                            <field name='aml_ids' nolabel='1'/>
+                        </page>
+                        <page string='Other Info'>
+                            <group>
+                                <group>
+                                    <field name='move_id' readonly='1'/>
+                                    <field name='journal_id' required='1' 
+                                        domain="[('type','=','general'),('company_id','=',company_id)]"/>
+                                    <field name='period_id' readonly='1' 
+                                        domain="[('company_id','=',company_id)]"/>
+                                </group>
+                                <group>
+                                    <field name='company_id' required='1'/>
+                                    <field name='currency_id' required='1'/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </form>
             </field>
         </record>
@@ -16,7 +73,6 @@
         <record id="periodic_inventory_valuation_tree" model="ir.ui.view">
             <field name="name">Inventory Valuation</field>
             <field name="model">periodic.inventory.valuation</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Inventory Valuation" version="7.0">
                     <field name="name"/>
@@ -33,14 +89,27 @@
             <field name="help">Periodic Inventory Valuation Help</field>
         </record>
         
-        <menuitem id="inventory_valuation" name="Inventory Valuation" 
-            parent="account.menu_finance" sequence="20" 
+        <menuitem 
+            id="inventory_valuation_main" 
+            name="Inventory Valuation" 
+            sequence="20" 
+            groups="account.group_account_manager"
             />
+
+        <menuitem 
+            id="inventory_valuation" 
+            name="Inventory Valuation" 
+            parent="inventory_valuation_main" 
+            sequence="20" 
+            groups="account.group_account_manager"
+            />
+
         <menuitem 
             id="periodic_inventory_valuation_menu"
             name="Inventory Valuation"
             parent="inventory_valuation"
-            sequence="100"
+            action="periodic_inventory_valuation_action"
+            groups="account.group_account_manager"
             />
 
 
