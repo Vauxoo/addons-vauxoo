@@ -4,10 +4,10 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Katherine Zaoral <katherine.zaoral@vauxoo.com>
 #    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
-#    Planified by: Humberto Arocha <hbto@vauxoo.com>           
+#    Planified by: Humberto Arocha <hbto@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 
 
 import parser
