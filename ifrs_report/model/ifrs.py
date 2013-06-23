@@ -636,6 +636,19 @@ class ifrs_lines(osv.osv):
         'inv_sign' : fields.boolean('Change Sign to Amount', help='Allows a change of sign'),
         'invisible' : fields.boolean('Invisible', help='Allows whether the line of the report is printed or not'),
         'comment' : fields.text( 'Comments/Question', help='Comments or questions about this ifrs line' ),
+        'ytd': fields.float('YTD', help='amount control field, functions to prevent repeated computes'),
+        'period_1': fields.float('Periodo 1', help='1st period amount control field, functions to prevent repeated computes'),
+        'period_2': fields.float('Periodo 2', help='2nd period amount control field, functions to prevent repeated computes'),
+        'period_3': fields.float('Periodo 3', help='3rd period amount control field, functions to prevent repeated computes'),
+        'period_4': fields.float('Periodo 4', help='4th period amount control field, functions to prevent repeated computes'),
+        'period_5': fields.float('Periodo 5', help='5th period amount control field, functions to prevent repeated computes'),
+        'period_6': fields.float('Periodo 6', help='6th period amount control field, functions to prevent repeated computes'),
+        'period_7': fields.float('Periodo 7', help='7th period amount control field, functions to prevent repeated computes'),
+        'period_8': fields.float('Periodo 8', help='8th period amount control field, functions to prevent repeated computes'),
+        'period_9': fields.float('Periodo 9', help='9th period amount control field, functions to prevent repeated computes'),
+        'period_10': fields.float('Periodo 10', help='10th period amount control field, functions to prevent repeated computes'),
+        'period_11': fields.float('Periodo 11', help='11th period amount control field, functions to prevent repeated computes'),
+        'period_12': fields.float('Periodo 12', help='12th period amount control field, functions to prevent repeated computes'),
     }
 
     _defaults = {
