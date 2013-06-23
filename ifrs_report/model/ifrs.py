@@ -439,6 +439,49 @@ class ifrs_lines(osv.osv):
 
         return res
 
+    
+    def _get_level(self, cr, uid, ids, field_name, arg, context=None):
+      res = {}
+      for ifrs_line in self.browse(cr, uid, ids, context=context):
+          level = 0
+          parent = ifrs_line.parent_id
+          while parent:
+              level += 1
+              parent = parent.parent_id
+          res[ifrs_line.id] = level
+      return res
+
+    def _get_children_and_total(self, cr, uid, ids, context=None):
+        """this function search for all the children and all consolidated children (recursively) of the given total ids
+        """
+        ids3 = []
+        ids2 = []
+        sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(map(str, ids)) + ')' 
+        cr.execute(sql)
+        childs =  cr.fetchall()
+        for rec in childs:
+            ids2.append(rec[1])
+            self.write(cr, uid, rec[1], {'parent_id':rec[0]})
+            rec = self.browse(cr, uid, rec[1], context=context)
+            for child in rec.total_ids:
+                ids3.append(child.id)
+        if ids3:
+            ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
+        return ids2 + ids3
+   
+ 
+    def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
+        if context is None: context = {}
+        res = []
+        ifrs_brws = self.pool.get('ifrs.ifrs').browse(cr, uid, ids, context = context)
+        for brw in ifrs_brws:
+            if brw.do_compute:
+                for l in brw.ifrs_lines_ids:
+                    res.append(l.id)
+                #~ TODO: write back False to brw.do_compute with SQL
+                #~ INCLUDE A LOGGER
+        return res
+
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None:
             context = {}
