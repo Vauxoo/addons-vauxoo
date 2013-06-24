@@ -63,7 +63,6 @@ class wizard_account_diot_mx(osv.osv_memory):
             context = {}
         acc_diot_obj = self.browse(cr, uid, ids, context=context)
         for wiz_qty in self.browse(cr, uid, ids, context=context):
-            print "Periodo elegido", wiz_qty.month_id.id
             period_id = wiz_qty.month_id.id
         src = []
         res2 = []
@@ -76,20 +75,27 @@ class wizard_account_diot_mx(osv.osv_memory):
         amount_exe = 0
         inv_obj = pooler.get_pool(cr.dbname).get('account.invoice')
         date_period = pooler.get_pool(cr.dbname).get('account.period').browse(cr, uid, [( int(period_id))])
-        print "date_period", date_period
         for line in date_period:
             date_start = line.date_start
             date_stop = line.date_stop
-            print date_start, date_stop
 
         account_invoice = pooler.get_pool(cr.dbname).get('account.invoice').search(cr, uid, [('type','=', 'in_invoice')])
 
-        print 'account_invoice', account_invoice, len(account_invoice)
         counter = 0
         dic_move_line = {}
         for items in account_invoice:
             untax_amount = 0.0
             invo = pooler.get_pool(cr.dbname).get('account.invoice').browse(cr, uid, items, context=context)
+####################    Verify Data  ############################################################################################
+            if invo.partner_id.vat == False:
+                raise osv.except_osv(('Error !'), ('Missing field (VAT) : "%s"') % (invo.partner_id.name))
+            if invo.partner_id.type_of_third == False:
+                raise osv.except_osv(('Error !'), ('Missing field (type of third) : "%s"') % (invo.partner_id.name))
+            if invo.partner_id.type_of_operation == False:
+                raise osv.except_osv(('Error !'), ('Missing field (type of operation) : "%s"') % (invo.partner_id.name))
+            if invo.partner_id.type_of_third == '05' and invo.partner_id.diot_country == False:
+                raise osv.except_osv(('Error !'), ('Missing field (DIOT Country) : "%s"') % (invo.partner_id.name))
+
             move_lines = invo.payment_ids
             for payment in move_lines:
                 if payment.date >= date_start and payment.date <= date_stop:
@@ -120,14 +126,15 @@ class wizard_account_diot_mx(osv.osv_memory):
                         line_move[9] = line_move[9] + amount_0
                         line_move[10] = line_move[10] + amount_exe
                         line_move[11] = line_move[11] + amount_ret
-                        dic_move_line [(str(invo.partner_id.vat))] = line_move
+                        dic_move_line [(str(invo.partner_id.vat_split))] = line_move
                     else:
-                        print invo.partner_id.name
                         matrix_row.append(str(invo.partner_id.type_of_third))
                         matrix_row.append(str(invo.partner_id.type_of_operation))
-                        matrix_row.append(str(invo.partner_id.vat))
+                        matrix_row.append(str(invo.partner_id.vat_split))
+
+
                         if invo.partner_id.type_of_third == "05":
-                            if invo.partner_id.number_fiscal_id_diot:
+                            if invo.partner_id.number_fiscal_id_diot != False:
                                 matrix_row.append(str(invo.partner_id.number_fiscal_id_diot))
                             else:
                                 matrix_row.append("")
@@ -142,7 +149,10 @@ class wizard_account_diot_mx(osv.osv_memory):
                         else:
                             matrix_row.append("")
                         if invo.partner_id.type_of_third != "04":
-                            matrix_row.append(str(invo.partner_id.nacionality_diot))
+                            if invo.partner_id.nacionality_diot != False:
+                                matrix_row.append(str(invo.partner_id.nacionality_diot))
+                            else:
+                                matrix_row.append("")
                         else:
                             matrix_row.append("")
                         matrix_row.append(amount_16)
