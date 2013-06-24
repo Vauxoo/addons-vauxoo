@@ -37,8 +37,9 @@ class account_closure_preparation(osv.TransientModel):
             help=('Company to which the chart of account is going to be'
             ' prepared')),
         'root_id':fields.many2one('account.account', 'Root Account',
+            domain="[('company_id','=',company_id),('type','=','view'),('parent_id','=',None)]",
             required=True, help=('Root Account, the account that plays as a'
-            ' Chart of Accounts')),
+                'Chart of Accounts')),
         'view_ut_id':fields.many2one('account.account.type', 'Closure Type',
             required=True, domain="[('close_method','=','none')]",
             help=('Select the Account Type that will be used when fixing your'
@@ -61,4 +62,11 @@ class account_closure_preparation(osv.TransientModel):
             required=True, domain="[('close_method','=','none')]",
             help=('Select the Account Type that will be used when fixing your '
             'chart of account')), 
+        'state':fields.selection([('draft','Readying Chart of Account')], help='State'), 
             }
+
+    _defaults = {
+        'state': 'draft',
+        'company_id': lambda s, c, u, ctx: \
+            s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
+        }

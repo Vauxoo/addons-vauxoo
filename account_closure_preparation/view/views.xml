@@ -6,6 +6,18 @@
             <field name="model">account.closure.preparation</field>
             <field name="arch" type="xml">
                 <form string="Inventory Valuation" version="7.0">
+                    <header>
+                        <button 
+                            name="METHOD_DEFITION" 
+                            type="object" 
+                            string="STRING" 
+                            states="draft" 
+                            class="oe_highlight"/>
+                        <field name="state" 
+                            widget="statusbar" 
+                            statusbar_visible="draft,confirmed,done" 
+                            statusbar_colors="{&quot;draft&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
+                    </header>
                     <group>
                         <field name='company_id'/>
                         <field name='root_id'/>
@@ -17,7 +29,12 @@
                                 <field name='bs_ut_id'/>
                             </group>
                             <group> colspan='4'
-                                <field name='bs_ids' nolabel="1"/>
+                                <field name='bs_ids' nolabel="1">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
                             </group>
                         </group>
                         <group string="Income Statement Accounts" cols="2">
@@ -25,7 +42,12 @@
                                 <field name='is_ut_id'/>
                             </group>
                             <group colspan='4'>
-                                <field name='is_ids' nolabel="1"/>
+                                <field name='is_ids' nolabel="1">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
                             </group>
                         </group>
                     </group>
