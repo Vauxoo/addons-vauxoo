@@ -93,7 +93,7 @@
             id="inventory_valuation_main" 
             name="Inventory Valuation" 
             sequence="20" 
-            groups="account.group_account_manager"
+            groups="group_periodicvaluation"
             />
 
         <menuitem 
@@ -101,7 +101,7 @@
             name="Inventory Valuation" 
             parent="inventory_valuation_main" 
             sequence="20" 
-            groups="account.group_account_manager"
+            groups="group_periodicvaluation"
             />
 
         <menuitem 
@@ -109,7 +109,7 @@
             name="Inventory Valuation"
             parent="inventory_valuation"
             action="periodic_inventory_valuation_action"
-            groups="account.group_account_manager"
+            groups="group_periodicvaluation"
             />
 
 
