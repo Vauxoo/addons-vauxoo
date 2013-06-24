@@ -18,4 +18,6 @@ access_account_analytic_journal_user,account.analytic.journal,account.model_acco
 access_account_analytic_line_manager,account.analytic.line manager,account.model_account_analytic_line,group_periodicvaluation,1,1,1,1
 access_res_partner_group_account_manager,res_partner group_account_manager,base.model_res_partner,group_periodicvaluation,1,1,1,1
 access_account_entries_report_invoice,account.entries.report,account.model_account_entries_report,group_periodicvaluation,1,1,1,1
-access_product_category_manager,product.category manager,product.model_product_category,group_periodicvaluation,1,1,1,1
+access_product_category_user,product.category manager,product.model_product_category,group_periodicvaluation,1,1,1,1
+access_account_move_reconcile_user,account.move.reconcile manager,account.model_account_move_reconcile,group_periodicvaluation,1,0,0,0
+access_account_invoice_accountant,account.invoice accountant,account.model_account_invoice,group_periodicvaluation,1,0,0,0
