@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_periodic_inventory_valuation_user","periodic.inventory.valuation","model_periodic_inventory_valuation","group_periodicvaluation",1,1,1,1
+"access_periodic_inventory_valuation_line_user","periodic.inventory.valuation.line","model_periodic_inventory_valuation_line","group_periodicvaluation",1,1,1,1
