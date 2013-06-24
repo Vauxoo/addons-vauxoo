@@ -28,6 +28,7 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 
+
 class ifrs_ifrs(osv.osv):
 
     _name = 'ifrs.ifrs'
@@ -51,22 +52,22 @@ class ifrs_ifrs(osv.osv):
         return res
 
     _columns = {
-        'name' : fields.char('Name', 128, required = True, help='Report name' ),
-        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', help='Company name' ),
-        'currency_id': fields.related('company_id', 'currency_id', type='many2one', relation='res.currency', string='Company Currency',help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
-        'title' : fields.char('Title', 128, required = True, translate = True, help='Report title that will be printed' ),
-        'code' : fields.char('Code', 128, required = True, help='Report code' ),
-        'description'  : fields.text('Description'),
-        'ifrs_lines_ids' : fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines' ),
-        'state': fields.selection( [
-            ('draft','Draft'),
+        'name': fields.char('Name', 128, required=True, help='Report name'),
+        'company_id': fields.many2one('res.company', string='Company', ondelete='cascade', help='Company name'),
+        'currency_id': fields.related('company_id', 'currency_id', type='many2one', relation='res.currency', string='Company Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
+        'title': fields.char('Title', 128, required=True, translate=True, help='Report title that will be printed'),
+        'code': fields.char('Code', 128, required=True, help='Report code'),
+        'description': fields.text('Description'),
+        'ifrs_lines_ids': fields.one2many('ifrs.lines', 'ifrs_id', 'IFRS lines'),
+        'state': fields.selection([
+            ('draft', 'Draft'),
             ('ready', 'Ready'),
-            ('done','Done'),
-            ('cancel','Cancel') ],
-            'State', required=True ),
-        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year' ),
-        'do_compute' : fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'), 
-        'ifrs_ids':fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
+            ('done', 'Done'),
+            ('cancel', 'Cancel')],
+            'State', required=True),
+        'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year'),
+        'do_compute': fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'),
+        'ifrs_ids': fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
 
     _defaults = {
@@ -352,8 +353,8 @@ class ifrs_lines(osv.osv):
                 period_company_id = period_obj.browse(cr, uid, c[
                                                       'period_from'], context=context).company_id.id
             if not c['period_from']:
-                    raise osv.except_osv(_('Error !'), _('prueba001 %s') % (
-                        period_obj.browse(cr, uid, context['period_from'], context=c).name))
+                raise osv.except_osv(_('Error !'), _('prueba001 %s') % (
+                    period_obj.browse(cr, uid, context['period_from'], context=c).name))
 
             elif brw.acc_val == 'var':
                 if context.get('whole_fy', False):
@@ -396,7 +397,7 @@ class ifrs_lines(osv.osv):
         elif brw.type == 'detail':
             # Si es de tipo detail
             analytic = [an.id for an in brw.analytic_ids]
-                #Tomo los ids de las cuentas analiticas de las lineas
+                # Tomo los ids de las cuentas analiticas de las lineas
             if analytic:  # Si habian cuentas analiticas en la linea, se guardan en el context y se usan en algun metodo dentro del modulo de account
                 c['analytic'] = analytic
             c['partner_detail'] = c.get('partner_detail')
@@ -437,6 +438,50 @@ class ifrs_lines(osv.osv):
                 field_name = 'period_%s' % str(number_month)
         self.write(cr, uid, brw.id, {field_name: res})
 
+        return res
+
+    def _get_level(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        for ifrs_line in self.browse(cr, uid, ids, context=context):
+            level = 0
+            parent = ifrs_line.parent_id
+            while parent:
+                level += 1
+                parent = parent.parent_id
+            res[ifrs_line.id] = level
+        return res
+
+    def _get_children_and_total(self, cr, uid, ids, context=None):
+        """this function search for all the children and all consolidated children (recursively) of the given total ids
+        """
+        ids3 = []
+        ids2 = []
+        sql = 'select * from ifrs_lines_rel where parent_id in (' + ','.join(
+            map(str, ids)) + ')'
+        cr.execute(sql)
+        childs = cr.fetchall()
+        for rec in childs:
+            ids2.append(rec[1])
+            self.write(cr, uid, rec[1], {'parent_id': rec[0]})
+            rec = self.browse(cr, uid, rec[1], context=context)
+            for child in rec.total_ids:
+                ids3.append(child.id)
+        if ids3:
+            ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
+        return ids2 + ids3
+
+    def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        res = []
+        ifrs_brws = self.pool.get('ifrs.ifrs').browse(
+            cr, uid, ids, context=context)
+        for brw in ifrs_brws:
+            if brw.do_compute:
+                for l in brw.ifrs_lines_ids:
+                    res.append(l.id)
+                #~ TODO: write back False to brw.do_compute with SQL
+                #~ INCLUDE A LOGGER
         return res
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
@@ -568,43 +613,43 @@ class ifrs_lines(osv.osv):
         return res
 
     _columns = {
-        'sequence' : fields.integer( 'Sequence', required = True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable' ),
-        'name' : fields.char( 'Name', 128, required = True, translate = True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated' ),
+        'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
+        'name': fields.char('Name', 128, required=True, translate=True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated'),
         'type': fields.selection(
             [
                 ('abstract', 'Abstract'),
                 ('detail', 'Detail'),
                 ('constant', 'Constant'),
-                ('total','Total') ] ,
-            string = 'Type',
-            required = True,
+                ('total', 'Total')],
+            string='Type',
+            required=True,
             help='Line type of report:'
-             " -Abstract(A),-Detail(D),-Constant(C),-Total(T)" ),
+            " -Abstract(A),-Detail(D),-Constant(C),-Total(T)"),
         'constant_type': fields.selection(
             [
                 ('period_days', 'Days of Period'),
                 ('fy_periods', "FY's Periods"),
                 ('fy_month', "FY's Month"),
             ],
-            string = 'Constant Type',
-            required = False,
-            help='Constant Type' ),
-        'ifrs_id' : fields.many2one('ifrs.ifrs', 'IFRS', required = True ),
+            string='Constant Type',
+            required=False,
+            help='Constant Type'),
+        'ifrs_id': fields.many2one('ifrs.ifrs', 'IFRS', required=True),
         'amount': fields.float(string='Amount',
-            help="This field will update when you click the compute button in the IFRS doc form"
-            ),
-        'cons_ids' : fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts' ),
-        'analytic_ids' : fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts' ),
-        'parent_id' : fields.many2one('ifrs.lines','Parent', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
-        'parent_abstract_id' : fields.many2one('ifrs.lines','Parent Abstract', select=True, ondelete ='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
-        'parent_right' : fields.integer('Parent Right', select=1 ),
-        'parent_left' : fields.integer('Parent Left', select=1 ),
-    'level': fields.function(_get_level, string='Level', method=True, type='integer',
-         store={
-            'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
-         }),
-        'operand_ids' : fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands' ),
-        'operator': fields.selection( [
+                               help="This field will update when you click the compute button in the IFRS doc form"
+                               ),
+        'cons_ids': fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts'),
+        'analytic_ids': fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
+        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
+        'parent_abstract_id': fields.many2one('ifrs.lines', 'Parent Abstract', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
+        'parent_right': fields.integer('Parent Right', select=1),
+        'parent_left': fields.integer('Parent Left', select=1),
+        'level': fields.function(_get_level, string='Level', method=True, type='integer',
+                                 store={
+                                 'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
+                                 }),
+        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands'),
+        'operator': fields.selection([
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
             ('ratio', 'Ratio'),
@@ -632,10 +677,10 @@ class ifrs_lines(osv.osv):
             ('balance', 'Balance')],
             'Accounting Value', required=False,
             help='Leaving blank means Balance'),
-        'total_ids' : fields.many2many('ifrs.lines','ifrs_lines_rel','parent_id','child_id',string='Total'),
-        'inv_sign' : fields.boolean('Change Sign to Amount', help='Allows a change of sign'),
-        'invisible' : fields.boolean('Invisible', help='Allows whether the line of the report is printed or not'),
-        'comment' : fields.text( 'Comments/Question', help='Comments or questions about this ifrs line' ),
+        'total_ids': fields.many2many('ifrs.lines', 'ifrs_lines_rel', 'parent_id', 'child_id', string='Total'),
+        'inv_sign': fields.boolean('Change Sign to Amount', help='Allows a change of sign'),
+        'invisible': fields.boolean('Invisible', help='Allows whether the line of the report is printed or not'),
+        'comment': fields.text('Comments/Question', help='Comments or questions about this ifrs line'),
         'ytd': fields.float('YTD', help='amount control field, functions to prevent repeated computes'),
         'period_1': fields.float('Periodo 1', help='1st period amount control field, functions to prevent repeated computes'),
         'period_2': fields.float('Periodo 2', help='2nd period amount control field, functions to prevent repeated computes'),

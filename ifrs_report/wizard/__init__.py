@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Maria Gabriela Quilarque  <gabrielaquilarque97@gmail.com>
 #    Planified by: Nhomar Hernandez
 #    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
@@ -25,4 +25,3 @@
 ##############################################################################
 
 import ifrs_report_wizard
-
