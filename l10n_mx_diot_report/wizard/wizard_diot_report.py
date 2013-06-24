@@ -126,11 +126,11 @@ class wizard_account_diot_mx(osv.osv_memory):
                         line_move[9] = line_move[9] + amount_0
                         line_move[10] = line_move[10] + amount_exe
                         line_move[11] = line_move[11] + amount_ret
-                        dic_move_line [(str(invo.partner_id.vat))] = line_move
+                        dic_move_line [(str(invo.partner_id.vat_split))] = line_move
                     else:
                         matrix_row.append(str(invo.partner_id.type_of_third))
                         matrix_row.append(str(invo.partner_id.type_of_operation))
-                        matrix_row.append(str(invo.partner_id.vat))
+                        matrix_row.append(str(invo.partner_id.vat_split))
 
 
                         if invo.partner_id.type_of_third == "05":
