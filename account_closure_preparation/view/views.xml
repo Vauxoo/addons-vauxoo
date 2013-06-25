@@ -11,49 +11,48 @@
                             name="prepare_chart" 
                             type="object" 
                             string="Prepare Chart" 
-                            states="draft" 
+                            states="stage1,stage2,stage3,stage4,stage5,stage6" 
                             class="oe_highlight"/>
                         <field name="state" 
                             widget="statusbar" 
-                            statusbar_visible="draft,stage2,stage3" 
-                            statusbar_colors="{&quot;draft&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
+                            statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6"
+                            statusbar_colors="{&quot;stage1&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
                     </header>
-                    <group string='Setting the Chart of Accounts' attrs="{'invisible':[('state','!=','draft')]}">
-                        <group colspan='4' attrs="{'invisible':[('state','!=','draft')]}">
-                            <h4><label colspan='4' string="Let us configure properly your Chart of Account so when closing your next Fiscal Year it will yield meaninful values in your Inicial Balance Entry" attrs="{'invisible':[('state','!=','draft')]}"/></h4>
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE1 Y STAGE2-->
+                    <group string='Setting the Chart of Accounts' attrs="{'invisible':[('state','not in',('stage1','stage2'))]}">
+                        <group colspan='4' attrs="{'invisible':[('state','not in',('stage1','stage2'))]}">
+                            <h4><label colspan='4' string="Let us configure properly your Chart of Account so when closing your next Fiscal Year it will yield meaninful values in your Inicial Balance Entry" attrs="{'invisible':[('state','not in',('stage1','stage2'))]}"/></h4>
                         </group>
-                        <label colspan='2' string="Set the company to which a Chart of Account is going to be configured" attrs="{'invisible':[('state','!=','draft')]}"/>
-                        <newline attrs="{'invisible':[('state','!=','draft')]}"/>
-                        <field name='company_id' attrs="{'invisible':[('state','!=','draft')]}"/>
-                        <label colspan='2' string="Select the Account which holds the Chart of Account of your Company" attrs="{'invisible':[('state','!=','draft')]}"/>
-                        <newline attrs="{'invisible':[('state','!=','draft')]}"/>
-                        <field name='root_id' attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <label colspan='2' string="Set the company to which a Chart of Account is going to be configured" attrs="{'invisible':[('state','not in',('stage1','stage2'))]}"/>
+                        <newline attrs="{'invisible':[('state','!=','stage1')]}"/>
+                        <field name='company_id' attrs="{'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
+                        <label colspan='2' string="Select the Account which holds the Chart of Account of your Company" attrs="{'invisible':[('state','not in',('stage1','stage2'))]}"/>
+                        <newline attrs="{'invisible':[('state','not in',('stage1','stage2'))]}"/>
+                        <field name='root_id' attrs="{'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
                         <label colspan='2' string="Select an User Account Type, the User Account Type defines how an Account is treated when Closing a Fiscal Year. A User Account Type defined as 'None' should be used in the Structure of your Chart of Account, When setting 'None' to an account that account will not carry balance to next year being open, given that the Structure of the Chart of Account just summarizes the move accounts that it holds, It is advisable to create an Account User Type named 'Chart Structure' and set it with deferral method as 'None'."/>
                         <label colspan='2' string="All those account which have been wrongly set with an User Account Type with deferral method different than 'None' will be changed to the 'Closure Type' that you will set below."
                             />
                         <newline/>
-                        <field name='view_ut_id' attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <field name='view_ut_id' attrs="{'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
                     </group>
-                    <group>
-                        <group string="Balance Sheet Accounts" cols="2">
-                            <group colspan='4'>
-                                <field name='bs_ut_id'/>
+
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE3 Y STAGE4-->
+                    <group attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
+                        <group string="Balance Sheet Accounts" cols="2" attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
+                                <h4><label colspan='4' string="Let us now prepare your Balance Sheet Accounts, Move Accounts in your Balance Sheet. All your Move Accounts in your Balance Sheet should not have an Account User Type with deferral method equal to 'None', due to the fact that an account with an Account User Type having a Deferral Method equal to 'None' will not carry values to next Fiscal Year prompting errors and yielding unexpected outcomes" attrs="{'invisible':[('state','not in',('stage3','stage4'))]}"/></h4>
                             </group>
-                            <group> colspan='4'
-                                <field name='bs_ids' nolabel="1">
-                                    <tree>
-                                        <field name='code'/>
-                                        <field name='name'/>
-                                    </tree>
-                                </field>
+                            <label colspan='2' string="Set the Account User Type, BS Closure Type, that will be used to Fix those accounts which are found to be set with deferral method 'None'. It could be advisable to create an Account User Type named 'BS Accounts' of generic use and deferral method equal to 'Balance', at least, all your Account in the Balance Sheet should carry the balance to the next Fiscal Year. There are other deferral methods: 'Unreconciled' which carries all unreconciled Account Entries for those account checked with attribute 'Reconcile', and 'Detail' which carries all Account Entries to the Opening Balance in the next Fiscal Year, this type could be handy for loans and mortgages" attrs="{'invisible':[('state','not in',('stage3','stage4'))]}"/>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
+                                <h5><label colspan='2' string="Your Balance Sheet Accounts should bear 'Assets', 'Liabilities' &amp; 'Equity'" attrs="{'invisible':[('state','not in',('stage3','stage4'))]}"/></h5>
                             </group>
                         </group>
-                        <group string="Income Statement Accounts" cols="2">
-                            <group colspan='4'>
-                                <field name='is_ut_id'/>
+                        <group cols="2" attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
+                                <field name='bs_ut_id' attrs="{'readonly':[('state','!=','stage3')],'invisible':[('state','not in',('stage3','stage4'))]}"/>
                             </group>
-                            <group colspan='4'>
-                                <field name='is_ids' nolabel="1">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
+                                <field name='bs_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage3')],'invisible':[('state','not in',('stage3','stage4'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -63,6 +62,40 @@
                         </group>
                     </group>
 
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE5 Y STAGE6-->
+                    <group attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                        <group string="Income Statement Accounts" cols="2" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                                <h4><label colspan='4' string="Let us now prepare your Balance Sheet Accounts, Move Accounts in your Balance Sheet. All your Move Accounts in your Balance Sheet should not have an Account User Type with deferral method equal to 'None', due to the fact that an account with an Account User Type having a Deferral Method equal to 'None' will not carry values to next Fiscal Year prompting errors and yielding unexpected outcomes" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}"/></h4>
+                            </group>
+                            <label colspan='2' string="Set the Account User Type, BS Closure Type, that will be used to Fix those accounts which are found to be set with deferral method 'None'. It could be advisable to create an Account User Type named 'BS Accounts' of generic use and deferral method equal to 'Balance', at least, all your Account in the Balance Sheet should carry the balance to the next Fiscal Year. There are other deferral methods: 'Unreconciled' which carries all unreconciled Account Entries for those account checked with attribute 'Reconcile', and 'Detail' which carries all Account Entries to the Opening Balance in the next Fiscal Year, this type could be handy for loans and mortgages" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}"/>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                                <h5><label colspan='2' string="Your Balance Sheet Accounts should bear 'Assets', 'Liabilities' &amp; 'Equity'" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}"/></h5>
+                            </group>
+                        </group>
+                        <group cols="2" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                                <field name='is_ut_id' attrs="{'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}"/>
+                            </group>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                                <field name='is_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6'))]}">
+                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6'))]}">
+                            <tree>
+                                <field name='code'/>
+                                <field name='name'/>
+                            </tree>
+                        </field>
+                    </group>
                 </form>
             </field>
         </record>
