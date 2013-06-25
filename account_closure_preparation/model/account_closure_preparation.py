@@ -68,12 +68,14 @@ class account_closure_preparation(osv.TransientModel):
             help=('Select the Account Type that will be used when fixing your '
             'chart of account')), 
         'state':fields.selection([
-            ('stage1','Preping Chart of Account'),
-            ('stage2','Fixing Chart of Account'),
-            ('stage3','Preping BS Accounts'),
-            ('stage4','Fixing BS Accounts'),
-            ('stage5','Preping IS Accounts'),
-            ('stage6','Fixing IS Accounts'),
+            ('stage1','Prep Chart'),
+            ('stage2','Fix Chart'),
+            ('stage3','Prep BS'),
+            ('stage4','Fix BS'),
+            ('stage5','Prep IS'),
+            ('stage6','Fix IS'),
+            ('stage7','Prep Bank Acc'),
+            ('stage8','Fix Bank Acc'),
             ], help='State'), 
             }
 
@@ -127,6 +129,20 @@ class account_closure_preparation(osv.TransientModel):
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr,uid,res,
                           {'user_type':wzd_brw.is_ut_id.id},context=context)
-            wzd_brw.write({'state':'stage6','account_ids':[(6,0,[])]})
+            wzd_brw.write({'state':'stage7','account_ids':[(6,0,[])]})
+        elif wzd_brw.state == 'stage7':
+            view_ids = acc_obj._get_children_and_consol(
+                    cr, uid, [i.id for i in wzd_brw.is_ids], context=context)
+            view_ids = acc_obj.search(cr, uid,[
+                                        ('id','in',view_ids),
+                                        ('type','!=','view'),
+                                        ('user_type.close_method','!=','none'),
+                                        ],context=context)
+            wzd_brw.write({'state':'stage8','account_ids':[(6,0,view_ids)]})
+        elif wzd_brw.state == 'stage8':
+            res = [i.id for i in wzd_brw.account_ids]
+            acc_obj.write(cr,uid,res,
+                          {'user_type':wzd_brw.is_ut_id.id},context=context)
+            wzd_brw.write({'state':'stage9','account_ids':[(6,0,[])]})
         return {}
     
