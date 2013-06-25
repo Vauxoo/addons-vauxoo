@@ -51,7 +51,8 @@ class periodic_inventory_valuation_line(osv.osv):
         'period_id':fields.related('piv_id', 'period_id', string='Company',
             relation='account.period', type='many2one', store=True, help='Company for this Document Line'), 
         'date':fields.related('piv_id', 'date', string='Company',
-            type='date', store=True, help='Date to be used when creating Journal Entries and Accounting Entries'), 
+            type='date', store=True, help='Date to be used when creating Journal Entries and Accounting Entries'),
+        'average_cost':fields.float('Average Cost', help='Is the average cost of the product'),
     }
 
 class periodic_inventory_valuation(osv.osv):
@@ -149,7 +150,8 @@ class periodic_inventory_valuation(osv.osv):
                         'qty_sale':0.0,
                         'qty_purchase':1.0,
                         'uom_id':prod.uom_id.id,
-                        'valuation':50,
+                        'average_cost':50.0,
+                        'valuation':50.0,
                         }, context=context))
 
             self.write(cr,uid,ids[0],{
@@ -161,9 +163,28 @@ class periodic_inventory_valuation(osv.osv):
                 if ail.product_id.id in prod_ids:
                     val_line_ids = periodic_line.search(cr,uid,[('product_id','=',ail.product_id.id)],context=context)
                     val_line = periodic_line.browse(cr, uid, val_line_ids, context=context)[0]
-                    new_val = ( val_line.valuation + (ail.price_unit*ail.quantity) ) / ( ail.quantity + val_line.qty_final )
-                    print new_val
-
+                    
+                    qty_sale = 0.0
+                    qty_purchase = 0.0
+                    new_valuation = val_line.valuation
+                    
+                    new_cost_prom = ( val_line.average_cost + (ail.price_unit*ail.quantity) ) / ( ail.quantity + val_line.qty_final )
+                    
+                    if ail.invoice_id.type == 'in_invoice':
+                        qty_purchase += ail.quantity
+                        new_valuation += ail.price_unit*ail.quantity 
+                    elif ail.invoice_id.type == 'out_invoice':
+                        qty_sale += ail.quantity
+                        new_valuation -= ail.price_unit*ail.quantity 
+                    periodic_line.write(cr, uid, val_line.id, {
+                        'average_cost':new_cost_prom,
+                        'valuation':new_valuation,
+                        'qty_sale':qty_sale,
+                        'qty_purchase':qty_purchase,
+                        'qty_final':(qty_purchase - qty_sale) + val_line.qty_final,
+                        'qty_init':val_line.qty_final,
+                        })
+                    
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
             'ail_ids':[(6,0,ail_ids)],
