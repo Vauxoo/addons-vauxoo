@@ -50,7 +50,9 @@ class account_vouchers_invoice_wizard(osv.osv_memory):
         if context.get('active_model') == 'account.invoice':
             invoice = self.pool.get('account.invoice').browse(cr, uid,
                 context.get('active_id'), context=context)
-            account_partner_id = invoice.partner_id.property_account_receivable and invoice.partner_id.property_account_receivable.id
+            account_partner_id = invoice.partner_id.\
+                property_account_receivable and invoice.partner_id.\
+                property_account_receivable.id
             acc_invoice = invoice.account_id.id
             if invoice.move_id:
                 for move in invoice.move_id.line_id:
@@ -59,5 +61,6 @@ class account_vouchers_invoice_wizard(osv.osv_memory):
                 for voucher in data.voucher_ids:
                     for line in voucher.move_ids:
                         if line.account_id.id == account_partner_id:
-                            move_line.reconcile_partial(cr, uid, [line.id, move_acc_inv], 'auto', context)
+                            move_line.reconcile_partial(cr, uid, [line.id,
+                                move_acc_inv], 'auto', context)
         return True
