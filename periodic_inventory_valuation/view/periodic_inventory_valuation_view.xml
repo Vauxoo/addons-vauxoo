@@ -41,7 +41,10 @@
                             <field name='pivl_ids' nolabel='1'>
                                 <tree>
                                     <field name='product_id'/>
-                                    <field name='qty'/>
+                                    <field name='qty_init'/>
+                                    <field name='qty_sale'/>
+                                    <field name='qty_purchase'/>
+                                    <field name='qty_final'/>
                                     <field name='uom_id'/>
                                     <field name='valuation'/>
                                 </tree>

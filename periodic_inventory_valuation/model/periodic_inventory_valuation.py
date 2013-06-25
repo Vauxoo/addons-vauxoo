@@ -38,7 +38,10 @@ class periodic_inventory_valuation_line(osv.osv):
     _columns = {
         'piv_id':fields.many2one('periodic.inventory.valuation', 'Valuation Document', help='Valuation Document to which this line belogs'), 
         'product_id':fields.many2one('product.product', 'Product', help='Product to be Valuated in this Document'), 
-        'qty':fields.float('Quantity', help='Product Quantity'), 
+        'qty_final':fields.float('Quantity Final', help='Product Quantity Final'), 
+        'qty_init':fields.float('Quantity Initial', help='Product Quantity Initial'), 
+        'qty_sale':fields.float('Quantity Sales', help='Product Quantity Sales'), 
+        'qty_purchase':fields.float('Quantity Purchases', help='Product Quantity Purchases'), 
         'uom_id':fields.many2one('product.uom', 'Unit of Measure', help='Product Unit of Measure being used to compute Inventory Valuation'), 
         'valuation':fields.float('Product Valuation', help='Product Valuation'), 
         'company_id':fields.related('piv_id', 'company_id', string='Company',
