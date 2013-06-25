@@ -136,29 +136,33 @@ class periodic_inventory_valuation(osv.osv):
             ('date','>=',date_start),('date','<=',date_stop),
             ],context=context)
 
+        periodic_line = self.pool.get('periodic.inventory.valuation.line')
         if not self.browse(cr,uid,ids[0],context=context).first:
             pivl_init_ids = []
             for prod_id in prod_ids:
                 prod = prod_obj.browse(cr,uid,prod_id,context=context)
-                print prod
-                import pdb
-                periodic_line = self.pool.get('periodic.inventory.valuation.line')
                 pivl_init_ids.append(periodic_line.create(cr, uid, {
-                        'name':'inicial',
                         'piv_id': ids[0],
                         'product_id':prod_id,
                         'qty_init':0.0,
-                        'qty_final':0.0,
+                        'qty_final':1.0,
                         'qty_sale':0.0,
                         'qty_purchase':1.0,
                         'uom_id':prod.uom_id.id,
                         'valuation':50,
                         }, context=context))
 
-            pdb.set_trace()
             self.write(cr,uid,ids[0],{
                 'pivl_ids':[(6,0,pivl_init_ids)],
                 },context=context)
+        else:
+            for ail_id in ail_ids:
+                ail = ail_obj.browse(cr,uid,ail_id,context=context)
+                if ail.product_id.id in prod_ids:
+                    val_line_ids = periodic_line.search(cr,uid,[('product_id','=',ail.product_id.id)],context=context)
+                    val_line = periodic_line.browse(cr, uid, val_line_ids, context=context)[0]
+                    new_val = ( val_line.valuation + (ail.price_unit*ail.quantity) ) / ( ail.quantity + val_line.qty_final )
+                    print new_val
 
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
