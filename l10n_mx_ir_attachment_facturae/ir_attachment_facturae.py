@@ -40,7 +40,7 @@ class ir_attachment_facturae_mx(osv.Model):
     def _get_type(self, cr, uid, ids=None, context=None):
         types = []
         return types
-
+        
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True,
             help='Name of attachment generated'),
@@ -339,3 +339,13 @@ class ir_attachment_facturae_mx(osv.Model):
         email_ids = email_pool.search(cr, uid, [(
             'model_id.model', '=', 'account.invoice')])
         return email_ids and email_ids[0] or False
+        
+class ir_attachment(osv.Model):
+    _inherit = 'ir.attachment'
+    
+    def unlink(self, cr, uid, ids, context=None):
+        attachments = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, ['|', '|', ('file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in', ids)])
+        if attachments:
+            raise osv.except_osv(_('Warning!'), _('You can not remove an attachment of an invoice'))
+        return super(ir_attachment, self).unlink(cr, uid, ids, context=context)
+    
