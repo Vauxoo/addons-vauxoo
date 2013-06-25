@@ -71,11 +71,13 @@ class periodic_inventory_valuation(osv.osv):
         'ail_ids':fields.many2many('account.invoice.line', 'piv_ail_rel', 'ail_id', 'piv_id', 'Account Invoice Lines', help='Account Invoice Lines to be used to Valuate Inventory'), 
         'aml_ids':fields.many2many('account.move.line', 'piv_aml_rel', 'aml_id', 'piv_id', 'Account Move Lines', help='Account Move Lines to be Created to Valuate Inventory'), 
         'pivl_ids':fields.one2many('periodic.inventory.valuation.line', 'piv_id', 'Periodic Inventory Valuation Lines', help='Periodic Inventory Valuation Lines created to valuate Inventory'), 
-    }
+        'first':fields.boolean('First run'),
+        }
     _defaults = {
         'state': 'draft',
         'company_id': lambda s, c, u, ctx: \
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
+        'first': False,
         }
 
     def load_valuation_items(self, cr, uid, ids, context=None):
@@ -134,13 +136,38 @@ class periodic_inventory_valuation(osv.osv):
             ('date','>=',date_start),('date','<=',date_stop),
             ],context=context)
 
+        if not self.browse(cr,uid,ids[0],context=context).first:
+            pivl_init_ids = []
+            for prod_id in prod_ids:
+                prod = prod_obj.browse(cr,uid,prod_id,context=context)
+                print prod
+                import pdb
+                periodic_line = self.pool.get('periodic.inventory.valuation.line')
+                pivl_init_ids.append(periodic_line.create(cr, uid, {
+                        'name':'inicial',
+                        'piv_id': ids[0],
+                        'product_id':prod_id,
+                        'qty_init':0.0,
+                        'qty_final':0.0,
+                        'qty_sale':0.0,
+                        'qty_purchase':1.0,
+                        'uom_id':prod.uom_id.id,
+                        'valuation':50,
+                        }, context=context))
+
+            pdb.set_trace()
+            self.write(cr,uid,ids[0],{
+                'pivl_ids':[(6,0,pivl_init_ids)],
+                },context=context)
+
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
             'ail_ids':[(6,0,ail_ids)],
             'period_id':period_ids,
             'date':date or fields.date.today(),
-            'stock_move_ids':[(6,0,incoming_sm_ids+outgoing_sm_ids)]
-        },context=context)
+            'stock_move_ids':[(6,0,incoming_sm_ids+outgoing_sm_ids)],
+            'first':True,
+            },context=context)
     
         return True
     
