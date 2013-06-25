@@ -83,7 +83,20 @@
                 </tree>
             </field>
         </record>
-
+        
+        <record id="company_form_periodic_valuation_view" model="ir.ui.view">         
+            <field name="name">res.company.periodic.valuation</field>            
+            <field name="model">res.company</field>                             
+            <field name="inherit_id" ref="base.view_company_form"/>             
+            <field name="arch" type="xml">                                      
+                <xpath expr="//page[@string='Configuration']" position="inside">
+                    <group string="Inventory Valuation">
+                        <field name="journal_id"/>
+                    </group>
+                </xpath>                                                        
+            </field>                                                            
+        </record>
+        
         <record model="ir.actions.act_window" id="periodic_inventory_valuation_action">
             <field name="name">Inventory Valuation</field>
             <field name="res_model">periodic.inventory.valuation</field>
@@ -92,7 +105,7 @@
             <field name="view_mode">tree,form</field>
             <field name="help">Periodic Inventory Valuation Help</field>
         </record>
-        
+
         <menuitem 
             id="inventory_valuation_main" 
             name="Inventory Valuation" 

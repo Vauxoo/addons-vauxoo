@@ -31,6 +31,12 @@ from openerp import tools
 # Periodic Inventory Valuation
 #----------------------------------------------------------
 
+class res_company(osv.osv):
+    _inherit = 'res.company'
+    _columns = {
+            'journal_id': fields.many2one('account.journal', 'Periodical Inventory Valuation Journal', help="Journal entry"),
+            }
+    
 class periodic_inventory_valuation_line(osv.osv):
     _name = "periodic.inventory.valuation.line"
     _description = "Periodic Inventory Valuation Lines"
