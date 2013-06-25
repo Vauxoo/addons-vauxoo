@@ -40,8 +40,8 @@ class account_vouchers_invoice_wizard(osv.osv_memory):
         'partner_id' : fields.many2one('res.partner', 'Partner', readonly=True),
         'voucher_ids' : fields.many2many('account.voucher', 
             'voucher_partner_invoice', 'voucher_id', 'id_wizard',
-            'Vouchers Partner', help='Vouchers of this partner in state\
-            confirm and without invoice associated',),
+            'Vouchers Partner', help='Vouchers of this partner in state '\
+            'confirm and without invoice associated',),
     }
     
     def apply(self, cr, uid, ids, context=None):
