@@ -18,6 +18,7 @@
                                 <field name="amount"/>
                                 <field name="date"/>
                                 <field name="journal_id"/>
+                                <field name="state"/>
                             </tree>
                         </field>
                     </group>
