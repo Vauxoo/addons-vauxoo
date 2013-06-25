@@ -62,7 +62,11 @@ class account_closure_preparation(osv.TransientModel):
             required=True, domain="[('close_method','=','none')]",
             help=('Select the Account Type that will be used when fixing your '
             'chart of account')), 
-        'state':fields.selection([('draft','Readying Chart of Account')], help='State'), 
+        'state':fields.selection([
+            ('draft','Readying Chart of Account'),
+            ('stage2','Preping BS Accounts'),
+            ('stage3','Preping IS Accounts'),
+            ], help='State'), 
             }
 
     _defaults = {
@@ -70,3 +74,9 @@ class account_closure_preparation(osv.TransientModel):
         'company_id': lambda s, c, u, ctx: \
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
         }
+    def prepare_chart(self, cr, uid, ids, context=None):
+        context = context or {}
+        wzr_brw = self.browse(cr,uid,ids[0],context=context)
+        wzr_brw.write({'state':'stage2'})
+        return {}
+    

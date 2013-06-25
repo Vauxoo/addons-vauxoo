@@ -8,20 +8,31 @@
                 <form string="Inventory Valuation" version="7.0">
                     <header>
                         <button 
-                            name="METHOD_DEFITION" 
+                            name="prepare_chart" 
                             type="object" 
-                            string="STRING" 
+                            string="Prepare Chart" 
                             states="draft" 
                             class="oe_highlight"/>
                         <field name="state" 
                             widget="statusbar" 
-                            statusbar_visible="draft,confirmed,done" 
+                            statusbar_visible="draft,stage2,stage3" 
                             statusbar_colors="{&quot;draft&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
                     </header>
-                    <group>
-                        <field name='company_id'/>
-                        <field name='root_id'/>
-                        <field name='view_ut_id'/>
+                    <group string='Setting the Chart of Accounts' attrs="{'invisible':[('state','!=','draft')]}">
+                        <group colspan='4' attrs="{'invisible':[('state','!=','draft')]}">
+                            <h4><label colspan='4' string="Let us configure properly your Chart of Account so when closing your next Fiscal Year it will yield meaninful values in your Inicial Balance Entry" attrs="{'invisible':[('state','!=','draft')]}"/></h4>
+                        </group>
+                        <label colspan='2' string="Set the company to which a Chart of Account is going to be configured" attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <newline attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <field name='company_id' attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <label colspan='2' string="Select the Account which holds the Chart of Account of your Company" attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <newline attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <field name='root_id' attrs="{'invisible':[('state','!=','draft')]}"/>
+                        <label colspan='2' string="Select an User Account Type, the User Account Type defines how an Account is treated when Closing a Fiscal Year. A User Account Type defined as 'None' should be used in the Structure of your Chart of Account, When setting 'None' to an account that account will not carry balance to next year being open, given that the Structure of the Chart of Account just summarizes the move accounts that it holds, It is advisable to create an Account User Type named 'Chart Structure' and set it with deferral method as 'None'."/>
+                        <label colspan='2' string="All those account which have been wrongly set with an User Account Type with deferral method different than 'None' will be changed to the 'Closure Type' that you will set below."
+                            />
+                        <newline/>
+                        <field name='view_ut_id' attrs="{'invisible':[('state','!=','draft')]}"/>
                     </group>
                     <group>
                         <group string="Balance Sheet Accounts" cols="2">
