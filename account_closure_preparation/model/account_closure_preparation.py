@@ -83,6 +83,14 @@ class account_closure_preparation(osv.TransientModel):
             required=False, domain="[('close_method','=','unreconciled')]",
             help=('Select the Account Type that will be used when fixing your '
             'chart of account')), 
+        'pay_ids':fields.many2many('account.account', 'acp_pay_acc_rel',
+            'account_id', 'acp_id', 'Payable Accounts',
+            domain="[('type','=','view')]", help=('Select the most top '
+            'level in the chart of account related to your Payable Accounts')),
+        'pay_ut_id':fields.many2one('account.account.type', 'Payable  Closure Type',
+            required=False, domain="[('close_method','=','unreconciled')]",
+            help=('Select the Account Type that will be used when fixing your '
+            'chart of account')), 
         'state':fields.selection([
             ('stage1','Prep Chart'),
             ('stage2','Fix Chart'),
@@ -97,6 +105,9 @@ class account_closure_preparation(osv.TransientModel):
             ('stage11','Fix Rec Acc'),
             ('stage12','Fix not Rec Acc'),
             ('stage13','Prep Pay Acc'),
+            ('stage14','Fix Pay Acc'),
+            ('stage15','Fix not Pay Acc'),
+            ('stage16','NEXT STEP'),
             ], help='State'), 
             }
 
@@ -227,5 +238,43 @@ class account_closure_preparation(osv.TransientModel):
             acc_obj.write(cr,uid,res,
                           {'type':'other'},context=context)
             wzd_brw.write({'state':'stage13','account_ids':[(6,0,[])]})
+        elif wzd_brw.state == 'stage13':
+            view_ids = acc_obj._get_children_and_consol(
+                    cr, uid, [i.id for i in wzd_brw.pay_ids], context=context)
+            view_ids = acc_obj.search(cr, uid,[
+                                        ('id','in',view_ids),
+                                        ('type','!=','view'),
+                                        '|',('reconcile','=',False),
+                                        '|',('type','not in',('payable','closed')),
+                                        ('user_type.close_method','!=','unreconciled'),
+                                        ],context=context)
+            wzd_brw.write({'state':'stage14','account_ids':[(6,0,view_ids)]})
+        elif wzd_brw.state == 'stage14':
+            res = [i.id for i in wzd_brw.account_ids]
+            acc_obj.write(cr,uid,res,{
+                          'user_type' : wzd_brw.pay_ut_id.id,
+                          'type' : 'payable',
+                          'reconcile' : True,
+                          },context=context)
+            pay_ids1 = acc_obj._get_children_and_consol(
+                    cr, uid, [i.id for i in wzd_brw.pay_ids], context=context)
+            pay_ids1x = acc_obj.search(cr, uid,[
+                                        ('id','in',pay_ids1),
+                                        ('type','!=','view'),
+                                        ],context=context)
+            pay_ids2 = acc_obj._get_children_and_consol(
+                    cr, uid, wzd_brw.root_id.id, context=context)
+            pay_ids2 = acc_obj.search(cr, uid,[
+                                        ('id','in',pay_ids2),
+                                        ('id','not in',pay_ids1x),
+                                        ('type','!=','view'),
+                                        ('type','=','payable'),
+                                        ],context=context)
+            wzd_brw.write({'state':'stage15','account_ids':[(6,0,pay_ids2)]})
+        elif wzd_brw.state == 'stage15':
+            res = [i.id for i in wzd_brw.account_ids]
+            acc_obj.write(cr,uid,res,
+                          {'type':'other'},context=context)
+            wzd_brw.write({'state':'stage16','account_ids':[(6,0,[])]})
         return {}
     
