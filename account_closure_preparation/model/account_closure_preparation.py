@@ -132,13 +132,15 @@ class account_closure_preparation(osv.TransientModel):
             view_ids = acc_obj.search(cr, uid,[
                                         ('id','in',view_ids),
                                         ('type','!=','view'),
+                                        '|',('type','not in',('other','closed')),
                                         ('user_type.close_method','!=','none'),
                                         ],context=context)
             wzd_brw.write({'state':'stage6','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage6':
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr,uid,res,
-                          {'user_type':wzd_brw.is_ut_id.id},context=context)
+                          {'user_type':wzd_brw.is_ut_id.id,
+                           'type':'other'},context=context)
             wzd_brw.write({'state':'stage7','account_ids':[(6,0,[])]})
         elif wzd_brw.state == 'stage7':
             view_ids = acc_obj._get_children_and_consol(
