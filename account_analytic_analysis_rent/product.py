@@ -29,8 +29,38 @@ class product_template(osv.osv):
     _columns={
         'rent_ok':fields.boolean('Rentable'),
         'rent': fields.boolean('Rent', readonly=True),
-        'contract_id': fields.many2one('account.analytic.account', 'Contract', readonly=True)
+        'contract_id': fields.many2one('account.analytic.account', 'Contract', readonly=True),
     }
     
 product_template()
-     
+
+class product_product(osv.osv):
+    _inherit='product.product'
+    
+    _columns={
+        'feature_ids': fields.one2many('product.feature.line', 'product_id', 'Features')
+    }
+    
+product_product()
+
+class product_feature(osv.osv):
+    _name='product.feature'
+    
+    _columns={
+        'name':fields.char('Name', size=64, required=True),
+        'description':fields.char('Description', size=256),
+    }
+    
+product_feature()
+
+class product_feature_line(osv.osv):
+    _name='product.feature.line'
+    
+    _columns={
+        'name':fields.many2one('product.feature', 'Feature', required=True),
+        'product_id':fields.many2one('product.product','Product')
+    }
+    
+product_feature_line()
+
+
