@@ -5,17 +5,23 @@
             <field name="name">Closure Preparation</field>
             <field name="model">account.closure.preparation</field>
             <field name="arch" type="xml">
-                <form string="Inventory Valuation" version="7.0">
+                <form string="Closure Preparation" version="7.0">
                     <header>
+                        <button 
+                            name="back_pedal" 
+                            type="object" 
+                            string="Back Pedal" 
+                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13" 
+                            class="oe_highlight"/>
                         <button 
                             name="prepare_chart" 
                             type="object" 
-                            string="Prepare Chart" 
-                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9" 
+                            string="Proceed" 
+                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13" 
                             class="oe_highlight"/>
                         <field name="state" 
                             widget="statusbar" 
-                            statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9"
+                            statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13"
                             statusbar_colors="{&quot;stage1&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
                     </header>
                     <!-- ELEMENTS VISIBLE ONLY IN STAGE1 Y STAGE2-->
@@ -119,8 +125,39 @@
                         </group>
                     </group>
 
-                    <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9'))]}">
-                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9'))]}">
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE10 TO STAGE12-->
+                    <group attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                        <group string="Bank &amp; Cash Accounts" cols="2" attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                                <h4><label colspan='4' string="We are not yet done! Let us keep moving! Our Bank &amp; Cash Accounts need special treatment. We are going to clean the Chart of Account up." attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/></h4>
+                            </group>
+                            <label colspan='2' string="All your Bank &amp; Cash Accounts should be set to an Account User Type that bears deferral method 'Balance', None of your Bank &amp; Cash Accounts should be different than that." attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/>
+                            <label colspan='2' string="Please Fill the Field For the 'Bank Closure Type', it is advisable that you create your own Account User Type named as 'Banks' having deferral method 'Balance'" attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/>
+                            <label colspan='2' string="And it is mandatory that you fill the field in the right with the parent accounts that hold your Bank &amp; Cash Accounts" attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                                <h5><label colspan='2' string="All those accounts, that are within the realm of the Holding Accounts you have set in the field at the right and, have wrongly set attributes like having an Account User Type of deferral method different than 'Balance' or have being set with 'type' different than 'Liquidity' will get fixed by setting their Account User Type to the one you have set in 'Bank Closure Type' and will get the 'type' attribute set to 'Liquidity'" attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/></h5>
+                            </group>
+                        </group>
+                        <group cols="2" attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                                <field name='rec_ut_id' attrs="{'readonly':[('state','!=','stage10')],'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/>
+                            </group>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                                <field name='rec_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage10')],'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                                <h5><label colspan='2' string="It is likely wrongly set Accounts got attribute 'Liquidity' Type, Be warned that you should address this issue before proceding With 'Fix not Bank Acc' step. Check that those Accounts being presented to you are really not 'Liquidity' Type or if that was a mistake and those Accounts should be part of your Bank &amp; Cash Accounts then back-pedal and include their parents in the 'Prep Bank Acc' step. In the event that you proceed ahead with 'Fix not Bank Acc' step then those Accounts will get the 'Regular' Type attribute." attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/></h5>
+                            </group>
+                        </group>
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12'))]}">
+                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12'))]}">
                             <tree>
                                 <field name='code'/>
                                 <field name='name'/>
