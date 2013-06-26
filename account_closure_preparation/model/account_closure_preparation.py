@@ -67,6 +67,14 @@ class account_closure_preparation(osv.TransientModel):
             required=False, domain="[('close_method','=','none')]",
             help=('Select the Account Type that will be used when fixing your '
             'chart of account')), 
+        'bk_ids':fields.many2many('account.account', 'acp_bk_acc_rel',
+            'account_id', 'acp_id', 'Bank & Cash Accounts',
+            domain="[('type','=','view')]", help=('Select the most top '
+            'level in the chart of account related to your Bank Accounts')),
+        'bk_ut_id':fields.many2one('account.account.type', 'Bank Closure Type',
+            required=False, domain="[('close_method','=','balance')]",
+            help=('Select the Account Type that will be used when fixing your '
+            'chart of account')), 
         'state':fields.selection([
             ('stage1','Prep Chart'),
             ('stage2','Fix Chart'),
@@ -76,6 +84,8 @@ class account_closure_preparation(osv.TransientModel):
             ('stage6','Fix IS'),
             ('stage7','Prep Bank Acc'),
             ('stage8','Fix Bank Acc'),
+            ('stage9','Fix not Bank Acc'),
+            ('stage10','Nxt Stp 2 Def'),
             ], help='State'), 
             }
 
@@ -132,17 +142,39 @@ class account_closure_preparation(osv.TransientModel):
             wzd_brw.write({'state':'stage7','account_ids':[(6,0,[])]})
         elif wzd_brw.state == 'stage7':
             view_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.is_ids], context=context)
+                    cr, uid, [i.id for i in wzd_brw.bk_ids], context=context)
             view_ids = acc_obj.search(cr, uid,[
                                         ('id','in',view_ids),
                                         ('type','!=','view'),
-                                        ('user_type.close_method','!=','none'),
+                                        '|',('type','!=','liquidity'),
+                                        ('user_type.close_method','!=','balance'),
                                         ],context=context)
             wzd_brw.write({'state':'stage8','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage8':
             res = [i.id for i in wzd_brw.account_ids]
+            acc_obj.write(cr,uid,res,{
+                          'user_type' : wzd_brw.bk_ut_id.id,
+                          'type' : 'liquidity',
+                          },context=context)
+            bank_ids1 = acc_obj._get_children_and_consol(
+                    cr, uid, [i.id for i in wzd_brw.bk_ids], context=context)
+            bank_ids1x = acc_obj.search(cr, uid,[
+                                        ('id','in',bank_ids1),
+                                        ('type','!=','view'),
+                                        ],context=context)
+            bank_ids2 = acc_obj._get_children_and_consol(
+                    cr, uid, wzd_brw.root_id.id, context=context)
+            bank_ids2 = acc_obj.search(cr, uid,[
+                                        ('id','in',bank_ids2),
+                                        ('id','not in',bank_ids1x),
+                                        ('type','!=','view'),
+                                        ('type','=','liquidity'),
+                                        ],context=context)
+            wzd_brw.write({'state':'stage9','account_ids':[(6,0,bank_ids2)]})
+        elif wzd_brw.state == 'stage9':
+            res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr,uid,res,
-                          {'user_type':wzd_brw.is_ut_id.id},context=context)
-            wzd_brw.write({'state':'stage9','account_ids':[(6,0,[])]})
+                          {'type':'other'},context=context)
+            wzd_brw.write({'state':'stage10','account_ids':[(6,0,[])]})
         return {}
     
