@@ -27,7 +27,10 @@
     ],
     "author" : "Vauxoo",
     "description" : """
-    daughters inactive accounts, accounts selected parent
+
+Inactive account child's
+========================
+Inactive accounts childs of select of parent
     """,
     "website" : "http://vauxoo.com",
     "category" : "Accounting",
