@@ -26,7 +26,7 @@
 ##############################################################################
 
 {
-    "name" : "Agregado del método de pago al partner y a la factura, además del Número de Cuenta",
+    "name" : "Agrega método de pago al partner y factura",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
