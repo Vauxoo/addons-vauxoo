@@ -10,7 +10,7 @@
             rml="l10n_mx_facturae_cbb/report/invoice_facturae_pdf.rml"
             attachment_use="1"
             attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"
-            groups="l10n_mx_facturae_cbb.group_facturae_mx_cbb_user,l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+            groups="l10n_mx_facturae_cbb.group_facturae_mx_cbb_user,l10n_mx_facturae_groups.group_l10n_mx_facturae_user,l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"
             menu="False"
         />
 
