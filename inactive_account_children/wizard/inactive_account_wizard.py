@@ -33,21 +33,16 @@ class inactive_account_wizard(osv.osv_memory):
     _name = 'inactive.account.wizard'
     
     def get_accounts(self, cr, uid, ids, context=None):
-        data = self.read(cr, uid, ids)[0]
-        account_ids = data['account_ids']
-        for account in account_ids:
-            cr.execute("""SELECT node.company_id,node.type,node.id as id,node.name
-                FROM account_account AS node,account_account AS parent
-                WHERE node.parent_left BETWEEN parent.parent_left
-                AND parent.parent_right
-                AND parent.id = %s
-                ORDER BY parent.parent_left""", (account,))
-            res = cr.dictfetchall()
-            for account_children in res:
-                self._check_moves(cr, uid, account_children.get('id'),\
-                    'write', account_children.get('name'), context=context)
-                self.pool.get('account.account').write(cr, uid,
-                    account_children['id'], {'active' : False})
+        data = self.browse(cr, uid, ids)[0]
+        account_obj = self.pool.get('account.account')
+        account_ids = data.account_ids[0].id
+        account_ids = account_obj.search(cr, uid, [('id', 'child_of', account_ids)])
+        accounts = account_obj.browse(cr, uid, account_ids)
+        for account_children in accounts:
+            self._check_moves(cr, uid, account_children.id,\
+                    'write', account_children.name, context=context)
+            self.pool.get('account.account').write(cr, uid,
+                        account_children.id, {'active' : False})
         return True
                     
     def _check_moves(self, cr, uid, ids, method, account=None, context=None):
