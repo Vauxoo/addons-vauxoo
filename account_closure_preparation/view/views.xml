@@ -11,17 +11,17 @@
                             name="back_pedal" 
                             type="object" 
                             string="Back Pedal" 
-                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16" 
+                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18" 
                             class="oe_highlight"/>
                         <button 
                             name="prepare_chart" 
                             type="object" 
                             string="Proceed" 
-                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16" 
+                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18" 
                             class="oe_highlight"/>
                         <field name="state" 
                             widget="statusbar" 
-                            statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16"
+                            statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18"
                             statusbar_colors="{&quot;stage1&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
                     </header>
                     <!-- ELEMENTS VISIBLE ONLY IN STAGE1 Y STAGE2-->
@@ -185,8 +185,35 @@
                         </group>
                     </group>
 
-                    <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15'))]}">
-                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15'))]}">
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE16 TO STAGE17-->
+                    <group attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                        <group string="Reconcilable Accounts" cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                                <h4><label colspan='4' string="A few more steps and we are almost done!. Now it is time to configure all those accounts that are Reconcilable though they are not Receivable or Payable Accounts. This kind of Accounts are useful when you want to keep track of Mortgages or Loans, and you want that Open cycles regarding these Accounts be kept in the Opening Journal Entries in the next Fiscal Year, this way when you ask for a General Ledger you can retrieve those Entry Lines in the Opening Period in the next Fiscal Year." attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/></h4>
+                            </group>
+                            <label colspan='2' string="Like Payable &amp; Receivable Accounts, All your Reconcilable Accounts should be set to an Account User Type that bears deferral method 'Unreconciled', None of your Reconcilable Accounts should be different than that." attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/>
+                            <label colspan='2' string="Please Fill the Field For the 'Reconcilable Closure Type', it is advisable that you create your own Account User Type named as 'Reconcilable' having deferral method 'Unreconciled'. It is mandatory that you fill the field in the right with the accounts that are your Reconcilable Accounts" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                                <h5><label colspan='2' string="All those accounts that you have regarded as Reconcilable Accounts will be set with attribute 'Reconcile', 'Regular' type and the Account User Type 'Reconcilable Closure Type' other Balance Sheet Accounts that have not previously configured will be set as not 'Reconcile', 'Regular' type and 'BS Closure Type' as an Balance Sheet Account" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/></h5>
+                            </group>
+                        </group>
+                        <group cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                                <field name='recon_ut_id' attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/>
+                            </group>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                                <field name='recon_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage18'))]}">
+                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage18'))]}">
                             <tree>
                                 <field name='code'/>
                                 <field name='name'/>
