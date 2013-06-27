@@ -8,6 +8,12 @@
                 <form string="Closure Preparation" version="7.0">
                     <header>
                         <button 
+                            name="to_start" 
+                            type="object" 
+                            string="Go To Start" 
+                            states="stage21" 
+                            class="oe_highlight"/>
+                        <button 
                             name="back_pedal" 
                             type="object" 
                             string="Back Pedal" 
@@ -258,6 +264,17 @@
                                     </tree>
                                 </field>
                             </group>
+                        </group>
+                    </group>
+
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE21 -->
+                    <group attrs="{'invisible':[('state','not in',('stage21'))]}">
+                        <group string="Final Step" cols="2" attrs="{'invisible':[('state','not in',('stage21'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage21'))]}">
+                                <h4><label colspan='4' string="What The Heck??? Another Step!!!. Actually this is not another step. " attrs="{'invisible':[('state','not in',('stage21'))]}"/></h4>
+                            </group>
+                            <label colspan='2' string="This step was created in order to give you a Second Chance to go to the beginning and walk over your steps to review that there are not remaining issues in your Chart of Accounts, so do not be afraid and take the liberty to go to the very start and validate that there were not mistakes while you were doing your job." attrs="{'invisible':[('state','not in',('stage21'))]}"/>
+                            <label colspan='2' string="If you are sure about what you have done Do not hesitate and leave this wizard and continue Generating your Opening Journal Entry" attrs="{'invisible':[('state','not in',('stage21'))]}"/>
                         </group>
                     </group>
 

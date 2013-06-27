@@ -33,15 +33,15 @@ class account_closure_preparation(osv.TransientModel):
     _name = 'account.closure.preparation'
 
     _columns = {
-        'company_id':fields.many2one('res.company', 'Company', required=True,
+        'company_id':fields.many2one('res.company', 'Company', required=False,
             help=('Company to which the chart of account is going to be'
             ' prepared')),
         'root_id':fields.many2one('account.account', 'Root Account',
             domain="[('company_id','=',company_id),('type','=','view'),('parent_id','=',None)]",
-            required=True, help=('Root Account, the account that plays as a'
+            required=False, help=('Root Account, the account that plays as a'
                 'Chart of Accounts')),
         'view_ut_id':fields.many2one('account.account.type', 'Closure Type',
-            required=True, domain="[('close_method','=','none')]",
+            required=False, domain="[('close_method','=','none')]",
             help=('Select the Account Type that will be used when fixing your'
             ' chart of account')), 
         'account_ids':fields.many2many('account.account', 'acp_all_acc_rel',
@@ -144,10 +144,18 @@ class account_closure_preparation(osv.TransientModel):
             }
 
     _defaults = {
-        'state': 'stage1',
+        'state': 'stage21',
         'company_id': lambda s, c, u, ctx: \
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
         }
+
+    def to_start(self, cr, uid, ids, context=None):
+        context = context or {}
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        context['company_id'] = wzd_brw.company_id.id
+        wzd_brw.write({'state':'stage1'})
+        return {}
+
     def prepare_chart(self, cr, uid, ids, context=None):
         context = context or {}
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
