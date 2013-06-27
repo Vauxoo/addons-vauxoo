@@ -186,23 +186,23 @@
                     </group>
 
                     <!-- ELEMENTS VISIBLE ONLY IN STAGE16 TO STAGE17-->
-                    <group attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
-                        <group string="Reconcilable Accounts" cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
-                                <h4><label colspan='4' string="A few more steps and we are almost done!. Now it is time to configure all those accounts that are Reconcilable though they are not Receivable or Payable Accounts. This kind of Accounts are useful when you want to keep track of Mortgages or Loans, and you want that Open cycles regarding these Accounts be kept in the Opening Journal Entries in the next Fiscal Year, this way when you ask for a General Ledger you can retrieve those Entry Lines in the Opening Period in the next Fiscal Year." attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/></h4>
+                    <group attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
+                        <group string="Reconcilable Accounts" cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
+                                <h4><label colspan='4' string="A few more steps and we are almost done!. Now it is time to configure all those accounts that are Reconcilable though they are not Receivable or Payable Accounts. This kind of Accounts are useful when you want to keep track of Mortgages or Loans, and you want that Open cycles regarding these Accounts be kept in the Opening Journal Entries in the next Fiscal Year, this way when you ask for a General Ledger you can retrieve those Entry Lines in the Opening Period in the next Fiscal Year." attrs="{'invisible':[('state','not in',('stage16','stage17'))]}"/></h4>
                             </group>
-                            <label colspan='2' string="Like Payable &amp; Receivable Accounts, All your Reconcilable Accounts should be set to an Account User Type that bears deferral method 'Unreconciled', None of your Reconcilable Accounts should be different than that." attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/>
-                            <label colspan='2' string="Please Fill the Field For the 'Reconcilable Closure Type', it is advisable that you create your own Account User Type named as 'Reconcilable' having deferral method 'Unreconciled'. It is mandatory that you fill the field in the right with the accounts that are your Reconcilable Accounts" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/>
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
-                                <h5><label colspan='2' string="All those accounts that you have regarded as Reconcilable Accounts will be set with attribute 'Reconcile', 'Regular' type and the Account User Type 'Reconcilable Closure Type' other Balance Sheet Accounts that have not previously configured will be set as not 'Reconcile', 'Regular' type and 'BS Closure Type' as an Balance Sheet Account" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/></h5>
+                            <label colspan='2' string="Like Payable &amp; Receivable Accounts, All your Reconcilable Accounts should be set to an Account User Type that bears deferral method 'Unreconciled', None of your Reconcilable Accounts should be different than that." attrs="{'invisible':[('state','not in',('stage16','stage17'))]}"/>
+                            <label colspan='2' string="Please Fill the Field For the 'Reconcilable Closure Type', it is advisable that you create your own Account User Type named as 'Reconcilable' having deferral method 'Unreconciled'. It is mandatory that you fill the field in the right with the accounts that are your Reconcilable Accounts" attrs="{'invisible':[('state','not in',('stage16','stage17'))]}"/>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
+                                <h5><label colspan='2' string="All those accounts that you have regarded as Reconcilable Accounts will be set with attribute 'Reconcile', 'Regular' type and the Account User Type 'Reconcilable Closure Type' other Balance Sheet Accounts that have not previously configured will be set as not 'Reconcile', 'Regular' type and 'BS Closure Type' as an Balance Sheet Account" attrs="{'invisible':[('state','not in',('stage16','stage17'))]}"/></h5>
                             </group>
                         </group>
-                        <group cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
-                                <field name='recon_ut_id' attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17','stage18'))]}"/>
+                        <group cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
+                                <field name='recon_ut_id' attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}"/>
                             </group>
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
-                                <field name='recon_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17','stage18'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
+                                <field name='recon_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
