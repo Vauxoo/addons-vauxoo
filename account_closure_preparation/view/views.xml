@@ -11,17 +11,17 @@
                             name="back_pedal" 
                             type="object" 
                             string="Back Pedal" 
-                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18" 
+                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20" 
                             class="oe_highlight"/>
                         <button 
                             name="prepare_chart" 
                             type="object" 
                             string="Proceed" 
-                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18" 
+                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20" 
                             class="oe_highlight"/>
                         <field name="state" 
                             widget="statusbar" 
-                            statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18"
+                            statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20"
                             statusbar_colors="{&quot;stage1&quot;:&quot;blue&quot;,&quot;confirmed&quot;:&quot;green&quot;,&quot;done&quot;:&quot;red&quot;}"/>
                     </header>
                     <!-- ELEMENTS VISIBLE ONLY IN STAGE1 Y STAGE2-->
@@ -212,8 +212,34 @@
                         </group>
                     </group>
 
-                    <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage18'))]}">
-                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage18'))]}">
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE18 TO STAGE19-->
+                    <group attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
+                        <group string="Detail Accounts" cols="2" attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
+                                <h4><label colspan='4' string="Oh Yeah!!! This is about to be finished. Let us talk about this wierd kind of Account. Chances are that you could have an Account of type 'Detail' thus we are going to be ready to this challenge. Detail Account could be used when you are willing to transfer 'All the Entry Lines' of an Account from an Ending Fiscal Year to an Opening Fiscal Year. You could find this kind of Account useful in 'Depreciation', because you want to have all those Entry Lines in your Opening Journal Entry whenever you ask for a General Ledger in your Opening Fiscal Year. After you are done of using these Accounts it is advisable that you close them all so that in the coming Fiscal Year they do not appear any longer." attrs="{'invisible':[('state','not in',('stage18','stage19'))]}"/></h4>
+                            </group>
+                            <label colspan='2' string="Please Fill the Field For the 'Detail Closure Type', it is advisable that you create your own Account User Type named as 'Detail' having deferral method 'Detail'. It is mandatory that you fill the field in the right with the accounts that are your Detail Accounts" attrs="{'invisible':[('state','not in',('stage18','stage19'))]}"/>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
+                                <h5><label colspan='2' string="All those accounts that you have regarded as Detail Accounts will be set with attribute 'Regular' type and the Account User Type 'Detail Closure Type' other Balance Sheet Accounts that were previously configured as 'Detail' and were left out will be set as plain Balance Sheet Accounts" attrs="{'invisible':[('state','not in',('stage18','stage19'))]}"/></h5>
+                            </group>
+                        </group>
+                        <group cols="2" attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
+                                <field name='det_ut_id' attrs="{'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}"/>
+                            </group>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
+                                <field name='det_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </group>
+
+                    <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
+                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
                             <tree>
                                 <field name='code'/>
                                 <field name='name'/>
