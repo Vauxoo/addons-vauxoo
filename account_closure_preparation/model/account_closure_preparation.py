@@ -46,9 +46,7 @@ class account_closure_preparation(osv.TransientModel):
             ' chart of account')), 
         'account_ids':fields.many2many('account.account', 'acp_all_acc_rel',
             'account_id', 'acp_id', 'Balance Sheet Accounts',
-            domain="[('parent_id','=',root_id)]", help=('Balance Sheet '
-                'Accounts, Just Select the most top level in the chart of '
-                'account related to the Balance Sheet')),
+            domain="[('parent_id','=',root_id)]"),
         'bs_ids':fields.many2many('account.account', 'acp_bs_acc_rel',
             'account_id', 'acp_id', 'Balance Sheet Accounts',
             domain="[('parent_id','=',root_id)]", help=('Balance Sheet '
@@ -109,6 +107,17 @@ class account_closure_preparation(osv.TransientModel):
             required=False, domain="[('close_method','=','detail')]",
             help=('Select the Account Type that will be used when fixing your '
             'chart of account')), 
+        'cons_id':fields.many2one('account.account', 'Consolidation Account',
+            domain=("["
+                    "('company_id','=',company_id),"
+                    "('type','=','consolidation'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+            required=False, help=('Consolidation Account, the account that '
+                'plays as a the Consolidation of the Income Statement in Your '
+                'Chart of Accounts')),
+        'cons_ids':fields.many2many('account.account', 'acp_cons_acc_rel',
+            'account_id', 'acp_id', 'Detail Accounts', readonly=False,
+            help=('Accounts to be used in the Consolidation Account')),
         'state':fields.selection([
             ('stage1','Prep Chart'),
             ('stage2','Fix Chart'),
@@ -129,7 +138,8 @@ class account_closure_preparation(osv.TransientModel):
             ('stage17','Fix Reconcile Acc'),
             ('stage18','Prep Detail Acc'),
             ('stage19','Fix Detail Acc'),
-            ('stage20','NEXT STEP'),
+            ('stage20','Prep & Fix Consolation Acc'),
+            ('stage21','LAST STEP'),
             ], help='State'), 
             }
 
@@ -359,6 +369,17 @@ class account_closure_preparation(osv.TransientModel):
                           'type' : 'other',
                           'reconcile' : False,
                           },context=context)
-            wzd_brw.write({'state':'stage20','account_ids':[(6,0,[])]})
+            wzd_brw.write({
+                'state':'stage20',
+                'account_ids':[(6,0,[])],
+                'cons_ids':[(6,0,[i.id for i in wzd_brw.is_ids])]})
+        elif wzd_brw.state == 'stage20':
+            acc_obj.write(cr,uid,wzd_brw.cons_id.id,{
+                'child_consol_ids':[(6,0,[i.id for i in wzd_brw.cons_ids])]
+                          },context=context)
+            wzd_brw.write({
+                'state':'stage21',
+                'account_ids':[(6,0,[])]})
+
         return {}
     

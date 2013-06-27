@@ -238,6 +238,29 @@
                         </group>
                     </group>
 
+                    <!-- ELEMENTS VISIBLE ONLY IN STAGE20 -->
+                    <group attrs="{'invisible':[('state','not in',('stage20'))]}">
+                        <group string="Consolitation Account" cols="2" attrs="{'invisible':[('state','not in',('stage20'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
+                                <h4><label colspan='4' string="Last Step!!! Configuring this Account will not affect the performance of your Opening Journal Entry although it is quite advisable you set this Account because is this Account the one that summarize your Income Statement within your Balance Sheet. Having it well set will allow you to have an accurate Balance Sheet without having to invoke your whole Chart of Account. We have taken in charge for you and have used the Income Statement Accounts you have previously set." attrs="{'invisible':[('state','not in',('stage20'))]}"/></h4>
+                            </group>
+                            <label colspan='2' string="Please set your Consolidation Account and when done we will attach the Income Statement Accounts for you" attrs="{'invisible':[('state','not in',('stage20'))]}"/>
+                        </group>
+                        <group cols="2" attrs="{'invisible':[('state','not in',('stage20'))]}">
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
+                                <field name='cons_id' attrs="{'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}"/>
+                            </group>
+                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
+                                <field name='cons_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}">
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </group>
+
                     <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
                         <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
                             <tree>
