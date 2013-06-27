@@ -14,10 +14,10 @@
                             states="stage21" 
                             class="oe_highlight"/>
                         <button 
-                            name="back_pedal" 
+                            name="backpedal" 
                             type="object" 
-                            string="Back Pedal" 
-                            states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20" 
+                            string="Go Back" 
+                            states="stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20" 
                             class="oe_highlight"/>
                         <button 
                             name="prepare_chart" 

@@ -144,7 +144,7 @@ class account_closure_preparation(osv.TransientModel):
             }
 
     _defaults = {
-        'state': 'stage21',
+        'state': 'stage1',
         'company_id': lambda s, c, u, ctx: \
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
         }
@@ -154,6 +154,53 @@ class account_closure_preparation(osv.TransientModel):
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
         context['company_id'] = wzd_brw.company_id.id
         wzd_brw.write({'state':'stage1'})
+        return {}
+
+    def backpedal(self, cr, uid, ids, context=None):
+        context = context or {}
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        context['company_id'] = wzd_brw.company_id.id
+        acc_obj = self.pool.get('account.account')
+        if wzd_brw.state == 'stage2':
+            wzd_brw.write({'state':'stage1'})
+        elif wzd_brw.state == 'stage3':
+            wzd_brw.write({'state':'stage2'})
+        elif wzd_brw.state == 'stage4':
+            wzd_brw.write({'state':'stage3'})
+        elif wzd_brw.state == 'stage5':
+            wzd_brw.write({'state':'stage4'})
+        elif wzd_brw.state == 'stage6':
+            wzd_brw.write({'state':'stage5'})
+        elif wzd_brw.state == 'stage7':
+            wzd_brw.write({'state':'stage6'})
+        elif wzd_brw.state == 'stage8':
+            wzd_brw.write({'state':'stager7'})
+        elif wzd_brw.state == 'stage9':
+            wzd_brw.write({'state':'stage8'})
+        elif wzd_brw.state == 'stage10':
+            wzd_brw.write({'state':'stage9'})
+        elif wzd_brw.state == 'stage11':
+            wzd_brw.write({'state':'stage10'})
+        elif wzd_brw.state == 'stage12':
+            wzd_brw.write({'state':'stage11'})
+        elif wzd_brw.state == 'stage13':
+            wzd_brw.write({'state':'stage12'})
+        elif wzd_brw.state == 'stage14':
+            wzd_brw.write({'state':'stage13'})
+        elif wzd_brw.state == 'stage15':
+            wzd_brw.write({'state':'stage14'})
+        elif wzd_brw.state == 'stage16':
+            wzd_brw.write({'state':'stage15'})
+        elif wzd_brw.state == 'stage17':
+            wzd_brw.write({'state':'stage16'})
+        elif wzd_brw.state == 'stage18':
+            wzd_brw.write({'state':'stage17'})
+        elif wzd_brw.state == 'stage19':
+            wzd_brw.write({'state':'stage18'})
+        elif wzd_brw.state == 'stage20':
+            wzd_brw.write({'state':'stage19'})
+        elif wzd_brw.state == 'stage21':
+            wzd_brw.write({'state':'stage20'})
         return {}
 
     def prepare_chart(self, cr, uid, ids, context=None):
