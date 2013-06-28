@@ -37,15 +37,15 @@
                         </group>
                         <label colspan='2' string="Set the company to which a Chart of Account is going to be configured" attrs="{'invisible':[('state','not in',('stage1','stage2'))]}"/>
                         <newline attrs="{'invisible':[('state','!=','stage1')]}"/>
-                        <field name='company_id' attrs="{'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
+                        <field name='company_id' attrs="{'required':[('state','=','stage1')],'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
                         <label colspan='2' string="Select the Account which holds the Chart of Account of your Company" attrs="{'invisible':[('state','not in',('stage1','stage2'))]}"/>
                         <newline attrs="{'invisible':[('state','not in',('stage1','stage2'))]}"/>
-                        <field name='root_id' attrs="{'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
+                        <field name='root_id' attrs="{'required':[('state','=','stage1')],'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
                         <label colspan='2' string="Select an User Account Type, the User Account Type defines how an Account is treated when Closing a Fiscal Year. A User Account Type defined as 'None' should be used in the Structure of your Chart of Account, When setting 'None' to an account that account will not carry balance to next year being open, given that the Structure of the Chart of Account just summarizes the move accounts that it holds, It is advisable to create an Account User Type named 'Chart Structure' and set it with deferral method as 'None'."/>
                         <label colspan='2' string="All those account which have been wrongly set with an User Account Type with deferral method different than 'None' will be changed to the 'Closure Type' that you will set below."
                             />
                         <newline/>
-                        <field name='view_ut_id' attrs="{'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
+                        <field name='view_ut_id' attrs="{'required':[('state','=','stage1')],'readonly':[('state','!=','stage1')],'invisible':[('state','not in',('stage1','stage2'))]}"/>
                     </group>
 
                     <!-- ELEMENTS VISIBLE ONLY IN STAGE3 Y STAGE4-->
@@ -61,10 +61,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
-                                <field name='bs_ut_id' attrs="{'readonly':[('state','!=','stage3')],'invisible':[('state','not in',('stage3','stage4'))]}"/>
+                                <field name='bs_ut_id' attrs="{'required':[('state','=','stage3')],'readonly':[('state','!=','stage3')],'invisible':[('state','not in',('stage3','stage4'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage3','stage4'))]}">
-                                <field name='bs_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage3')],'invisible':[('state','not in',('stage3','stage4'))]}">
+                                <field name='bs_ids' nolabel="1" attrs="{'required':[('state','=','stage3')],'readonly':[('state','!=','stage3')],'invisible':[('state','not in',('stage3','stage4'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -87,10 +87,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
-                                <field name='is_ut_id' attrs="{'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}"/>
+                                <field name='is_ut_id' attrs="{'required':[('state','=','stage5')],'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}"/>
                             </group>
                             <group colspan='4' string="Income Statement Accounts" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
-                                <field name='is_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}">
+                                <field name='is_ids' nolabel="1" attrs="{'required':[('state','=','stage5')],'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -115,10 +115,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage7','stage8','stage9'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage7','stage8','stage9'))]}">
-                                <field name='bk_ut_id' attrs="{'readonly':[('state','!=','stage7')],'invisible':[('state','not in',('stage7','stage8','stage9'))]}"/>
+                                <field name='bk_ut_id' attrs="{'required':[('state','=','stage7')],'readonly':[('state','!=','stage7')],'invisible':[('state','not in',('stage7','stage8','stage9'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage7','stage8','stage9'))]}">
-                                <field name='bk_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage7')],'invisible':[('state','not in',('stage7','stage8','stage9'))]}">
+                                <field name='bk_ids' nolabel="1" attrs="{'required':[('state','=','stage7')],'readonly':[('state','!=','stage7')],'invisible':[('state','not in',('stage7','stage8','stage9'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -145,10 +145,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
-                                <field name='rec_ut_id' attrs="{'readonly':[('state','!=','stage10')],'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/>
+                                <field name='rec_ut_id' attrs="{'required':[('state','=','stage10')],'readonly':[('state','!=','stage10')],'invisible':[('state','not in',('stage10','stage11','stage12'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
-                                <field name='rec_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage10')],'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
+                                <field name='rec_ids' nolabel="1" attrs="{'required':[('state','=','stage10')],'readonly':[('state','!=','stage10')],'invisible':[('state','not in',('stage10','stage11','stage12'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -175,10 +175,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage13','stage14','stage15'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage13','stage14','stage15'))]}">
-                                <field name='pay_ut_id' attrs="{'readonly':[('state','!=','stage13')],'invisible':[('state','not in',('stage13','stage14','stage15'))]}"/>
+                                <field name='pay_ut_id' attrs="{'required':[('state','=','stage13')],'readonly':[('state','!=','stage13')],'invisible':[('state','not in',('stage13','stage14','stage15'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage13','stage14','stage15'))]}">
-                                <field name='pay_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage13')],'invisible':[('state','not in',('stage13','stage14','stage15'))]}">
+                                <field name='pay_ids' nolabel="1" attrs="{'required':[('state','=','stage13')],'readonly':[('state','!=','stage13')],'invisible':[('state','not in',('stage13','stage14','stage15'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -205,10 +205,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
-                                <field name='recon_ut_id' attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}"/>
+                                <field name='recon_ut_id' attrs="{'required':[('state','=','stage16')],'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
-                                <field name='recon_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}">
+                                <field name='recon_ids' nolabel="1" attrs="{'required':[('state','=','stage16')],'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -231,10 +231,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
-                                <field name='det_ut_id' attrs="{'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}"/>
+                                <field name='det_ut_id' attrs="{'required':[('state','=','stage18')],'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
-                                <field name='det_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}">
+                                <field name='det_ids' nolabel="1" attrs="{'required':[('state','=','stage18')],'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -254,10 +254,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage20'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
-                                <field name='cons_id' attrs="{'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}"/>
+                                <field name='cons_id' attrs="{'required':[('state','=','stage20')],'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
-                                <field name='cons_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}">
+                                <field name='cons_ids' nolabel="1" attrs="{'required':[('state','=','stage20')],'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
