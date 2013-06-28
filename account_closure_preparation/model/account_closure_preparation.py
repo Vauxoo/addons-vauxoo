@@ -210,9 +210,8 @@ class account_closure_preparation(osv.TransientModel):
         acc_obj = self.pool.get('account.account')
         #TODO: CHECK THAT CLOSED ACCOUNTS REMAIN CLOSED
         if wzd_brw.state == 'stage1':
-            view_ids = acc_obj._get_children_and_consol(cr, uid, wzd_brw.root_id.id, context=context)
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('type','=','view'),
                                         ('user_type.close_method','!=','none'),
                                         ],context=context)
@@ -223,10 +222,9 @@ class account_closure_preparation(osv.TransientModel):
                           {'user_type':wzd_brw.view_ut_id.id},context=context)
             wzd_brw.write({'state':'stage3','account_ids':[(6,0,[])]})
         elif wzd_brw.state == 'stage3':
-            view_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.bs_ids], context=context)
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.bs_ids]),
                                         ('type','!=','view'),
                                         ('user_type.close_method','=','none'),
                                         ],context=context)
@@ -245,10 +243,9 @@ class account_closure_preparation(osv.TransientModel):
                 'is_ids':[(6,0,is_ids)],
                 })
         elif wzd_brw.state == 'stage5':
-            view_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.is_ids], context=context)
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.is_ids]),
                                         ('type','!=','view'),
                                         '|',('type','not in',('other','closed')),
                                         ('user_type.close_method','!=','none'),
@@ -261,10 +258,9 @@ class account_closure_preparation(osv.TransientModel):
                            'type':'other'},context=context)
             wzd_brw.write({'state':'stage7','account_ids':[(6,0,[])]})
         elif wzd_brw.state == 'stage7':
-            view_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.bk_ids], context=context)
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.bk_ids]),
                                         ('type','!=','view'),
                                         '|',('type','!=','liquidity'),
                                         ('user_type.close_method','!=','balance'),
@@ -276,16 +272,13 @@ class account_closure_preparation(osv.TransientModel):
                           'user_type' : wzd_brw.bk_ut_id.id,
                           'type' : 'liquidity',
                           },context=context)
-            bank_ids1 = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.bk_ids], context=context)
             bank_ids1x = acc_obj.search(cr, uid,[
-                                        ('id','in',bank_ids1),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.bk_ids]),
                                         ('type','!=','view'),
                                         ],context=context)
-            bank_ids2 = acc_obj._get_children_and_consol(
-                    cr, uid, wzd_brw.root_id.id, context=context)
             bank_ids2 = acc_obj.search(cr, uid,[
-                                        ('id','in',bank_ids2),
+                                        ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('id','not in',bank_ids1x),
                                         ('type','!=','view'),
                                         ('type','=','liquidity'),
@@ -297,10 +290,9 @@ class account_closure_preparation(osv.TransientModel):
                           {'type':'other'},context=context)
             wzd_brw.write({'state':'stage10','account_ids':[(6,0,[])]})
         elif wzd_brw.state == 'stage10':
-            view_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.rec_ids], context=context)
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.rec_ids]),
                                         ('type','!=','view'),
                                         '|',('reconcile','=',False),
                                         '|',('type','not in',('receivable','closed')),
@@ -314,16 +306,13 @@ class account_closure_preparation(osv.TransientModel):
                           'type' : 'receivable',
                           'reconcile' : True,
                           },context=context)
-            rec_ids1 = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.rec_ids], context=context)
             rec_ids1x = acc_obj.search(cr, uid,[
-                                        ('id','in',rec_ids1),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.rec_ids]),
                                         ('type','!=','view'),
                                         ],context=context)
-            rec_ids2 = acc_obj._get_children_and_consol(
-                    cr, uid, wzd_brw.root_id.id, context=context)
             rec_ids2 = acc_obj.search(cr, uid,[
-                                        ('id','in',rec_ids2),
+                                        ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('id','not in',rec_ids1x),
                                         ('type','!=','view'),
                                         ('type','=','receivable'),
@@ -335,10 +324,9 @@ class account_closure_preparation(osv.TransientModel):
                           {'type':'other'},context=context)
             wzd_brw.write({'state':'stage13','account_ids':[(6,0,[])]})
         elif wzd_brw.state == 'stage13':
-            view_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.pay_ids], context=context)
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.pay_ids]),
                                         ('type','!=','view'),
                                         '|',('reconcile','=',False),
                                         '|',('type','not in',('payable','closed')),
@@ -352,16 +340,13 @@ class account_closure_preparation(osv.TransientModel):
                           'type' : 'payable',
                           'reconcile' : True,
                           },context=context)
-            pay_ids1 = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.pay_ids], context=context)
             pay_ids1x = acc_obj.search(cr, uid,[
-                                        ('id','in',pay_ids1),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.pay_ids]),
                                         ('type','!=','view'),
                                         ],context=context)
-            pay_ids2 = acc_obj._get_children_and_consol(
-                    cr, uid, wzd_brw.root_id.id, context=context)
             pay_ids2 = acc_obj.search(cr, uid,[
-                                        ('id','in',pay_ids2),
+                                        ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('id','not in',pay_ids1x),
                                         ('type','!=','view'),
                                         ('type','=','payable'),
@@ -378,18 +363,17 @@ class account_closure_preparation(osv.TransientModel):
                           'type' : 'other',
                           'reconcile' : True,
                           },context=context)
-            bs_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.bs_ids], context=context)
-            other_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.bk_ids], context=context)
-            other_ids += acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.rec_ids], context=context)
-            other_ids += acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.pay_ids], context=context)
-            other_ids += [i.id for i in wzd_brw.recon_ids]
-            view_ids = list(set(bs_ids)-set(other_ids))
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.bs_ids]),
+                                        '!',('parent_id','child_of',
+                                            [i.id for i in wzd_brw.bk_ids]),
+                                        '!',('parent_id','child_of',
+                                            [i.id for i in wzd_brw.rec_ids]),
+                                        '!',('parent_id','child_of',
+                                            [i.id for i in wzd_brw.pay_ids]),
+                                        '!',('id','in',
+                                            [i.id for i in wzd_brw.recon_ids]),
                                         ('type','!=','view'),
                                         ('reconcile','=',True),
                                         ('user_type.close_method','=','unreconciled'),
@@ -408,19 +392,19 @@ class account_closure_preparation(osv.TransientModel):
                           'user_type' : wzd_brw.det_ut_id.id,
                           'type' : 'other',
                           },context=context)
-            bs_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.bs_ids], context=context)
-            other_ids = acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.bk_ids], context=context)
-            other_ids += acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.rec_ids], context=context)
-            other_ids += acc_obj._get_children_and_consol(
-                    cr, uid, [i.id for i in wzd_brw.pay_ids], context=context)
-            other_ids += [i.id for i in wzd_brw.recon_ids]
-            other_ids += [i.id for i in wzd_brw.det_ids]
-            view_ids = list(set(bs_ids)-set(other_ids))
             view_ids = acc_obj.search(cr, uid,[
-                                        ('id','in',view_ids),
+                                        ('parent_id','child_of',
+                                            [i.id for i in wzd_brw.bs_ids]),
+                                        '!',('parent_id','child_of',
+                                            [i.id for i in wzd_brw.bk_ids]),
+                                        '!',('parent_id','child_of',
+                                            [i.id for i in wzd_brw.rec_ids]),
+                                        '!',('parent_id','child_of',
+                                            [i.id for i in wzd_brw.pay_ids]),
+                                        '!',('id','in',
+                                            [i.id for i in wzd_brw.recon_ids]),
+                                        '!',('id','in',
+                                            [i.id for i in wzd_brw.det_ids]),
                                         ('type','!=','view'),
                                         ('user_type.close_method','=','detail'),
                                         ],context=context)
