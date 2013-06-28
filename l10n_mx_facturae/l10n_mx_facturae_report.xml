@@ -10,7 +10,7 @@
             rml="l10n_mx_facturae/report/invoice_facturae_pdf.rml"
             attachment_use="1"
             attachment="(object.state in ('open','paid')) and (object.cadena_original) and (object.fname_invoice and (object.fname_invoice + ''))"
-            groups="l10n_mx_facturae.group_facturae_mx_cfd_user,l10n_mx_facturae_groups.group_l10n_mx_facturae_user,l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
         />
         
     </data>
