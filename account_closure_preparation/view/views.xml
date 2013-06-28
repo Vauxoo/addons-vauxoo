@@ -89,7 +89,7 @@
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
                                 <field name='is_ut_id' attrs="{'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}"/>
                             </group>
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
+                            <group colspan='4' string="Income Statement Accounts" attrs="{'invisible':[('state','not in',('stage5','stage6'))]}">
                                 <field name='is_ids' nolabel="1" attrs="{'readonly':[('state','!=','stage5')],'invisible':[('state','not in',('stage5','stage6'))]}">
                                     <tree>
                                         <field name='code'/>

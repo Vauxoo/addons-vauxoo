@@ -58,9 +58,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'is_ids':fields.many2many('account.account', 'acp_is_acc_rel',
             'account_id', 'acp_id', 'Income Statement Accounts',
-            domain="[('parent_id','=',root_id)]", help=('Balance Sheet '
-                'Accounts, Just Select the most top level in the chart of '
-                'account related to the Balance Sheet')),
+            domain="[('parent_id','=',root_id),('id','not in',bs_ids[0][2])]",
+            help=('Balance Sheet Accounts, Just Select the most top level in '
+                'the chart of account related to the Balance Sheet')),
         'is_ut_id':fields.many2one('account.account.type', 'IS Closure Type',
             required=False, domain="[('close_method','=','none')]",
             help=('Select the Account Type that will be used when fixing your '
@@ -235,7 +235,15 @@ class account_closure_preparation(osv.TransientModel):
             res = [i.id for i in wzd_brw.account_ids]
             acc_obj.write(cr,uid,res,
                           {'user_type':wzd_brw.bs_ut_id.id},context=context)
-            wzd_brw.write({'state':'stage5','account_ids':[(6,0,[])]})
+            is_ids = acc_obj.search(cr,uid,[
+                ('parent_id','=',wzd_brw.root_id.id),
+                ('id','not in',[i.id for i in wzd_brw.bs_ids])
+                ],context=context)
+            wzd_brw.write({
+                'state':'stage5',
+                'account_ids':[(6,0,[])],
+                'is_ids':[(6,0,is_ids)],
+                })
         elif wzd_brw.state == 'stage5':
             view_ids = acc_obj._get_children_and_consol(
                     cr, uid, [i.id for i in wzd_brw.is_ids], context=context)
