@@ -279,22 +279,49 @@
                     </group>
 
                     <group attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
-                        <group cols="2" attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
-                                <label colspan='2' string="Please set your Consolidation Account and when done we will attach the Income Statement Accounts for you" attrs="{'invisible':[('state','not in',('stage20'))]}"/>
-                            </group>
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
-                        <field name='account_ids' nolabel="1" attrs="{'readonly':True, 'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
-                            <tree>
-                                <field name='code'/>
-                                <field name='name'/>
-                            </tree>
-                        </field>
+                        <group cols="2">
+                            <group colspan='4'>
+                                <field name='account_ids' nolabel='1' readonly='1'>
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                    </tree>
+                                </field>
                             </group>
                         </group>
-                        <group string="Lorem Ipsum" cols="2" attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
-                            <group colspan='4' attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}">
-                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. " attrs="{'invisible':[('state','not in',('stage2','stage4','stage6','stage8','stage9','stage11','stage12','stage14','stage15','stage17','stage19'))]}"/></h4>
+                        <group cols="2">
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage2'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage4'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage6'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage8'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage9'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage11'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage12'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage14'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage15'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage17'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
+                            </group>
+                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage19'))]}">
+                                <h4><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></h4>
                             </group>
                         </group>
                     </group>
