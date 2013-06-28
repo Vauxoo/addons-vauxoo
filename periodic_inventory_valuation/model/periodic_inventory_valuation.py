@@ -197,17 +197,19 @@ class periodic_inventory_valuation(osv.osv):
                         print ail.invoice_id.type
             
             for i in product_price_purs:
-                qty = 0
+                qty_pur = 0
                 costo = 0.0
                 if product_price_purs.get(i, False):
                     for j in product_price_purs[i]:
                         costo += j.get('qty')*j.get('price')
-                        qty += j.get('qty')
+                        qty_pur += j.get('qty')
+                    
                     val_line_ids = periodic_line.search(cr,uid,[('product_id','=',i)],context=context)
                     val_line = periodic_line.browse(cr, uid, val_line_ids, context=context)[0]
                     
                     costo += val_line.qty_final * val_line.average_cost
-                    qty += val_line.qty_final
+                    
+                    qty = qty_pur + val_line.qty_final
                     costo_promedio = round(costo / qty, 2)
                     
                     print 'costo bienes disponibles' , costo, ' cantidad disponible ' , qty , ' costo_promedio por unidad ', costo_promedio
@@ -220,18 +222,19 @@ class periodic_inventory_valuation(osv.osv):
                     print 'qty compras - qty ventas (inventario final)' , inventario_final
                     print 'inventario_final * costo_promedio' , inventario_final * costo_promedio
                     print '\n\n'
+#DUDA con VALUATION
+                periodic_line.write(cr, uid, val_line.id, {
+                    'average_cost':costo_promedio,
+                    'valuation':costo - (inventario_final * costo_promedio),
+                    'qty_sale':qty - inventario_final ,
+                    'qty_purchase':qty_pur ,
+                    'qty_final':inventario_final,
+                    'qty_init':val_line.qty_final,
+                        })
             
             
             print "products_price_pur " , product_price_purs , " products_price_sale " , product_price_sales
             print "qty_purchase " , qty_purchase , " total_purchase " , total_purchase
-            #periodic_line.write(cr, uid, val_line.id, {
-                #    'average_cost':new_cost_prom,
-                #    'valuation':new_valuation,
-                #    'qty_sale':qty_sale,
-                #    'qty_purchase':qty_purchase,
-                #    'qty_final':(qty_purchase - qty_sale) + val_line.qty_init,
-                #    'qty_init':val_line.qty_final,
-                #    })
                     
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
