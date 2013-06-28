@@ -160,7 +160,7 @@ class account_closure_preparation(osv.TransientModel):
         context = context or {}
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
         context['company_id'] = wzd_brw.company_id.id
-        acc_obj = self.pool.get('account.account')
+        wzd_brw.write({'account_ids':[(6,0,[])]})
         if wzd_brw.state == 'stage2':
             wzd_brw.write({'state':'stage1'})
         elif wzd_brw.state == 'stage3':
