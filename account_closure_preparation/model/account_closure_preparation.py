@@ -174,7 +174,7 @@ class account_closure_preparation(osv.TransientModel):
         elif wzd_brw.state == 'stage7':
             wzd_brw.write({'state':'stage6'})
         elif wzd_brw.state == 'stage8':
-            wzd_brw.write({'state':'stager7'})
+            wzd_brw.write({'state':'stage7'})
         elif wzd_brw.state == 'stage9':
             wzd_brw.write({'state':'stage8'})
         elif wzd_brw.state == 'stage10':
