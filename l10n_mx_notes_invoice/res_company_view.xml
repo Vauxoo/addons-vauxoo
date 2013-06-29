@@ -9,7 +9,9 @@
             <field name="arch" type="xml">
                  <xpath expr="//page[@string='Configuration']" position="after">
                     <page string="Notes Invoice">
-                        <field name="promissory"/>
+                        <group>
+                            <field name="dinamic_text"/>
+                        </group>
                     </page>
                 </xpath>
             </field>

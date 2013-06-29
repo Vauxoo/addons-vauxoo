@@ -34,8 +34,8 @@ class res_company(osv.Model):
     _inherit = 'res.company'
 
     _columns = {
-        'promissory': fields.text('Text promissory facturae',
-            help='This legend is used for the report of Electronic Invoice in the legend of promissory'),
+        'dinamic_text' : fields.text('Promissory note', translate=True,
+            help='This text will put in the report of Invoice'),
     }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
