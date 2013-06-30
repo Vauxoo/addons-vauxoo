@@ -238,7 +238,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
             })
         return res
         
-    def _get_text_promissory(self, company_id, partner, amount):
+    def _get_text_promissory(self, company, partner, invoice):
         text = ''
         context = {}
         lang = self.pool.get('res.partner').browse(self.cr, self.uid,\
@@ -246,9 +246,9 @@ class invoice_facturae_html(report_sxw.rml_parse):
         if lang:
             context.update({'lang' : lang})
         company = self.pool.get('res.company').browse(self.cr, self.uid,\
-            company_id, context=context)
+            company.id, context=context)
         if company.dinamic_text:
-            text = company.dinamic_text % (partner.name, company.name, amount,)
+            text = company.dinamic_text % eval("{" + company.dict_var + "}")
         return text
         
 

@@ -11,6 +11,15 @@
                     <page string="Notes Invoice">
                         <group>
                             <field name="dinamic_text"/>
+                            <field name="dict_var"/>
+                        </group>
+                        <separator string='Why fill the information?'/>
+                        <field name="details"/>
+                        <separator string='Sample'/>
+                        <field name="sample"/>
+                        <group>
+                            <field name="sample_text"/>
+                            <field name="sample_dict"/>
                         </group>
                     </page>
                 </xpath>
