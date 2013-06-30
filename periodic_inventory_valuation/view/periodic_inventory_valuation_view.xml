@@ -91,7 +91,7 @@
             <field name="arch" type="xml">                                      
                 <xpath expr="//page[@string='Configuration']" position="inside">
                     <group string="Inventory Valuation">
-                        <field name="journal_id"/>
+                        <field name="journal_id" required="1"/>
                     </group>
                 </xpath>                                                        
             </field>                                                            

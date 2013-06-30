@@ -34,7 +34,7 @@ from openerp import tools
 class res_company(osv.osv):
     _inherit = 'res.company'
     _columns = {
-            'journal_id': fields.many2one('account.journal', 'Periodical Inventory Valuation Journal', help="Journal entry"),
+            'journal_id': fields.many2one('account.journal', 'Periodical Inventory Valuation Journal', required=True, help="Journal entry"),
             }
     
 class periodic_inventory_valuation_line(osv.osv):
@@ -100,6 +100,7 @@ class periodic_inventory_valuation(osv.osv):
         piv_brw = self.browse(cr,uid,ids[0],context=context)
         date = piv_brw.date
         company_id = piv_brw.company_id.id 
+        journal_id = piv_brw.company_id.journal_id.id
         period_ids = period_obj.find(cr,uid,dt=date,context=context)
         print "periods ids" , period_ids, " date ", date, ' company_id' , piv_brw.company_id.id
         period_ids = period_obj.search(cr,uid,[
@@ -195,7 +196,7 @@ class periodic_inventory_valuation(osv.osv):
                             product_price_sales[ail.product_id.id] = [p_p_sale]
                     else:
                         print ail.invoice_id.type
-            
+            lineas =[]
             for i in product_price_purs:
                 qty_pur = 0
                 costo = 0.0
@@ -220,17 +221,76 @@ class periodic_inventory_valuation(osv.osv):
                             inventario_final -= k.get('qty')
                     
                     print 'qty compras - qty ventas (inventario final)' , inventario_final
-                    print 'inventario_final * costo_promedio' , inventario_final * costo_promedio
+                    print 'COSTO DE LOS BIENEN VENDIDOS' , ( qty - inventario_final  ) * costo_promedio
+                    print 'Ganancia en inventario' , (inventario_final * costo_promedio) - (val_line.qty_init * costo_promedio)
                     print '\n\n'
+                    
+                    #inv_ini = (val_line.qty_init * val_line.average_cost)
+                    #inv_fin = (inventario_final * costo_promedio)
+                    
+                    print "categoria del producto " ,
+                    prod = prod_obj.browse(cr,uid,i,context=context)
+                    print prod.product_tmpl_id.categ_id.property_account_income_categ
+                    print prod.product_tmpl_id.categ_id.property_account_expense_categ
+                    context['journal_id'] = journal_id
+                    context['period_id'] = period_ids
+                    
+                    print "INVENTARIO FINAAAAAL"
+                    print inventario_final - val_line.qty_final
+                    if val_line.qty_init <= inventario_final:
+                        cant = inventario_final - val_line.qty_final
+                        debit = cant * costo_promedio
+                        credit = 0.0
+                    else:
+                        cant = val_line.qty_init - inventario_final
+                        credit = cant * costo_promedio
+                        debit = 0.0
+                    d ={
+                            'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
+                            'partner_id': False,                                            
+                            'account_id': prod.product_tmpl_id.categ_id.property_account_income_categ, 
+                            'journal_id': journal_id,                               
+                            'period_id': period_ids,                                 
+                            'date': date_stop,                               
+                            'debit': debit,                                                   
+                            'credit': credit,                                                  
+                            }
+                    print d
+
+                    line_id = self.pool.get('account.move.line').create(cr, uid, {      
+                            'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
+                            'partner_id': False,                                            
+                            'account_id': prod.product_tmpl_id.categ_id.property_account_income_categ.id, 
+                            'move_id': False,                                             
+                            'journal_id': journal_id,                               
+                            'period_id': period_ids,                                 
+                            'date': date_stop,                               
+                            'debit': debit,                                                   
+                            'credit': credit,                                                  
+                        }, context=context)
+                    line_id_2 = self.pool.get('account.move.line').create(cr, uid, {      
+                            'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
+                            'partner_id': False,                                            
+                            'account_id': prod.product_tmpl_id.categ_id.property_account_expense_categ.id,                                      
+                            'move_id': False,                                             
+                            'journal_id': journal_id,                               
+                            'period_id': period_ids,                                 
+                            'date': date_stop,                               
+                            'debit': credit,                                                   
+                            'credit': debit,                                                  
+                        }, context=context)
+                    lineas.append(line_id)
+                    lineas.append(line_id_2)
 #DUDA con VALUATION
-                periodic_line.write(cr, uid, val_line.id, {
-                    'average_cost':costo_promedio,
-                    'valuation':costo - (inventario_final * costo_promedio),
-                    'qty_sale':qty - inventario_final ,
-                    'qty_purchase':qty_pur ,
-                    'qty_final':inventario_final,
-                    'qty_init':val_line.qty_final,
-                        })
+                #periodic_line.write(cr, uid, val_line.id, {
+                #    'average_cost':costo_promedio,
+                #    #'valuation':( qty - inventario_final  ) * costo_promedio,
+                #    'valuation':(inventario_final * costo_promedio) - (val_line.qty_init * costo_promedio)
+                #    'qty_sale':qty - inventario_final ,
+                #    'qty_purchase':qty_pur ,
+                #    'qty_final':inventario_final,
+                #    'qty_init':val_line.qty_final,
+                #        })
             
             
             print "products_price_pur " , product_price_purs , " products_price_sale " , product_price_sales
@@ -243,6 +303,7 @@ class periodic_inventory_valuation(osv.osv):
             'date':date or fields.date.today(),
             'stock_move_ids':[(6,0,incoming_sm_ids+outgoing_sm_ids)],
             'first':True,
+            'aml_ids':[(6, 0, lineas)],
             },context=context)
     
         return True
