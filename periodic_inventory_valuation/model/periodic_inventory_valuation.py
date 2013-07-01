@@ -147,6 +147,8 @@ class periodic_inventory_valuation(osv.osv):
             ],context=context)
 
         periodic_line = self.pool.get('periodic.inventory.valuation.line')
+        lineas = []
+        move_id = False
         if not self.browse(cr,uid,ids[0],context=context).first:
             pivl_init_ids = []
             for prod_id in prod_ids:
@@ -241,10 +243,12 @@ class periodic_inventory_valuation(osv.osv):
                         cant = inventario_final - val_line.qty_final
                         debit = cant * costo_promedio
                         credit = 0.0
+                        valuation = debit
                     else:
                         cant = val_line.qty_init - inventario_final
                         credit = cant * costo_promedio
                         debit = 0.0
+                        valuation = credit
                     d ={
                             'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
                             'partner_id': False,                                            
@@ -282,17 +286,17 @@ class periodic_inventory_valuation(osv.osv):
                     lineas.append(line_id)
                     lineas.append(line_id_2)
 #DUDA con VALUATION
-                #periodic_line.write(cr, uid, val_line.id, {
-                #    'average_cost':costo_promedio,
-                #    #'valuation':( qty - inventario_final  ) * costo_promedio,
-                #    'valuation':(inventario_final * costo_promedio) - (val_line.qty_init * costo_promedio)
-                #    'qty_sale':qty - inventario_final ,
-                #    'qty_purchase':qty_pur ,
-                #    'qty_final':inventario_final,
-                #    'qty_init':val_line.qty_final,
-                #        })
+                periodic_line.write(cr, uid, val_line.id, {
+                    'average_cost':costo_promedio,
+                    'valuation': valuation,
+                    'qty_sale':qty - inventario_final ,
+                    'qty_purchase':qty_pur ,
+                    'qty_final':inventario_final,
+                    'qty_init':val_line.qty_final,
+                        })
             
-            
+            move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
+
             print "products_price_pur " , product_price_purs , " products_price_sale " , product_price_sales
             print "qty_purchase " , qty_purchase , " total_purchase " , total_purchase
                     
@@ -304,6 +308,7 @@ class periodic_inventory_valuation(osv.osv):
             'stock_move_ids':[(6,0,incoming_sm_ids+outgoing_sm_ids)],
             'first':True,
             'aml_ids':[(6, 0, lineas)],
+            'move_id': move_id,
             },context=context)
     
         return True
