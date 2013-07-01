@@ -1,42 +1,36 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
 
        <record id="product_search_form_view_inh" model="ir.ui.view">
             <field name="name">product.search.form.inh</field>
             <field name="model">product.product</field>
+            <field name="priority">100</field>
             <field name="arch" type="xml">
                 <search string="Product">
-                       <field name="type" />
+                   <field name="name" string="Product" filter_domain="['|',('name','ilike',self),('default_code','ilike',self)]"/>
                    <filter string="Services" icon="terp-accessories-archiver" domain="[('type','=','service')]"/>
-                   <filter string="Products" icon="terp-accessories-archiver" domain="['|',('type','=','product'),('type','=','consu')]" help="Both stockable and consumable products"/>
-                   <separator orientation="vertical"/>
-                   <filter string="To Sell" name="filter_to_sell" icon="terp-accessories-archiver-minus" domain="[('sale_ok','=',1)]"/>
-                   <filter name="filter_to_purchase" string="To Purchase" icon="terp-accessories-archiver+" domain="[('purchase_ok', '=', 1)]"/>
-                   <separator orientation="vertical"/>
-                   <field name="name" filter_domain="['|', ('name','ilike',self),('default_code','ilike',self)]"/>
-                   <field name="categ_id" widget="selection" operator="child_of" groups="base.group_extended"/>
-                   <newline/>
-                   <group expand="0" string="Context..." groups="base.group_extended">
-                       <field name="location_id" widget="selection" context="{'location': self}"/>
+                   <filter string="Consumable" name="consumable" icon="terp-accessories-archiver" domain="[('type','=','consu')]" help="Consumable products"/>
+                   <separator/>
+                   <filter string="Can be Sold" name="filter_to_sell" icon="terp-accessories-archiver-minus" domain="[('sale_ok','=',1)]"/>
+                   <field name="categ_id"/>
+                   <group expand="0" string="Context...">
+                       <field name="pricelist_id" context="{'pricelist': self}" groups="product.group_sale_pricelist"/>
+                       <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="location_id" widget="selection" context="{'location': self}"/>
                        <field name="warehouse_id" widget="selection" context="{'warehouse': self}"/>
-                       <separator orientation="vertical"/>
-                       <field name="pricelist_id" widget="selection" context="{'pricelist': self}"/>
-                       <separator orientation="vertical" groups="base.group_multi_company"/>
-                       <field name="company_id" widget="selection" groups="base.group_multi_company"/>
-                       <field name="date_from_to" widget="date" context="{'from_date':self, 'to_date':self2}"/>
-                   </group>
-                   <newline/>
-                   <group expand="0" string="Group by..." groups="base.group_extended">
-                       <filter string="Category" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'categ_id'}" groups="base.group_extended"/>
-                       <separator orientation="vertical"/>
-                       <filter string="Default UOM" icon="terp-mrp" domain="[]" context="{'group_by' : 'uom_id'}"/>
-                       <separator orientation="vertical"/>
-                       <filter string="Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'type'}"/>
-                       <separator orientation="vertical" groups="base.group_multi_company"/>
-                       <filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by' : 'company_id'}" groups="base.group_multi_company"/>
+                       <field name="pricelist_id" context="{'pricelist': self}" />
+                       <field name="company_id" groups="base.group_multi_company" />
+                       <field name="date_from" context="{'from_date':self}"/>
+                       <field name="date_to" context="{'to_date':self}"/>
                    </group>
 
+                   <group  expand='0' string='Group by...'>
+                       <filter string='Category' icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'categ_id'}"/>
+                       <filter string='Default Unit of Measure' icon="terp-mrp" domain="[]" context="{'group_by' : 'uom_id'}"/>
+                       <filter string='Type' icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'type'}"/>
+                       <filter string='Company' icon="terp-go-home" domain="[]" context="{'group_by' : 'company_id'}" groups="base.group_multi_company"/>
+                   </group>
                 </search>
             </field>
         </record>
@@ -44,7 +38,7 @@
         <record id="product_product_tree_view_inh" model="ir.ui.view">
             <field name="name">product.product.tree.inh</field>
             <field name="model">product.product</field>
-            <field eval="7" name="priority"/>
+            <field name="priority">100</field>
             <field name="arch" type="xml">
                 <tree string="Products">
                     <field name="default_code"/>
@@ -52,6 +46,7 @@
                     <field name="categ_id" invisible="1"/>
                     <field name="variants" groups="product.group_product_variant"/>
                     <field name="uom_id" string="UoM"/>
+                    <field name="type"/>
                     <field name="stock_done_start"/>
                     <field name="incoming_done_qty"/>
                     <field name="outgoing_done_qty"/>
@@ -68,14 +63,14 @@
         <record id="product_normal_form_view_inh" model="ir.ui.view">
             <field name="name">product.normal.form.inh</field>
             <field name="model">product.product</field>
-            <field eval="7" name="priority"/>
+            <field name="priority">100</field>
             <field name="arch" type="xml">
-                <form string="Product" version="7.0">
+                <form string="Product">
                    <group colspan="4" col="8">
                     <group colspan="4" col="2">
                         <separator string="Name" colspan="2"/>
                         <field name="name"/>
-                        <field groups="product.group_product_variant" name="variants"/>
+                        <field groups="product.group_product_variant" name="variants" />
                     </group>
                     <group colspan="1" col="2">
                         <separator string="Codes" colspan="2"/>
@@ -93,15 +88,16 @@
                         <page string="Information">
                             <group colspan="2" col="2">
                                 <separator string="Procurement" colspan="2"/>
-                                <field name="procure_method" groups="base.group_extended"/>
                                 <field name="type"/>
+                                <field name="procure_method" groups="base.group_extended"/>
                                 <field name="supply_method"/>
                             </group>
                             <group colspan="2" col="2">
                                 <separator string="Base Prices" colspan="2"/>
                                 <field name="list_price"/>
                                 <field groups="base.group_extended" name="cost_method"/>
-                                <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}" groups="base.group_extended"/>
+                                <field name="standard_price" attrs="{'readonly':[('cost_method','=','average')]}"
+                                    groups="base.group_extended"/>
                                 <newline/>
                                 <field name="price_margin" groups="product.group_product_variant"/>
                                 <field name="price_extra" groups="product.group_product_variant"/>
@@ -144,7 +140,7 @@
                             </group>
                             <group colspan="2" col="2" name="store">
                                 <separator string="Storage Localisation" colspan="2"/>
-                                <field name="loc_rack" attrs="{'readonly':[('type','=','service')]}"/>
+                                <field name="loc_rack" attrs="{'readonly':[('type','=','service')]}" />
                                 <field name="loc_row" attrs="{'readonly':[('type','=','service')]}"/>
                                 <field name="loc_case" attrs="{'readonly':[('type','=','service')]}"/>
                             </group>
@@ -169,7 +165,7 @@
                         </page>
                         <page groups="base.group_extended" string="Packaging">
                             <field colspan="4" name="packaging" nolabel="1">
-                                <form string="Packaging" version="7.0">
+                                <form string="Packaging">
                                     <field name="ean"/>
                                     <field name="sequence" invisible="1"/>
                                     <newline/>
@@ -197,6 +193,7 @@
 
         <record id="product_normal_action_sell_inh" model="ir.actions.act_window">
             <field name="name">Product Kardex</field>
+            <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
             <field name="view_mode">tree,form,kanban</field>
             <field name="view_type">form</field>
@@ -206,7 +203,7 @@
             <field name="help">You must define a Product for everything you buy or sell. Products can be raw materials, stockable products, consumables or services. The Product form contains detailed information about your products related to procurement logistics, sales price, product category, suppliers and so on.</field>
         </record>
 
-        <menuitem action="product_normal_action_sell_inh" id="menu_products_inh" parent="stock.menu_stock_product"/>
+        <menuitem action="product_normal_action_sell_inh" id="menu_products_inh" parent="stock.menu_stock_product" />
 
         <record id="open_view_product_tree1_inh" model="ir.actions.act_window.view">
             <field name="sequence" eval="1"/>
@@ -225,6 +222,7 @@
         <record id="view_normal_stock_property_form_inh" model="ir.ui.view">
             <field name="name">product.normal.stock.form.inherit2</field>
             <field name="model">product.product</field>
+            <field name="priority">100</field>
             <field name="inherit_id" ref="product_normal_form_view_inh"/>
             <field name="arch" type="xml">
                 <group name="status" position="after">
@@ -241,9 +239,9 @@
                     </group>
                     <group colspan="2" col="2" name="lot" groups="base.group_extended">
                         <separator string="Lots" colspan="4"/>
-                        <field name="track_production"/>
-                        <field name="track_incoming"/>
-                        <field name="track_outgoing"/>
+                        <field name="track_production" />
+                        <field name="track_incoming" />
+                        <field name="track_outgoing" />
                     </group>
                 </group>
             </field>

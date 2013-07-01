@@ -25,6 +25,7 @@ from osv import fields, osv
 from tools.translate import _
 import netsvc
 
+
 class ifrs_report_wizard(osv.osv_memory):
 
     """ Wizard que permite al usuario elegir que periodo quiere imprimir del año fiscal """
@@ -32,58 +33,71 @@ class ifrs_report_wizard(osv.osv_memory):
     _name = 'ifrs.report.wizard'
     _description = 'IFRS Report'
 
-    def onchange_company_id(self,cr,uid,ids,company_id,context=None):
+    def onchange_company_id(self, cr, uid, ids, company_id, context=None):
         context = context or {}
-        context['company_id']=company_id
-        res = {'value':{}}
-        
-        if not company_id: return res
-            
-        cur_id = self.pool.get('res.company').browse(
-                cr, uid, company_id, context=context).currency_id.id
-        fy_id = self.pool.get('account.fiscalyear').find(
-                cr, uid, context=context)
+        context['company_id'] = company_id
+        res = {'value': {}}
 
-        res['value'].update({'fiscalyear_id':fy_id})
-        res['value'].update({'currency_id':cur_id})
+        if not company_id:
+            return res
+
+        cur_id = self.pool.get('res.company').browse(
+            cr, uid, company_id, context=context).currency_id.id
+        fy_id = self.pool.get('account.fiscalyear').find(
+            cr, uid, context=context)
+
+        res['value'].update({'fiscalyear_id': fy_id})
+        res['value'].update({'currency_id': cur_id})
         return res
 
     _columns = {
         'period': fields.many2one('account.period', 'Force period', help='Fiscal period to assign to the invoice. Keep empty to use the period of the current date.'),
-        'fiscalyear_id' : fields.many2one('account.fiscalyear', 'Fiscal Year' ),
-        'company_id' : fields.many2one('res.company', string='Company', ondelete='cascade', required = True ),
+        'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year'),
+        'company_id': fields.many2one('res.company', string='Company', ondelete='cascade', required=True, help='Company name'),
         'currency_id': fields.many2one('res.currency', 'Currency', help="Currency at which this report will be expressed. If not selected will be used the one set in the company"),
-        'exchange_date':fields.date('Exchange Date'),
-        'report_type': fields.selection( [
-            ('all','All Fiscalyear'),
+        'exchange_date': fields.date('Exchange Date', help='Date of change that will be printed in the report, with respect to the currency of the company'),
+        'report_type': fields.selection([
+            ('all', 'All Fiscalyear'),
             ('per', 'Force Period')],
-            string='Type', required=True ),
-        'columns': fields.selection( [
-            ('ifrs','Two Columns'),
+            string='Type', required=True, help='Indicates if the report it will be printed for the entire fiscal year, or for a particular period'),
+        'columns': fields.selection([
+            ('ifrs', 'Two Columns'),
             ('webkitaccount.ifrs_12', 'Twelve Columns'),
             #('ifrs_12_partner_detail', 'With Partner Detail')
-            ],
-            string='Number of Columns' ),
+        ],
+            string='Number of Columns',
+            help='Number of columns that will be printed in the report:'
+            " -Two Colums(02),-Twelve Columns(12)"),
         'target_move': fields.selection([('posted', 'All Posted Entries'),
                                         ('all', 'All Entries'),
-                                        ], 'Target Moves'),
+                                         ], 'Target Moves', help='Print All Accounting Entries or just Posted Accounting Entries'),
     }
 
     _defaults = {
-        'report_type' : 'all',
-        'target_move' : 'all',
-        'company_id'  : lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).company_id.id,
-        'fiscalyear_id' : lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).fiscalyear_id.id,
-        'exchange_date' : fields.date.today,
+        'report_type': 'all',
+        'target_move': 'all',
+        'company_id': lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).company_id.id,
+        'fiscalyear_id': lambda self, cr, uid, c: self.pool.get('ifrs.ifrs').browse(cr, uid, c.get('active_id')).fiscalyear_id.id,
+        'exchange_date': fields.date.today,
         'columns': 'ifrs'
     }
+
+    def default_get(self, cr, uid, fields, context=None):
+        if context is None:
+            context = {}
+        res = super(ifrs_report_wizard, self).default_get(
+            cr, uid, fields, context=context)
+        # res.update({'uid_country':
+        # self._get_country_code(cr,uid,context=context)})
+        return res
 
     def _get_period(self, cr, uid, context={}):
 
         """ Return the current period id """
 
         account_period_obj = self.pool.get('account.period')
-        ids = account_period_obj.find(cr, uid, time.strftime('%Y-%m-%d'), context=context)
+        ids = account_period_obj.find(
+            cr, uid, time.strftime('%Y-%m-%d'), context=context)
         period_id = ids[0]
         return period_id
 
@@ -93,11 +107,13 @@ class ifrs_report_wizard(osv.osv_memory):
             If period_id is nor given then return the current fiscalyear """
 
         if period_id:
-            period_obj = self.pool.get('account.period').browse(cr, uid, period_id)
+            period_obj = self.pool.get(
+                'account.period').browse(cr, uid, period_id)
             fiscalyear_id = period_obj.fiscalyear_id.id
         else:
             fiscalyear_obj = self.pool.get('account.fiscalyear')
-            ids = fiscalyear_obj.find(cr, uid, time.strftime('%Y-%m-%d'), context=context)
+            ids = fiscalyear_obj.find(cr, uid, time.strftime(
+                '%Y-%m-%d'), context=context)
             fiscalyear_id = ids
         return fiscalyear_id
 
@@ -110,21 +126,24 @@ class ifrs_report_wizard(osv.osv_memory):
         datas['columns'] = str(wizard_ifrs.columns)
         datas['target_move'] = wizard_ifrs.target_move
         datas['exchange_date'] = wizard_ifrs.exchange_date
-        datas['currency_wizard'] = wizard_ifrs.currency_id.id 
+        datas['currency_wizard'] = wizard_ifrs.currency_id.id
 
         if datas['report_type'] == 'all':
-            datas['fiscalyear'] = wizard_ifrs.fiscalyear_id.id or self._get_fiscalyear(cr, uid, context=context)
+            datas['fiscalyear'] = wizard_ifrs.fiscalyear_id.id or self._get_fiscalyear(
+                cr, uid, context=context)
             datas['period'] = False
         else:
             datas['columns'] = 'ifrs'
-            datas['period'] = wizard_ifrs.period.id or self._get_period( cr, uid, context=context )
-            datas['fiscalyear'] = self._get_fiscalyear(cr, uid, context=context, period_id=datas['period'])
-        
+            datas['period'] = wizard_ifrs.period.id or self._get_period(
+                cr, uid, context=context)
+            datas['fiscalyear'] = self._get_fiscalyear(
+                cr, uid, context=context, period_id=datas['period'])
+
         return {
             'type': 'ir.actions.report.xml',
             'report_name': datas['columns'],
-            'datas' : datas
-       }
+            'datas': datas
+        }
 
 ifrs_report_wizard()
 

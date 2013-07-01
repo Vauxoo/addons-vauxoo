@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,20 +25,24 @@
 ##############################################################################
 
 {
-    "name": "Product Context Date",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Product",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add field date in view search by the context
+    "name": "Account Invoice Number v7",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Localization/Mexico",
+    "description" : """This module add field internal_number to invoice view.
+        when you cancel a customer invoice will not delete the invoice number
     """,
-    'depends': ['stock'],
-    'update_xml': [
-        'product_context_date_view.xml',
-        ],
-    'demo_xml': [],
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
+    "depends": ["account"],
+    "demo": [],
+    "data": [
+        "account_invoice_view.xml",
+    ],
+    'js': [],
+    'qweb': [],
+    'css': [],
     'test': [],
-    'installable': True,
-    'active': False,
+    "installable": True,
+    "active": False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

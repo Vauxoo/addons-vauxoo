@@ -6,7 +6,7 @@
 #    All Rights Reserved.
 #    info@vauxoo.com
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
+#    Coded by: Luis Ernesto garcía (ernesto_gm@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,20 +25,26 @@
 ##############################################################################
 
 {
-    "name": "Product Context Date",
-    "version": "1.1",
+    "name": "Purchase / Group for button send email",
+    "version": "1.0",
     "author" : "Vauxoo",
-    "category": "Generic Modules/Product",
+    "category": "Purchase",
     "website" : "http://www.vauxoo.com/",
-    "description": """ Add field date in view search by the context
+    "description": """ 
+Group for button send email:
+============================
+
+Group that hides the button "send by email" sales order
+
     """,
-    'depends': ['stock'],
-    'update_xml': [
-        'product_context_date_view.xml',
+    'depends': ['purchase'],
+    'data': [
+        'security/purchase_security.xml',
+        'purchase_view.xml',
         ],
-    'demo_xml': [],
+    'demo': [],
     'test': [],
     'installable': True,
     'active': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4: 

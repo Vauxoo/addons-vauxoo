@@ -38,7 +38,6 @@
                         <field name="company_id" on_change='onchange_company_id(company_id)' required="1"/>
                         <field name="currency_id" required="1" readonly="1"/>
                         <field name="fiscalyear_id" required="1"/>
-                        <field name="do_compute" />
                     </group>
                 </group>
                 <notebook colspan='6'>
@@ -99,9 +98,9 @@
                                     <separator string='Total' colspan='2' />
                                     <field
                                         name="total_ids" widget="many2many"
-                                        nolabel='1'
-                                        domain="['|',('ifrs_id','in', [len(k) and k[2] or False for k in parent.ifrs_ids]),('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
-                                    </field>
+                                        nolabel="1"
+                                        domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
+                                        />
                                 </group>
                                 
                                 <group col='1' attrs="{'invisible':[('operator','=','without')]}">
@@ -109,7 +108,7 @@
                                     <field
                                         name="operand_ids" widget="many2many"
                                         nolabel='1'
-                                        domain="['|',('ifrs_id','in', [len(k) and k[2] or False for k in parent.ifrs_ids]),('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
+                                        domain="['|',('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
                                     </field>
                                 </group>
                               </group>

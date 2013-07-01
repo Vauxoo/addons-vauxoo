@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: julio (julio@vauxoo.com)
+#    Coded by: moylop260 (moylop260@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,22 +23,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-{
-    "name": "Product Context Date",
-    "version": "1.1",
-    "author" : "Vauxoo",
-    "category": "Generic Modules/Product",
-    "website" : "http://www.vauxoo.com/",
-    "description": """ Add field date in view search by the context
-    """,
-    'depends': ['stock'],
-    'update_xml': [
-        'product_context_date_view.xml',
-        ],
-    'demo_xml': [],
-    'test': [],
-    'installable': True,
-    'active': False,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

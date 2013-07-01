@@ -4,7 +4,7 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
-###############Credits######################################################
+# Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -19,23 +19,23 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
+##########################################################################
 {
-    "name" : "Add stock_kardex in menuitem",
-    "version" : "1.0",
-    "depends" : ['product','stock','product_context_date'],
-    "author" : "Vauxoo",
+    "name": "Add stock_kardex in menuitem",
+    "version": "1.0",
+    "depends": ['product',
+                'stock',
+                'product_context_date',
+                ],
+    "author": "Vauxoo",
     #"license" : "AGPL-3",
     "description" : """This module add stock_kardex in menuitem
     """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
+    "website": "http://vauxoo.com",
+    "category": "Generic Modules",
     "test": [],
-    "update_xml" : ['kardex.xml',
-    ],
+    "data": ['kardex.xml',
+             ],
     "active": False,
     "installable": True,
 }
-
