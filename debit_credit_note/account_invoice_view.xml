@@ -58,7 +58,11 @@
                     <field name="parent_id" attrs="{'required':[('type','=','out_refund')]}" domain="[('partner_id','=',partner_id),('id', '!=', active_id),('type','in',['out_invoice', 'out_refund'])]"/>
                 </xpath>
                 <xpath expr="//button[@string='Refund Invoice']" position="after">
-                    <button name="%(action_account_invoice_debit)d" type='action' string='Debit Note' states='open,paid' icon="gtk-execute" attrs="{'invisible':[('type','in',['in_refund', 'out_refund'])]}"/>
+                    <button name="%(action_account_invoice_debit)d"
+                            type='action'
+                            string='Debit Note'
+                            icon="gtk-execute"
+                            attrs="{'invisible':['|',('type','in',('in_refund','out_refund','out_invoice')),('state','=','draft')]}"/>
                 </xpath>
             </field>
         </record>
@@ -71,7 +75,7 @@
                     <field name="parent_id" attrs="{'required':[('type','=','in_refund')]}" domain="[('partner_id','=',partner_id),('id', '!=', active_id),('type','in',['in_invoice', 'in_refund'])]"/>
                 </xpath>
                 <xpath expr="//button[@string='Ask Refund']" position="after">
-                    <button name="%(action_account_invoice_debit)d" type='action' string='Debit Note' states='open,paid' icon="gtk-execute" attrs="{'invisible':[('type','in',['in_refund', 'out_refund'])]}"/>
+                    <button name="%(action_account_invoice_debit)d" type='action' string='Debit Note' states='open,paid' icon="gtk-execute" attrs="{'invisible':['|',('type','in',['in_refund', 'out_refund'],('state','=','draft'))]}"/>
                 </xpath>
             </field>
         </record>
