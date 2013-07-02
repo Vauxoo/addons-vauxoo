@@ -268,7 +268,6 @@ class account_voucher(osv.Model):
         debit_line_vals = {
                     'name': line_tax.tax_id.name,
                     'quantity': 1,
-                    'date': time.strftime('%Y-%m-%d'),
                     'partner_id': voucher.partner_id.id,
                     'debit': abs(reference_amount),
                     'credit': 0.0,
@@ -280,11 +279,11 @@ class account_voucher(osv.Model):
                     'tax_id': line_tax.id,
                     'analytic_account_id': line_tax.analytic_account_id and\
                                     line_tax.analytic_account_id.id or False,
+                    'date' : voucher.date,
         }
         credit_line_vals = {
                     'name': line_tax.tax_id.name,
                     'quantity': 1,
-                    'date': time.strftime('%Y-%m-%d'),
                     'partner_id': voucher.partner_id.id,
                     'debit': 0.0,
                     'credit': abs(reference_amount),
@@ -297,6 +296,7 @@ class account_voucher(osv.Model):
                     'tax_id': line_tax.id,
                     'analytic_account_id': line_tax.analytic_account_id and\
                                     line_tax.analytic_account_id.id or False,
+                    'date' : voucher.date,
         }
         if context.get('writeoff', False):
             debit_line_vals.pop('analytic_account_id')
