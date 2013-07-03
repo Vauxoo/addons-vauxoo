@@ -58,7 +58,7 @@ class account_voucher(osv.Model):
     def get_percent_pay_vs_invoice(self, cr, uid, amount_original,amount, context=None):
         return amount_original and amount/amount_original or 1.0
     
-    def get_partial_amount_tax_pay(self, cr, uid, tax_amount,tax_base, context=None):
+    def get_partial_amount_tax_pay(self, cr, uid, tax_amount, tax_base, context=None):
         return tax_amount*tax_base
     
     def voucher_move_line_tax_create(self, cr, uid, voucher_id, move_id, context=None):
@@ -364,12 +364,11 @@ class account_voucher(osv.Model):
                     for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
                         for tax in invoice.tax_line:
                             if tax.tax_id.tax_voucher_ok:
-                                base_amount=self.get_partial_amount_tax_pay(cr, uid, tax.tax_id.amount, tax.base, context=context)
+                                base_amount=self.get_partial_amount_tax_pay(cr, uid, tax.amount/100, tax.base, context=context)
                                 move_ids=[]
                                 account=tax.tax_id.account_collected_voucher_id.id
                                 credit_amount= float('%.*f' % (2,(base_amount*factor)))
-                                porcent_payment = line.amount * 1 / invoice.amount_total
-                                total_amount_tax = porcent_payment * tax.tax_amount
+                                credit_amount_original = (base_amount*factor)
                                 amount_unround= float(base_amount*factor)
                             ########## la comento para hacer pruebas sin el redondeo propuesto aqui
                             #    if credit_amount:
@@ -418,7 +417,7 @@ class account_voucher(osv.Model):
                                 tax_line={
                                     'tax_id':tax.tax_id.id,
                                     'account_id':account,
-                                    'amount_tax' : total_amount_tax,
+                                    'amount_tax' : credit_amount_original,
                                     'amount_tax_unround':amount_unround,
                                     'tax':credit_amount,
                                     'voucher_line_id':line.id,
