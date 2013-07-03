@@ -364,7 +364,7 @@ class account_voucher(osv.Model):
                     for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
                         for tax in invoice.tax_line:
                             if tax.tax_id.tax_voucher_ok:
-                                base_amount=self.get_partial_amount_tax_pay(cr, uid, tax.amount/100, tax.base, context=context)
+                                base_amount = tax.amount
                                 move_ids=[]
                                 account=tax.tax_id.account_collected_voucher_id.id
                                 credit_amount= float('%.*f' % (2,(base_amount*factor)))
