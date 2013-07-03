@@ -157,12 +157,12 @@ class periodic_inventory_valuation(osv.osv):
                         'piv_id': ids[0],
                         'product_id':prod_id,
                         'qty_init':0.0,
-                        'qty_final':1.0,
+                        'qty_final':0.0,
                         'qty_sale':0.0,
-                        'qty_purchase':1.0,
+                        'qty_purchase':0.0,
                         'uom_id':prod.uom_id.id,
-                        'average_cost':40.0,
-                        'valuation':40.0,
+                        'average_cost':0.0,
+                        'valuation':0.0,
                         }, context=context))
 
             self.write(cr,uid,ids[0],{
@@ -231,14 +231,28 @@ class periodic_inventory_valuation(osv.osv):
                     #inv_fin = (inventario_final * costo_promedio)
                     
                     print "categoria del producto " ,
+
                     prod = prod_obj.browse(cr,uid,i,context=context)
-                    print prod.product_tmpl_id.categ_id.property_account_income_categ
-                    print prod.product_tmpl_id.categ_id.property_account_expense_categ
+                    
+                    #Algo pasa con prod.property_account_expense y prod.property_account_income
+                    if prod.property_account_expense:
+                        account_expense = prod.property_account_expense 
+                    else:
+                        account_expense = prod.product_tmpl_id.categ_id.property_account_expense_categ
+                   
+                    if prod.property_account_income:
+                        account_income = prod.property_account_income
+                    else:
+                        account_income = prod.product_tmpl_id.categ_id.property_account_income_categ
+                    
+                    #print prod.id
+                    #print prod.property_account_income
+                    #print prod.property_account_expense
+
                     context['journal_id'] = journal_id
                     context['period_id'] = period_ids
-                    
-                    print "INVENTARIO FINAAAAAL"
-                    print inventario_final - val_line.qty_final
+                   
+                    #Product valuation and journal item amount
                     if val_line.qty_init <= inventario_final:
                         cant = inventario_final - val_line.qty_final
                         debit = cant * costo_promedio
@@ -249,21 +263,12 @@ class periodic_inventory_valuation(osv.osv):
                         credit = cant * costo_promedio
                         debit = 0.0
                         valuation = credit
-                    d ={
-                            'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
-                            'partner_id': False,                                            
-                            'account_id': prod.product_tmpl_id.categ_id.property_account_income_categ, 
-                            'journal_id': journal_id,                               
-                            'period_id': period_ids,                                 
-                            'date': date_stop,                               
-                            'debit': debit,                                                   
-                            'credit': credit,                                                  
-                            }
-                    print d
 
+                    #Create journal items
                     line_id = self.pool.get('account.move.line').create(cr, uid, {      
                             'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
-                            'partner_id': False,                                            
+                            'partner_id': False,           
+                            'product_id':prod.id,
                             'account_id': prod.product_tmpl_id.categ_id.property_account_income_categ.id, 
                             'move_id': False,                                             
                             'journal_id': journal_id,                               
@@ -275,6 +280,7 @@ class periodic_inventory_valuation(osv.osv):
                     line_id_2 = self.pool.get('account.move.line').create(cr, uid, {      
                             'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
                             'partner_id': False,                                            
+                            'product_id':prod.id,
                             'account_id': prod.product_tmpl_id.categ_id.property_account_expense_categ.id,                                      
                             'move_id': False,                                             
                             'journal_id': journal_id,                               
