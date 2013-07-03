@@ -87,6 +87,39 @@ class periodic_inventory_valuation(osv.osv):
         'first': False,
         }
 
+    def validate_data(self, cr, uid, ids, vals, context=None):
+        if context is None:
+            context = {}
+        
+        if ids:
+            peri_inv_allowed = self.search(cr, uid, [('id','!=',ids[0])], order='id desc', limit=1, context=context)
+        else:
+            peri_inv_allowed = self.search(cr, uid, [], order='id desc', limit=1, context=context)
+
+        print "*****************************"
+
+        all_per_inv = self.browse(cr, uid, peri_inv_allowed, context=context)
+         
+        for i in all_per_inv:
+            #print vals.get('date'), " <= ", i.date
+            if vals.get('date') <= i.date:
+                raise osv.except_osv('Record with this data existing !', 'Can not create a record with repeated date')
+        
+        return True
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if context is None:                                                     
+            context = {}                                                     
+        self.validate_data(cr, uid, ids, vals,context=context)
+        return super(periodic_inventory_valuation, self).write(cr, uid, ids, vals, context=context)        
+
+    def create(self, cr, uid, vals, context=None):
+        if context is None:
+            context = {}
+        print vals
+        self.validate_data(cr, uid, False, vals,  context=context)
+        return super(periodic_inventory_valuation, self).create(cr, uid, vals, context=context)
+
     def load_valuation_items(self, cr, uid, ids, context=None):
         context = context or {} 
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -149,7 +182,9 @@ class periodic_inventory_valuation(osv.osv):
         periodic_line = self.pool.get('periodic.inventory.valuation.line')
         lineas = []
         move_id = False
+        state = 'draft'
         if not self.browse(cr,uid,ids[0],context=context).first:
+            state = 'confirm'
             pivl_init_ids = []
             for prod_id in prod_ids:
                 prod = prod_obj.browse(cr,uid,prod_id,context=context)
@@ -169,6 +204,7 @@ class periodic_inventory_valuation(osv.osv):
                 'pivl_ids':[(6,0,pivl_init_ids)],
                 },context=context)
         else:
+            state='done'
             product_price_purs = {}
             product_price_sales = {}
             qty_purchase = 0 
