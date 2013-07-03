@@ -368,7 +368,8 @@ class account_voucher(osv.Model):
                                 move_ids=[]
                                 account=tax.tax_id.account_collected_voucher_id.id
                                 credit_amount= float('%.*f' % (2,(base_amount*factor)))
-                                credit_amount_original = (base_amount*factor)
+                                porcent_payment = line.amount * 1 / invoice.amount_total
+                                total_amount_tax = porcent_payment * tax.tax_amount
                                 amount_unround= float(base_amount*factor)
                             ########## la comento para hacer pruebas sin el redondeo propuesto aqui
                             #    if credit_amount:
@@ -417,7 +418,7 @@ class account_voucher(osv.Model):
                                 tax_line={
                                     'tax_id':tax.tax_id.id,
                                     'account_id':account,
-                                    'amount_tax':credit_amount_original,
+                                    'amount_tax' : total_amount_tax,
                                     'amount_tax_unround':amount_unround,
                                     'tax':credit_amount,
                                     'voucher_line_id':line.id,
