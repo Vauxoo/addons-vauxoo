@@ -11,7 +11,7 @@
                             name="load_valuation_items" 
                             type="object" 
                             string="Update Valuation" 
-                            states="draft" 
+                            states="draft,confirm" 
                             class="oe_highlight"/>
                         <field name="state" 
                             widget="statusbar" 

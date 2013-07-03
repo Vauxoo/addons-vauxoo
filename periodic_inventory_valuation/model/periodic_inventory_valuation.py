@@ -92,7 +92,11 @@ class periodic_inventory_valuation(osv.osv):
             context = {}
         
         if ids:
-            peri_inv_allowed = self.search(cr, uid, [('id','!=',ids[0])], order='id desc', limit=1, context=context)
+            if type(ids) is list:
+                peri_inv_allowed = self.search(cr, uid, [('id','!=',ids[0])], order='id desc', limit=1, context=context)
+            else:
+                peri_inv_allowed = self.search(cr, uid, [('id','!=',ids)], order='id desc', limit=1, context=context)
+
         else:
             peri_inv_allowed = self.search(cr, uid, [], order='id desc', limit=1, context=context)
 
@@ -101,7 +105,6 @@ class periodic_inventory_valuation(osv.osv):
         all_per_inv = self.browse(cr, uid, peri_inv_allowed, context=context)
          
         for i in all_per_inv:
-            #print vals.get('date'), " <= ", i.date
             if vals.get('date') <= i.date:
                 raise osv.except_osv('Record with this data existing !', 'Can not create a record with repeated date')
         
@@ -351,6 +354,7 @@ class periodic_inventory_valuation(osv.osv):
             'first':True,
             'aml_ids':[(6, 0, lineas)],
             'move_id': move_id,
+            'state': state,
             },context=context)
     
         return True
