@@ -16,5 +16,14 @@
             </field>
         </record>
 
+        <record id="hr_expense_extended_invoices" model="ir.actions.act_window">
+            <field name="res_model">account.invoice</field>
+            <field name="name">Invoices</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('type','=','in_invoice'),('expense_id','=',expense_id)]</field>
+            <field name="target">new</field>
+        </record>
+
     </data>
 </openerp>
