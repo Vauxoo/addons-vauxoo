@@ -134,9 +134,6 @@
                      <xpath expr="//field[@name='move_line_id']" position="after">
                         <field name="amount_original" invisible='1'/>
                      </xpath>
-                     <xpath expr="//field[@name='amount_original']" position="after">
-                        <field name="id" invisible='1'/>
-                     </xpath>
                 </field>
         </record>
 
