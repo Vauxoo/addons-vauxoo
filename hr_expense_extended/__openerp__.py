@@ -37,7 +37,8 @@ HR Expenses Extend Module
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "view/hr_expense_view.xml"
+        "view/hr_expense_view.xml",
+        "view/account_invoice_view.xml"
     ],
     "active": False,
     "installable": True,

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="hr_expense_extended_limited_invoice_form" model="ir.ui.view">
+            <field name="name">hr.expense.extended.limited.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@string='Validate']" position="after">
+                    <button colspan="2" name="create_expense_from_invoice" string="Create Expense From Invoice" type="object" attrs="{'invisible': [('state','!=', 'draft')], 'readonly': [('expense_id','!=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_expense_extended_invoice_form">
+            <field name="name">hr.expense.extended.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="expense_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
