@@ -583,7 +583,8 @@ account_voucher()
 class account_voucher_line(osv.Model):
     _inherit = 'account.voucher.line'
     
-    def onchange_amount(self, cr, uid, ids, amount, voucher_id, move_line_id, amount_original, context=None):
+    def onchange_amount(self, cr, uid, ids, amount, voucher_id, move_line_id,\
+        amount_original, context=None):
         voucher_obj = self.pool.get('account.voucher')
         move_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
@@ -594,8 +595,8 @@ class account_voucher_line(osv.Model):
         company_currency = company_obj.browse(cr, uid, company_user,\
             context=context).currency_id.id
         if voucher_id:
-            current_currency = voucher_obj._get_current_currency(cr, uid, voucher_id,\
-                context)
+            current_currency = voucher_obj._get_current_currency(cr, uid,\
+                voucher_id, context=context)
         else:
             current_currency = company_obj.browse(cr, uid, company_user,\
                 context=context).currency_id.id
@@ -603,6 +604,7 @@ class account_voucher_line(osv.Model):
             amount_original, amount, context=context)
         res = {'value' : {}}
         if amount > 0:
+            list_tax = []
             move_id = move_obj.browse(cr, uid, move_line_id, context=context).\
                 move_id.id
             invoice_ids = invoice_obj.search(cr, uid, [('move_id','=', \
@@ -612,10 +614,9 @@ class account_voucher_line(osv.Model):
                 for tax in invoice.tax_line:
                     if tax.tax_id.tax_voucher_ok:
                         base_amount = tax.amount
-                        move_ids = []
                         account = tax.tax_id.account_collected_voucher_id.id
                         credit_amount = float('%.*f' % (2,(base_amount*factor)))
-                        credit_amount_original = (amount * 1 / invoice.amount_total) * tax.amount
+                        credit_amount_original = (base_amount*factor)
                         amount_unround = float(credit_amount_original)
                         diff_amount_tax = 0.0
                         diff_account_id = False
@@ -675,7 +676,9 @@ class account_voucher_line(osv.Model):
                             if move_lines.account_id.id== account:
                                 move_line_id2 = move_lines.id
                                 break
-                        res['value'].update({'tax_line_ids' : [{
+                                
+                        list_tax.append([
+                            0, False, {
                             'tax_id' : tax.tax_id.id,
                             'account_id' : account,
                             'amount_tax' : credit_amount_original,
@@ -688,7 +691,12 @@ class account_voucher_line(osv.Model):
                             'analytic_account_id' : tax.\
                             account_analytic_id and tax.\
                             account_analytic_id.id or False,
-                        }]})
+                        }])
+                        
+            lista_tax_to_add = [[5, False, False]]
+            for tax in list_tax:
+                lista_tax_to_add.append(tax)
+            res['value'].update({'tax_line_ids' : lista_tax_to_add})
         return res
     
     _columns={
