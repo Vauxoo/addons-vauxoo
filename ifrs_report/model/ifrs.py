@@ -669,7 +669,7 @@ class ifrs_lines(osv.osv):
             ('init', 'Initial Values'),
             ('var', 'Variation in Periods'),
             ('fy', ('FY All'))],
-            'Accounting Spam', required=False,
+            'Accounting Span', required=False,
             help='Leaving blank means YTD'),
         'value': fields.selection([
             ('debit', 'Debit'),
