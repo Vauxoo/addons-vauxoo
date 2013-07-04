@@ -11,6 +11,12 @@
                     <field name="invoice_id"/>
                 </xpath>
 
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Invoices">
+                        <field name="invoice_ids"/>
+                    </page>
+                </xpath>
+
                 <xpath expr="//button[@name='confirm']" position="before">
                     <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action"/>
                 </xpath>
