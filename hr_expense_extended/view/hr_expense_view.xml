@@ -2,37 +2,29 @@
 <openerp>
     <data>
 
-        <record id="hr_expense_extended_form" model="ir.ui.view">
-            <field name="name">hr.expense.extended.from</field>
+        <record id="hr_expense_extended_expense_form" model="ir.ui.view">
+            <field name="name">hr.expense.extended.expense.from</field>
             <field name="model">hr.expense.expense</field>
             <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='line_ids']/tree/field[@name='ref']" position="after">
                     <field name="invoice_id"/>
                 </xpath>
-            </field>
-        </record>
 
-        <record id="hr_expense_extended_limited_invoice_form" model="ir.ui.view">
-            <field name="name">hr.expense.extended.limited.invoice.from</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_supplier_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="before">
-                    <label string="VERSION MODIFICADA"/>
+                <xpath expr="//button[@name='confirm']" position="before">
+                    <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action"/>
                 </xpath>
-<!--
-                <xpath expr="//header" position="attribute">
+                <xpath expr="//button[@name='confirm']" position="after">
+                    <button name="concile_viatical_payment" type="object" string="Concile Payment Dummy"/>
                 </xpath>
--->
-            </field>
-        </record>
 
-        <record id="action_hr_expense_extended_limited_invoice_form" model="ir.actions.act_window">
-            <field name="name">Draft Invoice</field>
-            <field name="res_model">account.invoice</field>
-            <field name="view_type">form</field>
-            <field name="view_id" ref="hr_expense_extended_limited_invoice_form"/>
+                <xpath expr="//sheet/group" position="before">
+                    <div class="oe_right oe_button_box" name="button_box">
+                        <button name="%(hr_expense_extended_invoices)d" type="action" string="Invoices" context="{'expense_id': active_id}"/>
+                    </div>
+                </xpath>
+                        
+            </field>
         </record>
 
     </data>

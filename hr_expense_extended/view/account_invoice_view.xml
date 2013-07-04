@@ -25,5 +25,15 @@
             <field name="target">new</field>
         </record>
 
+        <record id="action_add_invoice_to_expense" model="ir.actions.act_window">
+            <field name="name">Expense Invoice</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','in_invoice')]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False) }</field>
+            <field name="target">current</field>
+        </record>
+
     </data>
 </openerp>
