@@ -96,7 +96,6 @@ class periodic_inventory_valuation(osv.osv):
                 peri_inv_allowed = self.search(cr, uid, [('id','!=',ids[0])], order='id desc', limit=1, context=context)
             else:
                 peri_inv_allowed = self.search(cr, uid, [('id','!=',ids)], order='id desc', limit=1, context=context)
-
         else:
             peri_inv_allowed = self.search(cr, uid, [], order='id desc', limit=1, context=context)
 
@@ -122,6 +121,14 @@ class periodic_inventory_valuation(osv.osv):
         print vals
         self.validate_data(cr, uid, False, vals,  context=context)
         return super(periodic_inventory_valuation, self).create(cr, uid, vals, context=context)
+
+    def unlink(self, cr, uid, ids, context=None):
+        
+        brw_per_inv = self.browse(cr, uid, ids[0], context=context)
+        if brw_per_inv.state == 'done':
+            raise osv.except_osv('Can not delete the record', 'When a stock is done, can not be deleted')
+
+        return super(periodic_inventory_valuation, self).unlink(cr, uid, ids, context=context)
 
     def load_valuation_items(self, cr, uid, ids, context=None):
         context = context or {} 
