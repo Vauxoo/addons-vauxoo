@@ -77,7 +77,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'rec_ids':fields.many2many('account.account', 'acp_rec_acc_rel',
             'account_id', 'acp_id', 'Receivable Accounts',
-            domain="[('type','=','view')]", help=('Select the most top '
+            domain=("[('type','=','view'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
             'level in the chart of account related to your Receivable Accounts')),
         'rec_ut_id':fields.many2one('account.account.type', 'Receivable  Closure Type',
             required=False, domain="[('close_method','=','unreconciled')]",
