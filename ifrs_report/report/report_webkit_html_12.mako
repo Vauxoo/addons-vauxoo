@@ -19,13 +19,6 @@
                 </table>
             </td>
             <td>
-            <table>
-                %try:
-                    <tr><td>${helper.embed_logo_by_name('company_logo',80,60)|n}</td></tr>
-                %except:
-                    <tr><td></td></tr>
-                %endtry
-            </table>
             </td>
         </tr>
     </table> 
