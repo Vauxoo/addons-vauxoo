@@ -87,7 +87,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'pay_ids':fields.many2many('account.account', 'acp_pay_acc_rel',
             'account_id', 'acp_id', 'Payable Accounts',
-            domain="[('type','=','view')]", help=('Select the most top '
+            domain=("[('type','=','view'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
             'level in the chart of account related to your Payable Accounts')),
         'pay_ut_id':fields.many2one('account.account.type', 'Payable  Closure Type',
             required=False, domain="[('close_method','=','unreconciled')]",
@@ -95,7 +97,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'recon_ids':fields.many2many('account.account', 'acp_recon_acc_rel',
             'account_id', 'acp_id', 'Reconcilable Accounts',
-            domain="[('type','=','other')]", help=('Select the Accounts that '
+            domain=("[('type','=','other'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
                 'you will regard as Reconcilable. Remember this Accounts are'
                 ' different than your Receivable & Payable Accounts')),
         'recon_ut_id':fields.many2one('account.account.type', 'Reconcilable Closure Type',
@@ -104,7 +108,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'det_ids':fields.many2many('account.account', 'acp_det_acc_rel',
             'account_id', 'acp_id', 'Detail Accounts',
-            domain="[('type','=','other')]", help=('Select the Accounts that '
+            domain=("[('type','=','other'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
                 'you will regard as Detail. This kind of Account is weirdly '
                 'used. Although is could be used in Depreciation Accounts')),
         'det_ut_id':fields.many2one('account.account.type', 'Detail Closure Type',
