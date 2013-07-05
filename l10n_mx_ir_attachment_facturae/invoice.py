@@ -44,16 +44,19 @@ class account_invoice(osv.Model):
             'in_refund': False}
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False):
-                for attachment in ir_attach_obj.browse(cr, uid, id_attach,
-                                                       context):
-                    if attachment.state == 'done':
+                for attachment in ir_attach_obj.browse(cr, uid, 
+                        id_attach, context):
+                    if attachment.state <> 'cancel':
+                        raise osv.except_osv(_('Warning'), _('To cancel the invoice, the attachment must be canceled'))
+                    else:
                         wf_service.trg_validate(
                             uid, 'ir.attachment.facturae.mx',
                             attachment.id, 'action_cancel', cr)
-        self.write(cr, uid, ids, {
-                   'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-        return super(account_invoice, self).action_cancel(cr, uid, ids,
-                                                          context)
+                        self.write(cr, uid, ids, {
+                            'date_invoice_cancel': time.strftime(
+                                '%Y-%m-%d %H:%M:%S')})
+                        return super(account_invoice, 
+                            self).action_cancel(cr, uid, ids, context)
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')

@@ -335,6 +335,11 @@ class account_invoice(osv.Model):
                     'resultados']['mensaje'] or ''
                 status = resultado['resultados'] and resultado[
                     'resultados']['status'] or ''
+                status2 = resultado['status'] or ''
+                if status == '401':
+                    raise osv.except_osv(_('Warning'), _('La fecha del comprobante está fuera del rango de timbrado permitido.Han pasado más de 72 horas desde la fecha de generación del comprobante'))
+                if status == '307' and status2 == '200':
+                    raise osv.except_osv(_('Warning'), _('El CFDI ya ha sido timbrado previamente'))
                 if status == '200' or status == '307':
                     fecha_timbrado = resultado[
                         'resultados']['fechaTimbrado'] or False
@@ -500,11 +505,11 @@ class account_invoice(osv.Model):
                         '- Status of response of the SAT: 205. Not found the folio of CFDI for his cancellation.')
                 else:
                     msg_SAT = _('- Status of response of SAT unknown')
-                msg_global = msg_SAT + msg_global + str(msg_tecnical)
+                msg_global_all = msg_SAT + msg_global + str(msg_tecnical)
         else:
             msg_global = _(
                 'Not found information of webservices of PAC, verify that the configuration of PAC is correct')
-        return {'message': msg_global}
+        return {'message': msg_global_all, 'msg_SAT': msg_SAT, 'msg_tecnical': msg_tecnical, 'msg_global': msg_global, 'status': status, 'status_uuid': status_uuid}
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
         """
