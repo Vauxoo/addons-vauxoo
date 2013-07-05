@@ -75,6 +75,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         
     def create_diot(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids)[0]
+        user_company_name = self.pool.get('res.users').browse(cr, uid, uid).company_id.name
         if context is None:
             context = {}
         acc_diot_obj = self.browse(cr, uid, ids, context=context)
@@ -116,26 +117,19 @@ class wizard_account_diot_mx(osv.osv_memory):
             for payment in move_lines:
                 if payment.date >= date_start and payment.date <= date_stop:
                     amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
-                    print invo.tax_line
                     for tax in invo.tax_line:
                         if tax.tax_id.tax_category_id.name == 'IVA' and tax.tax_id.amount == 0.16:
                             amount_16 = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_16", amount_16
                         if tax.tax_id.tax_category_id.name == 'IVA' and tax.tax_id.amount == 0.11:
                             amount_11 = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_11", amount_11
                         if tax.tax_id.tax_category_id.name == 'IVA' and tax.tax_id.amount == 0:
                             amount_0 = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_0", amount_0
                         if tax.tax_id.tax_category_id.name == 'IVA-EXENTO' and tax.tax_id.amount == 0:
                             amount_exe = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_exe", amount_exe
                         if tax.tax_id.tax_category_id.name == 'IVA-RET':
                             amount_ret = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_ret", amount_ret
                         untax_amount += tax.amount
                     if (str(invo.partner_id.vat)) in dic_move_line:
-                        print invo.partner_id.name
                         line_move = dic_move_line[(str(invo.partner_id.vat))]    
                         line_move[7] = line_move[7] + amount_16
                         line_move[8] = line_move[8] + amount_11
@@ -180,14 +174,13 @@ class wizard_account_diot_mx(osv.osv_memory):
                     matrix_row = []
         invoice_ids = []
         buf = StringIO.StringIO()
-        print "dic", dic_move_line
         for diot in dic_move_line:
             cadena = str(dic_move_line[diot][0]) + '|' + str(dic_move_line[diot][1]) + '|' + str(dic_move_line[diot][2]) + '|' + str(dic_move_line[diot][3]) + '|' + str(dic_move_line[diot][4]) + '|' + str(dic_move_line[diot][5]) + '|' + str(dic_move_line[diot][6]) + '|' + (str(int(round((dic_move_line[diot][7]),0)))) + '||' + (str(int(round((dic_move_line[diot][8]),0)))) + '|||||||||' + (str(int(round((dic_move_line[diot][9]),0)))) + '|' + (str(int(round((dic_move_line[diot][10]),0)))) + '|' + (str(int(round((dic_move_line[diot][11]),0)))) + '||' + '\n'
             buf.write(upper(cadena))
         out = base64.encodestring(buf.getvalue())
         buf.close()
         period_id =  pooler.get_pool(cr.dbname).get('account.period').browse(cr, uid, period_id)
-        this.name = "%s-%s.txt" % ("OPENERP-DIOT", strftime('%Y-%m-%d'))
+        this.name = "%s-%s-%s.txt" % ("OPENERP-DIOT", strftime('%Y-%m-%d'), user_company_name)
         datas = {'ids' : context.get('active_ids',[])}
         res = self.read(cr, uid, ids, ['time_unit','measure_unit'])
         res = res and res[0] or {}
