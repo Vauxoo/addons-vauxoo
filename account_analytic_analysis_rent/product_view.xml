@@ -10,6 +10,7 @@
             <field name="arch" type="xml">
                 <field name="purchase_ok" position="after">
                     <field name="rent_ok"/>
+                    <field name="accesory_ok"/>
                 </field>
             </field>
     </record>
@@ -27,6 +28,9 @@
                             <tree string='Features'>
                                 <field name="name"/>
                             </tree>
+                            <form string='Features'>
+                                <field name="name"/>
+                            </form>
                         </field>
                     </group>
                 </group>
@@ -67,6 +71,16 @@
     </record>
 
     <menuitem action="product_rent_action" id="product_rent_action_menu" parent="base.menu_sales"/>
+    
+    <record model="ir.actions.act_window" id="product_accesory_action">
+        <field name="name">Accesory Product</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('accesory_ok','=',True)]</field>
+    </record>
+
+    <menuitem action="product_accesory_action" id="product_accesory_action_menu" parent="base.menu_sales"/>
     
     <record id="view_feature_product_tree" model="ir.ui.view">
         <field name="name">view.feature.product.tree</field>

@@ -26,8 +26,11 @@ from tools.translate import _
 class product_template(osv.osv):
     _inherit='product.template'
     
+    
+    
     _columns={
         'rent_ok':fields.boolean('Rentable'),
+        'accesory_ok':fields.boolean('Accesory'),
         'rent': fields.boolean('Rent', readonly=True),
         'contract_id': fields.many2one('account.analytic.account', 'Contract', readonly=True),
     }

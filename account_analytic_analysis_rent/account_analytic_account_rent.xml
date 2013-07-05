@@ -11,9 +11,14 @@
                 <notebook position="inside">
                     <page string="Product">
                         <field name="product_ids" nolabel="1">
-                            <tree string="products" editable="top" >
-                                <field name="product_id"/>
+                            <tree string="products" editable="top">
+                                <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                <field name="type"/>
                             </tree>
+                            <form string="products">
+                                <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                <field name="type"/>
+                            </form>
                         </field>
                     </page>
                 </notebook>
@@ -95,6 +100,18 @@
             </field>
     </record>
     
+    <record model="ir.ui.view" id="account_analytic_analysis_journal_contract">
+        <field name="name">account.analytic.analysis.journal.contract</field>
+        <field name="model">account.analytic.account</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                    <field name="user_id" position="after">
+                        <field name="journal_id"/>
+                    </field>
+            </field>
+    </record>
+
     <record model="ir.ui.view" id="account_analytic_analysis_group_prod">
         <field name="name">account.analytic.analysis.group.prod</field>
         <field name="model">account.analytic.account</field>
@@ -120,6 +137,19 @@
             </field>
     </record>
 
+    <record model="ir.ui.view" id="account_invoice_line_write">
+        <field name="name">account.invoice.line_write</field>
+        <field name="model">account.invoice.line</field>
+            <field name="type">form</field> 
+            <field name="inherit_id" ref="account.view_invoice_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="product_id" />
+                    <field name="w_start" />
+                    <field name="w_end" />
+                </field>
+            </field>
+    </record>
 
 
     </data>

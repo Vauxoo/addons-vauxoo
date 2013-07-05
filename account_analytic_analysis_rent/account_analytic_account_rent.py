@@ -36,8 +36,20 @@ class analytic_term(osv.osv):
 class account_analytic_product(osv.osv):
     _name='account.analytic.product'
     
+    def onchange_product_id(self, cr, uid, ids, product_id, context=None):
+        res={}
+        if context==None:
+            context={}
+        product_obj=self.pool.get('product.product')
+        for prod in product_obj.browse(cr, uid, [product_id], context):
+            type='rent'
+            if prod.accesory_ok:
+                type='accesory'
+        return {'value':{'type': type} }
+    
     _columns={
-        'product_id':fields.many2one('product.product','Product', domain=[('rent','=',False), ('rent_ok','=',True)]),
+        'product_id':fields.many2one('product.product','Product', domain=['|', ('rent_ok','=',True), ('accesory_ok','=',True), ('rent','=',False) ]),
+        'type': fields.selection([('rent','Rent'),('accesory','Accesory')],'Type'),
         'analytic_id':fields.many2one('account.analytic.account','Account Analytic')
     }
 
@@ -45,15 +57,12 @@ class account_analytic_line(osv.osv):
     _inherit='account.analytic.line'
     
     def _check_inv(self, cr, uid, ids, vals):
-        print ids,vals,'pero si entra'
         select = ids
         if isinstance(select, (int, long)):
-            print "si lo hace"
             select = [ids]
         if ( not vals.has_key('invoice_id')) or vals['invoice_id' ] == False:
             for line in self.browse(cr, uid, select):
                 if line.invoice_id and 'account_id' not in vals:
-                    print line.invoice_id,line.id, "no tiene"
                     raise osv.except_osv(_('Error !'),
                         _('You cannot modify an invoiced analytic lines!'))
         return True
@@ -70,6 +79,16 @@ class account_analytic_line(osv.osv):
     }
 
 
+class account_invoice_line(osv.osv):
+    _inherit='account.invoice.line'
+    
+    _columns={
+        'w_start': fields.integer('Inicial'),
+        'w_end': fields.integer('Final'),
+    }
+account_invoice_line()
+    
+
 class account_analytic_account(osv.osv):
     _inherit='account.analytic.account'
     
@@ -85,7 +104,6 @@ class account_analytic_account(osv.osv):
                             if l.id not in lines:
                                 lines.append(l.id)
             result[contract.id] = lines
-        print result,"lo mismos"
         return result
         
     def _compute_lines_inv(self, cr, uid, ids, name, args, context=None):
@@ -96,9 +114,7 @@ class account_analytic_account(osv.osv):
             for line in contract.line_ids:
                 if line.invoice_id and line.invoice_id.id not in lines:
                     lines.append(line.invoice_id.id)
-            print lines,"lines"
             result[contract.id]=lines
-        print result,"si sale"
         return result
     
     _columns={
@@ -106,7 +122,8 @@ class account_analytic_account(osv.osv):
         'term_id': fields.many2one('analytic.term','Term'),
         'voucher_ids': fields.function(_compute_lines, relation='account.move.line', type="many2many", string='Payments'),
         'invoice_ids': fields.function(_compute_lines_inv, relation='account.invoice', type="many2many", string='Invoice'),
-        'group_product': fields.boolean('Group Product')
+        'group_product': fields.boolean('Group Product'),
+        'journal_id':fields.many2one('account.journal','Journal')
     }
     
     def set_close(self, cr, uid, ids, context=None):
@@ -140,8 +157,11 @@ class account_analytic_account(osv.osv):
                 move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':warehouse.lot_stock_id.id,'location_dest_id':warehouse.lot_output_id.id}, context=context)
             for line in range(0,contract.term_id.no_term):
                 for prod in contract.product_ids:
+                    a = prod.product_id.product_tmpl_id.property_account_income.id
+                    if not a:
+                        a = prod.product_id.categ_id.property_account_income_categ.id
                     for feature in prod.product_id.feature_ids:
-                        line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':105,'to_invoice':1,'account_id':contract.id,'journal_id':2},context=context)
+                        line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id},context=context)
                     product_obj.write(cr, uid, prod.product_id.id, {'rent':True,'contract_id':contract.id}, context=context)
                 date_invoice=(datetime.strptime(date_invoice, "%Y-%m-%d") + relativedelta(months=1)).strftime("%Y-%m-%d")
         return super(account_analytic_account, self).set_open(cr, uid, ids, context=context)
