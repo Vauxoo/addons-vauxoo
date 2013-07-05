@@ -141,6 +141,9 @@ class account_closure_preparation(osv.TransientModel):
             ('stage20','Prep & Fix Consolation Acc'),
             ('stage21','LAST STEP'),
             ], help='State'), 
+        'skip':fields.boolean('Skip This Step', help=('Some time it is Ok to '
+            'skip a step because that configuration is not used in your company'
+            )), 
             }
 
     _defaults = {
@@ -357,7 +360,9 @@ class account_closure_preparation(osv.TransientModel):
             acc_obj.write(cr,uid,res,
                           {'type':'other'},context=context)
             wzd_brw.write({'state':'stage16','account_ids':[(6,0,[])]})
-        elif wzd_brw.state == 'stage16':
+        elif wzd_brw.state == 'stage16' and wzd_brw.skip:
+            wzd_brw.write({'state':'stage18','skip':False})
+        elif wzd_brw.state == 'stage16' and not wzd_brw.skip:
             acc_obj.write(cr,uid,[i.id for i in wzd_brw.recon_ids],{
                           'user_type' : wzd_brw.recon_ut_id.id,
                           'type' : 'other',
@@ -387,7 +392,9 @@ class account_closure_preparation(osv.TransientModel):
                           'reconcile' : False,
                           },context=context)
             wzd_brw.write({'state':'stage18','account_ids':[(6,0,[])]})
-        elif wzd_brw.state == 'stage18':
+        elif wzd_brw.state == 'stage18' and wzd_brw.skip:
+            wzd_brw.write({'state':'stage20','skip':False})
+        elif wzd_brw.state == 'stage18' and not wzd_brw.skip:
             acc_obj.write(cr,uid,[i.id for i in wzd_brw.det_ids],{
                           'user_type' : wzd_brw.det_ut_id.id,
                           'type' : 'other',
@@ -420,7 +427,9 @@ class account_closure_preparation(osv.TransientModel):
                 'state':'stage20',
                 'account_ids':[(6,0,[])],
                 'cons_ids':[(6,0,[i.id for i in wzd_brw.is_ids])]})
-        elif wzd_brw.state == 'stage20':
+        elif wzd_brw.state == 'stage20' and wzd_brw.skip:
+            wzd_brw.write({'state':'stage21','skip':False})
+        elif wzd_brw.state == 'stage20' and not wzd_brw.skip:
             acc_obj.write(cr,uid,wzd_brw.cons_id.id,{
                 'child_consol_ids':[(6,0,[i.id for i in wzd_brw.cons_ids])]
                           },context=context)

@@ -25,6 +25,8 @@
                             string="Proceed" 
                             states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20" 
                             class="oe_highlight"/>
+                        <label for="skip" states='stage16,stage18,stage20'/>
+                        <field name='skip' states='stage16,stage18,stage20'/>
                         <field name="state" 
                             widget="statusbar" 
                             statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20"
@@ -205,10 +207,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
-                                <field name='recon_ut_id' attrs="{'required':[('state','=','stage16')],'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}"/>
+                                <field name='recon_ut_id' attrs="{'required':[('skip','=',False),('state','=','stage16')],'readonly':['|',('skip','=',True),('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
-                                <field name='recon_ids' nolabel="1" attrs="{'required':[('state','=','stage16')],'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}">
+                                <field name='recon_ids' nolabel="1" attrs="{'required':[('skip','=',False),('state','=','stage16')],'readonly':['|',('skip','=',True),('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -231,10 +233,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
-                                <field name='det_ut_id' attrs="{'required':[('state','=','stage18')],'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}"/>
+                                <field name='det_ut_id' attrs="{'required':[('skip','=',False),('state','=','stage18')],'readonly':['|',('skip','=',True),('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
-                                <field name='det_ids' nolabel="1" attrs="{'required':[('state','=','stage18')],'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}">
+                                <field name='det_ids' nolabel="1" attrs="{'required':[('skip','=',False),('state','=','stage18')],'readonly':['|',('skip','=',True),('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -254,10 +256,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage20'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
-                                <field name='cons_id' attrs="{'required':[('state','=','stage20')],'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}"/>
+                                <field name='cons_id' attrs="{'required':[('skip','=',False),('state','=','stage20')],'readonly':['|',('skip','=',True),('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
-                                <field name='cons_ids' nolabel="1" attrs="{'required':[('state','=','stage20')],'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}">
+                                <field name='cons_ids' nolabel="1" attrs="{'required':[('skip','=',False),('state','=','stage20')],'readonly':['|',('skip','=',True),('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
