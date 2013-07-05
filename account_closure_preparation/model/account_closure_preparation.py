@@ -67,7 +67,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'bk_ids':fields.many2many('account.account', 'acp_bk_acc_rel',
             'account_id', 'acp_id', 'Bank & Cash Accounts',
-            domain="[('type','=','view')]", help=('Select the most top '
+            domain=("[('type','=','view'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
             'level in the chart of account related to your Bank Accounts')),
         'bk_ut_id':fields.many2one('account.account.type', 'Bank Closure Type',
             required=False, domain="[('close_method','=','balance')]",
