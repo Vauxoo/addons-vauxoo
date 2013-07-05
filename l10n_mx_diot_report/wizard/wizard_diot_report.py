@@ -19,6 +19,8 @@
 #
 ##############################################################################
 
+import datetime
+from dateutil.relativedelta import *
 from osv import osv, fields
 import time
 from account import account
@@ -56,7 +58,21 @@ class wizard_account_diot_mx(osv.osv_memory):
         'state': 'choose',
     }
 
-
+    def default_get(self, cr, uid, fields, context=None):
+        data = super(wizard_account_diot_mx,self).default_get(cr, uid,
+                                                fields, context=context)
+        time_now = datetime.date.today()+relativedelta(months=-1) 
+        company_id = self.pool.get('res.users').browse(cr, uid, uid).\
+                                                        company_id.id
+        period_id = self.pool.get('account.period').search(cr, uid,
+                [('date_start', '<=', time_now),
+                ('date_stop', '>=', time_now),
+                ('company_id', '=', company_id)])
+        if period_id:
+            data.update({'company_id' : company_id,
+                                            'month_id' : period_id[0]})
+        return data
+        
     def create_diot(self, cr, uid, ids, context=None):
         this = self.browse(cr, uid, ids)[0]
         if context is None:
