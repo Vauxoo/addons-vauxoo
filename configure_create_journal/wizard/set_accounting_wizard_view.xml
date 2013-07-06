@@ -29,7 +29,7 @@
             <field name="target">new</field>
         </record>
 
-    <menuitem action="action_configure_create_journal_wizard" id="menu_action_configure_create_journal_wizard" parent="account.menu_finance_configuration" sequence="100"/>
+    <menuitem action="action_configure_create_journal_wizard" id="menu_action_configure_create_journal_wizard" parent="account.menu_finance_configuration" sequence="100" groups="group_configurations_account.group_wizard_configure_accounting"/>
  
         </data>
 </openerp>
