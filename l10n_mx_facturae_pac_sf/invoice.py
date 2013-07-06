@@ -396,6 +396,7 @@ class account_invoice(osv.Model):
                     status = 'parent_' + resultado['status']
         else:
             msg = 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
+            raise osv.except_osv(_('Warning'), _('Not found information from web services of PAC, verify that the configuration of PAC is correct'))
         return {'file': file, 'msg': msg, 'status': status, 'cfdi_xml': cfdi_xml}
 
     def _get_file_cancel(self, cr, uid, inv_ids, context={}):
