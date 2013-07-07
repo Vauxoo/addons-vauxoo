@@ -30,7 +30,7 @@ class account_move_line(osv.Model):
     
     _columns = {
         'amount_base' : fields.float('Amount Base'),
-        'tax_id_secundary' : fields.many2one('account.tax', 'Tax Secundary'),
+        'tax_id_secondary' : fields.many2one('account.tax', 'Tax Secundary'),
     }
 
 class account_invoice_tax(osv.Model):
@@ -49,12 +49,12 @@ class account_invoice_tax(osv.Model):
                 'price_unit' : t.amount,
                 'quantity' : 1,
                 'price' : t.amount or 0.0,
-                'account_id' : t.account_id.id,
-                'tax_code_id' : t.tax_code_id.id,
-                'tax_amount' : t.tax_amount,
-                'account_analytic_id' : t.account_analytic_id.id,
-                'amount_base' : t.base_amount,
-                'tax_id_secundary' : t.tax_id.id,
+                'account_id' : t.account_id.id or False,
+                'tax_code_id' : t.tax_code_id.id of False,
+                'tax_amount' : t.tax_amount or False,
+                'account_analytic_id' : t.account_analytic_id.id or False,
+                'amount_base' : t.base_amount or 0.0,
+                'tax_id_secondary' : t.tax_id.id or False,
             })
         return res
         
@@ -65,7 +65,7 @@ class account_invoice(osv.Model):
         res = super(account_invoice, self).line_get_convert(cr, uid, x, part, date, context=context)
         res.update({
             'amount_base': x.get('amount_base', False),
-            'tax_id_secundary': x.get('tax_id_secundary', False),
+            'tax_id_secondary': x.get('tax_id_secondary', False),
         })
         return res
         
