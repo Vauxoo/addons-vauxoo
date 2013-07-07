@@ -28,18 +28,28 @@
 {
     "name" : "MEXICO - DIOT Report",
     "version" : "1.0",
-    "depends" : ["base", "base_vat","account", "l10n_mx", "account_accountant", "l10n_mx_account_invoice_tax", "l10n_mx_account_tax_category", "l10n_mx_base_vat_split" ],
     "author" : "Federico Manuel Echeverri Choux",
-    "description": """Module DIOT for  Mexico:
-    """,
-    'author': 'Federico Manuel Echeverri Choux',
+    "category" : "Generic Modules",
+    "description": """Module DIOT for  Mexico""",
     "website" : "http://www.conectel.mx/",
-    'init_xml': [],
-    'update_xml': [
-                    	"partner_view.xml",
-#                    	"account_tax_view.xml",
-                    	"wizard/wizard_diot_report_view.xml",
-                ],
-    'installable': True,
-    'active': False,
+    "license" : "AGPL-3",
+    "depends" : [
+        "base_vat",
+        "account_move_line_base_tax",
+        "account_accountant",
+        "l10n_mx_account_invoice_tax",
+        "l10n_mx_account_tax_category",
+        "l10n_mx_base_vat_split"
+        ],
+    "demo" : [],
+    "data" : [
+        "partner_view.xml",
+        "wizard/wizard_diot_report_view.xml",
+    ],
+    'js': [],
+    'qweb' : [],
+    'css':[],
+    'test': [],
+    "installable" : True,
+    "active" : False,
 }

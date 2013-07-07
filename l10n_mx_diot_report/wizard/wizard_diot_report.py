@@ -19,10 +19,9 @@
 #
 ##############################################################################
 
-from osv import osv, fields
+from openerp.osv import osv, fields
 import time
 from account import account
-from osv import fields, osv
 from lxml import etree
 import netsvc
 import pooler
@@ -35,8 +34,8 @@ from time import strftime
 import csv
 import pprint
 from string import upper
-from string import join
-
+import datetime
+from dateutil.relativedelta import *
 
 class wizard_account_diot_mx(osv.osv_memory):
 
@@ -45,8 +44,9 @@ class wizard_account_diot_mx(osv.osv_memory):
     _columns = {
         'name': fields.char('File Name', readonly=True),
         'company_id' : fields.many2one('res.company', 'Company', required=True),
-        'month_id': fields.many2one('account.period', 'Month', help='Select month', required=True),
-        'filename': fields.char('Filename', size=128, readonly=True, help='This is Filename'),
+        #Change name by period
+        'month_id': fields.many2one('account.period', 'Period', help='Select period', required=True),
+        'filename': fields.char('File name', size=128, readonly=True, help='This is File name'),
         'file': fields.binary('File', readonly=True),
         'state': fields.selection([('choose', 'choose'), ('get', 'get')]),
 
@@ -55,132 +55,114 @@ class wizard_account_diot_mx(osv.osv_memory):
     _defaults = { 
         'state': 'choose',
     }
-
-
+    
     def create_diot(self, cr, uid, ids, context=None):
-        this = self.browse(cr, uid, ids)[0]
         if context is None:
             context = {}
-        acc_diot_obj = self.browse(cr, uid, ids, context=context)
-        for wiz_qty in self.browse(cr, uid, ids, context=context):
-            period_id = wiz_qty.month_id.id
-        src = []
-        res2 = []
+        acc_move_line_obj = self.pool.get('account.move.line')
+        acc_tax_obj = self.pool.get('account.tax')
+        acc_tax_category_obj = self.pool.get('account.tax.category')
+        this = self.browse(cr, uid, ids)[0]
+        period = this.month_id
         matrix_row = []
-        matrix_col = []
-        diot_row = diot_col = []
-        lines = []
         untax_amount = 0.0
-        iva16 = 0.0
         amount_exe = 0
-        inv_obj = pooler.get_pool(cr.dbname).get('account.invoice')
-        date_period = pooler.get_pool(cr.dbname).get('account.period').browse(cr, uid, [( int(period_id))])
-        for line in date_period:
-            date_start = line.date_start
-            date_stop = line.date_stop
-
-        account_invoice = pooler.get_pool(cr.dbname).get('account.invoice').search(cr, uid, [('type','=', 'in_invoice')])
-
-        counter = 0
+        category_iva_id = acc_tax_category_obj.search(cr, uid, [('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
+        tax_purchase_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_category_id', 'in', category_iva_id)], context=context)
+        move_lines_diot = acc_move_line_obj.search(cr, uid, [('period_id', '=', period.id), ('tax_id_secundary', 'in', tax_purchase_ids)])
         dic_move_line = {}
-        for items in account_invoice:
-            untax_amount = 0.0
-            invo = pooler.get_pool(cr.dbname).get('account.invoice').browse(cr, uid, items, context=context)
-####################    Verify Data  ############################################################################################
-            if invo.partner_id.vat == False:
-                raise osv.except_osv(('Error !'), ('Missing field (VAT) : "%s"') % (invo.partner_id.name))
-            if invo.partner_id.type_of_third == False:
-                raise osv.except_osv(('Error !'), ('Missing field (type of third) : "%s"') % (invo.partner_id.name))
-            if invo.partner_id.type_of_operation == False:
-                raise osv.except_osv(('Error !'), ('Missing field (type of operation) : "%s"') % (invo.partner_id.name))
-            if invo.partner_id.type_of_third == '05' and invo.partner_id.diot_country == False:
-                raise osv.except_osv(('Error !'), ('Missing field (DIOT Country) : "%s"') % (invo.partner_id.name))
+        move_not_amount = []
+        partner_ids = []
+        for items in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
+            if items.partner_id.vat == False:
+                partner_ids.append(items.partner_id.id)
+        
+        if partner_ids:
+            return {
+                'name': 'Suppliers without RFC',
+                'view_type' : 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'res.partner',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', partner_ids), '|',('active', '=', False), ('active', '=', True)],
+            }
+        
+        for line in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
+            if line.partner_id.vat == False:
+                raise osv.except_osv(('Error !'), ('Missing field (VAT) : "%s"') % (line.partner_id.name))
+            if line.partner_id.type_of_third == False:
+                raise osv.except_osv(('Error !'), ('Missing field (type of third) : "%s"') % (line.partner_id.name))
+            if line.partner_id.type_of_operation == False:
+                raise osv.except_osv(('Error !'), ('Missing field (type of operation) : "%s"') % (line.partner_id.name))
+            if line.partner_id.type_of_third == '05' and line.partner_id.diot_country == False:
+                raise osv.except_osv(('Error !'), ('Missing field (DIOT Country) : "%s"') % (line.partner_id.name))
+                
+            if line.date >= period.date_start and line.date <= period.date_stop:
+                amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
+                if line.tax_id_secundary.tax_category_id.name == 'IVA' and line.tax_id_secundary.amount == 0.16:
+                    amount_16 = line.amount_base
+                if line.tax_id_secundary.tax_category_id.name == 'IVA' and line.tax_id_secundary.amount == 0.11:
+                    amount_11 = line.amount_base
+                if line.tax_id_secundary.tax_category_id.name == 'IVA' and line.tax_id_secundary.amount == 0:
+                    amount_0 = line.amount_base
+                if line.tax_id_secundary.tax_category_id.name == 'IVA-EXENTO' and line.tax_id_secundary.amount == 0:
+                    amount_exe = line.amount_base
+                if line.tax_id_secundary.tax_category_id.name == 'IVA-RET':
+                    amount_ret = line.amount_base
+                #Checar monto
+                untax_amount += line.amount_base
+                if line.partner_id.vat in dic_move_line:
+                    line_move = dic_move_line[line.partner_id.vat]    
+                    line_move[7] = line_move[7] + amount_16
+                    line_move[8] = line_move[8] + amount_11
+                    line_move[9] = line_move[9] + amount_0
+                    line_move[10] = line_move[10] + amount_exe
+                    line_move[11] = line_move[11] + amount_ret
+                    dic_move_line[line.partner_id.vat_split] = line_move
+                else:
+                    matrix_row.append(line.partner_id.type_of_third)
+                    matrix_row.append(line.partner_id.type_of_operation)
+                    matrix_row.append(line.partner_id.vat_split)
 
-            move_lines = invo.payment_ids
-            for payment in move_lines:
-                if payment.date >= date_start and payment.date <= date_stop:
-                    amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
-                    print invo.tax_line
-                    for tax in invo.tax_line:
-                        if tax.tax_id.tax_category_id.name == 'IVA' and tax.tax_id.amount == 0.16:
-                            amount_16 = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_16", amount_16
-                        if tax.tax_id.tax_category_id.name == 'IVA' and tax.tax_id.amount == 0.11:
-                            amount_11 = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_11", amount_11
-                        if tax.tax_id.tax_category_id.name == 'IVA' and tax.tax_id.amount == 0:
-                            amount_0 = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_0", amount_0
-                        if tax.tax_id.tax_category_id.name == 'IVA-EXENTO' and tax.tax_id.amount == 0:
-                            amount_exe = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_exe", amount_exe
-                        if tax.tax_id.tax_category_id.name == 'IVA-RET':
-                            amount_ret = tax.base * ((payment.debit) / ( invo.amount_total))
-                            print "amount_ret", amount_ret
-                        untax_amount += tax.amount
-                    if (str(invo.partner_id.vat)) in dic_move_line:
-                        print invo.partner_id.name
-                        line_move = dic_move_line[(str(invo.partner_id.vat))]    
-                        line_move[7] = line_move[7] + amount_16
-                        line_move[8] = line_move[8] + amount_11
-                        line_move[9] = line_move[9] + amount_0
-                        line_move[10] = line_move[10] + amount_exe
-                        line_move[11] = line_move[11] + amount_ret
-                        dic_move_line [(str(invo.partner_id.vat_split))] = line_move
+                    if line.partner_id.type_of_third == "05" and line.partner_id.number_fiscal_id_diot != False:
+                        matrix_row.append(line.partner_id.number_fiscal_id_diot)
                     else:
-                        matrix_row.append(str(invo.partner_id.type_of_third))
-                        matrix_row.append(str(invo.partner_id.type_of_operation))
-                        matrix_row.append(str(invo.partner_id.vat_split))
-
-
-                        if invo.partner_id.type_of_third == "05":
-                            if invo.partner_id.number_fiscal_id_diot != False:
-                                matrix_row.append(str(invo.partner_id.number_fiscal_id_diot))
-                            else:
-                                matrix_row.append("")
+                        matrix_row.append("")
+                    if line.partner_id.type_of_third != "04":
+                        matrix_row.append(line.partner_id.name)
+                        matrix_row.append(line.partner_id.diot_country)
+                        if line.partner_id.nacionality_diot != False:
+                            matrix_row.append(line.partner_id.nacionality_diot)
                         else:
                             matrix_row.append("")
-                        if invo.partner_id.type_of_third != "04":
-                            matrix_row.append(str(invo.partner_id.name))
-                        else:
-                            matrix_row.append("")
-                        if invo.partner_id.type_of_third != "04":
-                            matrix_row.append(str(invo.partner_id.diot_country))
-                        else:
-                            matrix_row.append("")
-                        if invo.partner_id.type_of_third != "04":
-                            if invo.partner_id.nacionality_diot != False:
-                                matrix_row.append(str(invo.partner_id.nacionality_diot))
-                            else:
-                                matrix_row.append("")
-                        else:
-                            matrix_row.append("")
-                        matrix_row.append(amount_16)
-                        matrix_row.append(amount_11)
-                        matrix_row.append(amount_0)
-                        matrix_row.append(amount_exe)
-                        matrix_row.append(amount_ret)
-                        dic_move_line [(str(invo.partner_id.vat))] = matrix_row
-                    matrix_row = []
-        invoice_ids = []
+                    else:
+                        matrix_row.append("")
+                        matrix_row.append("")
+                        matrix_row.append("")
+                    matrix_row.append(amount_16)
+                    matrix_row.append(amount_11)
+                    matrix_row.append(amount_0)
+                    matrix_row.append(amount_exe)
+                    matrix_row.append(amount_ret)
+                    dic_move_line [line.partner_id.vat] = matrix_row
+                matrix_row = []
         buf = StringIO.StringIO()
-        print "dic", dic_move_line
         for diot in dic_move_line:
+            #~ cadena = dic_move_line[diot][0] + '|' + dic_move_line[diot][1] + '|' + dic_move_line[diot][2] + '|' + dic_move_line[diot][3] + '|' + dic_move_line[diot][4] + '|' + dic_move_line[diot][5] + '|' + dic_move_line[diot][6] + '|' + round((dic_move_line[diot][7]),0) + '||' + round((dic_move_line[diot][8]),0) + '|||||||||' + round((dic_move_line[diot][9]),0) + '|' + round((dic_move_line[diot][10]),0) + '|' + round((dic_move_line[diot][11]),0) + '||' + '\n'
             cadena = str(dic_move_line[diot][0]) + '|' + str(dic_move_line[diot][1]) + '|' + str(dic_move_line[diot][2]) + '|' + str(dic_move_line[diot][3]) + '|' + str(dic_move_line[diot][4]) + '|' + str(dic_move_line[diot][5]) + '|' + str(dic_move_line[diot][6]) + '|' + (str(int(round((dic_move_line[diot][7]),0)))) + '||' + (str(int(round((dic_move_line[diot][8]),0)))) + '|||||||||' + (str(int(round((dic_move_line[diot][9]),0)))) + '|' + (str(int(round((dic_move_line[diot][10]),0)))) + '|' + (str(int(round((dic_move_line[diot][11]),0)))) + '||' + '\n'
             buf.write(upper(cadena))
         out = base64.encodestring(buf.getvalue())
         buf.close()
-        period_id =  pooler.get_pool(cr.dbname).get('account.period').browse(cr, uid, period_id)
+        #Revisar estos datos
         this.name = "%s-%s.txt" % ("OPENERP-DIOT", strftime('%Y-%m-%d'))
         datas = {'ids' : context.get('active_ids',[])}
         res = self.read(cr, uid, ids, ['time_unit','measure_unit'])
         res = res and res[0] or {}
         datas['form'] = res
-
         self.write(cr, uid, ids, {'state': 'get',
-                                  'file': out,
-                                  'filename':this.name
-                                    }, context=context)
+                                'file': out,
+                                'filename':this.name
+                                }, context=context)
 
         return {
             'type': 'ir.actions.act_window',
@@ -191,7 +173,5 @@ class wizard_account_diot_mx(osv.osv_memory):
             'res_model': 'account.diot.report',
             'target': 'new',
             }
-
-wizard_account_diot_mx()
-
+                    
 
