@@ -74,7 +74,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         move_not_amount = []
         partner_ids = []
         for items in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
-            if items.partner_id.vat == False:
+            if items.partner_id.vat_split == False:
                 partner_ids.append(items.partner_id.id)
         
         if partner_ids:
@@ -88,7 +88,7 @@ class wizard_account_diot_mx(osv.osv_memory):
             }
         
         for line in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
-            if line.partner_id.vat == False:
+            if line.partner_id.vat_split == False:
                 raise osv.except_osv(('Error !'), ('Missing field (VAT) : "%s"') % (line.partner_id.name))
             if line.partner_id.type_of_third == False:
                 raise osv.except_osv(('Error !'), ('Missing field (type of third) : "%s"') % (line.partner_id.name))
@@ -111,14 +111,14 @@ class wizard_account_diot_mx(osv.osv_memory):
                     amount_ret = line.amount_base
                 #Checar monto
                 untax_amount += line.amount_base
-                if line.partner_id.vat in dic_move_line:
-                    line_move = dic_move_line[line.partner_id.vat]    
+                if line.partner_id.vat_split in dic_move_line:
+                    line_move = dic_move_line[line.partner_id.vat_split]    
                     line_move[7] = line_move[7] + amount_16
                     line_move[8] = line_move[8] + amount_11
                     line_move[9] = line_move[9] + amount_0
                     line_move[10] = line_move[10] + amount_exe
                     line_move[11] = line_move[11] + amount_ret
-                    dic_move_line[line.partner_id.vat_split] = line_move
+                    dic_move_line.update({line.partner_id.vat_split : line_move})
                 else:
                     matrix_row.append(line.partner_id.type_of_third)
                     matrix_row.append(line.partner_id.type_of_operation)
@@ -144,8 +144,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                     matrix_row.append(amount_0)
                     matrix_row.append(amount_exe)
                     matrix_row.append(amount_ret)
-                    #~ dic_move_line [line.partner_id.vat] = matrix_row
-                    dic_move_line.update({line.partner_id.vat : matrix_row})
+                    dic_move_line.update({line.partner_id.vat_split : matrix_row})
                 matrix_row = []
         buf = StringIO.StringIO()
         for diot in dic_move_line:
