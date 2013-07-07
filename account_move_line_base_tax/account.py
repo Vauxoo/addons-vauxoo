@@ -50,7 +50,7 @@ class account_invoice_tax(osv.Model):
                 'quantity' : 1,
                 'price' : t.amount or 0.0,
                 'account_id' : t.account_id.id or False,
-                'tax_code_id' : t.tax_code_id.id of False,
+                'tax_code_id' : t.tax_code_id.id or False,
                 'tax_amount' : t.tax_amount or False,
                 'account_analytic_id' : t.account_analytic_id.id or False,
                 'amount_base' : t.base_amount or 0.0,
