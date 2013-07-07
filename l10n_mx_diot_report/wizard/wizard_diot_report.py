@@ -69,7 +69,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         amount_exe = 0
         category_iva_id = acc_tax_category_obj.search(cr, uid, [('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
         tax_purchase_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_category_id', 'in', category_iva_id)], context=context)
-        move_lines_diot = acc_move_line_obj.search(cr, uid, [('period_id', '=', period.id), ('tax_id_secundary', 'in', tax_purchase_ids)])
+        move_lines_diot = acc_move_line_obj.search(cr, uid, [('period_id', '=', period.id), ('tax_id_secondary', 'in', tax_purchase_ids)])
         dic_move_line = {}
         move_not_amount = []
         partner_ids = []
@@ -99,15 +99,15 @@ class wizard_account_diot_mx(osv.osv_memory):
                 
             if line.date >= period.date_start and line.date <= period.date_stop:
                 amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
-                if line.tax_id_secundary.tax_category_id.name == 'IVA' and line.tax_id_secundary.amount == 0.16:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.16:
                     amount_16 = line.amount_base
-                if line.tax_id_secundary.tax_category_id.name == 'IVA' and line.tax_id_secundary.amount == 0.11:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.11:
                     amount_11 = line.amount_base
-                if line.tax_id_secundary.tax_category_id.name == 'IVA' and line.tax_id_secundary.amount == 0:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0:
                     amount_0 = line.amount_base
-                if line.tax_id_secundary.tax_category_id.name == 'IVA-EXENTO' and line.tax_id_secundary.amount == 0:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO' and line.tax_id_secondary.amount == 0:
                     amount_exe = line.amount_base
-                if line.tax_id_secundary.tax_category_id.name == 'IVA-RET':
+                if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
                     amount_ret = line.amount_base
                 #Checar monto
                 untax_amount += line.amount_base
@@ -148,7 +148,6 @@ class wizard_account_diot_mx(osv.osv_memory):
                 matrix_row = []
         buf = StringIO.StringIO()
         for diot in dic_move_line:
-            #~ cadena = dic_move_line[diot][0] + '|' + dic_move_line[diot][1] + '|' + dic_move_line[diot][2] + '|' + dic_move_line[diot][3] + '|' + dic_move_line[diot][4] + '|' + dic_move_line[diot][5] + '|' + dic_move_line[diot][6] + '|' + round((dic_move_line[diot][7]),0) + '||' + round((dic_move_line[diot][8]),0) + '|||||||||' + round((dic_move_line[diot][9]),0) + '|' + round((dic_move_line[diot][10]),0) + '|' + round((dic_move_line[diot][11]),0) + '||' + '\n'
             cadena = str(dic_move_line[diot][0]) + '|' + str(dic_move_line[diot][1]) + '|' + str(dic_move_line[diot][2]) + '|' + str(dic_move_line[diot][3]) + '|' + str(dic_move_line[diot][4]) + '|' + str(dic_move_line[diot][5]) + '|' + str(dic_move_line[diot][6]) + '|' + (str(int(round((dic_move_line[diot][7]),0)))) + '||' + (str(int(round((dic_move_line[diot][8]),0)))) + '|||||||||' + (str(int(round((dic_move_line[diot][9]),0)))) + '|' + (str(int(round((dic_move_line[diot][10]),0)))) + '|' + (str(int(round((dic_move_line[diot][11]),0)))) + '||' + '\n'
             buf.write(upper(cadena))
         out = base64.encodestring(buf.getvalue())
