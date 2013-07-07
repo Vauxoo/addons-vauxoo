@@ -144,7 +144,8 @@ class wizard_account_diot_mx(osv.osv_memory):
                     matrix_row.append(amount_0)
                     matrix_row.append(amount_exe)
                     matrix_row.append(amount_ret)
-                    dic_move_line [line.partner_id.vat] = matrix_row
+                    #~ dic_move_line [line.partner_id.vat] = matrix_row
+                    dic_move_line.update({line.partner_id.vat : matrix_row})
                 matrix_row = []
         buf = StringIO.StringIO()
         for diot in dic_move_line:
