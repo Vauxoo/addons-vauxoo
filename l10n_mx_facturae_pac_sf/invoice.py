@@ -469,8 +469,6 @@ class account_invoice(osv.Model):
                     'resultados']['statusUUID'] or ''
                 status_principal = result['status'] or ''
                 msg_status = {}
-                if status_principal == '635':
-                    raise osv.except_osv(_('Warning'), _('El RFC del emisor no se encuentra registrado en su implementacion'))
                 if status == '200':
                     folio_cancel = result['resultados'] and result[
                         'resultados']['uuid'] or ''
