@@ -30,7 +30,6 @@ from openerp import tools
 from openerp import netsvc
 from openerp.tools.misc import ustr
 import wizard
-
 import base64
 import xml.dom.minidom
 import time
@@ -426,7 +425,6 @@ class account_invoice(osv.Model):
             'method_type', '=', 'pac_sf_cancelar'), ('company_id', '=',
             invoice_brw.company_emitter_id.id), ('active', '=', True)],
             context=context)
-
         if pac_params_srch:
             pac_params_brw = pac_params_obj.browse(
                 cr, uid, pac_params_srch, context)[0]
@@ -439,7 +437,6 @@ class account_invoice(osv.Model):
             #~ password = 'timbrado.SF.16672'
             #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
             #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
-
             wsdl_client = False
             wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
             if True:  # if wsdl_client:
@@ -454,7 +451,6 @@ class account_invoice(osv.Model):
                 zip = False  # Validar si es un comprimido zip, con la extension del archivo
                 contrasenaCSD = file_globals.get('password', '')
                 uuids = invoice_brw.cfdi_folio_fiscal  # cfdi_folio_fiscal
-
                 params = [
                     user, password, uuids, cerCSD, keyCSD, contrasenaCSD]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
@@ -462,7 +458,6 @@ class account_invoice(osv.Model):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                 result = wsdl_client.cancelar(*params)
-
                 status = result['resultados'] and result[
                     'resultados']['status'] or ''
                 # agregados
@@ -470,10 +465,12 @@ class account_invoice(osv.Model):
                     'resultados']['uuid'] or ''
                 msg_nvo = result['resultados'] and result[
                     'resultados']['mensaje'] or ''
-
                 status_uuid = result['resultados'] and result[
                     'resultados']['statusUUID'] or ''
+                status_principal = result['status'] or ''
                 msg_status = {}
+                if status_principal == '635':
+                    raise osv.except_osv(_('Warning'), _('El RFC del emisor no se encuentra registrado en su implementacion'))
                 if status == '200':
                     folio_cancel = result['resultados'] and result[
                         'resultados']['uuid'] or ''
