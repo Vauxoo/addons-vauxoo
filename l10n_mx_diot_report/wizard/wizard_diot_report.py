@@ -44,8 +44,7 @@ class wizard_account_diot_mx(osv.osv_memory):
     _columns = {
         'name': fields.char('File Name', readonly=True),
         'company_id' : fields.many2one('res.company', 'Company', required=True),
-        #Change name by period
-        'month_id': fields.many2one('account.period', 'Period', help='Select period', required=True),
+        'period_id': fields.many2one('account.period', 'Period', help='Select period', required=True),
         'filename': fields.char('File name', size=128, readonly=True, help='This is File name'),
         'file': fields.binary('File', readonly=True),
         'state': fields.selection([('choose', 'choose'), ('get', 'get')]),
@@ -63,20 +62,40 @@ class wizard_account_diot_mx(osv.osv_memory):
         acc_tax_obj = self.pool.get('account.tax')
         acc_tax_category_obj = self.pool.get('account.tax.category')
         this = self.browse(cr, uid, ids)[0]
-        period = this.month_id
+        period = this.period_id
         matrix_row = []
         untax_amount = 0.0
         amount_exe = 0
-        category_iva_id = acc_tax_category_obj.search(cr, uid, [('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
-        tax_purchase_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_category_id', 'in', category_iva_id)], context=context)
+        category_iva_ids = acc_tax_category_obj.search(cr, uid, [('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
+        tax_purchase_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_category_id', 'in', category_iva_ids)], context=context)
         move_lines_diot = acc_move_line_obj.search(cr, uid, [('period_id', '=', period.id), ('tax_id_secondary', 'in', tax_purchase_ids)])
         dic_move_line = {}
         move_not_amount = []
         partner_ids = []
+        moves_without_partner = []
+        partners_without_type_of_third = []
+        partners_without_type_of_operation = []
+        partners_without_diot_country = []
         for items in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
             if items.partner_id.vat_split == False:
                 partner_ids.append(items.partner_id.id)
-        
+            if not items.partner_id:
+                moves_without_partner.append(items.id)
+            if not items.partner_id.type_of_third:
+                partners_without_type_of_third.append(items.partner_id.id)
+            if not items.partner_id.type_of_operation:
+                partners_without_type_of_operation.append(items.partner_id.id)
+            if not items.partner_id.diot_country:
+                partners_without_diot_country.append(items.partner_id.id)
+        if moves_without_partner:
+            return {
+                'name': 'Moves without supplier',
+                'view_type' : 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'account.move.line',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', moves_without_partner),],
+            }
         if partner_ids:
             return {
                 'name': 'Suppliers without RFC',
@@ -86,17 +105,34 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'type': 'ir.actions.act_window',
                 'domain': [('id', 'in', partner_ids), '|',('active', '=', False), ('active', '=', True)],
             }
-        
+        if partners_without_type_of_third:
+            return {
+                'name': 'Suppliers without Type of Third',
+                'view_type' : 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'res.partner',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', partners_without_type_of_third), '|',('active', '=', False), ('active', '=', True)],
+            }
+        if partners_without_type_of_operation:
+            return {
+                'name': 'Suppliers without Type of Operation',
+                'view_type' : 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'res.partner',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', partners_without_type_of_operation), '|',('active', '=', False), ('active', '=', True)],
+            }
+        if partners_without_diot_country:
+            return {
+                'name': 'Suppliers without Diot Country',
+                'view_type' : 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'res.partner',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', partners_without_diot_country), '|',('active', '=', False), ('active', '=', True)],
+            }
         for line in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
-            if line.partner_id.vat_split == False:
-                raise osv.except_osv(('Error !'), ('Missing field (VAT) : "%s"') % (line.partner_id.name))
-            if line.partner_id.type_of_third == False:
-                raise osv.except_osv(('Error !'), ('Missing field (type of third) : "%s"') % (line.partner_id.name))
-            if line.partner_id.type_of_operation == False:
-                raise osv.except_osv(('Error !'), ('Missing field (type of operation) : "%s"') % (line.partner_id.name))
-            if line.partner_id.type_of_third == '05' and line.partner_id.diot_country == False:
-                raise osv.except_osv(('Error !'), ('Missing field (DIOT Country) : "%s"') % (line.partner_id.name))
-                
             if line.date >= period.date_start and line.date <= period.date_stop:
                 amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.16:
