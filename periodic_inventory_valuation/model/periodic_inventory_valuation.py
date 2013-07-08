@@ -87,7 +87,7 @@ class periodic_inventory_valuation(osv.osv):
         'first': False,
         }
 
-    def validate_data(self, cr, uid, ids, vals, context=None):
+    def validate_data(self, cr, uid, ids, date, context=None):
         if context is None:
             context = {}
         
@@ -104,22 +104,30 @@ class periodic_inventory_valuation(osv.osv):
         all_per_inv = self.browse(cr, uid, peri_inv_allowed, context=context)
          
         for i in all_per_inv:
-            if vals.get('date') <= i.date:
+            print date , "<=" , i.date
+            if date <= i.date:
                 raise osv.except_osv('Record with this data existing !', 'Can not create a record with repeated date')
         
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:                                                     
-            context = {}                                                     
-        self.validate_data(cr, uid, ids, vals,context=context)
+            context = {}         
+        print vals
+        
+        if type(ids) is list:
+            date = self.browse(cr, uid, ids[0], context=context).date
+        else:
+            date = self.browse(cr, uid, ids, context=context).date
+
+        self.validate_data(cr, uid, ids, date,context=context)
         return super(periodic_inventory_valuation, self).write(cr, uid, ids, vals, context=context)        
 
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
         print vals
-        self.validate_data(cr, uid, False, vals,  context=context)
+        self.validate_data(cr, uid, False, vals.get('date'),  context=context)
         return super(periodic_inventory_valuation, self).create(cr, uid, vals, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
@@ -193,6 +201,8 @@ class periodic_inventory_valuation(osv.osv):
         lineas = []
         move_id = False
         state = 'draft'
+
+
         if not self.browse(cr,uid,ids[0],context=context).first:
             state = 'confirm'
             pivl_init_ids = []
@@ -244,6 +254,8 @@ class periodic_inventory_valuation(osv.osv):
                             product_price_sales[ail.product_id.id] = [p_p_sale]
                     else:
                         print ail.invoice_id.type
+            import pdb
+            pdb.set_trace()
             lineas =[]
             for i in product_price_purs:
                 qty_pur = 0
@@ -253,7 +265,7 @@ class periodic_inventory_valuation(osv.osv):
                         costo += j.get('qty')*j.get('price')
                         qty_pur += j.get('qty')
                     
-                    val_line_ids = periodic_line.search(cr,uid,[('product_id','=',i)],context=context)
+                    val_line_ids = periodic_line.search(cr,uid,[('product_id','=',i),('piv_id','=',ids[0])],context=context)
                     val_line = periodic_line.browse(cr, uid, val_line_ids, context=context)[0]
                     
                     costo += val_line.qty_final * val_line.average_cost
@@ -309,7 +321,8 @@ class periodic_inventory_valuation(osv.osv):
                         credit = cant * costo_promedio
                         debit = 0.0
                         valuation = credit
-
+                    print "*******************************************"
+                    print journal_id
                     #Create journal items
                     line_id = self.pool.get('account.move.line').create(cr, uid, {      
                             'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
