@@ -99,12 +99,12 @@ class periodic_inventory_valuation(osv.osv):
         else:
             peri_inv_allowed = self.search(cr, uid, [], order='id desc', limit=1, context=context)
 
-        print "*****************************"
+        #print "*****************************"
 
         all_per_inv = self.browse(cr, uid, peri_inv_allowed, context=context)
          
         for i in all_per_inv:
-            print date , "<=" , i.date
+            #print date , "<=" , i.date
             if date <= i.date:
                 raise osv.except_osv('Record with this data existing !', 'Can not create a record with repeated date')
         
@@ -113,7 +113,7 @@ class periodic_inventory_valuation(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:                                                     
             context = {}         
-        print vals
+        #print vals
         
         if type(ids) is list:
             date = self.browse(cr, uid, ids[0], context=context).date
@@ -126,7 +126,7 @@ class periodic_inventory_valuation(osv.osv):
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
-        print vals
+        #print vals
         self.validate_data(cr, uid, False, vals.get('date'),  context=context)
         return super(periodic_inventory_valuation, self).create(cr, uid, vals, context=context)
 
@@ -153,7 +153,7 @@ class periodic_inventory_valuation(osv.osv):
         company_id = piv_brw.company_id.id 
         journal_id = piv_brw.company_id.journal_id.id
         period_ids = period_obj.find(cr,uid,dt=date,context=context)
-        print "periods ids" , period_ids, " date ", date, ' company_id' , piv_brw.company_id.id
+        #print "periods ids" , period_ids, " date ", date, ' company_id' , piv_brw.company_id.id
         period_ids = period_obj.search(cr,uid,[
             ('id','in',period_ids),('special','=',False)],context=context)
         period_ids = period_ids and period_ids[0] or False
@@ -166,7 +166,7 @@ class periodic_inventory_valuation(osv.osv):
             ('state','in',('open','paid')),('period_id','=',period_ids),
             ('company_id','=',company_id)
             ],context=context)
-        print "facturas", inv_ids
+        #print "facturas", inv_ids
         if not inv_ids:
             raise osv.except_osv(_('Error!'), _('There are no invoices defined for this period.\nMake sure you are using the right date.'))
         ail_obj = self.pool.get('account.invoice.line')
@@ -205,19 +205,36 @@ class periodic_inventory_valuation(osv.osv):
 
         if not self.browse(cr,uid,ids[0],context=context).first:
             state = 'confirm'
+            
             pivl_init_ids = []
             for prod_id in prod_ids:
                 prod = prod_obj.browse(cr,uid,prod_id,context=context)
+            
+                pnv_line_id = False
+                if type(ids) is list:
+                    pnv_id = self.search(cr, uid, [('id','!=',ids[0]),('state','=','done')], order='id desc', limit=1, context=context)
+                    if pnv_id:
+                        pnv_id = pnv_id[0]
+                        pnv_line_id = periodic_line.search(cr, uid, [('piv_id','=',pnv_id),('product_id','=',prod_id)], context=context)
+                else:
+                    pnv_id = self.search(cr, uid, [('id','!=',ids),('state','=','done')], order='id desc', limit=1, context=context)
+                    if pnv_id:
+                        pnv_id = pnv_id[0]
+                        pnv_line_id = periodic_line.search(cr, uid, [('piv_id','=',pnv_id),('product_id','=',prod_id)], context=context)
+                
+                if pnv_line_id:
+                    pnv_line_brw = periodic_line.browse(cr, uid, pnv_line_id, context=context)[0]
+           #condicional aqui de pnv_line_brw, puede que no exista 
                 pivl_init_ids.append(periodic_line.create(cr, uid, {
                         'piv_id': ids[0],
                         'product_id':prod_id,
-                        'qty_init':0.0,
-                        'qty_final':0.0,
-                        'qty_sale':0.0,
-                        'qty_purchase':0.0,
+                        'qty_init':pnv_line_brw.qty_init,
+                        'qty_final':pnv_line_brw.qty_final,
+                        'qty_sale':pnv_line_brw.qty_sale,
+                        'qty_purchase':pnv_line_brw.qty_purchase,
                         'uom_id':prod.uom_id.id,
-                        'average_cost':0.0,
-                        'valuation':0.0,
+                        'average_cost':pnv_line_brw.average_cost,
+                        'valuation':pnv_line_brw.valuation,
                         }, context=context))
 
             self.write(cr,uid,ids[0],{
@@ -254,9 +271,7 @@ class periodic_inventory_valuation(osv.osv):
                             product_price_sales[ail.product_id.id] = [p_p_sale]
                     else:
                         print ail.invoice_id.type
-            import pdb
-            pdb.set_trace()
-            lineas =[]
+            lineas = []
             for i in product_price_purs:
                 qty_pur = 0
                 costo = 0.0
@@ -273,22 +288,22 @@ class periodic_inventory_valuation(osv.osv):
                     qty = qty_pur + val_line.qty_final
                     costo_promedio = round(costo / qty, 2)
                     
-                    print 'costo bienes disponibles' , costo, ' cantidad disponible ' , qty , ' costo_promedio por unidad ', costo_promedio
+                    #print 'costo bienes disponibles' , costo, ' cantidad disponible ' , qty , ' costo_promedio por unidad ', costo_promedio
                     
                     inventario_final = qty
                     if product_price_sales.get(i, False):
                         for k in product_price_sales[i]:
                             inventario_final -= k.get('qty')
                     
-                    print 'qty compras - qty ventas (inventario final)' , inventario_final
-                    print 'COSTO DE LOS BIENEN VENDIDOS' , ( qty - inventario_final  ) * costo_promedio
-                    print 'Ganancia en inventario' , (inventario_final * costo_promedio) - (val_line.qty_init * costo_promedio)
-                    print '\n\n'
+                    #print 'qty compras - qty ventas (inventario final)' , inventario_final
+                    #print 'COSTO DE LOS BIENEN VENDIDOS' , ( qty - inventario_final  ) * costo_promedio
+                    #print 'Ganancia en inventario' , (inventario_final * costo_promedio) - (val_line.qty_init * costo_promedio)
+                    #print '\n\n'
                     
                     #inv_ini = (val_line.qty_init * val_line.average_cost)
                     #inv_fin = (inventario_final * costo_promedio)
                     
-                    print "categoria del producto " ,
+                    #print "categoria del producto " ,
 
                     prod = prod_obj.browse(cr,uid,i,context=context)
                     
@@ -321,8 +336,8 @@ class periodic_inventory_valuation(osv.osv):
                         credit = cant * costo_promedio
                         debit = 0.0
                         valuation = credit
-                    print "*******************************************"
-                    print journal_id
+                    #print "*******************************************"
+                    #print journal_id
                     #Create journal items
                     line_id = self.pool.get('account.move.line').create(cr, uid, {      
                             'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
@@ -362,9 +377,10 @@ class periodic_inventory_valuation(osv.osv):
             
             move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
 
-            print "products_price_pur " , product_price_purs , " products_price_sale " , product_price_sales
-            print "qty_purchase " , qty_purchase , " total_purchase " , total_purchase
-                    
+        #    print "products_price_pur " , product_price_purs , " products_price_sale " , product_price_sales
+        #    print "qty_purchase " , qty_purchase , " total_purchase " , total_purchase
+        
+
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
             'ail_ids':[(6,0,ail_ids)],
