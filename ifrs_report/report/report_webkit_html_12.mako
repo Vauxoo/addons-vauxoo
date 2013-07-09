@@ -49,19 +49,21 @@
 
         %while i < len(info):
             <tbody>
-            <tr class="prueba">
-                <th class="celda3">${info[i].get('name')}</th>
-                    %for moth in range(1, 13): 
-                    <th class="celda2">
-                        %try:
-                            ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
-                        %except:
-                            0.0
-                        %endtry
-                    </th>
-                    %endfor
-                <% i +=1 %>
-            </tr>
+            %if not info[i]['invisible']:
+                <tr class="prueba">
+                    <th class="celda3">${info[i].get('name')}</th>
+                        %for moth in range(1, 13): 
+                        <th class="celda2">
+                            %try:
+                                ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                            %except:
+                                0.0
+                            %endtry
+                        </th>
+                        %endfor
+                </tr>
+            %endif
+            <% i +=1 %>
         %endwhile
         </tbody>
     </table>
