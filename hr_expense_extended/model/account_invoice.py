@@ -55,8 +55,8 @@ class account_invoice(osv.osv):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp_obj = self.pool.get('hr.expense.expense')
         expl_obj = self.pool.get('hr.expense.line')
-        data = []
         for inv_brw in self.browse(cr, uid, ids, context=context):
+            data = []
             for line_brw in inv_brw.invoice_line:
                 vals = dict()
                 vals['invoice_id'] = inv_brw.id
