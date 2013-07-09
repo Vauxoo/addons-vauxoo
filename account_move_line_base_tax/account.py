@@ -24,13 +24,16 @@
 #
 ##############################################################################
 from openerp.osv import osv, fields
+from lxml import etree
 
 class account_move_line(osv.Model):
     _inherit = 'account.move.line'
     
     _columns = {
-        'amount_base' : fields.float('Amount Base'),
-        'tax_id_secondary' : fields.many2one('account.tax', 'Tax Secundary'),
+        'amount_base' : fields.float('Amount Base', help='Amount base '\
+            'without amount tax'),
+        'tax_id_secondary' : fields.many2one('account.tax', 'Tax Secondary',
+            help='Tax used for this move'),
     }
 
 class account_invoice_tax(osv.Model):
