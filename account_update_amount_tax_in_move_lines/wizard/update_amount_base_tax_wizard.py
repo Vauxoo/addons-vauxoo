@@ -28,23 +28,39 @@ from openerp.osv import fields, osv
 class update_amount_base_tax_wizard(osv.osv_memory):
     _name = 'update.amount.tax.wizard'
     
+    _columns = {
+        'warning' : fields.text('WARNING!', readonly=True),
+        }
+    
+    _defaults = {
+        'warning' : 'This wizard only should be used when the company have '\
+        'configured a tax by purchases and other by sales for each amount to '\
+        'tax, and the account of each tax is configured correctly'
+        }
+    
     def update_tax_secondary(self, cr, uid, ids, context=None):
         acc_tax_obj = self.pool.get('account.tax')
         user_obj = self.pool.get('res.users')
         move_line_obj = self.pool.get('account.move.line')
         acc_tax_category_obj = self.pool.get('account.tax.category')
-        company_user_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
+        company_user_id = user_obj.browse(cr, uid, uid, context=context).\
+            company_id.id
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
-        tax_ids = acc_tax_obj.search(cr, uid, [('company_id', '=' ,company_user_id), ('type_tax_use', '=', 'purchase'),
+        tax_ids = acc_tax_obj.search(cr, uid, [
+            ('company_id', '=' ,company_user_id),
+            ('type_tax_use', '=', 'purchase'),
             ('tax_category_id', 'in', category_iva_ids)], context=context)
         acc_collected_ids = []
         for tax in acc_tax_obj.browse(cr, uid, tax_ids, context=context):
             acc_collected_ids.append(tax.account_collected_id.id)
-        line_id = move_line_obj.search(cr, uid, [('account_id', 'in', acc_collected_ids), ('tax_id_secondary', '=', None)], context=context)
+        line_id = move_line_obj.search(cr, uid, [
+            ('account_id', 'in', acc_collected_ids),
+            ('tax_id_secondary', '=', None)], context=context)
         for line in move_line_obj.browse(cr, uid, line_id, context=context):
             acc_line = line.account_id.id
-            tax_this_line = acc_tax_obj.search(cr, uid, [('account_collected_id', '=', acc_line)])
+            tax_this_line = acc_tax_obj.search(cr, uid, [
+                ('account_collected_id', '=', acc_line)])
             #~ if len(tax_this_line) == 1:
             if tax_this_line:
                 cr.execute("""UPDATE account_move_line
@@ -59,30 +75,38 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         acc_tax_category_obj = self.pool.get('account.tax.category')
         acc_tax_obj = self.pool.get('account.tax')
         user_obj = self.pool.get('res.users')
-        company_user_id = user_obj.browse(cr, uid, uid, context=context).company_id.id
-        for invoice_id in invoice_obj.search(cr, uid, [('type', '=', 'in_invoice'), '|', ('state', '=', 'open'), ('state', '=', 'paid'), ('company_id', '=',  company_user_id)], context=context):
-            invoice = invoice_obj.browse(cr, uid, invoice_id, context=context)
-            move_lines = invoice.move_id.line_id or []
-            line_ids = [x.id for x in move_lines]
-            for tax in invoice.tax_line:
-                if tax.name == 'IVA(16%) COMPRAS':
-                    move_16 = move_line_obj.search(cr, uid, [('id', 'in', line_ids), ('name', '=', 'IVA(16%) COMPRAS')], context=context)
-                    if move_16:
-                        move_line_obj.write(cr, uid, move_16[0], {'amount_base' : tax.base_amount}, context=context)
-                if tax.name == 'IVA(11%) COMPRAS':
-                    move_11 = move_line_obj.search(cr, uid, [('id', 'in', line_ids), ('name', '=', 'IVA(11%) COMPRAS')], context=context)
-                    if move_11:
-                        move_line_obj.write(cr, uid, move_11[0], {'amount_base' : tax.base_amount}, context=context)
-                if tax.name == 'IVA(0%) COMPRAS':
-                    move_0 = move_line_obj.search(cr, uid, [('id', 'in', line_ids), ('name', '=', 'IVA(0%) COMPRAS')], context=context)
-                    if move_0:
-                        move_line_obj.write(cr, uid, move_0[0], {'amount_base' : tax.base_amount}, context=context)
+        company_user_id = user_obj.browse(cr, uid, uid, context=context).\
+        company_id.id
+        #~ invoice_ids = invoice_obj.search(cr, uid, [
+            #~ ('type', '=', 'in_invoice'), '|', ('state', '=', 'open'),\
+            #~ ('state', '=', 'paid'), ('company_id', '=',  company_user_id)],\
+            #~ context=context)
+        #~ for invoice in invoice_obj.browse(cr, uid, invoice_ids, context=context):
+            #~ move_lines = invoice.move_id.line_id or []
+            #~ line_ids = [x.id for x in move_lines]
+            #~ for tax in invoice.tax_line:
+                #~ if tax.name == 'IVA(16%) COMPRAS':
+                    #~ move_16 = move_line_obj.search(cr, uid, [
+                        #~ ('id', 'in', line_ids),
+                        #~ ('name', '=', 'IVA(16%) COMPRAS')], context=context)
+                    #~ if move_16:
+                        #~ move_line_obj.write(cr, uid, move_16[0], {'amount_base' : tax.base_amount}, context=context)
+                #~ if tax.name == 'IVA(11%) COMPRAS':
+                    #~ move_11 = move_line_obj.search(cr, uid, [('id', 'in', line_ids), ('name', '=', 'IVA(11%) COMPRAS')], context=context)
+                    #~ if move_11:
+                        #~ move_line_obj.write(cr, uid, move_11[0], {'amount_base' : tax.base_amount}, context=context)
+                #~ if tax.name == 'IVA(0%) COMPRAS':
+                    #~ move_0 = move_line_obj.search(cr, uid, [('id', 'in', line_ids), ('name', '=', 'IVA(0%) COMPRAS')], context=context)
+                    #~ if move_0:
+                        #~ move_line_obj.write(cr, uid, move_0[0], {'amount_base' : tax.base_amount}, context=context)
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
-        tax_ids = acc_tax_obj.search(cr, uid, [('company_id', '=' ,company_user_id), ('type_tax_use', '=', 'purchase'),
+        tax_ids = acc_tax_obj.search(cr, uid, [
+            ('company_id', '=' ,company_user_id),
+            ('type_tax_use', '=', 'purchase'),
             ('tax_category_id', 'in', category_iva_ids)], context=context)
-        lines_without_amount = move_line_obj.search(cr, uid, [('tax_id_secondary', 'in', tax_ids), ('amount_base', '=', False)])
-        print 'move_line_obj.browse(cr, uid, lines_without_amount, context=context)', move_line_obj.browse(cr, uid, lines_without_amount, context=context)
+        lines_without_amount = move_line_obj.search(cr, uid, [\
+            ('tax_id_secondary', 'in', tax_ids), ('amount_base', '=', False)])
         for move in move_line_obj.browse(cr, uid, lines_without_amount, context=context):
             amount_tax = move.tax_id_secondary.amount
             if move.debit != 0:

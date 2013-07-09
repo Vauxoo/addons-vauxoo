@@ -29,10 +29,11 @@
     "version" : "1.0",
     "category" : "Generic Modules",
     "depends" : [
-        "account",
+        "account_move_line_base_tax",
         ],
     "demo" : [],
     "data" : [
+        "security/wizard_update_amount_tax.xml",
         "wizard/update_amount_base_tax_wizard.xml",
         ],
     'js': [],
