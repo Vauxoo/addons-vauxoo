@@ -30,7 +30,7 @@
             <field name="res_model">account.invoice</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('type','=','in_invoice')]</field>
+            <field name="domain">[('type','=','in_invoice'),('expense_id','=',context.get('active_id',False))]</field>
             <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False) }</field>
             <field name="target">current</field>
         </record>
