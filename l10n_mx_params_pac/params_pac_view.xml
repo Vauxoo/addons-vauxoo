@@ -100,7 +100,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem id="menu_pacs" name="PACS" parent="base.menu_administration"/>
+        <menuitem id="menu_pacs" name="PACS" parent="base.menu_administration" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
         <menuitem action="action_params_pac"   id="menu_params_pac" parent="menu_pacs"/>
 
     </data>

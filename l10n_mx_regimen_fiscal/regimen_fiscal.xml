@@ -9,7 +9,6 @@
                     <field name="name"/>
                     <newline/>
                     <field name="description"/>
-
                 </form>
             </field>
         </record>
@@ -34,7 +33,7 @@
 
         <menuitem
             id="cfd_22_regimen_fiscal" name="Régimen Fiscal" parent='base.menu_config_address_book' sequence="50"
-            action='action_regimen_fiscal'
+            action='action_regimen_fiscal' groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"
         />
     </data>
 </openerp>
