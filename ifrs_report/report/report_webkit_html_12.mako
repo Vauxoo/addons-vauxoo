@@ -49,7 +49,7 @@
 
         %while i < len(info):
             <tbody>
-            %if info[i]['invisible'] == False:
+            %if not info[i]['invisible']:
                 <tr class="prueba">
                     <th class="celda3">${info[i].get('name')}</th>
                         %for moth in range(1, 13): 
