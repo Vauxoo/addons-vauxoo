@@ -39,11 +39,12 @@ class account_move_line(osv.Model):
 class account_invoice_tax(osv.Model):
     _inherit = "account.invoice.tax"
     
-    def move_line_get(self, cr, uid, invoice_id):
+    def move_line_get(self, cr, uid, invoice_id, context=None):
         res = []
-        res2 = super(account_invoice_tax, self).move_line_get(cr, uid, invoice_id)
-        tax_invoice_ids = self.search(cr, uid, [('invoice_id', '=', invoice_id)])
-        for t in self.browse(cr, uid, tax_invoice_ids):
+        super(account_invoice_tax, self).move_line_get(cr, uid, invoice_id)
+        tax_invoice_ids = self.search(cr, uid, [
+            ('invoice_id', '=', invoice_id)], context=context)
+        for t in self.browse(cr, uid, tax_invoice_ids, context=context):
             if not t.amount and not t.tax_code_id and not t.tax_amount:
                 continue
             res.append({
@@ -65,7 +66,8 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     
     def line_get_convert(self, cr, uid, x, part, date, context=None):
-        res = super(account_invoice, self).line_get_convert(cr, uid, x, part, date, context=context)
+        res = super(account_invoice, self).line_get_convert(cr, uid, x, part,\
+            date, context=context)
         res.update({
             'amount_base': x.get('amount_base', False),
             'tax_id_secondary': x.get('tax_id_secondary', False),
