@@ -127,3 +127,16 @@ class hr_expense_expense(osv.osv):
             #~ vals1['debit'] = 
 
         return True
+
+    def refresh_expense_lines(self, cr, uid, ids, context=None):
+        """ """
+        context = context or {}
+        ai_obj = self.pool.get('account.invoice')
+        expl_obj = self.pool.get('hr.expense.line')
+        for exp_brw in self.browse(cr, uid, ids, context=context):
+            expl_ids = [expl_brw.id for expl_brw in exp_brw.line_ids]
+            expl_obj.unlink(cr, uid, expl_ids, context=context)
+            inv_brws = exp_brw.invoice_ids
+            inv_ids = [inv_brw.id for inv_brw in inv_brws]
+            ai_obj.create_expense_lines(cr, uid, inv_ids, ids[0], context=context)
+        return True

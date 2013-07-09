@@ -11,6 +11,10 @@
                     <field name="invoice_id"/>
                 </xpath>
 
+                <xpath expr="//field[@name='line_ids']" position="before">
+                    <button string="Refresh Lines" name="refresh_expense_lines" type="object"/>
+                </xpath>
+
                 <xpath expr="//notebook[last()]" position="inside">
                     <page string="Invoices">
                         <field name="invoice_ids"/>
