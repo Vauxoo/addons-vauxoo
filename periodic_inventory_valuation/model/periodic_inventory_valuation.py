@@ -85,6 +85,8 @@ class periodic_inventory_valuation(osv.osv):
         'company_id': lambda s, c, u, ctx: \
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.id,
         'first': False,
+        'currency_id': lambda s, c, u, ctx: \
+            s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.currency_id.id,
         }
 
     def validate_data(self, cr, uid, ids, date, context=None):
@@ -113,7 +115,9 @@ class periodic_inventory_valuation(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:                                                     
             context = {}         
-        #print vals
+        
+        if brw_per_inv.state == 'done':
+            raise osv.except_osv('Can not write the record', 'When a stock is done, can not be write')
         
         if type(ids) is list:
             date = self.browse(cr, uid, ids[0], context=context).date
@@ -126,12 +130,12 @@ class periodic_inventory_valuation(osv.osv):
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
-        #print vals
         self.validate_data(cr, uid, False, vals.get('date'),  context=context)
         return super(periodic_inventory_valuation, self).create(cr, uid, vals, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
-        
+        if context is None:
+            context = {}
         brw_per_inv = self.browse(cr, uid, ids[0], context=context)
         if brw_per_inv.state == 'done':
             raise osv.except_osv('Can not delete the record', 'When a stock is done, can not be deleted')

@@ -65,7 +65,7 @@
                                 </group>
                                 <group>
                                     <field name='company_id' required='1'/>
-                                    <field name='currency_id' required='1'/>
+                                    <field name='currency_id' readonly='1'/>
                                 </group>
                             </group>
                         </page>
