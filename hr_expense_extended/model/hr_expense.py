@@ -50,11 +50,26 @@ class hr_expense_expense(osv.Model):
              for inv_brw in ai_obj.browse(cr, uid, inv_ids, context=context)]))
         return exp_ids
 
+    def _get_ail_ids(self, cr, uid, ids, field_name, arg, context=None):
+        """ Returns list of invoice lines of the invoices related to the
+        expense. """
+        context = context or {}
+        res = {}
+        for exp in self.browse(cr, uid, ids, context=context):
+            ail_ids = []
+            for inv_brw in self.browse(cr, uid, exp.id, context=context).invoice_ids:
+                ail_ids.extend( [line.id for line in inv_brw.invoice_line] )
+            res[exp.id] = ail_ids
+        return res
+
     _columns = {
         'invoice_ids': fields.one2many('account.invoice', 'expense_id',
                                        'Invoices', help=''),
-        'ail_ids': fields.one2many('account.invoice.line', 'expense_id',
-                                   'Invoices lines', help=''),
+        'ail_ids': fields.function(_get_ail_ids,
+                                   type="one2many",
+                                   relation='account.invoice.line',
+                                   string='Invoices lines',
+                                   help='Deductible Expense'),
         'amount': fields.function(
             _amount,
             string='Total Amount',
