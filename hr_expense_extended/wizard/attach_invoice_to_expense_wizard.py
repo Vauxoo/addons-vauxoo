@@ -22,6 +22,27 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+from openerp.osv import fields, osv
 
-import model
-import wizard
+
+class attach_invoice_to_expense_wizard(osv.TransientModel):
+    _name = 'attach.invoice.to.expense.wizard'
+    _columns = {
+        'expense_id': fields.many2one('hr.expense.expense', 'Expense',
+                                      help='Expense Document'),
+    }
+
+    def add_expense(self, cr, uid, ids, context=None):
+        """ Attach an invoice to a Expense object.
+        Note: Only applies to one invoice ay time """
+        #~ TODO: Necesito verificar si el partner es un empleado????
+
+        context = context or {}
+        ai_obj = self.pool.get('account.invoice')
+        expense_id = \
+            self.browse(cr, uid, ids[0], context=context).expense_id.id \
+            or False
+        ai_obj.write(
+            cr, uid, context['active_id'], {'expense_id': expense_id},
+            context=context)
+        return True
