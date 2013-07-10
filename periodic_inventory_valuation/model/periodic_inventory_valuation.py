@@ -209,11 +209,12 @@ class periodic_inventory_valuation(osv.osv):
         if not self.browse(cr,uid,ids[0],context=context).first:
             state = 'confirm'
             
-            
-            pivl_init_ids = []
+            pivline_init_ids = []
             #Se itera sobre los productos que sean de tipo producto y con valuation tipo manual_periodic
             for prod_id in prod_ids:
                 prod = prod_obj.browse(cr,uid,prod_id,context=context)
+                
+                piv_line_id = False
                 
                 #Se obtiene la linea del producto del registro anterior
                 if type(ids) is list:
@@ -228,7 +229,7 @@ class periodic_inventory_valuation(osv.osv):
                 #condicional aqui de piv_line_brw, puede que no exista 
                 if piv_line_id:
                     piv_line_brw = periodic_line.browse(cr, uid, piv_line_id, context=context)[0]
-                    line_qty_init = piv_line_brw.qty_init
+                    line_qty_init = piv_line_brw.qty_final
                     line_average_cost = piv_line_brw.average_cost
                     line_valuation = piv_line_brw.valuation
                 else:
@@ -251,7 +252,7 @@ class periodic_inventory_valuation(osv.osv):
                 
             #Cargar lineas nuevas en el registro actual
             self.write(cr,uid,ids[0],{
-                'pivl_ids':[(6,0,pivl_init_ids)],
+                'pivl_ids':[(6,0,pivline_init_ids)],
                 },context=context)
         else:
             state='done'
@@ -263,6 +264,7 @@ class periodic_inventory_valuation(osv.osv):
 
             #Se iteran que esten pagadas o abiertas y que esten dentro del periodo al que corresponde
             #la fecha actual 
+            product_price = []
             for ail_id in ail_ids:
                 ail = ail_obj.browse(cr,uid,ail_id,context=context)
                 #si la factura se relaciona a la lista de productos que se filtraron
@@ -289,119 +291,106 @@ class periodic_inventory_valuation(osv.osv):
                             product_price_sales[ail.product_id.id] = [p_p_sale]
                     else:
                         print ail.invoice_id.type
-            
+                    product_price.append(ail.product_id.id)
             #################################
             lineas = []
-            for i in product_price_purs:
+            for i in product_price:
+                
+                prod = prod_obj.browse(cr,uid,i,context=context)
+                val_line_ids = periodic_line.search(cr,uid,[('product_id','=',i),('piv_id','=',ids[0])],context=context)
+                val_line = periodic_line.browse(cr, uid, val_line_ids, context=context)[0]
+                
+                # ~~~~~~~~~~~ 
                 qty_pur = 0
                 costo = 0.0
+                qty_sale = 0
+                #Si el producto fue parte de una compra
                 if product_price_purs.get(i, False):
                     for j in product_price_purs[i]:
                         costo += j.get('qty')*j.get('price')
                         qty_pur += j.get('qty')
                     
-                    val_line_ids = periodic_line.search(cr,uid,[('product_id','=',i),('piv_id','=',ids[0])],context=context)
-                    val_line = periodic_line.browse(cr, uid, val_line_ids, context=context)[0]
-                    
-                    costo += val_line.qty_final * val_line.average_cost
-                    
-                    qty = qty_pur + val_line.qty_final
+                   
+                    # Sumo costo anterior multiplicado por la cantidad de inventario final anterior
+
+                #Si el producto fue parte de una venta
+                if product_price_sales.get(i, False):
+                    for k in product_price_sales[i]:
+                        inventario_final -= k.get('qty')
+                        qty_sale += k.get('qty')
+                
+                inventario_final = qty_pur - qty_sale
+
+                costo += val_line.valuation
+                qty = val_line.qty_init + qty_pur # este val_line.init es el final de la linea anterior
+                
+                if qty == 0:
+                    costo_promedio = 0
+                else:
                     costo_promedio = round(costo / qty, 2)
-                    
-                    #print 'costo bienes disponibles' , costo, ' cantidad disponible ' , qty , ' costo_promedio por unidad ', costo_promedio
-                    
-                    inventario_final = qty
-                    if product_price_sales.get(i, False):
-                        for k in product_price_sales[i]:
-                            inventario_final -= k.get('qty')
-                    
-                    #print 'qty compras - qty ventas (inventario final)' , inventario_final
-                    #print 'COSTO DE LOS BIENEN VENDIDOS' , ( qty - inventario_final  ) * costo_promedio
-                    #print 'Ganancia en inventario' , (inventario_final * costo_promedio) - (val_line.qty_init * costo_promedio)
-                    #print '\n\n'
-                    
-                    #inv_ini = (val_line.qty_init * val_line.average_cost)
-                    #inv_fin = (inventario_final * costo_promedio)
-                    
-                    #print "categoria del producto " ,
+                
+                valuation  = (val_line.valuation) + (qty_pur * costo_promedio) - (qty_sale * costo_promedio)
+                # ~~~~~~~~~~~
+                
+                #Algo pasa con prod.property_account_expense y prod.property_account_income
+                #Establezco los diarios para hacer los asientos
+                if prod.property_account_expense:
+                    account_expense = prod.property_account_expense 
+                else:
+                    account_expense = prod.product_tmpl_id.categ_id.property_account_expense_categ
+               
+                if prod.property_account_income:
+                    account_income = prod.property_account_income
+                else:
+                    account_income = prod.product_tmpl_id.categ_id.property_account_income_categ
+                
+                context['journal_id'] = journal_id
+                context['period_id'] = period_ids
 
-                    prod = prod_obj.browse(cr,uid,i,context=context)
-                    
-                    #Algo pasa con prod.property_account_expense y prod.property_account_income
-                    if prod.property_account_expense:
-                        account_expense = prod.property_account_expense 
-                    else:
-                        account_expense = prod.product_tmpl_id.categ_id.property_account_expense_categ
-                   
-                    if prod.property_account_income:
-                        account_income = prod.property_account_income
-                    else:
-                        account_income = prod.product_tmpl_id.categ_id.property_account_income_categ
-                    
-                    #print prod.id
-                    #print prod.property_account_income
-                    #print prod.property_account_expense
 
-                    context['journal_id'] = journal_id
-                    context['period_id'] = period_ids
-                   
-                    #Product valuation and journal item amount
-                    if val_line.qty_init <= inventario_final:
-                        cant = inventario_final - val_line.qty_final
-                        debit = cant * costo_promedio
-                        credit = 0.0
-                        valuation = debit
-                    else:
-                        cant = val_line.qty_init - inventario_final
-                        credit = cant * costo_promedio
-                        debit = 0.0
-                        valuation = credit
-                    #print "*******************************************"
-                    #print journal_id
-                    #Create journal items
-                        import pdb
-                        pdb.set_trace()
-                        move_line = {      
-                            'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
-                            'partner_id': False,           
-                            'product_id':prod.id,
-                            'account_id': prod.product_tmpl_id.categ_id.property_account_income_categ.id, 
-                            'move_id': False,                                             
-                            'journal_id': journal_id,                               
-                            'period_id': period_ids,                                 
-                            'date': date_stop,                               
-                            'debit': debit,                                                   
-                            'credit': credit,                                                  
-                           }
+                #Product valuation and journal item amount
+                journal_item = valuation - val_line.valuation
+
+                debit = journal_item > 0 and journal_item or 0.0
+                credit = journal_item < 0 and (journal_item*-1) or 0.0
+                
+                if journal_item != 0:
+                    move_line = {      
+                        'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
+                        'partner_id': False,           
+                        'product_id':prod.id,
+                        'account_id': account_income.id, 
+                        'move_id': False,                                             
+                        'journal_id': journal_id,                               
+                        'period_id': period_ids,                                 
+                        'date': date_stop,                               
+                        'debit': debit,                                                   
+                        'credit': credit,                                                  
+                       }
                     
                     line_id = self.pool.get('account.move.line').create(cr, uid, move_line, context=context)
                     lineas.append(line_id)
 
-                    move_line['account_id'] = prod.product_tmpl_id.categ_id.property_account_expense_categ.id 
+                    move_line['account_id'] = account_expense.id 
                     move_line['debit'] = credit
                     move_line['credit'] = debit
                     
                     line_id = self.pool.get('account.move.line').create(cr, uid, move_line, context=context)
                     lineas.append(line_id)
-
-#DUDA con VALUATION
+                
                 periodic_line.write(cr, uid, val_line.id, {
                     'average_cost':costo_promedio,
                     'valuation': valuation,
-                    'qty_sale':qty - inventario_final ,
+                    'qty_sale':qty_sale ,
                     'qty_purchase':qty_pur ,
                     'qty_final':inventario_final,
-                    'qty_init':val_line.qty_final,
+                    #'qty_init':val_line.qty_final,
                         })
             ##############################################################
 
 
 
             move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
-
-        #    print "products_price_pur " , product_price_purs , " products_price_sale " , product_price_sales
-        #    print "qty_purchase " , qty_purchase , " total_purchase " , total_purchase
-        
 
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
