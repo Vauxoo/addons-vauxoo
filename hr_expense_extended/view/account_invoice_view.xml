@@ -7,9 +7,6 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//button[@string='Validate']" position="after">
-                    <button colspan="2" name="create_expense_from_invoice" string="Create Expense From Invoice" type="object" attrs="{'invisible': [('state','!=', 'draft')], 'readonly': [('expense_id','!=', False)]}"/>
-                </xpath>
                 <xpath expr="//field[@name='journal_id']" position="after">
                     <field name="expense_id" readonly="1"/>
                 </xpath>

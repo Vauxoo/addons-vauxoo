@@ -32,20 +32,6 @@ class account_invoice(osv.osv):
                                       help='Expense Document Name'),
     }
 
-    def create_expense_from_invoice(self, cr, uid, ids, context=None):
-        """ Create an hr expense object from a invoice object """
-        #~ TODO: Necesito verificar si el partner es un empleado????
-        context = context or {}
-        exp_obj = self.pool.get('hr.expense.expense')
-        for inv_brw in self.browse(cr, uid, ids, context=context):
-            vals = {'name': 'Expenses for employee ' + inv_brw.partner_id.name}
-            exp_id = exp_obj.create(cr, uid, vals, context=context)
-            self.create_expense_lines(cr, uid, inv_brw.id, exp_id,
-                                      context=context)
-            self.write(cr, uid, inv_brw.id, {'expense_id': exp_id},
-                       context=context)
-        return True
-
     def create_expense_lines(self, cr, uid, ids, exp_id, context=None):
         """ Create hr expense lines from a invoices lines and associated to a
         pre created hr expense object.
