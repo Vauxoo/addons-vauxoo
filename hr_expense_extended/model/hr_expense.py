@@ -40,13 +40,29 @@ class hr_expense_expense(osv.Model):
                 res[expense.id] += invoice.amount_total
         return res
 
+    def _get_exp_from_invoice(self, cr, uid, ids, context=None):
+        """ Return expense ids related to invoices that have been changed."""
+        context = context or {}
+        ai_obj = self.pool.get('account.invoice')
+        inv_ids = ids
+        exp_ids = list(set(
+            [inv_brw.expense_id.id
+             for inv_brw in ai_obj.browse(cr, uid, inv_ids, context=context)]))
+        return exp_ids
+
     _columns = {
         'invoice_ids': fields.one2many('account.invoice', 'expense_id',
                                        'Invoices', help=''),
         'ail_ids': fields.one2many('account.invoice.line', 'expense_id',
                                    'Invoices lines', help=''),
-        'amount': fields.function(_amount, string='Total Amount',
-                                  digits_compute=dp.get_precision('Account')),
+        'amount': fields.function(
+            _amount,
+            string='Total Amount',
+            digits_compute=dp.get_precision('Account'),
+            store={
+                'hr.expense.expense': (lambda self, cr, uid, ids, c={}: ids, None, 50),
+                'account.invoice': (_get_exp_from_invoice, None, 50)
+            }),
     }
 
     def action_receipt_create(self, cr, uid, ids, context=None):
