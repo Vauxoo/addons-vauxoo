@@ -23,34 +23,30 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 from openerp.osv import fields, osv
-
-class hr_expense_line(osv.osv):
-    _inherit = "hr.expense.line"
-
-    _columns = {
-        'invoice_id': fields.many2one('account.invoice', 'Invoice',
-                                      ondelete='cascade'),
-        #~ NOTE: this field is really a one2one
-    }
-
-    def fields_get(self, cr, user, allfields=None, context=None,
-                   write_access=True):
-        """ Overwrite the method to add the domin of type of invoice into the
-        many2one hr expense line that it shows in ht expense form.
-        """
-        context = context or {}
-        res = super(hr_expense_line,self).fields_get(cr, user, allfields,
-                    context, write_access)
-        res['invoice_id']['domain'].append(('type','=','in_invoice'))
-        return res
+from openerp import netsvc
+import openerp.addons.decimal_precision as dp
 
 class hr_expense_expense(osv.osv):
     _inherit = "hr.expense.expense"
 
+    def _amount(self, cr, uid, ids, field_name, arg, context=None):
+        """ Overwrite method to add the sum of the invoices total amount
+        (Sub total + tax amount ). """
+        context = context or {}
+        res = super(hr_expense_expense,self)._amount(
+            cr, uid, ids, field_name, arg, context=context)
+        for expense in self.browse(cr, uid, res.keys() , context=context):
+            for invoice in expense.invoice_ids:
+                res[expense.id] += invoice.amount_total
+        return res
+
     _columns = {
-        'invoice_ids': fields.one2many(
-            'account.invoice', 'expense_id', 'Invoices',
-            help='Lines being recorded in the book'),
+        'invoice_ids': fields.one2many('account.invoice', 'expense_id',
+                                       'Invoices', help=''),
+        'ail_ids': fields.one2many('account.invoice.line', 'expense_id',
+                                   'Invoices lines', help=''),
+        'amount': fields.function(_amount, string='Total Amount',
+                                  digits_compute=dp.get_precision('Account')),
     }
 
     def action_receipt_create(self, cr, uid, ids, context=None):
@@ -62,9 +58,7 @@ class hr_expense_expense(osv.osv):
             for line_exp_brw in exp_brw.line_ids:
                 if line_exp_brw.invoice_id:
                     if line_exp_brw.invoice_id.state == 'open':
-                        # create accounting entries related to an expense
-                        super(hr_expense_expense, self).action_receipt_create(cr, uid, ids,
-                                                                              context=context)
+                        pass
                     else:
                         error_msj = error_msj + \
                             '- [Expense] ' + exp_brw.name + \
@@ -78,7 +72,9 @@ class hr_expense_expense(osv.osv):
                 " that are not in open state. Please paid the invoices.\n"
                 + error_msj)
 
-        return True
+        # create accounting entries related to an expense
+        return super(hr_expense_expense, self).action_receipt_create(
+            cr, uid, ids, context=context)
 
     #~ TODO: Doing
     def concile_viatical_payment(self, cr, uid, ids, context=None):
@@ -86,57 +82,170 @@ class hr_expense_expense(osv.osv):
         entry and the invoices accounting entries.
         """
         context = context or {}
-        am_obj = self.pool.get('account.move')
-        ai_obj = self.pool.get('account.invoice')
-        for exp_brw in self.browse(cr, uid, ids, context=context):
-            vals = {}
-            #~ posted el asiento de lra factura? -> validar la facutra. colocarla en estado open.
-            #~ inv_move_id = ... agregar campo a hr.expense? como es esa relacion de muchos?? 
-            #~ for inv_brw in exp_brw.invoice_ids:
-                #~ inv_move_id = 
-
-            #~ generar asiento del expense. esto es dando el click al boton de
-            #~ generate accounintg para dejar la exp en estado done?
-            #~ ....
-            exp_move_id = exp_brw.account_move_id.id
-
-        #~ create new account move, that containg the data of the hr_expsense acccount move recently created, and the info of the invoice paid.
-            #~ name: no estoy segura si necesito colocarlo o si se genera solo?
-            #~ state : draft
-            #~ ref
-            #~ journal_id: un nuevo journal_id
-            #~ lines: extraigo la info del acc.move del expense, y la info del acc.move de la factura
-                #~ para ello debo de buscar dentro de las acc.move.lines el que tenga credit
-            #~ vals['ref'] = 'Pago de Viaticos'
-            #~ am_obj.create(cr, uid, vals, context=context)
-            #~ self.create_account_move_line(cr, uid, ids, context=context)
-
-        return True
-
-    #~ TODO: Doing
-    def create_account_move_line(self, cr, uid, ids, context=None):
-        context = context or {}
-        am_obj = self.pool.get('account.move')
+        wf_service = netsvc.LocalService("workflow")
         aml_obj = self.pool.get('account.move.line')
-
+        per_obj = self.pool.get('account.period')
         for exp_brw in self.browse(cr, uid, ids, context=context):
+            # validate expense invoices
+            self.validate_expense_invoices(cr, uid, exp_brw.id, context=context)
+            # generate accounting entries for expense
+            self.generate_accounting_entries(cr, uid, exp_brw.id, context=context)
+            # create move account
+            exp_move_id = self.create_match_move(cr, uid, exp_brw.id,
+                                                 context=context)
+            print '\n'*5, 'exp_move_id', exp_move_id
 
-            vals1['name'] = 'Pago de Viáticos'
-            vals1['partner_id'] = exp_brw.employee_id
-            #~ vals1['account_id'] = Payable..
-            #~ vals1['debit'] = 
+            # reconcile manual entries for partners
+            # TODO: This part is failling, need to reorder de move lines by partner_id
+            inv_move_ids = [inv_brw.move_id.id
+                            for inv_brw in exp_brw.invoice_ids
+                            if inv_brw.move_id]
+            move_ids = [exp_move_id] + inv_move_ids
+            move_line_ids = aml_obj.search(
+                cr, uid, [('move_id', 'in', move_ids )], context=context)
+
+            move_lines_ids_d = dict()
+            for line in aml_obj.browse(cr, uid, move_line_ids, context=context):
+                if move_lines_ids_d.get(line.partner_id.id, False):
+                    move_lines_ids_d[line.partner_id.id] += [line.id] 
+                else:
+                    move_lines_ids_d[line.partner_id.id] = [line.id]
+
+            print 'move_ids', move_ids
+            print 'move_line_ids', move_line_ids
+            print 'move_lines_ids_d', move_lines_ids_d
+
+            account_id = self.get_payable_account_id(cr, uid, context=context)
+            # TODO: account_id need to be particular value?.
+            journal_id = self.get_purchase_journal_id(cr, uid, context=context)
+            #~ TODO: Ask. need to be a particular value? need to be selecte the allow reconcillaton option?
+            period_id = per_obj.find(cr, uid, context=context)[0]
+
+            for partner_id in move_lines_ids_d:
+                aml_obj.reconcile(cr, uid, move_lines_ids_d[partner_id], 'manual', account_id,
+                                  period_id, journal_id, context=context)
+
+            # reconcile manual for employee, like supplier payment... simulate
 
         return True
 
-    def refresh_expense_lines(self, cr, uid, ids, context=None):
-        """ """
+    def validate_expense_invoices(self, cr, uid, ids, context=None):
+        """ Validate Invoices asociated to the Expense. Put the invoices in
+        Open State. """
         context = context or {}
-        ai_obj = self.pool.get('account.invoice')
-        expl_obj = self.pool.get('hr.expense.line')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wf_service = netsvc.LocalService("workflow")
         for exp_brw in self.browse(cr, uid, ids, context=context):
-            expl_ids = [expl_brw.id for expl_brw in exp_brw.line_ids]
-            expl_obj.unlink(cr, uid, expl_ids, context=context)
-            inv_brws = exp_brw.invoice_ids
-            inv_ids = [inv_brw.id for inv_brw in inv_brws]
-            ai_obj.create_expense_lines(cr, uid, inv_ids, ids[0], context=context)
+            validate_inv_ids = \
+                [inv_brw.id
+                 for inv_brw in exp_brw.invoice_ids
+                 if inv_brw.state == 'draft']
+            for inv_id in validate_inv_ids:
+                wf_service.trg_validate(uid, 'account.invoice', inv_id,
+                                        'invoice_open', cr)
         return True
+
+    def generate_accounting_entries(self, cr, uid, ids, context=None):
+        """ Active the workflow signals to change the expense to Done state
+        and generate accounting entries for the expense by clicking the
+        'Generate Accounting Entries' button. """
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wf_service = netsvc.LocalService("workflow")
+        for exp_brw in self.browse(cr, uid, ids, context=context):
+            if exp_brw.state not in ['done']:
+                wf_service.trg_validate(uid, 'hr.expense.expense', exp_brw.id,
+                                        'confirm', cr)
+                wf_service.trg_validate(uid, 'hr.expense.expense', exp_brw.id,
+                                        'validate', cr)
+                wf_service.trg_validate(uid, 'hr.expense.expense', exp_brw.id,
+                                        'done', cr)
+        return True
+
+    def create_match_move(self, cr, uid, ids, context=None):
+        """ Create new account move that containg the data of the expsense
+        account move created and expense invoices moves. Receives only one
+        id """
+        context = context or {}
+        am_obj = self.pool.get('account.move')
+        exp_brw = self.browse(cr, uid, ids, context=context)
+        vals = dict()
+        vals['ref'] = 'Pago de Viaticos'
+        vals['journal_id'] = self.get_purchase_journal_id(
+            cr, uid, context=context)
+        debit_lines = self.create_debit_lines_dict(
+            cr, uid, exp_brw.id, context=context)
+
+        print '\n'*5
+        print 'exp_brw', exp_brw
+        print 'exp_brw.account_move_id', exp_brw.account_move_id
+        print 'exp_brw.account_move_id.partner_id', exp_brw.account_move_id.partner_id
+        credit_line = [
+            (0, 0, {
+             'name': 'Pago de Viaticos',
+             'account_id': self.get_payable_account_id(
+                cr, uid, context=context),
+             'partner_id': exp_brw.account_move_id.partner_id.id,
+             'debit': 0.0,
+             'credit': self.get_lines_credit_amount(
+                cr, uid, exp_brw.account_move_id.id, context=context)
+             })
+             #~ TODO: I think may to change this acocunt_id
+        ]
+        vals['line_id'] = debit_lines + credit_line
+        return am_obj.create(cr, uid, vals, context=context)
+
+    def create_debit_lines_dict(self, cr, uid, ids, context=None):
+        """ Returns a list of dictionarys for create account move
+        lines objects. Only recive one exp id """
+        context = context or {}
+        debit_lines = []
+        am_obj = self.pool.get('account.move')
+        exp_brw = self.browse(cr, uid, ids, context=context)
+        inv_move_ids = [inv_brw.move_id.id
+                        for inv_brw in exp_brw.invoice_ids
+                        if inv_brw.move_id]
+        for inv_move_brw in am_obj.browse(cr, uid, inv_move_ids, context=context):
+            debit_lines.append(
+                (0, 0, {
+                 'name': 'Pago de Viaticos',
+                 'account_id': self.get_payable_account_id(
+                    cr, uid, context=context),
+                 'partner_id': inv_move_brw.partner_id.id,
+                 'invoice': inv_move_brw.line_id[0].invoice.id,
+                 'debit':  self.get_lines_credit_amount(
+                    cr, uid, inv_move_brw.id, context=context),
+                 'credit': 0.0 })
+            )
+            #~ TODO: invoice field is have not been set, check why
+        return debit_lines
+
+    def get_lines_credit_amount(self, cr, uid, move_id, context=None):
+        """ Return the credit amount (float value) of the account move given.
+        @param move_id: list of move id where the credit will be extract """
+        context = context or {}
+        am_obj = self.pool.get('account.move')
+        move_brw = am_obj.browse(cr, uid, move_id, context=context)
+        amount = [move_line.credit
+                  for move_line in move_brw.line_id
+                  if move_line.credit != 0.0]
+        if not amount:
+            raise osv.except_osv(
+                'Invalid Procedure!',
+                "There is a problem in your move definition " +
+                move_brw.ref + ' ' + move_brw.name)
+        return amount[0]
+        
+    def get_payable_account_id(self, cr, uid, context=None):
+        """ Return the id of a payable account. """
+        aa_obj = self.pool.get('account.account')
+        return aa_obj.search(cr, uid, [('type','=', 'payable')], limit=1,
+                               context=context)[0]
+
+    def get_purchase_journal_id(self, cr, uid, context=None):
+        """ Return an journal id of type purchase. """
+        context = context or {}
+        aj_obj = self.pool.get('account.journal')
+        return aj_obj.search(cr, uid, [('type','=', 'purchase')], limit=1,
+            context=context)[0]
+

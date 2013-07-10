@@ -7,30 +7,28 @@
             <field name="model">hr.expense.expense</field>
             <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='line_ids']/tree/field[@name='ref']" position="after">
-                    <field name="invoice_id"/>
+
+                <xpath expr="//field[@name='line_ids']" position="after">
+                    <separator string = "Deductible Lines"/>
+                    <field name="ail_ids">
+                        <tree>
+                            <field name="name"/>
+                            <field name="invoice_id"/>
+                            <field name="quantity"/>
+                            <field name="price_unit"/>
+                            <field name="price_subtotal" sum=""/>
+                            <field name="invoice_line_tax_id"/>
+                        </tree>
+                    </field>
                 </xpath>
 
-                <xpath expr="//field[@name='line_ids']" position="before">
-                    <button string="Refresh Lines" name="refresh_expense_lines" type="object"/>
-                </xpath>
-
-                <xpath expr="//notebook[last()]" position="inside">
-                    <page string="Invoices">
-                        <field name="invoice_ids"/>
-                    </page>
-                </xpath>
-
-                <xpath expr="//button[@name='confirm']" position="before">
-                    <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action"/>
-                </xpath>
                 <xpath expr="//button[@name='confirm']" position="after">
                     <button name="concile_viatical_payment" type="object" string="Concile Payment Dummy"/>
                 </xpath>
 
                 <xpath expr="//sheet/group" position="before">
                     <div class="oe_right oe_button_box" name="button_box">
-                        <button name="%(hr_expense_extended_invoices)d" type="action" string="Invoices" context="{'expense_id': active_id}"/>
+                        <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action"/>
                     </div>
                 </xpath>
                         

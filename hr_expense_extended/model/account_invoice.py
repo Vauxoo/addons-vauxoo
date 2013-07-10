@@ -71,3 +71,16 @@ class account_invoice(osv.osv):
                 data.append((0, 0, vals))
             exp_obj.write(cr, uid, exp_id, {'line_ids': data}, context=context)
         return True
+
+
+class account_invoice_line(osv.osv):
+    _inherit = 'account.invoice.line'
+    _columns = {
+        'expense_id': fields.related('invoice_id', 'expense_id',
+                                     relation='hr.expense.expense',
+                                     type="many2one",
+                                     string='Expense',
+                                     help='Expense Document Name',
+                                     store=True),
+    }
+    
