@@ -197,46 +197,59 @@ class periodic_inventory_valuation(osv.osv):
             ('date','>=',date_start),('date','<=',date_stop),
             ],context=context)
 
+        #Se establecen parametros para usar en los calculos
         periodic_line = self.pool.get('periodic.inventory.valuation.line')
         lineas = []
         move_id = False
         state = 'draft'
 
-
+        #Si no se han hecho calculos, se cargan datos iniciales, aqui la condicion deberia ser si el estado es draft
+        #Se debe validar que si es el primer registro cargar datos en 0, si no es el primer registro entonces tomar
+        #valores del ultimo registro
         if not self.browse(cr,uid,ids[0],context=context).first:
             state = 'confirm'
             
+            
             pivl_init_ids = []
+            #Se itera sobre los productos que sean de tipo producto y con valuation tipo manual_periodic
             for prod_id in prod_ids:
                 prod = prod_obj.browse(cr,uid,prod_id,context=context)
-            
-                pnv_line_id = False
-                if type(ids) is list:
-                    pnv_id = self.search(cr, uid, [('id','!=',ids[0]),('state','=','done')], order='id desc', limit=1, context=context)
-                    if pnv_id:
-                        pnv_id = pnv_id[0]
-                        pnv_line_id = periodic_line.search(cr, uid, [('piv_id','=',pnv_id),('product_id','=',prod_id)], context=context)
-                else:
-                    pnv_id = self.search(cr, uid, [('id','!=',ids),('state','=','done')], order='id desc', limit=1, context=context)
-                    if pnv_id:
-                        pnv_id = pnv_id[0]
-                        pnv_line_id = periodic_line.search(cr, uid, [('piv_id','=',pnv_id),('product_id','=',prod_id)], context=context)
                 
-                if pnv_line_id:
-                    pnv_line_brw = periodic_line.browse(cr, uid, pnv_line_id, context=context)[0]
-           #condicional aqui de pnv_line_brw, puede que no exista 
-                pivl_init_ids.append(periodic_line.create(cr, uid, {
+                #Se obtiene la linea del producto del registro anterior
+                if type(ids) is list:
+                    piv_id = self.search(cr, uid, [('id','!=',ids[0]),('state','=','done')], order='id desc', limit=1, context=context)
+                else:
+                    piv_id = self.search(cr, uid, [('id','!=',ids),('state','=','done')], order='id desc', limit=1, context=context)
+
+                if piv_id:
+                    piv_id = piv_id[0]
+                    piv_line_id = periodic_line.search(cr, uid, [('piv_id','=',piv_id),('product_id','=',prod_id)], context=context)
+                
+                #condicional aqui de piv_line_brw, puede que no exista 
+                if piv_line_id:
+                    piv_line_brw = periodic_line.browse(cr, uid, piv_line_id, context=context)[0]
+                    line_qty_init = piv_line_brw.qty_init
+                    line_average_cost = piv_line_brw.average_cost
+                    line_valuation = piv_line_brw.valuation
+                else:
+                    line_qty_init = 0.0
+                    line_average_cost = 0.0 
+                    line_valuation = 0.0
+                
+                #Guardar informacion de la linea piv a crear en el registro actual
+                pivline_init_ids.append(periodic_line.create(cr, uid, {
                         'piv_id': ids[0],
                         'product_id':prod_id,
-                        'qty_init':pnv_line_brw.qty_init,
-                        'qty_final':pnv_line_brw.qty_final,
-                        'qty_sale':pnv_line_brw.qty_sale,
-                        'qty_purchase':pnv_line_brw.qty_purchase,
+                        'qty_init':line_qty_init,
+                        'qty_final':0.0,
+                        'qty_sale':0.0,
+                        'qty_purchase':0.0,
                         'uom_id':prod.uom_id.id,
-                        'average_cost':pnv_line_brw.average_cost,
-                        'valuation':pnv_line_brw.valuation,
+                        'average_cost':line_average_cost,
+                        'valuation':line_valuation,
                         }, context=context))
-
+                
+            #Cargar lineas nuevas en el registro actual
             self.write(cr,uid,ids[0],{
                 'pivl_ids':[(6,0,pivl_init_ids)],
                 },context=context)
@@ -244,10 +257,15 @@ class periodic_inventory_valuation(osv.osv):
             state='done'
             product_price_purs = {}
             product_price_sales = {}
+            
             qty_purchase = 0 
             total_purchase = 0 
+
+            #Se iteran que esten pagadas o abiertas y que esten dentro del periodo al que corresponde
+            #la fecha actual 
             for ail_id in ail_ids:
                 ail = ail_obj.browse(cr,uid,ail_id,context=context)
+                #si la factura se relaciona a la lista de productos que se filtraron
                 if ail.product_id.id in prod_ids:
                     
                     produc_obj = prod_obj.browse(cr, uid, ail.product_id.id, context=context)
@@ -271,6 +289,8 @@ class periodic_inventory_valuation(osv.osv):
                             product_price_sales[ail.product_id.id] = [p_p_sale]
                     else:
                         print ail.invoice_id.type
+            
+            #################################
             lineas = []
             for i in product_price_purs:
                 qty_pur = 0
@@ -339,7 +359,9 @@ class periodic_inventory_valuation(osv.osv):
                     #print "*******************************************"
                     #print journal_id
                     #Create journal items
-                    line_id = self.pool.get('account.move.line').create(cr, uid, {      
+                        import pdb
+                        pdb.set_trace()
+                        move_line = {      
                             'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
                             'partner_id': False,           
                             'product_id':prod.id,
@@ -350,21 +372,18 @@ class periodic_inventory_valuation(osv.osv):
                             'date': date_stop,                               
                             'debit': debit,                                                   
                             'credit': credit,                                                  
-                        }, context=context)
-                    line_id_2 = self.pool.get('account.move.line').create(cr, uid, {      
-                            'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
-                            'partner_id': False,                                            
-                            'product_id':prod.id,
-                            'account_id': prod.product_tmpl_id.categ_id.property_account_expense_categ.id,                                      
-                            'move_id': False,                                             
-                            'journal_id': journal_id,                               
-                            'period_id': period_ids,                                 
-                            'date': date_stop,                               
-                            'debit': credit,                                                   
-                            'credit': debit,                                                  
-                        }, context=context)
+                           }
+                    
+                    line_id = self.pool.get('account.move.line').create(cr, uid, move_line, context=context)
                     lineas.append(line_id)
-                    lineas.append(line_id_2)
+
+                    move_line['account_id'] = prod.product_tmpl_id.categ_id.property_account_expense_categ.id 
+                    move_line['debit'] = credit
+                    move_line['credit'] = debit
+                    
+                    line_id = self.pool.get('account.move.line').create(cr, uid, move_line, context=context)
+                    lineas.append(line_id)
+
 #DUDA con VALUATION
                 periodic_line.write(cr, uid, val_line.id, {
                     'average_cost':costo_promedio,
@@ -374,7 +393,10 @@ class periodic_inventory_valuation(osv.osv):
                     'qty_final':inventario_final,
                     'qty_init':val_line.qty_final,
                         })
-            
+            ##############################################################
+
+
+
             move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
 
         #    print "products_price_pur " , product_price_purs , " products_price_sale " , product_price_sales
