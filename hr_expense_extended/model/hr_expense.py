@@ -26,7 +26,7 @@ from openerp.osv import fields, osv
 from openerp import netsvc
 import openerp.addons.decimal_precision as dp
 
-class hr_expense_expense(osv.osv):
+class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
 
     def _amount(self, cr, uid, ids, field_name, arg, context=None):

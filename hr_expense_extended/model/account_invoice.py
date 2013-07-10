@@ -25,7 +25,7 @@
 from openerp.osv import fields, osv
 
 
-class account_invoice(osv.osv):
+class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     _columns = {
         'expense_id': fields.many2one('hr.expense.expense', 'Expense',
@@ -59,7 +59,7 @@ class account_invoice(osv.osv):
         return True
 
 
-class account_invoice_line(osv.osv):
+class account_invoice_line(osv.Model):
     _inherit = 'account.invoice.line'
     _columns = {
         'expense_id': fields.related('invoice_id', 'expense_id',
