@@ -80,31 +80,31 @@ class hr_expense_expense(osv.Model):
             }),
     }
 
-    def action_receipt_create(self, cr, uid, ids, context=None):
-        """ Overwrite the action_receipt_create function to add the validate
+    def expense_accept(self, cr, uid, ids, context=None):
+        """ Overwrite the expense_confirm function to add the validate
         invoice process """
         context = context or {}
         error_msj = str()
         for exp_brw in self.browse(cr, uid, ids, context=context):
-            for line_exp_brw in exp_brw.line_ids:
-                if line_exp_brw.invoice_id:
-                    if line_exp_brw.invoice_id.state == 'open':
-                        pass
-                    else:
-                        error_msj = error_msj + \
-                            '- [Expense] ' + exp_brw.name + \
-                            ' [Expense Line] ' + line_exp_brw.name +  \
-                            ' [Invoice] ' + (line_exp_brw.invoice_id.number or line_exp_brw.invoice_id.partner_id.name) + '\n'
+            bad_invs = [inv_brw
+                        for inv_brw in exp_brw.invoice_ids
+                        if inv_brw.state not in ['open']]
+
+            if bad_invs:
+                for inv_brw in bad_invs:
+                    error_msj = error_msj + \
+                    '- [Expense] ' + exp_brw.name + \
+                    ' [Invoice] ' + (inv_brw.number or inv_brw.partner_id.name) + \
+                    ' (' + inv_brw.state.capitalize() + ')\n'
+
         if error_msj:
             raise osv.except_osv(
                 'Invalid Procedure!',
-                "You can not generate the Accounting Entries for this Expense."
-                " There are some invoices associated to the expenses lines"
-                " that are not in open state. Please paid the invoices.\n"
+                "Associated invoices need to be in Open state.\n"
                 + error_msj)
 
         # create accounting entries related to an expense
-        return super(hr_expense_expense, self).action_receipt_create(
+        return super(hr_expense_expense, self).expense_accept(
             cr, uid, ids, context=context)
 
     #~ TODO: Doing
