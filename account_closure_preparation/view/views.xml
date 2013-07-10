@@ -25,6 +25,8 @@
                             string="Proceed" 
                             states="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20" 
                             class="oe_highlight"/>
+                        <label for="skip" states='stage16,stage18,stage20'/>
+                        <field name='skip' states='stage16,stage18,stage20'/>
                         <field name="state" 
                             widget="statusbar" 
                             statusbar_visible="stage1,stage2,stage3,stage4,stage5,stage6,stage7,stage8,stage9,stage10,stage11,stage12,stage13,stage14,stage15,stage16,stage17,stage18,stage19,stage20"
@@ -205,10 +207,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
-                                <field name='recon_ut_id' attrs="{'required':[('state','=','stage16')],'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}"/>
+                                <field name='recon_ut_id' attrs="{'required':[('skip','=',False),('state','=','stage16')],'readonly':['|',('skip','=',True),('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage16','stage17'))]}">
-                                <field name='recon_ids' nolabel="1" attrs="{'required':[('state','=','stage16')],'readonly':[('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}">
+                                <field name='recon_ids' nolabel="1" attrs="{'required':[('skip','=',False),('state','=','stage16')],'readonly':['|',('skip','=',True),('state','!=','stage16')],'invisible':[('state','not in',('stage16','stage17'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -231,10 +233,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
-                                <field name='det_ut_id' attrs="{'required':[('state','=','stage18')],'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}"/>
+                                <field name='det_ut_id' attrs="{'required':[('skip','=',False),('state','=','stage18')],'readonly':['|',('skip','=',True),('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage18','stage19'))]}">
-                                <field name='det_ids' nolabel="1" attrs="{'required':[('state','=','stage18')],'readonly':[('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}">
+                                <field name='det_ids' nolabel="1" attrs="{'required':[('skip','=',False),('state','=','stage18')],'readonly':['|',('skip','=',True),('state','!=','stage18')],'invisible':[('state','not in',('stage18','stage19'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -254,10 +256,10 @@
                         </group>
                         <group cols="2" attrs="{'invisible':[('state','not in',('stage20'))]}">
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
-                                <field name='cons_id' attrs="{'required':[('state','=','stage20')],'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}"/>
+                                <field name='cons_id' attrs="{'required':[('skip','=',False),('state','=','stage20')],'readonly':['|',('skip','=',True),('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}"/>
                             </group>
                             <group colspan='4' attrs="{'invisible':[('state','not in',('stage20'))]}">
-                                <field name='cons_ids' nolabel="1" attrs="{'required':[('state','=','stage20')],'readonly':[('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}">
+                                <field name='cons_ids' nolabel="1" attrs="{'required':[('skip','=',False),('state','=','stage20')],'readonly':['|',('skip','=',True),('state','!=','stage20')],'invisible':[('state','not in',('stage20'))]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -299,29 +301,29 @@
                             <group string="Fixing Income Statement Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage6'))]}">
                                 <i><label colspan='4' string="The Accounts shown in the left panel are accounts that should have an Account User Type with Deferral Method equal None and right now they are having another deferral method. The 'IS Closure Type' will be used to Fix the wrongly set Account in the Left "/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage8'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Bank Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage8'))]}">
+                                <i><label colspan='4' string="The accounts being shown in the left are Accounts that have not attribute Account User Type with Deferral Method 'Balance' nor are set as 'Liquidity' Type, Hence this accounts will be Fixed with the 'Bank Closure Type' previously set and their type will be set to Liquidity. If there are Accounts that you regard as not belonging to Bank Accounts and they show here, it is possible that you have wrongfully set the Bank Accounts, Backpedal and set them again and come back here, or you have set within your Bank Accounts other accounts that do not fit with the criteria for Bank Accounts and you should create a new branch for this accounts in your Chart of Accounts. Open a new window, Fix your Chart of Accounts, come back here, Backpedal and execute again this step "/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage9'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Non-Bank Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage9'))]}">
+                                <i><label colspan='4' string="The Account shown here are accounts that were previously set as of 'Liquidity' Type, please carefully review them, because after this step is completed their Type are going to be set to 'Regular'. If you think these account should be Bank Accounts then one of two things have happen: you have forgotten to set a Bank Account or your chart of Accounts should be Fixed to consolidate your Accounts in one or severtal Account Holders."/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage11'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Receivable Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage11'))]}">
+                                <i><label colspan='4' string="The Accounts depicted in the left are that should bear Attributes like 'Reconcile', 'Receivable' &amp; Account User Type with Deferral Method as 'Unreconciled' but some of those attributes are not met in these accounts. Those attribute are going to be set in these Accounts. If you Desagree with this conclusion, please, try to fix your previouse selection, by Backpedaling, and come back here, and check again."/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage12'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Non-Receivable Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage12'))]}">
+                                <i><label colspan='4' string="In the previous step you were presented with account that should be regarded as Receivable but were not, now it is the other way around, The accounts you are presented here were sometime ago regarded as 'Receivable' but these account are not now in the selection you have previously done. Proceed if this is ok for you, if not, go back a make the corrections."/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage14'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Payable Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage14'))]}">
+                                <i><label colspan='4' string="The Accounts depicted in the left are that should bear Attributes like 'Reconcile', 'Payable' &amp; Account User Type with Deferral Method as 'Unreconciled' but some of those attributes are not met in these accounts. Those attribute are going to be set in these Accounts. If you Desagree with this conclusion, please, try to fix your previouse selection, by Backpedaling, and come back here, and check again."/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage15'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Non-Payable Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage15'))]}">
+                                <i><label colspan='4' string="In the previous step you were presented with account that should be regarded as Payable but were not, now it is the other way around, The accounts you are presented here were sometime ago regarded as 'Payable' but these account are not now in the selection you have previously done. Proceed if this is ok for you, if not, go back a make the corrections."/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage17'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Reconcilable Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage17'))]}">
+                                <i><label colspan='4' string="The Accounts depicted in the left are that should bear Attributes like 'Reconcile' &amp; Account User Type with Deferral Method as 'Unreconciled' but some of those attributes are not met in these accounts. Those attribute are going to be set in these Accounts. If you Desagree with this conclusion, please, try to fix your previouse selection, by Backpedaling, and come back here, and check again."/></i>
                             </group>
-                            <group string="Lorem Ipsum" colspan='4' attrs="{'invisible':[('state','not in',('stage19'))]}">
-                                <i><label colspan='4' string="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. "/></i>
+                            <group string="Fixing Detail Accounts" colspan='4' attrs="{'invisible':[('state','not in',('stage19'))]}">
+                                <i><label colspan='4' string="The Accounts depicted in the left are that should bear Attributes like Account User Type with Deferral Method as 'Detail' but some of those attributes are not met in these accounts. Those attribute are going to be set in these Accounts. If you Desagree with this conclusion, please, try to fix your previouse selection, by Backpedaling, and come back here, and check again."/></i>
                             </group>
                         </group>
                     </group>

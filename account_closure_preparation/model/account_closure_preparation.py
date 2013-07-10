@@ -67,7 +67,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'bk_ids':fields.many2many('account.account', 'acp_bk_acc_rel',
             'account_id', 'acp_id', 'Bank & Cash Accounts',
-            domain="[('type','=','view')]", help=('Select the most top '
+            domain=("[('type','=','view'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
             'level in the chart of account related to your Bank Accounts')),
         'bk_ut_id':fields.many2one('account.account.type', 'Bank Closure Type',
             required=False, domain="[('close_method','=','balance')]",
@@ -75,7 +77,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'rec_ids':fields.many2many('account.account', 'acp_rec_acc_rel',
             'account_id', 'acp_id', 'Receivable Accounts',
-            domain="[('type','=','view')]", help=('Select the most top '
+            domain=("[('type','=','view'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
             'level in the chart of account related to your Receivable Accounts')),
         'rec_ut_id':fields.many2one('account.account.type', 'Receivable  Closure Type',
             required=False, domain="[('close_method','=','unreconciled')]",
@@ -83,7 +87,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'pay_ids':fields.many2many('account.account', 'acp_pay_acc_rel',
             'account_id', 'acp_id', 'Payable Accounts',
-            domain="[('type','=','view')]", help=('Select the most top '
+            domain=("[('type','=','view'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
             'level in the chart of account related to your Payable Accounts')),
         'pay_ut_id':fields.many2one('account.account.type', 'Payable  Closure Type',
             required=False, domain="[('close_method','=','unreconciled')]",
@@ -91,7 +97,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'recon_ids':fields.many2many('account.account', 'acp_recon_acc_rel',
             'account_id', 'acp_id', 'Reconcilable Accounts',
-            domain="[('type','=','other')]", help=('Select the Accounts that '
+            domain=("[('type','=','other'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
                 'you will regard as Reconcilable. Remember this Accounts are'
                 ' different than your Receivable & Payable Accounts')),
         'recon_ut_id':fields.many2one('account.account.type', 'Reconcilable Closure Type',
@@ -100,7 +108,9 @@ class account_closure_preparation(osv.TransientModel):
             'chart of account')), 
         'det_ids':fields.many2many('account.account', 'acp_det_acc_rel',
             'account_id', 'acp_id', 'Detail Accounts',
-            domain="[('type','=','other')]", help=('Select the Accounts that '
+            domain=("[('type','=','other'),"
+                    "('parent_id','child_of',bs_ids[0][2])]"),
+                help=('Select the most top '
                 'you will regard as Detail. This kind of Account is weirdly '
                 'used. Although is could be used in Depreciation Accounts')),
         'det_ut_id':fields.many2one('account.account.type', 'Detail Closure Type',
@@ -141,6 +151,9 @@ class account_closure_preparation(osv.TransientModel):
             ('stage20','Prep & Fix Consolation Acc'),
             ('stage21','LAST STEP'),
             ], help='State'), 
+        'skip':fields.boolean('Skip This Step', help=('Some time it is Ok to '
+            'skip a step because that configuration is not used in your company'
+            )), 
             }
 
     _defaults = {
@@ -214,6 +227,7 @@ class account_closure_preparation(osv.TransientModel):
                                         ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('type','=','view'),
                                         ('user_type.close_method','!=','none'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage2','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage2':
@@ -227,6 +241,7 @@ class account_closure_preparation(osv.TransientModel):
                                             [i.id for i in wzd_brw.bs_ids]),
                                         ('type','!=','view'),
                                         ('user_type.close_method','=','none'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage4','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage4':
@@ -236,6 +251,7 @@ class account_closure_preparation(osv.TransientModel):
             is_ids = acc_obj.search(cr,uid,[
                 ('parent_id','=',wzd_brw.root_id.id),
                 ('id','not in',[i.id for i in wzd_brw.bs_ids])
+                ('active','=',True),
                 ],context=context)
             wzd_brw.write({
                 'state':'stage5',
@@ -249,6 +265,7 @@ class account_closure_preparation(osv.TransientModel):
                                         ('type','!=','view'),
                                         '|',('type','not in',('other','closed')),
                                         ('user_type.close_method','!=','none'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage6','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage6':
@@ -264,6 +281,7 @@ class account_closure_preparation(osv.TransientModel):
                                         ('type','!=','view'),
                                         '|',('type','!=','liquidity'),
                                         ('user_type.close_method','!=','balance'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage8','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage8':
@@ -276,12 +294,14 @@ class account_closure_preparation(osv.TransientModel):
                                         ('parent_id','child_of',
                                             [i.id for i in wzd_brw.bk_ids]),
                                         ('type','!=','view'),
+                                        ('active','=',True),
                                         ],context=context)
             bank_ids2 = acc_obj.search(cr, uid,[
                                         ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('id','not in',bank_ids1x),
                                         ('type','!=','view'),
                                         ('type','=','liquidity'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage9','account_ids':[(6,0,bank_ids2)]})
         elif wzd_brw.state == 'stage9':
@@ -297,6 +317,7 @@ class account_closure_preparation(osv.TransientModel):
                                         '|',('reconcile','=',False),
                                         '|',('type','not in',('receivable','closed')),
                                         ('user_type.close_method','!=','unreconciled'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage11','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage11':
@@ -310,12 +331,14 @@ class account_closure_preparation(osv.TransientModel):
                                         ('parent_id','child_of',
                                             [i.id for i in wzd_brw.rec_ids]),
                                         ('type','!=','view'),
+                                        ('active','=',True),
                                         ],context=context)
             rec_ids2 = acc_obj.search(cr, uid,[
                                         ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('id','not in',rec_ids1x),
                                         ('type','!=','view'),
                                         ('type','=','receivable'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage12','account_ids':[(6,0,rec_ids2)]})
         elif wzd_brw.state == 'stage12':
@@ -331,6 +354,7 @@ class account_closure_preparation(osv.TransientModel):
                                         '|',('reconcile','=',False),
                                         '|',('type','not in',('payable','closed')),
                                         ('user_type.close_method','!=','unreconciled'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage14','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage14':
@@ -344,12 +368,14 @@ class account_closure_preparation(osv.TransientModel):
                                         ('parent_id','child_of',
                                             [i.id for i in wzd_brw.pay_ids]),
                                         ('type','!=','view'),
+                                        ('active','=',True),
                                         ],context=context)
             pay_ids2 = acc_obj.search(cr, uid,[
                                         ('parent_id','child_of',wzd_brw.root_id.id),
                                         ('id','not in',pay_ids1x),
                                         ('type','!=','view'),
                                         ('type','=','payable'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage15','account_ids':[(6,0,pay_ids2)]})
         elif wzd_brw.state == 'stage15':
@@ -357,7 +383,9 @@ class account_closure_preparation(osv.TransientModel):
             acc_obj.write(cr,uid,res,
                           {'type':'other'},context=context)
             wzd_brw.write({'state':'stage16','account_ids':[(6,0,[])]})
-        elif wzd_brw.state == 'stage16':
+        elif wzd_brw.state == 'stage16' and wzd_brw.skip:
+            wzd_brw.write({'state':'stage18','skip':False})
+        elif wzd_brw.state == 'stage16' and not wzd_brw.skip:
             acc_obj.write(cr,uid,[i.id for i in wzd_brw.recon_ids],{
                           'user_type' : wzd_brw.recon_ut_id.id,
                           'type' : 'other',
@@ -377,6 +405,7 @@ class account_closure_preparation(osv.TransientModel):
                                         ('type','!=','view'),
                                         ('reconcile','=',True),
                                         ('user_type.close_method','=','unreconciled'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage17','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage17':
@@ -387,7 +416,9 @@ class account_closure_preparation(osv.TransientModel):
                           'reconcile' : False,
                           },context=context)
             wzd_brw.write({'state':'stage18','account_ids':[(6,0,[])]})
-        elif wzd_brw.state == 'stage18':
+        elif wzd_brw.state == 'stage18' and wzd_brw.skip:
+            wzd_brw.write({'state':'stage20','skip':False})
+        elif wzd_brw.state == 'stage18' and not wzd_brw.skip:
             acc_obj.write(cr,uid,[i.id for i in wzd_brw.det_ids],{
                           'user_type' : wzd_brw.det_ut_id.id,
                           'type' : 'other',
@@ -407,6 +438,7 @@ class account_closure_preparation(osv.TransientModel):
                                             [i.id for i in wzd_brw.det_ids]),
                                         ('type','!=','view'),
                                         ('user_type.close_method','=','detail'),
+                                        ('active','=',True),
                                         ],context=context)
             wzd_brw.write({'state':'stage19','account_ids':[(6,0,view_ids)]})
         elif wzd_brw.state == 'stage19':
@@ -420,7 +452,9 @@ class account_closure_preparation(osv.TransientModel):
                 'state':'stage20',
                 'account_ids':[(6,0,[])],
                 'cons_ids':[(6,0,[i.id for i in wzd_brw.is_ids])]})
-        elif wzd_brw.state == 'stage20':
+        elif wzd_brw.state == 'stage20' and wzd_brw.skip:
+            wzd_brw.write({'state':'stage21','skip':False})
+        elif wzd_brw.state == 'stage20' and not wzd_brw.skip:
             acc_obj.write(cr,uid,wzd_brw.cons_id.id,{
                 'child_consol_ids':[(6,0,[i.id for i in wzd_brw.cons_ids])]
                           },context=context)
