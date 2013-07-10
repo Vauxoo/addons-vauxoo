@@ -307,8 +307,6 @@ class account_invoice(osv.Model):
             password = pac_params.password
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
-            if 'testing' in wsdl_url:
-                msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
             wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
             if True:  # if wsdl_client:
                 file_globals = self._get_file_globals(
@@ -323,8 +321,13 @@ class account_invoice(osv.Model):
                     xml_res_str_addenda.replace(codecs.BOM_UTF8, ''))
                 zip = False  # Validar si es un comprimido zip, con la extension del archivo
                 contrasenaCSD = file_globals.get('password', '')
-                params = [
-                    user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
+                if 'testing' in wsdl_url:
+                    msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
+                    params = [
+                        user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
+                else:
+                    params = [
+                        user, password, cfdi, zip]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
