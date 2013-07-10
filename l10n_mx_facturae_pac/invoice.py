@@ -159,18 +159,18 @@ class account_invoice(osv.Model):
         if not sign_str:
             raise osv.except_osv(_('Error in Stamp !'), _(
                 "Can't generate the stamp of the voucher.\nCkeck your configuration.\ns%s") % (msg2))
-
+                
         nodeComprobante = doc_xml.getElementsByTagName(comprobante)[0]
         nodeComprobante.setAttribute("sello", sign_str)
         data_dict[comprobante]['sello'] = sign_str
-
+        
         noCertificado = self._get_noCertificado(context['fname_cer'])
         if not noCertificado:
             raise osv.except_osv(_('Error in No. Certificate !'), _(
                 "Can't get the Certificate Number of the voucher.\nCkeck your configuration.\n%s") % (msg2))
         nodeComprobante.setAttribute("noCertificado", noCertificado)
         data_dict[comprobante]['noCertificado'] = noCertificado
-
+        
         cert_str = self._get_certificate_str(context['fname_cer'])
         if not cert_str:
             raise osv.except_osv(_('Error in Certificate!'), _(
@@ -178,6 +178,9 @@ class account_invoice(osv.Model):
         cert_str = cert_str.replace(' ', '').replace('\n', '')
         nodeComprobante.setAttribute("certificado", cert_str)
         data_dict[comprobante]['certificado'] = cert_str
+        
+        nodeComprobante.removeAttribute('anoAprobacion');
+        nodeComprobante.removeAttribute('noAprobacion');
 
         self.write_cfd_data(cr, uid, ids, data_dict, context=context)
 
