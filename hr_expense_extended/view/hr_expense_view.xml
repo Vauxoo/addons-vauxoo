@@ -9,15 +9,16 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='line_ids']" position="after">
-                    <separator string = "Deductible Lines"/>
-                    <field name="ail_ids">
+                    <separator string = "Deductible Expenses"/>
+                    <field name="ail_ids" readonly="1">
                         <tree>
                             <field name="name"/>
+                            <field name="partner_id"/>
                             <field name="invoice_id"/>
+                            <field name="invoice_line_tax_id"/>
                             <field name="quantity"/>
                             <field name="price_unit"/>
                             <field name="price_subtotal" sum=""/>
-                            <field name="invoice_line_tax_id"/>
                         </tree>
                     </field>
                 </xpath>
