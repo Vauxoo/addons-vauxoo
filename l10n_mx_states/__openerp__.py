@@ -27,7 +27,7 @@
 {
     "name" : "Mexican States",
     "version" : "0.1",
-    "depends" : ["base", "l10n_mx_facturae_groups"],
+    "depends" : ["base"],
     "author" : "Vauxoo",
     "description" : """
     What do this module:

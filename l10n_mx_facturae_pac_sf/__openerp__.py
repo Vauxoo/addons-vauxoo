@@ -36,7 +36,7 @@ Ubuntu Package Depends:
 """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae_groups","l10n_mx_params_pac", 
+    "depends" : ["l10n_mx_facturae_groups", "l10n_mx_params_pac", 
         "l10n_mx_account_tax_category",
         "l10n_mx_facturae_report",
         "l10n_mx_facturae_seq", 

@@ -30,8 +30,8 @@
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates e-invoice files from invoices with \
-    standard CFD-2010 of Mexican SAT.
+    "description" : """This module creates e-invoice files from \
+    invoices with standard CFD-2010 of Mexican SAT.
 Requires the following programs:
   xsltproc
     Ubuntu insall with:
@@ -43,7 +43,7 @@ Requires the following programs:
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_facturae_groups", "account", "base_vat", 
+    "depends" : [ "l10n_mx_facturae_groups", "account", "base_vat", 
             "document",
             "l10n_mx_facturae_lib",
             "l10n_mx_facturae_cer",
@@ -71,8 +71,6 @@ Requires the following programs:
         "wizard/wizard_invoice_facturae_txt_v6_view.xml",
         "wizard/wizard_invoice_facturae_xml_v6_view.xml",
         "wizard/installer_view.xml",
-        #"ir_sequence_view.xml",
-        #"res_company_view6.xml",
         "invoice_view.xml",
     ],
     "installable" : True,

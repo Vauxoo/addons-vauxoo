@@ -23,7 +23,7 @@
 {
     "name" : "Add category to taxes",
     "version" : "1.0",
-    "depends" : ["account", "l10n_mx_facturae_groups"],
+    "depends" : ["account"],
     "author" : "Vauxoo",
     "license" : "AGPL-3",
     "description" : """This module add to the taxes category & tax_percent
