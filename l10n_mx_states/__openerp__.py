@@ -35,12 +35,8 @@
                     """,
     "website" : "http://www.vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-        "l10n_mx_states.xml",
+    "demo" : [],
+    "data" : ["l10n_mx_states.xml",
     ],
     "active": False,
     "installable": True,

@@ -36,15 +36,18 @@ Ubuntu Package Depends:
 """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["l10n_mx_params_pac","l10n_mx_account_tax_category","l10n_mx_facturae_seq","l10n_mx_ir_attachment_facturae", "l10n_mx_facturae_pac"],
-    "init_xml" : [],
-    "demo_xml" : [
+    "depends" : ["l10n_mx_facturae_groups", "l10n_mx_params_pac", 
+        "l10n_mx_account_tax_category",
+        "l10n_mx_facturae_report",
+        "l10n_mx_facturae_seq", 
+        "l10n_mx_ir_attachment_facturae",
+        "l10n_mx_facturae_pac"],
+    "demo" : [
         "demo/l10n_mx_facturae_pac_sf_demo.xml",
         "demo/l10n_mx_facturae_seq_demo.xml",
     ],
-    "update_xml" : [
+    "data" : [
         "security/l10n_mx_facturae_pac_sf_security.xml",
-        #"invoice_wizard.xml",
         "l10n_mx_facturae_pac_sf_report.xml",
         "wizard/wizard_cancel_invoice_pac_sf_view.xml",
         "wizard/wizard_export_invoice_pac_sf_view_v6.xml",

@@ -59,7 +59,8 @@
         <menuitem action="action_res_company_facturae_certificate_tree"
                 id="menu_res_company_facturae_certificate" sequence="50"
                 parent="base.menu_res_company_global"
-                groups="l10n_mx_facturae_cer.group_facturae_mx_cer_manager"/>
+                groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"
+        />
 
 
         <record id="view_res_company_facturae_certificate_search" model="ir.ui.view">
@@ -89,7 +90,7 @@
             <field name="model">res.company</field>
             <field name="arch" type="xml">
                  <page string="Configuration" position="after">
-                    <page string="Certificados SAT" groups="l10n_mx_facturae_cer.group_facturae_mx_cer_manager">
+                    <page string="Certificados SAT" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager">
                         <!--<field name="cif_file" widget='image'/>-->
                         <newline/>
                         <separator colspan="4" string="For configurate sequence, access to sequence of Sale Journal."/>

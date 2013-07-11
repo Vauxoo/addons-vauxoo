@@ -22,26 +22,23 @@
 ################################################################################
 
 {
-    "name" : "Creacion de Attachment en la Factura Electronica para Mexico (CFD,CFDI,CBB)",
+    "name" : "Crea la aplicación para los grupos de la Factura Electronica",
     "version" : "1.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
-    "description" : """This module creates attachment for Invoice(CFD,CFDI,CBB)
+    "description" : """Create the application with the groups: User y Manager.
+                    This application is for Electronic Invoice of México
     """,
-    "website" : "http://www.vauxoo.com/",
+    "website" : "http://vauxoo.com",
     "license" : "AGPL-3",
-    "depends" : ["account", "mail", "email_template",
+    "depends" : [
         ],
-    "demo" : ["demo/l10n_mx_facturae_email_demo.xml",
-    ],
-    "data" : [
-        "security/ir.model.access.csv",
-        "ir_attachment_facturae_view.xml",
-        "l10n_mx_facturae_workflow.xml",
-        "invoice_view.xml",
-        "l10n_mx_facturae_mail_server_data.xml",
-        "res_config.xml",
-    ],
-    "installable" : True,
+    "demo" : [],
+    "test": [],
+    "data" : ["security/l10n_mx_facturae_security_groups.xml",
+            ],
+    "images": [],
+    'application': False,
     "active" : False,
+    "installable" : True,
 }

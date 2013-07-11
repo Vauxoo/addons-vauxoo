@@ -26,8 +26,7 @@ With this module you will be able to make a relation between invoice and Informa
 It will work as production lot make better control with quantities.
     """,
     "depends" : ["base","product","stock","account","procurement"],
-    "init_xml" : [],
-    "demo_xml" : [
+    "demo" : [
     'demo/import_info_demo.xml',
     ],
     "update_xml" : [

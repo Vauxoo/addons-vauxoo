@@ -38,9 +38,8 @@
         "account",
         "base",
     ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "demo" : [],
+    "data" : [
         "res_company_view.xml",
         "wizard/installer.xml",
     ],

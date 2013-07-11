@@ -9,8 +9,8 @@
             <field name="arch" type="xml">
                 <field name="fiscal_position" position="after">
                     <newline/>
-                        <field name="pay_method_id" colspan="2" groups="l10n_mx_payment_method.group_payment_method_manager,l10n_mx_payment_method.group_payment_method_user"/>
-                        <field name="acc_payment" colspan="2" domain = "[('partner_id', '=', partner_id)]" groups="l10n_mx_regimen_fiscal.group_regimen_fiscal_manager,l10n_mx_regimen_fiscal.group_regimen_fiscal_user"/>
+                        <field name="pay_method_id" colspan="2" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <field name="acc_payment" colspan="2" domain = "[('partner_id', '=', partner_id)]" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                 </field>
             </field>
         </record>

@@ -35,11 +35,8 @@
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : ["l10n_mx_facturae"],
-    "init_xml" : [],
-    "demo_xml" : [
-    ],
-    "update_xml" : [
-    ],
+    "demo" : [],
+    "data" : [],
     "installable" : True,
     "active" : False,
 }
