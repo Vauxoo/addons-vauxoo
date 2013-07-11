@@ -31,6 +31,9 @@
     "description": """
 HR Expenses Extend Module
 =========================
+This module add the functionality to manage deductible expenses with invoices
+asociated to and expense document. Also make an automation of the
+reconciliation process for the expense and the employee.
 """,
     "website": "http://openerp.com.ve",
     "category": "HR Module",
