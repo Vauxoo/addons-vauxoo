@@ -24,19 +24,19 @@
 ###############################################################################
 
 {
-    "name" : "HR Expenses Extend Module",
-    "version" : "0.1",
-    "depends" : ["hr_expense"],
-    "author" : "Vauxoo",
-    "description" : """
+    "name": "HR Expenses Extend Module",
+    "version": "0.1",
+    "depends": ["hr_expense"],
+    "author": "Vauxoo",
+    "description": """
 HR Expenses Extend Module
 =========================
 """,
-    "website" : "http://openerp.com.ve",
-    "category" : "HR Module",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "website": "http://openerp.com.ve",
+    "category": "HR Module",
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": [
         "wizard/hr_expense_wizard_view.xml",
         "view/account_invoice_view.xml",
         "view/hr_expense_view.xml",

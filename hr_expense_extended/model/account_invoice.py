@@ -69,4 +69,3 @@ class account_invoice_line(osv.Model):
                                      help='Expense Document Name',
                                      store=True),
     }
-    

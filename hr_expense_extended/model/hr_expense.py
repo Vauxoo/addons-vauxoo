@@ -26,6 +26,7 @@ from openerp.osv import fields, osv
 from openerp import netsvc
 import openerp.addons.decimal_precision as dp
 
+
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
 
@@ -33,9 +34,9 @@ class hr_expense_expense(osv.Model):
         """ Overwrite method to add the sum of the invoices total amount
         (Sub total + tax amount ). """
         context = context or {}
-        res = super(hr_expense_expense,self)._amount(
+        res = super(hr_expense_expense, self)._amount(
             cr, uid, ids, field_name, arg, context=context)
-        for expense in self.browse(cr, uid, res.keys() , context=context):
+        for expense in self.browse(cr, uid, res.keys(), context=context):
             for invoice in expense.invoice_ids:
                 res[expense.id] += invoice.amount_total
         return res
@@ -57,8 +58,9 @@ class hr_expense_expense(osv.Model):
         res = {}
         for exp in self.browse(cr, uid, ids, context=context):
             ail_ids = []
-            for inv_brw in self.browse(cr, uid, exp.id, context=context).invoice_ids:
-                ail_ids.extend( [line.id for line in inv_brw.invoice_line] )
+            for inv_brw in self.browse(
+                    cr, uid, exp.id, context=context).invoice_ids:
+                ail_ids.extend([line.id for line in inv_brw.invoice_line])
             res[exp.id] = ail_ids
         return res
 
@@ -75,7 +77,8 @@ class hr_expense_expense(osv.Model):
             string='Total Amount',
             digits_compute=dp.get_precision('Account'),
             store={
-                'hr.expense.expense': (lambda self, cr, uid, ids, c={}: ids, None, 50),
+                'hr.expense.expense': (lambda self, cr, uid, ids, c={}: ids,
+                                       None, 50),
                 'account.invoice': (_get_exp_from_invoice, None, 50)
             }),
     }
@@ -93,9 +96,10 @@ class hr_expense_expense(osv.Model):
             if bad_invs:
                 for inv_brw in bad_invs:
                     error_msj = error_msj + \
-                    '- [Expense] ' + exp_brw.name + \
-                    ' [Invoice] ' + (inv_brw.number or inv_brw.partner_id.name) + \
-                    ' (' + inv_brw.state.capitalize() + ')\n'
+                        '- [Expense] ' + exp_brw.name + \
+                        ' [Invoice] ' + (inv_brw.number or
+                        inv_brw.partner_id.name) + \
+                        ' (' + inv_brw.state.capitalize() + ')\n'
 
         if error_msj:
             raise osv.except_osv(
@@ -118,27 +122,31 @@ class hr_expense_expense(osv.Model):
         per_obj = self.pool.get('account.period')
         for exp_brw in self.browse(cr, uid, ids, context=context):
             # validate expense invoices
-            self.validate_expense_invoices(cr, uid, exp_brw.id, context=context)
+            self.validate_expense_invoices(cr, uid, exp_brw.id,
+                                           context=context)
             # generate accounting entries for expense
-            self.generate_accounting_entries(cr, uid, exp_brw.id, context=context)
+            self.generate_accounting_entries(cr, uid, exp_brw.id,
+                                             context=context)
             # create move account
             exp_move_id = self.create_match_move(cr, uid, exp_brw.id,
                                                  context=context)
             print '\n'*5, 'exp_move_id', exp_move_id
 
             # reconcile manual entries for partners
-            # TODO: This part is failling, need to reorder de move lines by partner_id
+            # TODO: This part is failling, need to reorder de move lines by
+            # partner_id
             inv_move_ids = [inv_brw.move_id.id
                             for inv_brw in exp_brw.invoice_ids
                             if inv_brw.move_id]
             move_ids = [exp_move_id] + inv_move_ids
             move_line_ids = aml_obj.search(
-                cr, uid, [('move_id', 'in', move_ids )], context=context)
+                cr, uid, [('move_id', 'in', move_ids)], context=context)
 
             move_lines_ids_d = dict()
-            for line in aml_obj.browse(cr, uid, move_line_ids, context=context):
+            for line in aml_obj.browse(
+                    cr, uid, move_line_ids, context=context):
                 if move_lines_ids_d.get(line.partner_id.id, False):
-                    move_lines_ids_d[line.partner_id.id] += [line.id] 
+                    move_lines_ids_d[line.partner_id.id] += [line.id]
                 else:
                     move_lines_ids_d[line.partner_id.id] = [line.id]
 
@@ -149,12 +157,14 @@ class hr_expense_expense(osv.Model):
             account_id = self.get_payable_account_id(cr, uid, context=context)
             # TODO: account_id need to be particular value?.
             journal_id = self.get_purchase_journal_id(cr, uid, context=context)
-            #~ TODO: Ask. need to be a particular value? need to be selecte the allow reconcillaton option?
+            #~ TODO: Ask. need to be a particular value? need to be selecte
+            #~ the allow reconcillaton option?
             period_id = per_obj.find(cr, uid, context=context)[0]
 
             for partner_id in move_lines_ids_d:
-                aml_obj.reconcile(cr, uid, move_lines_ids_d[partner_id], 'manual', account_id,
-                                  period_id, journal_id, context=context)
+                aml_obj.reconcile(cr, uid, move_lines_ids_d[partner_id],
+                                  'manual', account_id, period_id, journal_id,
+                                  context=context)
 
             # reconcile manual for employee, like supplier payment... simulate
 
@@ -210,18 +220,18 @@ class hr_expense_expense(osv.Model):
         print '\n'*5
         print 'exp_brw', exp_brw
         print 'exp_brw.account_move_id', exp_brw.account_move_id
-        print 'exp_brw.account_move_id.partner_id', exp_brw.account_move_id.partner_id
+        print 'exp.move.partner_id', exp_brw.account_move_id.partner_id
         credit_line = [
             (0, 0, {
              'name': 'Pago de Viaticos',
              'account_id': self.get_payable_account_id(
-                cr, uid, context=context),
+                 cr, uid, context=context),
              'partner_id': exp_brw.account_move_id.partner_id.id,
              'debit': 0.0,
              'credit': self.get_lines_credit_amount(
-                cr, uid, exp_brw.account_move_id.id, context=context)
+                 cr, uid, exp_brw.account_move_id.id, context=context)
              })
-             #~ TODO: I think may to change this acocunt_id
+            #~ TODO: I think may to change this acocunt_id
         ]
         vals['line_id'] = debit_lines + credit_line
         return am_obj.create(cr, uid, vals, context=context)
@@ -233,20 +243,20 @@ class hr_expense_expense(osv.Model):
         debit_lines = []
         am_obj = self.pool.get('account.move')
         exp_brw = self.browse(cr, uid, ids, context=context)
-        inv_move_ids = [inv_brw.move_id.id
-                        for inv_brw in exp_brw.invoice_ids
-                        if inv_brw.move_id]
-        for inv_move_brw in am_obj.browse(cr, uid, inv_move_ids, context=context):
+        move_ids = [inv_brw.move_id.id
+                    for inv_brw in exp_brw.invoice_ids
+                    if inv_brw.move_id]
+        for inv_move_brw in am_obj.browse(cr, uid, move_ids, context=context):
             debit_lines.append(
                 (0, 0, {
                  'name': 'Pago de Viaticos',
                  'account_id': self.get_payable_account_id(
-                    cr, uid, context=context),
+                     cr, uid, context=context),
                  'partner_id': inv_move_brw.partner_id.id,
                  'invoice': inv_move_brw.line_id[0].invoice.id,
                  'debit':  self.get_lines_credit_amount(
-                    cr, uid, inv_move_brw.id, context=context),
-                 'credit': 0.0 })
+                     cr, uid, inv_move_brw.id, context=context),
+                 'credit': 0.0})
             )
             #~ TODO: invoice field is have not been set, check why
         return debit_lines
@@ -266,17 +276,16 @@ class hr_expense_expense(osv.Model):
                 "There is a problem in your move definition " +
                 move_brw.ref + ' ' + move_brw.name)
         return amount[0]
-        
+
     def get_payable_account_id(self, cr, uid, context=None):
         """ Return the id of a payable account. """
         aa_obj = self.pool.get('account.account')
-        return aa_obj.search(cr, uid, [('type','=', 'payable')], limit=1,
-                               context=context)[0]
+        return aa_obj.search(cr, uid, [('type', '=', 'payable')], limit=1,
+                             context=context)[0]
 
     def get_purchase_journal_id(self, cr, uid, context=None):
         """ Return an journal id of type purchase. """
         context = context or {}
         aj_obj = self.pool.get('account.journal')
-        return aj_obj.search(cr, uid, [('type','=', 'purchase')], limit=1,
-            context=context)[0]
-
+        return aj_obj.search(cr, uid, [('type', '=', 'purchase')], limit=1,
+                             context=context)[0]
