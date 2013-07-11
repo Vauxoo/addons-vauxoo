@@ -15,10 +15,6 @@
             <field name="model">attach.invoice.to.expense.wizard</field>
             <field name="arch" type="xml">
                 <form string="Attach invoice to an Expense" version="7.0">
-                    <header>
-                        <button string="Add" type="object" name="add_expense" class="oe_highlight"/>
-                        <button string="Cancel" type="special" special="cancel"/>
-                    </header>
                     <group colspan="4" col="4">
                         <separator string="Expense"/>
                         <newline/>
@@ -28,6 +24,12 @@
                                 Note: It you already have an expense asociated to the invoice, this wizard will replace the previews expense link and add a new relationship to the expense
                                 specified below. If you want to unlink an already related expense only needs to run this wizard with expense field no filled. 
                             </p>
+
+                        
+                            <button string="Add" type="object" name="add_expense" class="oe_highlight"/>
+                            or
+                            <button string="Cancel" type="special" special="cancel" class="oe_link" icon="terp-gtk-stop"/>
+
                         </footer>
                     </group>
                 </form>
