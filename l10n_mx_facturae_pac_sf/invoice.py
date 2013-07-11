@@ -332,15 +332,47 @@ class account_invoice(osv.Model):
                 htz=int(self._get_time_zone(cr, uid, inv_ids, context=context))
                 msg += resultado['resultados'] and resultado[
                     'resultados']['mensaje'] or ''
-                status = resultado['resultados'] and resultado[
+                codigo_timbrado = resultado['status'] or ''
+                codigo_validacion = resultado['resultados'] and resultado[
                     'resultados']['status'] or ''
-                status2 = resultado['status'] or ''
-                if status == '401':
-                    raise osv.except_osv(_('Warning'), _('La fecha del comprobante está fuera del rango de timbrado permitido.Han pasado más de 72 horas desde la fecha de generación del comprobante'))
-                if status == '307' and status2 == '200':
-                    raise osv.except_osv(_('Warning'), _('El CFDI ya ha sido timbrado previamente'))
-                if status == '200' or status == '307':
-                    fecha_timbrado = resultado[
+                if codigo_timbrado == '200':
+                    msg += "\nEl proceso de validacion se ha completado correctamente\n"
+                    if codigo_validacion == '301':
+                        msg += "El CFDI no tiene una estructura XML correcta"
+                        raise osv.except_osv(_('Warning'), _('El CFDI no tiene una estructura XML correcta'))
+                    elif codigo_validacion == '302':
+                        msg += "El sello del emisor no es valido"
+                        raise osv.except_osv(_('Warning'), _('El sello del emisor no es valido'))
+                    elif codigo_validacion == '303':
+                        msg += "El Certificado de Sello Digital no corresponde al contribuyente emisor"
+                        raise osv.except_osv(_('Warning'), _('El Certificado de Sello Digital no corresponde al contribuyente emisor'))
+                    elif codigo_validacion == '304':
+                        msg += "El certificado se encuentra revocado o caduco"
+                        raise osv.except_osv(_('Warning'), _('El certificado se encuentra revocado o caduco'))
+                    elif codigo_validacion == '305':
+                        msg += "La fecha del CFDI esta fuera del rango de la validez del certificado"
+                        raise osv.except_osv(_('Warning'), _('La fecha del CFDI esta fuera del rango de la validez del certificado'))
+                    elif codigo_validacion == '306':
+                        msg += "El certificado usado para generar el sello digital no es un Certificado de Sello Digital"
+                        raise osv.except_osv(_('Warning'), _('El certificado usado para generar el sello digital no es un Certificado de Sello Digital'))
+                    elif codigo_validacion == '307':
+                        msg += "El CFDI ya ha ha sido timbrado previamente"
+                        raise osv.except_osv(_('Warning'), _('El CFDI ya ha ha sido timbrado previamente'))
+                    elif codigo_validacion == '308':
+                        msg += "El certificado utilizado para generar el sello digital no ha sido emitido por el SAT"
+                        raise osv.except_osv(_('Warning'), _('El certificado utilizado para generar el sello digital no ha sido emitido por el SAT'))
+                    elif codigo_validacion == '401':
+                        msg += "La fecha del comprobante esta fuera del rango de timbrado permitido.Han pasado mas de 72 horas desde la fecha de generacion del comprobante"
+                        raise osv.except_osv(_('Warning'), _('La fecha del comprobante esta fuera del rango de timbrado permitido.Han pasado mas de 72 horas desde la fecha de generacion del comprobante'))
+                    elif codigo_validacion == '402':
+                        msg += "El contribuyente no se encuentra dentro del regimen fiscal para emitir CFDI"
+                        raise osv.except_osv(_('Warning'), _('El contribuyente no se encuentra dentro del regimen fiscal para emitir CFDI'))
+                    elif codigo_validacion == '403':
+                        msg += "La fecha de emision del CFDI no puede ser anterior al 1 de enero de 2011"
+                        raise osv.except_osv(_('Warning'), _('La fecha de emision del CFDI no puede ser anterior al 1 de enero de 2011'))
+                    elif codigo_validacion == '200':
+                        msg += "CFDI correctamente validado y timbrado.\n"
+                        fecha_timbrado = resultado[
                         'resultados']['fechaTimbrado'] or False
                     fecha_timbrado = fecha_timbrado and time.strftime(
                         '%Y-%m-%d %H:%M:%S', time.strptime(
@@ -378,23 +410,10 @@ class account_invoice(osv.Model):
                             "\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                     else:
                         msg = msg + "\nCan't extract the file XML of PAC"
-                elif status == '500' or status == '307':  # documento no es un cfd version 2, probablemente ya es un CFD version 3
-                    msg = _("Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n") + (
-                        resultado['resultados']['mensaje'] or '') + (
-                        resultado['mensaje'] or '')
-                else:
-                    msg = msg + \
-                        "\nNo se pudo extraer el archivo XML del PAC"
-            elif status == '500' or status == '307':  # documento no es un cfd version 2, probablemente ya es un CFD version 3
-                msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + \
-                    (resultado['resultados']['mensaje'] or '') + (
-                        resultado['mensaje'] or '')
-            else:
-                msg += '\n' + resultado['mensaje'] or ''
-                if not status:
-                    status = 'parent_' + resultado['status']
+                elif codigo_timbrado == '500':
+                    raise osv.except_osv(_('Warning'), _('Han ocurrido errores que no han permitido completar el proceso de validacion/certificacion'))
         else:
-            msg = 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
+            msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
             raise osv.except_osv(_('Warning'), _('Not found information from web services of PAC, verify that the configuration of PAC is correct'))
         return {'file': file, 'msg': msg, 'status': status, 'cfdi_xml': cfdi_xml}
 
@@ -414,13 +433,16 @@ class account_invoice(osv.Model):
         return {'file': inv_xml}
 
     def sf_cancel(self, cr, uid, inv_ids, context=None):
+        msg_global = ''
+        msg_tecnical = ''
+        msg_SAT = ''
+        msg_status = {}
         context_id = inv_ids[0]
         company_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
-
         invoice_brw = self.browse(cr, uid, context_id, context)
         company_brw = company_obj.browse(cr, uid, [
-                                         invoice_brw.company_id.id], context)[0]
+                            invoice_brw.company_id.id], context)[0]
         pac_params_srch = pac_params_obj.search(cr, uid, [(
             'method_type', '=', 'pac_sf_cancelar'), ('company_id', '=',
             invoice_brw.company_emitter_id.id), ('active', '=', True)],
@@ -458,9 +480,9 @@ class account_invoice(osv.Model):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                 result = wsdl_client.cancelar(*params)
+                codigo_cancel = result['status'] or ''
                 status = result['resultados'] and result[
                     'resultados']['status'] or ''
-                # agregados
                 uuid_nvo = result['resultados'] and result[
                     'resultados']['uuid'] or ''
                 msg_nvo = result['resultados'] and result[
@@ -468,19 +490,23 @@ class account_invoice(osv.Model):
                 status_uuid = result['resultados'] and result[
                     'resultados']['statusUUID'] or ''
                 status_principal = result['status'] or ''
-                msg_status = {}
-                if status == '200':
-                    folio_cancel = result['resultados'] and result[
-                        'resultados']['uuid'] or ''
-                    msg_global = _('\n- The process of cancellation has completed correctly.\n- The uuid cancelled is: ') + folio_cancel+_(
-                        '\n\nMessage Technical:\n')
-                    msg_tecnical = 'Status:', status, ' uuid:', uuid_nvo,\
-                        ' msg:', msg_nvo, 'Status uuid:', status_uuid
-                else:
-                    msg_global = _(
-                        '\n- Have occurred errors that not permit complete the process of cancellation, make sure that the invoice that tried cancel has been stamped previously.\n\nMessage Technical:\n')
-                    msg_tecnical = 'status:', status, ' uuidnvo:', uuid_nvo,\
-                    ' MENSJAE:NVO', msg_nvo, 'STATUS UUID:', status_uuid
+                if user == 'testing@solucionfactible.com':
+                    codigo_cancel = '1'
+                if codigo_cancel == '1':
+                    msg_global = _('- Status of response of SAT unknown')
+                if codigo_cancel == '200':
+                    if status == '200':
+                        folio_cancel = result['resultados'] and result[
+                            'resultados']['uuid'] or ''
+                        msg_global = _('\n- The process of cancellation has completed correctly.\n- The uuid cancelled is: ') + folio_cancel+_(
+                            '\n\nMessage Technical:\n')
+                        msg_tecnical = 'Status:', status, ' uuid:', uuid_nvo,\
+                            ' msg:', msg_nvo, 'Status uuid:', status_uuid
+                    else:
+                        msg_global = _(
+                            '\n- Have occurred errors that not permit complete the process of cancellation, make sure that the invoice that tried cancel has been stamped previously.\n\nMessage Technical:\n')
+                        msg_tecnical = 'status:', status, ' uuidnvo:', uuid_nvo,\
+                        ' MENSJAE:NVO', msg_nvo, 'STATUS UUID:', status_uuid
 
                 if status_uuid == '201':
                     msg_SAT = _(
@@ -499,12 +525,10 @@ class account_invoice(osv.Model):
                 elif status_uuid == '205':
                     msg_SAT = _(
                         '- Status of response of the SAT: 205. Not found the folio of CFDI for his cancellation.')
-                else:
-                    msg_SAT = _('- Status of response of SAT unknown')
-                msg_global_all = msg_SAT + msg_global + str(msg_tecnical)
         else:
             msg_global = _(
                 'Not found information of webservices of PAC, verify that the configuration of PAC is correct')
+        msg_global_all = msg_SAT + msg_global + str(msg_tecnical)
         return {'message': msg_global_all, 'msg_SAT': msg_SAT, 'msg_tecnical': msg_tecnical, 'msg_global': msg_global, 'status': status, 'status_uuid': status_uuid}
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):

@@ -42,6 +42,7 @@
     "depends" : [
             "base",
             "l10n_mx_states",
+            "l10n_mx_regimen_fiscal",
         ],
     "init_xml" : [],
     "demo_xml" : ["demo/l10n_mx_partner_address_demo.xml",],

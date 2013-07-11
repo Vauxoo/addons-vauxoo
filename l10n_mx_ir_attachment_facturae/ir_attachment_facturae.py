@@ -25,7 +25,6 @@ from openerp.tools.translate import _
 from openerp import pooler, tools
 from openerp import netsvc
 from openerp import release
-
 import time
 import tempfile
 import base64
@@ -99,10 +98,10 @@ class ir_attachment_facturae_mx(osv.Model):
             uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
         cr.commit()
         wf_service.trg_validate(
-            uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
+            uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
         cr.commit()
         wf_service.trg_validate(
-            uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
+            uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
         cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
@@ -193,10 +192,6 @@ class ir_attachment_facturae_mx(osv.Model):
             res = invoice_obj._upload_ws_file(
                 cr, uid, [invoice.id], fdata, context={})
             msj = tools.ustr(res['msg']) + '\n'
-            if res['status'] == '500':
-                raise osv.except_osv(_('Warning'), _(res['msg']))
-            if res['status'] == '301':
-                raise osv.except_osv(_('Warning'), _(res['msg']))
             data_attach = {
                 'name': fname_invoice,
                 'datas': base64.encodestring(res['cfdi_xml'] or '') or False,
@@ -252,7 +247,7 @@ class ir_attachment_facturae_mx(osv.Model):
         partner_invoice_address = self.pool.get(
             'res.partner').browse(cr, uid, address_id, context)
         type = self.browse(cr, uid, ids)[0].type
-        msj = self.browse(cr, uid, ids)[0].msj
+        #msj = self.browse(cr, uid, ids)[0].msj
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
@@ -299,23 +294,29 @@ class ir_attachment_facturae_mx(osv.Model):
             'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'sent_backup'})
+        msj = ''
+        msj = _('Send_backup\n')
+        return self.write(cr, uid, ids, {'state': 'sent_backup', 'msj': msj})
 
     def action_done(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'done'})
+        msj = ''
+        msj = _('Done\n')
+        return self.write(cr, uid, ids, {'state': 'done', 'msj': msj,})
 
     def action_cancel(self, cr, uid, ids, context=None):
+        msj = ''
         invoice_obj = self.pool.get('account.invoice')
         attach_obj = self.pool.get('ir.attachment')
         type = self.browse(cr, uid, ids)[0].type
         invoice = self.browse(cr, uid, ids)[0].invoice_id
-        msj = self.browse(cr, uid, ids)[0].msj
+        #msj = self.browse(cr, uid, ids)[0].msj
         if type == 'cfdi32':
             get_file_cancel = invoice_obj._get_file_cancel(
                 cr, uid, [invoice], context={})
             sf_cancel = invoice_obj.sf_cancel(
                 cr, uid, [invoice.id], context={})
             msj = tools.ustr(sf_cancel['message'])
+            print msj
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
