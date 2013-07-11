@@ -34,7 +34,7 @@ from openerp import tools
 class res_company(osv.osv):
     _inherit = 'res.company'
     _columns = {
-            'journal_id': fields.many2one('account.journal', 'Periodical Inventory Valuation Journal', required=True, help="Journal entry"),
+            'inventory_valuation_journal_id': fields.many2one('account.journal', 'Periodical Inventory Valuation Journal', required=True, help="Journal entry"),
             }
     
 class periodic_inventory_valuation_line(osv.osv):
@@ -69,7 +69,7 @@ class periodic_inventory_valuation(osv.osv):
         'move_id':fields.many2one('account.move', 'Journal Entry', help='Journal Entry For this Periodic Inventory Valuation Document, it will be created when Document is Posted'), 
         'company_id':fields.many2one('res.company', 'Company', help='Company for this Document'), 
         'period_id':fields.many2one('account.period', 'Period', help='Accounting Period to be used when creating Journal Entries and Accounting Entries'), 
-        'journal_id':fields.many2one('account.journal', 'Journal', help='Accounting Journal to be used when creating Journal Entries and Accounting Entries'),         
+        'inventory_valuation_journal_id':fields.many2one('account.journal', 'Journal', help='Accounting Journal to be used when creating Journal Entries and Accounting Entries'),         
         'currency_id':fields.many2one('res.currency', 'Currency', help='Currency to be used when creating Journal Entries and Accounting Entries'),                 
         'date':fields.date('Valuation Date', help='Date to be used when creating Journal Entries and Accounting Entries'), 
         'state':fields.selection([('draft','Readying Valuation'),('confirm','Ready to Valuate'),('done','Valuated Inventory')]), 
@@ -87,8 +87,24 @@ class periodic_inventory_valuation(osv.osv):
         'first': False,
         'currency_id': lambda s, c, u, ctx: \
             s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.currency_id.id,
-        }
+        'inventory_valuation_journal_id': lambda s, c, u, ctx: \
+            s.pool.get('res.users').browse(c, u, u, context=ctx).company_id.inventory_valuation_journal_id.id,
+       }
 
+    def get_period(self, cr, uid, ids, date,context=None):
+        if context is None:
+            context = {}
+        
+        period_obj = self.pool.get('account.period')
+        period_ids = period_obj.find(cr,uid,dt=date,context=context)
+        period_ids = period_obj.search(cr,uid,[
+            ('id','in',period_ids),('special','=',False)],context=context)
+        period_ids = period_ids and period_ids[0] or False
+        if not period_ids:
+            raise osv.except_osv(_('Error!'), _('There is no fiscal year defined for this date.\nPlease create one from the configuration of the accounting menu.'))
+        
+        return period_ids
+    
     def validate_data(self, cr, uid, ids, date, context=None):
         if context is None:
             context = {}
@@ -110,27 +126,38 @@ class periodic_inventory_valuation(osv.osv):
             if date <= i.date:
                 raise osv.except_osv('Record with this data existing !', 'Can not create a record with repeated date')
         
+        
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:                                                     
             context = {}         
         
+        if type(ids) is list:
+            brw_per_inv = self.browse(cr, uid, ids[0], context=context)
+        else:
+            brw_per_inv = self.browse(cr, uid, ids, context=context)
+        
         if brw_per_inv.state == 'done':
             raise osv.except_osv('Can not write the record', 'When a stock is done, can not be write')
         
-        if type(ids) is list:
-            date = self.browse(cr, uid, ids[0], context=context).date
-        else:
-            date = self.browse(cr, uid, ids, context=context).date
-
-        self.validate_data(cr, uid, ids, date,context=context)
+        self.validate_data(cr, uid, ids, brw_per_inv.date,context=context)
+        
+        vals['period_id'] = self.get_period(cr, uid, ids, vals.get('date'), context=context)
         return super(periodic_inventory_valuation, self).write(cr, uid, ids, vals, context=context)        
 
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
+        
+        inv = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.inventory_valuation_journal_id
+        if not inv.id:    
+            raise osv.except_osv('You need to define the journal', 'Must be defined in the company the journal to generate the journal items for periodic inventory')
+
         self.validate_data(cr, uid, False, vals.get('date'),  context=context)
+        
+        vals['period_id'] = self.get_period(cr, uid, False, vals.get('date'), context=context)
+
         return super(periodic_inventory_valuation, self).create(cr, uid, vals, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
@@ -155,19 +182,14 @@ class periodic_inventory_valuation(osv.osv):
         piv_brw = self.browse(cr,uid,ids[0],context=context)
         date = piv_brw.date
         company_id = piv_brw.company_id.id 
-        journal_id = piv_brw.company_id.journal_id.id
-        period_ids = period_obj.find(cr,uid,dt=date,context=context)
-        #print "periods ids" , period_ids, " date ", date, ' company_id' , piv_brw.company_id.id
-        period_ids = period_obj.search(cr,uid,[
-            ('id','in',period_ids),('special','=',False)],context=context)
-        period_ids = period_ids and period_ids[0] or False
-        if not period_ids:
-            raise osv.except_osv(_('Error!'), _('There is no fiscal year defined for this date.\nPlease create one from the configu     ration of the accounting menu.'))
+        
+        inventory_valuation_journal_id = piv_brw.company_id.inventory_valuation_journal_id.id
 
+        period_id = piv_brw.period_id.id
 
         inv_obj = self.pool.get('account.invoice')
         inv_ids = inv_obj.search(cr,uid,[
-            ('state','in',('open','paid')),('period_id','=',period_ids),
+            ('state','in',('open','paid')),('period_id','=',period_id),
             ('company_id','=',company_id)
             ],context=context)
         #print "facturas", inv_ids
@@ -180,7 +202,7 @@ class periodic_inventory_valuation(osv.osv):
         if not ail_ids:
             raise osv.except_osv(_('Error!'), _('There are no invoices lines defined for this period.\nMake sure you are using the right date.'))
 
-        period_brw = period_obj.browse(cr,uid,period_ids,context=context)
+        period_brw = period_obj.browse(cr,uid,period_id,context=context)
         date_start = period_brw.date_start
         date_stop = period_brw.date_stop
 
@@ -348,8 +370,8 @@ class periodic_inventory_valuation(osv.osv):
                 else:
                     account_income = prod.product_tmpl_id.categ_id.property_account_income_categ
                 
-                context['journal_id'] = journal_id
-                context['period_id'] = period_ids
+                context['journal_id'] = inventory_valuation_journal_id
+                context['period_id'] = period_id
 
 
                 #Product valuation and journal item amount
@@ -365,8 +387,8 @@ class periodic_inventory_valuation(osv.osv):
                         'product_id':prod.id,
                         'account_id': account_income.id, 
                         'move_id': False,                                             
-                        'journal_id': journal_id,                               
-                        'period_id': period_ids,                                 
+                        'journal_id': inventory_valuation_journal_id,                               
+                        'period_id': period_id,                                 
                         'date': date_stop,                               
                         'debit': debit,                                                   
                         'credit': credit,                                                  
@@ -399,7 +421,6 @@ class periodic_inventory_valuation(osv.osv):
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
             'ail_ids':[(6,0,ail_ids)],
-            'period_id':period_ids,
             'date':date or fields.date.today(),
             'stock_move_ids':[(6,0,incoming_sm_ids+outgoing_sm_ids)],
             'first':True,
