@@ -32,7 +32,18 @@
                         <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action"/>
                     </div>
                 </xpath>
-                        
+
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Payments"  attrs="{'invisible':[('state','!=','done')]}">
+                        <group>
+                            <group>
+                                <field name="skip"/>
+                                <field name="payment_ids" nolabel="1" colspan="2" attrs="{'required':[('skip','=',False),('state','=','done')], 'readonly':['|',('skip','=',True),('state','!=','done')]}"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
             </field>
         </record>
 

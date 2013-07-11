@@ -81,6 +81,12 @@ class hr_expense_expense(osv.Model):
                                        None, 50),
                 'account.invoice': (_get_exp_from_invoice, None, 50)
             }),
+        'payment_ids': fields.many2many(
+            'account.move.line','expense_payment_rel',
+            'expense_id', 'payment_id', string='Payments',
+            help="Payments associated to the expense."),
+        'skip': fields.boolean(
+            'Check this option if the expense has not advances')
     }
 
     def expense_accept(self, cr, uid, ids, context=None):
