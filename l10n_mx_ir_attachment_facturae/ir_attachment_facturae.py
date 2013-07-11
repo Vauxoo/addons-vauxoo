@@ -295,7 +295,7 @@ class ir_attachment_facturae_mx(osv.Model):
 
     def action_send_backup(self, cr, uid, ids, context=None):
         msj = ''
-        msj = _('Send_backup\n')
+        msj = _('Send Backup\n')
         return self.write(cr, uid, ids, {'state': 'sent_backup', 'msj': msj})
 
     def action_done(self, cr, uid, ids, context=None):
@@ -325,7 +325,7 @@ class ir_attachment_facturae_mx(osv.Model):
         return self.write(cr, uid, ids,
                           {'state': 'cancel',
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj, })
+                           'msj': msj })
 
     def reset_to_draft(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
