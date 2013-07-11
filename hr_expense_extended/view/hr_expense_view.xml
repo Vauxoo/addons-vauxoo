@@ -24,7 +24,7 @@
                 </xpath>
 
                 <xpath expr="//button[@name='confirm']" position="after">
-                    <button name="concile_viatical_payment" type="object" string="Concile Payment Dummy"/>
+                    <button name="reconcile_viatical_payment" type="object" string="Reconcile Payment" states="done"/>
                 </xpath>
 
                 <xpath expr="//sheet/group" position="before">

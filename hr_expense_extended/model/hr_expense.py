@@ -112,7 +112,7 @@ class hr_expense_expense(osv.Model):
             cr, uid, ids, context=context)
 
     #~ TODO: Doing
-    def concile_viatical_payment(self, cr, uid, ids, context=None):
+    def reconcile_viatical_payment(self, cr, uid, ids, context=None):
         """ It concile a new journal entry that englobs the expense accounting
         entry and the invoices accounting entries.
         """
@@ -121,20 +121,12 @@ class hr_expense_expense(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         per_obj = self.pool.get('account.period')
         for exp_brw in self.browse(cr, uid, ids, context=context):
-            # validate expense invoices
-            self.validate_expense_invoices(cr, uid, exp_brw.id,
-                                           context=context)
-            # generate accounting entries for expense
-            self.generate_accounting_entries(cr, uid, exp_brw.id,
-                                             context=context)
             # create move account
             exp_move_id = self.create_match_move(cr, uid, exp_brw.id,
                                                  context=context)
             print '\n'*5, 'exp_move_id', exp_move_id
 
             # reconcile manual entries for partners
-            # TODO: This part is failling, need to reorder de move lines by
-            # partner_id
             inv_move_ids = [inv_brw.move_id.id
                             for inv_brw in exp_brw.invoice_ids
                             if inv_brw.move_id]
