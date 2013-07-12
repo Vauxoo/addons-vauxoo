@@ -168,9 +168,9 @@ class hr_expense_expense(osv.Model):
         return order_payments
 
     #~ TODO: Doing
-    def reconcile_viatical_payment(self, cr, uid, ids, context=None):
-        """ It concile a new journal entry that englobs the expense accounting
-        entry and the invoices accounting entries.
+    def reconcile_payment(self, cr, uid, ids, context=None):
+        """ It reconcile the expense advance and expense invoice account move
+         lines .
         """
         context = context or {}
         wf_service = netsvc.LocalService("workflow")
