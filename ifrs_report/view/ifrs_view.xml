@@ -26,6 +26,8 @@
 			<form string="International Financial Reporting Standards" version="7.0">
               <header>
                 <button string="Compute" name='compute' type='object' icon='gtk-execute' class="oe_inline_header"/>
+                <label for='help'/>
+                <field name='help'/>
 			    <field name="state" widget="statusbar" statusbar_visible="draft,ready,done,cancel" class="oe_inline_header" />
               </header>  
                 <group>

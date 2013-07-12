@@ -67,6 +67,7 @@ class ifrs_ifrs(osv.osv):
             'State', required=True),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year'),
         'do_compute': fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'),
+        'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
         'ifrs_ids': fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
 
