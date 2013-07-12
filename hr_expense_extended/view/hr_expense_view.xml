@@ -34,14 +34,14 @@
                 </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
-                    <page string="Payments"  attrs="{'invisible':[('state','!=','done')]}">
+                    <page string="Advances"  attrs="{'invisible':[('state','!=','done')]}">
                         <group>
                             <group>
                                 <group>
                                     <field name="skip"/>
                                     <button string="Refresh" name="load_payments" type="object" class="oe_highlight"/>
                                 </group>
-                                <field name="payment_ids" nolabel="1" colspan="2" attrs="{'required':[('skip','=',False),('state','=','done')], 'readonly':['|',('skip','=',True),('state','!=','done')]}"/>
+                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':['|',('state','!=','done')]}"/>
                             </group>
                         </group>
                     </page>

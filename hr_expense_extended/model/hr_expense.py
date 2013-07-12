@@ -81,10 +81,10 @@ class hr_expense_expense(osv.Model):
                                        None, 50),
                 'account.invoice': (_get_exp_from_invoice, None, 50)
             }),
-        'payment_ids': fields.many2many(
-            'account.move.line','expense_payment_rel',
-            'expense_id', 'aml_id', string='Payments',
-            help="Payments associated to the expense."),
+        'advance_ids': fields.many2many(
+            'account.move.line','expense_advance_rel',
+            'expense_id', 'aml_id', string='Employee Advances',
+            help="Advances associated to the expense employee."),
         'skip': fields.boolean(
             'Check this option if the expense has not advances')
     }
@@ -140,19 +140,17 @@ class hr_expense_expense(osv.Model):
         acc_payable_ids = self.pool.get('account.account').search(
             cr, uid, [('type', '=', 'payable')], context=context)
         for exp in self.browse(cr, uid, ids, context=context):
-            partner_ids = [inv.partner_id.id for inv in exp.invoice_ids]
-            partner_ids.append(exp.account_move_id.partner_id.id)
-            move_ids = [exp.account_move_id.id] + \
-                [inv.move_id.id for inv in exp.invoice_ids]
+            partner_ids = [exp.account_move_id.partner_id.id]
             aml_ids = aml_obj.search(
                 cr, uid,
                 [('reconcile_id', '=', False),
                  ('reconcile_partial_id', '=', False),
                  ('account_id', 'in', acc_payable_ids),
                  ('partner_id', 'in', partner_ids),
-                 ('move_id', 'in', move_ids) ], context=context)
+                 ('debit', '>', 0.0),
+                ],context=context)
             vals = {}
-            vals['payment_ids'] = \
+            vals['advance_ids'] = \
                 [(6, 0, aml_ids)]
             self.write(cr, uid, exp.id, vals, context=context)
         return True
@@ -164,7 +162,7 @@ class hr_expense_expense(osv.Model):
         exp = self.browse(cr, uid, ids, context=context)
         order_partner = list(set(
             [(payment.partner_id.name, payment.partner_id.id, payment.id)
-             for payment in exp.payment_ids]))
+             for payment in exp.advance_ids]))
         order_partner.sort()
         order_payments = [item[-1] for item in order_partner]
         return order_payments
