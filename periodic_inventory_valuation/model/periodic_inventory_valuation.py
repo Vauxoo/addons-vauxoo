@@ -31,6 +31,14 @@ from openerp import tools
 # Periodic Inventory Valuation
 #----------------------------------------------------------
 
+class account_invoice_line(osv.Model):
+
+    _inherit = 'account.invoice.line'
+
+    _columns = {
+            'currency_id':fields.related('invoice_id', 'currency_id', relation='res.currency', type='many2one', string='Currency', help='field'), 
+            }
+
 class res_company(osv.osv):
     _inherit = 'res.company'
     _columns = {
@@ -104,7 +112,16 @@ class periodic_inventory_valuation(osv.osv):
             raise osv.except_osv(_('Error!'), _('There is no fiscal year defined for this date.\nPlease create one from the configuration of the accounting menu.'))
         
         return period_ids
-    
+   
+    def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):                                  
+        if context is None:                                                     
+            context = {}                                                        
+        if from_currency_id == to_currency_id:                                  
+            return from_amount                                                  
+        curr_obj = self.pool.get('res.currency')                                
+        context['date'] = exchange_date                                         
+        return curr_obj.compute(cr, uid, from_currency_id, to_currency_id, from_amount, context=context)
+
     def validate_data(self, cr, uid, ids, date, context=None):
         if context is None:
             context = {}
@@ -182,7 +199,8 @@ class periodic_inventory_valuation(osv.osv):
         piv_brw = self.browse(cr,uid,ids[0],context=context)
         date = piv_brw.date
         company_id = piv_brw.company_id.id 
-        
+        currency_id = piv_brw.currency_id.id
+
         inventory_valuation_journal_id = piv_brw.company_id.inventory_valuation_journal_id.id
 
         period_id = piv_brw.period_id.id
@@ -293,6 +311,7 @@ class periodic_inventory_valuation(osv.osv):
             product_price = []
             for ail_id in ail_ids:
                 ail = ail_obj.browse(cr,uid,ail_id,context=context)
+                
                 #si la factura se relaciona a la lista de productos que se filtraron
                 if ail.product_id.id in prod_ids:
                     
@@ -304,6 +323,10 @@ class periodic_inventory_valuation(osv.osv):
                     #en otro ciclo
 
                     if ail.invoice_id.type == 'in_invoice':
+                        
+                        price_unit = self.exchange(cr, uid, ids, ail.price_unit, ail.invoice_id.currency_id.id, currency_id, date,context=context)
+                        print price_unit
+
                         p_p_pur = {'qty':ail.quantity,'price':ail.price_unit}
                         if product_price_purs.get(ail.product_id.id, False):
                             product_price_purs[ail.product_id.id].append(p_p_pur)
@@ -417,7 +440,9 @@ class periodic_inventory_valuation(osv.osv):
 
 
             move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
-
+        
+            
+        
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
             'ail_ids':[(6,0,ail_ids)],
