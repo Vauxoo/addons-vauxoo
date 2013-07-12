@@ -142,12 +142,15 @@ class hr_expense_expense(osv.Model):
         for exp in self.browse(cr, uid, ids, context=context):
             partner_ids = [inv.partner_id.id for inv in exp.invoice_ids]
             partner_ids.append(exp.account_move_id.partner_id.id)
+            move_ids = [exp.account_move_id.id] + \
+                [inv.move_id.id for inv in exp.invoice_ids]
             aml_ids = aml_obj.search(
                 cr, uid,
                 [('reconcile_id', '=', False),
                  ('reconcile_partial_id', '=', False),
                  ('account_id', 'in', acc_payable_ids),
-                 ('partner_id', 'in', partner_ids)], context=context)
+                 ('partner_id', 'in', partner_ids),
+                 ('move_id', 'in', move_ids) ], context=context)
             vals = {}
             vals['payment_ids'] = \
                 [(6, 0, aml_ids)]
