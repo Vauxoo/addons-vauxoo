@@ -23,7 +23,7 @@
                     <field name="date" required="1"/>
                     <notebook>
                         <page string='Products to Valuate'>
-                            <field name='product_ids' nolabel='1'>
+                            <field name='product_ids' nolabel='1' readonly='1'>
                                 <tree>
                                     <field name='default_code'/>
                                     <field name='name'/>
@@ -32,10 +32,10 @@
                             </field>
                         </page>
                         <page string='Stock Moves'>
-                            <field name='stock_move_ids' nolabel='1'/>
+                            <field name='stock_move_ids' nolabel='1' readonly='1'/>
                         </page>
                         <page string='Invoice Lines'>
-                            <field name='ail_ids' nolabel='1'>
+                            <field name='ail_ids' nolabel='1' readonly='1'>
                                 <tree>
                                     <field name='name'/>
                                     <field name='account_id'/>
@@ -47,7 +47,7 @@
                             </field>
                         </page>
                         <page string='Valuation Lines'>
-                            <field name='pivl_ids' nolabel='1'>
+                            <field name='pivl_ids' nolabel='1' readonly='1'>
                                 <tree>
                                     <field name='product_id'/>
                                     <field name='qty_init'/>
@@ -61,7 +61,7 @@
                             </field>
                         </page>
                         <page string='Accounting Entries'>
-                            <field name='aml_ids' nolabel='1'/>
+                            <field name='aml_ids' nolabel='1' readonly='1'/>
                         </page>
                         <page string='Other Info'>
                             <group>
