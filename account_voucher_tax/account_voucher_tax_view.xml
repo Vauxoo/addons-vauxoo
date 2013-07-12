@@ -116,6 +116,26 @@
                      </field>
                 </field>
         </record>
+        
+        <record id="view_account_voucher_line_onchange" model="ir.ui.view">
+                <field name="name">view.account.voucher.line.onchange</field>
+                <field name="model">account.voucher.line</field>
+                <field name="inherit_id" ref="account_voucher.view_voucher_line_form"/>
+                <field name="arch" type="xml">
+                     <xpath expr="//field[@name='amount']" position="replace">
+                        <field name="amount" on_change="onchange_amount(amount, voucher_id, move_line_id, amount_original)"/>
+                     </xpath>
+                     <xpath expr="//field[@name='amount']" position="after">
+                        <field name="voucher_id" invisible='1'/>
+                     </xpath>
+                     <xpath expr="//field[@name='voucher_id']" position="after">
+                        <field name="move_line_id" invisible='1'/>
+                     </xpath>
+                     <xpath expr="//field[@name='move_line_id']" position="after">
+                        <field name="amount_original" invisible='1'/>
+                     </xpath>
+                </field>
+        </record>
 
     </data>
 </openerp>
