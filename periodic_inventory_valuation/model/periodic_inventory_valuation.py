@@ -26,6 +26,7 @@
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import tools
+import datetime
 
 #----------------------------------------------------------
 # Periodic Inventory Valuation
@@ -133,7 +134,7 @@ class periodic_inventory_valuation(osv.osv):
             peri_inv_allowed = self.search(cr, uid, [], order='id desc', limit=1, context=context)
 
         all_per_inv = self.browse(cr, uid, peri_inv_allowed, context=context)
-         
+        #$$$         
         for i in all_per_inv:
             if date <= i.date:
                 raise osv.except_osv('Record with this data existing !', 'Can not create a record with repeated date')
@@ -173,6 +174,7 @@ class periodic_inventory_valuation(osv.osv):
         if context is None:
             context = {}
         brw_per_inv = self.browse(cr, uid, ids[0], context=context)
+        
         if brw_per_inv.state == 'done':
             raise osv.except_osv('Can not delete the record', 'When a stock is done, can not be deleted')
 
@@ -198,11 +200,38 @@ class periodic_inventory_valuation(osv.osv):
         period_id = piv_brw.period_id.id
 
         inv_obj = self.pool.get('account.invoice')
-        inv_ids = inv_obj.search(cr,uid,[
-            ('state','in',('open','paid')),('period_id','=',period_id),
-            ('company_id','=',company_id)
-            ],context=context)
         
+        #Se obtiene la linea del producto del registro anterior
+        if type(ids) is list:
+            piv_id = self.search(cr, uid, [('id','!=',ids[0]),('state','=','done')], order='id desc', limit=1, context=context)
+        else:
+            piv_id = self.search(cr, uid, [('id','!=',ids),('state','=','done')], order='id desc', limit=1, context=context)
+        
+        piv = self.browse(cr,uid,ids[0],context=context)
+        fecha_now = datetime.datetime.strptime(piv.date, '%Y-%m-%d')
+
+        if piv_id:
+            piv_id = piv_id[0]
+            piv_before = self.browse(cr, uid, piv_id, context=context)
+            fecha_before = datetime.datetime.strptime( piv_before.date ,'%Y-%m-%d')
+        else:
+            fecha_before = False 
+
+        inv_ids = []
+
+        if fecha_before:
+             inv_ids = inv_obj.search(cr,uid,[                                       
+                    ('state','in',('open','paid')),
+                    ('date_invoice','>',fecha_before),('date_invoice','<=',fecha_now),   
+                    ('company_id','=',company_id)                                       
+                    ],context=context) 
+        else:
+             inv_ids = inv_obj.search(cr,uid,[                                       
+                    ('state','in',('open','paid')),
+                    ('date_invoice','<=',fecha_now),   
+                    ('company_id','=',company_id)                                       
+                    ],context=context) 
+            
         if not inv_ids:
             raise osv.except_osv(_('Error!'), _('There are no invoices defined for this period.\nMake sure you are using the right date.'))
         ail_obj = self.pool.get('account.invoice.line')
@@ -238,19 +267,7 @@ class periodic_inventory_valuation(osv.osv):
         move_id = False
         state = 'draft'
 
-        #Se obtiene la linea del producto del registro anterior
-        if type(ids) is list:
-            piv_id = self.search(cr, uid, [('id','!=',ids[0]),('state','=','done')], order='id desc', limit=1, context=context)
-        else:
-            piv_id = self.search(cr, uid, [('id','!=',ids),('state','=','done')], order='id desc', limit=1, context=context)
-        
-        piv = self.browse(cr,uid,ids[0],context=context)
 
-        if piv_id:
-            piv_id = piv_id[0]
-            print self.browse(cr, uid, piv_id, context=context).period_id.code
-        #Aqui se tomara en cuenta periodos que quedaron en el vacio
-        print piv.period_id.code
 
 
         #Si no se han hecho calculos, se cargan datos iniciales, aqui la condicion deberia ser si el estado es draft
