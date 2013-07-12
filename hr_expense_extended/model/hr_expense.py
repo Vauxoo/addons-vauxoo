@@ -154,6 +154,18 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, vals, context=context)
         return True
 
+    def order_payments(self, cr, uid, ids, aml_ids, context=None):
+        """ orders the payments lines by partner id. Recive only one id"""
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        exp = self.browse(cr, uid, ids, context=context)
+        order_partner = list(set(
+            [(payment.partner_id.name, payment.partner_id.id, payment.id)
+             for payment in exp.payment_ids]))
+        order_partner.sort()
+        order_payments = [item[-1] for item in order_partner]
+        return order_payments
+
     #~ TODO: Doing
     def reconcile_viatical_payment(self, cr, uid, ids, context=None):
         """ It concile a new journal entry that englobs the expense accounting
