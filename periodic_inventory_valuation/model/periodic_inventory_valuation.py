@@ -388,18 +388,6 @@ class periodic_inventory_valuation(osv.osv):
                 
                 #Algo pasa con prod.property_account_expense y prod.property_account_income
                 #Establezco los diarios para hacer los asientos
-                if prod.property_account_expense:
-                    account_expense = prod.property_account_expense 
-                else:
-                    account_expense = prod.product_tmpl_id.categ_id.property_account_expense_categ
-               
-                if prod.property_account_income:
-                    account_income = prod.property_account_income
-                else:
-                    account_income = prod.product_tmpl_id.categ_id.property_account_income_categ
-                
-                context['journal_id'] = inventory_valuation_journal_id
-                context['period_id'] = period_id
 
 
                 #Product valuation and journal item amount
@@ -409,6 +397,19 @@ class periodic_inventory_valuation(osv.osv):
                 credit = journal_item < 0 and (journal_item*-1) or 0.0
                 
                 if journal_item != 0:
+                    if prod.property_account_expense:
+                        account_expense = prod.property_account_expense 
+                    else:
+                        account_expense = prod.product_tmpl_id.categ_id.property_account_expense_categ
+                   
+                    account_income = prod.product_tmpl_id.categ_id.property_stock_valuation_account_id
+                   
+                    if not account_expense or not account_income:
+                        raise osv.except_osv(_('Error!'), _('Product Account.\nThere are no accounts defined for the product %s.' % (prod.name) ))
+
+
+                    context['journal_id'] = inventory_valuation_journal_id
+                    context['period_id'] = period_id
                     move_line = {      
                         'name': 'GANANCIA O PERDIDA DE INVENTARIO',                 
                         'partner_id': False,           
