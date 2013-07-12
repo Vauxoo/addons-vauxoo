@@ -238,10 +238,25 @@ class periodic_inventory_valuation(osv.osv):
         move_id = False
         state = 'draft'
 
+        #Se obtiene la linea del producto del registro anterior
+        if type(ids) is list:
+            piv_id = self.search(cr, uid, [('id','!=',ids[0]),('state','=','done')], order='id desc', limit=1, context=context)
+        else:
+            piv_id = self.search(cr, uid, [('id','!=',ids),('state','=','done')], order='id desc', limit=1, context=context)
+        
+        piv = self.browse(cr,uid,ids[0],context=context)
+
+        if piv_id:
+            piv_id = piv_id[0]
+            print self.browse(cr, uid, piv_id, context=context).period_id.code
+        #Aqui se tomara en cuenta periodos que quedaron en el vacio
+        print piv.period_id.code
+
+
         #Si no se han hecho calculos, se cargan datos iniciales, aqui la condicion deberia ser si el estado es draft
         #Se debe validar que si es el primer registro cargar datos en 0, si no es el primer registro entonces tomar
         #valores del ultimo registro
-        if not self.browse(cr,uid,ids[0],context=context).first:
+        if not piv.first:
             state = 'confirm'
             
             pivline_init_ids = []
@@ -250,15 +265,8 @@ class periodic_inventory_valuation(osv.osv):
                 prod = prod_obj.browse(cr,uid,prod_id,context=context)
                 
                 piv_line_id = False
-                
-                #Se obtiene la linea del producto del registro anterior
-                if type(ids) is list:
-                    piv_id = self.search(cr, uid, [('id','!=',ids[0]),('state','=','done')], order='id desc', limit=1, context=context)
-                else:
-                    piv_id = self.search(cr, uid, [('id','!=',ids),('state','=','done')], order='id desc', limit=1, context=context)
 
                 if piv_id:
-                    piv_id = piv_id[0]
                     piv_line_id = periodic_line.search(cr, uid, [('piv_id','=',piv_id),('product_id','=',prod_id)], context=context)
                 
                 #condicional aqui de piv_line_brw, puede que no exista 
@@ -307,11 +315,10 @@ class periodic_inventory_valuation(osv.osv):
                 if ail.product_id.id in prod_ids:
                     
                     produc_obj = prod_obj.browse(cr, uid, ail.product_id.id, context=context)
+                    
+                    price_unit = self.exchange(cr, uid, ids, ail.price_unit, ail.invoice_id.currency_id.id, currency_id, date,context=context)
 
                     if ail.invoice_id.type == 'in_invoice':
-                        
-                        price_unit = self.exchange(cr, uid, ids, ail.price_unit, ail.invoice_id.currency_id.id, currency_id, date,context=context)
-
                         p_p_pur = {'qty':ail.quantity,'price':price_unit}
                         if product_price_purs.get(ail.product_id.id, False):
                             product_price_purs[ail.product_id.id].append(p_p_pur)
@@ -346,7 +353,7 @@ class periodic_inventory_valuation(osv.osv):
                 #Si el producto fue parte de una venta
                 if product_price_sales.get(i, False):
                     for k in product_price_sales[i]:
-                        inventario_final -= k.get('qty')
+                        #inventario_final -= k.get('qty')
                         qty_sale += k.get('qty')
                 
                 inventario_final = qty_pur - qty_sale
@@ -416,9 +423,11 @@ class periodic_inventory_valuation(osv.osv):
                     'qty_final':inventario_final,
                         })
             ##############################################################
+            if lineas:
+                move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
+            else:
+                move_id = False
 
-            move_id = self.pool.get('account.move.line').browse(cr, uid, lineas[0], context=context).move_id.id
-        
         self.write(cr,uid,ids[0],{
             'product_ids':[(6,0,prod_ids)],
             'ail_ids':[(6,0,ail_ids)],
