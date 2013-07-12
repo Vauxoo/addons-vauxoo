@@ -201,38 +201,38 @@ class account_invoice(osv.Model):
          @params xml_res_str : File XML
          @params comprobante : Name to the Node that contain the information the XML
         """
-        if xml_res_str:
-            node_Addenda = xml_res_str.getElementsByTagName('Addenda')
-            if len(node_Addenda) == 0:
-                nodeComprobante = xml_res_str.getElementsByTagName(
-                    comprobante)[0]
-                node_Addenda = self.add_node(
-                    'Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
-                node_Partner_attrs = {
-                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
-                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
-                    'id': "150731"
-                }
-                node_Partner_attrs_types = {
-                    'xmlns:sf': 'attribute',
-                    'xsi:schemaLocation': 'attribute',
-                    'id': 'attribute'
-                }
-                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
-                    node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
-            else:
-                node_Partner_attrs = {
-                    'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
-                    'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
-                    'id': "150731"
-                }
-                node_Partner_attrs_types = {
-                    'xmlns:sf': 'attribute',
-                    'xsi:schemaLocation': 'attribute',
-                    'id': 'attribute'
-                }
-                node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
-                    node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+        #~ if xml_res_str:
+            #~ node_Addenda = xml_res_str.getElementsByTagName('Addenda')
+            #~ if len(node_Addenda) == 0:
+                #~ nodeComprobante = xml_res_str.getElementsByTagName(
+                    #~ comprobante)[0]
+                #~ node_Addenda = self.add_node(
+                    #~ 'Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
+                #~ node_Partner_attrs = {
+                    #~ 'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
+                    #~ 'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    #~ 'id': "150731"
+                #~ }
+                #~ node_Partner_attrs_types = {
+                    #~ 'xmlns:sf': 'attribute',
+                    #~ 'xsi:schemaLocation': 'attribute',
+                    #~ 'id': 'attribute'
+                #~ }
+                #~ node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
+                    #~ node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+            #~ else:
+                #~ node_Partner_attrs = {
+                    #~ 'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
+                    #~ 'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
+                    #~ 'id': "150731"
+                #~ }
+                #~ node_Partner_attrs_types = {
+                    #~ 'xmlns:sf': 'attribute',
+                    #~ 'xsi:schemaLocation': 'attribute',
+                    #~ 'id': 'attribute'
+                #~ }
+                #~ node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
+                    #~ node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
         return xml_res_str
 
     def _get_type_sequence(self, cr, uid, ids, context=None):

@@ -661,8 +661,10 @@ class account_invoice(osv.Model):
             if ko in keys:
                 key_item_sort.append([ko, data_dict[ko]])
                 keys.pop(keys.index(ko))
-        if keys == ['rfc', 'nombre', 'RegimenFiscal', 'DomicilioFiscal', 'ExpedidoEn']:
+        if keys == ['rfc', 'nombre', 'RegimenFiscal', 'DomicilioFiscal', 'ExpedidoEn'] or keys == ['rfc', 'nombre', 'RegimenFiscal', 'ExpedidoEn', 'DomicilioFiscal']:
             keys = ['rfc', 'nombre', 'DomicilioFiscal', 'ExpedidoEn', 'RegimenFiscal']
+        if keys ==['rfc', 'nombre', 'cfdi:RegimenFiscal', 'cfdi:DomicilioFiscal', 'cfdi:ExpedidoEn'] or keys == ['rfc', 'nombre', 'cfdi:RegimenFiscal', 'cfdi:ExpedidoEn', 'cfdi:DomicilioFiscal']:
+            keys = ['rfc', 'nombre', 'cfdi:DomicilioFiscal', 'cfdi:ExpedidoEn', 'cfdi:RegimenFiscal']
         for key_too in keys:
             key_item_sort.append([key_too, data_dict[key_too]])
         return key_item_sort
