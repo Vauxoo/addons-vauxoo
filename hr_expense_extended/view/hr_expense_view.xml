@@ -37,6 +37,7 @@
                     <page string="Payments"  attrs="{'invisible':[('state','!=','done')]}">
                         <group>
                             <group>
+                                <button string="Refresh" name="load_payments" type="object" class="oe_highlight"/>
                                 <field name="skip"/>
                                 <field name="payment_ids" nolabel="1" colspan="2" attrs="{'required':[('skip','=',False),('state','=','done')], 'readonly':['|',('skip','=',True),('state','!=','done')]}"/>
                             </group>

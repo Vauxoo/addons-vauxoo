@@ -83,7 +83,7 @@ class hr_expense_expense(osv.Model):
             }),
         'payment_ids': fields.many2many(
             'account.move.line','expense_payment_rel',
-            'expense_id', 'payment_id', string='Payments',
+            'expense_id', 'aml_id', string='Payments',
             help="Payments associated to the expense."),
         'skip': fields.boolean(
             'Check this option if the expense has not advances')
@@ -116,6 +116,43 @@ class hr_expense_expense(osv.Model):
         # create accounting entries related to an expense
         return super(hr_expense_expense, self).expense_accept(
             cr, uid, ids, context=context)
+
+    def action_receipt_create(self, cr, uid, ids, context=None):
+        """ overwirte the method to create expense accounting entries to
+        add the first fill of the expense payments table """
+        context = context or {}
+        super(hr_expense_expense,self).action_receipt_create(
+            cr, uid, ids, context=context)
+        self.load_payments(cr, uid, ids, context=context)
+        return True
+
+    def load_payments(self, cr, uid, ids, context=None):
+        """ Load the expense payment table with the corresponding data. Adds
+        account move lines that fulfill the following conditions:
+            - Not reconciled.
+            - Not partially reconciled.
+            - Account associated of type payable.
+            - That belongs to the expense employee or to the expense invoices
+              partners.
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        acc_payable_ids = self.pool.get('account.account').search(
+            cr, uid, [('type', '=', 'payable')], context=context)
+        for exp in self.browse(cr, uid, ids, context=context):
+            partner_ids = [inv.partner_id.id for inv in exp.invoice_ids]
+            partner_ids.append(exp.account_move_id.partner_id.id)
+            aml_ids = aml_obj.search(
+                cr, uid,
+                [('reconcile_id', '=', False),
+                 ('reconcile_partial_id', '=', False),
+                 ('account_id', 'in', acc_payable_ids),
+                 ('partner_id', 'in', partner_ids)], context=context)
+            vals = {}
+            vals['payment_ids'] = \
+                [(6, 0, aml_ids)]
+            self.write(cr, uid, exp.id, vals, context=context)
+        return True
 
     #~ TODO: Doing
     def reconcile_viatical_payment(self, cr, uid, ids, context=None):
