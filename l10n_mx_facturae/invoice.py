@@ -458,6 +458,23 @@ class account_invoice(osv.Model):
                         my_path, 'l10n_mx_facturae', 'SAT',
                         'cadenaoriginal_2_2_l.xslt') or ''
                     break
+        
+        ir_seq_app_obj = self.pool.get('ir.sequence.approval')
+        invoice = self.browse(cr, uid, ids[0], context=context)
+        sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
+            'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
+        if sequence_app_id:
+            type_inv = ir_seq_app_obj.browse(
+                cr, uid, sequence_app_id[0], context=context).type
+        if type_inv == 'cfdi32':
+            # Search char "," for addons_path, now is multi-path
+            all_paths = tools.config["addons_path"].split(",")
+            for my_path in all_paths:
+                if os.path.isdir(os.path.join(my_path, 'l10n_mx_facturae', 'SAT')):
+                    # If dir is in path, save it on real_path
+                    file_globals['fname_xslt'] = my_path and os.path.join(
+                        my_path, 'l10n_mx_facturae', 'SAT','cadenaoriginal_3_2',
+                        'cadenaoriginal_3_2_l.xslt') or ''
         return file_globals
 
     def _____________get_facturae_invoice_txt_data(self, cr, uid, ids, context={}):

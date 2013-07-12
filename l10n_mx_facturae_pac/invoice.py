@@ -141,7 +141,7 @@ class account_invoice(osv.Model):
         (fileno_sign, fname_sign) = tempfile.mkstemp('.txt', 'openerp_' + (
             invoice_number or '') + '__facturae_txt_md5__')
         os.close(fileno_sign)
-
+        
         context.update({
             'fname_xml': fname_xml,
             'fname_txt': fname_txt,
@@ -151,6 +151,7 @@ class account_invoice(osv.Model):
         fname_txt, txt_str = self._xml2cad_orig(
             cr=False, uid=False, ids=False, context=context)
         data_dict['cadena_original'] = txt_str
+        msg2=''
 
         if not txt_str:
             raise osv.except_osv(_('Error in Original String!'), _(
