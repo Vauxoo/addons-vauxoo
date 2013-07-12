@@ -352,7 +352,7 @@ class periodic_inventory_valuation(osv.osv):
                     product_price.append(ail.product_id.id)
             
             lineas = []
-            for i in product_price:
+            for i in prod_ids:
                 
                 prod = prod_obj.browse(cr,uid,i,context=context)
                 val_line_ids = periodic_line.search(cr,uid,[('product_id','=',i),('piv_id','=',ids[0])],context=context)
@@ -372,8 +372,8 @@ class periodic_inventory_valuation(osv.osv):
                     for k in product_price_sales[i]:
                         #inventario_final -= k.get('qty')
                         qty_sale += k.get('qty')
-                
-                inventario_final = qty_pur - qty_sale
+                inventario_final = val_line.qty_init + qty_pur - qty_sale
+
 
                 costo += val_line.valuation
                 qty = val_line.qty_init + qty_pur # este val_line.init es el final de la linea anterior
