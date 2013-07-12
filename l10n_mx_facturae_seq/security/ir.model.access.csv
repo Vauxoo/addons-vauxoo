@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_ir_sequence_approval_manager,ir_sequence_approval_manager,model_ir_sequence_approval,,1,1,1,1
+access_l10n_mx_facturae_groups_ir_sequence_approval_manager,l10n_mx_facturae_groups_ir_sequence_approval_manager,model_ir_sequence_approval,,1,1,1,1

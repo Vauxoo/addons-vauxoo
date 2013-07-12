@@ -36,12 +36,10 @@
     "license" : "AGPL-3",
     "depends" : ["account",
         ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "demo" : [],
+    "data" : [
         #'security/ir.model.access.csv',
         "invoice_view_address.xml",
-        
         #"ir_sequence_view.xml",
         #"res_company_view6.xml",
         #"invoice_view.xml",

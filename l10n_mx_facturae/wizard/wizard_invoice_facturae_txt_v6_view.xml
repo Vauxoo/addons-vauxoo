@@ -38,7 +38,8 @@
             name="Electronic Invoice Report Monthly TXT" parent="account.menu_finance_receivables"
             action="action_wizard_invoice_facturae_txt"
             sequence="150"
-            groups="l10n_mx_facturae.group_facturae_mx_cfd_user"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user" 
+            
         />
 
         <record id="view_wizard_invoice_facturae_txt_v6_form2" model="ir.ui.view">
