@@ -92,12 +92,26 @@
                             <label for='help'/>
                             <field name='help'/>
                           </header>  
-                          <group colspan='4' col='6'>
-                              <field name="sequence" />
-                              <field name="name" />
-                              <field name="invisible" />
+                          <group colspan='4' col='4'>
+                              <group colspan='2'>
+                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                      <i><label string='Set the sequence for this line, the sequence will represent the position that this line will have within the report. It is advisable that you select a number multiple of ten thus if some new line in between your old lines is created it could fit among them.'/></i> 
+                                  </group>    
+                                  <field name="sequence" colspan='2'/>
+                              </group>    
+                              <group colspan='2'>
+                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                      <i><label string='By setting this field to "True" will avoid this line from printing in your report. It is useful to set some lines to invisible when using them to make some computations but you do not want them to appear in the report printing.'/></i> 
+                                  </group>    
+                                  <field name="invisible" />
+                              </group>    
+                              <group colspan='2'>
+                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                      <i><label string='This field will be the label that will be printed, if "invisible" is set to False, in your report. If you want a blank line in your report Just fill at least with one blank space'/></i> 
+                                  </group>    
+                                  <field name="name" />
+                              </group>    
                               <field name="type" />
-                              <field name="comment"></field>
                               <group colspan='4' col='1'>
                                   <group colspan='2' attrs="{'invisible':[('type','!=','constant')]}" >
                                       <field name="constant_type" attrs="{'required':[('type','=','constant')]}" />
@@ -111,8 +125,7 @@
                                       <field name="comparison" />
                                   </group>
                               </group>
-
-                           </group>
+                          </group>
 
                           <group colspan='6' col='6' attrs="{'invisible':[('type','=','abstract')]}">
                             <field name="amount" />
@@ -148,6 +161,7 @@
                                 </group>
                               </group>
                           </group>
+                          <field name="comment" colspan='4' nolabel='1'/>
 
                         </form>
                       </field>
