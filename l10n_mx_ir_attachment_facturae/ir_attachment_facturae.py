@@ -256,22 +256,48 @@ class ir_attachment_facturae_mx(osv.Model):
             attachments.append(attach.id)
             attach_name += attach.name + ', '
         if release.version >= '7':
-            mail_compose_message_pool = self.pool.get('mail.compose.message')
-            tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
-            message = mail_compose_message_pool.onchange_template_id(
-                cr, uid, [], template_id=tmp_id, composition_mode=None,
-                model='account.invoice', res_id=invoice.id, context=context)
-            mssg = message.get('value', False)
-            if mssg.get('partner_ids', False) and tmp_id:
-                mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
-                mssg['attachment_ids'] = [(6, 0, attachments)]
-                mssg_id = self.pool.get(
-                    'mail.compose.message').create(cr, uid, mssg)
-                state = self.pool.get('mail.compose.message').send_mail(
-                    cr, uid, [mssg_id], context=context)
-                msj = _('Email Send Successfully\n')
+            obj_ir_mail_server = self.pool.get('ir.mail_server')
+            mail_server_id = obj_ir_mail_server.search(cr, uid,
+                [('name', '=', 'FacturaE')], context=None)
+            if mail_server_id:
+                msj += _('Servidor de correo saliente "FacturaE"')
+                for smtp_server in obj_ir_mail_server.browse(cr, uid, 
+                    mail_server_id, context=context):
+                    smtp = False
+                    try:
+                        smtp = obj_ir_mail_server.connect(
+                        smtp_server.smtp_host, smtp_server.smtp_port, 
+                        user=smtp_server.smtp_user,
+                        password=smtp_server.smtp_pass,
+                        encryption=smtp_server.smtp_encryption,
+                        smtp_debug=smtp_server.smtp_debug)
+                    except Exception, e:
+                        raise osv.except_osv(_("Connection test failed!"), _("Configure su servidor de correo saliente:\n %s") % tools.ustr(e))
+                mail_compose_message_pool = self.pool.get('mail.compose.message')
+                tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
+                message = mail_compose_message_pool.onchange_template_id(
+                    cr, uid, [], template_id=tmp_id, composition_mode=None,
+                    model='account.invoice', res_id=invoice.id, context=context)
+                mssg = message.get('value', False)
+                if mssg.get('partner_ids', False) and tmp_id:
+                    mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
+                    mssg['attachment_ids'] = [(6, 0, attachments)]
+                    #ir a email.email y verificar si tiene correo(email_from)
+                    mssg_id = self.pool.get(
+                        'mail.compose.message').create(cr, uid, mssg, context=None)
+                    state = self.pool.get('mail.compose.message').send_mail(
+                        cr, uid, [mssg_id], context=context)
+                    print "state",state
+                    if state:
+                        msj = _('\nEmail Send Successfully\n')
+                    else:
+                        raise osv.except_osv(_('Warning'), _('El usuario\
+                            no tiene correo asignado.\nTiene que asignarselo'))
             else:
-                msj = _('Not Email Send\n')
+                raise osv.except_osv(_('Warning'), _('No se encontró\
+                servidor de correo saliente con el nombre de "FacturaE".\
+                \n Configure un servidor de correo saliente con nombre\
+                 "FacturaE"'))
         elif release.version < '7':
             mail = self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject+' '+type,
@@ -290,12 +316,12 @@ class ir_attachment_facturae_mx(osv.Model):
             # msj +=_('Please Check the Email Configuration!\n')
         # else:
             # msj +=_('Email Send Successfully\n')
-        return self.write(cr, uid, ids, {'state': 'sent_customer', 'msj': msj,
-            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+        return self.write(cr, uid, ids, {'state': 'sent_customer',
+            'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):
         msj = ''
-        msj = _('Send Backup\n')
+        #msj = _('Send Backup\n')
         return self.write(cr, uid, ids, {'state': 'sent_backup', 'msj': msj})
 
     def action_done(self, cr, uid, ids, context=None):
@@ -316,7 +342,6 @@ class ir_attachment_facturae_mx(osv.Model):
             sf_cancel = invoice_obj.sf_cancel(
                 cr, uid, [invoice.id], context={})
             msj = tools.ustr(sf_cancel['message'])
-            print msj
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
