@@ -88,7 +88,10 @@
                           <field name="invisible" />
                         </tree>
                         <form string="IFRS Lines">
-
+                          <header>
+                            <label for='help'/>
+                            <field name='help'/>
+                          </header>  
                           <group colspan='4' col='6'>
                               <field name="sequence" />
                               <field name="name" />

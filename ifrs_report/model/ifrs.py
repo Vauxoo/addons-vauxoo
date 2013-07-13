@@ -73,6 +73,7 @@ class ifrs_ifrs(osv.osv):
 
     _defaults = {
         'state': 'draft',
+        'help': True,
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(
             c, u, u, context=cx).company_id.id,
         'fiscalyear_id': lambda s, c, u, cx: s.pool.get('account.fiscalyear').find(c, u),
@@ -614,6 +615,7 @@ class ifrs_lines(osv.osv):
         return res
 
     _columns = {
+        'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
         'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
         'name': fields.char('Name', 128, required=True, translate=True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated'),
         'type': fields.selection(
@@ -702,6 +704,7 @@ class ifrs_lines(osv.osv):
         'invisible': False,
         'acc_val': 'fy',
         'value': 'balance',
+        'help': True,
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 
