@@ -47,6 +47,14 @@
                     </page>
                 </xpath>
 
+                <xpath expr="//page[@string='Accounting']" position="after">
+                    <page string="Invoices" >
+                        <group>
+                            <field name="invoice_ids" widget="many2many" nolabel="1" domain="[('type','=','in_invoice')]" context="[('type','=','in_invoice')]" readonly="1"/>
+                        </group>
+                    </page>
+                </xpath>
+
             </field>
         </record>
 
