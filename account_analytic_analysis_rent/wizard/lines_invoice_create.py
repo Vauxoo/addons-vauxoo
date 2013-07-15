@@ -77,7 +77,6 @@ class account_analytic_line(osv.osv):
                     pterm_list = [line[0] for line in pterm_list]
                     pterm_list.sort()
                     date_due = pterm_list[-1]
-
             curr_invoice = {
                 'name': time.strftime('%d/%m/%Y')+' - '+account.name,
                 'partner_id': account.partner_id.id,
@@ -90,7 +89,8 @@ class account_analytic_line(osv.osv):
                 'currency_id': account.pricelist_id.currency_id.id,
                 'date_due': date_due,
                 'fiscal_position': account.partner_id.property_account_position.id,
-                'type':'out_invoice'
+                'type':'out_invoice',
+                'journal_id':account.journal_id.id
             }
             last_invoice = invoice_obj.create(cr, uid, curr_invoice, context=context)
             invoices.append(last_invoice)
@@ -169,17 +169,16 @@ class lines_create(osv.osv_memory):
 
     _name = 'lines.create'
     _columns = {
-        'date': fields.date('Date'),
+        'month': fields.selection([('1','January'), ('2','February'),
+            ('3','March'), ('4','April'), ('5','May'), ('6','June'),
+            ('7','July'), ('8','August'), ('9','September'), ('10','October'),
+            ('11','November'), ('12','December')], 'Month'),
         'line_ids': fields.many2many('account.analytic.line','analytic_wiz_lines_rel','wiz_id','line_id','lines'),
         'contract_id': fields.many2one('account.analytic.account','Contract')
         #~ 'time': fields.boolean('Time spent', help='The time of each work done will be displayed on the invoice'),
         #~ 'name': fields.boolean('Description', help='The detail of each work done will be displayed on the invoice'),
         #~ 'price': fields.boolean('Cost', help='The cost of each work done will be displayed on the invoice. You probably don\'t want to check this'),
         #~ 'product': fields.many2one('product.product', 'Product', help='Complete this field only if you want to force to use a specific product. Keep empty to use the real product that comes from the cost.'),
-    }
-
-    _defaults = {
-         'date': fields.date.context_today,
     }
 
     def default_get(self, cr, uid, fields, context=None):
@@ -192,18 +191,19 @@ class lines_create(osv.osv_memory):
         lines_ids=[]
         if context.get('active_model') == 'account.analytic.account':
             res['contract_id']=context.get('active_id')
+            res['month']=str(datetime.strptime(datetime.now().strftime('%Y-%m-%d'), "%Y-%m-%d").month)
             for contract in analytic_obj.browse(cr,uid,context['active_ids'],context):
                 lines_ids=[]
                 for line in contract.line_ids:
                     if not line.invoice_id and line.to_invoice:
                         date_line=datetime.strptime(line.date, "%Y-%m-%d")
-                        date=datetime.strptime(res['date'], "%Y-%m-%d")
-                        if date_line.month==date.month:
+                        #~ date=datetime.strptime(datetime.now().strftime('%Y-%m-%d'), "%Y-%m-%d")
+                        if date_line.month==res['month']:
                             lines_ids.append(line.id)
             res['line_ids']=lines_ids
         return res
 
-    def onchange_date(self, cr, uid, ids, date, contract_id, context=None):
+    def onchange_date(self, cr, uid, ids, month, contract_id, context=None):
         if context is None:
             context = {}
         res={}
@@ -215,8 +215,8 @@ class lines_create(osv.osv_memory):
             for line in contract.line_ids:
                 if not line.invoice_id and line.to_invoice:
                     date_line=datetime.strptime(line.date, "%Y-%m-%d")
-                    date_new=datetime.strptime(date, "%Y-%m-%d")
-                    if date_line.month==date_new.month:
+                    #~ date_new=datetime.strptime(month, "%Y-%m-%d")
+                    if str(month)==str(date_line.month):
                         lines_ids.append(line.id)
         res['value']={'line_ids':lines_ids}
         return res
@@ -235,8 +235,8 @@ class lines_create(osv.osv_memory):
                     for line in contract.line_ids:
                         if not line.invoice_id and line.to_invoice and line.product_id.id==prod.product_id.id and prod.type=='rent':
                             date_line=datetime.strptime(line.date, "%Y-%m-%d")
-                            date=datetime.strptime(data['date'], "%Y-%m-%d")
-                            if date_line.month==date.month:
+                            #~ date=datetime.strptime(data['date'], "%Y-%m-%d")
+                            if str(date_line.month)==data['month']:
                                 lines_ids.append(line.id)
                     if not lines_ids and prod.type=='rent':
                         raise osv.except_osv(_('Warning !'), _("Invoice is already linked to some of the analytic line(s)!"))

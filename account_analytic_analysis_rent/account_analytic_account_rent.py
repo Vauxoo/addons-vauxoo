@@ -92,6 +92,20 @@ account_invoice_line()
 class account_analytic_account(osv.osv):
     _inherit='account.analytic.account'
     
+    
+    def _get_journal(self, cr, uid, context=None):
+        if context is None:
+            context = {}
+        type_inv = context.get('type', 'out_invoice')
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        company_id = context.get('company_id', user.company_id.id)
+        type2journal = {'out_invoice': 'sale', 'in_invoice': 'purchase', 'out_refund': 'sale_refund', 'in_refund': 'purchase_refund'}
+        journal_obj = self.pool.get('account.journal')
+        res = journal_obj.search(cr, uid, [('type', '=', type2journal.get(type_inv, 'sale')),
+                                            ('company_id', '=', company_id)],
+                                                limit=1)
+        return res and res[0] or False
+    
     def _compute_lines(self, cr, uid, ids, name, args, context=None):
         result = {}
         for contract in self.browse(cr, uid, ids, context=context):
@@ -119,11 +133,11 @@ class account_analytic_account(osv.osv):
     
     _columns={
         'product_ids':fields.one2many('account.analytic.product','analytic_id', 'Products'),
-        'term_id': fields.many2one('analytic.term','Term'),
+        'term_id': fields.many2one('analytic.term','Term', required=True),
         'voucher_ids': fields.function(_compute_lines, relation='account.move.line', type="many2many", string='Payments'),
         'invoice_ids': fields.function(_compute_lines_inv, relation='account.invoice', type="many2many", string='Invoice'),
         'group_product': fields.boolean('Group Product'),
-        'journal_id':fields.many2one('account.journal','Journal')
+        'journal_id':fields.many2one('account.journal','Journal', required=True)
     }
     
     def set_close(self, cr, uid, ids, context=None):
@@ -166,9 +180,23 @@ class account_analytic_account(osv.osv):
                 date_invoice=(datetime.strptime(date_invoice, "%Y-%m-%d") + relativedelta(months=1)).strftime("%Y-%m-%d")
         return super(account_analytic_account, self).set_open(cr, uid, ids, context=context)
     
+    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
+        journal_obj = self.pool.get('account.journal')
+        if context is None:
+            context = {}
+        res = super(account_analytic_account,self).fields_view_get(cr, uid, view_id=view_id, view_type=view_type, context=context, toolbar=toolbar, submenu=submenu)
+        type = 'sale'
+        for field in res['fields']:
+            if field == 'journal_id' and type:
+                journal_select = journal_obj._name_search(cr, uid, '', [('type', '=', type)], context=context, limit=None, name_get_uid=1)
+                res['fields'][field]['selection'] = journal_select
+
+        return res
+    
     _defaults = {
         'state': 'draft',
-        'group_product': True
+        'group_product': True,
+        'journal_id': _get_journal,
     }
 account_analytic_account()
     

@@ -107,7 +107,7 @@
             <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
             <field name="arch" type="xml">
                     <field name="user_id" position="after">
-                        <field name="journal_id"/>
+                        <field name="journal_id" widget="selection"/>
                     </field>
             </field>
     </record>
