@@ -202,6 +202,20 @@ class ifrs_ifrs(osv.osv):
         res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
 
         return res
+   
+    def _get_children_and_consol(self, cr, uid, ids, level, context={}):
+       """ Retorna todas las cuentas relacionadas con las cuentas ids 
+       recursivamente, incluyendolos
+       """
+       aa_obj = self.pool.get('account.account')                           
+       ids2 = []                                                           
+       for aa_brw in aa_obj.browse(cr, uid, ids, context):                 
+           if not aa_brw.child_id and aa_brw.level < level and aa_brw.type not in ('consolidation','view'):
+               ids2.append(aa_brw.id)
+           else:                                                           
+               ids2.append(aa_brw.id)
+               ids2 += self._get_children_and_consol(cr, uid, [x.id for x in aa_brw.child_id], level, context=context)
+       return list(set(ids2)) 
 
     def get_report_data(
         self, cr, uid, ids, fiscalyear=None, exchange_date=None,
@@ -227,6 +241,70 @@ class ifrs_ifrs(osv.osv):
         if is_compute is None:
             period_name = self._get_periods_name_list(
                 cr, uid, ids, fiscalyear, context=context)
+
+
+        #########################################
+        ############## Calculate ################
+        #########################################
+        account_obj = self.pool.get("account.account")
+        ifrs_lines_ids = ifrs_line.search(cr, uid, [('ifrs_id','=',ids[0])] ) 
+        ifrs_lines_brw = ifrs_line.browse(cr, uid, ifrs_lines_ids)
+        
+        all_account_brw = []
+
+        for ifrsl_brw in ifrs_lines_brw:
+            if ifrsl_brw.type == 'detail':
+                all_account_brw += ifrsl_brw.cons_ids
+        
+        tree_accounts = self._get_children_and_consol(cr, uid, [x.id for x in all_account_brw], 100)
+        
+
+        account_cons_consolidate = []
+        account_cons_leaf = []
+
+        for acc_id in tree_accounts:
+            acc_brw = account_obj.browse(cr, uid, acc_id)
+            if acc_brw.type in ('view', 'consolidation'):
+                account_cons_consolidate.append(acc_brw)
+            else:
+                account_cons_leaf.append(acc_brw)
+
+        account_cons_consolidate.sort(key=lambda x: x.level)
+        account_cons_consolidate.reverse()
+        account_cons_consolidate_ids = [i.id for i in account_cons_consolidate]
+         
+        dict_leaf = {}
+        for i in account_cons_leaf:
+            d = i.debit
+            c = i.credit
+            dict_leaf[i.id] = {
+                'obj': i,
+                'debit': d,
+                'credit': c,
+                'balance': d-c,
+            }
+        
+        dict_consolidate = {}
+        for i in account_cons_consolidate:
+            dict_consolidate[i.id] = {
+                'obj':  i,
+                'debit': 0.0,
+                'credit': 0.0,
+                'balance': 0.0,
+            }
+        
+        for j in account_cons_consolidate_ids:
+            acc_childs = dict_consolidate.get(j).get('obj').child_id
+            for child in acc_childs:
+                dict_consolidate.get(j)['debit'] += dict_leaf.get(child.id).get('debit')
+                dict_consolidate.get(j)['credit'] += dict_leaf.get(child.id).get('credit')
+                dict_consolidate.get(j)['balance'] += dict_leaf.get(child.id).get('balance')
+            dict_leaf[j] = dict_consolidate[j]
+
+        print dict_leaf
+        #########################################
+        ############## End Calculate ############
+        #########################################
 
         for ifrs_l in self._get_ordered_lines(cr, uid, ids, context=context):
             if is_compute:  # Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
