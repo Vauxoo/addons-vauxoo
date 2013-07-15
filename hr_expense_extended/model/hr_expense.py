@@ -22,9 +22,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
+import time
 from openerp.osv import fields, osv
 from openerp import netsvc
 import openerp.addons.decimal_precision as dp
+
+import pprint
 
 
 class hr_expense_expense(osv.Model):
@@ -170,53 +173,181 @@ class hr_expense_expense(osv.Model):
     #~ TODO: Doing
     def reconcile_payment(self, cr, uid, ids, context=None):
         """ It reconcile the expense advance and expense invoice account move
-         lines .
+        lines.
         """
         context = context or {}
-        wf_service = netsvc.LocalService("workflow")
         aml_obj = self.pool.get('account.move.line')
-        per_obj = self.pool.get('account.period')
-        for exp_brw in self.browse(cr, uid, ids, context=context):
-            # create move account
-            exp_move_id = self.create_match_move(cr, uid, exp_brw.id,
-                                                 context=context)
-            print '\n'*5, 'exp_move_id', exp_move_id
+        am_obj = self.pool.get('account.move')
+        period_id = \
+            self.pool.get('account.period').find(cr, uid, context=context)[0]
+        account_id = self.get_payable_account_id(cr, uid, context=context)
+        journal_id = self.get_purchase_journal_id(cr, uid, context=context)
+        # TODO: account_id and journal_id need to be particular value? at
+        #~ @journal_id  to be select the allow reconcillaton option?
 
-            # reconcile manual entries for partners
-            inv_move_ids = [inv_brw.move_id.id
-                            for inv_brw in exp_brw.invoice_ids
-                            if inv_brw.move_id]
-            move_ids = [exp_move_id] + inv_move_ids
-            move_line_ids = aml_obj.search(
-                cr, uid, [('move_id', 'in', move_ids)], context=context)
+        print '\n'*5
+        print 'reconcile_payment()'
 
-            move_lines_ids_d = dict()
-            for line in aml_obj.browse(
-                    cr, uid, move_line_ids, context=context):
-                if move_lines_ids_d.get(line.partner_id.id, False):
-                    move_lines_ids_d[line.partner_id.id] += [line.id]
+        for exp in self.browse(cr, uid, ids, context=context):
+            aml = {
+                'exp':
+                    [aml_brw
+                     for aml_brw in exp.account_move_id.line_id
+                     if aml_brw.account_id.type == 'payable'],
+                'advances':
+                    [aml_brw
+                     for aml_brw in exp.advance_ids
+                     if aml_brw.account_id.type == 'payable'],
+                'invs':
+                    [aml_brw
+                     for inv in exp.invoice_ids
+                     for aml_brw in inv.move_id.line_id
+                     if aml_brw.account_id.type == 'payable'],
+            }
+
+            aml['total_debit'] = \
+                sum([aml_brw.debit for aml_brw in aml['advances']])
+            aml['total_credit'] = \
+                sum([aml_brw.credit for aml_brw in aml['exp'] + aml['invs']])
+
+            aml['debit_lines'] = \
+                sorted([(aml_brw.debit, aml_brw.id)
+                        for aml_brw in aml['advances']], reverse=True)
+            aml['credit_lines'] = \
+                sorted(
+                    [(aml_brw.credit, aml_brw.id)
+                     for aml_brw in aml['exp'] + aml['invs']], reverse=True)
+
+            # group invoice aml by partner
+            inv_by = dict()
+            for line in aml['invs']:
+                if inv_by.get(line.partner_id.id, False):
+                    inv_by[line.partner_id.id] += [line]
                 else:
-                    move_lines_ids_d[line.partner_id.id] = [line.id]
+                    inv_by[line.partner_id.id] = [line]
+            aml['credit_by_partner'] = []
 
-            print 'move_ids', move_ids
-            print 'move_line_ids', move_line_ids
-            print 'move_lines_ids_d', move_lines_ids_d
+            for partner_inv in inv_by:
+                aml['credit_by_partner'].append(
+                    (sum([aml_brw.credit for aml_brw in inv_by[partner_inv]]),
+                     [aml_brw.id for aml_brw in inv_by[partner_inv]])
+                )
 
-            account_id = self.get_payable_account_id(cr, uid, context=context)
-            # TODO: account_id need to be particular value?.
-            journal_id = self.get_purchase_journal_id(cr, uid, context=context)
-            #~ TODO: Ask. need to be a particular value? need to be selecte
-            #~ the allow reconcillaton option?
-            period_id = per_obj.find(cr, uid, context=context)[0]
+            print 'aml'
+            pprint.pprint(aml)
 
-            for partner_id in move_lines_ids_d:
-                aml_obj.reconcile(cr, uid, move_lines_ids_d[partner_id],
-                                  'manual', account_id, period_id, journal_id,
-                                  context=context)
+            payments = True
+            by_partner_check = True
+            while(payments):
+                debit = aml['total_debit']
+                credit = aml['total_credit']
 
-            # reconcile manual for employee, like supplier payment... simulate
+                if debit > credit: # reconciliation
+                    print 'debit > credit', '\ndebit', debit, '\ncredit', credit
+                    #~ create move
+                    am_id = am_obj.create(
+                        cr, uid, {'journal_id': journal_id,
+                        'ref': 'new global entrie'}, context=context)
+                    print 'new move', am_id
+                    #~ create invoice and expense move lines.
+                    inv_and_exp_lines, advance_aml_ids = \
+                        self.create_reconcile_move_lines(
+                            cr, uid, exp.id,
+                            [item[1] for item in aml['credit_lines']],
+                            am_id, context=context)
+
+                    #~ create advances move lines.
+                    advance_aml_ids.extend( 
+                        self.create_reconcile_move_lines(
+                            cr, uid, exp.id,
+                            [item.id for item in aml['advances']],
+                            am_id, advance_amount=debit-credit,
+                            context=context)
+                        )
+
+                    reconciliaton_list = inv_and_exp_lines + [tuple(advance_aml_ids)]
+                    print 'inv_and_exp_lines', inv_and_exp_lines
+                    print 'advance_aml_ids', advance_aml_ids
+                    print 'reconciliaton_list', reconciliaton_list
+
+                    #~ make reconcilation.
+                    for line_pair in reconciliaton_list:
+                        aml_obj.reconcile(
+                            cr, uid, list(line_pair), 'manual', account_id,
+                            period_id, journal_id, context=context)
+                    payments = False
+
+                #~ elif debit < credit:
+                    #~ print 'debit < credit'
+                #~ elif debit == credit:
+                    #~ print 'debit == credit'
+                #~ aml['debit'].sort(reverse=True)
+                #~ aml['credit'].sort(reverse=True)
 
         return True
+
+    def create_reconcile_move_lines(self, cr, uid, ids, aml_ids, am_id,
+                                    advance_amount=False, context=None):
+        """
+        Create new move lines to match invoices, no deductible expense, and
+        advances lines for the expense. Returns a list of tuples of form
+        tuple(current credit line id, new debit line id).
+        NOTE: Only receives only one id.
+        @param aml_ids: acc.move.line list of ids
+        @param am_id: account move id
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        exp = self.browse(cr, uid, ids, context=context)
+        reconciliaton_list = []
+        advance_reconciliaton_list = []
+        vals = {}.fromkeys(['partner_id', 'debit', 'credit',
+                           'name', 'move_id', 'account_id'])
+        vals['move_id'] = am_id
+        vals['account_id'] = self.get_payable_account_id(
+            cr, uid, context=context)
+        vals['journal_id'] = self.get_purchase_journal_id(
+            cr, uid, context=context)
+        vals['period_id'] = self.pool.get('account.period').find(
+            cr, uid, context=context)[0]
+        vals['date'] = time.strftime('%Y-%m-%d')
+
+        for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+            #~ DEBIT LINE
+            debit_vals = vals.copy()
+            debit_vals.update({
+                'partner_id': advance_amount and
+                    exp.account_move_id.partner_id.id or
+                    aml_brw.partner_id.id,
+                'debit': advance_amount or aml_brw.credit,
+                'credit': 0.0,
+                'name': advance_amount and 
+                    'CxP @ Employee ' + exp.employee_id.name + ' (Sobrante)' or
+                    'CxP @ Partner' + aml_brw.partner_id.name,
+                })
+            debit_id = aml_obj.create(cr, uid, debit_vals, context=context)
+            #~ CREDIT LINE
+            credit_vals = vals.copy()
+            credit_vals.update({
+                'partner_id': exp.account_move_id.partner_id.id,
+                'debit': 0.0,
+                'credit': advance_amount or aml_brw.credit,
+                'name': advance_amount and
+                    'CxP to Employee ' + exp.employee_id.name + ' (Anticipado)' or
+                    'CxP to Employee ' + exp.employee_id.name
+                })
+            credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
+
+            reconciliaton_list.append((aml_brw.id, debit_id))
+            advance_reconciliaton_list.append(credit_id)
+
+        if advance_amount:
+            advance_mirror = []
+            for item in reconciliaton_list:
+                advance_mirror.extend(list(item))
+            return advance_mirror
+        else:
+            return reconciliaton_list, advance_reconciliaton_list
 
     def validate_expense_invoices(self, cr, uid, ids, context=None):
         """ Validate Invoices asociated to the Expense. Put the invoices in
