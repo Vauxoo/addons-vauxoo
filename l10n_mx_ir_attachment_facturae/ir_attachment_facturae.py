@@ -241,6 +241,8 @@ class ir_attachment_facturae_mx(osv.Model):
         msj = ''
         attach_name = ''
         state = ''
+        partner_mail = ''
+        user_mail = ''
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         address_id = self.pool.get('res.partner').address_get(
             cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
@@ -257,10 +259,13 @@ class ir_attachment_facturae_mx(osv.Model):
             attach_name += attach.name + ', '
         if release.version >= '7':
             obj_ir_mail_server = self.pool.get('ir.mail_server')
+            obj_mail_mail = self.pool.get('mail.mail')
+            obj_users = self.pool.get('res.users')
+            obj_partner = self.pool.get('res.partner')
             mail_server_id = obj_ir_mail_server.search(cr, uid,
                 [('name', '=', 'FacturaE')], context=None)
             if mail_server_id:
-                msj += _('Servidor de correo saliente "FacturaE"')
+                msj += _('Servidor de correo saliente "FacturaE".')
                 for smtp_server in obj_ir_mail_server.browse(cr, uid, 
                     mail_server_id, context=context):
                     smtp = False
@@ -279,20 +284,33 @@ class ir_attachment_facturae_mx(osv.Model):
                     cr, uid, [], template_id=tmp_id, composition_mode=None,
                     model='account.invoice', res_id=invoice.id, context=context)
                 mssg = message.get('value', False)
-                if mssg.get('partner_ids', False) and tmp_id:
-                    mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
-                    mssg['attachment_ids'] = [(6, 0, attachments)]
-                    #ir a email.email y verificar si tiene correo(email_from)
-                    mssg_id = self.pool.get(
-                        'mail.compose.message').create(cr, uid, mssg, context=None)
-                    state = self.pool.get('mail.compose.message').send_mail(
-                        cr, uid, [mssg_id], context=context)
-                    print "state",state
-                    if state:
-                        msj = _('\nEmail Send Successfully\n')
+                user_mail = obj_users.browse(cr, uid, uid, context=None).email
+                partner_id = mssg.get('partner_ids', False)
+                partner_mail = obj_partner.browse(cr, uid, partner_id)[0].email
+                partner_name = obj_partner.browse(cr, uid, partner_id)[0].name
+                if partner_mail:
+                    if user_mail:
+                        if mssg.get('partner_ids', False) and tmp_id:
+                            mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
+                            mssg['attachment_ids'] = [(6, 0, attachments)]
+                            mssg_id = self.pool.get(
+                                'mail.compose.message').create(cr, uid, mssg, context=None)
+                            state = self.pool.get('mail.compose.message').send_mail(
+                                cr, uid, [mssg_id], context=context)
+                            asunto = mssg['subject']
+                            id_mail = obj_mail_mail.search(cr, uid, [('subject', '=', asunto )])
+                            for mail in obj_mail_mail.browse(cr, uid, id_mail, context):
+                                if mail.state == 'exception':
+                                    msj += _('\nNo esta correcto el email del usuario.\n') 
+                                else:
+                                    msj += _('\nEmail Send Successfully\n') 
+                                    msj += _('\nCorreo enviado a %s \n') % (partner_mail)
                     else:
-                        raise osv.except_osv(_('Warning'), _('El usuario\
-                            no tiene correo asignado.\nTiene que asignarselo'))
+                        raise osv.except_osv(_('Warning'), _('Este usuario\
+                                no tiene correo asignado'))
+                else:
+                    raise osv.except_osv(_('Warning'), _('El cliente %s\
+                    no tiene correo asignado') % (partner_name))
             else:
                 raise osv.except_osv(_('Warning'), _('No se encontró\
                 servidor de correo saliente con el nombre de "FacturaE".\
@@ -312,10 +330,6 @@ class ir_attachment_facturae_mx(osv.Model):
             }, context=context)
             state = self.pool.get('mail.message').send(
                 cr, uid, [mail], auto_commit=False, context=context)
-        # if not state:
-            # msj +=_('Please Check the Email Configuration!\n')
-        # else:
-            # msj +=_('Email Send Successfully\n')
         return self.write(cr, uid, ids, {'state': 'sent_customer',
             'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
