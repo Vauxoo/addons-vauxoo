@@ -55,6 +55,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
             'get_sum_total': self._get_sum_total,
             'has_disc': self._has_disc,
             'get_data_certificate': self._get_data_certificate,
+            'get_text_promissory' : self._get_text_promissory,
         })
         self.taxes = []
 
@@ -237,6 +238,21 @@ class invoice_facturae_html(report_sxw.rml_parse):
             })
         return res
         
+    def _get_text_promissory(self, company, partner, invoice):
+        text = ''
+        context = {}
+        lang = self.pool.get('res.partner').browse(self.cr, self.uid,\
+            partner.id).lang
+        if lang:
+            context.update({'lang' : lang})
+        company = self.pool.get('res.company').browse(self.cr, self.uid,\
+            company.id, context=context)
+        if company.dinamic_text:
+            try:
+                text = company.dinamic_text % eval("{" + company.dict_var + "}")
+            except:
+                return text
+        return text
         
 
 report_sxw.report_sxw('report.account.invoice.facturae.webkit',
