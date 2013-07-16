@@ -26,8 +26,7 @@ import time
 from openerp.osv import fields, osv
 from openerp import netsvc
 import openerp.addons.decimal_precision as dp
-
-import pprint
+from openerp.tools.translate import _
 
 
 class hr_expense_expense(osv.Model):
@@ -243,12 +242,10 @@ class hr_expense_expense(osv.Model):
                 credit = aml['total_credit']
 
                 if debit > credit: # reconciliation
-                    print 'debit > credit', '\ndebit', debit, '\ncredit', credit
                     #~ create move
                     am_id = am_obj.create(
                         cr, uid, {'journal_id': journal_id,
-                        'ref': 'new global entrie'}, context=context)
-                    print 'new move', am_id
+                        'ref': _('New Global Entry for') + ' ' + exp.name }, context=context)
                     #~ create invoice and expense move lines.
                     inv_and_exp_lines, advance_aml_ids = \
                         self.create_reconcile_move_lines(
@@ -266,9 +263,6 @@ class hr_expense_expense(osv.Model):
                         )
 
                     reconciliaton_list = inv_and_exp_lines + [tuple(advance_aml_ids)]
-                    print 'inv_and_exp_lines', inv_and_exp_lines
-                    print 'advance_aml_ids', advance_aml_ids
-                    print 'reconciliaton_list', reconciliaton_list
 
                     #~ make reconcilation.
                     for line_pair in reconciliaton_list:
@@ -322,8 +316,8 @@ class hr_expense_expense(osv.Model):
                 'debit': advance_amount or aml_brw.credit,
                 'credit': 0.0,
                 'name': advance_amount and 
-                    'CxP @ Employee ' + exp.employee_id.name + ' (Sobrante)' or
-                    'CxP @ Partner' + aml_brw.partner_id.name,
+                    _('Payable to Employee') + ' ' + exp.employee_id.name + ' ' + _('(Remaining Advance)') or
+                    _('Payable to Partner') + ' ' + aml_brw.partner_id.name,
                 })
             debit_id = aml_obj.create(cr, uid, debit_vals, context=context)
             #~ CREDIT LINE
@@ -333,12 +327,16 @@ class hr_expense_expense(osv.Model):
                 'debit': 0.0,
                 'credit': advance_amount or aml_brw.credit,
                 'name': advance_amount and
-                    'CxP to Employee ' + exp.employee_id.name + ' (Anticipado)' or
-                    'CxP to Employee ' + exp.employee_id.name
+                    _('Payable to Employee') + ' ' + exp.employee_id.name + ' ' + _('(Applyed Advance)') or
+                    _('Payable to Employee') + ' ' + exp.employee_id.name
                 })
             credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
 
-            reconciliaton_list.append((aml_brw.id, debit_id))
+            reconciliaton_list.append(
+                advance_amount
+                and (aml_brw.id, credit_id)
+                or (aml_brw.id, debit_id)
+                )
             advance_reconciliaton_list.append(credit_id)
 
         if advance_amount:
