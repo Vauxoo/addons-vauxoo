@@ -94,25 +94,23 @@
                           </header>  
                           <group colspan='4' col='4'>
                               <group colspan='4'>
-                                  <group string='Line Name' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                  <group string='Line Name' colspan='4' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='This field will be the label that will be printed, if "invisible" is set to False, in your report. If you want a blank line in your report Just fill at least with one blank space. The name of your lines is traslatable too, so you can switch to your Preferred Language and write the Traslation for your Line.'/></i> 
                                   </group>    
-                                  <field name="name" />
-                              </group>    
-                              <group colspan='4'>
-                                  <group string='Line Type' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                  <field name="name" colspan='2'/>
+                                  <group string='Line Type' colspan='4' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='This option define the behavior this lines will have within the report'/></i> 
                                   </group>    
-                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                  <group colspan='4' attrs="{'invisible':[('help','=',False)]}">
                                       <label string='There are four types of Lines to fill with the report:'/>
                                   </group>    
-                                    <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                    <group colspan='4' attrs="{'invisible':[('help','=',False)]}">
                                         <ul><label string='Abstract: This type is the one you have to use to create label that just get printed in the report. This line does not bear values at all and do not make computation'/></ul>
                                         <ul><label string='Detail: This type is the one that is in direct contact with Accounting Accounts. You can select View Accounts (Summarized Accounts) and/or Normal Accounts (Movement Accounts)'/></ul>
                                         <ul><label string='Total: This type is the one that summarize "Detail" Lines, you can even do mathematical operations with them'/></ul>
                                         <ul><label string='Constant: This type is the one that just bears constant variable like Days of Period, Periods of Fiscal Year or Month of FiscalYear'/></ul>
                                     </group>    
-                                  <field name="type" />
+                                  <field name="type" colspan='2'/>
                               </group>    
                               <group colspan='4' col='4'>
                                   <group string='Sequence' colspan='2' attrs="{'invisible':[('help','=',False)]}">
