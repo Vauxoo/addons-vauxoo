@@ -164,9 +164,9 @@ class ir_attachment_facturae_mx(osv.Model):
             if not attach:
                 msj = _("Not Applicable XML CFD 2.2\n")
         if attach:
-            msj = _("Attached Successfully XML CFD 2.2\n")
+            msj = _("Attached Successfully XML CFD 3.2\n")
         else:
-            msj = _("Not Applicable XML CFD 2.2\n")
+            msj = _("Not Applicable XML CFD 3.2\n")
         return self.write(cr, uid, ids,
                           {'state': 'confirmed',
                            'file_input': attach or False,
@@ -265,7 +265,6 @@ class ir_attachment_facturae_mx(osv.Model):
             mail_server_id = obj_ir_mail_server.search(cr, uid,
                 [('name', '=', 'FacturaE')], context=None)
             if mail_server_id:
-                msj += _('Servidor de correo saliente "FacturaE".')
                 for smtp_server in obj_ir_mail_server.browse(cr, uid, 
                     mail_server_id, context=context):
                     smtp = False
@@ -299,12 +298,15 @@ class ir_attachment_facturae_mx(osv.Model):
                                 cr, uid, [mssg_id], context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(cr, uid, [('subject', '=', asunto )])
-                            for mail in obj_mail_mail.browse(cr, uid, id_mail, context):
-                                if mail.state == 'exception':
-                                    msj += _('\nNo esta correcto el email del usuario.\n') 
-                                else:
-                                    msj += _('\nEmail Send Successfully\n') 
-                                    msj += _('\nCorreo enviado a %s \n') % (partner_mail)
+                            if id_mail:
+                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context):
+                                    if mail.state == 'exception':
+                                        msj = _('\nNo esta correcto el email del usuario.\nVerifique en Menu Configuración/Tecnico/Email/Emails\n') 
+                            else:
+                                msj = _('Email Send Successfully.\
+                                Attached is sent to %s \
+                                for Outgoing Mail Server "FacturaeE"\
+                                                ') % (partner_mail)
                     else:
                         raise osv.except_osv(_('Warning'), _('Este usuario\
                                 no tiene correo asignado'))
