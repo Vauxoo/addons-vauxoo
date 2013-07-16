@@ -640,7 +640,7 @@ class ifrs_lines(osv.osv):
                                ),
         'cons_ids': fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts'),
         'analytic_ids': fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
-        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
+        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='cascade', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
         'parent_abstract_id': fields.many2one('ifrs.lines', 'Parent Abstract', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
         'parent_right': fields.integer('Parent Right', select=1),
         'parent_left': fields.integer('Parent Left', select=1),
