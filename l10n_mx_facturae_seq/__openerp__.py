@@ -41,7 +41,7 @@
     ],
     "demo" : [],
     "data" : [
-        "security/l10n_mx_facturae_seq_security.xml",
+        #"security/l10n_mx_facturae_seq_security.xml",
         "security/ir.model.access.csv",
         "ir_sequence_view.xml",
         "wizard/installer.xml",
