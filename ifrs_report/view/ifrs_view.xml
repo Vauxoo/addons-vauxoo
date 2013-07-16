@@ -99,35 +99,33 @@
                                   </group>    
                                   <field name="name" />
                               </group>    
-                              <group colspan='2'>
+                              <group colspan='4' col='4'>
                                   <group string='Sequence' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='Set the sequence for this line, the sequence will represent the position that this line will have within the report. It is advisable that you select a number multiple of ten thus if some new line in between your old lines is created it could fit among them.'/></i> 
                                   </group>    
-                                  <field name="sequence" colspan='2'/>
-                              </group>    
-                              <group colspan='2'>
                                   <group string='Invisible Line' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='By setting this field to "True" will avoid this line from printing in your report. It is useful to set some lines to invisible when using them to make some computations but you do not want them to appear in the report printing.'/></i> 
                                   </group>    
+                                  <field name="sequence" colspan='2'/>
                                   <field name="invisible" />
-                              </group>    
-                              <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
-                                <group string='Line Amount' colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                    <i><label string='This field will summarize the results that are carried on for the Detail, Total &amp; Constant Lines. Its value is modified by the "Change Sign" Field. Be aware!'/></i> 
-                                </group>    
-                                <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                    <ul><label string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/></ul>
-                                    <ul><label string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/></ul>
-                                    <ul><label string='When the line is "Abstract" type, it will not perform any computation'/></ul>
-                                    <ul><label string='When the line is "Constant" type, it will only show the constant values'/></ul>
-                                </group>    
-                                <field name="amount" colspan='2'/>
-                              </group>    
-                              <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
-                                <group string='Change Sign to Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
-                                    <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign a Financial Balance due to conventions.'/></i> 
-                                </group>    
-                                <field name="inv_sign" colspan='2'/>
+                                  <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
+                                    <group string='Line Amount' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                        <i><label string='This field will summarize the results that are carried on for the Detail, Total &amp; Constant Lines. Its value is modified by the "Change Sign" Field. Be aware!'/></i> 
+                                    </group>    
+                                    <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                        <ul><label string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/></ul>
+                                        <ul><label string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/></ul>
+                                        <ul><label string='When the line is "Abstract" type, it will not perform any computation'/></ul>
+                                        <ul><label string='When the line is "Constant" type, it will only show the constant values'/></ul>
+                                    </group>    
+                                  </group>    
+                                  <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
+                                    <group string='Change Sign to Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
+                                        <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign a Financial Balance due to conventions.'/></i> 
+                                    </group>    
+                                  </group>    
+                                  <field name="amount" colspan='2'/>
+                                  <field name="inv_sign" colspan='2'/>
                               </group>    
                               <group colspan='4'>
                                   <group string='Line Type' colspan='2' attrs="{'invisible':[('help','=',False)]}">
