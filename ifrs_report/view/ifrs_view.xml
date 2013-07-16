@@ -104,13 +104,13 @@
                                   <group colspan='4' attrs="{'invisible':[('help','=',False)]}">
                                       <label string='There are four types of Lines to fill with the report:'/>
                                   </group>    
-                                    <group colspan='4' attrs="{'invisible':[('help','=',False)]}">
-                                        <label colspan='4' string='Abstract: This type is the one you have to use to create label that just get printed in the report. This line does not bear values at all and do not make computation'/>
-                                        <label colspan='4' string='Detail: This type is the one that is in direct contact with Accounting Accounts. You can select View Accounts (Summarized Accounts) and/or Normal Accounts (Movement Accounts)'/>
-                                        <label colspan='4' string='Total: This type is the one that summarize "Detail" Lines, you can even do mathematical operations with them'/>
-                                        <label colspan='4' string='Constant: This type is the one that just bears constant variable like Days of Period, Periods of Fiscal Year or Month of FiscalYear'/>
-                                    </group>    
                                   <field name="type" colspan='2'/>
+                                  <group colspan='4' attrs="{'invisible':[('help','=',False)]}">
+                                      <label colspan='4' string='Abstract: This type is the one you have to use to create label that just get printed in the report. This line does not bear values at all and do not make computation' attrs="{'invisible':[('type','!=','abstract')]}"/>
+                                      <label colspan='4' string='Detail: This type is the one that is in direct contact with Accounting Accounts. You can select View Accounts (Summarized Accounts) and/or Normal Accounts (Movement Accounts)' attrs="{'invisible':[('type','!=','detail')]}"/>
+                                      <label colspan='4' string='Total: This type is the one that summarize "Detail" Lines, you can even do mathematical operations with them' attrs="{'invisible':[('type','!=','total')]}"/>
+                                      <label colspan='4' string='Constant: This type is the one that just bears constant variable like Days of Period, Periods of Fiscal Year or Month of FiscalYear' attrs="{'invisible':[('type','!=','constant')]}"/>
+                                  </group>    
                               </group>    
                               <group colspan='4' col='4'>
                                   <group string='Sequence' colspan='2' attrs="{'invisible':[('help','=',False)]}">
