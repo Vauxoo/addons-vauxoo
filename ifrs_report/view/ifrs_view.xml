@@ -121,21 +121,19 @@
                                   </group>    
                                   <field name="sequence" colspan='2'/>
                                   <field name="invisible" />
-                                  <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
-                                    <group string='Line Amount' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                  <group string='Line Amount' colspan='2' attrs="{'invisible':['|',('type','=','abstract'),('help','=',False)]}">
+                                    <group colspan='2' >
                                         <i><label string='This field will summarize the results that are carried on for the Detail, Total &amp; Constant Lines. Its value is modified by the "Change Sign" Field. Be aware!'/></i> 
                                     </group>    
-                                    <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                    <group colspan='2' >
                                         <label colspan='2' string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/>
                                         <label colspan='2' string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/>
                                         <label colspan='2' string='When the line is "Abstract" type, it will not perform any computation'/>
                                         <label colspan='2' string='When the line is "Constant" type, it will only show the constant values'/>
                                     </group>    
                                   </group>    
-                                  <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
-                                    <group string='Change Sign to Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
+                                  <group string='Change Sign to Amount' colspan='2' attrs="{'invisible':['|',('type','=','abstract'),('help','=',False)]}">
                                         <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign to a Financial Balance due to conventions.'/></i> 
-                                    </group>    
                                   </group>    
                                   <field name="amount" colspan='2' attrs="{'invisible':[('type','=','abstract')]}"/>
                                   <field name="inv_sign" colspan='2' attrs="{'invisible':[('type','=','abstract')]}"/>
