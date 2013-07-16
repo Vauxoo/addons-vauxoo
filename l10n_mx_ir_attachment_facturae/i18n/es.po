@@ -135,7 +135,7 @@ msgstr "Generar Formato de Impresión"
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "si ésta marcado, nuevos mensajes requieren su atención"
+msgstr "Si ésta marcado, nuevos mensajes requieren su atención"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,file_input_index:0
@@ -238,11 +238,6 @@ msgid "msg"
 msgstr "msg"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: field:ir.attachment.facturae.mx,file_xml_sign_index:0
-msgid "File XML Sign Index"
-msgstr "Archivo XML Firmado Index"
-
-#. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,state:0
 msgid "State of attachments"
 msgstr "Estado de los adjuntos"
@@ -277,11 +272,6 @@ msgstr "Identificador"
 #, python-format
 msgid "Email Send Successfully\n"
 msgstr "Correo electrónico enviado con éxito\n"
-
-#. module: l10n_mx_ir_attachment_facturae
-#: help:ir.attachment.facturae.mx,file_xml_sign:0
-msgid "File XML signed"
-msgstr "Archivo XML Firmado"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: view:ir.attachment.facturae.mx:0
