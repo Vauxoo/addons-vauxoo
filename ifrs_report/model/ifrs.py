@@ -651,7 +651,7 @@ class ifrs_lines(osv.osv):
                                  store={
                                  'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
                                  }),
-        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands'),
+        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Second Operand'),
         'operator': fields.selection([
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
@@ -680,7 +680,7 @@ class ifrs_lines(osv.osv):
             ('balance', 'Balance')],
             'Accounting Value', required=False,
             help='Leaving blank means Balance'),
-        'total_ids': fields.many2many('ifrs.lines', 'ifrs_lines_rel', 'parent_id', 'child_id', string='Total'),
+        'total_ids': fields.many2many('ifrs.lines', 'ifrs_lines_rel', 'parent_id', 'child_id', string='First Operand'),
         'inv_sign': fields.boolean('Change Sign to Amount', help='Allows a change of sign'),
         'invisible': fields.boolean('Invisible', help='Allows whether the line of the report is printed or not'),
         'comment': fields.text('Comments/Question', help='Comments or questions about this ifrs line'),

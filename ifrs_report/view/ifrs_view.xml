@@ -157,9 +157,19 @@
                                           <field name="value" />
                                       </group>    
                                   </group>
-                                  <group colspan='2' attrs="{'invisible':[('type','!=','total')]}">
-                                      <field name="operator" />
-                                      <field name="comparison" />
+                                  <group col='4' colspan='2' attrs="{'invisible':[('type','!=','total')]}">
+                                      <group col='2' colspan='2'>
+                                          <group string='Arithmetic Operator' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                              <i><label string='If you are seen this Field it is because you are setting this line as "Total" Type. By Default All the lines within the same operand are summarized. If you want to perform Subtraction, Product, Division or Percentual Computations, you will have to fill both the First Operand &amp; the Second Operand. If none operator is defined only the addition of the Elements in the First Operand will be performed and Elements in the Second Operand will be depreciated'/></i> 
+                                          </group>    
+                                          <field name="operator" />
+                                      </group>    
+                                      <group col='2' colspan='2'>
+                                          <group string='Comparison Type' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                              <i><label string='This concept is somewhat more advanced. It will perform a Comparison between the value resulted for the period being asked and the value for this same line but for the pretty previous period to the one being asked. This operation is perform after the Arithmetic Operator has been performed. If not comparison is defined only the value yield by the Arithmetic Operator will be given.'/></i> 
+                                          </group>    
+                                          <field name="comparison" />
+                                      </group>    
                                   </group>
                               </group>
                           </group>
@@ -198,20 +208,41 @@
                               <group colspan='6'
                                 attrs="{'invisible':[('type','!=','total')]}">
                                 <group col='1'>
-                                    <separator string='Total' colspan='2' />
+                                    <separator string='First Operand' colspan='2' />
+                                    <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                          <i><label string='This is the First Operand where you can summarize "Detail" Lines and even other Lines of Type "Total". All the lines you Select in this field will become the sum of them all. To perform other Arithmetic Operations like subtraction or product, fill this field with the "First Operand" and the Second Operand field with the "Second Operand" and do not forget to select you arithmetic operation in the "Arithmetic Operator" Field.'/></i> 
+                                    </group>    
                                     <field
                                         name="total_ids" widget="many2many"
                                         nolabel="1"
                                         domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
-                                        />
+                                        >
+                                        <tree>
+                                            <field name='sequence'/>
+                                            <field name='name'/>
+                                            <field name='type'/>
+                                            <field name='amount'/>
+                                            <field name='invisible'/>
+                                        </tree>
+                                    </field>
                                 </group>
                                 
                                 <group col='1' attrs="{'invisible':[('operator','=','without')]}">
-                                    <separator string='Operand' colspan='2' />
+                                    <separator string='Second Operand' colspan='2' />
+                                    <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                          <i><label string='This is the Second Operand, here as in the First Operand,  you will be able to summarize "Detail" Lines and Lines of Type "Total" as well. All the lines you Select in this field will become the sum of them all, and after that the result will be used as the Second Operand for the Arithmetic Operator previously selected after the Arithmetic Operation is performed the ultimate result will be shown as the Amount of the Line. If none arithmetic operator is selected this field will be disregarded.'/></i> 
+                                    </group>    
                                     <field
                                         name="operand_ids" widget="many2many"
                                         nolabel='1'
                                         domain="['|',('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]">
+                                        <tree>
+                                            <field name='sequence'/>
+                                            <field name='name'/>
+                                            <field name='type'/>
+                                            <field name='amount'/>
+                                            <field name='invisible'/>
+                                        </tree>
                                     </field>
                                 </group>
                               </group>
