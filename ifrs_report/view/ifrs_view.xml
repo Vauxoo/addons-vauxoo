@@ -114,7 +114,7 @@
                               </group>    
                               <group colspan='4' col='4'>
                                   <group string='Sequence' colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                      <i><label string='Set the sequence for this line, the sequence will represent the position that this line will have within the report. It is advisable that you select a number multiple of ten thus if some new line in between your old lines is created it could fit among them.'/></i> 
+                                      <i><label string='Set the sequence for this line, the sequence will represent the position that this line will have within the report. It is advisable that you select a number multiple of ten thus if some new line in between your old lines is created it could fit among them. Each sequence should be unique within the report.'/></i> 
                                   </group>    
                                   <group string='Invisible Line' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='By setting this field to "True" will avoid this line from printing in your report. It is useful to set some lines to invisible when using them to make some computations but you do not want them to appear in the report printing.'/></i> 
