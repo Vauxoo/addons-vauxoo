@@ -128,15 +128,15 @@
                                         <i><label string='This field will summarize the results that are carried on for the Detail, Total &amp; Constant Lines. Its value is modified by the "Change Sign" Field. Be aware!'/></i> 
                                     </group>    
                                     <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                        <ul><label string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/></ul>
-                                        <ul><label string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/></ul>
-                                        <ul><label string='When the line is "Abstract" type, it will not perform any computation'/></ul>
-                                        <ul><label string='When the line is "Constant" type, it will only show the constant values'/></ul>
+                                        <label colspan='2' string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/>
+                                        <label colspan='2' string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/>
+                                        <label colspan='2' string='When the line is "Abstract" type, it will not perform any computation'/>
+                                        <label colspan='2' string='When the line is "Constant" type, it will only show the constant values'/>
                                     </group>    
                                   </group>    
                                   <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
                                     <group string='Change Sign to Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
-                                        <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign a Financial Balance due to conventions.'/></i> 
+                                        <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign to a Financial Balance due to conventions.'/></i> 
                                     </group>    
                                   </group>    
                                   <field name="amount" colspan='2' attrs="{'invisible':[('type','=','abstract')]}"/>
@@ -145,32 +145,30 @@
                                       <i><label string='This field will allow you to take into account constant values that are related to the Accounting Fiscal Year like: Days of Period, Periods of Fiscal Year or Month of FiscalYear'/></i> 
                                   </group>    
                                   <field name="constant_type" colspan='4' attrs="{'required':[('type','=','constant')],'invisible':[('type','!=','constant')]}" />
+                                  <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
+                                      <group string='Accounting Span' colspan='2'>
+                                          <i><label string='In this field, regarding a time span, you will indicate which (initial, variation, ending) amount from the accounts your are consulting on is the one you want for the period you are asking. This field is only available when lines are of type "Detail". Available options are:'/></i> 
+                                      </group>    
+                                      <group colspan='2'>
+                                            <label colspan='2' string='Initial Values: Will yield the values at the beginning of the period you are consulting on'/>
+                                            <label colspan='2' string='Variations in Period: Will yield the values throughout the period you are consulting on'/>
+                                            <label colspan='2' string='Ending Values: Will yield the values at the end of the period you are consulting on'/>
+                                      </group>    
+                                  </group>    
+                                  <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
+                                      <group string='Accounting Value' colspan='2'>
+                                          <i><label string='In this field, regarding a value, you will indicate which (debit, credit, balance) amount from the accounts your are consulting on is the one you want for the period you are asking. This field is only available when lines are of type "Detail". Available options are:'/></i> 
+                                      </group>    
+                                      <group colspan='2'>
+                                            <label colspan='2' string='Debit: Will yield only the Debits for the accounts being consulted within the "Accounting Span" being asked'/>
+                                            <label colspan='2' string='Credit: Will yield only the Credits for the accounts being consulted within the "Accounting Span" being asked'/>
+                                            <label colspan='2' string='Balance: Will yield the Balances for the accounts being consulted within the "Accounting Span" being asked'/>
+                                      </group>    
+                                  </group>    
+                                  <field colspan='2' name="acc_val" attrs="{'invisible':[('type','!=','detail')]}"/>
+                                  <field colspan='2' name="value" attrs="{'invisible':[('type','!=','detail')]}"/>
                               </group>    
                               <group colspan='4' col='2'>
-                                  <group colspan='2' col='4' attrs="{'invisible':[('type','!=','detail')]}">
-                                      <group colspan='2'>
-                                          <group string='Accounting Span' colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                              <i><label string='In this field, regarding a time span, you will indicate which (initial, variation, ending) amount from the accounts your are consulting on is the one you want for the period you are asking. This field is only available when lines are of type "Detail". Available options are:'/></i> 
-                                          </group>    
-                                          <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                                <ul><label string='Initial Values: Will yield the values at the beginning of the period you are consulting on'/></ul>
-                                                <ul><label string='Variations in Period: Will yield the values throughout the period you are consulting on'/></ul>
-                                                <ul><label string='Ending Values: Will yield the values at the end of the period you are consulting on'/></ul>
-                                          </group>    
-                                          <field name="acc_val"/>
-                                      </group>    
-                                      <group colspan='2'>
-                                          <group string='Accounting Value' colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                              <i><label string='In this field, regarding a value, you will indicate which (debit, credit, balance) amount from the accounts your are consulting on is the one you want for the period you are asking. This field is only available when lines are of type "Detail". Available options are:'/></i> 
-                                          </group>    
-                                          <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                                <ul><label string='Debit: Will yield only the Debits for the accounts being consulted within the "Accounting Span" being asked'/></ul>
-                                                <ul><label string='Credit: Will yield only the Credits for the accounts being consulted within the "Accounting Span" being asked'/></ul>
-                                                <ul><label string='Balance: Will yield the Balances for the accounts being consulted within the "Accounting Span" being asked'/></ul>
-                                          </group>    
-                                          <field name="value" />
-                                      </group>    
-                                  </group>
                                   <group col='4' colspan='2' attrs="{'invisible':[('type','!=','total')]}">
                                       <group col='2' colspan='2'>
                                           <group string='Arithmetic Operator' colspan='2' attrs="{'invisible':[('help','=',False)]}">
