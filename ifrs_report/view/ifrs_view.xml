@@ -93,26 +93,26 @@
                             <field name='help'/>
                           </header>  
                           <group colspan='4' col='4'>
+                              <group colspan='4'>
+                                  <group string='Line Name' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                      <i><label string='This field will be the label that will be printed, if "invisible" is set to False, in your report. If you want a blank line in your report Just fill at least with one blank space. The name of your lines is traslatable too, so you can switch to your Preferred Language and right the Traslation for your Line.'/></i> 
+                                  </group>    
+                                  <field name="name" />
+                              </group>    
                               <group colspan='2'>
-                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                  <group string='Sequence' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='Set the sequence for this line, the sequence will represent the position that this line will have within the report. It is advisable that you select a number multiple of ten thus if some new line in between your old lines is created it could fit among them.'/></i> 
                                   </group>    
                                   <field name="sequence" colspan='2'/>
                               </group>    
                               <group colspan='2'>
-                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                  <group string='Invisible Line' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='By setting this field to "True" will avoid this line from printing in your report. It is useful to set some lines to invisible when using them to make some computations but you do not want them to appear in the report printing.'/></i> 
                                   </group>    
                                   <field name="invisible" />
                               </group>    
-                              <group colspan='2'>
-                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                      <i><label string='This field will be the label that will be printed, if "invisible" is set to False, in your report. If you want a blank line in your report Just fill at least with one blank space'/></i> 
-                                  </group>    
-                                  <field name="name" />
-                              </group>    
-                              <group colspan='2'>
-                                  <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                              <group colspan='4'>
+                                  <group string='Line Type' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='This option define the behavior this lines will have within the report'/></i> 
                                   </group>    
                                   <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
@@ -126,13 +126,16 @@
                                     </group>    
                                   <field name="type" />
                               </group>    
-                              <group colspan='4' col='1'>
+                              <group colspan='4' col='2'>
                                   <group colspan='2' attrs="{'invisible':[('type','!=','constant')]}" >
+                                      <group string='Constant Type' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                          <i><label string='This field will allow you to take into account constant values that are related to the Accounting Fiscal Year like: Days of Period, Periods of Fiscal Year or Month of FiscalYear'/></i> 
+                                      </group>    
                                       <field name="constant_type" attrs="{'required':[('type','=','constant')]}" />
                                   </group>
-                                  <group colspan='2' attrs="{'invisible':[('type','!=','detail')]}">
+                                  <group colspan='2' col='4' attrs="{'invisible':[('type','!=','detail')]}">
                                       <group colspan='2'>
-                                          <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                          <group string='Accounting Span' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                               <i><label string='In this field, regarding a time span, you will indicate which (initial, variation, ending) amount from the accounts your are consulting on is the one you want for the period you are asking. This field is only available when lines are of type "Detail". Available options are:'/></i> 
                                           </group>    
                                           <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
@@ -143,7 +146,7 @@
                                           <field name="acc_val"/>
                                       </group>    
                                       <group colspan='2'>
-                                          <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                          <group string='Accounting Value' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                               <i><label string='In this field, regarding a value, you will indicate which (debit, credit, balance) amount from the accounts your are consulting on is the one you want for the period you are asking. This field is only available when lines are of type "Detail". Available options are:'/></i> 
                                           </group>    
                                           <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
@@ -162,19 +165,19 @@
                           </group>
 
                           <group colspan='6' col='6' attrs="{'invisible':[('type','=','abstract')]}">
-                                <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                <group string='Line Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
                                     <i><label string='This field will summarize the results that are carried on for the Detail, Total &amp; Constant Lines. Its value is modified by the "Change Sign" Field. Be aware!'/></i> 
                                 </group>    
-                                <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                    <ul><label string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Selected Accounts"'/></ul>
-                                    <ul><label string='When the line is "Total" type, it will perform the operations thar are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/></ul>
+                                <group colspan='6' attrs="{'invisible':[('help','=',False)]}">
+                                    <ul><label string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/></ul>
+                                    <ul><label string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/></ul>
                                     <ul><label string=''/></ul>
                                 </group>    
-                                <field name="amount" />
-                                <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                    <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely'/></i> 
+                                <field name="amount" colspan='6'/>
+                                <group string='Change Sign to Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
+                                    <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign a Financial Balance due to conventions.'/></i> 
                                 </group>    
-                                <field name="inv_sign" />
+                                <field name="inv_sign" colspan='6'/>
                           </group>
 
                           <group colspan='6'>
@@ -213,6 +216,7 @@
                                 </group>
                               </group>
                           </group>
+                          <separator string='Notes &amp; Comments' colspan='2' />
                           <field name="comment" colspan='4' nolabel='1'/>
 
                         </form>
