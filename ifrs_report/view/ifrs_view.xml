@@ -95,7 +95,7 @@
                           <group colspan='4' col='4'>
                               <group colspan='4'>
                                   <group string='Line Name' colspan='2' attrs="{'invisible':[('help','=',False)]}">
-                                      <i><label string='This field will be the label that will be printed, if "invisible" is set to False, in your report. If you want a blank line in your report Just fill at least with one blank space. The name of your lines is traslatable too, so you can switch to your Preferred Language and right the Traslation for your Line.'/></i> 
+                                      <i><label string='This field will be the label that will be printed, if "invisible" is set to False, in your report. If you want a blank line in your report Just fill at least with one blank space. The name of your lines is traslatable too, so you can switch to your Preferred Language and write the Traslation for your Line.'/></i> 
                                   </group>    
                                   <field name="name" />
                               </group>    
