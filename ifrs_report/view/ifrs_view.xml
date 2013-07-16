@@ -111,6 +111,24 @@
                                   </group>    
                                   <field name="invisible" />
                               </group>    
+                              <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
+                                <group string='Line Amount' colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                    <i><label string='This field will summarize the results that are carried on for the Detail, Total &amp; Constant Lines. Its value is modified by the "Change Sign" Field. Be aware!'/></i> 
+                                </group>    
+                                <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
+                                    <ul><label string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/></ul>
+                                    <ul><label string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/></ul>
+                                    <ul><label string='When the line is "Abstract" type, it will not perform any computation'/></ul>
+                                    <ul><label string='When the line is "Constant" type, it will only show the constant values'/></ul>
+                                </group>    
+                                <field name="amount" colspan='2'/>
+                              </group>    
+                              <group colspan='2' attrs="{'invisible':[('type','=','abstract')]}">
+                                <group string='Change Sign to Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
+                                    <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign a Financial Balance due to conventions.'/></i> 
+                                </group>    
+                                <field name="inv_sign" colspan='2'/>
+                              </group>    
                               <group colspan='4'>
                                   <group string='Line Type' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='This option define the behavior this lines will have within the report'/></i> 
@@ -174,36 +192,37 @@
                               </group>
                           </group>
 
-                          <group colspan='6' col='6' attrs="{'invisible':[('type','=','abstract')]}">
-                                <group string='Line Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
-                                    <i><label string='This field will summarize the results that are carried on for the Detail, Total &amp; Constant Lines. Its value is modified by the "Change Sign" Field. Be aware!'/></i> 
-                                </group>    
-                                <group colspan='6' attrs="{'invisible':[('help','=',False)]}">
-                                    <ul><label string='When the line is "Detail" type, it will summarize the accounts that were selected in the field "Consolidated Accounts"'/></ul>
-                                    <ul><label string='When the line is "Total" type, it will perform the operations that are considered in the "Operator" &amp; "Make Comparison" fields, taking into account the selections for the operands'/></ul>
-                                    <ul><label string=''/></ul>
-                                </group>    
-                                <field name="amount" colspan='6'/>
-                                <group string='Change Sign to Amount' colspan='6' attrs="{'invisible':[('help','=',False)]}">
-                                    <i><label string='If you check the field "Change Sign to Amount", the initial value of the amount will be multiplied by minus one (-1). So a negative number will become a positive number and conversely. Sometimes you are willing to change a sign a Financial Balance due to conventions.'/></i> 
-                                </group>    
-                                <field name="inv_sign" colspan='6'/>
-                          </group>
-
-                          <group colspan='6'>
+                          <group colspan='4' col='4'>
                               <group
-                                colspan='6'
-                                attrs="{'invisible':[('type','!=','detail')]}" height="50" width="300">
-                                <separator string='Consolidated Accounts' colspan='6' />
+                                colspan='2'
+                                attrs="{'invisible':[('type','!=','detail')]}">
+                                <separator string='Consolidated Accounts' colspan='2' />
                                 <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                     <i><label string='This field is to be filled with Accounting Accounts. You can use Accounts of "View" Type, if you want to grasp a big amount of accounts, or you can use Move Accounts if you want to pinpoint in nitty-gritty detail which Accounts you want to regard in this line. Be aware that using Move Account could be cumbersome when you have a line that depends on many Accounts, it is better to consolidate them and then come back here and use your consolidated account.'/></i> 
                                 </group>    
-                                <field name="cons_ids" width="450" nolabel='1'/>
-                                <separator string='Analytic Accounts' colspan='6' />
+                                <field colspan='2' name="cons_ids" nolabel='1'>
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                        <field name='type'/>
+                                        <field name='company_id'/>
+                                    </tree>
+                                </field>
+                                </group>    
+                              <group
+                                colspan='2'
+                                attrs="{'invisible':[('type','!=','detail')]}">
+                                <separator string='Analytic Accounts' colspan='2' />
                                 <group colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                     <i><label string='This field is to be filled with Analytic Accounts. Analytic Accounts serve as a way of filtering data from one Accounting Account. There are chances that you use one single account for multiple purposes though you have been using for a while Analytic Accounts to break down the details regarding that Account. Hence you can use a combination of Accounting Account and Analytic Accounts to retrieve valuable data from the Accounting system to your Line Report. Be aware that all the Accounting Account selected previously will be affected by the Analytic Accounts selected here. If you want one-to-one matches you should create as many lines as you want to fulfill your requirement.'/></i> 
                                 </group>    
-                                <field name="analytic_ids" width="450" nolabel='1'/>
+                                <field colspan='2' name="analytic_ids" nolabel='1'>
+                                    <tree>
+                                        <field name='code'/>
+                                        <field name='name'/>
+                                        <field name='type'/>
+                                    </tree>
+                                </field>
                               </group>
                               <group colspan='6'
                                 attrs="{'invisible':[('type','!=','total')]}">
