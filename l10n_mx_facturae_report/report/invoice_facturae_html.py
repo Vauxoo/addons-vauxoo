@@ -248,7 +248,10 @@ class invoice_facturae_html(report_sxw.rml_parse):
         company = self.pool.get('res.company').browse(self.cr, self.uid,\
             company.id, context=context)
         if company.dinamic_text:
-            text = company.dinamic_text % eval("{" + company.dict_var + "}")
+            try:
+                text = company.dinamic_text % eval("{" + company.dict_var + "}")
+            except:
+                return text
         return text
         
 
