@@ -671,7 +671,7 @@ class ifrs_lines(osv.osv):
         'acc_val': fields.selection([
             ('init', 'Initial Values'),
             ('var', 'Variation in Periods'),
-            ('fy', ('FY All'))],
+            ('fy', ('Ending Values'))],
             'Accounting Span', required=False,
             help='Leaving blank means YTD'),
         'value': fields.selection([
