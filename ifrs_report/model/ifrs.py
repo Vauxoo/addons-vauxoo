@@ -217,6 +217,12 @@ class ifrs_ifrs(osv.osv):
                ids2 += self._get_children_and_consol(cr, uid, [x.id for x in aa_brw.child_id], level, context=context)
        return list(set(ids2)) 
 
+    def _get_context(cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+
+        return context, context, context
+
     def get_report_data(
         self, cr, uid, ids, fiscalyear=None, exchange_date=None,
             currency_wizard=None, target_move=None, period=None, two=None, is_compute=None, context=None):
@@ -305,58 +311,78 @@ class ifrs_ifrs(osv.osv):
         #########################################
         ############## End Calculate ############
         #########################################
+        if period:
+            if two:
+                context = {
+                    'period_from': period, 'period_to': period}
+            else:
+                period_id = period_name[period][1]
+                context = {'period_from': period_id, 'period_to': period_id}
+        else:
+            context = {'whole_fy': 'True'}
 
-        for ifrs_l in self._get_ordered_lines(cr, uid, ids, context=context):
-            if is_compute:  # Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
+        context['partner_detail'] = None
+        context['fiscalyear'] = fiscalyear
+        context['state'] = target_move
+
+        context, ctx_c, ctx_c2 = self._get_context(cr, uid, ids, context=context)
+
+        ordered_lines = self._get_ordered_lines(cr, uid, ids, context=context)
+
+        if is_compute:  # Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
+            for ifrs_l in ordered_lines:
                 ifrs_line._get_amount_value(cr, uid,
-                                            ids, ifrs_l, is_compute=True, context=context)
-            else:
-                if two:
-                    amount_value = ifrs_line._get_amount_value(cr, uid, ids,
-                                                               ifrs_l, period_name, fiscalyear, exchange_date,
-                                                               currency_wizard, period, target_move, two=two,
-                                                               context=context)
-                else:
-                    for lins in range(1, 13):
-                        amount_value = ifrs_line._get_amount_value(
-                            cr, uid, ids,
-                            ifrs_l, period_name, fiscalyear, exchange_date,
-                            currency_wizard, lins, target_move,
-                            context=context)
-
-        for ifrs_l in self._get_ordered_lines(cr, uid, ids, context=context):
-            if is_compute:  # Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
+                ids, ifrs_l, is_compute=True, context=context)
+            
+            for ifrs_l in ordered_lines:
                 ifrs_line._get_amount_with_operands(cr, uid,
-                                                    ids, ifrs_l, is_compute=True, context=context)
-            else:
-                if two:  # Cuando el reporte es de 2 columnas, se retornara una lista de diccionario
-                    #[{'sequence':1, 'id':id_de_la_linea, 'name':nombre_de_la_linea,
-                    #'invisible':mostrar_campo_en_reporte, 'type':tipo_de_linea, 'amount':monto_de_suma_total_de_todos_los_periodos}]
+                ids, ifrs_l, is_compute=True, context=context)
+        else:
+            if two:
+                for ifrs_l in ordered_lines:
+                    amount_value = ifrs_line._get_amount_value(cr, uid, ids,
+                       ifrs_l, period_name, fiscalyear, exchange_date,
+                       currency_wizard, period, target_move, two=two,
+                       context=context)
+                    
+                for ifrs_l in ordered_lines:
                     amount_value = ifrs_line._get_amount_with_operands(cr, uid,
-                                                                       ids, ifrs_l, period_name, fiscalyear, exchange_date,
-                                                                       currency_wizard, period, target_move, two=two,
-                                                                       context=context)
+                       ids, ifrs_l, period_name, fiscalyear, exchange_date,
+                       currency_wizard, period, target_move, two=two,
+                       context=context)
+                    
                     line = {'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name, 'invisible': ifrs_l.invisible, 'type': str(
                         ifrs_l.type), 'amount': amount_value}
-                else:  # Cuando el reporte es de 12 columnas no se tendra el campo amount sino que tendra un campo 'period',
-                    # que sera un diccionario con el valor que corresponde a
-                    # cada uno de los 12 periodos por linea
+                    
+                    if ifrs_l.ifrs_id.id == ids[0]:  # Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
+                        data.append(line)
+                    data.sort(key=lambda x: int(x['sequence']))
+            else:
+                for ifrs_l in ordered_lines:
+                    for lins in range(1, 13):
+                        amount_value = ifrs_line._get_amount_value(
+                        cr, uid, ids,
+                        ifrs_l, period_name, fiscalyear, exchange_date,
+                        currency_wizard, lins, target_move,
+                        context=context)
+                
+                
+                for ifrs_l in ordered_lines:
                     line = {
-                        'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
-                        'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
-                        'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}}
+                    'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
+                    'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
+                    'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}}
                     for lins in range(1, 13):
                         amount_value = ifrs_line._get_amount_with_operands(
-                            cr, uid,
-                            ids, ifrs_l, period_name, fiscalyear, exchange_date,
-                            currency_wizard, lins, target_move,
-                            context=context)
+                                cr, uid,
+                                ids, ifrs_l, period_name, fiscalyear, exchange_date,
+                                currency_wizard, lins, target_move,
+                                context=context)
                         line['period'][lins] = amount_value
 
-                if ifrs_l.ifrs_id.id == ids[0]:  # Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
-                    data.append(line)
-                data.sort(key=lambda x: int(x['sequence']))
-        # print data
+                    if ifrs_l.ifrs_id.id == ids[0]:  # Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
+                        data.append(line)
+                    data.sort(key=lambda x: int(x['sequence']))
         return data
 
 
@@ -584,22 +610,9 @@ class ifrs_lines(osv.osv):
         @param target_move: target move to consider
         @param is_compute: si el metodo actualizara el campo amount para la vista
         """
+
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
         to_currency_id = currency_wizard
-
-        if number_month:
-            if two:
-                context = {
-                    'period_from': number_month, 'period_to': number_month}
-            else:
-                period_id = period_info[number_month][1]
-                context = {'period_from': period_id, 'period_to': period_id}
-        else:
-            context = {'whole_fy': 'True'}
-
-        context['partner_detail'] = pd
-        context['fiscalyear'] = fiscalyear
-        context['state'] = target_move
 
         res = self._get_sum(
             cr, uid, ifrs_line.id, number_month, is_compute, context=context)
