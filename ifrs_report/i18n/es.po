@@ -236,7 +236,7 @@ msgstr ""
 #. module: ifrs_report
 #: field:ifrs.lines,comparison:0
 msgid "Make Comparison"
-msgstr "Realizar Comparasión"
+msgstr "Realizar Comparación"
 
 #. module: ifrs_report
 #: view:ifrs.ifrs:0
