@@ -164,9 +164,9 @@ class ir_attachment_facturae_mx(osv.Model):
             if not attach:
                 msj = _("Not Applicable XML CFD 2.2\n")
         if attach:
-            msj = _("Attached Successfully XML CFD 3.2\n")
+            msj = _("Attached Successfully XML CFD 2.2\n")
         else:
-            msj = _("Not Applicable XML CFD 3.2\n")
+            msj = _("Not Applicable XML CFD 2.2\n")
         return self.write(cr, uid, ids,
                           {'state': 'confirmed',
                            'file_input': attach or False,
@@ -276,7 +276,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         encryption=smtp_server.smtp_encryption,
                         smtp_debug=smtp_server.smtp_debug)
                     except Exception, e:
-                        raise osv.except_osv(_("Connection test failed!"), _("Configure su servidor de correo saliente:\n %s") % tools.ustr(e))
+                        raise osv.except_osv(_("Connection test failed!"), _("Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
                 mail_compose_message_pool = self.pool.get('mail.compose.message')
                 tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
                 message = mail_compose_message_pool.onchange_template_id(
@@ -301,23 +301,22 @@ class ir_attachment_facturae_mx(osv.Model):
                             if id_mail:
                                 for mail in obj_mail_mail.browse(cr, uid, id_mail, context):
                                     if mail.state == 'exception':
-                                        msj = _('\nNo esta correcto el email del usuario.\nVerifique en Menu Configuración/Tecnico/Email/Emails\n') 
+                                        msj = _('\nNot correct email of the user or customer.\nCheck in Menu Configuración\Tecnico\Email\Emails\n') 
                             else:
                                 msj = _('Email Send Successfully.\
                                 Attached is sent to %s \
                                 for Outgoing Mail Server "FacturaeE"\
                                                 ') % (partner_mail)
                     else:
-                        raise osv.except_osv(_('Warning'), _('Este usuario\
-                                no tiene correo asignado'))
+                        raise osv.except_osv(_('Warning'), _('This user\
+                                does not have mail'))
                 else:
-                    raise osv.except_osv(_('Warning'), _('El cliente %s\
-                    no tiene correo asignado') % (partner_name))
+                    raise osv.except_osv(_('Warning'), _('The customer %s\
+                    does not have mail') % (partner_name))
             else:
-                raise osv.except_osv(_('Warning'), _('No se encontró\
-                servidor de correo saliente con el nombre de "FacturaE".\
-                \n Configure un servidor de correo saliente con nombre\
-                 "FacturaE"'))
+                raise osv.except_osv(_('Warning'), _('Not Found\
+                outgoing mail server name of "FacturaE".\
+                \nConfigure outgoing mail server named "FacturaE"'))
         elif release.version < '7':
             mail = self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject+' '+type,
@@ -337,7 +336,7 @@ class ir_attachment_facturae_mx(osv.Model):
 
     def action_send_backup(self, cr, uid, ids, context=None):
         msj = ''
-        #msj = _('Send Backup\n')
+        msj = _('Send Backup\n')
         return self.write(cr, uid, ids, {'state': 'sent_backup', 'msj': msj})
 
     def action_done(self, cr, uid, ids, context=None):
