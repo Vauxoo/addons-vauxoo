@@ -657,7 +657,7 @@ class ifrs_lines(osv.osv):
             ('percent', 'Percentage'),
             ('ratio', 'Ratio'),
             ('product', 'Product'),
-            ('without', '')
+            ('without', 'First Operand Only')
         ],
             'Operator', required=False,
             help='Leaving blank will not take into account Operands'),
