@@ -229,33 +229,19 @@ class hr_expense_expense(osv.Model):
             print 'aml'
             pprint.pprint(aml)
 
-            if aml['debit'] > aml['credit']: # reconciliation
+            aml_amount = aml['debit'] - aml['credit']
+            adjust_balance_to = aml_amount > 0.0 and 'debit' or 'credit'
 
-                self.create_reconciled_move(
-                    cr, uid, exp.id, aml, adjust_balance_to='debit',
-                    context=context)
-
-            elif aml['debit'] < aml['credit'] and aml['credit'] > 0.0:
-
-                #~ make reconciliation
-                print 'case 2: debit < credit'
-                av_aml = self.create_reconciled_move(
-                    cr, uid, exp.id, aml, adjust_balance_to='credit',
-                    context=context)
-                print 'av_aml', av_aml
-                #~ TODO: make the automatic the voucher linked to the av_aml?
-            else:
-                print '\n'*3,
-                print 'this case is not implemented'
-                print '\n'*3,
-
-            #~ elif aml['debit'] == aml['credit']:
-                #~ print 'debit == credit'
+            av_aml = self.create_reconciled_move(
+                cr, uid, exp.id, aml, adjust_balance_to=adjust_balance_to,
+                reconcile_amount=abs(aml_amount), context=context)
+            print 'av_aml', av_aml
+            #~ TODO: make the automatic the voucher linked to the av_aml?
 
         return True
 
     def create_reconciled_move(self, cr, uid, ids, aml, adjust_balance_to,
-                               context=None):
+                               reconcile_amount=None, context=None):
         """
         Create the account move and its move lines to balance the reconcliation
         note: only recieve one ids
@@ -303,17 +289,25 @@ class hr_expense_expense(osv.Model):
         global_reconcile_aml.extend(exp_reconcile_aml)
 
         #~ create advances move lines.
-        advance_new_aml, adv_reconcile_aml = \
-            self.create_reconcile_move_lines(
-                cr, uid, exp.id, am_id,
-                aml_ids=[aml['advances'][0]],
-                advance_amount=abs(aml['debit']-aml['credit']),
-                line_type='advance',
-                adjust_balance_to=adjust_balance_to,
-                context=context)
+        if reconcile_amount:
+            advance_new_aml, adv_reconcile_aml = \
+                self.create_reconcile_move_lines(
+                    cr, uid, exp.id, am_id,
+                    aml_ids=[aml['advances'][0]],
+                    advance_amount=reconcile_amount,
+                    line_type='advance',
+                    adjust_balance_to=adjust_balance_to,
+                    context=context)
+            advance_new_aml += aml['advances'][1:]
+        else:
+            advance_new_aml = aml['advances']
+            adv_reconcile_aml = False
 
         reconciliaton_list = global_new_aml + \
-            [tuple( global_reconcile_aml + advance_new_aml + aml['advances'][1:])]
+            [tuple(global_reconcile_aml + advance_new_aml)]
+
+        print 'advance_new_aml'
+        print 'reconciliaton_list', reconciliaton_list
 
         # make reconcilation.
         for line_pair in reconciliaton_list:
@@ -321,7 +315,7 @@ class hr_expense_expense(osv.Model):
                 cr, uid, list(line_pair), 'manual', account_id,
                 period_id, journal_id, context=context)
 
-        return adv_reconcile_aml
+        return adv_reconcile_aml or False
 
     def create_reconcile_move_lines(self, cr, uid, ids, am_id, aml_ids,
                                     advance_amount=False, line_type=None,
