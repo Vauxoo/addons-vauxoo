@@ -28,8 +28,6 @@ from openerp import netsvc
 import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
 
-import pprint
-
 
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
@@ -198,13 +196,7 @@ class hr_expense_expense(osv.Model):
         lines.
         """
         context = context or {}
-        av_obj = self.pool.get('account.voucher')
-
-        print '\n'*5
-        print 'reconcile_payment()'
-
         for exp in self.browse(cr, uid, ids, context=context):
-
             exp_aml_brws = [aml_brw
                             for aml_brw in exp.account_move_id.line_id
                             if aml_brw.account_id.type == 'payable']
@@ -215,7 +207,6 @@ class hr_expense_expense(osv.Model):
                             for inv in exp.invoice_ids
                             for aml_brw in inv.move_id.line_id
                             if aml_brw.account_id.type == 'payable']
-
             aml = {
                 'exp': [aml_brw.id for aml_brw in exp_aml_brws],
                 'advances': [aml_brw.id for aml_brw in advance_aml_brws],
@@ -231,16 +222,12 @@ class hr_expense_expense(osv.Model):
                          for aml_brw in exp_aml_brws + inv_aml_brws])
             }
 
-            print 'aml'
-            pprint.pprint(aml)
-
             aml_amount = aml['debit'] - aml['credit']
             adjust_balance_to = aml_amount > 0.0 and 'debit' or 'credit'
 
             av_aml = self.create_reconciled_move(
                 cr, uid, exp.id, aml, adjust_balance_to=adjust_balance_to,
                 reconcile_amount=abs(aml_amount), context=context)
-            print 'av_aml', av_aml
             #~ TODO: make the automatic the voucher linked to the av_aml?
 
         return True
@@ -311,9 +298,6 @@ class hr_expense_expense(osv.Model):
         reconciliaton_list = global_new_aml + \
             [tuple(global_reconcile_aml + advance_new_aml)]
 
-        print 'advance_new_aml'
-        print 'reconciliaton_list', reconciliaton_list
-
         # make reconcilation.
         for line_pair in reconciliaton_list:
             aml_obj.reconcile(
@@ -376,11 +360,6 @@ class hr_expense_expense(osv.Model):
                     advance_name['debit_line'] or ''),
                 })
             debit_id = aml_obj.create(cr, uid, debit_vals, context=context)
-
-            print '\n'*2
-            print 'debit_id', debit_id
-            pprint.pprint(debit_vals)
-
             #~ CREDIT LINE
             credit_vals = vals.copy()
             credit_vals.update({
@@ -394,11 +373,6 @@ class hr_expense_expense(osv.Model):
                     advance_name['credit_line'] or ''),
                 })
             credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
-
-            print '\n'*2
-            print 'credit_id', credit_id
-            pprint.pprint(credit_vals)
-
             if line_type == 'advance':
                 if adjust_balance_to == 'debit':
                     reconciliation_tuple = (aml_brw.id, credit_id)
@@ -409,10 +383,6 @@ class hr_expense_expense(osv.Model):
 
             reconciliaton_list.append(reconciliation_tuple)
             advance_reconciliaton_list.append(credit_id)
-
-        print 'into fc'
-        print 'reconciliaton_list', reconciliaton_list
-        print 'advance_reconciliaton_list', advance_reconciliaton_list
 
         if line_type == 'advance':
             advance_mirror = []
