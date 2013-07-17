@@ -444,11 +444,18 @@ class account_invoice(osv.Model):
             else:
                 raise osv.except_osv(_('Warning !'), _(
                     'Check date of invoice and the validity of certificate, & that the register of the certificate is active.\n%s!') % (msg2))
-
+        
         invoice_datetime = self.browse(cr, uid, ids)[0].invoice_datetime
+        ir_seq_app_obj = self.pool.get('ir.sequence.approval')
+        invoice = self.browse(cr, uid, ids[0], context=context)
+        sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
+            'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
+        if sequence_app_id:
+            type_inv = ir_seq_app_obj.browse(
+                cr, uid, sequence_app_id[0], context=context).type
         if invoice_datetime < '2012-07-01 00:00:00':
             return file_globals
-        else:
+        elif type_inv == 'cfd22':
             # Search char "," for addons_path, now is multi-path
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:
@@ -458,15 +465,7 @@ class account_invoice(osv.Model):
                         my_path, 'l10n_mx_facturae', 'SAT',
                         'cadenaoriginal_2_2_l.xslt') or ''
                     break
-        
-        ir_seq_app_obj = self.pool.get('ir.sequence.approval')
-        invoice = self.browse(cr, uid, ids[0], context=context)
-        sequence_app_id = ir_seq_app_obj.search(cr, uid, [(
-            'sequence_id', '=', invoice.invoice_sequence_id.id)], context=context)
-        if sequence_app_id:
-            type_inv = ir_seq_app_obj.browse(
-                cr, uid, sequence_app_id[0], context=context).type
-        if type_inv == 'cfdi32':
+        elif type_inv == 'cfdi32':
             # Search char "," for addons_path, now is multi-path
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:
