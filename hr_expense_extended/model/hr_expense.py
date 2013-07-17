@@ -88,7 +88,12 @@ class hr_expense_expense(osv.Model):
             'expense_id', 'aml_id', string='Employee Advances',
             help="Advances associated to the expense employee."),
         'skip': fields.boolean(
-            'Check this option if the expense has not advances')
+            string='This expense has not advances',
+            help=_('Active this checkbox to allow leave the expense without '
+                   'advances (This will create write off a journal entry when '
+                   'reconciling). If this is not what you want please create '
+                   'and advance for the expense employee and use the Refresh '
+                   'button to associated to this expense'))
     }
 
     def expense_accept(self, cr, uid, ids, context=None):
@@ -197,6 +202,8 @@ class hr_expense_expense(osv.Model):
         """
         context = context or {}
         for exp in self.browse(cr, uid, ids, context=context):
+            self.check_advance_no_empty_condition(cr, uid, exp.id,
+                                                  context=context)
             exp_aml_brws = [aml_brw
                             for aml_brw in exp.account_move_id.line_id
                             if aml_brw.account_id.type == 'payable']
@@ -230,6 +237,39 @@ class hr_expense_expense(osv.Model):
                 reconcile_amount=abs(aml_amount), context=context)
             #~ TODO: make the automatic the voucher linked to the av_aml?
 
+        return True
+
+    def check_advance_no_empty_condition(self, cr, uid, ids, context=None):
+        """
+        Check if the Expense have not advances and force him to active the
+        checkbox for allow leave the advances empty and leave the user now
+        the repercussions of this configuration.
+        """
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        for exp in self.browse(cr, uid, ids, context=context):
+            if exp.advance_ids and not exp.skip:
+                pass
+            elif exp.advance_ids and exp.skip:
+                raise osv.except_osv(
+                    _('Invalid Procedure!'),
+                    _('Integrity Problem. You have advances for this expense '
+                      'but in same time you active the No advances option. '
+                      'Please uncheck the No advances option or clean the '
+                      'advances table instead.'))
+            elif not exp.advance_ids and not exp.skip:
+                raise osv.except_osv(
+                    _('Invalid Procedure!'),
+                    _('You have leave the expense advances empty (Renconcile '
+                      'the Expense will cause a Write Off journal entry). If '
+                      'this is your purpose its required to check the This '
+                      'expense has not advances checkbox into the expense '
+                      'advances page. If not, please create some advances for '
+                      'the employee and Refresh the expense advance lines '
+                      'with the expense advance page refresh button.'))
+            elif not exp.advance_ids and exp.skip:
+                #~ reconciling the expense withhout advances
+                pass
         return True
 
     def create_reconciled_move(self, cr, uid, ids, aml, adjust_balance_to,
