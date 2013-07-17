@@ -19,29 +19,4 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-################################################################################
-
-{
-    "name" : "Creacion de Attachment en la Factura Electronica para Mexico (CFD,CFDI,CBB)",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
-    "description" : """This module creates attachment for Invoice(CFD,CFDI,CBB)
-    """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : ["account", "mail", "email_template",
-        ],
-    "demo" : ["demo/l10n_mx_facturae_email_demo.xml",
-    ],
-    "data" : [
-        "security/ir.model.access.csv",
-        "ir_attachment_facturae_view.xml",
-        "l10n_mx_facturae_workflow.xml",
-        "invoice_view.xml",
-        "l10n_mx_facturae_mail_server_data.xml",
-        "res_config.xml",
-    ],
-    "installable" : True,
-    "active" : False,
-}
+###############################################################################

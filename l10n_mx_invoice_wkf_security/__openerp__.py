@@ -33,11 +33,10 @@
                         1) invoice_cancel
                         2) invoice_reset_draft
                        Asignados a los botones cancel y set_to_draft respectivamente. """,
-    "depends" : ["base", "account"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ['security/invoice_wkf_security_data.xml', 'invoice_wkf_security_view.xml'],
+    "depends" : ["base", "account", "l10n_mx_facturae_groups",],
+    "demo" : [],
+    "data" : ['security/invoice_wkf_security_data.xml', 
+        'invoice_wkf_security_view.xml'],
     "active": False,
-    "test":[],
     "installable": True,
 }

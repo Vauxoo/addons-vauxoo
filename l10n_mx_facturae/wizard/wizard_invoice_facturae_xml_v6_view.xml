@@ -25,7 +25,9 @@
             target="new"
             key2="client_action_multi"
             id="action_wizard_facturae_xml_v6_form"
-            groups="l10n_mx_facturae.group_facturae_mx_cfd_user"/>
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+        
+        />
 
 
     </data>

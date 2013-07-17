@@ -38,9 +38,8 @@
     "depends" : [
             "base",
         ],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "demo" : [],
+    "data" : [
         'res_city_view.xml',
         'partner_address_view.xml',
         'security/city_security.xml',

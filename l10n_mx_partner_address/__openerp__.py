@@ -39,13 +39,10 @@
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : [
-            "base",
-            "l10n_mx_states",
+    "depends" : ["base", "l10n_mx_states", "l10n_mx_facturae_groups",
         ],
-    "init_xml" : [],
-    "demo_xml" : ["demo/l10n_mx_partner_address_demo.xml",],
-    "update_xml" : [
+    "demo" : ["demo/l10n_mx_partner_address_demo.xml",],
+    "data" : [
         'country_data.xml',
         'res_company_view_inherit.xml',
     ],

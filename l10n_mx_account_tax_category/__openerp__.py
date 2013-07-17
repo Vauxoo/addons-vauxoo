@@ -30,15 +30,14 @@
     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules",
-    "init_xml" : [],
-    "demo_xml" : [],
+    "demo" : [],
     "test": [],
-    "update_xml" : [
-    'security/account_tax_category_security.xml',
-    'security/ir.model.access.csv',
-    'invoice_view.xml',
-    'account_tax_category_view.xml',
-    'data/account_tax_category_data.xml'
+    "data" : [
+        'security/account_tax_category_security.xml',
+        'security/ir.model.access.csv',
+        'invoice_view.xml',
+        'account_tax_category_view.xml',
+        'data/account_tax_category_data.xml'
 
     ],
     "active": False,

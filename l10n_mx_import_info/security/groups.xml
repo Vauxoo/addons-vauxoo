@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <record model="res.groups" id="import_group_user">
+        <record model="res.groups" id="import_group_manager">
             <field name="name">Warehouse / Import Manager</field>
         </record>
         <record model="res.groups" id="import_group_user">
