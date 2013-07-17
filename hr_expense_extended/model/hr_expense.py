@@ -154,6 +154,11 @@ class hr_expense_expense(osv.Model):
                  ('debit', '>', 0.0),
                 ],context=context)
             vals = {}
+            cr.execute(('SELECT aml_id FROM expense_advance_rel '
+                        'WHERE expense_id != %s'), (exp.id,))
+            already_use_aml = cr.fetchall()
+            already_use_aml = map(lambda x: x[0], already_use_aml)
+            aml_ids = list(set(aml_ids) - set(already_use_aml))
             vals['advance_ids'] = \
                 [(6, 0, aml_ids)]
             self.write(cr, uid, exp.id, vals, context=context)
