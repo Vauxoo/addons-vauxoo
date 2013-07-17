@@ -216,12 +216,74 @@ class ifrs_ifrs(osv.osv):
                ids2.append(aa_brw.id)
                ids2 += self._get_children_and_consol(cr, uid, [x.id for x in aa_brw.child_id], level, context=context)
        return list(set(ids2)) 
-
-    def _get_context(cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-
-        return context, context, context
+       
+#    def _calculate_acc(self, cr, uid, ids, context=None):
+#        #########################################
+#        ############## Calculate ################
+#        #########################################
+#        if context is None:
+#            context = {}
+#
+#        account_obj = self.pool.get("account.account")
+#        ifrs_lines_ids = ifrs_line.search(cr, uid, [('ifrs_id','=',ids[0])] ) 
+#        ifrs_lines_brw = ifrs_line.browse(cr, uid, ifrs_lines_ids)
+#        
+#        all_account_brw = []
+#
+#        for ifrsl_brw in ifrs_lines_brw:
+#            if ifrsl_brw.type == 'detail':
+#                all_account_brw += ifrsl_brw.cons_ids
+#        
+#        tree_accounts = self._get_children_and_consol(cr, uid, [x.id for x in all_account_brw], 100)
+#        
+#
+#        account_cons_consolidate = []
+#        account_cons_leaf = []
+#
+#        for acc_id in tree_accounts:
+#            acc_brw = account_obj.browse(cr, uid, acc_id, context=context)
+#            if acc_brw.type in ('view', 'consolidation'):
+#                account_cons_consolidate.append(acc_brw)
+#            else:
+#                account_cons_leaf.append(acc_brw)
+#
+#        account_cons_consolidate.sort(key=lambda x: x.level)
+#        account_cons_consolidate.reverse()
+#        account_cons_consolidate_ids = [i.id for i in account_cons_consolidate]
+#         
+#        dict_leaf = {}
+#        for i in account_cons_leaf:
+#            d = i.debit
+#            c = i.credit
+#            dict_leaf[i.id] = {
+#                'obj': i,
+#                'debit': d,
+#                'credit': c,
+#                'balance': d-c,
+#            }
+#        
+#        dict_consolidate = {}
+#        for i in account_cons_consolidate:
+#            dict_consolidate[i.id] = {
+#                'obj':  i,
+#                'debit': 0.0,
+#                'credit': 0.0,
+#                'balance': 0.0,
+#            }
+#        
+#        for j in account_cons_consolidate_ids:
+#            acc_childs = dict_consolidate.get(j).get('obj').child_id
+#            for child in acc_childs:
+#                dict_consolidate.get(j)['debit'] += dict_leaf.get(child.id).get('debit')
+#                dict_consolidate.get(j)['credit'] += dict_leaf.get(child.id).get('credit')
+#                dict_consolidate.get(j)['balance'] += dict_leaf.get(child.id).get('balance')
+#            dict_leaf[j] = dict_consolidate[j]
+#
+#        print dict_leaf
+#        #########################################
+#        ############## End Calculate ############
+#        #########################################
+#        return dict_leaf
 
     def get_report_data(
         self, cr, uid, ids, fiscalyear=None, exchange_date=None,
@@ -249,83 +311,6 @@ class ifrs_ifrs(osv.osv):
                 cr, uid, ids, fiscalyear, context=context)
 
 
-        #########################################
-        ############## Calculate ################
-        #########################################
-        account_obj = self.pool.get("account.account")
-        ifrs_lines_ids = ifrs_line.search(cr, uid, [('ifrs_id','=',ids[0])] ) 
-        ifrs_lines_brw = ifrs_line.browse(cr, uid, ifrs_lines_ids)
-        
-        all_account_brw = []
-
-        for ifrsl_brw in ifrs_lines_brw:
-            if ifrsl_brw.type == 'detail':
-                all_account_brw += ifrsl_brw.cons_ids
-        
-        tree_accounts = self._get_children_and_consol(cr, uid, [x.id for x in all_account_brw], 100)
-        
-
-        account_cons_consolidate = []
-        account_cons_leaf = []
-
-        for acc_id in tree_accounts:
-            acc_brw = account_obj.browse(cr, uid, acc_id)
-            if acc_brw.type in ('view', 'consolidation'):
-                account_cons_consolidate.append(acc_brw)
-            else:
-                account_cons_leaf.append(acc_brw)
-
-        account_cons_consolidate.sort(key=lambda x: x.level)
-        account_cons_consolidate.reverse()
-        account_cons_consolidate_ids = [i.id for i in account_cons_consolidate]
-         
-        dict_leaf = {}
-        for i in account_cons_leaf:
-            d = i.debit
-            c = i.credit
-            dict_leaf[i.id] = {
-                'obj': i,
-                'debit': d,
-                'credit': c,
-                'balance': d-c,
-            }
-        
-        dict_consolidate = {}
-        for i in account_cons_consolidate:
-            dict_consolidate[i.id] = {
-                'obj':  i,
-                'debit': 0.0,
-                'credit': 0.0,
-                'balance': 0.0,
-            }
-        
-        for j in account_cons_consolidate_ids:
-            acc_childs = dict_consolidate.get(j).get('obj').child_id
-            for child in acc_childs:
-                dict_consolidate.get(j)['debit'] += dict_leaf.get(child.id).get('debit')
-                dict_consolidate.get(j)['credit'] += dict_leaf.get(child.id).get('credit')
-                dict_consolidate.get(j)['balance'] += dict_leaf.get(child.id).get('balance')
-            dict_leaf[j] = dict_consolidate[j]
-
-        print dict_leaf
-        #########################################
-        ############## End Calculate ############
-        #########################################
-        if period:
-            if two:
-                context = {
-                    'period_from': period, 'period_to': period}
-            else:
-                period_id = period_name[period][1]
-                context = {'period_from': period_id, 'period_to': period_id}
-        else:
-            context = {'whole_fy': 'True'}
-
-        context['partner_detail'] = None
-        context['fiscalyear'] = fiscalyear
-        context['state'] = target_move
-
-        context, ctx_c, ctx_c2 = self._get_context(cr, uid, ids, context=context)
 
         ordered_lines = self._get_ordered_lines(cr, uid, ids, context=context)
 
@@ -392,6 +377,66 @@ class ifrs_lines(osv.osv):
     _parent_store = True
 #    _parent_name = "parent_id"
     _order = 'sequence, type'
+    
+    def _calculate_acc(self, cr, uid, ids, all_account_brw, context=None):
+        #########################################
+        ############## Calculate ################
+        #########################################
+        if context is None:
+            context = {}
+
+        account_obj = self.pool.get("account.account")
+        
+        tree_accounts = self.pool.get('ifrs.ifrs')._get_children_and_consol(cr, uid, [x.id for x in all_account_brw], 100)
+        
+
+        account_cons_consolidate = []
+        account_cons_leaf = []
+
+        for acc_id in tree_accounts:
+            acc_brw = account_obj.browse(cr, uid, acc_id, context=context)
+            if acc_brw.type in ('view', 'consolidation'):
+                account_cons_consolidate.append(acc_brw)
+            else:
+                account_cons_leaf.append(acc_brw)
+
+        account_cons_consolidate.sort(key=lambda x: x.level)
+        account_cons_consolidate.reverse()
+        account_cons_consolidate_ids = [i.id for i in account_cons_consolidate]
+         
+        dict_leaf = {}
+        for i in account_cons_leaf:
+            d = i.debit
+            c = i.credit
+            dict_leaf[i.id] = {
+                'obj': i,
+                'debit': d,
+                'credit': c,
+                'balance': d-c,
+            }
+        
+        dict_consolidate = {}
+        for i in account_cons_consolidate:
+            dict_consolidate[i.id] = {
+                'obj':  i,
+                'debit': 0.0,
+                'credit': 0.0,
+                'balance': 0.0,
+            }
+        
+        for j in account_cons_consolidate_ids:
+            acc_childs = dict_consolidate.get(j).get('obj').child_id
+            for child in acc_childs:
+                dict_consolidate.get(j)['debit'] += dict_leaf.get(child.id).get('debit')
+                dict_consolidate.get(j)['credit'] += dict_leaf.get(child.id).get('credit')
+                dict_consolidate.get(j)['balance'] += dict_leaf.get(child.id).get('balance')
+            dict_leaf[j] = dict_consolidate[j]
+
+        #########################################
+        ############## End Calculate ############
+        #########################################
+        return dict_leaf
+
 
     def _get_sum_total(self, cr, uid, brw, number_month=None, is_compute=None, context=None):
         """ Calculates the sum of the line total_ids the current ifrs.line
@@ -505,13 +550,19 @@ class ifrs_lines(osv.osv):
             if analytic:  # Si habian cuentas analiticas en la linea, se guardan en el context y se usan en algun metodo dentro del modulo de account
                 c['analytic'] = analytic
             c['partner_detail'] = c.get('partner_detail')
+            
+            dict_cons = self._calculate_acc(cr, uid, id, brw.cons_ids, context=c)
+            
             for a in brw.cons_ids:  # Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
                 if brw.value == 'debit':
-                    res += a.debit
+                    res += dict_cons.get(a.id).get('debit')
+                    #res += a.debit
                 elif brw.value == 'credit':
-                    res += a.credit
+                    res += dict_cons.get(a.id).get('credit')
+                    #res += a.credit
                 else:
-                    res += a.balance
+                    res += dict_cons.get(a.id).get('balance')
+                    #res += a.balance
 
         elif brw.type == 'total':
             res = self._get_sum_total(
@@ -613,6 +664,20 @@ class ifrs_lines(osv.osv):
 
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
         to_currency_id = currency_wizard
+        
+        if number_month:
+            if two:
+                context = {
+                    'period_from': number_month, 'period_to': number_month}
+            else:
+                period_id = period_info[number_month][1]
+                context = {'period_from': period_id, 'period_to': period_id}
+        else:
+            context = {'whole_fy': 'True'}
+
+        context['partner_detail'] = pd
+        context['fiscalyear'] = fiscalyear
+        context['state'] = target_move
 
         res = self._get_sum(
             cr, uid, ifrs_line.id, number_month, is_compute, context=context)
