@@ -193,14 +193,7 @@ class hr_expense_expense(osv.Model):
         lines.
         """
         context = context or {}
-        aml_obj = self.pool.get('account.move.line')
-        am_obj = self.pool.get('account.move')
-        period_id = \
-            self.pool.get('account.period').find(cr, uid, context=context)[0]
-        account_id = self.get_payable_account_id(cr, uid, context=context)
-        journal_id = self.get_purchase_journal_id(cr, uid, context=context)
-        # TODO: account_id and journal_id need to be particular value? at
-        #~ @journal_id  to be select the allow reconcillaton option?
+        av_obj = self.pool.get('account.voucher')
 
         print '\n'*5
         print 'reconcile_payment()'
@@ -236,73 +229,103 @@ class hr_expense_expense(osv.Model):
             print 'aml'
             pprint.pprint(aml)
 
-            debit = aml['debit']
-            credit = aml['credit']
+            if aml['debit'] > aml['credit']: # reconciliation
 
-            if debit > credit: # reconciliation
-
-                #~ create move
-                am_id = am_obj.create(
-                    cr, uid, {'journal_id': journal_id,
-                    'ref': _('New Global Entry for') + ' ' + exp.name },
+                self.create_reconciled_move(
+                    cr, uid, exp.id, aml, adjust_balance_to='debit',
                     context=context)
 
-                #~ create invoice move lines.
-                global_new_aml = []
-                global_reconcile_aml = []
-                inv_new_aml, inv_reconcile_aml = \
-                    self.create_reconcile_move_lines(
-                        cr, uid, exp.id, am_id,
-                        aml_ids=aml['invs'],
-                        line_type='invoice',
-                        context=context)
-                global_new_aml.extend(inv_new_aml)
-                global_reconcile_aml.extend(inv_reconcile_aml)
+            elif aml['debit'] < aml['credit'] and aml['credit'] > 0.0:
 
-                #~ create expense move line.
-                exp_new_aml, exp_reconcile_aml = \
-                    self.create_reconcile_move_lines(
-                        cr, uid, exp.id, am_id,
-                        aml_ids=aml['exp'],
-                        line_type='expense',
-                        context=context)
-                global_new_aml.extend(exp_new_aml)
-                global_reconcile_aml.extend(exp_reconcile_aml)
-
-                #~ create advances move lines.
-                advance_new_aml = \
-                    self.create_reconcile_move_lines(
-                        cr, uid, exp.id, am_id,
-                        aml_ids=[aml['advances'][0]],
-                        advance_amount=debit-credit,
-                        line_type='advance',
-                        context=context)
-
-                reconciliaton_list = global_new_aml + \
-                    [tuple( global_reconcile_aml + advance_new_aml + aml['advances'][1:])]
-
-                #~ make reconcilation.
-                for line_pair in reconciliaton_list:
-                    aml_obj.reconcile(
-                        cr, uid, list(line_pair), 'manual', account_id,
-                        period_id, journal_id, context=context)
+                #~ make reconciliation
+                print 'case 2: debit < credit'
+                av_aml = self.create_reconciled_move(
+                    cr, uid, exp.id, aml, adjust_balance_to='credit',
+                    context=context)
+                print 'av_aml', av_aml
+                #~ TODO: make the automatic the voucher linked to the av_aml?
             else:
                 print '\n'*3,
                 print 'this case is not implemented'
                 print '\n'*3,
 
-            #~ elif debit < credit:
-                #~ print 'debit < credit'
-            #~ elif debit == credit:
+            #~ elif aml['debit'] == aml['credit']:
                 #~ print 'debit == credit'
-            #~ aml['debit'].sort(reverse=True)
-            #~ aml['credit'].sort(reverse=True)
 
         return True
 
+    def create_reconciled_move(self, cr, uid, ids, aml, adjust_balance_to,
+                               context=None):
+        """
+        Create the account move and its move lines to balance the reconcliation
+        note: only recieve one ids
+        @param ids: only one expense id
+        @param aml: dictionary with expense data (inv, exp
+        and advances move lines), and debit an credit totals.
+        """
+        context = context or {}
+        am_obj = self.pool.get('account.move')
+        aml_obj = self.pool.get('account.move.line')
+        period_id = \
+            self.pool.get('account.period').find(cr, uid, context=context)[0]
+        account_id = self.get_payable_account_id(cr, uid, context=context)
+        journal_id = self.get_purchase_journal_id(cr, uid, context=context)
+        # TODO: account_id and journal_id need to be particular value? at
+        #~ @journal_id  to be select the allow reconcillaton option?
+        exp = self.browse(cr, uid, ids, context=context)
+
+        #~ create move
+        am_id = am_obj.create(
+            cr, uid, {'journal_id': journal_id,
+            'ref': _('New Global Entry for') + ' ' + exp.name },
+            context=context)
+
+        #~ create invoice move lines.
+        global_new_aml = []
+        global_reconcile_aml = []
+        inv_new_aml, inv_reconcile_aml = \
+            self.create_reconcile_move_lines(
+                cr, uid, exp.id, am_id,
+                aml_ids=aml['invs'],
+                line_type='invoice',
+                context=context)
+        global_new_aml.extend(inv_new_aml)
+        global_reconcile_aml.extend(inv_reconcile_aml)
+
+        #~ create expense move line.
+        exp_new_aml, exp_reconcile_aml = \
+            self.create_reconcile_move_lines(
+                cr, uid, exp.id, am_id,
+                aml_ids=aml['exp'],
+                line_type='expense',
+                context=context)
+        global_new_aml.extend(exp_new_aml)
+        global_reconcile_aml.extend(exp_reconcile_aml)
+
+        #~ create advances move lines.
+        advance_new_aml, adv_reconcile_aml = \
+            self.create_reconcile_move_lines(
+                cr, uid, exp.id, am_id,
+                aml_ids=[aml['advances'][0]],
+                advance_amount=abs(aml['debit']-aml['credit']),
+                line_type='advance',
+                adjust_balance_to=adjust_balance_to,
+                context=context)
+
+        reconciliaton_list = global_new_aml + \
+            [tuple( global_reconcile_aml + advance_new_aml + aml['advances'][1:])]
+
+        # make reconcilation.
+        for line_pair in reconciliaton_list:
+            aml_obj.reconcile(
+                cr, uid, list(line_pair), 'manual', account_id,
+                period_id, journal_id, context=context)
+
+        return adv_reconcile_aml
+
     def create_reconcile_move_lines(self, cr, uid, ids, am_id, aml_ids,
                                     advance_amount=False, line_type=None,
-                                    context=None):
+                                    adjust_balance_to=None, context=None):
         """
         Create new move lines to match invoices, no deductible expense, and
         advances lines for the expense. Returns a list of tuples of form
@@ -327,6 +350,15 @@ class hr_expense_expense(osv.Model):
             cr, uid, context=context)[0]
         vals['date'] = time.strftime('%Y-%m-%d')
 
+        advance_name = {
+            'debit_line':
+                adjust_balance_to == 'debit' and _('(Remaining Advance)')
+                or _('(Reconciliation)'),
+            'credit_line':
+                adjust_balance_to == 'debit' and _('(Applyed Advance)')
+                or _('(Debt to employee)'),
+        }
+
         for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
             #~ DEBIT LINE
             debit_vals = vals.copy()
@@ -342,7 +374,7 @@ class hr_expense_expense(osv.Model):
                     line_type == 'invoice' and _('Payable to Partner') + ' ' +
                     aml_brw.partner_id.name or _('Payable to Employee') + ' ' +
                     exp.employee_id.name + (line_type == 'advance' and ' ' +
-                    _('(Remaining Advance)') or ''),
+                    advance_name['debit_line'] or ''),
                 })
             debit_id = aml_obj.create(cr, uid, debit_vals, context=context)
 
@@ -359,8 +391,8 @@ class hr_expense_expense(osv.Model):
                     line_type == 'advance' and advance_amount
                     or aml_brw.credit,
                 'name': _('Payable to Employee') + ' ' + exp.employee_id.name + 
-                    (line_type == 'advance' and ' ' + _('(Applyed Advance)')
-                    or ''),
+                    (line_type == 'advance' and ' ' +
+                    advance_name['credit_line'] or ''),
                 })
             credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
 
@@ -368,22 +400,26 @@ class hr_expense_expense(osv.Model):
             print 'credit_id', credit_id
             pprint.pprint(credit_vals)
 
-            reconciliaton_list.append(
-                line_type == 'advance'
-                and (aml_brw.id, credit_id)
-                or (aml_brw.id, debit_id)
-                )
+            if line_type == 'advance':
+                if adjust_balance_to == 'debit':
+                    reconciliation_tuple = (aml_brw.id, credit_id)
+                elif adjust_balance_to == 'credit':
+                    reconciliation_tuple = (aml_brw.id, debit_id)
+            else:
+                reconciliation_tuple = (aml_brw.id, debit_id)
+
+            reconciliaton_list.append(reconciliation_tuple)
             advance_reconciliaton_list.append(credit_id)
 
         print 'into fc'
         print 'reconciliaton_list', reconciliaton_list
         print 'advance_reconciliaton_list', advance_reconciliaton_list
 
-        if advance_amount:
+        if line_type == 'advance':
             advance_mirror = []
             for item in reconciliaton_list:
                 advance_mirror.extend(list(item))
-            return advance_mirror
+            return advance_mirror, advance_reconciliaton_list
         else:
             return reconciliaton_list, advance_reconciliaton_list
 
