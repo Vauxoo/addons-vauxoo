@@ -36,7 +36,7 @@
 
                 <xpath expr="//sheet/group" position="before">
                     <div class="oe_right oe_button_box" name="button_box">
-                        <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action"/>
+                        <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action" states="draft,confirm,accepted"/>
                     </div>
                     <h1>
                         <field name="id" readonly="1" string="Expense ID"/>
