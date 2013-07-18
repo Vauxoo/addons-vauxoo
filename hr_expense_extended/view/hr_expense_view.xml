@@ -57,7 +57,7 @@
                                 <group colspan="4" col="4">
                                     <field name="skip" attrs="{'readonly':[('state','!=','done')]}" on_change="onchange_no_danvace_option(skip)"/>
                                     <newline/>
-                                    <button string="Refresh" name="load_payments" type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','done'),('skip','=',True)]}"/>
+                                    <button string="Refresh" name="load_advances" type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','done'),('skip','=',True)]}"/>
                                 </group>
                                 <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','done')]}">
                                     <tree>

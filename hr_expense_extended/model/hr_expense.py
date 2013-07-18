@@ -119,7 +119,7 @@ class hr_expense_expense(osv.Model):
         if skip:
             res['value'] = {'advance_ids': []}
         else:
-            self.load_payments(cr, uid, ids, context=context)
+            self.load_advances(cr, uid, ids, context=context)
             res['value'] = {'advance_ids':
                [advn.id
                 for advn in self.browse(
@@ -157,11 +157,11 @@ class hr_expense_expense(osv.Model):
         am_obj.unlink(cr, uid, move_ids, context=context)
 
         #~ Related pre-load advances
-        self.load_payments(cr, uid, ids, context=context)
+        self.load_advances(cr, uid, ids, context=context)
         return True
 
-    def load_payments(self, cr, uid, ids, context=None):
-        """ Load the expense payment table with the corresponding data. Adds
+    def load_advances(self, cr, uid, ids, context=None):
+        """ Load the expense advances table with the corresponding data. Adds
         account move lines that fulfill the following conditions:
             - Not reconciled.
             - Not partially reconciled.
