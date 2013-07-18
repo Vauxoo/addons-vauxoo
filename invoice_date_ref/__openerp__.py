@@ -1,14 +1,13 @@
 # -*- encoding: utf-8 -*-
-###########################################################################
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2013 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
-############################################################################
-#    Coded by: moylop260 (moylop260@vauxoo.com)
-#    Launchpad Project Manager for Publication: Nhomar Hernandez - nhomar@vauxoo.com
-############################################################################
+#
+#    Coded by: Rangel (fernando.rangel@vauxoo.com)
+#
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -23,21 +22,21 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 
 {
-    "name" : "Invoice Data",
-    "version" : "1.0",
-    "author" : "Vauxoo",
-    "category" : "Localization",
+    "name": "Invoice Data",
+    "version": "1.0",
+    "author": "Vauxoo",
+    "category": "Localization",
     "description" : """
     """,
-    "website" : "http://www.vauxoo.com/",
-    "license" : "AGPL-3",
-    "depends" : [
+    "website": "http://www.vauxoo.com/",
+    "license": "AGPL-3",
+    "depends": [
         "account",
     ],
-    "update_xml" : ["invoice_date.xml" ],
-    "installable" : True,
-    "active" : False,
+    "update_xml": ["invoice_date.xml"],
+    "installable": True,
+    "active": False,
 }
