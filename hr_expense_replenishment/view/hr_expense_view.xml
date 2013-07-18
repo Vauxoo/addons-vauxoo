@@ -19,6 +19,7 @@
                             <field name="quantity"/>
                             <field name="price_unit"/>
                             <field name="price_subtotal" sum=""/>
+                            <field name="currency_id"/>
                         </tree>
                     </field>
                 </xpath>
