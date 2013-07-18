@@ -96,34 +96,6 @@ class hr_expense_expense(osv.Model):
                    'button to associated to this expense'))
     }
 
-    def expense_accept(self, cr, uid, ids, context=None):
-        """ Overwrite the expense_accept method to add the validate
-        invoice process """
-        context = context or {}
-        error_msj = str()
-        for exp_brw in self.browse(cr, uid, ids, context=context):
-            bad_invs = [inv_brw
-                        for inv_brw in exp_brw.invoice_ids
-                        if inv_brw.state not in ['open']]
-
-            if bad_invs:
-                for inv_brw in bad_invs:
-                    error_msj = error_msj + \
-                        '- [Expense] ' + exp_brw.name + \
-                        ' [Invoice] ' + (inv_brw.number or
-                        inv_brw.partner_id.name) + \
-                        ' (' + inv_brw.state.capitalize() + ')\n'
-
-        if error_msj:
-            raise osv.except_osv(
-                'Invalid Procedure!',
-                "Associated invoices need to be in Open state.\n"
-                + error_msj)
-
-        # create accounting entries related to an expense
-        return super(hr_expense_expense, self).expense_accept(
-            cr, uid, ids, context=context)
-
     def expense_confirm(self, cr, uid, ids, context=None):
         """ Overwrite the expense_confirm method to validate that the expense
         have expenses lines before sending to Manager."""
@@ -143,6 +115,7 @@ class hr_expense_expense(osv.Model):
         add the first fill of the expense payments table """
         context = context or {}
         am_obj = self.pool.get('account.move')
+        self.check_expense_invoices(cr, uid, ids, context=context)
         super(hr_expense_expense,self).action_receipt_create(
             cr, uid, ids, context=context)
 
@@ -458,6 +431,32 @@ class hr_expense_expense(osv.Model):
                     raise osv.except_osv ('HELLO', 'LA estoy cagando en algun lugar')
 
         return match_pair_list, global_reconcil_list, excess_list
+
+    def check_expense_invoices(self, cr, uid, ids, context=None):
+        """ Overwrite the expense_accept method to add the validate
+        invoice process """
+        context = context or {}
+        error_msj = str()
+        for exp_brw in self.browse(cr, uid, ids, context=context):
+            bad_invs = [inv_brw
+                        for inv_brw in exp_brw.invoice_ids
+                        if inv_brw.state not in ['open']]
+
+            if bad_invs:
+                for inv_brw in bad_invs:
+                    error_msj = error_msj + \
+                        '- ' + (inv_brw.number or inv_brw.partner_id.name) + \
+                        ' Invoice total ' + str(inv_brw.amount_total) + ' (' + inv_brw.state.capitalize() + ')\n'
+
+        if error_msj:
+            raise osv.except_osv(
+                _('Invalid Procedure'),
+                _('The expense invoices need to be validated. After manually '
+                  'check invoices you can validate all invoices in batch by '
+                  'using the Validate Invoices button. \n Invoices to '
+                  'Validate:\n')
+                + error_msj)
+        return True
 
     def validate_expense_invoices(self, cr, uid, ids, context=None):
         """ Validate Invoices asociated to the Expense. Put the invoices in
