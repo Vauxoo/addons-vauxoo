@@ -293,15 +293,15 @@ class ir_attachment_facturae_mx(osv.Model):
                             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
                             mssg['attachment_ids'] = [(6, 0, attachments)]
                             mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context=None)
+                                'mail.compose.message').create(cr, uid, mssg, context = None)
                             state = self.pool.get('mail.compose.message').send_mail(
                                 cr, uid, [mssg_id], context=context)
                             asunto = mssg['subject']
                             id_mail = obj_mail_mail.search(cr, uid, [('subject', '=', asunto )])
                             if id_mail:
-                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context):
+                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context = None):
                                     if mail.state == 'exception':
-                                        msj = _('\nNot correct email of the user or customer.\nCheck in Menu Configuración\Tecnico\Email\Emails\n') 
+                                        msj = _('\nNot correct email of the user or customer. Change priority outgoing mail server. Check in Menu Configuración\Tecnico\Email\Emails\n') 
                             else:
                                 msj = _('Email Send Successfully.\
                                 Attached is sent to %s \
@@ -356,7 +356,8 @@ class ir_attachment_facturae_mx(osv.Model):
                 cr, uid, [invoice], context={})
             sf_cancel = invoice_obj.sf_cancel(
                 cr, uid, [invoice.id], context={})
-            msj = tools.ustr(sf_cancel['message'])
+            msj = _('Cancel\n')
+            msj += tools.ustr(sf_cancel['message'])
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):

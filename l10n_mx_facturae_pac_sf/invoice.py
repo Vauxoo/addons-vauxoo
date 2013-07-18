@@ -258,7 +258,8 @@ class account_invoice(osv.Model):
             hours = timezone(userstz)
             fmt = '%Y-%m-%d %H:%M:%S %Z%z'
             now = datetime.now()
-            loc_dt = hours.localize(datetime(now.year,now.month,now.day,now.hour,now.minute,now.second))
+            loc_dt = hours.localize(datetime(now.year,now.month,now.day,
+                now.hour,now.minute,now.second))
             timezone_loc=(loc_dt.strftime(fmt))
             diff_timezone_original=timezone_loc[-5:-2]
             timezone_original=int(diff_timezone_original)
@@ -335,52 +336,57 @@ class account_invoice(osv.Model):
                 codigo_timbrado = resultado['status'] or ''
                 codigo_validacion = resultado['resultados'] and resultado[
                     'resultados']['status'] or ''
+                if codigo_timbrado == '311' or codigo_validacion == '311':
+                    raise osv.except_osv(_('Warning'), _('Unauthorized'))
+                if codigo_timbrado == '312' or codigo_validacion == '312':
+                    raise osv.except_osv(_('Warning'), _('Failed to consult the SAT'))
                 if codigo_timbrado == '200':
-                    msg += "\nEl proceso de validacion se ha completado correctamente\n"
+                    msg += _(u"The validation process is completed successfully.\n")
                     if codigo_validacion == '301':
-                        msg += "El CFDI no tiene una estructura XML correcta"
                         raise osv.except_osv(_('Warning'), _('El CFDI no tiene una estructura XML correcta'))
                     elif codigo_validacion == '302':
-                        msg += "El sello del emisor no es valido"
-                        raise osv.except_osv(_('Warning'), _('El sello del emisor no es valido'))
+                        raise osv.except_osv(_('Warning'), _('El sello del emisor no es válido'))
                     elif codigo_validacion == '303':
-                        msg += "El Certificado de Sello Digital no corresponde al contribuyente emisor"
                         raise osv.except_osv(_('Warning'), _('El Certificado de Sello Digital no corresponde al contribuyente emisor'))
                     elif codigo_validacion == '304':
-                        msg += "El certificado se encuentra revocado o caduco"
-                        raise osv.except_osv(_('Warning'), _('El certificado se encuentra revocado o caduco'))
+                        raise osv.except_osv(_('Warning'), _('El certificado se encuentra revocado o caducó'))
                     elif codigo_validacion == '305':
-                        msg += "La fecha del CFDI esta fuera del rango de la validez del certificado"
-                        raise osv.except_osv(_('Warning'), _('La fecha del CFDI esta fuera del rango de la validez del certificado'))
+                        raise osv.except_osv(_('Warning'), _('La fecha del CFDI está fuera del rango de la validez del certificado'))
                     elif codigo_validacion == '306':
-                        msg += "El certificado usado para generar el sello digital no es un Certificado de Sello Digital"
                         raise osv.except_osv(_('Warning'), _('El certificado usado para generar el sello digital no es un Certificado de Sello Digital'))
                     elif codigo_validacion == '307':
-                        msg += "El CFDI ya ha ha sido timbrado previamente"
                         raise osv.except_osv(_('Warning'), _('El CFDI ya ha ha sido timbrado previamente'))
                     elif codigo_validacion == '308':
-                        msg += "El certificado utilizado para generar el sello digital no ha sido emitido por el SAT"
                         raise osv.except_osv(_('Warning'), _('El certificado utilizado para generar el sello digital no ha sido emitido por el SAT'))
                     elif codigo_validacion == '401':
-                        msg += "La fecha del comprobante esta fuera del rango de timbrado permitido.Han pasado mas de 72 horas desde la fecha de generacion del comprobante"
-                        raise osv.except_osv(_('Warning'), _('La fecha del comprobante esta fuera del rango de timbrado permitido.Han pasado mas de 72 horas desde la fecha de generacion del comprobante'))
+                        raise osv.except_osv(_('Warning'), _('La fecha del comprobante está fuera del rango de timbrado permitido.Han pasado mas de 72 horas desde la fecha de generacion del comprobante'))
                     elif codigo_validacion == '402':
-                        msg += "El contribuyente no se encuentra dentro del regimen fiscal para emitir CFDI"
-                        raise osv.except_osv(_('Warning'), _('El contribuyente no se encuentra dentro del regimen fiscal para emitir CFDI'))
+                        raise osv.except_osv(_('Warning'), _('El contribuyente no se encuentra dentro del régimen fiscal para emitir CFDI'))
                     elif codigo_validacion == '403':
-                        msg += "La fecha de emision del CFDI no puede ser anterior al 1 de enero de 2011"
-                        raise osv.except_osv(_('Warning'), _('La fecha de emision del CFDI no puede ser anterior al 1 de enero de 2011'))
+                        raise osv.except_osv(_('Warning'), _('La fecha de emisión del CFDI no puede ser anterior al 1 de enero de 2011'))
+                    elif codigo_validacion == '611':
+                        raise osv.except_osv(_('Warning'), _('Los datos recibidos estan incompletos o no se encuentran donde se esperarían'))
+                    elif codigo_validacion == '612':
+                        raise osv.except_osv(_('Warning'), _('El archivo XML o alguno de sus atributos está malformado'))
+                    elif codigo_validacion == '630':
+                        raise osv.except_osv(_('Warning'), _('Se han agotado los timbres de la implementacion'))
+                    elif codigo_validacion == '631':
+                        raise osv.except_osv(_('Warning'), _('Se han agotado los timbres del emisor'))
+                    elif codigo_validacion == '632':
+                        raise osv.except_osv(_('Warning'), _('Se ha alcanzado el límite de uso justo permitido por transacción'))
+                    elif codigo_validacion == '633':
+                        raise osv.except_osv(_('Warning'), _('Uso indebido de cuenta de producción en pruebas o cuenta de prueba en producción'))
                     elif codigo_validacion == '200':
-                        msg += "CFDI correctamente validado y timbrado.\n"
+                        msg += _(u"CFDI correctly validated and ringing.\n")
                         fecha_timbrado = resultado[
                         'resultados']['fechaTimbrado'] or False
-                    fecha_timbrado = fecha_timbrado and time.strftime(
+                        fecha_timbrado = fecha_timbrado and time.strftime(
                         '%Y-%m-%d %H:%M:%S', time.strptime(
                         fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
-                    fecha_timbrado = fecha_timbrado and datetime.strptime(
+                        fecha_timbrado = fecha_timbrado and datetime.strptime(
                         fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
                         hours=htz) or False
-                    cfdi_data = {
+                        cfdi_data = {
                         'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                         'cfdi_sello': resultado['resultados'][
                             'selloSAT'] or False,
@@ -392,26 +398,49 @@ class account_invoice(osv.Model):
                         'cfdi_xml': base64.decodestring(resultado[
                             'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
                         'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
-                    }
-                    if cfdi_data.get('cfdi_xml', False):
-                        url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
-                            comprobante)
-                        cfdi_data['cfdi_xml'] = cfdi_data[
-                            'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
-                        file = base64.encodestring(
-                            cfdi_data['cfdi_xml'] or '')
-                        # self.cfdi_data_write(cr, uid, [invoice.id],
-                        # cfdi_data, context=context)
-                        cfdi_xml = cfdi_data.pop('cfdi_xml')
+                        }
+                        if cfdi_data.get('cfdi_xml', False):
+                            url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
+                                comprobante)
+                            cfdi_data['cfdi_xml'] = cfdi_data[
+                                'cfdi_xml'].replace('</"%s">' % (comprobante), url_pac)
+                            file = base64.encodestring(
+                                cfdi_data['cfdi_xml'] or '')
+                            # self.cfdi_data_write(cr, uid, [invoice.id],
+                            # cfdi_data, context=context)
+                            cfdi_xml = cfdi_data.pop('cfdi_xml')
                         if cfdi_xml:
                             self.write(cr, uid, inv_ids, cfdi_data)
                             cfdi_data['cfdi_xml'] = cfdi_xml
-                        msg = msg + _(
-                            "\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
-                    else:
-                        msg = msg + "\nCan't extract the file XML of PAC"
+                            msg = msg + _("\nMake Sure to the file \
+                            really has generated correctly to the \
+                            SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
+                        else:
+                            msg += _(u"\nCan't extract the file XML of PAC")
                 elif codigo_timbrado == '500':
-                    raise osv.except_osv(_('Warning'), _('Han ocurrido errores que no han permitido completar el proceso de validacion/certificacion'))
+                    raise osv.except_osv(_('Warning'), _('Errors occurred were not allowed to complete the process of validation / certification'))
+                elif codigo_timbrado == '501':
+                    raise osv.except_osv(_('Warning'), _('Failed to Connect to the database'))
+                elif codigo_timbrado == '502':
+                    raise osv.except_osv(_('Warning'), _('It failed when trying to retrieve or store information in the database'))
+                elif codigo_timbrado == '503':
+                    raise osv.except_osv(_('Warning'), _('It has reached the limit of concurrent access licenses database'))
+                elif codigo_timbrado == '601':
+                    raise osv.except_osv(_('Warning'), _('Authentication failed, user name or password is incorrect'))
+                elif codigo_timbrado == '602':
+                    raise osv.except_osv(_('Warning'), _('The user account is locked'))
+                elif codigo_timbrado == '603':
+                    raise osv.except_osv(_('Warning'), _('The account password has expired'))
+                elif codigo_timbrado == '604':
+                    raise osv.except_osv(_('Warning'), _('You have exceeded the maximum number of failed authentication attempts'))
+                elif codigo_timbrado == '605':
+                    raise osv.except_osv(_('Warning'), _('The user is inactive'))
+                elif codigo_timbrado == '1401':
+                    raise osv.except_osv(_('Warning'), _('The XML Namespace does not match the namespace of CFDI'))
+                elif codigo_timbrado == '1402':
+                    raise osv.except_osv(_('Warning'), _('No data found in the CFDI issuer'))
+                elif codigo_timbrado == '1403':
+                    raise osv.except_osv(_('Warning'), _('No data are receiver in the CFDI'))
         else:
             msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
             raise osv.except_osv(_('Warning'), _('Not found information from web services of PAC, verify that the configuration of PAC is correct'))
@@ -489,25 +518,51 @@ class account_invoice(osv.Model):
                     'resultados']['mensaje'] or ''
                 status_uuid = result['resultados'] and result[
                     'resultados']['statusUUID'] or ''
-                status_principal = result['status'] or ''
-                if user == 'testing@solucionfactible.com':
-                    codigo_cancel = '1'
-                if codigo_cancel == '1':
+                if 'testing' in wsdl_url:
                     msg_global = _('- Status of response of SAT unknown')
                 if codigo_cancel == '200':
-                    if status == '200':
+                    msg_global += _(u"\nThe cancellation process has \
+                                    been completed successfully\n")
+                    if status == '201':
+                        msg_global += _(u"\nFolio has been canceled \
+                                                    successfully\n")
                         folio_cancel = result['resultados'] and result[
                             'resultados']['uuid'] or ''
-                        msg_global = _('\n- The process of cancellation has completed correctly.\n- The uuid cancelled is: ') + folio_cancel+_(
-                            '\n\nMessage Technical:\n')
+                        msg_global = _('\n- The process of cancellation\
+                                has completed correctly.\n- The uuid \
+                                cancelledis: ') + folio_cancel+_(
+                                    '\n\nMessage Technical:\n')
                         msg_tecnical = 'Status:', status, ' uuid:', uuid_nvo,\
                             ' msg:', msg_nvo, 'Status uuid:', status_uuid
-                    else:
-                        msg_global = _(
-                            '\n- Have occurred errors that not permit complete the process of cancellation, make sure that the invoice that tried cancel has been stamped previously.\n\nMessage Technical:\n')
-                        msg_tecnical = 'status:', status, ' uuidnvo:', uuid_nvo,\
-                        ' MENSJAE:NVO', msg_nvo, 'STATUS UUID:', status_uuid
-
+                    elif status == '202':
+                        raise osv.except_osv(_('Warning'), _('The CFDI had been previously canceled'))
+                    elif status == '202':
+                        raise osv.except_osv(_('Warning'), _('The CFDI had been previously canceled'))
+                    elif status == '203':
+                        raise osv.except_osv(_('Warning'), _('UUID does not correspond to the issuer'))
+                    elif status == '204':
+                        raise osv.except_osv(_('Warning'), _('The cancellation does not apply to CFDI'))
+                    elif status == '205':
+                        raise osv.except_osv(_('Warning'), _('The UUID does not exist or has been prosecuted for the SAT'))
+                    elif status == '402':
+                        raise osv.except_osv(_('Warning'), _('The Taxpayer not found the LCO or validity of obligations is reported as negative'))
+                elif codigo_cancel == '601':
+                    raise osv.except_osv(_('Warning'), _('Authentication failed, user name or password is incorrect'))
+                elif codigo_cancel == '602':
+                    raise osv.except_osv(_('Warning'), _('The user account is locked'))
+"""603 - La contraseña de la cuenta ha expirado.
+604 - Se ha superado el número máximo permitido de intentos fallidos de autenticación.
+605 - El usuario se encuentra inactivo
+611 - No se han proporcionado UUIDs a cancelar.
+1701 - La llave privada y la llave pública del CSD no corresponden.
+1702 - La llave privada de la contraseña es incorrecta.
+1703 - La llave privada no cumple con la estructura esperada.
+1704 - La llave Privada no es una llave RSA.
+1710 - La estructura del certificado no cumple con la estructura X509 esperada.
+1711 - El certificado no esá vigente todavía.
+1712 - El certificado ha expirado.
+1713 - La llave pública contenida en el certificado no es una llave RSA.
+1803 - El dato no es un UUID válido."""
                 if status_uuid == '201':
                     msg_SAT = _(
                         '- Status of response of the SAT: 201. The folio was canceled with success.')
