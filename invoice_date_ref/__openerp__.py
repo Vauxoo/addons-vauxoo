@@ -29,7 +29,9 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization",
-    "description" : """ the module adds the field  date_info
+    "description" : """ 
+    The module invoice_date_ref adds the field  date_info in invoice,
+    this fields is informative only
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
