@@ -27,10 +27,17 @@
                     <button name="reconcile_payment" type="object" string="Reconcile Payment" states="done"/>
                 </xpath>
 
+                <xpath expr="//field[@name='name']" position="replace">
+                </xpath>
+
                 <xpath expr="//sheet/group" position="before">
                     <div class="oe_right oe_button_box" name="button_box">
                         <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action"/>
                     </div>
+                    <h1>
+                        <field name="id" readonly="1" string="Expense ID"/>
+                        <field name="name"/>
+                    </h1>
                 </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
