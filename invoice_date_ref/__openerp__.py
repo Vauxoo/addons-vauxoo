@@ -29,7 +29,7 @@
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Localization",
-    "description" : """
+    "description" : """ the module adds the field  date_info
     """,
     "website": "http://www.vauxoo.com/",
     "license": "AGPL-3",
