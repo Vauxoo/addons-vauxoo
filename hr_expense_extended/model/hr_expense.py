@@ -96,6 +96,23 @@ class hr_expense_expense(osv.Model):
                    'button to associated to this expense'))
     }
 
+    def onchange_no_danvace_option(self, cr, uid, ids, skip, context=None):
+        """
+        Clean up the expense advances when the No advances checkbox is set
+        """
+        context = context or {}
+        res = {'value': {}}
+        if skip:
+            res['value'] = {'advance_ids': []}
+        else:
+            self.load_payments(cr, uid, ids, context=context)
+            res['value'] = {'advance_ids':
+                [advn.id
+                 for advn in self.browse(
+                    cr, uid, ids[0], context=context).advance_ids]
+                }
+        return res
+
     def expense_confirm(self, cr, uid, ids, context=None):
         """ Overwrite the expense_confirm method to validate that the expense
         have expenses lines before sending to Manager."""
