@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    "name": "HR Expenses Extend Module",
+    "name": "Expenses Replenishment",
     "version": "0.1",
     "depends": ["hr_expense"],
     "author": "Vauxoo",
