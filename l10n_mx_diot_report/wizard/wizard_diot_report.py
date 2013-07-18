@@ -20,19 +20,11 @@
 ##############################################################################
 
 from openerp.osv import osv, fields
-import time
-from account import account
-from lxml import etree
-import netsvc
-import pooler
-from osv.orm import browse_record, browse_null
 from tools.translate import _
 import base64
 import StringIO
 import pooler
 from time import strftime
-import csv
-import pprint
 from string import upper
 import datetime
 from dateutil.relativedelta import *
@@ -43,9 +35,12 @@ class wizard_account_diot_mx(osv.osv_memory):
     _description = 'Account - DIOT Report for Mexico'
     _columns = {
         'name': fields.char('File Name', readonly=True),
-        'company_id' : fields.many2one('res.company', 'Company', required=True),
-        'period_id': fields.many2one('account.period', 'Period', help='Select period', required=True),
-        'filename': fields.char('File name', size=128, readonly=True, help='This is File name'),
+        'company_id' : fields.many2one('res.company', 'Company',
+            required=True),
+        'period_id': fields.many2one('account.period', 'Period',
+            help='Select period', required=True),
+        'filename': fields.char('File name', size=128, readonly=True,
+            help='This is File name'),
         'file': fields.binary('File', readonly=True),
         'state': fields.selection([('choose', 'choose'), ('get', 'get')]),
 
@@ -66,9 +61,16 @@ class wizard_account_diot_mx(osv.osv_memory):
         matrix_row = []
         untax_amount = 0.0
         amount_exe = 0
-        category_iva_ids = acc_tax_category_obj.search(cr, uid, [('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
-        tax_purchase_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), ('tax_category_id', 'in', category_iva_ids)], context=context)
-        move_lines_diot = acc_move_line_obj.search(cr, uid, [('period_id', '=', period.id), ('tax_id_secondary', 'in', tax_purchase_ids)])
+        category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
+            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
+        tax_purchase_ids = acc_tax_obj.search(cr, uid, [\
+            ('type_tax_use', '=', 'purchase'),
+            ('tax_category_id', 'in', category_iva_ids)], context=context)
+        move_lines_diot = acc_move_line_obj.search(cr, uid, [\
+            ('period_id', '=', period.id),
+            ('tax_id_secondary', 'in', tax_purchase_ids),
+            '|', ('reconcile_id', '!=', False),
+            ('reconcile_partial_id', '!=', False)])
         dic_move_line = {}
         move_not_amount = []
         partner_ids = []
@@ -76,7 +78,8 @@ class wizard_account_diot_mx(osv.osv_memory):
         partners_without_type_of_third = []
         partners_without_type_of_operation = []
         partners_without_diot_country = []
-        for items in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
+        for items in acc_move_line_obj.browse(cr, uid, move_lines_diot,
+            context=context):
             if items.partner_id.vat_split == False:
                 partner_ids.append(items.partner_id.id)
             if not items.partner_id:
@@ -85,7 +88,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                 partners_without_type_of_third.append(items.partner_id.id)
             if not items.partner_id.type_of_operation:
                 partners_without_type_of_operation.append(items.partner_id.id)
-            if not items.partner_id.diot_country:
+            if not items.partner_id.diot_country and items.partner_id.type_of_third != '04':
                 partners_without_diot_country.append(items.partner_id.id)
         if moves_without_partner:
             return {
@@ -103,7 +106,8 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'view_mode': 'tree,form',
                 'res_model': 'res.partner',
                 'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', partner_ids), '|',('active', '=', False), ('active', '=', True)],
+                'domain': [('id', 'in', partner_ids), '|',\
+                    ('active', '=', False), ('active', '=', True)],
             }
         if partners_without_type_of_third:
             return {
@@ -112,7 +116,8 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'view_mode': 'tree,form',
                 'res_model': 'res.partner',
                 'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', partners_without_type_of_third), '|',('active', '=', False), ('active', '=', True)],
+                'domain': [('id', 'in', partners_without_type_of_third), '|',\
+                    ('active', '=', False), ('active', '=', True)],
             }
         if partners_without_type_of_operation:
             return {
@@ -121,7 +126,8 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'view_mode': 'tree,form',
                 'res_model': 'res.partner',
                 'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', partners_without_type_of_operation), '|',('active', '=', False), ('active', '=', True)],
+                'domain': [('id', 'in', partners_without_type_of_operation),\
+                    '|',('active', '=', False), ('active', '=', True)],
             }
         if partners_without_diot_country:
             return {
@@ -130,18 +136,24 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'view_mode': 'tree,form',
                 'res_model': 'res.partner',
                 'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', partners_without_diot_country), '|',('active', '=', False), ('active', '=', True)],
+                'domain': [('id', 'in', partners_without_diot_country), '|',\
+                    ('active', '=', False), ('active', '=', True)],
             }
-        for line in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
+        for line in acc_move_line_obj.browse(cr, uid, move_lines_diot,
+            context=context):
             if line.date >= period.date_start and line.date <= period.date_stop:
                 amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.16:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
+                    line.tax_id_secondary.amount == 0.16:
                     amount_16 = line.amount_base
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.11:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
+                    line.tax_id_secondary.amount == 0.11:
                     amount_11 = line.amount_base
-                if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
+                    line.tax_id_secondary.amount == 0:
                     amount_0 = line.amount_base
-                if line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO' and line.tax_id_secondary.amount == 0:
+                if line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO'\
+                    and line.tax_id_secondary.amount == 0:
                     amount_exe = line.amount_base
                 if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
                     amount_ret = line.amount_base
@@ -154,13 +166,15 @@ class wizard_account_diot_mx(osv.osv_memory):
                     line_move[9] = line_move[9] + amount_0
                     line_move[10] = line_move[10] + amount_exe
                     line_move[11] = line_move[11] + amount_ret
-                    dic_move_line.update({line.partner_id.vat_split : line_move})
+                    dic_move_line.update({
+                        line.partner_id.vat_split : line_move})
                 else:
                     matrix_row.append(line.partner_id.type_of_third)
                     matrix_row.append(line.partner_id.type_of_operation)
                     matrix_row.append(line.partner_id.vat_split)
 
-                    if line.partner_id.type_of_third == "05" and line.partner_id.number_fiscal_id_diot != False:
+                    if line.partner_id.type_of_third == "05" and\
+                        line.partner_id.number_fiscal_id_diot != False:
                         matrix_row.append(line.partner_id.number_fiscal_id_diot)
                     else:
                         matrix_row.append("")
@@ -180,11 +194,23 @@ class wizard_account_diot_mx(osv.osv_memory):
                     matrix_row.append(amount_0)
                     matrix_row.append(amount_exe)
                     matrix_row.append(amount_ret)
-                    dic_move_line.update({line.partner_id.vat_split : matrix_row})
+                    dic_move_line.update({
+                        line.partner_id.vat_split : matrix_row})
                 matrix_row = []
         buf = StringIO.StringIO()
         for diot in dic_move_line:
-            cadena = str(dic_move_line[diot][0]) + '|' + str(dic_move_line[diot][1]) + '|' + str(dic_move_line[diot][2]) + '|' + str(dic_move_line[diot][3]) + '|' + str(dic_move_line[diot][4]) + '|' + str(dic_move_line[diot][5]) + '|' + str(dic_move_line[diot][6]) + '|' + (str(int(round((dic_move_line[diot][7]),0)))) + '||' + (str(int(round((dic_move_line[diot][8]),0)))) + '|||||||||' + (str(int(round((dic_move_line[diot][9]),0)))) + '|' + (str(int(round((dic_move_line[diot][10]),0)))) + '|' + (str(int(round((dic_move_line[diot][11]),0)))) + '||' + '\n'
+            cadena = str(dic_move_line[diot][0]) + '|' +\
+                str(dic_move_line[diot][1]) + '|' +\
+                str(dic_move_line[diot][2]) + '|' +\
+                str(dic_move_line[diot][3]) + '|' +\
+                str(dic_move_line[diot][4]) + '|' +\
+                str(dic_move_line[diot][5]) + '|' +\
+                str(dic_move_line[diot][6]) + '|' +\
+                (str(int(round((dic_move_line[diot][7]),0)))) + '||' +\
+                (str(int(round((dic_move_line[diot][8]),0)))) + '|||||||||' +\
+                (str(int(round((dic_move_line[diot][9]),0)))) + '|' +\
+                (str(int(round((dic_move_line[diot][10]),0)))) + '|' +\
+                (str(int(round((dic_move_line[diot][11]),0)))) + '||' + '\n'
             buf.write(upper(cadena))
         out = base64.encodestring(buf.getvalue())
         buf.close()
