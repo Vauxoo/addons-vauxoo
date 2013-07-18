@@ -201,12 +201,12 @@ class account_invoice(osv.Model):
          @params comprobante : Name to the Node that contain the information the XML
         """
         if xml_res_str:
-            node_Addenda = xml_res_str.getElementsByTagName('Addenda')
+            node_Addenda = xml_res_str.getElementsByTagName('cfdi:Addenda')
             if len(node_Addenda) == 0:
                 nodeComprobante = xml_res_str.getElementsByTagName(
                     comprobante)[0]
                 node_Addenda = self.add_node(
-                    'Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
+                    'cfdi:Addenda', {}, nodeComprobante, xml_res_str, attrs_types={})
                 node_Partner_attrs = {
                     'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
                     'xsi:schemaLocation': "http://timbrado.solucionfactible.com/partners https://solucionfactible.com/timbrado/partners/partners.xsd",
@@ -323,7 +323,7 @@ class account_invoice(osv.Model):
                 zip = False  # Validar si es un comprimido zip, con la extension del archivo
                 contrasenaCSD = file_globals.get('password', '')
                 params = [
-                    user, password, cfdi, cerCSD, keyCSD, contrasenaCSD, zip]
+                    user, password, cfdi, zip]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
                 wsdl_client.soapproxy.config.dumpSOAPIn = 0
                 wsdl_client.soapproxy.config.debug = 0
