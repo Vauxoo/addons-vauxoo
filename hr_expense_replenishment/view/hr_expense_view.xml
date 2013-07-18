@@ -33,7 +33,7 @@
                 </xpath>
 
                 <xpath expr="//button[@name='confirm']" position="after">
-                    <button name="reconcile_payment" type="object" string="Reconcile Payment" states="done"/>
+                    <button name="reconcile_payment" type="object" string="Reconcile Payment" states="done" class="oe_highlight"/>
                 </xpath>
 
                 <xpath expr="//field[@name='name']" position="replace">
