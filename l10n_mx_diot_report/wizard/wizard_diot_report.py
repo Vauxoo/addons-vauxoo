@@ -89,6 +89,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         move_not_amount = []
         partner_ids_to_fix = []
         moves_without_partner = []
+        partner_ids_tax_0 = []
         for items in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
             partner_id = items.partner_id
             if not partner_id:
@@ -102,8 +103,8 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'type': 'ir.actions.act_window',
                 'domain': [('id', 'in', moves_without_partner),],
             }
-        for items in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
-            partner_id = items.partner_id
+        for line in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
+            partner_id = line.partner_id
             partner_vat = upper((partner_id.vat_split or '').replace('-', '').replace('_', '').replace(' ', ''))
             if not partner_vat \
                 or not partner_id.type_of_third\
@@ -115,56 +116,54 @@ class wizard_account_diot_mx(osv.osv_memory):
                 partner_ids_to_fix.append(partner_id.id)
             if partner_ids_to_fix:
                 continue
-            for line in acc_move_line_obj.browse(cr, uid, move_lines_diot, context=context):
-                if line.date >= period.date_start and line.date <= period.date_stop:
-                    amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
-                    if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.16:
-                        amount_16 = line.amount_base
-                    if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.11:
-                        amount_11 = line.amount_base
-                    if line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0:
-                        amount_0 = line.amount_base
-                    if line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO' and line.tax_id_secondary.amount == 0:
-                        amount_exe = line.amount_base
-                    if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
-                        amount_ret = line.amount_base
-                    #Checar monto
-                    untax_amount += line.amount_base
-                    
-                    if partner_vat in dic_move_line:
-                        line_move = dic_move_line[partner_vat] 
-                        line_move[7] = line_move[7] + amount_16
-                        line_move[8] = line_move[8] + amount_11
-                        line_move[9] = line_move[9] + amount_0
-                        line_move[10] = line_move[10] + amount_exe
-                        line_move[11] = line_move[11] + amount_ret
-                        dic_move_line.update({partner_vat : line_move})
+            if line.date >= period.date_start and line.date <= period.date_stop:
+                amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
+                if line.tax_id_secondary and line.tax_id_secondary.tax_category_id and line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.16:
+                    amount_16 = line.amount_base
+                if line.tax_id_secondary and line.tax_id_secondary.tax_category_id and line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0.11:
+                    amount_11 = line.amount_base
+                if line.tax_id_secondary and line.tax_id_secondary.tax_category_id and line.tax_id_secondary.tax_category_id.name == 'IVA' and line.tax_id_secondary.amount == 0:
+                    amount_0 = line.amount_base
+                if line.tax_id_secondary and line.tax_id_secondary.tax_category_id and line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO' and line.tax_id_secondary.amount == 0:
+                    amount_exe = line.amount_base
+                if line.tax_id_secondary and line.tax_id_secondary.tax_category_id and line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
+                    amount_ret = line.amount_base
+                #Checar monto
+                untax_amount += line.amount_base
+                if partner_vat in dic_move_line:
+                    line_move = dic_move_line[partner_vat] 
+                    line_move[7] = line_move[7] + amount_16
+                    line_move[8] = line_move[8] + amount_11
+                    line_move[9] = line_move[9] + amount_0
+                    line_move[10] = line_move[10] + amount_exe
+                    line_move[11] = line_move[11] + amount_ret
+                    dic_move_line.update({partner_vat : line_move})
+                else:
+                    matrix_row.append(line.partner_id.type_of_third)
+                    matrix_row.append(line.partner_id.type_of_operation)
+                    matrix_row.append(partner_vat)
+                    if line.partner_id.type_of_third == "05" and line.partner_id.number_fiscal_id_diot != False:
+                        matrix_row.append(line.partner_id.number_fiscal_id_diot)
                     else:
-                        matrix_row.append(line.partner_id.type_of_third)
-                        matrix_row.append(line.partner_id.type_of_operation)
-                        matrix_row.append(partner_vat)
-                        if line.partner_id.type_of_third == "05" and line.partner_id.number_fiscal_id_diot != False:
-                            matrix_row.append(line.partner_id.number_fiscal_id_diot)
+                        matrix_row.append("")
+                    if line.partner_id.type_of_third != "04":
+                        matrix_row.append(line.partner_id.name)
+                        matrix_row.append(line.partner_id.diot_country)
+                        if line.partner_id.nacionality_diot != False:
+                            matrix_row.append(line.partner_id.nacionality_diot)
                         else:
                             matrix_row.append("")
-                        if line.partner_id.type_of_third != "04":
-                            matrix_row.append(line.partner_id.name)
-                            matrix_row.append(line.partner_id.diot_country)
-                            if line.partner_id.nacionality_diot != False:
-                                matrix_row.append(line.partner_id.nacionality_diot)
-                            else:
-                                matrix_row.append("")
-                        else:
-                            matrix_row.append("")
-                            matrix_row.append("")
-                            matrix_row.append("")
-                        matrix_row.append(amount_16)
-                        matrix_row.append(amount_11)
-                        matrix_row.append(amount_0)
-                        matrix_row.append(amount_exe)
-                        matrix_row.append(amount_ret)
-                        dic_move_line.update({partner_vat : matrix_row})
-                    matrix_row = []
+                    else:
+                        matrix_row.append("")
+                        matrix_row.append("")
+                        matrix_row.append("")
+                    matrix_row.append(amount_16)
+                    matrix_row.append(amount_11)
+                    matrix_row.append(amount_0)
+                    matrix_row.append(amount_exe)
+                    matrix_row.append(amount_ret)
+                    dic_move_line.update({partner_vat : matrix_row})
+                matrix_row = []
         if partner_ids_to_fix:
             return {
                 'name': 'Suppliers do not have the information necessary for the DIOT',
@@ -197,6 +196,19 @@ class wizard_account_diot_mx(osv.osv_memory):
             'VAT for returns, discounts and rebates on purchases',
             'show_pipe',], delimiter='|')
         for diot in dic_move_line:
+            if int(round((dic_move_line[diot][7]),0)) == 0 and int(round((dic_move_line[diot][8]),0)) == 0 and int(round((dic_move_line[diot][9]),0)) == 0 and int(round((dic_move_line[diot][10]),0)) == 0 and int(round((dic_move_line[diot][11]),0)) == 0:
+                partner_ids_tax_0.append(self.pool.get('res.partner').search(cr, uid, [('vat_split' , '=', diot)]))
+        if partner_ids_tax_0:
+            account_move_line_id = acc_move_line_obj.search(cr, uid, [('partner_id', 'in', partner_ids_tax_0), ('period_id', '=', period.id)])
+            return {
+                'name': 'Corroborates the amounts of taxes',
+                'view_type' : 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'account.move.line',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', account_move_line_id)],
+            }
+        for diot in dic_move_line:
             fcsv.writerow({'type_of_third': dic_move_line[diot][0],
                 'type_of_operation': dic_move_line[diot][1],
                 'vat' : dic_move_line[diot][2],
@@ -210,7 +222,6 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)' : int(round((dic_move_line[diot][10]),0)),
                 'tax Withheld by the taxpayer' : int(round((dic_move_line[diot][11]),0)),
                 })
-        #~ #Revisar estos datos
         f_write.close()
         f_read= file(fname, "rb")
         fdata = f_read.read()
