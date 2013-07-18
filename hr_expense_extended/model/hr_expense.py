@@ -97,7 +97,7 @@ class hr_expense_expense(osv.Model):
     }
 
     def expense_accept(self, cr, uid, ids, context=None):
-        """ Overwrite the expense_confirm function to add the validate
+        """ Overwrite the expense_accept method to add the validate
         invoice process """
         context = context or {}
         error_msj = str()
@@ -124,12 +124,35 @@ class hr_expense_expense(osv.Model):
         return super(hr_expense_expense, self).expense_accept(
             cr, uid, ids, context=context)
 
+    def expense_confirm(self, cr, uid, ids, context=None):
+        """ Overwrite the expense_confirm method to validate that the expense
+        have expenses lines before sending to Manager."""
+        context = context or {}
+        for exp in self.browse(cr, uid, ids, context=context):
+            if not exp.invoice_ids and not exp.line_ids:
+                raise osv.except_osv(_('Invalid Procedure'),
+                    _('You have not Deductible or No Deductible lines loaded into '
+                      'the expense')
+                )
+            super(hr_expense_expense, self).expense_confirm(
+                cr, uid, ids, context=context)
+        return True
+
     def action_receipt_create(self, cr, uid, ids, context=None):
         """ overwirte the method to create expense accounting entries to
         add the first fill of the expense payments table """
         context = context or {}
+        am_obj = self.pool.get('account.move')
         super(hr_expense_expense,self).action_receipt_create(
             cr, uid, ids, context=context)
+
+        #~ No Deductible Expenses then No Expense Move
+        move_ids = [exp.account_move_id.id
+                    for exp in self.browse(cr, uid, ids, context=context)
+                    if not exp.line_ids]
+        am_obj.unlink(cr, uid, move_ids, context=context)
+
+        #~ Related pre-load advances
         self.load_payments(cr, uid, ids, context=context)
         return True
 
@@ -147,7 +170,7 @@ class hr_expense_expense(osv.Model):
         acc_payable_ids = self.pool.get('account.account').search(
             cr, uid, [('type', '=', 'payable')], context=context)
         for exp in self.browse(cr, uid, ids, context=context):
-            partner_ids = [exp.account_move_id.partner_id.id]
+            partner_ids = [exp.employee_id.address_home_id.id]
             aml_ids = aml_obj.search(
                 cr, uid,
                 [('reconcile_id', '=', False),
@@ -204,9 +227,10 @@ class hr_expense_expense(osv.Model):
         for exp in self.browse(cr, uid, ids, context=context):
             self.check_advance_no_empty_condition(cr, uid, exp.id,
                                                   context=context)
-            exp_aml_brws = [aml_brw
-                            for aml_brw in exp.account_move_id.line_id
-                            if aml_brw.account_id.type == 'payable']
+            exp_aml_brws = exp.account_move_id and \
+                [aml_brw
+                 for aml_brw in exp.account_move_id.line_id
+                 if aml_brw.account_id.type == 'payable'] or []
             advance_aml_brws = [aml_brw
                                 for aml_brw in exp.advance_ids
                                 if aml_brw.account_id.type == 'payable']
@@ -215,7 +239,9 @@ class hr_expense_expense(osv.Model):
                             for aml_brw in inv.move_id.line_id
                             if aml_brw.account_id.type == 'payable']
             aml = {
-                'exp': [aml_brw.id for aml_brw in exp_aml_brws],
+                'exp':
+                    exp_aml_brws and [aml_brw.id for aml_brw in exp_aml_brws]
+                    or [],
                 'advances': [aml_brw.id for aml_brw in advance_aml_brws],
                 'invs': [aml_brw.id for aml_brw in inv_aml_brws],
                 #~ self.group_aml_inv_ids_by_partner(
@@ -231,7 +257,7 @@ class hr_expense_expense(osv.Model):
 
             aml_amount = aml['debit'] - aml['credit']
             adjust_balance_to = aml_amount > 0.0 and 'debit' or 'credit'
-
+            adjust_balance_to = aml['advances'] and adjust_balance_to or 'no-advance'
             av_aml = self.create_reconciled_move(
                 cr, uid, exp.id, aml, adjust_balance_to=adjust_balance_to,
                 reconcile_amount=abs(aml_amount), context=context)
@@ -299,52 +325,49 @@ class hr_expense_expense(osv.Model):
             context=context)
 
         #~ create invoice move lines.
-        global_new_aml = []
-        global_reconcile_aml = []
-        inv_new_aml, inv_reconcile_aml = \
+        inv_match_pair, inv_global_reconcile, inv_excess = aml['invs'] and \
             self.create_reconcile_move_lines(
-                cr, uid, exp.id, am_id,
-                aml_ids=aml['invs'],
-                line_type='invoice',
-                context=context)
-        global_new_aml.extend(inv_new_aml)
-        global_reconcile_aml.extend(inv_reconcile_aml)
+                cr, uid, exp.id, am_id, aml_ids=aml['invs'],
+                line_type='invoice', adjust_balance_to=adjust_balance_to,
+                context=context) or ([], [], [])
 
         #~ create expense move line.
-        exp_new_aml, exp_reconcile_aml = \
+        exp_match_pair, exp_global_reconcile, exp_excess = aml['exp'] and \
             self.create_reconcile_move_lines(
-                cr, uid, exp.id, am_id,
-                aml_ids=aml['exp'],
-                line_type='expense',
-                context=context)
-        global_new_aml.extend(exp_new_aml)
-        global_reconcile_aml.extend(exp_reconcile_aml)
+                cr, uid, exp.id, am_id, aml_ids=aml['exp'],
+                line_type='expense', adjust_balance_to=adjust_balance_to,
+                context=context) or ([], [], [])
 
         #~ create advances move lines.
         if reconcile_amount:
-            advance_new_aml, adv_reconcile_aml = \
+            adv_match_pair, adv_global_reconcile, adv_excess = \
                 self.create_reconcile_move_lines(
                     cr, uid, exp.id, am_id,
-                    aml_ids=[aml['advances'][0]],
+                    aml_ids=[aml['advances'] and aml['advances'][0] or False],
                     advance_amount=reconcile_amount,
                     line_type='advance',
                     adjust_balance_to=adjust_balance_to,
                     context=context)
-            advance_new_aml += aml['advances'][1:]
+            if aml['advances'] and len(aml['advances']) > 1:
+                adv_global_reconcile += aml['advances'][1:]
         else:
-            advance_new_aml = aml['advances']
-            adv_reconcile_aml = False
+            adv_match_pair = []
+            adv_global_reconcile = aml['advances']
+            adv_excess = []
 
-        reconciliaton_list = global_new_aml + \
-            [tuple(global_reconcile_aml + advance_new_aml)]
+        match_pair_list = inv_match_pair + exp_match_pair + \
+            adv_match_pair + [tuple(
+                inv_global_reconcile + exp_global_reconcile + adv_global_reconcile)]
 
         # make reconcilation.
-        for line_pair in reconciliaton_list:
+        for line_pair in match_pair_list:
             aml_obj.reconcile(
                 cr, uid, list(line_pair), 'manual', account_id,
                 period_id, journal_id, context=context)
+            if not aml['exp']:
+                self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
 
-        return adv_reconcile_aml or False
+        return adv_global_reconcile or False
 
     def create_reconcile_move_lines(self, cr, uid, ids, am_id, aml_ids,
                                     advance_amount=False, line_type=None,
@@ -360,8 +383,9 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
         exp = self.browse(cr, uid, ids, context=context)
-        reconciliaton_list = []
-        advance_reconciliaton_list = []
+        match_pair_list = []
+        global_reconcil_list = []
+        excess_list = []
         vals = {}.fromkeys(['partner_id', 'debit', 'credit',
                            'name', 'move_id', 'account_id'])
         vals['move_id'] = am_id
@@ -382,12 +406,15 @@ class hr_expense_expense(osv.Model):
                 or _('(Debt to employee)'),
         }
 
-        for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+        for aml_id in aml_ids:
+            aml_brw = aml_id \
+                and aml_obj.browse(cr, uid, aml_id, context=context) \
+                or False
             #~ DEBIT LINE
             debit_vals = vals.copy()
             debit_vals.update({
                 'partner_id': line_type == 'advance' and
-                    exp.account_move_id.partner_id.id or
+                    exp.employee_id.address_home_id.id or
                     aml_brw.partner_id.id,
                 'debit':
                     line_type == 'advance' and advance_amount or
@@ -403,7 +430,7 @@ class hr_expense_expense(osv.Model):
             #~ CREDIT LINE
             credit_vals = vals.copy()
             credit_vals.update({
-                'partner_id': exp.account_move_id.partner_id.id,
+                'partner_id': exp.employee_id.address_home_id.id,
                 'debit': 0.0,
                 'credit':
                     line_type == 'advance' and advance_amount
@@ -413,24 +440,24 @@ class hr_expense_expense(osv.Model):
                     advance_name['credit_line'] or ''),
                 })
             credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
-            if line_type == 'advance':
-                if adjust_balance_to == 'debit':
-                    reconciliation_tuple = (aml_brw.id, credit_id)
-                elif adjust_balance_to == 'credit':
-                    reconciliation_tuple = (aml_brw.id, debit_id)
-            else:
-                reconciliation_tuple = (aml_brw.id, debit_id)
 
-            reconciliaton_list.append(reconciliation_tuple)
-            advance_reconciliaton_list.append(credit_id)
+            if line_type in ['invoice', 'expense']:
+                match_pair_list.append((aml_brw.id, debit_id))
+                global_reconcil_list.append(credit_id)
+            elif line_type in ['advance']:
+                if adjust_balance_to in ['debit', 'credit']:
+                    match_id, mirror_id = \
+                        adjust_balance_to == 'debit' \
+                        and (credit_id, debit_id) or (debit_id, credit_id)
+                    global_reconcil_list.extend([aml_brw.id, match_id])
+                    excess_list.append(mirror_id)
+                elif adjust_balance_to in ['no-advance']:
+                    global_reconcil_list.append(debit_id)
+                    excess_list.append(credit_id)
+                else:
+                    raise osv.except_osv ('HELLO', 'LA estoy cagando en algun lugar')
 
-        if line_type == 'advance':
-            advance_mirror = []
-            for item in reconciliaton_list:
-                advance_mirror.extend(list(item))
-            return advance_mirror, advance_reconciliaton_list
-        else:
-            return reconciliaton_list, advance_reconciliaton_list
+        return match_pair_list, global_reconcil_list, excess_list
 
     def validate_expense_invoices(self, cr, uid, ids, context=None):
         """ Validate Invoices asociated to the Expense. Put the invoices in
