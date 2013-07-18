@@ -36,13 +36,12 @@ class attach_invoice_to_expense_wizard(osv.TransientModel):
         """ Attach an invoice to a Expense object.
         Note: Only applies to one invoice ay time """
         #~ TODO: Necesito verificar si el partner es un empleado????
-
         context = context or {}
         ai_obj = self.pool.get('account.invoice')
         expense_id = \
             self.browse(cr, uid, ids[0], context=context).expense_id.id \
             or False
         ai_obj.write(
-            cr, uid, context['active_id'], {'expense_id': expense_id},
+            cr, uid, context['active_ids'], {'expense_id': expense_id},
             context=context)
         return True

@@ -3,11 +3,20 @@
     <data>
 
         <record model="ir.actions.act_window" id="act_attach_invoice_to_expense_wizard">
-            <field name="name">Attach invoice to an Expense</field>
+            <field name="name">Attach to Expense</field>
             <field name="res_model">attach.invoice.to.expense.wizard</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="action_batch_attach_invoices_to_expense">
+            <field name="model_id" ref="account.model_account_invoice" />
+            <field name="name">Attach to Expense</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('act_attach_invoice_to_expense_wizard'))" />
+            <field name="key">action</field>
+            <field name="model">account.invoice</field>
         </record>
 
         <record id="attach_invoice_to_expense_view" model="ir.ui.view">
