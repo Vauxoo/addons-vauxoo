@@ -36,7 +36,7 @@
     "depends": [
         "account",
     ],
-    "update_xml": ["invoice_date.xml"],
+    "data": ["invoice_date.xml"],
     "installable": True,
     "active": False,
 }
