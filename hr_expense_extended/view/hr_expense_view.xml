@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='line_ids']" position="after">
-                    <separator string = "Deductible Expenses"/>
+                    <separator string="Deductible Lines"/>
                     <field name="ail_ids" readonly="1">
                         <tree>
                             <field name="name"/>
@@ -21,6 +21,10 @@
                             <field name="price_subtotal" sum=""/>
                         </tree>
                     </field>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']" position="before">
+                    <separator string="No Deductible Lines"/>
                 </xpath>
 
                 <xpath expr="//button[@name='confirm']" position="after">
