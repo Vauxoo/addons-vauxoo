@@ -84,7 +84,7 @@ class hr_expense_expense(osv.Model):
                 'account.invoice': (_get_exp_from_invoice, None, 50)
             }),
         'advance_ids': fields.many2many(
-            'account.move.line','expense_advance_rel',
+            'account.move.line', 'expense_advance_rel',
             'expense_id', 'aml_id', string='Employee Advances',
             help="Advances associated to the expense employee."),
         'skip': fields.boolean(
@@ -107,10 +107,10 @@ class hr_expense_expense(osv.Model):
         else:
             self.load_payments(cr, uid, ids, context=context)
             res['value'] = {'advance_ids':
-                [advn.id
-                 for advn in self.browse(
+               [advn.id
+                for advn in self.browse(
                     cr, uid, ids[0], context=context).advance_ids]
-                }
+            }
         return res
 
     def expense_confirm(self, cr, uid, ids, context=None):
@@ -119,10 +119,10 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         for exp in self.browse(cr, uid, ids, context=context):
             if not exp.invoice_ids and not exp.line_ids:
-                raise osv.except_osv(_('Invalid Procedure'),
-                    _('You have not Deductible or No Deductible lines loaded into '
-                      'the expense')
-                )
+                raise osv.except_osv(
+                    _('Invalid Procedure'),
+                    _('You have not Deductible or No Deductible lines loaded '
+                      'into the expense'))
             super(hr_expense_expense, self).expense_confirm(
                 cr, uid, ids, context=context)
         return True
@@ -133,7 +133,7 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         am_obj = self.pool.get('account.move')
         self.check_expense_invoices(cr, uid, ids, context=context)
-        super(hr_expense_expense,self).action_receipt_create(
+        super(hr_expense_expense, self).action_receipt_create(
             cr, uid, ids, context=context)
 
         #~ No Deductible Expenses then No Expense Move
@@ -168,7 +168,7 @@ class hr_expense_expense(osv.Model):
                  ('account_id', 'in', acc_payable_ids),
                  ('partner_id', 'in', partner_ids),
                  ('debit', '>', 0.0),
-                ],context=context)
+                 ], context=context)
             vals = {}
             cr.execute(('SELECT aml_id FROM expense_advance_rel '
                         'WHERE expense_id != %s'), (exp.id,))
@@ -230,24 +230,25 @@ class hr_expense_expense(osv.Model):
                             if aml_brw.account_id.type == 'payable']
             aml = {
                 'exp':
-                    exp_aml_brws and [aml_brw.id for aml_brw in exp_aml_brws]
-                    or [],
+                exp_aml_brws and [aml_brw.id for aml_brw in exp_aml_brws]
+                or [],
                 'advances': [aml_brw.id for aml_brw in advance_aml_brws],
                 'invs': [aml_brw.id for aml_brw in inv_aml_brws],
                 #~ self.group_aml_inv_ids_by_partner(
-                    #~ cr, uid, [aml_brw.id for aml_brw in inv_aml_brws],
-                    #~ context=context),
+                #~ cr, uid, [aml_brw.id for aml_brw in inv_aml_brws],
+                #~ context=context),
                 'debit':
-                    sum([aml_brw.debit
-                         for aml_brw in advance_aml_brws]),
+                sum([aml_brw.debit
+                     for aml_brw in advance_aml_brws]),
                 'credit':
-                    sum([aml_brw.credit
-                         for aml_brw in exp_aml_brws + inv_aml_brws])
+                sum([aml_brw.credit
+                     for aml_brw in exp_aml_brws + inv_aml_brws])
             }
 
             aml_amount = aml['debit'] - aml['credit']
             adjust_balance_to = aml_amount > 0.0 and 'debit' or 'credit'
-            adjust_balance_to = aml['advances'] and adjust_balance_to or 'no-advance'
+            adjust_balance_to = aml['advances'] and \
+                adjust_balance_to or 'no-advance'
             av_aml = self.create_reconciled_move(
                 cr, uid, exp.id, aml, adjust_balance_to=adjust_balance_to,
                 reconcile_amount=abs(aml_amount), context=context)
@@ -311,7 +312,7 @@ class hr_expense_expense(osv.Model):
         #~ create move
         am_id = am_obj.create(
             cr, uid, {'journal_id': journal_id,
-            'ref': _('New Global Entry for') + ' ' + exp.name },
+                      'ref': _('New Global Entry for') + ' ' + exp.name},
             context=context)
 
         #~ create invoice move lines.
@@ -345,9 +346,9 @@ class hr_expense_expense(osv.Model):
             adv_global_reconcile = aml['advances']
             adv_excess = []
 
-        match_pair_list = inv_match_pair + exp_match_pair + \
-            adv_match_pair + [tuple(
-                inv_global_reconcile + exp_global_reconcile + adv_global_reconcile)]
+        match_pair_list = inv_match_pair + exp_match_pair + adv_match_pair + \
+            [tuple(inv_global_reconcile + exp_global_reconcile +
+                   adv_global_reconcile)]
 
         # make reconcilation.
         for line_pair in match_pair_list:
@@ -389,11 +390,11 @@ class hr_expense_expense(osv.Model):
 
         advance_name = {
             'debit_line':
-                adjust_balance_to == 'debit' and _('(Remaining Advance)')
-                or _('(Reconciliation)'),
+            adjust_balance_to == 'debit' and _('(Remaining Advance)')
+            or _('(Reconciliation)'),
             'credit_line':
-                adjust_balance_to == 'debit' and _('(Applyed Advance)')
-                or _('(Debt to employee)'),
+            adjust_balance_to == 'debit' and _('(Applyed Advance)')
+            or _('(Debt to employee)'),
         }
 
         for aml_id in aml_ids:
@@ -404,18 +405,18 @@ class hr_expense_expense(osv.Model):
             debit_vals = vals.copy()
             debit_vals.update({
                 'partner_id': line_type == 'advance' and
-                    exp.employee_id.address_home_id.id or
-                    aml_brw.partner_id.id,
+                exp.employee_id.address_home_id.id or
+                aml_brw.partner_id.id,
                 'debit':
-                    line_type == 'advance' and advance_amount or
-                    aml_brw.credit,
+                line_type == 'advance' and advance_amount or
+                aml_brw.credit,
                 'credit': 0.0,
                 'name':
-                    line_type == 'invoice' and _('Payable to Partner') + ' ' +
-                    aml_brw.partner_id.name or _('Payable to Employee') + ' ' +
-                    exp.employee_id.name + (line_type == 'advance' and ' ' +
-                    advance_name['debit_line'] or ''),
-                })
+                line_type == 'invoice' and _('Payable to Partner') + ' ' +
+                aml_brw.partner_id.name or _('Payable to Employee') + ' ' +
+                exp.employee_id.name + (line_type == 'advance' and ' ' +
+                advance_name['debit_line'] or ''),
+            })
             debit_id = aml_obj.create(cr, uid, debit_vals, context=context)
             #~ CREDIT LINE
             credit_vals = vals.copy()
@@ -423,12 +424,12 @@ class hr_expense_expense(osv.Model):
                 'partner_id': exp.employee_id.address_home_id.id,
                 'debit': 0.0,
                 'credit':
-                    line_type == 'advance' and advance_amount
-                    or aml_brw.credit,
-                'name': _('Payable to Employee') + ' ' + exp.employee_id.name + 
-                    (line_type == 'advance' and ' ' +
+                line_type == 'advance' and advance_amount
+                or aml_brw.credit,
+                'name': _('Payable to Employee') + ' ' + exp.employee_id.name +
+                (line_type == 'advance' and ' ' +
                     advance_name['credit_line'] or ''),
-                })
+            })
             credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
 
             if line_type in ['invoice', 'expense']:
@@ -445,7 +446,8 @@ class hr_expense_expense(osv.Model):
                     global_reconcil_list.append(debit_id)
                     excess_list.append(credit_id)
                 else:
-                    raise osv.except_osv ('HELLO', 'LA estoy cagando en algun lugar')
+                    raise osv.except_osv(
+                        'Ups', 'there is a problem')
 
         return match_pair_list, global_reconcil_list, excess_list
 
@@ -463,7 +465,8 @@ class hr_expense_expense(osv.Model):
                 for inv_brw in bad_invs:
                     error_msj = error_msj + \
                         '- ' + (inv_brw.number or inv_brw.partner_id.name) + \
-                        ' Invoice total ' + str(inv_brw.amount_total) + ' (' + inv_brw.state.capitalize() + ')\n'
+                        ' Invoice total ' + str(inv_brw.amount_total) + ' (' \
+                        + inv_brw.state.capitalize() + ')\n'
 
         if error_msj:
             raise osv.except_osv(
