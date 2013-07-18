@@ -56,15 +56,17 @@ class mass_fuse_wizard(osv.osv_memory):
             related_ids = models_obj.search(cr,uid,[('relation','=',str(context.get('active_model')))]) #get the models related to the one to fuse        
             for related in models_obj.browse(cr,uid,related_ids):
                 to_unlink = []
+                print 'related.model',related.model
                 target_model = self.pool.get(related.model)
-                target_ids = target_model.search(cr,uid,[(related.name,'in',active_ids)])
+                target_ids = target_model and target_model.search(cr,uid,[(related.name,'in',active_ids)])
                 if target_ids:
                     try:
                         target_model.write(cr,uid,target_ids,{str(related.name):base_id})
                     except:
                         pass #Lame way to validate field deletion on tables that still on the ir.model.fields model
-                    to_unlink = list(set(active_ids) - set([base_id])) 
-                    model_obj.unlink(cr,uid,to_unlink)
+                cr.commit()
+            to_unlink = list(set(active_ids) - set([base_id])) 
+            model_obj.unlink(cr,uid,to_unlink)
         result = super(mass_fuse_wizard, self).create(cr, uid, {}, context)
         return result
 
