@@ -42,7 +42,7 @@ class res_currency(osv.Model):
         @param exchange_date: date were the exchange will be done, this date
         will indicate the conversio rate to use.
         """
-        context = context ot {}
+        context = context or {}
         if from_currency_id == to_currency_id:
             return from_amount
         context['date'] = exchange_date
