@@ -27,7 +27,11 @@
 from osv import osv
 from osv import fields
 from tools.translate import _
+import time
 
+__CTX__ = {}
+__CONS__ = {}
+__NUM__ = 1
 
 class ifrs_ifrs(osv.osv):
 
@@ -342,17 +346,26 @@ class ifrs_ifrs(osv.osv):
                     if ifrs_l.ifrs_id.id == ids[0]:  # Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
                         data.append(line)
                     data.sort(key=lambda x: int(x['sequence']))
+
             else:
                 for ifrs_l in ordered_lines:
+                    print "Calculo inicial - ", ifrs_l.name ," ##########################\n"
+                    start_time = time.time()
                     for lins in range(1, 13):
+                        print "Columna ", lins, "\n"
                         amount_value = ifrs_line._get_amount_value(
                         cr, uid, ids,
                         ifrs_l, period_name, fiscalyear, exchange_date,
                         currency_wizard, lins, target_move,
                         context=context)
+                    print (time.time() - start_time)/60.0, "minutos"
+                    print "##########################\n"
                 
                 
                 for ifrs_l in ordered_lines:
+                    print "Calculo operands - ", ifrs_l.name ," ##########################\n"
+                    start_time = time.time()
+                    
                     line = {
                     'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
                     'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
@@ -368,6 +381,9 @@ class ifrs_ifrs(osv.osv):
                     if ifrs_l.ifrs_id.id == ids[0]:  # Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
                         data.append(line)
                     data.sort(key=lambda x: int(x['sequence']))
+                    
+                    print (time.time() - start_time)/60.0, "minutos"
+                    print "##########################\n"
         return data
 
 
@@ -377,7 +393,8 @@ class ifrs_lines(osv.osv):
     _parent_store = True
 #    _parent_name = "parent_id"
     _order = 'sequence, type'
-    
+   
+
     def _calculate_acc(self, cr, uid, ids, all_account_brw, context=None):
         #########################################
         ############## Calculate ################
@@ -436,6 +453,33 @@ class ifrs_lines(osv.osv):
         ############## End Calculate ############
         #########################################
         return dict_leaf
+
+    def dicc(self, cr, uid, ids, acc_brw, context=None):
+        if context is None:
+            context = {}
+        
+        global __CTX__
+        global __CONS__
+        global __NUM__ 
+        
+        print "ctx", context
+        
+        key = -1 
+        for i,j in __CTX__.items():
+            if j == context:
+                key = i
+            break
+        
+        if key == -1:
+            consolidates = self._calculate_acc(cr, uid, ids, acc_brw.cons_ids, context=context)
+            __CTX__[__NUM__] = context
+            __CONS__[__NUM__] = consolidates
+            __NUM__ += 1
+        else:
+            consolidates = __CONS__[key]
+        
+        print "dicc_ctx", __CTX__
+        return consolidates
 
 
     def _get_sum_total(self, cr, uid, brw, number_month=None, is_compute=None, context=None):
@@ -551,20 +595,29 @@ class ifrs_lines(osv.osv):
                 c['analytic'] = analytic
             c['partner_detail'] = c.get('partner_detail')
             
-            dict_cons = self._calculate_acc(cr, uid, id, brw.cons_ids, context=c)
+            print "Es Detail $$$$$$$$$$$$$$"
+            start_time = time.time()
+
             
+            #dict_cons = self.dicc(cr, uid, id, brw, context=c)
+
             for a in brw.cons_ids:  # Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
                 if brw.value == 'debit':
-                    res += dict_cons.get(a.id).get('debit')
-                    #res += a.debit
+                    #res += dict_cons.get(a.id).get('debit')
+                    res += a.debit
                 elif brw.value == 'credit':
-                    res += dict_cons.get(a.id).get('credit')
-                    #res += a.credit
+                    #res += dict_cons.get(a.id).get('credit')
+                    res += a.credit
                 else:
-                    res += dict_cons.get(a.id).get('balance')
-                    #res += a.balance
+                    #res += dict_cons.get(a.id).get('balance')
+                    res += a.balance
+
+            print "fin detail #########", time.time() - start_time
 
         elif brw.type == 'total':
+            print "Es Total $$$$$$$$$$$$$$"
+            start_time = time.time()
+            
             res = self._get_sum_total(
                 cr, uid, brw, number_month, is_compute, context=c)
             if brw.comparison != 'without':
@@ -582,6 +635,9 @@ class ifrs_lines(osv.osv):
                     res = res2 != 0 and (100 * res / res2) or 0.0
                 elif brw.comparison == 'ratio':
                     res = res2 != 0 and (res / res2) or 0.0
+            
+            print "fin total #########", time.time() - start_time
+        
         res = brw.inv_sign and (-1.0 * res) or res
         # guardar amount del periodo que corresponde
         if is_compute:
