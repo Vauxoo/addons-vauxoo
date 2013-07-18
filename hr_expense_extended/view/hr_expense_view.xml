@@ -23,6 +23,11 @@
                     </field>
                 </xpath>
 
+                <xpath expr="//separator[@string='Notes']" position="before">
+                    <separator string="Deductible Taxes"/>
+                    <field name="ait_ids" readonly="1"/>
+                </xpath>
+
                 <xpath expr="//field[@name='line_ids']" position="before">
                     <separator string="No Deductible Lines"/>
                 </xpath>

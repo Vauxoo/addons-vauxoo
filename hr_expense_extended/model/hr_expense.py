@@ -93,7 +93,21 @@ class hr_expense_expense(osv.Model):
                    'advances (This will create write off a journal entry when '
                    'reconciling). If this is not what you want please create '
                    'and advance for the expense employee and use the Refresh '
-                   'button to associated to this expense'))
+                   'button to associated to this expense')),
+        'ait_ids': fields.related(
+            #~ _get_ait_ids,
+            'invoice_ids', 'tax_line',
+            type="one2many",
+            relation='account.invoice.tax',
+            string=_('Deductible Tax Lines'),
+            help=_('This are the account invoice taxes loaded into the '
+                   'Expense invoices. The user can\'t change its content and '
+                   'not have to worry about to fill the field. This taxes '
+                   'will be auto update when the expense invoices change.\n\n'
+                   'This invoices changes includes:\n - when a tax is added '
+                   'or removed from an invoice line,\n - when an invoice line '
+                   'is deleted from an invoice,\n - when the invoice is '
+                   'unlinked to the expense.')),
     }
 
     def onchange_no_danvace_option(self, cr, uid, ids, skip, context=None):
