@@ -43,10 +43,12 @@ cuentas no tienen asignadas cuenta padre y estas tienen hijas
 padre que se selecciona en el mismo wizard
 
     """,
-    'depends': ['account'],
+    'depends': [
+		'account',
+		'group_configurations_account',
+		],
     'data': [
         'wizard/set_accounting_wizard_view.xml',
-      
         ],
     'demo': [],
     'test': [],

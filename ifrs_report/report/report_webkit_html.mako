@@ -1,10 +1,6 @@
 <html xmlns="http://www.w3.org/TR/REC-html40" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
 <head>
 	
-    <style type="text/css">
-        ${css}
-       
-    </style>
 <table>
 	<tr>
 		
@@ -28,13 +24,6 @@
 				</table>
 			</td>
 			<td>
-			<table>
-				%try:
-					<tr><td>${helper.embed_logo_by_name('company_logo',40,60)|n}</td></tr>
-				%except:
-					<tr><td></td></tr>
-				%endtry
-			</table>
 			</td>
 		</tr>
 	</table> 

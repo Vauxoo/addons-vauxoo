@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.0-rc1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-03-08 08:12+0000\n"
-"PO-Revision-Date: 2011-03-25 16:01+0000\n"
+"PO-Revision-Date: 2013-06-03 07:38+0000\n"
 "Last-Translator: jmartin (Zikzakmedia) <jmartin@zikzakmedia.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2011-04-16 06:57+0000\n"
-"X-Generator: Launchpad (build 12735)\n"
+"X-Launchpad-Export-Date: 2013-07-18 07:16+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
 
 #. module: product_icecat
 #: code:addons/product_icecat/wizard/wizard_product_icecat.py:159
@@ -358,21 +358,3 @@ msgstr ""
 #: help:product.icecat.mapline,name:0
 msgid "Insert ID Category from Icecat"
 msgstr "Insereix ID de la categoria de icecat"
-
-#~ msgid ""
-#~ "The Object name must start with x_ and not contain any special character !"
-#~ msgstr ""
-#~ "El nom de l'objecte ha de començar amb x_ i no ha de contenir cap caràcter "
-#~ "especial!"
-
-#~ msgid "Invalid model name in the action definition."
-#~ msgstr "Nom de model no correcte en la definició de l'acció"
-
-#~ msgid "Error ! You can not create recursive Menu."
-#~ msgstr "Error ! No pot crear un menú recursiu."
-
-#~ msgid "Invalid XML for View Architecture!"
-#~ msgstr "Invàlid XML per la vista de l'arquitectura!"
-
-#~ msgid "Size of the field can never be less than 1 !"
-#~ msgstr "La grandaria del camp no pot ser menys petit de 1!"
