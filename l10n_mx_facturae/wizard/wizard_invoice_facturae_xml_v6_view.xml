@@ -25,7 +25,7 @@
             target="new"
             key2="client_action_multi"
             id="action_wizard_facturae_xml_v6_form"
-            groups="l10n_mx_facturae_group_show_default_wizards.res_group_facturae_show_default_wizards"
+            groups="l10n_mx_facturae_group_show_wizards.res_group_facturae_show_default_wizards"
         
         />
 

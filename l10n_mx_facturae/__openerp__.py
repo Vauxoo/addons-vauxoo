@@ -62,7 +62,7 @@ Requires the following programs:
             "l10n_mx_invoice_currency_chgdft",
             "l10n_mx_base_vat_split",
             "l10n_mx_facturae_report",
-            "l10n_mx_facturae_group_show_default_wizards",
+            "l10n_mx_facturae_group_show_wizards",
         ],
     "demo" : ["demo/l10n_mx_facturae_seq_demo.xml",],
     "data" : [
