@@ -108,8 +108,8 @@ class wizard_account_diot_mx(osv.osv_memory):
         for line in acc_move_line_obj.browse(cr, uid, move_lines_diot,
             context=context):
             partner_id = line.partner_id
-            partner_vat = upper((partner_id.vat_split or '').replace('-', '').\
-                replace('_', '').replace(' ', ''))
+            partner_vat = upper((partner_id.vat_split or '').replace('-', '')\
+                .replace('_', '').replace(' ', ''))
             if not partner_vat \
                 or not partner_id.type_of_third\
                 or not partner_id.type_of_operation\
@@ -144,11 +144,11 @@ class wizard_account_diot_mx(osv.osv_memory):
                     line_move[10] = line_move[10] + amount_exe
                     line_move[11] = line_move[11] + amount_ret
                     dic_move_line.update({
-                        line.partner_id.vat_split : line_move})
+                        partner_vat : line_move})
                 else:
                     matrix_row.append(line.partner_id.type_of_third)
                     matrix_row.append(line.partner_id.type_of_operation)
-                    matrix_row.append(line.partner_id.vat_split)
+                    matrix_row.append(partner_vat)
                     if line.partner_id.type_of_third == "05" and\
                         line.partner_id.number_fiscal_id_diot != False:
                         matrix_row.append(line.partner_id.number_fiscal_id_diot)
@@ -171,7 +171,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                     matrix_row.append(amount_exe)
                     matrix_row.append(amount_ret)
                     dic_move_line.update({
-                        line.partner_id.vat_split : matrix_row})
+                        partner_vat : matrix_row})
                 matrix_row = []
         if partner_ids_to_fix:
             return {
@@ -217,11 +217,13 @@ class wizard_account_diot_mx(osv.osv_memory):
                 int(round((dic_move_line[diot][10]),0)) == 0 and\
                 int(round((dic_move_line[diot][11]),0)) == 0:
                 partner_ids_tax_0.append(self.pool.get('res.partner').search(\
-                    cr, uid, [('vat_split' , '=', diot)]))
+                    cr, uid, [('vat_split' , '=', diot)])[0])
         if partner_ids_tax_0:
             account_move_line_id = acc_move_line_obj.search(cr, uid, [\
                 ('partner_id', 'in', partner_ids_tax_0),\
-                ('period_id', '=', period.id)])
+                ('period_id', '=', period.id),\
+                ('id', 'in', move_lines_diot)
+                ])
             return {
                 'name': 'Movements to corroborate the amounts of taxes',
                 'view_type' : 'form',
