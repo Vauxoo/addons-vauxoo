@@ -87,19 +87,58 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             ('tax_category_id', 'in', category_iva_ids)], context=context)
         lines_without_amount = move_line_obj.search(cr, uid, [\
             ('tax_id_secondary', 'in', tax_ids), ('amount_base', '=', False)])
-        for move in move_line_obj.browse(cr, uid, lines_without_amount, context=context):
+        for move in move_line_obj.browse(cr, uid, lines_without_amount,\
+            context=context):
             amount_tax = move.tax_id_secondary.amount
             amount_base = 0
             if move.debit != 0:
                 amount_base = move.debit
             if move.credit != 0:
                 amount_base = move.credit
+            if move.tax_id_secondary.amount == 0:
+                invoice_move_ids = invoice_obj.search(cr, uid, [\
+                    ('move_id','=', move.move_id.id)], context=context)
+                for invo in invoice_obj.browse(cr, uid, invoice_move_ids,\
+                    context=context):
+                    for tax_inv in invo.tax_line:
+                        if tax_inv.amount == 0:
+                            amount_base = tax_inv.base_amount
             if amount_tax != 0:
                 cr.execute("""UPDATE account_move_line
                     SET amount_base = %s
-                    WHERE id = %s""", (amount_base/amount_tax, move.id))
+                    WHERE id = %s""", (abs(amount_base/amount_tax), move.id))
             else:
                 cr.execute("""UPDATE account_move_line
                     SET amount_base = %s
                     WHERE id = %s""", (amount_base, move.id))
+        move_concile_ids = move_line_obj.search(cr, uid, ['|',\
+            ('reconcile_id', '!=', False),\
+            ('reconcile_partial_id', '!=', False)], context=context)
+        list_moves = []
+        for line in move_line_obj.browse(cr, uid, move_concile_ids,\
+            context=context):
+            list_moves.append(line.move_id)
+        list_moves = list(set(list_moves))
+        for move in list_moves:
+            move_tax = move_line_obj.search(cr, uid, [('move_id', '=', move.id), 
+                ('tax_id_secondary', '!=', False), ('reconcile_id','=', False),
+                ('reconcile_partial_id', '=', False)])
+            reconcile_id = False
+            reconcile_partial_id = False
+            for line in move.line_id:
+                if line.reconcile_id:
+                    reconcile_id = line.reconcile_id.id
+                    continue
+                if line.reconcile_partial_id:
+                    reconcile_partial_id = line.reconcile_partial_id.id
+                    continue
+            for line in move_line_obj.browse(cr, uid, move_tax, context=context):
+                if reconcile_id:
+                    cr.execute("""UPDATE account_move_line
+                        SET reconcile_id = %s
+                        WHERE id = %s""", (reconcile_id, line.id))
+                if reconcile_partial_id:
+                    cr.execute("""UPDATE account_move_line
+                        SET reconcile_partial_id = %s
+                        WHERE id = %s""", (reconcile_partial_id, line.id))
         return True
