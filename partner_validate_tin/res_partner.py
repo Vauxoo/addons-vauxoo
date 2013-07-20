@@ -57,15 +57,6 @@ class res_partner(osv.Model):
                 cr, uid, [('vat', '=', current_vat), ('parent_id', '=', None), ('id', '!=', partner_brw[0].id)]))
             return not duplicates
 
-        currrent_is_company = partner_brw[0].is_company
-
-        # Partners that are not company and have parent_id, can't have
-        # partners' VAT that are not part of its siblings or parent
-        if(current_parent_id and not currrent_is_company):
-            list_nodes = current_parent_id.child_ids
-            list_nodes = map(lambda x: x.id, list_nodes)
-            list_nodes.append(current_parent_id.id)
-            return self._check_vat_uniqueness_def(cr, uid, ids, current_vat, list_nodes, context=context)
         return True
 
     _constraints = [
