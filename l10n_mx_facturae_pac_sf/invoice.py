@@ -307,6 +307,17 @@ class account_invoice(osv.Model):
             password = pac_params.password
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
+            url = 'https://solucionfactible.com/ws/services/Timbrado2'
+            testing_url = 'http://testing.solucionfactible.com/ws/services/Timbrado'
+            if (wsdl_url == url) or (wsdl_url == testing_url):
+                pass
+            else:
+                raise osv.except_osv(_('Warning'), _('Web Service URL \
+                    o PAC incorrect'))
+            if namespace == 'http://timbrado.ws.cfdi.solucionfactible.com':
+                pass
+            else:
+                raise osv.except_osv(_('Warning'), _('Namespace of PAC incorrect'))
             if 'testing' in wsdl_url:
                 msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
             wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
@@ -418,7 +429,7 @@ class account_invoice(osv.Model):
                         else:
                             msg += _(u"\nCan't extract the file XML of PAC")
                 elif codigo_timbrado == '500':
-                    raise osv.except_osv(_('Warning'), _('Errors occurred were not allowed to complete the process of validation / certification.\nCode Stamping 500'))
+                    raise osv.except_osv(_('Warning'), _('Errors occurred were not allowed to complete the process of validation/certification.\nCode Stamping 500'))
                 elif codigo_timbrado == '501':
                     raise osv.except_osv(_('Warning'), _('Failed to Connect to the database.\nCode Stamping 501'))
                 elif codigo_timbrado == '502':
@@ -490,7 +501,6 @@ class account_invoice(osv.Model):
             #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
             wsdl_client = False
             wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
-            print "dddddddddddddddddd",wsdl_client
             if True:  # if wsdl_client:
                 file_globals = self._get_file_globals(
                     cr, uid, [context_id], context=context)
@@ -510,6 +520,7 @@ class account_invoice(osv.Model):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                 result = wsdl_client.cancelar(*params)
+                print result
                 codigo_cancel = result['status'] or ''
                 status = result['resultados'] and result[
                     'resultados']['status'] or ''
@@ -521,9 +532,11 @@ class account_invoice(osv.Model):
                     'resultados']['statusUUID'] or ''
                 if 'testing' in wsdl_url:
                     msg_global = _('- Status of response of SAT unknown')
+                print codigo_cancel
+                print status
+                print "status_uuid",status_uuid
                 if codigo_cancel == '200':
-                    msg_global += _(u"\nThe cancellation process has \
-                                    been completed successfully\n")
+                    msg_global += _(tools.ustr(result['mensaje']))
                     if status == '201':
                         msg_global += _(u"\nFolio has been canceled \
                                                     successfully\n")
@@ -531,7 +544,7 @@ class account_invoice(osv.Model):
                             'resultados']['uuid'] or ''
                         msg_global = _('\n- The process of cancellation\
                                 has completed correctly.\n- The uuid \
-                                cancelledis: ') + folio_cancel+_('\n\nMessage Technical:\n')
+                                cancelled is: ') + folio_cancel+_('\n\nMessage Technical:\n')
                         msg_tecnical = 'Status:', status, ' uuid:', uuid_nvo,\
                             ' msg:', msg_nvo, 'Status uuid:', status_uuid
                         self.write(cr, uid, context_id, {

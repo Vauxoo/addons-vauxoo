@@ -106,14 +106,11 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
         cr.commit()
-
         ir_model_data = self.pool.get('ir.model.data')
-
         form_res = ir_model_data.get_object_reference(
             cr, uid, 'l10n_mx_ir_attachment_facturae',
             'view_ir_attachment_facturae_mx_form')
         form_id = form_res and form_res[1] or False
-
         tree_res = ir_model_data.get_object_reference(
             cr, uid, 'l10n_mx_ir_attachment_facturae',
             'view_ir_attachment_facturae_mx_tree')
@@ -162,11 +159,9 @@ class ir_attachment_facturae_mx(osv.Model):
                 #'res_id': invoice.id,
             }, context=context)
             if not attach:
-                msj = _("Not Applicable XML CFD 2.2\n")
+                msj = _("Not Applicable XML CFD 3.2\n")
         if attach:
-            msj = _("Attached Successfully XML CFD 2.2\n")
-        else:
-            msj = _("Not Applicable XML CFD 2.2\n")
+            msj = _("Attached Successfully XML CFD 3.2\n")
         return self.write(cr, uid, ids,
                           {'state': 'confirmed',
                            'file_input': attach or False,
@@ -349,20 +344,25 @@ class ir_attachment_facturae_mx(osv.Model):
         invoice_obj = self.pool.get('account.invoice')
         attach_obj = self.pool.get('ir.attachment')
         type = self.browse(cr, uid, ids)[0].type
+        state = self.browse(cr, uid, ids)[0].state
+        name = self.browse(cr, uid, ids)[0].name
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         #msj = self.browse(cr, uid, ids)[0].msj
         if type == 'cfdi32':
-            get_file_cancel = invoice_obj._get_file_cancel(
-                cr, uid, [invoice], context={})
-            sf_cancel = invoice_obj.sf_cancel(
-                cr, uid, [invoice.id], context={})
-            msj = _('Cancel\n')
-            msj += tools.ustr(sf_cancel['message'])
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
-            'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
-        for attachment in self.browse(cr, uid, adjuntos, context):
-            ids2 = attach_obj.write(cr, uid, attachment.id, {
+            if state not in ['draft', 'confirmed']:
+                sf_cancel = invoice_obj.sf_cancel(
+                    cr, uid, [invoice.id], context={})
+                msj = _('Cancel\n')
+                msj += tools.ustr(sf_cancel['message'])
+                #validar si se hizo correcta la cancelación con los status
+                adjuntos = attach_obj.search(cr, uid, [(
+                    'res_model', '=', 'account.invoice'), 
+                        ('res_id', '=', invoice)])
+                for attachment in self.browse(cr, uid, adjuntos, context):
+                    ids2 = attach_obj.write(cr, uid, attachment.id, {
                                     'res_id': False, }, context={})
+                status = invoice_obj.action_cancel(cr, uid, [invoice.id], context)
+                #Termina validacion
         return self.write(cr, uid, ids,
                           {'state': 'cancel',
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
