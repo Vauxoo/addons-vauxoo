@@ -25,5 +25,5 @@ msgstr "Empresa"
 #: constraint:res.partner:0
 #, python-format
 msgid "Error ! Partner's VAT must be a unique value or empty"
-msgstr "Error ! El RFC debe ser unico para cada Partner en cada compañia"
+msgstr "Error ! El RFC debe ser unico para cada Partner en cada compañía"
 
