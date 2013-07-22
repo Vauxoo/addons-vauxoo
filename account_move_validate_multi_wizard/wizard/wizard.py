@@ -23,6 +23,7 @@
 
 
 from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 
 class account_move_multi_wizard(osv.TransientModel):
@@ -45,9 +46,19 @@ class account_move_multi_wizard(osv.TransientModel):
     def validate_moves(self, cr, uid, ids, context=None):
         if not context:
             context = {}
-        form = self.read(cr, uid, ids, context=context)
-        move_ids = form[0]['account_move_ids']
+        lista = []
         obj_account_move = self.pool.get('account.move')
-        for move in move_ids:
-            obj_account_move.button_validate(cr, uid, [move], context=context)
+        for form in self.browse(cr, uid, ids, context=context):
+            for move in form.account_move_ids:
+                try:
+                    obj_account_move.button_validate(
+                        cr, uid, [move.id], context=context)
+                    cr.commit()
+                except:
+                    lista.append(move.id)
+        if lista:
+            raise osv.except_osv(_('Error de validación!'),
+                                 _( '''You cannot validate a non-balanced entry. Make sure you have configured payment terms properly.
+                                       The latest payment term line should be of the "Balance" type. \n In journal entries: %s''' ) % (lista))
+
         return {}
