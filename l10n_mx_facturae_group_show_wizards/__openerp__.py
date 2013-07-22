@@ -31,7 +31,11 @@ Group for show wizards of FacturaE
 ==================================
 
 This module creates the group Show Default Wizards FacturaE, if a user has this group,\n 
-can see the facturae wizards, however is advisable that nobody has this group assigned.
+can see the facturae wizards, however is advisable that nobody has this group assigned. \n
+Show wizards:\n
+-Factura Electronica XML \n
+-Cancelar FActura PAC SF \n
+-Subir Factura al PAC V6 \n
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
