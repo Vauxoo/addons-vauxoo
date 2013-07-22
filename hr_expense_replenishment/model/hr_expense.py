@@ -159,12 +159,6 @@ class hr_expense_expense(osv.Model):
         super(hr_expense_expense, self).action_receipt_create(
             cr, uid, ids, context=context)
 
-        #~ No Deductible Expenses then No Expense Move
-        move_ids = [exp.account_move_id.id
-                    for exp in self.browse(cr, uid, ids, context=context)
-                    if not exp.line_ids]
-        am_obj.unlink(cr, uid, move_ids, context=context)
-
         #~ Related pre-load advances
         self.load_advances(cr, uid, ids, context=context)
         return True
@@ -336,11 +330,11 @@ class hr_expense_expense(osv.Model):
     def create_reconciled_move(self, cr, uid, ids, aml, adjust_balance_to,
                                reconcile_amount=None, context=None):
         """
-        Create the account move and its move lines to balance the reconcliation
-        note: only recieve one ids
+        Create the account move lines to balance the invoices, expense, and
+        advances move lines to be reconciliated. Note: only recieve one id
         @param ids: only one expense id
-        @param aml: dictionary with expense data (inv, exp
-        and advances move lines), and debit an credit totals.
+        @param aml: dictionary with expense data (inv, exp and advances move
+        lines), and debit an credit totals.
         """
         context = context or {}
         am_obj = self.pool.get('account.move')
@@ -352,25 +346,21 @@ class hr_expense_expense(osv.Model):
         # TODO: account_id and journal_id need to be particular value? at
         #~ @journal_id  to be select the allow reconcillaton option?
         exp = self.browse(cr, uid, ids, context=context)
+        exp_global_reconcile = [brw.id
+                                for brw in exp.account_move_id.line_id
+                                if brw.credit > 0.0]
+        am_id = exp.account_move_id.id
 
-        #~ create move
-        am_id = am_obj.create(
-            cr, uid, {'journal_id': journal_id,
-                      'ref': _('New Global Entry for') + ' ' + exp.name},
-            context=context)
+        #~ clear empty expense move.
+        if not exp_global_reconcile:
+            empty_aml_ids = [brw.id for brw in exp.account_move_id.line_id]
+            aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
 
         #~ create invoice move lines.
         inv_match_pair, inv_global_reconcile, inv_excess = aml['invs'] and \
             self.create_reconcile_move_lines(
                 cr, uid, exp.id, am_id, aml_ids=aml['invs'],
                 line_type='invoice', adjust_balance_to=adjust_balance_to,
-                context=context) or ([], [], [])
-
-        #~ create expense move line.
-        exp_match_pair, exp_global_reconcile, exp_excess = aml['exp'] and \
-            self.create_reconcile_move_lines(
-                cr, uid, exp.id, am_id, aml_ids=aml['exp'],
-                line_type='expense', adjust_balance_to=adjust_balance_to,
                 context=context) or ([], [], [])
 
         #~ create advances move lines.
@@ -390,7 +380,7 @@ class hr_expense_expense(osv.Model):
             adv_global_reconcile = aml['advances']
             adv_excess = []
 
-        match_pair_list = inv_match_pair + exp_match_pair + adv_match_pair + \
+        match_pair_list = inv_match_pair + adv_match_pair + \
             [tuple(inv_global_reconcile + exp_global_reconcile +
                    adv_global_reconcile)]
 
