@@ -33,7 +33,7 @@
     "demo" : [],
     "test": [],
     "data" : [
-        #'security/account_tax_category_security.xml',
+        'security/account_tax_category_security.xml',
         'security/ir.model.access.csv',
         'invoice_view.xml',
         'account_tax_category_view.xml',
