@@ -394,6 +394,8 @@ class hr_expense_expense(osv.Model):
             [tuple(inv_global_reconcile + exp_global_reconcile +
                    adv_global_reconcile)]
 
+        #~ raise osv.except_osv ('stop', 'check console')
+
         # make reconcilation.
         for line_pair in match_pair_list:
             aml_obj.reconcile(
@@ -424,10 +426,9 @@ class hr_expense_expense(osv.Model):
         vals = {}.fromkeys(['partner_id', 'debit', 'credit',
                            'name', 'move_id', 'account_id'])
         vals['move_id'] = am_id
-        vals['account_id'] = self.get_payable_account_id(
-            cr, uid, context=context)
-        vals['journal_id'] = self.get_purchase_journal_id(
-            cr, uid, context=context)
+        no_advance_account = \
+            exp.employee_id.address_home_id.property_account_payable.id
+        vals['journal_id'] = exp.journal_id
         vals['period_id'] = self.pool.get('account.period').find(
             cr, uid, context=context)[0]
         vals['date'] = time.strftime('%Y-%m-%d')
@@ -460,6 +461,10 @@ class hr_expense_expense(osv.Model):
                 aml_brw.partner_id.name or _('Payable to Employee') + ' ' +
                 exp.employee_id.name + (line_type == 'advance' and ' ' +
                 advance_name['debit_line'] or ''),
+                'account_id':
+                    aml_brw and aml_brw.account_id.id
+                    or adjust_balance_to in ['no-advance']
+                    and no_advance_account or False,
             })
             debit_id = aml_obj.create(cr, uid, debit_vals, context=context)
             #~ CREDIT LINE
@@ -473,6 +478,10 @@ class hr_expense_expense(osv.Model):
                 'name': _('Payable to Employee') + ' ' + exp.employee_id.name +
                 (line_type == 'advance' and ' ' +
                     advance_name['credit_line'] or ''),
+                'account_id':
+                    aml_brw and aml_brw.account_id.id
+                    or adjust_balance_to in ['no-advance']
+                    and no_advance_account or False,
             })
             credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
 
