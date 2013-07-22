@@ -32,7 +32,7 @@ class account_account(osv.Model):
 
     _columns = {
         'analytic_required': fields.boolean('Analytic Required', help='If '\
-        'this field is active, the journal items that used this account, '\
+        'this field is active, the journal items that used this account '\
         'should have an analytic account'),
     }
 

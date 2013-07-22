@@ -32,7 +32,7 @@ class account_account(osv.Model):
 
     _columns = {
         'partner_required': fields.boolean('Partner Required', help='If this '\
-        'field is active, the journal items that used this account, should '\
+        'field is active, the journal items that used this account should '\
         'have a partner'),
     }
 
