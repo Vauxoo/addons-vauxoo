@@ -77,7 +77,7 @@
                 </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
-                    <page string="Payments" attrs="{'invisible':[('state','not in',['done','paid'])]}">
+                    <page string="Payments" attrs="{'invisible':[('state','not in',['paid'])]}">
                         <field name="payment_ids" nolabel="1" readonly="1">
                             <tree>
                                 <field name="journal_id"/>
