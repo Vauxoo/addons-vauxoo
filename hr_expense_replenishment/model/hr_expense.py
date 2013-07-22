@@ -133,6 +133,23 @@ class hr_expense_expense(osv.Model):
                    'or removed from an invoice line,\n - when an invoice line '
                    'is deleted from an invoice,\n - when the invoice is '
                    'unlinked to the expense.')),
+        'state': fields.selection([
+            ('draft', 'New'),
+            ('cancelled', 'Refused'),
+            ('confirm', 'Waiting Approval'),
+            ('accepted', 'Approved'),
+            ('done', 'Waiting Payment'),
+            ('process', 'Processing Payment'),
+            ('deduction', 'Processing Deduction'),
+            ('paid', 'Paid')
+            ],
+            'Status', readonly=True, track_visibility='onchange',
+            help=_('When the expense request is created the status is '
+            '\'Draft\'.\n It is confirmed by the user and request is sent to '
+            'admin, the status is \'Waiting Confirmation\'.\ \nIf the admin '
+            'accepts it, the status is \'Accepted\'.\n If the accounting '
+            'entries are made for the expense request, the status is '
+            '\'Waiting Payment\'.')),
     }
 
     def onchange_no_danvace_option(self, cr, uid, ids, skip, context=None):
