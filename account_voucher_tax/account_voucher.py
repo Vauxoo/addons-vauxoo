@@ -426,7 +426,7 @@ class account_voucher(osv.Model):
                                     if move_lines.account_id.id== account:
                                         move_line_id=move_lines.id
                                         break
-                                amount_base = (credit_amount_original * 1 / (tax.base_amount + tax.amount)) * (tax.base_amount + tax.amount)
+                                amount_base = (credit_amount_original * 1.0 / (tax.base_amount + tax.amount)) * (tax.base_amount + tax.amount)
                                 tax_line={
                                     'tax_id':tax.tax_id.id,
                                     'account_id':account,
