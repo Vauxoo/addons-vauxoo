@@ -87,9 +87,10 @@ class hr_expense_expense(osv.Model):
             'account.move.line', 'expense_advance_rel',
             'expense_id', 'aml_id', string='Employee Advances',
             help="Advances associated to the expense employee."),
-        'payment_ids': fields.many2many(
-            'account.move.line', 'expense_payment_rel',
-            'expense_id', 'payment_id',
+        'payment_ids': fields.related(
+            'account_move_id', 'line_id',
+            type='one2many',
+            relation='account.move.line',
             string=_('Expense Payments'),
             help=_('This table is a summary of the payments done to reconcile '
                    'the expense invoices, lines and advances. This is an only '
@@ -197,26 +198,6 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, vals, context=context)
         return True
 
-    def related_payments(self, cr, uid, ids, context=None):
-        """ Load the expense related payments."""
-        context = context or {}
-        aml_obj = self.pool.get('account.move.line')
-        acc_payable_ids = self.pool.get('account.account').search(
-            cr, uid, [('type', '=', 'payable')], context=context)
-        for exp in self.browse(cr, uid, ids, context=context):
-            exp_move_ids = exp.account_move_id.id
-            partner_ids = [exp.employee_id.address_home_id.id]
-            aml_ids = aml_obj.search(
-                cr, uid,
-                [('reconcile_id', '!=', False),
-                 ('account_id', 'in', acc_payable_ids),
-                 ('partner_id', 'in', partner_ids),
-                ], context=context)
-            vals = {}
-            vals['payment_ids'] = [(6, 0, aml_ids)]
-            self.write(cr, uid, exp.id, vals, context=context)
-        return aml_ids
-
     def order_payments(self, cr, uid, ids, aml_ids, context=None):
         """ orders the payments lines by partner id. Recive only one id"""
         context = context or {}
@@ -289,7 +270,6 @@ class hr_expense_expense(osv.Model):
             av_aml = self.create_reconciled_move(
                 cr, uid, exp.id, aml, adjust_balance_to=adjust_balance_to,
                 reconcile_amount=abs(aml_amount), context=context)
-            self.related_payments(cr, uid, [exp.id], context=context)
             #~ TODO: make the automatic the voucher linked to the av_aml?
 
         return True
