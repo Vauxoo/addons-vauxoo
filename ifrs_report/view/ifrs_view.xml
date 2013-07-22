@@ -22,12 +22,9 @@
 		<record model="ir.ui.view" id="view_ifrs_ifrs_form">
 		  <field name="name">ifrs.ifrs.form</field>
 		  <field name="model">ifrs.ifrs</field>
+		  <field name="type">form</field>
 		  <field name="arch" type="xml">
-			<form string="International Financial Reporting Standards" version="7.0">
-              <header>
-                <button string="Compute" name='compute' type='object' icon='gtk-execute' class="oe_inline_header"/>
-			    <field name="state" widget="statusbar" statusbar_visible="draft,ready,done,cancel" class="oe_inline_header" />
-              </header>  
+			<form string="International Financial Reporting Standards">
                 <group>
                     <group>
                         <field name="name" />

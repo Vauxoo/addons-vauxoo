@@ -351,6 +351,9 @@ class ifrs_ifrs(osv.osv):
                 for ifrs_l in ordered_lines:
                     print "Calculo inicial - ", ifrs_l.name ," ##########################\n"
                     start_time = time.time()
+                    #if ifrs_l.name == "UTILIDAD DE LA OPERACION":
+                        #import pdb
+                        #pdb.set_trace()
                     for lins in range(1, 13):
                         print "Columna ", lins, "\n"
                         amount_value = ifrs_line._get_amount_value(
@@ -364,6 +367,9 @@ class ifrs_ifrs(osv.osv):
                 
                 for ifrs_l in ordered_lines:
                     print "Calculo operands - ", ifrs_l.name ," ##########################\n"
+                    #if ifrs_l.name == "UTILIDAD DE LA OPERACION":
+                        #import pdb
+                        #pdb.set_trace()
                     start_time = time.time()
                     
                     line = {
@@ -563,7 +569,7 @@ class ifrs_lines(osv.osv):
                     c['period_from'] = c['period_from'][1]
 
         elif brw.type == 'total':
-            if brw.comparison != 'without':
+            if brw.comparison <> 'without':
                 c2 = c.copy()
 
                 c2['period_from'] = period_obj.previous(
@@ -601,6 +607,7 @@ class ifrs_lines(osv.osv):
             
             #dict_cons = self.dicc(cr, uid, id, brw, context=c)
 
+            
             for a in brw.cons_ids:  # Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
                 if brw.value == 'debit':
                     #res += dict_cons.get(a.id).get('debit')
@@ -616,11 +623,14 @@ class ifrs_lines(osv.osv):
 
         elif brw.type == 'total':
             print "Es Total $$$$$$$$$$$$$$"
+            #if brw.name == "UTILIDAD DE LA OPERACION":
+                #import pdb
+                #pdb.set_trace()
             start_time = time.time()
             
             res = self._get_sum_total(
                 cr, uid, brw, number_month, is_compute, context=c)
-            if brw.comparison != 'without':
+            if brw.comparison <> 'without':
                 res2 = 0
                 #~ TODO: Write definition for previous periods
                 #~ that will be the arguments for the new brw.
@@ -635,10 +645,9 @@ class ifrs_lines(osv.osv):
                     res = res2 != 0 and (100 * res / res2) or 0.0
                 elif brw.comparison == 'ratio':
                     res = res2 != 0 and (res / res2) or 0.0
-            
             print "fin total #########", time.time() - start_time
         
-        res = brw.inv_sign and (-1.0 * res) or res
+        #res = brw.inv_sign and (-1.0 * res) or res
         # guardar amount del periodo que corresponde
         if is_compute:
             field_name = 'amount'
@@ -647,7 +656,7 @@ class ifrs_lines(osv.osv):
                 field_name = 'ytd'
             else:
                 field_name = 'period_%s' % str(number_month)
-        self.write(cr, uid, brw.id, {field_name: res})
+        #self.write(cr, uid, brw.id, {field_name: res})
 
         return res
 
@@ -738,6 +747,10 @@ class ifrs_lines(osv.osv):
         res = self._get_sum(
             cr, uid, ifrs_line.id, number_month, is_compute, context=context)
 
+        #if ifrs_line.name == "UTILIDAD DE LA OPERACION":
+            #import pdb
+            #pdb.set_trace()
+
         if ifrs_line.type == 'detail':
             res = self.exchange(
                 cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
@@ -799,7 +812,9 @@ class ifrs_lines(osv.osv):
             res = self._get_amount_value(
                 cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
                 currency_wizard, number_month, target_move, pd, undefined, two, context=context)
-
+        
+        res = ifrs_line.inv_sign and (-1.0 * res) or res
+        self.write(cr, uid, ifrs_line.id, {field_name: res})
         return res
 
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
