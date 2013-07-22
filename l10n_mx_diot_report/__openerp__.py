@@ -31,13 +31,12 @@
     "author" : "Federico Manuel Echeverri Choux",
     "category" : "Generic Modules",
     "description": """Module DIOT for  Mexico
-    ------------------------------------------------------------------------
+    
     The modules 
     - account_move_line_base_tax
     - account_voucher_tax
     are in lp:addons-vauxoo/7.0
     
-    ------------------------------------------------------------------------
     If you have old moves without this modules installed, and the company have
     configurated the tax by 'purchase' and by 'sales', you can use the wizard 
     account_update_amount_tax_in_move_lines located in lp:addons-vauxoo/7.0
