@@ -36,11 +36,26 @@ class hr_expense_expense(osv.Model):
         """ Overwrite method to add the sum of the invoices total amount
         (Sub total + tax amount ). """
         context = context or {}
+        cur_obj = self.pool.get('res.currency')
         res = super(hr_expense_expense, self)._amount(
             cr, uid, ids, field_name, arg, context=context)
+        acc_payable_ids = self.pool.get('account.account').search(
+            cr, uid, [('type', '=', 'payable')], context=context)
         for expense in self.browse(cr, uid, res.keys(), context=context):
             for invoice in expense.invoice_ids:
-                res[expense.id] += invoice.amount_total
+                if invoice.move_id:
+                    res[expense.id] += \
+                        sum([aml.credit
+                             for aml in invoice.move_id.line_id
+                             if aml.account_id in acc_payable_ids])
+                else:
+                    res[expense.id] += cur_obj.exchange(
+                        cr, uid, [],
+                        from_amount=invoice.amount_total,
+                        to_currency_id=expense.currency_id.id,
+                        from_currency_id=invoice.currency_id.id,
+                        exchange_date=invoice.date_due,
+                        context=context)
         return res
 
     def _get_exp_from_invoice(self, cr, uid, ids, context=None):
