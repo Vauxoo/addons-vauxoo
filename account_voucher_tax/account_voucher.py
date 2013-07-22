@@ -83,8 +83,10 @@ class account_voucher(osv.Model):
                     return rate
         return rate
     
-    def get_percent_pay_vs_invoice(self, cr, uid, amount_original,amount, context=None):
-        return amount_original and amount/amount_original or 1.0
+    def get_percent_pay_vs_invoice(self, cr, uid, amount_original, amount,\
+        context=None):
+        return amount_original != 0 and float(amount) / float(\
+            amount_original) or 1.0
     
     def get_partial_amount_tax_pay(self, cr, uid, tax_amount, tax_base, context=None):
         return tax_amount*tax_base
