@@ -184,16 +184,12 @@ class hr_expense_expense(osv.Model):
         return True
 
     def action_receipt_create(self, cr, uid, ids, context=None):
-        """ overwirte the method to create expense accounting entries to
-        add the first fill of the expense payments table """
+        """ overwirte the method """
         context = context or {}
         am_obj = self.pool.get('account.move')
         self.check_expense_invoices(cr, uid, ids, context=context)
         super(hr_expense_expense, self).action_receipt_create(
             cr, uid, ids, context=context)
-
-        #~ Related pre-load advances
-        self.load_advances(cr, uid, ids, context=context)
         return True
 
     def load_advances(self, cr, uid, ids, context=None):
@@ -609,7 +605,7 @@ class hr_expense_expense(osv.Model):
             aml_obj.reconcile(cr, uid, reconcile_list, 'manual',
                               context=context)
             #~ aml_obj.reconcile_partial(cr, uid, reconcile_list, 'manual',
-                                      context=context)
+                                      #~ context=context)
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
