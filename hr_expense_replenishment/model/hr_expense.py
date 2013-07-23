@@ -183,15 +183,6 @@ class hr_expense_expense(osv.Model):
                 cr, uid, ids, context=context)
         return True
 
-    def action_receipt_create(self, cr, uid, ids, context=None):
-        """ overwirte the method """
-        context = context or {}
-        am_obj = self.pool.get('account.move')
-        self.check_expense_invoices(cr, uid, ids, context=context)
-        super(hr_expense_expense, self).action_receipt_create(
-            cr, uid, ids, context=context)
-        return True
-
     def load_advances(self, cr, uid, ids, context=None):
         """ Load the expense advances table with the corresponding data. Adds
         account move lines that fulfill the following conditions:
@@ -226,6 +217,9 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, vals, context=context)
         return True
 
+    #~ note: This method is not currently used. Can be used when trying to
+    #~ print the payment info with some partner and date order (need to be
+    #~ check)
     def order_payments(self, cr, uid, ids, aml_ids, context=None):
         """ orders the payments lines by partner id. Recive only one id"""
         context = context or {}
@@ -540,6 +534,8 @@ class hr_expense_expense(osv.Model):
                                         'invoice_open', cr)
         return True
 
+    #~ note: This method is not used. Can be used when the validating invoice
+    #~ process its automatize when generating accounting entries (it works).
     def generate_accounting_entries(self, cr, uid, ids, context=None):
         """ Active the workflow signals to change the expense to Done state
         and generate accounting entries for the expense by clicking the
@@ -621,90 +617,3 @@ class hr_expense_expense(osv.Model):
                               context=context)
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
-
-    def create_match_move(self, cr, uid, ids, context=None):
-        """ Create new account move that containg the data of the expsense
-        account move created and expense invoices moves. Receives only one
-        id """
-        context = context or {}
-        am_obj = self.pool.get('account.move')
-        exp_brw = self.browse(cr, uid, ids, context=context)
-        vals = dict()
-        vals['ref'] = 'Pago de Viaticos'
-        vals['journal_id'] = self.get_purchase_journal_id(
-            cr, uid, context=context)
-        debit_lines = self.create_debit_lines_dict(
-            cr, uid, exp_brw.id, context=context)
-
-        print '\n'*5
-        print 'exp_brw', exp_brw
-        print 'exp_brw.account_move_id', exp_brw.account_move_id
-        print 'exp.move.partner_id', exp_brw.account_move_id.partner_id
-        credit_line = [
-            (0, 0, {
-             'name': 'Pago de Viaticos',
-             'account_id': self.get_payable_account_id(
-                 cr, uid, context=context),
-             'partner_id': exp_brw.account_move_id.partner_id.id,
-             'debit': 0.0,
-             'credit': self.get_lines_credit_amount(
-                 cr, uid, exp_brw.account_move_id.id, context=context)
-             })
-            #~ TODO: I think may to change this acocunt_id
-        ]
-        vals['line_id'] = debit_lines + credit_line
-        return am_obj.create(cr, uid, vals, context=context)
-
-    def create_debit_lines_dict(self, cr, uid, ids, context=None):
-        """ Returns a list of dictionarys for create account move
-        lines objects. Only recive one exp id """
-        context = context or {}
-        debit_lines = []
-        am_obj = self.pool.get('account.move')
-        exp_brw = self.browse(cr, uid, ids, context=context)
-        move_ids = [inv_brw.move_id.id
-                    for inv_brw in exp_brw.invoice_ids
-                    if inv_brw.move_id]
-        for inv_move_brw in am_obj.browse(cr, uid, move_ids, context=context):
-            debit_lines.append(
-                (0, 0, {
-                 'name': 'Pago de Viaticos',
-                 'account_id': self.get_payable_account_id(
-                     cr, uid, context=context),
-                 'partner_id': inv_move_brw.partner_id.id,
-                 'invoice': inv_move_brw.line_id[0].invoice.id,
-                 'debit':  self.get_lines_credit_amount(
-                     cr, uid, inv_move_brw.id, context=context),
-                 'credit': 0.0})
-            )
-            #~ TODO: invoice field is have not been set, check why
-        return debit_lines
-
-    def get_lines_credit_amount(self, cr, uid, move_id, context=None):
-        """ Return the credit amount (float value) of the account move given.
-        @param move_id: list of move id where the credit will be extract """
-        context = context or {}
-        am_obj = self.pool.get('account.move')
-        move_brw = am_obj.browse(cr, uid, move_id, context=context)
-        amount = [move_line.credit
-                  for move_line in move_brw.line_id
-                  if move_line.credit != 0.0]
-        if not amount:
-            raise osv.except_osv(
-                'Invalid Procedure!',
-                "There is a problem in your move definition " +
-                move_brw.ref + ' ' + move_brw.name)
-        return amount[0]
-
-    def get_payable_account_id(self, cr, uid, context=None):
-        """ Return the id of a payable account. """
-        aa_obj = self.pool.get('account.account')
-        return aa_obj.search(cr, uid, [('type', '=', 'payable')], limit=1,
-                             context=context)[0]
-
-    def get_purchase_journal_id(self, cr, uid, context=None):
-        """ Return an journal id of type purchase. """
-        context = context or {}
-        aj_obj = self.pool.get('account.journal')
-        return aj_obj.search(cr, uid, [('type', '=', 'purchase')], limit=1,
-                             context=context)[0]
