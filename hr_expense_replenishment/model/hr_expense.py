@@ -302,28 +302,23 @@ class hr_expense_expense(osv.Model):
             }
 
             aml_amount = aml['debit'] - aml['credit']
-            adjust_balance_to = aml_amount > 0.0 and 'debit' or \
-            aml_amount < 0.0 and 'credit' or 'liquidate'
+            adjust_balance_to = aml_amount == 0.0 and 'liquidate' or \
+                (aml_amount > 0.0 and 'debit') or 'credit'
 
             #~ create and reconcile invoice move lines
             aml['invs'] and self.create_and_reconcile_invoice_lines(
                 cr, uid, exp.id, aml['invs'],
                 adjust_balance_to=adjust_balance_to, context=context)
 
-            #~ reconcile partial with advance
-            self.expense_reconcile_partial(cr, uid, exp.id, context=context)
-
             #~ change expense state
-            if adjust_balance_to == 'debit':
-                self.write(cr, uid, exp.id, {'state': 'deduction'},
-                context=context)
-            elif adjust_balance_to == 'credit':
-                self.write(cr, uid, exp.id, {'state': 'process'},
-                context=context)
+            if adjust_balance_to in ['debit', 'credit']:
+                print 'entre a debit & credit'
+                self.expense_reconcile_partial(cr, uid, exp.id, context=context)
+                self.write(
+                    cr, uid, exp.id, {'state': adjust_balance_to == 'debit'
+                    and 'deduction' or 'process'}, context=context)
             elif adjust_balance_to == 'liquidate':
                 self.expense_reconcile(cr, uid, exp.id, context=context)
-                raise osv.except_osv("ERROR",
-                                     "This option is not completed implemented yet")
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
@@ -338,17 +333,8 @@ class hr_expense_expense(osv.Model):
         for exp in self.browse(cr, uid, ids, context=context):
             exp_debit_lines = [aml.id for aml in exp.advance_ids]
             exp_credit_lines = [aml.id
-                                for aml in exp.account_move_id
+                                for aml in exp.account_move_id.line_id
                                 if aml.credit > 0.0]
-
-            #~ print '\n'*3
-            #~ print 'exp_debit_lines', exp_debit_lines
-            #~ print 'exp_credit_lines', exp_credit_lines
-            #~ for item in aml_obj.browse(cr, uid, exp_debit_lines + exp_credit_lines, context=context):
-                #~ print (item.id, item.debit, item.credit, item.name)
-            #~ print '\n'*3
-            #~ raise osv.except_osv('testing', 'check console')
-
             aml_obj.reconcile_partial(cr, uid,
                 exp_debit_lines + exp_credit_lines, 'manual',
                 context=context)
@@ -364,7 +350,7 @@ class hr_expense_expense(osv.Model):
         for exp in self.browse(cr, uid, ids, context=context):
             exp_debit_lines = [aml.id for aml in exp.advance_ids]
             exp_credit_lines = [aml.id
-                                for aml in exp.account_move_id
+                                for aml in exp.account_move_id.line_id
                                 if aml.credit > 0.0]
             aml_obj.reconcile(cr, uid, exp_debit_lines + exp_credit_lines,
                           'manual', context=context)
@@ -631,14 +617,6 @@ class hr_expense_expense(osv.Model):
                     adjust_balance_to='debit',
                     context=context)
             reconcile_list = advance_match_pair + credit_aml_ids
-
-            #~ print '\n'*3
-            #~ print 'reconcile_list', reconcile_list 
-            #~ for item in aml_obj.browse(cr, uid, reconcile_list, context=context):
-                #~ print (item.id, item.debit, item.credit, item.name)
-            #~ print '\n'*3
-            #~ raise osv.except_osv('testing', 'check console')
-
             aml_obj.reconcile(cr, uid, reconcile_list, 'manual',
                               context=context)
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
