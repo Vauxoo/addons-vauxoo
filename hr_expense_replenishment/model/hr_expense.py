@@ -310,6 +310,9 @@ class hr_expense_expense(osv.Model):
                 cr, uid, exp.id, aml['invs'],
                 adjust_balance_to=adjust_balance_to, context=context)
 
+            #~ reconcile partial with advance
+            self.expense_reconcile_partial(cr, uid, exp.id, context=context)
+
             #~ change expense state
             if adjust_balance_to == 'debit':
                 self.write(cr, uid, exp.id, {'state': 'deduction'},
@@ -322,6 +325,33 @@ class hr_expense_expense(osv.Model):
                 raise osv.except_osv("ERROR",
                                      "This option is not completed implemented yet")
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
+        return True
+
+    def expense_reconcile_partial(self, cr, uid, ids, context=None):
+        """
+        make a partial reconciliation between invoices debit and advances
+        credit.
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        ids = isinstance(ids, (int,long)) and [ids] or ids
+        for exp in self.browse(cr, uid, ids, context=context):
+            exp_debit_lines = [aml.id for aml in exp.advance_ids]
+            exp_credit_lines = [aml.id
+                                for aml in exp.account_move_id
+                                if aml.credit > 0.0]
+
+            #~ print '\n'*3
+            #~ print 'exp_debit_lines', exp_debit_lines
+            #~ print 'exp_credit_lines', exp_credit_lines
+            #~ for item in aml_obj.browse(cr, uid, exp_debit_lines + exp_credit_lines, context=context):
+                #~ print (item.id, item.debit, item.credit, item.name)
+            #~ print '\n'*3
+            #~ raise osv.except_osv('testing', 'check console')
+
+            aml_obj.reconcile_partial(cr, uid,
+                exp_debit_lines + exp_credit_lines, 'manual',
+                context=context)
         return True
 
     def expense_reconcile(self, cr, uid, ids, context=None):
@@ -601,11 +631,16 @@ class hr_expense_expense(osv.Model):
                     adjust_balance_to='debit',
                     context=context)
             reconcile_list = advance_match_pair + credit_aml_ids
-            #~ raise osv.except_osv ("Warning", "Method no yet complete implemented")
+
+            #~ print '\n'*3
+            #~ print 'reconcile_list', reconcile_list 
+            #~ for item in aml_obj.browse(cr, uid, reconcile_list, context=context):
+                #~ print (item.id, item.debit, item.credit, item.name)
+            #~ print '\n'*3
+            #~ raise osv.except_osv('testing', 'check console')
+
             aml_obj.reconcile(cr, uid, reconcile_list, 'manual',
                               context=context)
-            #~ aml_obj.reconcile_partial(cr, uid, reconcile_list, 'manual',
-                                      #~ context=context)
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
