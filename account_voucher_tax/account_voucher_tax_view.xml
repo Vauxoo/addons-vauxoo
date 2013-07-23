@@ -38,28 +38,6 @@
             </field>
         </record>
 
-        <record id="view_account_voucher_compute_tax" model="ir.ui.view">
-                <field name="name">view.account.voucher.compute.tax</field>
-                <field name="model">account.voucher</field>
-                <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
-                <field name="arch" type="xml">
-                     <xpath expr="//button[@name='proforma_voucher']" position="after">
-                        <button name="compute_tax" string="Compute" type="object" icon="gtk-cancel"/>
-                     </xpath>
-                </field>
-        </record>
-
-        <record id="view_account_voucher_compute_tax2" model="ir.ui.view">
-                <field name="name">view.account.voucher.compute.tax2</field>
-                <field name="model">account.voucher</field>
-                <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
-                <field name="arch" type="xml">
-                     <xpath expr="//button[@name='proforma_voucher']" position="after">
-                        <button name="compute_tax" string="Compute" type="object" icon="gtk-cancel"/>
-                     </xpath>
-                </field>
-        </record>
-
 
         <record id="view_account_voucher_lines_dr" model="ir.ui.view">
                 <field name="name">view.account.voucher.lines.dr</field>
