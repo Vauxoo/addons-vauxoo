@@ -505,7 +505,7 @@ class account_voucher(osv.Model):
                                     'analytic_account_id': tax.\
                                     account_analytic_id and tax.\
                                     account_analytic_id.id or False,
-                                    }])
+                                    'amount_base' : tax.base_amount}])
                                 #Check why need move_line_id
                 lista_tax_to_add = [[5, False, False]]
                 for tax in list_tax:
