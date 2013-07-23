@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-###########################################################################
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #
 #    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
-############################################################################
+#
 #    Coded by: Luis Torres (luis_t@vauxoo.com)
-############################################################################
+#
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,26 +22,35 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 {
-    "name" : "Wizard Vouchers Partner Invoice",
-    "author" : "Vauxoo",
-    "version" : "1.0",
-    "category" : "Generic Modules",
-    "depends" : [
+    "name": "Wizard Vouchers Partner Invoice",
+    "author": "Vauxoo",
+    "version": "1.0",
+    "category": "Generic Modules",
+    "description" : """
+Wizard Vouchers Partner Invoice
+===============================
+
+This wizard is used when you make advances to suppliers,
+without even the invoice issued. With this wizard you can
+relate the payments that have already been made ​​to the
+bill to which must belong, in turn making reconciliation of
+payment with invoice
+""",
+    "depends": [
         "account_voucher",
-        ],
-    "demo" : [],
-    "data" : [
+    ],
+    "demo": [],
+    "data": [
         #~ "account_voucher_view.xml",
         "wizard/vouchers_partner_invoice.xml",
-        ],
+    ],
     'js': [],
-    'qweb' : [],
-    'css':[],
+    'qweb': [],
+    'css': [],
     'test': [],
     "active": False,
     "installable": True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
