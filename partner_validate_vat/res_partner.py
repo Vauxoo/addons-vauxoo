@@ -32,7 +32,8 @@ class res_partner(osv.Model):
     _inherit = 'res.partner'
 
     def _check_vat_uniqueness(self, cr, uid, ids, context=None):
-        """ Check that the vat is unique in the level where the partner in the tree
+        """ Check that the vat is unique in the level 
+            where the partner in the tree
         """
         if context is None:
             context = {}
@@ -41,7 +42,9 @@ class res_partner(osv.Model):
             'res.users').browse(cr, uid, uid).company_id
 
         # User must be of MX
-        if not (user_company.partner_id and user_company.partner_id.country_id and user_company.partner_id.country_id.code == 'MX'):
+        if not (user_company.partner_id and\
+            user_company.partner_id.country_id\
+            and user_company.partner_id.country_id.code == 'MX'):
             return True
 
         partner_brw = self.browse(cr, uid, ids)
@@ -54,10 +57,14 @@ class res_partner(osv.Model):
         # Partners without parent, must have VAT uniqueness
         if not current_parent_id:
             duplicates = self.browse(cr, uid, self.search(
-                cr, uid, [('vat', '=', current_vat), ('parent_id', '=', None), ('id', '!=', partner_brw[0].id)]))
+                cr, uid, [('vat', '=', current_vat),
+                    ('parent_id', '=', None),
+                    ('id', '!=', partner_brw[0].id)]))
             return not duplicates
 
         return True
 
     _constraints = [
-        (_check_vat_uniqueness, _("Error ! Partner's VAT must be a unique value or empty"), []), ]
+        (_check_vat_uniqueness,
+         _("Error ! Partner's VAT must be a unique value or empty"), 
+         []), ]
