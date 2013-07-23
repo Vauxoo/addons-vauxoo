@@ -83,8 +83,10 @@ class account_voucher(osv.Model):
                     return rate
         return rate
     
-    def get_percent_pay_vs_invoice(self, cr, uid, amount_original,amount, context=None):
-        return amount_original and amount/amount_original or 1.0
+    def get_percent_pay_vs_invoice(self, cr, uid, amount_original, amount,\
+        context=None):
+        return amount_original != 0 and float(amount) / float(\
+            amount_original) or 1.0
     
     def get_partial_amount_tax_pay(self, cr, uid, tax_amount, tax_base, context=None):
         return tax_amount*tax_base
@@ -389,8 +391,11 @@ class account_voucher(osv.Model):
         company_currency = company_obj.browse(cr, uid, company_user,\
             context=context).currency_id.id
         tax_lines = {}
+        lines_ids = []
         if lines and lines.get('value', False):
-            for line in lines['value'].get('line_cr_ids'):
+            lines_ids.extend(lines['value'].get('line_cr_ids'))
+            lines_ids.extend(lines['value'].get('line_dr_ids'))
+            for line in lines_ids:
                 factor = self.get_percent_pay_vs_invoice(cr, uid, line[\
                     'amount_original'], line['amount'], context=context)
                 list_tax = []
