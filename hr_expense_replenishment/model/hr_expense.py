@@ -141,8 +141,7 @@ class hr_expense_expense(osv.Model):
             ('done', 'Waiting Payment'),
             ('process', 'Processing Payment'),
             ('deduction', 'Processing Deduction'),
-            ('paid', 'Paid')
-            ],
+            ('paid', 'Paid')],
             'Status', readonly=True, track_visibility='onchange',
             help=_('When the expense request is created the status is '
             '\'Draft\'.\n It is confirmed by the user and request is sent to '
@@ -306,11 +305,12 @@ class hr_expense_expense(osv.Model):
 
             #~ change expense state
             if adjust_balance_to in ['debit', 'credit']:
-                print 'entre a debit & credit'
-                self.expense_reconcile_partial(cr, uid, exp.id, context=context)
+                self.expense_reconcile_partial(cr, uid, exp.id,
+                                               context=context)
                 self.write(
-                    cr, uid, exp.id, {'state': adjust_balance_to == 'debit'
-                    and 'deduction' or 'process'}, context=context)
+                    cr, uid, exp.id,
+                    {'state': adjust_balance_to == 'debit' and 'deduction'
+                     or 'process'}, context=context)
             elif adjust_balance_to == 'liquidate':
                 self.expense_reconcile(cr, uid, exp.id, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
@@ -323,14 +323,14 @@ class hr_expense_expense(osv.Model):
         """
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
-        ids = isinstance(ids, (int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         for exp in self.browse(cr, uid, ids, context=context):
             exp_debit_lines = [aml.id for aml in exp.advance_ids]
             exp_credit_lines = [aml.id
                                 for aml in exp.account_move_id.line_id
                                 if aml.credit > 0.0]
-            aml_obj.reconcile_partial(cr, uid,
-                exp_debit_lines + exp_credit_lines, 'manual',
+            aml_obj.reconcile_partial(
+                cr, uid, exp_debit_lines + exp_credit_lines, 'manual',
                 context=context)
         return True
 
@@ -340,14 +340,14 @@ class hr_expense_expense(osv.Model):
         """
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
-        ids = isinstance(ids, (int,long)) and [ids] or ids
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         for exp in self.browse(cr, uid, ids, context=context):
             exp_debit_lines = [aml.id for aml in exp.advance_ids]
             exp_credit_lines = [aml.id
                                 for aml in exp.account_move_id.line_id
                                 if aml.credit > 0.0]
             aml_obj.reconcile(cr, uid, exp_debit_lines + exp_credit_lines,
-                          'manual', context=context)
+                              'manual', context=context)
         return True
 
     def check_advance_no_empty_condition(self, cr, uid, ids, context=None):
@@ -384,7 +384,7 @@ class hr_expense_expense(osv.Model):
         return True
 
     def create_and_reconcile_invoice_lines(self, cr, uid, ids, inv_aml_ids,
-                               adjust_balance_to, context=None):
+                                           adjust_balance_to, context=None):
         """
         Create the account move lines to balance the expense invoices and
         reconcile them with the original invoice move lines.
@@ -434,11 +434,12 @@ class hr_expense_expense(osv.Model):
 
         advance_name = {
             'debit_line':
-                adjust_balance_to == 'debit' and _('(Remaining Advance)')
-                or _('(Reconciliation)'),
+            adjust_balance_to == 'debit' and _('(Remaining Advance)')
+            or _('(Reconciliation)'),
+
             'credit_line':
-                adjust_balance_to == 'debit' and _('(Applyed Advance)')
-                or _('(Debt to employee)'),
+            adjust_balance_to == 'debit' and _('(Applyed Advance)')
+            or _('(Debt to employee)'),
         }
 
         for aml_id in aml_ids:
@@ -449,20 +450,24 @@ class hr_expense_expense(osv.Model):
             debit_vals = vals.copy()
             debit_vals.update({
                 'partner_id': line_type == 'advance' and
-                    exp.employee_id.address_home_id.id or
-                    aml_brw.partner_id.id,
+                exp.employee_id.address_home_id.id or
+                aml_brw.partner_id.id,
+
                 'debit':
-                    line_type == 'advance' and advance_amount or
-                    aml_brw.credit,
+                line_type == 'advance' and advance_amount or
+                aml_brw.credit,
+
                 'credit': 0.0,
+
                 'name':
-                    line_type == 'invoice' and _('Payable to Partner')
-                    or _('Payable to Employee') + (line_type == 'advance' and ' ' +
-                    advance_name['debit_line'] or ''),
+                line_type == 'invoice' and _('Payable to Partner')
+                or _('Payable to Employee') + (line_type == 'advance' and ' ' +
+                advance_name['debit_line'] or ''),
+
                 'account_id':
-                    aml_brw and aml_brw.account_id.id
-                    or adjust_balance_to in ['no-advance']
-                    and no_advance_account or False,
+                aml_brw and aml_brw.account_id.id
+                or adjust_balance_to in ['no-advance']
+                and no_advance_account or False,
             })
             debit_id = aml_obj.create(cr, uid, debit_vals, context=context)
             #~ CREDIT LINE
@@ -471,15 +476,17 @@ class hr_expense_expense(osv.Model):
                 'partner_id': exp.employee_id.address_home_id.id,
                 'debit': 0.0,
                 'credit':
-                    line_type == 'advance' and advance_amount
-                    or aml_brw.credit,
+                line_type == 'advance' and advance_amount
+                or aml_brw.credit,
+
                 'name':
-                    _('Payable to Employee') + (line_type == 'advance'
-                        and ' ' + advance_name['credit_line'] or ''),
+                _('Payable to Employee') + (line_type == 'advance' and ' ' +
+                advance_name['credit_line'] or ''),
+
                 'account_id':
-                    aml_brw and aml_brw.account_id.id
-                    or adjust_balance_to in ['no-advance']
-                    and no_advance_account or False,
+                aml_brw and aml_brw.account_id.id
+                or adjust_balance_to in ['no-advance']
+                and no_advance_account or False,
             })
             credit_id = aml_obj.create(cr, uid, credit_vals, context=context)
 
@@ -561,7 +568,7 @@ class hr_expense_expense(osv.Model):
         missing expense amount.
         """
         context = context or {}
-        raise osv.except_osv ("Warning DUMMY method", "No yet implemented")
+        raise osv.except_osv("Warning DUMMY method", "No yet implemented")
 
         #~ TODO: make the automatic the voucher linked to the no reconciled
         #~ expense move line
@@ -570,7 +577,9 @@ class hr_expense_expense(osv.Model):
         #~ vals = {
             #~ 'move_line_id': av_aml,
         #~ }
-        #~ voucher_line_id = self.pool.get('account.voucher.line').create(cr, uid, vals, context=context)
+        #~ voucher_line_id = \
+        #~ self.pool.get('account.voucher.line').create(cr, uid, vals,
+                                                        #~ context=context)
         #~ print 'i am about to create the voucher'
 
         #~ vals = {
