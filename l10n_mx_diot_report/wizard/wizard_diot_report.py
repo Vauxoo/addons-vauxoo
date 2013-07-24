@@ -211,11 +211,8 @@ class wizard_account_diot_mx(osv.osv_memory):
             'VAT for returns, discounts and rebates on purchases',
             'show_pipe',], delimiter='|')
         for diot in dic_move_line:
-            if int(round((dic_move_line[diot][7]),0)) == 0 and\
-                int(round((dic_move_line[diot][8]),0)) == 0 and\
-                int(round((dic_move_line[diot][9]),0)) == 0 and\
-                int(round((dic_move_line[diot][10]),0)) == 0 and\
-                int(round((dic_move_line[diot][11]),0)) == 0:
+            diot_list = dic_move_line.get(diot, False)
+            if diot_list and sum(diot_list[7:11]) == 0:
                 partner_ids_tax_0.append(self.pool.get('res.partner').search(\
                     cr, uid, [('vat_split' , '=', diot)])[0])
         if partner_ids_tax_0:
