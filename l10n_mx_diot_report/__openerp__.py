@@ -28,18 +28,40 @@
 {
     "name" : "MEXICO - DIOT Report",
     "version" : "1.0",
-    "depends" : ["base", "base_vat","account", "l10n_mx", "account_accountant", "l10n_mx_account_invoice_tax", "l10n_mx_account_tax_category", "l10n_mx_base_vat_split" ],
     "author" : "Federico Manuel Echeverri Choux",
-    "description": """Module DIOT for  Mexico:
+    "category" : "Generic Modules",
+    "description": """Module DIOT for  Mexico
+    
+    The modules 
+    - account_move_line_base_tax
+    - account_voucher_tax
+    are in lp:addons-vauxoo/7.0
+    
+    If you have old moves without this modules installed, and the company have
+    configurated the tax by 'purchase' and by 'sales', you can use the wizard 
+    account_update_amount_tax_in_move_lines located in lp:addons-vauxoo/7.0
+    to update this moves
     """,
-    'author': 'Federico Manuel Echeverri Choux',
     "website" : "http://www.conectel.mx/",
-    'init_xml': [],
-    'update_xml': [
-                    	"partner_view.xml",
-#                    	"account_tax_view.xml",
-                    	"wizard/wizard_diot_report_view.xml",
-                ],
-    'installable': True,
-    'active': False,
+    "license" : "AGPL-3",
+    "depends" : [
+        "base_vat",
+        "account_move_line_base_tax",
+        "account_accountant",
+        "l10n_mx_account_invoice_tax",
+        "l10n_mx_account_tax_category",
+        "l10n_mx_base_vat_split",
+        "account_voucher_tax",
+        ],
+    "demo" : [],
+    "data" : [
+        "partner_view.xml",
+        "wizard/wizard_diot_report_view.xml",
+    ],
+    'js': [],
+    'qweb' : [],
+    'css':[],
+    'test': [],
+    "installable" : True,
+    "active" : False,
 }
