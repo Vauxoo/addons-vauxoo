@@ -46,8 +46,8 @@ class wizard_account_diot_mx(osv.osv_memory):
         'filename': fields.char('File name', size=128, readonly=True,
             help='This is File name'),
         'file': fields.binary('File', readonly=True),
-        'state': fields.selection([('choose', 'choose'), ('get', 'get')]),
-
+        'state': fields.selection([('choose', 'Choose'), ('get', 'Get'),
+            ('not_file', 'Not File')]),
     }
 
     _defaults = {
@@ -55,6 +55,10 @@ class wizard_account_diot_mx(osv.osv_memory):
     }
 
     def default_get(self, cr, uid, fields, context=None):
+        """
+        This function load in the wizard, the company used by the user, and
+        the previous period to the current
+        """
         data = super(wizard_account_diot_mx, self).default_get(cr, uid,
             fields, context=context)
         time_now = datetime.date.today()+relativedelta(months=-1)
@@ -70,6 +74,10 @@ class wizard_account_diot_mx(osv.osv_memory):
         return data
 
     def create_diot(self, cr, uid, ids, context=None):
+        """
+        This function create the file for report to DIOT, take the amount base
+        paid by partner in each tax, in the period and company selected.
+        """
         if context is None:
             context = {}
         acc_move_line_obj = self.pool.get('account.move.line')
@@ -256,22 +264,20 @@ class wizard_account_diot_mx(osv.osv_memory):
         f_read = file(fname, "rb")
         fdata = f_read.read()
         out = base64.encodestring(fdata)
-        this.name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,
+        name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,
                                      strftime('%Y-%m-%d'))
-        f_read.close()
-        f_read = file(fname, "rb")
-        fdata = f_read.read()
-        out = base64.encodestring(fdata)
-        this.name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,
-            strftime('%Y-%m-%d'))
         f_read.close()
         datas = {'ids': context.get('active_ids', [])}
         res = self.read(cr, uid, ids, ['time_unit', 'measure_unit'])
         res = res and res[0] or {}
         datas['form'] = res
-        self.write(cr, uid, ids, {'state': 'get',
+        if out:
+            state = 'get'
+        else:
+            state = 'not_file'
+        self.write(cr, uid, ids, {'state': state,
                                 'file': out,
-                                'filename': this.name
+                                'filename': name
                                 }, context=context)
         return {
             'type': 'ir.actions.act_window',
