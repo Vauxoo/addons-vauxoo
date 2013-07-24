@@ -32,13 +32,14 @@ import os
 from dateutil.relativedelta import *
 import csv
 
+
 class wizard_account_diot_mx(osv.osv_memory):
 
     _name = 'account.diot.report'
     _description = 'Account - DIOT Report for Mexico'
     _columns = {
         'name': fields.char('File Name', readonly=True),
-        'company_id' : fields.many2one('res.company', 'Company',
+        'company_id': fields.many2one('res.company', 'Company',
             required=True),
         'period_id': fields.many2one('account.period', 'Period',
             help='Select period', required=True),
@@ -49,25 +50,25 @@ class wizard_account_diot_mx(osv.osv_memory):
 
     }
 
-    _defaults = { 
+    _defaults = {
         'state': 'choose',
     }
 
     def default_get(self, cr, uid, fields, context=None):
-        data = super(wizard_account_diot_mx,self).default_get(cr, uid,
-                                                fields, context=context)
-        time_now = datetime.date.today()+relativedelta(months=-1) 
-        company_id =self.pool.get('res.company')._company_default_get(cr, uid,
+        data = super(wizard_account_diot_mx, self).default_get(cr, uid,
+            fields, context=context)
+        time_now = datetime.date.today()+relativedelta(months=-1)
+        company_id = self.pool.get('res.company')._company_default_get(cr, uid,
             'account.diot.report', context=context)
         period_id = self.pool.get('account.period').search(cr, uid,
-                [('date_start', '<=', time_now),
-                ('date_stop', '>=', time_now),
-                ('company_id', '=', company_id)])
+            [('date_start', '<=', time_now),
+            ('date_stop', '>=', time_now),
+            ('company_id', '=', company_id)])
         if period_id:
-            data.update({'company_id' : company_id,
-                        'period_id' : period_id[0]})
+            data.update({'company_id': company_id,
+                        'period_id': period_id[0]})
         return data
-        
+
     def create_diot(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -78,12 +79,12 @@ class wizard_account_diot_mx(osv.osv_memory):
         period = this.period_id
         matrix_row = []
         amount_exe = 0
-        category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
+        category_iva_ids = acc_tax_category_obj.search(cr, uid, [
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
-        tax_purchase_ids = acc_tax_obj.search(cr, uid, [\
+        tax_purchase_ids = acc_tax_obj.search(cr, uid, [
             ('type_tax_use', '=', 'purchase'),
             ('tax_category_id', 'in', category_iva_ids)], context=context)
-        move_lines_diot = acc_move_line_obj.search(cr, uid, [\
+        move_lines_diot = acc_move_line_obj.search(cr, uid, [
             ('period_id', '=', period.id),
             ('tax_id_secondary', 'in', tax_purchase_ids),
             '|', ('reconcile_id', '!=', False),
@@ -99,23 +100,23 @@ class wizard_account_diot_mx(osv.osv_memory):
         if moves_without_partner:
             return {
                 'name': 'Moves without supplier',
-                'view_type' : 'form',
+                'view_type': 'form',
                 'view_mode': 'tree,form',
                 'res_model': 'account.move.line',
                 'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', moves_without_partner),],
+                'domain': [('id', 'in', moves_without_partner), ],
             }
         for line in acc_move_line_obj.browse(cr, uid, move_lines_diot,
             context=context):
             partner_id = line.partner_id
-            partner_vat = upper((partner_id.vat_split or '').replace('-', '')\
-                .replace('_', '').replace(' ', ''))
+            partner_vat = upper((partner_id.vat_split or '').replace('-', '')
+                                .replace('_', '').replace(' ', ''))
             if not partner_vat \
                 or not partner_id.type_of_third\
                 or not partner_id.type_of_operation\
-                or (partner_id.type_of_third == '05'\
+                or (partner_id.type_of_third == '05'
                     and not partner_id.diot_country)\
-                or (partner_id.type_of_third == '04' and\
+                or (partner_id.type_of_third == '04' and
                     not self.pool.get('res.partner').check_vat_mx(partner_vat)):
                 partner_ids_to_fix.append(partner_id.id)
             if partner_ids_to_fix:
@@ -137,27 +138,28 @@ class wizard_account_diot_mx(osv.osv_memory):
                 if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
                     amount_ret = line.amount_base
                 if partner_vat in dic_move_line:
-                    line_move = dic_move_line[partner_vat] 
+                    line_move = dic_move_line[partner_vat]
                     line_move[7] = line_move[7] + amount_16
                     line_move[8] = line_move[8] + amount_11
                     line_move[9] = line_move[9] + amount_0
                     line_move[10] = line_move[10] + amount_exe
                     line_move[11] = line_move[11] + amount_ret
                     dic_move_line.update({
-                        partner_vat : line_move})
+                        partner_vat: line_move})
                 else:
                     matrix_row.append(line.partner_id.type_of_third)
                     matrix_row.append(line.partner_id.type_of_operation)
                     matrix_row.append(partner_vat)
                     if line.partner_id.type_of_third == "05" and\
-                        line.partner_id.number_fiscal_id_diot != False:
-                        matrix_row.append(line.partner_id.number_fiscal_id_diot)
+                        line.partner_id.number_fiscal_id_diot:
+                        matrix_row.append(
+                            line.partner_id.number_fiscal_id_diot)
                     else:
                         matrix_row.append("")
                     if line.partner_id.type_of_third != "04":
                         matrix_row.append(line.partner_id.name)
                         matrix_row.append(line.partner_id.diot_country)
-                        if line.partner_id.nacionality_diot != False:
+                        if line.partner_id.nacionality_diot:
                             matrix_row.append(line.partner_id.nacionality_diot)
                         else:
                             matrix_row.append("")
@@ -171,59 +173,60 @@ class wizard_account_diot_mx(osv.osv_memory):
                     matrix_row.append(amount_exe)
                     matrix_row.append(amount_ret)
                     dic_move_line.update({
-                        partner_vat : matrix_row})
+                        partner_vat: matrix_row})
                 matrix_row = []
         if partner_ids_to_fix:
             return {
-                'name': 'Suppliers do not have the information necessary'\
+                'name': 'Suppliers do not have the information necessary'
                 'for the DIOT',
-                'view_type' : 'form',
+                'view_type': 'form',
                 'view_mode': 'tree,form',
                 'res_model': 'res.partner',
                 'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', partner_ids_to_fix), '|',(\
+                'domain': [('id', 'in', partner_ids_to_fix), '|', (
                     'active', '=', False), ('active', '=', True)],
             }
         (fileno, fname) = tempfile.mkstemp('.csv', 'tmp')
         os.close(fileno)
         f_write = open(fname, 'wb')
-        fcsv = csv.DictWriter(f_write, ['type_of_third', 'type_of_operation',
+        fcsv = csv.DictWriter(f_write, 
+            ['type_of_third', 'type_of_operation',
             'vat', 'number_id_fiscal', 'foreign_name',
-            'country_of_residence','nationality',
+            'country_of_residence', 'nationality',
             'value_of_acts_or_activities_paid_at_the_rate_of_16%',
             'value_of_acts_or_activities_paid_at_the_rate_of_15%',
             'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%',
             'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT',
             'value_of_acts_or_activities_paid_at_the_rate_of_10%_VAT',
             'amount_of_non-creditable_VAT_paid_at_the_rate_of_11%',
-            'value_of_acts_or_activities_paid_on_import_of_goods_and_'\
-                'services_at_the_rate_of_16%_VAT',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_at_the_rate_of_16%_VAT',
             'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_16%',
-            'value_of_acts_or_activities_paid_on_import_of_goods_and_'\
-                'services_at_the_rate_of_11%_VAT',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_at_the_rate_of_11%_VAT',
             'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_11%',
-            'value_of_acts_or_activities_paid_on_import_of_goods_and_'\
-                'services_for_which_VAT_is_not_pay_(exempt)',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_for_which_VAT_is_not_pay_(exempt)',
             'value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT',
-            'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_'\
-                'VAT_(Exempt)',
+            'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_'
+            'VAT_(Exempt)',
             'tax Withheld by the taxpayer',
             'VAT for returns, discounts and rebates on purchases',
-            'show_pipe',], delimiter='|')
+            'show_pipe', ], delimiter='|')
         for diot in dic_move_line:
             diot_list = dic_move_line.get(diot, False)
             if diot_list and sum(diot_list[7:11]) == 0:
-                partner_ids_tax_0.append(self.pool.get('res.partner').search(\
-                    cr, uid, [('vat_split' , '=', diot)])[0])
+                partner_ids_tax_0.append(self.pool.get('res.partner').search(
+                    cr, uid, [('vat_split', '=', diot)])[0])
         if partner_ids_tax_0:
-            account_move_line_id = acc_move_line_obj.search(cr, uid, [\
-                ('partner_id', 'in', partner_ids_tax_0),\
-                ('period_id', '=', period.id),\
+            account_move_line_id = acc_move_line_obj.search(cr, uid, [
+                ('partner_id', 'in', partner_ids_tax_0),
+                ('period_id', '=', period.id),
                 ('id', 'in', move_lines_diot)
-                ])
+            ])
             return {
                 'name': 'Movements to corroborate the amounts of taxes',
-                'view_type' : 'form',
+                'view_type': 'form',
                 'view_mode': 'tree,form',
                 'res_model': 'account.move.line',
                 'type': 'ir.actions.act_window',
@@ -231,43 +234,44 @@ class wizard_account_diot_mx(osv.osv_memory):
             }
         for diot in dic_move_line:
             values_diot = dic_move_line.get(diot, False)
-            fcsv.writerow({'type_of_third': values_diot[0],
-                'type_of_operation': values_diot[1],
-                'vat' : values_diot[2],
-                'number_id_fiscal' : values_diot[3],
-                'foreign_name' : values_diot[4],
-                'country_of_residence' : values_diot[5],
-                'nationality' : values_diot[6],
-                'value_of_acts_or_activities_paid_at_the_rate_of_16%' : int(\
-                    round((values_diot[7]),0)),
-                'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%' : int(\
-                    round((values_diot[8]),0)),
-                'value_of_the_other_acts_or_activities_paid_at_the_rate_of'\
-                    '_0%_VAT' : int(round((values_diot[9]),0)),
-                'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the'\
-                    '_VAT_(Exempt)' : int(round((values_diot[10]),0)),
-                'tax Withheld by the taxpayer' : int(round((values_diot[11]),0)),
-                })
+            fcsv.writerow(
+                {'type_of_third': values_diot[0],
+               'type_of_operation': values_diot[1],
+               'vat': values_diot[2],
+               'number_id_fiscal': values_diot[3],
+               'foreign_name': values_diot[4],
+               'country_of_residence': values_diot[5],
+               'nationality': values_diot[6],
+               'value_of_acts_or_activities_paid_at_the_rate_of_16%': int(
+               round((values_diot[7]), 0)),
+               'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%': int(
+               round((values_diot[8]), 0)),
+               'value_of_the_other_acts_or_activities_paid_at_the_rate_of'
+               '_0%_VAT': int(round((values_diot[9]), 0)),
+               'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the'
+               '_VAT_(Exempt)': int(round((values_diot[10]), 0)),
+               'tax Withheld by the taxpayer': int(round((values_diot[11]), 0)),
+               })
         f_write.close()
-        f_read= file(fname, "rb")
+        f_read = file(fname, "rb")
         fdata = f_read.read()
         out = base64.encodestring(fdata)
-        this.name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,\
-            strftime('%Y-%m-%d'))
+        this.name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,
+                                     strftime('%Y-%m-%d'))
         f_read.close()
-        f_read= file(fname, "rb")
+        f_read = file(fname, "rb")
         fdata = f_read.read()
         out = base64.encodestring(fdata)
-        this.name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,\
+        this.name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,
             strftime('%Y-%m-%d'))
         f_read.close()
-        datas = {'ids' : context.get('active_ids',[])}
-        res = self.read(cr, uid, ids, ['time_unit','measure_unit'])
+        datas = {'ids': context.get('active_ids', [])}
+        res = self.read(cr, uid, ids, ['time_unit', 'measure_unit'])
         res = res and res[0] or {}
         datas['form'] = res
         self.write(cr, uid, ids, {'state': 'get',
                                 'file': out,
-                                'filename':this.name
+                                'filename': this.name
                                 }, context=context)
         return {
             'type': 'ir.actions.act_window',
@@ -277,4 +281,4 @@ class wizard_account_diot_mx(osv.osv_memory):
             'views': [(False, 'form')],
             'res_model': 'account.diot.report',
             'target': 'new',
-            }
+        }
