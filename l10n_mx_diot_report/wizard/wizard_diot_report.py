@@ -230,23 +230,23 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'domain': [('id', 'in', account_move_line_id)],
             }
         for diot in dic_move_line:
-            fcsv.writerow({'type_of_third': dic_move_line[diot][0],
-                'type_of_operation': dic_move_line[diot][1],
-                'vat' : dic_move_line[diot][2],
-                'number_id_fiscal' : dic_move_line[diot][3],
-                'foreign_name' : dic_move_line[diot][4],
-                'country_of_residence' : dic_move_line[diot][5],
-                'nationality' : dic_move_line[diot][6],
+            values_diot = dic_move_line.get(diot, False)
+            fcsv.writerow({'type_of_third': values_diot[0],
+                'type_of_operation': values_diot[1],
+                'vat' : values_diot[2],
+                'number_id_fiscal' : values_diot[3],
+                'foreign_name' : values_diot[4],
+                'country_of_residence' : values_diot[5],
+                'nationality' : values_diot[6],
                 'value_of_acts_or_activities_paid_at_the_rate_of_16%' : int(\
-                    round((dic_move_line[diot][7]),0)),
+                    round((values_diot[7]),0)),
                 'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%' : int(\
-                    round((dic_move_line[diot][8]),0)),
+                    round((values_diot[8]),0)),
                 'value_of_the_other_acts_or_activities_paid_at_the_rate_of'\
-                    '_0%_VAT' : int(round((dic_move_line[diot][9]),0)),
+                    '_0%_VAT' : int(round((values_diot[9]),0)),
                 'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the'\
-                    '_VAT_(Exempt)' : int(round((dic_move_line[diot][10]),0)),
-                'tax Withheld by the taxpayer' : int(round(\
-                    (dic_move_line[diot][11]),0)),
+                    '_VAT_(Exempt)' : int(round((values_diot[10]),0)),
+                'tax Withheld by the taxpayer' : int(round((values_diot[11]),0)),
                 })
         f_write.close()
         f_read= file(fname, "rb")
