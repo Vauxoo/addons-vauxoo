@@ -28,10 +28,7 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 import time
-
-__CTX__ = {}
-__CONS__ = {}
-__NUM__ = 1
+import pdb
 
 class ifrs_ifrs(osv.osv):
 
@@ -220,75 +217,7 @@ class ifrs_ifrs(osv.osv):
                ids2.append(aa_brw.id)
                ids2 += self._get_children_and_consol(cr, uid, [x.id for x in aa_brw.child_id], level, context=context)
        return list(set(ids2)) 
-       
-#    def _calculate_acc(self, cr, uid, ids, context=None):
-#        #########################################
-#        ############## Calculate ################
-#        #########################################
-#        if context is None:
-#            context = {}
-#
-#        account_obj = self.pool.get("account.account")
-#        ifrs_lines_ids = ifrs_line.search(cr, uid, [('ifrs_id','=',ids[0])] ) 
-#        ifrs_lines_brw = ifrs_line.browse(cr, uid, ifrs_lines_ids)
-#        
-#        all_account_brw = []
-#
-#        for ifrsl_brw in ifrs_lines_brw:
-#            if ifrsl_brw.type == 'detail':
-#                all_account_brw += ifrsl_brw.cons_ids
-#        
-#        tree_accounts = self._get_children_and_consol(cr, uid, [x.id for x in all_account_brw], 100)
-#        
-#
-#        account_cons_consolidate = []
-#        account_cons_leaf = []
-#
-#        for acc_id in tree_accounts:
-#            acc_brw = account_obj.browse(cr, uid, acc_id, context=context)
-#            if acc_brw.type in ('view', 'consolidation'):
-#                account_cons_consolidate.append(acc_brw)
-#            else:
-#                account_cons_leaf.append(acc_brw)
-#
-#        account_cons_consolidate.sort(key=lambda x: x.level)
-#        account_cons_consolidate.reverse()
-#        account_cons_consolidate_ids = [i.id for i in account_cons_consolidate]
-#         
-#        dict_leaf = {}
-#        for i in account_cons_leaf:
-#            d = i.debit
-#            c = i.credit
-#            dict_leaf[i.id] = {
-#                'obj': i,
-#                'debit': d,
-#                'credit': c,
-#                'balance': d-c,
-#            }
-#        
-#        dict_consolidate = {}
-#        for i in account_cons_consolidate:
-#            dict_consolidate[i.id] = {
-#                'obj':  i,
-#                'debit': 0.0,
-#                'credit': 0.0,
-#                'balance': 0.0,
-#            }
-#        
-#        for j in account_cons_consolidate_ids:
-#            acc_childs = dict_consolidate.get(j).get('obj').child_id
-#            for child in acc_childs:
-#                dict_consolidate.get(j)['debit'] += dict_leaf.get(child.id).get('debit')
-#                dict_consolidate.get(j)['credit'] += dict_leaf.get(child.id).get('credit')
-#                dict_consolidate.get(j)['balance'] += dict_leaf.get(child.id).get('balance')
-#            dict_leaf[j] = dict_consolidate[j]
-#
-#        print dict_leaf
-#        #########################################
-#        ############## End Calculate ############
-#        #########################################
-#        return dict_leaf
-
+    
     def get_report_data(
         self, cr, uid, ids, fiscalyear=None, exchange_date=None,
             currency_wizard=None, target_move=None, period=None, two=None, is_compute=None, context=None):
@@ -313,8 +242,6 @@ class ifrs_ifrs(osv.osv):
         if is_compute is None:
             period_name = self._get_periods_name_list(
                 cr, uid, ids, fiscalyear, context=context)
-
-
 
         ordered_lines = self._get_ordered_lines(cr, uid, ids, context=context)
 
@@ -349,28 +276,22 @@ class ifrs_ifrs(osv.osv):
 
             else:
                 for ifrs_l in ordered_lines:
-                    print "Calculo inicial - ", ifrs_l.name ," ##########################\n"
-                    start_time = time.time()
-                    #if ifrs_l.name == "UTILIDAD DE LA OPERACION":
-                        #import pdb
-                        #pdb.set_trace()
+                    #print "Calculo inicial - ", ifrs_l.name ," ##########################\n"
+                    #start_time = time.time()
                     for lins in range(1, 13):
-                        print "Columna ", lins, "\n"
+                        #print "Columna ", lins, "\n"
                         amount_value = ifrs_line._get_amount_value(
                         cr, uid, ids,
                         ifrs_l, period_name, fiscalyear, exchange_date,
                         currency_wizard, lins, target_move,
                         context=context)
-                    print (time.time() - start_time)/60.0, "minutos"
-                    print "##########################\n"
+                    #print (time.time() - start_time)/60.0, "minutos"
+                    #print "##########################\n"
                 
                 
                 for ifrs_l in ordered_lines:
-                    print "Calculo operands - ", ifrs_l.name ," ##########################\n"
-                    #if ifrs_l.name == "UTILIDAD DE LA OPERACION":
-                        #import pdb
-                        #pdb.set_trace()
-                    start_time = time.time()
+                    #print "Calculo operands - ", ifrs_l.name ," ##########################\n"
+                    #start_time = time.time()
                     
                     line = {
                     'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
@@ -388,8 +309,8 @@ class ifrs_ifrs(osv.osv):
                         data.append(line)
                     data.sort(key=lambda x: int(x['sequence']))
                     
-                    print (time.time() - start_time)/60.0, "minutos"
-                    print "##########################\n"
+                    #print (time.time() - start_time)/60.0, "minutos"
+                    #print "##########################\n"
         return data
 
 
@@ -397,97 +318,8 @@ class ifrs_lines(osv.osv):
 
     _name = 'ifrs.lines'
     _parent_store = True
-#    _parent_name = "parent_id"
     _order = 'sequence, type'
    
-
-    def _calculate_acc(self, cr, uid, ids, all_account_brw, context=None):
-        #########################################
-        ############## Calculate ################
-        #########################################
-        if context is None:
-            context = {}
-
-        account_obj = self.pool.get("account.account")
-        
-        tree_accounts = self.pool.get('ifrs.ifrs')._get_children_and_consol(cr, uid, [x.id for x in all_account_brw], 100)
-        
-
-        account_cons_consolidate = []
-        account_cons_leaf = []
-
-        for acc_id in tree_accounts:
-            acc_brw = account_obj.browse(cr, uid, acc_id, context=context)
-            if acc_brw.type in ('view', 'consolidation'):
-                account_cons_consolidate.append(acc_brw)
-            else:
-                account_cons_leaf.append(acc_brw)
-
-        account_cons_consolidate.sort(key=lambda x: x.level)
-        account_cons_consolidate.reverse()
-        account_cons_consolidate_ids = [i.id for i in account_cons_consolidate]
-         
-        dict_leaf = {}
-        for i in account_cons_leaf:
-            d = i.debit
-            c = i.credit
-            dict_leaf[i.id] = {
-                'obj': i,
-                'debit': d,
-                'credit': c,
-                'balance': d-c,
-            }
-        
-        dict_consolidate = {}
-        for i in account_cons_consolidate:
-            dict_consolidate[i.id] = {
-                'obj':  i,
-                'debit': 0.0,
-                'credit': 0.0,
-                'balance': 0.0,
-            }
-        
-        for j in account_cons_consolidate_ids:
-            acc_childs = dict_consolidate.get(j).get('obj').child_id
-            for child in acc_childs:
-                dict_consolidate.get(j)['debit'] += dict_leaf.get(child.id).get('debit')
-                dict_consolidate.get(j)['credit'] += dict_leaf.get(child.id).get('credit')
-                dict_consolidate.get(j)['balance'] += dict_leaf.get(child.id).get('balance')
-            dict_leaf[j] = dict_consolidate[j]
-
-        #########################################
-        ############## End Calculate ############
-        #########################################
-        return dict_leaf
-
-    def dicc(self, cr, uid, ids, acc_brw, context=None):
-        if context is None:
-            context = {}
-        
-        global __CTX__
-        global __CONS__
-        global __NUM__ 
-        
-        print "ctx", context
-        
-        key = -1 
-        for i,j in __CTX__.items():
-            if j == context:
-                key = i
-            break
-        
-        if key == -1:
-            consolidates = self._calculate_acc(cr, uid, ids, acc_brw.cons_ids, context=context)
-            __CTX__[__NUM__] = context
-            __CONS__[__NUM__] = consolidates
-            __NUM__ += 1
-        else:
-            consolidates = __CONS__[key]
-        
-        print "dicc_ctx", __CTX__
-        return consolidates
-
-
     def _get_sum_total(self, cr, uid, brw, number_month=None, is_compute=None, context=None):
         """ Calculates the sum of the line total_ids the current ifrs.line
         @param number_month: periodo a calcular
@@ -601,33 +433,22 @@ class ifrs_lines(osv.osv):
                 c['analytic'] = analytic
             c['partner_detail'] = c.get('partner_detail')
             
-            print "Es Detail $$$$$$$$$$$$$$"
-            start_time = time.time()
-
-            
-            #dict_cons = self.dicc(cr, uid, id, brw, context=c)
-
+            #print "Es Detail $$$$$$$$$$$$$$"
+            #start_time = time.time()
             
             for a in brw.cons_ids:  # Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
                 if brw.value == 'debit':
-                    #res += dict_cons.get(a.id).get('debit')
                     res += a.debit
                 elif brw.value == 'credit':
-                    #res += dict_cons.get(a.id).get('credit')
                     res += a.credit
                 else:
-                    #res += dict_cons.get(a.id).get('balance')
                     res += a.balance
 
-            print "fin detail #########", time.time() - start_time
+            #print "fin detail #########", time.time() - start_time
 
         elif brw.type == 'total':
-            print "Es Total $$$$$$$$$$$$$$"
-            #if brw.name == "UTILIDAD DE LA OPERACION":
-                #import pdb
-                #pdb.set_trace()
-            start_time = time.time()
-            
+            #print "Es Total $$$$$$$$$$$$$$"
+            #start_time = time.time()
             res = self._get_sum_total(
                 cr, uid, brw, number_month, is_compute, context=c)
             if brw.comparison <> 'without':
@@ -645,9 +466,8 @@ class ifrs_lines(osv.osv):
                     res = res2 != 0 and (100 * res / res2) or 0.0
                 elif brw.comparison == 'ratio':
                     res = res2 != 0 and (res / res2) or 0.0
-            print "fin total #########", time.time() - start_time
+            #print "fin total #########", time.time() - start_time
         
-        #res = brw.inv_sign and (-1.0 * res) or res
         # guardar amount del periodo que corresponde
         if is_compute:
             field_name = 'amount'
@@ -656,7 +476,6 @@ class ifrs_lines(osv.osv):
                 field_name = 'ytd'
             else:
                 field_name = 'period_%s' % str(number_month)
-        #self.write(cr, uid, brw.id, {field_name: res})
 
         return res
 
@@ -729,7 +548,9 @@ class ifrs_lines(osv.osv):
 
         from_currency_id = ifrs_line.ifrs_id.company_id.currency_id.id
         to_currency_id = currency_wizard
-        
+
+        ifrs_line = self.browse(cr, uid, ifrs_line.id)
+
         if number_month:
             if two:
                 context = {
@@ -759,6 +580,24 @@ class ifrs_lines(osv.osv):
                 if ifrs_line.comparison not in ('percent', 'ratio', 'product'):
                     res = self.exchange(
                         cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+
+        if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
+            pdb.set_trace()
+        if not two:
+            if number_month > 1 and ifrs_line.type == 'detail':
+                month_before = number_month - 1
+                field_name = 'period_%s' % str( month_before )
+                valor_anterior = eval("ifrs_line.%s" % field_name  )
+                res = valor_anterior - res
+        print ifrs_line.name
+        print "periodo ", number_month
+        print res
+
+
+        #DUDOSO
+        #field_name = 'period_%s' % str( number_month )
+        #self.write(cr, uid, ifrs_line.id, {field_name: res})
+        
         return res
 
     def _get_amount_with_operands(self, cr, uid, ids, ifrs_line, period_info=None, fiscalyear=None, exchange_date=None, currency_wizard=None, number_month=None, target_move=None, pd=None, undefined=None, two=None, is_compute=None, context=None):
@@ -775,6 +614,7 @@ class ifrs_lines(osv.osv):
         @param is_compute: si el metodo actualizara el campo amount para la vista
         """
 
+        ifrs_line = self.browse(cr, uid, ifrs_line.id)
         if not number_month:
             context = {'whole_fy': 'True'}
 
@@ -807,14 +647,17 @@ class ifrs_lines(osv.osv):
             self.write(cr, uid, ifrs_line.id, {field_name: res})
             ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
             band = False
+        
 
         if band and ifrs_line.type == 'total':
             res = self._get_amount_value(
                 cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
                 currency_wizard, number_month, target_move, pd, undefined, two, context=context)
         
-        res = ifrs_line.inv_sign and (-1.0 * res) or res
+        res = ifrs_line.inv_sign and res or (-1.0 * res) 
         self.write(cr, uid, ifrs_line.id, {field_name: res})
+        ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
+       
         return res
 
     def _get_partner_detail(self, cr, uid, ids, ifrs_l, context=None):
