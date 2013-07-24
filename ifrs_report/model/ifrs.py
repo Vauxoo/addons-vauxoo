@@ -311,6 +311,8 @@ class ifrs_ifrs(osv.osv):
                     
                     #print (time.time() - start_time)/60.0, "minutos"
                     #print "##########################\n"
+        for i in xrange(1, 13):
+            cr.execute("update ifrs_lines set period_" + str(i) +"= 0.0;" )
         return data
 
 
@@ -564,6 +566,9 @@ class ifrs_lines(osv.osv):
         context['partner_detail'] = pd
         context['fiscalyear'] = fiscalyear
         context['state'] = target_move
+        
+        if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
+            pdb.set_trace()
 
         res = self._get_sum(
             cr, uid, ifrs_line.id, number_month, is_compute, context=context)
@@ -581,8 +586,8 @@ class ifrs_lines(osv.osv):
                     res = self.exchange(
                         cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
 
-        if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
-            pdb.set_trace()
+        #if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
+        #    pdb.set_trace()
         if not two:
             if number_month > 1 and ifrs_line.type == 'detail':
                 month_before = number_month - 1
@@ -654,9 +659,8 @@ class ifrs_lines(osv.osv):
                 cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
                 currency_wizard, number_month, target_move, pd, undefined, two, context=context)
         
-        res = ifrs_line.inv_sign and res or (-1.0 * res) 
+        res = ifrs_line.inv_sign and (-1.0 * res) or res
         self.write(cr, uid, ifrs_line.id, {field_name: res})
-        ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
        
         return res
 
