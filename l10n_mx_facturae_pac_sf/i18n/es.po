@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* l10n_mx_facturae_pac_sf
+#   * l10n_mx_facturae_pac_sf
 #
 msgid ""
 msgstr ""
@@ -14,6 +14,104 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:321
+#, python-format
+msgid "WARNING, SIGNED IN TEST!!!!\n"
+"\n"
+""
+msgstr "ADEVERTENCIA, FIRMADO EN PRUEBA!!!!\n"
+"\n"
+""
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:396
+#, python-format
+msgid "\n"
+"Make Sure to the file really has generated correctly to the SAT\n"
+"https://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+msgstr "\n"
+"Asegúrese que el archivo realmente se haya generado correctamente ante al SAT\n"
+"https://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:313
+#, python-format
+msgid "Web Service URL                     o PAC incorrect"
+msgstr "Servicio Web o URL del PAC incorrecto"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:491
+#, python-format
+msgid "Cancel Code: %s. \n"
+"Status code %s.\n"
+"Status UUID: %s.\n"
+"Folio Cancel: %s.\n"
+"Cancel Message: %s.\n"
+" Answer Message: %s."
+msgstr "Código Cancelación: %s. \n"
+"Código Status %s.\n"
+"Status UUID: %s.\n"
+"Folio Cancel: %s.\n"
+"Mensaje de Cancelación: %s.\n"
+"Mensaje de respuesta: %s."
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:357
+#, python-format
+msgid "Failed to consult the SAT.\n"
+"Code 312"
+msgstr "Error al consultar al SAT.\n"
+"Code 312"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:354
+#, python-format
+msgid "Unauthorized.\n"
+"Code 311"
+msgstr "No autorizado.\n"
+"Code 311"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:318
+#, python-format
+msgid "Namespace of PAC incorrect"
+msgstr "Namespace del PAC incorrecto"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:313
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:318
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:354
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:357
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:401
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:405
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:491
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:405
+#, python-format
+msgid "Not found information from web services of PAC, verify that the configuration of PAC is correct"
+msgstr "No se ha encontrado información de los servicios web del PAC, compruebe que la configuración del PAC sea correcta"
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:484
+#, python-format
+msgid "\n"
+"- The process of cancellation                    has completed correctly.\n"
+"- The uuid cancelled is:                    "
+msgstr "\n"
+"- El proceso de cancelación se ha completado correctamente.\n"
+"- El uuid de cancelación es:                    "
+
+#. module: l10n_mx_facturae_pac_sf
+#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:399
+#, python-format
+msgid "Can't extract the file XML of PAC"
+msgstr "No se pudo extraer el archivo XML del PAC"
 
 #. module: l10n_mx_facturae_pac_sf
 #: model:ir.model,name:l10n_mx_facturae_pac_sf.model_wizard_export_invoice_pac_sf_v6
@@ -310,7 +408,7 @@ msgstr "Mensaje"
 #. module: l10n_mx_facturae_pac_sf
 #: view:wizard.export.invoice.pac.sf.v6:0
 msgid "or"
-msgstr "o"
+msgstr "ó"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
