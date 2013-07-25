@@ -25,10 +25,17 @@
 
 from openerp.osv import osv, fields
 
+
 class res_partner(osv.Model):
     _inherit = 'res.partner'
+      
+    def _supplier_customer_advance_get(self, cr, uid, ids, field, arg, context=None):
+        res = {}
+        for id in ids:
+            res={id:{'customer_advance': 0.0,'supplier_advance': 0.0}}            
+        return res
+
     _columns={
-        #~ This account will be used instead of the default one as the payable account for the current partner
         'property_account_supplier_advance' : fields.property(
             'account.account',
             type='many2one',
@@ -38,7 +45,6 @@ class res_partner(osv.Model):
             domain="[('type','=','receivable')]",
             help="",
             required=True),
-        #~ This account will be used instead of the default one as the payable account for the current partner
         'property_account_customer_advance' : fields.property(
             'account.account',
             type='many2one',
@@ -48,8 +54,6 @@ class res_partner(osv.Model):
             domain="[('type','=','payable')]",
             help="",
             required=True),
-        #~ 'customer_advance': fields.function(__compute,_credit_debit_get,
-            #~ fnct_search=_credit_search, string='Total Customer Advance', multi='dc', help=""),
-        #~ 'supplier_advance': fields.function(__compute,_credit_debit_get,
-            #~ fnct_search=_credit_search, string='Total Supplier Advance', multi='dc', help=""),
+        'customer_advance': fields.function(_supplier_customer_advance_get, type='float', string='Total Customer Advance', multi='sc', help=""),
+        'supplier_advance': fields.function(_supplier_customer_advance_get, type='float',string='Total Supplier Advance', multi='sc', help=""),
     }

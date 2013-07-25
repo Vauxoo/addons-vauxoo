@@ -39,10 +39,5 @@ class account_voucher(osv.Model):
     }
     
     def onchange_account_advance_payment(self, cr, uid, ids, trans_type , context=None):
-        if not context:
-            context={}
-        if trans_type=='normal':
-            return True
-        else:
-            return 
+        return True
 
