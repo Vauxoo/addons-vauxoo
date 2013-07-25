@@ -25,19 +25,20 @@
 
 from openerp.osv import osv, fields
 
+
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
-    _columns={
-        'trans_type' : fields.selection([
-            ('normal','Payments'),
-            ('advance','Advance'),
-            ],'trans_type', select=True, track_visibility='always'),
+    _columns = {
+        'trans_type': fields.selection([
+            ('normal', 'Payments'),
+            ('advance', 'Advance'),
+        ], 'Transaction Type', select=True, track_visibility='always',
+            help="""Payments.- Normal payment is made. \nAdvance.- Advance payment of custom or supplier"""),
     }
-    
+
     _defaults = {
         'trans_type': 'normal',
     }
-    
-    def onchange_account_advance_payment(self, cr, uid, ids, trans_type , context=None):
-        return True
 
+    def onchange_account_advance_payment(self, cr, uid, ids, trans_type, context=None):
+        return True

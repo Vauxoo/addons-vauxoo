@@ -28,32 +28,32 @@ from openerp.osv import osv, fields
 
 class res_partner(osv.Model):
     _inherit = 'res.partner'
-      
+
     def _supplier_customer_advance_get(self, cr, uid, ids, field, arg, context=None):
         res = {}
         for id in ids:
-            res={id:{'customer_advance': 0.0,'supplier_advance': 0.0}}            
+            res = {id: {'customer_advance': 0.0, 'supplier_advance': 0.0}}
         return res
 
-    _columns={
-        'property_account_supplier_advance' : fields.property(
+    _columns = {
+        'property_account_supplier_advance': fields.property(
             'account.account',
             type='many2one',
             relation='account.account',
             string="Account Supplier Advance",
             view_load=True,
             domain="[('type','=','receivable')]",
-            help="",
+            help="This account will be used for advance payment of suppliers",
             required=True),
-        'property_account_customer_advance' : fields.property(
+        'property_account_customer_advance': fields.property(
             'account.account',
             type='many2one',
             relation='account.account',
             string="Account Customer Advance",
             view_load=True,
             domain="[('type','=','payable')]",
-            help="",
+            help="This account will be used for advance payment of custom",
             required=True),
-        'customer_advance': fields.function(_supplier_customer_advance_get, type='float', string='Total Customer Advance', multi='sc', help=""),
-        'supplier_advance': fields.function(_supplier_customer_advance_get, type='float',string='Total Supplier Advance', multi='sc', help=""),
+        'customer_advance': fields.function(_supplier_customer_advance_get, type='float', string='Total Customer Advance', multi='sc', help="Total amount of advance payment of custom."),
+        'supplier_advance': fields.function(_supplier_customer_advance_get, type='float', string='Total Supplier Advance', multi='sc', help="Total amount of advance payment of suppliers."),
     }
