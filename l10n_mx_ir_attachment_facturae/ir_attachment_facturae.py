@@ -35,39 +35,38 @@ class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
 
-
     def _get_type(self, cr, uid, ids=None, context=None):
         types = []
         return types
-        
+
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True,
-            help='Name of attachment generated'),
+                            help='Name of attachment generated'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice',
-            readonly=True, help='Invoice to which it belongs this attachment'),
+                                      readonly=True, help='Invoice to which it belongs this attachment'),
         'company_id': fields.many2one('res.company', 'Company', readonly=True,
-            help='Company to which it belongs this attachment'),
+                                      help='Company to which it belongs this attachment'),
         'file_input': fields.many2one('ir.attachment', 'File input',
-            readonly=True, help='File input'),
+                                      readonly=True, help='File input'),
         'file_input_index': fields.text('File input',
-            help='File input index'),
+                                        help='File input index'),
         'file_xml_sign': fields.many2one('ir.attachment', 'File XML Sign',
-            readonly=True, help='File XML signed'),
+                                         readonly=True, help='File XML signed'),
         'file_xml_sign_index': fields.text('File XML Sign Index',
-            help='File XML sign index'),
+                                           help='File XML sign index'),
         'file_pdf': fields.many2one('ir.attachment', 'File PDF', readonly=True,
-            help='Report PDF generated for the electronic Invoice'),
+                                    help='Report PDF generated for the electronic Invoice'),
         'file_pdf_index': fields.text('File PDF Index',
-            help='Report PDF with index'),
+                                      help='Report PDF with index'),
         'identifier': fields.char('Identifier', size=128, ),
         'type': fields.selection(_get_type, 'Type', type='char', size=64,
-            readonly=True, help="Type of Electronic Invoice"),
+                                 readonly=True, help="Type of Electronic Invoice"),
         'description': fields.text('Description'),
         'msj': fields.text('Last Message', readonly=True,
-            track_visibility='onchange',
-            help='Message generated to upload XML to sign'),
+                           track_visibility='onchange',
+                           help='Message generated to upload XML to sign'),
         'last_date': fields.datetime('Last Modified', readonly=True,
-            help='Date when is generated the attachment'),
+                                     help='Date when is generated the attachment'),
         'state': fields.selection([
             ('draft', 'Draft'),
             ('confirmed', 'Confirmed'),
@@ -76,7 +75,7 @@ class ir_attachment_facturae_mx(osv.Model):
             ('sent_customer', 'Sent Customer'),
             ('sent_backup', 'Sent Backup'),
             ('done', 'Done'),
-            ('cancel', 'Cancelled'),],
+            ('cancel', 'Cancelled'), ],
             'State', readonly=True, required=True, help='State of attachments'),
     }
 
@@ -144,11 +143,11 @@ class ir_attachment_facturae_mx(osv.Model):
                 'res_model': 'account.invoice',
                 'res_id': invoice.id,
             }, context=context)
-            if not attach:
-                msj = "Error XML CFD 2.2\n"
+            if attach:
+                msj = _("Attached Successfully XML CFD 2.2\n")
         if type == 'cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
-                '_V2_2.xml' or ''
+                '_V3_2.xml' or ''
             fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
                 cr, uid, [invoice.id], context=context)
             attach = self.pool.get('ir.attachment').create(cr, uid, {
@@ -158,10 +157,8 @@ class ir_attachment_facturae_mx(osv.Model):
                 'res_model': 'account.invoice',
                 #'res_id': invoice.id,
             }, context=context)
-            if not attach:
-                msj = _("Not Applicable XML CFD 3.2\n")
-        if attach:
-            msj = _("Attached Successfully XML CFD 3.2\n")
+            if attach:
+                msj = _("Attached Successfully XML CFDI 3.2\n")
         return self.write(cr, uid, ids,
                           {'state': 'confirmed',
                            'file_input': attach or False,
@@ -213,13 +210,13 @@ class ir_attachment_facturae_mx(osv.Model):
             '.pdf', 'openerp_' + (False or '') + '__facturae__')
         os.close(fileno)
         file = invoice_obj.create_report(cr, uid, [invoice.id],
-            "account.invoice.facturae.webkit", fname)
+                                         "account.invoice.facturae.webkit", fname)
         adjuntos = self.pool.get('ir.attachment').search(cr, uid,
-            [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice),
-            ('datas_fname', '=', invoice.fname_invoice+'.pdf')])
+                                                         [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice),
+                                ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
         for attachment in self.browse(cr, uid, adjuntos, context):
             aids = attachment.id
-            self.pool.get('ir.attachment').write(cr, uid, attachment.id, {
+            self.pool.get('ir.attachment').write(cr, uid, [attachment.id], {
                 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
             msj = _("Attached Successfully PDF\n")
@@ -244,7 +241,7 @@ class ir_attachment_facturae_mx(osv.Model):
         partner_invoice_address = self.pool.get(
             'res.partner').browse(cr, uid, address_id, context)
         type = self.browse(cr, uid, ids)[0].type
-        #msj = self.browse(cr, uid, ids)[0].msj
+        # msj = self.browse(cr, uid, ids)[0].msj
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
@@ -258,21 +255,23 @@ class ir_attachment_facturae_mx(osv.Model):
             obj_users = self.pool.get('res.users')
             obj_partner = self.pool.get('res.partner')
             mail_server_id = obj_ir_mail_server.search(cr, uid,
-                [('name', '=', 'FacturaE')], context=None)
+                                                       [('name', '=', 'FacturaE')], context=None)
             if mail_server_id:
-                for smtp_server in obj_ir_mail_server.browse(cr, uid, 
-                    mail_server_id, context=context):
+                for smtp_server in obj_ir_mail_server.browse(cr, uid,
+                                                             mail_server_id, context=context):
                     smtp = False
                     try:
                         smtp = obj_ir_mail_server.connect(
-                        smtp_server.smtp_host, smtp_server.smtp_port, 
-                        user=smtp_server.smtp_user,
-                        password=smtp_server.smtp_pass,
-                        encryption=smtp_server.smtp_encryption,
-                        smtp_debug=smtp_server.smtp_debug)
+                            smtp_server.smtp_host, smtp_server.smtp_port,
+                            user=smtp_server.smtp_user,
+                            password=smtp_server.smtp_pass,
+                            encryption=smtp_server.smtp_encryption,
+                            smtp_debug=smtp_server.smtp_debug)
                     except Exception, e:
-                        raise osv.except_osv(_("Connection test failed!"), _("Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
-                mail_compose_message_pool = self.pool.get('mail.compose.message')
+                        raise osv.except_osv(_("Connection test failed!"), _(
+                            "Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
+                mail_compose_message_pool = self.pool.get(
+                    'mail.compose.message')
                 tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
                 message = mail_compose_message_pool.onchange_template_id(
                     cr, uid, [], template_id=tmp_id, composition_mode=None,
@@ -288,15 +287,17 @@ class ir_attachment_facturae_mx(osv.Model):
                             mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
                             mssg['attachment_ids'] = [(6, 0, attachments)]
                             mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context = None)
+                                'mail.compose.message').create(cr, uid, mssg, context=None)
                             state = self.pool.get('mail.compose.message').send_mail(
                                 cr, uid, [mssg_id], context=context)
                             asunto = mssg['subject']
-                            id_mail = obj_mail_mail.search(cr, uid, [('subject', '=', asunto )])
+                            id_mail = obj_mail_mail.search(
+                                cr, uid, [('subject', '=', asunto)])
                             if id_mail:
-                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context = None):
+                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
                                     if mail.state == 'exception':
-                                        msj = _('\nNot correct email of the user or customer. Change priority outgoing mail server. Check in Menu Configuración\Tecnico\Email\Emails\n') 
+                                        msj = _(
+                                            '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
                             else:
                                 msj = _('Email Send Successfully.\
                                 Attached is sent to %s \
@@ -311,7 +312,7 @@ class ir_attachment_facturae_mx(osv.Model):
             else:
                 raise osv.except_osv(_('Warning'), _('Not Found\
                 outgoing mail server name of "FacturaE".\
-                \nConfigure outgoing mail server named "FacturaE"'))
+                \nConfigure the outgoing mail server named "FacturaE"'))
         elif release.version < '7':
             mail = self.pool.get('mail.message').create(cr, uid, {
                 'subject': subject+' '+type,
@@ -327,7 +328,7 @@ class ir_attachment_facturae_mx(osv.Model):
             state = self.pool.get('mail.message').send(
                 cr, uid, [mail], auto_commit=False, context=context)
         return self.write(cr, uid, ids, {'state': 'sent_customer',
-            'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                                         'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 
     def action_send_backup(self, cr, uid, ids, context=None):
         msj = ''
@@ -337,7 +338,7 @@ class ir_attachment_facturae_mx(osv.Model):
     def action_done(self, cr, uid, ids, context=None):
         msj = ''
         msj = _('Done\n')
-        return self.write(cr, uid, ids, {'state': 'done', 'msj': msj,})
+        return self.write(cr, uid, ids, {'state': 'done', 'msj': msj, })
 
     def action_cancel(self, cr, uid, ids, context=None):
         msj = ''
@@ -347,26 +348,27 @@ class ir_attachment_facturae_mx(osv.Model):
         state = self.browse(cr, uid, ids)[0].state
         name = self.browse(cr, uid, ids)[0].name
         invoice = self.browse(cr, uid, ids)[0].invoice_id
-        #msj = self.browse(cr, uid, ids)[0].msj
+        # msj = self.browse(cr, uid, ids)[0].msj
         if type == 'cfdi32':
             if state not in ['draft', 'confirmed']:
+                status = invoice_obj.action_cancel(
+                    cr, uid, [invoice.id], context)
                 sf_cancel = invoice_obj.sf_cancel(
                     cr, uid, [invoice.id], context={})
                 msj = _('Cancel\n')
                 msj += tools.ustr(sf_cancel['message'])
-                #validar si se hizo correcta la cancelación con los status
+                # validar si se hizo correcta la cancelación con los status
                 adjuntos = attach_obj.search(cr, uid, [(
-                    'res_model', '=', 'account.invoice'), 
-                        ('res_id', '=', invoice)])
+                    'res_model', '=', 'account.invoice'),
+                    ('res_id', '=', invoice)])
                 for attachment in self.browse(cr, uid, adjuntos, context):
-                    ids2 = attach_obj.write(cr, uid, attachment.id, {
-                                    'res_id': False, }, context={})
-                status = invoice_obj.action_cancel(cr, uid, [invoice.id], context)
-                #Termina validacion
+                    ids2 = attach_obj.write(cr, uid, [attachment.id], {
+                        'res_id': False, }, context={})
+                # Termina validacion
         return self.write(cr, uid, ids,
                           {'state': 'cancel',
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj })
+                           'msj': msj})
 
     def reset_to_draft(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
@@ -381,13 +383,15 @@ class ir_attachment_facturae_mx(osv.Model):
         email_ids = email_pool.search(cr, uid, [(
             'model_id.model', '=', 'account.invoice')])
         return email_ids and email_ids[0] or False
-        
+
+
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
-    
+
     def unlink(self, cr, uid, ids, context=None):
-        attachments = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, ['|', '|', ('file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in', ids)])
+        attachments = self.pool.get('ir.attachment.facturae.mx').search(cr, uid, ['|', '|', (
+            'file_input', 'in', ids), ('file_xml_sign', 'in', ids), ('file_pdf', 'in', ids)])
         if attachments:
-            raise osv.except_osv(_('Warning!'), _('You can not remove an attachment of an invoice'))
+            raise osv.except_osv(_('Warning!'), _(
+                'You can not remove an attachment of an invoice'))
         return super(ir_attachment, self).unlink(cr, uid, ids, context=context)
-    
