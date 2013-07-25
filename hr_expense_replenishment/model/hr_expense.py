@@ -572,10 +572,12 @@ class hr_expense_expense(osv.Model):
         act_obj = self.pool.get('ir.actions.act_window')
         exp = self.browse(cr, uid, ids[0], context=context)
         exp_ids=[]
-        result = mod_obj.get_object_reference(cr, uid, 'account_voucher', 'action_voucher_list')
+        result = mod_obj.get_object_reference(cr, uid, 'account_voucher',
+            'action_voucher_list')
         id = result and result[1] or False
         view_type='view_vendor_payment_form'
-        res = mod_obj.get_object_reference(cr, uid, 'account_voucher', view_type)
+        res = mod_obj.get_object_reference(cr, uid, 'account_voucher',
+            view_type)
         result = act_obj.read(cr, uid, [id], context=context)[0]
         result['views'] = [(res and res[1] or False, 'form')]
         result['context']= {
@@ -651,12 +653,16 @@ class hr_expense_expense(osv.Model):
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
-    def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id, price, currency_id, ttype, date, context=None):
-        res = super(account_voucher, self).recompute_voucher_lines(cr, uid, ids, partner_id, journal_id, price, currency_id, ttype, date, context=context)
+    def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id,
+                                price, currency_id, ttype, date, context=None):
+        res = super(account_voucher, self).recompute_voucher_lines(cr, uid,
+                ids, partner_id, journal_id, price, currency_id, ttype, date,
+                context=context)
         hr_expense_rep = self.pool.get('hr.expense.expense')
         exp_id = context.get('hr_expense_repl', False)
         if exp_id:
-            for expense in hr_expense_rep.browse(cr, uid, [exp_id], context=context):
+            for expense in hr_expense_rep.browse(cr, uid, [exp_id],
+                                                            context=context):
                 amount = 0.0
                 res['value']['line_cr_ids'] = []
                 for adv in expense.advance_ids:
@@ -676,27 +682,39 @@ class account_voucher(osv.Model):
                     res['value']['line_cr_ids'].append(rs)
                     res['value']['pre_line'] = 1
                 res['value']['amount'] = expense.amount - amount
-        print res,'imprimo res'
         return res
 
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
 
-    def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
-        res = super(account_move_line, self).reconcile(cr, uid, ids, type=type, writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id, writeoff_journal_id=writeoff_journal_id, context=context)
-        #when making a full reconciliation of account move lines 'ids', we may need to recompute the state of some hr.expense
-        account_move_ids = [aml.move_id.id for aml in self.browse(cr, uid, ids, context=context)]
+    def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False,
+                    writeoff_period_id=False, writeoff_journal_id=False,
+                    context=None):
+        res = super(account_move_line, self).reconcile(cr, uid, ids, type=type,
+                                    writeoff_acc_id=writeoff_acc_id,
+                                    writeoff_period_id=writeoff_period_id,
+                                    writeoff_journal_id=writeoff_journal_id,
+                                    context=context)
+
+        account_move_ids = [aml.move_id.id for aml in self.browse(cr, uid, ids,
+            context=context)]
         expense_obj = self.pool.get('hr.expense.expense')
         currency_obj = self.pool.get('res.currency')
         if account_move_ids:
-            expense_ids = expense_obj.search(cr, uid, [('account_move_id', 'in', account_move_ids)], context=context)
-            for expense in expense_obj.browse(cr, uid, expense_ids, context=context):
+            expense_ids = expense_obj.search(cr, uid,
+                [('account_move_id', 'in', account_move_ids)], context=context)
+            for expense in expense_obj.browse(cr, uid, expense_ids,
+                                                            context=context):
                 if expense.state in ('process', 'deduction'):
-                    #making the postulate it has to be set paid, then trying to invalidate it
                     new_status_is_paid = True
                     for aml in expense.account_move_id.line_id:
-                        if aml.account_id.type == 'payable' and not currency_obj.is_zero(cr, uid, expense.company_id.currency_id, aml.amount_residual):
+                        if aml.account_id.type == 'payable' and not\
+                            currency_obj.is_zero(cr,
+                                uid,
+                                expense.company_id.currency_id,
+                                aml.amount_residual):
                             new_status_is_paid = False
                     if new_status_is_paid:
-                        expense_obj.write(cr, uid, [expense.id], {'state': 'paid'}, context=context)
+                        expense_obj.write(cr, uid, [expense.id],
+                                            {'state': 'paid'}, context=context)
         return res
