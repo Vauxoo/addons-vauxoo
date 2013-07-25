@@ -6,78 +6,62 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2012-05-28 15:00+0000\n"
-"PO-Revision-Date: 2012-05-28 10:42-0400\n"
-"Last-Translator: Miguel <miguel.delgado07@gmail.com>\n"
+"POT-Creation-Date: 2009-11-25 13:27+0000\n"
+"PO-Revision-Date: 2013-06-03 07:33+0000\n"
+"Last-Translator: Miguel Delgado (Vauxoo) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-07-18 07:16+0000\n"
+"X-Generator: Launchpad (build 16696)\n"
 
-#. module: product_catalog_m321
+#. module: product_catalog_report
 #: wizard_view:res.partner.product_catalog,init:0
 msgid "Select a Product Categories "
 msgstr "Seleccione las Categorias por producto "
 
-#. module: product_catalog_m321
-#: model:ir.module.module,description:product_catalog_m321.module_meta_information
+#. module: product_catalog_report
+#: model:ir.module.module,description:product_catalog_report.module_meta_information
 msgid ""
 "\n"
-"    This module use to print report of product catalog with product image, list price\n"
-"    This module was ported to V6.0 by Vauxoo\n"
-"    You need to save an image as attachment with the word \"catalog\" on its name,\n"
-"    With this you will be able to see the image on report.\n"
-"    The report will print all information related to product and prices related to \n"
-"    The partner selected to send the report.\n"
-"    Go to Sales > Customers > Print Product Catalog to see the result.\n"
-"    Try to save image with an square Npx X Npx resolution to avoid unspected redimension.\n"
+"    This module use to print report of product catalog with product image, "
+"list price\n"
 "    "
 msgstr ""
-"\n"
-"    Este modulo es usado para imprimir un reporte del catalogo de productos con la imagen del producto, lista de precios\n"
-"    Este modulo fue portado a V6.0 por Vauxoo\n"
-"    Usted necesita salvar una imagen como adjunto con la palabra  \"catalog\"en su nombre,\n"
-"    Con esto, usted será capaz de ver la imagen en el informe.\n"
-"    El informe se imprimirá toda la información relacionada con los productos y los precios relacionados con \n"
-"    El socio seleccionado para enviar el informe.\n"
-"    Ir a Ventas > Clientes > Imprimir Catalogo de Producto para ver el resultado.\n"
-"   Trate de guardar la imagen con un cuadrado de resolución npx X npx para evitar redimensionar unspected.\n"
-"    "
 
-#. module: product_catalog_m321
+#. module: product_catalog_report
 #: wizard_field:res.partner.product_catalog,init,report_lang:0
 msgid "Language"
 msgstr "Idioma"
 
-#. module: product_catalog_m321
-#: model:ir.actions.wizard,name:product_catalog_m321.wizard_print_catalog_report
+#. module: product_catalog_report
+#: model:ir.actions.wizard,name:product_catalog_report.wizard_print_catalog_report
 #: wizard_button:res.partner.product_catalog,init,print:0
 msgid "Print Product Catalog"
 msgstr "Imprimir Catalogo de Producto"
 
-#. module: product_catalog_m321
-#: model:ir.module.module,shortdesc:product_catalog_m321.module_meta_information
-msgid "Product Catalog - Print Report of product catalog with product image"
-msgstr "Catálogo de productos - Reporte de impresión del catálogo de producto con la imagen del producto"
+#. module: product_catalog_report
+#: model:ir.module.module,shortdesc:product_catalog_report.module_meta_information
+msgid "Product Catalog"
+msgstr ""
 
-#. module: product_catalog_m321
+#. module: product_catalog_report
 #: wizard_view:res.partner.product_catalog,init:0
 msgid "Select a printing language "
 msgstr "Seleccione el lenguaje de Impresión "
 
-#. module: product_catalog_m321
+#. module: product_catalog_report
 #: wizard_button:res.partner.product_catalog,init,end:0
 msgid "Cancel"
 msgstr "Cancelar"
 
-#. module: product_catalog_m321
+#. module: product_catalog_report
 #: wizard_view:res.partner.product_catalog,init:0
 msgid "Choose catalog preferencies"
 msgstr "Elija las preferencias de catálogo"
 
-#. module: product_catalog_m321
+#. module: product_catalog_report
 #: wizard_field:res.partner.product_catalog,init,categories:0
 msgid "Select Category"
-msgstr "Seleccione la Categoría "
-
+msgstr "Seleccione la Categoría"

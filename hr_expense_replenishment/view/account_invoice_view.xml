@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="hr_expense_extended_invoice_form" model="ir.ui.view">
+            <field name="name">hr.expense.extended.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_title']" position="after">
+                    <div class="oe_right oe_button_box" name="button_box">
+                        <!-- Put buttons here -->
+                        <button string="Attach Invoice to Expense" name="%(act_attach_invoice_to_expense_wizard)d" type="action" attrs="{'invisible': [('state','!=', 'draft')]}"/>
+                    </div>
+                </xpath>
+
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="expense_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_add_invoice_to_expense" model="ir.actions.act_window">
+            <field name="name">Expense Invoice</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','in_invoice'),('expense_id','=',context.get('active_id',False))]</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False) }</field>
+            <field name="target">current</field>
+        </record>
+
+    </data>
+</openerp>

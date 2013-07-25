@@ -67,11 +67,13 @@ class ifrs_ifrs(osv.osv):
             'State', required=True),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year'),
         'do_compute': fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'),
+        'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
         'ifrs_ids': fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
 
     _defaults = {
         'state': 'draft',
+        'help': True,
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(
             c, u, u, context=cx).company_id.id,
         'fiscalyear_id': lambda s, c, u, cx: s.pool.get('account.fiscalyear').find(c, u),
@@ -613,6 +615,7 @@ class ifrs_lines(osv.osv):
         return res
 
     _columns = {
+        'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
         'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
         'name': fields.char('Name', 128, required=True, translate=True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated'),
         'type': fields.selection(
@@ -640,7 +643,7 @@ class ifrs_lines(osv.osv):
                                ),
         'cons_ids': fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts'),
         'analytic_ids': fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
-        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
+        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='cascade', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
         'parent_abstract_id': fields.many2one('ifrs.lines', 'Parent Abstract', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
         'parent_right': fields.integer('Parent Right', select=1),
         'parent_left': fields.integer('Parent Left', select=1),
@@ -648,13 +651,13 @@ class ifrs_lines(osv.osv):
                                  store={
                                  'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
                                  }),
-        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Operands'),
+        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Second Operand'),
         'operator': fields.selection([
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
             ('ratio', 'Ratio'),
             ('product', 'Product'),
-            ('without', '')
+            ('without', 'First Operand Only')
         ],
             'Operator', required=False,
             help='Leaving blank will not take into account Operands'),
@@ -668,8 +671,8 @@ class ifrs_lines(osv.osv):
         'acc_val': fields.selection([
             ('init', 'Initial Values'),
             ('var', 'Variation in Periods'),
-            ('fy', ('FY All'))],
-            'Accounting Spam', required=False,
+            ('fy', ('Ending Values'))],
+            'Accounting Span', required=False,
             help='Leaving blank means YTD'),
         'value': fields.selection([
             ('debit', 'Debit'),
@@ -677,7 +680,7 @@ class ifrs_lines(osv.osv):
             ('balance', 'Balance')],
             'Accounting Value', required=False,
             help='Leaving blank means Balance'),
-        'total_ids': fields.many2many('ifrs.lines', 'ifrs_lines_rel', 'parent_id', 'child_id', string='Total'),
+        'total_ids': fields.many2many('ifrs.lines', 'ifrs_lines_rel', 'parent_id', 'child_id', string='First Operand'),
         'inv_sign': fields.boolean('Change Sign to Amount', help='Allows a change of sign'),
         'invisible': fields.boolean('Invisible', help='Allows whether the line of the report is printed or not'),
         'comment': fields.text('Comments/Question', help='Comments or questions about this ifrs line'),
@@ -701,6 +704,7 @@ class ifrs_lines(osv.osv):
         'invisible': False,
         'acc_val': 'fy',
         'value': 'balance',
+        'help': True,
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 
