@@ -37,6 +37,7 @@
                 <field name="inherit_id" ref="project.view_task_search_form"/>
                 <field name="arch" type="xml">
                         <xpath expr="//filter[@string=&quot;Stage&quot;]" position="after">
+                                <field name="id"/>
                                 <filter string="User Story" name="group_user_story_id" icon="terp-stage" domain="[]" context="{'group_by':'userstory_id'}"/>
                         </xpath>
                 </field>
