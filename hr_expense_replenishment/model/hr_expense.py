@@ -47,7 +47,7 @@ class hr_expense_expense(osv.Model):
                     res[expense.id] += \
                         sum([aml.credit
                              for aml in invoice.move_id.line_id
-                             if aml.account_id in acc_payable_ids])
+                             ])
                 else:
                     res[expense.id] += cur_obj.exchange(
                         cr, uid, [],
@@ -559,7 +559,7 @@ class hr_expense_expense(osv.Model):
                 wf_service.trg_validate(uid, 'hr.expense.expense', exp_brw.id,
                                         'done', cr)
         return True
-
+    
     def expense_pay(self, cr, uid, ids, context=None):
         """
         Expense credit is greater than the expense debit. That means that the
@@ -567,8 +567,30 @@ class hr_expense_expense(osv.Model):
         payment. So now we create a account voucher to pay the employee the
         missing expense amount.
         """
-        context = context or {}
-        raise osv.except_osv("Warning DUMMY method", "No yet implemented")
+        if not ids: return []
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+        exp = self.browse(cr, uid, ids[0], context=context)
+        exp_ids=[]
+        result = mod_obj.get_object_reference(cr, uid, 'account_voucher', 'action_voucher_list')
+        id = result and result[1] or False
+        view_type='view_vendor_payment_form'
+        res = mod_obj.get_object_reference(cr, uid, 'account_voucher', view_type)
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+        result['views'] = [(res and res[1] or False, 'form')]
+        result['context']= {
+                'default_partner_id': exp.employee_id.address_home_id.id,
+                'default_amount': 100,
+                'default_reference': exp.name,
+                'default_type': 'payment',
+                #'invoice_id': 5,
+                'type': 'payment',
+                'hr_expense_repl': exp.id
+            }
+        result['res_id'] = exp_ids and exp_ids[0] or False
+        return result
+        #context = context or {}
+        #raise osv.except_osv("Warning DUMMY method", "No yet implemented")
 
         #~ TODO: make the automatic the voucher linked to the no reconciled
         #~ expense move line
@@ -593,7 +615,7 @@ class hr_expense_expense(osv.Model):
         #~ print 'i create the voucher successfully'
         #~ print 'voucher_id', voucher_id
 
-        return True
+        #return True
 
     def expense_deduction(self, cr, uid, ids, context=None):
         """
@@ -626,3 +648,55 @@ class hr_expense_expense(osv.Model):
                               context=context)
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
+
+class account_voucher(osv.Model):
+    _inherit = 'account.voucher'
+    def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id, price, currency_id, ttype, date, context=None):
+        res = super(account_voucher, self).recompute_voucher_lines(cr, uid, ids, partner_id, journal_id, price, currency_id, ttype, date, context=context)
+        hr_expense_rep = self.pool.get('hr.expense.expense')
+        exp_id = context.get('hr_expense_repl', False)
+        if exp_id:
+            for expense in hr_expense_rep.browse(cr, uid, [exp_id], context=context):
+                amount = 0.0
+                res['value']['line_cr_ids'] = []
+                for adv in expense.advance_ids:
+                    amount += adv.debit
+                    rs = {
+                        'date_due': adv.date,
+                        'name': adv.name,
+                        'date_original': adv.date,
+                        'move_line_id': adv.id,
+                        'amount_original': adv.debit,
+                        'currency_id': 1,
+                        'amount': 0,
+                        'type': 'cr',
+                        'account_id': adv.account_id.id,
+                        'amount_unreconciled': adv.debit,
+                    }
+                    res['value']['line_cr_ids'].append(rs)
+                    res['value']['pre_line'] = 1
+                res['value']['amount'] = expense.amount - amount
+        print res,'imprimo res'
+        return res
+
+class account_move_line(osv.osv):
+    _inherit = "account.move.line"
+
+    def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
+        res = super(account_move_line, self).reconcile(cr, uid, ids, type=type, writeoff_acc_id=writeoff_acc_id, writeoff_period_id=writeoff_period_id, writeoff_journal_id=writeoff_journal_id, context=context)
+        #when making a full reconciliation of account move lines 'ids', we may need to recompute the state of some hr.expense
+        account_move_ids = [aml.move_id.id for aml in self.browse(cr, uid, ids, context=context)]
+        expense_obj = self.pool.get('hr.expense.expense')
+        currency_obj = self.pool.get('res.currency')
+        if account_move_ids:
+            expense_ids = expense_obj.search(cr, uid, [('account_move_id', 'in', account_move_ids)], context=context)
+            for expense in expense_obj.browse(cr, uid, expense_ids, context=context):
+                if expense.state in ('process', 'deduction'):
+                    #making the postulate it has to be set paid, then trying to invalidate it
+                    new_status_is_paid = True
+                    for aml in expense.account_move_id.line_id:
+                        if aml.account_id.type == 'payable' and not currency_obj.is_zero(cr, uid, expense.company_id.currency_id, aml.amount_residual):
+                            new_status_is_paid = False
+                    if new_status_is_paid:
+                        expense_obj.write(cr, uid, [expense.id], {'state': 'paid'}, context=context)
+        return res
