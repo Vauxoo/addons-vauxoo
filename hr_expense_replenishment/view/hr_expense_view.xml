@@ -34,7 +34,9 @@
                 </xpath>
 
                 <xpath expr="//button[@name='confirm']" position="after">
-                    <button name="reconcile_payment" type="object" string="Reconcile Payment" states="done" class="oe_highlight"/>
+                    <button string="Reconcile" name="payment_reconcile" type="object" states="done" class="oe_highlight"/>
+                    <button string="Pay" name="expense_pay" type="object" states="process" class="oe_highlight"/>
+                    <button string="Deduct" name="expense_deduction" type="object" states="deduction" class="oe_highlight"/>
                 </xpath>
 
                 <xpath expr="//field[@name='name']" position="replace">
@@ -52,7 +54,7 @@
                 </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
-                    <page string="Advances"  attrs="{'invisible':[('state','not in',['done','paid'])]}">
+                    <page string="Advances"  attrs="{'invisible':[('state','in',['draft','confirm','accepted'])]}">
                         <group>
                             <group>
                                 <group colspan="4" col="4">
@@ -60,7 +62,7 @@
                                     <newline/>
                                     <button string="Refresh" name="load_advances" type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','done'),('skip','=',True)]}"/>
                                 </group>
-                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','done')]}">
+                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','done')]}" widget="many2many">
                                     <tree>
                                         <field name="journal_id"/>
                                         <field name="period_id"/>
