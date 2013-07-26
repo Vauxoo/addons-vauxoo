@@ -156,12 +156,16 @@ class hr_expense_expense(osv.Model):
         res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
                                             ids, employee_id, context=context)
         emp_obj = self.pool.get('hr.employee')
-        acc_analytic_id = False
-        if employee_id:
-            employee = emp_obj.browse(cr, uid, employee_id, context=context)
-            acc_analytic_id = employee.account_analytic_id.id
+
+        employee = emp_obj.browse(cr, uid, employee_id, context=context)
+            
+        acc_analytic_id = employee.account_analytic_id and\
+                            employee.account_analytic_id.id or False
+        if not acc_analytic_id:
+            acc_analytic_id = employee.department_id and\
+            employee.department_id.analytic_account_id and\
+            employee.department_id.analytic_account_id.id or False
         res['value'].update({'account_analytic_id': acc_analytic_id})
-        
         return res
 
     def onchange_department_id(self, cr, uid, ids, employee_id, department_id,
@@ -169,15 +173,18 @@ class hr_expense_expense(osv.Model):
         dep_obj = self.pool.get('hr.department')
         emp_obj = self.pool.get('hr.employee')
         employee = emp_obj.browse(cr, uid, employee_id, context=context)
-        acc_analytic_id = False
-        if department_id:
-            if not employee.account_analytic_id:
-                department = dep_obj.browse(cr, uid, department_id,
-                                            context=context)
-                acc_analytic_id = department.analytic_account_id.id
-        else:
-            acc_analytic_id = employee.account_analytic_id and\
-                                employee.account_analytic_id.id or False
+        acc_analytic_id = employee.account_analytic_id and\
+                            employee.account_analytic_id.id or False
+        if not acc_analytic_id:
+            acc_analytic_id = employee.department_id and\
+            employee.department_id.analytic_account_id  and \
+            employee.department_id.analytic_account_id.id or False
+            
+        if not acc_analytic_id and department_id:
+            department = dep_obj.browse(cr, uid, department_id,
+                                        context=context)
+            acc_analytic_id = department.analytic_account_id and \
+                        department.analytic_account_id.id or False
         res  = {'value':{'account_analytic_id': acc_analytic_id}}
         return res
     
@@ -761,11 +768,11 @@ class hr_expense_line(osv.Model):
     _inherit = "hr.expense.line"
 
     def _get_analytic(self, cr, uid, context={}):
+        context = context or {}
         res = super(hr_expense_line, self)._get_analytic(cr, uid,
             context=context)
-        print res,'imprimo res'
-        print context,'imprimo context'
-        return res
+        result = context.get('account_analytic_exp', res)
+        return result
 
     _defaults = {
         'analytic_account': _get_analytic

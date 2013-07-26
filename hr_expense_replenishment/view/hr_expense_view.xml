@@ -140,6 +140,17 @@
                 </xpath>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="view_hr_expense_expense_analytic_form">
+            <field name="name">hr.expense.expense.analytic.inherit</field>
+            <field name="inherit_id" ref="hr_expense_analytic.view_hr_expense_analytic_context"/>
+            <field name="model">hr.expense.expense</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="context">{'currency_id': currency_id, 'depto': department_id, 'account_analytic_exp': account_analytic_id}</attribute>
+                </xpath>
+            </field>
+        </record>
         
     </data>
 </openerp>
