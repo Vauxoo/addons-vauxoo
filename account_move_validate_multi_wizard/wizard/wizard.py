@@ -41,6 +41,7 @@ class account_move_multi_wizard(osv.TransientModel):
     _columns = {
         'account_move_ids': fields.many2many('account.move',
                                              'account_move_wizard_rel', 'wiz_id', 'move_id'),
+        'result': fields.text('Result'),
     }
 
     def validate_moves(self, cr, uid, ids, context=None):
@@ -57,8 +58,20 @@ class account_move_multi_wizard(osv.TransientModel):
                 except:
                     lista.append(move.id)
         if lista:
-            raise osv.except_osv(_('Error de validación!'),
-                                 _( '''You cannot validate a non-balanced entry. Make sure you have configured payment terms properly.
-                                       The latest payment term line should be of the "Balance" type. \n In journal entries: %s''' ) % (lista))
-
-        return {}
+            pass
+            __, xml_id = self.pool.get('ir.model.data').get_object_reference(
+                cr, uid, 'account_move_validate_multi_wizard', 'account_move_validate_multi_wizard_unbalance')
+            context.update(
+                {'default_result': '''You cannot validate a non-balanced entry. Make sure you have configured payment terms properly.
+The latest payment term line should be of the "Balance" type. \n\n In journal entries: %s''' % (lista)})
+            return {
+                'res_model': 'account.move.multi.wizard',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'view_id': xml_id,
+                'context': context,
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+            }
+        else:
+            return {}
