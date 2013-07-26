@@ -43,8 +43,7 @@ class res_partner(osv.Model):
             string="Account Supplier Advance",
             view_load=True,
             domain="[('type','=','receivable')]",
-            help="This account will be used for advance payment of suppliers",
-            required=True),
+            help="This account will be used for advance payment of suppliers"),
         'property_account_customer_advance': fields.property(
             'account.account',
             type='many2one',
@@ -52,8 +51,7 @@ class res_partner(osv.Model):
             string="Account Customer Advance",
             view_load=True,
             domain="[('type','=','payable')]",
-            help="This account will be used for advance payment of custom",
-            required=True),
+            help="This account will be used for advance payment of custom"),
         'customer_advance': fields.function(_supplier_customer_advance_get, type='float', string='Total Customer Advance', multi='sc', help="Total amount of advance payment of custom."),
         'supplier_advance': fields.function(_supplier_customer_advance_get, type='float', string='Total Supplier Advance', multi='sc', help="Total amount of advance payment of suppliers."),
     }
