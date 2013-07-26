@@ -26,7 +26,10 @@
 {
     "name": "Expenses Replenishment",
     "version": "0.1",
-    "depends": ["hr_expense","account_invoice_line_currency"],
+    "depends": ["hr_expense",
+        "account_invoice_line_currency",
+        "hr_expense_analytic"
+        ],
     "author": "Vauxoo",
     "description": """
 Expenses Replenishment
