@@ -149,8 +149,21 @@ class hr_expense_expense(osv.Model):
             'accepts it, the status is \'Accepted\'.\n If the accounting '
             'entries are made for the expense request, the status is '
             '\'Waiting Payment\'.')),
+        'account_analytic_id': fields.many2one('account.analytic.account',
+            'Analytic')
     }
-
+    def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
+        res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
+                                            ids, employee_id, context=context)
+        emp_obj = self.pool.get('hr.employee')
+        acc_analytic_id = False
+        if employee_id:
+            employee = emp_obj.browse(cr, uid, employee_id, context=context)
+            acc_analytic_id = employee.account_analytic_id.id
+            company_id = employee.company_id.id
+        res['value'].update({'account_analytic_id': acc_analytic_id})
+        return res
+    
     def onchange_no_danvace_option(self, cr, uid, ids, skip, context=None):
         """
         Clean up the expense advances when the No advances checkbox is set
@@ -718,3 +731,11 @@ class account_move_line(osv.osv):
                         expense_obj.write(cr, uid, [expense.id],
                                             {'state': 'paid'}, context=context)
         return res
+
+class hr_employee(osv.Model):
+    _inherit = 'hr.employee'
+    
+    _columns = {
+        'account_analytic_id': fields.many2one('account.analytic.account',
+            'Analytic')
+    }

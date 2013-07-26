@@ -52,6 +52,10 @@
                         <field name="name"/>
                     </h1>
                 </xpath>
+                
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
                     <page string="Advances"  attrs="{'invisible':[('state','in',['draft','confirm','accepted'])]}">
@@ -122,5 +126,16 @@
             </field>
         </record>
 
+        <record id="hr_employee_inherit_form" model="ir.ui.view">
+            <field name="name">hr.employee.inherit.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>
