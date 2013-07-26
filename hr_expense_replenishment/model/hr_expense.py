@@ -149,8 +149,45 @@ class hr_expense_expense(osv.Model):
             'accepts it, the status is \'Accepted\'.\n If the accounting '
             'entries are made for the expense request, the status is '
             '\'Waiting Payment\'.')),
+        'account_analytic_id': fields.many2one('account.analytic.account',
+            'Analytic')
     }
+    def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
+        res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
+                                            ids, employee_id, context=context)
+        emp_obj = self.pool.get('hr.employee')
 
+        employee = emp_obj.browse(cr, uid, employee_id, context=context)
+            
+        acc_analytic_id = employee.account_analytic_id and\
+                            employee.account_analytic_id.id or False
+        if not acc_analytic_id:
+            acc_analytic_id = employee.department_id and\
+            employee.department_id.analytic_account_id and\
+            employee.department_id.analytic_account_id.id or False
+        res['value'].update({'account_analytic_id': acc_analytic_id})
+        return res
+
+    def onchange_department_id(self, cr, uid, ids, employee_id, department_id,
+                                                                context=None):
+        dep_obj = self.pool.get('hr.department')
+        emp_obj = self.pool.get('hr.employee')
+        employee = emp_obj.browse(cr, uid, employee_id, context=context)
+        acc_analytic_id = employee.account_analytic_id and\
+                            employee.account_analytic_id.id or False
+        if not acc_analytic_id:
+            acc_analytic_id = employee.department_id and\
+            employee.department_id.analytic_account_id  and \
+            employee.department_id.analytic_account_id.id or False
+            
+        if not acc_analytic_id and department_id:
+            department = dep_obj.browse(cr, uid, department_id,
+                                        context=context)
+            acc_analytic_id = department.analytic_account_id and \
+                        department.analytic_account_id.id or False
+        res  = {'value':{'account_analytic_id': acc_analytic_id}}
+        return res
+    
     def onchange_no_danvace_option(self, cr, uid, ids, skip, context=None):
         """
         Clean up the expense advances when the No advances checkbox is set
@@ -718,3 +755,26 @@ class account_move_line(osv.osv):
                         expense_obj.write(cr, uid, [expense.id],
                                             {'state': 'paid'}, context=context)
         return res
+
+class hr_employee(osv.Model):
+    _inherit = 'hr.employee'
+    
+    _columns = {
+        'account_analytic_id': fields.many2one('account.analytic.account',
+            'Analytic')
+    }
+
+class hr_expense_line(osv.Model):
+    _inherit = "hr.expense.line"
+
+    def _get_analytic(self, cr, uid, context={}):
+        context = context or {}
+        res = super(hr_expense_line, self)._get_analytic(cr, uid,
+            context=context)
+        result = context.get('account_analytic_exp', res)
+        return result
+
+    _defaults = {
+        'analytic_account': _get_analytic
+    }
+

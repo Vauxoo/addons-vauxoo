@@ -52,6 +52,14 @@
                         <field name="name"/>
                     </h1>
                 </xpath>
+                
+                <xpath expr="//field[@name='department_id']" position="replace">
+                    <field name="department_id" on_change="onchange_department_id(employee_id, department_id)"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
                     <page string="Advances"  attrs="{'invisible':[('state','in',['draft','confirm','accepted'])]}">
@@ -122,5 +130,27 @@
             </field>
         </record>
 
+        <record id="hr_employee_inherit_form" model="ir.ui.view">
+            <field name="name">hr.employee.inherit.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_expense_expense_analytic_form">
+            <field name="name">hr.expense.expense.analytic.inherit</field>
+            <field name="inherit_id" ref="hr_expense_analytic.view_hr_expense_analytic_context"/>
+            <field name="model">hr.expense.expense</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="context">{'currency_id': currency_id, 'depto': department_id, 'account_analytic_exp': account_analytic_id}</attribute>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>
