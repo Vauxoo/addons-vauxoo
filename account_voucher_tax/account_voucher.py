@@ -186,6 +186,7 @@ class account_voucher(osv.Model):
             #############################################################################################
                     
                     if line_tax.balance_tax + line_tax.amount_tax < line_tax.original_tax and voucher.payment_option=='with_writeoff':
+                        print '888888888888888888888888888888888888888888888888888888'
                         context['date']=line.move_line_id.date
                         credit_orig=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.balance_tax)), round=True, context=context)
                         context['date']=voucher.date
@@ -248,20 +249,33 @@ class account_voucher(osv.Model):
                         move_id, voucher, line, line_tax, company_currency,
                         reference_amount, amount_tax_unround,
                         current_currency, factor, context=context)
+                    invoice_line = line_tax.tax_invoice_id and line_tax.tax_invoice_id.invoice_id or False
+                    if invoice_line:
+                        move_invoice = invoice_line.move_id
+                        for line_move in move_invoice.line_id:
+                            if line_move.account_id.id == account_tax_collected:
+                                line_invo = line_move
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
-                        move_ids.append(move_create)
-
+                        acc = move_line_obj.browse(cr, uid, move_create).account_id.id
+                        print 'accccccc', acc
+                        if line_invo and line_invo.account_id.id == acc:
+                            move_ids.append(line_invo.id)
+                            move_ids.append(move_create)
+                        #~ move_ids.append(move_create)
+                    print 'move_ids', move_ids
                     amount_exchange = self._convert_amount(cr, uid, line.untax_amount or line.amount, voucher.id, context=context)
                     tax_amount_exchange = self._convert_amount(cr, uid, line.amount_original, voucher.id, context=context)
                     base_exchange = self._convert_amount(cr, uid, 2.88, voucher.id, context=context)
                     if line.amount == line.amount_unreconciled:
+                        print '***********************************************************'
                         if not line.move_line_id:
                             raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
                         sign = voucher.type in ('payment', 'purchase') and -1 or 1
                         currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
                         if round(currency_rate_difference, 2):
+                            print '--------------------------------------------------------'
                             factor=self.get_percent_pay_vs_invoice(cr ,uid, tax_amount_exchange, currency_rate_difference,context=context)
                             base_amount=self.get_partial_amount_tax_pay(cr, uid, line_tax.tax_id.amount, base_exchange, context=context)
                             move_lines_tax = self._get_move_writeoff(cr, uid,
@@ -275,6 +289,7 @@ class account_voucher(osv.Model):
                                 move_ids.append(move_create)
                     
                     if voucher.writeoff_amount > 0:
+                        print 'qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq'
                         reference_amount_w = self.get_partial_amount_tax_pay(cr,
                             uid, voucher.writeoff_amount,
                             line_tax.original_tax, context=context)
@@ -289,6 +304,7 @@ class account_voucher(osv.Model):
                             move_create = move_line_obj.create(cr ,uid, move_line_w,
                                                     context=context)
                             move_ids.append(move_create)
+        print 'move_ids', move_ids
         return move_ids
     
     def _get_move_writeoff(self, cr, uid, src_account_id, dest_account_id,
@@ -375,6 +391,7 @@ class account_voucher(osv.Model):
             debit_line_vals['debit'] = cur_obj.compute(cr, uid, reference_currency_id, dest_main_currency_id, reference_amount, context=context)
             if (not dest_acct.currency_id) or dest_acct.currency_id.id == reference_currency_id:
                 debit_line_vals.update(currency_id=reference_currency_id, amount_currency=reference_amount)
+        print '[debit_line_vals, credit_line_vals]', [debit_line_vals, credit_line_vals]
         return [debit_line_vals, credit_line_vals]
     
     def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
@@ -384,7 +401,12 @@ class account_voucher(osv.Model):
         currency_obj = self.pool.get('res.currency')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
         new=self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
-        res[1][0]=res[1][0]+new
+        print 'res', res
+        print 'NEEEEEEEEEEEEEEEEEEEEw', new
+        print 'res[1][0]', res[1]
+        res[1].append(new)
+        #~ res[1][0]=res[1][0]+new
+        print 'res', res
         return res
     
     def onchange_compute_tax(self, cr, uid, ids, lines=None, context=None):
@@ -421,6 +443,8 @@ class account_voucher(osv.Model):
                         context=context):
                         for tax in invoice.tax_line:
                             if tax.tax_id.tax_voucher_ok:
+                                print 'tax.id', tax.id
+                                print 'tax.name', tax.name
                                 base_amount = tax.amount
                                 account = tax.tax_id.\
                                     account_collected_voucher_id.id
@@ -505,7 +529,8 @@ class account_voucher(osv.Model):
                                     'analytic_account_id': tax.\
                                     account_analytic_id and tax.\
                                     account_analytic_id.id or False,
-                                    'amount_base' : tax.base_amount}])
+                                    'amount_base' : tax.base_amount,
+                                    'tax_invoice_id' : tax.id}])
                                 #Check why need move_line_id
                 lista_tax_to_add = [[5, False, False]]
                 for tax in list_tax:
@@ -729,5 +754,6 @@ class account_voucher_line_tax(osv.Model):
         'voucher_line_id':fields.many2one('account.voucher.line', 'Voucher Line'),
         'move_line_id':fields.many2one('account.move.line','Move'),
         'analytic_account_id': fields.many2one('account.analytic.account', 'Account Analytic'),
-        'amount_base' : fields.float('Amount Base')
+        'amount_base' : fields.float('Amount Base'),
+        'tax_invoice_id' : fields.many2one('account.invoice.tax', 'Id Tax in Invoice'),
     }
