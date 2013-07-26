@@ -708,7 +708,8 @@ class ifrs_lines(osv.osv):
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 
-    def _check_description(self, cr, user, ids):
+    def _check_description(self, cr, user, ids,context=None):
+        context = context or {}
         for s in self.browse(cr, user, ids):
             # if s.type=='total' and s.parent_id.type!='abstract':
             #    return False

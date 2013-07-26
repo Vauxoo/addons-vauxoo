@@ -115,9 +115,63 @@ page-break-before: auto;
 .celda2{
 max-width:80px;
 min-width:79px;
-font-size:10;
+font-size:9;
 text-align:right;
+background-color:#F0F8FF;
 }
+
+th.celda3{
+text-align:left;
+font-size:12;
+font-weight:bold;
+color:black;
+padding-right:3px
+padding-left:3px
+background-color:#d4e388;
+}
+
+.celda4{
+max-width:80px;
+min-width:79px;
+font-size:9;
+text-align:right;
+background-color:#F3FCFF;
+}
+
+.celda5{
+max-width:80px;
+min-width:79px;
+font-size:12;
+text-align:left;
+background-color:#F0F8FF;
+}
+
+.celda6{
+max-width:80px;
+min-width:79px;
+font-size:12;
+text-align:left;
+background-color:#F3FCFF;
+}
+
+.celdaTotalTitulo{
+max-width:80px;
+min-width:79px;
+font-size:14;
+text-align:left;
+font-weight:bold;
+background-color:#C2FABF;
+}
+
+.celdaTotal{
+max-width:80px;
+min-width:79px;
+font-size:9;
+text-align:right;
+font-weight:bold;
+background-color:#C2FABF;
+}
+
 
 th.list_table{
 border-top:4px solid black;
@@ -153,7 +207,6 @@ width:50%;
 
 
 .prueba{
-background-color:#80E680;
 color:black;
 }
 
@@ -185,15 +238,6 @@ padding-right:3px
 padding-left:3px
 }
 
-
-th.celda3{
-text-align:left;
-font-size:12;
-font-weight:bold;
-color:black;
-padding-right:3px
-padding-left:3px
-}
 
 tr
 {
