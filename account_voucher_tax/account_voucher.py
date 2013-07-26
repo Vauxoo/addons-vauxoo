@@ -383,7 +383,7 @@ class account_voucher(osv.Model):
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
         res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
-        #~ new=self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
+        new=self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
         #~ res[1] and res[1][0]+new
         return res
     
