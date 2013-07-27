@@ -28,7 +28,7 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 import time
-import pdb
+#~ import pdb
 
 class ifrs_ifrs(osv.osv):
 
@@ -570,8 +570,8 @@ class ifrs_lines(osv.osv):
         context['fiscalyear'] = fiscalyear
         context['state'] = target_move
         
-        if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
-            pdb.set_trace()
+        #~ if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
+            #~ pdb.set_trace()
 
         res = self._get_sum(
             cr, uid, ifrs_line.id, number_month, is_compute, context=context)
