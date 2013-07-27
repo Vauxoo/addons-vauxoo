@@ -55,6 +55,7 @@ Dependencies information
         "wizard/hr_expense_wizard_view.xml",
         "view/account_invoice_view.xml",
         "view/hr_expense_view.xml",
+        "workflow/workflow.xml",
     ],
     "active": False,
     "installable": True,

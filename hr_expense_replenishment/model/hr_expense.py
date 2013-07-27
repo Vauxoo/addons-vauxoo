@@ -28,7 +28,6 @@ from openerp import netsvc
 import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
 
-
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
 
@@ -82,6 +81,12 @@ class hr_expense_expense(osv.Model):
         return res
 
     _columns = {
+        'partner_id':fields.related('employee_id', 'address_home_id', 
+            string= 'Partner linked to Employee', 
+            help=('This field is automatically filled when Employee is '
+                'selected'),
+            relation='res.partner', type='many2one', store=True, readonly=True), 
+        
         'invoice_ids': fields.one2many('account.invoice', 'expense_id',
                                        'Invoices', help=''),
         'ail_ids': fields.function(_get_ail_ids,
@@ -155,10 +160,11 @@ class hr_expense_expense(osv.Model):
     def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
         res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
                                             ids, employee_id, context=context)
-        emp_obj = self.pool.get('hr.employee')
+        if not employee_id:
+            return res
 
+        emp_obj = self.pool.get('hr.employee')
         employee = emp_obj.browse(cr, uid, employee_id, context=context)
-            
         acc_analytic_id = employee.account_analytic_id and\
                             employee.account_analytic_id.id or False
         if not acc_analytic_id:
@@ -204,6 +210,22 @@ class hr_expense_expense(osv.Model):
                     cr, uid, ids[0], context=context).advance_ids]
             }
         return res
+
+    def check_invoice(self, cr, uid, ids, context=None):
+        """ Verifying that all invoices related to this expense
+        have been validated"""
+        context = context or {}
+        inv_brws = self.browse(cr, uid, ids[0], context=context).invoice_ids
+        res = [True]
+        if inv_brws:
+            res+=map(lambda x: x.state=='open' and True or False, inv_brws)
+            res = all(res)
+        if not res:
+            raise osv.except_osv(
+                _('Invalid Procedure'),
+                _('Please, Complete the validation of the remaining Draft '
+                  'Invoices before continuing'))
+        return True
 
     def expense_confirm(self, cr, uid, ids, context=None):
         """ Overwrite the expense_confirm method to validate that the expense
@@ -305,15 +327,18 @@ class hr_expense_expense(osv.Model):
             #~ manage the expense move lines
             exp_aml_brws = exp.account_move_id and \
                 [aml_brw
-                 for aml_brw in exp.account_move_id.line_id
-                 if aml_brw.account_id.type == 'payable'] or []
+                     for aml_brw in exp.account_move_id.line_id
+                         if aml_brw.account_id.type == 'payable'] or []
+
             advance_aml_brws = [aml_brw
                                 for aml_brw in exp.advance_ids
-                                if aml_brw.account_id.type == 'payable']
+                                    if aml_brw.account_id.type == 'payable']
+
             inv_aml_brws = [aml_brw
-                            for inv in exp.invoice_ids
-                            for aml_brw in inv.move_id.line_id
-                            if aml_brw.account_id.type == 'payable']
+                                for inv in exp.invoice_ids
+                                    for aml_brw in inv.move_id.line_id
+                                        if aml_brw.account_id.type == 'payable']
+
             aml = {
                 'exp':
                 exp_aml_brws and [aml_brw.id for aml_brw in exp_aml_brws]
@@ -451,7 +476,7 @@ class hr_expense_expense(osv.Model):
                                     advance_amount=False, line_type=None,
                                     adjust_balance_to=None, context=None):
         """
-        Create new move lines to match to the expense. recieve only one id
+        Create new move lines to match to the expense. receive only one id
         @param aml_ids: acc.move.line list of ids
         @param am_id: account move id
         """
