@@ -173,9 +173,9 @@ class ifrs_ifrs(osv.osv):
         for ii, period_id in enumerate(periods_ids, start=1):
             period_list.append((str(ii), period_id, periods.browse(
                 cr, uid, period_id, context=context).name))
-
         return period_list
 
+ 
     def _get_period_print_info(self, cr, uid, ids, period_id, report_type, context=None):
         """ Return all the printable information about period
         @param period_id: Dependiendo del report_type, en el caso que sea 'per',
@@ -717,7 +717,7 @@ class ifrs_lines(osv.osv):
                                ),
         'cons_ids': fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts'),
         'analytic_ids': fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
-        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='cascade', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
+        'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
         'parent_abstract_id': fields.many2one('ifrs.lines', 'Parent Abstract', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id),('type','=','abstract'),('id','!=',id)]"),
         'parent_right': fields.integer('Parent Right', select=1),
         'parent_left': fields.integer('Parent Left', select=1),
