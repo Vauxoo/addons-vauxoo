@@ -174,7 +174,7 @@ class ifrs_ifrs(osv.osv):
             period_list.append((str(ii), period_id, periods.browse(
                 cr, uid, period_id, context=context).name))
         return period_list
-
+        
  
     def _get_period_print_info(self, cr, uid, ids, period_id, report_type, context=None):
         """ Return all the printable information about period
@@ -294,11 +294,12 @@ class ifrs_ifrs(osv.osv):
                 for ifrs_l in ordered_lines:
                     #print "Calculo operands - ", ifrs_l.name ," ##########################\n"
                     #start_time = time.time()
-                    
+
                     line = {
                     'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
                     'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
-                    'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}}
+                    'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0},
+                    'amount': amount_value}
                     for lins in range(1, 13):
                         amount_value = ifrs_line._get_amount_with_operands(
                                 cr, uid,

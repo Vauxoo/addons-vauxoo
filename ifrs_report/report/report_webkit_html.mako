@@ -29,15 +29,18 @@
 	</table> 
 
 <table class="list_table" width="90%">
-    <%
-        period_name = ifrs._get_periods_name_list(data['fiscalyear'])
-    %>
-    
-    <% 
-        info = ifrs.get_report_data( data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['target_move'], data['period'], two=True)
-    %>
 
-	 %for ifrs_l in info:
+    %if data['report_type'] == 'per':
+        <% 
+            info = ifrs.get_report_data( data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['target_move'], data['period'])
+        %>
+    %else:
+        <% 
+            info = ifrs.get_report_data( data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['target_move'], data['period'],two=True)
+        %>
+    %endif
+
+    %for ifrs_l in info:
 	<tbody>
 		 %if not ifrs_l.get('invisible'):
 			<td>
