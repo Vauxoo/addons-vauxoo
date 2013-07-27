@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+    <record id="hr_job_comp_rule" model="ir.rule">
+        <field name="name">Employees of my Company</field>
+        <field model="ir.model" name="model_id" ref="model_hr_employee"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+        <field eval="False" name="global"/>
+        <field name="domain_force">[('company_id','=',user.company_id.id)]</field>
+        <field name="groups" eval="[(4,ref('base.group_user')),(4,ref('base.group_hr_user')),(4,ref('base.group_hr_manager'))]"/>
+    </record>
+</data>
+</openerp>
