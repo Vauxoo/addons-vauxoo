@@ -76,7 +76,8 @@ class ifrs_ifrs(osv.osv):
         'help': True,
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(
             c, u, u, context=cx).company_id.id,
-        'fiscalyear_id': lambda s, c, u, cx: s.pool.get('account.fiscalyear').find(c, u),
+        'fiscalyear_id': lambda s, c, u, cx: \
+                s.pool.get('account.fiscalyear').find(c, u,exception=False),
     }
 
     def _get_level(self, cr, uid, l, level, tree, context=None):
