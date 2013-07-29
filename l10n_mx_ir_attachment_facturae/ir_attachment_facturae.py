@@ -174,7 +174,8 @@ class ir_attachment_facturae_mx(osv.Model):
         attachment_obj = self.pool.get('ir.attachment')
         type = self.browse(cr, uid, ids)[0].type
         if type == 'cfd22':
-            aids = self.browse(cr, uid, ids)[0].file_input or False
+            attach = self.browse(cr, uid, ids)[0].file_input.id or False
+            msj = _("Attached Successfully XML CFD 2.2\n")
         if type == 'cfdi32':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                 '.xml' or ''
@@ -196,7 +197,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 cr, uid, data_attach, context=context)
         return self.write(cr, uid, ids,
                           {'state': 'signed',
-                           'file_xml_sign': attach,
+                           'file_xml_sign': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj}, context=context)
 
@@ -349,6 +350,8 @@ class ir_attachment_facturae_mx(osv.Model):
         name = self.browse(cr, uid, ids)[0].name
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         # msj = self.browse(cr, uid, ids)[0].msj
+        if type == 'cfd22':
+            msj = _('Cancel\n')
         if type == 'cfdi32':
             if state not in ['draft', 'confirmed']:
                 status = invoice_obj.action_cancel(

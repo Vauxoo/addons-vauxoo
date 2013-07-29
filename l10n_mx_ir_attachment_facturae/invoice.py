@@ -58,7 +58,7 @@ class account_invoice(osv.Model):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         invoice = self.browse(cr, uid, ids, context=context)[0]
         if invoice.invoice_sequence_id.approval_id:
-            if invoice.invoice_sequence_id.approval_id.type == 'cfdi32':
+            if invoice.invoice_sequence_id.approval_id.type == 'cfdi32' or invoice.invoice_sequence_id.approval_id.type == 'cfd22':
                 attach = ir_attach_obj.create(cr, uid, {
                                               'name': invoice.fname_invoice, 'invoice_id': ids[0],
                                               'type': invoice.invoice_sequence_id.approval_id.type},
