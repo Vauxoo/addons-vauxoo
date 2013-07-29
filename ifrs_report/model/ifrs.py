@@ -240,7 +240,8 @@ class ifrs_ifrs(osv.osv):
         data = []
 
         ifrs_line = self.pool.get('ifrs.lines')
-
+        accountfy_obj = self.pool.get('account.fiscalyear')
+        
         if is_compute is None:
             period_name = self._get_periods_name_list(
                 cr, uid, ids, fiscalyear, context=context)
@@ -289,17 +290,17 @@ class ifrs_ifrs(osv.osv):
                         context=context)
                     #print (time.time() - start_time)/60.0, "minutos"
                     #print "##########################\n"
-                
+                    
+                num_month= accountfy_obj._get_fy_month(cr,uid,fiscalyear,period)
                 
                 for ifrs_l in ordered_lines:
                     #print "Calculo operands - ", ifrs_l.name ," ##########################\n"
                     #start_time = time.time()
-
                     line = {
                     'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
                     'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
                     'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0},
-                    'amount': amount_value}
+                    'number_month': num_month}
                     for lins in range(1, 13):
                         amount_value = ifrs_line._get_amount_with_operands(
                                 cr, uid,
@@ -597,9 +598,9 @@ class ifrs_lines(osv.osv):
                 field_name = 'period_%s' % str( month_before )
                 valor_anterior = eval("ifrs_line.%s" % field_name  )
                 res = valor_anterior - res
-        print ifrs_line.name
-        print "periodo ", number_month
-        print res
+        #~ print ifrs_line.name
+        #~ print "periodo ", number_month
+        #~ print res
 
 
         #DUDOSO
@@ -637,7 +638,6 @@ class ifrs_lines(osv.osv):
         res = self._get_amount_value(
             cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
             currency_wizard, number_month, target_move, pd, undefined, two, context=context)
-
         band = True
         if ifrs_line.operator in ('subtract', 'percent', 'ratio', 'product'):
             res2 = 0
