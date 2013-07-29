@@ -31,5 +31,5 @@ class account_invoice(osv.Model):
     _inherit = 'account.invoice'
     _columns = {
 
-        'date_info': fields.date("Date Information:"),
+        'date_info': fields.date("Original Invoice Date"),
     }

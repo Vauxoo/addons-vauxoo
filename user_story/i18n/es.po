@@ -512,3 +512,8 @@ msgstr "Sprint"
 msgid "Chek if this criteria apply"
 msgstr "Marca si aplican estos criterios"
 
+#. module: user_story
+#: view:user.story:0
+msgid "User Story Number: "
+msgstr "Historia de usuario número: "
+

@@ -28,7 +28,7 @@
     "name": "Invoice Data",
     "version": "1.0",
     "author": "Vauxoo",
-    "category": "Localization",
+    "category": "Generic Modules",
     "description" : """ 
     The module invoice_date_ref adds the field  date_info in invoice,
     this fields is informative only
@@ -38,7 +38,8 @@
     "depends": [
         "account",
     ],
-    "data": ["invoice_date.xml"],
+    "data": [
+        "invoice_date.xml"],
     "installable": True,
     "active": False,
 }
