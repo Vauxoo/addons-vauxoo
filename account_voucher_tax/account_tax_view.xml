@@ -28,6 +28,29 @@
                     </group>
                 </field>
         </record>
-
+        
+        <record id="view_account_voucher_validate_tax" model="ir.ui.view">
+                <field name="name">view.account.voucher.validate.tax</field>
+                <field name="model">account.voucher</field>
+                <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//button[@name='proforma_voucher']" position="after">
+                        <button name="validate_paid_tax" string="Validate Tax" type="object" class="oe_highlight" attrs="{'invisible': ['|', '|', ('move_id', '=', False), ('move_tax_id', '!=', False), ('double_validation_ok', '=', False)]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='journal_id']" position="after">
+                        <field name="date_tax_move" attrs="{'required': [('move_id', '!=', False), ('double_validation_ok', '=', True)]}"/>
+                        <field name="move_tax_id"/>
+                    </xpath>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="period_tax_move" attrs="{'required': [('move_id', '!=', False), ('double_validation_ok', '=', True)]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="move_id" invisible="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='period_tax_move']" position="after">
+                        <field name="double_validation_ok"/>
+                    </xpath>
+                </field>
+        </record>
     </data>
 </openerp>

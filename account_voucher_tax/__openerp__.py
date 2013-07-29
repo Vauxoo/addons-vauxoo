@@ -58,7 +58,10 @@ Caused VAT is that actually charged to customers.
     "depends" : ["account","account_voucher","account_invoice_tax","analytic"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["account_tax_view.xml","account_voucher_tax_view.xml"],
+    "update_xml" : [
+        "account_tax_view.xml",
+        "account_voucher_tax_view.xml",
+        "account_view.xml"],
     "test": [
         'test/account_voucher_taxes.yml',
     ],
