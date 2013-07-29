@@ -66,9 +66,9 @@ Requires the following programs:
         ],
     "demo" : ["demo/l10n_mx_facturae_seq_demo.xml",],
     "data" : [
-        'security/l10n_mx_facturae_security.xml',
+        #'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',
-        "l10n_mx_facturae_report.xml",
+        #"l10n_mx_facturae_report.xml",
         "wizard/wizard_invoice_facturae_txt_v6_view.xml",
         "wizard/wizard_invoice_facturae_xml_v6_view.xml",
         "wizard/installer_view.xml",

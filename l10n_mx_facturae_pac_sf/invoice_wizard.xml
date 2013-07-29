@@ -6,13 +6,13 @@
             name="wizard.export.invoice.pac.sf"
             string="Export invoice PAC SF"
             model="account.invoice"
-            groups="l10n_mx_facturae_pac_sf.group_facturae_mx_cfdi_pac_sf_user, l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
         />
         <wizard id="wizard_cancel_invoice_pac_sf_v5"
             name="wizard.cancel.invoice.pac.sf.v5"
             string="Cancel invoice CFDI PAC SF"
             model="account.invoice"
-            groups="l10n_mx_facturae_pac_sf.group_invoice_facturae_sf_cancel, l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+            groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
         />
     
     </data>

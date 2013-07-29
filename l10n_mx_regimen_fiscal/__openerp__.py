@@ -39,7 +39,7 @@
         ],
     "demo" : [],
     "data" : [
-        "security/regimen_fiscal.xml",
+        #"security/regimen_fiscal.xml",
         "security/ir.model.access.csv",
         "regimen_fiscal.xml",
         "partner_view.xml",

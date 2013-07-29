@@ -42,7 +42,7 @@
     ],
     "demo" : [],
     "data" : [
-        "security/dateinvoice_security.xml",
+        #"security/dateinvoice_security.xml",
         "account_invoice_view.xml"
     ],
     "installable" : True,
