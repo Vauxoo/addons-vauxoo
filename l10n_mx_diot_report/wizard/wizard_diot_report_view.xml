@@ -6,23 +6,29 @@
             <field name="name">Account DIOT Report for Mexico</field>
             <field name="model">account.diot.report</field>
             <field name="arch" type="xml">
-             <form string="Create invoices" version="7.0">
+            <form string="DIOT Report" version="7.0">
                 <field invisible="1" name="state"/>
                 <field name="name" invisible="1"/>
                 <group  states="choose" string="DIOT Report - Statement of transactions with third parties [DIOT]" colspan="4">
                     <field name="company_id" />
-                    <field name="month_id" />
+                    <field name="period_id" />
                 </group>
                 <div states="get">
                     <h2>You DIOT report has been successfully created!</h2>
                     <p>Here is the exported DIOT Report file: <field name="file" readonly="1" filename="filename"/></p>
+                </div>
+                <div states="not_file">
+                    <h2>You DIOT report not has been created!</h2>
+                    <p>Probably by:</p>
+                    <p>- Not exists movements in the selected period</p>
+                    <p>- You do not have configured taxes correctly</p>
                 </div>
 
                 <footer  states="choose">
                     <button icon='gtk-cancel' special="cancel"  string="Cancel" />
                     <button name="create_diot" string="Create file of DIOT" colspan="1" type="object" icon="gtk-ok"/>
                 </footer>
-                <footer states="get">
+                <footer attrs="{'invisible':[('state','not in', ('get', 'not_file'))]}">
                     <button special="cancel" string="Close" type="object"/>
                 </footer>
             </form>

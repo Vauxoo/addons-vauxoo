@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 ###############Credits######################################################
-#    Coded by: carlos(juan@vauxoo.com)
+#    Coded by: Luis Ernesto García (ernesto_gm@vauxoo.com)
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
@@ -20,26 +20,32 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ################################################################################
+
 {
-    "name" : "Add category to taxes",
+    "name" : "Group For Wizards Of Facturae",
     "version" : "1.0",
-    "depends" : ["account"],
     "author" : "Vauxoo",
-    "license" : "AGPL-3",
-    "description" : """This module add to the taxes category & tax_percent
+    "category" : "Localization/Mexico",
+    "description" : """
+Group for show wizards of FacturaE
+==================================
+
+This module creates the group Show Default Wizards FacturaE, if a user has this group,\n 
+can see the facturae wizards, however is advisable that nobody has this group assigned. \n
+Wizards to show:\n
+
+- Factura Electronica XML \n
+- Cancelar FActura PAC SF \n
+- Subir Factura al PAC V6 \n
     """,
-    "website" : "http://vauxoo.com",
-    "category" : "Generic Modules",
-    "demo" : [],
-    "test": [],
-    "data" : [
-        'security/ir.model.access.csv',
-        'invoice_view.xml',
-        'account_tax_category_view.xml',
-        'data/account_tax_category_data.xml'
-
+    "website" : "http://www.vauxoo.com/",
+    "license" : "AGPL-3",
+    "depends" : ["base",
     ],
-    "active": False,
-    "installable": True,
+    "demo" : [],
+    "data" : [
+        "security/res_groups.xml",
+    ],
+    "installable" : True,
+    "active" : False,
 }
-
