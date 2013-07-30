@@ -351,17 +351,23 @@ class hr_expense_expense(osv.Model):
                      for aml_brw in advance_aml_brws]),
                 'credit':
                 sum([aml_brw.credit
-                     for aml_brw in exp_aml_brws + inv_aml_brws])
+                     for aml_brw in exp_aml_brws + inv_aml_brws]),
+                'exp_sum':
+                sum([aml_brw.credit
+                     for aml_brw in exp_aml_brws]),
+                'inv_sum':
+                sum([aml_brw.credit
+                     for aml_brw in inv_aml_brws])
             }
 
             aml_amount = aml['debit'] - aml['credit']
             adjust_balance_to = aml_amount == 0.0 and 'liquidate' or \
                 (aml_amount > 0.0 and 'debit') or 'credit'
-
+            part_rec = []
             #~ create and reconcile invoice move lines
-            aml['invs'] and self.create_and_reconcile_invoice_lines(
+            full_rec = aml['invs'] and self.create_and_reconcile_invoice_lines(
                 cr, uid, exp.id, aml['invs'],
-                adjust_balance_to=adjust_balance_to, context=context)
+                adjust_balance_to=adjust_balance_to, context=context) or []
 
             #~ change expense state
             if adjust_balance_to == 'debit':
@@ -371,17 +377,26 @@ class hr_expense_expense(osv.Model):
                     cr, uid, exp.id,
                     {'state': 'deduction'}, context=context)
             elif adjust_balance_to == 'credit':
-                self.expense_reconcile_partial_payment(cr, uid, exp.id,
-                                               context=context)
+                ff, pp= self.expense_reconcile_partial_payment(cr, uid, exp.id,
+                                              aml, context=context)
                 self.write(
                     cr, uid, exp.id,
                     {'state': 'process'}, context=context)
             elif adjust_balance_to == 'liquidate':
                 self.expense_reconcile(cr, uid, exp.id, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
+
+            for line_pair in full_rec+[ff]:
+                if not line_pair: continue
+                aml_obj.reconcile(
+                    cr, uid, line_pair, 'manual', context=context)
+            for line_pair in part_rec+[pp]:
+                if not line_pair: continue
+                aml_obj.reconcile_partial(
+                    cr, uid, line_pair, 'manual', context=context)
         return True
 
-    def expense_reconcile_partial_payment(self, cr, uid, ids, context=None):
+    def expense_reconcile_partial_payment(self, cr, uid, ids, d, context=None):
         """
         This method make a distribution of the advances, whenever applies
         paying fully those invoice that can be paid and leaving just a remaining
@@ -394,79 +409,68 @@ class hr_expense_expense(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         ids = isinstance(ids, (int, long)) and [ids] or ids
         exp = self.browse(cr, uid, ids[0], context=context)
-        exp_debit_lines = [aml.id for aml in exp.advance_ids]
-        exp_credit_lines = [aml.id
-                            for aml in exp.account_move_id.line_id
-                            if aml.credit > 0.0]
 
-        debit = exp_debit_lines and [aml.debit for aml in exp.advance_ids] or []
-        debit = sum(debit)
-        if debit:
-            res = self.do_payment(cr, uid, debit, exp_credit_lines,
-                    context = context)
+        adv_ids = d['advances']
+        exp_ids = d['exp']
 
-        if res.get('full'):
-            match_pair = self.create_reconcile_move_lines(
-                cr, uid, exp.id,
-                am_id=exp.account_move_id.id,
-                aml_ids=res['full'],
-                line_type='advance',
-                adjust_balance_to='credit',
-                context=context)
-            # make reconcilation.
-            aml_obj.reconcile(
-                cr, uid, match_pair, 'manual', context=context)
-        if res.get('partial'):
-            match_pair = self.create_reconcile_move_lines(
-                cr, uid, exp.id,
-                am_id=exp.account_move_id.id,
-                aml_ids=res['partial'],
-                line_type='advance',
-                advance_amount=res['partial_amount'],
-                adjust_balance_to='credit',
-                context=context)
-            aml_obj.reconcile_partial(
-                cr, uid, match_pair, 'manual', context=context)
+        sum_adv = d['debit']
+        sum_exp = d['exp_sum']
+        sum_inv = d['inv_sum']
+        partial_rec = []
+        full_rec = []
 
+        if not sum_adv:
+            return full_rec,partial_rec
 
-        exp = self.browse(cr, uid, ids[0], context=context)
-        to_reconcile = []
-        for aml_id in exp.account_move_id.line_id:
-            if not aml_id.reconcile_id and not aml_id.reconcile_partial_id \
-                    and aml_id.account_id.type=='payable':
-                to_reconcile.append(aml_id.id)    
+        if sum_exp < sum_adv: # and sum_inv > 0
+            l1 = sum_adv - sum_exp
+            l2 = sum_inv - l1
+            l1 = self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    l1)
+            l2 = self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    l2)
+            return [l1]+ adv_ids + exp_ids, []
+        elif sum_exp == sum_adv:
+            return adv_ids + exp_ids,[]
+        else: # sum_exp > sum_adv
+            inv_ids = [self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    sum_inv)]
+            if sum_adv > sum_inv:
+                return [], exp_ids + adv_ids
+            elif sum_advance == sum_inv:
+                return adv_ids + inv_ids, []
+            else: # sum_adv < sum_inv
+                return [], adv_ids + inv_ids
 
-        if to_reconcile and exp_debit_lines:
-            to_reconcile = list(set(to_reconcile) - set(res.get('none',[])))
-            len(to_reconcile) > 1 and aml_obj.reconcile(
-                cr, uid, to_reconcile + exp_debit_lines, 'manual', context=context)
-        return True
-
-    def do_payment(self, cr, uid, debit, credit_lines, context=None):
+    def expense_credit_lines(self, cr, uid, ids, am_id, amount, account_id=False, 
+                                    partner_id=False, date=None, 
+                                    advance_amount=False, line_type=None,
+                                    adjust_balance_to=None, context=None):
+        """
+        Create new move lines to match to the expense. receive only one id
+        @param aml_ids: acc.move.line list of ids
+        @param am_id: account move id
+        """
         context = context or {}
-        res = {}
-        res['full']=[]
-        res['partial']=[]
-        res['none']=[]
         aml_obj = self.pool.get('account.move.line')
-        cl = aml_obj.browse(cr, uid, credit_lines, context=context)
-        cl.sort(key=lambda x: x.credit)
-        cl.reverse()
-        csum = 0.0
-        for c in cl:
-            if csum + c.credit <= debit:
-                csum += c.credit
-                res['full'].append(c.id)
-                res['full_amount']= csum
-            elif csum != debit and not res['partial']:
-                res['partial'].append(c.id)
-                res['partial_amount']= debit - csum
-            else:
-                res['none']=list(
-                        set(credit_lines) -\
-                        set(res['full']+res['partial']))
-                break
-        return res
+        exp = self.browse(cr, uid, ids, context=context)
+        account_id = account_id or exp.employee_id.address_home_id and\
+                exp.employee_id.address_home_id.property_account_payable.id
+        partner_id = partner_id or exp.employee_id.address_home_id and \
+                            exp.employee_id.address_home_id.id
+        vals = {
+            'move_id': am_id,
+            'journal_id': exp.account_move_id.journal_id.id,
+            'date' : date or fields.date.today(),
+            'period_id' : self.pool.get('account.period').find(
+                cr, uid, context=context)[0],
+            'debit' : 0.0,
+            'name' : _('Debts to be reimburst to Employee'),
+            'partner_id' : partner_id,
+            'account_id' : account_id,
+            'credit' : amount,
+        }
+        return aml_obj.create(cr, uid, vals, context=context)
 
     def expense_reconcile_partial(self, cr, uid, ids, context=None):
         """
@@ -549,18 +553,44 @@ class hr_expense_expense(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for exp in self.browse(cr, uid, ids, context=context):
             #~ create invoice move lines.
-            inv_match_pair = self.create_reconcile_move_lines(
+            inv_match_pair = self.invoice_counter_move_lines(
                 cr, uid, exp.id,
                 am_id=exp.account_move_id.id,
                 aml_ids=inv_aml_ids,
-                line_type='invoice',
-                adjust_balance_to=adjust_balance_to,
                 context=context)
-            # make reconcilation.
-            for line_pair in inv_match_pair:
-                aml_obj.reconcile(
-                    cr, uid, list(line_pair), 'manual', context=context)
-        return True
+        return inv_match_pair
+
+    def invoice_counter_move_lines(self, cr, uid, ids, am_id, aml_ids,
+                                    advance_amount=False, line_type=None,
+                                    adjust_balance_to=None, context=None):
+        """
+        Create new move lines to match to the expense. receive only one id
+        @param aml_ids: acc.move.line list of ids
+        @param am_id: account move id
+        """
+        context = context or {}
+        res = []
+        aml_obj = self.pool.get('account.move.line')
+        exp = self.browse(cr, uid, ids, context=context)
+        vals = {
+            'move_id': am_id,
+            'journal_id': exp.journal_id,
+            'date' : fields.date.today(),
+            'period_id' : self.pool.get('account.period').find(
+                cr, uid, context=context)[0],
+            'credit' : 0.0,
+            'name' : _('Payment through Expense'),
+        }
+
+        for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+            vals_debit = vals.copy()
+            vals_debit['partner_id'] = aml_brw.partner_id.id
+            vals_debit['account_id'] = aml_brw.account_id.id
+            vals_debit['debit'] = aml_brw.credit
+
+            debit_id = aml_obj.create(cr, uid, vals_debit, context=context)
+            res.append([aml_brw.id, debit_id])
+        return res
 
     def create_reconcile_move_lines(self, cr, uid, ids, am_id, aml_ids,
                                     advance_amount=False, line_type=None,
