@@ -44,17 +44,55 @@ class account_voucher(osv.Model):
         return res
     
     _columns={
-        'date_tax_move' : fields.date('Date Paid Tax', select=True, help='Date when is paid the tax', ),
-        'period_tax_move' : fields.many2one('account.period', 'Period Tax', help='Period when is paid the tax'),
-        'move_tax_id' : fields.many2one('account.move', 'Move Tax', help='Move that is create when paid the tax', readonly=True),
-        'double_validation_ok' : fields.function(_get_double_validation_ok, type='boolean', string='Double Validation OK', store=True)
+        'date_tax_move' : fields.date('Date Paid Tax', select=True,
+            help='Date when is paid the tax', ),
+        'period_tax_move' : fields.many2one('account.period', 'Period Tax',
+            help='Period when is paid the tax'),
+        'move_tax_id' : fields.many2one('account.move', 'Move Tax',
+            help='Move that is create when paid the tax', readonly=True),
+        'double_validation_ok' : fields.function(_get_double_validation_ok,
+            type='boolean', string='Double Validation OK', store=True)
         }
         
+    def cancel_voucher(self, cr, uid, ids, context=None):
+        super(account_voucher, self).cancel_voucher(cr, uid, ids, context=context)
+        reconcile_pool = self.pool.get('account.move.reconcile')
+        move_pool = self.pool.get('account.move')
+
+        for voucher in self.browse(cr, uid, ids, context=context):
+            # refresh to make sure you don't unlink an already removed move
+            voucher.refresh()
+            recs = []
+            if voucher.move_tax_id:
+                for line in voucher.move_tax_id.line_id:
+                    if line.reconcile_id:
+                        recs += [line.reconcile_id.id]
+                    if line.reconcile_partial_id:
+                        recs += [line.reconcile_partial_id.id]
+
+            reconcile_pool.unlink(cr, uid, recs)
+
+            if voucher.move_tax_id:
+                move_pool.button_cancel(cr, uid, [voucher.move_tax_id.id])
+                move_pool.unlink(cr, uid, [voucher.move_tax_id.id])
+        res = {
+            'move_tax_id':False,
+        }
+        self.write(cr, uid, ids, res)
+        return True
+        
     def validate_paid_tax(self, cr, uid, ids, context=None):
+        """
+        When the journal have selected voucher_double_validation_ok,
+        this action validates the taxes after of already was validated the
+        voucher
+        """
         move_obj = self.pool.get('account.move')
         for voucher in self.browse(cr, uid, ids, context=context):
-            move_id = move_obj.create(cr, uid, self.account_move_tax_get(cr, uid, voucher.id, context=context), context=context)
-            self.voucher_move_line_tax_create(cr,uid, voucher.id, move_id, context=context)
+            move_id = move_obj.create(cr, uid, self.account_move_tax_get(cr,\
+                uid, voucher.id, context=context), context=context)
+            self.voucher_move_line_tax_create(cr,uid, voucher.id, move_id,\
+            context=context)
             voucher.write({'move_tax_id' : move_id})
         return True
         
@@ -64,7 +102,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_amount(cr, uid, ids,\
             amount, rate, partner_id, journal_id, currency_id, ttype, date,\
             payment_rate_currency_id, company_id, context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -73,7 +111,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_partner_id(cr, uid, ids,\
             partner_id, journal_id, amount, currency_id, ttype, date,\
             context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -82,7 +120,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_journal(cr, uid, ids,\
             journal_id, line_ids, tax_id, partner_id, date, amount, ttype,\
             company_id, context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -264,11 +302,19 @@ class account_voucher(osv.Model):
                         move_id, voucher, line, line_tax, company_currency,
                         reference_amount, amount_tax_unround,
                         current_currency, factor, context=context)
+                    invoice_line = line_tax.tax_invoice_id and line_tax.tax_invoice_id.invoice_id or False
+                    if invoice_line:
+                        move_invoice = invoice_line.move_id
+                        for line_move in move_invoice.line_id:
+                            if line_move.account_id.id == account_tax_collected:
+                                line_invo = line_move
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
-                        move_ids.append(move_create)
-
+                        acc = move_line_obj.browse(cr, uid, move_create).account_id.id
+                        if line_invo and line_invo.account_id.id == acc:
+                            move_ids.append(line_invo.id)
+                            move_ids.append(move_create)
                     amount_exchange = self._convert_amount(cr, uid, line.untax_amount or line.amount, voucher.id, context=context)
                     tax_amount_exchange = self._convert_amount(cr, uid, line.amount_original, voucher.id, context=context)
                     base_exchange = self._convert_amount(cr, uid, 2.88, voucher.id, context=context)
@@ -277,7 +323,7 @@ class account_voucher(osv.Model):
                             raise osv.except_osv(_('Wrong voucher line'),_("The invoice you are willing to pay is not valid anymore."))
                         sign = voucher.type in ('payment', 'purchase') and -1 or 1
                         currency_rate_difference = sign * (line.move_line_id.amount_residual - amount_exchange)
-                        if round(currency_rate_difference, 2):
+                        if round(currency_rate_difference, 2) and not voucher.double_validation_ok:
                             factor=self.get_percent_pay_vs_invoice(cr ,uid, tax_amount_exchange, currency_rate_difference,context=context)
                             base_amount=self.get_partial_amount_tax_pay(cr, uid, line_tax.tax_id.amount, base_exchange, context=context)
                             move_lines_tax = self._get_move_writeoff(cr, uid,
@@ -286,10 +332,8 @@ class account_voucher(osv.Model):
                                 factor * base_amount, None,
                                 company_currency, context=context)
                             for move_line_tax in move_lines_tax:
-                                move_create = move_line_obj.create(cr ,uid, move_line_tax,
+                                move_line_obj.create(cr ,uid, move_line_tax,
                                                         context=context)
-                                move_ids.append(move_create)
-                    
                     if voucher.writeoff_amount > 0:
                         reference_amount_w = self.get_partial_amount_tax_pay(cr,
                             uid, voucher.writeoff_amount,
@@ -302,10 +346,8 @@ class account_voucher(osv.Model):
                             None, current_currency,
                             context=context)
                         for move_line_w in move_lines_w:
-                            move_create = move_line_obj.create(cr ,uid, move_line_w,
+                            move_line_obj.create(cr ,uid, move_line_w,
                                                     context=context)
-                            move_ids.append(move_create)
-            
             if len(move_ids) >= 2 and voucher.double_validation_ok:
                 reconcile = move_line_obj.reconcile_partial(cr, uid, move_ids, writeoff_acc_id=voucher.writeoff_acc_id.id, writeoff_period_id=voucher.period_tax_move.id, writeoff_journal_id=voucher.journal_id.id)
         return move_ids
@@ -433,23 +475,19 @@ class account_voucher(osv.Model):
                 debit_line_vals.update(currency_id=reference_currency_id, amount_currency=reference_amount)
         return [debit_line_vals, credit_line_vals]
     
-    def voucher_move_line_create(self, cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None):
-        move_obj = self.pool.get('account.move')
-        move_line_obj = self.pool.get('account.move.line')
-        invoice_obj = self.pool.get('account.invoice')
-        currency_obj = self.pool.get('res.currency')
-        res=super(account_voucher, self).voucher_move_line_create(cr, uid, voucher_id, line_total, move_id, company_currency, current_currency, context=None)
-        #~ new = self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
+    def voucher_move_line_create(self, cr, uid, voucher_id, line_total,\
+        move_id, company_currency, current_currency, context=None):
+        res=super(account_voucher, self).voucher_move_line_create(cr, uid,\
+            voucher_id, line_total, move_id, company_currency,\
+            current_currency, context=None)
         voucher = self.browse(cr, uid, voucher_id, context=context)
         if not voucher.double_validation_ok:
-            new = self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
+            new = self.voucher_move_line_tax_create(cr,uid, voucher_id,\
+            move_id, context=context)
             res[1].append(new)
-        if voucher.double_validation_ok and voucher.state == 'posted':
-            new = self.voucher_move_line_tax_create(cr,uid, voucher_id, move_id, context=context)
-            res = (res[0], [new])
         return res
     
-    def onchange_compute_tax(self, cr, uid, ids, lines=None, context=None):
+    def onchange_compute_tax(self, cr, uid, ids, lines=None, ttype=False, date=False, context=None):
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
         tax_line_obj = self.pool.get('account.voucher.line.tax')
@@ -519,9 +557,9 @@ class account_voucher(osv.Model):
                                         current_currency,company_currency,\
                                         float('%.*f' % (2,credit_amount)),\
                                         round=False, context=context)
-                                    context['date']=voucher.date
+                                    context['date'] = date
                                     credit_diff=currency_obj.compute(cr, uid,\
-                                        current_currency,company_currency,\
+                                        current_currency, company_currency,\
                                         float('%.*f' % (2,credit_amount)),\
                                         round=False, context=context)
 
@@ -531,14 +569,14 @@ class account_voucher(osv.Model):
                                         credit_orig-credit_diff))),\
                                         round=False, context=context)
                                     if credit_orig > credit_diff:
-                                        if voucher.type=='receipt':
+                                        if ttype and ttype == 'receipt':
                                             diff_account_id=tax.tax_id.\
                                             account_expense_voucher_id.id
                                         else:
                                             diff_account_id=tax.tax_id.\
                                             account_income_voucher_id.id
                                     if credit_orig<credit_diff:
-                                        if voucher.type=='receipt':
+                                        if ttype and ttype == 'receipt':
                                             diff_account_id=tax.tax_id.\
                                             account_income_voucher_id.id
                                         else:
@@ -567,98 +605,14 @@ class account_voucher(osv.Model):
                                     'analytic_account_id': tax.\
                                     account_analytic_id and tax.\
                                     account_analytic_id.id or False,
-                                    'amount_base' : tax.base_amount,}])
+                                    'amount_base' : tax.base_amount,
+                                    'tax_invoice_id' : tax.id}])
                                 #Check why need move_line_id
                 lista_tax_to_add = [[5, False, False]]
                 for tax in list_tax:
                     lista_tax_to_add.append(tax)
                 line.update({'tax_line_ids' : lista_tax_to_add})
         return lines
-    
-    def compute_tax(self, cr, uid, ids, context=None):
-        invoice_obj = self.pool.get('account.invoice')
-        currency_obj = self.pool.get('res.currency')
-        tax_line_obj = self.pool.get('account.voucher.line.tax')
-        for voucher in self.browse(cr, uid, ids, context=context):
-            company_currency = self._get_company_currency(cr, uid, voucher.id, context)
-            current_currency = self._get_current_currency(cr, uid, voucher.id, context)
-            lines=[]
-            for line in voucher.line_ids:
-                delete_ids=tax_line_obj.search(cr , uid, [('voucher_line_id', '=' , line.id)], context=context)
-                tax_line_obj.unlink(cr, uid, delete_ids, context=context)
-                factor = self.get_percent_pay_vs_invoice(cr,uid,line.amount_original, line.amount,context=context)
-                if line.amount > 0:
-                    invoice_ids = invoice_obj.search(cr,uid,[('move_id','=',line.move_line_id.move_id.id)],context=context)
-                    for invoice in invoice_obj.browse(cr,uid,invoice_ids,context=context):
-                        for tax in invoice.tax_line:
-                            if tax.tax_id.tax_voucher_ok:
-                                base_amount = tax.amount
-                                move_ids=[]
-                                account = tax.tax_id.account_collected_voucher_id.id
-                                credit_amount= float('%.*f' % (2,(base_amount*factor)))
-                                credit_amount_original = (base_amount*factor)
-                                amount_unround= float(base_amount*factor)
-                            ########## la comento para hacer pruebas sin el redondeo propuesto aqui
-                            #    if credit_amount:
-                             #       if abs(float('%.*f' % (2,credit_amount))-base_amount)<=.02:
-                              #          credit_amount=credit_amount-abs(float('%.*f' % (2,credit_amount))-base_amount)
-                               #         amount_unround=amount_unround-abs(float(amount_unround)-base_amount)
-                                #    if abs(float('%.*f' % (2,credit_amount))+ (base_amount*(1-factor))-base_amount)<.02:
-                                 #       credit_amount=credit_amount-abs(float('%.*f' % (2,credit_amount))+ (base_amount*(1-factor))-base_amount)
-                                  #      amount_unround=amount_unround-abs(float(amount_unround)+ (base_amount*(1-factor))-base_amount)
-                            #######################################################################
-                                #context['date']=invoice.date_invoice
-                                diff_amount_tax=0.0
-                                diff_account_id=False
-                                base_amount_curr=base_amount
-                                if company_currency==current_currency:
-                                    rate_move=self.get_rate(cr,uid,line.move_line_id.move_id.id,context=context)
-                                    credit_amount=credit_amount*rate_move
-                                    amount_unround=amount_unround*rate_move
-                                else:
-                                    credit_amount=currency_obj.compute(cr, uid, invoice.currency_id.id,current_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
-                                    amount_unround=currency_obj.compute(cr, uid, invoice.currency_id.id,current_currency, float(amount_unround), round=False, context=context)
-                                    base_amount_curr=currency_obj.compute(cr, uid, invoice.currency_id.id,current_currency, float('%.*f' % (2,base_amount)), round=False, context=context)
-                                    context['date']=invoice.date_invoice
-                                    credit_orig=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
-                                    context['date']=voucher.date
-                                    credit_diff=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,credit_amount)), round=False, context=context)
-
-                                    diff_amount_tax=currency_obj.compute(cr, uid, company_currency,current_currency, float('%.*f' % (2,(credit_orig-credit_diff))), round=False, context=context)
-                                    if credit_orig>credit_diff:
-                                        if voucher.type=='receipt':
-                                            diff_account_id=tax.tax_id.account_expense_voucher_id.id
-                                        else:
-                                            diff_account_id=tax.tax_id.account_income_voucher_id.id
-                                    if credit_orig<credit_diff:
-                                        if voucher.type=='receipt':
-                                            diff_account_id=tax.tax_id.account_income_voucher_id.id
-                                        else:
-                                            diff_account_id=tax.tax_id.account_expense_voucher_id.id
-                                        
-                                debit_amount=0.0
-                                move_line_id= False
-                                for move_lines in line.move_line_id.move_id.line_id:
-                                    if move_lines.account_id.id== account:
-                                        move_line_id=move_lines.id
-                                        break
-                                amount_base = (credit_amount_original * 1.0 / (tax.base_amount + tax.amount)) * (tax.base_amount + tax.amount)
-                                tax_line={
-                                    'tax_id':tax.tax_id.id,
-                                    'account_id':account,
-                                    'amount_tax' : credit_amount_original,
-                                    'amount_tax_unround':amount_unround,
-                                    'tax':credit_amount,
-                                    'voucher_line_id':line.id,
-                                    'original_tax':base_amount_curr,
-                                    'diff_account_id':diff_account_id,
-                                    'diff_amount_tax':abs(diff_amount_tax),
-                                    'move_line_id': move_line_id,
-                                    'analytic_account_id': tax.account_analytic_id and tax.account_analytic_id.id or False,
-                                    'amount_base' : tax.base_amount
-                                }
-                                tax_line_compute = tax_line_obj.create(cr, uid, tax_line, context=context)
-        return True
 
 
 class account_voucher_line(osv.Model):
@@ -666,17 +620,22 @@ class account_voucher_line(osv.Model):
     
     def onchange_amount(self, cr, uid, ids, amount, voucher_id, move_line_id,\
         amount_original, context=None):
+        if not context:
+            context = {}
         voucher_obj = self.pool.get('account.voucher')
         move_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
         company_obj = self.pool.get('res.company')
         tax_line_obj = self.pool.get('account.voucher.line.tax')
+        currency_obj = self.pool.get('res.currency')
         company_user = self.pool.get('res.users').browse(cr, uid, uid,\
             context=context).company_id.id
         company_currency = company_obj.browse(cr, uid, company_user,\
             context=context).currency_id.id
         if voucher_id:
             current_currency = voucher_obj._get_current_currency(cr, uid,\
+                voucher_id, context=context)
+            voucher = self.pool.get('account.voucher').browse(cr, uid, 
                 voucher_id, context=context)
         else:
             current_currency = company_obj.browse(cr, uid, company_user,\
@@ -692,6 +651,7 @@ class account_voucher_line(osv.Model):
                 move_id)], context=context)
             for invoice in invoice_obj.browse(cr, uid, invoice_ids,\
                 context=context):
+                context
                 for tax in invoice.tax_line:
                     if tax.tax_id.tax_voucher_ok:
                         base_amount = tax.amount
@@ -720,7 +680,7 @@ class account_voucher_line(osv.Model):
                                 invoice.currency_id.id, current_currency,\
                                 float('%.*f' % (2, base_amount)), round=False,\
                                 context=context)
-                            context['date']=invoice.date_invoice
+                            context['date'] = invoice.invoice_datetime
                             credit_orig=currency_obj.compute(cr, uid,\
                                 current_currency,company_currency,\
                                 float('%.*f' % (2,credit_amount)),\
@@ -876,5 +836,6 @@ class account_voucher_line_tax(osv.Model):
         'voucher_line_id':fields.many2one('account.voucher.line', 'Voucher Line'),
         'move_line_id':fields.many2one('account.move.line','Move'),
         'analytic_account_id': fields.many2one('account.analytic.account', 'Account Analytic'),
-        'amount_base' : fields.float('Amount Base')
+        'amount_base' : fields.float('Amount Base'),
+        'tax_invoice_id' : fields.many2one('account.invoice.tax', 'Id Tax in Invoice'),
     }

@@ -48,7 +48,7 @@
                         <field name="move_id" invisible="1"/>
                     </xpath>
                     <xpath expr="//field[@name='period_tax_move']" position="after">
-                        <field name="double_validation_ok"/>
+                        <field name="double_validation_ok" invisible="1"/>
                     </xpath>
                 </field>
         </record>
