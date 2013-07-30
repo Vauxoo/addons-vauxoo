@@ -43,6 +43,7 @@
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
+                            <field name="file_xml_sign_index"/>
                         </group>
                         <group colspan="4">
                             <field name="msj" invisible="1"/>

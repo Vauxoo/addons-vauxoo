@@ -167,9 +167,7 @@ class ir_attachment_facturae_mx(osv.Model):
 
     def action_sign(self, cr, uid, ids, context={}):
         attach = ''
-        res = {'msg': ''}
         invoice = self.browse(cr, uid, ids)[0].invoice_id
-        msj = self.browse(cr, uid, ids)[0].msj
         invoice_obj = self.pool.get('account.invoice')
         attachment_obj = self.pool.get('ir.attachment')
         type = self.browse(cr, uid, ids)[0].type
@@ -184,10 +182,10 @@ class ir_attachment_facturae_mx(osv.Model):
             fdata = base64.encodestring(xml_data)
             res = invoice_obj._upload_ws_file(
                 cr, uid, [invoice.id], fdata, context={})
-            msj = tools.ustr(res['msg']) + '\n'
+            msj = tools.ustr(res.get('msg', False))
             data_attach = {
                 'name': fname_invoice,
-                'datas': base64.encodestring(res['cfdi_xml'] or '') or False,
+                'datas': base64.encodestring(res.get('cfdi_xml', False)),
                 'datas_fname': fname_invoice,
                 'description': 'Factura-E XML CFD-I SIGN',
                 'res_model': 'account.invoice',
@@ -199,10 +197,12 @@ class ir_attachment_facturae_mx(osv.Model):
                           {'state': 'signed',
                            'file_xml_sign': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj}, context=context)
+                           'msj': msj,
+                           'file_xml_sign_index': res.get(
+                                                           'cfdi_xml', False) }, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
-        aids = []
+        aids = ''
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         msj = self.browse(cr, uid, ids)[0].msj
         invoice_obj = self.pool.get('account.invoice')
@@ -347,7 +347,6 @@ class ir_attachment_facturae_mx(osv.Model):
         attach_obj = self.pool.get('ir.attachment')
         type = self.browse(cr, uid, ids)[0].type
         state = self.browse(cr, uid, ids)[0].state
-        name = self.browse(cr, uid, ids)[0].name
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         # msj = self.browse(cr, uid, ids)[0].msj
         if type == 'cfd22':
