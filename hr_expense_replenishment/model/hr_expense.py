@@ -899,6 +899,19 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'advance_ids': [],
+                        'invoice_ids': [],
+                        'payment_ids': [],
+                        'ail_ids': [],
+                        'ait_ids': [],
+                        })
+        return super(hr_expense_expense, self).copy(cr, uid, id, default,
+                        context=context)
+
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id,
