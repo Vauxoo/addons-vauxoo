@@ -878,7 +878,15 @@ class hr_employee(osv.Model):
     
     _columns = {
         'account_analytic_id': fields.many2one('account.analytic.account',
-            'Analytic')
+            'Analytic', domain=[('type','<>','view')])
+    }
+
+class hr_department(osv.Model):
+    _inherit = "hr.department"
+
+    _columns = {
+        'analytic_account_id': fields.many2one('account.analytic.account',
+            'Analytic', domain=[('type','<>','view')]),
     }
 
 class hr_expense_line(osv.Model):

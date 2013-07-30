@@ -75,7 +75,7 @@
                                     <newline/>
                                     <button string="Load All Advances" name="load_advances" type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','done'),('skip','=',True)]}"/>
                                 </group>
-                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','done')]}" widget="many2many">
+                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':['|',('state','!=','done'), ('skip','=',True)]}" widget="many2many">
                                     <tree>
                                         <field name="journal_id"/>
                                         <field name="period_id"/>
