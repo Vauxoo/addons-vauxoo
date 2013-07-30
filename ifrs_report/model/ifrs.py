@@ -221,6 +221,11 @@ class ifrs_ifrs(osv.osv):
                ids2 += self._get_children_and_consol(cr, uid, [x.id for x in aa_brw.child_id], level, context=context)
        return list(set(ids2)) 
     
+    def get_num_month(self, cr, uid, id, fiscalyear, period, context=None):
+        accountfy_obj = self.pool.get('account.fiscalyear')
+        return accountfy_obj._get_fy_month(cr, uid, fiscalyear, period, special=False, context=context)
+
+
     def get_report_data(
         self, cr, uid, ids, fiscalyear=None, exchange_date=None,
             currency_wizard=None, target_move=None, period=None, two=None, is_compute=None, context=None):
@@ -241,7 +246,6 @@ class ifrs_ifrs(osv.osv):
         data = []
 
         ifrs_line = self.pool.get('ifrs.lines')
-        accountfy_obj = self.pool.get('account.fiscalyear')
         
         if is_compute is None:
             period_name = self._get_periods_name_list(
@@ -292,7 +296,6 @@ class ifrs_ifrs(osv.osv):
                     #print (time.time() - start_time)/60.0, "minutos"
                     #print "##########################\n"
                     
-                num_month= accountfy_obj._get_fy_month(cr,uid,fiscalyear,period)
                 
                 for ifrs_l in ordered_lines:
                     #print "Calculo operands - ", ifrs_l.name ," ##########################\n"
@@ -300,8 +303,7 @@ class ifrs_ifrs(osv.osv):
                     line = {
                     'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
                     'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
-                    'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0},
-                    'number_month': num_month}
+                    'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}}
                     for lins in range(1, 13):
                         amount_value = ifrs_line._get_amount_with_operands(
                                 cr, uid,

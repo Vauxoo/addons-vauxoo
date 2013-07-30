@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/TR/REC-html40" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word">
 <head>
-	
+
 <table>
 	<tr>
 		
@@ -33,6 +33,7 @@
             %if data['report_type'] == 'per':
                 <% 
                     info = ifrs.get_report_data( data['fiscalyear'], data['exchange_date'], data['currency_wizard'], data['target_move'], data['period'],two=False)
+                    num_month = ifrs.get_num_month(data['fiscalyear'], data['period'])
                 %>
                 %for ifrs_l in info:
                 <tbody>
@@ -41,10 +42,10 @@
                             ${ifrs_l.get('name')}
                         </td>
                         <td>
-                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l['period'].get(ifrs_l.get('number_month'),0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
                         </td>
                         <td>
-                            ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l['period'].get(ifrs_l.get('number_month'),0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                            ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
                         </td>
                       %endif
                 </tbody>

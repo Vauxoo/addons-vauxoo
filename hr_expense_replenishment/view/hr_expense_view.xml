@@ -63,7 +63,7 @@
                 </xpath>
                 
                 <xpath expr="//field[@name='department_id']" position="after">
-                    <field name="account_analytic_id"/>
+                    <field name="account_analytic_id" domain="[('type','!=','view')]"/>
                 </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
@@ -129,7 +129,7 @@
                                     <field name="origin"/>
                                     <field name="residual"/>
                                     <field name="amount_untaxed"/>
-                                    <field name="amount_total"/>
+                                    <field name="amount_total" sum=''/>
                                     <field name="state"/>
                                 </tree>
                             </field>
@@ -146,7 +146,7 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='user_id']" position="after">
-                    <field name="account_analytic_id"/>
+                    <field name="account_analytic_id" domain="[('type','!=','view')]"/>
                 </xpath>
             </field>
         </record>
