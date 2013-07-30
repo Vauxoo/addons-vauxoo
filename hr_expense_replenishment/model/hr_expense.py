@@ -42,18 +42,16 @@ class hr_expense_expense(osv.Model):
             cr, uid, [('type', '=', 'payable')], context=context)
         for expense in self.browse(cr, uid, res.keys(), context=context):
             for invoice in expense.invoice_ids:
-                if invoice.move_id:
-                    res[expense.id] += \
-                        sum([aml.credit
-                             for aml in invoice.move_id.line_id
-                             ])
+                if expense.state in ('draft','confirm', 'accepted', 'cancelled'):
+                    date= fields.date.today()
                 else:
-                    res[expense.id] += cur_obj.exchange(
+                    date= invoice.date_invoice
+                res[expense.id] += cur_obj.exchange(
                         cr, uid, [],
                         from_amount=invoice.amount_total,
                         to_currency_id=expense.currency_id.id,
                         from_currency_id=invoice.currency_id.id,
-                        exchange_date=invoice.date_due,
+                        exchange_date=date,
                         context=context)
         return res
 
