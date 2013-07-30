@@ -384,7 +384,8 @@ class hr_expense_expense(osv.Model):
                     cr, uid, exp.id,
                     {'state': 'process'}, context=context)
             elif adjust_balance_to == 'liquidate':
-                self.expense_reconcile(cr, uid, exp.id, context=context)
+                ff, pp= self.expense_reconcile_partial_deduction(cr, uid, exp.id,
+                                              aml, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
 
             for line_pair in full_rec+[ff]:
