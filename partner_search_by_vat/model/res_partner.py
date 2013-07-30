@@ -30,22 +30,18 @@ from openerp.osv import fields, osv
 class res_partner(osv.osv):
 
     _inherit = 'res.partner'
-     
-        
+
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
         if not args:
             args = []
         if context is None:
             context = {}
-        res = super(res_partner, self).name_search(cr, user, name, args, operator, context, limit)
-        print type(res)
-        print 'res',res
-        print 'name',name
+        res = super(res_partner, self).name_search(
+            cr, user, name, args, operator, context, limit)
         if name:
-            ids = self.search(cr, user, [('vat', operator, name)] + args, limit=limit, context=context)
-            print 'ids',ids
+            ids = self.search(
+                cr, user, [('vat', operator, name)] + args, limit=limit, context=context)
             res_new = self.name_get(cr, user, ids, context=context)
-            print 'res_new',res_new
             for n in res_new:
                 res.append(n)
         return res
