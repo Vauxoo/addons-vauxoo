@@ -830,7 +830,7 @@ class hr_expense_expense(osv.Model):
         result['views'] = [(res and res[1] or False, 'form')]
         result['context']= {
                 'default_partner_id': exp.employee_id.address_home_id.id,
-                'default_amount': 100,
+                #'default_amount': 100,
                 'default_reference': exp.name,
                 'default_type': 'payment',
                 #'invoice_id': 5,
@@ -934,7 +934,8 @@ class account_voucher(osv.Model):
                         'date_original': adv.date,
                         'move_line_id': adv.id,
                         'amount_original': adv.debit,
-                        'currency_id': 1,
+                        'currency_id': expense.currency_id and\
+                                        expense.currency_id.id or False,
                         'amount': 0,
                         'type': 'cr',
                         'account_id': adv.account_id.id,
