@@ -320,7 +320,8 @@ class hr_expense_expense(osv.Model):
                  if brw.credit > 0.0]
             if not exp_credit:
                 empty_aml_ids = [brw.id for brw in exp.account_move_id.line_id]
-                aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
+                # Really!!!
+                #aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
 
             #~ manage the expense move lines
             exp_aml_brws = exp.account_move_id and \
@@ -363,7 +364,7 @@ class hr_expense_expense(osv.Model):
             aml_amount = aml['debit'] - aml['credit']
             adjust_balance_to = aml_amount == 0.0 and 'liquidate' or \
                 (aml_amount > 0.0 and 'debit') or 'credit'
-            part_rec = []
+            part_rec, ff, pp = [], [], []
             #~ create and reconcile invoice move lines
             full_rec = aml['invs'] and self.create_and_reconcile_invoice_lines(
                 cr, uid, exp.id, aml['invs'],
@@ -371,11 +372,11 @@ class hr_expense_expense(osv.Model):
 
             #~ change expense state
             if adjust_balance_to == 'debit':
-                self.expense_reconcile_partial(cr, uid, exp.id,
-                                               context=context)
+                ff, pp= self.expense_reconcile_partial_deduction(cr, uid, exp.id,
+                                              aml, context=context)
                 self.write(
                     cr, uid, exp.id,
-                    {'state': 'deduction'}, context=context)
+                    {'state': 'paid'}, context=context)
             elif adjust_balance_to == 'credit':
                 ff, pp= self.expense_reconcile_partial_payment(cr, uid, exp.id,
                                               aml, context=context)
@@ -395,6 +396,38 @@ class hr_expense_expense(osv.Model):
                 aml_obj.reconcile_partial(
                     cr, uid, line_pair, 'manual', context=context)
         return True
+
+    def expense_reconcile_partial_deduction(self, cr, uid, ids, d, context=None):
+        """
+        This method make a distribution of the advances, whenever applies
+        paying fully those invoice that can be paid and leaving just a remaining
+        to that that just can be paid partially, this way is less cumbersome
+        due to the fact that partial reconciliation in openerp over several
+        invoice can be really __nasty__ 
+        """
+        context = context or {}
+        res = {}
+        aml_obj = self.pool.get('account.move.line')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        exp = self.browse(cr, uid, ids[0], context=context)
+
+        adv_ids = d['advances']
+        exp_ids = d['exp']
+
+        sum_adv = d['debit']
+        sum_exp = d['exp_sum']
+        sum_inv = d['inv_sum']
+        partial_rec = []
+        full_rec = []
+
+        ld = sum_adv - d['credit'] # Remaining Advance
+        ld and self.expense_debit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    ld) 
+        lc = sum_adv - d['credit'] + sum_inv
+        lc = self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    lc)
+
+        return adv_ids + exp_ids + [lc],[]
 
     def expense_reconcile_partial_payment(self, cr, uid, ids, d, context=None):
         """
@@ -419,10 +452,11 @@ class hr_expense_expense(osv.Model):
         partial_rec = []
         full_rec = []
 
-        if not sum_adv:
+        if not sum_adv and sum_inv:
+            inv_ids = [self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    sum_inv)]
             return full_rec,partial_rec
-
-        if sum_exp < sum_adv: # and sum_inv > 0
+        elif sum_exp < sum_adv: # and sum_inv > 0
             l1 = sum_adv - sum_exp
             l2 = sum_inv - l1
             l1 = self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
@@ -441,6 +475,37 @@ class hr_expense_expense(osv.Model):
                 return adv_ids + inv_ids, []
             else: # sum_adv < sum_inv
                 return [], adv_ids + inv_ids
+        return [],[]
+
+    def expense_debit_lines(self, cr, uid, ids, am_id, amount, account_id=False, 
+                                    partner_id=False, date=None, 
+                                    advance_amount=False, line_type=None,
+                                    adjust_balance_to=None, context=None):
+        """
+        Create new move lines to match to the expense. receive only one id
+        @param aml_ids: acc.move.line list of ids
+        @param am_id: account move id
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        exp = self.browse(cr, uid, ids, context=context)
+        account_id = account_id or exp.employee_id.address_home_id and\
+                exp.employee_id.address_home_id.property_account_payable.id
+        partner_id = partner_id or exp.employee_id.address_home_id and \
+                            exp.employee_id.address_home_id.id
+        vals = {
+            'move_id': am_id,
+            'journal_id': exp.account_move_id.journal_id.id,
+            'date' : date or fields.date.today(),
+            'period_id' : self.pool.get('account.period').find(
+                cr, uid, context=context)[0],
+            'debit' : amount,
+            'name' : _('Remaining Employee Advance'),
+            'partner_id' : partner_id,
+            'account_id' : account_id,
+            'credit' : 0.0,
+        }
+        return aml_obj.create(cr, uid, vals, context=context)
 
     def expense_credit_lines(self, cr, uid, ids, am_id, amount, account_id=False, 
                                     partner_id=False, date=None, 
@@ -465,7 +530,7 @@ class hr_expense_expense(osv.Model):
             'period_id' : self.pool.get('account.period').find(
                 cr, uid, context=context)[0],
             'debit' : 0.0,
-            'name' : _('Debts to be reimburst to Employee'),
+            'name' : _('Debts to be reimbursed to Employee'),
             'partner_id' : partner_id,
             'account_id' : account_id,
             'credit' : amount,
