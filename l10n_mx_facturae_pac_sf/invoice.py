@@ -353,10 +353,10 @@ class account_invoice(osv.Model):
                 if codigo_timbrado == '311' or codigo_validacion == '311':
                     raise osv.except_osv(_('Warning'), _(
                         'Unauthorized.\nCode 311'))
-                if codigo_timbrado == '312' or codigo_validacion == '312':
+                elif codigo_timbrado == '312' or codigo_validacion == '312':
                     raise osv.except_osv(_('Warning'), _(
                         'Failed to consult the SAT.\nCode 312'))
-                if codigo_timbrado == '200' and codigo_validacion == '200':
+                elif codigo_timbrado == '200' and codigo_validacion == '200':
                     fecha_timbrado = resultado[
                         'resultados']['fechaTimbrado'] or False
                     fecha_timbrado = fecha_timbrado and time.strftime(
