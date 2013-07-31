@@ -51,7 +51,23 @@ class account_voucher(osv.Model):
         'move_tax_id' : fields.many2one('account.move', 'Move Tax',
             help='Move that is create when paid the tax', readonly=True),
         'double_validation_ok' : fields.function(_get_double_validation_ok,
-            type='boolean', string='Double Validation OK', store=True)
+            type='boolean', string='Double Validation OK', store=True),
+        'state':fields.selection(
+            [('draft','Draft'),
+             ('cancel','Cancelled'),
+             ('proforma','Pro-forma'),
+             ('wait_tax','Wait Tax'),
+             ('posted','Posted')
+            ], 'Status', readonly=True, size=32, track_visibility='onchange',
+            help=' * The \'Draft\' status is used when a user is encoding a '
+                'new and unconfirmed Voucher. \\n* The \'Pro-forma\' when '
+                'voucher is in Pro-forma status,voucher does not have an '
+                'voucher number. \\n* The \'Posted\' status is used when '
+                'user create voucher,a voucher number is generated and voucher '
+                    'entries are created in account \\n* The \'Cancelled\' status '
+                    'is used when user cancel voucher.\\n* The \'Wait Tax\' status'
+                    'is used when user paid the invoice but not concile the tax'
+                    'yet or in retainer.'),
         }
         
     def cancel_voucher(self, cr, uid, ids, context=None):
@@ -89,6 +105,10 @@ class account_voucher(osv.Model):
         """
         move_obj = self.pool.get('account.move')
         for voucher in self.browse(cr, uid, ids, context=context):
+            if not voucher.period_tax_move:
+                voucher.write({'period_tax_move' : voucher.period_id.id})
+            if not voucher.date_tax_move:
+                voucher.write({'date_tax_move' : voucher.date})
             move_id = move_obj.create(cr, uid, self.account_move_tax_get(cr,\
                 uid, voucher.id, context=context), context=context)
             self.voucher_move_line_tax_create(cr,uid, voucher.id, move_id,\

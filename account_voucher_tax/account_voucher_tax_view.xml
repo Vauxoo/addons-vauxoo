@@ -114,6 +114,17 @@
                      </xpath>
                 </field>
         </record>
+        
+        <record id="view_account_voucher_state" model="ir.ui.view">
+                <field name="name">view.account.voucher.state</field>
+                <field name="model">account.voucher</field>     
+                <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+                <field name="arch" type="xml">
+                     <xpath expr="//field[@name='state']" position="replace">
+                        <field name="state" widget="statusbar" statusbar_visible="draft,wait_tax,posted" statusbar_colors='{"proforma":"blue"}'/>
+                     </xpath>
+                </field>
+        </record>
 
     </data>
 </openerp>
