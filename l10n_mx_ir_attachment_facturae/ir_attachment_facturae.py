@@ -128,9 +128,12 @@ class ir_attachment_facturae_mx(osv.Model):
 
     def action_confirm(self, cr, uid, ids, context=None):
         attach = ''
+        msj = ''
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         invoice_obj = self.pool.get('account.invoice')
         type = self.browse(cr, uid, ids)[0].type
+        if type == 'cbb':
+            msj = _("Confirmed")
         if type == 'cfd22':
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                 '.xml' or ''
@@ -168,6 +171,7 @@ class ir_attachment_facturae_mx(osv.Model):
     def action_sign(self, cr, uid, ids, context={}):
         attach = ''
         index_xml = ''
+        msj = ''
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         invoice_obj = self.pool.get('account.invoice')
         attachment_obj = self.pool.get('ir.attachment')
