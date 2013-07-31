@@ -190,7 +190,7 @@ class ifrs_ifrs(osv.osv):
         if context is None:
             context = {}
         if report_type == 'all':
-            res = 'All Periods of the fiscalyear.'
+            res = _('ALL PERIODS OF THE FISCALYEAR')
         else:
             period = self.pool.get('account.period').browse(
                 cr, uid, period_id, context=context)
