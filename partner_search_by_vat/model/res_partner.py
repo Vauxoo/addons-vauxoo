@@ -42,6 +42,5 @@ class res_partner(osv.osv):
             ids = self.search(
                 cr, user, [('vat', operator, name)] + args, limit=limit, context=context)
             res_new = self.name_get(cr, user, ids, context=context)
-            for n in res_new:
-                res.append(n)
+            res.extend(res_new)
         return res
