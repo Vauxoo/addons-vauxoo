@@ -24,24 +24,23 @@
 #
 #
 
-{
-    "name": "Search Supplier by VAT",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description" : """
-Search Supplier by VAT
-==========================================
-This module adds the possibility to search for vat
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": ["l10n_mx_base_vat_split",
-                ],
-    "demo": [],
-    "data": [
-        "view/res_partner_view.xml"
-    ],
-    "installable": True,
-    "active": False,
-}
+from openerp.osv import fields, osv
+
+
+class res_partner(osv.osv):
+
+    _inherit = 'res.partner'
+
+    def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
+        if not args:
+            args = []
+        if context is None:
+            context = {}
+        res = super(res_partner, self).name_search(
+            cr, user, name, args, operator, context, limit)
+        if name:
+            ids = self.search(
+                cr, user, [('vat', operator, name)] + args, limit=limit, context=context)
+            res_new = self.name_get(cr, user, ids, context=context)
+            res.extend(res_new)
+        return res
