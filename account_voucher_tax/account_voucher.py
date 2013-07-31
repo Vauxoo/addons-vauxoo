@@ -301,6 +301,10 @@ class account_voucher(osv.Model):
         if voucher.type == 'payment' and reference_amount < 0:
             src_account_id, dest_account_id = dest_account_id, src_account_id
         tax_secondary_ids = acc_tax_obj.search(cr, uid, [('type_tax_use', '=', 'purchase'), '|', ('account_collected_id', '=', src_account_id), ('account_paid_voucher_id', '=', src_account_id)])
+        tax_secondary = False
+        if tax_secondary_ids:
+            tax_secondary = tax_secondary_ids[0]
+        amount_base = line_tax.amount_base * factor
         debit_line_vals = {
                     'name': line_tax.tax_id.name,
                     'quantity': 1,
@@ -316,11 +320,9 @@ class account_voucher(osv.Model):
                     'analytic_account_id': line_tax.analytic_account_id and\
                                     line_tax.analytic_account_id.id or False,
                     'date' : voucher.date,
+                    'amount_base' : abs(amount_base),
+                    'tax_id_secondary' : tax_secondary,
         }
-        tax_secondary = False
-        if tax_secondary_ids:
-            tax_secondary = tax_secondary_ids[0]
-        amount_base = line_tax.amount_base * factor
         credit_line_vals = {
                     'name': line_tax.tax_id.name,
                     'quantity': 1,
@@ -337,8 +339,6 @@ class account_voucher(osv.Model):
                     'analytic_account_id': line_tax.analytic_account_id and\
                                     line_tax.analytic_account_id.id or False,
                     'date' : voucher.date,
-                    'amount_base' : abs(amount_base),
-                    'tax_id_secondary' : tax_secondary,
         }
         if context.get('writeoff', False):
             debit_line_vals.pop('analytic_account_id')
