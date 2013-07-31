@@ -167,6 +167,7 @@ class ir_attachment_facturae_mx(osv.Model):
 
     def action_sign(self, cr, uid, ids, context={}):
         attach = ''
+        index_xml = ''
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         invoice_obj = self.pool.get('account.invoice')
         attachment_obj = self.pool.get('ir.attachment')
@@ -183,6 +184,7 @@ class ir_attachment_facturae_mx(osv.Model):
             res = invoice_obj._upload_ws_file(
                 cr, uid, [invoice.id], fdata, context={})
             msj = tools.ustr(res.get('msg', False))
+            index_xml = res.get('cfdi_xml', False)
             data_attach = {
                 'name': fname_invoice,
                 'datas': base64.encodestring(res.get('cfdi_xml', False)),
@@ -198,8 +200,7 @@ class ir_attachment_facturae_mx(osv.Model):
                            'file_xml_sign': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj,
-                           'file_xml_sign_index': res.get(
-                           'cfdi_xml', False)}, context=context)
+                           'file_xml_sign_index': index_xml}, context=context)
 
     def action_printable(self, cr, uid, ids, context={}):
         aids = ''
