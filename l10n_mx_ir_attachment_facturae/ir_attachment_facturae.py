@@ -198,7 +198,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 'res_id': invoice.id,
             }
             attach = attachment_obj.create(
-                cr, uid, data_attach, context=context)
+                                            cr, uid, data_attach, context=context)
         return self.write(cr, uid, ids,
                           {'state': 'signed',
                            'file_xml_sign': attach or False,
@@ -208,8 +208,10 @@ class ir_attachment_facturae_mx(osv.Model):
 
     def action_printable(self, cr, uid, ids, context={}):
         aids = ''
+        index_pdf = ''
+        attachment_obj = self.pool.get('ir.attachment')
         invoice = self.browse(cr, uid, ids)[0].invoice_id
-        msj = self.browse(cr, uid, ids)[0].msj
+        #msj = self.browse(cr, uid, ids)[0].msj
         invoice_obj = self.pool.get('account.invoice')
         type = self.browse(cr, uid, ids)[0].type
         (fileno, fname) = tempfile.mkstemp(
@@ -217,12 +219,15 @@ class ir_attachment_facturae_mx(osv.Model):
         os.close(fileno)
         file = invoice_obj.create_report(cr, uid, [invoice.id],
                                          "account.invoice.facturae.webkit", fname)
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid,
-                                                         [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice),
-                                ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
-        for attachment in self.browse(cr, uid, adjuntos, context):
+        adjuntos = attachment_obj.search(cr, uid, [
+                                                    ('res_model', '=', 'account.invoice'),
+                                                    ('res_id', '=', invoice),
+                                                    ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
+        for attachment in attachment_obj.browse(cr, uid, adjuntos, context):
             aids = attachment.id
-            self.pool.get('ir.attachment').write(cr, uid, [attachment.id], {
+            index_pdf = attachment.index_content
+            print index_pdf
+            attachment_obj.write(cr, uid, [attachment.id], {
                 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
             msj = _("Attached Successfully PDF\n")
@@ -232,7 +237,8 @@ class ir_attachment_facturae_mx(osv.Model):
             'state': 'printable',
             'file_pdf': aids or False,
             'msj': msj,
-            'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
+            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+            'file_pdf_index': index_pdf }, context=context)
 
     def action_send_customer(self, cr, uid, ids, context=None):
         attachments = []
