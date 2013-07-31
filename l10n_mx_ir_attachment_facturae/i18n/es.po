@@ -136,7 +136,7 @@ msgstr "Seguidores"
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,file_xml_sign_index:0
 msgid "File XML sign index"
-msgstr "Archivo XML Firmado Index"
+msgstr "Contenido del XML 3.2"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: selection:ir.attachment.facturae.mx,state:0
@@ -197,7 +197,7 @@ msgstr "Descripción"
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,file_pdf_index:0
 msgid "Report PDF with index"
-msgstr "Informe PDF con índice"
+msgstr "Contenido del PDF"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,message_unread:0

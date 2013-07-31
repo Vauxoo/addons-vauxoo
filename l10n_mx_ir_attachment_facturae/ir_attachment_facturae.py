@@ -226,7 +226,6 @@ class ir_attachment_facturae_mx(osv.Model):
         for attachment in attachment_obj.browse(cr, uid, adjuntos, context):
             aids = attachment.id
             index_pdf = attachment.index_content
-            print index_pdf
             attachment_obj.write(cr, uid, [attachment.id], {
                 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
