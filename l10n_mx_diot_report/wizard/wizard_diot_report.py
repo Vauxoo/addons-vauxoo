@@ -83,10 +83,13 @@ class wizard_account_diot_mx(osv.osv_memory):
         acc_move_line_obj = self.pool.get('account.move.line')
         acc_tax_obj = self.pool.get('account.tax')
         acc_tax_category_obj = self.pool.get('account.tax.category')
+        acc_journal_obj = self.pool.get('account.journal')
         this = self.browse(cr, uid, ids)[0]
         period = this.period_id
         matrix_row = []
         amount_exe = 0
+        journal_ids = acc_journal_obj.search(cr, uid, [('type', 'not in', 
+            ('purchase', 'sale'))], context=context)
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
         tax_purchase_ids = acc_tax_obj.search(cr, uid, [
@@ -95,8 +98,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         move_lines_diot = acc_move_line_obj.search(cr, uid, [
             ('period_id', '=', period.id),
             ('tax_id_secondary', 'in', tax_purchase_ids),
-            '|', ('reconcile_id', '!=', False),
-            ('reconcile_partial_id', '!=', False)])
+            ('journal_id', 'in', journal_ids),])
         dic_move_line = {}
         partner_ids_to_fix = []
         moves_without_partner = []
