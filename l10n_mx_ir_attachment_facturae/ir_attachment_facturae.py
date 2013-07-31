@@ -351,7 +351,7 @@ class ir_attachment_facturae_mx(osv.Model):
         if type == 'cfd22':
             msj = _('Cancel\n')
         if type == 'cfdi32':
-            if state not in ['draft', 'confirmed']:
+            if state not in ['draft', 'confirmed', 'cancel']:
                 status = invoice_obj.action_cancel(
                     cr, uid, [invoice.id], context)
                 sf_cancel = invoice_obj.sf_cancel(
@@ -359,12 +359,14 @@ class ir_attachment_facturae_mx(osv.Model):
                 msj = _('Cancel\n')
                 msj += tools.ustr(sf_cancel.get('message', False))
                 #Para que no aparescan los adjuntos en facturas canceladas
-                adjuntos = attach_obj.search(cr, uid, [(
-                    'res_model', '=', 'account.invoice'),
-                    ('res_id', '=', invoice)])
-                for attachment in self.browse(cr, uid, adjuntos, context):
-                    ids2 = attach_obj.write(cr, uid, [attachment.id], {
-                        'res_id': False, }, context={})
+                ##adjuntos = attach_obj.search(cr, uid, [(
+                    ##'res_model', '=', 'account.invoice'),
+                    ##('res_id', '=', invoice)])
+                ##for attachment in self.browse(cr, uid, adjuntos, context):
+                    ##ids2 = attach_obj.write(cr, uid, [attachment.id], {
+                        ##'res_id': False, }, context={})
+            else:
+                 msj = _('Cancel\n')
         return self.write(cr, uid, ids,
                           {'state': 'cancel',
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
