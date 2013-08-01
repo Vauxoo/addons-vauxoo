@@ -314,7 +314,7 @@ class hr_expense_expense(osv.Model):
             elif adjust_balance_to == 'liquidate':
                 self.expense_reconcile(cr, uid, exp.id, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
-        return True
+        return aml
 
     def expense_reconcile_partial(self, cr, uid, ids, context=None):
         """
