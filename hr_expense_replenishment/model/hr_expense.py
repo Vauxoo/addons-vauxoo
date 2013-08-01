@@ -153,7 +153,8 @@ class hr_expense_expense(osv.Model):
             'entries are made for the expense request, the status is '
             '\'Waiting Payment\'.')),
         'account_analytic_id': fields.many2one('account.analytic.account',
-            'Analytic')
+            'Analytic'),
+            'date_post':fields.date('Post Date ')
     }
     def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
         res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
@@ -310,6 +311,7 @@ class hr_expense_expense(osv.Model):
         """
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
+        per_obj = self.pool.get('account.period')
         for exp in self.browse(cr, uid, ids, context=context):
             self.check_advance_no_empty_condition(cr, uid, exp.id,
                                                   context=context)
@@ -387,6 +389,17 @@ class hr_expense_expense(osv.Model):
                 ff, pp= self.expense_reconcile_partial_deduction(cr, uid, exp.id,
                                               aml, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
+
+            date_post=exp.date_post or fields.date.today()
+             
+            period_id=per_obj.find(cr, uid,dt=date_post)
+            period_id=period_id and period_id[0]
+            exp.write({'date_post':date_post,'period_id':period_id})
+            x_aml_ids=[aml.id for aml in exp.account_move_id.line_id]
+
+            vals={'date':date_post,'period_id':period_id}
+            exp.account_move_id.write(vals)
+            aml_obj.write(cr,uid,x_aml_ids,vals)
 
             for line_pair in full_rec+[ff]:
                 if not line_pair: continue
