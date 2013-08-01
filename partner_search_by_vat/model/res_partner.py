@@ -44,3 +44,15 @@ class res_partner(osv.osv):
             res_new = self.name_get(cr, user, ids, context=context)
             res.extend(res_new)
         return res
+        
+    def name_get(self, cr, uid, ids, context=None):
+        if not len(ids):
+            return []
+        reads = self.read(cr, uid, ids, ['name', 'vat'], context=context)
+        res = []
+        for record in reads:
+            name = record['name']
+            if record['vat']:
+                name = '['+record['vat']+'] '+name
+            res.append((record['id'], name))
+        return res
