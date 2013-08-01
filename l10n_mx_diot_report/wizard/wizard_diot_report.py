@@ -97,8 +97,12 @@ class wizard_account_diot_mx(osv.osv_memory):
             ('tax_category_id', 'in', category_iva_ids)], context=context)
         account_ids_tax = []
         for tax in acc_tax_obj.browse(cr, uid, tax_purchase_ids, context=context):
-            if tax.account_paid_voucher_id:
-                account_ids_tax.append(tax.account_paid_voucher_id.id)
+            if tax.tax_category_id and tax.tax_category_id.name == 'IVA-RET':
+                if tax.account_collected_id:
+                    account_ids_tax.append(tax.account_collected_id.id)
+            else:
+                if tax.account_paid_voucher_id:
+                    account_ids_tax.append(tax.account_paid_voucher_id.id)
         move_lines_diot = acc_move_line_obj.search(cr, uid, [
             ('period_id', '=', period.id),
             ('tax_id_secondary', 'in', tax_purchase_ids),
@@ -140,18 +144,18 @@ class wizard_account_diot_mx(osv.osv_memory):
                 amount_0 = amount_16 = amount_exe = amount_11 = amount_ret = 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
                     line.tax_id_secondary.amount == 0.16:
-                    amount_16 = line.amount_base
+                    amount_16 = line.amount_base or 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
                     line.tax_id_secondary.amount == 0.11:
-                    amount_11 = line.amount_base
+                    amount_11 = line.amount_base or 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA' and\
                     line.tax_id_secondary.amount == 0:
-                    amount_0 = line.amount_base
+                    amount_0 = line.amount_base or 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA-EXENTO'\
                     and line.tax_id_secondary.amount == 0:
-                    amount_exe = line.amount_base
+                    amount_exe = line.amount_base or 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
-                    amount_ret = line.amount_base
+                    amount_ret = line.debit or 0
                 if partner_vat in dic_move_line:
                     line_move = dic_move_line[partner_vat]
                     line_move[7] = line_move[7] + amount_16
