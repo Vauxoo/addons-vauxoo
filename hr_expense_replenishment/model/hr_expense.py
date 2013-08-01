@@ -830,7 +830,7 @@ class hr_expense_expense(osv.Model):
         result['views'] = [(res and res[1] or False, 'form')]
         result['context']= {
                 'default_partner_id': exp.employee_id.address_home_id.id,
-                'default_amount': 100,
+                #'default_amount': 100,
                 'default_reference': exp.name,
                 'default_type': 'payment',
                 #'invoice_id': 5,
@@ -899,6 +899,19 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'advance_ids': [],
+                        'invoice_ids': [],
+                        'payment_ids': [],
+                        'ail_ids': [],
+                        'ait_ids': [],
+                        })
+        return super(hr_expense_expense, self).copy(cr, uid, id, default,
+                        context=context)
+
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id,
@@ -921,7 +934,8 @@ class account_voucher(osv.Model):
                         'date_original': adv.date,
                         'move_line_id': adv.id,
                         'amount_original': adv.debit,
-                        'currency_id': 1,
+                        'currency_id': expense.currency_id and\
+                                        expense.currency_id.id or False,
                         'amount': 0,
                         'type': 'cr',
                         'account_id': adv.account_id.id,
@@ -972,7 +986,15 @@ class hr_employee(osv.Model):
     
     _columns = {
         'account_analytic_id': fields.many2one('account.analytic.account',
-            'Analytic')
+            'Analytic', domain=[('type','<>','view')])
+    }
+
+class hr_department(osv.Model):
+    _inherit = "hr.department"
+
+    _columns = {
+        'analytic_account_id': fields.many2one('account.analytic.account',
+            'Analytic', domain=[('type','<>','view')]),
     }
 
 class hr_expense_line(osv.Model):
