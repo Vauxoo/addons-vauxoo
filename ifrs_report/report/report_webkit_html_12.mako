@@ -10,7 +10,10 @@
     %for ifrs in objects :
     <table>
         <tr>
-            <td>
+            <td width="30%">
+                <div>${helper.embed_image('jpeg',str(ifrs.company_id.logo),250, 120)}</div>
+            </td>
+            <td width="70%">
                 <table class="dest_address " style="border-bottom: 0px solid black; width: 100%">
                     <tr><td><b>[${ifrs.code or ''|entity}] ${ifrs.name or ''|entity}</b></td></tr>
                     <tr><td>${ifrs.company_id.name or ''|entity}</td></tr>
@@ -24,7 +27,7 @@
     </table> 
 
 
-    <table class="list_table"  width="90%">
+    <table class="list_table"  width="100%">
         <%
             period_name = ifrs._get_periods_name_list(data['fiscalyear'])
         %>
