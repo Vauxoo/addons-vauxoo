@@ -28,7 +28,6 @@ from openerp import netsvc
 import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
 
-
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
 
@@ -43,18 +42,16 @@ class hr_expense_expense(osv.Model):
             cr, uid, [('type', '=', 'payable')], context=context)
         for expense in self.browse(cr, uid, res.keys(), context=context):
             for invoice in expense.invoice_ids:
-                if invoice.move_id:
-                    res[expense.id] += \
-                        sum([aml.credit
-                             for aml in invoice.move_id.line_id
-                             ])
+                if expense.state in ('draft','confirm', 'accepted', 'cancelled'):
+                    date= fields.date.today()
                 else:
-                    res[expense.id] += cur_obj.exchange(
+                    date= invoice.date_invoice
+                res[expense.id] += cur_obj.exchange(
                         cr, uid, [],
                         from_amount=invoice.amount_total,
                         to_currency_id=expense.currency_id.id,
                         from_currency_id=invoice.currency_id.id,
-                        exchange_date=invoice.date_due,
+                        exchange_date=date,
                         context=context)
         return res
 
@@ -82,6 +79,12 @@ class hr_expense_expense(osv.Model):
         return res
 
     _columns = {
+        'partner_id':fields.related('employee_id', 'address_home_id', 
+            string= 'Partner linked to Employee', 
+            help=('This field is automatically filled when Employee is '
+                'selected'),
+            relation='res.partner', type='many2one', store=True, readonly=True), 
+        
         'invoice_ids': fields.one2many('account.invoice', 'expense_id',
                                        'Invoices', help=''),
         'ail_ids': fields.function(_get_ail_ids,
@@ -149,8 +152,46 @@ class hr_expense_expense(osv.Model):
             'accepts it, the status is \'Accepted\'.\n If the accounting '
             'entries are made for the expense request, the status is '
             '\'Waiting Payment\'.')),
+        'account_analytic_id': fields.many2one('account.analytic.account',
+            'Analytic')
     }
+    def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
+        res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
+                                            ids, employee_id, context=context)
+        if not employee_id:
+            return res
 
+        emp_obj = self.pool.get('hr.employee')
+        employee = emp_obj.browse(cr, uid, employee_id, context=context)
+        acc_analytic_id = employee.account_analytic_id and\
+                            employee.account_analytic_id.id or False
+        if not acc_analytic_id:
+            acc_analytic_id = employee.department_id and\
+            employee.department_id.analytic_account_id and\
+            employee.department_id.analytic_account_id.id or False
+        res['value'].update({'account_analytic_id': acc_analytic_id})
+        return res
+
+    def onchange_department_id(self, cr, uid, ids, employee_id, department_id,
+                                                                context=None):
+        dep_obj = self.pool.get('hr.department')
+        emp_obj = self.pool.get('hr.employee')
+        employee = emp_obj.browse(cr, uid, employee_id, context=context)
+        acc_analytic_id = employee.account_analytic_id and\
+                            employee.account_analytic_id.id or False
+        if not acc_analytic_id:
+            acc_analytic_id = employee.department_id and\
+            employee.department_id.analytic_account_id  and \
+            employee.department_id.analytic_account_id.id or False
+            
+        if not acc_analytic_id and department_id:
+            department = dep_obj.browse(cr, uid, department_id,
+                                        context=context)
+            acc_analytic_id = department.analytic_account_id and \
+                        department.analytic_account_id.id or False
+        res  = {'value':{'account_analytic_id': acc_analytic_id}}
+        return res
+    
     def onchange_no_danvace_option(self, cr, uid, ids, skip, context=None):
         """
         Clean up the expense advances when the No advances checkbox is set
@@ -167,6 +208,22 @@ class hr_expense_expense(osv.Model):
                     cr, uid, ids[0], context=context).advance_ids]
             }
         return res
+
+    def check_invoice(self, cr, uid, ids, context=None):
+        """ Verifying that all invoices related to this expense
+        have been validated"""
+        context = context or {}
+        inv_brws = self.browse(cr, uid, ids[0], context=context).invoice_ids
+        res = [True]
+        if inv_brws:
+            res+=map(lambda x: x.state=='open' and True or False, inv_brws)
+            res = all(res)
+        if not res:
+            raise osv.except_osv(
+                _('Invalid Procedure'),
+                _('Please, Complete the validation of the remaining Draft '
+                  'Invoices before continuing'))
+        return True
 
     def expense_confirm(self, cr, uid, ids, context=None):
         """ Overwrite the expense_confirm method to validate that the expense
@@ -263,20 +320,24 @@ class hr_expense_expense(osv.Model):
                  if brw.credit > 0.0]
             if not exp_credit:
                 empty_aml_ids = [brw.id for brw in exp.account_move_id.line_id]
-                aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
+                # Really!!!
+                #aml_obj.unlink(cr, uid, empty_aml_ids, context=context)
 
             #~ manage the expense move lines
             exp_aml_brws = exp.account_move_id and \
                 [aml_brw
-                 for aml_brw in exp.account_move_id.line_id
-                 if aml_brw.account_id.type == 'payable'] or []
+                     for aml_brw in exp.account_move_id.line_id
+                         if aml_brw.account_id.type == 'payable'] or []
+
             advance_aml_brws = [aml_brw
                                 for aml_brw in exp.advance_ids
-                                if aml_brw.account_id.type == 'payable']
+                                    if aml_brw.account_id.type == 'payable']
+
             inv_aml_brws = [aml_brw
-                            for inv in exp.invoice_ids
-                            for aml_brw in inv.move_id.line_id
-                            if aml_brw.account_id.type == 'payable']
+                                for inv in exp.invoice_ids
+                                    for aml_brw in inv.move_id.line_id
+                                        if aml_brw.account_id.type == 'payable']
+
             aml = {
                 'exp':
                 exp_aml_brws and [aml_brw.id for aml_brw in exp_aml_brws]
@@ -291,30 +352,190 @@ class hr_expense_expense(osv.Model):
                      for aml_brw in advance_aml_brws]),
                 'credit':
                 sum([aml_brw.credit
-                     for aml_brw in exp_aml_brws + inv_aml_brws])
+                     for aml_brw in exp_aml_brws + inv_aml_brws]),
+                'exp_sum':
+                sum([aml_brw.credit
+                     for aml_brw in exp_aml_brws]),
+                'inv_sum':
+                sum([aml_brw.credit
+                     for aml_brw in inv_aml_brws])
             }
 
             aml_amount = aml['debit'] - aml['credit']
             adjust_balance_to = aml_amount == 0.0 and 'liquidate' or \
                 (aml_amount > 0.0 and 'debit') or 'credit'
-
+            part_rec, ff, pp = [], [], []
             #~ create and reconcile invoice move lines
-            aml['invs'] and self.create_and_reconcile_invoice_lines(
+            full_rec = aml['invs'] and self.create_and_reconcile_invoice_lines(
                 cr, uid, exp.id, aml['invs'],
-                adjust_balance_to=adjust_balance_to, context=context)
+                adjust_balance_to=adjust_balance_to, context=context) or []
 
             #~ change expense state
-            if adjust_balance_to in ['debit', 'credit']:
-                self.expense_reconcile_partial(cr, uid, exp.id,
-                                               context=context)
+            if adjust_balance_to == 'debit':
+                ff, pp= self.expense_reconcile_partial_deduction(cr, uid, exp.id,
+                                              aml, context=context)
                 self.write(
                     cr, uid, exp.id,
-                    {'state': adjust_balance_to == 'debit' and 'deduction'
-                     or 'process'}, context=context)
+                    {'state': 'paid'}, context=context)
+            elif adjust_balance_to == 'credit':
+                ff, pp= self.expense_reconcile_partial_payment(cr, uid, exp.id,
+                                              aml, context=context)
+                self.write(
+                    cr, uid, exp.id,
+                    {'state': 'process'}, context=context)
             elif adjust_balance_to == 'liquidate':
-                self.expense_reconcile(cr, uid, exp.id, context=context)
+                ff, pp= self.expense_reconcile_partial_deduction(cr, uid, exp.id,
+                                              aml, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
+            for line_pair in full_rec+[ff]:
+                if not line_pair: continue
+                aml_obj.reconcile(
+                    cr, uid, line_pair, 'manual', context=context)
+            for line_pair in part_rec+[pp]:
+                if not line_pair: continue
+                aml_obj.reconcile_partial(
+                    cr, uid, line_pair, 'manual', context=context)
         return aml
+
+    def expense_reconcile_partial_deduction(self, cr, uid, ids, d, context=None):
+        """
+        This method make a distribution of the advances, whenever applies
+        paying fully those invoice that can be paid and leaving just a remaining
+        to that that just can be paid partially, this way is less cumbersome
+        due to the fact that partial reconciliation in openerp over several
+        invoice can be really __nasty__ 
+        """
+        context = context or {}
+        res = {}
+        aml_obj = self.pool.get('account.move.line')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        exp = self.browse(cr, uid, ids[0], context=context)
+
+        adv_ids = d['advances']
+        exp_ids = d['exp']
+
+        sum_adv = d['debit']
+        sum_exp = d['exp_sum']
+        sum_inv = d['inv_sum']
+        partial_rec = []
+        full_rec = []
+
+        ld = sum_adv - d['credit'] # Remaining Advance
+        ld and self.expense_debit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    ld) 
+        lc = sum_adv - d['credit'] + sum_inv
+        lc = self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    lc)
+
+        return adv_ids + exp_ids + [lc],[]
+
+    def expense_reconcile_partial_payment(self, cr, uid, ids, d, context=None):
+        """
+        This method make a distribution of the advances, whenever applies
+        paying fully those invoice that can be paid and leaving just a remaining
+        to that that just can be paid partially, this way is less cumbersome
+        due to the fact that partial reconciliation in openerp over several
+        invoice can be really __nasty__ 
+        """
+        context = context or {}
+        res = {}
+        aml_obj = self.pool.get('account.move.line')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        exp = self.browse(cr, uid, ids[0], context=context)
+
+        adv_ids = d['advances']
+        exp_ids = d['exp']
+
+        sum_adv = d['debit']
+        sum_exp = d['exp_sum']
+        sum_inv = d['inv_sum']
+        partial_rec = []
+        full_rec = []
+
+        if not sum_adv and sum_inv:
+            inv_ids = [self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    sum_inv)]
+            return full_rec,partial_rec
+        elif sum_exp < sum_adv: # and sum_inv > 0
+            l1 = sum_adv - sum_exp
+            l2 = sum_inv - l1
+            l1 = self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    l1)
+            l2 = self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    l2)
+            return [l1]+ adv_ids + exp_ids, []
+        elif sum_exp == sum_adv:
+            return adv_ids + exp_ids,[]
+        else: # sum_exp > sum_adv
+            inv_ids = [self.expense_credit_lines(cr, uid, exp.id,exp.account_move_id.id,
+                    sum_inv)]
+            if sum_adv > sum_inv:
+                return [], exp_ids + adv_ids
+            elif sum_advance == sum_inv:
+                return adv_ids + inv_ids, []
+            else: # sum_adv < sum_inv
+                return [], adv_ids + inv_ids
+        return [],[]
+
+    def expense_debit_lines(self, cr, uid, ids, am_id, amount, account_id=False, 
+                                    partner_id=False, date=None, 
+                                    advance_amount=False, line_type=None,
+                                    adjust_balance_to=None, context=None):
+        """
+        Create new move lines to match to the expense. receive only one id
+        @param aml_ids: acc.move.line list of ids
+        @param am_id: account move id
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        exp = self.browse(cr, uid, ids, context=context)
+        account_id = account_id or exp.employee_id.address_home_id and\
+                exp.employee_id.address_home_id.property_account_payable.id
+        partner_id = partner_id or exp.employee_id.address_home_id and \
+                            exp.employee_id.address_home_id.id
+        vals = {
+            'move_id': am_id,
+            'journal_id': exp.account_move_id.journal_id.id,
+            'date' : date or fields.date.today(),
+            'period_id' : self.pool.get('account.period').find(
+                cr, uid, context=context)[0],
+            'debit' : amount,
+            'name' : _('Remaining Employee Advance'),
+            'partner_id' : partner_id,
+            'account_id' : account_id,
+            'credit' : 0.0,
+        }
+        return aml_obj.create(cr, uid, vals, context=context)
+
+    def expense_credit_lines(self, cr, uid, ids, am_id, amount, account_id=False, 
+                                    partner_id=False, date=None, 
+                                    advance_amount=False, line_type=None,
+                                    adjust_balance_to=None, context=None):
+        """
+        Create new move lines to match to the expense. receive only one id
+        @param aml_ids: acc.move.line list of ids
+        @param am_id: account move id
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        exp = self.browse(cr, uid, ids, context=context)
+        account_id = account_id or exp.employee_id.address_home_id and\
+                exp.employee_id.address_home_id.property_account_payable.id
+        partner_id = partner_id or exp.employee_id.address_home_id and \
+                            exp.employee_id.address_home_id.id
+        vals = {
+            'move_id': am_id,
+            'journal_id': exp.account_move_id.journal_id.id,
+            'date' : date or fields.date.today(),
+            'period_id' : self.pool.get('account.period').find(
+                cr, uid, context=context)[0],
+            'debit' : 0.0,
+            'name' : _('Debts to be reimbursed to Employee'),
+            'partner_id' : partner_id,
+            'account_id' : account_id,
+            'credit' : amount,
+        }
+        return aml_obj.create(cr, uid, vals, context=context)
 
     def expense_reconcile_partial(self, cr, uid, ids, context=None):
         """
@@ -397,24 +618,50 @@ class hr_expense_expense(osv.Model):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         for exp in self.browse(cr, uid, ids, context=context):
             #~ create invoice move lines.
-            inv_match_pair = self.create_reconcile_move_lines(
+            inv_match_pair = self.invoice_counter_move_lines(
                 cr, uid, exp.id,
                 am_id=exp.account_move_id.id,
                 aml_ids=inv_aml_ids,
-                line_type='invoice',
-                adjust_balance_to=adjust_balance_to,
                 context=context)
-            # make reconcilation.
-            for line_pair in inv_match_pair:
-                aml_obj.reconcile(
-                    cr, uid, list(line_pair), 'manual', context=context)
-        return True
+        return inv_match_pair
+
+    def invoice_counter_move_lines(self, cr, uid, ids, am_id, aml_ids,
+                                    advance_amount=False, line_type=None,
+                                    adjust_balance_to=None, context=None):
+        """
+        Create new move lines to match to the expense. receive only one id
+        @param aml_ids: acc.move.line list of ids
+        @param am_id: account move id
+        """
+        context = context or {}
+        res = []
+        aml_obj = self.pool.get('account.move.line')
+        exp = self.browse(cr, uid, ids, context=context)
+        vals = {
+            'move_id': am_id,
+            'journal_id': exp.journal_id,
+            'date' : fields.date.today(),
+            'period_id' : self.pool.get('account.period').find(
+                cr, uid, context=context)[0],
+            'credit' : 0.0,
+            'name' : _('Payment through Expense'),
+        }
+
+        for aml_brw in aml_obj.browse(cr, uid, aml_ids, context=context):
+            vals_debit = vals.copy()
+            vals_debit['partner_id'] = aml_brw.partner_id.id
+            vals_debit['account_id'] = aml_brw.account_id.id
+            vals_debit['debit'] = aml_brw.credit
+
+            debit_id = aml_obj.create(cr, uid, vals_debit, context=context)
+            res.append([aml_brw.id, debit_id])
+        return res
 
     def create_reconcile_move_lines(self, cr, uid, ids, am_id, aml_ids,
                                     advance_amount=False, line_type=None,
                                     adjust_balance_to=None, context=None):
         """
-        Create new move lines to match to the expense. recieve only one id
+        Create new move lines to match to the expense. receive only one id
         @param aml_ids: acc.move.line list of ids
         @param am_id: account move id
         """
@@ -582,7 +829,7 @@ class hr_expense_expense(osv.Model):
         result['views'] = [(res and res[1] or False, 'form')]
         result['context']= {
                 'default_partner_id': exp.employee_id.address_home_id.id,
-                'default_amount': 100,
+                #'default_amount': 100,
                 'default_reference': exp.name,
                 'default_type': 'payment',
                 #'invoice_id': 5,
@@ -651,6 +898,19 @@ class hr_expense_expense(osv.Model):
             self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
         return True
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'advance_ids': [],
+                        'invoice_ids': [],
+                        'payment_ids': [],
+                        'ail_ids': [],
+                        'ait_ids': [],
+                        })
+        return super(hr_expense_expense, self).copy(cr, uid, id, default,
+                        context=context)
+
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id,
@@ -673,7 +933,8 @@ class account_voucher(osv.Model):
                         'date_original': adv.date,
                         'move_line_id': adv.id,
                         'amount_original': adv.debit,
-                        'currency_id': 1,
+                        'currency_id': expense.currency_id and\
+                                        expense.currency_id.id or False,
                         'amount': 0,
                         'type': 'cr',
                         'account_id': adv.account_id.id,
@@ -718,3 +979,34 @@ class account_move_line(osv.osv):
                         expense_obj.write(cr, uid, [expense.id],
                                             {'state': 'paid'}, context=context)
         return res
+
+class hr_employee(osv.Model):
+    _inherit = 'hr.employee'
+    
+    _columns = {
+        'account_analytic_id': fields.many2one('account.analytic.account',
+            'Analytic', domain=[('type','<>','view')])
+    }
+
+class hr_department(osv.Model):
+    _inherit = "hr.department"
+
+    _columns = {
+        'analytic_account_id': fields.many2one('account.analytic.account',
+            'Analytic', domain=[('type','<>','view')]),
+    }
+
+class hr_expense_line(osv.Model):
+    _inherit = "hr.expense.line"
+
+    def _get_analytic(self, cr, uid, context={}):
+        context = context or {}
+        res = super(hr_expense_line, self)._get_analytic(cr, uid,
+            context=context)
+        result = context.get('account_analytic_exp', res)
+        return result
+
+    _defaults = {
+        'analytic_account': _get_analytic
+    }
+

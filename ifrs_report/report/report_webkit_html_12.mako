@@ -10,7 +10,10 @@
     %for ifrs in objects :
     <table>
         <tr>
-            <td>
+            <td width="30%">
+                <div>${helper.embed_image('jpeg',str(ifrs.company_id.logo),250, 120)}</div>
+            </td>
+            <td width="70%">
                 <table class="dest_address " style="border-bottom: 0px solid black; width: 100%">
                     <tr><td><b>[${ifrs.code or ''|entity}] ${ifrs.name or ''|entity}</b></td></tr>
                     <tr><td>${ifrs.company_id.name or ''|entity}</td></tr>
@@ -24,7 +27,7 @@
     </table> 
 
 
-    <table class="list_table"  width="90%">
+    <table class="list_table"  width="100%">
         <%
             period_name = ifrs._get_periods_name_list(data['fiscalyear'])
         %>
@@ -51,16 +54,43 @@
             <tbody>
             %if not info[i]['invisible']:
                 <tr class="prueba">
-                    <th class="celda3">${info[i].get('name')}</th>
-                        %for moth in range(1, 13): 
-                        <th class="celda2">
-                            %try:
-                                ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
-                            %except:
-                                0.0
-                            %endtry
-                        </th>
-                        %endfor
+                    %if info[i]['type']=='total':
+                    
+                     <th class="celdaTotalTitulo">${info[i].get('name')}</th>
+                            %for moth in range(1, 13): 
+                            <th class="celdaTotal">
+                                %try:
+                                    ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                                %except:
+                                    0.0
+                                %endtry
+                            </th>
+                            %endfor
+                    %else:
+                        %if i%2==0:
+                        <th class="celda5">${info[i].get('name')}</th>
+                            %for moth in range(1, 13): 
+                            <th class="celda2">
+                                %try:
+                                    ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                                %except:
+                                    0.0
+                                %endtry
+                            </th>
+                            %endfor
+                        %else:
+                             <th class="celda6">${info[i].get('name')}</th>
+                            %for moth in range(1, 13): 
+                            <th class="celda4">
+                                %try:
+                                    ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                                %except:
+                                    0.0
+                                %endtry
+                            </th>
+                            %endfor
+                        %endif
+                    %endif
                 </tr>
             %endif
             <% i +=1 %>

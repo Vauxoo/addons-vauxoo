@@ -26,7 +26,7 @@
         </table>
     </body>
 </html>]]></field>
-			<field name="orientation">Portrait</field>
+			<field name="orientation">Landscape</field>
 			<field name="format">Letter</field>
 			<field name="html">
 				<![CDATA[<html>
@@ -105,19 +105,73 @@ border-collapse: collapse;
 .celda{
 border-top:4px solid black;
 border-bottom:4px solid black;
-max-width:80px;
-min-width:79px;
+max-width:99px;
+min-width:89px;
 font-size:10;
 text-align:right;
 page-break-before: auto;
 }
 
 .celda2{
-max-width:80px;
-min-width:79px;
+max-width:99px;
+min-width:89px;
 font-size:10;
 text-align:right;
+background-color:#F0F8FF;
 }
+
+th.celda3{
+text-align:left;
+font-size:11;
+font-weight:bold;
+color:black;
+padding-right:3px
+padding-left:3px
+background-color:#d4e388;
+}
+
+.celda4{
+max-width:99px;
+min-width:89px;
+font-size:10;
+text-align:right;
+background-color:#F3FCFF;
+}
+
+.celda5{
+max-width:99px;
+min-width:89px;
+font-size:11;
+text-align:left;
+background-color:#F0F8FF;
+}
+
+.celda6{
+max-width:99px;
+min-width:89px;
+font-size:11;
+text-align:left;
+background-color:#F3FCFF;
+}
+
+.celdaTotalTitulo{
+max-width:99px;
+min-width:89px;
+font-size:12;
+text-align:left;
+font-weight:bold;
+background-color:#dcdcdc;
+}
+
+.celdaTotal{
+max-width:99px;
+min-width:89px;
+font-size:9;
+text-align:right;
+font-weight:bold;
+background-color:#dcdcdc;
+}
+
 
 th.list_table{
 border-top:4px solid black;
@@ -153,7 +207,6 @@ width:50%;
 
 
 .prueba{
-background-color:#80E680;
 color:black;
 }
 
@@ -166,8 +219,8 @@ font-size:8;
 
 td.celda_border{
 text-align:right;
-max-width:80px;
-min-width:79px;
+max-width:99px;
+min-width:89px;
 font-size:10;
 border-right-style:solid;
 border-left-style:solid;
@@ -185,15 +238,6 @@ padding-right:3px
 padding-left:3px
 }
 
-
-th.celda3{
-text-align:left;
-font-size:12;
-font-weight:bold;
-color:black;
-padding-right:3px
-padding-left:3px
-}
 
 tr
 {
@@ -264,47 +308,19 @@ background-color:#C0C0BF;
 				 ${_debug or ''|n} </body>
 				</html>]]>
 		</field>
-<field name="css2">
+<field name="css">
 <![CDATA[
-body {
-font-family:helvetica;
-font-size:12;
-}
 
+.basic_table{
+text-align:center;
+}
 
 .dest_address {
 font-size:12;
 margin-left:0;
-text-align:rigth;
+text-align:left;
 line-height:80%;
 padding-top:0px
-
-}
-
-.header {
-margin-left:0;
-text-align:center;
-font-size:50;
-width:3%;
-}
-
-.title {
-font-size:100;
-font-weight: bold;
-
-}
-
-
-.basic_table{
-text-align:center;
-border:1px solid lightGrey;
-border-collapse: collapse;
-}
-.basic_table td {
-border:1px solid lightGrey;
-font-size:12;
-
-}
 
 .list_table {
 border-color:black;
@@ -313,111 +329,62 @@ font-size:8;
 border-collapse: collapse;
 }
 
-
-.celda{
-border-top:4px solid black;
-border-bottom:4px solid black;
-max-width:80px;
-min-width:79px;
-font-size:10;
-text-align:right;
-page-break-before: auto;
-}
-
-.celda2{
-max-width:80px;
-min-width:79px;
-font-size:10;
-text-align:right;
-}
-
-th.list_table{
-border-top:4px solid black;
-border-bottom:4px solid black;
+.header {
+margin-left:0;
 text-align:center;
-font-size:8;
-font-weight:bold;
-padding-right:3px
-padding-left:3px
+width:3%;
 }
 
-.list_tabe thead {
-    display:table-header-group;
-}
-
-
-.total {
-width:100%;
-}
-.lib {
-width:10.3%;
-}
-.tot {
-text-align:right;
-width:15%;
-}
-.lefttot {
-width:74%;
-}
-.tax {
-width:50%;
-} 
-
-
-.prueba{
-background-color:#80E680;
-color:black;
-}
-
-th.justify
-{
-text-align:justify;
-text-indent:20px;
-font-size:8;
-}
-
-td.celda_border{
-text-align:right;
-max-width:80px;
-min-width:79px;
-font-size:10;
-border-right-style:solid;
-border-left-style:solid;
-border-width:1px;
-}
-
-
-th.celda_border{
-border-top:4px solid black;
-border-bottom:4px solid black;
-text-align:left;
-font-size:11;
-font-weight:bold;
-padding-right:3px
-padding-left:3px
-}
-
-
-th.celda3{
-text-align:left;
+td.celda2{
 font-size:12;
-font-weight:bold;
+text-align:left;
+font-family: sans-serif;
+}
+
+td.celda{
+font-size:10;
 color:black;
 padding-right:3px
 padding-left:3px
+font-family: monospace;
+text-align:right;
 }
 
-tr
-{
-page-break-after:auto;
+.celdaTotalTitulo{
+font-size:12;
+text-align:left;
+font-family: sans-serif;
+background-color:#dcdcdc;
 }
 
-tr.nonrow
+.celdaTotal{
+font-size:10;
+color:black;
+padding-right:3px
+padding-left:3px
+font-family: monospace;
+text-align:right;
+background-color:#dcdcdc;
+}
+
+div.td_company
 {
-background-color:#C0C0BF;
-}]]>
+font-size:17;
+margin-left:0;
+text-align:left;
+line-height:80%;
+padding-top:0px;
+font-family: sans-serif;
+}
+
+]]>
 </field>
 			<field name="name">Reports IFRS WebKit 2</field>
 		</record>
+        
+        <record id="ir_header_img_companylogo10" model="ir.header_img">
+            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
+        </record>
 	</data>
 </openerp>

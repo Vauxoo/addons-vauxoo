@@ -44,13 +44,26 @@
 
                 <xpath expr="//sheet/group" position="before">
                     <div class="oe_right oe_button_box" name="button_box">
-                        <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action" states="draft,confirm,accepted"/>
+                        <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action" states="draft"/>
+                        <button string="Show Invoice" name="%(action_add_invoice_to_expense)d" type="action" states="accepted"/>
                         <button string="Validate Invoices" name="validate_expense_invoices" type="object" states="accepted" class="oe_highlight"/>
                     </div>
                     <h1>
                         <field name="id" readonly="1" string="Expense ID"/>
                         <field name="name"/>
                     </h1>
+                </xpath>
+                
+                <xpath expr="//field[@name='department_id']" position="replace">
+                    <field name="department_id" on_change="onchange_department_id(employee_id, department_id)"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='employee_id']" position="after">
+                    <field name="partner_id"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="account_analytic_id" domain="[('type','!=','view')]"/>
                 </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
@@ -60,9 +73,9 @@
                                 <group colspan="4" col="4">
                                     <field name="skip" attrs="{'readonly':[('state','!=','done')]}" on_change="onchange_no_danvace_option(skip)"/>
                                     <newline/>
-                                    <button string="Refresh" name="load_advances" type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','done'),('skip','=',True)]}"/>
+                                    <button string="Load All Advances" name="load_advances" type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','done'),('skip','=',True)]}"/>
                                 </group>
-                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','done')]}" widget="many2many">
+                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':['|',('state','!=','done'), ('skip','=',True)]}" widget="many2many">
                                     <tree>
                                         <field name="journal_id"/>
                                         <field name="period_id"/>
@@ -101,7 +114,12 @@
                 <xpath expr="//page[@string='Accounting']" position="after">
                     <page string="Invoices" >
                         <group>
-                            <field name="invoice_ids" widget="many2many" nolabel="1" attrs="{'readonly':[('state','in',['cancelled','done','paid'])]}">
+                            <field name="invoice_ids" 
+                                widget="many2many" 
+                                nolabel="1" 
+                                attrs="{'readonly':[('state','in',['cancelled','done','paid'])]}"
+                                domain="[('state','=','draft'),('expense_id','=',False)]"
+                                >
                                 <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'">
                                     <field name="partner_id"/>
                                     <field name="date_invoice"/>
@@ -111,7 +129,7 @@
                                     <field name="origin"/>
                                     <field name="residual"/>
                                     <field name="amount_untaxed"/>
-                                    <field name="amount_total"/>
+                                    <field name="amount_total" sum=''/>
                                     <field name="state"/>
                                 </tree>
                             </field>
@@ -122,5 +140,27 @@
             </field>
         </record>
 
+        <record id="hr_employee_inherit_form" model="ir.ui.view">
+            <field name="name">hr.employee.inherit.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="account_analytic_id" domain="[('type','!=','view')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_expense_expense_analytic_form">
+            <field name="name">hr.expense.expense.analytic.inherit</field>
+            <field name="inherit_id" ref="hr_expense_analytic.view_hr_expense_analytic_context"/>
+            <field name="model">hr.expense.expense</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="context">{'currency_id': currency_id, 'depto': department_id, 'account_analytic_exp': account_analytic_id}</attribute>
+                </xpath>
+            </field>
+        </record>
+        
     </data>
 </openerp>

@@ -120,7 +120,6 @@ class ifrs_report_wizard(osv.osv_memory):
     def print_report(self, cr, uid, ids, context={}):
         datas = {'ids': context.get('active_ids', [])}
         wizard_ifrs = self.browse(cr, uid, ids, context=context)[0]
-
         datas['report_type'] = str(wizard_ifrs.report_type)
         datas['company'] = wizard_ifrs.company_id.id
         datas['columns'] = str(wizard_ifrs.columns)

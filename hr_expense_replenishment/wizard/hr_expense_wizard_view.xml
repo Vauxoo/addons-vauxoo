@@ -27,7 +27,7 @@
                     <group colspan="4" col="4">
                         <separator string="Expense"/>
                         <newline/>
-                        <field name="expense_id" nolabel="1"/>
+                        <field name="expense_id" nolabel="1" domain="[('state','=','draft')]"/>
                         <footer>
                             <p class="oe_view_nocontent">
                                 Note: It you already have an expense asociated to the invoice, this wizard will replace the previews expense link and add a new relationship to the expense

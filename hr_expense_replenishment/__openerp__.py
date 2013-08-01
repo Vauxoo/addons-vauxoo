@@ -26,7 +26,10 @@
 {
     "name": "Expenses Replenishment",
     "version": "0.1",
-    "depends": ["hr_expense","account_invoice_line_currency"],
+    "depends": ["hr_expense",
+        "account_invoice_line_currency",
+        "hr_expense_analytic"
+        ],
     "author": "Vauxoo",
     "description": """
 Expenses Replenishment
@@ -49,9 +52,11 @@ Dependencies information
     "init_xml": [],
     "demo_xml": [],
     "update_xml": [
+        "security/hr_security.xml",
         "wizard/hr_expense_wizard_view.xml",
         "view/account_invoice_view.xml",
         "view/hr_expense_view.xml",
+        "workflow/workflow.xml",
     ],
     "active": False,
     "installable": True,

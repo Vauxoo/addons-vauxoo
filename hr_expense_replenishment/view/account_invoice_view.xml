@@ -17,6 +17,9 @@
                 <xpath expr="//field[@name='journal_id']" position="after">
                     <field name="expense_id" readonly="1"/>
                 </xpath>
+                <xpath expr="//field[@name='invoice_line']" position="attributes">
+                    <attribute name="context">{'partner_id': partner_id, 'price_type': context.get('price_type') or False, 'type': type, 'analytic_exp': context.get('expense_id', False)}</attribute>
+                </xpath>
             </field>
         </record>
 
@@ -26,7 +29,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('type','=','in_invoice'),('expense_id','=',context.get('active_id',False))]</field>
-            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False) }</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False)}</field>
             <field name="target">current</field>
         </record>
 
