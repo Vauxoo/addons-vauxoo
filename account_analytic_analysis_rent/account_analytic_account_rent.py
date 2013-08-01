@@ -36,20 +36,26 @@ class analytic_term(osv.osv):
 class account_analytic_product(osv.osv):
     _name='account.analytic.product'
     
+    
     def onchange_product_id(self, cr, uid, ids, product_id, context=None):
         res={}
+        list=[]
         if context==None:
             context={}
-        product_obj=self.pool.get('product.product')
-        for prod in product_obj.browse(cr, uid, [product_id], context):
-            type='rent'
-            if prod.accesory_ok:
-                type='accesory'
-        return {'value':{'type': type} }
+        if product_id:
+            product_obj=self.pool.get('product.product')
+            for prod in product_obj.browse(cr, uid, [product_id], context):
+                type='rent'
+                if prod.accesory_ok:
+                    type='accesory'
+                list_data = [{'name':feature.name.id} for feature in prod.feature_ids]
+            res={'value':{'type': type, }}
+        return res
     
     _columns={
-        'product_id':fields.many2one('product.product','Product', domain=['|', ('rent_ok','=',True), ('accesory_ok','=',True), ('rent','=',False) ]),
+        'product_id':fields.many2one('product.product','Product', required=True, domain=[('rent_ok','=',True)]),
         'type': fields.selection([('rent','Rent'),('accesory','Accesory')],'Type'),
+        'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', help="Production lot is used to put a serial number on the production", select=True),
         'analytic_id':fields.many2one('account.analytic.account','Account Analytic')
     }
 
@@ -92,7 +98,20 @@ account_invoice_line()
 class account_analytic_account(osv.osv):
     _inherit='account.analytic.account'
     
-    
+    def onchange_product_lines(self, cr, uid, ids, product_ids, feature_ids, context=None):
+        res={}
+        list_feature=[]
+        if context==None:
+            context={}
+        if product_ids:
+            product_obj=self.pool.get('product.product')
+            for prod in product_ids:
+                if prod[2]['product_id']:
+                    for feature in product_obj.browse(cr, uid, prod[2]['product_id'], context=context).feature_ids:
+                        if {'name':feature.name.id} not in list_feature:
+                            list_feature.append({'name':feature.name.id})
+        return {'value':{'feature_ids': [(0, 6, data) for data in list_feature]}}
+
     def _get_journal(self, cr, uid, context=None):
         if context is None:
             context = {}
@@ -137,7 +156,8 @@ class account_analytic_account(osv.osv):
         'voucher_ids': fields.function(_compute_lines, relation='account.move.line', type="many2many", string='Payments'),
         'invoice_ids': fields.function(_compute_lines_inv, relation='account.invoice', type="many2many", string='Invoice'),
         'group_product': fields.boolean('Group Product'),
-        'journal_id':fields.many2one('account.journal','Journal', required=True)
+        'journal_id':fields.many2one('account.journal','Journal', required=True),
+        'feature_ids': fields.one2many('product.feature.line', 'analytic_id', 'Features')
     }
     
     def set_close(self, cr, uid, ids, context=None):
@@ -150,7 +170,7 @@ class account_analytic_account(osv.osv):
         for contract in self.browse(cr, uid , ids , context=context):
             picking_id=picking_obj.create(cr, uid, {'origin':contract.name, 'address_id':contract.contact_id.id,'date':contract.date_start,'type':'in'}, context=context)
             for prod in contract.product_ids:
-                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':warehouse.lot_output_id.id,'location_dest_id':warehouse.lot_input_id.id}, context=context)
+                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':warehouse.lot_output_id.id,'location_dest_id':warehouse.lot_input_id.id, 'prodlot_id':prod.prodlot_id.id}, context=context)
                 product_obj.write(cr, uid, prod.product_id.id, {'rent':False, 'contract_id': False}, context=context)
         return super(account_analytic_account, self).set_close(cr, uid, ids, context=context)
     
@@ -168,14 +188,14 @@ class account_analytic_account(osv.osv):
             #~ date_invoice=datetime.strptime(contract.date_start, "%Y-%m-%d")
             picking_id=picking_obj.create(cr, uid, {'origin':contract.name, 'address_id':contract.contact_id.id,'date':contract.date_start,'type':'out'}, context=context)
             for prod in contract.product_ids:
-                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':warehouse.lot_stock_id.id,'location_dest_id':warehouse.lot_output_id.id}, context=context)
+                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':warehouse.lot_stock_id.id,'location_dest_id':warehouse.lot_output_id.id, 'prodlot_id':prod.prodlot_id.id}, context=context)
             for line in range(0,contract.term_id.no_term):
                 for prod in contract.product_ids:
                     a = prod.product_id.product_tmpl_id.property_account_income.id
                     if not a:
                         a = prod.product_id.categ_id.property_account_income_categ.id
-                    for feature in prod.product_id.feature_ids:
-                        line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id},context=context)
+                    for feature in contract.feature_ids:
+                        line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id,'amount':feature.cost},context=context)
                     product_obj.write(cr, uid, prod.product_id.id, {'rent':True,'contract_id':contract.id}, context=context)
                 date_invoice=(datetime.strptime(date_invoice, "%Y-%m-%d") + relativedelta(months=1)).strftime("%Y-%m-%d")
         return super(account_analytic_account, self).set_open(cr, uid, ids, context=context)

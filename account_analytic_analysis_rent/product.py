@@ -61,7 +61,9 @@ class product_feature_line(osv.osv):
     
     _columns={
         'name':fields.many2one('product.feature', 'Feature', required=True),
-        'product_id':fields.many2one('product.product','Product')
+        'product_id':fields.many2one('product.product','Product'),
+        'analytic_id':fields.many2one('account.analytic.account','Product'),
+        'cost':fields.float('cost')
     }
     
 product_feature_line()

@@ -10,14 +10,31 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="Product">
-                        <field name="product_ids" nolabel="1">
+                        <field name="product_ids" on_change="onchange_product_lines(product_ids, feature_ids)" nolabel="1">
                             <tree string="products" editable="top">
                                 <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                <field name="prodlot_id" 
+                                context="{'product_id':product_id}"
+                                domain="[('product_id','=?',product_id)]"/>
                                 <field name="type"/>
                             </tree>
                             <form string="products">
                                 <field name="product_id" on_change="onchange_product_id(product_id)"/>
+                                <field name="prodlot_id" 
+                                context="{'product_id':product_id}"
+                                domain="[('product_id','=?',product_id)]"/>
                                 <field name="type"/>
+                            </form>
+                        </field>
+                        <newline/>
+                        <field name="feature_ids" nolabel="1">
+                            <tree string='Features' editable="top">
+                                <field name="name"/>
+                                <field name="cost"/>
+                            </tree>
+                            <form string='Features'>
+                                <field name="name"/>
+                                <field name="cost"/>
                             </form>
                         </field>
                     </page>
