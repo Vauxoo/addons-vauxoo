@@ -225,7 +225,7 @@ class wizard_account_diot_mx(osv.osv_memory):
             'show_pipe', ], delimiter='|')
         for diot in dic_move_line:
             diot_list = dic_move_line.get(diot, False)
-            if diot_list and sum(diot_list[7:11]) == 0:
+            if diot_list and sum(diot_list[7:12]) == 0:
                 partner_ids_tax_0.append(self.pool.get('res.partner').search(
                     cr, uid, [('vat_split', '=', diot)])[0])
         if partner_ids_tax_0:
