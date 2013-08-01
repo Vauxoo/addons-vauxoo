@@ -95,10 +95,15 @@ class wizard_account_diot_mx(osv.osv_memory):
         tax_purchase_ids = acc_tax_obj.search(cr, uid, [
             ('type_tax_use', '=', 'purchase'),
             ('tax_category_id', 'in', category_iva_ids)], context=context)
+        account_ids_tax = []
+        for tax in acc_tax_obj.browse(cr, uid, tax_purchase_ids, context=context):
+            if tax.account_paid_voucher_id:
+                account_ids_tax.append(tax.account_paid_voucher_id.id)
         move_lines_diot = acc_move_line_obj.search(cr, uid, [
             ('period_id', '=', period.id),
             ('tax_id_secondary', 'in', tax_purchase_ids),
-            ('journal_id', 'in', journal_ids),])
+            ('journal_id', 'in', journal_ids),
+            ('account_id', 'in', account_ids_tax)])
         dic_move_line = {}
         partner_ids_to_fix = []
         moves_without_partner = []
