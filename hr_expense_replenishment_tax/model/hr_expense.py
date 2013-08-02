@@ -39,7 +39,6 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         res = super(hr_expense_expense, self).payment_reconcile(cr, uid, ids,
                                                             context=context)
-        print res,'imprimo res'
         self.create_her_tax(cr, uid, ids, res, context=context)
         return res
 
@@ -50,23 +49,34 @@ class hr_expense_expense(osv.Model):
         invoice_ids = aml.get('invs_ids', False)
         exp = self.browse(cr, uid, ids, context=context)[0]
         for invoice in invoice_obj.browse(cr, uid, invoice_ids,
-                                                            context=context):
+                                                        context=context):
             for tax in invoice.tax_line:
                 if tax.tax_id.tax_voucher_ok:
-                    move_line_tax = {
-                        'journal_id': exp.account_move_id.journal_id.id,
-                        'period_id': exp.account_move_id.period_id.id,
-                        'name': tax.name,
-                        'account_id': tax.tax_id.\
-                                    account_collected_voucher_id.id,
-                        'move_id': exp.account_move_id.id,
-                        #'amount_currency': 0.0,
-                        #'partner_id': ,
-                        #'currency_id': exp.currency_id.id,
-                        'quantity': 1,
-                        'debit': tax.amount < 0 and -tax.amount or 0.0,
-                        'credit': tax.amount > 0 and tax.amount or 0.0,
-                        #'date': line.voucher_id.date,
-                    }
+                    account_id = tax.tax_id.account_collected_voucher_id.id
+                    amount = -tax.amount
+                    move_line_tax = self.preparate_move_line_tax(exp, tax,
+                                        account_id, amount, context=context)
                     aml_obj.create(cr, uid, move_line_tax, context=context)
+                    
+                    account_id = tax.tax_id.account_collected_id.id
+                    amount = tax.amount
+                    move_line_tax2 = self.preparate_move_line_tax(exp, tax,
+                                        account_id, amount, context=context)
+                    aml_obj.create(cr, uid, move_line_tax2, context=context)
         return True
+    
+    def preparate_move_line_tax(self, exp, tax, acc, amount, context=None):
+        return  {
+                'journal_id': exp.account_move_id.journal_id.id,
+                'period_id': exp.account_move_id.period_id.id,
+                'name': tax.name,
+                'account_id': acc,
+                'move_id': exp.account_move_id.id,
+                #'amount_currency': 0.0,
+                #'partner_id': ,
+                #'currency_id': exp.currency_id.id,
+                'quantity': 1,
+                'debit': amount < 0 and -amount or 0.0,
+                'credit': amount > 0 and amount or 0.0,
+                'date': exp.account_move_id.date,
+                }
