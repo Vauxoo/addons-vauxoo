@@ -37,6 +37,7 @@
     "init_xml": [],
     "demo_xml": [],
     "update_xml": [
+        'view/hr_expense_view.xml', 
     ],
     "active": False,
     "installable": True,
