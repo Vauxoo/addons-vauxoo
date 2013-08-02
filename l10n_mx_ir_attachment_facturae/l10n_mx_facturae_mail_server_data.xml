@@ -9,7 +9,8 @@
             <field name="smtp_user">tuemail@gmail.com</field>
             <field name="smtp_pass">pass</field>
             <field name="smtp_encryption">starttls</field>
-            <field name="sequence">2</field>
+            <field name="sequence">5</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
         <!--<field name="company" ref="base.main_company"/>-->
         

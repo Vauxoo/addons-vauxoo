@@ -284,46 +284,47 @@ class ir_attachment_facturae_mx(osv.Model):
                             "Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
                 mail_compose_message_pool = self.pool.get(
                     'mail.compose.message')
-                tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
-                print  "plantilla",tmp_id
-                message = mail_compose_message_pool.onchange_template_id(
-                    cr, uid, [], template_id=tmp_id, composition_mode=None,
-                    model='account.invoice', res_id=invoice.id, context=context)
-                print message
-                mssg = message.get('value', False)
-                print mssg
-                user_mail = obj_users.browse(cr, uid, uid, context=None).email
-                partner_id = mssg.get('partner_ids', False)
-                partner_mail = obj_partner.browse(cr, uid, partner_id)[0].email
-                partner_name = obj_partner.browse(cr, uid, partner_id)[0].name
-                if partner_mail:
-                    if user_mail:
-                        if mssg.get('partner_ids', False) and tmp_id:
-                            mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
-                            mssg['attachment_ids'] = [(6, 0, attachments)]
-                            mssg_id = self.pool.get(
-                                'mail.compose.message').create(cr, uid, mssg, context=None)
-                            state = self.pool.get('mail.compose.message').send_mail(
-                                cr, uid, [mssg_id], context=context)
-                            asunto = mssg['subject']
-                            id_mail = obj_mail_mail.search(
-                                cr, uid, [('subject', '=', asunto)])
-                            if id_mail:
-                                for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
-                                    if mail.state == 'exception':
-                                        msj = _(
-                                            '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
-                            else:
-                                msj = _('Email Send Successfully.\
-                                Attached is sent to %s \
-                                for Outgoing Mail Server %s\
-                                                ') % (partner_mail,server_name)
+                email_pool = self.pool.get('email.template')
+                tmp_id = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice'),
+                                                        ('company_id', '=', company_id),('mail_server_id', '=', smtp_server.id)], limit = 1,context=None)
+                print tmp_id
+                if tmp_id:
+                    message = mail_compose_message_pool.onchange_template_id(
+                        cr, uid, [], template_id=tmp_id[0], composition_mode=None,
+                        model='account.invoice', res_id=invoice.id, context=context)
+                    mssg = message.get('value', False)
+                    user_mail = obj_users.browse(cr, uid, uid, context=None).email
+                    partner_id = mssg.get('partner_ids', False)
+                    partner_mail = obj_partner.browse(cr, uid, partner_id)[0].email
+                    partner_name = obj_partner.browse(cr, uid, partner_id)[0].name
+                    if partner_mail:
+                        if user_mail:
+                            if mssg.get('partner_ids', False) and tmp_id:
+                                mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
+                                mssg['attachment_ids'] = [(6, 0, attachments)]
+                                mssg_id = self.pool.get(
+                                    'mail.compose.message').create(cr, uid, mssg, context=None)
+                                state = self.pool.get('mail.compose.message').send_mail(
+                                    cr, uid, [mssg_id], context=context)
+                                asunto = mssg['subject']
+                                id_mail = obj_mail_mail.search(
+                                    cr, uid, [('subject', '=', asunto)])
+                                if id_mail:
+                                    for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
+                                        if mail.state == 'exception':
+                                            msj = _(
+                                                '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
+                                else:
+                                    msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (partner_mail,server_name)
+                        else:
+                            raise osv.except_osv(_('Warning'), _('This user\
+                                    does not have mail'))
                     else:
-                        raise osv.except_osv(_('Warning'), _('This user\
-                                does not have mail'))
+                        raise osv.except_osv(_('Warning'), _('The customer %s\
+                        does not have mail') % (partner_name))
                 else:
-                    raise osv.except_osv(_('Warning'), _('The customer %s\
-                    does not have mail') % (partner_name))
+                    raise osv.except_osv(_('Warning'), _('No template\
+                        assigned to %s') % (server_name))
             else:
                 raise osv.except_osv(_('Warning'), _('Not Found\
                 outgoing mail server name of "FacturaE".\
@@ -395,13 +396,6 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_delete(uid, 'ir.attachment.facturae.mx', row.id, cr)
             wf_service.trg_create(uid, 'ir.attachment.facturae.mx', row.id, cr)
         return self.write(cr, uid, ids, {'state': 'draft'})
-
-    def get_tmpl_email_id(self, cr, uid, ids, context=None):
-        email_pool = self.pool.get('email.template')
-        email_ids = email_pool.search(cr, uid, [(
-            'model_id.model', '=', 'account.invoice')])
-        return email_ids and email_ids[0] or False
-
 
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'

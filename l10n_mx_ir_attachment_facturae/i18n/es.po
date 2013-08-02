@@ -41,10 +41,10 @@ msgstr "Se envió Respaldo\n"
 ""
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:302
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:317
 #, python-format
-msgid "Email Send Successfully.                                Attached is sent to %s                                 for Outgoing Mail Server \"FacturaeE\"                                                "
-msgstr "Correo Enviado Exitosamente.                                Adjunto se envio a %s                                 por el Servidor de Correo Saliente \"FacturaeE\"                                                "
+msgid "Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s"                                                "
+msgstr "Correo Enviado Exitosamente.se envió a %s por el Servidor de Correo Saliente %s"                                                "
 
 #. module: l10n_mx_ir_attachment_facturae
 #: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:271
