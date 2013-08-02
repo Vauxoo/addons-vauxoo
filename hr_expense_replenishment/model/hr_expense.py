@@ -923,6 +923,7 @@ class hr_expense_expense(osv.Model):
                         'payment_ids': [],
                         'ail_ids': [],
                         'ait_ids': [],
+                        'date_post': False,
                         })
         return super(hr_expense_expense, self).copy(cr, uid, id, default,
                         context=context)

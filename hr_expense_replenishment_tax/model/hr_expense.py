@@ -35,6 +35,14 @@ class hr_expense_expense(osv.Model):
                 help=('Indicates if VAT has been computed in this expense')), 
             }
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'fully_applied_vat': False,
+                        })
+        return super(hr_expense_expense, self).copy(cr, uid, id, default,
+                        context=context)
     def payment_reconcile(self, cr, uid, ids, context=None):
         """ It reconcile the expense advance and expense invoice account move
         lines.
