@@ -32,6 +32,10 @@
                 <xpath expr="//field[@name='line_ids']" position="before">
                     <separator string="No Deductible Lines"/>
                 </xpath>
+                
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="date_post" attrs="{'readonly':[('state','not in',('accepted','done'))]}"/>
+                </xpath>
 
                 <xpath expr="//button[@name='confirm']" position="after">
                     <button string="Reconcile" name="payment_reconcile" type="object" states="done" class="oe_highlight"/>

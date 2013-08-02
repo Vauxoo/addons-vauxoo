@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    "name": "Expenses Replenishment",
+    "name": "Expenses Replenishment Tax",
     "version": "0.1",
     "depends": ["hr_expense_replenishment"
         ],
