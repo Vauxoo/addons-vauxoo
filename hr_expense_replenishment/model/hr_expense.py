@@ -360,7 +360,9 @@ class hr_expense_expense(osv.Model):
                      for aml_brw in exp_aml_brws]),
                 'inv_sum':
                 sum([aml_brw.credit
-                     for aml_brw in inv_aml_brws])
+                     for aml_brw in inv_aml_brws]),
+                'invs_ids': [inv.id
+                                for inv in exp.invoice_ids]
             }
 
             aml_amount = aml['debit'] - aml['credit']
@@ -395,7 +397,7 @@ class hr_expense_expense(osv.Model):
             period_id=per_obj.find(cr, uid,dt=date_post)
             period_id=period_id and period_id[0]
             exp.write({'date_post':date_post,'period_id':period_id})
-            x_aml_ids=[aml.id for aml in exp.account_move_id.line_id]
+            x_aml_ids=[aml_brw.id for aml_brw in exp.account_move_id.line_id]
 
             vals={'date':date_post,'period_id':period_id}
             exp.account_move_id.write(vals)
@@ -409,7 +411,7 @@ class hr_expense_expense(osv.Model):
                 if not line_pair: continue
                 aml_obj.reconcile_partial(
                     cr, uid, line_pair, 'manual', context=context)
-        return True
+        return aml
 
     def expense_reconcile_partial_deduction(self, cr, uid, ids, d, context=None):
         """
