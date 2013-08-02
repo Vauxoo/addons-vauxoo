@@ -15,25 +15,31 @@
                                 <field name="product_id" on_change="onchange_product_id(product_id)"/>
                                 <field name="prodlot_id" 
                                 context="{'product_id':product_id}"
-                                domain="[('product_id','=?',product_id)]"/>
+                                domain="[('product_id','=?',product_id)]"
+                                on_change="onchange_prodlot(prodlot_id)"/>
                                 <field name="type"/>
                             </tree>
                             <form string="products">
                                 <field name="product_id" on_change="onchange_product_id(product_id)"/>
                                 <field name="prodlot_id" 
                                 context="{'product_id':product_id}"
-                                domain="[('product_id','=?',product_id)]"/>
+                                domain="[('product_id','=?',product_id)]"
+                                on_change="onchange_prodlot(prodlot_id)"/>
                                 <field name="type"/>
                             </form>
                         </field>
                         <newline/>
                         <field name="feature_ids" nolabel="1">
                             <tree string='Features' editable="top">
+                                <field name="product_line_id"/>
                                 <field name="name"/>
+                                <field name="counter"/>
                                 <field name="cost"/>
                             </tree>
                             <form string='Features'>
+                                <field name="product_line_id"/>
                                 <field name="name"/>
+                                <field name="counter"/>
                                 <field name="cost"/>
                             </form>
                         </field>

@@ -49,6 +49,7 @@ class account_analytic_line(osv.osv):
         fiscal_pos_obj = self.pool.get('account.fiscal.position')
         product_uom_obj = self.pool.get('product.uom')
         invoice_line_obj = self.pool.get('account.invoice.line')
+        feature_line_obj = self.pool.get('product.feature.line')
         invoices = []
         if context is None:
             context = {}
@@ -96,12 +97,12 @@ class account_analytic_line(osv.osv):
             invoices.append(last_invoice)
             context2 = context.copy()
             context2['lang'] = partner.lang
-            cr.execute("SELECT product_id, to_invoice, unit_amount, product_uom_id, w_start, w_end, name, amount " \
+            cr.execute("SELECT product_id, to_invoice, unit_amount, product_uom_id, w_start, w_end, name, amount, feature_id " \
                     "FROM account_analytic_line as line " \
                     "WHERE account_id = %s " \
                         "AND id IN %s AND to_invoice IS NOT NULL " , (account.id, tuple(ids),))
 
-            for product_id, factor_id, qty, uom, w_start, w_end, name, amount in cr.fetchall():
+            for product_id, factor_id, qty, uom, w_start, w_end, name, amount, feature_id in cr.fetchall():
                 product = product_obj.browse(cr, uid, product_id, context2)
                 if not product:
                     raise osv.except_osv(_('Error'), _('At least one line has no product !'))
@@ -114,7 +115,6 @@ class account_analytic_line(osv.osv):
                     pl = account.pricelist_id.id
                     price = pro_price_obj.price_get(cr,uid,[pl], product_id or data.get('product', False), qty or 1.0, account.partner_id.id, context=ctx)[pl]
                 else:
-                    print 'por eso sale en cero'
                     price = 0.0
 
                 taxes = product.taxes_id
@@ -134,10 +134,10 @@ class account_analytic_line(osv.osv):
                     'uos_id': uom,
                     'account_id': account_id,
                     'account_analytic_id': account.id,
-                    'w_start': w_start,
-                    'w_end': w_end,
+                    'w_start': int(w_start or 0),
+                    'w_end': int(w_end or 0),
                 }
-
+                feature_line_obj.write(cr, uid, feature_id, {'counter': int(w_end or 0)}, context=context)
                 #
                 # Compute for lines
                 #
@@ -188,6 +188,7 @@ class lines_create(osv.osv_memory):
         res = super(lines_create, self).default_get(
             cr, uid, fields, context=context)
         analytic_obj = self.pool.get('account.analytic.account')
+        product_obj = self.pool.get('product.product')
         line_obj = self.pool.get('account.analytic.line')
         lines_ids=[]
         if context.get('active_model') == 'account.analytic.account':
@@ -218,6 +219,9 @@ class lines_create(osv.osv_memory):
                     date_line=datetime.strptime(line.date, "%Y-%m-%d")
                     #~ date_new=datetime.strptime(month, "%Y-%m-%d")
                     if str(month)==str(date_line.month):
+                        for feature in contract.feature_ids:
+                                if feature.id==line.feature_id.id:
+                                    line_obj.write(cr, uid, line.id, {'w_start':feature.counter}, context=context)
                         lines_ids.append(line.id)
         res['value']={'line_ids':lines_ids}
         return res

@@ -36,7 +36,20 @@ class analytic_term(osv.osv):
 class account_analytic_product(osv.osv):
     _name='account.analytic.product'
     
-    
+
+    def onchange_prodlot(self, cr , uid, ids, prodlot_id, context=None):
+        if context==None:
+            context={}
+        res={}
+        if prodlot_id:
+            prodlot_obj=self.pool.get('stock.production.lot')
+            if prodlot_obj.browse(cr, uid, prodlot_id, context=context).stock_available < 0:
+                res={'value':{'prodlot_id': False },'warning':{
+                'title': _('This product is already rented  !'),
+                'message': _('This product is already rented,check serial number.')
+            }}
+        return res
+        
     def onchange_product_id(self, cr, uid, ids, product_id, context=None):
         res={}
         list=[]
@@ -61,6 +74,7 @@ class account_analytic_product(osv.osv):
 
 class account_analytic_line(osv.osv):
     _inherit='account.analytic.line'
+    _order='product_id'
     
     def _check_inv(self, cr, uid, ids, vals):
         select = ids
@@ -82,6 +96,7 @@ class account_analytic_line(osv.osv):
     _columns={
         'w_start': fields.integer('Inicial'),
         'w_end': fields.integer('Final'),
+        'feature_id': fields.many2one('product.feature.line','Feature')
     }
 
 
@@ -108,8 +123,7 @@ class account_analytic_account(osv.osv):
             for prod in product_ids:
                 if prod[2]['product_id']:
                     for feature in product_obj.browse(cr, uid, prod[2]['product_id'], context=context).feature_ids:
-                        if {'name':feature.name.id} not in list_feature:
-                            list_feature.append({'name':feature.name.id})
+                        list_feature.append({'name':feature.name.id, 'product_line_id':prod[2]['product_id'],'counter':feature.counter})
         return {'value':{'feature_ids': [(0, 6, data) for data in list_feature]}}
 
     def _get_journal(self, cr, uid, context=None):
@@ -167,10 +181,15 @@ class account_analytic_account(osv.osv):
         product_obj=self.pool.get('product.product')
         ware_id=warehouse_obj.search(cr, uid, [], context=context)[0]
         warehouse=warehouse_obj.browse(cr ,uid, ware_id, context=context)
+        location = self.pool.get('stock.location').search(cr, uid, [('usage', '=', 'customer')], context=context)
+        if location:
+            location=location[0]
+        else:
+            raise osv.except_osv(_('Error!'),  _('You not have a configured client location'))
         for contract in self.browse(cr, uid , ids , context=context):
             picking_id=picking_obj.create(cr, uid, {'origin':contract.name, 'address_id':contract.contact_id.id,'date':contract.date_start,'type':'in'}, context=context)
             for prod in contract.product_ids:
-                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':warehouse.lot_output_id.id,'location_dest_id':warehouse.lot_input_id.id, 'prodlot_id':prod.prodlot_id.id}, context=context)
+                move_obj.create(cr, uid, {'name':prod.product_id.name,'product_id':prod.product_id.id,'product_qty':1,'picking_id':picking_id,'product_uom':prod.product_id.uom_id.id,'location_id':location,'location_dest_id':warehouse.lot_input_id.id, 'prodlot_id':prod.prodlot_id.id}, context=context)
                 product_obj.write(cr, uid, prod.product_id.id, {'rent':False, 'contract_id': False}, context=context)
         return super(account_analytic_account, self).set_close(cr, uid, ids, context=context)
     
@@ -195,7 +214,8 @@ class account_analytic_account(osv.osv):
                     if not a:
                         a = prod.product_id.categ_id.property_account_income_categ.id
                     for feature in contract.feature_ids:
-                        line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id,'amount':feature.cost},context=context)
+                        if feature.product_line_id.id==prod.product_id.id:
+                            line_obj.create(cr, uid, {'date':date_invoice,'name':feature.name.name,'product_id':prod.product_id.id,'product_uom_id':prod.product_id.uom_id.id,'general_account_id':a,'to_invoice':1,'account_id':contract.id,'journal_id':contract.journal_id.analytic_journal_id.id,'amount':feature.cost, 'feature_id':feature.id},context=context)
                     product_obj.write(cr, uid, prod.product_id.id, {'rent':True,'contract_id':contract.id}, context=context)
                 date_invoice=(datetime.strptime(date_invoice, "%Y-%m-%d") + relativedelta(months=1)).strftime("%Y-%m-%d")
         return super(account_analytic_account, self).set_open(cr, uid, ids, context=context)
