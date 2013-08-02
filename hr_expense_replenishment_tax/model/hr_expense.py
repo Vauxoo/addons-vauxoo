@@ -66,6 +66,7 @@ class hr_expense_expense(osv.Model):
                     move_line_tax2 = self.preparate_move_line_tax(exp, tax,
                                         account_id, amount, context=context)
                     aml_obj.create(cr, uid, move_line_tax2, context=context)
+        exp.write({'fully_applied_vat':True})
         return True
     
     def preparate_move_line_tax(self, exp, tax, acc, amount, context=None):
