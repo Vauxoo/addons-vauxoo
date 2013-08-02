@@ -154,7 +154,7 @@ class hr_expense_expense(osv.Model):
             '\'Waiting Payment\'.')),
         'account_analytic_id': fields.many2one('account.analytic.account',
             'Analytic'),
-            'date_post':fields.date('Post Date ')
+        'date_post':fields.date('Accounting Date')
     }
     def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
         res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
