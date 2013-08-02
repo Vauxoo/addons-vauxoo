@@ -287,7 +287,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 email_pool = self.pool.get('email.template')
                 tmp_id = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice'),
                                                         ('company_id', '=', company_id),('mail_server_id', '=', smtp_server.id)], limit = 1,context=None)
-                print tmp_id
                 if tmp_id:
                     message = mail_compose_message_pool.onchange_template_id(
                         cr, uid, [], template_id=tmp_id[0], composition_mode=None,
