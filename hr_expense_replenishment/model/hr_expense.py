@@ -358,7 +358,9 @@ class hr_expense_expense(osv.Model):
                      for aml_brw in exp_aml_brws]),
                 'inv_sum':
                 sum([aml_brw.credit
-                     for aml_brw in inv_aml_brws])
+                     for aml_brw in inv_aml_brws]),
+                'invs_ids': [inv.id
+                                for inv in exp.invoice_ids]
             }
 
             aml_amount = aml['debit'] - aml['credit']
