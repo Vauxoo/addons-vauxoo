@@ -47,6 +47,7 @@ class hr_expense_expense(osv.Model):
         aml_obj = self.pool.get('account.move.line')
         context = context or {}
         invoice_ids = aml.get('invs_ids', False)
+        ids= isinstance(ids,(int,long)) and [ids] or ids
         exp = self.browse(cr, uid, ids, context=context)[0]
         for invoice in invoice_obj.browse(cr, uid, invoice_ids,
                                                         context=context):
