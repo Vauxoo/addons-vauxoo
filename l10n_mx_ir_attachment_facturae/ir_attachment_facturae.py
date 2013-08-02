@@ -246,13 +246,13 @@ class ir_attachment_facturae_mx(osv.Model):
         state = ''
         partner_mail = ''
         user_mail = ''
+        company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
         invoice = self.browse(cr, uid, ids)[0].invoice_id
         address_id = self.pool.get('res.partner').address_get(
             cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
         partner_invoice_address = self.pool.get(
             'res.partner').browse(cr, uid, address_id, context)
         type = self.browse(cr, uid, ids)[0].type
-        # msj = self.browse(cr, uid, ids)[0].msj
         fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
@@ -266,10 +266,11 @@ class ir_attachment_facturae_mx(osv.Model):
             obj_users = self.pool.get('res.users')
             obj_partner = self.pool.get('res.partner')
             mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                       [('name', '=', 'FacturaE')], context=None)
+                                                       ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit = 1, order = 'sequence', context=None)
             if mail_server_id:
                 for smtp_server in obj_ir_mail_server.browse(cr, uid,
                                                              mail_server_id, context=context):
+                    server_name = smtp_server.name
                     smtp = False
                     try:
                         smtp = obj_ir_mail_server.connect(
@@ -284,10 +285,13 @@ class ir_attachment_facturae_mx(osv.Model):
                 mail_compose_message_pool = self.pool.get(
                     'mail.compose.message')
                 tmp_id = self.get_tmpl_email_id(cr, uid, ids, context=context)
+                print  "plantilla",tmp_id
                 message = mail_compose_message_pool.onchange_template_id(
                     cr, uid, [], template_id=tmp_id, composition_mode=None,
                     model='account.invoice', res_id=invoice.id, context=context)
+                print message
                 mssg = message.get('value', False)
+                print mssg
                 user_mail = obj_users.browse(cr, uid, uid, context=None).email
                 partner_id = mssg.get('partner_ids', False)
                 partner_mail = obj_partner.browse(cr, uid, partner_id)[0].email
@@ -312,8 +316,8 @@ class ir_attachment_facturae_mx(osv.Model):
                             else:
                                 msj = _('Email Send Successfully.\
                                 Attached is sent to %s \
-                                for Outgoing Mail Server "FacturaeE"\
-                                                ') % (partner_mail)
+                                for Outgoing Mail Server %s\
+                                                ') % (partner_mail,server_name)
                     else:
                         raise osv.except_osv(_('Warning'), _('This user\
                                 does not have mail'))
