@@ -711,6 +711,7 @@ class ifrs_lines(osv.osv):
                 ('period_days', 'Days of Period'),
                 ('fy_periods', "FY's Periods"),
                 ('fy_month', "FY's Month"),
+                ('total_customer', "Total Customers")
             ],
             string='Constant Type',
             required=False,
