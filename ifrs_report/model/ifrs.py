@@ -429,6 +429,7 @@ class ifrs_lines(osv.osv):
             if brw.constant_type == 'period_days':
                 res = period_obj._get_period_days(
                     cr, uid, c['period_from'], c['period_to'])
+                print res,'imprimo res'
             elif brw.constant_type == 'fy_periods':
                 res = fy_obj._get_fy_periods(cr, uid, c['fiscalyear'])
             elif brw.constant_type == 'fy_month':
@@ -711,7 +712,7 @@ class ifrs_lines(osv.osv):
                 ('period_days', 'Days of Period'),
                 ('fy_periods', "FY's Periods"),
                 ('fy_month', "FY's Month"),
-                ('total_customer', "Total Customers")
+                ('number_customer', "Number of customers* in portfolio")
             ],
             string='Constant Type',
             required=False,
