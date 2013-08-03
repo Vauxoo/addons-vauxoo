@@ -696,14 +696,15 @@ class ifrs_lines(osv.osv):
         return res
     def _get_number_customer_portfolio(self, cr, uid, fy, period,
                                                                 context=None):
-        print context,'imprimo context'
-        print fy,'imprimo fy'
-        print period,'imprimo period'
+        if context.get('whole_fy', False):
+            period_fy = ('period_id.fiscalyear_id', '=', fy)
+        else:
+            period_fy = ('period_id', '=', period)
         invoice_obj = self.pool.get('account.invoice')
         invoice_ids = invoice_obj.search(cr, uid, [
                                     ('type', '=', 'out_invoice'),
                                     ('state', 'in', ('open', 'paid',)),
-                                    ('period_id', '=', period)])
+                                    period_fy])
         partner_number = set([inv.partner_id.id for inv\
             in invoice_obj.browse(cr, uid, invoice_ids, context=context)])
         return len(list(partner_number))
