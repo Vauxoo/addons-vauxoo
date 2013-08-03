@@ -39,7 +39,7 @@
         <thead>
             <tr>
                 %for li in range(0, 13):
-                    <th class="celda">
+                    <th class="celda" style="text-align:center;">
                         %try:
                             ${ period_name[li][2] }
                         %except:
