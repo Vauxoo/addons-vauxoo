@@ -429,12 +429,14 @@ class ifrs_lines(osv.osv):
             if brw.constant_type == 'period_days':
                 res = period_obj._get_period_days(
                     cr, uid, c['period_from'], c['period_to'])
-                print res,'imprimo res'
             elif brw.constant_type == 'fy_periods':
                 res = fy_obj._get_fy_periods(cr, uid, c['fiscalyear'])
             elif brw.constant_type == 'fy_month':
                 res = fy_obj._get_fy_month(cr, uid, c[
                                            'fiscalyear'], c['period_to'])
+            elif brw.constant_type == 'number_customer':
+                res = self._get_number_customer_portfolio(cr, uid, c[
+                                           'fiscalyear'], c['period_to'], c)
         elif brw.type == 'detail':
             # Si es de tipo detail
             analytic = [an.id for an in brw.analytic_ids]
@@ -489,7 +491,7 @@ class ifrs_lines(osv.osv):
 
         return res
 
-    def _get_level(self, cr, uid, ids, field_name, arg, context=None):
+    def _get_level(self, cr, uid, ids, a, arg, context=None):
         res = {}
         for ifrs_line in self.browse(cr, uid, ids, context=context):
             level = 0
@@ -692,7 +694,20 @@ class ifrs_lines(osv.osv):
                 res = [lins for lins in partner_obj.browse(cr, uid, [
                                                            li['id'] for li in dat], context=context)]
         return res
-
+    def _get_number_customer_portfolio(self, cr, uid, fy, period,
+                                                                context=None):
+        print context,'imprimo context'
+        print fy,'imprimo fy'
+        print period,'imprimo period'
+        invoice_obj = self.pool.get('account.invoice')
+        invoice_ids = invoice_obj.search(cr, uid, [
+                                    ('type', '=', 'out_invoice'),
+                                    ('state', 'in', ('open', 'paid',)),
+                                    ('period_id', '=', period)])
+        partner_number = set([inv.partner_id.id for inv\
+            in invoice_obj.browse(cr, uid, invoice_ids, context=context)])
+        return len(list(partner_number))
+    
     _columns = {
         'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
         'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
