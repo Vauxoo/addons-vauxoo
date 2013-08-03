@@ -286,7 +286,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     'mail.compose.message')
                 email_pool = self.pool.get('email.template')
                 tmp_id = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice'),
-                                                        ('company_id', '=', company_id),('mail_server_id', '=', smtp_server.id)], limit = 1,context=None)
+                                                        ('company_id', '=', company_id),('mail_server_id', '=', smtp_server.id),('report_template.report_name', '=', 'account.invoice.facturae.webkit')], limit = 1,context=None)
                 if tmp_id:
                     message = mail_compose_message_pool.onchange_template_id(
                         cr, uid, [], template_id=tmp_id[0], composition_mode=None,
@@ -322,8 +322,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         raise osv.except_osv(_('Warning'), _('The customer %s\
                         does not have mail') % (partner_name))
                 else:
-                    raise osv.except_osv(_('Warning'), _('No template\
-                        assigned to %s') % (server_name))
+                    raise osv.except_osv(_('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
             else:
                 raise osv.except_osv(_('Warning'), _('Not Found\
                 outgoing mail server name of "FacturaE".\
