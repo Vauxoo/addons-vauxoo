@@ -69,6 +69,15 @@
                                             </td>
                                             <td class="celdaAbstract" width="20%"></td>
                                             <td class="celdaAbstract" width="20%"></td>
+                                        %else:
+                                            %if ifrs_l.get('type')=='constant':
+                                                <td class="celdaDetailTitulo" width="15%">
+                                                    ${ifrs_l.get('name').capitalize()}
+                                                </td>
+                                                <td class="celdaDetail" width="20%">
+                                                    ${ifrs_l.get('type')=='constant' and formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                                </td>
+                                            %endif
                                         %endif
                                     %endif
                                 %endif
@@ -109,6 +118,15 @@
                                             </td>
                                             <td class="celdaAbstract" width="20%"></td>
                                             <td class="celdaAbstract" width="20%"></td>
+                                        %else:
+                                            %if ifrs_l.get('type')=='constant':
+                                                <td class="celdaDetailTitulo" width="15%">
+                                                    ${ifrs_l.get('name').capitalize()}
+                                                </td>
+                                                <td class="celdaDetail" width="20%">
+                                                    ${ifrs_l.get('type')=='constant' and formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                                </td>
+                                            %endif
                                         %endif
                                     %endif
                                 %endif

@@ -92,6 +92,21 @@
                                 %for moth in range(1, 13):
                                 <td class="celdaAbstract" width="8%"></td> 
                                 %endfor
+                            %else:
+                                %if ifrs_l.get('type')=='constant':
+                                    <td class="celdaDetailTitulo" width="15%">
+                                        ${ifrs_l.get('name').capitalize()}
+                                    </td>
+                                    %for moth in range(1, 13): 
+                                        <td class="celdaDetail" width="8%">
+                                            %try:
+                                                ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                                            %except:
+                                                0.0
+                                            %endtry
+                                        </td>
+                                    %endfor
+                                %endif
                             %endif
                         %endif
                     %endif
