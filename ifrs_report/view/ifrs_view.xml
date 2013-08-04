@@ -241,7 +241,7 @@
                           </group>
                           <separator string='Notes &amp; Comments' colspan='2' />
                           <field name="comment" colspan='4' nolabel='1'/>
-                          <field name="company_id" colspan='4' nolabel='1'/>
+                          <field name="company_id" colspan='4' nolabel='1' readonly='1'/>
                         </form>
                       </field>
                     </page>
