@@ -37,7 +37,7 @@
     "license" : "AGPL-3",
     "depends" : ["account", "l10n_mx_facturae_groups",
         ],
-    "demo" : [],
+    "demo" : ["demo/l10n_mx_regimen_fiscal_demo.xml",],
     "data" : [
         #"security/regimen_fiscal.xml",
         "security/ir.model.access.csv",
