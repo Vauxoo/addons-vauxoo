@@ -65,6 +65,18 @@ class hr_expense_expense(osv.Model):
              for inv_brw in ai_obj.browse(cr, uid, inv_ids, context=context)]))
         return exp_ids
 
+    def _get_ait_ids(self, cr, uid, ids, field_name, arg, context=None):
+        """ Returns list of invoice taxes of the invoices related to the
+        expense. """
+        context = context or {}
+        res = {}.fromkeys(ids,[])
+        for exp in self.browse(cr, uid, ids, context=context):
+            ait_ids = []
+            for inv_brw in exp.invoice_ids:
+                ait_ids.extend([line.id for line in inv_brw.tax_line])
+            res[exp.id] = ait_ids
+        return res
+
     def _get_ail_ids(self, cr, uid, ids, field_name, arg, context=None):
         """ Returns list of invoice lines of the invoices related to the
         expense. """
@@ -122,9 +134,8 @@ class hr_expense_expense(osv.Model):
                    'reconciling). If this is not what you want please create '
                    'and advance for the expense employee and use the Refresh '
                    'button to associated to this expense')),
-        'ait_ids': fields.related(
-            #~ _get_ait_ids,
-            'invoice_ids', 'tax_line',
+        'ait_ids': fields.function(
+            _get_ait_ids,
             type="one2many",
             relation='account.invoice.tax',
             string=_('Deductible Tax Lines'),
