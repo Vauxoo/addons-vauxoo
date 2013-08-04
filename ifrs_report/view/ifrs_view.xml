@@ -231,7 +231,6 @@
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
-                                        <field name='invisible'/>
                                     </tree>
                                 </field>
                                 <field
@@ -245,7 +244,6 @@
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
-                                        <field name='invisible'/>
                                     </tree>
                                 </field>
                               </group>    
