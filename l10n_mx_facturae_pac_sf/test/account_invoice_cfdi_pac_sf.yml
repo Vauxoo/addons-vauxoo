@@ -1,0 +1,51 @@
+-
+  I create a customer invoice with cfdi_pac_sf journal
+-
+  !record {model: account.invoice, id: account_invoice_cfdi_pac_sf, view: account.invoice_form}:
+    journal_id: l10n_mx_facturae_pac_sf.demo_l10n_mx_facturae_account_journal_01
+    partner_id: l10n_mx_partner_address.res_partner_address_vauxoo_1
+    payment_term: account.account_payment_term_advance
+    reference_type: none
+    name: 'Test cfdi_pac_sf Customer Invoice'
+    invoice_line:
+      - product_id: product.product_product_5
+        quantity: 10.0
+-
+  I check that Initially customer invoice state is "Draft"
+-
+  !assert {model: account.invoice, id: account_invoice_cfdi_pac_sf}:
+    - state == 'draft'
+-
+  I called the "Confirm Draft Invoices" wizard
+-
+  !record {model: account.invoice.confirm, id: account_invoice_confirm_cfdi_pac_sf}:
+    {}
+-
+  I clicked on Confirm Invoices Button
+-
+  !python {model: account.invoice.confirm}: |
+    self.invoice_confirm(cr, uid, [ref("account_invoice_confirm_cfdi_pac_sf")], {"lang": 'en_US',
+      "tz": False, "active_model": "account.invoice", "active_ids": [ref("account_invoice_cfdi_pac_sf")],
+      "type": "out_invoice", "active_id": ref("account_invoice_cfdi_pac_sf"), })
+-
+  I check that customer invoice state is "Open"
+-
+  !assert {model: account.invoice, id: account_invoice_cfdi_pac_sf}:
+    - state == 'open'
+
+-
+  I confirm l10n_mx facturae cfdi_pac_sf
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    cfdi_pac_sf_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfdi_pac_sf") )], limit=1)
+    cfdi_pac_sf = self.browse(cr, uid, cfdi_pac_sf_ids)
+    self.action_create_ir_attachment_facturae(cr, uid, cfdi_pac_sf_ids)
+
+-
+  I check that file cfdi_pac_sf PDF exists
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    cfdi_pac_sf_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfdi_pac_sf") )], limit=1)
+    cfdi_pac_sf = self.browse(cr, uid, cfdi_pac_sf_ids)
+    attach_id = cfdi_pac_sf.file_pdf and cfdi_pac_sf.file_pdf.id or False
+    assert(attach_id)

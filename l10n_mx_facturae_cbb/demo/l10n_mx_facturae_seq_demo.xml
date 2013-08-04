@@ -31,9 +31,9 @@
             <field name="name">Diario de CBB</field>
             <field name="code">CBB</field>
             <field name="type">sale</field>
-            <field name="user_id" ref="base.user_root"/>
+            <!--<field name="user_id" ref="base.user_root"/>
             <field name="company2_id" ref="base.main_company"/>
-            <field name="currency" ref="base.MXN"/>
+            <field name="currency" ref="base.MXN"/>-->
         </record>
     </data>
 </openerp>

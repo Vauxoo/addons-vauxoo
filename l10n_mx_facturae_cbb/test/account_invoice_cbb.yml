@@ -1,0 +1,51 @@
+-
+  I create a customer invoice with cbb journal
+-
+  !record {model: account.invoice, id: account_invoice_cbb, view: account.invoice_form}:
+    journal_id: l10n_mx_facturae_cbb.demo_l10n_mx_facturae_account_journal_02
+    partner_id: l10n_mx_partner_address.res_partner_address_vauxoo_1
+    payment_term: account.account_payment_term_advance
+    reference_type: none
+    name: 'Test cbb Customer Invoice'
+    invoice_line:
+      - product_id: product.product_product_5
+        quantity: 10.0
+-
+  I check that Initially customer invoice state is "Draft"
+-
+  !assert {model: account.invoice, id: account_invoice_cbb}:
+    - state == 'draft'
+-
+  I called the "Confirm Draft Invoices" wizard
+-
+  !record {model: account.invoice.confirm, id: account_invoice_confirm_cbb}:
+    {}
+-
+  I clicked on Confirm Invoices Button
+-
+  !python {model: account.invoice.confirm}: |
+    self.invoice_confirm(cr, uid, [ref("account_invoice_confirm_cbb")], {"lang": 'en_US',
+      "tz": False, "active_model": "account.invoice", "active_ids": [ref("account_invoice_cbb")],
+      "type": "out_invoice", "active_id": ref("account_invoice_cbb"), })
+-
+  I check that customer invoice state is "Open"
+-
+  !assert {model: account.invoice, id: account_invoice_cbb}:
+    - state == 'open'
+
+-
+  I confirm l10n_mx facturae cbb
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb") )], limit=1)
+    cbb = self.browse(cr, uid, cbb_ids)
+    self.action_create_ir_attachment_facturae(cr, uid, cbb_ids)
+
+-
+  I check that file cbb PDF exists
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb") )], limit=1)
+    cbb = self.browse(cr, uid, cbb_ids)
+    attach_id = cbb.file_pdf and cbb.file_pdf.id or False
+    assert(attach_id)
