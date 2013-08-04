@@ -28,9 +28,9 @@
             <field name="name">Diario de CFD</field>
             <field name="code">CFD</field>
             <field name="type">sale</field>
-            <field name="user_id" ref="base.user_root"/>
-            <field name="company2_id" ref="base.main_company"/>
-            <field name="currency" ref="base.MXN"/>
+            <!--<field name="user_id" ref="base.user_root"/>-->
+            <!--<field name="company2_id" ref="base.main_company"/>-->
+            <!--<field name="currency" ref="base.EUR"/>-->
         </record>
     </data>
 </openerp>

@@ -64,7 +64,9 @@ Requires the following programs:
             "l10n_mx_facturae_report",
             "l10n_mx_facturae_group_show_wizards",
         ],
-    "demo" : ["demo/l10n_mx_facturae_seq_demo.xml",],
+    "demo" : [
+        "demo/l10n_mx_facturae_seq_demo.xml",
+    ],
     "data" : [
         #'security/l10n_mx_facturae_security.xml',
         #'security/ir.model.access.csv',
@@ -74,6 +76,9 @@ Requires the following programs:
         "wizard/installer_view.xml",
         "invoice_view.xml",
     ],
+    "test" : [
+        "test/account_invoice_cfd.yml",
+    ]
     "installable" : True,
     "active" : False,
 }
