@@ -16,7 +16,7 @@
             <field name="state_id" ref="l10n_mx_states.res_country_state_mx_son" model="res.country.state"/>
             <field name="country_id" ref="base.mx"/>
             <!--<field name="type">invoice</field>-->
-            <field name="email">info@vauxoo.com</field>
+            <field name="email">info(at)vauxoo.com</field>
             <field name="phone"></field>
             <field name="vat">MXVAU111017CG9</field>
         </record>
@@ -37,7 +37,7 @@
             <field name="state_id" ref="l10n_mx_states.res_country_state_mx_gto" model="res.country.state"/>
             <field name="country_id" ref="base.mx"/>
             <field name="type">invoice</field>
-            <field name="email">info@vauxoo.com</field>
+            <field name="email">info(at)vauxoo.com</field>
             <field name="phone">477-773-3346</field>
             <field name="vat">MXWOG0507257V9</field>
             -->
