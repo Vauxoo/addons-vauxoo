@@ -1,20 +1,15 @@
 -
-  In order to test l10n_mx_facturae CFD Invoice I create an invoice and confirm it with this wizard
+  I create a customer invoice with CFD journal
 -
-  !record {model: account.invoice, id: account_invoice_cfd}:
-    account_id: account.a_recv
-    company_id: base.main_company
-    currency_id: base.MXN
-    invoice_line:
-      - account_id: account.a_sale
-        name: '[PCSC234] PC Assemble SC234'
-        price_unit: 450.0
-        quantity: 1.0
-        product_id: product.product_product_3
-        uos_id: product.product_uom_unit
+  !record {model: account.invoice, id: account_invoice_cfd, view: account.invoice_form}:
     journal_id: l10n_mx_facturae.demo_l10n_mx_facturae_account_journal_0
     partner_id: l10n_mx_partner_address.res_partner_address_vauxoo_1
+    payment_term: account.account_payment_term_advance
     reference_type: none
+    name: 'Test CFD Customer Invoice'
+    invoice_line:
+      - product_id: product.product_product_5
+        quantity: 10.0
 -
   I check that Initially customer invoice state is "Draft"
 -
