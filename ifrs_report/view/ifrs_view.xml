@@ -223,7 +223,7 @@
                                 <field
                                     name="total_ids" widget="many2many"
                                     nolabel="1" colspan='2' 
-                                    domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
+                                    domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
                                     attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"
                                     >
                                     <tree>
@@ -236,7 +236,7 @@
                                 <field
                                     name="operand_ids" widget="many2many"
                                     nolabel='1' colspan='2' 
-                                    domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
+                                    domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
                                     attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}"
                                     >
                                     <tree>
