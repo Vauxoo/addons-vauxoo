@@ -185,7 +185,11 @@
                                 <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
                                     <i><label string='This field is to be filled with Analytic Accounts. Analytic Accounts serve as a way of filtering data from one Accounting Account. There are chances that you use one single account for multiple purposes though you have been using for a while Analytic Accounts to break down the details regarding that Account. Hence you can use a combination of Accounting Account and Analytic Accounts to retrieve valuable data from the Accounting system to your Line Report. Be aware that all the Accounting Account selected previously will be affected by the Analytic Accounts selected here. If you want one-to-one matches you should create as many lines as you want to fulfill your requirement.'/></i> 
                                 </group>    
-                                <field colspan='2' name="cons_ids" nolabel='1' attrs="{'invisible':[('type','!=','detail')]}">
+                                <field 
+                                    colspan='2' 
+                                    name="cons_ids" 
+                                    nolabel='1' 
+                                    attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
