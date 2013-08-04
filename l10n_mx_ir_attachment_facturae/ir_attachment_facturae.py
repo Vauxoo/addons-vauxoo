@@ -228,7 +228,7 @@ class ir_attachment_facturae_mx(osv.Model):
             [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice.id),
             ('datas_fname', '=', invoice.fname_invoice+'.pdf')])
         for attachment in self.browse(cr, uid, attachment_ids, context=context):
-            aids.append( attachment.id )
+            aids = attachment.id #TODO: aids.append( attachment.id ) but without error in last write
             self.pool.get('ir.attachment').write(cr, uid, [attachment.id], {
                 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
@@ -320,7 +320,7 @@ class ir_attachment_facturae_mx(osv.Model):
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
-            ids2 = attach_obj.write(cr, uid, attachment.id, {
+            ids2 = attach_obj.write(cr, uid, [attachment.id], {
                                     'res_id': False, }, context={})
         return self.write(cr, uid, ids,
                           {'state': 'cancel',
