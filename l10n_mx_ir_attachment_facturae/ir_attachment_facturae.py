@@ -224,22 +224,23 @@ class ir_attachment_facturae_mx(osv.Model):
         os.close(fileno)
         file = invoice_obj.create_report(cr, uid, [invoice.id],
             "account.invoice.facturae.webkit", fname)
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid,
-            [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice),
+        attachment_ids = self.pool.get('ir.attachment').search(cr, uid,
+            [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice.id),
             ('datas_fname', '=', invoice.fname_invoice+'.pdf')])
-        for attachment in self.browse(cr, uid, adjuntos, context):
-            aids = attachment.id
-            self.pool.get('ir.attachment').write(cr, uid, attachment.id, {
+        for attachment in self.browse(cr, uid, attachment_ids, context=context):
+            aids.append( attachment.id )
+            self.pool.get('ir.attachment').write(cr, uid, [attachment.id], {
                 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
             msj = _("Attached Successfully PDF\n")
         else:
             msj = _("Not Attached PDF\n")
-        return self.write(cr, uid, ids, {
+        writed = self.write(cr, uid, ids, {
             'state': 'printable',
             'file_pdf': aids or False,
             'msj': msj,
             'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
+        return writed
 
     def action_send_customer(self, cr, uid, ids, context=None):
         attachments = []
