@@ -745,7 +745,7 @@ class ifrs_lines(osv.osv):
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
             ('ratio', 'Ratio'),
-            ('without', '')],
+            ('without', 'No Comparison')],
             'Make Comparison', required=False,
             help='Make a Comparison against the previous period.\nThat is, period X(n) minus period X(n-1)\nLeaving blank will not make any effects'),
         'acc_val': fields.selection([

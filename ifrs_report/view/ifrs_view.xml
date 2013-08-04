@@ -83,6 +83,7 @@
                           <field name="type" />
                           <field name="cons_ids" />
                           <field name="total_ids" />
+                          <field name="operand_ids" />
                           <field name="amount" />
                          <field name="value" />
                           <field name="invisible" />
@@ -175,8 +176,14 @@
                                   <group string='Comparison Type' colspan='2' attrs="{'invisible':['|',('type','!=','total'),('help','=',False)]}">
                                       <i><label string='This concept is somewhat more advanced. It will perform a Comparison between the value resulted for the period being asked and the value for this same line but for the pretty previous period to the one being asked. This operation is perform after the Arithmetic Operator has been performed. If not comparison is defined only the value yield by the Arithmetic Operator will be given.'/></i> 
                                   </group>    
-                                  <field name="operator" colspan='2' attrs="{'invisible':[('type','!=','total')]}"/>
-                                  <field name="comparison" colspan='2' attrs="{'invisible':[('type','!=','total')]}"/>
+                                  <field 
+                                      name="operator" 
+                                      colspan='2' 
+                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"/>
+                                  <field 
+                                      name="comparison" 
+                                      colspan='2' 
+                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"/>
                                 <separator string='Consolidated Accounts' colspan='2' attrs="{'invisible':[('type','!=','detail')]}"/>
                                 <separator string='Analytic Accounts' colspan='2' attrs="{'invisible':[('type','!=','detail')]}"/>
                                 <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
@@ -217,7 +224,7 @@
                                     name="total_ids" widget="many2many"
                                     nolabel="1" colspan='2' 
                                     domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
-                                    attrs="{'invisible':[('type','!=','total')]}"
+                                    attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"
                                     >
                                     <tree>
                                         <field name='sequence'/>
@@ -230,8 +237,8 @@
                                 <field
                                     name="operand_ids" widget="many2many"
                                     nolabel='1' colspan='2' 
-                                    domain="['|',('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
-                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')]}"
+                                    domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
+                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}"
                                     >
                                     <tree>
                                         <field name='sequence'/>
