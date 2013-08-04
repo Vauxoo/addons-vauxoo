@@ -74,7 +74,7 @@ Requires the following programs:
         "wizard/wizard_invoice_facturae_txt_v6_view.xml",
         "wizard/wizard_invoice_facturae_xml_v6_view.xml",
         "wizard/installer_view.xml",
-        "invoice_view.xml",
+        #"invoice_view.xml",
     ],
     "test" : [
         "test/account_invoice_cfd.yml",
