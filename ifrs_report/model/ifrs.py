@@ -716,7 +716,7 @@ class ifrs_lines(osv.osv):
             required=False,
             help='Constant Type'),
         'ifrs_id': fields.many2one('ifrs.ifrs', 'IFRS', required=True),
-        'company_id': fields.related('company_id', 'ifrs_id', type='many2one',
+        'company_id': fields.related('ifrs_id', 'company_id', type='many2one',
             relation='res.company', string='Company', store=True),
         'amount': fields.float(string='Amount', help=("This field will update "
             "when you click the compute button in the IFRS doc form"),
