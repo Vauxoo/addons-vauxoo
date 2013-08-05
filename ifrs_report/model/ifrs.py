@@ -283,10 +283,7 @@ class ifrs_ifrs(osv.osv):
                     data.sort(key=lambda x: int(x['sequence']))
 
             else:
-                pdb.set_trace()                
                 for ifrs_l in ordered_lines:
-                    #print "Calculo operands - ", ifrs_l.name ," ##########################\n"
-                    #start_time = time.time()
                     line = {
                     'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
                     'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
@@ -299,12 +296,12 @@ class ifrs_ifrs(osv.osv):
                                 context=context)
                         line['period'][lins] = amount_value
 
-                    if ifrs_l.ifrs_id.id == ids[0]:  # Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
+                    if ifrs_l.ifrs_id.id == ids[0]:  
+                        # Se toman las lineas del ifrs actual, ya que en los
+                        # calculos se incluyen lineas de otros ifrs
                         data.append(line)
                     data.sort(key=lambda x: int(x['sequence']))
                     
-                    #print (time.time() - start_time)/60.0, "minutos"
-                    #print "##########################\n"
         for i in xrange(1, 13):
             cr.execute("update ifrs_lines set period_" + str(i) +"= 0.0;" )
         return data
@@ -338,6 +335,81 @@ class ifrs_lines(osv.osv):
         # It takes the sum of the total_ids
         for t in brw.total_ids:
             res += getattr(t, field_name)
+        return res
+
+    def _get_sum_detail(self, cr, uid, id=None, number_month=None, is_compute=None, context=None):
+        """ Calculates the amount sum of the line type == 'detail'
+        @param number_month: periodo a calcular
+        @param is_compute: si el metodo actualizara el campo amount para la vista
+        """
+        fy_obj = self.pool.get('account.fiscalyear')
+        period_obj = self.pool.get('account.period')
+        context = context or {}
+        cx = context.copy()
+        res = 0.0
+
+        if not cx.get('fiscalyear'):
+            cx['fiscalyear'] = fy_obj.find(cr, uid)
+
+        fy_id = cx['fiscalyear']
+
+        brw = self.browse(cr, uid, id)
+
+        if brw.acc_val == 'init':
+            if cx.get('whole_fy',False):
+                cx['periods'] = period_obj.search(cr, uid, [
+                    ('fiscalyear_id','=',fy_id),('special','=',True)])
+            else:
+                period_from = period_obj.search(cr, uid, [
+                    ('fiscalyear_id','=',fy_id),('special','=',True)])
+                # Case when the period_from is the first non-special period
+                # of the fiscalyear
+                if period_obj.browse(cr, uid, cx['period_from']).date_start ==\
+                    fy_obj.browse(cr, uid, fy_id).date_start:
+                    cx['period_to'] = period_from[0]
+                else:
+                    cx['period_to'] = period_obj.previous(
+                            cr, uid, cx['period_from'])
+                cx['period_from'] = period_from[0]
+        elif brw.acc_val == 'var':
+            #it is going to be the one sent by the previous cx
+            if cx.get('whole_fy',False):
+                cx['periods'] = period_obj.search(cr, uid, [
+                    ('fiscalyear_id','=',fy_id),('special','=',False)])
+        else:
+            #it is going to be from the fiscalyear's beginning
+            if cx.get('whole_fy',False):
+                cx['periods'] = period_obj.search(cr, uid, [
+                    ('fiscalyear_id','=',fy_id)])
+            else:
+                period_from = period_obj.search(cr, uid, [
+                    ('fiscalyear_id','=',fy_id),('special','=',True)])
+                cx['period_from'] = period_from[0]
+                cx['periods'] = period_obj.build_ctx_periods(cr, uid,
+                    cx['period_from'], cx['period_to'])
+
+        brw = self.browse(cr, uid, id, context=cx)
+
+        if brw.type == 'detail':
+            # Si es de tipo detail
+            analytic = [an.id for an in brw.analytic_ids]
+                # Tomo los ids de las cuentas analiticas de las lineas
+            if analytic:  
+                # Si habian cuentas analiticas en la linea, se guardan en el
+                # context y se usan en algun metodo dentro del modulo de
+                # account
+                cx['analytic'] = analytic
+            cx['partner_detail'] = cx.get('partner_detail')
+            
+            for aa in brw.cons_ids:  
+                # Se hace la sumatoria de la columna balance, credito o debito.
+                # Dependiendo de lo que se escoja en el wizard
+                if brw.value == 'debit':
+                    res += aa.debit
+                elif brw.value == 'credit':
+                    res += aa.credit
+                else:
+                    res += aa.balance
         return res
 
     def _get_sum(self, cr, uid, id=None, number_month=None, is_compute=None, context=None):
@@ -431,14 +503,16 @@ class ifrs_lines(osv.osv):
             
             #print "Es Detail $$$$$$$$$$$$$$"
             #start_time = time.time()
+            c['initial_bal']=True
+            brw = self.browse(cr, uid, id, context=c)
             
-            for a in brw.cons_ids:  # Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
+            for aa in brw.cons_ids:  # Se hace la sumatoria de la columna balance, credito o debito. Dependiendo de lo que se escoja en el wizard
                 if brw.value == 'debit':
-                    res += a.debit
+                    res += aa.debit
                 elif brw.value == 'credit':
-                    res += a.credit
+                    res += aa.credit
                 else:
-                    res += a.balance
+                    res += aa.balance
 
             #print "fin detail #########", time.time() - start_time
 
@@ -561,15 +635,12 @@ class ifrs_lines(osv.osv):
         context['fiscalyear'] = fiscalyear
         context['state'] = target_move
         
-        #~ if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
-            #~ pdb.set_trace()
-
-        res = self._get_sum(
-            cr, uid, ifrs_line.id, number_month, is_compute, context=context)
-
-        #if ifrs_line.name == "UTILIDAD DE LA OPERACION":
-            #import pdb
-            #pdb.set_trace()
+        if ifrs_line.type == 'detail':
+            res = self._get_sum_detail( cr, uid, ifrs_line.id, number_month,
+                    is_compute, context=context)
+        else:
+            res = self._get_sum( cr, uid, ifrs_line.id, number_month,
+                    is_compute, context=context)
 
         if ifrs_line.type == 'detail':
             res = self.exchange(
