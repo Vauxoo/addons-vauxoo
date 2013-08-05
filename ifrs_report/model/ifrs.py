@@ -28,7 +28,7 @@ from osv import osv
 from osv import fields
 from tools.translate import _
 import time
-#~ import pdb
+import pdb
 
 class ifrs_ifrs(osv.osv):
 
@@ -296,7 +296,7 @@ class ifrs_ifrs(osv.osv):
                     #print (time.time() - start_time)/60.0, "minutos"
                     #print "##########################\n"
                     
-                
+                pdb.set_trace()                
                 for ifrs_l in ordered_lines:
                     #print "Calculo operands - ", ifrs_l.name ," ##########################\n"
                     #start_time = time.time()
@@ -641,8 +641,8 @@ class ifrs_lines(osv.osv):
         res = self._get_amount_value(
             cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
             currency_wizard, number_month, target_move, pd, undefined, two, context=context)
-        band = True
-        if ifrs_line.operator in ('subtract', 'percent', 'ratio', 'product'):
+        if ifrs_line.type == 'total' and \
+                ifrs_line.operator in ('subtract', 'percent', 'ratio', 'product'):
             res2 = 0
             for o in ifrs_line.operand_ids:
                 res2 += getattr(o, field_name)
@@ -657,10 +657,9 @@ class ifrs_lines(osv.osv):
                 res = res * res2
             self.write(cr, uid, ifrs_line.id, {field_name: res})
             ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
-            band = False
-        
 
-        if band and ifrs_line.type == 'total':
+        elif ifrs_line.type == 'total' and \
+                ifrs_line.operator not in ('subtract', 'percent', 'ratio', 'product'):
             res = self._get_amount_value(
                 cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
                 currency_wizard, number_month, target_move, pd, undefined, two, context=context)
