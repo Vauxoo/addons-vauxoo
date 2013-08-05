@@ -9,7 +9,7 @@
     name: 'Test cfd Customer Invoice'
     invoice_line:
       - product_id: product.product_product_5
-        quantity: 22.0
+        quantity: 20.0
 -
   I rewrite the journal field (BUG I need overwrite two times this field for done! only in test yaml)
 -

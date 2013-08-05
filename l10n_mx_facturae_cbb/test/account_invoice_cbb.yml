@@ -9,7 +9,7 @@
     name: 'Test cbb Customer Invoice'
     invoice_line:
       - product_id: product.product_product_5
-        quantity: 22.0
+        quantity: 10.0
 -
   I rewrite the journal field (BUG I need overwrite two times this field for done! only in test yaml)
 -
@@ -73,7 +73,7 @@
     import netsvc, tools, os
     invoice_obj = self.pool.get('account.invoice')
     invoice_id = invoice_obj.search(cr, uid, [('id', '=', ref('account_invoice_cbb0'))])[0]
-    #(data, format) = netsvc.LocalService('report.account.invoice.facturae.webkit').create(cr, uid, [invoice_id], {}, {})
+    #(data, format) = netsvc.LocalService('report.account.invoice.facturae.webkit').create(cr, uid, [invoice_id], {}, {})#TODO Report a bug when test yaml generate a webkit report
     (data, format) = netsvc.LocalService('report.account.invoice').create(cr, uid, [invoice_id], {}, {})##Temporal only for test
     if tools.config['test_report_directory']:
         file(os.path.join(tools.config['test_report_directory'], 'l10n_mx-facturae_cbb_report.'+format), 'wb+').write(data)
