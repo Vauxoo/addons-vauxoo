@@ -313,6 +313,30 @@ class ifrs_lines(osv.osv):
     _parent_store = True
     _order = 'sequence, type'
    
+    def _get_sum_operator(self, cr, uid, brw, number_month=None, is_compute=None, context=None):
+        """ Calculates the sum of the line operand_ids the current ifrs.line
+        @param number_month: periodo a calcular
+        @param is_compute: si el metodo actualizara el campo amount para la vista
+        """
+        if context is None:
+            context = {}
+        res = 0
+
+        # If the report is two or twelve columns, will choose the field needed
+        # to make the sum
+        if is_compute:
+            field_name = 'amount'
+        else:
+            if context.get('whole_fy', False):
+                field_name = 'ytd'
+            else:
+                field_name = 'period_%s' % str(number_month)
+
+        # It takes the sum of the operands 
+        for t in brw.operand_ids:
+            res += getattr(t, field_name)
+        return res
+
     def _get_sum_total(self, cr, uid, brw, number_month=None, is_compute=None, context=None):
         """ Calculates the sum of the line total_ids the current ifrs.line
         @param number_month: periodo a calcular
@@ -410,6 +434,40 @@ class ifrs_lines(osv.osv):
                     res += aa.credit
                 else:
                     res += aa.balance
+        return res
+
+    def _get_grand_total(self, cr, uid, id=None, number_month=None, is_compute=None, context=None):
+        """ Calculates the amount sum of the line type == 'total'
+        @param number_month: periodo a calcular
+        @param is_compute: si el metodo actualizara el campo amount para la vista
+        """
+        fy_obj = self.pool.get('account.fiscalyear')
+        context = context or {}
+        cx = context.copy()
+        res = 0.0
+
+        if not cx.get('fiscalyear'):
+            cx['fiscalyear'] = fy_obj.find(cr, uid)
+
+        fy_id = cx['fiscalyear']
+        
+        pdb.set_trace()
+
+        brw = self.browse(cr, uid, id)
+        res = self._get_sum_total( cr, uid, brw, number_month, is_compute,
+                context=cx)
+
+        if brw.operator in ('subtract','percent','ratio','product'):
+            so = self._get_sum_operator( cr, uid, brw, number_month,
+                    is_compute, context=cx)
+            if brw.operator == 'subtract':
+                res -= so
+            elif brw.operator == 'percent':
+                res = so != 0 and (100 * res / so) or 0.0
+            elif brw.operator == 'ratio':
+                res = so != 0 and (res / so) or 0.0
+            elif brw.operator == 'product':
+                res = res * so
         return res
 
     def _get_sum(self, cr, uid, id=None, number_month=None, is_compute=None, context=None):
@@ -637,6 +695,9 @@ class ifrs_lines(osv.osv):
         
         if ifrs_line.type == 'detail':
             res = self._get_sum_detail( cr, uid, ifrs_line.id, number_month,
+                    is_compute, context=context)
+        elif ifrs_line.type == 'total':
+            res = self._get_grand_total( cr, uid, ifrs_line.id, number_month,
                     is_compute, context=context)
         else:
             res = self._get_sum( cr, uid, ifrs_line.id, number_month,
