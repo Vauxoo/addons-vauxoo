@@ -592,24 +592,6 @@ class ifrs_lines(osv.osv):
                 if ifrs_line.comparison not in ('percent', 'ratio', 'product'):
                     res = self.exchange(
                         cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
-
-        #if ifrs_line.name == 'COSTO (VARIABLE) DE VENTA ESTANDAR' and number_month == 2:
-        #    pdb.set_trace()
-        if not two:
-            if number_month > 1 and ifrs_line.type == 'detail':
-                month_before = number_month - 1
-                field_name = 'period_%s' % str( month_before )
-                valor_anterior = eval("ifrs_line.%s" % field_name  )
-                res = valor_anterior - res
-        #~ print ifrs_line.name
-        #~ print "periodo ", number_month
-        #~ print res
-
-
-        #DUDOSO
-        #field_name = 'period_%s' % str( number_month )
-        #self.write(cr, uid, ifrs_line.id, {field_name: res})
-        
         return res
 
     def _get_amount_with_operands(self, cr, uid, ids, ifrs_line, period_info=None, fiscalyear=None, exchange_date=None, currency_wizard=None, number_month=None, target_move=None, pd=None, undefined=None, two=None, is_compute=None, context=None):
