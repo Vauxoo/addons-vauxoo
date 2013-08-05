@@ -539,6 +539,9 @@ class ifrs_lines(osv.osv):
             elif brw.constant_type == 'fy_month':
                 res = fy_obj._get_fy_month(cr, uid, c[
                                            'fiscalyear'], c['period_to'])
+            elif brw.constant_type == 'number_customer':
+                res = self._get_number_customer_portfolio(cr, uid, id, c[
+                                           'fiscalyear'], c['period_to'], c)
         elif brw.type == 'detail':
             # Si es de tipo detail
             analytic = [an.id for an in brw.analytic_ids]
@@ -757,7 +760,24 @@ class ifrs_lines(osv.osv):
                 res = [lins for lins in partner_obj.browse(cr, uid, [
                                                            li['id'] for li in dat], context=context)]
         return res
-
+    def _get_number_customer_portfolio(self, cr, uid, ids, fy, period,
+                                                                context=None):
+        ifrs_brw = self.browse(cr, uid, ids, context=context)
+        company_id = ifrs_brw.ifrs_id.company_id.id
+        if context.get('whole_fy', False):
+            period_fy = [('period_id.fiscalyear_id', '=', fy),
+                            ('period_id.special', '=', False)]
+        else:
+            period_fy = [('period_id', '=', period)]
+        invoice_obj = self.pool.get('account.invoice')
+        invoice_ids = invoice_obj.search(cr, uid, [
+                                ('type', '=', 'out_invoice'),
+                                ('state', 'in', ('open', 'paid',)),
+                                ('company_id', '=', company_id)] + period_fy)
+        partner_number = set([inv.partner_id.id for inv\
+            in invoice_obj.browse(cr, uid, invoice_ids, context=context)])
+        return len(list(partner_number))
+    
     _columns = {
         'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
         'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
@@ -777,6 +797,7 @@ class ifrs_lines(osv.osv):
                 ('period_days', 'Days of Period'),
                 ('fy_periods', "FY's Periods"),
                 ('fy_month', "FY's Month"),
+                ('number_customer', "Number of customers* in portfolio")
             ],
             string='Constant Type',
             required=False,
