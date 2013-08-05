@@ -65,19 +65,22 @@ class hr_expense_expense(osv.Model):
                 if tax.tax_id.tax_voucher_ok:
                     account_id = tax.tax_id.account_collected_voucher_id.id
                     amount = -tax.amount
-                    move_line_tax = self.preparate_move_line_tax(exp, tax,
-                                        account_id, amount, context=context)
-                    aml_obj.create(cr, uid, move_line_tax, context=context)
+                    move_line_payment = self.preparate_move_line_tax(exp, tax,
+                                        account_id, amount,
+                                        invoice.partner_id.id, context=context)
+                    aml_obj.create(cr, uid, move_line_payment, context=context)
                     
                     account_id = tax.tax_id.account_collected_id.id
                     amount = tax.amount
-                    move_line_tax2 = self.preparate_move_line_tax(exp, tax,
-                                        account_id, amount, context=context)
-                    aml_obj.create(cr, uid, move_line_tax2, context=context)
+                    move_line_inv = self.preparate_move_line_tax(exp, tax,
+                                        account_id, amount,
+                                        invoice.partner_id.id, context=context)
+                    aml_obj.create(cr, uid, move_line_inv, context=context)
         exp.write({'fully_applied_vat':True})
         return True
     
-    def preparate_move_line_tax(self, exp, tax, acc, amount, context=None):
+    def preparate_move_line_tax(self, exp, tax, acc, amount, partner=None,
+                                    context=None):
         return  {
                 'journal_id': exp.account_move_id.journal_id.id,
                 'period_id': exp.account_move_id.period_id.id,
@@ -85,7 +88,7 @@ class hr_expense_expense(osv.Model):
                 'account_id': acc,
                 'move_id': exp.account_move_id.id,
                 #'amount_currency': 0.0,
-                #'partner_id': ,
+                'partner_id': partner,
                 #'currency_id': exp.currency_id.id,
                 'quantity': 1,
                 'debit': amount < 0 and -amount or 0.0,
