@@ -34,7 +34,7 @@
                 </xpath>
                 
                 <xpath expr="//field[@name='date']" position="after">
-                    <field name="date_post" attrs="{'readonly':[('state','not in',('accepted','done'))]}"/>
+                    <field name="date_post" attrs="{'readonly':[('state','not in',('accepted','done'))],'required':[('state','=','accepted')]}"/>
                 </xpath>
 
                 <xpath expr="//button[@name='confirm']" position="after">
