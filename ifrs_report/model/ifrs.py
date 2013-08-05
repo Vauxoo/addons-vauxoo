@@ -435,7 +435,7 @@ class ifrs_lines(osv.osv):
                 res = fy_obj._get_fy_month(cr, uid, c[
                                            'fiscalyear'], c['period_to'])
             elif brw.constant_type == 'number_customer':
-                res = self._get_number_customer_portfolio(cr, uid, c[
+                res = self._get_number_customer_portfolio(cr, uid, id, c[
                                            'fiscalyear'], c['period_to'], c)
         elif brw.type == 'detail':
             # Si es de tipo detail
@@ -694,17 +694,20 @@ class ifrs_lines(osv.osv):
                 res = [lins for lins in partner_obj.browse(cr, uid, [
                                                            li['id'] for li in dat], context=context)]
         return res
-    def _get_number_customer_portfolio(self, cr, uid, fy, period,
+    def _get_number_customer_portfolio(self, cr, uid, ids, fy, period,
                                                                 context=None):
+        ifrs_brw = self.browse(cr, uid, ids, context=context)
+        company_id = ifrs_brw.ifrs_id.company_id.id
         if context.get('whole_fy', False):
-            period_fy = ('period_id.fiscalyear_id', '=', fy)
+            period_fy = [('period_id.fiscalyear_id', '=', fy),
+                            ('period_id.special', '=', False)]
         else:
-            period_fy = ('period_id', '=', period)
+            period_fy = [('period_id', '=', period)]
         invoice_obj = self.pool.get('account.invoice')
         invoice_ids = invoice_obj.search(cr, uid, [
-                                    ('type', '=', 'out_invoice'),
-                                    ('state', 'in', ('open', 'paid',)),
-                                    period_fy])
+                                ('type', '=', 'out_invoice'),
+                                ('state', 'in', ('open', 'paid',)),
+                                ('company_id', '=', company_id)] + period_fy)
         partner_number = set([inv.partner_id.id for inv\
             in invoice_obj.browse(cr, uid, invoice_ids, context=context)])
         return len(list(partner_number))
