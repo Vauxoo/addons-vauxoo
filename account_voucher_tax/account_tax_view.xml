@@ -35,7 +35,7 @@
                 <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
                 <field name="arch" type="xml">
                     <xpath expr="//button[@name='proforma_voucher']" position="after">
-                        <button name="validate_paid_tax" string="Validate Tax" type="object" class="oe_highlight" attrs="{'invisible': ['|', '|', ('move_id', '=', False), ('move_tax_id', '!=', False), ('double_validation_ok', '=', False)]}"/>
+                        <button name="validate_paid_tax" string="Validate Tax" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'wait_tax'), ('double_validation_ok', '=', False)]}"/>
                     </xpath>
                     <xpath expr="//field[@name='journal_id']" position="after">
                         <field name="date_tax_move" attrs="{'readonly': [('move_tax_id', '!=', False)], 'invisible': [('double_validation_ok', '=', True)]}"/>

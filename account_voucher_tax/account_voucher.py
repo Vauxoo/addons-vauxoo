@@ -26,7 +26,7 @@
 
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
-
+import netsvc
 import release
 import decimal_precision as dp
 
@@ -113,7 +113,15 @@ class account_voucher(osv.Model):
                 uid, voucher.id, context=context), context=context)
             self.voucher_move_line_tax_create(cr,uid, voucher.id, move_id,\
             context=context)
-            voucher.write({'move_tax_id' : move_id})
+            voucher.write({'move_tax_id' : move_id, 'state' : 'posted'})
+        return True
+        
+    def proforma_voucher(self, cr, uid, ids, context=None):
+        super(account_voucher, self).proforma_voucher(cr, uid, ids,
+            context=context)
+        for voucher in self.browse(cr, uid, ids, context=context):
+            if not voucher.double_validation_ok:
+                voucher.write({'state' : 'posted'})
         return True
         
     def onchange_amount(self, cr, uid, ids, amount, rate, partner_id,\
@@ -166,6 +174,8 @@ class account_voucher(osv.Model):
         return tax_amount*tax_base
     
     def voucher_move_line_tax_create(self, cr, uid, voucher_id, move_id, context=None):
+        if not context:
+            context = {}
         move_obj = self.pool.get('account.move')
         move_line_obj = self.pool.get('account.move.line')
         invoice_obj = self.pool.get('account.invoice')
@@ -316,7 +326,7 @@ class account_voucher(osv.Model):
                     account_tax_collected=line_tax.tax_id.account_collected_id.id
                     
                     reference_amount = line_tax.amount_tax
-                    context['writeoff'] =  False
+                    context.update({'writeoff' : False})
                     move_lines_tax = self._get_move_writeoff(cr, uid,
                         account_tax_voucher, account_tax_collected,
                         move_id, voucher, line, line_tax, company_currency,
@@ -380,6 +390,8 @@ class account_voucher(osv.Model):
         :return: mapping between fieldname and value of account move to create
         :rtype: dict
         '''
+        if not context:
+            context = {}
         seq_obj = self.pool.get('ir.sequence')
         voucher = self.pool.get('account.voucher').browse(cr,uid,voucher_id,context)
         if voucher.number:

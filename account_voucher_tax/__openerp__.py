@@ -55,12 +55,18 @@ Caused VAT is that actually charged to customers.
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account","account_voucher","account_invoice_tax","analytic"],
+    "depends" : [
+        "account",
+        "account_voucher",
+        "account_invoice_tax",
+        "analytic"
+        ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
         "account_tax_view.xml",
         "account_voucher_tax_view.xml",
+        "account_voucher_workflow.xml",
         "account_view.xml"],
     "test": [
         'test/account_voucher_taxes.yml',

@@ -123,6 +123,9 @@
                      <xpath expr="//field[@name='state']" position="replace">
                         <field name="state" widget="statusbar" statusbar_visible="draft,wait_tax,posted" statusbar_colors='{"proforma":"blue"}'/>
                      </xpath>
+                     <xpath expr="//button[@name='cancel_voucher']" position="replace">
+                        <button name="cancel_voucher" string="Cancel Voucher" type="object" states="posted,wait_tax" confirm="Are you sure you want to unreconcile this record?"/>
+                     </xpath>
                 </field>
         </record>
 
