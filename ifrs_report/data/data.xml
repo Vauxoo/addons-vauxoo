@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-	    <data noupdate="1">
+	    <data noupdate="0">
 		<record id="ir_header_webkit_ifrsreport" model="ir.header_webkit">
 			<field name="footer_html"><![CDATA[<html>
     <head>
@@ -78,8 +78,6 @@ width:3%;
 
 .title {
 font-size:100;
-font-weight: bold;
-
 }
 
 
@@ -95,80 +93,91 @@ font-size:12;
 }
 
 .list_table {
-border-color:black;
-text-align:right;
-font-size:8;
-border-collapse: collapse;
+border-collapse: separate; 
+border-spacing: 1px 1px;
 }
 
 
 .celda{
-border-top:4px solid black;
-border-bottom:4px solid black;
 max-width:99px;
 min-width:89px;
 font-size:10;
 text-align:right;
 page-break-before: auto;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#620400;
+color:#FFFFFF;
 }
 
-.celda2{
-max-width:99px;
-min-width:89px;
-font-size:10;
-text-align:right;
-background-color:#F0F8FF;
-}
-
-th.celda3{
+.celdaDetailTitulo{
+font-style:italic;
+font-size:9;
 text-align:left;
-font-size:11;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#F5F5F5;
+}
+
+.celdaDetail{
+font-size:8; 
+font-weight:bold; 
+font-family: monospace; 
+text-align:right; 
+background-color:#F5F5F5;
+}
+
+.celdaAbstractTotal{
+font-size:9;
+text-align:left;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#EAEAEA;
+}
+
+.celdaTituloTabla{
+font-size:10;
+text-align:left;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#620400;
+color:#FFFFFF;
+}
+
+.celdaAbstract{
+font-size:8;
+font-weight:bold; 
+font-family: monospace;
+text-align:right;
+background-color:#EAEAEA;
+}
+
+div.td_company
+{
+font-size:12pt;
+margin-left:0;
 font-weight:bold;
-color:black;
-padding-right:3px
-padding-left:3px
-background-color:#d4e388;
+font-family:Arial,Helvetica,sans-serif;
 }
 
-.celda4{
-max-width:99px;
-min-width:89px;
-font-size:10;
-text-align:right;
-background-color:#F3FCFF;
+div.td_company_title
+{
+font-size:22pt;
+margin-left:0;
+font-weight:bold;
+font-family:Arial,Helvetica,sans-serif;
 }
 
-.celda5{
-max-width:99px;
-min-width:89px;
-font-size:11;
-text-align:left;
-background-color:#F0F8FF;
-}
-
-.celda6{
-max-width:99px;
-min-width:89px;
-font-size:11;
-text-align:left;
-background-color:#F3FCFF;
-}
 
 .celdaTotalTitulo{
-max-width:99px;
-min-width:89px;
-font-size:12;
+font-size:9;
 text-align:left;
 font-weight:bold;
+font-family:Arial,Helvetica,sans-serif;
 background-color:#dcdcdc;
 }
 
 .celdaTotal{
-max-width:99px;
-min-width:89px;
-font-size:9;
+font-family: monospace; 
+font-size:8;
+font-weight:bold; 
 text-align:right;
-font-weight:bold;
 background-color:#dcdcdc;
 }
 
@@ -178,7 +187,6 @@ border-top:4px solid black;
 border-bottom:4px solid black;
 text-align:center;
 font-size:8;
-font-weight:bold;
 padding-right:3px
 padding-left:3px
 }
@@ -233,7 +241,6 @@ border-top:4px solid black;
 border-bottom:4px solid black;
 text-align:left;
 font-size:11;
-font-weight:bold;
 padding-right:3px
 padding-left:3px
 }
@@ -251,140 +258,6 @@ background-color:#C0C0BF;
 </field>
 			<field name="name">Reports IFRS WebKit</field>
 		</record>
-		
-		<record id="ir_header_img_company" model="ir.header_img">
-			<field name="type">png</field>
-			<field name="name">company_logo</field>
-		</record>
-        
-        <record id="ir_header_webkit_ifrsreport_1" model="ir.header_webkit">
-			<field name="footer_html"><![CDATA[<html>
-    <head>
-        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
-        <script>
-            function subst() {
-            var vars={};
-            var x=document.location.search.substring(1).split('&');
-            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-            for(var i in x) {
-            var y = document.getElementsByClassName(x[i]);
-            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-                }
-            }
-        </script>
-    </head>
-    <body style="border:0; margin: 0;" onload="subst()">
-        <table style="border-top: 1px solid black; width: 100%">
-            <tr >
-                <td style="text-align:right;font-size:12;" width="95%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
-            </tr>
-        </table>
-    </body>
-</html>]]></field>
-			<field name="orientation">Portrait</field>
-			<field name="format">Letter</field>
-			<field name="html">
-				<![CDATA[<html>
-					<head>
-						<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
-						<script>
-							function subst() {
-							var vars={};
-							var x=document.location.search.substring(1).split('&');
-							for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-							var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-							for(var i in x) {
-							var y = document.getElementsByClassName(x[i]);
-							for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-								}
-							}
-						</script>
-						<style type="text/css">
-							${css2}
-						</style>
-					</head>
-					<body style="border:0; margin: 0;" onload="subst()">
-				 ${_debug or ''|n} </body>
-				</html>]]>
-		</field>
-<field name="css">
-<![CDATA[
 
-.basic_table{
-text-align:center;
-}
-
-.dest_address {
-font-size:12;
-margin-left:0;
-text-align:left;
-line-height:80%;
-padding-top:0px
-
-.list_table {
-border-color:black;
-text-align:right;
-font-size:8;
-border-collapse: collapse;
-}
-
-.header {
-margin-left:0;
-text-align:center;
-width:3%;
-}
-
-td.celda2{
-font-size:12;
-text-align:left;
-font-family: sans-serif;
-}
-
-td.celda{
-font-size:10;
-color:black;
-padding-right:3px
-padding-left:3px
-font-family: monospace;
-text-align:right;
-}
-
-.celdaTotalTitulo{
-font-size:12;
-text-align:left;
-font-family: sans-serif;
-background-color:#dcdcdc;
-}
-
-.celdaTotal{
-font-size:10;
-color:black;
-padding-right:3px
-padding-left:3px
-font-family: monospace;
-text-align:right;
-background-color:#dcdcdc;
-}
-
-div.td_company
-{
-font-size:17;
-margin-left:0;
-text-align:left;
-line-height:80%;
-padding-top:0px;
-font-family: sans-serif;
-}
-
-]]>
-</field>
-			<field name="name">Reports IFRS WebKit 2</field>
-		</record>
-        
-        <record id="ir_header_img_companylogo10" model="ir.header_img">
-            <field eval="&quot;&quot;&quot;jpg&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;company_logo&quot;&quot;&quot;" name="name"/>
-        </record>
 	</data>
 </openerp>

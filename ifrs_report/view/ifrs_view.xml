@@ -83,6 +83,7 @@
                           <field name="type" />
                           <field name="cons_ids" />
                           <field name="total_ids" />
+                          <field name="operand_ids" />
                           <field name="amount" />
                          <field name="value" />
                           <field name="invisible" />
@@ -161,16 +162,28 @@
                                             <label colspan='2' string='Balance: Will yield the Balances for the accounts being consulted within the "Accounting Span" being asked'/>
                                       </group>    
                                   </group>    
-                                  <field colspan='2' name="acc_val" attrs="{'invisible':[('type','!=','detail')]}"/>
-                                  <field colspan='2' name="value" attrs="{'invisible':[('type','!=','detail')]}"/>
+                                  <field 
+                                      colspan='2' 
+                                      name="acc_val" 
+                                      attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}"/>
+                                  <field 
+                                      colspan='2' 
+                                      name="value" 
+                                      attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}"/>
                                   <group string='Arithmetic Operator' colspan='2' attrs="{'invisible':['|',('type','!=','total'),('help','=',False)]}">
                                       <i><label string='If you are seen this Field it is because you are setting this line as "Total" Type. By Default All the lines within the same operand are summarized. If you want to perform Subtraction, Product, Division or Percentual Computations, you will have to fill both the First Operand &amp; the Second Operand. If "First Operand Only" operator is defined only the addition of the Elements in the First Operand will be performed and Elements in the Second Operand will be depreciated'/></i> 
                                   </group>    
                                   <group string='Comparison Type' colspan='2' attrs="{'invisible':['|',('type','!=','total'),('help','=',False)]}">
                                       <i><label string='This concept is somewhat more advanced. It will perform a Comparison between the value resulted for the period being asked and the value for this same line but for the pretty previous period to the one being asked. This operation is perform after the Arithmetic Operator has been performed. If not comparison is defined only the value yield by the Arithmetic Operator will be given.'/></i> 
                                   </group>    
-                                  <field name="operator" colspan='2' attrs="{'invisible':[('type','!=','total')]}"/>
-                                  <field name="comparison" colspan='2' attrs="{'invisible':[('type','!=','total')]}"/>
+                                  <field 
+                                      name="operator" 
+                                      colspan='2' 
+                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"/>
+                                  <field 
+                                      name="comparison" 
+                                      colspan='2' 
+                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"/>
                                 <separator string='Consolidated Accounts' colspan='2' attrs="{'invisible':[('type','!=','detail')]}"/>
                                 <separator string='Analytic Accounts' colspan='2' attrs="{'invisible':[('type','!=','detail')]}"/>
                                 <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
@@ -179,7 +192,11 @@
                                 <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
                                     <i><label string='This field is to be filled with Analytic Accounts. Analytic Accounts serve as a way of filtering data from one Accounting Account. There are chances that you use one single account for multiple purposes though you have been using for a while Analytic Accounts to break down the details regarding that Account. Hence you can use a combination of Accounting Account and Analytic Accounts to retrieve valuable data from the Accounting system to your Line Report. Be aware that all the Accounting Account selected previously will be affected by the Analytic Accounts selected here. If you want one-to-one matches you should create as many lines as you want to fulfill your requirement.'/></i> 
                                 </group>    
-                                <field colspan='2' name="cons_ids" nolabel='1' attrs="{'invisible':[('type','!=','detail')]}">
+                                <field 
+                                    colspan='2' 
+                                    name="cons_ids" 
+                                    nolabel='1' 
+                                    attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}">
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -206,36 +223,34 @@
                                 <field
                                     name="total_ids" widget="many2many"
                                     nolabel="1" colspan='2' 
-                                    domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
-                                    attrs="{'invisible':[('type','!=','total')]}"
+                                    domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
+                                    attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"
                                     >
                                     <tree>
                                         <field name='sequence'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
-                                        <field name='invisible'/>
                                     </tree>
                                 </field>
                                 <field
                                     name="operand_ids" widget="many2many"
                                     nolabel='1' colspan='2' 
-                                    domain="['|',('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
-                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')]}"
+                                    domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
+                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}"
                                     >
                                     <tree>
                                         <field name='sequence'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
-                                        <field name='invisible'/>
                                     </tree>
                                 </field>
                               </group>    
                           </group>
                           <separator string='Notes &amp; Comments' colspan='2' />
                           <field name="comment" colspan='4' nolabel='1'/>
-
+                          <field name="company_id" colspan='4' nolabel='1' readonly='1'/>
                         </form>
                       </field>
                     </page>

@@ -24,7 +24,7 @@
 ###############################################################################
 
 {
-    "name": "Expenses Replenishment",
+    "name": "Expenses Replenishment Tax",
     "version": "0.1",
     "depends": ["hr_expense_replenishment"
         ],
@@ -37,6 +37,7 @@
     "init_xml": [],
     "demo_xml": [],
     "update_xml": [
+        'view/hr_expense_view.xml', 
     ],
     "active": False,
     "installable": True,

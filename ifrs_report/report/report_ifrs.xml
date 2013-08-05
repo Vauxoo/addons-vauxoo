@@ -10,7 +10,7 @@
             file="ifrs_report/report/report_webkit_html.mako"
             string="Print IFRS"
             report_type="webkit"
-            webkit_header="ir_header_webkit_ifrsreport_1"
+            webkit_header="ir_header_webkit_ifrsreport_two_colums"
             multi="True"
             />
 

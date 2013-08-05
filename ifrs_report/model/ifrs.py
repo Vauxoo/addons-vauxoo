@@ -716,9 +716,11 @@ class ifrs_lines(osv.osv):
             required=False,
             help='Constant Type'),
         'ifrs_id': fields.many2one('ifrs.ifrs', 'IFRS', required=True),
-        'amount': fields.float(string='Amount',
-                               help="This field will update when you click the compute button in the IFRS doc form"
-                               ),
+        'company_id': fields.related('ifrs_id', 'company_id', type='many2one',
+            relation='res.company', string='Company', store=True),
+        'amount': fields.float(string='Amount', help=("This field will update "
+            "when you click the compute button in the IFRS doc form"),
+            readonly=True),
         'cons_ids': fields.many2many('account.account', 'ifrs_account_rel', 'ifrs_lines_id', 'account_id', string='Consolidated Accounts'),
         'analytic_ids': fields.many2many('account.analytic.account', 'ifrs_analytic_rel', 'ifrs_lines_id', 'analytic_id', string='Consolidated Analytic Accounts'),
         'parent_id': fields.many2one('ifrs.lines', 'Parent', select=True, ondelete='set null', domain="[('ifrs_id','=',parent.id), ('type','=','total'),('id','!=',id)]"),
@@ -743,7 +745,7 @@ class ifrs_lines(osv.osv):
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
             ('ratio', 'Ratio'),
-            ('without', '')],
+            ('without', 'No Comparison')],
             'Make Comparison', required=False,
             help='Make a Comparison against the previous period.\nThat is, period X(n) minus period X(n-1)\nLeaving blank will not make any effects'),
         'acc_val': fields.selection([

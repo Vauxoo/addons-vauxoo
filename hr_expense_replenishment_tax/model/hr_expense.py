@@ -30,8 +30,19 @@ from openerp.tools.translate import _
 
 class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
+    _columns =  {
+            'fully_applied_vat':fields.boolean('Fully Applied VAT',
+                help=('Indicates if VAT has been computed in this expense')), 
+            }
 
-
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'fully_applied_vat': False,
+                        })
+        return super(hr_expense_expense, self).copy(cr, uid, id, default,
+                        context=context)
     def payment_reconcile(self, cr, uid, ids, context=None):
         """ It reconcile the expense advance and expense invoice account move
         lines.
@@ -43,13 +54,13 @@ class hr_expense_expense(osv.Model):
         return res
 
     def create_her_tax(self, cr, uid, ids, aml={}, context=None):
-        invoice_obj = self.pool.get('account.invoice')
         aml_obj = self.pool.get('account.move.line')
         context = context or {}
-        invoice_ids = aml.get('invs_ids', False)
+        ids= isinstance(ids,(int,long)) and [ids] or ids
         exp = self.browse(cr, uid, ids, context=context)[0]
-        for invoice in invoice_obj.browse(cr, uid, invoice_ids,
-                                                        context=context):
+        if exp.fully_applied_vat:
+            return True
+        for invoice in exp.invoice_ids:
             for tax in invoice.tax_line:
                 if tax.tax_id.tax_voucher_ok:
                     account_id = tax.tax_id.account_collected_voucher_id.id
@@ -63,6 +74,7 @@ class hr_expense_expense(osv.Model):
                     move_line_tax2 = self.preparate_move_line_tax(exp, tax,
                                         account_id, amount, context=context)
                     aml_obj.create(cr, uid, move_line_tax2, context=context)
+        exp.write({'fully_applied_vat':True})
         return True
     
     def preparate_move_line_tax(self, exp, tax, acc, amount, context=None):
