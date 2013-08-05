@@ -283,19 +283,6 @@ class ifrs_ifrs(osv.osv):
                     data.sort(key=lambda x: int(x['sequence']))
 
             else:
-                for ifrs_l in ordered_lines:
-                    #print "Calculo inicial - ", ifrs_l.name ," ##########################\n"
-                    #start_time = time.time()
-                    for lins in range(1, 13):
-                        #print "Columna ", lins, "\n"
-                        amount_value = ifrs_line._get_amount_value(
-                        cr, uid, ids,
-                        ifrs_l, period_name, fiscalyear, exchange_date,
-                        currency_wizard, lins, target_move,
-                        context=context)
-                    #print (time.time() - start_time)/60.0, "minutos"
-                    #print "##########################\n"
-                    
                 pdb.set_trace()                
                 for ifrs_l in ordered_lines:
                     #print "Calculo operands - ", ifrs_l.name ," ##########################\n"
