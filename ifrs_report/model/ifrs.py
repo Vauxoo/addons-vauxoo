@@ -255,20 +255,10 @@ class ifrs_ifrs(osv.osv):
 
         if is_compute:  # Si es llamado desde el metodo compute, solo se actualizaran los montos y no se creara el diccionario
             for ifrs_l in ordered_lines:
-                ifrs_line._get_amount_value(cr, uid,
-                ids, ifrs_l, is_compute=True, context=context)
-            
-            for ifrs_l in ordered_lines:
                 ifrs_line._get_amount_with_operands(cr, uid,
                 ids, ifrs_l, is_compute=True, context=context)
         else:
             if two:
-                for ifrs_l in ordered_lines:
-                    amount_value = ifrs_line._get_amount_value(cr, uid, ids,
-                       ifrs_l, period_name, fiscalyear, exchange_date,
-                       currency_wizard, period, target_move, two=two,
-                       context=context)
-                    
                 for ifrs_l in ordered_lines:
                     amount_value = ifrs_line._get_amount_with_operands(cr, uid,
                        ids, ifrs_l, period_name, fiscalyear, exchange_date,
@@ -450,8 +440,6 @@ class ifrs_lines(osv.osv):
             cx['fiscalyear'] = fy_obj.find(cr, uid)
 
         fy_id = cx['fiscalyear']
-        
-        pdb.set_trace()
 
         brw = self.browse(cr, uid, id)
         res = self._get_sum_total( cr, uid, brw, number_month, is_compute,
@@ -741,30 +729,8 @@ class ifrs_lines(osv.osv):
 
         res = self._get_amount_value(
             cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
-            currency_wizard, number_month, target_move, pd, undefined, two, context=context)
-        if ifrs_line.type == 'total' and \
-                ifrs_line.operator in ('subtract', 'percent', 'ratio', 'product'):
-            res2 = 0
-            for o in ifrs_line.operand_ids:
-                res2 += getattr(o, field_name)
+            currency_wizard, number_month, target_move, pd, undefined, two, is_compute, context=context)
 
-            if ifrs_line.operator == 'subtract':
-                res -= res2
-            elif ifrs_line.operator == 'percent':
-                res = res2 != 0 and (100 * res / res2) or 0.0
-            elif ifrs_line.operator == 'ratio':
-                res = res2 != 0 and (res / res2) or 0.0
-            elif ifrs_line.operator == 'product':
-                res = res * res2
-            self.write(cr, uid, ifrs_line.id, {field_name: res})
-            ifrs_line = self.browse(cr, uid, ifrs_line.id, context=context)
-
-        elif ifrs_line.type == 'total' and \
-                ifrs_line.operator not in ('subtract', 'percent', 'ratio', 'product'):
-            res = self._get_amount_value(
-                cr, uid, ids, ifrs_line, period_info, fiscalyear, exchange_date,
-                currency_wizard, number_month, target_move, pd, undefined, two, context=context)
-        
         res = ifrs_line.inv_sign and (-1.0 * res) or res
         self.write(cr, uid, ifrs_line.id, {field_name: res})
        
