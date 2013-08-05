@@ -94,19 +94,20 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
-        cr.commit()
+        #TODO: Remplazar los commit y los traceback por un mail.message
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
-        cr.commit()
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
-        cr.commit()
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
-        cr.commit()
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
-        cr.commit()
+        #cr.commit()
 
         ir_model_data = self.pool.get('ir.model.data')
 
@@ -222,8 +223,10 @@ class ir_attachment_facturae_mx(osv.Model):
         (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_' + (False or '') + '__facturae__')
         os.close(fileno)
-        file = invoice_obj.create_report(cr, uid, [invoice.id],
+        freport = invoice_obj.create_report(cr, uid, [invoice.id],
             "account.invoice.facturae.webkit", fname)
+        #file = invoice_obj.create_report(cr, uid, [invoice.id],
+            #"account.invoice", fname)
         attachment_ids = self.pool.get('ir.attachment').search(cr, uid,
             [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice.id),
             ('datas_fname', '=', invoice.fname_invoice+'.pdf')])
