@@ -22,8 +22,9 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#
-
+##############################################################################
+import math
+import re
 from openerp.osv import fields, osv
 
 
@@ -31,23 +32,33 @@ class res_partner(osv.osv):
 
     _inherit = 'res.partner'
 
-    def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
+    def name_search(self, cr, user, name, args=None, operator='ilike',
+                                                    context=None, limit=100):
         if not args:
             args = []
         if context is None:
             context = {}
-        res = super(res_partner, self).name_search(
-            cr, user, name, args, operator, context, limit)
+        ids = []
         if name:
-            ids = self.search(
-                cr, user, [('vat', operator, name)] + args, limit=limit, context=context)
-            res_new = self.name_get(cr, user, ids, context=context)
-            res.extend(res_new)
-        return res
+            ids = self.search(cr, user, [('name', 'ilike', name)]+ args,
+                                                limit=limit, context=context)
+            if not ids:
+                ids = self.search(cr, user, [('vat', 'ilike', name)]+ args,
+                                                limit=limit, context=context)
+            if not ids:
+                ptrn = re.compile('(\[(.*?)\])')
+                res = ptrn.search(name)
+                if res:
+                    ids = self.search(cr, user,
+                        [('vat', 'ilike', res.group(2))]+ args, limit=limit,
+                                                            context=context)
+        return self.name_get(cr, user, ids, context=context)
         
     def name_get(self, cr, uid, ids, context=None):
-        if not len(ids):
+        if isinstance(ids, (list, tuple)) and not len(ids):
             return []
+        if isinstance(ids, (long, int)):
+            ids = [ids]
         reads = self.read(cr, uid, ids, ['name', 'vat'], context=context)
         res = []
         for record in reads:
