@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
-    <data noupdate="0">
+    <data noupdate="1">
         
         <record id="mail_server_rule" model="ir.rule">
             <field name="name">Mail Server</field>

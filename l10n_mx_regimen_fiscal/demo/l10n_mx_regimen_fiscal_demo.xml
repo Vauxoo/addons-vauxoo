@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="base.main_partner" model="res.partner">
+            <field name="regimen_fiscal_id" ref="regimen_fiscal_personasmoralesdelrgimengeneral0"/>
+        </record>
+        
+    </data>
+</openerp>

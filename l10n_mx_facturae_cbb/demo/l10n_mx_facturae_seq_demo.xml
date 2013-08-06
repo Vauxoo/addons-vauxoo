@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-        <record id="demo_l10n_mx_facturae_ir_seq_02" model="ir.sequence">
+        <record id="l10n_mx_cbb_seq_0" model="ir.sequence">
             <field name="company_id" ref="base.main_company"/>
             <field name="name">Sequence CBB</field>
             <field name="active" eval="True"/>
@@ -11,9 +11,9 @@
             <field name="implementation">standard</field>
         </record>
 
-        <record id="demo_l10n_mx_facturae_ir_seq_approval_02" model="ir.sequence.approval">
+        <record id="l10n_mx_cbb_approval_0" model="ir.sequence.approval">
             <field name="company_id" ref="base.main_company"/>
-            <field name="sequence_id" ref="demo_l10n_mx_facturae_ir_seq_02"/>
+            <field name="sequence_id" ref="l10n_mx_cbb_seq_0"/>
             <field name="approval_number">12345</field>
             <field name="serie">A</field>
             <field name="approval_year" eval="time.strftime('%Y')"/>
@@ -25,15 +25,15 @@
             <field name="cbb_image">iVBORw0KGgoAAAANSUhEUgAAANwAAADcCAYAAAAbWs+BAAAABmJLR0QA/wD/AP+gvaeTAAAJN0lEQVR4nO3dTW8cRRSF4euIHUrsZIlQPII1UfZRfjzKHwjZgyZWhFgl/gCxQQmLIdKo+ww607d8u2r8PtIssKq72rGvZ/pwuyoCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeFjO1r4A4SwiLta+iD2f1r6APRcx/5ldR8SXhseqcYo69jwiHhnHVriJiM9rX8QIzmP3g+zl1ZOvv+T7r/PGx6px6qWOfW8eW/F6bv67lOrlrxHwIFBwQCEKDij0zdoXYPoSu3uL+/Y0MU6FK+751LEqvFBBgLrPzBx7Lca5QYpSEV70FNYMR4UmFcUWYt5DoUlmnHtsRUDics+nQpOK8GKteY/GXwWgEAUHFKLggEKjhCZKtiOlooMkE6So8MINB1TAcSGOdTtNWnckZUKOoTtIRi64JxHxMXF8RVvbM/E1t3tlI752HcvDj6342kXsfoGn4zIBi+NdLA81LiPiquG1lOIjJVCIggMKUXBAoZHv4UbgdqRkuMGH+ziNCiUynSbYQ8HdLxXqtP7F3cQ8+FDhijtOBSmZsAZ7+EgJFKLggEIUHFCIggMKEZq043aQqHEqSHGDisyjS6o1zg1SsADvcEAhCg4oRMEBhSg4oNDIoclN9N9upK5PhSaHFgJa2hmiuCFMRUByec/n7xbvcEAhCg4oRMEBhSg4oNAoocnXxWF75gYk7riM1o/dZMKa98aYB4N3OKAQBQcUouCAQhQcgCG13nnH5W4R7G4bjHvEOxxQiIIDClFwQCEKDig0csFltyZeGjQcs22wGncmXoobhrQOPjIhjNoRR20H3PrV5fbCysgFBwyHggMKUXBAIQoOwGIqSMl2crQOTdxxKgxRgYY7LhO4uPMqbmiSCT7UHF0GKbzDAYUoOKAQBQcUouCAQqOsaaKcx7yz5JjFYd0wpfX5XJldcXp3GRFXa1/EGniHAwpRcEAhCg4oRMEBhUYJTVRAcgwVaKwVhrjnW2tXnIqtjt3FYU8uXOEdDihEwQGFKDigEAUHFOqx4DJrlWQfz3GPddclcccp7iM2l2IOFY64j9hcmOdT49yAQ13zSYUjh/RYcMDJouCAQhQcUIiCAwqN0mmi3MTuxn3foY4UN6xwtwN2gxi3w6V1N4vLDaPcLpW1XK59AS7e4YBCFBxQiIIDClFwQKGRQ5MnEfFx8rVD4ch03H14VjDHJiJuJ1+b/vcxx25j9++4hDpWda68iIgPk6+9iYjvJl97HRG/G+PU+d5FxPfGuNWNXHBnEfHUHOuOy/hUMMd1LE8L1bGZdPQivOfmbmL+b/M45j+TO3Oc+lR2bo5bXZcXBZwqCg4oRMEBhUa5h7uN3U3/viexu3F3ZAINN3BR49x51bhtzEOJbXj3XS9id0+0T4Urm5gHTWpelwoq3HvOdxHxefI1FaSo872I+ZtHl50xoxTcl5jfUE9/OP+nItDIBDPq+lRhTVvZDrkJf8EgZ16XCkhcKoBRQcqheYfAR0qgEAUHFKLggEKj3MOprpK7mIcNxwQpFd0n7rxuuLIJr7PE7T7ZxjwgWRqYROjgQ3E7UtS9meoqUeg0SVBdJY8iF6RUdJ+0njfTaaK43SKuzLncwEV1lShdfnrr8qKAU0XBAYUoOKBQj/dwt+GFIW6QckjF4zQuFaT8FBF/Tr6mwpBtzIOOzYGxU5vw1ntxQ5hMUKEexVEygQtMh1ZUXrpC85qc7+PQqsiKu6Jya2re54nzvRfnc1+ZeUvxkRIoRMEBhSg4oFCPoYkKSNyFXFWQktX60R73fG5Q4dqGF6644zYx/7kc8yjOtFvkVUT8YR4/5a59sroeC+6YtUpaHnsf1LVUPCqkqK4S9YfMHZcJqFS3yF+x/N/GXftkdV1eFHCqKDigEAUHFOrxHk51mqzJDT4yAYmyDe9RGbV+ybvY3de0GucGOO6jMyog+Vkc6y766q59ggG4+35n9hZX3D2+VVeJ233SukvF7RZRnSHq2My4LvGREihEwQGFKDigUI+hibsuyX0sDlux6Ks7hwovtuEFKZuY/89qdyHYX8w5FPf+T619krl3VOej08Tkdouod+dsp0lmNx63S8KdQy3m6gYxbheIGtd6nROl9fnV+br89NblRQGnioIDClFwQKEe7+HcThN1P5PtUmkdfLhzqPNtY/49ZrpAWtsk5na3CHZ3ynE7XFbXY8GpnXIqjo3ksa3nUDvluLviVMgsSqsW7HUXglVzHrMA8Kr4SAkUouCAQhQcUKjHe7hjukUqVGxX3HrL4U14gYaaQy1Aq8Ypbhhy6FinW0TNUbEOZxM9Flxv65JkuN9H6y2H3UWXVFfJbSzvcFFrlbifotxuEXf3nC7xkRIoRMEBhSg4oFCP93DKXUS8LJjn18bH/piY42XM/yC+jfkaJC9j3n3yJiK+NeZ4Hbv1IPdNz3WM1zH/nZquNZKl5nB33oGgdsqp2hUns35JxdonmbVKetqhJ7P2iXu+Ltc54SMlUIiCAwpRcEChUUIT5XHsQoSlVKCROdYNQzLzKm9j3qExDVaOPd/0eHU+Na9LBRxqMVcVuKiAhMAkwQ1N3G2IqwKN1gvBKm4Y4r4ygUvrVyYgyZyvFB8pgUIUHFCIggMKjRyajCrTzfIqIv5udSGx27FmGoio7pPWVPDxJiL+EdfidKq4gcvqKLh6PySO/RBt1zTZxDw4uWo8hzItrAgdcri/n1f/vbrHR0qgEAUHFKLggELcwy3jBh+ZR3bcx27UONUtorTuIHFDDpcKUlRXSSZwefBG6DSpmLf1VsIjdotUXEspPlIChSg4oBAFBxQaOTS5i/aPurgyj+e451MBieoCUePcx3NU4OJSwYwKLxT3cZpM8EFgYhphTRP32Mz5KgKSzLokFcFMl8FHBh8pgUIUHFCIggMKjRKaPI5cKFEhE+Co7631Iq0qIMmcT1EhR8UirWoOOk1M2Q6S1q8KmUCj9aKvLjWvCjkyXSUsBAtgOQoOKETBAYXcnTIrPYrdo/+9+K1gDrXswja8x2Q24f3hdM/nUvNexbzT5HksD+fU+RQ1h3ssAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACn4V/RmbdMpVkYqAAAAABJRU5ErkJggg==</field>
         </record>
 
-        <record id="demo_l10n_mx_facturae_account_journal_02" model="account.journal">
+        <record id="l10n_mx_cbb_journal_0" model="account.journal">
             <field name="company_id" ref="base.main_company"/>
-            <field name="sequence_id" ref="demo_l10n_mx_facturae_ir_seq_02"/>
+            <field name="sequence_id" ref="l10n_mx_cbb_seq_0"/>
             <field name="name">Diario de CBB</field>
             <field name="code">CBB</field>
             <field name="type">sale</field>
-            <field name="user_id" ref="base.user_root"/>
+            <!--<field name="user_id" ref="base.user_root"/>
             <field name="company2_id" ref="base.main_company"/>
-            <field name="currency" ref="base.MXN"/>
+            <field name="currency" ref="base.MXN"/>-->
         </record>
     </data>
 </openerp>

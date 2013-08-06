@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        
+        <record id="main_mx_address_company" model="res.partner">
+            <field name="name">Your MX Address</field>
+            <field name="parent_id" ref="base.main_partner"/>
+            <field name="customer" eval="0"/>
+            <field name="is_company" eval="0"/>
+            <field name="use_parent_address" eval="0"/>
+            <field name="street">Tu Calle</field>
+            <field name="street2">Tu Colonia</field>
+            <field name="l10n_mx_street3">Tu num exterior</field>
+            <field name="l10n_mx_street4">Tu num interior</field>
+            <field name="zip">10000</field>
+            <field name="l10n_mx_city2">Tu localidad</field>
+            <field name="city">tu ciudad</field>
+            <field name="state_id" ref="l10n_mx_states.res_country_state_mx_gto" model="res.country.state"/>
+            <field name="country_id" ref="base.mx"/>
+            <field name="email">tu_email@tu_dominio.com</field>
+            <field name="phone">tu-telefono</field>
+            <field name="vat">MXATU010201RF2</field> <!--TODO: Should be use parent_id.vat in py-->
+        </record>
+        
+        <record id="base.main_partner" model="res.partner">
+            <field name="vat">MXATU010301RF3</field>
+        </record>
+        
+        <record id="base.main_company" model="res.company">
+            <field name="address_invoice_parent_company_id" ref="main_mx_address_company"/>
+        </record>
+
+    </data>
+</openerp>

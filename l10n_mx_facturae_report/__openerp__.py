@@ -35,7 +35,7 @@
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account", "report_webkit","l10n_mx_regimen_fiscal",
+    "depends" : ["account", "report_webkit", "l10n_mx_regimen_fiscal",
         "l10n_mx_notes_invoice"],
     "demo" : [],
     "data" : [

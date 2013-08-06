@@ -94,19 +94,20 @@ class ir_attachment_facturae_mx(osv.Model):
         wf_service = netsvc.LocalService("workflow")
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_sign', cr)
-        cr.commit()
+        #TODO: Remplazar los commit y los traceback por un mail.message
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_printable', cr)
-        cr.commit()
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_send_backup', cr)
-        cr.commit()
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_send_customer', cr)
-        cr.commit()
+        #cr.commit()
         wf_service.trg_validate(
             uid, 'ir.attachment.facturae.mx', attach, 'action_done', cr)
-        cr.commit()
+        #cr.commit()
 
         ir_model_data = self.pool.get('ir.model.data')
 
@@ -222,24 +223,27 @@ class ir_attachment_facturae_mx(osv.Model):
         (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_' + (False or '') + '__facturae__')
         os.close(fileno)
-        file = invoice_obj.create_report(cr, uid, [invoice.id],
+        freport = invoice_obj.create_report(cr, uid, [invoice.id],
             "account.invoice.facturae.webkit", fname)
-        adjuntos = self.pool.get('ir.attachment').search(cr, uid,
-            [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice),
+        #file = invoice_obj.create_report(cr, uid, [invoice.id],
+            #"account.invoice", fname)
+        attachment_ids = self.pool.get('ir.attachment').search(cr, uid,
+            [('res_model', '=', 'account.invoice'), ('res_id', '=', invoice.id),
             ('datas_fname', '=', invoice.fname_invoice+'.pdf')])
-        for attachment in self.browse(cr, uid, adjuntos, context):
-            aids = attachment.id
-            self.pool.get('ir.attachment').write(cr, uid, attachment.id, {
+        for attachment in self.browse(cr, uid, attachment_ids, context=context):
+            aids = attachment.id #TODO: aids.append( attachment.id ) but without error in last write
+            self.pool.get('ir.attachment').write(cr, uid, [attachment.id], {
                 'name': invoice.fname_invoice + '.pdf', }, context={})
         if aids:
             msj = _("Attached Successfully PDF\n")
         else:
             msj = _("Not Attached PDF\n")
-        return self.write(cr, uid, ids, {
+        writed = self.write(cr, uid, ids, {
             'state': 'printable',
             'file_pdf': aids or False,
             'msj': msj,
             'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
+        return writed
 
     def action_send_customer(self, cr, uid, ids, context=None):
         attachments = []
@@ -319,7 +323,7 @@ class ir_attachment_facturae_mx(osv.Model):
         adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
             'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
         for attachment in self.browse(cr, uid, adjuntos, context):
-            ids2 = attach_obj.write(cr, uid, attachment.id, {
+            ids2 = attach_obj.write(cr, uid, [attachment.id], {
                                     'res_id': False, }, context={})
         return self.write(cr, uid, ids,
                           {'state': 'cancel',

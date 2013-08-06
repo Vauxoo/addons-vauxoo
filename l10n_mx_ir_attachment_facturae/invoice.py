@@ -58,7 +58,7 @@ class account_invoice(osv.Model):
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         invoice = self.browse(cr, uid, ids, context=context)[0]
-        if invoice.invoice_sequence_id.approval_id:
+        if invoice._columns.has_key('invoice_sequence_id') and invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id:#FIX: Just in runbot generate a bug of field no exists in account.invoice model.
             if invoice.invoice_sequence_id.approval_id.type == 'cfdi32':
                 pac = self.pool.get('params.pac').search(
                     cr, uid, [('active', '=', True)], context)

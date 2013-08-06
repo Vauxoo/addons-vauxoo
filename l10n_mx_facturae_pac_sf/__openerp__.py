@@ -53,6 +53,9 @@ Ubuntu Package Depends:
         "wizard/wizard_cancel_invoice_pac_sf_view.xml",
         "wizard/wizard_export_invoice_pac_sf_view_v6.xml",
     ],
+    "test" : [
+        "test/account_invoice_cfdi_pac_sf.yml",
+    ],
     "installable" : True,
     "active" : False,
 }
