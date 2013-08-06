@@ -109,21 +109,21 @@
             <field model="workflow.activity" name="act_to" ref="workflow_activity_printable"/>
             <field name="condition">True</field>
         </record>
-        <record id="workflow_transition_act_printable_to_act_send_backup" model="workflow.transition">
-            <field name="signal">action_send_backup</field>
-            <field model="workflow.activity" name="act_from" ref="workflow_activity_printable"/>
-            <field model="workflow.activity" name="act_to" ref="workflow_activity_send_backup"/>
-            <field name="condition">True</field>
-        </record>
         <record id="workflow_transition_act_printable_to_act_send_customer" model="workflow.transition">
             <field name="signal">action_send_customer</field>
-            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_backup"/>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_printable"/>
             <field model="workflow.activity" name="act_to" ref="workflow_activity_send_customer"/>
+            <field name="condition">True</field>
+        </record>
+        <record id="workflow_transition_act_printable_to_act_send_backup" model="workflow.transition">
+            <field name="signal">action_send_backup</field>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_customer"/>
+            <field model="workflow.activity" name="act_to" ref="workflow_activity_send_backup"/>
             <field name="condition">True</field>
         </record>
         <record id="workflow_transition_act_send_customer_to_act_done" model="workflow.transition">
             <field name="signal">action_done</field>
-            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_customer"/>
+            <field model="workflow.activity" name="act_from" ref="workflow_activity_send_backup"/>
             <field model="workflow.activity" name="act_to" ref="workflow_activity_done"/>
             <field name="condition">True</field>
         </record>

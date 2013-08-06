@@ -45,8 +45,8 @@ class l10n_mx_email_config_settings(osv.TransientModel):
         else:
             try:
                 email_tmp_id = self.pool.get('ir.model.data').get_object(cr,
-                    uid, 'l10n_mx_ir_attachment_facturae',
-                    'email_template_template_facturae_mx')
+                                                                         uid, 'l10n_mx_ir_attachment_facturae',
+                                                                         'email_template_template_facturae_mx')
             except:
                 pass
         return {'email_tmp_id': email_tmp_id and email_tmp_id.id or False}

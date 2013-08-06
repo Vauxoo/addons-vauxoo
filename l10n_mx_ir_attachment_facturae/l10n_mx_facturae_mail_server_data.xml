@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
-    <data noupdate="True">
+    <data noupdate="1">
 
         <record model="ir.mail_server" id="email_template_account_facturae_mx">
             <field name="name">FacturaE</field>
@@ -9,6 +9,8 @@
             <field name="smtp_user">tuemail@gmail.com</field>
             <field name="smtp_pass">pass</field>
             <field name="smtp_encryption">starttls</field>
+            <field name="sequence">5</field>
+            <field name="company_id" ref="base.main_company"/>
         </record>
         <!--<field name="company" ref="base.main_company"/>-->
         

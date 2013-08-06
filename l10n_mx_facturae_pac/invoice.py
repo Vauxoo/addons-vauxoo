@@ -203,8 +203,8 @@ class account_invoice(osv.Model):
             return doc_xml
         data_xml = doc_xml.toxml('UTF-8')
         data_xml = codecs.BOM_UTF8 + data_xml
-        fname_xml = (data_dict[comprobante][emisor]['rfc'] or '') + '.' + (
-            data_dict[comprobante].get('serie', '') or '') + '.' + (
+        fname_xml = (data_dict[comprobante][emisor]['rfc'] or '') + '_' + (
+            data_dict[comprobante].get('serie', '') or '') + '_' + (
             data_dict[comprobante].get('folio', '') or '') + '.xml'
         data_xml = data_xml.replace(
             '<?xml version="1.0" encoding="UTF-8"?>', '<?xml version="1.0" encoding="UTF-8"?>\n')

@@ -22,15 +22,15 @@
             <field name="arch" type="xml">
                 <form string="Attachment Factura-E" version="7.0">
                     <header>
-                        <button name="action_create_ir_attachment_facturae" states="confirmed" string="Validate Attachment" type="object"/>
-                        <button name="action_confirm" states="draft" string="Confirm" type="workflow"/>
-                        <button name="action_sign" states="confirmed" string="Sign" type="workflow"/>
-                        <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow"/>
-                        <button name="action_send_backup" states="printable" string="Send to Backup" type="workflow"/>
-                        <button name="action_send_customer" states="sent_backup" string="Send to Customer" type="workflow"/>
-                        <button name="action_done" states="sent_customer" string="Done" type="workflow"/>
-                        <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow"/>
-                        <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object"/>
+                        <button name="action_create_ir_attachment_facturae" states="confirmed" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="action_confirm" states="draft" string="Confirm" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="action_sign" states="confirmed" string="Sign" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="action_send_customer" states="printable" string="Send to Customer" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="action_send_backup" states="sent_customer" string="Send to Backup" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="action_done" states="sent_backup" string="Done" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
+                        <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,printable,sent_customer,sent_backup,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
                     <sheet string="Attachment Factura-E">
@@ -43,6 +43,8 @@
                             <field name="file_xml_sign"/>
                             <field name="file_pdf"/>
                             <field name="identifier"/>
+                            <field name="file_xml_sign_index"/>
+                            <field name="file_pdf_index"/>
                         </group>
                         <group colspan="4">
                             <field name="msj" invisible="1"/>

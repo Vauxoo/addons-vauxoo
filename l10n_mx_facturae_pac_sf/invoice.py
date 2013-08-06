@@ -25,7 +25,7 @@
 #
 ##############################################################################
 from openerp.tools.translate import _
-from openerp.osv import fields, osv
+from openerp.osv import fields, osv, orm
 from openerp import tools
 from openerp import netsvc
 from openerp.tools.misc import ustr
@@ -63,15 +63,15 @@ class account_invoice(osv.Model):
         'cfdi_cbb': fields.binary('CFD-I CBB'),
         'cfdi_sello': fields.text('CFD-I Sello', help='Sign assigned by the SAT'),
         'cfdi_no_certificado': fields.char('CFD-I Certificado', size=32,
-            help='Serial Number of the Certificate'),
+                                           help='Serial Number of the Certificate'),
         'cfdi_cadena_original': fields.text('CFD-I Cadena Original',
-            help='Original String used in the electronic invoice'),
+                                            help='Original String used in the electronic invoice'),
         'cfdi_fecha_timbrado': fields.datetime('CFD-I Fecha Timbrado',
-            help='Date when is stamped the electronic invoice'),
+                                               help='Date when is stamped the electronic invoice'),
         'cfdi_fecha_cancelacion': fields.datetime('CFD-I Fecha Cancelacion',
-            help='If the invoice is cancel, this field saved the date when is cancel'),
+                                                  help='If the invoice is cancel, this field saved the date when is cancel'),
         'cfdi_folio_fiscal': fields.char('CFD-I Folio Fiscal', size=64,
-            help='Folio used in the electronic invoice'),
+                                         help='Folio used in the electronic invoice'),
     }
 
     def cfdi_data_write(self, cr, uid, ids, cfdi_data, context={}):
@@ -148,7 +148,7 @@ class account_invoice(osv.Model):
             '.xml' or ''
         aids = self.pool.get('ir.attachment').search(cr, uid, [(
             'datas_fname', '=', invoice.fname_invoice+'.xml'), (
-            'res_model', '=', 'account.invoice'), ('res_id', '=', id)])
+                'res_model', '=', 'account.invoice'), ('res_id', '=', id)])
         xml_data = ""
         if aids:
             brow_rec = self.pool.get('ir.attachment').browse(cr, uid, aids[0])
@@ -170,7 +170,7 @@ class account_invoice(osv.Model):
                 'name': fname_invoice, 'msg': msg}
 
     def add_node(self, node_name=None, attrs=None, parent_node=None,
-        minidom_xml_obj=None, attrs_types=None, order=False):
+                 minidom_xml_obj=None, attrs_types=None, order=False):
         """
             @params node_name : Name node to added
             @params attrs : Attributes to add in node
@@ -218,7 +218,7 @@ class account_invoice(osv.Model):
                     'id': 'attribute'
                 }
                 node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
-                    node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
             else:
                 node_Partner_attrs = {
                     'xmlns:sf': "http://timbrado.solucionfactible.com/partners",
@@ -231,7 +231,7 @@ class account_invoice(osv.Model):
                     'id': 'attribute'
                 }
                 node_Partner = self.add_node('sf:Partner', node_Partner_attrs,
-                    node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
+                                             node_Addenda, xml_res_str, attrs_types=node_Partner_attrs_types)
         return xml_res_str
 
     def _get_type_sequence(self, cr, uid, ids, context=None):
@@ -248,26 +248,26 @@ class account_invoice(osv.Model):
         else:
             comprobante = 'Comprobante'
         return comprobante
-        
-        
+
     def _get_time_zone(self, cr, uid, invoice_id, context=None):
         res_users_obj = self.pool.get('res.users')
         userstz = res_users_obj.browse(cr, uid, [uid])[0].partner_id.tz
-        a=0
+        a = 0
         if userstz:
             hours = timezone(userstz)
             fmt = '%Y-%m-%d %H:%M:%S %Z%z'
             now = datetime.now()
-            loc_dt = hours.localize(datetime(now.year,now.month,now.day,now.hour,now.minute,now.second))
-            timezone_loc=(loc_dt.strftime(fmt))
-            diff_timezone_original=timezone_loc[-5:-2]
-            timezone_original=int(diff_timezone_original)
-            s= str(datetime.now(pytz.timezone(userstz)))
-            s=s[-6:-3]
-            timezone_present=int(s)*-1
-            a=  timezone_original + ((timezone_present + timezone_original)*-1)
+            loc_dt = hours.localize(datetime(now.year, now.month, now.day,
+                                             now.hour, now.minute, now.second))
+            timezone_loc = (loc_dt.strftime(fmt))
+            diff_timezone_original = timezone_loc[-5:-2]
+            timezone_original = int(diff_timezone_original)
+            s = str(datetime.now(pytz.timezone(userstz)))
+            s = s[-6:-3]
+            timezone_present = int(s)*-1
+            a = timezone_original + ((
+                timezone_present + timezone_original)*-1)
         return a
-
 
     def _upload_ws_file(self, cr, uid, inv_ids, fdata=None, context={}):
         """
@@ -293,12 +293,11 @@ class account_invoice(osv.Model):
         rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
         file = False
         msg = ''
-        status = ''
         cfdi_xml = False
         pac_params_ids = pac_params_obj.search(cr, uid, [
             ('method_type', '=', 'pac_sf_firmar'), (
-            'company_id', '=', invoice.company_emitter_id.id), (
-            'active', '=', True)], limit=1, context=context)
+                'company_id', '=', invoice.company_emitter_id.id), (
+                    'active', '=', True)], limit=1, context=context)
         if pac_params_ids:
             pac_params = pac_params_obj.browse(
                 cr, uid, pac_params_ids, context)[0]
@@ -306,6 +305,18 @@ class account_invoice(osv.Model):
             password = pac_params.password
             wsdl_url = pac_params.url_webservice
             namespace = pac_params.namespace
+            url = 'https://solucionfactible.com/ws/services/Timbrado'
+            testing_url = 'http://testing.solucionfactible.com/ws/services/Timbrado'
+            if (wsdl_url == url) or (wsdl_url == testing_url):
+                pass
+            else:
+                raise osv.except_osv(_('Warning'), _('Web Service URL \
+                    o PAC incorrect'))
+            if namespace == 'http://timbrado.ws.cfdi.solucionfactible.com':
+                pass
+            else:
+                raise osv.except_osv(_('Warning'), _(
+                    'Namespace of PAC incorrect'))
             if 'testing' in wsdl_url:
                 msg += _(u'WARNING, SIGNED IN TEST!!!!\n\n')
             wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
@@ -329,33 +340,46 @@ class account_invoice(osv.Model):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                 resultado = wsdl_client.timbrar(*params)
-                htz=int(self._get_time_zone(cr, uid, inv_ids, context=context))
-                msg += resultado['resultados'] and resultado[
-                    'resultados']['mensaje'] or ''
-                status = resultado['resultados'] and resultado[
-                    'resultados']['status'] or ''
-                if status == '200' or status == '307':
+                htz = int(self._get_time_zone(
+                    cr, uid, inv_ids, context=context))
+                mensaje = _(tools.ustr(resultado['mensaje']))
+                resultados_mensaje = resultado['resultados'] and \
+                    resultado['resultados']['mensaje'] or ''
+                folio_fiscal = resultado['resultados'] and \
+                    resultado['resultados']['uuid'] or ''
+                codigo_timbrado = resultado['status'] or ''
+                codigo_validacion = resultado['resultados'] and \
+                    resultado['resultados']['status'] or ''
+                if codigo_timbrado == '311' or codigo_validacion == '311':
+                    raise osv.except_osv(_('Warning'), _(
+                        'Unauthorized.\nCode 311'))
+                elif codigo_timbrado == '312' or codigo_validacion == '312':
+                    raise osv.except_osv(_('Warning'), _(
+                        'Failed to consult the SAT.\nCode 312'))
+                elif codigo_timbrado == '200' and codigo_validacion == '200':
                     fecha_timbrado = resultado[
                         'resultados']['fechaTimbrado'] or False
                     fecha_timbrado = fecha_timbrado and time.strftime(
                         '%Y-%m-%d %H:%M:%S', time.strptime(
-                        fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
+                            fecha_timbrado[:19], '%Y-%m-%dT%H:%M:%S')) or False
                     fecha_timbrado = fecha_timbrado and datetime.strptime(
                         fecha_timbrado, '%Y-%m-%d %H:%M:%S') + timedelta(
-                        hours=htz) or False
+                            hours=htz) or False
                     cfdi_data = {
                         'cfdi_cbb': resultado['resultados']['qrCode'] or False,  # ya lo regresa en base64
                         'cfdi_sello': resultado['resultados'][
-                            'selloSAT'] or False,
+                        'selloSAT'] or False,
                         'cfdi_no_certificado': resultado['resultados'][
-                            'certificadoSAT'] or False,
+                        'certificadoSAT'] or False,
                         'cfdi_cadena_original': resultado['resultados'][
-                            'cadenaOriginal'] or False,
+                        'cadenaOriginal'] or False,
                         'cfdi_fecha_timbrado': fecha_timbrado,
                         'cfdi_xml': base64.decodestring(resultado[
-                            'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
+                        'resultados']['cfdiTimbrado'] or ''),  # este se necesita en uno que no es base64
                         'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
                     }
+                    msg += mensaje + "." + resultados_mensaje + \
+                        " Folio Fiscal " + folio_fiscal + "."
                     if cfdi_data.get('cfdi_xml', False):
                         url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
                             comprobante)
@@ -366,31 +390,21 @@ class account_invoice(osv.Model):
                         # self.cfdi_data_write(cr, uid, [invoice.id],
                         # cfdi_data, context=context)
                         cfdi_xml = cfdi_data.pop('cfdi_xml')
-                        if cfdi_xml:
-                            self.write(cr, uid, inv_ids, cfdi_data)
-                            cfdi_data['cfdi_xml'] = cfdi_xml
-                        msg = msg + _(
-                            "\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
+                    if cfdi_xml:
+                        self.write(cr, uid, inv_ids, cfdi_data)
+                        cfdi_data['cfdi_xml'] = cfdi_xml
+                        msg += _(
+                            u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                     else:
-                        msg = msg + "\nCan't extract the file XML of PAC"
-                elif status == '500' or status == '307':  # documento no es un cfd version 2, probablemente ya es un CFD version 3
-                    msg = _("Probably the file XML already has stamping previously and it isn't necessary to upload again.\nOr can be that the format of file is incorrect.\nPlease, visualized the file for corroborate and followed with the next step or contact you administrator of system.\n") + (
-                        resultado['resultados']['mensaje'] or '') + (
-                        resultado['mensaje'] or '')
+                        msg += _(u"Can't extract the file XML of PAC")
                 else:
-                    msg = msg + \
-                        "\nNo se pudo extraer el archivo XML del PAC"
-            elif status == '500' or status == '307':  # documento no es un cfd version 2, probablemente ya es un CFD version 3
-                msg = "Probablemente el archivo XML ya ha sido timbrado previamente y no es necesario volverlo a subir.\nO puede ser que el formato del archivo, no es el correcto.\nPor favor, visualice el archivo para corroborarlo y seguir con el siguiente paso o comuniquese con su administrador del sistema.\n" + \
-                    (resultado['resultados']['mensaje'] or '') + (
-                        resultado['mensaje'] or '')
-            else:
-                msg += '\n' + resultado['mensaje'] or ''
-                if not status:
-                    status = 'parent_' + resultado['status']
+                    raise orm.except_orm(_('Warning'), _('Stamped Code: %s. \nValidation code %s.\nFolio Fiscal: %s .\nStamped Message: %s.\n Validation Message: %s.') % (
+                        codigo_timbrado, codigo_validacion, folio_fiscal, mensaje, resultados_mensaje))
         else:
-            msg = 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
-        return {'file': file, 'msg': msg, 'status': status, 'cfdi_xml': cfdi_xml}
+            msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
+            raise osv.except_osv(_('Warning'), _(
+                'Not found information from web services of PAC, verify that the configuration of PAC is correct'))
+        return {'file': file, 'msg': msg, 'cfdi_xml': cfdi_xml}
 
     def _get_file_cancel(self, cr, uid, inv_ids, context={}):
         inv_ids = inv_ids[0]
@@ -408,18 +422,18 @@ class account_invoice(osv.Model):
         return {'file': inv_xml}
 
     def sf_cancel(self, cr, uid, inv_ids, context=None):
+        msg = ''
         context_id = inv_ids[0]
         company_obj = self.pool.get('res.company.facturae.certificate')
         pac_params_obj = self.pool.get('params.pac')
-
         invoice_brw = self.browse(cr, uid, context_id, context)
         company_brw = company_obj.browse(cr, uid, [
-                                         invoice_brw.company_id.id], context)[0]
+            invoice_brw.company_id.id], context)[0]
         pac_params_srch = pac_params_obj.search(cr, uid, [(
             'method_type', '=', 'pac_sf_cancelar'), ('company_id', '=',
-            invoice_brw.company_emitter_id.id), ('active', '=', True)],
+                                                     invoice_brw.company_emitter_id.id), (
+                                                         'active', '=', True)],
             context=context)
-
         if pac_params_srch:
             pac_params_brw = pac_params_obj.browse(
                 cr, uid, pac_params_srch, context)[0]
@@ -432,7 +446,6 @@ class account_invoice(osv.Model):
             #~ password = 'timbrado.SF.16672'
             #~ wsdl_url = 'http://testing.solucionfactible.com/ws/services/Timbrado?wsdl'
             #~ namespace = 'http://timbrado.ws.cfdi.solucionfactible.com'
-
             wsdl_client = False
             wsdl_client = WSDL.SOAPProxy(wsdl_url, namespace)
             if True:  # if wsdl_client:
@@ -447,7 +460,6 @@ class account_invoice(osv.Model):
                 zip = False  # Validar si es un comprimido zip, con la extension del archivo
                 contrasenaCSD = file_globals.get('password', '')
                 uuids = invoice_brw.cfdi_folio_fiscal  # cfdi_folio_fiscal
-
                 params = [
                     user, password, uuids, cerCSD, keyCSD, contrasenaCSD]
                 wsdl_client.soapproxy.config.dumpSOAPOut = 0
@@ -455,55 +467,33 @@ class account_invoice(osv.Model):
                 wsdl_client.soapproxy.config.debug = 0
                 wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                 result = wsdl_client.cancelar(*params)
-
-                status = result['resultados'] and result[
+                codigo_cancel = result['status'] or ''
+                status_cancel = result['resultados'] and result[
                     'resultados']['status'] or ''
-                # agregados
                 uuid_nvo = result['resultados'] and result[
                     'resultados']['uuid'] or ''
+                mensaje_cancel = _(tools.ustr(result['mensaje']))
                 msg_nvo = result['resultados'] and result[
                     'resultados']['mensaje'] or ''
-
                 status_uuid = result['resultados'] and result[
                     'resultados']['statusUUID'] or ''
-                msg_status = {}
-                if status == '200':
-                    folio_cancel = result['resultados'] and result[
-                        'resultados']['uuid'] or ''
-                    msg_global = _('\n- The process of cancellation has completed correctly.\n- The uuid cancelled is: ') + folio_cancel+_(
-                        '\n\nMessage Technical:\n')
-                    msg_tecnical = 'Status:', status, ' uuid:', uuid_nvo,\
-                        ' msg:', msg_nvo, 'Status uuid:', status_uuid
+                folio_cancel = result['resultados'] and result[
+                    'resultados']['uuid'] or ''
+                if codigo_cancel == '200' and status_cancel == '200' and\
+                        status_uuid == '201':
+                    msg +=  mensaje_cancel + _('\n- The process of cancellation\
+                    has completed correctly.\n- The uuid cancelled is:\
+                    ') + folio_cancel
+                    self.write(cr, uid, context_id, {
+                        'cfdi_fecha_cancelacion': time.strftime(
+                        '%Y-%m-%d %H:%M:%S')})
                 else:
-                    msg_global = _(
-                        '\n- Have occurred errors that not permit complete the process of cancellation, make sure that the invoice that tried cancel has been stamped previously.\n\nMessage Technical:\n')
-                    msg_tecnical = 'status:', status, ' uuidnvo:', uuid_nvo,\
-                    ' MENSJAE:NVO', msg_nvo, 'STATUS UUID:', status_uuid
-
-                if status_uuid == '201':
-                    msg_SAT = _(
-                        '- Status of response of the SAT: 201. The folio was canceled with success.')
-                    self.write(cr, uid, context_id, {'cfdi_fecha_cancelacion':\
-                    time.strftime('%Y-%m-%d %H:%M:%S')})
-                elif status_uuid == '202':
-                    msg_SAT = _(
-                        '- Status of response of the SAT: 202. The folio already has cancelled previously.')
-                elif status_uuid == '203':
-                    msg_SAT = _(
-                        '- Status of response of the SAT: 203. The voucher that tries cancel not corresponds the taxpayer with that signed the request of cancellation.')
-                elif status_uuid == '204':
-                    msg_SAT = _(
-                        '- Status of response of the SAT: 204. The CFDI not aply for cancellation.')
-                elif status_uuid == '205':
-                    msg_SAT = _(
-                        '- Status of response of the SAT: 205. Not found the folio of CFDI for his cancellation.')
-                else:
-                    msg_SAT = _('- Status of response of SAT unknown')
-                msg_global = msg_SAT + msg_global + str(msg_tecnical)
+                    raise orm.except_orm(_('Warning'), _('Cancel Code: %s. \nStatus code %s.\nStatus UUID: %s.\nFolio Cancel: %s.\nCancel Message: %s.\n Answer Message: %s.') % (
+                        codigo_cancel, status_cancel, status_uuid, folio_cancel, mensaje_cancel, msg_nvo))
         else:
-            msg_global = _(
+            msg = _(
                 'Not found information of webservices of PAC, verify that the configuration of PAC is correct')
-        return {'message': msg_global}
+        return {'message': msg, 'status_uuid': status_uuid}
 
     def write_cfd_data(self, cr, uid, ids, cfd_datas, context={}):
         """

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-# 	* l10n_mx_ir_attachment_facturae
+#   * l10n_mx_ir_attachment_facturae
 #
 msgid ""
 msgstr ""
@@ -15,6 +15,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "X-Generator: Poedit 1.5.4\n"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:358
+#, python-format
+msgid "Cancel\n"
+""
+msgstr "Cancelado\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:340
+#, python-format
+msgid "Done\n"
+""
+msgstr "Hecho\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:335
+#, python-format
+msgid "Send Backup\n"
+""
+msgstr "Se envió Respaldo\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:317
+#, python-format
+msgid "Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s"                                                "
+msgstr "Correo Enviado Exitosamente.se envió a %s por el Servidor de Correo Saliente %s"                                                "
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:271
+#, python-format
+msgid "Connection test failed!"
+msgstr "Conección de prueba falló!"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:310
+#, python-format
+msgid "The customer %s                    does not have mail"
+msgstr "El cliente %s                    no tiene un correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:307
+#, python-format
+msgid "This user                                does not have mail"
+msgstr "Este usuario no tiene un correo"
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:299
+#, python-format
+msgid "\n"
+"Not correct email of the user or customer. Check in Menu Configuración\\Tecnico\\Email\\Emails\n"
+""
+msgstr "\n"
+"No es correcto el correo electrónico del usuario o cliente. Revise en el Menú. Check in Menu Configuración\\Tecnico\\Email\\Emails\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:313
+#, python-format
+msgid "Not Found                outgoing mail server name of \"FacturaE\".                \n"
+"Configure the outgoing mail server named \"FacturaE\""
+msgstr "No se encontró el nombre del servidor de correo saliente \"FacturaE\".                \n"
+"Configure el servidor de correo saliente llamado \"FacturaE\""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:271
+#, python-format
+msgid "Configure outgoing mail server named FacturaE:\n"
+" %s"
+msgstr "Configure el servidor de correo saliente llamado FacturaE:\n"
+" %s"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: selection:ir.attachment.facturae.mx,state:0
@@ -62,7 +136,7 @@ msgstr "Seguidores"
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,file_xml_sign_index:0
 msgid "File XML sign index"
-msgstr "Archivo XML Firmado Index"
+msgstr "Contenido del XML 3.2"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: selection:ir.attachment.facturae.mx,state:0
@@ -96,10 +170,18 @@ msgid "Type"
 msgstr "Tipo"
 
 #. module: l10n_mx_ir_attachment_facturae
-#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:168
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:147
 #, python-format
 msgid "Attached Successfully XML CFD 2.2\n"
-msgstr "Adjunto con éxito XML CFD 2.2\n"
+""
+msgstr "Se Adjunto exitosamente XML CFD 2.2\n"
+""
+
+#. module: l10n_mx_ir_attachment_facturae
+#: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:168
+#, python-format
+msgid "Attached Successfully XML CFDI 3.2\n"
+msgstr "Se Adjunto exitosamente XML CFDI 3.2\n"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:349
@@ -115,7 +197,7 @@ msgstr "Descripción"
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,file_pdf_index:0
 msgid "Report PDF with index"
-msgstr "Informe PDF con índice"
+msgstr "Contenido del PDF"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,message_unread:0
@@ -213,7 +295,7 @@ msgstr "Mensajes e historial de comunicación"
 #: code:addons/l10n_mx_ir_attachment_facturae/ir_attachment_facturae.py:235
 #, python-format
 msgid "Attached Successfully PDF\n"
-msgstr "Adjunto con éxito PDF\n"
+msgstr "Se Adjunto con éxito PDF\n"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: field:ir.attachment.facturae.mx,message_ids:0
@@ -301,7 +383,7 @@ msgstr "Factura a la que pertenece este adjunto"
 #. module: l10n_mx_ir_attachment_facturae
 #: view:l10n.mx.email.config.settings:0
 msgid "or"
-msgstr "or"
+msgstr "ó"
 
 #. module: l10n_mx_ir_attachment_facturae
 #: help:ir.attachment.facturae.mx,last_date:0

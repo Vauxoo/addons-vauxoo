@@ -48,6 +48,6 @@ class params_pac(osv.Model):
 
     _columns = {
         'method_type': fields.selection(_get_method_type_selection,
-            "Process to perform", type='char', size=64, required=True,
-            help='Type of process to configure in this pac'),
+                                        "Process to perform", type='char', size=64, required=True,
+                                        help='Type of process to configure in this pac'),
     }

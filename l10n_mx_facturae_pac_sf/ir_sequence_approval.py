@@ -41,6 +41,6 @@ class ir_sequence_approval(osv.Model):
 
     _columns = {
         'type': fields.selection(_get_type, 'Type', type='char', size=64,
-            required=True, help="Type of Electronic Invoice"),
+                                 required=True, help="Type of Electronic Invoice"),
     }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

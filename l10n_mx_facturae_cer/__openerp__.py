@@ -42,6 +42,7 @@
         "demo/l10n_mx_facturae_cer_demo.xml"
     ],
     "data" : [
+        "security/l10n_mx_facturae_cer_security.xml",
         "security/ir.model.access.csv",
         "res_company_view.xml",
         "wizard/installer.xml",
