@@ -118,6 +118,18 @@ class account_voucher(osv.Model):
             voucher.write({'move_tax_id' : move_id, 'state' : 'posted'})
         return True
         
+    def action_move_line_create(self, cr, uid, ids, context=None):
+        super(account_voucher, self).action_move_line_create(cr, uid, ids,
+            context=context)
+        for voucher in self.browse(cr, uid, ids, context=context):
+            if voucher.double_validation_ok:
+                self.write(cr, uid, [voucher.id], {
+                    'state': 'wait_tax',
+                    'date_tax_move': voucher.date,
+                    'period_tax_move': voucher.period_id.id,
+                })
+        return True
+        
     def proforma_voucher(self, cr, uid, ids, context=None):
         super(account_voucher, self).proforma_voucher(cr, uid, ids,
             context=context)
