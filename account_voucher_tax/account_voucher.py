@@ -47,7 +47,7 @@ class account_voucher(osv.Model):
         'date_tax_move' : fields.date('Date Paid Tax', select=True,
             help='Date when is paid the tax', ),
         'period_tax_move' : fields.many2one('account.period', 'Period Tax',
-            help='Period when is paid the tax'),
+            help='Period when is paid the tax', readonly=True),
         'move_tax_id' : fields.many2one('account.move', 'Move Tax',
             help='Move that is create when paid the tax', readonly=True),
         'double_validation_ok' : fields.function(_get_double_validation_ok,
@@ -93,6 +93,8 @@ class account_voucher(osv.Model):
                 move_pool.unlink(cr, uid, [voucher.move_tax_id.id])
         res = {
             'move_tax_id':False,
+            'date_tax_move':False,
+            'period_tax_move':False,
         }
         self.write(cr, uid, ids, res)
         return True
@@ -123,6 +125,19 @@ class account_voucher(osv.Model):
             if not voucher.double_validation_ok:
                 voucher.write({'state' : 'posted'})
         return True
+        
+    def onchange_period_tax(self, cr, uid, ids, date_tax=False, context=None):
+        vals = {'period_tax_move': False}
+        if date_tax:
+            company_id = self.pool.get('res.company')._company_default_get(cr, uid,
+            'account.voucher', context=context)
+            period_id = self.pool.get('account.period').search(cr, uid,
+            [('date_start', '<=', date_tax),
+            ('date_stop', '>=', date_tax),
+            ('company_id', '=', company_id)])
+            if period_id:
+                vals = {'period_tax_move': period_id[0]}
+        return {'value': vals}
         
     def onchange_amount(self, cr, uid, ids, amount, rate, partner_id,\
         journal_id, currency_id, ttype, date, payment_rate_currency_id,\
