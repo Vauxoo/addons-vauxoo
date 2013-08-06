@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="mrp_workcenter_action" model="ir.actions.act_window">
+            <field name="name">Work Orders By WorkCenter</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.workcenter</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                    Workcenter    
+              </p>
+            </field>
+        </record>
+        <menuitem action="mrp.mrp_workcenter_action" id="menu_mrp_workcenter_action"
+            parent="mrp.menu_mrp_manufacturing" sequence="1"/>
+    
+    </data>
+</openerp>

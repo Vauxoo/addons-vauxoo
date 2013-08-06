@@ -40,15 +40,17 @@ List of new functionalities:
 
 - adds a new menuitem at **Manufacturing** > **Manufacturing** > **Work Centers**  that shows the work centers registered.
                                                                                  
- """,                                                                            
-    "depends": ["mrp",],                                   
-    "data": [],                                                                      
-    "js": [],                                                                   
-    "qweb": [],                                                                 
-    "css": [],                                                                  
-    "demo": [],                                                                 
-    "test": [],                                                                 
-    "installable": True,                                                        
-    "active": False,                                                            
+ """,
+    "depends": ["base","mrp"],
+    "data": [
+        "view/mrp_workcenter_view.xml",
+        ],                                                                      
+    "js": [],
+    "qweb": [],
+    "css": [],
+    "demo": [],
+    "test": [],
+    "installable": True,
+    "active": False,
 }
                                                                
