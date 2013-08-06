@@ -28,11 +28,6 @@ msgstr "Fecha de Factura Vacía"
 
 #. module: l10n_mx_facturae
 #: report:account.invoice.facturae.pdf:0
-msgid "Origen:"
-msgstr "Origen:"
-
-#. module: l10n_mx_facturae
-#: report:account.invoice.facturae.pdf:0
 msgid "Últimos 4 dígitos de la cuenta bancaria:"
 msgstr "Últimos 4 dígitos de la cuenta bancaria:"
 
