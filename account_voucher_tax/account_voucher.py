@@ -39,8 +39,14 @@ class account_voucher(osv.Model):
     def _get_double_validation_ok(self, cr, uid, ids, field, arg, context=None):
         res = {}
         for voucher in self.browse(cr, uid, ids, context=context):
-            journal = voucher.journal_id.voucher_double_validation_ok
-            res[voucher.id] = journal
+            amount_lines = 0
+            for line in voucher.line_dr_ids:
+                amount_lines += line.amount
+            journal_double_val_ok = voucher.journal_id.voucher_double_validation_ok
+            if journal_double_val_ok or amount_lines == 0:
+                res[voucher.id] = True
+            else:
+                res[voucher.id] = False
         return res
     
     _columns={
