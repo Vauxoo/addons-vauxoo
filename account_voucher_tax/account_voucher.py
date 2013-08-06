@@ -43,7 +43,8 @@ class account_voucher(osv.Model):
             for line in voucher.line_dr_ids:
                 amount_lines += line.amount
             journal_double_val_ok = voucher.journal_id.voucher_double_validation_ok
-            if journal_double_val_ok or amount_lines == 0:
+            if journal_double_val_ok or amount_lines == 0 and\
+                voucher.type == 'payment':
                 res[voucher.id] = True
             else:
                 res[voucher.id] = False

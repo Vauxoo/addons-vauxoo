@@ -11,7 +11,7 @@
             <field name="wkf_id" ref="wkf"/>
             <field name="flow_start">True</field>
             <field name="name">proforma</field>
-            <field name="action">write({'state':'wait_tax'})</field>
+            <field name="action">write({'state':'draft'})</field>
             <field name="kind">function</field>
         </record>
         
