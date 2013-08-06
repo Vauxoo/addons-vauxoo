@@ -26,16 +26,6 @@ msgstr "ADEVERTENCIA, FIRMADO EN PRUEBA!!!!\n"
 ""
 
 #. module: l10n_mx_facturae_pac_sf
-#: code:addons/l10n_mx_facturae_pac_sf/invoice.py:396
-#, python-format
-msgid "\n"
-"Make Sure to the file really has generated correctly to the SAT\n"
-"https://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
-msgstr "\n"
-"Asegúrese que el archivo realmente se haya generado correctamente ante al SAT\n"
-"https://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html"
-
-#. module: l10n_mx_facturae_pac_sf
 #: code:addons/l10n_mx_facturae_pac_sf/invoice.py:313
 #, python-format
 msgid "Web Service URL                     o PAC incorrect"
@@ -845,11 +835,6 @@ msgstr "Dirección:"
 #: report:account.invoice.facturae.pac.sf.pdf:0
 msgid "Receptor"
 msgstr "Receptor"
-
-#. module: l10n_mx_facturae_pac_sf
-#: report:account.invoice.facturae.pac.sf.pdf:0
-msgid "Sello Digital Emisor:"
-msgstr "Sello Digital Emisor:"
 
 #. module: l10n_mx_facturae_pac_sf
 #: report:account.invoice.facturae.pac.sf.pdf:0
