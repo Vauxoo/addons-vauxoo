@@ -24,4 +24,46 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.      
 ###############################################################################
 
-import mrp_workcenter
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+
+#class mrp_workcenter(osv.Model):
+#
+#    _inherit = "mrp.workcenter"
+#    _order = "sequence"
+#    _columns = {
+#        "sequence": fields.integer("Sequence")
+#    }
+#
+#    _sql_constraints = [
+#        ("sequence_uniq", "unique(sequence)", "The sequence of the workcenter must be unique!")
+#    ]
+
+class mrp_production_workcenter_line(osv.Model):
+
+    _inherit = "mrp.production.workcenter.line"
+
+    def _read_group_workcenter_ids(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
+        workcenter_obj = self.pool.get('mrp.workcenter')
+        workcenter_ids = workcenter_obj.search(cr, uid, [], context=context)       
+        
+        lista_workcenter = workcenter_obj.browse(cr, uid, workcenter_ids, context=context)
+       # lista_workcenter.sort(key=lambda x: x.sequence)
+       # lista_workcenter.reverse()
+
+        # Lista de tuplas (id, name)
+        result = []
+        for i in lista_workcenter:
+            result.append( (i.id, i.name) )
+
+        #Si se despliega o no
+        visible = {}
+        for i in workcenter_ids:
+            visible[i] = False
+        
+        return result, visible
+
+    _group_by_full = {
+        'workcenter_id': _read_group_workcenter_ids,
+    }
+                                 
