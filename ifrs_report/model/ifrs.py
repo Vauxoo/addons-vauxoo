@@ -67,7 +67,6 @@ class ifrs_ifrs(osv.osv):
             ('cancel', 'Cancel')],
             'State', required=True),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year'),
-        'do_compute': fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'),
         'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
         'ifrs_ids': fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
@@ -198,11 +197,8 @@ class ifrs_ifrs(osv.osv):
         return res
 
     def copy(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default.update({
-            'do_compute': False,
-        })
+        context = context or {}
+        default = default or {}
         res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
 
         return res
@@ -521,19 +517,6 @@ class ifrs_lines(osv.osv):
             ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
         return ids2 + ids3
 
-    def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        res = []
-        ifrs_brws = self.pool.get('ifrs.ifrs').browse(
-            cr, uid, ids, context=context)
-        for brw in ifrs_brws:
-            if brw.do_compute:
-                for l in brw.ifrs_lines_ids:
-                    res.append(l.id)
-                #~ TODO: write back False to brw.do_compute with SQL
-                #~ INCLUDE A LOGGER
-        return res
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None:
