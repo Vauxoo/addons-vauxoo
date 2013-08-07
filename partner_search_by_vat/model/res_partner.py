@@ -31,7 +31,7 @@ from openerp.osv import fields, osv
 class res_partner(osv.osv):
 
     _inherit = 'res.partner'
-
+    
     def name_search(self, cr, user, name, args=None, operator='ilike',
                                                     context=None, limit=100):
         if not args:
@@ -40,18 +40,22 @@ class res_partner(osv.osv):
             context = {}
         ids = []
         if name:
+            ptrn_name = re.compile('(\[(.*?)\])')
+            res_name = ptrn_name.search(name)
+            if res_name:
+                name = name.replace('['+res_name.group(2)+'] ', '')
             partner_search = super(res_partner, self).name_search(cr, user,
                                         name, args, operator, context, limit)
             ids = [partner[0] for partner in partner_search]
             if not ids:
-                ids = self.search(cr, user, [('vat', 'ilike', name)]+ args,
+                ids = self.search(cr, user, [('vat', operator, name)]+ args,
                                                 limit=limit, context=context)
             if not ids:
                 ptrn = re.compile('(\[(.*?)\])')
                 res = ptrn.search(name)
                 if res:
                     ids = self.search(cr, user,
-                        [('vat', 'ilike', res.group(2))]+ args, limit=limit,
+                        [('vat', operator, res.group(2))]+ args, limit=limit,
                                                             context=context)
                                                             
         return self.name_get(cr, user, ids, context=context)
@@ -64,10 +68,10 @@ class res_partner(osv.osv):
         res_name = super(res_partner, self).name_get(cr, uid, ids, context)
         reads = self.read(cr, uid, ids, ['name', 'vat'], context=context)
         res = []
-        for record in reads:
-            name = record['name']
-            if record['vat']:
-                name = '['+record['vat']+'] '+name
-            res.append((record['id'], name))
-        res = list(set(res + res_name))
+        for record in res_name:
+            partner = self.browse(cr, uid, record[0], context=context)
+            name = record[1]
+            if partner.vat:
+                name = '['+partner.vat+'] '+name
+            res.append((record[0], name))
         return res
