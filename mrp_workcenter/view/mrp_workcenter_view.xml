@@ -13,7 +13,11 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
                             <div t-attf-class="oe_kanban_content">
-                                <div><b><field name="name"/></b></div>
+                                <b>WO:</b> <field name="name"/><br/>
+                                <b>MO:</b> <field name="production_id"/><br/>
+                                <b>Product:</b> <field name="product"/><br/>
+                                <b>Hour:</b> <field name="hour"/><br/>
+                                <b>Delay:</b> <field name="delay"/><br/>
                             </div>
                         </div>
                     </t>
