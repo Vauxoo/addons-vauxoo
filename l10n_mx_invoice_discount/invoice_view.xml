@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
         <record model="ir.ui.view" id="view_account_invoice_form_inh_xml22">
             <field name="name">view.account.invoice.form.inh.xml22</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-            <field name="fiscal_position" position="after">
-                 <newline/>
-
-                <field name="global_discount_percent" colspan="2"/>
-                <field name="motive_discount" colspan="2"/>
-                <field name="global_discount_amount" colspan="2"/>
-            </field>
+                <xpath expr="//field[@name='fiscal_position']" position="after">
+                    <newline/>
+                    <field name="global_discount_percent" colspan="2"/>
+                    <field name="motive_discount" colspan="2"/>
+                    <field name="global_discount_amount" colspan="2"/>
+                </xpath>
             </field>
         </record>
-
+        
         <record model="ir.ui.view" id="view_invoice_line_tree_inh_discount">
             <field name="name">view.invoice.line.tree.inh.discount</field>
             <field name="model">account.invoice.line</field>
             <field name="inherit_id" ref="account.view_invoice_line_tree"/>
             <field name="arch" type="xml">
-            <field name="discount" position="replace">
-                <field name="discount" groups="base.group_extended" readonly="1"/>
-            </field>
+                <xpath expr="//field[@name='discount']" position="replace">
+                    <field name="discount" groups="base.group_extended" readonly="1"/>
+                </xpath>
             </field>
         </record>
-
+        
         <record model="ir.ui.view" id="view_invoice_line_form_inh_discount">
             <field name="name">view.invoice.line.form.inh.discount</field>
             <field name="model">account.invoice.line</field>
             <field name="inherit_id" ref="account.view_invoice_line_form"/>
             <field name="arch" type="xml">
-            <field name="discount" position="replace">
-                <field name="discount" groups="base.group_extended" readonly="1"/>
-            </field>
+                <xpath expr="//field[@name='discount']" position="replace">
+                    <field name="discount" groups="base.group_extended" readonly="1"/>
+                </xpath>
             </field>
         </record>
     </data>

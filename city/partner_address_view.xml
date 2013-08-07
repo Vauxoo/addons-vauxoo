@@ -5,8 +5,7 @@
             <field name="name">res.partner.form_city_01</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
-            <field name="arch" type="xml">
-                
+            <field name="arch" type="xml">                
                 <xpath expr="//field[@name='country_id']" position="after">
                     <field name="city_id" on_change="onchange_city(city_id)"  placeholder="Ciudad"/>
                 </xpath>
@@ -15,7 +14,5 @@
                 </xpath>
             </field>
         </record>
-
     </data>
 </openerp>
-

@@ -7,9 +7,9 @@
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
-                <field name="parent_id" position="after">
+                <xpath expr="//field[@name='parent_id']" position="after">
                     <field name="address_invoice_parent_company_id"/>
-                </field>
+                </xpath>
             </field>
         </record>
 
