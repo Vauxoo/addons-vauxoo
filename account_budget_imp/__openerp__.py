@@ -66,6 +66,9 @@ Budget per period.
     ],
     "demo" : [
     ],
+    "css": [
+        "static/src/css/account_budget.css",
+    ],
     "test" : [
     ],
     "installable" : True,

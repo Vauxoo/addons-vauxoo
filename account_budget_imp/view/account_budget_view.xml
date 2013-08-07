@@ -20,6 +20,11 @@
                     <field name="forecasted_amount"/>
                     </xpath>
                     <xpath 
+                        expr="//field[@name='crossovered_budget_line']//tree"
+                        position="attributes">
+                        <attribute name="class">oe_account_budget_line</attribute>
+                    </xpath>
+                    <xpath 
                         expr="//field[@name='crossovered_budget_line']//form//field[@name='planned_amount']"
                     position="after">
                         <field name="practical_amount_aa"/>
