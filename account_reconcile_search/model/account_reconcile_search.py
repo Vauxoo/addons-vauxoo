@@ -29,11 +29,9 @@ class account_move_line(osv.Model):
 
     def _get_reconcile(self, cr, uid, ids,name, unknow_none, context=None):
         res = super(account_move_line, self)._get_reconcile(cr, uid, ids, name, unknow_none, context)
-        print res
         return res
     
     def fc(s, c, u, ids, cx):
-        print "****",ids
         return ids
     
     _columns = {
@@ -45,4 +43,4 @@ class account_move_line(osv.Model):
                 'account.move.line':(fc, ['reconcile_id','partial_reconcile_id'],30),
                 },
             ),
-    }
+        }
