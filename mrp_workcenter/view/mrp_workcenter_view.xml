@@ -41,6 +41,12 @@
                         <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
                             <div t-attf-class="oe_kanban_content">
                                 <b>Routing:</b> <field name="name"/><br/>
+                       <div>
+                   <a name="%(mrp_operations.mrp_production_wc_action_form)d" type="action" style="margin-right: 10px">
+                        Work Orders    
+                        </a>
+                        </div> 
+                            
                             </div>
                         </div>
                     </t>
