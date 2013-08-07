@@ -248,9 +248,24 @@ class ifrs_ifrs(osv.osv):
 
         return True
 
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        res = super(ifrs_ifrs, self).copy_data(cr, uid, id, default, context)
+        if res['ifrs_lines_ids'] and context.get('clear_cons_ids', False):
+            for l in res['ifrs_lines_ids']:
+                l[2]['cons_ids'] = l[2]['type']=='detail' and l[2]['cons_ids']\
+                        and [] or []
+        return res
+
     def copy(self, cr, uid, id, default=None, context=None):
         context = context or {}
         default = default or {}
+        ru_brw = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        ii_brw = self.pool.get('ifrs.ifrs').browse(cr, uid, id, context=context)
+        if ru_brw.company_id.id != ii_brw.company_id.id:
+            context['clear_cons_ids']=True
+            default['company_id'] = ru_brw.company_id.id
+            default['fiscalyear_id'] = self.pool.get('account.fiscalyear').find(
+                    cr, uid, exception=False, context=context)
         res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
         self.step_sibling(cr, uid, id, res, context=context)
         return res
