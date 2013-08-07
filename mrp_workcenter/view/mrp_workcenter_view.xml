@@ -7,12 +7,14 @@
             <field name="name">Mrp Production Workcenter Line</field>
             <field name="model">mrp.production.workcenter.line</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="workcenter_id">
+                <kanban version="7.0" default_group_by="workcenter_id">
                     <field name="name"/>
                     <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_content">
-                            Name: <field name="name"/>
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
+                            <div t-attf-class="oe_kanban_content">
+                                <div><b><field name="name"/></b></div>
+                            </div>
                         </div>
                     </t>
                     </templates>
