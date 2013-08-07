@@ -805,14 +805,43 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wf_service = netsvc.LocalService("workflow")
+        inv_obj = self.pool.get('account.invoice')
         for exp_brw in self.browse(cr, uid, ids, context=context):
+            self.check_inv_periods(cr, uid, exp_brw.id,context=context)
             validate_inv_ids = \
                 [inv_brw.id
                  for inv_brw in exp_brw.invoice_ids
                  if inv_brw.state == 'draft']
+            inv_obj.write(cr, uid, validate_inv_ids,{
+                'date_invoice':exp_brw.date_post,
+                }, context=context)
             for inv_id in validate_inv_ids:
                 wf_service.trg_validate(uid, 'account.invoice', inv_id,
                                         'invoice_open', cr)
+        return True
+    
+    def check_inv_periods(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int,long)) and [ids] or ids
+        exp_brw=self.browse(cr, uid, ids[0], context = context)
+        period_obj=self.pool.get('account.period')
+        res=[]
+        for inv_brw in exp_brw.invoice_ids:
+            if inv_brw.state=='draft':
+                pass
+            elif inv_brw.state in ('cancel','paid'):
+                res.append(inv_brw)
+            elif inv_brw.state=='open':
+                if inv_brw.payment_ids:
+                    res.append(inv_brw)
+                elif[inv_brw.period_id.id]!=period_obj.find(cr,uid,dt=exp_brw.date_post):
+                    res.append(inv_brw)
+        if res:
+            note= _('The folliwing invoices cannot be used in this Expense:\n')
+            for inv_brw in res:
+                note+= '%s - %s -%s - %s \n'%(inv_brw.supplier_invoice_number,
+                inv_brw.partner_id.name,inv_brw.date_invoice,inv_brw.period_id.name)
+            raise osv.except_osv(_('Error!'),note)
         return True
 
     #~ note: This method is not used. Can be used when the validating invoice

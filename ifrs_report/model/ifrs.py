@@ -67,7 +67,6 @@ class ifrs_ifrs(osv.osv):
             ('cancel', 'Cancel')],
             'State', required=True),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', help='Fiscal Year'),
-        'do_compute': fields.boolean('Compute', help='Allows the amount field automatically run when is calculated'),
         'help': fields.boolean('Show Help', help='Allows you to show the help in the form'),
         'ifrs_ids': fields.many2many('ifrs.ifrs', 'ifrs_m2m_rel', 'parent_id', 'child_id', string='Other Reportes',)
     }
@@ -197,14 +196,78 @@ class ifrs_ifrs(osv.osv):
             res = str(period.name) + ' [' + str(period.code) + ']'
         return res
 
-    def copy(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default.update({
-            'do_compute': False,
-        })
-        res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
+    def step_sibling(self, cr, uid, old_id, new_id, context=None):
+        '''
+        Sometimes total_ids and operand_ids include lines from their own
+        ifrs_id report, They are siblings. In this case m2m copy_data just make
+        a link from the old report.
+        In the new report we have to substitute the cousins that are pretending
+        to be siblings with the siblings
+        This can be achieved due to the fact that each line has unique sequence
+        within each report, using the analogy about relatives then each
+        pretending cousin is of same age than that of the actual sibling
+        cousins with common parent are siblings among them
+        '''
+        context = context or {}
 
+        old_brw = self.browse(cr, uid, old_id, context=context)
+        new_brw = self.browse(cr, uid, new_id, context=context)
+        il_obj = self.pool.get('ifrs.lines')
+
+        sibling_ids = {} 
+        markt=[]
+        marko=[]
+        for l in old_brw.ifrs_lines_ids:
+            for t in l.total_ids:
+                if t.ifrs_id.id == l.ifrs_id.id:
+                    sibling_ids[t.sequence]= t.id
+                    markt.append(l.sequence)
+            for o in l.operand_ids:
+                if o.ifrs_id.id == l.ifrs_id.id:
+                    sibling_ids[o.sequence]= o.id
+                    marko.append(l.sequence)
+
+        if not sibling_ids: return True
+        
+        markt = markt and set(markt) or []
+        marko = marko and set(marko) or []
+
+        o2n={}
+        for seq in  sibling_ids:
+            ns_id = il_obj.search(cr,uid,[ ('sequence','=',seq),
+                ('ifrs_id','=',new_id) ],context=context)
+            o2n[sibling_ids[seq]] = ns_id[0]
+
+        for nl in new_brw.ifrs_lines_ids:
+            if nl.sequence in markt:
+                tt = [o2n.get(nt.id,nt.id) for nt in nl.total_ids]
+                nl.write({'total_ids':[(6,0,tt)]})
+            if nl.sequence in marko:
+                oo = [o2n.get(no.id,no.id) for no in nl.operand_ids]
+                nl.write({'operand_ids':[(6,0,oo)]})
+
+        return True
+
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        res = super(ifrs_ifrs, self).copy_data(cr, uid, id, default, context)
+        if res['ifrs_lines_ids'] and context.get('clear_cons_ids', False):
+            for l in res['ifrs_lines_ids']:
+                l[2]['cons_ids'] = l[2]['type']=='detail' and l[2]['cons_ids']\
+                        and [] or []
+        return res
+
+    def copy(self, cr, uid, id, default=None, context=None):
+        context = context or {}
+        default = default or {}
+        ru_brw = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        ii_brw = self.pool.get('ifrs.ifrs').browse(cr, uid, id, context=context)
+        if ru_brw.company_id.id != ii_brw.company_id.id:
+            context['clear_cons_ids']=True
+            default['company_id'] = ru_brw.company_id.id
+            default['fiscalyear_id'] = self.pool.get('account.fiscalyear').find(
+                    cr, uid, exception=False, context=context)
+        res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
+        self.step_sibling(cr, uid, id, res, context=context)
         return res
    
     def _get_children_and_consol(self, cr, uid, ids, level, context={}):
@@ -628,19 +691,6 @@ class ifrs_lines(osv.osv):
             ids3 = self._get_children_and_total(cr, uid, ids3, context=context)
         return ids2 + ids3
 
-    def _get_changes_on_ifrs(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        res = []
-        ifrs_brws = self.pool.get('ifrs.ifrs').browse(
-            cr, uid, ids, context=context)
-        for brw in ifrs_brws:
-            if brw.do_compute:
-                for l in brw.ifrs_lines_ids:
-                    res.append(l.id)
-                #~ TODO: write back False to brw.do_compute with SQL
-                #~ INCLUDE A LOGGER
-        return res
 
     def exchange(self, cr, uid, ids, from_amount, to_currency_id, from_currency_id, exchange_date, context=None):
         if context is None:
