@@ -28,7 +28,7 @@
     "name" : "Account Budget Improvements",
     "version" : "1.0",
     "author" : "Vauxoo",
-    "category" : "Budget",
+    'category' : 'Accounting & Finance',
     "description" : """
 Improvements to Account Budget
 ==============================
