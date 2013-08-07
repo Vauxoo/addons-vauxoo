@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="crossovered_budget_view_form">
+            <field name="name">account.budget.post.form.inherit</field>
+            <field name="model">account.budget.post</field>
+            <field name="inherit_id"
+                   eval="ref(account_budget.crossovered_budget_view_form)"/>
+            <field name="arch" type="xml">
+                <form string="Budgetary Position" version="7.0">
+                    <xpath expr="//field[@name='validating_user_id']"
+                           position="after">
+                        <field name="dt_approved" readonly="True"/>
+                        <field name="dt_validated" readonly="True"/>
+                        <field name="dt_done" readonly="True"/>
+                    </xpath>
+                    <xpath 
+  expr="//field[@name='crossovered_budget_line']/tree/field[@name='paid_date']"
+                    position="after">
+                        <field name="practical_amount_aa"/>
+                        <field name="forecasted_amount"/>
+                    </xpath>
+                    <xpath 
+  expr="//field[@name='crossovered_budget_line']/form/field[@name='paid_date']"
+                    position="after">
+                        <field name="practical_amount_aa"/>
+                        <field name="forecasted_amount"/>
+                    </xpath>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>
+
