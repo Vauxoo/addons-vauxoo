@@ -40,8 +40,9 @@ class res_partner(osv.osv):
             context = {}
         ids = []
         if name:
-            ids = self.search(cr, user, [('name', 'ilike', name)]+ args,
-                                                limit=limit, context=context)
+            partner_search = super(res_partner, self).name_search(cr, user,
+                                        name, args, operator, context, limit)
+            ids = [partner[0] for partner in partner_search]
             if not ids:
                 ids = self.search(cr, user, [('vat', 'ilike', name)]+ args,
                                                 limit=limit, context=context)
@@ -52,6 +53,7 @@ class res_partner(osv.osv):
                     ids = self.search(cr, user,
                         [('vat', 'ilike', res.group(2))]+ args, limit=limit,
                                                             context=context)
+                                                            
         return self.name_get(cr, user, ids, context=context)
         
     def name_get(self, cr, uid, ids, context=None):
@@ -59,6 +61,7 @@ class res_partner(osv.osv):
             return []
         if isinstance(ids, (long, int)):
             ids = [ids]
+        res_name = super(res_partner, self).name_get(cr, uid, ids, context)
         reads = self.read(cr, uid, ids, ['name', 'vat'], context=context)
         res = []
         for record in reads:
@@ -66,4 +69,5 @@ class res_partner(osv.osv):
             if record['vat']:
                 name = '['+record['vat']+'] '+name
             res.append((record['id'], name))
+        res = list(set(res + res_name))
         return res
