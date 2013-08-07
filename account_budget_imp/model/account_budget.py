@@ -35,43 +35,37 @@ class crossovered_budget(osv.osv):
 
     _columns = {
         'dt_approved': fields.date('Date Approved',
-                                   required=True,
                                    states={'done': [('readonly', True)]}),
         'dt_validated': fields.date('Date Validated',
-                                    required=True,
                                     states={'done': [('readonly', True)]}),
         'dt_done': fields.date('Date Done',
-                               required=True,
                                states={'done': [('readonly', True)]}),
     }
 
 class crossovered_budget_lines(osv.osv):
     _inherit = 'crossovered.budget.lines'
 
-    def _prac(self, cr, uid, ids, name, args, context=None):
+    def _prac_acc(self, cr, uid, ids, name, args, context=None):
         res={}
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = self._prac_amt(cr, uid, [line.id], context=context)[line.id]
+            res[line.id] = self._prac_amt_acc(cr, uid, [line.id], context=context)[line.id]
         return res
 
     _columns = {
-        'practical_amount_aa':fields.function(_prac,
-                              string='Practical Amount', type='float',
+        'practical_amount_aa': fields.function(_prac_acc,
+                              string='Caused Amount', type='float',
                               digits_compute=dp.get_precision('Account')),
-        'forcasted_amount':fields.float('Forcasted Amount', required=True,
+        'forecasted_amount': fields.float('Forecasted Amount',
                            digits_compute=dp.get_precision('Account'),
                            help="Due to your analisys what is the amopunt that the manager stimate will comply to be compared with the Planned Ammount"),
     }
 
-    def _prac_amt(self, cr, uid, ids, context=None):
+    def _prac_amt_acc(self, cr, uid, ids, context=None):
         '''
         This Method should compute considering Accounts Accounts due to the 
         Account Analityc Account is not mandatory in the budget Line.
         If the account Analityc Account is empty 
         '''
-        print '''
-En Mi Metodo
-            '''
         res = {}
         result = 0.0
         if context is None: 
@@ -91,6 +85,8 @@ En Mi Metodo
                        "between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd')) AND "
                        "general_account_id=ANY(%s)", (line.analytic_account_id.id, date_from, date_to,acc_ids,))
                 result = cr.fetchone()[0]
+            else:
+                result = sum([a.balance for a in line.general_budget_id.account_ids]) 
             if result is None:
                 result = 0.00
             res[line.id] = result

@@ -14,13 +14,13 @@
                         <field name="dt_done" readonly="True"/>
                     </xpath>
                     <xpath 
-  expr="//field[@name='crossovered_budget_line']/tree/field[@name='paid_date']"
+                        expr="//field[@name='crossovered_budget_line']//tree/field[@name='planned_amount']"
                     position="after">
                         <field name="practical_amount_aa"/>
-                        <field name="forecasted_amount"/>
+                    <field name="forecasted_amount"/>
                     </xpath>
                     <xpath 
-  expr="//field[@name='crossovered_budget_line']//form/field[@name='paid_date']"
+                        expr="//field[@name='crossovered_budget_line']//form//field[@name='planned_amount']"
                     position="after">
                         <field name="practical_amount_aa"/>
                         <field name="forecasted_amount"/>
