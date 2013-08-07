@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 00:02+0000\n"
-"PO-Revision-Date: 2013-04-03 00:02+0000\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2013-07-29 01:16+0000\n"
+"Last-Translator: Rodolfo Lopez - http://www.vauxoo.com <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-08-07 05:04+0000\n"
+"X-Generator: Launchpad (build 16721)\n"
 
 #. module: l10n_mx_facturae_cbb
 #: report:account.invoice.facturae.pdf2:0
@@ -87,8 +88,12 @@ msgstr "Nombre:"
 
 #. module: l10n_mx_facturae_cbb
 #: report:account.invoice.facturae.pdf2:0
-msgid "La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales."
-msgstr "La reproducción apócrifa de este comprobante constituye un delito en los términos de las disposiciones fiscales."
+msgid ""
+"La reproducción apócrifa de este comprobante constituye un delito en los "
+"términos de las disposiciones fiscales."
+msgstr ""
+"La reproducción apócrifa de este comprobante constituye un delito en los "
+"términos de las disposiciones fiscales."
 
 #. module: l10n_mx_facturae_cbb
 #: model:ir.actions.report.xml,name:l10n_mx_facturae_cbb.account_invoice_facturae_pdf2
@@ -113,8 +118,12 @@ msgstr "Total $"
 
 #. module: l10n_mx_facturae_cbb
 #: report:account.invoice.facturae.pdf2:0
-msgid "Este comprobante tendrá una vigencia de dos años contados a partir de la fecha de aprobación de la asignación de folios, la cual es:"
-msgstr "Este comprobante tendrá una vigencia de dos años contados a partir de la fecha de aprobación de la asignación de folios, la cual es:"
+msgid ""
+"Este comprobante tendrá una vigencia de dos años contados a partir de la "
+"fecha de aprobación de la asignación de folios, la cual es:"
+msgstr ""
+"Este comprobante tendrá una vigencia de dos años contados a partir de la "
+"fecha de aprobación de la asignación de folios, la cual es:"
 
 #. module: l10n_mx_facturae_cbb
 #: report:account.invoice.facturae.pdf2:0
@@ -280,4 +289,3 @@ msgstr "Fecha en que terminan los folios"
 #: report:account.invoice.facturae.pdf2:0
 msgid "Importe"
 msgstr "Importe"
-
