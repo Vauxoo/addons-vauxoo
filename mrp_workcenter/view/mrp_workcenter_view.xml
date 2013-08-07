@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
+        
+        <record model="ir.ui.view" id="view_workcenter_kanban">
+            <field name="name">Mrp Production Workcenter Line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="workcenter_id">
+                    <field name="name"/>
+                    <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content">
+                            Name: <field name="name"/>
+                        </div>
+                    </t>
+                    </templates>
+                </kanban>
+            </field>
+         </record>
+
+        <record id="mrp_production_workcenter_kanban" model="ir.actions.act_window.view">
+             <field name="view_mode">kanban</field>
+             <field name="act_window_id" ref="mrp_operations.mrp_production_wc_action_form"/>                      
+        </record>    
+
         <record id="mrp_workcenter_action" model="ir.actions.act_window">
             <field name="name">Work Orders By WorkCenter</field>
             <field name="type">ir.actions.act_window</field>
