@@ -48,6 +48,12 @@ class crossovered_budget(osv.osv):
 class crossovered_budget_lines(osv.osv):
     _inherit = 'crossovered.budget.lines'
 
+    def _prac(self, cr, uid, ids, name, args, context=None):
+        res={}
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = self._prac_amt(cr, uid, [line.id], context=context)[line.id]
+        return res
+
     _columns = {
         'practical_amount_aa':fields.function(_prac,
                               string='Practical Amount', type='float',
