@@ -196,11 +196,63 @@ class ifrs_ifrs(osv.osv):
             res = str(period.name) + ' [' + str(period.code) + ']'
         return res
 
+    def step_sibling(self, cr, uid, old_id, new_id, context=None):
+        '''
+        Sometimes total_ids and operand_ids include lines from their own
+        ifrs_id report, They are siblings. In this case m2m copy_data just make
+        a link from the old report.
+        In the new report we have to substitute the cousins that are pretending
+        to be siblings with the siblings
+        This can be achieved due to the fact that each line has unique sequence
+        within each report, using the analogy about relatives then each
+        pretending cousin is of same age than that of the actual sibling
+        cousins with common parent are siblings among them
+        '''
+        context = context or {}
+
+        old_brw = self.browse(cr, uid, old_id, context=context)
+        new_brw = self.browse(cr, uid, new_id, context=context)
+        il_obj = self.pool.get('ifrs.lines')
+
+        sibling_ids = {} 
+        markt=[]
+        marko=[]
+        for l in old_brw.ifrs_lines_ids:
+            for t in l.total_ids:
+                if t.ifrs_id.id == l.ifrs_id.id:
+                    sibling_ids[t.sequence]= t.id
+                    markt.append(l.sequence)
+            for o in l.operand_ids:
+                if o.ifrs_id.id == l.ifrs_id.id:
+                    sibling_ids[o.sequence]= o.id
+                    marko.append(l.sequence)
+
+        if not sibling_ids: return True
+        
+        markt = markt and set(markt) or []
+        marko = marko and set(marko) or []
+
+        o2n={}
+        for seq in  sibling_ids:
+            ns_id = il_obj.search(cr,uid,[ ('sequence','=',seq),
+                ('ifrs_id','=',new_id) ],context=context)
+            o2n[sibling_ids[seq]] = ns_id[0]
+
+        for nl in new_brw.ifrs_lines_ids:
+            if nl.sequence in markt:
+                tt = [o2n.get(nt.id,nt.id) for nt in nl.total_ids]
+                nl.write({'total_ids':[(6,0,tt)]})
+            if nl.sequence in marko:
+                oo = [o2n.get(no.id,no.id) for no in nl.operand_ids]
+                nl.write({'operand_ids':[(6,0,oo)]})
+
+        return True
+
     def copy(self, cr, uid, id, default=None, context=None):
         context = context or {}
         default = default or {}
         res = super(ifrs_ifrs, self).copy(cr, uid, id, default, context)
-
+        self.step_sibling(cr, uid, id, res, context=context)
         return res
    
     def _get_children_and_consol(self, cr, uid, ids, level, context={}):
