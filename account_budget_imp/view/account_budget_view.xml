@@ -7,7 +7,6 @@
             <field name="inherit_id"
                    ref="account_budget.crossovered_budget_view_form"/>
             <field name="arch" type="xml">
-                <form string="Budgetary Position" version="7.0">
                     <xpath expr="//field[@name='validating_user_id']"
                            position="after">
                         <field name="dt_approved" readonly="True"/>
@@ -26,7 +25,6 @@
                         <field name="practical_amount_aa"/>
                         <field name="forecasted_amount"/>
                     </xpath>
-                </form>
             </field>
         </record>
     </data>
