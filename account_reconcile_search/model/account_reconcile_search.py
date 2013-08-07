@@ -24,7 +24,6 @@ from openerp.osv import osv, fields
 from openerp.tools.translate import _
 
 class account_move_line(osv.Model):
-    _description = 'Account Move Line Search'
     _inherit = "account.move.line"
 
     def _get_reconcile(self, cr, uid, ids,name, unknow_none, context=None):
