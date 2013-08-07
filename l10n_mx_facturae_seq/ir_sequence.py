@@ -85,7 +85,8 @@ class ir_sequence_approval(osv.Model):
                 SELECT *
                 FROM ir_sequence_approval
                ) approval_2
-               ON approval_2.sequence_id = approval_1.sequence_id
+               ON approval_2.sequence_id = approval_1.sequence_id and 
+               approval_2.company_id = approval_1.company_id
               AND approval_2.id <> approval_1.id
             WHERE approval_1.sequence_id = %d
               AND ( approval_1.number_start between approval_2.number_start \
@@ -100,7 +101,7 @@ class ir_sequence_approval(osv.Model):
 
     _constraints = [
         (_check_numbers_range, 'Error ! There ranges of numbers underhand between approvals.',\
-            ['sequence_id', 'number_start', 'number_end'])
+            ['sequence_id', 'number_start', 'number_end', 'company_id'])
     ]
 
 
