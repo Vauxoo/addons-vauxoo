@@ -5,7 +5,7 @@
             <field name="name">crossovered.budget.form.inherit</field>
             <field name="model">crossovered.budget</field>
             <field name="inherit_id"
-                   eval="ref(account_budget.crossovered_budget_view_form)"/>
+                   ref="account_budget.crossovered_budget_view_form"/>
             <field name="arch" type="xml">
                 <form string="Budgetary Position" version="7.0">
                     <xpath expr="//field[@name='validating_user_id']"
