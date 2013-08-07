@@ -2,8 +2,8 @@
 <openerp>
     <data>
         <record model="ir.ui.view" id="crossovered_budget_view_form">
-            <field name="name">account.budget.post.form.inherit</field>
-            <field name="model">account.budget.post</field>
+            <field name="name">crossovered.budget.form.inherit</field>
+            <field name="model">crossovered.budget</field>
             <field name="inherit_id"
                    eval="ref(account_budget.crossovered_budget_view_form)"/>
             <field name="arch" type="xml">
