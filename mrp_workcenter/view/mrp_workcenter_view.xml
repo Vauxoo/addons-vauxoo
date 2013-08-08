@@ -29,15 +29,13 @@
          </record>
 
          <record model="ir.ui.view" id="view_routing_search">                   
-             <field name="name">mrp.production.workcenter.line</field>                          
+             <field name="name">mrp.production.workcenter.line.routing</field>                          
              <field name="model">mrp.production.workcenter.line</field>                         
              <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>               
              <field name="arch" type="xml">                                      
                  <data>                                                          
                      <xpath expr="//field[@name='state']" position="after">
                         <field name="routing_id"/>
-                        <filter string="Routing" name="routing_filter" icon="terp-folder-violet" domain="[('routing_id','=', '2')]" />
-                     
                     </xpath>                                                    
                  </data>                                                         
              </field>                                                            
@@ -46,10 +44,6 @@
         <record id="mrp_production_workcenter_kanban" model="ir.actions.act_window.view">
             <field name="res_model">mrp.production.workcenter.line</field>
             <field name="view_mode">kanban</field>
-            <field name="context">{'search_default_routing_id': 1,'default_routing_id': active_id}</field>
-        <!--    <field name="domain">[('routing_id', 'child_of', [active_id])]</field>
-        -->   
-            <field name="search_view_id" ref="view_routing_search"/> 
             <field name="act_window_id" ref="mrp_operations.mrp_production_wc_action_form"/>                      
         </record>    
 
@@ -77,26 +71,14 @@
                 </kanban>
             </field>
          </record>
-         
+     
+        <record model="ir.actions.act_window" id="mrp_operations.mrp_production_wc_action_form">
+            <field name="context">{'search_default_routing_id': [context.get('active_id', False)], 'default_project_id': context.get('active_id', False), 'active_test': False}</field>
+        </record>
+    
         <record id="mrp_routing_kanban" model="ir.actions.act_window.view">
              <field name="view_mode">kanban</field>
              <field name="act_window_id" ref="mrp.mrp_routing_action"/>                      
         </record>    
-        <!--
-        <record id="mrp_workcenter_action" model="ir.actions.act_window">
-            <field name="name">Work Orders By WorkCenter</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">mrp.workcenter</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                    Workcenter    
-              </p>
-            </field>
-        </record>
-        <menuitem action="mrp.mrp_workcenter_action" id="menu_mrp_workcenter_action"
-            parent="mrp.menu_mrp_manufacturing" sequence="1"/>
-    -->
     </data>
 </openerp>

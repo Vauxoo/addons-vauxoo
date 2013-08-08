@@ -41,7 +41,7 @@ List of new functionalities:
 - adds a new menuitem at **Manufacturing** > **Manufacturing** > **Work Centers**  that shows the work centers registered.
                                                                                  
  """,
-    "depends": ["base","mrp"],
+    "depends": ["base","mrp", "mrp_operations"],
     "data": [
         "view/mrp_workcenter_view.xml",
         ],                                                                      
