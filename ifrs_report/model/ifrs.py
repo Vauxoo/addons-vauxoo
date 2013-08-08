@@ -364,7 +364,7 @@ class ifrs_lines(osv.osv):
 
     _name = 'ifrs.lines'
     _parent_store = True
-    _order = 'sequence, type'
+    _order = 'ifrs_id, sequence'
    
     def _get_sum_operator(self, cr, uid, brw, number_month=None, is_compute=None, context=None):
         """ Calculates the sum of the line operand_ids the current ifrs.line
