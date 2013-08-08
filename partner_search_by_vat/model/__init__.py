@@ -24,24 +24,4 @@
 #
 #
 
-{
-    "name": "Search Supplier by VAT",
-    "version": "1.0",
-    "author": "Vauxoo",
-    "category": "Generic Modules",
-    "description" : """
-Search Supplier by VAT
-==========================================
-This module adds the possibility to search for vat
-    """,
-    "website": "http://www.vauxoo.com/",
-    "license": "AGPL-3",
-    "depends": ["l10n_mx_base_vat_split",
-                ],
-    "demo": [],
-    "data": [
-        "view/res_partner_view.xml"
-    ],
-    "installable": True,
-    "active": False,
-}
+import res_partner

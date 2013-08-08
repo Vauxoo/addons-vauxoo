@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-29 05:35+0000\n"
-"PO-Revision-Date: 2013-07-29 05:35+0000\n"
+"POT-Creation-Date: 2013-08-02 06:41+0000\n"
+"PO-Revision-Date: 2013-08-02 06:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,13 +21,20 @@ msgid "Expense Invoice"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Validate Invoices"
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:549
+#, python-format
+msgid "Debts to be reimbursed to Employee"
 msgstr ""
 
 #. module: hr_expense_replenishment
 #: model:ir.model,name:hr_expense_replenishment.model_hr_expense_line
 msgid "Expense Line"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:519
+#, python-format
+msgid "Remaining Employee Advance"
 msgstr ""
 
 #. module: hr_expense_replenishment
@@ -57,25 +64,35 @@ msgid "Add"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:521
+#: view:hr.expense.expense:0
+msgid "Validate Invoices"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:604
 #, python-format
 msgid "Integrity Problem. You have advances for this expense but in same time you active the No advances option. Please uncheck the No advances option or clean the advances table instead."
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: model:ir.model,name:hr_expense_replenishment.model_hr_employee
-msgid "Employee"
+#: model:ir.model,name:hr_expense_replenishment.model_hr_department
+msgid "Department"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:520
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:527
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:603
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:610
 #, python-format
 msgid "Invalid Procedure!"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:133
+#: view:hr.expense.expense:0
+msgid "Show Invoice"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:131
 #: help:hr.expense.expense,ait_ids:0
 #, python-format
 msgid "This are the account invoice taxes loaded into the Expense invoices. The user can't change its content and not have to worry about to fill the field. This taxes will be auto update when the expense invoices change.\n"
@@ -87,15 +104,15 @@ msgid "This are the account invoice taxes loaded into the Expense invoices. The 
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:226
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:225
 #, python-format
 msgid "Please, Complete the validation of the remaining Draft Invoices before continuing"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:225
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:237
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:674
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:224
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:236
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:783
 #: code:addons/hr_expense_replenishment/wizard/attach_invoice_to_expense_wizard.py:45
 #, python-format
 msgid "Invalid Procedure"
@@ -151,18 +168,29 @@ msgid "Journal Items"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: model:ir.model,name:hr_expense_replenishment.model_attach_invoice_to_expense_wizard
-msgid "attach.invoice.to.expense.wizard"
+#: field:hr.expense.expense,date_post:0
+msgid "Accounting Date"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:528
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:611
 #, python-format
 msgid "You have leave the expense advances empty (Renconcile the Expense will cause a Write Off journal entry). If this is your purpose its required to check the This expense has not advances checkbox into the expense advances page. If not, please create some advances for the employee and Refresh the expense advance lines with the expense advance page refresh button."
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:151
+#: view:attach.invoice.to.expense.wizard:0
+msgid "Note: It you already have an expense asociated to the invoice, this wizard will replace the previews expense link and add a new relationship to the expense\n"
+"                                specified below. If you want to unlink an already related expense only needs to run this wizard with expense field no filled."
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: model:ir.model,name:hr_expense_replenishment.model_attach_invoice_to_expense_wizard
+msgid "attach.invoice.to.expense.wizard"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:149
 #, python-format
 msgid "When the expense request is created the status is 'Draft'.\n"
 " It is confirmed by the user and request is sent to admin, the status is 'Waiting Confirmation'.\\ \n"
@@ -177,31 +205,30 @@ msgid "Expense Document Name"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: view:attach.invoice.to.expense.wizard:0
-msgid "Note: It you already have an expense asociated to the invoice, this wizard will replace the previews expense link and add a new relationship to the expense\n"
-"                                specified below. If you want to unlink an already related expense only needs to run this wizard with expense field no filled."
+#: model:ir.model,name:hr_expense_replenishment.model_hr_employee
+msgid "Employee"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:618
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:637
+#: view:hr.expense.expense:0
+msgid "{'currency_id': currency_id, 'depto': department_id, 'account_analytic_exp': account_analytic_id}"
+msgstr ""
+
+#. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:727
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:746
 #, python-format
 msgid "Payable to Employee"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Refresh"
-msgstr ""
-
-#. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:595
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:704
 #, python-format
 msgid "(Applyed Advance)"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:675
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:784
 #, python-format
 msgid "The expense invoices need to be validated. After manually check invoices you can validate all invoices in batch by using the Validate Invoices button. \n"
 " Invoices to Validate:\n"
@@ -214,8 +241,8 @@ msgid "Deductible Taxes"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: help:hr.expense.expense,ail_ids:0
-msgid "Deductible Expense"
+#: view:hr.expense.expense:0
+msgid "Deduct"
 msgstr ""
 
 #. module: hr_expense_replenishment
@@ -224,14 +251,14 @@ msgid "Payments"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:122
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:120
 #: help:hr.expense.expense,skip:0
 #, python-format
 msgid "Active this checkbox to allow leave the expense without advances (This will create write off a journal entry when reconciling). If this is not what you want please create and advance for the expense employee and use the Refresh button to associated to this expense"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:115
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:113
 #: help:hr.expense.expense,payment_ids:0
 #, python-format
 msgid "This table is a summary of the payments done to reconcile the expense invoices, lines and advances. This is an only read field that is set up once the expence reconciliation is done (when user click the Reconcile button at the Waiting Payment expense state."
@@ -248,7 +275,7 @@ msgid "Reconcile"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:238
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:237
 #, python-format
 msgid "You have not Deductible or No Deductible lines loaded into the expense"
 msgstr ""
@@ -269,7 +296,7 @@ msgid "Employee Advances"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:114
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:112
 #: field:hr.expense.expense,payment_ids:0
 #, python-format
 msgid "Expense Payments"
@@ -281,20 +308,20 @@ msgid "{'partner_id': partner_id, 'price_type': context.get('price_type') or Fal
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: view:hr.expense.expense:0
-msgid "Deduct"
+#: help:hr.expense.expense,ail_ids:0
+msgid "Deductible Expense"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:617
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:726
 #, python-format
 msgid "Payable to Partner"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/wizard/attach_invoice_to_expense_wizard.py:46
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:663
 #, python-format
-msgid "You cannot change to another Expense as the one your Invoice is linked is not in Draft State!"
+msgid "Payment through Expense"
 msgstr ""
 
 #. module: hr_expense_replenishment
@@ -314,7 +341,7 @@ msgid "Accounting Voucher"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:591
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:700
 #, python-format
 msgid "(Remaining Advance)"
 msgstr ""
@@ -325,7 +352,7 @@ msgid "Invoice Line"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:596
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:705
 #, python-format
 msgid "(Debt to employee)"
 msgstr ""
@@ -337,7 +364,7 @@ msgstr ""
 
 #. module: hr_expense_replenishment
 #: view:hr.expense.expense:0
-msgid "{'currency_id': currency_id, 'depto': department_id, 'account_analytic_exp': account_analytic_id}"
+msgid "Load All Advances"
 msgstr ""
 
 #. module: hr_expense_replenishment
@@ -346,12 +373,18 @@ msgid "Cancel"
 msgstr ""
 
 #. module: hr_expense_replenishment
+#: code:addons/hr_expense_replenishment/wizard/attach_invoice_to_expense_wizard.py:46
+#, python-format
+msgid "You cannot change to another Expense as the one your Invoice is linked is not in Draft State!"
+msgstr ""
+
+#. module: hr_expense_replenishment
 #: model:ir.actions.act_window,name:hr_expense_replenishment.act_attach_invoice_to_expense_wizard
 msgid "Attach to Expense"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:592
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:701
 #, python-format
 msgid "(Reconciliation)"
 msgstr ""
@@ -362,7 +395,7 @@ msgid "or"
 msgstr ""
 
 #. module: hr_expense_replenishment
-#: code:addons/hr_expense_replenishment/model/hr_expense.py:132
+#: code:addons/hr_expense_replenishment/model/hr_expense.py:130
 #: field:hr.expense.expense,ait_ids:0
 #, python-format
 msgid "Deductible Tax Lines"

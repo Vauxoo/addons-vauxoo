@@ -65,6 +65,18 @@ class hr_expense_expense(osv.Model):
              for inv_brw in ai_obj.browse(cr, uid, inv_ids, context=context)]))
         return exp_ids
 
+    def _get_ait_ids(self, cr, uid, ids, field_name, arg, context=None):
+        """ Returns list of invoice taxes of the invoices related to the
+        expense. """
+        context = context or {}
+        res = {}.fromkeys(ids,[])
+        for exp in self.browse(cr, uid, ids, context=context):
+            ait_ids = []
+            for inv_brw in exp.invoice_ids:
+                ait_ids.extend([line.id for line in inv_brw.tax_line])
+            res[exp.id] = ait_ids
+        return res
+
     def _get_ail_ids(self, cr, uid, ids, field_name, arg, context=None):
         """ Returns list of invoice lines of the invoices related to the
         expense. """
@@ -122,9 +134,8 @@ class hr_expense_expense(osv.Model):
                    'reconciling). If this is not what you want please create '
                    'and advance for the expense employee and use the Refresh '
                    'button to associated to this expense')),
-        'ait_ids': fields.related(
-            #~ _get_ait_ids,
-            'invoice_ids', 'tax_line',
+        'ait_ids': fields.function(
+            _get_ait_ids,
             type="one2many",
             relation='account.invoice.tax',
             string=_('Deductible Tax Lines'),
@@ -153,7 +164,8 @@ class hr_expense_expense(osv.Model):
             'entries are made for the expense request, the status is '
             '\'Waiting Payment\'.')),
         'account_analytic_id': fields.many2one('account.analytic.account',
-            'Analytic')
+            'Analytic'),
+        'date_post':fields.date('Accounting Date')
     }
     def onchange_employee_id(self, cr, uid, ids, employee_id, context=None):
         res = super(hr_expense_expense, self).onchange_employee_id(cr, uid,
@@ -310,6 +322,7 @@ class hr_expense_expense(osv.Model):
         """
         context = context or {}
         aml_obj = self.pool.get('account.move.line')
+        per_obj = self.pool.get('account.period')
         for exp in self.browse(cr, uid, ids, context=context):
             self.check_advance_no_empty_condition(cr, uid, exp.id,
                                                   context=context)
@@ -358,7 +371,9 @@ class hr_expense_expense(osv.Model):
                      for aml_brw in exp_aml_brws]),
                 'inv_sum':
                 sum([aml_brw.credit
-                     for aml_brw in inv_aml_brws])
+                     for aml_brw in inv_aml_brws]),
+                'invs_ids': [inv.id
+                                for inv in exp.invoice_ids]
             }
 
             aml_amount = aml['debit'] - aml['credit']
@@ -388,6 +403,17 @@ class hr_expense_expense(osv.Model):
                                               aml, context=context)
                 self.write(cr, uid, exp.id, {'state': 'paid'}, context=context)
 
+            date_post=exp.date_post or fields.date.today()
+             
+            period_id=per_obj.find(cr, uid,dt=date_post)
+            period_id=period_id and period_id[0]
+            exp.write({'date_post':date_post,'period_id':period_id})
+            x_aml_ids=[aml_brw.id for aml_brw in exp.account_move_id.line_id]
+
+            vals={'date':date_post,'period_id':period_id}
+            exp.account_move_id.write(vals)
+            aml_obj.write(cr,uid,x_aml_ids,vals)
+
             for line_pair in full_rec+[ff]:
                 if not line_pair: continue
                 aml_obj.reconcile(
@@ -396,7 +422,7 @@ class hr_expense_expense(osv.Model):
                 if not line_pair: continue
                 aml_obj.reconcile_partial(
                     cr, uid, line_pair, 'manual', context=context)
-        return True
+        return aml
 
     def expense_reconcile_partial_deduction(self, cr, uid, ids, d, context=None):
         """
@@ -779,14 +805,43 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wf_service = netsvc.LocalService("workflow")
+        inv_obj = self.pool.get('account.invoice')
         for exp_brw in self.browse(cr, uid, ids, context=context):
+            self.check_inv_periods(cr, uid, exp_brw.id,context=context)
             validate_inv_ids = \
                 [inv_brw.id
                  for inv_brw in exp_brw.invoice_ids
                  if inv_brw.state == 'draft']
+            inv_obj.write(cr, uid, validate_inv_ids,{
+                'date_invoice':exp_brw.date_post,
+                }, context=context)
             for inv_id in validate_inv_ids:
                 wf_service.trg_validate(uid, 'account.invoice', inv_id,
                                         'invoice_open', cr)
+        return True
+    
+    def check_inv_periods(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int,long)) and [ids] or ids
+        exp_brw=self.browse(cr, uid, ids[0], context = context)
+        period_obj=self.pool.get('account.period')
+        res=[]
+        for inv_brw in exp_brw.invoice_ids:
+            if inv_brw.state=='draft':
+                pass
+            elif inv_brw.state in ('cancel','paid'):
+                res.append(inv_brw)
+            elif inv_brw.state=='open':
+                if inv_brw.payment_ids:
+                    res.append(inv_brw)
+                elif[inv_brw.period_id.id]!=period_obj.find(cr,uid,dt=exp_brw.date_post):
+                    res.append(inv_brw)
+        if res:
+            note= _('The folliwing invoices cannot be used in this Expense:\n')
+            for inv_brw in res:
+                note+= '%s - %s -%s - %s \n'%(inv_brw.supplier_invoice_number,
+                inv_brw.partner_id.name,inv_brw.date_invoice,inv_brw.period_id.name)
+            raise osv.except_osv(_('Error!'),note)
         return True
 
     #~ note: This method is not used. Can be used when the validating invoice
@@ -908,6 +963,7 @@ class hr_expense_expense(osv.Model):
                         'payment_ids': [],
                         'ail_ids': [],
                         'ait_ids': [],
+                        'date_post': False,
                         })
         return super(hr_expense_expense, self).copy(cr, uid, id, default,
                         context=context)

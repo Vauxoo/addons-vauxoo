@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-	    <data noupdate="1">
+	    <data noupdate="0">
 		<record id="ir_header_webkit_ifrsreport" model="ir.header_webkit">
 			<field name="footer_html"><![CDATA[<html>
     <head>
@@ -26,7 +26,7 @@
         </table>
     </body>
 </html>]]></field>
-			<field name="orientation">Portrait</field>
+			<field name="orientation">Landscape</field>
 			<field name="format">Letter</field>
 			<field name="html">
 				<![CDATA[<html>
@@ -78,8 +78,6 @@ width:3%;
 
 .title {
 font-size:100;
-font-weight: bold;
-
 }
 
 
@@ -95,81 +93,92 @@ font-size:12;
 }
 
 .list_table {
-border-color:black;
-text-align:right;
-font-size:8;
-border-collapse: collapse;
+border-collapse: separate; 
+border-spacing: 1px 1px;
 }
 
 
 .celda{
-border-top:4px solid black;
-border-bottom:4px solid black;
-max-width:80px;
-min-width:79px;
+max-width:99px;
+min-width:89px;
 font-size:10;
 text-align:right;
 page-break-before: auto;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#620400;
+color:#FFFFFF;
 }
 
-.celda2{
-max-width:80px;
-min-width:79px;
+.celdaDetailTitulo{
+font-style:italic;
 font-size:9;
-text-align:right;
-background-color:#F0F8FF;
+text-align:left;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#F5F5F5;
 }
 
-th.celda3{
+.celdaDetail{
+font-size:8; 
+font-weight:bold; 
+font-family: monospace; 
+text-align:right; 
+background-color:#F5F5F5;
+}
+
+.celdaAbstractTotal{
+font-size:9;
 text-align:left;
-font-size:12;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#EAEAEA;
+}
+
+.celdaTituloTabla{
+font-size:10;
+text-align:left;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#620400;
+color:#FFFFFF;
+}
+
+.celdaAbstract{
+font-size:8;
+font-weight:bold; 
+font-family: monospace;
+text-align:right;
+background-color:#EAEAEA;
+}
+
+div.td_company
+{
+font-size:12pt;
+margin-left:0;
 font-weight:bold;
-color:black;
-padding-right:3px
-padding-left:3px
-background-color:#d4e388;
+font-family:Arial,Helvetica,sans-serif;
 }
 
-.celda4{
-max-width:80px;
-min-width:79px;
-font-size:9;
-text-align:right;
-background-color:#F3FCFF;
+div.td_company_title
+{
+font-size:22pt;
+margin-left:0;
+font-weight:bold;
+font-family:Arial,Helvetica,sans-serif;
 }
 
-.celda5{
-max-width:80px;
-min-width:79px;
-font-size:12;
-text-align:left;
-background-color:#F0F8FF;
-}
-
-.celda6{
-max-width:80px;
-min-width:79px;
-font-size:12;
-text-align:left;
-background-color:#F3FCFF;
-}
 
 .celdaTotalTitulo{
-max-width:80px;
-min-width:79px;
-font-size:14;
+font-size:9;
 text-align:left;
 font-weight:bold;
-background-color:#C2FABF;
+font-family:Arial,Helvetica,sans-serif;
+background-color:#dcdcdc;
 }
 
 .celdaTotal{
-max-width:80px;
-min-width:79px;
-font-size:9;
+font-family: monospace; 
+font-size:8;
+font-weight:bold; 
 text-align:right;
-font-weight:bold;
-background-color:#C2FABF;
+background-color:#dcdcdc;
 }
 
 
@@ -178,7 +187,6 @@ border-top:4px solid black;
 border-bottom:4px solid black;
 text-align:center;
 font-size:8;
-font-weight:bold;
 padding-right:3px
 padding-left:3px
 }
@@ -219,8 +227,8 @@ font-size:8;
 
 td.celda_border{
 text-align:right;
-max-width:80px;
-min-width:79px;
+max-width:99px;
+min-width:89px;
 font-size:10;
 border-right-style:solid;
 border-left-style:solid;
@@ -233,7 +241,6 @@ border-top:4px solid black;
 border-bottom:4px solid black;
 text-align:left;
 font-size:11;
-font-weight:bold;
 padding-right:3px
 padding-left:3px
 }
@@ -251,217 +258,6 @@ background-color:#C0C0BF;
 </field>
 			<field name="name">Reports IFRS WebKit</field>
 		</record>
-		
-		<record id="ir_header_img_company" model="ir.header_img">
-			<field name="type">png</field>
-			<field name="name">company_logo</field>
-		</record>
-        
-        <record id="ir_header_webkit_ifrsreport_1" model="ir.header_webkit">
-			<field name="footer_html"><![CDATA[<html>
-    <head>
-        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
-        <script>
-            function subst() {
-            var vars={};
-            var x=document.location.search.substring(1).split('&');
-            for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-            var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-            for(var i in x) {
-            var y = document.getElementsByClassName(x[i]);
-            for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-                }
-            }
-        </script>
-    </head>
-    <body style="border:0; margin: 0;" onload="subst()">
-        <table style="border-top: 1px solid black; width: 100%">
-            <tr >
-                <td style="text-align:right;font-size:12;" width="95%">Page <span class="page"/></td><td style="text-align:left;font-size:12;">  of <span class="topage"/></td>
-            </tr>
-        </table>
-    </body>
-</html>]]></field>
-			<field name="orientation">Portrait</field>
-			<field name="format">Letter</field>
-			<field name="html">
-				<![CDATA[<html>
-					<head>
-						<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
-						<script>
-							function subst() {
-							var vars={};
-							var x=document.location.search.substring(1).split('&');
-							for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-							var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-							for(var i in x) {
-							var y = document.getElementsByClassName(x[i]);
-							for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-								}
-							}
-						</script>
-						<style type="text/css">
-							${css2}
-						</style>
-					</head>
-					<body style="border:0; margin: 0;" onload="subst()">
-				 ${_debug or ''|n} </body>
-				</html>]]>
-		</field>
-<field name="css2">
-<![CDATA[
-body {
-font-family:helvetica;
-font-size:12;
-}
 
-
-.dest_address {
-font-size:12;
-margin-left:0;
-text-align:rigth;
-line-height:80%;
-padding-top:0px
-
-}
-
-.header {
-margin-left:0;
-text-align:center;
-font-size:50;
-width:3%;
-}
-
-.title {
-font-size:100;
-font-weight: bold;
-
-}
-
-
-.basic_table{
-text-align:center;
-border:1px solid lightGrey;
-border-collapse: collapse;
-}
-.basic_table td {
-border:1px solid lightGrey;
-font-size:12;
-
-}
-
-.list_table {
-border-color:black;
-text-align:right;
-font-size:8;
-border-collapse: collapse;
-}
-
-
-.celda{
-border-top:4px solid black;
-border-bottom:4px solid black;
-max-width:80px;
-min-width:79px;
-font-size:10;
-text-align:right;
-page-break-before: auto;
-}
-
-.celda2{
-max-width:80px;
-min-width:79px;
-font-size:10;
-text-align:right;
-}
-
-th.list_table{
-border-top:4px solid black;
-border-bottom:4px solid black;
-text-align:center;
-font-size:8;
-font-weight:bold;
-padding-right:3px
-padding-left:3px
-}
-
-.list_tabe thead {
-    display:table-header-group;
-}
-
-
-.total {
-width:100%;
-}
-.lib {
-width:10.3%;
-}
-.tot {
-text-align:right;
-width:15%;
-}
-.lefttot {
-width:74%;
-}
-.tax {
-width:50%;
-} 
-
-
-.prueba{
-background-color:#80E680;
-color:black;
-}
-
-th.justify
-{
-text-align:justify;
-text-indent:20px;
-font-size:8;
-}
-
-td.celda_border{
-text-align:right;
-max-width:80px;
-min-width:79px;
-font-size:10;
-border-right-style:solid;
-border-left-style:solid;
-border-width:1px;
-}
-
-
-th.celda_border{
-border-top:4px solid black;
-border-bottom:4px solid black;
-text-align:left;
-font-size:11;
-font-weight:bold;
-padding-right:3px
-padding-left:3px
-}
-
-
-th.celda3{
-text-align:left;
-font-size:12;
-font-weight:bold;
-color:black;
-padding-right:3px
-padding-left:3px
-}
-
-tr
-{
-page-break-after:auto;
-}
-
-tr.nonrow
-{
-background-color:#C0C0BF;
-}]]>
-</field>
-			<field name="name">Reports IFRS WebKit 2</field>
-		</record>
 	</data>
 </openerp>
