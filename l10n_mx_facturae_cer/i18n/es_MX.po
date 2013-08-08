@@ -7,10 +7,280 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 17:17+0000\n"
-"PO-Revision-Date: 2013-04-03 17:17+0000\n"
+"PO-Revision-Date: 2013-08-07 16:39+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-08-08 05:01+0000\n"
+"X-Generator: Launchpad (build 16723)\n"
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,serial_number:0
+msgid "Number of serie of the certificate"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company,invoice_out_refund_sequence_id:0
+msgid "The sequence used for invoice out refund numbers."
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: code:addons/l10n_mx_facturae_cer/res_company.py:132
+#, python-format
+msgid ""
+"You certificate file, key file or password is incorrect.\n"
+"Verify uppercase and lowercase"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:account.invoice,certificate_id:0
+msgid "Invoice Certificate"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company.facturae.certificate:0
+msgid "Group By..."
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,certificate_key_file:0
+msgid "Certificate Key File"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company,invoice_out_sequence_id:0
+msgid "The sequence used for invoice out numbers."
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+#: field:res.company,certificate_ids:0
+#: view:res.company.facturae.certificate:0
+msgid "Certificates"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,date_start:0
+msgid "Date start the certificate before the SAT"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+#: view:res.company.facturae.certificate:0
+msgid "General Information of Certificate"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company,certificate_ids:0
+msgid "Certificates configurated in this company"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,certificate_file:0
+msgid "Certificate File"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+#: view:res.company.facturae.certificate:0
+msgid "Certificates PEM FORMAT (Transformed)"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,certificate_key_file_pem:0
+msgid "This file is generated with the file.key"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company.facturae.certificate:0
+#: field:res.company.facturae.certificate,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,active:0
+msgid "Indicate if this certificate is active"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company,certificate_id:0
+msgid "Certificate Current"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,serial_number:0
+msgid "Serial Number"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,certificate_key_file:0
+msgid "This file .key is proportionate by the SAT"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company,invoice_out_sequence_id:0
+msgid "Invoice Out Sequence"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,date_end:0
+msgid "Date end of validity of the certificate"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,certificate_file_pem:0
+msgid "This file is generated with the file.cer"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+#: view:res.company.facturae.certificate:0
+msgid "Certificates DER FORMAT (Original)"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+msgid "Configuration"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,certificate_password:0
+msgid "Certificate Password"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+msgid "Certificados SAT"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company,invoice_out_refund_sequence_id:0
+msgid "Invoice Out Refund Sequence"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,certificate_file_pem:0
+msgid "Certificate File PEM"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: model:ir.actions.act_window,name:l10n_mx_facturae_cer.action_res_company_facturae_certificate_tree
+#: model:ir.ui.menu,name:l10n_mx_facturae_cer.menu_res_company_facturae_certificate
+msgid "FacturaE Certificate"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,certificate_password:0
+msgid "This password is proportionate by the SAT"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,company_id:0
+msgid "Company where you add this certificate"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: model:ir.model,name:l10n_mx_facturae_cer.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+#: view:res.company.facturae.certificate:0
+msgid "Extra Information"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,certificate_key_file_pem:0
+msgid "Certificate Key File PEM"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,active:0
+msgid "Active"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: model:ir.actions.act_window,name:l10n_mx_facturae_cer.certificates_form_config_action
+msgid "Configure Certificates to Electronic Invoice"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: code:addons/l10n_mx_facturae_cer/res_company.py:131
+#, python-format
+msgid "Warning!"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,fname_xslt:0
+msgid "Folder in server with XSLT file"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+#: view:res.company.facturae.certificate:0
+msgid "Get Certificate Info"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,fname_xslt:0
+msgid "File XML Parser (.xslt)"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company.facturae.certificate,certificate_file:0
+msgid "This file .cer is proportionate by the SAT"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: model:ir.actions.act_window,help:l10n_mx_facturae_cer.certificates_form_config_action
+msgid "Configure yours certificates for Electronic Invoice."
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,date_end:0
+msgid "Date End"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: model:ir.model,name:l10n_mx_facturae_cer.model_res_company_facturae_certificate
+msgid "res.company.facturae.certificate"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: model:res.groups,name:l10n_mx_facturae_cer.group_facturae_mx_cer_manager
+msgid "FacturaE MX Cer / Manager"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:account.invoice,certificate_id:0
+msgid "Id of the certificate used for the invoice"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company.facturae.certificate:0
+msgid "Inactive"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: view:res.company:0
+msgid "For configurate sequence, access to sequence of Sale Journal."
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: model:ir.model,name:l10n_mx_facturae_cer.model_account_invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: field:res.company.facturae.certificate,date_start:0
+msgid "Date Start"
+msgstr ""
+
+#. module: l10n_mx_facturae_cer
+#: help:res.company,certificate_id:0
+msgid ""
+"Serial Number of the certificate active and inside of dates in this company"
+msgstr ""

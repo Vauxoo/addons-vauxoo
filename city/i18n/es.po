@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-22 16:20+0000\n"
-"PO-Revision-Date: 2013-02-22 10:21-0600\n"
-"Last-Translator: Isaac Lopez <isaac@vauxoo.com>\n"
+"PO-Revision-Date: 2013-08-07 16:16+0000\n"
+"Last-Translator: Isaac López Zúñiga - http://www.vauxoo.com <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-08-08 05:01+0000\n"
+"X-Generator: Launchpad (build 16723)\n"
 
 #. module: city
 #: view:res.country.state.city:0
@@ -67,4 +68,3 @@ msgstr "Empresa"
 #: model:ir.ui.menu,name:city.menu_country_state_city_partner
 msgid "Cities"
 msgstr "Ciudades"
-

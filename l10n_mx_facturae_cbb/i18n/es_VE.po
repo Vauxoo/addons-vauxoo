@@ -7,10 +7,281 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-03 00:02+0000\n"
-"PO-Revision-Date: 2013-04-03 00:02+0000\n"
+"PO-Revision-Date: 2013-08-07 16:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-08-08 05:01+0000\n"
+"X-Generator: Launchpad (build 16723)\n"
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Teléfono(s):"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Calle:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "RFC:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Suma $"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Expedido en:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Origen:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Últimos 4 dígitos de la cuenta bancaria:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: model:ir.model,name:l10n_mx_facturae_cbb.model_ir_attachment_facturae_mx
+msgid "ir.attachment.facturae.mx"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: field:ir.sequence.approval,date_start:0
+msgid "Date Approval"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Int:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Estado:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Descuento:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: help:ir.sequence.approval,date_start:0
+msgid "Date start of the folios"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Nombre:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid ""
+"La reproducción apócrifa de este comprobante constituye un delito en los "
+"términos de las disposiciones fiscales."
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: model:ir.actions.report.xml,name:l10n_mx_facturae_cbb.account_invoice_facturae_pdf2
+msgid "Electronic Invoice CBB PDF"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: model:ir.model,name:l10n_mx_facturae_cbb.model_ir_sequence_approval
+msgid "ir.sequence.approval"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: view:ir.sequence:0
+#: view:ir.sequence.approval:0
+msgid "Code of Dimensional Bar (CBB)"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Total $"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid ""
+"Este comprobante tendrá una vigencia de dos años contados a partir de la "
+"fecha de aprobación de la asignación de folios, la cual es:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Localidad:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "%) $"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Dirección:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Receptor"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Pago en una sola exhibición"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "C.P.:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Nro. Ext:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Efectos fiscales al pago"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Vendedor:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Condición de pago:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "IMPORTE CON LETRA:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Sub Total $"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: field:ir.sequence.approval,cbb_image:0
+msgid "Image of Code of Dimensional Bar"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Ret ("
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "R. F. C. :"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: help:ir.sequence.approval,cbb_image:0
+msgid "This images will be used in the Report of Electronic Invoice"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Descripción"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Método de Pago:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Colonia:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Ciudad:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Cantidad"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Folio:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Régimen Fiscal:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: field:ir.sequence.approval,date_end:0
+msgid "Effective Date"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Unidad de medida"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "CP:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Clave"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: model:ir.model,name:l10n_mx_facturae_cbb.model_account_invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "P.Unitario"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Número de aprobación SICOFI:"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: model:res.groups,name:l10n_mx_facturae_cbb.group_facturae_mx_cbb_user
+msgid "FacturaE MX CBB / User"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: help:ir.sequence.approval,date_end:0
+msgid "Date end of the folios"
+msgstr ""
+
+#. module: l10n_mx_facturae_cbb
+#: report:account.invoice.facturae.pdf2:0
+msgid "Importe"
+msgstr ""
