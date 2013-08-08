@@ -831,7 +831,7 @@ class ifrs_lines(osv.osv):
     _columns = {
         'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
         'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
-        'name': fields.char('Name', 128, required=True, translate=True, help='Line name in the report. This name can be translatable, if there are multiple languages ​​loaded it can be translated'),
+        'name': fields.char('Name', 128, required=True, translate=True, help='Line name in the report. This name can be translatable, if there are multiple languages loaded it can be translated'),
         'type': fields.selection(
             [
                 ('abstract', 'Abstract'),
@@ -868,7 +868,8 @@ class ifrs_lines(osv.osv):
                                  store={
                                  'ifrs.lines': (_get_children_and_total, ['parent_id'], 10),
                                  }),
-        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel', 'ifrs_parent_id', 'ifrs_child_id', string='Second Operand'),
+        'operand_ids': fields.many2many('ifrs.lines', 'ifrs_operand_rel',
+            'ifrs_parent_id', 'ifrs_child_id', string='Second Operand'),
         'operator': fields.selection([
             ('subtract', 'Subtraction'),
             ('percent', 'Percentage'),
