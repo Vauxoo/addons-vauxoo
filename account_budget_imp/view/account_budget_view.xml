@@ -1,36 +1,120 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
-        <record model="ir.ui.view" id="crossovered_budget_view_form">
-            <field name="name">crossovered.budget.form.inherit</field>
-            <field name="model">crossovered.budget</field>
-            <field name="inherit_id"
-                   ref="account_budget.crossovered_budget_view_form"/>
+        <record model="ir.ui.view" id="view_crossovered_budget_line_form">
+            <field name="name">crossovered.budget.line.form.inherit</field>
+            <field name="model">crossovered.budget.lines</field>
+            <field name="inherit_id" ref="account_budget.view_crossovered_budget_line_form"/>
             <field name="arch" type="xml">
-                    <xpath expr="//field[@name='validating_user_id']"
-                           position="after">
-                        <field name="dt_approved" readonly="True"/>
-                        <field name="dt_validated" readonly="True"/>
-                        <field name="dt_done" readonly="True"/>
-                    </xpath>
-                    <xpath 
-                        expr="//field[@name='crossovered_budget_line']//tree/field[@name='planned_amount']"
-                    position="after">
-                        <field name="practical_amount_aa"/>
+                <xpath expr="//field[@name='theoritical_amount']" position="after">
+                    <field name="period_id"/>
+                    <field name="practical_amount_aa"/>
                     <field name="forecasted_amount"/>
-                    </xpath>
-                    <xpath 
-                        expr="//field[@name='crossovered_budget_line']//tree"
-                        position="attributes">
-                        <attribute name="class">oe_account_budget_line</attribute>
-                    </xpath>
-                    <xpath 
-                        expr="//field[@name='crossovered_budget_line']//form//field[@name='planned_amount']"
-                    position="after">
-                        <field name="practical_amount_aa"/>
-                        <field name="forecasted_amount"/>
-                    </xpath>
+                </xpath>
             </field>
+        </record>
+       <record id="account_budget.view_crossovered_budget_line_search" model="ir.ui.view">
+            <field name="name">account.budget.line.search</field>
+            <field name="model">crossovered.budget.lines</field>
+            <field name="arch" type="xml">
+                <search string="Budget Lines">
+                    <field name="analytic_account_id"/>
+                    <field name="analytic_account_id"/>
+                    <field name="period_id"/>
+                    <field name="practical_amount_aa"/>
+                    <field name="forecasted_amount"/>
+                    <field name="crossovered_budget_id"/>
+                    <field name="general_budget_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="paid_date"/>
+                    <field name="planned_amount"/>
+                    <field name="practical_amount"/>
+                    <field name="theoritical_amount"/>
+                    <field name="percentage"/>
+                    <field name="company_id"/>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="crossovered_budget_line_view_kanban">
+            <field name="name">crossovered.budget.line.kanban.inherit</field>
+            <field name="model">crossovered.budget.lines</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="period_id"  quick_create="false" create="true">
+                    <field name="analytic_account_id"/>
+                    <field name="period_id"/>
+                    <field name="practical_amount_aa"/>
+                    <field name="forecasted_amount"/>
+                    <field name="crossovered_budget_id"/>
+                    <field name="general_budget_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="paid_date"/>
+                    <field name="planned_amount"/>
+                    <field name="practical_amount"/>
+                    <field name="theoritical_amount"/>
+                    <field name="percentage"/>
+                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                        <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
+                                <div class="oe_dropdown_toggle oe_dropdown_kanban" groups="base.group_user">
+                                    <span class="oe_e">í</span>
+                                    <ul class="oe_dropdown_menu">
+                                        <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Budget Settings</a></li></t>
+                                        <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+                                    </ul>
+                                </div>
+                            <div class="oe_kanban_content">
+                            <div class="oe_module_vignette  oe_semantic_html_override">
+                                <a type="open">
+                                    <div class="oe_kanban_details">
+                                        <span class="oe_e">N</span>
+                                        <ul>
+                                            <li><field name="company_id"/></li>
+                                            <li><field name="practical_amount_aa"/></li>
+                                            <li><field name="forecasted_amount"/></li>
+                                            <li><field name="analytic_account_id" groups="analytic.group_analytic_accounting"/></li>
+                                            <li><field name="crossovered_budget_id"/></li>
+                                            <li><field name="general_budget_id"/></li>
+                                            <li><field name="date_from"/></li>
+                                            <li><field name="date_to"/></li>
+                                            <li><field name="paid_date"/></li>
+                                            <li><field name="percentage"/></li>
+                                        </ul>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                <td>Algo</td>
+                                                <td>HAdd</td>
+                                                <td>Algo</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><field name="planned_amount"/></td>
+                                                <td><field name="practical_amount"/></td>
+                                                <td><field name="theoritical_amount"/></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </a>
+                            </div>
+                            </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="account_budget.act_crossovered_budget_lines_view">
+            <field name="name">Budget Lines</field>
+            <field name="res_model">crossovered.budget.lines</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="view_id" ref="crossovered_budget_line_view_kanban"/>
         </record>
     </data>
 </openerp>
