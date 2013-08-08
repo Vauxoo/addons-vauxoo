@@ -526,20 +526,22 @@ class ifrs_lines(osv.osv):
         @param number_month: periodo a calcular
         @param is_compute: si el metodo actualizara el campo amount para la vista
         """
-        brw = self.browse(cr, uid, id, context=c)
+        cx = context or {}
+        brw = self.browse(cr, uid, id, context=cx)
+        fy_obj = self.pool.get('account.fiscalyear')
+        period_obj = self.pool.get('account.period')
 
-        elif brw.type == 'constant':
-            if brw.constant_type == 'period_days':
-                res = period_obj._get_period_days(
-                    cr, uid, c['period_from'], c['period_to'])
-            elif brw.constant_type == 'fy_periods':
-                res = fy_obj._get_fy_periods(cr, uid, c['fiscalyear'])
-            elif brw.constant_type == 'fy_month':
-                res = fy_obj._get_fy_month(cr, uid, c[
-                                           'fiscalyear'], c['period_to'])
-            elif brw.constant_type == 'number_customer':
-                res = self._get_number_customer_portfolio(cr, uid, id, c[
-                                           'fiscalyear'], c['period_to'], c)
+        if brw.constant_type == 'period_days':
+            res = period_obj._get_period_days(
+                cr, uid, cx['period_from'], cx['period_to'])
+        elif brw.constant_type == 'fy_periods':
+            res = fy_obj._get_fy_periods(cr, uid, cx['fiscalyear'])
+        elif brw.constant_type == 'fy_month':
+            res = fy_obj._get_fy_month(cr, uid, cx[
+                                       'fiscalyear'], cx['period_to'])
+        elif brw.constant_type == 'number_customer':
+            res = self._get_number_customer_portfolio(cr, uid, id, cx[
+                                       'fiscalyear'], cx['period_to'], cx)
         return res
 
     def _get_sum(self, cr, uid, id=None, number_month=None, is_compute=None, context=None):
