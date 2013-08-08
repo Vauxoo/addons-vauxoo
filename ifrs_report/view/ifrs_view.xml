@@ -228,6 +228,7 @@
                                     attrs="{'invisible':[('type','!=','total')]}">
                                     <!--attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}">-->
                                     <tree>
+                                        <field name='ifrs_id'/>
                                         <field name='sequence'/>
                                         <field name='name'/>
                                         <field name='type'/>
@@ -241,6 +242,7 @@
                                     attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">
                                     <!--attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">-->
                                     <tree>
+                                        <field name='ifrs_id'/>
                                         <field name='sequence'/>
                                         <field name='name'/>
                                         <field name='type'/>
