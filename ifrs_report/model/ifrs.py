@@ -521,6 +521,27 @@ class ifrs_lines(osv.osv):
                 res = res * so
         return res
 
+    def _get_constant(self, cr, uid, id=None, number_month=None, is_compute=None, context=None):
+        """ Calculates the amount sum of the line of constant
+        @param number_month: periodo a calcular
+        @param is_compute: si el metodo actualizara el campo amount para la vista
+        """
+        brw = self.browse(cr, uid, id, context=c)
+
+        elif brw.type == 'constant':
+            if brw.constant_type == 'period_days':
+                res = period_obj._get_period_days(
+                    cr, uid, c['period_from'], c['period_to'])
+            elif brw.constant_type == 'fy_periods':
+                res = fy_obj._get_fy_periods(cr, uid, c['fiscalyear'])
+            elif brw.constant_type == 'fy_month':
+                res = fy_obj._get_fy_month(cr, uid, c[
+                                           'fiscalyear'], c['period_to'])
+            elif brw.constant_type == 'number_customer':
+                res = self._get_number_customer_portfolio(cr, uid, id, c[
+                                           'fiscalyear'], c['period_to'], c)
+        return res
+
     def _get_sum(self, cr, uid, id=None, number_month=None, is_compute=None, context=None):
         """ Calculates the amount sum of the line
         @param number_month: periodo a calcular
@@ -739,6 +760,9 @@ class ifrs_lines(osv.osv):
                     is_compute, context=context)
         elif ifrs_line.type == 'total':
             res = self._get_grand_total( cr, uid, ifrs_line.id, number_month,
+                    is_compute, context=context)
+        elif ifrs_line.type == 'constant':
+            res = self._get_constant( cr, uid, ifrs_line.id, number_month,
                     is_compute, context=context)
         else:
             res = self._get_sum( cr, uid, ifrs_line.id, number_month,
