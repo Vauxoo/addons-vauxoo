@@ -57,6 +57,9 @@ class res_partner(osv.osv):
                     ids = self.search(cr, user,
                         [('vat', operator, res.group(2))]+ args, limit=limit,
                                                             context=context)
+        else:
+            return super(res_partner, self).name_search(cr, user,
+                                        name, args, operator, context, limit)
                                                             
         return self.name_get(cr, user, ids, context=context)
         
@@ -66,7 +69,6 @@ class res_partner(osv.osv):
         if isinstance(ids, (long, int)):
             ids = [ids]
         res_name = super(res_partner, self).name_get(cr, uid, ids, context)
-        reads = self.read(cr, uid, ids, ['name', 'vat'], context=context)
         res = []
         for record in res_name:
             partner = self.browse(cr, uid, record[0], context=context)
