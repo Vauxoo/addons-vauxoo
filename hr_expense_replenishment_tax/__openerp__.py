@@ -26,7 +26,8 @@
 {
     "name": "Expenses Replenishment Tax",
     "version": "0.1",
-    "depends": ["hr_expense_replenishment"
+    "depends": ["hr_expense_replenishment",
+        "account_invoice_tax"
         ],
     "author": "Vauxoo",
     "description": """
