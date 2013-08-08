@@ -787,11 +787,14 @@ class ifrs_lines(osv.osv):
         if ifrs_line.type == 'detail':
             res = self.exchange(
                 cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
-        elif ifrs_line.type == 'total':
-            if ifrs_line.operator not in ('percent', 'ratio'):
-                if ifrs_line.comparison not in ('percent', 'ratio', 'product'):
-                    res = self.exchange(
-                        cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
+        # Total amounts come from details so if the details are already
+        # converted into the regarding currency then it is not useful to do at
+        # total level
+        #elif ifrs_line.type == 'total':
+        #    if ifrs_line.operator not in ('percent', 'ratio'):
+        #        if ifrs_line.comparison not in ('percent', 'ratio', 'product'):
+        #            res = self.exchange(
+        #                cr, uid, ids, res, to_currency_id, from_currency_id, exchange_date, context=context)
         return res
 
     def _get_amount_with_operands(self, cr, uid, ids, ifrs_line, period_info=None, fiscalyear=None, exchange_date=None, currency_wizard=None, number_month=None, target_move=None, pd=None, undefined=None, two=None, is_compute=None, context=None):
