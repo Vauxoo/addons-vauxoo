@@ -196,7 +196,8 @@
                                     colspan='2' 
                                     name="cons_ids" 
                                     nolabel='1' 
-                                    attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}">
+                                    attrs="{'invisible':[('type','!=','detail')]}">
+                                    <!--attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}">-->
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -224,8 +225,8 @@
                                     name="total_ids" widget="many2many"
                                     nolabel="1" colspan='2' 
                                     domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
-                                    attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"
-                                    >
+                                    attrs="{'invisible':[('type','!=','total')]}">
+                                    <!--attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}">-->
                                     <tree>
                                         <field name='sequence'/>
                                         <field name='name'/>
@@ -237,8 +238,8 @@
                                     name="operand_ids" widget="many2many"
                                     nolabel='1' colspan='2' 
                                     domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
-                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}"
-                                    >
+                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">
+                                    <!--attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">-->
                                     <tree>
                                         <field name='sequence'/>
                                         <field name='name'/>

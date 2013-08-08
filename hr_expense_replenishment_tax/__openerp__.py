@@ -26,11 +26,17 @@
 {
     "name": "Expenses Replenishment Tax",
     "version": "0.1",
-    "depends": ["hr_expense_replenishment"
+    "depends": [
+        "account_invoice_tax",
+        "hr_expense_replenishment",
         ],
     "author": "Vauxoo",
     "description": """
+Create Entries Tax Effectively Paid :
+=====================================
 
+This module creates the tax effectively paid of the invoices associated
+with the expense
 """,
     "website": "http://openerp.com.ve",
     "category": "HR Module",
