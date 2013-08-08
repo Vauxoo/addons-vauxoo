@@ -856,6 +856,8 @@ class ifrs_lines(osv.osv):
         'acc_val': 'fy',
         'value': 'balance',
         'help': True,
+        'operator': 'without',
+        'comparison': 'without',
         #'sequence': lambda obj, cr, uid, context: uid,
     }
 
