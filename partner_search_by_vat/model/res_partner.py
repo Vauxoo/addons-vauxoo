@@ -57,6 +57,9 @@ class res_partner(osv.osv):
                     ids = self.search(cr, user,
                         [('vat', operator, res.group(2))]+ args, limit=limit,
                                                             context=context)
+        else:
+            return super(res_partner, self).name_search(cr, user,
+                                        name, args, operator, context, limit)
                                                             
         return self.name_get(cr, user, ids, context=context)
         
