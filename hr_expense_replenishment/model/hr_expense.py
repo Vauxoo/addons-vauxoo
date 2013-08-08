@@ -968,6 +968,20 @@ class hr_expense_expense(osv.Model):
         return super(hr_expense_expense, self).copy(cr, uid, id, default,
                         context=context)
 
+    def show_entries(self, cr, uid, ids, context=None):
+        for exp in self.browse(cr, uid, ids, context=context):
+            res = [move.id for move in exp.account_move_id.line_id]
+            print res,'imprimo res'
+        return {
+            'domain': "[('id','in', ["+','.join(map(str, res))+"])]",
+            'name': _('Entries'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.move.line',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
+
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
     def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id,
