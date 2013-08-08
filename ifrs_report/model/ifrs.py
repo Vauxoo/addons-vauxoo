@@ -531,6 +531,20 @@ class ifrs_lines(osv.osv):
         fy_obj = self.pool.get('account.fiscalyear')
         period_obj = self.pool.get('account.period')
 
+        if not cx.get('fiscalyear'):
+            cx['fiscalyear'] = fy_obj.find(cr, uid, dt=None, context=cx)
+
+        if not cx.get('period_from', False) and not cx.get('period_to', False):
+            if context.get('whole_fy', False):
+                cx['period_from'] = period_obj.search(cr, uid, [(
+                    'fiscalyear_id', '=', cx['fiscalyear']), ('special', '=', True)])
+                if not cx['period_from']:
+                    raise osv.except_osv(_('Error !'), _('There are no special period in %s') % (
+                        fy_obj.browse(cr, uid, cx['fiscalyear'], context=cx).name))
+                cx['period_from'] = cx['period_from'][0]
+            cx['period_to'] = period_obj.search(cr, uid, [
+                                               ('fiscalyear_id', '=', cx['fiscalyear'])])[-1]
+
         if brw.constant_type == 'period_days':
             res = period_obj._get_period_days(
                 cr, uid, cx['period_from'], cx['period_to'])
