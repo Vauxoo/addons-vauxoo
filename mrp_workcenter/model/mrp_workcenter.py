@@ -42,14 +42,47 @@ from openerp.tools.translate import _
 class mrp_production_workcenter_line(osv.Model):
 
     _inherit = "mrp.production.workcenter.line"
+    _columns = {
+
+        'routing_id' : fields.related('production_id', 'routing_id', type='many2one', relation='mrp.routing', string='Routing' ,store=True),
+    }
+
+    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
+        res = {}                                                                
+        res = super(mrp_production_workcenter_line, self).fields_view_get(cr, uid, view_id, view_type,
+                                                       context, toolbar=toolbar, submenu=submenu)
+        import pprint
+        import pdb
+
+        print '\n\n fields_view_get'
+        print view_id, view_type
+        pprint.pprint(context)
+
+        #pdb.set_trace() 
+        return res
 
     def _read_group_workcenter_ids(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
-        workcenter_obj = self.pool.get('mrp.workcenter')
-        workcenter_ids = workcenter_obj.search(cr, uid, [], context=context)       
         
+        routing_obj = self.pool.get('mrp.routing')
+        workcenter_obj = self.pool.get('mrp.workcenter')
+
+        workcenter_ids = []
+        if context.get('active_id', False):
+            routing_brw = routing_obj.browse(cr, uid, 
+                context.get('active_id', False), context=context)
+            
+            for work_line in routing_brw.workcenter_lines:
+                workcenter_ids.append( work_line.workcenter_id.id )
+            workcenter_ids = map(lambda x: x, set(workcenter_ids))
+            work_orders_ids = self.search(cr, uid, [("workcenter_id","in",workcenter_ids),("routing_id","=",context.get('active_id', False))], context=context)
+        else:
+            workcenter_ids = workcenter_obj.search(cr, uid, [], context=context)       
+            work_orders_ids = self.search(cr, uid, [("workcenter_id","in",workcenter_ids)], context=context)
+
         lista_workcenter = workcenter_obj.browse(cr, uid, workcenter_ids, context=context)
        # lista_workcenter.sort(key=lambda x: x.sequence)
        # lista_workcenter.reverse()
+
 
         # Lista de tuplas (id, name)
         result = []
@@ -60,6 +93,8 @@ class mrp_production_workcenter_line(osv.Model):
         visible = {}
         for i in workcenter_ids:
             visible[i] = False
+        #import pdb
+        #pdb.set_trace()
         
         return result, visible
 

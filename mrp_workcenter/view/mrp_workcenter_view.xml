@@ -18,6 +18,8 @@
                                 <b>Product:</b> <field name="product"/><br/>
                                 <b>Hour:</b> <field name="hour"/><br/>
                                 <b>Delay:</b> <field name="delay"/><br/>
+                                <b>Routing:</b> <field name="routing_id"/><br/>
+
                             </div>
                         </div>
                     </t>
@@ -26,9 +28,29 @@
             </field>
          </record>
 
+         <record model="ir.ui.view" id="view_routing_search">                   
+             <field name="name">mrp.production.workcenter.line</field>                          
+             <field name="model">mrp.production.workcenter.line</field>                         
+             <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>               
+             <field name="arch" type="xml">                                      
+                 <data>                                                          
+                     <xpath expr="//field[@name='state']" position="after">
+                        <field name="routing_id"/>
+                        <filter string="Routing" name="routing_filter" icon="terp-folder-violet" domain="[('routing_id','=', '2')]" />
+                     
+                    </xpath>                                                    
+                 </data>                                                         
+             </field>                                                            
+         </record> 
+        
         <record id="mrp_production_workcenter_kanban" model="ir.actions.act_window.view">
-             <field name="view_mode">kanban</field>
-             <field name="act_window_id" ref="mrp_operations.mrp_production_wc_action_form"/>                      
+            <field name="res_model">mrp.production.workcenter.line</field>
+            <field name="view_mode">kanban</field>
+            <field name="context">{'search_default_routing_id': 1,'default_routing_id': active_id}</field>
+        <!--    <field name="domain">[('routing_id', 'child_of', [active_id])]</field>
+        -->   
+            <field name="search_view_id" ref="view_routing_search"/> 
+            <field name="act_window_id" ref="mrp_operations.mrp_production_wc_action_form"/>                      
         </record>    
 
         <record model="ir.ui.view" id="view_routing_kanban">
@@ -41,7 +63,8 @@
                         <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
                             <div t-attf-class="oe_kanban_content">
                                 <b>Routing:</b> <field name="name"/><br/>
-                       <div>
+                       <!--Me redirecciona al action de work orders-->
+                        <div>
                    <a name="%(mrp_operations.mrp_production_wc_action_form)d" type="action" style="margin-right: 10px">
                         Work Orders    
                         </a>
