@@ -961,12 +961,30 @@ class hr_expense_expense(osv.Model):
         default.update({'advance_ids': [],
                         'invoice_ids': [],
                         'payment_ids': [],
+                        'advance_ids': [],
                         'ail_ids': [],
                         'ait_ids': [],
                         'date_post': False,
                         })
         return super(hr_expense_expense, self).copy(cr, uid, id, default,
                         context=context)
+
+    def show_entries(self, cr, uid, ids, context=None):
+        for exp in self.browse(cr, uid, ids, context=context):
+            res_exp = [move.id for move in exp.account_move_id.line_id]
+            res_pay = [line.id for line in exp.advance_ids]
+            res_inv = [move.id for inv in exp.invoice_ids
+                                for move in inv.move_id.line_id]
+        return {
+            'domain': "[('id','in',\
+                ["+','.join(map(str, res_exp+res_inv+res_pay))+"])]",
+            'name': _('Entries'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.move.line',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
