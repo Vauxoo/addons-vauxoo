@@ -245,6 +245,7 @@
             </tr>
             
         </table>
+        <br/>${o.comment or '' |entity}<br/>
         <br clear="all"/>
         <!--code for cfd-->
         %if o.invoice_sequence_id.approval_id.type == 'cfd22':
