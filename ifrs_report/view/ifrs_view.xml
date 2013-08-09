@@ -76,11 +76,11 @@
                         <field 
                             name="ifrs_lines_ids"  
                             nolabel="1" 
-                            context="{'ifrs_help':help}"
+                            context="{'ifrs_help':help, 'ifrs_id':active_id}"
                             colspan="4">
                         <tree string="IFRS Lines">
                           <field name="id" />
-                          <field name="sequence" />
+                          <field name="priority" />
                           <field name="name" />
                           <field name="type" />
                           <field name="cons_ids" />
@@ -122,7 +122,7 @@
                                   <group string='Invisible Line' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='By setting this field to "True" will avoid this line from printing in your report. It is useful to set some lines to invisible when using them to make some computations but you do not want them to appear in the report printing.'/></i> 
                                   </group>    
-                                  <field name="sequence" colspan='2'/>
+                                  <field name="sequence" colspan='2' on_change='onchange_sequence(sequence)'/>
                                   <field name="invisible" />
                                   <group string='Line Amount' colspan='2' attrs="{'invisible':['|',('type','=','abstract'),('help','=',False)]}">
                                     <group colspan='2' >
@@ -231,7 +231,7 @@
                                     <!--attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}">-->
                                     <tree>
                                         <field name='ifrs_id'/>
-                                        <field name='sequence'/>
+                                        <field name='priority'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
@@ -245,7 +245,7 @@
                                     <!--attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">-->
                                     <tree>
                                         <field name='ifrs_id'/>
-                                        <field name='sequence'/>
+                                        <field name='priority'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
@@ -256,6 +256,7 @@
                           <separator string='Notes &amp; Comments' colspan='2' />
                           <field name="comment" colspan='4' nolabel='1'/>
                           <field name="company_id" colspan='4' nolabel='1' readonly='1'/>
+                          <field name="priority" invisible='1'/>
                         </form>
                       </field>
                     </page>
@@ -318,7 +319,7 @@
 			<field name="arch" type="xml">
 				<tree string="IFRS Line">
                         <field name="ifrs_id" invisible='1'/>
-						<field name="sequence"/>
+						<field name="priority"/>
 						<field name="name" />
 						<field name="type" />
 				</tree>
