@@ -7,7 +7,6 @@
 		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
 		  <field name="name">ifrs.ifrs.tree</field>
 		  <field name="model">ifrs.ifrs</field>
-		  <field name="type">tree</field>
 		  <field name="arch" type="xml">
 			<tree string="International Financial Reporting Standards">
 			  <field name="name" />
@@ -271,24 +270,30 @@
 			</form>
 		  </field>
 		</record>
-<!--
-		    <record id="view_board_search" model="ir.ui.view">
+
+        <record id="view_board_search" model="ir.ui.view">
 			<field name="name">ifrs.lines.search</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">search</field>
 			<field name="arch" type="xml">
-			    <search string="Buscar">
-				<field name="name"/>
-				<field name="sequence"/>
-			    </search>
+               <search string="IFRS Lines Search">
+                   <filter 
+                       string="Report" 
+                       icon="terp-blue-folder"
+                       name="group_report"
+                       context="{'group_by':'ifrs_id'}"/>
+                   <filter 
+                       string="Type" 
+                       icon="terp-blue-folder"
+                       name="group_type"
+                       context="{'group_by':'type'}"/>
+               </search>
 			</field>
-		    </record> -->
+        </record>
 
 
 		<record model="ir.ui.view" id="view_ifrs_lines_form">
 			<field name="name">ifrs.lines.form</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="IFRS Line">
 					<group col="6" colspan="4">
@@ -307,16 +312,12 @@
 		<record model="ir.ui.view" id="view_ifrs_lines_tree">
 			<field name="name">ifrs.lines.tree</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="IFRS Line">
-						<field name="sequence"></field>
+                        <field name="ifrs_id" invisible='1'/>
+						<field name="sequence"/>
 						<field name="name" />
 						<field name="type" />
-						<field name="amount"></field>
-						<field name="invisible"></field>
-						<field name="ifrs_id"></field>
-						<field name="comment"></field>
 				</tree>
 			</field>
 		</record>
