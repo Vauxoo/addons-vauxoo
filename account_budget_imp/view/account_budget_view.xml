@@ -56,55 +56,56 @@
                     <field name="percentage"/>
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     <templates>
-                        <t t-name="kanban-box">
+                        <div t-name="kanban-box" class="oe_budget">
+                        <div class="oe_dropdown_toggle oe_dropdown_kanban" groups="base.group_user">
+                            <span class="oe_e">í</span>
+                            <ul class="oe_dropdown_menu">
+                                <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Budget Settings</a></li></t>
+                                <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+                            </ul>
+                        </div>
                         <div class="oe_kanban_card oe_kanban_global_click">
-                        <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 4px; diplay: inline-block">X</a>
-                                <div class="oe_dropdown_toggle oe_dropdown_kanban" groups="base.group_user">
-                                    <span class="oe_e">í</span>
-                                    <ul class="oe_dropdown_menu">
-                                        <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Budget Settings</a></li></t>
-                                        <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
-                                    </ul>
-                                </div>
                             <div class="oe_kanban_content">
                             <div class="oe_module_vignette  oe_semantic_html_override">
+                                        <span class="oe_kanban_group_title_vertical">
+                                            <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                        </span>
                                 <a type="open">
-                                    <div class="oe_kanban_details">
-                                        <span class="oe_e">N</span>
-                                        <ul>
-                                            <li><field name="company_id"/></li>
-                                            <li><field name="practical_amount_aa"/></li>
-                                            <li><field name="forecasted_amount"/></li>
-                                            <li><field name="analytic_account_id" groups="analytic.group_analytic_accounting"/></li>
-                                            <li><field name="crossovered_budget_id"/></li>
-                                            <li><field name="general_budget_id"/></li>
-                                            <li><field name="date_from"/></li>
-                                            <li><field name="date_to"/></li>
-                                            <li><field name="paid_date"/></li>
-                                            <li><field name="percentage"/></li>
-                                        </ul>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                <td>Algo</td>
-                                                <td>HAdd</td>
-                                                <td>Algo</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td><field name="planned_amount"/></td>
-                                                <td><field name="practical_amount"/></td>
-                                                <td><field name="theoritical_amount"/></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    <h4 class="oe_right"><field name="company_id"/></h4>
+                                    <h4 class="oe_right"><field name="crossovered_budget_id"/></h4>
                                 </a>
+                                    <table class="oe_list_content table table-bordered">
+                                        <thead>
+                                        <tr> <td>BP</td> </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><field name="planned_amount"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="oe_list_content table table-bordered">
+                                        <thead>
+                                        <tr> <td>REAL</td> <td>FC</td> </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td><field name="practical_amount_aa"/></td>
+                                            <td><field name="forecasted_amount"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <ul>
+                                        <li><field name="theoritical_amount"/></li>
+                                        <span class="oe_e">N</span>
+                                        <li><field name="paid_date"/></li>
+                                        <li><field name="percentage"/></li>
+                                    </ul>
+                                <h5><field name="general_budget_id"/></h5>
                             </div>
                             </div>
                             </div>
-                        </t>
+                        </div>
                     </templates>
                 </kanban>
             </field>

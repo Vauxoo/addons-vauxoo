@@ -1,3 +1,7 @@
 .openerp .oe_account_budget_line {
     font-size: .8em;
 }
+
+.openerp .oe_kanban_budget_line .oe_kanban_column_cards {
+    background-color: #000;
+}
