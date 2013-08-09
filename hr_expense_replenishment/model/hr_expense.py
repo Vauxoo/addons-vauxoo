@@ -805,14 +805,44 @@ class hr_expense_expense(osv.Model):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wf_service = netsvc.LocalService("workflow")
+        inv_obj = self.pool.get('account.invoice')
         for exp_brw in self.browse(cr, uid, ids, context=context):
+            self.check_inv_periods(cr, uid, exp_brw.id,context=context)
             validate_inv_ids = \
                 [inv_brw.id
                  for inv_brw in exp_brw.invoice_ids
                  if inv_brw.state == 'draft']
+            inv_obj.write(cr, uid, validate_inv_ids,{
+                'date_invoice':exp_brw.date_post,
+                'period_id':False,
+                }, context=context)
             for inv_id in validate_inv_ids:
                 wf_service.trg_validate(uid, 'account.invoice', inv_id,
                                         'invoice_open', cr)
+        return True
+    
+    def check_inv_periods(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int,long)) and [ids] or ids
+        exp_brw=self.browse(cr, uid, ids[0], context = context)
+        period_obj=self.pool.get('account.period')
+        res=[]
+        for inv_brw in exp_brw.invoice_ids:
+            if inv_brw.state=='draft':
+                pass
+            elif inv_brw.state in ('cancel','paid'):
+                res.append(inv_brw)
+            elif inv_brw.state=='open':
+                if inv_brw.payment_ids:
+                    res.append(inv_brw)
+                elif[inv_brw.period_id.id]!=period_obj.find(cr,uid,dt=exp_brw.date_post):
+                    res.append(inv_brw)
+        if res:
+            note= _('The folliwing invoices cannot be used in this Expense:\n')
+            for inv_brw in res:
+                note+= '%s - %s -%s - %s \n'%(inv_brw.supplier_invoice_number,
+                inv_brw.partner_id.name,inv_brw.date_invoice,inv_brw.period_id.name)
+            raise osv.except_osv(_('Error!'),note)
         return True
 
     #~ note: This method is not used. Can be used when the validating invoice
@@ -932,12 +962,30 @@ class hr_expense_expense(osv.Model):
         default.update({'advance_ids': [],
                         'invoice_ids': [],
                         'payment_ids': [],
+                        'advance_ids': [],
                         'ail_ids': [],
                         'ait_ids': [],
                         'date_post': False,
                         })
         return super(hr_expense_expense, self).copy(cr, uid, id, default,
                         context=context)
+
+    def show_entries(self, cr, uid, ids, context=None):
+        for exp in self.browse(cr, uid, ids, context=context):
+            res_exp = [move.id for move in exp.account_move_id.line_id]
+            res_pay = [line.id for line in exp.advance_ids]
+            res_inv = [move.id for inv in exp.invoice_ids
+                                for move in inv.move_id.line_id]
+        return {
+            'domain': "[('id','in',\
+                ["+','.join(map(str, res_exp+res_inv+res_pay))+"])]",
+            'name': _('Entries'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.move.line',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
