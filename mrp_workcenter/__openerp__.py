@@ -47,9 +47,7 @@ List of new functionalities:
         ],                                                                      
     "js": [],
     "qweb": [],
-    "css": [
-        "static/src/css/mrp_workcenter.css",
-        ],
+    "css": [],
     "demo": [],
     "test": [],
     "installable": True,
