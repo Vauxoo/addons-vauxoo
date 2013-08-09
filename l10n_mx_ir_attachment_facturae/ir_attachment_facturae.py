@@ -395,7 +395,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             ##'res_id': False, }, context={})
             self.write(cr, uid, ids,
                           {'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj})
+                            'msj': msj})
             wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
             return True
         except Exception, e:
