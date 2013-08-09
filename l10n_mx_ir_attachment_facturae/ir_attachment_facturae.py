@@ -86,32 +86,34 @@ class ir_attachment_facturae_mx(osv.Model):
     }
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
-        ir_attachment_fact = self.browse(cr, uid, ids, context={})[0]
-        attach = ir_attachment_fact.id
-        if not self.signal_confirm(cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        if not self.signal_confirm(cr, uid, ids, context={}):
             return False
-        if not self.signal_sign(cr, uid, ids, context=None):
+        if not self.signal_sign(cr, uid, ids, context={}):
             return False
-        if not self.signal_printable(cr, uid, ids, context=None):
+        if not self.signal_printable(cr, uid, ids, context={}):
             return False
-        if not self.signal_send_customer(cr, uid, ids, context=None):
+        if not self.signal_send_customer(cr, uid, ids, context={}):
             return False
-        if not self.signal_send_backup(cr, uid, ids, context=None):
+        if not self.signal_send_backup(cr, uid, ids, context={}):
             return False
-        if not self.signal_done(cr, uid, ids, context=None):
+        if not self.signal_done(cr, uid, ids, context={}):
             return False
         return True
     
     def signal_confirm(self, cr, uid, ids, context=None):
-        attach = ''
-        msj = ''
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        invoice_obj = self.pool.get('account.invoice')
-        type = self.browse(cr, uid, ids)[0].type
-        wf_service = netsvc.LocalService("workflow")
-        if type == 'cbb':
-            msj = _("Confirmed")
         try:
+            if context is None:
+                context = {}
+            attach = ''
+            msj = ''
+            invoice = self.browse(cr, uid, ids)[0].invoice_id
+            invoice_obj = self.pool.get('account.invoice')
+            type = self.browse(cr, uid, ids)[0].type
+            wf_service = netsvc.LocalService("workflow")
+            if type == 'cbb':
+                msj = _("Confirmed")
             if type == 'cfd22':
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                     '.xml' or ''
@@ -149,18 +151,20 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
         
     def action_confirm(self, cr, uid, ids, context={}):
-        return self.write(cr, uid, ids, {'state': 'confirmed'}, context={})
+        return self.write(cr, uid, ids, {'state': 'confirmed'}, context=context)
 
     def signal_sign(self, cr, uid, ids, context={}):
-        attach = ''
-        index_xml = ''
-        msj = ''
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        invoice_obj = self.pool.get('account.invoice')
-        attachment_obj = self.pool.get('ir.attachment')
-        type = self.browse(cr, uid, ids)[0].type
-        wf_service = netsvc.LocalService("workflow")
         try:
+            if context is None:
+                context = {}
+            attach = ''
+            index_xml = ''
+            msj = ''
+            invoice = self.browse(cr, uid, ids)[0].invoice_id
+            invoice_obj = self.pool.get('account.invoice')
+            attachment_obj = self.pool.get('ir.attachment')
+            type = self.browse(cr, uid, ids)[0].type
+            wf_service = netsvc.LocalService("workflow")
             if type == 'cfd22':
                 attach = self.browse(cr, uid, ids)[0].file_input.id or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
@@ -195,17 +199,19 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
                            
     def action_sign(self, cr, uid, ids, context={}):
-        return self.write(cr, uid, ids, {'state': 'signed'}, context={})
+        return self.write(cr, uid, ids, {'state': 'signed'}, context=context)
 
     def signal_printable(self, cr, uid, ids, context={}):
-        aids = ''
-        index_pdf = ''
-        attachment_obj = self.pool.get('ir.attachment')
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        invoice_obj = self.pool.get('account.invoice')
-        type = self.browse(cr, uid, ids)[0].type
-        wf_service = netsvc.LocalService("workflow")
         try:
+            if context is None:
+                context = {}
+            aids = ''
+            index_pdf = ''
+            attachment_obj = self.pool.get('ir.attachment')
+            invoice = self.browse(cr, uid, ids)[0].invoice_id
+            invoice_obj = self.pool.get('account.invoice')
+            type = self.browse(cr, uid, ids)[0].type
+            wf_service = netsvc.LocalService("workflow")
             (fileno, fname) = tempfile.mkstemp(
             '.pdf', 'openerp_' + (False or '') + '__facturae__')
             os.close(fileno)
@@ -235,24 +241,26 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
     
     def action_printable(self, cr, uid, ids, context={}):
-        return self.write(cr, uid, ids, {'state': 'printable'}, context={})
+        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
-        attachments = []
-        msj = ''
-        attach_name = ''
-        state = ''
-        partner_mail = ''
-        user_mail = ''
-        company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        address_id = self.pool.get('res.partner').address_get(
-            cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
-        partner_invoice_address = self.pool.get(
-            'res.partner').browse(cr, uid, address_id, context)
-        type = self.browse(cr, uid, ids)[0].type
-        wf_service = netsvc.LocalService("workflow")
         try:
+            if context is None:
+                context = {}
+            attachments = []
+            msj = ''
+            attach_name = ''
+            state = ''
+            partner_mail = ''
+            user_mail = ''
+            company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
+            invoice = self.browse(cr, uid, ids)[0].invoice_id
+            address_id = self.pool.get('res.partner').address_get(
+                cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
+            partner_invoice_address = self.pool.get(
+                'res.partner').browse(cr, uid, address_id, context)
+            type = self.browse(cr, uid, ids)[0].type
+            wf_service = netsvc.LocalService("workflow")
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
             adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
                 'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
@@ -267,7 +275,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 obj_partner = self.pool.get('res.partner')
                 mail_server_id = obj_ir_mail_server.search(cr, uid,
                                                            ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit = 1, order = 'sequence', context=None)
-
                 for smtp_server in obj_ir_mail_server.browse(cr, uid,
                                                              mail_server_id, context=context):
                     server_name = smtp_server.name
@@ -302,30 +309,31 @@ class ir_attachment_facturae_mx(osv.Model):
                         'mail.compose.message').create(cr, uid, mssg, context=None)
                     state = self.pool.get('mail.compose.message').send_mail(
                         cr, uid, [mssg_id], context=context)
-                    asunto = mssg['subject']
-                    id_mail = obj_mail_mail.search(
-                        cr, uid, [('subject', '=', asunto)])
-                    if id_mail:
-                        for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
-                            if mail.state == 'exception':
-                                msj = _(
-                                    '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
-                    else:
-                        msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (partner_mail,server_name)
+                    ##asunto = mssg['subject']
+                    ##id_mail = obj_mail_mail.search(
+                        ##cr, uid, [('subject', '=', asunto)])
+                    ##if id_mail:
+                        ##for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
+                            ##if mail.state == 'exception':
+                                ##msj = _(
+                                    ##'\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
+                    msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (partner_mail,server_name)
             self.write(cr, uid, ids, {'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
             wf_service.trg_validate(uid, self._name, ids[0], 'action_send_customer', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': e}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
     def action_send_customer(self, cr, uid, ids, context={}):
-        return self.write(cr, uid, ids, {'state': 'sent_customer'}, context={})
+        return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
 
     def signal_send_backup(self, cr, uid, ids, context=None):
-        msj = ''
-        wf_service = netsvc.LocalService("workflow")
         try:
+            if context is None:
+                context = {}
+            msj = ''
+            wf_service = netsvc.LocalService("workflow")
             msj = _('Send Backup\n')
             self.write(cr, uid, ids, {'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context={})
@@ -336,12 +344,14 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
         
     def action_send_backup(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'sent_backup'}, context={})
+        return self.write(cr, uid, ids, {'state': 'sent_backup'}, context=context)
     
     def signal_done(self, cr, uid, ids, context=None):
-        msj = ''
-        wf_service = netsvc.LocalService("workflow")
         try:
+            if context is None:
+                context = {}
+            msj = ''
+            wf_service = netsvc.LocalService("workflow")
             msj = _('Done\n')
             self.write(cr, uid, ids, {'msj': msj,
                 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context={})
@@ -352,16 +362,17 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_done(self, cr, uid, ids, context=None):
-       return self.write(cr, uid, ids, {'state': 'done'},context={})
+       return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
-    def action_cancel(self, cr, uid, ids, context=None):
-        msj = ''
-        invoice_obj = self.pool.get('account.invoice')
-        attach_obj = self.pool.get('ir.attachment')
-        type = self.browse(cr, uid, ids)[0].type
-        state = self.browse(cr, uid, ids)[0].state
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        if state not in ['draft', 'confirmed', 'cancel']:
+    def signal_cancel(self, cr, uid, ids, context=None):
+        try:
+            msj = ''
+            invoice_obj = self.pool.get('account.invoice')
+            attach_obj = self.pool.get('ir.attachment')
+            type = self.browse(cr, uid, ids)[0].type
+            state = self.browse(cr, uid, ids)[0].state
+            invoice = self.browse(cr, uid, ids)[0].invoice_id
+            wf_service = netsvc.LocalService("workflow")
             if type == 'cbb':
                 invoice_obj.action_cancel(cr, uid, [invoice.id], context)
                 msj = _('Cancel\n')
@@ -369,23 +380,30 @@ class ir_attachment_facturae_mx(osv.Model):
                 invoice_obj.action_cancel(cr, uid, [invoice.id], context)
                 msj = _('Cancel\n')
             if type == 'cfdi32':
-                sf_cancel = invoice_obj.sf_cancel(
-                    cr, uid, [invoice.id], context={})
-                msj = _('Cancel\n')
-                msj += tools.ustr(sf_cancel.get('message', False))
-                status = invoice_obj.action_cancel(
-                    cr, uid, [invoice.id], context)
-                #Para que no aparescan los adjuntos en facturas canceladas
-                ##adjuntos = attach_obj.search(cr, uid, [(
-                    ##'res_model', '=', 'account.invoice'),
-                    ##('res_id', '=', invoice)])
-                ##for attachment in self.browse(cr, uid, adjuntos, context):
-                    ##ids2 = attach_obj.write(cr, uid, [attachment.id], {
-                        ##'res_id': False, }, context={})
-        return self.write(cr, uid, ids,
-                          {'state': 'cancel',
-                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                if state not in ['draft']:
+                    sf_cancel = invoice_obj.sf_cancel(
+                        cr, uid, [invoice.id], context={})
+                    msj += tools.ustr(sf_cancel.get('message', False))
+                    status = invoice_obj.action_cancel(
+                        cr, uid, [invoice.id], context)
+                    #Para que no aparescan los adjuntos en facturas canceladas
+                    ##adjuntos = attach_obj.search(cr, uid, [(
+                        ##'res_model', '=', 'account.invoice'),
+                        ##('res_id', '=', invoice)])
+                    ##for attachment in self.browse(cr, uid, adjuntos, context):
+                        ##ids2 = attach_obj.write(cr, uid, [attachment.id], {
+                            ##'res_id': False, }, context={})
+            self.write(cr, uid, ids,
+                          {'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj})
+            wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
+            return True
+        except Exception, e:
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
+            return False
+    
+    def action_cancel(self, cr, uid, ids, context=None):
+       return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
     def reset_to_draft(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
