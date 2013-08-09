@@ -47,20 +47,6 @@ class mrp_production_workcenter_line(osv.Model):
         'routing_id' : fields.related('production_id', 'routing_id', type='many2one', relation='mrp.routing', string='Routing' ,store=True),
     }
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):
-        res = {}                                                                
-        res = super(mrp_production_workcenter_line, self).fields_view_get(cr, uid, view_id, view_type,
-                                                       context, toolbar=toolbar, submenu=submenu)
-        import pprint
-        import pdb
-
-        print '\n\n fields_view_get'
-        print view_id, view_type
-        pprint.pprint(context)
-
-        #pdb.set_trace() 
-        return res
-
     def _read_group_workcenter_ids(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
         
         routing_obj = self.pool.get('mrp.routing')
@@ -93,8 +79,6 @@ class mrp_production_workcenter_line(osv.Model):
         visible = {}
         for i in workcenter_ids:
             visible[i] = False
-        #import pdb
-        #pdb.set_trace()
         
         return result, visible
 
