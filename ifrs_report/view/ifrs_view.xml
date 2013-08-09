@@ -122,7 +122,7 @@
                                   <group string='Invisible Line' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='By setting this field to "True" will avoid this line from printing in your report. It is useful to set some lines to invisible when using them to make some computations but you do not want them to appear in the report printing.'/></i> 
                                   </group>    
-                                  <field name="sequence" colspan='2'/>
+                                  <field name="sequence" colspan='2' on_change='onchange_sequence(sequence)'/>
                                   <field name="invisible" />
                                   <group string='Line Amount' colspan='2' attrs="{'invisible':['|',('type','=','abstract'),('help','=',False)]}">
                                     <group colspan='2' >
@@ -256,6 +256,7 @@
                           <separator string='Notes &amp; Comments' colspan='2' />
                           <field name="comment" colspan='4' nolabel='1'/>
                           <field name="company_id" colspan='4' nolabel='1' readonly='1'/>
+                          <field name="priority" invisible='1'/>
                         </form>
                       </field>
                     </page>

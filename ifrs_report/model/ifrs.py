@@ -729,7 +729,11 @@ class ifrs_lines(osv.osv):
         partner_number = set([inv.partner_id.id for inv\
             in invoice_obj.browse(cr, uid, invoice_ids, context=context)])
         return len(list(partner_number))
-    
+
+    def onchange_sequence(self, cr, uid, ids, sequence, context=None):
+        context = context or {}
+        return {'value' : {'priority' : sequence}}
+
     def _get_default_sequence(self, cr, uid, context=None):
         ctx = context or {}
         res = 0
@@ -746,7 +750,7 @@ class ifrs_lines(osv.osv):
         # Really!!! A repeated field with same functionality! This was done due
         # to the fact that web view everytime that sees sequence tries to allow
         # you to change the values and this feature here is undesirable.
-        'priority': fields.related('sequence', string='Sequence', type='integer', help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
+        'priority': fields.related('sequence', string='Sequence', type='integer', store=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
         'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
         'name': fields.char('Name', 128, required=True, translate=True, help='Line name in the report. This name can be translatable, if there are multiple languages loaded it can be translated'),
         'type': fields.selection(
@@ -843,6 +847,7 @@ class ifrs_lines(osv.osv):
         'operator': 'without',
         'comparison': 'without',
         'sequence': _get_default_sequence,
+        'priority': _get_default_sequence,
     }
 
     def _check_description(self, cr, user, ids,context=None):
