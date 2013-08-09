@@ -7,7 +7,6 @@
 		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
 		  <field name="name">ifrs.ifrs.tree</field>
 		  <field name="model">ifrs.ifrs</field>
-		  <field name="type">tree</field>
 		  <field name="arch" type="xml">
 			<tree string="International Financial Reporting Standards">
 			  <field name="name" />
@@ -288,7 +287,6 @@
 		<record model="ir.ui.view" id="view_ifrs_lines_form">
 			<field name="name">ifrs.lines.form</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="IFRS Line">
 					<group col="6" colspan="4">
@@ -307,16 +305,13 @@
 		<record model="ir.ui.view" id="view_ifrs_lines_tree">
 			<field name="name">ifrs.lines.tree</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="IFRS Line">
+						<field name="ifrs_id"></field>
 						<field name="sequence"></field>
 						<field name="name" />
 						<field name="type" />
 						<field name="amount"></field>
-						<field name="invisible"></field>
-						<field name="ifrs_id"></field>
-						<field name="comment"></field>
 				</tree>
 			</field>
 		</record>
