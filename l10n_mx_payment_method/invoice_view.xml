@@ -7,11 +7,11 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <field name="fiscal_position" position="after">
+                <xpath expr="//field[@name='fiscal_position']" position="after">
                     <newline/>
                     <field name="pay_method_id" colspan="2" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                     <field name="acc_payment" colspan="2" domain = "[('partner_id', '=', partner_id)]" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                </field>
+                </xpath>
             </field>
         </record>
         
@@ -21,11 +21,11 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
-                <field name="fiscal_position" position="after">
+                <xpath expr="//field[@name='fiscal_position']" position="after">
                     <newline/>
                     <field name="pay_method_id" colspan="2" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                     <field name="acc_payment" colspan="2" domain = "[('partner_id', '=', partner_id)]" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                </field>
+                </xpath>
             </field>
         </record>
 

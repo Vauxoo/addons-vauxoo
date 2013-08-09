@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        
         <record id="view_mail_server_form_inherit" model="ir.ui.view">
             <field name="name">mail.server.form.inherit</field>
             <field name="model">ir.mail_server</field>
@@ -12,6 +11,5 @@
                 </xpath>
             </field>
         </record>
-        
     </data>
 </openerp>

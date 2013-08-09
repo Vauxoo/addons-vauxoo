@@ -57,9 +57,9 @@
         </record>
 
         <menuitem action="action_res_company_facturae_certificate_tree"
-                id="menu_res_company_facturae_certificate" sequence="50"
-                parent="base.menu_res_company_global"
-                groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"
+                  id="menu_res_company_facturae_certificate" sequence="50"
+                  parent="base.menu_res_company_global"
+                  groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"
         />
 
 
@@ -81,7 +81,7 @@
             </field>
         </record>
 
-         <!--<field colspan="4" name="order_line" nolabel="1" widget="one2many_list">-->
+        <!--<field colspan="4" name="order_line" nolabel="1" widget="one2many_list">-->
 
         <!--Version OpenERP-->
         <record model="ir.ui.view" id="view_res_company_form_inh_l10n_mx_facturae">
@@ -89,7 +89,7 @@
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="model">res.company</field>
             <field name="arch" type="xml">
-                 <page string="Configuration" position="after">
+                <xpath expr="//page[@string='Configuration']" position="after">
                     <page string="Certificados SAT" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager">
                         <!--<field name="cif_file" widget='image'/>-->
                         <newline/>
@@ -104,27 +104,27 @@
                         <field name="certificate_ids" nolabel="1" colspan="4"  widget="one2many_list">
                             <form string="Certificates">
                                 <separator string="Certificates DER FORMAT (Original)" colspan="4"/>
-                                    <field name="certificate_file" colspan="4"/>
-                                    <field name="certificate_key_file" colspan="4"/>
-                                    <newline/>
-                                    <field name="certificate_password" password="True" on_change="onchange_certificate_info(certificate_file, certificate_key_file, certificate_password)"/>
-                                    <separator string="Certificates PEM FORMAT (Transformed)" colspan="4"/>
-                                    <field name="certificate_file_pem" colspan="4"/>
-                                    <field name="certificate_key_file_pem" colspan="4"/>
-                                    <separator string="General Information of Certificate" colspan="4"/>
-                                    <field name="serial_number"/>
-                                    <newline/>
-                                    <field name="date_start"/>
-                                    <newline/>
-                                    <field name="date_end"/>
-                                    <separator string="Extra Information" colspan="4"/>
-                                    <field name="fname_xslt"/>
-                                    <newline/>
-                                    <field name="active"/>
-                                    <newline/>
-                                    <button name="get_certificate_info" string="Get Certificate Info" type="object"/>
+                                <field name="certificate_file" colspan="4"/>
+                                <field name="certificate_key_file" colspan="4"/>
+                                <newline/>
+                                <field name="certificate_password" password="True" on_change="onchange_certificate_info(certificate_file, certificate_key_file, certificate_password)"/>
+                                <separator string="Certificates PEM FORMAT (Transformed)" colspan="4"/>
+                                <field name="certificate_file_pem" colspan="4"/>
+                                <field name="certificate_key_file_pem" colspan="4"/>
+                                <separator string="General Information of Certificate" colspan="4"/>
+                                <field name="serial_number"/>
+                                <newline/>
+                                <field name="date_start"/>
+                                <newline/>
+                                <field name="date_end"/>
+                                <separator string="Extra Information" colspan="4"/>
+                                <field name="fname_xslt"/>
+                                <newline/>
+                                <field name="active"/>
+                                <newline/>
+                                <button name="get_certificate_info" string="Get Certificate Info" type="object"/>
                             </form>
-                             <tree string="Certificates">
+                            <tree string="Certificates">
                                 <field name="serial_number"/>
                                 <field name="date_start"/>
                                 <field name="date_end"/>
@@ -133,7 +133,7 @@
                             </tree>
                         </field>
                     </page>
-                </page>
+                </xpath>
             </field>
         </record>
 

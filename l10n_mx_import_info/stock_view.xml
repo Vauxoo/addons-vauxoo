@@ -6,12 +6,12 @@
             <field name="model">stock.tracking</field>
             <field name="inherit_id" ref="stock.view_tracking_form"/>
             <field name="arch" type="xml">
-                <field name="date" position="after">
+                <xpath expr="//field[@name='date']" position="after">
                     <field name="import_id" domain="[]"/>
-                </field>
-<!--                <field name="date" position="after">-->
-<!--                    <field name="import_product_id"/>-->
-<!--                </field>-->
+                </xpath>
+                <!--                <field name="date" position="after">-->
+                <!--                    <field name="import_product_id"/>-->
+                <!--                </field>-->
             </field>
         </record>
         <record model="ir.ui.view" id="stock_tracking_form">
@@ -34,10 +34,10 @@
             <field name="model">stock.report.tracklots</field>
             <field name="arch" type="xml">
                 <form string="Stock Tracking">
-                        <field name="product_id"/>
-                        <field name="location_id"/>
-                        <field name="name"/>
-                        <field name="tracking_id"/>
+                    <field name="product_id"/>
+                    <field name="location_id"/>
+                    <field name="name"/>
+                    <field name="tracking_id"/>
                 </form>
             </field>
         </record>
@@ -46,10 +46,10 @@
             <field name="model">stock.report.tracklots</field>
             <field name="arch" type="xml">
                 <tree string="Stock Tracking">
-                        <field name="product_id"/>
-                        <field name="location_id"/>
-                        <field name="name"/>
-                        <field name="tracking_id"/>
+                    <field name="product_id"/>
+                    <field name="location_id"/>
+                    <field name="name"/>
+                    <field name="tracking_id"/>
                 </tree>
             </field>
         </record>
@@ -60,9 +60,9 @@
                 <search string="Stock Tracking">
                     <group col="6" colspan="4">
                         <filter string="Without Customers and Suppliers" icon="terp-partner"
-                        name="wo_cands"
-                        domain="[('location_id','!=','Suppliers'),('location_id','!=','Customers')]"
-                        help="Just Internal, with this filter you will not inventory on Suppliers and Customers location" />
+                                name="wo_cands"
+                                domain="[('location_id','!=','Suppliers'),('location_id','!=','Customers')]"
+                                help="Just Internal, with this filter you will not inventory on Suppliers and Customers location" />
                         <field name="product_id"/>
                         <field name="location_id"/>
                         <field name="name"/>
@@ -71,7 +71,7 @@
                     <newline/>
                     <group expand="1" string="Group By..." colspan="4" col="4" groups="base.group_extended">
                         <filter string="Tracking" icon="terp-stock_effects-object-colorize"
-                         context="{'group_by':'tracking_id'}"/>
+                                context="{'group_by':'tracking_id'}"/>
                     </group>
                 </search>
             </field>
@@ -83,8 +83,6 @@
             name="Stock per tracking"
             res_model="stock.report.tracklots"
             src_model="product.product"
-            />
+        />
     </data>
 </openerp>
-
-

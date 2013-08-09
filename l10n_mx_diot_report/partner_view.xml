@@ -1,14 +1,12 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-    
-
         <record id="view_partner_diot_form" model="ir.ui.view">
             <field name="name">res.partner.form.diot</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <field name="bank_ids" position="before">
+                <xpath expr="//field[@name='bank_ids']" position="before">
                     <group colspan="4" col="4" attrs="{'invisible':[('supplier','=', False)]}">
                         <separator string="DIOT Information" colspan="4"/>
                         <newline/>
@@ -20,10 +18,8 @@
                         <field name="diot_country" attrs="{'invisible':[('type_of_third','=', '04')]}"/>
                         <field name="nacionality_diot" attrs="{'invisible':[('type_of_third','=', '04')]}"/>
                     </group>
-                </field>
+                </xpath>
             </field>
         </record>
-
-        
     </data>
 </openerp>
