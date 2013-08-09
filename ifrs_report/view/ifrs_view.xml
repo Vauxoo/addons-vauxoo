@@ -76,7 +76,7 @@
                         <field 
                             name="ifrs_lines_ids"  
                             nolabel="1" 
-                            context="{'ifrs_help':help, 'ifrs_lines_ids':len(list(ifrs_lines_ids))}"
+                            context="{'ifrs_help':help, 'ifrs_id':active_id}"
                             colspan="4">
                         <tree string="IFRS Lines">
                           <field name="id" />

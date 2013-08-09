@@ -731,13 +731,15 @@ class ifrs_lines(osv.osv):
         return len(list(partner_number))
     
     def _get_default_sequence(self, cr, uid, context=None):
-        context = context or {}
-        res = 10
-        import pdb
-        pdb.set_trace()
-        if context.get('ifrs_lines_ids',0):
-            pass
-        return res
+        ctx = context or {}
+        res = 0
+        if ctx.get('ifrs_id'):
+            ifrs_lines_ids = self.search(cr, uid ,
+                    [('ifrs_id','=',ctx['ifrs_id'])])
+            if ifrs_lines_ids:
+                res = max([line['sequence'] for line in self.read(cr,
+                    uid, ifrs_lines_ids, ['sequence'])])
+        return res + 10
     
     _columns = {
         'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
