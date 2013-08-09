@@ -843,7 +843,7 @@ class ifrs_lines(osv.osv):
             'Error: Los padres de las lineas ifrs de tipo total solo pueden tener padres de tipo abstract'), ['parent_id']),
     ]
 
-    _sql_constraints = [('sequence_ifrs_id_unique', 'unique(sequence,ifrs_id,type)',
+    _sql_constraints = [('sequence_ifrs_id_unique', 'unique(sequence,ifrs_id,name)',
                          'The sequence already have been set in another IFRS line')]
 
 ifrs_lines()
