@@ -824,7 +824,7 @@ class ifrs_lines(osv.osv):
         'invisible': False,
         'acc_val': 'fy',
         'value': 'balance',
-        'help': True,
+        'help': lambda s, c, u, cx: cx.get('ifrs_help',True),
         'operator': 'without',
         'comparison': 'without',
         #'sequence': lambda obj, cr, uid, context: uid,

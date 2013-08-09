@@ -73,8 +73,11 @@
                             <ul><label string='Total: This type is the one that summarize "Detail" Lines, you can even do mathematical operations with them'/></ul>
                             <ul><label string='Constant: This type is the one that just bears constant variable like Days of Period, Periods of Fiscal Year or Month of FiscalYear'/></ul>
                         </group>    
-                      <field name="ifrs_lines_ids"  nolabel="1" colspan="4">
-                        
+                        <field 
+                            name="ifrs_lines_ids"  
+                            nolabel="1" 
+                            context="{'ifrs_help':help}"
+                            colspan="4">
                         <tree string="IFRS Lines">
                           <field name="id" />
                           <field name="sequence" />
