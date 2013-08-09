@@ -814,6 +814,7 @@ class hr_expense_expense(osv.Model):
                  if inv_brw.state == 'draft']
             inv_obj.write(cr, uid, validate_inv_ids,{
                 'date_invoice':exp_brw.date_post,
+                'period_id':False,
                 }, context=context)
             for inv_id in validate_inv_ids:
                 wf_service.trg_validate(uid, 'account.invoice', inv_id,
