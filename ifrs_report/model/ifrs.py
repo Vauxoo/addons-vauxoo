@@ -730,6 +730,15 @@ class ifrs_lines(osv.osv):
             in invoice_obj.browse(cr, uid, invoice_ids, context=context)])
         return len(list(partner_number))
     
+    def _get_default_sequence(self, cr, uid, context=None):
+        context = context or {}
+        res = 10
+        import pdb
+        pdb.set_trace()
+        if context.get('ifrs_lines_ids',0):
+            pass
+        return res
+    
     _columns = {
         'help': fields.related('ifrs_id','help', string='Show Help',type='boolean',help='Allows you to show the help in the form'),
         'sequence': fields.integer('Sequence', required=True, help='Indicates the order of the line in the report. The sequence must be unique and unrepeatable'),
@@ -827,7 +836,7 @@ class ifrs_lines(osv.osv):
         'help': lambda s, c, u, cx: cx.get('ifrs_help',True),
         'operator': 'without',
         'comparison': 'without',
-        #'sequence': lambda obj, cr, uid, context: uid,
+        'sequence': _get_default_sequence,
     }
 
     def _check_description(self, cr, user, ids,context=None):
