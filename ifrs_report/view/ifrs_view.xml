@@ -80,7 +80,7 @@
                             colspan="4">
                         <tree string="IFRS Lines">
                           <field name="id" />
-                          <field name="sequence" />
+                          <field name="priority" />
                           <field name="name" />
                           <field name="type" />
                           <field name="cons_ids" />
@@ -231,7 +231,7 @@
                                     <!--attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}">-->
                                     <tree>
                                         <field name='ifrs_id'/>
-                                        <field name='sequence'/>
+                                        <field name='priority'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
@@ -245,7 +245,7 @@
                                     <!--attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">-->
                                     <tree>
                                         <field name='ifrs_id'/>
-                                        <field name='sequence'/>
+                                        <field name='priority'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
@@ -318,7 +318,7 @@
 			<field name="arch" type="xml">
 				<tree string="IFRS Line">
                         <field name="ifrs_id" invisible='1'/>
-						<field name="sequence"/>
+						<field name="priority"/>
 						<field name="name" />
 						<field name="type" />
 				</tree>
