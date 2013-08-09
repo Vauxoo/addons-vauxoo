@@ -44,7 +44,7 @@ class account_invoice(osv.Model):
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False):
                 for attachment in ir_attach_obj.browse(cr, uid,
-                                                       id_attach, context):
+                                                       id_attach, context={}):
                     wf_service.trg_validate(
                         uid, 'ir.attachment.facturae.mx',
                         attachment.id, 'action_cancel', cr)
@@ -57,17 +57,15 @@ class account_invoice(osv.Model):
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         attach = ''
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
-        invoice = self.browse(cr, uid, ids, context=context)[0]
-        if invoice._columns.has_key('invoice_sequence_id') and invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id:#FIX: Just in runbot generate a bug of field no exists in account.invoice model.
+        invoice = self.browse(cr, uid, ids, context={})[0]
+        if invoice._columns.has_key('invoice_sequence_id') and invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id:
             if invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id and invoice.invoice_sequence_id.approval_id.type:
                 attach = ir_attach_obj.create(cr, uid, {
                                                   'name': invoice.fname_invoice, 'invoice_id': ids[0],
                                                   'type': invoice.invoice_sequence_id.approval_id.type},
-                                                  context=context)
+                                                  context={})
                 if attach:
-                    wf_service = netsvc.LocalService("workflow")
-                    wf_service.trg_validate(
-                        uid, 'ir.attachment.facturae.mx', attach, 'action_confirm', cr)
+                    self.pool.get('ir.attachment.facturae.mx').signal_confirm(cr, uid, [attach], context=None)
                     ir_model_data = self.pool.get('ir.model.data')
                     form_res = ir_model_data.get_object_reference(
                         cr, uid, 'l10n_mx_ir_attachment_facturae',
