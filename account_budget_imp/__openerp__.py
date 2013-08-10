@@ -60,6 +60,9 @@ Budget per period.
     "license" : "AGPL-3",
     "depends" : [
         "account_budget",
+        "account_accountant",
+        "ifrs_report",
+        "web_kanban",
     ],
     "data" : [
         "view/account_budget_view.xml",
@@ -68,6 +71,9 @@ Budget per period.
     ],
     "css": [
         "static/src/css/account_budget.css",
+    ],
+    "js": [
+        "static/src/js/account_budget_imp.js",
     ],
     "test" : [
     ],

@@ -63,7 +63,11 @@ class crossovered_budget_lines(osv.osv):
                                      help="Period for this budget"),
         'forecasted_amount': fields.float('Forecasted Amount',
                            digits_compute=dp.get_precision('Account'),
-                           help="Due to your analisys what is the amopunt that the manager stimate will comply to be compared with the Planned Ammount"),
+                           help="""Due to your analisys what is the amopunt that
+                           the manager stimate will comply to be compared with
+                           the Planned Ammount"""),
+        'ifrs_lines_id': fields.many2one("ifrs.lines", "Report Line",
+        help= "Line on the IFRS report to analyse your budget."),
     }
 
     def _prac_amt_acc(self, cr, uid, ids, context=None):

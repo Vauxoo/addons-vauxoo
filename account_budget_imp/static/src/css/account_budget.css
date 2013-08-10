@@ -5,3 +5,11 @@
 .openerp .oe_kanban_budget_line .oe_kanban_column_cards {
     background-color: #000;
 }
+
+.openerp .oe_budget h4 {
+    margin-right: 3px;
+}
+
+.openerp .oe_budget_hidden {
+    display:none;
+} 
