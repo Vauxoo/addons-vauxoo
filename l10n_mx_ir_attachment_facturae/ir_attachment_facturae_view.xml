@@ -22,7 +22,7 @@
             <field name="arch" type="xml">
                 <form string="Attachment Factura-E" version="7.0">
                     <header>
-                        <button name="create_ir_attachment_facturae" states="confirmed" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="create_ir_attachment_facturae" states="draft" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_confirm" states="draft" string="Confirm" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_sign" states="confirmed" string="Sign" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="signal_printable" states="signed" string="Generate Printable Format" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>

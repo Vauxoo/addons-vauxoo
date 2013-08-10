@@ -393,12 +393,10 @@ class account_invoice(osv.Model):
                     if cfdi_xml:
                         self.write(cr, uid, inv_ids, cfdi_data)
                         cfdi_data['cfdi_xml'] = cfdi_xml
-                        msg += _(
-                            u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                     else:
                         msg += _(u"Can't extract the file XML of PAC")
                 else:
-                    raise orm.except_orm(_('Warning'), _('Stamped Code: %s. \nValidation code %s.\nFolio Fiscal: %s .\nStamped Message: %s.\n Validation Message: %s.') % (
+                    raise orm.except_orm(_('Warning'), _('Stamped Code: %s.-Validation code %s.-Folio Fiscal: %s.-Stamped Message: %s.-Validation Message: %s.') % (
                         codigo_timbrado, codigo_validacion, folio_fiscal, mensaje, resultados_mensaje))
         else:
             msg += 'Not found information from web services of PAC, verify that the configuration of PAC is correct'
@@ -488,7 +486,7 @@ class account_invoice(osv.Model):
                         'cfdi_fecha_cancelacion': time.strftime(
                         '%Y-%m-%d %H:%M:%S')})
                 else:
-                    raise orm.except_orm(_('Warning'), _('Cancel Code: %s. \nStatus code %s.\nStatus UUID: %s.\nFolio Cancel: %s.\nCancel Message: %s.\n Answer Message: %s.') % (
+                    raise orm.except_orm(_('Warning'), _('Cancel Code: %s.-Status code %s.-Status UUID: %s.-Folio Cancel: %s.-Cancel Message: %s.-Answer Message: %s.') % (
                         codigo_cancel, status_cancel, status_uuid, folio_cancel, mensaje_cancel, msg_nvo))
         else:
             msg = _(

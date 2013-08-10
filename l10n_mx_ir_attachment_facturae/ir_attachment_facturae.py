@@ -126,7 +126,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     'res_model': 'account.invoice',
                     'res_id': invoice.id,
                 }, context={})
-                msj = _("Attached Successfully XML CFD 2.2\n")
+                msj = _("Attached Successfully XML CFD 2.2")
             if type == 'cfdi32':
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                     '_V3_2.xml' or ''
@@ -147,7 +147,8 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': e}, context={})
+            print "Confirm",tools.ustr(e)
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
         
     def action_confirm(self, cr, uid, ids, context={}):
@@ -195,7 +196,8 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_sign', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': e}, context={})
+            print "SIGN", tools.ustr(e)
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
                            
     def action_sign(self, cr, uid, ids, context={}):
@@ -237,7 +239,8 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': e}, context={})
+            print "printable",tools.ustr(e)
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
     def action_printable(self, cr, uid, ids, context={}):
@@ -275,53 +278,70 @@ class ir_attachment_facturae_mx(osv.Model):
                 obj_partner = self.pool.get('res.partner')
                 mail_server_id = obj_ir_mail_server.search(cr, uid,
                                                            ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit = 1, order = 'sequence', context=None)
-                for smtp_server in obj_ir_mail_server.browse(cr, uid,
-                                                             mail_server_id, context=context):
-                    server_name = smtp_server.name
-                    smtp = False
-                    try:
-                        smtp = obj_ir_mail_server.connect(
-                            smtp_server.smtp_host, smtp_server.smtp_port,
-                            user=smtp_server.smtp_user,
-                            password=smtp_server.smtp_pass,
-                            encryption=smtp_server.smtp_encryption,
-                            smtp_debug=smtp_server.smtp_debug)
-                    except Exception, e:
-                        self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
-                        return False
-                mail_compose_message_pool = self.pool.get(
-                    'mail.compose.message')
-                email_pool = self.pool.get('email.template')
-                tmp_id = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice'),
-                                                        ('company_id', '=', company_id),('mail_server_id', '=', smtp_server.id),('report_template.report_name', '=', 'account.invoice.facturae.webkit')], limit = 1,context=None)
-                message = mail_compose_message_pool.onchange_template_id(
-                    cr, uid, [], template_id=tmp_id[0], composition_mode=None,
-                    model='account.invoice', res_id=invoice.id, context=context)
-                mssg = message.get('value', False)
-                user_mail = obj_users.browse(cr, uid, uid, context=None).email
-                partner_id = mssg.get('partner_ids', False)
-                partner_mail = obj_partner.browse(cr, uid, partner_id)[0].email
-                partner_name = obj_partner.browse(cr, uid, partner_id)[0].name
-                if mssg.get('partner_ids', False) and tmp_id:
-                    mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
-                    mssg['attachment_ids'] = [(6, 0, attachments)]
-                    mssg_id = self.pool.get(
-                        'mail.compose.message').create(cr, uid, mssg, context=None)
-                    state = self.pool.get('mail.compose.message').send_mail(
-                        cr, uid, [mssg_id], context=context)
-                    ##asunto = mssg['subject']
-                    ##id_mail = obj_mail_mail.search(
-                        ##cr, uid, [('subject', '=', asunto)])
-                    ##if id_mail:
-                        ##for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
-                            ##if mail.state == 'exception':
-                                ##msj = _(
-                                    ##'\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
-                    msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (partner_mail,server_name)
-            self.write(cr, uid, ids, {'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-            wf_service.trg_validate(uid, self._name, ids[0], 'action_send_customer', cr)
+                if mail_server_id:
+                    for smtp_server in obj_ir_mail_server.browse(cr, uid,
+                                                                 mail_server_id, context=context):
+                        server_name = smtp_server.name
+                        smtp = False
+                        try:
+                            smtp = obj_ir_mail_server.connect(
+                                smtp_server.smtp_host, smtp_server.smtp_port,
+                                user=smtp_server.smtp_user,
+                                password=smtp_server.smtp_pass,
+                                encryption=smtp_server.smtp_encryption,
+                                smtp_debug=smtp_server.smtp_debug)
+                        except Exception, e:
+                            raise osv.except_osv(_("Connection test failed!"), _(
+                                "Configure outgoing mail server named FacturaE:\n %s") % tools.ustr(e))
+                    mail_compose_message_pool = self.pool.get(
+                        'mail.compose.message')
+                    email_pool = self.pool.get('email.template')
+                    tmp_id = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice'),
+                                                            ('company_id', '=', company_id),('mail_server_id', '=', smtp_server.id),('report_template.report_name', '=', 'account.invoice.facturae.webkit')], limit = 1,context=None)
+                    if tmp_id:
+                        message = mail_compose_message_pool.onchange_template_id(
+                            cr, uid, [], template_id=tmp_id[0], composition_mode=None,
+                            model='account.invoice', res_id=invoice.id, context=context)
+                        mssg = message.get('value', False)
+                        user_mail = obj_users.browse(cr, uid, uid, context=None).email
+                        partner_id = mssg.get('partner_ids', False)
+                        partner_mail = obj_partner.browse(cr, uid, partner_id)[0].email
+                        partner_name = obj_partner.browse(cr, uid, partner_id)[0].name
+                        if partner_mail:
+                            if user_mail:
+                                if mssg.get('partner_ids', False) and tmp_id:
+                                    mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
+                                    mssg['attachment_ids'] = [(6, 0, attachments)]
+                                    mssg_id = self.pool.get(
+                                        'mail.compose.message').create(cr, uid, mssg, context=None)
+                                    state = self.pool.get('mail.compose.message').send_mail(
+                                        cr, uid, [mssg_id], context=context)
+                                    asunto = mssg['subject']
+                                    id_mail = obj_mail_mail.search(
+                                        cr, uid, [('subject', '=', asunto)])
+                                    if id_mail:
+                                        for mail in obj_mail_mail.browse(cr, uid, id_mail, context=None):
+                                            if mail.state == 'exception':
+                                                msj = _(
+                                                    '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
+                                    else:
+                                        msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (partner_mail,server_name)
+                            else:
+                                raise osv.except_osv(_('Warning'), _('This user\
+                                        does not have mail'))
+                        else:
+                            raise osv.except_osv(_('Warning'), _('The customer %s\
+                            does not have mail') % (partner_name))
+                    else:
+                        raise osv.except_osv(_('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
+                else:
+                    raise osv.except_osv(_('Warning'), _('Not Found\
+                    outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
+                self.write(cr, uid, ids, {'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                wf_service.trg_validate(uid, self._name, ids[0], 'action_send_customer', cr)
             return True
         except Exception, e:
+            print "signal_send_customer",tools.ustr(e)
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
@@ -340,7 +360,7 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_send_backup', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': e}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
         
     def action_send_backup(self, cr, uid, ids, context=None):
@@ -358,13 +378,14 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_done', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': e}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
 
     def action_done(self, cr, uid, ids, context=None):
        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
+        print "entra cancel"
         try:
             msj = ''
             invoice_obj = self.pool.get('account.invoice')
@@ -380,12 +401,18 @@ class ir_attachment_facturae_mx(osv.Model):
                 invoice_obj.action_cancel(cr, uid, [invoice.id], context)
                 msj = _('Cancel\n')
             if type == 'cfdi32':
-                if state not in ['draft']:
-                    sf_cancel = invoice_obj.sf_cancel(
-                        cr, uid, [invoice.id], context={})
-                    msj += tools.ustr(sf_cancel.get('message', False))
+                if state in ['cancel', 'draft','confirmed']:
+                    wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
                     status = invoice_obj.action_cancel(
                         cr, uid, [invoice.id], context)
+                    msj = _('Cancel\n')
+                else:
+                    sf_cancel = invoice_obj.sf_cancel(
+                        cr, uid, [invoice.id], context={})
+                    wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
+                    status = invoice_obj.action_cancel(
+                        cr, uid, [invoice.id], context)
+                    msj += tools.ustr(sf_cancel.get('message', False))
                     #Para que no aparescan los adjuntos en facturas canceladas
                     ##adjuntos = attach_obj.search(cr, uid, [(
                         ##'res_model', '=', 'account.invoice'),
@@ -399,6 +426,7 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
             return True
         except Exception, e:
+            print "Cancel",tools.ustr(e)
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
