@@ -67,27 +67,35 @@
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     <templates>
                         <div t-name="kanban-box" class="oe_kanban_content oe_kanban_card oe_budget">
-                            
-                            <span class="oe_inline oe_right"><field name="period_id"/></span>
-                            <table class="oe_list_content table table-bordered">
-                                <thead>
-                                    <td>
+                            <table>
+                                <caption class="oe_budget_oneline">
                                 <h4 class="oe_right"><field name="company_id"/></h4>
-                                    </td>
-                                    <td>
                                 <a type="open" target="_NEW">
                                     <h4 class="oe_right"><field name="crossovered_budget_id"/></h4>
                                 </a>
-                                    </td>
-                                </thead>
-                            </table>
-                            <table class="oe_list_content table table-bordered">
+                                </caption>
                                 <thead>
-                                    <tr><td title="Ifrs Position"></td><td title="Amount on Global budget">BP</td><td title="Amount Stimated by CFO local">FC</td><td title="Amount computed">REAL</td></tr> 
-                                    <tr><td><field name="ifrs_lines_id"/></td><td><field name="planned_amount"/></td><td><field name="forecasted_amount"/></td><td><field name="practical_amount_aa"/></td> </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td title="Amount on Global budget">B. Plan</td>
+                                        <td title="Amount Stimated by CFO local">ForeCasted</td>
+                                        <td title="Amount computed">Real</td>
+                                    </tr> 
+                                    <tr>
+                                        <th rowspan="2" class="oe_budget_oneline oe_left"><field name="ifrs_lines_id"/></th>
+                                        <td><span class="oe_right"><field name="planned_amount"/></span></td>
+                                        <td><span class="oe_right"><field name="forecasted_amount"/></span></td>
+                                        <td><span class="oe_right"><field name="practical_amount_aa"/></span></td>
+                                    </tr>
                                 </thead>
                             </table>
-                            <div class="oe_e oe_budget_extra">D</div>
+                            <div class="oe_kanban_bottom_right">
+                                <field name="period_id"/>
+                                <a href="#" class="oe_e">D</a>
+                                <a href="#" class="oe_e">W</a>
+                                <a href="#" class="oe_e">N</a>
+                                <a href="#" class="oe_e">O</a>
+                            </div>
                             <div class="oe_budget_hidden">
                                 <table class="oe_list_content table table-bordered">
                                     <thead>
@@ -105,6 +113,7 @@
                                 <field name="paid_date" class="oe_inline oe_budget"/>
                                 <h5><field name="general_budget_id"/></h5>
                             </div>
+                            <div class="oe_clear"></div>
                         </div>
                     </templates>
                 </kanban>

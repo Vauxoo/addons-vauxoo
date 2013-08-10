@@ -13,3 +13,16 @@
 .openerp .oe_budget_hidden {
     display:none;
 } 
+
+.openerp .oe_budget .oe_budget_oneline {
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+
+.openerp .oe_budget table {
+    border: 1px solid #000;
+    border-spacing: 4px;
+    font-size: 1.1em;
+    width: 100%;
+}
