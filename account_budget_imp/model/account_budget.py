@@ -35,15 +35,19 @@ class crossovered_budget(osv.osv):
 
     _columns = {
         'dt_approved': fields.date('Date Approved',
-                                   states={'done': [('readonly', True)]}),
+                                   readonly = True),
         'dt_validated': fields.date('Date Validated',
-                                    states={'done': [('readonly', True)]}),
-        'period_id': fields.many2one('account.period', 'Period',
-                                     domain=[('special', '<>', True)],
-                                     help="Period for this budget"),
+                                    readonly = True),
         'dt_done': fields.date('Date Done',
-                               states={'done': [('readonly', True)]}),
-    }
+                               readonly = True,
+                               help = "Date when the cicle finish."),
+        'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year',
+                                     help="Period for this budget"),
+        'period_id': fields.many2one('account.period', 'Period',
+                                     help="Period for this budget"),
+        'date_from': fields.date('Start Date', states={'done':[('readonly',True)]}),
+        'date_to': fields.date('End Date', states={'done':[('readonly',True)]}),
+     }
 
 class crossovered_budget_lines(osv.osv):
     _inherit = 'crossovered.budget.lines'
@@ -58,9 +62,6 @@ class crossovered_budget_lines(osv.osv):
         'practical_amount_aa': fields.function(_prac_acc,
                               string='Caused Amount', type='float',
                               digits_compute=dp.get_precision('Account')),
-        'period_id': fields.many2one('account.period', 'Period',
-                                     domain=[('special', '<>', True)],
-                                     help="Period for this budget"),
         'forecasted_amount': fields.float('Forecasted Amount',
                            digits_compute=dp.get_precision('Account'),
                            help="""Due to your analisys what is the amopunt that
@@ -68,6 +69,9 @@ class crossovered_budget_lines(osv.osv):
                            the Planned Ammount"""),
         'ifrs_lines_id': fields.many2one("ifrs.lines", "Report Line",
         help= "Line on the IFRS report to analyse your budget."),
+        'period_id': fields.many2one('account.period', 'Period',
+                                     domain=[('special', '<>', True)],
+                                     help="Period for this budget"),
     }
 
     def _prac_amt_acc(self, cr, uid, ids, context=None):

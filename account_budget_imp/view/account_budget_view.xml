@@ -1,6 +1,31 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_crossovered_budget_form">
+            <field name="name">crossovered.budget.form.inherit</field>
+            <field name="model">crossovered.budget</field>
+            <field name="inherit_id" ref="account_budget.crossovered_budget_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_to']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='date_from']" position="replace">
+                </xpath>
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Audit Information">
+                    <label for="dt_validated"/>
+                        <field name="dt_validated"/>
+                    <label for="dt_approved"/>
+                        <field name="dt_approved"/>
+                    <label for="dt_done"/>
+                        <field name="dt_done"/>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="fiscalyear_id"/>
+                    <field name="period_id" domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '!=', False)]"/>
+                </xpath>
+            </field>
+        </record>
         <record model="ir.ui.view" id="view_crossovered_budget_line_form">
             <field name="name">crossovered.budget.line.form.inherit</field>
             <field name="model">crossovered.budget.lines</field>
