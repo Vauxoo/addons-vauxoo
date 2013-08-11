@@ -21,14 +21,16 @@ openerp.account_budget_imp = function (openerp) {
             var show_txt = r.raw_value;
             if (r.type === "many2one"){
                 show_txtbase = r.raw_value[1];
-                if (show_txtbase.split('/').length >= 3){
-                    /*
-                    TODO: maybe change and count characters too! to allow
-                    mantain the get_name in only one line.
-                    */
-                    show_txto =  show_txtbase.split('/')[0].substring(0, 4);
-                    show_txtf =  show_txtbase.split('/').pop();
-                    show_txt = show_txto+'/../'+show_txtf;
+                if (show_txtbase){
+                    if (show_txtbase.split('/').length >= 3){
+                        /*
+                        TODO: maybe change and count characters too! to allow
+                        mantain the get_name in only one line.
+                        */
+                        show_txto =  show_txtbase.split('/')[0].substring(0, 4);
+                        show_txtf =  show_txtbase.split('/').pop();
+                        show_txt = show_txto+'/../'+show_txtf;
+                    }
                 }
             }
             return show_txt 

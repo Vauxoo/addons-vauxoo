@@ -67,22 +67,23 @@
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     <templates>
                         <div t-name="kanban-box" class="oe_kanban_content oe_kanban_card oe_budget">
+                            <a type="open" target="_NEW" class="oe_inline">
+                                <field name="crossovered_budget_id"/>
+                            </a>
                             <table>
                                 <caption class="oe_budget_oneline">
+                                <h4 class="oe_line"><field name="period_id"/></h4>
                                 <h4 class="oe_right"><field name="company_id"/></h4>
-                                <a type="open" target="_NEW">
-                                    <h4 class="oe_right"><field name="crossovered_budget_id"/></h4>
-                                </a>
                                 </caption>
                                 <thead>
                                     <tr>
-                                        <td></td>
-                                        <td title="Amount on Global budget">B. Plan</td>
-                                        <td title="Amount Stimated by CFO local">ForeCasted</td>
-                                        <td title="Amount computed">Real</td>
+                                        <th rowspan="2" class="oe_budget_oneline oe_left"><field name="ifrs_lines_id"/></th>
+                                        <td title="Amount on Global budget"><span>B. Plan</span></td>
+                                        <td title="Amount Stimated by CFO local"><span>ForeCasted</span></td>
+                                        <td title="Amount computed"><span>Real</span></td>
                                     </tr> 
                                     <tr>
-                                        <th rowspan="2" class="oe_budget_oneline oe_left"><field name="ifrs_lines_id"/></th>
+                                        <th></th>
                                         <td><span class="oe_right"><field name="planned_amount"/></span></td>
                                         <td><span class="oe_right"><field name="forecasted_amount"/></span></td>
                                         <td><span class="oe_right"><field name="practical_amount_aa"/></span></td>
@@ -90,23 +91,14 @@
                                 </thead>
                             </table>
                             <div class="oe_kanban_bottom_right">
-                                <field name="period_id"/>
                                 <a href="#" class="oe_e">D</a>
                                 <a href="#" class="oe_e">W</a>
                                 <a href="#" class="oe_e">N</a>
                                 <a href="#" class="oe_e">O</a>
                             </div>
                             <div class="oe_budget_hidden">
-                                <table class="oe_list_content table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <td class="oe_e">A</td><td><field name="percentage"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td>THEO</td><td><field name="theoritical_amount"/></td> 
-                                        </tr>
-                                    </thead>
-                                </table>
+                                <span class="oe_e">A</span><span><field name="percentage"/></span>
+                                <span>THEO</span><span><field name="theoritical_amount"/></span>
                                 <a t-att-title="record.analytic_account_id.raw_value[1]"><t t-raw="kanban_name_resumed(record.analytic_account_id)"></t></a>
                                 <span><field name="analytic_account_id" groups="analytic.group_analytic_accounting"/></span>
                                 <span class="oe_e oe_inline">N</span>
