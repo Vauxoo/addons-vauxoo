@@ -871,57 +871,31 @@ class hr_expense_expense(osv.Model):
         payment. So now we create a account voucher to pay the employee the
         missing expense amount.
         """
+        ids = isinstance(ids, (int, long)) and [ids] or ids
         if not ids: return []
-        mod_obj = self.pool.get('ir.model.data')
-        act_obj = self.pool.get('ir.actions.act_window')
-        exp = self.browse(cr, uid, ids[0], context=context)
-        exp_ids=[]
-        result = mod_obj.get_object_reference(cr, uid, 'account_voucher',
-            'action_voucher_list')
-        id = result and result[1] or False
-        view_type='view_vendor_payment_form'
-        res = mod_obj.get_object_reference(cr, uid, 'account_voucher',
-            view_type)
-        result = act_obj.read(cr, uid, [id], context=context)[0]
-        result['views'] = [(res and res[1] or False, 'form')]
-        result['context']= {
-                'default_partner_id': exp.employee_id.address_home_id.id,
-                #'default_amount': 100,
-                'default_reference': exp.name,
+        dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'hr_expense_replenishment', 'view_vendor_receipt_dialog_form')
+        exp_brw = self.browse(cr, uid, ids[0], context=context)
+        return {
+            'name':_("Pay Employee Expense"),
+            'view_mode': 'form',
+            'view_id': view_id,
+            'view_type': 'form',
+            'res_model': 'account.voucher',
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'new',
+            'domain': '[]',
+            'context': {
+                'payment_expected_currency': exp_brw.currency_id.id,
+                'default_partner_id': exp_brw.partner_id.id,
+                'default_amount': exp_brw.amount,
+                'default_name': exp_brw.name,
+                'default_reference': '',
+                'close_after_process': True,
                 'default_type': 'payment',
-                #'invoice_id': 5,
-                'type': 'payment',
-                'hr_expense_repl': exp.id
+                'type': 'payment'
             }
-        result['res_id'] = exp_ids and exp_ids[0] or False
-        return result
-        #context = context or {}
-        #raise osv.except_osv("Warning DUMMY method", "No yet implemented")
-
-        #~ TODO: make the automatic the voucher linked to the no reconciled
-        #~ expense move line
-
-        #~ create account.voucher for employee (credits)
-        #~ vals = {
-            #~ 'move_line_id': av_aml,
-        #~ }
-        #~ voucher_line_id = \
-        #~ self.pool.get('account.voucher.line').create(cr, uid, vals,
-                                                        #~ context=context)
-        #~ print 'i am about to create the voucher'
-
-        #~ vals = {
-            #~ 'partner_id': exp.account_move_id.partner_id.id,
-            #~ 'amount': abs(aml['debit']-aml['credit']),
-            #~ 'account_id': aml.account_id,
-            #~ 'line_cr_ids': [voucher_line_id]
-        #~ }
-        #~ print 'i am about to create the voucher rigth now'
-        #~ voucher_id = av_obj.create(cr, uid, vals, context=context)
-        #~ print 'i create the voucher successfully'
-        #~ print 'voucher_id', voucher_id
-
-        #return True
+        }
 
     def expense_deduction(self, cr, uid, ids, context=None):
         """
