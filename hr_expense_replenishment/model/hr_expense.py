@@ -117,10 +117,8 @@ class hr_expense_expense(osv.Model):
             'account.move.line', 'expense_advance_rel',
             'expense_id', 'aml_id', string='Employee Advances',
             help="Advances associated to the expense employee."),
-        'payment_ids': fields.related(
-            'account_move_id', 'line_id',
-            type='one2many',
-            relation='account.move.line',
+        'payment_ids': fields.many2many('account.voucher','expense_pay_rel',
+            'expense_id', 'av_id',
             string=_('Expense Payments'),
             help=_('This table is a summary of the payments done to reconcile '
                    'the expense invoices, lines and advances. This is an only '
@@ -871,6 +869,7 @@ class hr_expense_expense(osv.Model):
         payment. So now we create a account voucher to pay the employee the
         missing expense amount.
         """
+        context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         if not ids: return []
         dummy, view_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'hr_expense_replenishment', 'view_vendor_receipt_dialog_form')
@@ -893,7 +892,8 @@ class hr_expense_expense(osv.Model):
                 'default_reference': '',
                 'close_after_process': True,
                 'default_type': 'payment',
-                'type': 'payment'
+                'type': 'payment',
+                'employee_payment':True,
             }
         }
 
@@ -963,36 +963,15 @@ class hr_expense_expense(osv.Model):
 
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
-    def recompute_voucher_lines(self, cr, uid, ids, partner_id, journal_id,
-                                price, currency_id, ttype, date, context=None):
-        res = super(account_voucher, self).recompute_voucher_lines(cr, uid,
-                ids, partner_id, journal_id, price, currency_id, ttype, date,
-                context=context)
-        hr_expense_rep = self.pool.get('hr.expense.expense')
-        exp_id = context.get('hr_expense_repl', False)
-        if exp_id:
-            for expense in hr_expense_rep.browse(cr, uid, [exp_id],
-                                                            context=context):
-                amount = 0.0
-                res['value']['line_cr_ids'] = []
-                for adv in expense.advance_ids:
-                    amount += adv.debit
-                    rs = {
-                        'date_due': adv.date,
-                        'name': adv.name,
-                        'date_original': adv.date,
-                        'move_line_id': adv.id,
-                        'amount_original': adv.debit,
-                        'currency_id': expense.currency_id and\
-                                        expense.currency_id.id or False,
-                        'amount': 0,
-                        'type': 'cr',
-                        'account_id': adv.account_id.id,
-                        'amount_unreconciled': adv.debit,
-                    }
-                    res['value']['line_cr_ids'].append(rs)
-                    res['value']['pre_line'] = 1
-                res['value']['amount'] = expense.amount - amount
+    def create(self, cr, uid, vals, context=None):
+        context = context or {}
+        res = super(account_voucher,self).create(cr, uid,
+                vals, context=context)
+        if context.get('employee_payment',False):
+            exp_obj = self.pool.get('hr.expense.expense')
+            exp_obj.write(cr, uid, context['active_id'],{
+                'payment_ids':[(4,res)]                
+                },context=context)
         return res
 
 class account_move_line(osv.osv):

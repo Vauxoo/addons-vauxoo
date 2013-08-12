@@ -97,22 +97,8 @@
                 </xpath>
 
                 <xpath expr="//notebook[last()]" position="inside">
-                    <page string="Payments" attrs="{'invisible':[('state','not in',['paid'])]}">
-                        <field name="payment_ids" nolabel="1" readonly="1">
-                            <tree>
-                                <field name="journal_id"/>
-                                <field name="period_id"/>
-                                <field name="date"/>
-                                <field name="name"/>
-                                <field name="ref"/>
-                                <field name="partner_id"/>
-                                <field name="account_id"/>
-                                <field name="move_id"/>
-                                <field name="debit" sum=""/>
-                                <field name="credit" sum=""/>
-                                <field name="reconcile_id"/>
-                            </tree>
-                        </field>
+                    <page string="Payments" attrs="{'invisible':[('state','not in',('paid','process'))]}">
+                        <field name="payment_ids" nolabel="1" readonly="1"/>
                     </page>
                 </xpath>
 
