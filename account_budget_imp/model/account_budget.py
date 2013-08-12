@@ -72,6 +72,8 @@ class crossovered_budget_lines(osv.osv):
         'period_id': fields.many2one('account.period', 'Period',
                                      domain=[('special', '<>', True)],
                                      help="Period for this budget"),
+        'date_from': fields.date('Start Date'),
+        'date_to': fields.date('End Date'),
     }
 
     def _prac_amt_acc(self, cr, uid, ids, context=None):

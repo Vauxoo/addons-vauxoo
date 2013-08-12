@@ -24,6 +24,26 @@
                     <field name="fiscalyear_id"/>
                     <field name="period_id" domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '!=', False)]"/>
                 </xpath>
+                <xpath expr="//field[@name='crossovered_budget_line']" position="replace">
+                    <field name="crossovered_budget_line">
+                        <tree>
+                            <field name="ifrs_lines_id"/>
+                            <field name="period_id"/>
+                            <field name="planned_amount"/>
+                            <field name="forecasted_amount"/>
+                            <field name="practical_amount_aa"/>
+                            <field name="company_id" groups="account_budget_imp.budget_multicompany"/>
+                        </tree>
+                        <form>
+                            <field name="ifrs_lines_id"/>
+                            <field name="period_id"/>
+                            <field name="planned_amount"/>
+                            <field name="forecasted_amount"/>
+                            <field name="practical_amount_aa"/>
+                            <field name="company_id" groups="account_budget_imp.budget_multicompany"/>
+                        </form>
+                    </field>
+                </xpath>
             </field>
         </record>
         <record model="ir.ui.view" id="view_crossovered_budget_line_form">

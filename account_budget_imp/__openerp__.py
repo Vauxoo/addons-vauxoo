@@ -66,6 +66,7 @@ Budget per period.
     ],
     "data" : [
         "view/account_budget_view.xml",
+        "security/res_groups.xml",
     ],
     "demo" : [
     ],
