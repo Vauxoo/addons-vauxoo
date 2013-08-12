@@ -120,12 +120,15 @@
                 <field name="model">account.voucher</field>     
                 <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
                 <field name="arch" type="xml">
-                     <xpath expr="//field[@name='state']" position="replace">
-                        <field name="state" widget="statusbar" statusbar_visible="draft,wait_tax,posted" statusbar_colors='{"proforma":"blue"}'/>
-                     </xpath>
-                     <xpath expr="//button[@name='cancel_voucher']" position="replace">
-                        <button name="cancel_voucher" string="Cancel Voucher" type="object" states="posted,wait_tax" confirm="Are you sure you want to unreconcile this record?"/>
-                     </xpath>
+                    <xpath expr="//header" position="replace">
+                        <header>
+                            <button name="proforma_voucher" string="Post" states="draft" class="oe_highlight"/>
+                            <button name="cancel_voucher" string="Cancel Voucher" type="object" states="posted,wait_tax" confirm="Are you sure you want to unreconcile this record?"/>
+                            <button name="cancel_voucher" string="Cancel Voucher" states="draft,proforma" />
+                            <button name="action_cancel_draft" type="object" states="cancel" string="Set to Draft"/>
+                            <field name="state" widget="statusbar" statusbar_visible="draft,wait_tax,posted" statusbar_colors='{"proforma":"blue"}'/>
+                        </header>
+                    </xpath>
                 </field>
         </record>
 
