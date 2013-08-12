@@ -22,4 +22,28 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
-import mrp_workcenter_responsible
+
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+
+class mrp_workcenter(osv.Model):
+
+    _inherit = 'mrp.workcenter'
+    _columns = {
+        'responsible_id': fields.many2one(
+            'res.users',
+            string=_('Responsible'),
+            help=_('User responsible of the work center')),
+    }
+
+class mrp_production_workcenter_line(osv.Model):
+
+    _inherit = 'mrp.production.workcenter.line'
+    _columns = {
+        'responsible_id': fields.related(
+            'workcenter_id', 'responsible_id',
+            type='many2one',
+            relation='res.users',
+            string=_('Responsible'),
+            help=_('User responsible of the work order')),
+    }
