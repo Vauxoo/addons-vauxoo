@@ -5,7 +5,7 @@
     <!-- Work Center -->
 
          <record model="ir.ui.view" id="workcenter_reponsible_form_view_inherit">
-             <field name="name">mrp.workcenter.responsible</field>
+             <field name="name">mrp.workcenter.responsible.form</field>
              <field name="model">mrp.workcenter</field>
              <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
              <field name="arch" type="xml">
@@ -20,7 +20,7 @@
     <!-- Work Order -->
 
          <record model="ir.ui.view" id="workorder_responsible_form_view_inherit">
-             <field name="name">mrp.production.workcenter.line.responsible</field>
+             <field name="name">mrp.production.workcenter.line.responsible.form</field>
              <field name="model">mrp.production.workcenter.line</field>
              <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
              <field name="arch" type="xml">
