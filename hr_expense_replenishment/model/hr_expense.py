@@ -947,12 +947,15 @@ class hr_expense_expense(osv.Model):
     def show_entries(self, cr, uid, ids, context=None):
         for exp in self.browse(cr, uid, ids, context=context):
             res_exp = [move.id for move in exp.account_move_id.line_id]
-            res_pay = [line.id for line in exp.advance_ids]
+            res_adv = [l.id for line in exp.advance_ids
+                                for l in line.move_id.line_id]
+            res_pay = [line.id for pay in exp.payment_ids
+                                for line in pay.move_ids]
             res_inv = [move.id for inv in exp.invoice_ids
                                 for move in inv.move_id.line_id]
         return {
             'domain': "[('id','in',\
-                ["+','.join(map(str, res_exp+res_inv+res_pay))+"])]",
+                ["+','.join(map(str, res_exp+res_adv+res_pay+res_inv))+"])]",
             'name': _('Entries'),
             'view_type': 'form',
             'view_mode': 'tree,form',
