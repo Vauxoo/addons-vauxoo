@@ -102,7 +102,7 @@ class account_invoice(osv.Model):
                 'discount': invoice.global_discount_percent,
             }
             sub_tot += line.price_unit * line.quantity
-            invoice_line_obj.write(cr, uid, line.id, discount_dic)
+            invoice_line_obj.write(cr, uid, [line.id], discount_dic)
 
         discount = invoice.global_discount_percent and sub_tot * (
             invoice.global_discount_percent and invoice.\
