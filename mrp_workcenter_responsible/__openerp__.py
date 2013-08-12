@@ -33,8 +33,8 @@
 MRP Workcenter Responsible
 ==========================
 
-Add the functionality of a responsible from a work center and it childs work
-orders.
+Add the feature of having an responsible for a work center and it's work
+orders associated.
 """,
     "depends": ["mrp_operations"],
     "data": [
