@@ -33,7 +33,8 @@ class mrp_workcenter(osv.Model):
         'responsible_id': fields.many2one(
             'res.users',
             string=_('Responsible'),
-            help=_('User responsible of the work center')),
+            help=_('Responsible person to perform the work center'
+                   ' activities.')),
     }
 
 class mrp_production_workcenter_line(osv.Model):
@@ -45,5 +46,8 @@ class mrp_production_workcenter_line(osv.Model):
             type='many2one',
             relation='res.users',
             string=_('Responsible'),
-            help=_('User responsible of the work order')),
+            help=_('Responsible person to carry out the work order. The'
+                   ' responsible is the one for the work center associated.'
+                   ' To change the responsible you need to change the work'
+                   ' center responsible.')),
     }
