@@ -81,11 +81,11 @@ class task_expired_config(osv.Model):
             before_expiry = before_expiry.strftime('%Y-%m-%d')
             last_change = last_change.strftime('%Y-%m-%d') 
             task_ids = task_obj.search(cr, uid,
-                                       [('state','not in',
-                                        ('done','draft','cancelled'))],
+                                       [('state', 'not in',
+                                        ('done', 'cancelled'))],
                                         context=context)
             for task in task_ids and task_obj.browse(cr, uid, task_ids):
-                msg = _('<h2>Information about tasks</h2>') 
+                msg = _('<h2>Information about %s</h2>' % task.name) 
                 if task.date_deadline and task.date_deadline <= today:
                     msg+=_('<p>The task is expired</p>') 
                 if work_obj.search(cr, uid,
@@ -95,15 +95,13 @@ class task_expired_config(osv.Model):
                    message.search(cr, uid,
                                    [('date', '<=', last_change),
                                     ('res_id', '=', task.id)],
-                                   context) or :
+                                   context): 
                     msg+=_('<p>The task has more than %s days without \
                                                                 changes</p>'\
                                                    % config_brw.without_change)
                 if task.date_deadline and task.date_deadline == before_expiry:
-                    msg+=_('<p>The next task will expire in %s days</p>' %\
+                    msg+=_('<p>The task will expire in %s days</p>' %\
                                                       config_brw.before_expiry) 
-                
-
                 if msg:
                     mail_id = mail_mail.create(cr, uid,
                                                 {               
