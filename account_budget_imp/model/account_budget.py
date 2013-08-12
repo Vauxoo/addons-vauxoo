@@ -47,8 +47,14 @@ class crossovered_budget(osv.osv):
                                      help="Period for this budget"),
         'date_from': fields.date('Start Date', states={'done':[('readonly',True)]}),
         'date_to': fields.date('End Date', states={'done':[('readonly',True)]}),
+        'company_id': fields.many2one('res.company', 'Company'),
+        'general_budget_id': fields.many2one('account.budget.post', 'Budgetary Position'),
      }
 
+    _default = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+    }
+   
 class crossovered_budget_lines(osv.osv):
     _inherit = 'crossovered.budget.lines'
 
@@ -61,6 +67,12 @@ class crossovered_budget_lines(osv.osv):
     _columns = {
         'practical_amount_aa': fields.function(_prac_acc,
                               string='Caused Amount', type='float',
+                              digits_compute=dp.get_precision('Account')),
+        'practical_amount': fields.function(_prac_acc,
+                              string='Amount', type='float',
+                              digits_compute=dp.get_precision('Account')),
+        'theoritical_amount': fields.function(_prac_acc,
+                              string='Amount', type='float',
                               digits_compute=dp.get_precision('Account')),
         'forecasted_amount': fields.float('Forecasted Amount',
                            digits_compute=dp.get_precision('Account'),
@@ -76,6 +88,22 @@ class crossovered_budget_lines(osv.osv):
         'date_to': fields.date('End Date'),
     }
 
+    _default = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+    }
+
+    def write(self, cr, uid, ids, values, context = None):
+        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context = context)
+        values.update({'date_from': period_brw.date_start,
+                       'date_to': period_brw.date_stop})
+        return super(crossovered_budget_lines, self).write(cr, uid, ids, values, context = context)
+
+    def create(self, cr, uid, values, context = None):
+        period_brw = self.pool.get('account.period').browse(cr, uid, values.get('period_id'), context = context)
+        values.update({'date_from': period_brw.date_start,
+                       'date_to': period_brw.date_stop})
+        return super(crossovered_budget_lines, self).create(cr, uid, values, context = context)
+
     def _prac_amt_acc(self, cr, uid, ids, context=None):
         '''
         This Method should compute considering Accounts Accounts due to the 
@@ -87,24 +115,27 @@ class crossovered_budget_lines(osv.osv):
         if context is None: 
             context = {}
         for line in self.browse(cr, uid, ids, context=context):
-            acc_ids = [x.id for x in line.general_budget_id.account_ids]
-            if not acc_ids:
-                raise osv.except_osv(_('Error!'),_("The Budget '%s' has no accounts!") % str(line.general_budget_id.name))
             date_to = line.date_to
             date_from = line.date_from
             if context.has_key('wizard_date_from'):
                 date_from = context['wizard_date_from']
             if context.has_key('wizard_date_to'):
                 date_to = context['wizard_date_to']
-            if line.analytic_account_id.id:
-                cr.execute("SELECT SUM(amount) FROM account_analytic_line WHERE account_id=%s AND (date "
-                       "between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd')) AND "
-                       "general_account_id=ANY(%s)", (line.analytic_account_id.id, date_from, date_to,acc_ids,))
-                result = cr.fetchone()[0]
+            if not date_from or not date_to:
+                acc_b_ids = line.general_budget_id and line.general_budget_id.account_ids or []
+                acc_ids = [x.id for x in acc_b_ids]
+                if not acc_ids:
+                    result = 0.00
+                if line.analytic_account_id.id:
+                    cr.execute("SELECT SUM(amount) FROM account_analytic_line WHERE account_id=%s AND (date "
+                           "between to_date(%s,'yyyy-mm-dd') AND to_date(%s,'yyyy-mm-dd')) AND "
+                           "general_account_id=ANY(%s)", (line.analytic_account_id.id, date_from, date_to,acc_ids,))
+                    result = cr.fetchone()[0]
+                else:
+                    result = sum([a.balance for a in line.general_budget_id.account_ids]) 
             else:
-                result = sum([a.balance for a in line.general_budget_id.account_ids]) 
+                result = 0.00
             if result is None:
                 result = 0.00
             res[line.id] = result
         return res
-

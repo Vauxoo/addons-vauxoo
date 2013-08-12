@@ -29,6 +29,8 @@
                         <tree>
                             <field name="ifrs_lines_id"/>
                             <field name="period_id"/>
+                            <field name="date_from" readonly="True"/>
+                            <field name="date_to" readonly="True"/>
                             <field name="planned_amount"/>
                             <field name="forecasted_amount"/>
                             <field name="practical_amount_aa"/>
@@ -37,9 +39,12 @@
                         <form>
                             <field name="ifrs_lines_id"/>
                             <field name="period_id"/>
+                            <field name="date_from" readonly="True"/>
+                            <field name="date_to" readonly="True"/>
                             <field name="planned_amount"/>
                             <field name="forecasted_amount"/>
                             <field name="practical_amount_aa"/>
+                            <field name="general_budget_id"/>
                             <field name="company_id" groups="account_budget_imp.budget_multicompany"/>
                         </form>
                     </field>
@@ -56,6 +61,8 @@
                     <field name="ifrs_lines_id"/>
                     <field name="practical_amount_aa"/>
                     <field name="forecasted_amount"/>
+                    <field name="date_from" readonly="True"/>
+                    <field name="date_to" readonly="True"/>
                 </xpath>
             </field>
         </record>
