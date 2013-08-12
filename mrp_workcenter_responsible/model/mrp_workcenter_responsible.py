@@ -45,6 +45,7 @@ class mrp_production_workcenter_line(osv.Model):
             'workcenter_id', 'responsible_id',
             type='many2one',
             relation='res.users',
+            readonly=True,
             string=_('Responsible'),
             help=_('Responsible person to carry out the work order. The'
                    ' responsible is the one for the work center associated.'
