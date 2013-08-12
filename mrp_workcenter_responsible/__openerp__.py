@@ -36,8 +36,10 @@ MRP Workcenter Responsible
 Add the functionality of a responsible from a work center and it childs work
 orders.
 """,
-    "depends": ["mrp"],
-    "data": [],
+    "depends": ["mrp_operations"],
+    "data": [
+        "view/mrp_workcenter_responsible_view.xml",
+    ],
     "demo": [],
     "test": [],
     "active": False,

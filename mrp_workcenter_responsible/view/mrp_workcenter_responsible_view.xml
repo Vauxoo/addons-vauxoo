@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    <!-- Work Center -->
+
+         <record model="ir.ui.view" id="workcenter_reponsible_form_view_inherit">
+             <field name="name">mrp.workcenter.responsible</field>
+             <field name="model">mrp.workcenter</field>
+             <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+             <field name="arch" type="xml">
+                 <data>
+                     <xpath expr="//field[@name='code']" position="before">
+                        <field name="responsible_id"/>
+                    </xpath>
+                 </data>
+             </field>
+         </record>
+
+    <!-- Work Order -->
+
+         <record model="ir.ui.view" id="workorder_responsible_form_view_inherit">
+             <field name="name">mrp.production.workcenter.line.responsible</field>
+             <field name="model">mrp.production.workcenter.line</field>
+             <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+             <field name="arch" type="xml">
+                 <data>
+                     <xpath expr="//field[@name='sequence']" position="after">
+                        <field name="responsible_id"/>
+                    </xpath>
+                 </data>
+             </field>
+         </record>
+
+    </data>
+</openerp>
