@@ -496,7 +496,7 @@ class hr_expense_expense(osv.Model):
                     sum_inv)]
             if sum_adv > sum_inv:
                 return [], exp_ids + adv_ids
-            elif sum_advance == sum_inv:
+            elif sum_adv == sum_inv:
                 return adv_ids + inv_ids, []
             else: # sum_adv < sum_inv
                 return [], adv_ids + inv_ids
