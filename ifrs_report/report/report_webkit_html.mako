@@ -147,7 +147,7 @@
                                             ${ifrs_l.get('name').capitalize()}
                                         </td>
                                         <td class="celdaDetail" width="20%">
-                                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity}
                                         </td>
                                         <td class="celdaDetail" width="20%">
                                         </td>
