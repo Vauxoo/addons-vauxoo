@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from openerp.osv import osv
 from openerp.osv import fields 
+from openerp.tools.translate import _
 
 class account_reconcile_advance(osv.Model):
     
@@ -16,9 +17,11 @@ class account_reconcile_advance(osv.Model):
             help='State'), 
         'state':fields.selection([('draft','Draft'),('approved','Approved'),
             ('done','Done')], help='State'), 
+        'company_id':fields.many2one('res.company', 'Company', help='Company'), 
         'partner_id':fields.many2one('res.partner', 'Partner', help='Advance Partner'), 
         'period_id':fields.many2one('account.period', 'Accounting Period', help='Period where Journal Entries will be posted'), 
         'journal_id':fields.many2one('account.journal', 'Journal', help='Accounting Journal where Entries will be posted'), 
+        'move_id':fields.many2one('account.move', 'Accounting Entry', help='Accounting Entry'), 
         'invoice_ids':fields.many2many('account.invoice', 'ara_invoice_rel', 'ara_id', 'inv_id', 'Invoices', help='Invoices to be used in this Advance'), 
         'voucher_ids':fields.many2many('account.voucher', 'ara_voucher_rel', 'ara_id', 'voucher_id', 'Advances', help='Advances to be used'), 
         'ai_aml_ids':fields.many2many('account.move.line', 'ara_ai_aml_rel', 'ara_id', 'aml_id', 'Invoice Entry Lines', help=''), 
@@ -27,7 +30,61 @@ class account_reconcile_advance(osv.Model):
     _defaults = {
         'state':'draft',        
         'type':'pay',    
+        'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
+            u, cx).company_id.id,
     }
+
+    def invoice_credit_lines(self, cr, uid, ids, amount, am_id=None,
+            account_id=False, partner_id=False, date=None, context=None):
+        """
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ara_brw = self.browse(cr, uid, ids[0], context=context)
+        account_id = account_id or ara_brw.partner_id.property_account_payable.id
+        partner_id = ara_brw.partner_id.id 
+        date = date or ara_brw.date_post or fields.date.today()
+        period_id = ara_brw.period_id or ara_brw.period_id.id
+        vals = {
+            'move_id': am_id or ara_brw.move_id.id,
+            'journal_id': ara_brw.journal_id.id,
+            'date' : date,
+            'period_id' : period_id or self.pool.get('account.period').find(
+                cr, uid, dt=date,context=context)[0],
+            'debit' : 0.0,
+            'name' : _('Advance Applied'),
+            'partner_id' : partner_id,
+            'account_id' : account_id,
+            'credit' : amount,
+        }
+        return aml_obj.create(cr, uid, vals, context=context)
+
+    def invoice_debit_lines(self, cr, uid, ids, amount, am_id=None,
+            account_id=False, partner_id=False, date=None, context=None):
+        """
+        """
+        context = context or {}
+        aml_obj = self.pool.get('account.move.line')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ara_brw = self.browse(cr, uid, ids[0], context=context)
+        account_id = account_id or ara_brw.partner_id.property_account_payable.id
+        partner_id = ara_brw.partner_id.id 
+        date = date or ara_brw.date_post or fields.date.today()
+        period_id = ara_brw.period_id or ara_brw.period_id.id
+        vals = {
+            'move_id': am_id or ara_brw.move_id.id,
+            'journal_id': ara_brw.journal_id.id,
+            'date' : date,
+            'period_id' : period_id or self.pool.get('account.period').find(
+                cr, uid, dt=date,context=context)[0],
+            'debit' : amount,
+            'name' : _('Invoice Payment with Advance'),
+            'partner_id' : partner_id,
+            'account_id' : account_id,
+            'credit' : 0.0,
+        }
+        return aml_obj.create(cr, uid, vals, context=context)
 
     def payment_reconcile(self, cr, uid, ids, context=None):
         context = context or {}
@@ -35,23 +92,27 @@ class account_reconcile_advance(osv.Model):
         inv_obj = self.pool.get('account.invoice')
         av_obj = self.pool.get('account.voucher')
         aml_obj = self.pool.get('account.move.line')
+        am_obj = self.pool.get('account.move')
 
         ara_brw = self.browse(cr, uid, ids[0], context=context)
+
+        am_vals = am_obj.account_move_prepare(cr, uid, ara_brw.journal_id.id,
+                date=ara_brw.date_post, ref=ara_brw.name,
+                company_id=ara_brw.company_id.id, context=context)
+        am_id = am_obj.create(cr, uid, am_vals, context=context)
+
         invoice_ids = [inv.id for inv in ara_brw.invoice_ids]
         invoice_ids = inv_obj.search(cr, uid, [('id','in',invoice_ids)],
                 order='date_due asc', context=context)
 
         av_aml_ids = []
-        for av_brw in ara_brw.av_aml_ids:
+        for av_brw in ara_brw.voucher_ids:
             av_aml_ids += [l.id for l in av_brw.move_ids if l.account_id.type \
                     == 'payable' and not l.reconcile_id and not \
                     l.reconcile_partial_id]
 
-        av_aml_ids = inv_obj.search(cr, uid, [('id','in',av_aml_ids)],
+        av_aml_ids = aml_obj.search(cr, uid, [('id','in',av_aml_ids)],
                 order='date asc', context=context)
-
-        # BE AWARE this is not yet multicurrency
-        invoice_sum = sum([inv.residual for inv in ara_brw.invoice_ids])
 
         # In the future this should be like this
         # while (invoice_ids or ai_aml_ids) and av_aml_ids:
@@ -59,33 +120,74 @@ class account_reconcile_advance(osv.Model):
         aml_sum = 0.0
         aml_grn_sum = 0.0
         mem_av_aml_ids = av_aml_ids
+        lines_2_rec = []
+        lines_2_par = []
         while invoice_ids  and av_aml_ids:
             inv_brw = inv_obj.browse(cr, uid, invoice_ids.pop(0), context=context)
+#           BE AWARE MULTICURRENCY MISSING HERE
             inv_sum = inv_brw.residual
             while inv_sum > aml_sum and av_aml_ids:
                 aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
                 aml_sum += aml_brw.debit
                 aml_grn_sum += aml_brw.debit
-            
-            if inv_sum <= aml_sum:
-                #Creates its own mirror and fully conciliate them
-                aml_sum -= inv_sum
-                pass
-            elif inv_sum > aml_sum and not av_aml_ids:
-                # payments are over
-                aml_sum = 0.0
-                pass
+#               gruping by account_id should be done here            
 
-        if av_aml_ids: #spare aml's. We will do nothing with these lines
+            iamls = [line.id for line in inv_brw.move_id.line_id if
+                    line.account_id.type == 'payable']
+            pamls = [line.id for line in inv_brw.payment_ids]
+
+            if inv_sum <= aml_sum:
+#               Creates its own mirror and fully reconciliates them
+                payid = self.invoice_debit_lines(cr, uid, ids,
+                        inv_brw.residual, account_id=inv_brw.account_id.id,
+                        am_id=am_id, context=context)
+                lines_2_rec.append(iamls+pamls+[payid])
+                aml_sum -= inv_sum
+            elif inv_sum > aml_sum and not av_aml_ids:
+#               Payments are over. Last line to invoice is made with the
+#               aml_sum
+                payid = self.invoice_debit_lines(cr, uid, ids, aml_sum,
+                        account_id=inv_brw.account_id.id, am_id=am_id,
+                        context=context)
+                lines_2_par.append(iamls+pamls+[payid])
+                aml_sum = 0.0
+
+        if av_aml_ids: 
+#           spare aml's. We will do nothing with these lines
+#           these were the advances we did not use
             pass
         used_aml_ids = list(set(mem_av_aml_ids) - set(av_aml_ids)) # used lines
+        adv_2_rec = []
         if used_aml_ids: # used lines
-
-            aml_grn_sum => credito
-            aml__sum => debito
-
-
             
+#            when reconciling among used_aml_ids, those ids should be grouped by
+#            account_id, take care of the last used_aml_ids, because is with this
+#            that the aml_sum (debit) should be created.
+#            aml_grn_sum => credit
+#            aml_sum => debit
+            if aml_sum:
+#               if some remaining money get around it will not be reconciled
+                aml_brw = aml_obj.browse(cr, uid, used_aml_ids[-1],
+                        context=context)
+#           This should be sent to a method in order to be capture
+                self.invoice_debit_lines(cr, uid, ids, aml_sum,
+                        account_id=ara_brw.partner_id.property_account_payable.id,
+                        am_id=am_id, context=context)
+
+            for aml_brw in aml_obj.browse(cr, uid, used_aml_ids, context=context):
+                adv_2_rec.append(self.invoice_credit_lines(cr, uid, ids,
+                    aml_brw.debit, account_id=aml_brw.account_id.id,
+                    am_id=am_id, context=context),aml_brw.id)
+
+        for line_pair in adv_2_rec+lines_2_rec:
+            if not line_pair: continue
+            aml_obj.reconcile(
+                cr, uid, line_pair, 'manual', context=context)
+        for line_pair in lines_2_par:
+            if not line_pair: continue
+            aml_obj.reconcile_partial(
+                cr, uid, line_pair, 'manual', context=context)
+            ara_brw.write({'move_id':am_id, 'state':'done'})
         return True
     
 class account_voucher(osv.Model):
