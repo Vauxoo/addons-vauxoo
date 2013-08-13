@@ -20,13 +20,16 @@
                 <group col='4'>
                     <field name='date'/>
                     <field name='date_post'/>
-                    <field name='partner_id'/>
+                    <field name='partner_id' required='1'/>
                     <field name='period_id'/>
                     <field name='journal_id'/>
                 </group>
                 <notebook>
                     <page string='Invoices'>
-                        <field name='invoice_ids' nolabel='1'/>
+                        <field 
+                            name='invoice_ids' 
+                            domain="[('type','=','in_invoice'),('state','=','open'),('partner_id','=',partner_id)]"
+                            nolabel='1'/>
                         <field name='ai_aml_ids' nolabel='1'/>
                     </page>
                     <page string='Advances'>
