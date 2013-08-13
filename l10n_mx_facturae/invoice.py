@@ -118,7 +118,7 @@ msg2 = "Contact you administrator &/or to info@vauxoo.com"
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
+    def create_report(self, cr, uid, res_ids, report_name=False, file_name=False, context=None):
         """
         @param report_name : Name of report with the name of object more type
             of report
@@ -131,7 +131,7 @@ class account_invoice(osv.Model):
         # try:
         ret_file_name = file_name+'.pdf'
         service = netsvc.LocalService("report."+report_name)
-        (result, format) = service.create(cr, uid, res_ids, {}, {})
+        (result, format) = service.create(cr, uid, res_ids, report_name, context=context)
         fp = open(ret_file_name, 'wb+')
         fp.write(result)
         fp.close()

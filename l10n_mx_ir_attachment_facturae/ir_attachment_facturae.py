@@ -151,10 +151,10 @@ class ir_attachment_facturae_mx(osv.Model):
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
         
-    def action_confirm(self, cr, uid, ids, context={}):
+    def action_confirm(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'confirmed'}, context=context)
 
-    def signal_sign(self, cr, uid, ids, context={}):
+    def signal_sign(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
@@ -200,25 +200,23 @@ class ir_attachment_facturae_mx(osv.Model):
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
                            
-    def action_sign(self, cr, uid, ids, context={}):
+    def action_sign(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'signed'}, context=context)
 
-    def signal_printable(self, cr, uid, ids, context={}):
+    def signal_printable(self, cr, uid, ids, context=None):
         try:
             if context is None:
                 context = {}
             aids = ''
+            msj = ''
             index_pdf = ''
             attachment_obj = self.pool.get('ir.attachment')
             invoice = self.browse(cr, uid, ids)[0].invoice_id
             invoice_obj = self.pool.get('account.invoice')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
-            (fileno, fname) = tempfile.mkstemp(
-            '.pdf', 'openerp_' + (False or '') + '__facturae__')
-            os.close(fileno)
             report = invoice_obj.create_report(cr, uid, [invoice.id],
-                                             "account.invoice.facturae.webkit", fname)
+                                             "account.invoice.facturae.webkit", invoice.fname_invoice, context=context)
             attachment_ids = attachment_obj.search(cr, uid,[
                                                         ('res_model', '=', 'account.invoice'),
                                                         ('res_id', '=', invoice),
@@ -243,7 +241,7 @@ class ir_attachment_facturae_mx(osv.Model):
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
-    def action_printable(self, cr, uid, ids, context={}):
+    def action_printable(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
@@ -345,7 +343,7 @@ class ir_attachment_facturae_mx(osv.Model):
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
-    def action_send_customer(self, cr, uid, ids, context={}):
+    def action_send_customer(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
 
     def signal_send_backup(self, cr, uid, ids, context=None):
@@ -395,9 +393,11 @@ class ir_attachment_facturae_mx(osv.Model):
             invoice = self.browse(cr, uid, ids)[0].invoice_id
             wf_service = netsvc.LocalService("workflow")
             if type == 'cbb':
+                wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
                 invoice_obj.action_cancel(cr, uid, [invoice.id], context)
                 msj = _('Cancel\n')
             if type == 'cfd22':
+                wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
                 invoice_obj.action_cancel(cr, uid, [invoice.id], context)
                 msj = _('Cancel\n')
             if type == 'cfdi32':
@@ -423,7 +423,6 @@ class ir_attachment_facturae_mx(osv.Model):
             self.write(cr, uid, ids,
                           {'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                             'msj': msj})
-            wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
             return True
         except Exception, e:
             print "Cancel",tools.ustr(e)
@@ -434,6 +433,7 @@ class ir_attachment_facturae_mx(osv.Model):
        return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
     def reset_to_draft(self, cr, uid, ids, context=None):
+        print entro ,"reset"
         wf_service = netsvc.LocalService("workflow")
         for row in self.browse(cr, uid, ids, context=context):
             # Deleting the existing instance of workflow

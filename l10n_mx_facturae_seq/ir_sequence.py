@@ -119,6 +119,7 @@ class ir_sequence(osv.Model):
         context={}):
         if not context:
             context = {}
+        company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
         res = {}
         for id in ids:
             res[id] = False
@@ -129,7 +130,8 @@ class ir_sequence(osv.Model):
             approval_ids = approval_obj.search(cr, uid, [
                 ('sequence_id', '=', sequence.id),
                 ('number_start', '<=', number_work),
-                ('number_end', '>=', number_work)],
+                ('number_end', '>=', number_work),
+                ('company_id', '=', company_id)],
                 limit=1)
             approval_id = approval_ids and approval_ids[0] or False
             res[sequence.id] = approval_id
