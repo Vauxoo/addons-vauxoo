@@ -67,12 +67,18 @@ class crossovered_budget_lines(osv.osv):
     def _get_ifrs_total(self, cr, uid, ids, name, args, context=None):
         res = {}
         cbl_brws = self.browse(cr, uid, ids, context = context)
+        ifrs_line_obj = self.pool.get('ifrs.lines')
         for line in cbl_brws:
-            res[line.id] = self._prac_amt_acc(cr, uid, [line.id], context=context)[line.id]
+            ifrs_result = ifrs_line_obj._get_amount_value(cr, uid,
+                    [line.ifrs_lines_id.id],
+                    ifrs_line = line.ifrs_lines_id,
+                    period_info = line.period_id,
+                    context = context)
+            res[line.id] = ifrs_result 
         return res
 
     _columns = {
-        'practical_amount_aa': fields.function(_prac_acc,
+        'practical_amount_aa': fields.function(_get_ifrs_total,
                               string='Caused Amount', type='float',
                               digits_compute=dp.get_precision('Account'),
                               help="This amount comes from the computation related to the IFRS line report related"),
