@@ -83,13 +83,10 @@ class wizard_account_diot_mx(osv.osv_memory):
         acc_move_line_obj = self.pool.get('account.move.line')
         acc_tax_obj = self.pool.get('account.tax')
         acc_tax_category_obj = self.pool.get('account.tax.category')
-        acc_journal_obj = self.pool.get('account.journal')
         this = self.browse(cr, uid, ids)[0]
         period = this.period_id
         matrix_row = []
         amount_exe = 0
-        journal_ids = acc_journal_obj.search(cr, uid, [('type', 'not in', 
-            ('purchase', 'sale'))], context=context)
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
         tax_purchase_ids = acc_tax_obj.search(cr, uid, [
@@ -97,16 +94,10 @@ class wizard_account_diot_mx(osv.osv_memory):
             ('tax_category_id', 'in', category_iva_ids)], context=context)
         account_ids_tax = []
         for tax in acc_tax_obj.browse(cr, uid, tax_purchase_ids, context=context):
-            if tax.tax_category_id and tax.tax_category_id.name == 'IVA-RET':
-                if tax.account_collected_id:
-                    account_ids_tax.append(tax.account_collected_id.id)
-            else:
-                if tax.account_paid_voucher_id:
-                    account_ids_tax.append(tax.account_paid_voucher_id.id)
+            account_ids_tax.append(tax.account_paid_voucher_id.id)
         move_lines_diot = acc_move_line_obj.search(cr, uid, [
             ('period_id', '=', period.id),
             ('tax_id_secondary', 'in', tax_purchase_ids),
-            ('journal_id', 'in', journal_ids),
             ('account_id', 'in', account_ids_tax)])
         dic_move_line = {}
         partner_ids_to_fix = []
@@ -155,7 +146,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                     and line.tax_id_secondary.amount == 0:
                     amount_exe = line.amount_base or 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
-                    amount_ret = line.debit or 0
+                    amount_ret = line.credit or 0
                 if partner_vat in dic_move_line:
                     line_move = dic_move_line[partner_vat]
                     line_move[7] = line_move[7] + amount_16
