@@ -383,7 +383,6 @@ class ir_attachment_facturae_mx(osv.Model):
        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
-        print "entra cancel"
         try:
             msj = ''
             invoice_obj = self.pool.get('account.invoice')
@@ -433,7 +432,6 @@ class ir_attachment_facturae_mx(osv.Model):
        return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
     def reset_to_draft(self, cr, uid, ids, context=None):
-        print entro ,"reset"
         wf_service = netsvc.LocalService("workflow")
         for row in self.browse(cr, uid, ids, context=context):
             # Deleting the existing instance of workflow
