@@ -35,7 +35,7 @@
                     <page string='Advances'>
                         <field 
                             name='voucher_ids' 
-                            domain="[('type','=','payment'),('state','=','posted'),('partner_id','=',partner_id)]"
+                            domain="[('type','=','payment'),('state','=','posted'),('partner_id','=',partner_id),('advance','=',True)]"
                             nolabel='1'/>
                         <field name='av_aml_ids' nolabel='1'/>
                     </page>
