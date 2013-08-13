@@ -119,13 +119,17 @@
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     <templates>
                         <div t-name="kanban-box" class="oe_kanban_content oe_kanban_card oe_budget">
-                            <a type="open" target="_NEW" class="oe_inline">
-                                <field name="crossovered_budget_id"/>
-                            </a>
+                            <div class="oe_kanban_options">
+                                <div class="oe_kanban_bottom_right">
+                                    <a href="#" class="oe_e">D</a>
+                                    <a href="#" class="oe_e">W</a>
+                                    <a href="#" class="oe_e">N</a>
+                                    <a href="#" class="oe_e">O</a>
+                                </div>
+                            </div>
                             <table>
                                 <caption class="oe_budget_oneline">
-                                <h4 class="oe_line"><field name="period_id"/></h4>
-                                <h4 class="oe_right"><field name="company_id"/></h4>
+                                <h4 class="oe_right"><field name="crossovered_budget_id"/> - <field name="period_id"/> - <field name="company_id"/></h4>
                                 </caption>
                                 <thead>
                                     <tr>
@@ -142,12 +146,6 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="oe_kanban_bottom_right">
-                                <a href="#" class="oe_e">D</a>
-                                <a href="#" class="oe_e">W</a>
-                                <a href="#" class="oe_e">N</a>
-                                <a href="#" class="oe_e">O</a>
-                            </div>
                             <div class="oe_budget_hidden">
                                 <span class="oe_e">A</span><span><field name="percentage"/></span>
                                 <span>THEO</span><span><field name="theoritical_amount"/></span>

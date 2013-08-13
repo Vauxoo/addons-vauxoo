@@ -17,6 +17,22 @@ openerp.account_budget_imp = function (openerp) {
             });
             this.replaceElement($el);
         },
+        bind_events: function(){
+            var ko = this.$el.find('.oe_kanban_options');
+            if (this.$el.find('.oe_openoptions').length) {
+                this.$el.find('.oe_openoptions').click(function(){
+                    /*
+                    var ko = this.$el.find('.oe_kanban_options');
+                    */
+                    ko.toggle();
+                    console.log('En el Click de this ::: ' + ko.html());
+                });
+            }
+        this._super(); 
+        },
+        start: function(){
+            this._super();
+        },
         kanban_name_resumed: function(r) {
             var show_txt = r.raw_value;
             if (r.type === "many2one"){
