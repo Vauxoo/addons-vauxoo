@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="account_reconcile_advance_supplier_form">
+            <field name="name">account.reconcile.advance.supplier.form</field>
+            <field name="model">account.reconcile.advance</field>
+            <field name="arch" type="xml">
+                <form string='Account Reconcile Advance' version='7.0'>
+                    <field name='name'/>
+                    <field name='date'/>
+                    <field name='date_post'/>
+                    <field name='partner_id'/>
+                    <field name='period_id'/>
+                    <field name='journal_id'/>
+                    <field name='invoice_ids'/>
+                    <field name='voucher_ids'/>
+                    <field name='ai_aml_ids'/>
+                    <field name='av_aml_ids'/>
+                </form>
+            </field>
+        </record>
     </data>
 </openerp>
