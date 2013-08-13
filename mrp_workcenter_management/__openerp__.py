@@ -25,7 +25,7 @@
 ###############################################################################
 
 {
-    "name": "MRP Management Workcenter",
+    "name": "MRP Workcenter Management",
     "version": "1.0",
     "author": "Vauxoo C.A",
     "website": "http://vauxoo.com",
@@ -52,4 +52,4 @@ List of new functionalities:
     "test": [],
     "installable": True,
     "active": False,
-}
+    }
