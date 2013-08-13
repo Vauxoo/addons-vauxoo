@@ -367,6 +367,7 @@ class account_voucher(osv.Model):
                         reference_amount, amount_tax_unround,
                         current_currency, factor, context=context)
                     invoice_line = line_tax.tax_invoice_id and line_tax.tax_invoice_id.invoice_id or False
+                    line_invo = False
                     if invoice_line:
                         move_invoice = invoice_line.move_id
                         for line_move in move_invoice.line_id:
