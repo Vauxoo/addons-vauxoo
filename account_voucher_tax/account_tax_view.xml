@@ -28,6 +28,53 @@
                     </group>
                 </field>
         </record>
-
+        
+        <record id="view_account_voucher_validate_tax" model="ir.ui.view">
+                <field name="name">view.account.voucher.validate.tax</field>
+                <field name="model">account.voucher</field>
+                <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//button[@name='proforma_voucher']" position="after">
+                        <button name="validate_paid_tax" string="Validate Tax" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'wait_tax'), ('double_validation_ok', '=', False)]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='journal_id']" position="after">
+                        <field name="date_tax_move" on_change="onchange_period_tax(date_tax_move)" attrs="{'readonly': [('move_tax_id', '!=', False)], 'invisible': [('double_validation_ok', '=', False)]}"/>
+                        <field name="period_tax_move" attrs="{'invisible': [('double_validation_ok', '=', False)]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="move_tax_id" attrs="{'invisible': [('move_tax_id', '=', False)]}"/>
+                    </xpath>
+                    <xpath expr="//field[@name='company_id']" position="after">
+                        <field name="move_id" invisible="1"/>
+                    </xpath>
+                    <xpath expr="//field[@name='period_tax_move']" position="after">
+                        <field name="double_validation_ok" invisible="1"/>
+                    </xpath>
+                    <xpath expr="//page[@string='Journal Items']" position="replace">
+                        <page string="Journal Items" attrs="{'invisible': [('state','not in',('posted', 'wait_tax'))]}">
+                            <group col="4">
+                                <field name="period_id"/>
+                                <field name="audit"/>
+                            </group>
+                            <field name="move_ids" readonly="1">
+                               <tree string="Journal Items">
+                                   <field name="move_id"/>
+                                   <field name="ref"/>
+                                   <field name="date"/>
+                                   <field name="statement_id"/>
+                                   <field name="partner_id"/>
+                                   <field name="account_id"/>
+                                   <field name="name"/>
+                                   <field name="debit"/>
+                                   <field name="credit"/>
+                                   <field name="state"/>
+                                   <field name="reconcile_id"/>
+                               </tree>
+                            </field>
+                        </page>
+                    </xpath>
+                    
+                </field>
+        </record>
     </data>
 </openerp>
