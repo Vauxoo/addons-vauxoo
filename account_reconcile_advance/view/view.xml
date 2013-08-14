@@ -33,14 +33,14 @@
                             name='invoice_ids' 
                             domain="[('type','=','in_invoice'),('state','=','open'),('partner_id','=',partner_id)]"
                             nolabel='1'/>
-                        <field name='ai_aml_ids' nolabel='1'/>
+                        <field name='ai_aml_ids' nolabel='1' invisible='1'/>
                     </page>
                     <page string='Advances'>
                         <field 
                             name='voucher_ids' 
                             domain="[('type','=','payment'),('state','=','posted'),('partner_id','=',partner_id),('advance','=',True)]"
                             nolabel='1'/>
-                        <field name='av_aml_ids' nolabel='1'/>
+                        <field name='av_aml_ids' nolabel='1' invisible='1'/>
                     </page>
                 </notebook>
                 </form>
