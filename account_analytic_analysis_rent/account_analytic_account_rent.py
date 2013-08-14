@@ -66,7 +66,7 @@ class account_analytic_product(osv.osv):
         return res
     
     _columns={
-        'product_id':fields.many2one('product.product','Product', required=True, domain=[('rent_ok','=',True)]),
+        'product_id':fields.many2one('product.product','Product', required=True, domain=['|', ('rent_ok','=',True), ('accesory_ok','=',True) ]),
         'type': fields.selection([('rent','Rent'),('accesory','Accesory')],'Type'),
         'prodlot_id': fields.many2one('stock.production.lot', 'Production Lot', help="Production lot is used to put a serial number on the production", select=True),
         'analytic_id':fields.many2one('account.analytic.account','Account Analytic')
