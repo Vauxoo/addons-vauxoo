@@ -434,13 +434,14 @@ class ir_attachment_facturae_mx(osv.Model):
     def action_cancel(self, cr, uid, ids, context=None):
        return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
-    def reset_to_draft(self, cr, uid, ids, context=None):
+    def reset_to_draft(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'draft'})
         wf_service = netsvc.LocalService("workflow")
-        for row in self.browse(cr, uid, ids, context=context):
+        for row in ids:
             # Deleting the existing instance of workflow
-            wf_service.trg_delete(uid, self._name, row.id, cr)
-            wf_service.trg_create(uid, self._name, row.id, cr)
-        return self.write(cr, uid, ids, {'state': 'draft'})
+            wf_service.trg_delete(uid, self._name, row, cr)
+            wf_service.trg_create(uid, self._name, row, cr)
+        return True
 
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
