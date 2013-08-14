@@ -3,7 +3,7 @@
     <data noupdate="1">
         <record id="l10n_mx_cbb_seq_0" model="ir.sequence">
             <field name="company_id" ref="base.main_company"/>
-            <field name="name">Sequence CBB</field>
+            <field name="name">MX Sequence CBB</field>
             <field name="active" eval="True"/>
             <field name="padding">0</field>
             <field name="number_next">1</field>
@@ -15,7 +15,7 @@
             <field name="company_id" ref="base.main_company"/>
             <field name="sequence_id" ref="l10n_mx_cbb_seq_0"/>
             <field name="approval_number">12345</field>
-            <field name="serie">A</field>
+            <field name="serie">MXCBB</field>
             <field name="approval_year" eval="time.strftime('%Y')"/>
             <field name="number_start">1</field>
             <field name="number_end">9999</field>
@@ -28,12 +28,9 @@
         <record id="l10n_mx_cbb_journal_0" model="account.journal">
             <field name="company_id" ref="base.main_company"/>
             <field name="sequence_id" ref="l10n_mx_cbb_seq_0"/>
-            <field name="name">Diario de CBB</field>
+            <field name="name">MX CBB Journal</field>
             <field name="code">CBB</field>
             <field name="type">sale</field>
-            <!--<field name="user_id" ref="base.user_root"/>
-            <field name="company2_id" ref="base.main_company"/>
-            <field name="currency" ref="base.MXN"/>-->
         </record>
     </data>
 </openerp>

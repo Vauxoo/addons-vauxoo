@@ -33,7 +33,7 @@ from openerp import tests
 from openerp.osv import osv
 from openerp import netsvc
 import openerp
-
+from report_webkit import webkit_report
 
 class invoice_facturae_html(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -255,7 +255,7 @@ class invoice_facturae_html(report_sxw.rml_parse):
         return text
         
 
-report_sxw.report_sxw('report.account.invoice.facturae.webkit',
+webkit_report.WebKitParser('report.account.invoice.facturae.webkit',
             'account.invoice',
             'addons/l10n_mx_facturae_report/report/invoice_facturae_html.mako',
             parser=invoice_facturae_html)

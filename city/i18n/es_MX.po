@@ -7,10 +7,64 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-22 16:20+0000\n"
-"PO-Revision-Date: 2013-02-22 10:21-0600\n"
+"PO-Revision-Date: 2013-08-07 16:20+0000\n"
 "Last-Translator: Isaac Lopez <isaac@vauxoo.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2013-08-08 05:01+0000\n"
+"X-Generator: Launchpad (build 16723)\n"
+
+#. module: city
+#: view:res.country.state.city:0
+#: field:res.partner,city_id:0
+msgid "City"
+msgstr ""
+
+#. module: city
+#: help:res.country.state.city,name:0
+msgid "Administrative divisions of a state."
+msgstr ""
+
+#. module: city
+#: field:res.country.state.city,name:0
+msgid "Name"
+msgstr ""
+
+#. module: city
+#: model:ir.model,name:city.model_res_country_state_city
+msgid "Country state city"
+msgstr ""
+
+#. module: city
+#: field:res.country.state.city,country_id:0
+msgid "Country"
+msgstr ""
+
+#. module: city
+#: field:res.country.state.city,code:0
+msgid "City Code"
+msgstr ""
+
+#. module: city
+#: view:res.country.state.city:0
+#: field:res.country.state.city,state_id:0
+msgid "State"
+msgstr ""
+
+#. module: city
+#: help:res.country.state.city,code:0
+msgid "The city code in max. five chars."
+msgstr ""
+
+#. module: city
+#: model:ir.model,name:city.model_res_partner
+msgid "Partner"
+msgstr ""
+
+#. module: city
+#: model:ir.actions.act_window,name:city.action_country_state_city
+#: model:ir.ui.menu,name:city.menu_country_state_city_partner
+msgid "Cities"
+msgstr ""

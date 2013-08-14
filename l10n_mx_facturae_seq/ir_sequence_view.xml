@@ -19,7 +19,7 @@
             </field>
         </record>
 
-         <record id="view_facturae_ir_sequence_approval_tree" model="ir.ui.view">
+        <record id="view_facturae_ir_sequence_approval_tree" model="ir.ui.view">
             <field name="name">view.facturae.ir.sequence.approval.tree</field>
             <field name="model">ir.sequence.approval</field>
             <field name="arch" type="xml">
@@ -32,11 +32,11 @@
                     <field name="number_end"/>
                     <field name="type"/>
                     <field name="company_id"/>
-                 </tree>
-             </field>
+                </tree>
+            </field>
         </record>
 
-         <record id="action_facturae_sequence_tree" model="ir.actions.act_window">
+        <record id="action_facturae_sequence_tree" model="ir.actions.act_window">
             <field name="name">FacturaE MX Sequence Approval</field>
             <field name="res_model">ir.sequence.approval</field>
             <field name="type">ir.actions.act_window</field>
@@ -45,9 +45,9 @@
         </record>
 
         <menuitem action="action_facturae_sequence_tree"
-                id="menu_facturae_sequence" sequence="50"
-                parent="base.next_id_5"
-                groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
+                  id="menu_facturae_sequence" sequence="50"
+                  parent="base.next_id_5"
+                  groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"
         />
 
         <record id="view_facturae_sequence_search" model="ir.ui.view">
@@ -77,7 +77,7 @@
             <field name="model">ir.sequence</field>
             <field name="inherit_id" ref="base.sequence_view"/>
             <field name="arch" type="xml">
-                <page string="Sequence" position="after">
+                <xpath expr="//page[@string='Sequence']" position="after">
                     <page string="Aprobaciones SAT" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager">
                         <field name="approval_id"/>
                         <field name="approval_ids" nolabel="1" colspan="4"  widget="one2many_list">
@@ -99,37 +99,37 @@
                             </form>
                         </field>
                     </page>
-                </page>
+                </xpath>
             </field>
         </record>
 
         <!--TinyERP Compatibility
-        <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
-            <field name="name">ir.sequence.form.inh.l10n_mx_facturae</field>
-            <field name="model">ir.sequence</field>
-            <field name="inherit_id" ref="base.sequence_view"/>
-            <field name="arch" type="xml">
-                <field name="name" position="after">
-                    <field name="approval_id"/>
-                    <field name="approval_ids" nolabel="1" colspan="4">
-                        <tree string="Aprobaciones">
-                            <field name="approval_number"/>
-                            <field name="serie"/>
-                            <field name="approval_year"/>
-                            <field name="number_start"/>
-                            <field name="number_end"/>
-                        </tree>
-                        <form string="Aprobaciones">
-                            <field name="approval_number"/>
-                            <field name="serie"/>
-                            <field name="approval_year"/>
-                            <field name="number_start"/>
-                            <field name="number_end"/>
-                        </form>
+            <record id="ir_sequence_form_inh_l10n_mx_facturae" model="ir.ui.view">
+                <field name="name">ir.sequence.form.inh.l10n_mx_facturae</field>
+                <field name="model">ir.sequence</field>
+                <field name="inherit_id" ref="base.sequence_view"/>
+                <field name="arch" type="xml">
+                    <field name="name" position="after">
+                        <field name="approval_id"/>
+                        <field name="approval_ids" nolabel="1" colspan="4">
+                            <tree string="Aprobaciones">
+                                <field name="approval_number"/>
+                                <field name="serie"/>
+                                <field name="approval_year"/>
+                                <field name="number_start"/>
+                                <field name="number_end"/>
+                            </tree>
+                            <form string="Aprobaciones">
+                                <field name="approval_number"/>
+                                <field name="serie"/>
+                                <field name="approval_year"/>
+                                <field name="number_start"/>
+                                <field name="number_end"/>
+                            </form>
+                        </field>
                     </field>
                 </field>
-            </field>
-        </record>
-    -->
+            </record>
+        -->
     </data>
 </openerp>

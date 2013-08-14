@@ -1,4 +1,6 @@
 -
+  To test the Mexican Electronic Invoice CBB
+-
   I create a cbb customer invoice
 -
   !record {model: account.invoice, id: account_invoice_cbb0, view: account.invoice_form}:
@@ -65,41 +67,24 @@
         cbb = self.browse(cr, uid, [cbb_id])[0]
         state = cbb.state
     assert state=='signed', 'No signed state l10n_mx attachment facturae cbb'
-    
 -
-  TODO I generate a printable l10n_mx attachment facturae cbb manualmente
+  I generate a printable l10n_mx attachment facturae cbb by clicking on printable button
 -
-  !python {model: account.invoice}: |
-    import netsvc, tools, os
-    invoice_obj = self.pool.get('account.invoice')
-    invoice_id = invoice_obj.search(cr, uid, [('id', '=', ref('account_invoice_cbb0'))])[0]
-    #(data, format) = netsvc.LocalService('report.account.invoice.facturae.webkit').create(cr, uid, [invoice_id], {}, {})#TODO Report a bug when test yaml generate a webkit report
-    (data, format) = netsvc.LocalService('report.account.invoice').create(cr, uid, [invoice_id], {}, {})##Temporal only for test
-    if tools.config['test_report_directory']:
-        file(os.path.join(tools.config['test_report_directory'], 'l10n_mx-facturae_cbb_report.'+format), 'wb+').write(data)
-#TODO: Report a bug when test yaml generate a webkit report
-#~ -
-  #~ I generate a printable l10n_mx attachment facturae cbb by clicking on printable button
-#~ -
-  #~ !python {model: ir.attachment.facturae.mx}: |
-    #~ import netsvc
-    #~ wf_service = netsvc.LocalService("workflow")
-    #~ cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb0") ), ('state', '<>', 'cancel')], limit=1)
-    #~ cbb_id = cbb_ids and cbb_ids[0] or False
-    #~ if cbb_id:
-        #~ #wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', cbb_id, 'action_printable', cr)
-        #~ #wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', cbb_id, 'action_printable', cr)
-        #~ #wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', cbb_id, 'action_printable', cr)
-        #~ #wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', cbb_id, 'action_printable', cr)
-        #~ self.action_printable(cr, uid, [cbb_id], context={})
-#~ -
-  #~ I check that the state in l10n_mx attachment facturae cbb is Printable
-#~ -
-  #~ !python {model: ir.attachment.facturae.mx}: |
-    #~ cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb0") ), ('state', '<>', 'cancel')], limit=1)
-    #~ cbb_id = cbb_ids and cbb_ids[0] or False
-    #~ state = None
-    #~ if cbb_id:
-        #~ cbb = self.browse(cr, uid, [cbb_id])[0]
-        #~ state = cbb.state
-    #~ assert state=='printable', 'No printable state l10n_mx attachment facturae cbb'
+  !python {model: ir.attachment.facturae.mx}: |
+    import netsvc
+    wf_service = netsvc.LocalService("workflow")
+    cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb0") ), ('state', '<>', 'cancel')], limit=1)
+    cbb_id = cbb_ids and cbb_ids[0] or False
+    if cbb_id:
+        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', cbb_id, 'action_printable', cr)
+-
+  I check that the state in l10n_mx attachment facturae cbb is Printable
+-
+  !python {model: ir.attachment.facturae.mx}: |
+    cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb0") ), ('state', '<>', 'cancel')], limit=1)
+    cbb_id = cbb_ids and cbb_ids[0] or False
+    state = None
+    if cbb_id:
+        cbb = self.browse(cr, uid, [cbb_id])[0]
+        state = cbb.state
+    assert state=='printable', 'No printable state l10n_mx attachment facturae cbb'
