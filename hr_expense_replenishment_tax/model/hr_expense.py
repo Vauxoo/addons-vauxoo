@@ -117,20 +117,4 @@ class hr_expense_expense(osv.Model):
         ])
         aml_obj.unlink(cr, uid, move_ids)
         return True
-        
-    def preparate_move_line_tax(self, exp, tax, acc, amount, partner=None,
-                                    context=None):
-        return  {
-                'journal_id': exp.account_move_id.journal_id.id,
-                'period_id': exp.account_move_id.period_id.id,
-                'name': tax.name,
-                'account_id': acc,
-                'move_id': exp.account_move_id.id,
-                #'amount_currency': 0.0,
-                'partner_id': partner,
-                #'currency_id': exp.currency_id.id,
-                'quantity': 1,
-                'debit': amount < 0 and -amount or 0.0,
-                'credit': amount > 0 and amount or 0.0,
-                'date': exp.account_move_id.date,
-                }
+    
