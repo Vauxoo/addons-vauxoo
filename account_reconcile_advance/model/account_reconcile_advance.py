@@ -87,9 +87,23 @@ class account_reconcile_advance(osv.Model):
         }
         return aml_obj.create(cr, uid, vals, context=context)
 
+    def validate_data(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        ara_brw = self.browse(cr, uid, ids[0], context=context)
+        res = []
+        res.append(ara_brw.invoice_ids and True or False)
+        res.append(ara_brw.voucher_ids and True or False)
+        if all(res):
+            return True
+        else:
+            raise osv.except_osv(_('Error!'),_("Please Field the Invoices & "
+                "Advances Fields"))
+
     def payment_reconcile(self, cr, uid, ids, context=None):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
+        self.validate_data(cr, uid, ids, context=context)
         inv_obj = self.pool.get('account.invoice')
         av_obj = self.pool.get('account.voucher')
         aml_obj = self.pool.get('account.move.line')

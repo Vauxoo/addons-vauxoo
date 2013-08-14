@@ -25,7 +25,11 @@
                     </group>
                     <group col='2'>
                         <field name='date_post' required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
-                        <field name='journal_id' required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field 
+                            name='journal_id' 
+                            required='1' 
+                            domain="[('type','=','general')]"
+                            attrs="{'readonly':[('state','!=','draft')]}"/>
                         <field name='move_id' readonly='1' attrs="{'readonly':[('state','!=','draft')]}"/>
                     </group>
                 </group>
