@@ -187,7 +187,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     'res_model': 'account.invoice',
                     'res_id': invoice.id,
                 }
-                attach = attachment_obj.create(cr, uid, data_attach, context=context)
+                attach = attachment_obj.create(cr, uid, data_attach, context={})
             self.write(cr, uid, ids,
                               {'file_xml_sign': attach or False,
                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
