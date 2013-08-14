@@ -76,9 +76,12 @@ class hr_expense_expense(osv.Model):
                     account_tax_collected = tax.tax_id.account_collected_id.id
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
                         tax.amount, tax.amount, context=context)
+                    self.unlink_move_tax(cr, uid, ids, exp.account_move_id.id,
+                                        account_tax_voucher,
+                                        account_tax_collected, context=context)
                     move_lines_tax = acc_voucher_obj._get_move_writeoff(cr, uid,
                         account_tax_voucher, account_tax_collected,
-                        exp.account_move_id.id, 'payment', False,
+                        exp.account_move_id.id, 'payment', invoice.partner_id.id,
                         exp.account_move_id.period_id.id,
                         exp.account_move_id.journal_id.id,
                         exp.account_move_id.date, company_currency,
@@ -104,7 +107,17 @@ class hr_expense_expense(osv.Model):
                                                                     context)
         return exp.currency_id.id or\
                 self._get_company_currency(cr ,uid, exp_id, context)
-    
+
+    def unlink_move_tax(self, cr, uid, ids, move_id, acc_tax_v, acc_tax_c,
+                            context={}):
+        aml_obj = self.pool.get('account.move.line')
+        move_ids = aml_obj.search(cr, uid, [
+                ('move_id', '=', move_id),
+                ('account_id', 'in', (acc_tax_v, acc_tax_c))
+        ])
+        aml_obj.unlink(cr, uid, move_ids)
+        return True
+        
     def preparate_move_line_tax(self, exp, tax, acc, amount, partner=None,
                                     context=None):
         return  {
