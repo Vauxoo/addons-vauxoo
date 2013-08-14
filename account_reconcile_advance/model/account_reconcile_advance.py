@@ -216,7 +216,7 @@ class account_reconcile_advance(osv.Model):
             if not line_pair: continue
             aml_obj.reconcile_partial(
                 cr, uid, line_pair, 'manual', context=context)
-            ara_brw.write({'move_id':am_id, 'state':'done'})
+        ara_brw.write({'move_id':am_id, 'state':'done'})
         return True
     
 class account_voucher(osv.Model):
