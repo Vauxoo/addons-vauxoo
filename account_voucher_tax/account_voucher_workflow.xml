@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="wkf" model="workflow">
+            <field name="name">account.voucher.basic</field>
+            <field name="osv">account.voucher</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <record id="act_proforma" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="flow_start">True</field>
+            <field name="name">proforma</field>
+            <field name="action">write({'state':'draft'})</field>
+            <field name="kind">function</field>
+        </record>
+        
+        <record id="act_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">done</field>
+            <field name="action">validate_paid_tax</field>
+            <field name="kind">function</field>
+            <field name="flow_stop">True</field>
+        </record>
+        
+        <record id="act_wait_tax" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">wait_tax</field>
+            <field name="action">proforma_voucher()</field>
+            <field name="kind">function</field>
+        </record>
+        
+        <record id="act_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">cancel</field>
+            <field name="flow_stop">True</field>
+            <field name="action">cancel_voucher()</field>
+            <field name="kind">function</field>
+        </record>
+        
+        <record id="workflow_transition_act_proforma_to_act_wait_tax" model="workflow.transition">
+            <field name="act_from" ref="act_proforma"/>
+            <field name="act_to" ref="act_wait_tax"/>
+            <field name="signal">proforma_voucher</field>
+        </record>
+        
+        <record id="workflow_transition_act_wait_tax_to_act_done" model="workflow.transition">
+            <field name="act_from" ref="act_wait_tax"/>
+            <field name="act_to" ref="act_done"/>
+            <field name="signal">validate_paid_tax</field>
+        </record>
+        
+        <record id="workflow_transition_act_wait_tax_to_act_cancel" model="workflow.transition">
+            <field name="act_from" ref="act_wait_tax"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">cancel_voucher</field>
+        </record>
+    </data>
+</openerp>
