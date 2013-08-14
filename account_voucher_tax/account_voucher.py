@@ -361,7 +361,7 @@ class account_voucher(osv.Model):
                     
                     reference_amount = line_tax.amount_tax
                     context.update({'writeoff' : False})
-                    move_lines_tax = self._get_move_writeoff(cr, uid,
+                    move_lines_tax = self._preparate_move_line_tax(cr, uid,
                         account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
                         voucher.period_id.id, voucher.journal_id.id,
@@ -397,7 +397,7 @@ class account_voucher(osv.Model):
                         if round(currency_rate_difference, 2) and not voucher.double_validation_ok:
                             factor=self.get_percent_pay_vs_invoice(cr ,uid, tax_amount_exchange, currency_rate_difference,context=context)
                             base_amount=self.get_partial_amount_tax_pay(cr, uid, line_tax.tax_id.amount, base_exchange, context=context)
-                            move_lines_tax = self._get_move_writeoff(cr, uid,
+                            move_lines_tax = self._preparate_move_line_tax(cr, uid,
                                 account_tax_voucher, account_tax_collected,
                                 move_id, voucher.type, voucher.partner_id.id,
                                 voucher.period_id.id, voucher.journal_id.id,
@@ -417,7 +417,7 @@ class account_voucher(osv.Model):
                             uid, voucher.writeoff_amount,
                             line_tax.original_tax, context=context)
                         context['writeoff'] =  True
-                        move_lines_w = self._get_move_writeoff(cr, uid,
+                        move_lines_w = self._preparate_move_line_tax(cr, uid,
                             account_tax_voucher, voucher.writeoff_acc_id.id,
                             move_id, voucher.type, voucher.partner_id.id,
                             voucher.period_id.id, voucher.journal_id.id,
@@ -474,7 +474,7 @@ class account_voucher(osv.Model):
         }
         return move
     
-    def _get_move_writeoff(self, cr, uid, src_account_id, dest_account_id,
+    def _preparate_move_line_tax(self, cr, uid, src_account_id, dest_account_id,
                             move_id, type, partner, period, journal, date,
                             company_currency, reference_amount,
                             amount_tax_unround, reference_currency_id,
