@@ -8,39 +8,47 @@
                 <form string='Account Reconcile Advance' version='7.0'>
                 <header>
                     <button string="Reconcile" name="payment_reconcile" type="object" states="draft" class="oe_highlight"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,done" statusbar_colors='{"draft":"blue","approved":"blue"}'/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done" statusbar_colors='{"draft":"blue","approved":"blue"}'/>
                 </header>
                 <div class="oe_title">
                     <div class="oe_edit_only">
                         <label for="name"/>
                     </div>
                     <h1>
-                        <field name="name" default_focus="1" placeholder="Name" />
+                        <field name="name" default_focus="1" placeholder="Name"  required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
                     </h1>
                 </div>
                 <group col='4'>
-                    <field name='date'/>
-                    <field name='date_post'/>
-                    <field name='partner_id' required='1'/>
-                    <field name='period_id'/>
-                    <field name='journal_id'/>
-                    <field name='move_id'/>
-                    <field name='company_id'/>
+                    <group col='2'>
+                        <field name='partner_id' required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name='date' required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
+                    <group col='2'>
+                        <field name='date_post' required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name='journal_id' required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name='move_id' readonly='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </group>
                 </group>
                 <notebook>
                     <page string='Invoices'>
                         <field 
                             name='invoice_ids' 
                             domain="[('type','=','in_invoice'),('state','=','open'),('partner_id','=',partner_id)]"
-                            nolabel='1'/>
-                        <field name='ai_aml_ids' nolabel='1' invisible='1'/>
+                            nolabel='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name='ai_aml_ids' nolabel='1' invisible='1' attrs="{'readonly':[('state','!=','draft')]}"/>
                     </page>
                     <page string='Advances'>
                         <field 
                             name='voucher_ids' 
                             domain="[('type','=','payment'),('state','=','posted'),('partner_id','=',partner_id),('advance','=',True)]"
-                            nolabel='1'/>
-                        <field name='av_aml_ids' nolabel='1' invisible='1'/>
+                            nolabel='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <field name='av_aml_ids' nolabel='1' invisible='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                    </page>
+                    <page string='Other Info'>
+                        <group col='4'>
+                            <field name='company_id' required='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                            <field name='period_id' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        </group>
                     </page>
                 </notebook>
                 </form>

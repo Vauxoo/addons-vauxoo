@@ -15,7 +15,7 @@ class account_reconcile_advance(osv.Model):
         'date_post':fields.date('Accounting Date', help='Date to be used in Journal Entries when posted'), 
         'type':fields.selection([('pay','Payment'),('rec','Receipt')],
             help='State'), 
-        'state':fields.selection([('draft','Draft'),('approved','Approved'),
+        'state':fields.selection([('draft','Draft'),('cancel','Cancel'),
             ('done','Done')], help='State'), 
         'company_id':fields.many2one('res.company', 'Company', help='Company'), 
         'partner_id':fields.many2one('res.partner', 'Partner', help='Advance Partner'), 
@@ -32,6 +32,7 @@ class account_reconcile_advance(osv.Model):
         'type':'pay',    
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
             u, cx).company_id.id,
+        'date': fields.date.today
     }
 
     def invoice_credit_lines(self, cr, uid, ids, amount, am_id=None,
