@@ -68,17 +68,14 @@ class hr_expense_expense(osv.Model):
 
         if exp.fully_applied_vat:
             return True
+        self.unlink_move_tax(cr, uid, exp, context=context)
         for invoice in exp.invoice_ids:
             for tax in invoice.tax_line:
                 if tax.tax_id.tax_voucher_ok:
-                    
                     account_tax_voucher = tax.tax_id.account_paid_voucher_id.id
                     account_tax_collected = tax.tax_id.account_collected_id.id
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
                         tax.amount, tax.amount, context=context)
-                    self.unlink_move_tax(cr, uid, ids, exp.account_move_id.id,
-                                        account_tax_voucher,
-                                        account_tax_collected, context=context)
                     move_lines_tax = acc_voucher_obj._get_move_writeoff(cr, uid,
                         account_tax_voucher, account_tax_collected,
                         exp.account_move_id.id, 'payment', invoice.partner_id.id,
@@ -108,12 +105,19 @@ class hr_expense_expense(osv.Model):
         return exp.currency_id.id or\
                 self._get_company_currency(cr ,uid, exp_id, context)
 
-    def unlink_move_tax(self, cr, uid, ids, move_id, acc_tax_v, acc_tax_c,
-                            context={}):
+    def unlink_move_tax(self, cr, uid, exp, context={}):
         aml_obj = self.pool.get('account.move.line')
+        acc_tax_v = []
+        acc_tax_c = []
+        for invoice in exp.invoice_ids:
+            for tax in invoice.tax_line:
+                if tax.tax_id.tax_voucher_ok:
+                    acc_tax_v.append(tax.tax_id.account_paid_voucher_id.id)
+                    acc_tax_c.append(tax.tax_id.account_collected_id.id)
+        acc_inv_tax = list( set( acc_tax_v + acc_tax_c ) )
         move_ids = aml_obj.search(cr, uid, [
-                ('move_id', '=', move_id),
-                ('account_id', 'in', (acc_tax_v, acc_tax_c))
+                ('move_id', '=', exp.account_move_id.id),
+                ('account_id', 'in', ( acc_inv_tax ))
         ])
         aml_obj.unlink(cr, uid, move_ids)
         return True
