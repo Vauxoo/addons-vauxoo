@@ -50,7 +50,27 @@
                                     <td class="celdaTotal" width="20%">
                                    </td>
                                     <td class="celdaTotal" width="20%">
-                                            ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                        %if ifrs_l.get('comparison') in ('subtract', 'ratio', 'without'):
+                                            %if ifrs_l.get('operator') in ('subtract', 'ratio', 'without', 'product'):
+                                                %try:
+                                                    ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity}
+                                                %except:
+                                                    0.0
+                                                %endtry
+                                            %elif ifrs_l.get('operator') == 'percent':
+                                                %try:
+                                                    ${ifrs_l.get('type')=='total' and formatLang(ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=True)} %
+                                                %except:
+                                                    0.0
+                                                %endtry
+                                            %endif
+                                        %elif ifrs_l.get('comparison')== 'percent':
+                                            %try:
+                                                ${ifrs_l.get('type')=='total' and formatLang(ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=True)} %
+                                            %except:
+                                                0.0
+                                            %endtry
+                                        %endif
                                     </td>
                                 %else:
                                     %if ifrs_l.get('type')=='detail':
@@ -58,7 +78,7 @@
                                             ${ifrs_l.get('name').capitalize()}
                                         </td>
                                         <td class="celdaDetail" width="20%">
-                                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity}
                                         </td>
                                         <td class="celdaDetail" width="20%">
                                         </td>
@@ -75,7 +95,7 @@
                                                     ${ifrs_l.get('name').capitalize()}
                                                 </td>
                                                 <td class="celdaDetail" width="20%">
-                                                    ${ifrs_l.get('type')=='constant' and formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                                    ${ifrs_l.get('type')=='constant' and formatLang( ifrs_l['period'].get(num_month,0.0), digits=0, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
                                                 </td>
                                             %endif
                                         %endif
@@ -99,7 +119,27 @@
                                     <td class="celdaTotal" width="20%">
                                    </td>
                                     <td class="celdaTotal" width="20%">
-                                            ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                        %if ifrs_l.get('comparison') in ('subtract', 'ratio', 'without'):
+                                            %if ifrs_l.get('operator') in ('subtract', 'ratio', 'without', 'product'):
+                                                %try:
+                                                    ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity}
+                                                %except:
+                                                    0.0
+                                                %endtry
+                                            %elif ifrs_l.get('operator') == 'percent':
+                                                %try:
+                                                    ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity} %
+                                                %except:
+                                                    0.0
+                                                %endtry
+                                            %endif
+                                        %elif ifrs_l.get('comparison')== 'percent':
+                                            %try:
+                                                ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity} %
+                                            %except:
+                                                0.0
+                                            %endtry
+                                        %endif
                                     </td>
                                 %else:
                                     %if ifrs_l.get('type')=='detail':
@@ -107,7 +147,7 @@
                                             ${ifrs_l.get('name').capitalize()}
                                         </td>
                                         <td class="celdaDetail" width="20%">
-                                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                            ${ifrs_l.get('type')=='detail' and formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity}
                                         </td>
                                         <td class="celdaDetail" width="20%">
                                         </td>
@@ -124,7 +164,7 @@
                                                     ${ifrs_l.get('name').capitalize()}
                                                 </td>
                                                 <td class="celdaDetail" width="20%">
-                                                    ${ifrs_l.get('type')=='constant' and formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
+                                                    ${ifrs_l.get('type')=='constant' and formatLang( ifrs_l.get('amount'), digits=0, date=False, date_time=False, grouping=3, monetary=False) or ''|entity}
                                                 </td>
                                                 <td class="celdaDetail" width="20%">
                                             %endif
