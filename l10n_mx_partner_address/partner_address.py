@@ -87,19 +87,19 @@ class res_partner(osv.Model):
                                     on_change="onchange_address(use_parent_address, parent_id)"/>
                             </div>
 
-                            <label for="street" string="Dirección"/>
+                            <label for="street" string="Address"/>
                             <div>
-                                <field name="street" placeholder="Calle..."/>
-                                <field name="l10n_mx_street3" placeholder="No. Exterior..."/>
+                                <field name="street" placeholder="Street..."/>
                                 <field name="l10n_mx_street4" placeholder="No. Interior..."/>
+                                <field name="l10n_mx_street3" placeholder="No. Exterior..."/>
                                 <field name="street2" placeholder="Colonia..."/>
                                 <div class="address_format">
                                     %s
-                                    <field name="state_id" class="oe_no_button" placeholder="Provincia" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
-                                    <field name="zip" placeholder="C.P." style="width: 20%%"/>
+                                    <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
+                                    <field name="zip" placeholder="ZIP" style="width: 20%%"/>
                                 </div>
                                 <field name="l10n_mx_city2" placeholder="Localidad"/>
-                                <field name="country_id" placeholder="País" class="oe_no_button" options='{"no_open": True}'/>
+                                <field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True}'/>
                             </div>
                             <field name="website" widget="url" placeholder="e.g. www.openerp.com"/>
                         </group>

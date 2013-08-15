@@ -148,7 +148,6 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
-            print "Confirm",tools.ustr(e)
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
         
@@ -197,7 +196,6 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_sign', cr)
             return True
         except Exception, e:
-            print "SIGN", tools.ustr(e)
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
                            
@@ -217,15 +215,15 @@ class ir_attachment_facturae_mx(osv.Model):
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
             report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
-                                             "account.invoice.facturae.webkit", invoice.fname_invoice, context=context)
+                                             "account.invoice.facturae.webkit", invoice.fname_invoice, context={})
             attachment_ids = attachment_obj.search(cr, uid,[
                                                         ('res_model', '=', 'account.invoice'),
                                                         ('res_id', '=', invoice),
                                                         ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
-            for attachment in self.browse(cr, uid, attachment_ids, context=context):
+            for attachment in self.browse(cr, uid, attachment_ids, context={}):
                 aids = attachment.id #TODO: aids.append( attachment.id ) but without error in last write
                 attachment_obj.write(cr, uid, [attachment.id], {
-                    'name': invoice.fname_invoice + '.pdf', }, context=context)
+                    'name': invoice.fname_invoice + '.pdf', }, context={})
             if aids:
                 msj = _("Attached Successfully PDF\n")
             else:
@@ -234,11 +232,10 @@ class ir_attachment_facturae_mx(osv.Model):
                         'file_pdf': aids or False,
                         'msj': msj,
                         'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                        'file_pdf_index': index_pdf }, context=context)
+                        'file_pdf_index': index_pdf }, context={})
             wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
             return True
         except Exception, e:
-            print "printable",tools.ustr(e)
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
@@ -343,7 +340,6 @@ class ir_attachment_facturae_mx(osv.Model):
                 wf_service.trg_validate(uid, self._name, ids[0], 'action_send_customer', cr)
             return True
         except Exception, e:
-            print "signal_send_customer",tools.ustr(e)
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
@@ -428,7 +424,6 @@ class ir_attachment_facturae_mx(osv.Model):
                             'msj': msj})
             return True
         except Exception, e:
-            print "Cancel",tools.ustr(e)
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
             return False
     
