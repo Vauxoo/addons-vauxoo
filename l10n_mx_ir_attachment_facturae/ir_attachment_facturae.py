@@ -29,6 +29,7 @@ import time
 import tempfile
 import base64
 import os
+from openerp import SUPERUSER_ID
 
 class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
@@ -215,7 +216,8 @@ class ir_attachment_facturae_mx(osv.Model):
             invoice_obj = self.pool.get('account.invoice')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
-            report = invoice_obj.create_report(cr, uid, [invoice.id],
+            print SUPERUSER_ID
+            report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
                                              "account.invoice.facturae.webkit", invoice.fname_invoice, context=context)
             attachment_ids = attachment_obj.search(cr, uid,[
                                                         ('res_model', '=', 'account.invoice'),
