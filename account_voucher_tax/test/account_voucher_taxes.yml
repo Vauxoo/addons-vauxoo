@@ -16,10 +16,8 @@
 -
   I create a supplier invoice
 -
-  !record {model: account.invoice, id: account_invoice_supplier_tax0}:
-    account_id: account.a_pay
-    address_contact_id: base.res_partner_address_3000
-    address_invoice_id: base.res_partner_address_3000
+  !record {model: account.invoice, id: account_invoice_supplier_tax0, view: account.invoice_supplier_form}:
+    account_id: account.a_recv
     check_total: 6182.80
     company_id: base.main_company
     currency_id: base.EUR
@@ -27,13 +25,13 @@
       - account_id: account.a_expense
         name: '[PC1] Basic PC'
         price_unit: 5330.0
-        product_id: product.product_product_pc1
+        product_id: product.product_product_5
         quantity: 1.0
-        uos_id: product.product_uom_unit
         invoice_line_tax_id:
                   - account_tax_iva
     journal_id: account.expenses_journal
-    partner_id: base.res_partner_c2c
+    partner_id: base.res_partner_23
+    reference_type: none
     reference_type: none
     type: in_invoice
 
@@ -50,36 +48,48 @@
 -
   I create the first voucher of payment with values 6182.80
 -
-  !record {model: account.voucher, id: account_voucher_tax1, view: False}:
+  !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_vendor_receipt_form}:
     account_id: account.cash
     company_id: base.main_company
     amount: 6182.80
     journal_id: account.bank_journal
     name: 'First payment: with tax'
-    partner_id: base.res_partner_c2c
+    partner_id: base.res_partner_23
     period_id: account.period_7
     date: !eval time.strftime("%Y-%m-%d")
-    type: 'payment'
+    type: 'receipt'
 
+#~ -
+  #~ Line of voucher
+#~ -
+  #~ !python {model: account.voucher}: |
+    #~ move=self.pool.get('account.invoice').search(cr, uid, [('id', '=', ref('account_invoice_supplier_tax0'))])
+    #~ move_name=self.pool.get('account.invoice').browse(cr, uid, move)[0].move_id.name
+    #~ voucher = self.browse(cr, uid, ref('account_voucher_tax1'))
+    #~ res=self.onchange_amount(cr, uid, [voucher.id], amount=6182.80, rate=voucher.payment_rate, partner_id=voucher.partner_id.id, journal_id=ref('account.bank_journal'), currency_id=voucher.currency_id.id, ttype='payment', date=voucher.date, payment_rate_currency_id=voucher.payment_rate_currency_id.id, company_id=voucher.company_id.id, context=None)
+    #~ onchange_amount_value=res.get('value', {}) or {}
+    #~ lines=onchange_amount_value.pop('line_dr_ids')
+    #~ lines_format=[0,0]
+    #~ for l in lines:
+        #~ if l['name']==move_name:
+            #~ l['amount']=6182.80
+            #~ lines_format.append(l)
+#~ 
+    #~ onchange_amount_value['line_dr_ids']=[tuple(lines_format)]
+    #~ onchange_amount_value['line_cr_ids']=[]
+    #~ self.write(cr,uid, [voucher.id], onchange_amount_value)
+    #~ self.compute_tax(cr, uid, [voucher.id])
 -
-  Line of voucher
--
-  !python {model: account.voucher}: |
-    voucher_id = self.search(cr, uid, [('id', '=', ref('account_voucher_tax1'))])
-    voucher = self.browse(cr, uid, voucher_id[0])
-    res=self.onchange_journal(cr, uid, [voucher.id], journal_id=ref('account.bank_journal'), line_ids=[], tax_id=False, partner_id=voucher.partner_id.id, date=voucher.date, amount=6182.80, ttype='payment', company_id=voucher.company_id.id, context=None)
-    onchange_journal_value=res.get('value', {}) or {}
-    lines=onchange_journal_value.pop('line_dr_ids')[0]
-    lines_format=[0,0]
-    lines_format.append(lines)
-    onchange_journal_value['line_dr_ids']=[tuple(lines_format)]
-    self.write(cr,uid, [voucher.id], onchange_journal_value)
-    assert (voucher.amount==6182.80) , "check amount"
+  I click to validate button on voucher
 -
   !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_tax1}
 -
-
-
-
-
-
+  I check that the voucher state is now "Posted"
+-
+  !assert {model: account.voucher, id: account_voucher_tax1}:
+    - state == 'posted'
+-
+  I check that the invoice state is now "Paid"
+-
+  !assert {model: account.invoice, id: account_invoice_supplier_tax0}:
+    - state == 'paid'
