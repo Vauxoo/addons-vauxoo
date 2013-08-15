@@ -216,7 +216,6 @@ class ir_attachment_facturae_mx(osv.Model):
             invoice_obj = self.pool.get('account.invoice')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
-            print SUPERUSER_ID
             report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
                                              "account.invoice.facturae.webkit", invoice.fname_invoice, context=context)
             attachment_ids = attachment_obj.search(cr, uid,[
