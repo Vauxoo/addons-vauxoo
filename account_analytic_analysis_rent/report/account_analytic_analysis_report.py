@@ -27,7 +27,19 @@ from tools.translate import _
 class account_analytic_account_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(account_analytic_account_report, self).__init__(cr, uid, name, context=context)
+        self.localcontext.update({
+            'accesory': self._accesory,
+            'type_payment' : self._type_payment,
+        })
+    def _accesory(self,product_id):
+        if product_id.type == 'accesory':
+            return product_id.product_id.name
+        return []
+    def _type_payment(self,feature_id):
+        if feature_id.name and feature_id.name.name == 'Copias Bco y Negro' or feature_id.name.name == 'Copias Color' :
+            return 'Por copia procesada'
+        return 'Mensual'
 
 
-
-report_sxw.report_sxw('report.account.analytic.account.report','account.analytic.account','addons/account_analytic_analysis_rent/report/account_analytic_analysis_report.rml',parser=account_analytic_account_report)
+report_sxw.report_sxw('report.account.analytic.account.report','account.analytic.account','addons/account_analytic_analysis_rent/report/account_analytic_analysis_report.rml',
+    parser=account_analytic_account_report, header=False)
