@@ -76,9 +76,11 @@ class hr_expense_expense(osv.Model):
                     account_tax_collected = tax.tax_id.account_collected_id.id
                     factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
                         tax.amount, tax.amount, context=context)
-                    move_lines_tax = acc_voucher_obj._get_move_writeoff(cr, uid,
-                        account_tax_voucher, account_tax_collected,
-                        exp.account_move_id.id, 'payment', invoice.partner_id.id,
+                    move_lines_tax = acc_voucher_obj.\
+                                            _preparate_move_line_tax(cr, uid,
+                        account_tax_voucher,
+                        account_tax_collected, exp.account_move_id.id,
+                        'payment', invoice.partner_id.id,
                         exp.account_move_id.period_id.id,
                         exp.account_move_id.journal_id.id,
                         exp.account_move_id.date, company_currency,
