@@ -742,7 +742,6 @@ class account_voucher_line(osv.Model):
                         base_amount = tax.amount
                         account = tax.tax_id.account_collected_voucher_id.id
                         credit_amount = float('%.*f' % (2,(base_amount*factor)))
-                        print factor,'imprimo factor'
                         credit_amount_original = (base_amount*factor)
                         amount_unround = float(credit_amount_original)
                         diff_amount_tax = 0.0
