@@ -53,6 +53,9 @@
                                 <field name="descriptions" widget="html" attrs="{'readonly':[('state','=','done')]}" placeholder="Add Description .." />
                             </page>
                         </xpath>
+                        <xpath expr="//div[@name='buttons']" > 
+                            <button name="user_story_tree_view" string="User Stories" type="object"/>
+                        </xpath>
                 </field>
         </record>
 
@@ -70,6 +73,6 @@
                         </xpath>
                 </field>
         </record>
-
+        
 </data>
 </openerp>

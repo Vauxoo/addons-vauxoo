@@ -210,6 +210,20 @@ class inherit_project(osv.Model):
     
     _inherit = 'project.project'
     
+    def user_story_tree_view(self, cr, uid, ids, context):
+        users_ids = self.pool.get('user.story').search(cr, uid, [('project_id', 'in', ids)])
+        res_id = ids and ids[0] or False
+        return {
+            'name': _('User Story'),
+            'res_model': 'user.story',
+            'type': 'ir.actions.act_window',
+            'view_id': False,
+            'view_mode': 'tree,form',
+            'view_type': 'form',
+            'limit': 80,
+            'context': "{'default_res_model': '%s','default_res_id': %d}" % (self._name, res_id)
+        }
+        
     _columns = {
             'descriptions':fields.text('Description',
                                        help="reference on what the project "
