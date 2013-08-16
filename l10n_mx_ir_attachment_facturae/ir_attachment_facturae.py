@@ -166,6 +166,8 @@ class ir_attachment_facturae_mx(osv.Model):
             attachment_obj = self.pool.get('ir.attachment')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
+            if type == 'cbb':
+                msj = _("Signed")
             if type == 'cfd22':
                 attach = self.browse(cr, uid, ids)[0].file_input.id or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
@@ -240,7 +242,7 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
     
     def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
+        return self.write(cr, uid, ids, {'state': 'printable'}, context={})
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         try:

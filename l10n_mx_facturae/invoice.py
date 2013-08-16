@@ -131,7 +131,7 @@ class account_invoice(osv.Model):
         # try:
         ret_file_name = file_name+'.pdf'
         service = netsvc.LocalService("report."+report_name)
-        (result, format) = service.create(cr, uid, res_ids, report_name, context=context)
+        (result, format) = service.create(cr, uid, res_ids, report_name, context={})
         fp = open(ret_file_name, 'wb+')
         fp.write(result)
         fp.close()
