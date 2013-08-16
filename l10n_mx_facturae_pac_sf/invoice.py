@@ -379,7 +379,9 @@ class account_invoice(osv.Model):
                         'cfdi_folio_fiscal': resultado['resultados']['uuid'] or '',
                     }
                     msg += mensaje + "." + resultados_mensaje + \
-                        " Folio Fiscal " + folio_fiscal + "."
+                        " Folio Fiscal: " + folio_fiscal + "."
+                    msg += _(
+                            u"\nMake Sure to the file really has generated correctly to the SAT\nhttps://www.consulta.sat.gob.mx/sicofi_web/moduloECFD_plus/ValidadorCFDI/Validador%20cfdi.html")
                     if cfdi_data.get('cfdi_xml', False):
                         url_pac = '</"%s"><!--Para validar el XML CFDI puede descargar el certificado del PAC desde la siguiente liga: https://solucionfactible.com/cfdi/00001000000102699425.zip-->' % (
                             comprobante)
