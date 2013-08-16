@@ -18,7 +18,7 @@
         </record>
         
         <record id="action_update_amount_base_tax_move_line_wizard" model="ir.actions.act_window">
-            <field name="name">Update Amount Base Tax in Move Lines</field>
+            <field name="name">Update Amount Base Tax in Journal Items</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">update.amount.tax.wizard</field>
             <field name="view_type">form</field>
