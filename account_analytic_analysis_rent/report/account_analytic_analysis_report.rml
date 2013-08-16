@@ -2,7 +2,10 @@
 <document filename="test.pdf">
   <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="57.0" y1="57.0" width="498" height="678"/>
+      <pageGraphics>
+            <image x="500.0" y="50.0" height="700" width="2600">[[o.company_id.img_report and o.company_id.img_report or removeParentNode('image')]]</image>
+      </pageGraphics>
+      <frame id="first" x1="57.0" y1="57.0" width="450" height="678"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -13,31 +16,71 @@
     <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#000000" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
       <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table6">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table7">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Helvetica"/>
-    <paraStyle name="P2" fontName="Helvetica"/>
-    <paraStyle name="P3" fontName="Helvetica"/>
-    <paraStyle name="P4" fontName="Helvetica"/>
-    <paraStyle name="P5" fontName="Helvetica"/>
-    <paraStyle name="P6" fontName="Helvetica"/>
-    <paraStyle name="P7" fontName="Helvetica"/>
-    <paraStyle name="P8" fontName="Helvetica" fontSize="12.0" leading="15"/>
-    <paraStyle name="P9" fontName="Helvetica"/>
-    <paraStyle name="P10" fontName="Helvetica"/>
+    <paraStyle name="P1" fontName="Helvetica-Bold" fontSize="9.0" leading="14"/>
+    <paraStyle name="P2" fontName="Helvetica-Bold" fontSize="10.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
+    <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="10.0" leading="14" alignment="JUSTIFY"/>
+    <paraStyle name="P5" fontName="Helvetica-Bold" fontSize="9.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="7.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P7" fontName="Helvetica" alignment="JUSTIFY"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
+    <paraStyle name="P9" fontName="Helvetica" alignment="CENTER"/>
+    <paraStyle name="P10" fontName="Helvetica" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P11" rightIndent="149.0" leftIndent="0.0" fontName="Helvetica"/>
+    <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P13" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
+    <paraStyle name="P14" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
+    <paraStyle name="P15" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
+    <paraStyle name="P16" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
+    <paraStyle name="P17" fontName="Helvetica" alignment="JUSTIFY"/>
+    <paraStyle name="P18" fontName="Helvetica" fontSize="7.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P19" fontName="Helvetica" fontSize="7.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P20" fontName="Helvetica" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -45,146 +88,439 @@
     <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="Index" fontName="Helvetica"/>
     <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER"/>
     <images/>
   </stylesheet>
   <story>
-    <para style="P1">
-      <font face="Helvetica"/>
+    <para style="Standard">
+      <font color="white"> </font>
     </para>
     <section>
-      <para style="P2">
-        <font face="Helvetica">[[repeatIn(objects,'o')]]</font>
-      </para>
-      <blockTable colWidths="249.0,249.0" style="Table1">
+      <para style="Standard">[[repeatIn(objects,'o')]]</para>
+      <para style="P1">No. Contrato:[[o.name]]</para>
+      <para style="P2">CONTRATO DE ARRENDAMIENTO</para>
+      <para style="P6">Contrato de arrendamiento a ser celebrado entre <font face="Helvetica-Bold">Rico Copiadoras Fax, SA de CV</font>, a ser identificado en este contrato como “el proveedor” y <font face="Helvetica-Bold">CTE</font>, a ser identificado en este contrato como “el cliente”.</para>
+      <para style="P6">El precio de este contrato quedará estipulado por los siguientes productos y costos, por un período obligatorio de [[o.term_id.name]], a ser facturados mensualmente previa lectura del contador de impresiones.</para>
+      <section>
+        <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table1">
+          <tr>
+            <td>
+              <para style="P12">Producto</para>
+            </td>
+            <td>
+              <para style="P12">No. Serie</para>
+            </td>
+            <td>
+              <para style="P12">Contador Inicial</para>
+            </td>
+            <td>
+              <para style="P12">Descripción</para>
+            </td>
+            <td>
+              <para style="P12">Costo</para>
+            </td>
+            <td>
+              <para style="P12">Pago</para>
+            </td>
+          </tr>
+        </blockTable>
+      </section>
+      <section>
+        <para style="P3">[[repeatIn(o.feature_ids, 'features')]]</para>
+      
+      <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table2">
         <tr>
           <td>
-            <para style="P2">
-              <font face="Helvetica">Contratos [[ o.name ]]</font>
+            <para style="P14">[[features.product_line_id and features.product_line_id.name]]</para>
+          </td>
+          <td>
+            <para style="P15">[[features.product_line_id and features.product_line_id.default_code]]</para>
+          </td>
+          <td>
+            <para style="P15" alignment="RIGHT">[[features.counter or '0']]</para>
+          </td>
+          <td>
+            <para style="P13">[[features.name and features.name.name]]</para>
+          </td>
+          <td>
+            <para style="P16" alignment="RIGHT">[[features.cost or '0.0']]</para>
+          </td>
+          <td>
+              <para style="P14">[[type_payment(features)]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      </section>
+      <para style="P12">Accesorios:</para>
+      <section>
+        <para style="P3">[[repeatIn(o.product_ids, 'product')]]</para>
+        
+        <para style="P8">[[accesory(product)]]</para>
+      </section>
+      <para style="P6">Además del equipo mencionado con anterioridad se incluirán dentro del mismo contrato los siguientes conceptos: Tóner, consumibles y servicio técnico, en caso de equipo con conectividad se incluirá la asistencia correspondiente a dar de alta el equipo en su red. No se incluye el papel, cartulinas y cualquier otro medio utilizado para obtener una imagen impresa, así mismo no incluye el mantenimiento del equipo en su red. Se excluyen también de este contrato la reparación de los daños provocados al equipo por mal uso, piezas rotas por desconocimiento de su operación, intervención de terceras personas en el mismo o deficiencias en el suministro de energía eléctrica.</para>
+      <para style="P4">Obligaciones del proveedor:</para>
+      <blockTable colWidths="15.0,423.0" style="Table3">
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Brindar servicio técnico a todos los requerimientos del cliente dentro de los horarios comprendidos de 8:00 a 18:00 horas de lunes a viernes, excluyendo días festivos.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Atender los requerimientos urgentes a causa de fallas del equipo que impidan su operación <font color="white"> .........</font> dentro de un plazo no mayor de 4 (cuatro) horas hábiles y de 24 (veinticuatro) horas hábiles en <font color="white"> .........</font> atención de fallas menores que no impidan el uso del equipo.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Mantener el equipo siempre en condiciones óptimas de operación garantizando el reemplazo del <font color="white"> .........</font>equipo dentro de un plazo razonable en caso de que el mismo no pudiese operar normalmente a <font color="white"> .........</font>causa de desperfectos mayores o desgaste del mismo que no hayan sido provocados por mal <font color="white"> .........</font>uso, desconocimiento de su operación o intervención de terceras personas en el mismo.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Atender los servicios con personal técnicamente calificado, con herramienta adecuada para desarrollar sus funciones, buena presentación y actitud de trabajo.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Brindar asistencia telefónica amable a cualquier solicitud de servicio y envío de materiales de consumo.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Proporcionar permanentemente nuestro servicio de asesoría y entrenamiento en el uso del equipo ante cualquier solicitud por escrito del cliente para lo cual se agendarán las visitas necesarias.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Efectuar una visita mensual para registro del contador de impresiones y facturación posterior para su presentación a cobro.</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P4">Obligaciones del cliente:</para>
+      <blockTable colWidths="14.0,424.0" style="Table4">
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Hacer buen uso del equipo cuidando siempre la apariencia del mismo, utilizar papel adecuado y de calidad aceptable. Nunca utilizar papel usado en el equipo ya que este tiene contaminantes externos que dañan los componentes internos del mismo.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Mantener y controlar la existencia de tóner, mismo que será proporcionado de acuerdo al volumen de impresión que registre su consumo mensual promedio, haciendo su pedido con oportunidad al instalar en su caso el último cartucho en existencia. El reemplazo de tóner será enviado dentro de un plazo de 48 (cuarenta y ocho) horas máximo. En caso de ser necesario el envío de urgencia por causas de previsión u olvido el cliente deberá pasar por el mismo a nuestras oficinas.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Para efecto de solicitudes de servicio por teléfono al número (664) 681-1103 con siete líneas, por fax al número (664) 608-0149 y por correo electrónico a la dirección <font color="blue">servicio@ricocopiadoras.com</font>. Se deberá proporcionar la siguiente información que será de gran <font color="white"> .........</font>importancia para la atención pronta y eficiente de su solicitud de servicio:</para>
+            <blockTable colWidths="45.0,374.0" style="Table5">
+              <tr>
+                <td>
+                  <para style="P18">•</para>
+                </td>
+                <td>
+                  <para style="P19">Nombre de la empresa.</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P18">•</para>
+                </td>
+                <td>
+                  <para style="P19">Nombre de la persona que reporta.</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P18">•</para>
+                </td>
+                <td>
+                  <para style="P19">Número de identificación del equipo.</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P18">•</para>
+                </td>
+                <td>
+                  <para style="P19">Descripción de la falla, código de servicio o solicitud de materiales.</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P18">•</para>
+                </td>
+                <td>
+                  <para style="P19">Número actual del contador total de impresiones del equipo.</para>
+                </td>
+              </tr>
+            </blockTable>
+            <para style="P6">
+              <font color="white"> </font>
             </para>
-            <para style="P2">
-              <font face="Helvetica">Cliente: [[ o.partner_id.name ]]</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">En caso de ser provocados en el equipo daños por mal uso o desconocimiento del funcionamiento del mismo y habiendo sido comprobado por ambas partes, el cliente deberá cubrir el importe correspondiente a la reparación e instalación de los mismos y para este efecto se hará llegar la factura correspondiente con la facturación mensual.</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">-</para>
+          </td>
+          <td>
+            <para style="P6">Las facturas correspondientes a cada período mensual serán enviadas electrónicamente a la dirección de correo electrónico que nos sea indicado y el pago será procesado por depósito directo o traspaso a cualquiera de nuestras cuentas indicadas a continuación:</para>
+            <blockTable colWidths="209.0,209.0" style="Table6">
+              <tr>
+                <td>
+                  <para style="P13"><font face="Helvetica-Bold">BBVA Bancomer Sucursal 604</font></para>
+                </td>
+                <td>
+                  <para style="P13"><font face="Helvetica-Bold">Banamex Sucursal 284</font></para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P13">Moneda Nacional 0136423450</para>
+                </td>
+                <td>
+                  <para style="P13">Moneda Nacional 0284 7524912</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P13">CLABE 012028001364234507</para>
+                </td>
+                <td>
+                  <para style="P13">CLABE 002028028475249128</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P13">Moneda Americana 0136424589</para>
+                </td>
+                <td>
+                  <para style="P13">Moneda Americana 0284 9879556</para>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <para style="P13">CLABE 012028001364245897</para>
+                </td>
+                <td>
+                  <para style="P13">CLABE 002028028498795565</para>
+                </td>
+              </tr>
+            </blockTable>
+            <para style="P7">
+              <font color="white"> </font>
             </para>
-            <para style="P2">
-              <font face="Helvetica">Dirección: [[ o.contact_id.name ]]</font>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P7">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P6">Una vez efectuado el depósito o transferencia confirmarlo al correo electrónico</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P8">
+              <font color="white"> </font>
             </para>
           </td>
           <td>
             <para style="P7">
-              <font face="Helvetica">Fecha Inicial : [[ o.date_start ]]</font>
-            </para>
-            <para style="P8">
-              <font face="Helvetica">Fecha Final: [[ o.date or '']]</font>
-            </para>
-            <para style="P10">
-              <font face="Helvetica">Responsable: [[ o.user_id.name ]]</font>
+              <font face="Helvetica" color="blue" size="8.0">alderon@ricocopiadoras.com</font>
+              <font face="Helvetica" size="8.0"> y </font>
+              <font face="Helvetica" color="blue" size="8.0">angelica.perez@ricocopiadoras.com</font>
+              <font face="Helvetica" size="8.0"/>
             </para>
           </td>
         </tr>
-      </blockTable>
-      <para style="P3">
-        <font face="Helvetica">.</font>
-      </para>
-      <para style="P3">
-        <font face="Helvetica">.</font>
-      </para>
-      <para style="P3">
-        <font face="Helvetica">.</font>
-      </para>
-      <para style="P3">
-        <font face="Helvetica"/>
-      </para>
-      <para style="P3">
-        <font face="Helvetica"/>
-      </para>
-      <para style="P6">
-        <font face="Helvetica">Sirva este documento para hacer valer el contrato del equipo: [[ o.product_id.name]] </font>
-      </para>
-      <para style="P6">
-        <font face="Helvetica"/>
-      </para>
-      <para style="P6">
-        <font face="Helvetica">Para el c</font>
-        <font face="Helvetica">liente: [[ o.partner_id.name ]] desde el d</font>
-        <font face="Helvetica">í</font>
-        <font face="Helvetica">a: [[ o.date_start ]]</font>
-      </para>
-      <section>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-        <para style="P4">.</para>
-      </section>
-      <para style="P5">
-        <font face="Helvetica">Terminos:</font>
-        <font face="Helvetica">[[ o.description]]</font>
-      </para>
-      <para style="P4">
-        <font face="Helvetica">.</font>
-      </para>
-      <para style="P4">
-        <font face="Helvetica">.</font>
-      </para>
-      <para style="P4">
-        <font face="Helvetica">.</font>
-      </para>
-      <para style="P3">
-        <font face="Helvetica"/>
-      </para>
-      <para style="P3">
-        <font face="Helvetica"/>
-      </para>
-      <para style="P1">
-        <font face="Helvetica"/>
-      </para>
-      <para style="P4">
-        <font face="Helvetica"/>
-      </para>
-      <blockTable colWidths="249.0,249.0" style="Table2">
         <tr>
           <td>
-            <para style="P4">
-              <font face="Helvetica">Firma Responsable:</font>
-            </para>
-            <para style="P4">
-              <font face="Helvetica"/>
-            </para>
-            <para style="P4">
-              <font face="Helvetica">___________________</font>
+            <para style="P7">
+              <font color="white"> </font>
             </para>
           </td>
           <td>
-            <para style="P9">
-              <font face="Helvetica">Firma Cliente:</font>
-            </para>
-            <para style="P9">
-              <font face="Helvetica"/>
-            </para>
-            <para style="P9">
-              <font face="Helvetica">____________________</font>
-            </para>
+            <para style="P6">El cliente deberá cubrir con oportunidad dentro del plazo establecido de hasta días máximo el importe correspondiente a los cargos generados durante el período según las condiciones estipuladas en el mismo. Ante el retraso mayor del tiempo antes establecido se procederá a la suspensión temporal del servicio y suministro de materiales. En caso de persistir la falta de pago a un período mayor a 45 días el proveedor. tendrá la facultad de recoger su equipo por falta del pago correspondiente quedando la responsabilidad del cliente cubrir los gastos de recolección, a pagar los adeudos pendientes más los intereses moratorios correspondientes.</para>
           </td>
         </tr>
       </blockTable>
-      <para style="P4">
-        <font face="Helvetica"/>
-      </para>
+      <section>
+        <para style="P6">Este contrato tendrá una validez de meses y en caso de cancelación anticipada el cliente se compromete a cubrir las mensualidades restantes correspondientes al costo de arrendamiento al fin de éste contrato. En caso de no ser devuelto este contrato debidamente firmado, el uso del equipo implica la aceptación del mismo y los términos establecidos.</para>
+      </section>
+      <section>
+        <para style="P9">
+          <font color="white"> </font>
+        </para>
+        <blockTable colWidths="213.0,225.0" style="Table7">
+          <tr>
+            <td>
+              <para style="P9"/>
+            </td>
+            <td>
+              <para style="P17"/>
+            </td>
+          </tr>
+        </blockTable>
+        <para style="P10">Tijuana, B.C., a [[time.strftime('%d')]] de [[time.strftime('%B %Y')]]</para>
+        <para style="P9">
+          <font color="white"> </font>
+        </para>
+        <blockTable colWidths="213.0,225.0" style="Table7">
+          <tr>
+            <td>
+              <para style="P9"/>
+            </td>
+            <td>
+              <para style="P17"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P9"/>
+            </td>
+            <td>
+              <para style="P17"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5">Rico Copiadoras Fax, S.A. de C.V.</para>
+            </td>
+            <td>
+              <para style="P20">
+                <font color="white"> </font>
+              </para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5"/>
+            </td>
+            <td>
+              <para style="P5"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5"/>
+            </td>
+            <td>
+              <para style="P5"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5">________________________________ </para>
+            </td>
+            <td>
+              <para style="P5">________________________________ </para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5">Ing. Ricardo Assemat Hernández</para>
+            </td>
+            <td>
+              <para style="P5">Representante Legal</para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5">Representante Legal</para>
+            </td>
+            <td>
+              <para style="P5">
+                <font color="white"> </font>
+              </para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5"/>
+            </td>
+            <td>
+              <para style="P5"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5"/>
+            </td>
+            <td>
+              <para style="P5"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5">________________________________</para>
+            </td>
+            <td>
+              <para style="P5">________________________________</para>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <para style="P5">Testigo</para>
+            </td>
+            <td>
+              <para style="P5">Testigo</para>
+            </td>
+          </tr>
+        </blockTable>
+        <para style="P7">
+          <font color="white"> </font>
+        </para>
+        <para style="P7">
+          <font color="white"> </font>
+        </para>
+        <para style="P7">
+          <font color="white"> </font>
+        </para>
+      </section>
     </section>
-    <para style="P1">
-      <font face="Helvetica"/>
+    <para style="P11">
+      <font color="white"> </font>
     </para>
   </story>
 </document>
