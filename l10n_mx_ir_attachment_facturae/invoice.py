@@ -53,6 +53,8 @@ class account_invoice(osv.Model):
                             '%Y-%m-%d %H:%M:%S')})
                 return super(account_invoice,
                              self).action_cancel(cr, uid, ids, context)
+        return super(account_invoice,
+                     self).action_cancel(cr, uid, ids, context)
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         attach = ''
