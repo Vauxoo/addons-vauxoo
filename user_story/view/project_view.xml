@@ -54,7 +54,7 @@
                             </page>
                         </xpath>
                         <xpath expr="//div[@name='buttons']" > 
-                            <button name="user_story_tree_view" string="User Stories" type="object"/>
+                            <button name="user_story_tree_view" string="User Stories" type="object" groups="user_story.group_user_story_manager, user_story.group_user_story_user"/>
                         </xpath>
                 </field>
         </record>
