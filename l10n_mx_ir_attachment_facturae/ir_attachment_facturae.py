@@ -430,7 +430,7 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
     
     def action_cancel(self, cr, uid, ids, context=None):
-       return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
+        return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
     def reset_to_draft(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
