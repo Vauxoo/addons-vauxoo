@@ -126,12 +126,14 @@ class account_invoice(osv.Model):
             name of report that is 'openerp___facturae__' more six random
             characters for no files duplicate
         """
+        if context is None:
+                context = {}
         if not report_name or not res_ids:
             return (False, Exception('Report name and Resources ids are required !!!'))
         # try:
         ret_file_name = file_name+'.pdf'
         service = netsvc.LocalService("report."+report_name)
-        (result, format) = service.create(cr, uid, res_ids, report_name, context={})
+        (result, format) = service.create(cr, uid, res_ids, report_name, context=context)
         fp = open(ret_file_name, 'wb+')
         fp.write(result)
         fp.close()

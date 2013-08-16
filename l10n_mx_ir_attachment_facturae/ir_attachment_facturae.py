@@ -217,15 +217,15 @@ class ir_attachment_facturae_mx(osv.Model):
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
             report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
-                                             "account.invoice.facturae.webkit", invoice.fname_invoice, context={})
+                                             "account.invoice.facturae.webkit", invoice.fname_invoice)
             attachment_ids = attachment_obj.search(cr, uid,[
                                                         ('res_model', '=', 'account.invoice'),
                                                         ('res_id', '=', invoice),
                                                         ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
-            for attachment in self.browse(cr, uid, attachment_ids, context={}):
+            for attachment in self.browse(cr, uid, attachment_ids, context=context):
                 aids = attachment.id #TODO: aids.append( attachment.id ) but without error in last write
                 attachment_obj.write(cr, uid, [attachment.id], {
-                    'name': invoice.fname_invoice + '.pdf', }, context={})
+                    'name': invoice.fname_invoice + '.pdf', }, context=context)
             if aids:
                 msj = _("Attached Successfully PDF\n")
             else:
@@ -242,7 +242,7 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
     
     def action_printable(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'printable'}, context={})
+        return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
     def signal_send_customer(self, cr, uid, ids, context=None):
         try:
