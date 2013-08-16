@@ -35,6 +35,7 @@
                 "l10n_mx_facturae_report",
                 "email_template_multicompany",
                 "l10n_mx_facturae_groups",
+                "account_cancel",
         ],
     "demo" : ["demo/l10n_mx_facturae_email_demo.xml",
     ],
