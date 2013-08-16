@@ -18,18 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
-{
-    'name' : "Account Analytic Account Rent",
-    'category' : "account_analytic",
-    'version' : "1.0",
-    'depends' : ['account_analytic_analysis','product','account_voucher'],
-    'author' : "Vauxoo",
-    'description' : """
-        This module added product in account_analytic_analysis to product control
-        """,
-    'data' : ['account_analytic_account_rent.xml','product_view.xml','account_analytic_analysis_report.xml','wizard/lines_invoice_create_view.xml','res_company_view.xml'],
-    'installable': True,
-    'auto_install': False,
-}
+from openerp.osv import osv, fields
+class res_company(osv.osv):
+    _inherit='res.company'
+    
+    
+    
+    _columns={
+        'img_report' : fields.binary('Imagen Contratos'),
+    }
+res_company()

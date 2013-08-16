@@ -3,7 +3,7 @@
   <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
       <pageGraphics>
-            <image x="500.0" y="50.0" height="700" width="2600">[[o.company_id.logo and o.company_id.logo or removeParentNode('image')]]</image>
+            <image x="500.0" y="50.0" height="700" width="2600">[[o.company_id.img_report and o.company_id.img_report or removeParentNode('image')]]</image>
       </pageGraphics>
       <frame id="first" x1="57.0" y1="57.0" width="450" height="678"/>
     </pageTemplate>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="view_res_company_form_inh_img_report">
+            <field name="name">view.res.company.form.inh.img.report</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="model">res.company</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@string='Bank Accounts']" position="after">
+                    <page string="Imagen Reporte Contratos">
+                        <field colspan="4" name="img_report" widget="image"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>
