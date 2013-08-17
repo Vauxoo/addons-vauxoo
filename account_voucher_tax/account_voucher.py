@@ -254,13 +254,6 @@ class account_voucher(osv.Model):
                                     line_tax.analytic_account_id.id or False,
                         line_tax.amount_base,
                         factor, context=context)
-                    invoice_line = line_tax.tax_invoice_id and line_tax.tax_invoice_id.invoice_id or False
-                    line_invo = False
-                    if invoice_line:
-                        move_invoice = invoice_line.move_id
-                        for line_move in move_invoice.line_id:
-                            if line_move.account_id.id == account_tax_collected:
-                                line_invo = line_move
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
