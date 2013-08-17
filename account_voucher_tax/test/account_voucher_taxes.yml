@@ -77,14 +77,15 @@
   I check that the Journal Items is generated with tax section from voucher
 -
   !python {model: account.voucher}: |
-    aml_iva_count = 0
     voucher_id = self.browse(cr, uid, ref('account_voucher_tax1'))
     for move_line in voucher_id.move_id.line_id:
         if move_line.credit == 852.80:
             assert move_line.account_id.id == ref('account.iva'), "Wrong account IVA in Journal Item"
-            aml_iva_count += 1
-        if move_line.debit == 852.80:
-            assert move_line.account_id.id == ref('account.ova'), "Wrong account IVA in Journal Item"
-            aml_iva_count += 1
-    if aml_iva_count <> 2:
-        assert False, "Wrong entry. Unrecognized account move line for voucher tax. aml_iva_count<>2 (%d)"%(aml_iva_count)
+        elif move_line.debit == 852.80:
+            assert move_line.account_id.id == ref('account.ova'), "Wrong account OVA in Journal Item"
+        elif move_line.credit == 6182.80:
+            assert move_line.account_id.id == voucher_id.account_id.id, "Wrong bank account in Journal Item"
+        elif move_line.debit == 6182.80:
+            assert move_line.account_id.id == voucher_id.partner_id.property_account_payable.id, "Wrong payable account in Journal Item"
+        else:
+            assert False, "Wrong entry. Unrecognized account move line for voucher tax."
