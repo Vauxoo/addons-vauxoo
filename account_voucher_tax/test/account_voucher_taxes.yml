@@ -1,23 +1,29 @@
 -
-  In order to check account voucher tax module in OpenERP I create a tax
+  In order to check account voucher tax module in OpenERP
+-
+  I create a test tax
 -
   !record {model: account.tax, id: account_tax_iva}:
-    description: iva 16
+    description: iva 16 test
     type_tax_use: purchase
     tax_voucher_ok: True
-    name: Iva 16%
+    name: IVA 16%
     type: percent
     amount: 0.1600
     account_collected_id: account.iva
     account_paid_id: account.iva
     account_collected_voucher_id: account.ova
     account_paid_voucher_id: account.ova
-
+-
+  I set the context as would do the action in supplier invoice menuitem
+-
+  !context
+    'default_type': 'in_invoice'
 -
   I create a supplier invoice
 -
   !record {model: account.invoice, id: account_invoice_supplier_tax0, view: account.invoice_supplier_form}:
-    account_id: account.a_recv
+    account_id: account.a_pay
     check_total: 6182.80
     company_id: base.main_company
     currency_id: base.EUR
@@ -28,12 +34,11 @@
         product_id: product.product_product_5
         quantity: 1.0
         invoice_line_tax_id:
-                  - account_tax_iva
+            - account_tax_iva
     journal_id: account.expenses_journal
     partner_id: base.res_partner_23
     reference_type: none
     reference_type: none
-    type: in_invoice
 
 -
   I change the state of invoice to open by clicking Validate button
@@ -44,41 +49,18 @@
 -
   !assert {model: account.invoice, id: account_invoice_supplier_tax0}:
     - state == 'open'
-
 -
   I create the first voucher of payment with values 6182.80
 -
-  !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_vendor_receipt_form}:
+  !record {model: account.voucher, id: account_voucher_tax1, view: account_voucher.view_vendor_payment_form}:
     account_id: account.cash
     company_id: base.main_company
     amount: 6182.80
     journal_id: account.bank_journal
     name: 'First payment: with tax'
     partner_id: base.res_partner_23
-    period_id: account.period_7
     date: !eval time.strftime("%Y-%m-%d")
-    type: 'receipt'
-
-#~ -
-  #~ Line of voucher
-#~ -
-  #~ !python {model: account.voucher}: |
-    #~ move=self.pool.get('account.invoice').search(cr, uid, [('id', '=', ref('account_invoice_supplier_tax0'))])
-    #~ move_name=self.pool.get('account.invoice').browse(cr, uid, move)[0].move_id.name
-    #~ voucher = self.browse(cr, uid, ref('account_voucher_tax1'))
-    #~ res=self.onchange_amount(cr, uid, [voucher.id], amount=6182.80, rate=voucher.payment_rate, partner_id=voucher.partner_id.id, journal_id=ref('account.bank_journal'), currency_id=voucher.currency_id.id, ttype='payment', date=voucher.date, payment_rate_currency_id=voucher.payment_rate_currency_id.id, company_id=voucher.company_id.id, context=None)
-    #~ onchange_amount_value=res.get('value', {}) or {}
-    #~ lines=onchange_amount_value.pop('line_dr_ids')
-    #~ lines_format=[0,0]
-    #~ for l in lines:
-        #~ if l['name']==move_name:
-            #~ l['amount']=6182.80
-            #~ lines_format.append(l)
-#~ 
-    #~ onchange_amount_value['line_dr_ids']=[tuple(lines_format)]
-    #~ onchange_amount_value['line_cr_ids']=[]
-    #~ self.write(cr,uid, [voucher.id], onchange_amount_value)
-    #~ self.compute_tax(cr, uid, [voucher.id])
+    type: 'payment'
 -
   I click to validate button on voucher
 -
