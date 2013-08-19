@@ -362,19 +362,16 @@ class account_voucher(osv.Model):
                     'analytic_account_id': acc_a,
                     'date' : date,
         }
-        if context.get('writeoff', False):
-            debit_line_vals.pop('analytic_account_id')
-            credit_line_vals.pop('analytic_account_id')
+
+        if type in ('payment','purchase'): 
+            reference_amount < 0 and\
+                credit_line_vals.pop('analytic_account_id') or\
+                debit_line_vals.pop('analytic_account_id')
         else:
-            if type in ('payment','purchase'): 
-                reference_amount < 0 and\
-                    credit_line_vals.pop('analytic_account_id') or\
-                    debit_line_vals.pop('analytic_account_id')
-            else:
-                reference_amount < 0 and\
-                    debit_line_vals.pop('analytic_account_id') or\
-                    credit_line_vals.pop('analytic_account_id')
-            
+            reference_amount < 0 and\
+                debit_line_vals.pop('analytic_account_id') or\
+                credit_line_vals.pop('analytic_account_id')
+        
         if not amount_tax_unround:
             credit_line_vals.pop('amount_tax_unround')
             credit_line_vals.pop('tax_id')
