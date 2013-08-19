@@ -244,7 +244,6 @@ class account_voucher(osv.Model):
                     account_tax_collected=line_tax.tax_id.account_collected_id.id
                     
                     reference_amount = line_tax.amount_tax
-                    context.update({'writeoff' : False})
                     move_lines_tax = self._preparate_move_line_tax(cr, uid,
                         account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
