@@ -286,27 +286,29 @@ class account_voucher(osv.Model):
                                 move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                         context=context)
                                 move_ids.append(move_create)
-                    
-                    if voucher.writeoff_amount > 0:
-                        reference_amount_w = self.get_partial_amount_tax_pay(cr,
-                            uid, voucher.writeoff_amount,
-                            line_tax.original_tax, context=context)
-                        context['writeoff'] =  True
-                        move_lines_w = self._preparate_move_line_tax(cr, uid,
-                            account_tax_voucher, voucher.writeoff_acc_id.id,
-                            move_id, voucher.type, voucher.partner_id.id,
-                            voucher.period_id.id, voucher.journal_id.id,
-                            voucher.date, company_currency, reference_amount_w,
-                            None, current_currency,
-                            line_tax.id, line_tax.tax_id.name,
-                            line_tax.analytic_account_id and\
-                                    line_tax.analytic_account_id.id or False,
-                            line_tax.amount_base,
-                            factor, context=context)
-                        for move_line_w in move_lines_w:
-                            move_create = move_line_obj.create(cr ,uid, move_line_w,
-                                                    context=context)
-                            move_ids.append(move_create)
+                                
+##commented code section that we are not considering
+##taxes actually paid by cases writeoff
+#                    if voucher.writeoff_amount > 0:
+ #                       reference_amount_w = self.get_partial_amount_tax_pay(cr,
+  #                          uid, voucher.writeoff_amount,
+   #                         line_tax.original_tax, context=context)
+    #                    context['writeoff'] =  True
+     #                   move_lines_w = self._preparate_move_line_tax(cr, uid,
+      #                      account_tax_voucher, voucher.writeoff_acc_id.id,
+       #                     move_id, voucher.type, voucher.partner_id.id,
+        #                    voucher.period_id.id, voucher.journal_id.id,
+         #                   voucher.date, company_currency, reference_amount_w,
+          #                  None, current_currency,
+           #                 line_tax.id, line_tax.tax_id.name,
+            #                line_tax.analytic_account_id and\
+             #                       line_tax.analytic_account_id.id or False,
+              #              line_tax.amount_base,
+               #             factor, context=context)
+                #        for move_line_w in move_lines_w:
+                 #           move_create = move_line_obj.create(cr ,uid, move_line_w,
+                  #                                  context=context)
+                   #         move_ids.append(move_create)
         return move_ids
     
     def _preparate_move_line_tax(self, cr, uid, src_account_id, dest_account_id,
