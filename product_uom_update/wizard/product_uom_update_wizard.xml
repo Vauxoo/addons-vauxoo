@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="base_product_uom_merge_wizard_result" model="ir.ui.view">
+            <field name="name">base.product.uom.merge.wizard.result</field>
+            <field eval="1000" name="sequence"/>
+            <field name="model">base.product.merge.uom.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Product Uom Not Update " version="7.0">
+                    <h4><center><field name="result" nolabel="1" readonly = "1"/></center></h4>
+                    <newline/>
+                    <footer>
+                        <button name="close_vw" special="nosave"
+                            string="Close"
+                            type="object"
+                            class="oe_link oe_inline"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record id="base_product_uom_merge_wizard" model="ir.ui.view">
+            <field name="name">base.product.uom.merge.wizard</field>
+            <field eval="10" name="sequence"/>
+            <field name="model">base.product.merge.uom.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Product oum update" version="7.0">
+                        <group string="Select the unit of measure to change">
+                            <field name="uom_id_from" colspan="4" mode="tree">
+                               <tree string="Products">
+                                    <field name="name"/>
+                                    <field name="uom_id"/>
+                                </tree>
+                            </field>
+                            <field name="uom_id_to" required="True"/>
+                        </group>
+                    <footer>
+                        <button type="object" string="Apply" 
+                     class="oe_highlight" name="unit_measure_update"
+                     confirm="Are you sure change unit of measure?"
+                     context="{'uom_id_to_id': [uom_id_to] }"/>
+                     or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="base_product_uom_merge_wizard_act">
+            <field name="name">Product uom update</field>
+            <field name="res_model">base.product.merge.uom.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <menuitem id='base_product_uom_merge_wizard_menu'
+            action='base_product_uom_merge_wizard_act'
+            groups='base.group_system'
+            parent='product_do_merge.root_menu_product' />
+
+
+        <act_window 
+            name="Product Uom Update"
+            multi="True" 
+            res_model="base.product.merge.uom.wizard"
+            src_model="product.product"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="base_product_uom_merge_wizard_act" />
+        
+    </data>
+</openerp>
