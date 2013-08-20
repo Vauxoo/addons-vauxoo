@@ -14,7 +14,12 @@ _logger = logging.getLogger(__name__)
 class warranty_oerp(osv.Model):
     _name = 'account.warranty_oerp'
     _columns = {
-        'contract_id':fields.many2one('account.analytic.account', 'Contract', help='fields help'), 
+        'startdate':fields.date('Start Date', help='Start Date'), 
+        'enddate':fields.date('End date', help='End Date'), 
+        'enterprise_key':fields.char('Enterprise Key', 64, help="""Enterprise
+            Key"""), 
+        'contract_id':fields.many2one('account.analytic.account', 'Contract',
+            help='fields help'), 
     }
                                                                                 
 class account_analytic_account(osv.Model):
@@ -22,5 +27,5 @@ class account_analytic_account(osv.Model):
     _columns = {
         'license_oerp':fields.boolean('This contract has Enterprise License',
             help='This contract has Enterprise License'), 
-        'warranty_oerp_ids':fields.one2many('warranty_oerp', 'warranty_id', 'Warranties Enterprise', help='Warranties Enterprise'), 
+        'warranty_oerp_ids':fields.one2many('account.warranty_oerp', 'contract_id', 'Warranties Enterprise', help='Warranties Enterprise'), 
     }

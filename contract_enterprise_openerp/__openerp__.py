@@ -33,6 +33,7 @@
     "website": "http://vauxoo.com",
     "category": "Sales",
     "data": [
+        'view/account_analytic_analysis_view.xml',
     ],
     "active": False,
     "installable": True,
