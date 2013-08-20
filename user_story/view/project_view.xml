@@ -31,6 +31,14 @@
       </field>
     </record>
 
+        <record id="act_project_project_users_story_all" model="ir.actions.act_window">
+          <field name="res_model">user.story</field>
+          <field name="view_type">form</field>
+          <field name="name">User Story</field>
+          <field name="view_mode">tree,form</field>
+          <field name="context">{'search_default_project_id': [active_id], 'default_project_id': active_id}</field>
+        </record>
+
        <record id="view_task_search_form_user_story_m2o" model="ir.ui.view">
                 <field name="name">project.task.search.form.user.story_m2o</field>
                 <field name="model">project.task</field>
@@ -54,7 +62,7 @@
                             </page>
                         </xpath>
                         <xpath expr="//div[@name='buttons']" > 
-                            <button name="user_story_tree_view" string="User Stories" type="object" groups="user_story.group_user_story_manager, user_story.group_user_story_user"/>
+                            <button name="%(act_project_project_users_story_all)d" string="User Stories" type="action" groups="user_story.group_user_story_manager, user_story.group_user_story_user"/>
                         </xpath>
                 </field>
         </record>
@@ -74,5 +82,6 @@
                 </field>
         </record>
         
+
 </data>
 </openerp>
