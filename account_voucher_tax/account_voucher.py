@@ -48,7 +48,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_amount(cr, uid, ids,\
             amount, rate, partner_id, journal_id, currency_id, ttype, date,\
             payment_rate_currency_id, company_id, context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -57,7 +57,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_partner_id(cr, uid, ids,\
             partner_id, journal_id, amount, currency_id, ttype, date,\
             context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -66,7 +66,7 @@ class account_voucher(osv.Model):
         res = super(account_voucher, self).onchange_journal(cr, uid, ids,\
             journal_id, line_ids, tax_id, partner_id, date, amount, ttype,\
             company_id, context=context)
-        res_compute = self.onchange_compute_tax(cr, uid, ids, res,\
+        res_compute = self.onchange_compute_tax(cr, uid, ids, res, ttype, date,\
             context=context)
         return res_compute
         
@@ -405,7 +405,8 @@ class account_voucher(osv.Model):
         #~ res[1] and res[1][0]+new
         return res
     
-    def onchange_compute_tax(self, cr, uid, ids, lines=None, context=None):
+    def onchange_compute_tax(self, cr, uid, ids, lines=None, ttype=False,
+        date=False, context=None):
         invoice_obj = self.pool.get('account.invoice')
         currency_obj = self.pool.get('res.currency')
         tax_line_obj = self.pool.get('account.voucher.line.tax')
@@ -470,31 +471,31 @@ class account_voucher(osv.Model):
                                         current_currency, float('%.*f' % (2,\
                                         base_amount)), round=False,\
                                         context=context)
-                                    context['date']=invoice.date_invoice
-                                    credit_orig=currency_obj.compute(cr, uid,\
+                                    context['date'] = invoice.date_invoice
+                                    credit_orig = currency_obj.compute(cr, uid,\
                                         current_currency,company_currency,\
                                         float('%.*f' % (2,credit_amount)),\
                                         round=False, context=context)
-                                    context['date']=voucher.date
-                                    credit_diff=currency_obj.compute(cr, uid,\
+                                    context['date'] = date
+                                    credit_diff = currency_obj.compute(cr, uid,\
                                         current_currency,company_currency,\
                                         float('%.*f' % (2,credit_amount)),\
                                         round=False, context=context)
 
-                                    diff_amount_tax=currency_obj.compute(cr,\
+                                    diff_amount_tax = currency_obj.compute(cr,\
                                         uid, company_currency,current_currency,\
                                         float('%.*f' % (2,(\
                                         credit_orig-credit_diff))),\
                                         round=False, context=context)
                                     if credit_orig > credit_diff:
-                                        if voucher.type=='receipt':
+                                        if ttype and ttype == 'receipt':
                                             diff_account_id=tax.tax_id.\
                                             account_expense_voucher_id.id
                                         else:
                                             diff_account_id=tax.tax_id.\
                                             account_income_voucher_id.id
                                     if credit_orig<credit_diff:
-                                        if voucher.type=='receipt':
+                                        if ttype and ttype == 'receipt':
                                             diff_account_id=tax.tax_id.\
                                             account_income_voucher_id.id
                                         else:
