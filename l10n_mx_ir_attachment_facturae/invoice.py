@@ -35,22 +35,27 @@ class account_invoice(osv.Model):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         id_attach = ir_attach_obj.search(
             cr, uid, [('invoice_id', '=', ids[0])], context={})
-        wf_service = netsvc.LocalService("workflow")
+        #wf_service = netsvc.LocalService("workflow")
         inv_type_facturae = {
             'out_invoice': True,
             'out_refund': True,
             'in_invoice': False,
             'in_refund': False}
+        if id_attach:
+            res = super(account_invoice,
+                                self).action_cancel(cr, uid, ids, context)
+        else:
+            res = super(account_invoice,
+                                self).action_cancel(cr, uid, ids, context)
+        print id_attach
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False):
-                if id_attach:
-                    for attach in ir_attach_obj.browse(cr, uid, id_attach):
-                        if attach.state=='cancel':
-                            self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
-                        else:
-                            self.pool.get('ir.attachment.facturae.mx').signal_cancel(cr, uid, id_attach, context=None)
-        return super(account_invoice,
-                 self).action_cancel(cr, uid, ids, context)
+                for attach in ir_attach_obj.browse(cr, uid, id_attach):
+                    print attach.id
+                    if attach.state <> 'cancel':
+                        self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
+                        ir_attach_obj.signal_cancel(cr, uid, [attach.id], context=context)
+        return res
 
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         attach = ''

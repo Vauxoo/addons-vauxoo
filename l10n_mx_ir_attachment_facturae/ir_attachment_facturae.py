@@ -385,6 +385,7 @@ class ir_attachment_facturae_mx(osv.Model):
        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
 
     def signal_cancel(self, cr, uid, ids, context=None):
+        print "ids",ids
         try:
             msj = ''
             invoice_obj = self.pool.get('account.invoice')
@@ -392,35 +393,38 @@ class ir_attachment_facturae_mx(osv.Model):
             type = self.browse(cr, uid, ids)[0].type
             state = self.browse(cr, uid, ids)[0].state
             invoice = self.browse(cr, uid, ids)[0].invoice_id
+            invoice_state = self.browse(cr, uid, ids)[0].invoice_id.state
+            print invoice_state
             wf_service = netsvc.LocalService("workflow")
-            if type == 'cbb':
-                wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
-                msj = _('Cancel\n')
-            if type == 'cfd22':
-                wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
-                msj = _('Cancel\n')
-            if type == 'cfdi32':
-                if state in ['cancel', 'draft','confirmed']:
+            if invoice_state in ['cancel']:
+                if type == 'cbb':
                     wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                    status = invoice_obj.action_cancel(
-                        cr, uid, [invoice.id], context=context)
+                    #invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
                     msj = _('Cancel\n')
-                else:
-                    sf_cancel = invoice_obj.sf_cancel(
-                        cr, uid, [invoice.id], context=context)
+                if type == 'cfd22':
                     wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                    status = invoice_obj.action_cancel(
-                        cr, uid, [invoice.id], context=context)
-                    msj += tools.ustr(sf_cancel.get('message', False))
-                    #Para que no aparescan los adjuntos en facturas canceladas
-                    ##adjuntos = attach_obj.search(cr, uid, [(
-                        ##'res_model', '=', 'account.invoice'),
-                        ##('res_id', '=', invoice)])
-                    ##for attachment in self.browse(cr, uid, adjuntos, context):
-                        ##ids2 = attach_obj.write(cr, uid, [attachment.id], {
-                            ##'res_id': False, }, context=context)
+                    #invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                    msj = _('Cancel\n')
+                if type == 'cfdi32':
+                    if state in ['cancel', 'draft', 'confirmed']:
+                        wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
+                        msj = _('Cancel\n')
+                    else:
+                        print "else adjunto"
+                        sf_cancel = invoice_obj.sf_cancel(
+                                cr, uid, [invoice.id], context=context)
+                        wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
+                        msj += tools.ustr(sf_cancel.get('message', False))
+                        #Para que no aparescan los adjuntos en facturas canceladas
+                        ##adjuntos = attach_obj.search(cr, uid, [(
+                            ##'res_model', '=', 'account.invoice'),
+                            ##('res_id', '=', invoice)])
+                        ##for attachment in self.browse(cr, uid, adjuntos, context):
+                            ##ids2 = attach_obj.write(cr, uid, [attachment.id], {
+                                ##'res_id': False, }, context=context)
+            else:
+                print "else............."
+                invoice_obj.action_cancel(cr, uid, [invoice.id], context)
             self.write(cr, uid, ids,
                           {'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                             'msj': msj})
