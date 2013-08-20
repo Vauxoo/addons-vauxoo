@@ -68,8 +68,10 @@ msgstr "Mensajes no leidos"
 
 #. module: user_story
 #: field:acceptability.criteria,accep_crit_id:0
+#: model:ir.actions.act_window,name:user_story.act_project_project_users_story_all
 #: model:ir.actions.act_window,name:user_story.action_user_story
 #: model:ir.actions.report.xml,name:user_story.report_user_story
+#: model:ir.module.category,name:user_story.module_user_story
 #: model:ir.ui.menu,name:user_story.menu_action_user_story
 #: view:project.task:0
 #: field:project.task,userstory_id:0
@@ -117,6 +119,7 @@ msgid "Messages"
 msgstr "Mensajes"
 
 #. module: user_story
+#: model:ir.model,name:user_story.model_project_project
 #: view:user.story:0
 #: field:user.story,project_id:0
 msgid "Project"
@@ -243,6 +246,11 @@ msgstr "Tareas"
 #: model:mail.message.subtype,name:user_story.mt_task_started
 msgid "Task Started"
 msgstr "Tarea iniciada"
+
+#. module: user_story
+#: view:project.project:0
+msgid "User Stories"
+msgstr "Historias de Usuario"
 
 #. module: user_story
 #: selection:user.story,priority_level:0
@@ -516,4 +524,3 @@ msgstr "Marca si aplican estos criterios"
 #: view:user.story:0
 msgid "User Story Number: "
 msgstr "Historia de usuario número: "
-
