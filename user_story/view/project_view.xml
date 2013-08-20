@@ -62,7 +62,7 @@
                             </page>
                         </xpath>
                         <xpath expr="//div[@name='buttons']" > 
-                            <button name="%(act_project_project_users_story_all)d" string="User Stories" type="action" groups="user_story.group_user_story_manager, user_story.group_user_story_user"/>
+                            <button name="%(act_project_project_users_story_all)d" string="User Stories" type="action" groups="user_story.group_user_story_user"/>
                         </xpath>
                 </field>
         </record>
