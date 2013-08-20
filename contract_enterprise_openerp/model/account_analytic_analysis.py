@@ -33,7 +33,7 @@ class warranty_oerp(osv.Model):
     _columns = {
         'startdate':fields.date('Start Date', help='Start Date'), 
         'enddate':fields.date('End date', help='End Date'), 
-        'enterprise_key':fields.char('Enterprise Key', 64, help="""Enterprise
+        'enterprise_key':fields.char('Enterprise Contract Key', 64, help="""Enterprise
             Key"""), 
         'contract_id':fields.many2one('account.analytic.account', 'Contract',
             help='fields help'), 
