@@ -58,8 +58,8 @@ msgstr "5.- Conclusion del analisis"
 
 #. module: user_story
 #: model:res.groups,name:user_story.group_user_story_user
-msgid "User Story / User"
-msgstr "Historia de Usuario/ Usuario"
+msgid "User"
+msgstr "Usuario"
 
 #. module: user_story
 #: field:user.story,message_unread:0
@@ -110,8 +110,8 @@ msgstr "Escenario"
 
 #. module: user_story
 #: model:res.groups,name:user_story.group_user_story_manager
-msgid "User Story / Manager"
-msgstr "Historia de Usuario / Administrador"
+msgid "Manager"
+msgstr "Administrador"
 
 #. module: user_story
 #: field:user.story,message_ids:0
