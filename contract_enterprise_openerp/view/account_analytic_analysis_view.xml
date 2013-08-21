@@ -6,10 +6,10 @@
             <field name="model">account.warranty_oerp</field>                                   
             <field name="arch" type="xml">                                          
                 <form string="" version="7.0">
-                    <label for="startdate"/>
-                    <field name="startdate"/>
-                    <label for="enddate"/>
-                    <field name="enddate"/>
+                    <label for="start_date"/>
+                    <field name="start_date"/>
+                    <label for="end_date"/>
+                    <field name="end_date"/>
                     <label for="enterprise_key"/>
                     <field name="enterprise_key"/>
                 </form>
@@ -28,8 +28,8 @@
                      <page string="OpenERP Warranties" name="warranty_page" attrs="{'invisible':[('license_oerp','=',False)]}" >
                          <field name="warranty_oerp_ids">
                              <tree editable="button">
-                                <field name="startdate"/>
-                                <field name="enddate"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
                                 <field name="enterprise_key"/>
                              </tree>
                          </field>

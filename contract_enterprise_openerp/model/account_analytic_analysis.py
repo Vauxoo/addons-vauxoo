@@ -16,11 +16,11 @@ class warranty_oerp(osv.Model):
 
     def _check_overlapping(self,cr,uid,ids,context=None):
         obj_warranty = self.browse(cr, uid, ids[0], context=context) 
-        if obj_warranty.enddate < obj_warranty.startdate:                        
+        if obj_warranty.end_date < obj_warranty.start_date:                        
             return False                                                        
         pids = self.search(cr, uid,
-                [('enddate','>=',obj_warranty.startdate),
-                    ('startdate','<=',obj_warranty.enddate),
+                [('end_date','>=',obj_warranty.start_date),
+                    ('start_date','<=',obj_warranty.end_date),
                     ('id','<>',obj_warranty.id)])
         if len(pids) > 0:
             return False
@@ -36,15 +36,19 @@ class warranty_oerp(osv.Model):
         return True
 
     _columns = {
-        'startdate':fields.date('Start Date', help='Start Date'), 
-        'enddate':fields.date('End date', help='End Date'), 
+        'start_date':fields.date('Start Date', help="""day when this contract
+            was enabled by OpenERP and is shown in the contract PDF
+            attached."""), 
+        'end_date':fields.date('End date', help="""day when this contract will
+            end  by OpenERP and is shown in the contract PDF attached."""), 
         'enterprise_key':fields.char('Enterprise Contract Key', 64,
-            help="""Enterprise Key"""), 
+            help="""Key given by OpenERP i.e: twa-1234355352ff"""), 
         'contract_id':fields.many2one('account.analytic.account', 'Contract',
-            help='fields help'), 
+            help='Contract linked to warranty'), 
     }
     _constraints = [                                                            
-         (_check_overlapping, """Error!\n Date is/are invalid.""", ['enddate']),
+         (_check_overlapping, """Error!\n Date is/are invalid.""",
+             ['end_date']),
          (_check_duplicity, """Error!\n Enterprise Key exists in other
              contract.""", ['enterprise_key']),
     ]
@@ -53,8 +57,8 @@ class account_analytic_account(osv.Model):
     _inherit = 'account.analytic.account'
     _columns = {
         'license_oerp':fields.boolean('This contract has Enterprise License',
-            help='This contract has Enterprise License'), 
+            help='This check enables the management of warranties'), 
         'warranty_oerp_ids':fields.one2many('account.warranty_oerp',
-            'contract_id', 'Warranties Enterprise', help="""Warranties
+            'contract_id', 'Warranties Enterprise', help="""List of Warranties
             Enterprise"""), 
     }
