@@ -47,8 +47,9 @@ This is helpfull because in real life does not happend that all the process
 of a big capacity production order is process at once.
 
 """,
-    "depends": ["mrp"],
+    "depends": ["mrp", "mrp_operations", "mrp_consume_produce"],
     "data": [
+        'view/mrp_byworkcenter_capacity_view.xml',
     ],
     "demo": [],
     "test": [],

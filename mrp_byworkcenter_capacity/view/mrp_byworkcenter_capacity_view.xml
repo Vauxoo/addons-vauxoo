@@ -2,5 +2,54 @@
 <openerp>
     <data>
 
+        <record id="mrp_scheduled_workorders_form" model="ir.ui.view">
+            <field name="name">mrp.scheduled.workorders.form</field>
+            <field name="model">mrp.scheduled.workorders</field>
+            <field name="arch" type="xml">
+                <form string="Scheduled Work Order" version="7.0">
+                    <group>
+                        <field name="name"/>
+                        <field name="workcenter_id"/>
+                        <field name="sequence"/>
+                        <field name="cycle"/>
+                        <field name="hour"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="mrp_scheduled_workorders_tree" model="ir.ui.view">
+            <field name="name">mrp.scheduled.workorders.tree</field>
+            <field name="model">mrp.scheduled.workorders</field>
+            <field name="arch" type="xml">
+                <tree string="Scheduled Work Orders" version="7.0">
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="workcenter_id"/>
+                    <field name="cycle"/>
+                    <field name="hour"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mrp_byworcenter_production_form" model="ir.ui.view">
+            <field name="name">mrp.byworcenter.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='workcenter_lines']" position="before">
+                    <separator string="Scheluded Orders"/>
+                    <field name="swo_ids"/>
+                    <separator string="Real Orders"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_compute']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
     </data>
 </openerp>
