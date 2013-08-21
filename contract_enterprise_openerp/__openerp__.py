@@ -6,7 +6,7 @@
 #    All Rights Reserved                                                        
 ################# Credits######################################################
 #    Coded by: Luis Escobar <luis@vauxoo.com>                                  
-#    Audited by: Nhoma Hernandez <nhomar@gmail.com> 
+#    Audited by: Nhomar Hernandez <nhomar@vauxoo.com> 
 ############################################################################### 
 #    This program is free software: you can redistribute it and/or modify      
 #    it under the terms of the GNU Affero General Public License as published   
