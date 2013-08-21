@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_account_journal_inherit_voucher_double_validation_form">
+            <field name="name">view.account.journal.inherit.voucher.double.validation.form</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence_id']" position="after">
+                    <field name="voucher_double_validation_ok"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

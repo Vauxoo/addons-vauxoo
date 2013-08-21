@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<openerp>
+    <data>
+    
+        <record id="view_account_voucher_double_validation" model="ir.ui.view">
+                <field name="name">view.account.voucher.double.validation</field>
+                <field name="model">account.voucher</field>
+                <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//field[@name='journal_id']" position="after">
+                        <field name="double_validation_ok" invisible="1"/>
+                        <field name="tax_paid" invisible="1"/>
+                    </xpath>
+                    <xpath expr="//button[@name='proforma_voucher']" position="after">
+                        <button name="validate_paid_tax" string="Validate Tax" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'posted'), ('tax_paid', '=', True)]}"/>
+                    </xpath>
+                </field>
+        </record>
+    
+    </data>
+</openerp>
