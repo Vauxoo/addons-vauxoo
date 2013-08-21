@@ -1,5 +1,5 @@
 -
-    Test for check advance greate than payment
+    Test for check advance greater than payment
 -
   I create the first voucher of payment with values 500 supplier 1
 -
@@ -68,6 +68,7 @@
     journal_id: account.expenses_journal
     partner_id: base.res_partner_23
     reference_type: none
+    name: 'Invoice01'
 -
   I change the state of invoice to open by clicking Validate button
 -
@@ -103,6 +104,7 @@
     journal_id: account.expenses_journal
     partner_id: base.res_partner_23
     reference_type: none
+    name: 'Invoice02'
 -
   I change the state of invoice to open by clicking Validate button
 -
@@ -138,6 +140,7 @@
     journal_id: account.expenses_journal
     partner_id: base.res_partner_23
     reference_type: none
+    name: 'Invoice03'
 -
   I change the state of invoice to open by clicking Validate button
 -
@@ -170,12 +173,93 @@
   !assert {model: account.reconcile.advance, id: account_reconcile_advance_ara01}:
     - state == 'done'
 -
-  I check that
+  I check account move line after of ARA_01 
 -
   !python {model: account.move.line}: |
     moves_ids = self.search( cr, uid, [('ref','=',self.pool.get('account.reconcile.advance').browse(cr, uid, [ref('account_reconcile_advance_ara01')])[0].name)])
     moves = self.browse(cr, uid, moves_ids)
     for move in moves :
-        print move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.ref,'\t', move.reconcile_id, '\t',move.reconcile_partial_id
-    #~ for move_line in voucher_id.move_id.line_id:
-        
+        print move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+-
+  I check account vouchers of payments
+-
+  !python {model: account.voucher}: |
+    voucher_ids = self.browse(cr, uid, [ref('account_voucher_payment01'), ref('account_voucher_payment02')])
+    for voucher in voucher_ids :
+        if voucher.amount == 500:
+            assert voucher.advance == True , "Wrong in Payment01"
+            print voucher.name,'\t',voucher.date,'\t', voucher.partner_id.name,'\t', voucher.amount,'\t',voucher.advance
+        elif voucher.amount == 1000:
+            assert voucher.advance == False , "Wrong in Payment02"
+            print voucher.name,'\t',voucher.date,'\t', voucher.partner_id.name,'\t', voucher.amount,'\t',voucher.advance
+        else:
+            assert False, "Wrong entry. Unrecognized account voucher."
+-
+    I check account move line of payments
+-
+  !python {model: account.move.line}: |
+    payments_ids=self.pool.get('account.voucher').browse(cr, uid, [ref('account_voucher_payment01'), ref('account_voucher_payment02')])
+    tuple_payments=[ payment.move_id.id for payment in payments_ids]
+    moves_ids = self.search( cr, uid, [('move_id','in', tuple(tuple_payments))])
+    moves_line = self.browse (cr,uid, moves_ids)
+    for move in moves_line :
+        if move.debit == 500:
+            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment01 (Debit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.credit == 500:
+            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment01 (Credit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.debit == 1000:
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment02 (Debit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.credit == 1000:
+            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment02 (Credit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        else:
+            assert False, "Wrong entry. Unrecognized in account move line."
+-
+  I check account vouchers of invoices
+-
+  !python {model: account.invoice}: |
+    invoice_ids = self.browse(cr, uid, [ref('account_invoice_supplier_invoice01'), ref('account_invoice_supplier_invoice02'), ref('account_invoice_supplier_invoice03')])
+    for invoice in invoice_ids :
+        if invoice.amount_total == 100:
+            assert invoice.state == 'paid' , "Wrong in Invoice01"
+            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state
+        elif invoice.amount_total == 200:
+            assert invoice.state == 'paid' , "Wrong in Invoice02"
+            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state
+        elif invoice.amount_total == 300:
+            assert invoice.state == 'paid' , "Wrong in Invoice03"
+            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state
+        else:
+            assert False, "Wrong entry. Unrecognized account invoice."
+-
+    I check account move line of invoices
+-
+  !python {model: account.move.line}: |
+    payments_ids=self.pool.get('account.invoice').browse(cr, uid, [ref('account_invoice_supplier_invoice01'), ref('account_invoice_supplier_invoice02'), ref('account_invoice_supplier_invoice03')])
+    tuple_payments=[ payment.move_id.id for payment in payments_ids]
+    moves_ids = self.search( cr, uid, [('move_id','in', tuple(tuple_payments))])
+    moves_line = self.browse (cr,uid, moves_ids)
+    for move in moves_line :
+        if move.debit == 100:
+            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Invoice01 (Debit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.credit == 100:
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice01 (Credit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.debit == 200:
+            assert move.reconcile_id.name== None and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice02 (Debit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.credit == 200:
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice02 (Credit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.debit == 300:
+            assert move.reconcile_id.name== None and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice03 (Debit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        elif move.credit == 300:
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice03 (Credit)"
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+        else:
+            assert False, "Wrong entry. Unrecognized in account move line."
