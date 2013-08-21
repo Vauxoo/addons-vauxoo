@@ -35,7 +35,6 @@ class account_invoice(osv.Model):
         ir_attach_obj = self.pool.get('ir.attachment.facturae.mx')
         id_attach = ir_attach_obj.search(
             cr, uid, [('invoice_id', '=', ids[0])], context={})
-        #wf_service = netsvc.LocalService("workflow")
         inv_type_facturae = {
             'out_invoice': True,
             'out_refund': True,
@@ -47,11 +46,9 @@ class account_invoice(osv.Model):
         else:
             res = super(account_invoice,
                                 self).action_cancel(cr, uid, ids, context)
-        print id_attach
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False):
                 for attach in ir_attach_obj.browse(cr, uid, id_attach):
-                    print attach.id
                     if attach.state <> 'cancel':
                         self.write(cr, uid, ids, {'date_invoice_cancel': time.strftime('%Y-%m-%d %H:%M:%S')})
                         ir_attach_obj.signal_cancel(cr, uid, [attach.id], context=context)
@@ -68,7 +65,7 @@ class account_invoice(osv.Model):
             'in_refund': False}
         for inv in self.browse(cr, uid, ids):
             if inv_type_facturae.get(inv.type, False) and invoice.journal_id.sequence_id.id:
-                if invoice._columns.has_key('invoice_sequence_id') and invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id:
+                if invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id:
                     if invoice.invoice_sequence_id.approval_id.type=='cbb' or invoice.invoice_sequence_id.approval_id.type=='cfd22' or invoice.invoice_sequence_id.approval_id.type=='cfdi32':
                         attach = ir_attach_obj.create(cr, uid, {
                                                           'name': invoice.fname_invoice, 'invoice_id': ids[0],
@@ -96,7 +93,7 @@ class account_invoice(osv.Model):
                             'type': 'ir.actions.act_window',
                         }
                     else:
-                        raise osv.except_osv(_('Warning'), _('No exists type of electroncic invoice'))
+                        raise osv.except_osv(_('Warning'), _('No exists type of electronic invoice'))
                 else:
-                    pass
+                    raise osv.except_osv(_('Warning'), _('Folios Invalid Approval'))
         return True

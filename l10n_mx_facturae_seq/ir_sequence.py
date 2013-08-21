@@ -125,8 +125,8 @@ class ir_sequence(osv.Model):
             res[id] = False
         approval_obj = self.pool.get('ir.sequence.approval')
         for sequence in self.browse(cr, uid, ids, context=context):
-            number_work = context.get(
-                'number_work', None) or sequence.number_next
+            number_work = sequence.number_next_actual or False
+            number_work = number_work-1
             approval_ids = approval_obj.search(cr, uid, [
                 ('sequence_id', '=', sequence.id),
                 ('number_start', '<=', number_work),
