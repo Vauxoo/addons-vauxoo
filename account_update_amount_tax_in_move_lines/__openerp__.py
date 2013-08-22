@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Rodo (rodo@vauxoo.com)
-#              Julio (julio@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,16 +23,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+{
+    "name" : "Update amount base tax in account move line",
+    "author" : "Vauxoo",
+    "version" : "1.0",
+    "category" : "Generic Modules",
+    "depends" : [
+        "account_move_line_base_tax",
+        ],
+    "demo" : [],
+    "data" : [
+        "security/wizard_update_amount_tax.xml",
+        "wizard/update_amount_base_tax_wizard.xml",
+        ],
+    'js': [],
+    'qweb' : [],
+    'css':[],
+    'test': [],
+    "active": False,
+    "installable": True
+}
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
-
-class account_tax(osv.Model):
-    _inherit = "account.tax"
-
-    _columns = {
-        'tax_voucher_ok': fields.boolean('Tax Vocuher Ok', help='help'),
-        'account_collected_voucher_id': fields.many2one('account.account', 'Account Collected Voucher'),
-        'account_paid_voucher_id': fields.many2one('account.account', 'Account Paid Voucher'),
-        'account_expense_voucher_id': fields.many2one('account.account', 'Account Expense Voucher'),
-        'account_income_voucher_id': fields.many2one('account.account', 'Account Income Voucher'),
-    }

@@ -5,8 +5,8 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
-#    Planified by: Humberto Arocha       <hbto@vauxoo.com>
+#    Coded by: Katherine Zaoral          <katherine.zaoral@vauxoo.com>
+#    Planified by: Katherine Zaoral      <katherine.zaoral@vauxoo.com>
 #    Audited by: Humberto Arocha         <hbto@vauxoo.com>
 ###############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -24,28 +24,24 @@
 ###############################################################################
 
 {
-    "name": "Expenses Replenishment Tax",
-    "version": "0.1",
-    "depends": [
-        "account_invoice_tax",
-        "hr_expense_replenishment",
-        "account_voucher_tax"
-        ],
-    "author": "Vauxoo",
+    "name": "MRP Workcenter Responsible",
+    "version": "1.0",
+    "author": "Vauxoo C.A.",
+    "website": "http://www.openerp.com.ve",
+    "category": "MRP",
     "description": """
-Create Entries Tax Effectively Paid :
-=====================================
+MRP Workcenter Responsible
+==========================
 
-This module creates the tax effectively paid of the invoices associated
-with the expense
+Add the feature of having a responsible for a work center and it's work
+orders associated.
 """,
-    "website": "http://openerp.com.ve",
-    "category": "HR Module",
-    "init_xml": [],
-    "demo_xml": [],
-    "update_xml": [
-        'view/hr_expense_view.xml', 
+    "depends": ["mrp_operations"],
+    "data": [
+        "view/mrp_workcenter_responsible_view.xml",
     ],
+    "demo": [],
+    "test": [],
     "active": False,
     "installable": True,
 }

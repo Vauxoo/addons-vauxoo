@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
-#    info@vauxoo.com
+#    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: Rodo (rodo@vauxoo.com)
-#              Julio (julio@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,16 +23,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import osv, fields
+from openerp.osv import fields, osv
 
-
-class account_tax(osv.Model):
-    _inherit = "account.tax"
-
-    _columns = {
-        'tax_voucher_ok': fields.boolean('Tax Vocuher Ok', help='help'),
-        'account_collected_voucher_id': fields.many2one('account.account', 'Account Collected Voucher'),
-        'account_paid_voucher_id': fields.many2one('account.account', 'Account Paid Voucher'),
-        'account_expense_voucher_id': fields.many2one('account.account', 'Account Expense Voucher'),
-        'account_income_voucher_id': fields.many2one('account.account', 'Account Income Voucher'),
-    }
+class account_voucher(osv.Model):
+    _inherit = 'account.voucher'
+    
+    def onchange_partner_id(self, cr, uid, ids, partner_id, journal_id,\
+        amount, currency_id, ttype, date, context=None):
+        res = super(account_voucher, self).onchange_partner_id(cr, uid, ids,\
+            partner_id, journal_id, amount, currency_id, ttype, date,\
+            context=context)
+        values = res.get('value', False)
+        if values and values.get('line_cr_ids') and ttype == 'payment':
+            for line in values.get('line_cr_ids'):
+                line.update({'reconcile' : False})
+        if values and values.get('line_dr_ids') and ttype == 'receipt':
+            for line in values.get('line_dr_ids'):
+                line.update({'reconcile' : False})
+        return res
+    

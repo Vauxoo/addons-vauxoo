@@ -4,10 +4,11 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-############# Credits #########################################################
-#    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
-#    Planified by: Humberto Arocha       <hbto@vauxoo.com>
-#    Audited by: Humberto Arocha         <hbto@vauxoo.com>
+# Credits######################################################
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
+#              Katherine Zaoral <katherine.zaoral@vauxoo.com>
+#    Planified by: Yanina Aular <yanina.aular@vauxoo.com>
+#    Audited by: Humberto Arocha <humbertoarocha@gmail.com>
 ###############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -24,28 +25,31 @@
 ###############################################################################
 
 {
-    "name": "Expenses Replenishment Tax",
-    "version": "0.1",
-    "depends": [
-        "account_invoice_tax",
-        "hr_expense_replenishment",
-        "account_voucher_tax"
-        ],
-    "author": "Vauxoo",
+    "name": "MRP Workcenter Management",
+    "version": "1.0",
+    "author": "Vauxoo C.A",
+    "website": "http://vauxoo.com",
+    "category": "MRP",
     "description": """
-Create Entries Tax Effectively Paid :
-=====================================
 
-This module creates the tax effectively paid of the invoices associated
-with the expense
-""",
-    "website": "http://openerp.com.ve",
-    "category": "HR Module",
-    "init_xml": [],
-    "demo_xml": [],
-    "update_xml": [
-        'view/hr_expense_view.xml', 
+MRP Management Workcenter.
+==========================
+
+This module adds a better management of Work Centers on Manufacturing module.
+List of new functionalities:
+
+- adds a new menuitem at **Manufacturing** > **Manufacturing** > **Work Centers**  that shows the work centers registered.
+
+ """,
+    "depends": ["base", "mrp", "mrp_operations"],
+    "data": [
+        "view/mrp_workcenter_view.xml",
     ],
-    "active": False,
+    "js": [],
+    "qweb": [],
+    "css": [],
+    "demo": [],
+    "test": [],
     "installable": True,
-}
+    "active": False,
+    }

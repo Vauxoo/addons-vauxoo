@@ -5,8 +5,8 @@
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
 ############# Credits #########################################################
-#    Coded by: Katherine Zaoral          <kathy@vauxoo.com>
-#    Planified by: Humberto Arocha       <hbto@vauxoo.com>
+#    Coded by: Katherine Zaoral          <katherine.zaoral@vauxoo.com>
+#    Planified by: Katherine Zaoral      <katherine.zaoral@vauxoo.com>
 #    Audited by: Humberto Arocha         <hbto@vauxoo.com>
 ###############################################################################
 #    This program is free software: you can redistribute it and/or modify
@@ -23,29 +23,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    "name": "Expenses Replenishment Tax",
-    "version": "0.1",
-    "depends": [
-        "account_invoice_tax",
-        "hr_expense_replenishment",
-        "account_voucher_tax"
-        ],
-    "author": "Vauxoo",
-    "description": """
-Create Entries Tax Effectively Paid :
-=====================================
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
 
-This module creates the tax effectively paid of the invoices associated
-with the expense
-""",
-    "website": "http://openerp.com.ve",
-    "category": "HR Module",
-    "init_xml": [],
-    "demo_xml": [],
-    "update_xml": [
-        'view/hr_expense_view.xml', 
-    ],
-    "active": False,
-    "installable": True,
-}
+class mrp_workcenter(osv.Model):
+
+    _inherit = 'mrp.workcenter'
+    _columns = {
+        'responsible_id': fields.many2one(
+            'res.users',
+            string=_('Responsible'),
+            help=_('Responsible person to perform the work center'
+                   ' activities.')),
+    }
+
+class mrp_production_workcenter_line(osv.Model):
+
+    _inherit = 'mrp.production.workcenter.line'
+    _columns = {
+        'responsible_id': fields.related(
+            'workcenter_id', 'responsible_id',
+            type='many2one',
+            relation='res.users',
+            readonly=True,
+            string=_('Responsible'),
+            help=_('Responsible person to carry out the work order. The'
+                   ' responsible is the one for the work center associated.'
+                   ' To change the responsible you need to change the work'
+                   ' center responsible.')),
+    }
