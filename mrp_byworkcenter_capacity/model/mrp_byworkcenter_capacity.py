@@ -37,6 +37,70 @@ class mrp_workcenter(osv.Model):
 
     _inherit = 'mrp.workcenter'
     _columns = {
+        'product_capacity_ids': fields.one2many(
+            'mrp.workcenter.product.capacity',
+            'workcenter_id',
+            _('Products Maxime Capacity'),
+            ondelete='cascades',
+            help=_('Workcenter capacities by product')),
+    }
+
+class mrp_workcenter_product_capacity(osv.Model):
+
+    _name = 'mrp.workcenter.product.capacity'
+    _description = 'Workcenter Product Capacity'
+
+    #~ TODO: this method for constraint is not working like it supposed.
+    def _check_uniqueness(self, cr, uid, ids, context=None):
+        """
+        Check if a product capacity is already defined in a workcenter
+        @return True if there is unique, False if already exist
+        """
+        context = context or {}
+        wc_obj = self.pool.get('mrp.workcenter')
+        product_obj = self.pool.get('product.product')
+        wcpc_brw = self.browse(cr, uid, ids, context=context)[0]
+
+        product_capacity = self.search(
+            cr, uid, [('product_id', '=', wcpc_brw.product_id.id),
+            ('workcenter_id', '=', wcpc_brw.workcenter_id.id)],
+            context=context)
+
+        #~ print '\n'*4
+        #~ print '_check_uniqueness()'
+        #~ print 'wcpc_brw', wcpc_brw
+        #~ print 'product_capacity', product_capacity
+        #~ print '\n'*4
+
+        return product_capacity and True or False 
+
+    _columns = {
+        'workcenter_id': fields.many2one(
+            'mrp.workcenter',
+            _('WorkCenter'),
+            required=True,
+            help=_('Work Center')),
+        'product_id': fields.many2one(
+            'product.product',
+            _('Product'),
+            required=True,
+            help=_('Product')),
+        'qty': fields.float(
+            _('Capacity'),
+            required=True,
+            help=_('Quantity')),
+        'uom_id': fields.many2one(
+            'product.uom',
+            _('Unit of Measure'),
+            required=True,
+            help=_('Unit of Measure')),
+    }
+
+    _constraints = {
+        (_check_uniqueness,
+         _('Error! There is already defined capacity for this product in the '
+           'current workcenter'),
+         'product_id')
     }
 
 class mrp_production(osv.Model):
@@ -85,6 +149,29 @@ class mrp_production(osv.Model):
 
         return res
 
+    #~ TODO: development in progress
+    def get_wc_capacity(self, cr, uid, ids, rounting_id, context=None):
+        """
+        It calculate every workcenters capacity in the rounting_id.
+        @return the rorunting capacity (the minimun workcenter max capacity) 
+        """
+        context = context or {}
+        routing_obj = self.pool.get('mrp.routing')
+        routing_brw = routing_obj.browse(cr, uid, ids, context=context)
+        wc_capacity = {}
+
+        for operation in routing_brw.workcenter_lines:
+            wc_capacity[operation.workcenter_id] = []
+
+        #~ import pprint
+        #~ print '\n'*3
+        #~ print 'get_wc_capacity', get_wc_capacity
+        #~ print 'wc_capacity'
+        #~ pprint.pprint(wc_capacity)
+        #~ print '\n'*3
+
+        return  0
+
     def create_swo_dict(self, cr, uid, ids, context=None):
         """
         Generate a dictionary of scheduled work orders to create when
@@ -123,14 +210,22 @@ class mrp_production(osv.Model):
             if not routing_brw:
                 return result
 
+            batch_mode = production.company_id.batch_type
+
             # for every routing operation
             for wc_op in routing_brw.workcenter_lines:
                 wc_brw = wc_op.workcenter_id
 
-                wc_capacity = wc_brw.capacity_per_cycle
-                # TODO: Change this processing capacity to a raw materials
-                # capacity
-
+                if batch_mode == 'max_cost':
+                    wc_capacity = wc_brw.capacity_per_cycle
+                elif batch_mode == 'bottleneck':
+                    raise osv.except_osv(
+                        _('Warining'),
+                        _('This functionality is in development.'))
+                    wc_capacity = self.get_wc_capacity(
+                        cr, uid, production.id, routing_brw.id,
+                        context=context)
+                    
                 product_qty = production.product_qty
                 d, m = divmod(factor, wc_capacity)
                 mult = int(d + (m and 1.0 or 0.0))

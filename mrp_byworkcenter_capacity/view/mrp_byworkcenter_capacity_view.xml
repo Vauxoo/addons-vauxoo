@@ -51,5 +51,34 @@
             </field>
         </record>
 
+        
+        <record id="mrp_workcenter_product_capacity_tree" model="ir.ui.view">
+            <field name="name">mrp.workcenter.product.capacity.tree</field>
+            <field name="model">mrp.workcenter.product.capacity</field>
+            <field name="arch" type="xml">
+                <tree string="Workcenter Product Capacities" editable="bottom" version="7.0">
+                    <field name="product_id"/>
+                    <field name="qty"/>
+                    <field name="uom_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="mrp_byworcenter_workcenter_form" model="ir.ui.view">
+            <field name="name">mrp.byworcenter.workcenter.form</field>
+            <field name="model">mrp.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@string='General Information']/group" position="after">
+                    <group name="workcenter_products" string="Products Information">
+                        <field name="product_capacity_ids" colspan="4"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
     </data>
 </openerp>
