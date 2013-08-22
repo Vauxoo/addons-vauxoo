@@ -50,8 +50,8 @@
                                     <td class="celdaTotal" width="20%">
                                    </td>
                                     <td class="celdaTotal" width="20%">
-                                        %if ifrs_l.get('comparison') in ('subtract', 'ratio', 'without'):
-                                            %if ifrs_l.get('operator') in ('subtract', 'ratio', 'without', 'product'):
+                                        %if ifrs_l.get('comparison') in ('subtract', 'ratio', 'without', False):
+                                            %if ifrs_l.get('operator') in ('subtract', 'ratio', 'without', 'product', False):
                                                 %try:
                                                     ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l['period'].get(num_month,0.0), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity}
                                                 %except:
@@ -119,8 +119,8 @@
                                     <td class="celdaTotal" width="20%">
                                    </td>
                                     <td class="celdaTotal" width="20%">
-                                        %if ifrs_l.get('comparison') in ('subtract', 'ratio', 'without'):
-                                            %if ifrs_l.get('operator') in ('subtract', 'ratio', 'without', 'product'):
+                                        %if ifrs_l.get('comparison') in ('subtract', 'ratio', 'without', False):
+                                            %if ifrs_l.get('operator') in ('subtract', 'ratio', 'without', 'product', False):
                                                 %try:
                                                     ${ifrs_l.get('type')=='total' and  formatLang( ifrs_l.get('amount'), digits=2, date=False, date_time=False, grouping=3, monetary=True) or ''|entity}
                                                 %except:
