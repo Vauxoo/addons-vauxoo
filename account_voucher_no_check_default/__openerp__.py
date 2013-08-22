@@ -2,11 +2,11 @@
 ###########################################################################
 #    Module Writen to OpenERP, Open Source Management Solution
 #
-#    Copyright (c) 2012 Vauxoo - http://www.vauxoo.com/
+#    Copyright (c) 2010 Vauxoo - http://www.vauxoo.com/
 #    All Rights Reserved.
 #    info Vauxoo (info@vauxoo.com)
 ############################################################################
-#    Coded by: el_rodo_1 (rodo@vauxoo.com)
+#    Coded by: Luis Torres (luis_t@vauxoo.com)
 ############################################################################
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,52 +25,25 @@
 ##############################################################################
 
 {
-    "name" : "account_voucher_tax",
+    "name" : "No concile Credits Voucher",
     "version" : "1.0",
     "author" : "Vauxoo",
-    "category" : "Localization/Mexico",
+    "category" : "Generic Modules",
     "description" : """
-
-The tax actually paid/cashed in the move of payment,
-====================================================
-
-Creditable VAT.
-
-It is the charge to all your payments i.e: 
-
-Bought a desktop that charge VAT on this desk is the creditable taxes
-
-Retained VAT is retained by suppliers
-
-- The rule is that only a natural person can hold a moral person.
-
-- The exception to this rule is for freight and rental.
-
-Caused VAT is that actually charged to customers.
-
-- When you make a cash sale that VAT is caused
-
-- When you make a sale on credit is transferred iva but when you pay that sale becomes caused VAT
-
+        This module change the onchange in the lines from account voucher,
+        that no check 'reconcile'.
     """,
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
     "depends" : [
-        "account",
-        "account_voucher",
-        "account_invoice_tax",
-        "analytic",
-        "account_move_line_base_tax",
+            "account_voucher",
         ],
-    "demo" : ["demo/account_voucher_tax_demo.xml"],
-    "data" : [
-        "account_tax_view.xml",
-        "account_voucher_tax_view.xml",
-        "security/ir.model.access.csv",
-        ],
-    "test": [
-        'test/account_voucher_taxes.yml',
-    ],
+    "demo" : [],
+    "data" : [],
+    'js': [],
+    'qweb' : [],
+    'css':[],
+    'test': [],
     "installable" : True,
     "active" : False,
 }

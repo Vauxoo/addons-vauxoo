@@ -184,57 +184,59 @@ class account_voucher(osv.Model):
  #          #             move_line['amount_currency']=line_tax.amount_tax
    #        #         move_ids.append(move_line_obj.create(cr ,uid, move_line, context=context))
             #############################################################################################
-                    
-                    if line_tax.balance_tax + line_tax.amount_tax < line_tax.original_tax and voucher.payment_option=='with_writeoff':
-                        context['date']=line.move_line_id.date
-                        credit_orig=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.balance_tax)), round=True, context=context)
-                        context['date']=voucher.date
-                        credit_now=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.amount_tax)), round=False, context=context)
-                        amount_diff=abs(credit_orig-credit_now)
-                        debit_diff=0.0
-                        if voucher.type=='payment':
-                            if not credit_orig-credit_now < 0: 
-                                amount_diff, debit_diff= debit_diff, amount_diff
-                            move_line={
-                                'journal_id': voucher.journal_id.id,
-                                'period_id': voucher.period_id.id,
-                                'name': 'change_tax: ' + str(line.name),
-                                'account_id':line_tax.diff_account_id and line_tax.diff_account_id.id or voucher.writeoff_acc_id.id, 
-                                'move_id': int(move_id),
-                                'partner_id': voucher.partner_id.id,
-                                'company_id':company_currency,
-                                #~ 'currency_id': voucher.journal_id.currency.id,
-                                'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
-                                'quantity': 1,
-                                'credit': float('%.*f' % (2,amount_diff)),
-                                'debit': float('%.*f' % (2,debit_diff)),
-                                #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
-                                'date': voucher.date,
-                                'tax_id': line_tax.id,
-                                'amount_tax_unround':amount_tax_unround,
-                                }
-                            #move_line_obj.create(cr ,uid, move_line, context=context)
-                        else:
-                            if credit_orig-credit_now < 0:
-                                amount_diff, debit_diff= debit_diff, amount_diff
-                            move_line={
-                                'journal_id': voucher.journal_id.id,
-                                'period_id': voucher.period_id.id,
-                                'name': 'change_tax: ' +  str(line.name),
-                                'account_id':line_tax.diff_account_id and line_tax.diff_account_id.id or voucher.writeoff_acc_id.id, 
-                                'move_id': int(move_id),
-                                'partner_id': voucher.partner_id.id,
-                                'company_id':company_currency,
-                                #~ 'currency_id': voucher.journal_id.currency.id,
-                                'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
-                                'quantity': 1,
-                                'credit': float('%.*f' % (2,amount_diff)),
-                                'debit': float('%.*f' % (2,debit_diff)),
-                                #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
-                                'date': voucher.date,
-                                'tax_id': line_tax.id
-                                }
-                            #move_line_obj.create(cr ,uid, move_line, context=context)
+
+#####################no se usa codigo################################################################################################
+#                    if line_tax.balance_tax + line_tax.amount_tax < line_tax.original_tax and voucher.payment_option=='with_writeoff':
+#                        context['date']=line.move_line_id.date
+#                        credit_orig=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.balance_tax)), round=True, context=context)
+#                        context['date']=voucher.date
+#                        credit_now=currency_obj.compute(cr, uid, current_currency,company_currency, float('%.*f' % (2,line_tax.amount_tax)), round=False, context=context)
+#                        amount_diff=abs(credit_orig-credit_now)
+#                        debit_diff=0.0
+#                        if voucher.type=='payment':
+#                            if not credit_orig-credit_now < 0: 
+#                                amount_diff, debit_diff= debit_diff, amount_diff
+#                            move_line={
+#                                'journal_id': voucher.journal_id.id,
+#                                'period_id': voucher.period_id.id,
+#                                'name': 'change_tax: ' + str(line.name),
+#                                'account_id':line_tax.diff_account_id and line_tax.diff_account_id.id or voucher.writeoff_acc_id.id, 
+#                                'move_id': int(move_id),
+#                                'partner_id': voucher.partner_id.id,
+#                                'company_id':company_currency,
+#                                #~ 'currency_id': voucher.journal_id.currency.id,
+#                                'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
+#                                'quantity': 1,
+#                                'credit': float('%.*f' % (2,amount_diff)),
+#                                'debit': float('%.*f' % (2,debit_diff)),
+#                                #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
+#                                'date': voucher.date,
+#                                'tax_id': line_tax.id,
+#                                'amount_tax_unround':amount_tax_unround,
+#                                }
+#                            #move_line_obj.create(cr ,uid, move_line, context=context)
+#                        else:
+#                            if credit_orig-credit_now < 0:
+#                                amount_diff, debit_diff= debit_diff, amount_diff
+#                            move_line={
+#                                'journal_id': voucher.journal_id.id,
+#                                'period_id': voucher.period_id.id,
+#                                'name': 'change_tax: ' +  str(line.name),
+#                                'account_id':line_tax.diff_account_id and line_tax.diff_account_id.id or voucher.writeoff_acc_id.id, 
+#                                'move_id': int(move_id),
+#                                'partner_id': voucher.partner_id.id,
+#                                'company_id':company_currency,
+#                                #~ 'currency_id': voucher.journal_id.currency.id,
+#                                'currency_id': line.move_line_id and (company_currency <> current_currency and current_currency) or False,
+#                                'quantity': 1,
+#                                'credit': float('%.*f' % (2,amount_diff)),
+#                                'debit': float('%.*f' % (2,debit_diff)),
+#                                #~ 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
+#                                'date': voucher.date,
+#                                'tax_id': line_tax.id
+#                                }
+#                            #move_line_obj.create(cr ,uid, move_line, context=context)
+#####################################################################################################################################
                     if voucher.type in ('sale', 'receipt'):
                         account_tax_voucher=line_tax.tax_id.account_collected_voucher_id.id
                     else:
@@ -242,7 +244,6 @@ class account_voucher(osv.Model):
                     account_tax_collected=line_tax.tax_id.account_collected_id.id
                     
                     reference_amount = line_tax.amount_tax
-                    context.update({'writeoff' : False})
                     move_lines_tax = self._preparate_move_line_tax(cr, uid,
                         account_tax_voucher, account_tax_collected,
                         move_id, voucher.type, voucher.partner_id.id,
@@ -254,13 +255,6 @@ class account_voucher(osv.Model):
                                     line_tax.analytic_account_id.id or False,
                         line_tax.amount_base,
                         factor, context=context)
-                    invoice_line = line_tax.tax_invoice_id and line_tax.tax_invoice_id.invoice_id or False
-                    line_invo = False
-                    if invoice_line:
-                        move_invoice = invoice_line.move_id
-                        for line_move in move_invoice.line_id:
-                            if line_move.account_id.id == account_tax_collected:
-                                line_invo = line_move
                     for move_line_tax in move_lines_tax:
                         move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                 context=context)
@@ -293,27 +287,29 @@ class account_voucher(osv.Model):
                                 move_create = move_line_obj.create(cr ,uid, move_line_tax,
                                                         context=context)
                                 move_ids.append(move_create)
-                    
-                    if voucher.writeoff_amount > 0:
-                        reference_amount_w = self.get_partial_amount_tax_pay(cr,
-                            uid, voucher.writeoff_amount,
-                            line_tax.original_tax, context=context)
-                        context['writeoff'] =  True
-                        move_lines_w = self._preparate_move_line_tax(cr, uid,
-                            account_tax_voucher, voucher.writeoff_acc_id.id,
-                            move_id, voucher.type, voucher.partner_id.id,
-                            voucher.period_id.id, voucher.journal_id.id,
-                            voucher.date, company_currency, reference_amount_w,
-                            None, current_currency,
-                            line_tax.id, line_tax.tax_id.name,
-                            line_tax.analytic_account_id and\
-                                    line_tax.analytic_account_id.id or False,
-                            line_tax.amount_base,
-                            factor, context=context)
-                        for move_line_w in move_lines_w:
-                            move_create = move_line_obj.create(cr ,uid, move_line_w,
-                                                    context=context)
-                            move_ids.append(move_create)
+                                
+##commented code section that we are not considering
+##taxes actually paid by cases writeoff
+#                    if voucher.writeoff_amount > 0:
+ #                       reference_amount_w = self.get_partial_amount_tax_pay(cr,
+  #                          uid, voucher.writeoff_amount,
+   #                         line_tax.original_tax, context=context)
+    #                    context['writeoff'] =  True
+     #                   move_lines_w = self._preparate_move_line_tax(cr, uid,
+      #                      account_tax_voucher, voucher.writeoff_acc_id.id,
+       #                     move_id, voucher.type, voucher.partner_id.id,
+        #                    voucher.period_id.id, voucher.journal_id.id,
+         #                   voucher.date, company_currency, reference_amount_w,
+          #                  None, current_currency,
+           #                 line_tax.id, line_tax.tax_id.name,
+            #                line_tax.analytic_account_id and\
+             #                       line_tax.analytic_account_id.id or False,
+              #              line_tax.amount_base,
+               #             factor, context=context)
+                #        for move_line_w in move_lines_w:
+                 #           move_create = move_line_obj.create(cr ,uid, move_line_w,
+                  #                                  context=context)
+                   #         move_ids.append(move_create)
         return move_ids
     
     def _preparate_move_line_tax(self, cr, uid, src_account_id, dest_account_id,
@@ -365,19 +361,16 @@ class account_voucher(osv.Model):
                     'analytic_account_id': acc_a,
                     'date' : date,
         }
-        if context.get('writeoff', False):
-            debit_line_vals.pop('analytic_account_id')
-            credit_line_vals.pop('analytic_account_id')
+
+        if type in ('payment','purchase'): 
+            reference_amount < 0 and\
+                credit_line_vals.pop('analytic_account_id') or\
+                debit_line_vals.pop('analytic_account_id')
         else:
-            if type in ('payment','purchase'): 
-                reference_amount < 0 and\
-                    credit_line_vals.pop('analytic_account_id') or\
-                    debit_line_vals.pop('analytic_account_id')
-            else:
-                reference_amount < 0 and\
-                    debit_line_vals.pop('analytic_account_id') or\
-                    credit_line_vals.pop('analytic_account_id')
-            
+            reference_amount < 0 and\
+                debit_line_vals.pop('analytic_account_id') or\
+                credit_line_vals.pop('analytic_account_id')
+        
         if not amount_tax_unround:
             credit_line_vals.pop('amount_tax_unround')
             credit_line_vals.pop('tax_id')
