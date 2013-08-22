@@ -32,7 +32,6 @@
             <field name="name">view.partner.clabe.tree.inh.xml22</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="account.view_partner_property_form"/>
-            <field name="sequence">20</field>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='bank_name']" position="after">
                         <field name="clabe" colspan="2"/>
