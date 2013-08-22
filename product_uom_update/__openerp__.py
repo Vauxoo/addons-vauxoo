@@ -25,12 +25,13 @@
 #
 
 {
-    "name": "Product oum update",
+    "name": "Product uom update",
     "version": "1.0",
     "author": "Vauxoo",
     "category": "Generic Modules",
     "description" : """
-    Product oum update
+Product uom update
+==================
 
     This wizard help you to change units in the products
     """,

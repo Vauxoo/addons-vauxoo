@@ -4,7 +4,6 @@
 
         <record id="base_product_uom_merge_wizard_result" model="ir.ui.view">
             <field name="name">base.product.uom.merge.wizard.result</field>
-            <field eval="1000" name="sequence"/>
             <field name="model">base.product.merge.uom.wizard</field>
             <field name="arch" type="xml">
                 <form string="Product Uom Not Update " version="7.0">
@@ -22,10 +21,9 @@
         
         <record id="base_product_uom_merge_wizard" model="ir.ui.view">
             <field name="name">base.product.uom.merge.wizard</field>
-            <field eval="10" name="sequence"/>
             <field name="model">base.product.merge.uom.wizard</field>
             <field name="arch" type="xml">
-                <form string="Product oum update" version="7.0">
+                <form string="Product uom update" version="7.0">
                         <group string="Select the unit of measure to change">
                             <field name="uom_id_from" colspan="4" mode="tree">
                                <tree string="Products">
@@ -49,17 +47,25 @@
         
         <record model="ir.actions.act_window" id="base_product_uom_merge_wizard_act">
             <field name="name">Product uom update</field>
+            <field eval="104" name="sequence"/>
+            <field name="type">ir.actions.act_window</field>
             <field name="res_model">base.product.merge.uom.wizard</field>
+            <field name="search_view_id" ref="base_product_uom_merge_wizard"/>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
+        </record>
+        
+        <record id="action_base_product_uom_merge_wizard" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="base_product_uom_merge_wizard"/>
+            <field name="act_window_id" ref="base_product_uom_merge_wizard_act"/>
         </record>
         
         <menuitem id='base_product_uom_merge_wizard_menu'
             action='base_product_uom_merge_wizard_act'
             groups='base.group_system'
             parent='product_do_merge.root_menu_product' />
-
 
         <act_window 
             name="Product Uom Update"

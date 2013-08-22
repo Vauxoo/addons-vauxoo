@@ -26,7 +26,7 @@ from openerp.osv import osv, orm
 from openerp.osv import fields
 
 
-class product_oum_update(osv.TransientModel):
+class product_uom_update(osv.TransientModel):
 
     _name = 'base.product.merge.uom.wizard'
 
@@ -35,7 +35,7 @@ class product_oum_update(osv.TransientModel):
         if not context:
             context = {}
         products = context.get('active_ids', False)
-        res = super(product_oum_update, self).default_get(
+        res = super(product_uom_update, self).default_get(
             cr, uid, fields, context=context)
         res.update({'uom_id_from': products})
         return res
