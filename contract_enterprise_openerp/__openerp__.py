@@ -25,7 +25,11 @@
 {
     "name": "Warranties Enterprise",
     "version": "0.1",
-    "depends": ["base", "account_analytic_analysis"],
+    "depends": [
+                "base",
+                "account_analytic_analysis",
+                "project",
+                ],
     "author": "Vauxoo",
     "description": """
 Enterprise Contract Management.
