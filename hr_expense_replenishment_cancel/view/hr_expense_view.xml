@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='confirm']" position="after">
-                    <button string="Cancel" name="cancel" states="done,accepted,paid" class="oe_highlight"/>
+                    <button string="Cancel" name="cancel" states="done,paid" class="oe_highlight"/>
                 </xpath>
 
             </field>
