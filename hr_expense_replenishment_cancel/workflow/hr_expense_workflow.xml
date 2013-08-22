@@ -5,6 +5,7 @@
             <field name="act_from" ref="hr_expense.act_done"/>
             <field name="act_to" ref="hr_expense.act_refused"/>
             <field name="signal">cancel</field>
+            <field name="group_id" ref="base.group_hr_user"/>
         </record>
     </data>
 </openerp>

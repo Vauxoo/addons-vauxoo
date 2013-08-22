@@ -42,5 +42,6 @@ class hr_expense_expense(osv.Model):
                     [move_line.id
                         for move_line in expense.account_move_id.line_id],
                     context=context)
-                obj_move.unlink(cr, uid, [expense.account_move_id.id])
+                obj_move.unlink(cr, uid, [expense.account_move_id.id],
+                                context=context)
         return res
