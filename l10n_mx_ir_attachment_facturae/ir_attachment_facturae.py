@@ -109,6 +109,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 context = {}
             attach = ''
             msj = ''
+            index_xml = ''
             invoice = self.browse(cr, uid, ids)[0].invoice_id
             invoice_obj = self.pool.get('account.invoice')
             type = self.browse(cr, uid, ids)[0].type
@@ -127,7 +128,9 @@ class ir_attachment_facturae_mx(osv.Model):
                     'res_model': 'account.invoice',
                     'res_id': invoice.id,
                 }, context={})
-                msj = _("Attached Successfully XML CFD 2.2")
+                if attach:
+                    index_xml = self.pool.get('ir.attachment').browse(cr, uid, attach).index_content
+                    msj = _("Attached Successfully XML CFD 2.2")
             if type == 'cfdi32':
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                     '_V3_2.xml' or ''
@@ -144,7 +147,8 @@ class ir_attachment_facturae_mx(osv.Model):
             self.write(cr, uid, ids,
                           {'file_input': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj }, context=context)
+                           'msj': msj,
+                           'file_xml_sign_index': index_xml }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
@@ -170,6 +174,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 msj = _("Signed")
             if type == 'cfd22':
                 attach = self.browse(cr, uid, ids)[0].file_input.id or False
+                index_xml = self.browse(cr, uid, ids)[0].file_xml_sign_index or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
             if type == 'cfdi32':
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
