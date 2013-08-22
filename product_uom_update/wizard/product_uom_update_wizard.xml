@@ -47,7 +47,6 @@
         
         <record model="ir.actions.act_window" id="base_product_uom_merge_wizard_act">
             <field name="name">Product uom update</field>
-            <field eval="104" name="sequence"/>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">base.product.merge.uom.wizard</field>
             <field name="search_view_id" ref="base_product_uom_merge_wizard"/>
@@ -58,6 +57,7 @@
         
         <record id="action_base_product_uom_merge_wizard" model="ir.actions.act_window.view">
             <field name="view_mode">form</field>
+            <field eval="104" name="sequence"/>
             <field name="view_id" ref="base_product_uom_merge_wizard"/>
             <field name="act_window_id" ref="base_product_uom_merge_wizard_act"/>
         </record>
