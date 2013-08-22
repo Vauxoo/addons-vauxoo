@@ -23,3 +23,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 import mrp_byworkcenter_capacity
+import res_company
+import res_config

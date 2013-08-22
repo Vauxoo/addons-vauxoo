@@ -23,38 +23,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############################################################################
 
-{
-    "name": "MRP Work Center Capacity",
-    "version": "1.0",
-    "author": "Vauxoo C.A.",
-    "website": "http://www.openerp.com.ve",
-    "category": "MRP",
-    "description": """
-MRP Work Center Capacity
-========================
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from openerp import tools
 
-This module add the feuture of take in count the workcenters minimum and
-maximum when automatic generating the work orders for a production order.
-Instead of generate one work order by every activity loaded in the production
-order routing (the basic process) it create so many work orders needed to the
-production capacity in every work center.
- 
-For example. If I want to produce 100 pounds of meat but my related work center
-process only 20 pounds at time, this feature will create 5 work orders each to
-process 20 pounds of the production order 100 pounds.
+class res_company(osv.osv):
+    _inherit = 'res.company'
+    _columns = {
+        'batch_type': fields.selection(
+            [('bottleneck', 'Avoid Production Bottleneck'),
+             ('max_cost', 'Maximize Production Cost')],
+            'Production Batch Process Type',
+            help=_('Two options when management the batch work orders:\n\n'
+                   ' - Avoid Production Bottleneck: Will create the batch'
+                   ' work orders taking into a count the minium workcenter'
+                   ' capacity.'
+                   ' - Maximize Production Cost: For every workcenter will'
+                   ' create a batch of works orders that always explotes the'
+                   ' product capacity of the workcenter.\n')
+            ),
+    }
 
-This is helpfull because in real life does not happend that all the process
-of a big capacity production order is process at once.
-
-""",
-    "depends": ["mrp", "mrp_operations", "mrp_consume_produce"],
-    "data": [
-        'view/mrp_byworkcenter_capacity_view.xml',
-        'view/res_config_view.xml',
-        'view/res_company_view.xml',
-    ],
-    "demo": [],
-    "test": [],
-    "active": False,
-    "installable": True,
-}
+    _defaults = {
+        'batch_type': 'bottleneck',
+    }
