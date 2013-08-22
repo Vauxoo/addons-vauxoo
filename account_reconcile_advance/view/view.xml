@@ -9,7 +9,7 @@
                 <header>
                     <button string="Reconcile" name="payment_reconcile" type="object" states="draft" class="oe_highlight"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,done" statusbar_colors='{"draft":"blue","approved":"blue"}'/>
-                            <field name='type' />
+                            <field name='type' invisible="1"/>
                 </header>
                 <div class="oe_title">
                     <div class="oe_edit_only">
@@ -45,6 +45,8 @@
                     <page string='Advances'>
                         <field 
                             name='voucher_ids' 
+                            create="False"
+                            context="{'create':False}"
                             domain="[('type','=',type == 'pay' and 'payment' or 'receipt'),('state','=','posted'),('partner_id','=',partner_id),('advance','=',True)]"
                             nolabel='1' attrs="{'readonly':[('state','!=','draft')]}"/>
                         <field name='av_aml_ids' nolabel='1' invisible='1' attrs="{'readonly':[('state','!=','draft')]}"/>
