@@ -32,7 +32,6 @@ class hr_expense_expense(osv.Model):
     _inherit = "hr.expense.expense"
     
     def expense_canceled(self, cr, uid, ids, context=None):
-        print ids,'idsqqqqqqqqqqqqqqqqqqqqq'
         obj_move_line = self.pool.get('account.move.line')
         obj_move = self.pool.get('account.move')
         res = super(hr_expense_expense,
