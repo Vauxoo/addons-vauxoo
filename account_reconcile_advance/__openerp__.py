@@ -19,6 +19,8 @@ A description is intended to fill this space
     "demo": [
     ],
     "data": [
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'view/view.xml',
         'view/menues_and_actions.xml',
     ],

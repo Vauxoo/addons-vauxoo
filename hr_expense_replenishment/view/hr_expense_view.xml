@@ -41,6 +41,7 @@
                     <button string="Reconcile" name="payment_reconcile" type="object" states="done" class="oe_highlight"/>
                     <button string="Pay" name="expense_pay" type="object" states="process" class="oe_highlight"/>
                     <button string="Deduct" name="expense_deduction" type="object" states="deduction" class="oe_highlight"/>
+                    <button string="Cancel" name="cancel" states="done,paid" class="oe_highlight"/>
                 </xpath>
 
                 <xpath expr="//field[@name='name']" position="replace">
