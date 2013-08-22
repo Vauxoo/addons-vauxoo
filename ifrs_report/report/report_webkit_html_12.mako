@@ -63,11 +63,27 @@
                      <th class="celdaTotalTitulo" width="15%">${info[i].get('name').upper()}</th>
                             %for moth in range(1, 13): 
                             <th class="celdaTotal" width="8%">
-                                %try:
-                                    ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
-                                %except:
-                                    0.0
-                                %endtry
+                                %if ifrs_l.get('comparison') in ('subtract', 'ratio', 'without', False):
+                                    %if ifrs_l.get('operator') in ('subtract', 'ratio', 'without', 'product', False):
+                                        %try:
+                                            ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=True)}
+                                        %except:
+                                            0.0
+                                        %endtry
+                                    %elif ifrs_l.get('operator') == 'percent':
+                                        %try:
+                                            ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=True)} %
+                                        %except:
+                                            0.0
+                                        %endtry
+                                    %endif
+                                %elif ifrs_l.get('comparison')== 'percent':
+                                    %try:
+                                        ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=True)} %
+                                    %except:
+                                        0.0
+                                    %endtry
+                                %endif
                             </th>
                             %endfor
                     %else:
@@ -78,7 +94,7 @@
                                 %for moth in range(1, 13): 
                                 <td class="celdaDetail" width="8%">
                                     %try:
-                                        ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                                        ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=True)}
                                     %except:
                                         0.0
                                     %endtry
@@ -100,7 +116,7 @@
                                     %for moth in range(1, 13): 
                                         <td class="celdaDetail" width="8%">
                                             %try:
-                                                ${formatLang(info[i]['period'][moth], digits=2, date=False, date_time=False, grouping=3, monetary=False)}
+                                                ${formatLang(info[i]['period'][moth], digits=0, date=False, date_time=False, grouping=3, monetary=False)}
                                             %except:
                                                 0.0
                                             %endtry

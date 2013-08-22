@@ -329,7 +329,7 @@ class ifrs_ifrs(osv.osv):
                        context=context)
                     
                     line = {'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name, 'invisible': ifrs_l.invisible, 'type': str(
-                        ifrs_l.type), 'amount': amount_value}
+                        ifrs_l.type), 'amount': amount_value,'comparison':ifrs_l.comparison,'operator':ifrs_l.operator}
                     
                     if ifrs_l.ifrs_id.id == ids[0]:  # Se toman las lineas del ifrs actual, ya que en los calculos se incluyen lineas de otros ifrs
                         data.append(line)
@@ -340,7 +340,8 @@ class ifrs_ifrs(osv.osv):
                     line = {
                     'sequence': int(ifrs_l.sequence), 'id': ifrs_l.id, 'name': ifrs_l.name,
                     'invisible': ifrs_l.invisible, 'type': ifrs_l.type,
-                    'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}}
+                    'period': {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0},
+                    'comparison':ifrs_l.comparison,'operator':ifrs_l.operator}
                     for lins in range(1, 13):
                         amount_value = ifrs_line._get_amount_with_operands(
                                 cr, uid,
