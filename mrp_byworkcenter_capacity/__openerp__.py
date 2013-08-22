@@ -33,19 +33,30 @@
 MRP Work Center Capacity
 ========================
 
-This module add the feuture of take in count the workcenters minimum and
-maximum when automatic generating the work orders for a production order.
-Instead of generate one work order by every activity loaded in the production
-order routing (the basic process) it create so many work orders needed to the
-production capacity in every work center.
- 
-For example. If I want to produce 100 pounds of meat but my related work center
+This module adds two features to the mrp module. First, create a new model
+named ``Scheduled Work Orders`` that represent the estimated work orders to be
+done. When a manufacturing order is confirmed then the scheduled or estimated
+work orders are created. Later, using the mrp_consume_produce module you can
+consume and produce real work orders.
+
+This module also adds the feature of taking in count the workcenters maximum
+when automatic generating the work orders for a manufacturing order to make
+batch orders. Instead of generate one workorder by every activity loaded in
+the manufacturing order routing (the basic process) it create so many
+work orders needed to the production capacity in the workcenters. There is two
+criterias for the workcenters capacitys:
+
+- Avoid Production Bottleneck: Will create the batch work orders taking into a
+  count the minium workcenter capacity.
+- Maximize Production Cost: For every workcenter will create a batch of works
+  orders that always explotes the product capacity of the workcenter.
+
+For example. If I want to produce 100 pounds of meat but my related workcenters
 process only 20 pounds at time, this feature will create 5 work orders each to
 process 20 pounds of the production order 100 pounds.
 
 This is helpfull because in real life does not happend that all the process
-of a big capacity production order is process at once.
-
+of a big capacity manufacturing order is process at once.
 """,
     "depends": ["mrp", "mrp_operations", "mrp_consume_produce"],
     "data": [
