@@ -8,6 +8,16 @@ class account_reconcile_advance(osv.Model):
     '''description'''
     
     _name = 'account.reconcile.advance'
+    def default_get(self, cr, uid, fields, context=None):
+        ''''''
+        context = context or {}
+    
+        res = super(account_reconcile_advance, self).default_get(cr, uid, fields, context=context)
+        if not context.get('default_type',False):
+            res.update({'type':'pay'})
+    
+        return res
+    
     
     _columns = {
         'name':fields.char('Name', size=256, help='Name of This Advance Document'), 
@@ -29,7 +39,6 @@ class account_reconcile_advance(osv.Model):
     }
     _defaults = {
         'state':'draft',        
-        'type':'pay',    
         'company_id': lambda s, c, u, cx: s.pool.get('res.users').browse(c, u,
             u, cx).company_id.id,
         'date': fields.date.today
@@ -123,8 +132,8 @@ class account_reconcile_advance(osv.Model):
         av_aml_ids = []
         for av_brw in ara_brw.voucher_ids:
             av_aml_ids += [l.id for l in av_brw.move_ids if l.account_id.type \
-                    == 'payable' and not l.reconcile_id and not \
-                    l.reconcile_partial_id]
+                    == (ara_brw.type == 'pay' and 'payable' or 'receivable') \
+                    and not l.reconcile_id and not l.reconcile_partial_id]
 
         av_aml_ids = aml_obj.search(cr, uid, [('id','in',av_aml_ids)],
                 order='date asc', context=context)
@@ -145,8 +154,8 @@ class account_reconcile_advance(osv.Model):
 #           money
             while (aml_sum == 0.0 or inv_sum > aml_sum) and av_aml_ids:
                 aml_brw = aml_obj.browse(cr, uid, av_aml_ids.pop(0), context=context)
-                aml_sum += aml_brw.debit
-                aml_grn_sum += aml_brw.debit
+                aml_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
+                aml_grn_sum += aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit']
 #               gruping by account_id should be done here            
 
 #           Let us pick our first debt
@@ -163,13 +172,15 @@ class account_reconcile_advance(osv.Model):
                 aml_sum -= inv_sum
                 inv_sum = 0.0 
 
+                get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                        self.invoice_credit_lines
 #               Creates its own mirror and fully reconciliates them
-                payid = self.invoice_debit_lines(cr, uid, ids,
+                payid = get_aml(cr, uid, ids,
                         inv_brw.residual, account_id=inv_brw.account_id.id,
                         am_id=am_id, context=context)
 
                 iamls = [line.id for line in inv_brw.move_id.line_id if
-                        line.account_id.type == 'payable']
+                        line.account_id.type == (ara_brw.type == 'pay' and 'payable' or 'receivable')]
                 pamls = [line.id for line in inv_brw.payment_ids]
 
                 lines_2_rec.append(iamls+pamls+[payid])
@@ -186,11 +197,14 @@ class account_reconcile_advance(osv.Model):
             if not av_aml_ids and aml_sum and inv_sum > aml_sum:
 #               Payments are over. Last line to invoice is made with the
 #               aml_sum
-                payid = self.invoice_debit_lines(cr, uid, ids, aml_sum,
+                get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                        self.invoice_credit_lines
+
+                payid = get_aml(cr, uid, ids, aml_sum,
                         account_id=inv_brw.account_id.id, am_id=am_id,
                         context=context)
                 iamls = [line.id for line in inv_brw.move_id.line_id if
-                        line.account_id.type == 'payable']
+                        line.account_id.type == (ara_brw.type == 'pay' and 'payable' or 'receivable')]
                 pamls = [line.id for line in inv_brw.payment_ids]
 
                 lines_2_par.append(iamls+pamls+[payid])
@@ -214,15 +228,25 @@ class account_reconcile_advance(osv.Model):
                 aml_brw = aml_obj.browse(cr, uid, used_aml_ids[-1],
                         context=context)
 #               This should be sent to a method in order to be captured
-                self.invoice_debit_lines(cr, uid, ids, aml_sum,
-                        account_id=ara_brw.partner_id.property_account_payable.id,
+                if ara_brw.type == 'pay':
+                    acc_id = ara_brw.partner_id.property_account_payable.id
+                else:
+                    acc_id = ara_brw.partner_id.property_account_receivable.id
+                get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
+                        self.invoice_credit_lines
+
+                get_aml(cr, uid, ids, aml_sum,
+                        account_id=acc_id,
                         am_id=am_id, context=context)
 
+            get_aml = ara_brw.type == 'pay' and self.invoice_credit_lines or \
+                    self.invoice_debit_lines
             for aml_brw in aml_obj.browse(cr, uid, used_aml_ids, context=context):
-                adv_2_rec.append([self.invoice_credit_lines(cr, uid, ids,
-                    aml_brw.debit, account_id=aml_brw.account_id.id,
+                adv_2_rec.append([get_aml(cr, uid, ids,
+                    aml_brw[ara_brw.type == 'pay' and 'debit' or 'credit'],
+                    account_id=aml_brw.account_id.id,
                     am_id=am_id, context=context),aml_brw.id])
-
+        
         for line_pair in adv_2_rec+lines_2_rec:
             if not line_pair: continue
             aml_obj.reconcile(
