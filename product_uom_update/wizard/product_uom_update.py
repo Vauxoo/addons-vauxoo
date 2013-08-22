@@ -45,20 +45,25 @@ class product_uom_update(osv.TransientModel):
         product_ids_validate = []
         product_ids_unvalidate = []
         product_ids_validate_name = []
+        string_result = ''
 
         product_model = self.pool.get('product.product')
         wizard = self.browse(cr, uid, ids[0], context=context)
         new_unit = context.get('uom_id_to_id')[0]
-
-        if context.get('active_ids'):
+        product_ids = []
+        for product in wizard.uom_id_from:
+            product_ids.append(product.id)
+        if len(product_ids) > 0:
+            context.update({'active_ids': product_ids})
             res = self.pool.get('base.product.merge.automatic.wizard').\
                     _update_foreign_keys(
                 cr, uid, False, [new_unit],
                 model='product_uom', context=context)
             dst_product_ids = product_model.browse(
-                cr, uid, context.get('active_ids'), context=context)
+                cr, uid, product_ids, context=context)
             uom_factor_dst = self.pool.get('product.uom').browse(
-                cr, uid, context.get('uom_id_to_id'), context=context)[0].factor
+                cr, uid, context.get('uom_id_to_id'), context=context)[0].\
+                        factor
             for dst_product_id in dst_product_ids:
                 if dst_product_id.uom_id.factor == uom_factor_dst:
                     product_ids_validate.append(dst_product_id.id)
@@ -67,34 +72,7 @@ class product_uom_update(osv.TransientModel):
                 else:
                     product_ids_unvalidate.append(
                         dst_product_id.name.encode('utf8'))
-        else:
-            try:
-                product_ids = []
-                for product in wizard.uom_id_from:
-                    product_ids.append(product.id)
-                context.update({'active_ids': product_ids})
-                res = self.pool.get('base.product.merge.automatic.wizard').\
-                        _update_foreign_keys(
-                    cr, uid, False, [new_unit],
-                    model='product_uom', context=context)
-                dst_product_ids = product_model.browse(
-                    cr, uid, product_ids, context=context)
-                uom_factor_dst = self.pool.get('product.uom').browse(
-                    cr, uid, context.get('uom_id_to_id'), context=context)[0].\
-                            factor
-                for dst_product_id in dst_product_ids:
-                    if dst_product_id.uom_id.factor == uom_factor_dst:
-                        product_ids_validate.append(dst_product_id.id)
-                        product_ids_validate_name.append(
-                            dst_product_id.name.encode('utf8'))
-                    else:
-                        product_ids_unvalidate.append(
-                            dst_product_id.name.encode('utf8'))
-            except:
-                raise osv.except_osv(
-                    ('Warning!'), ("You must choose at least one record.."))
-
-        if len(product_ids_validate) > 0:
+                if len(product_ids_validate) > 0:
                     product_ids_tuple = tuple(product_ids_validate)
                     query = '''UPDATE "product_template" SET uos_id = %s ,\
                             uom_id = %s , uom_po_id = %s
@@ -102,20 +80,23 @@ class product_uom_update(osv.TransientModel):
                                                    new_unit, new_unit)
                     cr.execute(query, (product_ids_tuple,))
 
+            if len(product_ids_validate) > 0:
+                string_aux1 = '\n'.join(product_ids_validate_name)
+                string_result += '''Products Changed:\n\n %s ''' % (
+                    string_aux1)
+            if len(product_ids_unvalidate) > 0:
+                string_aux2 = '\n'.join(product_ids_unvalidate)
+                string_result += '''\n\nProducts that not change because the '''\
+                        '''conversion factor is not equal:\n\n %s''' % (
+                    string_aux2)
+        
+        else:
+            string_result= 'Warning! \n\n You must choose at least one record..'
+
         __, xml_id = self.pool.get('ir.model.data').get_object_reference(
             cr, uid, 'product_uom_update',\
                     'base_product_uom_merge_wizard_result')
-        string_result = ''
-        if len(product_ids_validate) > 0:
-            string_aux1 = '\n'.join(product_ids_validate_name)
-            string_result += '''Products Changed:\n\n %s ''' % (
-                string_aux1)
-        if len(product_ids_unvalidate) > 0:
-            string_aux2 = '\n'.join(product_ids_unvalidate)
-            string_result += '''\n\nProducts that not change because the '''\
-                    '''conversion factor is not equal:\n\n %s''' % (
-                string_aux2)
-
+                    
         context.update(
             {'default_result': string_result})
 
