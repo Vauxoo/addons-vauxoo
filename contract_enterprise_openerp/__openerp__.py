@@ -26,12 +26,27 @@
     "name": "Warranties Enterprise",                                                  
     "version": "0.1",                                                           
     "depends": ["base", "account_analytic_analysis"],
-    "summary": "",
     "author": "Vauxoo",
     "description": """
+Enterprise Contract Management.
+===============================
+
+When you are partner sometimes need to be sure manage internally the tickets
+and the renewal process of OpenERP Enterprise licences regarding to your
+customer contracts this module allow you manage this informatio related to
+this contracts.
+
+* Start Date.
+* End Date.
+* Licence KEy.
+
+#TODO:
+
+* Expiration Warnings.
+* Manage Comunication with OpenERP.
     """,
     "website": "http://vauxoo.com",
-    "category": "Sales",
+    "category": "Contracts",
     "data": [
         'view/account_analytic_analysis_view.xml',
     ],
