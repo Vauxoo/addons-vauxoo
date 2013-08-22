@@ -52,7 +52,9 @@ class mrp_production(osv.Model):
 
     def action_compute(self, cr, uid, ids, properties=None, context=None):
         """
-        Overwrite
+        Overwrite method to take into a count the workcenter capacities to
+        split the manufacturing order workorders in batch. This batch is based
+        on raw materials capacity per workcenter.  
         """
         context = context or {}
         properties = properties or []
