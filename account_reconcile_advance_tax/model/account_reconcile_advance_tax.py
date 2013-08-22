@@ -30,36 +30,54 @@ class account_reconcile_advance(osv.Model):
     def payment_reconcile(self, cr, uid, ids, context=None):
         res = super(account_reconcile_advance,
                         self).payment_reconcile(cr, uid, ids, context=context)
-        self.create_ara_tax(cr, uid, ids, context=context)
-        return resq
+        self.create_ara_tax(cr, uid, ids, amount_inv_pay=res, context=context)
+        return res
+    
+    def _get_company_currency(self, cr, uid, adv_id, context=None):
+        return self.pool.get('account.reconcile.advance').browse(cr,
+            uid, adv_id,
+            context).move_id.journal_id.company_id.currency_id.id
 
-    def create_ara_tax(self, cr, uid, ids, context=None):
+    def _get_current_currency(self, cr, uid, exp_id, context=None):
+        exp = self.pool.get('account.reconcile.advance').browse(cr, uid, adv_id,
+                                                                    context)
+        return exp.currency_id.id or\
+                self._get_company_currency(cr ,uid, adv_id, context)
+                
+    def create_ara_tax(self, cr, uid, ids, amount_inv_pay={}, context=None):
+        aml_obj = self.pool.get('account.move.line')
         acc_voucher_obj = self.pool.get('account.voucher')
         adv = self.browse(cr, uid, ids, context=context)[0]
+        
+        company_currency = self._get_company_currency(cr, uid,
+                            adv.id, context)
+
+        current_currency = self._get_company_currency(cr, uid,
+                            adv.id, context)
+                            
         for invoice in adv.invoice_ids:
-            print invoice.amount_total,'imprimo amount_total'
             for tax in invoice.tax_line:
                 if tax.tax_id.tax_voucher_ok:
+                    
                     account_tax_voucher = tax.tax_id.account_paid_voucher_id.id
                     account_tax_collected = tax.tax_id.account_collected_id.id
-                    print tax.tax_id.name,'imprimo tame'
-                    factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr, uid,
-                        invoice.amount_total, 58, context=context)
-                    print factor,'imprimo factor'
-                    print tax.amount * factor,'amount'
+                    
+                    factor = acc_voucher_obj.get_percent_pay_vs_invoice(cr,
+                                uid, invoice.amount_total,
+                                amount_inv_pay.get(invoice.id, 0.0),
+                                context=context)
+                                
                     move_lines_tax = acc_voucher_obj.\
                                             _preparate_move_line_tax(cr, uid,
-                        account_tax_voucher,
-                        account_tax_collected, exp.account_move_id.id,
-                        'payment', invoice.partner_id.id,
-                        adv.account_move_id.period_id.id,
-                        adv.account_move_id.journal_id.id,
-                        adv.account_move_id.date, company_currency,
-                        tax.amount, tax.amount,
-                        current_currency,
-                        False, adv.name, adv.account_analytic_id and\
-                            adv.account_analytic_id.id or False,
-                        adv.base_amount, factor, context=context)
+                        account_tax_voucher, account_tax_collected,
+                        adv.move_id.id, 'payment', invoice.partner_id.id,
+                        adv.move_id.period_id.id, adv.move_id.journal_id.id,
+                        adv.move_id.date, company_currency,
+                        tax.amount * factor, tax.amount * factor,
+                        current_currency, False, tax.name,
+                        tax.account_analytic_id and\
+                            tax.account_analytic_id.id or False,
+                        tax.base_amount, factor, context=context)
                         
                     for move_line_tax in move_lines_tax:
                         move_create = aml_obj.create(cr ,uid, move_line_tax,
