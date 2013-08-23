@@ -1,0 +1,72 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* purchase_requisition_make_po
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-06-27 18:57+0000\n"
+"PO-Revision-Date: 2013-06-27 11:59-0800\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: purchase_requisition_make_po
+#: model:ir.model,name:purchase_requisition_make_po.model_purchase_requisition_line
+msgid "Purchase Requisition Line"
+msgstr "Línea solicitud de compra"
+
+#. module: purchase_requisition_make_po
+#: field:purchase.requisition.line,name:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: purchase_requisition_make_po
+#: model:ir.model,name:purchase_requisition_make_po.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: purchase_requisition_make_po
+#: field:purchase.requisition.line,account_analytic_id:0
+msgid "Analytic Account"
+msgstr "Cuenta Analítica"
+
+#. module: purchase_requisition_make_po
+#: field:purchase.order,rfq_user_id:0
+msgid "Requisitor"
+msgstr "Solicitante"
+
+#. module: purchase_requisition_make_po
+#: code:addons/purchase_requisition_make_po/purchase_requisition.py:88
+#, python-format
+msgid "Warning!"
+msgstr "Warning!"
+
+#. module: purchase_requisition_make_po
+#: model:ir.model,name:purchase_requisition_make_po.model_purchase_requisition
+msgid "Purchase Requisition"
+msgstr "Solicitud de compra"
+
+#. module: purchase_requisition_make_po
+#: help:purchase.requisition.line,account_analytic_id:0
+msgid ""
+"This field is used to assign the selected analytic account to the line of "
+"the purchase order"
+msgstr ""
+"This field is used to assign the selected analytic account to the line of "
+"the purchase order"
+
+#. module: purchase_requisition_make_po
+#: code:addons/purchase_requisition_make_po/purchase_requisition.py:88
+#, python-format
+msgid ""
+"You have already one %s purchase order for this partner, you must cancel "
+"this purchase order to create a new quotation."
+msgstr ""
+"You have already one %s purchase order for this partner, you must cancel "
+"this purchase order to create a new quotation."

@@ -3,16 +3,15 @@
     <data>
         <!-- No sera necesario importar el parser -->
         <report
-            id="ifrs_report"
-            name="ifrs"
-            string="Print IFRS"
-            model="ifrs.ifrs"
-            file="ifrs_report/report/report_webkit_html.mako"
-            multi="True"
-            header="False"
             auto = "True"
-            menu="False"
+            id="ifrs_report"
+            model="ifrs.ifrs"
+            name="ifrs"
+            file="ifrs_report/report/report_webkit_html.mako"
+            string="Print IFRS"
             report_type="webkit"
+            webkit_header="ir_header_webkit_ifrsreport_1"
+            multi="True"
             />
 
         <report 

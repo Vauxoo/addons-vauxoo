@@ -48,7 +48,7 @@ class account_move_line(osv.Model):
         for rec_brw in obj_move_rec.browse(cr, uid, rec_ids, context=context):
             aml_ids = list(set([rec_line.id for rec_line in rec_brw.line_id]) -
                            set(move_ids))
-            obj_move_rec.unlink(cr, uid, rec_brw.id)
+            obj_move_rec.unlink(cr, uid, [rec_brw.id])
             if len(aml_ids) >= 2:
                 obj_move_line.reconcile_partial(
                     cr, uid, aml_ids, 'auto', context=context)
@@ -58,7 +58,7 @@ class account_move_line(osv.Model):
             aml_ids = list(set([rec_line.id
                             for rec_line in part_rec_brw.line_partial_ids]) -
                            set(move_ids))
-            obj_move_rec.unlink(cr, uid, part_rec_brw.id)
+            obj_move_rec.unlink(cr, uid, [part_rec_brw.id])
             if len(aml_ids) >= 2:
                 obj_move_line.reconcile_partial(
                     cr, uid, aml_ids, 'auto', context=context)

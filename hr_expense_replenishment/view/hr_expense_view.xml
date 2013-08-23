@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="hr_expense_extended_expense_form" model="ir.ui.view">
+            <field name="name">hr.expense.extended.expense.form</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='line_ids']" position="after">
+                    <separator string="Deductible Lines"/>
+                    <field name="ail_ids" readonly="1">
+                        <tree>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="invoice_id"/>
+                            <field name="invoice_line_tax_id"/>
+                            <field name="quantity"/>
+                            <field name="price_unit"/>
+                            <field name="price_subtotal" sum=""/>
+                            <field name="currency_id"/>
+                        </tree>
+                    </field>
+                </xpath>
+
+                <xpath expr="//separator[@string='Notes']" position="before">
+                    <separator string="Deductible Taxes"/>
+                    <field name="ait_ids" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']" position="before">
+                    <separator string="No Deductible Lines"/>
+                </xpath>
+
+                <xpath expr="//button[@name='confirm']" position="after">
+                    <button string="Reconcile" name="payment_reconcile" type="object" states="done" class="oe_highlight"/>
+                    <button string="Pay" name="expense_pay" type="object" states="process" class="oe_highlight"/>
+                    <button string="Deduct" name="expense_deduction" type="object" states="deduction" class="oe_highlight"/>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="replace">
+                </xpath>
+
+                <xpath expr="//sheet/group" position="before">
+                    <div class="oe_right oe_button_box" name="button_box">
+                        <button string="Add Invoice" name="%(action_add_invoice_to_expense)d" type="action" states="draft,confirm,accepted"/>
+                        <button string="Validate Invoices" name="validate_expense_invoices" type="object" states="accepted" class="oe_highlight"/>
+                    </div>
+                    <h1>
+                        <field name="id" readonly="1" string="Expense ID"/>
+                        <field name="name"/>
+                    </h1>
+                </xpath>
+                
+                <xpath expr="//field[@name='department_id']" position="replace">
+                    <field name="department_id" on_change="onchange_department_id(employee_id, department_id)"/>
+                </xpath>
+                
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
+
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Advances"  attrs="{'invisible':[('state','in',['draft','confirm','accepted'])]}">
+                        <group>
+                            <group>
+                                <group colspan="4" col="4">
+                                    <field name="skip" attrs="{'readonly':[('state','!=','done')]}" on_change="onchange_no_danvace_option(skip)"/>
+                                    <newline/>
+                                    <button string="Refresh" name="load_advances" type="object" class="oe_highlight" attrs="{'invisible':['|',('state','!=','done'),('skip','=',True)]}"/>
+                                </group>
+                                <field name="advance_ids" nolabel="1" colspan="2" attrs="{'readonly':[('state','!=','done')]}" widget="many2many">
+                                    <tree>
+                                        <field name="journal_id"/>
+                                        <field name="period_id"/>
+                                        <field name="date"/>
+                                        <field name="name"/>
+                                        <field name="ref"/>
+                                        <field name="partner_id"/>
+                                        <field name="debit"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page string="Payments" attrs="{'invisible':[('state','not in',['paid'])]}">
+                        <field name="payment_ids" nolabel="1" readonly="1">
+                            <tree>
+                                <field name="journal_id"/>
+                                <field name="period_id"/>
+                                <field name="date"/>
+                                <field name="name"/>
+                                <field name="ref"/>
+                                <field name="partner_id"/>
+                                <field name="account_id"/>
+                                <field name="move_id"/>
+                                <field name="debit" sum=""/>
+                                <field name="credit" sum=""/>
+                                <field name="reconcile_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//page[@string='Accounting']" position="after">
+                    <page string="Invoices" >
+                        <group>
+                            <field name="invoice_ids" widget="many2many" nolabel="1" attrs="{'readonly':[('state','in',['cancelled','done','paid'])]}">
+                                <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'">
+                                    <field name="partner_id"/>
+                                    <field name="date_invoice"/>
+                                    <field name="number"/>
+                                    <field name="user_id"/>
+                                    <field name="date_due"/>
+                                    <field name="origin"/>
+                                    <field name="residual"/>
+                                    <field name="amount_untaxed"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="hr_employee_inherit_form" model="ir.ui.view">
+            <field name="name">hr.employee.inherit.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_expense_expense_analytic_form">
+            <field name="name">hr.expense.expense.analytic.inherit</field>
+            <field name="inherit_id" ref="hr_expense_analytic.view_hr_expense_analytic_context"/>
+            <field name="model">hr.expense.expense</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']" position="attributes">
+                    <attribute name="context">{'currency_id': currency_id, 'depto': department_id, 'account_analytic_exp': account_analytic_id}</attribute>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

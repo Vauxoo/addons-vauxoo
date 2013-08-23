@@ -27,7 +27,10 @@
 {
     "name" : "Configure Account to partners",
     "version" : "0.1",
-    "depends" : ["account"],
+    "depends" : [
+		"account",
+		'group_configurations_account'
+	],
     "author" : "Vauxoo",
     "description" : """
 Configure Accounts On imported Partners:

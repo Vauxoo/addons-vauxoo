@@ -26,6 +26,8 @@
 ##############################################################################
 from openerp.osv import osv, fields
 from openerp import SUPERUSER_ID
+import logging
+_logger = logging.getLogger(__name__)
 
 try:
     from recaptcha.client import captcha

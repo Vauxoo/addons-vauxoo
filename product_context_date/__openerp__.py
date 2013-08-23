@@ -33,7 +33,6 @@
     "description": """ Add field date in view search by the context
     """,
     'depends': ['stock'],
-    'init_xml': [],
     'update_xml': [
         'product_context_date_view.xml',
         ],

@@ -223,7 +223,8 @@ class account_invoice_debit(osv.TransientModel):
                 orig = self._get_orig(cr, uid, inv, invoice[
                                       'reference'], context)
                 invoice.update({
-                    'type': inv.type,
+                    'type': inv.type == 'in_invoice' and 'in_refund' or\
+                            inv.type == 'out_invoice' and 'out_refund',
                     'date_invoice': date,
                     'state': 'draft',
                     'number': False,
@@ -251,8 +252,8 @@ class account_invoice_debit(osv.TransientModel):
             # we get the view id
             xml_id = (inv.type == 'out_refund') and 'action_invoice_tree1' or \
                      (inv.type == 'in_refund') and 'action_invoice_tree2' or \
-                     (inv.type == 'out_invoice') and 'action_invoice_tree1' or \
-                     (inv.type == 'in_invoice') and 'action_invoice_tree2'
+                     (inv.type == 'out_invoice') and 'action_invoice_tree3' or \
+                     (inv.type == 'in_invoice') and 'action_invoice_tree4'
             # we get the model
             result = mod_obj.get_object_reference(cr, uid, 'account', xml_id)
             id = result and result[1] or False

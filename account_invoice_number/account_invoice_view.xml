@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="account_invoice_form_inh_numberv6_01">
+            <field name="name">account.invoice.form.inh.numberv6.01</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet[@string='Invoice']/h1/field[@name='number']" position="replace">
+                    <field name="internal_number"/>
+                </xpath>
+            </field>
+        </record>
+
+        
+        <record model="ir.ui.view" id="account_invoice_search_inh_numberv6_01">
+            <field name="name">account.invoice.form.search.inh.numberv6.01</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="/search/field[@name='number']" position="replace">
+                    <field name="internal_number"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="account_invoice_tree_inh_numberv6_01">
+            <field name="name">account.invoice.form.tree.inh.numberv6.01</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="/tree/field[@name='number']" position="replace">
+                    <field name="internal_number"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

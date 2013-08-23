@@ -35,7 +35,10 @@ hijos con tipo liquidez y tipo interno No conciliado.
 
 2.- crea un diario por cada cuenta hija detectada en el paso anterior
     """,
-    'depends': ['account'],
+    'depends': [
+		'account',
+		'group_configurations_account'
+	],
     'data': [
         'wizard/set_accounting_wizard_view.xml',
         ],
