@@ -102,7 +102,8 @@ class account_reconcile_advance(osv.Model):
         ara_brw = self.browse(cr, uid, ids[0], context=context)
         res = []
         res.append(ara_brw.invoice_ids and True or False)
-        res.append(ara_brw.voucher_ids and True or False)
+        res.append(ara_brw.voucher_ids and True or ara_brw.av_aml_ids and True\
+                or False)
         if all(res):
             return True
         else:
@@ -134,6 +135,9 @@ class account_reconcile_advance(osv.Model):
             av_aml_ids += [l.id for l in av_brw.move_ids if l.account_id.type \
                     == (ara_brw.type == 'pay' and 'payable' or 'receivable') \
                     and not l.reconcile_id and not l.reconcile_partial_id]
+
+        av_aml_ids += ara_brw.av_aml_ids and [l.id for l in ara_brw.av_aml_ids] or []
+        av_aml_ids = list(set(av_aml_ids))
 
         av_aml_ids = aml_obj.search(cr, uid, [('id','in',av_aml_ids)],
                 order='date asc', context=context)
