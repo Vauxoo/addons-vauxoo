@@ -48,10 +48,10 @@ the manufacturing order routing (the basic process) it create so many
 work orders needed to the production capacity in the workcenters. There is two
 criterias for the workcenters capacitys:
 
-- **Avoid Production Bottleneck:** Will create the batch work orders taking into a
-  count the minium workcenter capacity.
-- **Maximize Production Cost:** For every workcenter will create a batch of works
-  orders that always explotes the product capacity of the workcenter.
+- **Avoid Production Bottleneck:** Will create the batch work orders taking 
+  into account the minium workcenter capacity.
+- **Maximize Production Cost:** For every workcenter will create a batch of 
+  works orders that always explotes the product capacity of the workcenter.
 
 This criteria needs to be set, by default it use the
 *Avoid Production Bottleneck* option. For change this option have this
@@ -60,7 +60,7 @@ alternatives:
 - Go to ``Settings > Companies > (Select Companie) > Configuration (Tab) >
   Logistics > Production Batch Process Type``.
 - Go to ``Settings > Configuration > Manufacturing > Manufacturing Order >
-  Planning > Production Batch Process Type``
+  Planning > Production Batch Process Type``.
 
 For example. If I want to produce 100 pounds of meat but my related workcenters
 process only 20 pounds at time, this feature will create 5 work orders each to
@@ -68,6 +68,14 @@ process 20 pounds of the production order 100 pounds.
 
 This is helpfull because in real life does not happen that all the process
 of a big capacity manufacturing order is process at once.
+
+Also it's needed active some technical settings. Go to
+``Settings > Users > Users > (Select User) > Access Rights (Tab) >
+Technical Settings`` and select the ``Manage Routings`` and 
+``Manage Multiple Units of Measure`` checkboxs.
+
+.. note:: The module ``mrp_consume_produce`` can be find in
+          ``lp:addons-vauxoo/7.0``.
 """,
     "depends": ["mrp", "mrp_operations", "mrp_consume_produce"],
     "data": [
