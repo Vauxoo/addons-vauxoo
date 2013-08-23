@@ -45,7 +45,9 @@ class wizard_account_diot_mx(osv.osv_memory):
             help='Select period', required=True),
         'filename': fields.char('File name', size=128, readonly=True,
             help='This is File name'),
-        'file': fields.binary('File', readonly=True),
+        'filename_csv': fields.char('File name', size=128, readonly=True),
+        'file': fields.binary('File', readonly=True, help='This is File for export to SAT'),
+        'file_csv': fields.binary('File', readonly=True, help='This is the file to collate'),
         'state': fields.selection([('choose', 'Choose'), ('get', 'Get'),
             ('not_file', 'Not File')]),
     }
@@ -196,7 +198,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'domain': [('id', 'in', partner_ids_to_fix), '|', (
                     'active', '=', False), ('active', '=', True)],
             }
-        (fileno, fname) = tempfile.mkstemp('.csv', 'tmp')
+        (fileno, fname) = tempfile.mkstemp('.txt', 'tmp')
         os.close(fileno)
         f_write = open(fname, 'wb')
         fcsv = csv.DictWriter(f_write, 
@@ -223,6 +225,34 @@ class wizard_account_diot_mx(osv.osv_memory):
             'tax Withheld by the taxpayer',
             'VAT for returns, discounts and rebates on purchases',
             'show_pipe', ], delimiter='|')
+        
+        (fileno, fname_csv) = tempfile.mkstemp('.csv', 'tmp_csv')
+        os.close(fileno)
+        f_write_csv = open(fname_csv, 'wb')
+        fcsv_csv = csv.DictWriter(f_write_csv, 
+            ['type_of_third', 'type_of_operation',
+            'vat', 'number_id_fiscal', 'foreign_name',
+            'country_of_residence', 'nationality',
+            'value_of_acts_or_activities_paid_at_the_rate_of_16%',
+            'value_of_acts_or_activities_paid_at_the_rate_of_15%',
+            'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%',
+            'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT',
+            'value_of_acts_or_activities_paid_at_the_rate_of_10%_VAT',
+            'amount_of_non-creditable_VAT_paid_at_the_rate_of_11%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_at_the_rate_of_16%_VAT',
+            'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_16%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_at_the_rate_of_11%_VAT',
+            'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_11%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_'
+            'services_for_which_VAT_is_not_pay_(exempt)',
+            'value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT',
+            'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_'
+            'VAT_(Exempt)',
+            'tax Withheld by the taxpayer',
+            'VAT for returns, discounts and rebates on purchases',
+            'show_pipe', ], delimiter=',')
         for diot in dic_move_line:
             diot_list = dic_move_line.get(diot, False)
             if diot_list and sum(diot_list[7:12]) == 0:
@@ -242,6 +272,40 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'type': 'ir.actions.act_window',
                 'domain': [('id', 'in', account_move_line_id)],
             }
+        fcsv_csv.writerow(
+            {'type_of_third' : 'Tipo de tercero', 'type_of_operation' :\
+            'Tipo de operación', 'vat' : 'RFC', 'number_id_fiscal' : \
+            'Número de ID fiscal', 'foreign_name' : 'Nombre del extranjero',
+            'country_of_residence' : 'País de residencia', 'nationality' : 'Nacionalidad',
+            'value_of_acts_or_activities_paid_at_the_rate_of_16%' : \
+            'Valor de los actos o actividades pagados a la tasa del 15% ó 16% de IVA',
+            'value_of_acts_or_activities_paid_at_the_rate_of_15%' : \
+            'Valor de los actos o actividades pagados a la tasa del 15% de IVA',
+            'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%' : \
+            'Monto del IVA pagado no acreditable a la tasa del 15% ó 16%',
+            'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT' : \
+            'Valor de los actos o actividades pagados a la tasa del 10% u 11% de IVA',
+            'value_of_acts_or_activities_paid_at_the_rate_of_10%_VAT' : \
+            'Valor de los actos o actividades pagados a la tasa del 10% de IVA',
+            'amount_of_non-creditable_VAT_paid_at_the_rate_of_11%' : \
+            'Monto del IVA pagado no acreditable a la tasa del 10% u 11%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_services_at_the_rate_of_16%_VAT' : \
+            'Valor de los actos o actividades pagados en la importación de bienes y servicios a la tasa del 15% ó 16% de IVA',
+            'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_16%' : \
+            'Monto del IVA pagado no acreditable por la importacion a la tasa del 15% ó 16%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_services_at_the_rate_of_11%_VAT' : \
+            'Valor de los actos o actividades pagados en la importacion de bienes y servicios a la tasa del 10% u 11% de IVA',
+            'amount_of_non-creditable_VAT_paid_by_imports_at_the_rate_of_11%' : \
+            'Monto del IVA pagado no acreditable por la importacion a la tasa del 10% u 11%',
+            'value_of_acts_or_activities_paid_on_import_of_goods_and_services_for_which_VAT_is_not_pay_(exempt)' : \
+            'Valor de los actos o actividades pagados en la importación de bienes y servicios por los que no se paragá el IVA (Exentos)',
+            'value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT' : \
+            'Valor de los demás actos o actividades pagados a la tasa del 0% de IVA',
+            'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)' : \
+            'Valor de los actos o actividades pagados por los que no se pagará el IVA (Exentos)',
+            'tax Withheld by the taxpayer' : 'IVA Retenido por el contribuyente',
+            'VAT for returns, discounts and rebates on purchases' : ' IVA correspondiente a las devoluciones, descuentos y bonificaciones'
+            })
         for diot in dic_move_line:
             values_diot = dic_move_line.get(diot, False)
             fcsv.writerow(
@@ -262,11 +326,36 @@ class wizard_account_diot_mx(osv.osv_memory):
                '_VAT_(Exempt)': int(round((values_diot[10]), 0)),
                'tax Withheld by the taxpayer': int(round((values_diot[11]), 0)),
                })
+            fcsv_csv.writerow(
+                {'type_of_third': values_diot[0],
+               'type_of_operation': values_diot[1],
+               'vat': values_diot[2],
+               'number_id_fiscal': values_diot[3],
+               'foreign_name': values_diot[4],
+               'country_of_residence': values_diot[5],
+               'nationality': values_diot[6],
+               'value_of_acts_or_activities_paid_at_the_rate_of_16%': int(
+               round((values_diot[7]), 0)),
+               'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT': int(
+               round((values_diot[8]), 0)),
+               'value_of_the_other_acts_or_activities_paid_at_the_rate_of'
+               '_0%_VAT': int(round((values_diot[9]), 0)),
+               'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the'
+               '_VAT_(Exempt)': int(round((values_diot[10]), 0)),
+               'tax Withheld by the taxpayer': int(round((values_diot[11]), 0)),
+               })
         f_write.close()
+        f_write_csv.close()
         f_read = file(fname, "rb")
         fdata = f_read.read()
         out = base64.encodestring(fdata)
         name = "%s-%s-%s.txt" % ("OPENERP-DIOT", this.company_id.name,
+                                     strftime('%Y-%m-%d'))
+        f_read.close()
+        f_read_csv = file(fname_csv, "rb")
+        fdata_csv = f_read_csv.read()
+        out_csv = base64.encodestring(fdata_csv)
+        name_csv = "%s-%s-%s.csv" % ("OPENERP-DIOT", this.company_id.name,
                                      strftime('%Y-%m-%d'))
         f_read.close()
         datas = {'ids': context.get('active_ids', [])}
@@ -279,7 +368,9 @@ class wizard_account_diot_mx(osv.osv_memory):
             state = 'not_file'
         self.write(cr, uid, ids, {'state': state,
                                 'file': out,
-                                'filename': name
+                                'file_csv' : out_csv,
+                                'filename': name,
+                                'filename_csv' : name_csv,
                                 }, context=context)
         return {
             'type': 'ir.actions.act_window',

@@ -79,6 +79,11 @@ msgid "CO - Colombia"
 msgstr "CO - Colombia"
 
 #. module: l10n_mx_diot_report
+#: help:account.diot.report,file:0
+msgid "This is File for export to SAT"
+msgstr "Este es el archivo para exportar al SAT"
+
+#. module: l10n_mx_diot_report
 #: selection:res.partner,type_of_operation:0
 msgid " 85 - Others"
 msgstr " 85 - Otros"
@@ -192,6 +197,11 @@ msgstr "HN - República de Honduras"
 #: selection:res.partner,diot_country:0
 msgid "GU - Guam"
 msgstr "GU - Guam"
+
+#. module: l10n_mx_diot_report
+#: help:account.diot.report,file_csv:0
+msgid "This is the file to collate"
+msgstr "Este es el archivo para cotejar"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
