@@ -435,14 +435,14 @@
     invoice_ids = self.browse(cr, uid, [ref('account_invoice_supplier_invoice04'), ref('account_invoice_supplier_invoice05'), ref('account_invoice_supplier_invoice06')])
     for invoice in invoice_ids :
         if invoice.amount_total == 400:
+            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',invoice.payment_ids[0].debit,'\t',invoice.residual
             assert invoice.state == 'paid' and invoice.payment_ids[0].debit == 400 and invoice.residual == 0, "Wrong in Invoice04"
-            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',invoice.payment_ids[0].debit,'\t',invoice.residual
         elif invoice.amount_total == 200:
-            assert invoice.state == 'open' and invoice.residual == 200, "Wrong in Invoice05"
             print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t\t', invoice.residual
+            assert invoice.state == 'open' and invoice.residual == 200, "Wrong in Invoice05"
         elif invoice.amount_total == 300:
-            assert invoice.state == 'open' and invoice.payment_ids[0].debit == 100 and invoice.residual == 200, "Wrong in Invoice06"
             print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',invoice.payment_ids[0].debit,'\t',invoice.residual
+            assert invoice.state == 'open' and invoice.payment_ids[0].debit == 100 and invoice.residual == 200, "Wrong in Invoice06"
         else:
             assert False, "Wrong entry. Unrecognized account invoice."
 -
@@ -495,15 +495,16 @@
     partner_id: base.res_partner_23
     date: !eval time.strftime('%Y-02-15')
     type: 'payment'
-    line_dr_ids:
-        -
-    line_cr_ids:
-        -
+    line_dr_ids: []
+    line_cr_ids: []
+
 -
-    Set empty credit & debit lines of voucher
+    Set amount 0 in credit & debit lines of voucher
 -
- !python {model: account.voucher}: |
-   self.write(cr, uid, [ref('account_voucher_payment03')], {'line_dr_ids': [], 'line_cr_ids': []})
+  !python {model: account.voucher}: |
+    voucher_id = self.browse(cr, uid, ref('account_voucher_payment03'))
+    line_ids = [item.id for item in voucher_id.line_cr_ids] + [item.id for item in voucher_id.line_dr_ids]
+    self.pool.get('account.voucher.line').write(cr, uid, line_ids, {'amount': 0})
 -
   I click to validate button on voucher Payment03
 -
@@ -526,10 +527,12 @@
     date: !eval time.strftime('%Y-02-28')
     type: 'payment'
 -
-    Set empty credit & debit lines of voucher
+    Set amount 0 in credit & debit lines of voucher
 -
- !python {model: account.voucher}: |
-   self.write(cr, uid, [ref('account_voucher_payment04')], {'line_dr_ids': [], 'line_cr_ids': []})
+  !python {model: account.voucher}: |
+    voucher_id = self.browse(cr, uid, ref('account_voucher_payment04'))
+    line_ids = [item.id for item in voucher_id.line_cr_ids] + [item.id for item in voucher_id.line_dr_ids]
+    self.pool.get('account.voucher.line').write(cr, uid, line_ids, {'amount': 0})
 -
   I click to validate button on voucher Payment04
 -
@@ -553,7 +556,7 @@
     date_post: !eval time.strftime("%Y-07-28")
     partner_id: base.res_partner_23
     journal_id: account.miscellaneous_journal
-
+ 
 -
   I added invoices and vouchers. Click button Reconcile
 -
@@ -561,7 +564,7 @@
     invoice_ids = self.pool.get('account.invoice').browse(cr, uid, [ref('account_invoice_supplier_invoice05'), ref('account_invoice_supplier_invoice06')])
     voucher_ids = self.pool.get('account.voucher').browse(cr, uid, [ref('account_voucher_payment03'),ref('account_voucher_payment04')])
     self.write(cr, uid, [ref("account_reconcile_advance_ara03")], {'invoice_ids': [(6,0,[invoice.id for invoice in invoice_ids])] , 'voucher_ids': [(6,0,[voucher.id for voucher in voucher_ids])] })
-    #~ self.payment_reconcile(cr, uid, [ref("account_reconcile_advance_ara03")],context=context)
+    self.payment_reconcile(cr, uid, [ref("account_reconcile_advance_ara03")],context=context)
 -
   I check that supplier advance reconciliation is now "Done".
 -
@@ -575,14 +578,6 @@
     moves = self.browse(cr, uid, moves_ids)
     for move in moves :
         print move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
-     if voucher.amount == 300:
-                assert voucher.advance == False , "Wrong in Payment03"
-                print voucher.name,'\t',voucher.date,'\t', voucher.partner_id.name,'\t', voucher.amount,'\t',voucher.advance
-            elif voucher.amount == 100:
-                assert voucher.advance == False , "Wrong in Payment04"
-                print voucher.name,'\t',voucher.date,'\t', voucher.partner_id.name,'\t', voucher.amount,'\t',voucher.advance
-            else:
-                assert False, "Wrong entry. Unrecognized account voucher."
 -
     I check account move line of payments
 -
@@ -593,18 +588,19 @@
     moves_line = self.browse (cr,uid, moves_ids)
     for move in moves_line :
         if move.debit == 300:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment01 (Debit)"
-            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
         elif move.credit == 300:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment01 (Credit)"
-            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
         elif move.debit == 100:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment02 (Debit)"
-            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
         elif move.credit == 100:
-            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment02 (Credit)"
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+            assert move.reconcile_id.name == None and move.reconcile_partial_id.name == None , "Wrong in account move line of Payment02 (Credit)"
         else:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert False, "Wrong entry. Unrecognized in account move line."
 -
   I check account vouchers of invoices
@@ -613,34 +609,36 @@
     invoice_ids = self.browse(cr, uid, [ref('account_invoice_supplier_invoice05'), ref('account_invoice_supplier_invoice06')])
     for invoice in invoice_ids :
         if invoice.amount_total == 200:
+            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',invoice.payment_ids[0].debit,'\t',invoice.residual
             assert invoice.state == 'paid' and invoice.payment_ids[0].debit == 200 and invoice.residual == 0, "Wrong in Invoice05"
-            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',invoice.payment_ids[0].debit,'\t',invoice.residual
         elif invoice.amount_total == 300:
-            assert invoice.state == 'paid' and invoice.payment_ids[0].debit == 300 and invoice.residual == 0, "Wrong in Invoice06"
-            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',invoice.payment_ids[0].debit,'\t',invoice.residual
+            payment_debit_sum = sum(payment_id.debit for payment_id in invoice.payment_ids)
+            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',payment_debit_sum,'\t',invoice.residual
+            assert invoice.state == 'paid' and payment_debit_sum == 300 and invoice.residual == 0, "Wrong in Invoice06"
         else:
+            print invoice.date_invoice,'\t', invoice.date_due,'\t', invoice.partner_id.name,'\t', invoice.amount_total,'\t',invoice.state, '\t',invoice.payment_ids[0].debit,'\t',invoice.residual
             assert False, "Wrong entry. Unrecognized account invoice."
 -
     I check account move line of invoices
 -
   !python {model: account.move.line}: |
-    payments_ids=self.pool.get('account.invoice').browse(cr, uid, [ref('account_invoice_supplier_invoice04'), ref('account_invoice_supplier_invoice05'), ref('account_invoice_supplier_invoice06')])
+    payments_ids=self.pool.get('account.invoice').browse(cr, uid, [ref('account_invoice_supplier_invoice05'), ref('account_invoice_supplier_invoice06')])
     tuple_payments=[ payment.move_id.id for payment in payments_ids]
     moves_ids = self.search( cr, uid, [('move_id','in', tuple(tuple_payments))])
     moves_line = self.browse (cr,uid, moves_ids)
     for move in moves_line :
         if move.debit == 200:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert move.reconcile_id.name== None and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice05 (Debit)"
-            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
         elif move.credit == 200:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice05 (Credit)"
-            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
         elif move.debit == 300:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert move.reconcile_id.name== None and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice06 (Debit)"
-            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
         elif move.credit == 300:
-            assert move.reconcile_id.name and move.reconcile_partial_id.name , "Wrong in account move line of Inovice06 (Credit)"
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
+            assert move.reconcile_id.name and move.reconcile_partial_id.name == None , "Wrong in account move line of Inovice06 (Credit)"
         else:
+            print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
             assert False, "Wrong entry. Unrecognized in account move line."
-
