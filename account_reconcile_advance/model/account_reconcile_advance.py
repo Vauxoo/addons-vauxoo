@@ -117,6 +117,7 @@ class account_reconcile_advance(osv.Model):
         av_obj = self.pool.get('account.voucher')
         aml_obj = self.pool.get('account.move.line')
         am_obj = self.pool.get('account.move')
+        res = {} 
 
         ara_brw = self.browse(cr, uid, ids[0], context=context)
 
@@ -170,6 +171,8 @@ class account_reconcile_advance(osv.Model):
             while inv_sum <= aml_sum and inv_sum:
 #               Let us spend our money
                 aml_sum -= inv_sum
+#               BE AWARE MULTICURRENCY MISSING HERE
+                res[inv_brw.id] = inv_sum
                 inv_sum = 0.0 
 
                 get_aml = ara_brw.type == 'pay' and self.invoice_debit_lines or \
@@ -208,6 +211,8 @@ class account_reconcile_advance(osv.Model):
                 pamls = [line.id for line in inv_brw.payment_ids]
 
                 lines_2_par.append(iamls+pamls+[payid])
+#               BE AWARE MULTICURRENCY MISSING HERE
+                res[inv_brw.id] = aml_sum
                 aml_sum = 0.0
 
         if av_aml_ids: 
@@ -256,7 +261,7 @@ class account_reconcile_advance(osv.Model):
             aml_obj.reconcile_partial(
                 cr, uid, line_pair, 'manual', context=context)
         ara_brw.write({'move_id':am_id, 'state':'done'})
-        return True
+        return res
     
 class account_voucher(osv.Model):
     _inherit = 'account.voucher'
