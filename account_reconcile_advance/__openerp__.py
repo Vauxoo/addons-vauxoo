@@ -24,6 +24,11 @@ A description is intended to fill this space
         'view/view.xml',
         'view/menues_and_actions.xml',
     ],
+    "test" : [
+            "test/advance_greater_than_payment.yml",
+            "test/advance_less_than_payment.yml",
+            "test/advance_equals_than_payment.yml",
+    ],
     "installable": True,
     "active": False,
 }
