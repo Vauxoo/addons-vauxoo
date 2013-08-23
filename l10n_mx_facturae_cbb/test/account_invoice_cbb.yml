@@ -89,12 +89,29 @@
         state = cbb.state
     assert state=='printable', 'No printable state l10n_mx attachment facturae cbb'
 -
-  I generate a printable l10n_mx attachment facturae cbb by clicking on printable button
+  I added update_posted in journal
+-
+  !python {model: account.journal}: |
+    journal_id = self.browse(cr, uid, ref('l10n_mx_cbb_journal_0'))
+    self.write(cr, uid, journal_id.id, {'update_posted': True})
+-
+  I generate a cancel l10n_mx attachment facturae cbb by clicking on cancel button
 -
   !python {model: ir.attachment.facturae.mx}: |
-    import netsvc
-    wf_service = netsvc.LocalService("workflow")
     cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb0") ), ('state', '<>', 'cancel')], limit=1)
     cbb_id = cbb_ids and cbb_ids[0] or False
     if cbb_id:
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', cbb_id, 'action_cancel', cr)
+        self.signal_cancel(cr, uid , cbb_ids ,context=context)
+        cbb = self.browse(cr, uid, [cbb_id])[0]
+        state = cbb.state
+    assert state=='cancel', 'No cancel state l10n_mx attachment facturae cbb'
+-
+  I check that customer invoice state is "cancel"
+-
+  !assert {model: account.invoice, id: account_invoice_cbb0}:
+    - state == 'cancel'
+-
+  I check that customer invoice move_id is None
+-
+  !assert {model: account.invoice, id: account_invoice_cbb0}:
+    - move_id.name == None

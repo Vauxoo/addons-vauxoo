@@ -89,12 +89,30 @@
         state = cfd.state
     assert state=='printable', 'No printable state l10n_mx attachment facturae cfd'
 -
+  I added update_posted in journal
+-
+  !python {model: account.journal}: |
+    journal_id = self.browse(cr, uid, ref('l10n_mx_cfd_journal_0'))
+    self.write(cr, uid, journal_id.id, {'update_posted': True})
+-
   I generate a cancel l10n_mx attachment facturae cfd by clicking on cancel button
 -
   !python {model: ir.attachment.facturae.mx}: |
-    import netsvc
-    wf_service = netsvc.LocalService("workflow")
     cfd_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfd0") ), ('state', '<>', 'cancel')], limit=1)
     cfd_id = cfd_ids and cfd_ids[0] or False
     if cfd_id:
-        wf_service.trg_validate(uid, 'ir.attachment.facturae.mx', cfd_id, 'action_cancel', cr)
+        self.signal_cancel(cr, uid , cfd_ids ,context=context)
+        cfd= self.browse(cr, uid, [cfd_id])[0]
+        state = cfd.state
+    assert state=='cancel', 'No cancel state l10n_mx attachment facturae cfd'
+-
+  I check that customer invoice state is "cancel"
+-
+  !assert {model: account.invoice, id: account_invoice_cfd0}:
+    - state == 'cancel'
+-
+  I check that customer invoice move_id is None
+-
+  !assert {model: account.invoice, id: account_invoice_cfd0}:
+    - move_id.name == None
+
