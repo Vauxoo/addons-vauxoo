@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.actions.act_window" id="action_audit_wizard">
+            <field name="name">audittrail.wizard</field>
+            <field name="res_model">audittrail.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_audit_wizard_form">
+            <field name="name">wizard.audit.form</field>
+            <field name="model">audittrail.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Agregar reglas" version="7.0">
+                    <sheet>
+                        <group colspan="2">
+                            <field name="name" required="1" colspan="2"/>
+                        </group>                             
+                        <group colspan="2">
+                            <field name="user_ids" colspan="2"/>
+                        </group>
+                        <group col="4">
+                            <field name="log_read"/>
+                            <field name="log_write"/>
+                            <field name="log_unlink"/>
+                            <field name="log_create"/>
+                            <field name="log_action"/>
+                            <field name="log_workflow"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="object_ids" colspan="2"/>
+                        </group>                        
+                    </sheet>
+                    <footer>
+                        <button type="special" special="cancel" string="Cancel" icon="gtk-cancel"/>
+                        <button type="object" name="action_add_rules" string="Agregar y Subscribir permisos" icon="gtk-ok" confirm="Estás seguro que deseas agregar estos permisos?"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_wizard_audit_wizard"
+            name="Agregar Permisos"
+            src_model="audittrail.rule"
+            res_model="audittrail.wizard"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"/>
+            
+        <menuitem id="menu_action_audittrail_rule_wizard" parent="audittrail.menu_audit" action="action_wizard_audit_wizard"/>
+    </data>
+</openerp>
