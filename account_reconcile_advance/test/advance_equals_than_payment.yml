@@ -1,7 +1,5 @@
 -
-    CASE 3
--
-    Test for check advance equals than payment
+    CASE 3 Test for check advance equals than payment
 -
   I change context account invoice.
 -

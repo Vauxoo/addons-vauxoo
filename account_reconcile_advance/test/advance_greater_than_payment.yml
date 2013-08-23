@@ -1,7 +1,5 @@
 -
-    CASE 1
--
-    Test for check advance greater than payment
+    CASE 1 Test for check advance greater than payment
 -
   I create the first voucher of payment with values 500 supplier 1
 -
