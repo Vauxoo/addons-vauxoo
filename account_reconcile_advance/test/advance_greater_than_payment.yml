@@ -15,6 +15,11 @@
     date: !eval time.strftime('%Y-02-28')
     type: 'payment'
 -
+    Set empty credit & debit lines of voucher
+-
+ !python {model: account.voucher}: |
+   self.write(cr, uid, [ref('account_voucher_payment01')], {'line_dr_ids': [], 'line_cr_ids': []})
+-
   I click to validate button on voucher Payment01
 -
   !workflow {model: account.voucher, action: proforma_voucher, ref: account_voucher_payment01}
@@ -35,6 +40,11 @@
     partner_id: base.res_partner_23
     date: !eval time.strftime('%Y-02-15')
     type: 'payment'
+-
+    Set empty credit & debit lines of voucher
+-
+ !python {model: account.voucher}: |
+   self.write(cr, uid, [ref('account_voucher_payment02')], {'line_dr_ids': [], 'line_cr_ids': []})
 -
   I click to validate button on voucher Payment02
 -
@@ -142,7 +152,12 @@
   !assert {model: account.invoice, id: account_invoice_supplier_invoice03}:
     - state == 'open'
 -
-  I create a supplier advance reconciliation
+  I change context supplier advance reconciliation.
+-
+  !python {model: account.reconcile.advance}: |
+    context.update({'default_type':'pay'})
+-
+    I create a supplier advance reconciliation
 -
   !record {model: account.reconcile.advance, id: account_reconcile_advance_ara01, view: account_reconcile_advance.account_reconcile_advance_supplier_form }:
     name: ARA_01
@@ -259,6 +274,11 @@
 -
     Test for check advance less than payment
 -
+  I change context account invoice.
+-
+  !python {model: account.invoice}: |
+    context.update({'default_type': 'in_invoice'})
+-
   I create a supplier invoice 04
 -
   !record {model: account.invoice, id: account_invoice_supplier_invoice04, view: account.invoice_supplier_form}:
@@ -345,6 +365,11 @@
 -
   !assert {model: account.invoice, id: account_invoice_supplier_invoice06}:
     - state == 'open'
+-
+  I change context supplier advance reconciliation.
+-
+  !python {model: account.reconcile.advance}: |
+    context.update({'default_type':'pay'})
 -
   I create a supplier advance reconciliation
 -
@@ -454,6 +479,11 @@
 -
     Test for check advance equals than payment
 -
+  I change context account invoice.
+-
+  !python {model: account.invoice}: |
+    context.update({'default_type': 'in_invoice'})
+-
   I create voucher of payment with values 300 supplier 1
 -
   !record {model: account.voucher, id: account_voucher_payment03, view: account_voucher.view_vendor_payment_form}:
@@ -465,6 +495,15 @@
     partner_id: base.res_partner_23
     date: !eval time.strftime('%Y-02-15')
     type: 'payment'
+    line_dr_ids:
+        -
+    line_cr_ids:
+        -
+-
+    Set empty credit & debit lines of voucher
+-
+ !python {model: account.voucher}: |
+   self.write(cr, uid, [ref('account_voucher_payment03')], {'line_dr_ids': [], 'line_cr_ids': []})
 -
   I click to validate button on voucher Payment03
 -
@@ -482,10 +521,15 @@
     company_id: base.main_company
     amount: 100
     journal_id: account.bank_journal
-    name: 'Payment02'
+    name: 'Payment04'
     partner_id: base.res_partner_23
     date: !eval time.strftime('%Y-02-28')
     type: 'payment'
+-
+    Set empty credit & debit lines of voucher
+-
+ !python {model: account.voucher}: |
+   self.write(cr, uid, [ref('account_voucher_payment04')], {'line_dr_ids': [], 'line_cr_ids': []})
 -
   I click to validate button on voucher Payment04
 -
@@ -496,6 +540,11 @@
   !assert {model: account.voucher, id: account_voucher_payment04}:
     - state == 'posted'
 -
+  I change context supplier advance reconciliation.
+-
+  !python {model: account.reconcile.advance}: |
+    context.update({'default_type':'pay'})
+-
   I create a supplier advance reconciliation
 -
   !record {model: account.reconcile.advance, id: account_reconcile_advance_ara03, view: account_reconcile_advance.account_reconcile_advance_supplier_form }:
@@ -504,6 +553,7 @@
     date_post: !eval time.strftime("%Y-07-28")
     partner_id: base.res_partner_23
     journal_id: account.miscellaneous_journal
+
 -
   I added invoices and vouchers. Click button Reconcile
 -
@@ -511,7 +561,7 @@
     invoice_ids = self.pool.get('account.invoice').browse(cr, uid, [ref('account_invoice_supplier_invoice05'), ref('account_invoice_supplier_invoice06')])
     voucher_ids = self.pool.get('account.voucher').browse(cr, uid, [ref('account_voucher_payment03'),ref('account_voucher_payment04')])
     self.write(cr, uid, [ref("account_reconcile_advance_ara03")], {'invoice_ids': [(6,0,[invoice.id for invoice in invoice_ids])] , 'voucher_ids': [(6,0,[voucher.id for voucher in voucher_ids])] })
-    self.payment_reconcile(cr, uid, [ref("account_reconcile_advance_ara03")],context=context)
+    #~ self.payment_reconcile(cr, uid, [ref("account_reconcile_advance_ara03")],context=context)
 -
   I check that supplier advance reconciliation is now "Done".
 -
@@ -593,3 +643,4 @@
             print move.account_id.name,'\t',move.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name
         else:
             assert False, "Wrong entry. Unrecognized in account move line."
+
