@@ -254,7 +254,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                'nationality': values_diot[6],
                'value_of_acts_or_activities_paid_at_the_rate_of_16%': int(
                round((values_diot[7]), 0)),
-               'amount_of_non-creditable_VAT_paid_at_the_rate_of_16%': int(
+               'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT': int(
                round((values_diot[8]), 0)),
                'value_of_the_other_acts_or_activities_paid_at_the_rate_of'
                '_0%_VAT': int(round((values_diot[9]), 0)),
