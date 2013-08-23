@@ -43,13 +43,28 @@
                         <field name='ai_aml_ids' nolabel='1' invisible='1' attrs="{'readonly':[('state','!=','draft')]}"/>
                     </page>
                     <page string='Advances'>
+                        <separator string='Customer Payments' attrs='{"invisible":[("type","!=","rec")]}'/>
+                        <separator string='Supplier Payments' attrs='{"invisible":[("type","!=","pay")]}'/>
                         <field 
                             name='voucher_ids' 
                             create="False"
                             context="{'create':False}"
                             domain="[('type','=',type == 'pay' and 'payment' or 'receipt'),('state','=','posted'),('partner_id','=',partner_id),('advance','=',True)]"
                             nolabel='1' attrs="{'readonly':[('state','!=','draft')]}"/>
-                        <field name='av_aml_ids' nolabel='1' invisible='1' attrs="{'readonly':[('state','!=','draft')]}"/>
+                        <separator string='Receipt Entry Lines' attrs='{"invisible":[("type","!=","rec")]}'/>
+                        <separator string='Payment Entry Lines' attrs='{"invisible":[("type","!=","pay")]}'/>
+                        <field 
+                            name='av_aml_ids' 
+                            nolabel='1' 
+                            invisible='0' 
+                            domain="[('partner_id','=',partner_id),
+                                ('account_id.type','=', type == 'pay' and 'payable' or 'receivable'),
+                                ('reconcile_id','=',False),
+                                ('reconcile_partial_id','=',False),
+                                ('state','=','valid'),
+                                (type == 'pay' and 'debit' or 'credit','>',0.0),
+                                ]"
+                            attrs="{'readonly':[('state','!=','draft')]}"/>
                     </page>
                     <page string='Other Info'>
                         <group col='4'>
