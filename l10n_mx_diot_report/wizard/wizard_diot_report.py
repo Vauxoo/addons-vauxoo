@@ -306,6 +306,11 @@ class wizard_account_diot_mx(osv.osv_memory):
             'tax Withheld by the taxpayer' : 'IVA Retenido por el contribuyente',
             'VAT for returns, discounts and rebates on purchases' : ' IVA correspondiente a las devoluciones, descuentos y bonificaciones'
             })
+        sum_dic = {'type_of_third': '', 'value_of_acts_or_activities_paid_at_the_rate_of_16%' : 0,
+            'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT' : 0,
+            'value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT' : 0,
+            'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)' : 0,
+            'tax Withheld by the taxpayer' : 0}
         for diot in dic_move_line:
             values_diot = dic_move_line.get(diot, False)
             fcsv.writerow(
@@ -326,6 +331,12 @@ class wizard_account_diot_mx(osv.osv_memory):
                '_VAT_(Exempt)': int(round((values_diot[10]), 0)),
                'tax Withheld by the taxpayer': int(round((values_diot[11]), 0)),
                })
+            sum_dic.update({'value_of_acts_or_activities_paid_at_the_rate_of_16%' : sum_dic['value_of_acts_or_activities_paid_at_the_rate_of_16%'] + int(round((values_diot[7]), 0)),
+                'value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT' : sum_dic['value_of_acts_or_activities_paid_at_the_rate_of_11%_VAT'] + int(round((values_diot[8]), 0)),
+                'value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT' : sum_dic['value_of_the_other_acts_or_activities_paid_at_the_rate_of_0%_VAT'] + int(round((values_diot[9]), 0)),
+                'value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)' : sum_dic['value_of_acts_or_activities_paid_by_those_who_do_not_pay_the_VAT_(Exempt)'] + int(round((values_diot[10]), 0)),
+                'tax Withheld by the taxpayer' : sum_dic['tax Withheld by the taxpayer'] + int(round((values_diot[11]), 0)),
+                'type_of_third': 'Total'})
             fcsv_csv.writerow(
                 {'type_of_third': values_diot[0],
                'type_of_operation': values_diot[1],
@@ -344,6 +355,7 @@ class wizard_account_diot_mx(osv.osv_memory):
                '_VAT_(Exempt)': int(round((values_diot[10]), 0)),
                'tax Withheld by the taxpayer': int(round((values_diot[11]), 0)),
                })
+        fcsv_csv.writerow(sum_dic)
         f_write.close()
         f_write_csv.close()
         f_read = file(fname, "rb")
