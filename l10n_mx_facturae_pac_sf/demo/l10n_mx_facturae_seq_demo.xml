@@ -28,7 +28,6 @@
             <field name="name">MX CFDI SF Journal</field>
             <field name="code">CFDI</field>
             <field name="type">sale</field>
-            <field name="update_posted">1</field>
         </record>
     </data>
 </openerp>
