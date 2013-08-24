@@ -102,7 +102,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         dic_move_line = {}
         partner_ids_to_fix = []
         moves_without_partner = []
-        partner_ids_tax_0 = []
+        moves_amount_0 = []
         for items in acc_move_line_obj.browse(cr, uid, move_lines_diot,
             context=context):
             if not items.partner_id:
@@ -147,6 +147,8 @@ class wizard_account_diot_mx(osv.osv_memory):
                     amount_exe = line.amount_base or 0
                 if line.tax_id_secondary.tax_category_id.name == 'IVA-RET':
                     amount_ret = line.credit or 0
+                if amount_0 + amount_16 + amount_exe + amount_11 + amount_ret == 0:
+                    moves_amount_0.append(line.id)
                 if partner_vat in dic_move_line:
                     line_move = dic_move_line[partner_vat]
                     line_move[7] = line_move[7] + amount_16
@@ -196,6 +198,15 @@ class wizard_account_diot_mx(osv.osv_memory):
                 'domain': [('id', 'in', partner_ids_to_fix), '|', (
                     'active', '=', False), ('active', '=', True)],
             }
+        if moves_amount_0:
+            return {
+                'name': 'Movements to corroborate the amounts of taxes',
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                'res_model': 'account.move.line',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', moves_amount_0)],
+            }
         (fileno, fname) = tempfile.mkstemp('.csv', 'tmp')
         os.close(fileno)
         f_write = open(fname, 'wb')
@@ -223,25 +234,6 @@ class wizard_account_diot_mx(osv.osv_memory):
             'tax Withheld by the taxpayer',
             'VAT for returns, discounts and rebates on purchases',
             'show_pipe', ], delimiter='|')
-        for diot in dic_move_line:
-            diot_list = dic_move_line.get(diot, False)
-            if diot_list and sum(diot_list[7:12]) == 0:
-                partner_ids_tax_0.append(self.pool.get('res.partner').search(
-                    cr, uid, [('vat_split', '=', diot)])[0])
-        if partner_ids_tax_0:
-            account_move_line_id = acc_move_line_obj.search(cr, uid, [
-                ('partner_id', 'in', partner_ids_tax_0),
-                ('period_id', '=', period.id),
-                ('id', 'in', move_lines_diot)
-            ])
-            return {
-                'name': 'Movements to corroborate the amounts of taxes',
-                'view_type': 'form',
-                'view_mode': 'tree,form',
-                'res_model': 'account.move.line',
-                'type': 'ir.actions.act_window',
-                'domain': [('id', 'in', account_move_line_id)],
-            }
         for diot in dic_move_line:
             values_diot = dic_move_line.get(diot, False)
             fcsv.writerow(
