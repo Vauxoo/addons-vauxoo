@@ -218,7 +218,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         'res_model': 'account.invoice',
                         #'res_id': invoice.id,
                     }
-                    attach = attachment_obj.create(cr, uid, data_attach, context=context)
+                    attach = attachment_obj.create(cr, uid, data_attach, context=None)#Context, because use a variable type of our code but we dont need it.
                 else:
                     msj += _("Unknow driver for %s"%(type))
             self.write(cr, uid, ids,
