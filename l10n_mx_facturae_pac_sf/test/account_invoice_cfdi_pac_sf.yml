@@ -1,7 +1,7 @@
 -
   To test the Mexican Electronic Invoice CFDI PAC SF
 -
-  I create cfdi_pac_sf a customer invoice
+  I create a cfdi_pac_sf customer invoice
 -
   !record {model: account.invoice, id: account_invoice_cfdi_pac_sf0, view: account.invoice_form}:
     payment_term: account.account_payment_term_advance
@@ -11,7 +11,7 @@
     name: 'Test cfdi_pac_sf Customer Invoice'
     invoice_line:
       - product_id: product.product_product_5
-        quantity: 30.0
+        quantity: 32.0
 -
   I rewrite the journal field (BUG I need overwrite two times this field for done! only in test yaml)
 -
@@ -98,7 +98,7 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id], context=context)[0]
         ir_attach_facturae_mx = cfdi_pac_sf.file_xml_sign and cfdi_pac_sf.file_xml_sign or False
-        fdata = ir_attach_facturae_mx.db_datas
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
         if fdata:
             state = cfdi_pac_sf.state
             if tools.config['test_report_directory']:
@@ -135,7 +135,7 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id], context=context)[0]
         ir_attach_facturae_mx = cfdi_pac_sf.file_pdf and cfdi_pac_sf.file_pdf or False
-        fdata = ir_attach_facturae_mx.db_datas
+        fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
         if fdata:
             state = cfdi_pac_sf.state
             if tools.config['test_report_directory']:
