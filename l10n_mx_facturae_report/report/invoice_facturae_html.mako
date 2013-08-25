@@ -247,12 +247,12 @@
         </table>
         <br clear="all"/>
         <!--code for cfd-->
-        %if o.invoice_sequence_id.approval_id.type == 'cfd22':
-            ${_('“Este documento es una representacion impresa de un CFD”')}<br/>
-            ${_('CFD, Comprobante Fiscal Digital')}
-        %elif o.invoice_sequence_id.approval_id.type == 'cfdi32':
+        %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
             <font class="font">“Este documento es una representacion impresa de un CFDI”
             <br/>CFDI, Comprobante Fiscal Digital por Internet</font>
+        %elif 'cfd' in o.invoice_sequence_id.approval_id.type:
+            ${_('“Este documento es una representacion impresa de un CFD”')}<br/>
+            ${_('CFD, Comprobante Fiscal Digital')}
         %endif
         <!-- bank info-->
         %if o.company_emitter_id.partner_id.bank_ids:
@@ -284,7 +284,7 @@
             <tr><td class="center_td">${ get_text_promissory(o.company_id, o.partner_id, o) or ''|entity }</td></tr>
         </table>
         <!--code for cfd 3.2-->
-        %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
+        %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
             <table class="basic_table" rules="cols" style="border:1.5px solid grey;">
                 <tr>
                     <th width="33%"> ${_('Certificado del SAT')}</th>
@@ -367,7 +367,7 @@
             </div>
         %endif
         <!--code for cfd32-->
-        %if o.invoice_sequence_id.approval_id.type == 'cfdi32':
+        %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
             <div style="page-break-inside:avoid; border:1.5px solid grey;">
                 <table width="100%" class="datos_fiscales">
                     <%data_certificate=get_data_certificate(o.id)%>
