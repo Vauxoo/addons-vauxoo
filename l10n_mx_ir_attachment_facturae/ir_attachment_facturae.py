@@ -125,7 +125,7 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service = netsvc.LocalService("workflow")
             if 'cbb' in type:
                 msj = _("Confirmed")
-            if 'cfd' in type:
+            if 'cfd' in type and not 'cfdi' in type:
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                     '.xml' or ''
                 fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
@@ -153,7 +153,6 @@ class ir_attachment_facturae_mx(osv.Model):
                     'res_id': invoice.id,
                 }, context=context)
                 msj = _("Attached Successfully XML CFDI 3.2\n")
-#TODO: TODO: TODO: AQUI HAY PROBLEMOTA!!!
             self.write(cr, uid, ids,
                           {'file_input': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
@@ -163,6 +162,10 @@ class ir_attachment_facturae_mx(osv.Model):
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
+            import traceback, sys
+            traceback.print_stack()
+            #traceback_str = repr(traceback.extract_stack())
+            #print traceback_str
             return False
         
     def action_confirm(self, cr, uid, ids, context=None):
@@ -180,13 +183,13 @@ class ir_attachment_facturae_mx(osv.Model):
             attachment_obj = self.pool.get('ir.attachment')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
-            if type == 'cbb':
+            if 'cbb' in type:
                 msj = _("Signed")
-            if type == 'cfd22':
+            if 'cfd' in type and not 'cfdi' in type:
                 attach = self.browse(cr, uid, ids)[0].file_input.id or False
                 index_xml = self.browse(cr, uid, ids)[0].file_xml_sign_index or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
-            if 'cfdi32' in type:
+            if 'cfdi' in type:
                 #upload file in custom module for pac
                 type__fc = self.get_driver_fc_sign()
                 if type in type__fc.keys():
@@ -219,6 +222,8 @@ class ir_attachment_facturae_mx(osv.Model):
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
+            import traceback, sys
+            traceback.print_stack()
             return False
                            
     def action_sign(self, cr, uid, ids, context=None):
@@ -411,6 +416,7 @@ class ir_attachment_facturae_mx(osv.Model):
         inv_cancel_status = False
         for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             msj = ''
+            invoice = ir_attach_facturae_mx_id.invoice_id
             if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
                 type__fc = self.get_driver_fc_cancel()
                 if ir_attach_facturae_mx_id.type in type__fc.keys():
@@ -431,71 +437,6 @@ class ir_attachment_facturae_mx(osv.Model):
               'msj': msj,
             })
         return inv_cancel_status
-            #cancelar wkf
-            #cancelar invoice guardar resultado
-            #guardar mensaje
-    """
-    def signal_cancel(self, cr, uid, ids, context=None):
-        msj = ''
-        invoice_obj = self.pool.get('account.invoice')
-        attach_obj = self.pool.get('ir.attachment')
-        wf_service = netsvc.LocalService("workflow")
-        inv_cancel_status = True
-        for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
-            if ir_attach_facturae_mx_id.invoice_id.state <> 'cancel':
-                if 'cfdi32' in ir_attach_facturae_mx_id.invoice_id.type:
-                    if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
-                        type__fc = self.get_driver_fc_sign()
-                        if type in type__fc.keys():
-                            res = type__fc[type](
-                            inv_cancel_status = invoice_obj.action_cancel(cr, uid, [ir_attach_facturae_mx_id.invoice_id.id], context=context)
-                        else:
-                            #TODO CANCEL SECTION
-            else:
-                inv_cancel_status = True
-            if inv_cancel_status:
-                wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                msj = _('Cancel\n')
-            else:
-                msj = _('Exception in cancel')
-        self.write(cr, uid, ids,
-              {'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                    'msj': msj})
-        return inv_cancel_status
-    """
-    """
-    def signal_cancel(self, cr, uid, ids, context=None):
-        msj = ''
-        invoice_obj = self.pool.get('account.invoice')
-        attach_obj = self.pool.get('ir.attachment')
-        type = self.browse(cr, uid, ids)[0].type
-        state = self.browse(cr, uid, ids)[0].state
-        invoice = self.browse(cr, uid, ids)[0].invoice_id
-        invoice_state = self.browse(cr, uid, ids)[0].invoice_id.state
-        wf_service = netsvc.LocalService("workflow")
-        if invoice_state in ['cancel']:
-            if type == 'cbb':
-                wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                msj = _('Cancel\n')
-            if type == 'cfd22':
-                wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                msj = _('Cancel\n')
-            if type == 'cfdi32':
-                if state in ['cancel', 'draft', 'confirmed']:
-                    wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                    msj = _('Cancel\n')
-                else:
-                    sf_cancel = invoice_obj.sf_cancel(
-                            cr, uid, [invoice.id], context=context)
-                    wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                    msj += tools.ustr(sf_cancel.get('message', False))
-        else:
-            invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
-        self.write(cr, uid, ids,
-                      {'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                        'msj': msj})
-        return True
-        """
     
     def action_cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)

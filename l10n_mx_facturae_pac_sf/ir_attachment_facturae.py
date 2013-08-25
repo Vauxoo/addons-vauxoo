@@ -173,11 +173,11 @@ class ir_attachment_facturae_mx(osv.Model):
             xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
             xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
             
-            if tools.config['test_report_directory']:#TODO: And test-enabled
+            if tools.config['test_report_directory']:#TODO: Add if test-enabled:
+                ir_attach_facturae_mx_file_input = ir_attachment_facturae_mx_id.file_input and ir_attachment_facturae_mx_id.file_input or False
+                fname_suffix = ir_attach_facturae_mx_file_input and ir_attach_facturae_mx_file_input.datas_fname or ''
                 open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_sf' + '_' + \
-                  'account_invoice_cfdi_pac_sf' + '_' + 'before_upload' + '_' + \
-                  time.strftime("%Y-%m-%d_%H%M%S") + '.xml'), 'wb+').write( xml_res_str_addenda )
-            
+                  'before_upload' + '-' + fname_suffix), 'wb+').write( xml_res_str_addenda )
             compr = xml_res_addenda.getElementsByTagName(comprobante)[0]
             date = compr.attributes['fecha'].value
             date_format = datetime.strptime(
@@ -285,7 +285,7 @@ class ir_attachment_facturae_mx(osv.Model):
                             # cfdi_data, context=context)
                             cfdi_xml = cfdi_data.pop('cfdi_xml')
                         if cfdi_xml:
-                            invoice_obj.write(cr, uid, inv_ids, cfdi_data)
+                            invoice_obj.write(cr, uid, [invoice.id], cfdi_data)
                             cfdi_data['cfdi_xml'] = cfdi_xml
                         else:
                             msg += _(u"Can't extract the file XML of PAC")
