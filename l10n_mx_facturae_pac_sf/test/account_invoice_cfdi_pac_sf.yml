@@ -77,7 +77,7 @@
   I sign l10n_mx attachment facturae cfdi_pac_sf by clicking on sign button upload pac
 -
   !python {model: ir.attachment.facturae.mx}: |
-    import netsvc
+    import netsvc, tools
     wf_service = netsvc.LocalService("workflow")
     cfdi_pac_sf_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfdi_pac_sf0") ), ('state', '<>', 'cancel')], limit=1)
     cfdi_pac_sf_id = cfdi_pac_sf_ids and cfdi_pac_sf_ids[0] or False
@@ -113,7 +113,7 @@
   I generate a printable l10n_mx attachment facturae cfdi_pac_sf by clicking on printable button
 -
   !python {model: ir.attachment.facturae.mx}: |
-    import netsvc
+    import netsvc, tools
     wf_service = netsvc.LocalService("workflow")
     cfdi_pac_sf_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cfdi_pac_sf0") ), ('state', '<>', 'cancel')], limit=1)
     cfdi_pac_sf_id = cfdi_pac_sf_ids and cfdi_pac_sf_ids[0] or False

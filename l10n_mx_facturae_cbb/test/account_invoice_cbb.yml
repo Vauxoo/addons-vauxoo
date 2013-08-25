@@ -78,7 +78,7 @@
   I sign l10n_mx attachment facturae cbb by clicking on sign button
 -
   !python {model: ir.attachment.facturae.mx}: |
-    import netsvc
+    import netsvc, tools
     wf_service = netsvc.LocalService("workflow")
     cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb0") ), ('state', '<>', 'cancel')], limit=1)
     cbb_id = cbb_ids and cbb_ids[0] or False
@@ -114,7 +114,7 @@
   I generate a printable l10n_mx attachment facturae cbb by clicking on printable button
 -
   !python {model: ir.attachment.facturae.mx}: |
-    import netsvc
+    import netsvc, tools
     wf_service = netsvc.LocalService("workflow")
     cbb_ids = self.search(cr, uid, [('invoice_id', '=', ref("account_invoice_cbb0") ), ('state', '<>', 'cancel')], limit=1)
     cbb_id = cbb_ids and cbb_ids[0] or False
