@@ -123,9 +123,25 @@ class ir_attachment_facturae_mx(osv.Model):
             invoice = attach.invoice_id
             type = attach.type
             wf_service = netsvc.LocalService("workflow")
+            save_attach = None
             if 'cbb' in type:
                 msj = _("Confirmed")
-            if 'cfd' in type and not 'cfdi' in type:
+                save_attach = False
+            elif 'cfdi' in type:
+                fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
+                    '_V3_2.xml' or ''
+                fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
+                    cr, uid, [invoice.id], context=context)
+                attach = self.pool.get('ir.attachment').create(cr, uid, {
+                    'name': fname_invoice,
+                    'datas': base64.encodestring(xml_data),
+                    'datas_fname': fname_invoice,
+                    'res_model': 'account.invoice',
+                    'res_id': invoice.id,
+                }, context=context)
+                msj = _("Attached Successfully XML CFDI 3.2\n")
+                save_attach = True
+            elif 'cfd' in type:
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                     '.xml' or ''
                 fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
@@ -140,24 +156,16 @@ class ir_attachment_facturae_mx(osv.Model):
                 if attach:
                     index_xml = self.pool.get('ir.attachment').browse(cr, uid, attach).index_content
                     msj = _("Attached Successfully XML CFD 2.2")
-            if 'cfdi' in type:
-                fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
-                    '_V3_2.xml' or ''
-                fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
-                    cr, uid, [invoice.id], context=context)
-                attach = self.pool.get('ir.attachment').create(cr, uid, {
-                    'name': fname_invoice,
-                    'datas': base64.encodestring(xml_data),
-                    'datas_fname': fname_invoice,
-                    'res_model': 'account.invoice',
-                    'res_id': invoice.id,
-                }, context=context)
-                msj = _("Attached Successfully XML CFDI 3.2\n")
-            self.write(cr, uid, ids,
-                          {'file_input': attach or False,
-                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj,
-                           'file_xml_sign_index': index_xml }, context=context)
+                save_attach = True
+            else:
+                raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
+                                "The Type Electronic Invoice:"+(type or '')) )
+            if save_attach:
+                self.write(cr, uid, ids,
+                              {'file_input': attach or False,
+                               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                               'msj': msj,
+                               'file_xml_sign_index': index_xml }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
@@ -417,21 +425,30 @@ class ir_attachment_facturae_mx(osv.Model):
         for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             msj = ''
             invoice = ir_attach_facturae_mx_id.invoice_id
-            if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
-                type__fc = self.get_driver_fc_cancel()
-                if ir_attach_facturae_mx_id.type in type__fc.keys():
-                    cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
-                            cr, uid, [ir_attach_facturae_mx_id.id], context=context
-                    )
-                    msj += tools.ustr(cfdi_cancel.get('message', False))
-                    if cfdi_cancel.get('message', True):#TODO, validate cfdi_cancel True or False
-                        wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                        if invoice.state <>  'cancel':
-                            inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
-                        else:
-                            inv_cancel_status = True
+            if 'cfdi' in ir_attach_facturae_mx_id.type:
+                if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+                    type__fc = self.get_driver_fc_cancel()
+                    if ir_attach_facturae_mx_id.type in type__fc.keys():
+                        cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
+                                cr, uid, [ir_attach_facturae_mx_id.id], context=context
+                        )
+                        msj += tools.ustr(cfdi_cancel.get('message', False))
+                        if cfdi_cancel.get('status', True):#TODO, validate cfdi_cancel True or False
+                            wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                            if invoice.state <>  'cancel':
+                                inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                            else:
+                                inv_cancel_status = True
+                    else:
+                        msj += _("Unknow cfdi driver for %s"%(ir_attach_facturae_mx_id.type))
+            else:
+                wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                if invoice.state <>  'cancel':
+                    inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
                 else:
-                    msj += _("Unknow driver for %s"%(ir_attach_facturae_mx_id.type))
+                    inv_cancel_status = True
+                msj = 'cancelled'
+                        
             self.write(cr, uid, ids, {
               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
               'msj': msj,
