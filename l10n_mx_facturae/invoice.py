@@ -528,25 +528,28 @@ class account_invoice(osv.Model):
 
             invoice = self.browse(cr, uid, [facturae_data[
                                   'invoice_id']], context=context)[0]
-            pedimento_numeros = []
-            pedimento_fechas = []
-            pedimento_aduanas = []
-            for line in invoice.invoice_line:
-                try:
-                    pedimento_numeros.append(
-                        line.tracking_id.import_id.name or '')
-                    pedimento_fechas.append(
-                        line.tracking_id.import_id.date or '')
-                    pedimento_aduanas.append(
-                        line.tracking_id.import_id.customs or '')
-                except:
-                    pass
-            pedimento_numeros = ','.join(map(
-                lambda x: str(x) or '', pedimento_numeros))
-            pedimento_fechas = ','.join(map(
-                lambda x: str(x) or '', pedimento_fechas))
-            pedimento_aduanas = ','.join(map(
-                lambda x: str(x) or '', pedimento_aduanas))
+            pedimento_numeros = ''
+            pedimento_fechas = ''
+            pedimento_aduanas = ''
+            if 'tracking_id' in line._columns:
+                pedimento_numeros = []
+                pedimento_fechas = []
+                pedimento_aduanas = []
+                for line in invoice.invoice_line:
+                    import_id = line.tracking_id and line.tracking_id.import_id or False
+                    if import_id:
+                        pedimento_numeros.append(
+                            import_id.name or '')
+                        pedimento_fechas.append(
+                            import_id.date or '')
+                        pedimento_aduanas.append(
+                            import_id.customs or '')
+                pedimento_numeros = ','.join(map(
+                    lambda x: str(x) or '', pedimento_numeros))
+                pedimento_fechas = ','.join(map(
+                    lambda x: str(x) or '', pedimento_fechas))
+                pedimento_aduanas = ','.join(map(
+                    lambda x: str(x) or '', pedimento_aduanas))
 
             facturae_data_txt_list = [
                 invoice_comprobante_data['Receptor']['rfc'] or '',
@@ -1165,19 +1168,17 @@ class account_invoice(osv.Model):
                 invoice_data['Conceptos'].append({'Concepto': concepto})
 
                 pedimento = None
-                try:
-                    pedimento = line.tracking_id.import_id
-                except:
-                    pass
-                if pedimento:
-                    informacion_aduanera = {
-                        'numero': pedimento.name or '',
-                        'fecha': pedimento.date or '',
-                        'aduana': pedimento.customs,
-                    }
-                    concepto.update({
-                                    'InformacionAduanera': informacion_aduanera})
-            # Termina seccion: Conceptos
+                if 'tracking_id' in line._columns:
+                    pedimento = line.tracking_id and line.tracking_id.import_id or False
+                    if pedimento:
+                        informacion_aduanera = {
+                            'numero': pedimento.name or '',
+                            'fecha': pedimento.date or '',
+                            'aduana': pedimento.customs,
+                        }
+                        concepto.update({
+                                        'InformacionAduanera': informacion_aduanera})
+                # Termina seccion: Conceptos
             # Inicia seccion: impuestos
             invoice_data['Impuestos'] = {}
             invoice_data['Impuestos'].update({
