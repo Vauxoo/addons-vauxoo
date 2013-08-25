@@ -70,7 +70,7 @@
                   'account_invoice_cfdi_pac_sf0' + '_' + 'confirmed' + '.xml'), 'wb+').write( base64.decodestring( fdata ) )
         else:
             state = 'no data in attach file'
-    assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_pac_sf'
+    assert state=='confirmed', 'No confirmed state l10n_mx attachment facturae cfdi_pac_sf'
 -
   I sign l10n_mx attachment facturae cfdi_pac_sf by clicking on sign button upload pac
 -
