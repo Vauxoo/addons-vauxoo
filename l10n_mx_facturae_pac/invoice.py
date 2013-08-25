@@ -55,7 +55,7 @@ class account_invoice(osv.Model):
             type_inv = ir_seq_app_obj.browse(
                 cr, uid, sequence_app_id[0], context=context).type
         for data in datas:
-            if type_inv == 'cfdi32':
+            if 'cfdi' in type_inv:
                 comprobante = data['Comprobante']
                 rfc = comprobante['Emisor']['rfc']
                 nombre = comprobante['Emisor']['nombre']
@@ -113,7 +113,7 @@ class account_invoice(osv.Model):
         if sequence_app_id:
             type_inv = ir_seq_app_obj.browse(
                 cr, uid, sequence_app_id[0], context=context).type
-        if type_inv == 'cfdi32':
+        if 'cfdi' in type_inv:
             comprobante = 'cfdi:Comprobante'
             emisor = 'cfdi:Emisor'
             receptor = 'cfdi:Receptor'

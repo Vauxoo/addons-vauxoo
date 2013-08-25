@@ -38,6 +38,14 @@ class ir_attachment_facturae_mx(osv.Model):
     def _get_type(self, cr, uid, ids=None, context=None):
         types = []
         return types
+    
+    def get_driver_fc_sign(self):
+        """function to inherit from module driver of pac and add particular function"""
+        return {}
+        
+    def get_driver_fc_cancel(self):
+        """function to inherit from module driver of pac and add particular function"""
+        return {}
 
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True,
@@ -89,17 +97,17 @@ class ir_attachment_facturae_mx(osv.Model):
     def create_ir_attachment_facturae(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        if not self.signal_confirm(cr, uid, ids, context={}):
+        if not self.signal_confirm(cr, uid, ids, context=context):
             return False
-        if not self.signal_sign(cr, uid, ids, context={}):
+        if not self.signal_sign(cr, uid, ids, context=context):
             return False
-        if not self.signal_printable(cr, uid, ids, context={}):
+        if not self.signal_printable(cr, uid, ids, context=context):
             return False
-        if not self.signal_send_customer(cr, uid, ids, context={}):
+        if not self.signal_send_customer(cr, uid, ids, context=context):
             return False
-        if not self.signal_send_backup(cr, uid, ids, context={}):
+        if not self.signal_send_backup(cr, uid, ids, context=context):
             return False
-        if not self.signal_done(cr, uid, ids, context={}):
+        if not self.signal_done(cr, uid, ids, context=context):
             return False
         return True
     
@@ -107,31 +115,19 @@ class ir_attachment_facturae_mx(osv.Model):
         try:
             if context is None:
                 context = {}
+            invoice_obj = self.pool.get('account.invoice')
             attach = ''
             msj = ''
             index_xml = ''
-            invoice = self.browse(cr, uid, ids)[0].invoice_id
-            invoice_obj = self.pool.get('account.invoice')
-            type = self.browse(cr, uid, ids)[0].type
+            attach = self.browse(cr, uid, ids[0])
+            invoice = attach.invoice_id
+            type = attach.type
             wf_service = netsvc.LocalService("workflow")
-            if type == 'cbb':
+            save_attach = None
+            if 'cbb' in type:
                 msj = _("Confirmed")
-            if type == 'cfd22':
-                fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
-                    '.xml' or ''
-                fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
-                    cr, uid, [invoice.id], context={})
-                attach = self.pool.get('ir.attachment').create(cr, uid, {
-                    'name': fname_invoice,
-                    'datas': base64.encodestring(xml_data),
-                    'datas_fname': fname_invoice,
-                    'res_model': 'account.invoice',
-                    'res_id': invoice.id,
-                }, context={})
-                if attach:
-                    index_xml = self.pool.get('ir.attachment').browse(cr, uid, attach).index_content
-                    msj = _("Attached Successfully XML CFD 2.2")
-            if type == 'cfdi32':
+                save_attach = False
+            elif 'cfdi' in type:
                 fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
                     '_V3_2.xml' or ''
                 fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
@@ -141,18 +137,43 @@ class ir_attachment_facturae_mx(osv.Model):
                     'datas': base64.encodestring(xml_data),
                     'datas_fname': fname_invoice,
                     'res_model': 'account.invoice',
-                    #'res_id': invoice.id,
-                }, context={})
+                    'res_id': invoice.id,
+                }, context=context)
                 msj = _("Attached Successfully XML CFDI 3.2\n")
-            self.write(cr, uid, ids,
-                          {'file_input': attach or False,
-                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                           'msj': msj,
-                           'file_xml_sign_index': index_xml }, context=context)
+                save_attach = True
+            elif 'cfd' in type:
+                fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
+                    '.xml' or ''
+                fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
+                    cr, uid, [invoice.id], context=context)
+                attach = self.pool.get('ir.attachment').create(cr, uid, {
+                    'name': fname_invoice,
+                    'datas': base64.encodestring(xml_data),
+                    'datas_fname': fname_invoice,
+                    'res_model': 'account.invoice',
+                    'res_id': invoice.id,
+                }, context=context)
+                if attach:
+                    index_xml = self.pool.get('ir.attachment').browse(cr, uid, attach).index_content
+                    msj = _("Attached Successfully XML CFD 2.2")
+                save_attach = True
+            else:
+                raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
+                                "The Type Electronic Invoice:"+(type or '')) )
+            if save_attach:
+                self.write(cr, uid, ids,
+                              {'file_input': attach or False,
+                               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                               'msj': msj,
+                               'file_xml_sign_index': index_xml }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
+            import traceback, sys
+            traceback.print_stack()
+            #traceback_str = repr(traceback.extract_stack())
+            #print traceback_str
             return False
         
     def action_confirm(self, cr, uid, ids, context=None):
@@ -170,40 +191,47 @@ class ir_attachment_facturae_mx(osv.Model):
             attachment_obj = self.pool.get('ir.attachment')
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
-            if type == 'cbb':
+            if 'cbb' in type:
                 msj = _("Signed")
-            if type == 'cfd22':
+            if 'cfd' in type and not 'cfdi' in type:
                 attach = self.browse(cr, uid, ids)[0].file_input.id or False
                 index_xml = self.browse(cr, uid, ids)[0].file_xml_sign_index or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
-            if type == 'cfdi32':
-                fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
-                    '.xml' or ''
-                fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
-                    cr, uid, [invoice.id], context=context)
-                fdata = base64.encodestring(xml_data)
-                res = invoice_obj._upload_ws_file(
-                    cr, uid, [invoice.id], fdata, context=context)
-                msj = tools.ustr(res.get('msg', False))
-                index_xml = res.get('cfdi_xml', False)
-                data_attach = {
-                    'name': fname_invoice,
-                    'datas': base64.encodestring(res.get('cfdi_xml', False)),
-                    'datas_fname': fname_invoice,
-                    'description': 'Factura-E XML CFD-I SIGN',
-                    'res_model': 'account.invoice',
-                    'res_id': invoice.id,
-                }
-                attach = attachment_obj.create(cr, uid, data_attach, context={})
+            if 'cfdi' in type:
+                #upload file in custom module for pac
+                type__fc = self.get_driver_fc_sign()
+                if type in type__fc.keys():
+                    fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
+                        '.xml' or ''
+                    fname, xml_data = invoice_obj._get_facturae_invoice_xml_data(
+                        cr, uid, [invoice.id], context=context)
+                    fdata = base64.encodestring(xml_data)
+                    res = type__fc[type](
+                        cr, uid, [ids[0]], fdata, context=context)
+                    msj = tools.ustr(res.get('msg', False))
+                    index_xml = res.get('cfdi_xml', False)
+                    data_attach = {
+                        'name': fname_invoice,
+                        'datas': base64.encodestring(res.get('cfdi_xml', False)),
+                        'datas_fname': fname_invoice,
+                        'description': 'Factura-E XML CFD-I SIGN',
+                        'res_model': 'account.invoice',
+                        #'res_id': invoice.id,
+                    }
+                    attach = attachment_obj.create(cr, uid, data_attach, context=context)
+                else:
+                    msj += _("Unknow driver for %s"%(type))
             self.write(cr, uid, ids,
-                              {'file_xml_sign': attach or False,
-                               'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                               'msj': msj,
-                               'file_xml_sign_index': index_xml}, context=context)
+                          {'file_xml_sign': attach or False,
+                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                           'msj': msj,
+                           'file_xml_sign_index': index_xml}, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_sign', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
+            import traceback, sys
+            traceback.print_stack()
             return False
                            
     def action_sign(self, cr, uid, ids, context=None):
@@ -239,11 +267,11 @@ class ir_attachment_facturae_mx(osv.Model):
                         'file_pdf': aids or False,
                         'msj': msj,
                         'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                        'file_pdf_index': index_pdf }, context={})
+                        'file_pdf_index': index_pdf }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
             return False
     
     def action_printable(self, cr, uid, ids, context=None):
@@ -347,7 +375,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 wf_service.trg_validate(uid, self._name, ids[0], 'action_send_customer', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
             return False
     
     def action_send_customer(self, cr, uid, ids, context=None):
@@ -365,7 +393,7 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_send_backup', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
             return False
         
     def action_send_backup(self, cr, uid, ids, context=None):
@@ -383,54 +411,49 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service.trg_validate(uid, self._name, ids[0], 'action_done', cr)
             return True
         except Exception, e:
-            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
+            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
             return False
 
     def action_done(self, cr, uid, ids, context=None):
        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
-
+    
     def signal_cancel(self, cr, uid, ids, context=None):
-        try:
+        invoice_obj = self.pool.get('account.invoice')
+        attach_obj = self.pool.get('ir.attachment')
+        wf_service = netsvc.LocalService("workflow")
+        inv_cancel_status = False
+        for ir_attach_facturae_mx_id in self.browse(cr, uid, ids, context=context):
             msj = ''
-            invoice_obj = self.pool.get('account.invoice')
-            attach_obj = self.pool.get('ir.attachment')
-            type = self.browse(cr, uid, ids)[0].type
-            state = self.browse(cr, uid, ids)[0].state
-            invoice = self.browse(cr, uid, ids)[0].invoice_id
-            invoice_state = self.browse(cr, uid, ids)[0].invoice_id.state
-            wf_service = netsvc.LocalService("workflow")
-            if invoice_state in ['cancel']:
-                if type == 'cbb':
-                    wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                    msj = _('Cancel\n')
-                if type == 'cfd22':
-                    wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                    msj = _('Cancel\n')
-                if type == 'cfdi32':
-                    if state in ['cancel', 'draft', 'confirmed']:
-                        wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                        msj = _('Cancel\n')
+            invoice = ir_attach_facturae_mx_id.invoice_id
+            if 'cfdi' in ir_attach_facturae_mx_id.type:
+                if not ir_attach_facturae_mx_id.state in ['cancel', 'draft', 'confirmed']:
+                    type__fc = self.get_driver_fc_cancel()
+                    if ir_attach_facturae_mx_id.type in type__fc.keys():
+                        cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
+                                cr, uid, [ir_attach_facturae_mx_id.id], context=context
+                        )
+                        msj += tools.ustr(cfdi_cancel.get('message', False))
+                        if cfdi_cancel.get('status', True):#TODO, validate cfdi_cancel True or False
+                            wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                            if invoice.state <>  'cancel':
+                                inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                            else:
+                                inv_cancel_status = True
                     else:
-                        sf_cancel = invoice_obj.sf_cancel(
-                                cr, uid, [invoice.id], context=context)
-                        wf_service.trg_validate(uid, self._name, ids[0], 'action_cancel', cr)
-                        msj += tools.ustr(sf_cancel.get('message', False))
-                        #Para que no aparescan los adjuntos en facturas canceladas
-                        ##adjuntos = attach_obj.search(cr, uid, [(
-                            ##'res_model', '=', 'account.invoice'),
-                            ##('res_id', '=', invoice)])
-                        ##for attachment in self.browse(cr, uid, adjuntos, context):
-                            ##ids2 = attach_obj.write(cr, uid, [attachment.id], {
-                                ##'res_id': False, }, context=context)
+                        msj += _("Unknow cfdi driver for %s"%(ir_attach_facturae_mx_id.type))
             else:
-                invoice_obj.action_cancel(cr, uid, [invoice.id], context)
-            self.write(cr, uid, ids,
-                          {'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                            'msj': msj})
-            return True
-        except Exception, e:
-            self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context={})
-            return False
+                wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                if invoice.state <>  'cancel':
+                    inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                else:
+                    inv_cancel_status = True
+                msj = 'cancelled'
+                        
+            self.write(cr, uid, ids, {
+              'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+              'msj': msj,
+            })
+        return inv_cancel_status
     
     def action_cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
