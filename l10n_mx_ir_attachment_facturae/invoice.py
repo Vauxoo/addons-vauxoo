@@ -83,7 +83,7 @@ class account_invoice(osv.Model):
             'view_type': 'form',
             'view_mode': 'form,tree',
             'res_model': 'ir.attachment.facturae.mx',
-            'res_id': attach_ids,
+            'res_id': attach_ids[0],
             'view_id': False,
             'views': [(form_id, 'form'), (tree_id, 'tree')],
             'type': 'ir.actions.act_window',
