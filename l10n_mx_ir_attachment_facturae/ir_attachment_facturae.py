@@ -196,7 +196,7 @@ class ir_attachment_facturae_mx(osv.Model):
                         cr, uid, [invoice.id], context=context)
                     fdata = base64.encodestring(xml_data)
                     res = type__fc[type](
-                        cr, uid, [invoice.id], fdata, context=context)
+                        cr, uid, [ids[0]], fdata, context=context)
                     msj = tools.ustr(res.get('msg', False))
                     index_xml = res.get('cfdi_xml', False)
                     data_attach = {

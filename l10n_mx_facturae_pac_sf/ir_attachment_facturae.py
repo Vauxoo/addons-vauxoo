@@ -43,11 +43,12 @@ import codecs
 from xml.dom import minidom
 import urllib
 import pooler
-from tools.translate import _
+from openerp.tools.translate import _
 from datetime import datetime, timedelta
 from pytz import timezone
 import pytz
 import time
+from openerp import tools
 try:
     from SOAPpy import WSDL
 except:
@@ -170,15 +171,19 @@ class ir_attachment_facturae_mx(osv.Model):
             xml_res_addenda = invoice_obj.add_addenta_xml(
                 cr, uid, xml_res_str, comprobante, context=context)
             xml_res_str_addenda = xml_res_addenda.toxml('UTF-8')
+            xml_res_str_addenda = xml_res_str_addenda.replace(codecs.BOM_UTF8, '')
+            
+            if tools.config['test_report_directory']:#TODO: And test-enabled
+                open( os.path.join(tools.config['test_report_directory'], 'l10n_mx_facturae_pac_sf' + '_' + \
+                  'account_invoice_cfdi_pac_sf' + '_' + 'before_upload' + '_' + \
+                  time.strftime("%Y-%m-%d_%H%M%S") + '.xml'), 'wb+').write( xml_res_str_addenda )
+            
             compr = xml_res_addenda.getElementsByTagName(comprobante)[0]
             date = compr.attributes['fecha'].value
             date_format = datetime.strptime(
                 date, '%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d')
             context['date'] = date_format
             invoice_ids = [invoice.id]
-            currency = invoice.currency_id.name
-            currency_enc = currency.encode('UTF-8', 'strict')
-            rate = invoice.currency_id.rate and (1.0/invoice.currency_id.rate) or 1
             file = False
             msg = ''
             cfdi_xml = False
@@ -217,8 +222,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     fname_key_no_pem = file_globals['fname_key']
                     keyCSD = fname_key_no_pem and base64.encodestring(
                         open(fname_key_no_pem, "r").read()) or ''
-                    cfdi = base64.encodestring(
-                        xml_res_str_addenda.replace(codecs.BOM_UTF8, ''))
+                    cfdi = base64.encodestring(xml_res_str_addenda)
                     zip = False  # Validar si es un comprimido zip, con la extension del archivo
                     contrasenaCSD = file_globals.get('password', '')
                     params = [
@@ -229,7 +233,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     wsdl_client.soapproxy.config.dict_encoding = 'UTF-8'
                     resultado = wsdl_client.timbrar(*params)
                     htz = int(invoice_obj._get_time_zone(
-                        cr, uid, inv_ids, context=context))
+                        cr, uid, [ir_attachment_facturae_mx_id.invoice_id.id], context=context))
                     mensaje = _(tools.ustr(resultado['mensaje']))
                     resultados_mensaje = resultado['resultados'] and \
                         resultado['resultados']['mensaje'] or ''
