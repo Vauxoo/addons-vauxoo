@@ -211,14 +211,14 @@ class ir_attachment_facturae_mx(osv.Model):
                         #'res_id': invoice.id,
                     }
                     attach = attachment_obj.create(cr, uid, data_attach, context=context)
-                    self.write(cr, uid, ids,
-                                  {'file_xml_sign': attach or False,
-                                   'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                                   'msj': msj,
-                                   'file_xml_sign_index': index_xml}, context=context)
-                    wf_service.trg_validate(uid, self._name, ids[0], 'action_sign', cr)
                 else:
                     msj += _("Unknow driver for %s"%(type))
+            self.write(cr, uid, ids,
+                          {'file_xml_sign': attach or False,
+                           'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                           'msj': msj,
+                           'file_xml_sign_index': index_xml}, context=context)
+            wf_service.trg_validate(uid, self._name, ids[0], 'action_sign', cr)
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
