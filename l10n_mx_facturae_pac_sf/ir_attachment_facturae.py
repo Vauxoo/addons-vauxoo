@@ -66,18 +66,17 @@ class ir_attachment_facturae_mx(osv.Model):
         return types
     
     def get_driver_fc_sign(self):
-        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign(facturae_mx_type)
+        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_sign()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update( 'cfdi32_pac_sf': self._upload_ws_file )
+        factura_mx_type__fc.update({'cfdi32_pac_sf': self._upload_ws_file})
         return factura_mx_type__fc
     
     def get_driver_fc_cancel(self):
-        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel(
-            cr, uid, ids, context=context)
+        factura_mx_type__fc = super(ir_attachment_facturae_mx, self).get_driver_fc_cancel()
         if factura_mx_type__fc == None:
             factura_mx_type__fc = {}
-        factura_mx_type__fc.update( 'cfdi32_pac_sf': self.sf_cancel )
+        factura_mx_type__fc.update({'cfdi32_pac_sf': self.sf_cancel})
         return factura_mx_type__fc
         
     _columns = {
@@ -91,15 +90,16 @@ class ir_attachment_facturae_mx(osv.Model):
         pac_params_obj = self.pool.get('params.pac')
         invoice_obj = self.pool.get('account.invoice')
         for ir_attachment_facturae_mx_id in self.browse(cr, uid, ids, context=context):
+            status = False
             invoice = ir_attachment_facturae_mx_id.invoice_id
             pac_params_ids = pac_params_obj.search(cr, uid, [
                 ('method_type', '=', 'pac_sf_cancelar'),
                 ('company_id', '=', invoice.company_emitter_id.id),
                 ('active', '=', True),
-             ], limit=1, context=context),
-             pac_params_id = pac_params_ids and pac_params_ids[0] or False
-             if pac_params_id:
-                 file_globals = invoice_obj._get_file_globals(
+            ], limit=1, context=context)
+            pac_params_id = pac_params_ids and pac_params_ids[0] or False
+            if pac_params_id:
+                file_globals = invoice_obj._get_file_globals(
                     cr, uid, [invoice.id], context=context)
                 pac_params_brw = pac_params_obj.browse(
                     cr, uid, [pac_params_id], context=context)[0]
@@ -146,13 +146,14 @@ class ir_attachment_facturae_mx(osv.Model):
                         'cfdi_fecha_cancelacion': time.strftime(
                         '%Y-%m-%d %H:%M:%S')
                     })
+                    status = True
                 else:
                     raise orm.except_orm(_('Warning'), _('Cancel Code: %s.-Status code %s.-Status UUID: %s.-Folio Cancel: %s.-Cancel Message: %s.-Answer Message: %s.') % (
                         codigo_cancel, status_cancel, status_uuid, folio_cancel, mensaje_cancel, msg_nvo))
         else:
             msg = _(
                 'Not found information of webservices of PAC, verify that the configuration of PAC is correct')
-        return {'message': msg, 'status_uuid': status_uuid}
+        return {'message': msg, 'status_uuid': status_uuid, 'status': status}
     
     def _upload_ws_file(self, cr, uid, ids, fdata=None, context={}):
         """

@@ -47,6 +47,8 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
         self.signal_confirm(cr, uid , cfdi_pac_sf_ids ,context=context)
+        print "cfdi_pac_sf_state",cfdi_pac_sf.state
+        print "cfdi_pac_sf_msj",cfdi_pac_sf.msj
         state = cfdi_pac_sf.state
 -
   I sign l10n_mx attachment facturae cfdi_pac_sf by clicking on sign button upload pac
@@ -58,7 +60,9 @@
     cfdi_pac_sf_id = cfdi_pac_sf_ids and cfdi_pac_sf_ids[0] or False
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
-        self.signal_sign(cr, uid , cfdi_pac_sf_ids ,context=context)
+        self.signal_sign(cr, uid, cfdi_pac_sf_ids, context=context)
+        print "cfdi_pac_sf_state",cfdi_pac_sf.state
+        print "cfdi_pac_sf_msj",cfdi_pac_sf.msj
         state = cfdi_pac_sf.state
 -
   I check that the state in l10n_mx attachment facturae cfdi_pac_sf is "Signed"
@@ -69,6 +73,8 @@
     state = None
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
+        print "cfdi_pac_sf_state",cfdi_pac_sf.state
+        print "cfdi_pac_sf_msj",cfdi_pac_sf.msj
         state = cfdi_pac_sf.state
     assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_pac_sf'
 -
@@ -82,6 +88,8 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
         self.signal_printable(cr, uid , cfdi_pac_sf_ids ,context=context)
+        print "cfdi_pac_sf_state",cfdi_pac_sf.state
+        print "cfdi_pac_sf_msj",cfdi_pac_sf.msj
         state = cfdi_pac_sf.state
 -
   I check that the state in l10n_mx attachment facturae cfdi_pac_sf is Printable
@@ -93,6 +101,8 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
         state = cfdi_pac_sf.state
+        print "cfdi_pac_sf_state",cfdi_pac_sf.state
+        print "cfdi_pac_sf_msj",cfdi_pac_sf.msj
     assert state=='printable', 'No printable state l10n_mx attachment facturae cfdi_pac_sf'
 -
   I added update_posted in journal

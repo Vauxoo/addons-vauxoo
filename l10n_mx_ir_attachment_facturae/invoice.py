@@ -59,21 +59,21 @@ class account_invoice(osv.Model):
             'out_refund': True,
             'in_invoice': False,
             'in_refund': False}
-        for inv in self.browse(cr, uid, ids, context=context):
-            if inv_type_facturae.get(inv.type, False):
+        for invoice in self.browse(cr, uid, ids, context=context):
+            if inv_type_facturae.get(invoice.type, False):
                 approval_id = invoice.invoice_sequence_id and invoice.invoice_sequence_id.approval_id or False
                 if approval_id:
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
-                      'name': invoice.fname_invoice, 'invoice_id': inv.id,
+                      'name': invoice.fname_invoice, 'invoice_id': invoice.id,
                       'type': invoice.invoice_sequence_id.approval_id.type},
-                      context={})
+                      context=context)
                     )
         form_res = ir_model_data_obj.get_object_reference(
             cr, uid, 'l10n_mx_ir_attachment_facturae',
             'view_ir_attachment_facturae_mx_form')
         form_id = form_res and form_res[1] or False
 
-        tree_res = ir_model_data.get_object_reference(
+        tree_res = ir_model_data_obj.get_object_reference(
             cr, uid, 'l10n_mx_ir_attachment_facturae',
             'view_ir_attachment_facturae_mx_tree')
         tree_id = tree_res and tree_res[1] or False

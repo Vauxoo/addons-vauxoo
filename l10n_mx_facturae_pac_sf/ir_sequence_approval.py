@@ -35,7 +35,7 @@ class ir_sequence_approval(osv.Model):
         types = super(ir_sequence_approval, self)._get_type(
             cr, uid, ids, context=context)
         types.extend([
-            ('cfdi32', 'CFDI 3.2 Solución Factible'),
+            ('cfdi32_pac_sf', 'CFDI 3.2 Solución Factible'),
         ])
         return types
 
