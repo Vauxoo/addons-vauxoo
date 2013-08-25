@@ -47,8 +47,8 @@
     if cbb_id:
         cbb = self.browse(cr, uid, [cbb_id])[0]
         self.signal_confirm(cr, uid , cbb_ids ,context=context)
-        print "cbb_state",cbb.state
-        print "cbb_msj",cbb.msj
+        print "cbb_state",tools.ustr(cbb.state)
+        print "cbb_msj",tools.ustr(cbb.msj)
         state = cbb.state
 -
   I check that the state in l10n_mx attachment facturae cbb is "Confirmed"
@@ -60,8 +60,8 @@
     state = 'no attach file'
     if cbb_id:
         cbb = self.browse(cr, uid, [cbb_id])[0]
-        print "cbb_state",cbb.state
-        print "cbb_msj",cbb.msj
+        print "cbb_state",tools.ustr(cbb.state)
+        print "cbb_msj",tools.ustr(cbb.msj)
         state = cbb.state
         #This state no generate a new attch
         #ir_attach_facturae_mx = cbb.file_input and cbb.file_input or False
@@ -85,8 +85,8 @@
     if cbb_id:
         cbb = self.browse(cr, uid, [cbb_id], context=context)[0]
         self.signal_sign(cr, uid, cbb_ids, context=context)
-        print "cbb_state",cbb.state
-        print "cbb_msj",cbb.msj
+        print "cbb_state",tools.ustr(cbb.state)
+        print "cbb_msj",tools.ustr(cbb.msj)
         state = cbb.state
 -
   I check that the state in l10n_mx attachment facturae cbb is "Signed"
@@ -108,7 +108,7 @@
                   #~ 'wb+').write( base64.decodestring( fdata ) )
         #~ else:
             #~ state = 'no data in attach file'
-    print "state",state
+    print "state",tools.ustr(state)
     assert state=='signed', 'No signed state l10n_mx attachment facturae cbb'
 -
   I generate a printable l10n_mx attachment facturae cbb by clicking on printable button
@@ -121,8 +121,8 @@
     if cbb_id:
         cbb = self.browse(cr, uid, [cbb_id])[0]
         self.signal_printable(cr, uid , cbb_ids ,context=context)
-        print "cbb_state",cbb.state
-        print "cbb_msj",cbb.msj
+        print "cbb_state",tools.ustr(cbb.state)
+        print "cbb_msj",tools.ustr(cbb.msj)
         state = cbb.state
 -
   I check that the state in l10n_mx attachment facturae cbb is Printable

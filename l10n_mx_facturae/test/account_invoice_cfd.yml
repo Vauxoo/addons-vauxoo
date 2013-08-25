@@ -47,8 +47,8 @@
     if cfd_id:
         cfd = self.browse(cr, uid, [cfd_id])[0]
         self.signal_confirm(cr, uid , cfd_ids ,context=context)
-        print "cfd_state",cfd.state
-        print "cfd_msj",cfd.msj
+        print "cfd_state",tools.ustr(cfd.state)
+        print "cfd_msj",tools.ustr(cfd.msj)
         state = cfd.state
 -
   I check that the state in l10n_mx attachment facturae cfd is "Confirmed"
@@ -60,8 +60,8 @@
     state = 'no attach file'
     if cfd_id:
         cfd = self.browse(cr, uid, [cfd_id])[0]
-        print "cfd_state",cfd.state
-        print "cfd_msj",cfd.msj
+        print "cfd_state",tools.ustr( cfd.state )
+        print "cfd_msj",tools.ustr( cfd.msj )
         state = cfd.state
         ir_attach_facturae_mx = cfd.file_input and cfd.file_input or False
         fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
@@ -84,8 +84,8 @@
     if cfd_id:
         cfd = self.browse(cr, uid, [cfd_id], context=context)[0]
         self.signal_sign(cr, uid, cfd_ids, context=context)
-        print "cfd_state",cfd.state
-        print "cfd_msj",cfd.msj
+        print "cfd_state",tools.ustr( cfd.state )
+        print "cfd_msj",tools.ustr( cfd.msj )
         state = cfd.state
 -
   I check that the state in l10n_mx attachment facturae cfd is "Signed"
@@ -108,7 +108,7 @@
                   'wb+').write( base64.decodestring( fdata ) )
         else:
             state = 'no data in attach file'
-    print "state",state
+    print "state",tools.ustr( state )
     assert state=='signed', 'No signed state l10n_mx attachment facturae cfd'
 -
   I generate a printable l10n_mx attachment facturae cfd by clicking on printable button
@@ -121,8 +121,8 @@
     if cfd_id:
         cfd = self.browse(cr, uid, [cfd_id])[0]
         self.signal_printable(cr, uid , cfd_ids ,context=context)
-        print "cfd_state",cfd.state
-        print "cfd_msj",cfd.msj
+        print "cfd_state",tools.ustr( cfd.state )
+        print "cfd_msj",tools.ustr( cfd.msj )
         state = cfd.state
 -
   I check that the state in l10n_mx attachment facturae cfd is Printable
