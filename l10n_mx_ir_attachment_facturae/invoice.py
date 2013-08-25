@@ -68,24 +68,25 @@ class account_invoice(osv.Model):
                       'type': invoice.invoice_sequence_id.approval_id.type},
                       context=context)
                     )
-        form_res = ir_model_data_obj.get_object_reference(
-            cr, uid, 'l10n_mx_ir_attachment_facturae',
-            'view_ir_attachment_facturae_mx_form')
-        form_id = form_res and form_res[1] or False
+        if attach_ids:
+            form_res = ir_model_data_obj.get_object_reference(
+                cr, uid, 'l10n_mx_ir_attachment_facturae',
+                'view_ir_attachment_facturae_mx_form')
+            form_id = form_res and form_res[1] or False
 
-        tree_res = ir_model_data_obj.get_object_reference(
-            cr, uid, 'l10n_mx_ir_attachment_facturae',
-            'view_ir_attachment_facturae_mx_tree')
-        tree_id = tree_res and tree_res[1] or False
+            tree_res = ir_model_data_obj.get_object_reference(
+                cr, uid, 'l10n_mx_ir_attachment_facturae',
+                'view_ir_attachment_facturae_mx_tree')
+            tree_id = tree_res and tree_res[1] or False
 
-        return {
-            'name': _('Attachment Factura E MX'),
-            'view_type': 'form',
-            'view_mode': 'form,tree',
-            'res_model': 'ir.attachment.facturae.mx',
-            'res_id': attach_ids[0],
-            'view_id': False,
-            'views': [(form_id, 'form'), (tree_id, 'tree')],
-            'type': 'ir.actions.act_window',
-        }
-        return True
+            return {
+                'name': _('Attachment Factura E MX'),
+                'view_type': 'form',
+                'view_mode': 'form,tree',
+                'res_model': 'ir.attachment.facturae.mx',
+                'res_id': attach_ids[0],
+                'view_id': False,
+                'views': [(form_id, 'form'), (tree_id, 'tree')],
+                'type': 'ir.actions.act_window',
+            }
+        return {}
