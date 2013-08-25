@@ -15,7 +15,6 @@
 		<record id="ifrs_lines_ventabruta0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">VENTA BRUTA</field>
-			<field eval="2" name="level"/>
 			<field eval="5" name="sequence"/>
 			<field eval="0.0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -27,7 +26,6 @@
 		<record id="ifrs_lines_devolucionesenventas0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">DEVOLUCIONES EN VENTAS</field>
-			<field eval="2" name="level"/>
 			<field eval="10" name="sequence"/>
 			<field eval="0.0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -39,7 +37,6 @@
 		<record id="ifrs_lines_descuentossobreventas0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">DESCUENTOS SOBRE VENTAS</field>
-			<field eval="2" name="level"/>
 			<field eval="20" name="sequence"/>
 			<field eval="0.0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -51,7 +48,6 @@
 		<record id="ifrs_lines_otrosingresos0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">OTROS INGRESOS</field>
-			<field eval="2" name="level"/>
 			<field eval="30" name="sequence"/>
 			<field eval="0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -63,7 +59,6 @@
 		<record id="ifrs_lines_importesobreventaneta0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">IMPORTE SOBRE VENTA NETA</field>
-			<field eval="1" name="level"/>
 			<field eval="40" name="sequence"/>
 			<field eval="0.0" name="amount"/>
 			<field eval="1" name="inv_sign"/>
@@ -85,7 +80,6 @@
 		<record id="ifrs_lines_costovariabledeventaestandar0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">COSTO (VARIABLE) DE VENTA ESTANDAR</field>
-			<field eval="1" name="level"/>
 			<field eval="50" name="sequence"/>
 			<field eval="0.0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -97,7 +91,6 @@
 		<record id="ifrs_lines_desviacionenconsumodemateriaprima0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">DESVIACION EN CONSUMO DE MATERIA PRIMA</field>
-			<field eval="1" name="level"/>
 			<field eval="60" name="sequence"/>
 			<field eval="0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -108,7 +101,6 @@
 		<record id="ifrs_lines_desviacionenpreciocomprademateriaprima0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">DESVIACION EN PRECIO COMPRA DE MATERIA PRIMA</field>
-			<field eval="1" name="level"/>
 			<field eval="70" name="sequence"/>
 			<field eval="0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -120,7 +112,6 @@
 		<record id="ifrs_lines_otroscostosdeventadistribucion0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">OTROS COSTOS DE VENTA (DISTRIBUCION)</field>
-			<field eval="1" name="level"/>
 			<field eval="75" name="sequence"/>
 			<field eval="0" name="amount"/>
 			<field eval="0" name="inv_sign"/>
@@ -131,7 +122,6 @@
 		<record id="ifrs_lines_otroscostosvtaafcadmmasydeg0" model="ifrs.lines">
 			<field eval="[(6,0,[])]" name="operand_ids"/>
 			<field name="name">OTROS COSTOS (VTA AF, CAD, MMAS Y DEG)</field>
-			<field eval="1" name="level"/>
 			<field eval="80" name="sequence"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
