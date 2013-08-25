@@ -47,8 +47,8 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
         self.signal_confirm(cr, uid , cfdi_pac_sf_ids ,context=context)
-        print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
-        print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
+        #print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
+        #print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
         state = cfdi_pac_sf.state
 -
   I check that the state in l10n_mx attachment facturae cfdi_pac_sf is "Confirmed"
@@ -60,8 +60,8 @@
     state = 'no attach file'
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
-        print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
-        print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
+        #print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
+        #print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
         state = cfdi_pac_sf.state
         ir_attach_facturae_mx = cfdi_pac_sf.file_input and cfdi_pac_sf.file_input or False
         fdata = ir_attach_facturae_mx and ir_attach_facturae_mx.db_datas or False
@@ -84,8 +84,8 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id], context=context)[0]
         self.signal_sign(cr, uid, cfdi_pac_sf_ids, context=context)
-        print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
-        print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
+        #print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
+        #print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
         state = cfdi_pac_sf.state
 -
   I check that the state in l10n_mx attachment facturae cfdi_pac_sf is "Signed"
@@ -107,7 +107,7 @@
                   'wb+').write( base64.decodestring( fdata ) )
         else:
             state = 'no data in attach file'
-    print "state",tools.ustr( state )
+    #print "state",tools.ustr( state )
     assert state=='signed', 'No signed state l10n_mx attachment facturae cfdi_pac_sf'
 -
   I generate a printable l10n_mx attachment facturae cfdi_pac_sf by clicking on printable button
@@ -120,8 +120,8 @@
     if cfdi_pac_sf_id:
         cfdi_pac_sf = self.browse(cr, uid, [cfdi_pac_sf_id])[0]
         self.signal_printable(cr, uid , cfdi_pac_sf_ids ,context=context)
-        print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
-        print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
+        #print "cfdi_pac_sf_state",tools.ustr( cfdi_pac_sf.state )
+        #print "cfdi_pac_sf_msj",tools.ustr( cfdi_pac_sf.msj )
         state = cfdi_pac_sf.state
 -
   I check that the state in l10n_mx attachment facturae cfdi_pac_sf is Printable
