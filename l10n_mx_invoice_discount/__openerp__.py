@@ -39,6 +39,6 @@
     "update_xml" : ["partner_view.xml",
                     "invoice_view.xml",
                     ],
-    "installable" : True,
-    "active" : False,
+    "installable": False,
+    "active": False,
 }
