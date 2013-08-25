@@ -57,9 +57,9 @@ class inherits_sale(osv.Model):
         res = super(inherits_sale,self)._prepare_invoice(cr, uid, order,
                                                          lines, context)
         res.update({'pay_method_id':order.pay_method_id and\
-                                        order.pay_method_id.id,
+                                        order.pay_method_id.id or False,
                     'acc_payment':order.acc_payment and\
-                                        order.acc_payment.id,
+                                        order.acc_payment.id or False,
         })
 
         return res 
@@ -80,7 +80,7 @@ class inherits_sale(osv.Model):
                                         [('partner_id', '=', part.id)])
         res.get('value',{}).update({                                                                     
             'pay_method_id': payment_term,                                           
-            'acc_payment': bank_partner_id and bank_partner_id[0],                                           
+            'acc_payment': bank_partner_id and bank_partner_id[0] or False,
         })                                                                           
 
         return res 
