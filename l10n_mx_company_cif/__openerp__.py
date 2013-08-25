@@ -38,7 +38,7 @@
         "account",
         "base",
     ],
-    "demo" : [],
+    "demo" : ["demo/l10n_mx_company_cif_demo.xml"],
     "data" : [
         "res_company_view.xml",
         "wizard/installer.xml",

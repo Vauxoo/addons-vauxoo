@@ -85,7 +85,8 @@ class ir_sequence_approval(osv.Model):
                 SELECT *
                 FROM ir_sequence_approval
                ) approval_2
-               ON approval_2.sequence_id = approval_1.sequence_id
+               ON approval_2.sequence_id = approval_1.sequence_id and 
+               approval_2.company_id = approval_1.company_id
               AND approval_2.id <> approval_1.id
             WHERE approval_1.sequence_id = %d
               AND ( approval_1.number_start between approval_2.number_start \
@@ -100,7 +101,7 @@ class ir_sequence_approval(osv.Model):
 
     _constraints = [
         (_check_numbers_range, 'Error ! There ranges of numbers underhand between approvals.',\
-            ['sequence_id', 'number_start', 'number_end'])
+            ['sequence_id', 'number_start', 'number_end', 'company_id'])
     ]
 
 
@@ -118,17 +119,19 @@ class ir_sequence(osv.Model):
         context={}):
         if not context:
             context = {}
+        company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
         res = {}
         for id in ids:
             res[id] = False
         approval_obj = self.pool.get('ir.sequence.approval')
         for sequence in self.browse(cr, uid, ids, context=context):
-            number_work = context.get(
-                'number_work', None) or sequence.number_next
+            number_work = sequence.number_next_actual or False
+            number_work = number_work-1
             approval_ids = approval_obj.search(cr, uid, [
                 ('sequence_id', '=', sequence.id),
                 ('number_start', '<=', number_work),
-                ('number_end', '>=', number_work)],
+                ('number_end', '>=', number_work),
+                ('company_id', '=', company_id)],
                 limit=1)
             approval_id = approval_ids and approval_ids[0] or False
             res[sequence.id] = approval_id

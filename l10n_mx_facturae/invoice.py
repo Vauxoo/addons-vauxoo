@@ -118,7 +118,7 @@ msg2 = "Contact you administrator &/or to info@vauxoo.com"
 class account_invoice(osv.Model):
     _inherit = 'account.invoice'
 
-    def create_report(self, cr, uid, res_ids, report_name=False, file_name=False):
+    def create_report(self, cr, uid, res_ids, report_name=False, file_name=False, context=None):
         """
         @param report_name : Name of report with the name of object more type
             of report
@@ -126,12 +126,14 @@ class account_invoice(osv.Model):
             name of report that is 'openerp___facturae__' more six random
             characters for no files duplicate
         """
+        if context is None:
+                context = {}
         if not report_name or not res_ids:
             return (False, Exception('Report name and Resources ids are required !!!'))
         # try:
         ret_file_name = file_name+'.pdf'
         service = netsvc.LocalService("report."+report_name)
-        (result, format) = service.create(cr, uid, res_ids, {}, {})
+        (result, format) = service.create(cr, uid, res_ids, report_name, context=context)
         fp = open(ret_file_name, 'wb+')
         fp.write(result)
         fp.close()
@@ -455,7 +457,7 @@ class account_invoice(osv.Model):
                 cr, uid, sequence_app_id[0], context=context).type
         if invoice_datetime < '2012-07-01 00:00:00':
             return file_globals
-        elif type_inv == 'cfd22':
+        elif 'cfd' in type_inv and not 'cfdi' in type_inv:
             # Search char "," for addons_path, now is multi-path
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:
@@ -465,7 +467,7 @@ class account_invoice(osv.Model):
                         my_path, 'l10n_mx_facturae', 'SAT',
                         'cadenaoriginal_2_2_l.xslt') or ''
                     break
-        elif type_inv == 'cfdi32':
+        elif 'cfdi' in type_inv:
             # Search char "," for addons_path, now is multi-path
             all_paths = tools.config["addons_path"].split(",")
             for my_path in all_paths:

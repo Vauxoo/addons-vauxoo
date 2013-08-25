@@ -22,14 +22,14 @@
             <field name="arch" type="xml">
                 <form string="Attachment Factura-E" version="7.0">
                     <header>
-                        <button name="action_create_ir_attachment_facturae" states="confirmed" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="action_confirm" states="draft" string="Confirm" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="action_sign" states="confirmed" string="Sign" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="action_printable" states="signed" string="Generate Printable Format" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="action_send_customer" states="printable" string="Send to Customer" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="action_send_backup" states="sent_customer" string="Send to Backup" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="action_done" states="sent_backup" string="Done" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
-                        <button name="action_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="workflow" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
+                        <button name="create_ir_attachment_facturae" states="draft" string="Validate Attachment" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_confirm" states="draft" string="Confirm" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_sign" states="confirmed" string="Sign" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_printable" states="signed" string="Generate Printable Format" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_send_customer" states="printable" string="Send to Customer" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_send_backup" states="sent_customer" string="Send to Backup" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_done" states="sent_backup" string="Done" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
+                        <button name="signal_cancel" states="draft,confirmed,signed,printable,sent_backup,sent_customer,done" string="Cancel" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_user"/>
                         <button name="reset_to_draft" states="cancel" string="Reset to Draft" type="object" groups="l10n_mx_facturae_groups.group_l10n_mx_facturae_manager"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,signed,printable,sent_customer,sent_backup,done,cancel" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
                     </header>
