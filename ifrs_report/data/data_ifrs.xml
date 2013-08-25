@@ -19,7 +19,6 @@
 			<field eval="49" name="parent_left"/>
 			<field eval="5" name="sequence"/>
 			<field eval="0.0" name="amount"/>
-			<field eval="50" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -33,7 +32,6 @@
 			<field eval="47" name="parent_left"/>
 			<field eval="10" name="sequence"/>
 			<field eval="0.0" name="amount"/>
-			<field eval="48" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -47,7 +45,6 @@
 			<field eval="45" name="parent_left"/>
 			<field eval="20" name="sequence"/>
 			<field eval="0.0" name="amount"/>
-			<field eval="46" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -61,7 +58,6 @@
 			<field eval="43" name="parent_left"/>
 			<field eval="30" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="44" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -75,7 +71,6 @@
 			<field eval="42" name="parent_left"/>
 			<field eval="40" name="sequence"/>
 			<field eval="0.0" name="amount"/>
-			<field eval="51" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -87,7 +82,6 @@
 			<field name="name">-</field>
 			<field eval="63" name="parent_left"/>
 			<field eval="45" name="sequence"/>
-			<field eval="64" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -101,7 +95,6 @@
 			<field eval="38" name="parent_left"/>
 			<field eval="50" name="sequence"/>
 			<field eval="0.0" name="amount"/>
-			<field eval="39" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -115,7 +108,6 @@
 			<field eval="36" name="parent_left"/>
 			<field eval="60" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="37" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -128,7 +120,6 @@
 			<field eval="34" name="parent_left"/>
 			<field eval="70" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="35" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -142,7 +133,6 @@
 			<field eval="32" name="parent_left"/>
 			<field eval="75" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="33" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -154,7 +144,6 @@
 			<field eval="1" name="level"/>
 			<field eval="30" name="parent_left"/>
 			<field eval="80" name="sequence"/>
-			<field eval="31" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -167,7 +156,6 @@
 			<field eval="29" name="parent_left"/>
 			<field eval="90" name="sequence"/>
 			<field eval="0.0" name="amount"/>
-			<field eval="40" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -179,7 +167,6 @@
 			<field name="name">-</field>
 			<field eval="65" name="parent_left"/>
 			<field eval="95" name="sequence"/>
-			<field eval="66" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -203,7 +190,6 @@
 			<field eval="100" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="52" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -219,7 +205,6 @@
 			<field eval="110" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="58" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -231,7 +216,6 @@
 			<field name="name">-</field>
 			<field eval="67" name="parent_left"/>
 			<field eval="115" name="sequence"/>
-			<field eval="68" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -245,7 +229,6 @@
 			<field eval="120" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="60" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -259,7 +242,6 @@
 			<field eval="130" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="62" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -271,7 +253,6 @@
 			<field name="name">-</field>
 			<field eval="69" name="parent_left"/>
 			<field eval="135" name="sequence"/>
-			<field eval="70" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -284,7 +265,6 @@
 			<field eval="71" name="parent_left"/>
 			<field eval="140" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="72" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -296,7 +276,6 @@
 			<field eval="73" name="parent_left"/>
 			<field eval="150" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="74" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -308,7 +287,6 @@
 			<field eval="75" name="parent_left"/>
 			<field eval="160" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="76" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -319,7 +297,6 @@
 			<field name="name">-</field>
 			<field eval="83" name="parent_left"/>
 			<field eval="165" name="sequence"/>
-			<field eval="84" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -332,7 +309,6 @@
 			<field eval="77" name="parent_left"/>
 			<field eval="170" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="78" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -346,7 +322,6 @@
 			<field eval="180" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="80" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -360,7 +335,6 @@
 			<field eval="190" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="82" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -372,7 +346,6 @@
 			<field name="name">-</field>
 			<field eval="85" name="parent_left"/>
 			<field eval="195" name="sequence"/>
-			<field eval="86" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -384,7 +357,6 @@
 			<field name="name">INTERESES BANCARIOS</field>
 			<field eval="89" name="parent_left"/>
 			<field eval="200" name="sequence"/>
-			<field eval="90" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -397,7 +369,6 @@
 			<field eval="91" name="parent_left"/>
 			<field eval="210" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="92" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -408,7 +379,6 @@
 			<field name="name">(UTILIDAD O) PERDIDA EN CAMBIOS</field>
 			<field eval="93" name="parent_left"/>
 			<field eval="220" name="sequence"/>
-			<field eval="94" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -420,7 +390,6 @@
 			<field name="name">-</field>
 			<field eval="87" name="parent_left"/>
 			<field eval="225" name="sequence"/>
-			<field eval="88" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -433,7 +402,6 @@
 			<field eval="95" name="parent_left"/>
 			<field eval="230" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="96" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -447,7 +415,6 @@
 			<field eval="240" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="98" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_estadoderesultados0"/>
@@ -471,7 +438,6 @@
 			<field name="name">ACTIVO</field>
 			<field eval="99" name="parent_left"/>
 			<field eval="10" name="sequence"/>
-			<field eval="100" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -484,7 +450,6 @@
 			<field eval="101" name="parent_left"/>
 			<field eval="20" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="102" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -496,7 +461,6 @@
 			<field eval="103" name="parent_left"/>
 			<field eval="30" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="104" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -509,7 +473,6 @@
 			<field eval="105" name="parent_left"/>
 			<field eval="40" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="106" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -521,7 +484,6 @@
 			<field eval="107" name="parent_left"/>
 			<field eval="50" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="108" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -533,7 +495,6 @@
 			<field eval="109" name="parent_left"/>
 			<field eval="60" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="110" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -545,7 +506,6 @@
 			<field eval="111" name="parent_left"/>
 			<field eval="70" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="112" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -558,7 +518,6 @@
 			<field eval="113" name="parent_left"/>
 			<field eval="80" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="114" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -569,7 +528,6 @@
 			<field name="name">DIFERENCIA DE INVENTARIO POR ACLARAR</field>
 			<field eval="115" name="parent_left"/>
 			<field eval="90" name="sequence"/>
-			<field eval="116" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -582,7 +540,6 @@
 			<field eval="117" name="parent_left"/>
 			<field eval="100" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="118" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -595,7 +552,6 @@
 			<field eval="119" name="parent_left"/>
 			<field eval="110" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="120" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -608,7 +564,6 @@
 			<field eval="121" name="parent_left"/>
 			<field eval="120" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="122" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -621,7 +576,6 @@
 			<field eval="123" name="parent_left"/>
 			<field eval="130" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="124" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -633,7 +587,6 @@
 			<field eval="125" name="parent_left"/>
 			<field eval="140" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="126" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -645,7 +598,6 @@
 			<field name="name">CARGOS DIFERIDOS</field>
 			<field eval="127" name="parent_left"/>
 			<field eval="150" name="sequence"/>
-			<field eval="128" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -657,7 +609,6 @@
 			<field name="name">AMORTIZACION DE CARGOS DIFERIDOS</field>
 			<field eval="129" name="parent_left"/>
 			<field eval="160" name="sequence"/>
-			<field eval="130" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -669,7 +620,6 @@
 			<field name="name">SUMA ACTIVO DIFERIDO</field>
 			<field eval="131" name="parent_left"/>
 			<field eval="170" name="sequence"/>
-			<field eval="132" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -682,7 +632,6 @@
 			<field eval="133" name="parent_left"/>
 			<field eval="180" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="134" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -694,7 +643,6 @@
 			<field name="name">PASIVO</field>
 			<field eval="135" name="parent_left"/>
 			<field eval="200" name="sequence"/>
-			<field eval="136" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -707,7 +655,6 @@
 			<field eval="137" name="parent_left"/>
 			<field eval="210" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="138" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -719,7 +666,6 @@
 			<field eval="139" name="parent_left"/>
 			<field eval="220" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="140" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -732,7 +678,6 @@
 			<field eval="141" name="parent_left"/>
 			<field eval="230" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="142" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -744,7 +689,6 @@
 			<field eval="143" name="parent_left"/>
 			<field eval="240" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="144" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -756,7 +700,6 @@
 			<field name="name">OTROS ACREEDORES</field>
 			<field eval="145" name="parent_left"/>
 			<field eval="250" name="sequence"/>
-			<field eval="146" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -769,7 +712,6 @@
 			<field eval="147" name="parent_left"/>
 			<field eval="260" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="148" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -781,7 +723,6 @@
 			<field name="name">PRESTAMOS BANCARIOS LP</field>
 			<field eval="149" name="parent_left"/>
 			<field eval="270" name="sequence"/>
-			<field eval="150" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -793,7 +734,6 @@
 			<field name="name">OTROS PASIVOS LP</field>
 			<field eval="151" name="parent_left"/>
 			<field eval="280" name="sequence"/>
-			<field eval="152" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -805,7 +745,6 @@
 			<field name="name">IMPUESTOS DIFERIDOS</field>
 			<field eval="153" name="parent_left"/>
 			<field eval="290" name="sequence"/>
-			<field eval="154" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -817,7 +756,6 @@
 			<field name="name">INVERSIONES EN ACCIONES</field>
 			<field eval="155" name="parent_left"/>
 			<field eval="300" name="sequence"/>
-			<field eval="156" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -829,7 +767,6 @@
 			<field name="name">SUMA PASIVO A LARGO PLAZO</field>
 			<field eval="157" name="parent_left"/>
 			<field eval="310" name="sequence"/>
-			<field eval="158" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -842,7 +779,6 @@
 			<field eval="159" name="parent_left"/>
 			<field eval="320" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="160" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -854,7 +790,6 @@
 			<field name="name">CAPITAL</field>
 			<field eval="161" name="parent_left"/>
 			<field eval="400" name="sequence"/>
-			<field eval="162" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -867,7 +802,6 @@
 			<field eval="163" name="parent_left"/>
 			<field eval="410" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="164" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -879,7 +813,6 @@
 			<field name="name">RESERVA LEGAL</field>
 			<field eval="165" name="parent_left"/>
 			<field eval="420" name="sequence"/>
-			<field eval="166" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -891,7 +824,6 @@
 			<field name="name">SUPERAVIT POR ACTUALIZACION</field>
 			<field eval="167" name="parent_left"/>
 			<field eval="430" name="sequence"/>
-			<field eval="168" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -904,7 +836,6 @@
 			<field eval="169" name="parent_left"/>
 			<field eval="440" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="170" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -916,7 +847,6 @@
 			<field eval="171" name="parent_left"/>
 			<field eval="450" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="172" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -929,7 +859,6 @@
 			<field eval="173" name="parent_left"/>
 			<field eval="460" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="174" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -942,7 +871,6 @@
 			<field eval="175" name="parent_left"/>
 			<field eval="470" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="176" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -956,7 +884,6 @@
 			<field eval="480" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="178" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -969,7 +896,6 @@
 			<field eval="179" name="parent_left"/>
 			<field eval="490" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="180" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_balancegeneral0"/>
@@ -993,7 +919,6 @@
 			<field name="name">SALDO INICIAL</field>
 			<field eval="181" name="parent_left"/>
 			<field eval="10" name="sequence"/>
-			<field eval="182" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1007,7 +932,6 @@
 			<field eval="20" name="sequence"/>
 			<field name="acc_val">init</field>
 			<field eval="0" name="amount"/>
-			<field eval="184" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1021,7 +945,6 @@
 			<field eval="30" name="sequence"/>
 			<field name="acc_val">init</field>
 			<field eval="0" name="amount"/>
-			<field eval="186" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1035,7 +958,6 @@
 			<field eval="40" name="sequence"/>
 			<field name="acc_val">init</field>
 			<field eval="0" name="amount"/>
-			<field eval="188" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1047,7 +969,6 @@
 			<field eval="189" name="parent_left"/>
 			<field eval="50" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="190" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1059,7 +980,6 @@
 			<field name="name">INVERSIONES EN ACTIVO FIJO</field>
 			<field eval="191" name="parent_left"/>
 			<field eval="60" name="sequence"/>
-			<field eval="192" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1074,7 +994,6 @@
 			<field name="acc_val">var</field>
 			<field name="value">debit</field>
 			<field eval="0" name="amount"/>
-			<field eval="194" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1088,7 +1007,6 @@
 			<field eval="80" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field name="value">debit</field>
-			<field eval="196" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1100,7 +1018,6 @@
 			<field eval="197" name="parent_left"/>
 			<field eval="90" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="198" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1112,7 +1029,6 @@
 			<field name="name">RETIRO DE ACTIVOS FIJOS</field>
 			<field eval="199" name="parent_left"/>
 			<field eval="100" name="sequence"/>
-			<field eval="200" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1127,7 +1043,6 @@
 			<field name="acc_val">var</field>
 			<field name="value">credit</field>
 			<field eval="0" name="amount"/>
-			<field eval="202" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1142,7 +1057,6 @@
 			<field name="acc_val">var</field>
 			<field name="value">debit</field>
 			<field eval="0" name="amount"/>
-			<field eval="204" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1154,7 +1068,6 @@
 			<field name="name">INVERSIONES EN PROCESO</field>
 			<field eval="205" name="parent_left"/>
 			<field eval="130" name="sequence"/>
-			<field eval="206" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1166,7 +1079,6 @@
 			<field name="name">SUMA DE RETIRO DE ACTIVO FIJO</field>
 			<field eval="207" name="parent_left"/>
 			<field eval="140" name="sequence"/>
-			<field eval="208" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1181,7 +1093,6 @@
 			<field name="acc_val">var</field>
 			<field name="value">credit</field>
 			<field eval="0" name="amount"/>
-			<field eval="210" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1193,7 +1104,6 @@
 			<field name="name">SALDO FINAL</field>
 			<field eval="213" name="parent_left"/>
 			<field eval="160" name="sequence"/>
-			<field eval="214" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1207,7 +1117,6 @@
 			<field eval="170" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="212" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1221,7 +1130,6 @@
 			<field eval="180" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="216" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1235,7 +1143,6 @@
 			<field eval="190" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="218" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1248,7 +1155,6 @@
 			<field eval="219" name="parent_left"/>
 			<field eval="200" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="220" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_movimientosdeactivofijo0"/>
@@ -1272,7 +1178,6 @@
 			<field name="name">SALDO INICIAL</field>
 			<field eval="221" name="parent_left"/>
 			<field eval="10" name="sequence"/>
-			<field eval="222" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1285,7 +1190,6 @@
 			<field eval="223" name="parent_left"/>
 			<field eval="20" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="224" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1298,7 +1202,6 @@
 			<field eval="225" name="parent_left"/>
 			<field eval="30" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="226" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1311,7 +1214,6 @@
 			<field eval="227" name="parent_left"/>
 			<field eval="40" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="228" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1324,7 +1226,6 @@
 			<field eval="229" name="parent_left"/>
 			<field eval="50" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="230" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1337,7 +1238,6 @@
 			<field eval="231" name="parent_left"/>
 			<field eval="60" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="232" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1349,7 +1249,6 @@
 			<field name="name">CARGOS DIFERIDOS</field>
 			<field eval="233" name="parent_left"/>
 			<field eval="70" name="sequence"/>
-			<field eval="234" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1362,7 +1261,6 @@
 			<field eval="235" name="parent_left"/>
 			<field eval="80" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="236" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1375,7 +1273,6 @@
 			<field eval="237" name="parent_left"/>
 			<field eval="90" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="238" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1389,7 +1286,6 @@
 			<field eval="91" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="248" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1402,7 +1298,6 @@
 			<field eval="239" name="parent_left"/>
 			<field eval="92" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="240" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1415,7 +1310,6 @@
 			<field eval="241" name="parent_left"/>
 			<field eval="93" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="242" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1427,7 +1321,6 @@
 			<field name="name">OTROS ACREEDORES</field>
 			<field eval="243" name="parent_left"/>
 			<field eval="94" name="sequence"/>
-			<field eval="244" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1440,7 +1333,6 @@
 			<field eval="245" name="parent_left"/>
 			<field eval="95" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="246" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1454,7 +1346,6 @@
 			<field eval="249" name="parent_left"/>
 			<field eval="96" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="250" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1467,7 +1358,6 @@
 			<field eval="251" name="parent_left"/>
 			<field eval="97" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="252" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1480,7 +1370,6 @@
 			<field eval="253" name="parent_left"/>
 			<field eval="98" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="254" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1493,7 +1382,6 @@
 			<field eval="255" name="parent_left"/>
 			<field eval="99" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="256" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_analisisdecapitaldetrabajo0"/>
@@ -1518,7 +1406,6 @@
 			<field eval="257" name="parent_left"/>
 			<field eval="10" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="258" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1531,7 +1418,6 @@
 			<field eval="259" name="parent_left"/>
 			<field eval="20" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="260" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1543,7 +1429,6 @@
 			<field name="name">BAJAS DE ACTIVOS Y CARGOS DIFERIDOS</field>
 			<field eval="261" name="parent_left"/>
 			<field eval="30" name="sequence"/>
-			<field eval="262" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1556,7 +1441,6 @@
 			<field eval="263" name="parent_left"/>
 			<field eval="40" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="264" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1570,7 +1454,6 @@
 			<field eval="50" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="266" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1584,7 +1467,6 @@
 			<field eval="60" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="268" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1597,7 +1479,6 @@
 			<field eval="70" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="270" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1609,7 +1490,6 @@
 			<field eval="271" name="parent_left"/>
 			<field eval="80" name="sequence"/>
 			<field name="acc_val">var</field>
-			<field eval="272" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1622,7 +1502,6 @@
 			<field eval="90" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="274" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1635,7 +1514,6 @@
 			<field eval="275" name="parent_left"/>
 			<field eval="100" name="sequence"/>
 			<field name="acc_val">var</field>
-			<field eval="276" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1649,7 +1527,6 @@
 			<field eval="110" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="278" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1663,7 +1540,6 @@
 			<field eval="120" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="280" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1676,7 +1552,6 @@
 			<field eval="130" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="282" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1688,7 +1563,6 @@
 			<field name="name">(AUM) DISM OTROS ACREEDORES</field>
 			<field eval="283" name="parent_left"/>
 			<field eval="140" name="sequence"/>
-			<field eval="284" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1701,7 +1575,6 @@
 			<field eval="285" name="parent_left"/>
 			<field eval="150" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="286" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1714,7 +1587,6 @@
 			<field eval="287" name="parent_left"/>
 			<field eval="160" name="sequence"/>
 			<field name="acc_val">var</field>
-			<field eval="288" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1727,7 +1599,6 @@
 			<field eval="289" name="parent_left"/>
 			<field eval="170" name="sequence"/>
 			<field name="acc_val">var</field>
-			<field eval="290" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1740,7 +1611,6 @@
 			<field eval="291" name="parent_left"/>
 			<field eval="180" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="292" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1752,7 +1622,6 @@
 			<field name="name">DEVALUACION DE ACTIVO FIJO Y CARGOS DIFERIDOS</field>
 			<field eval="293" name="parent_left"/>
 			<field eval="190" name="sequence"/>
-			<field eval="294" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1764,7 +1633,6 @@
 			<field name="name">INVERSIONES EN ACCIONES</field>
 			<field eval="295" name="parent_left"/>
 			<field eval="200" name="sequence"/>
-			<field eval="296" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1777,7 +1645,6 @@
 			<field eval="297" name="parent_left"/>
 			<field eval="210" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="298" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1790,7 +1657,6 @@
 			<field eval="299" name="parent_left"/>
 			<field eval="220" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="300" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1804,7 +1670,6 @@
 			<field eval="230" name="sequence"/>
 			<field name="acc_val">var</field>
 			<field eval="0" name="amount"/>
-			<field eval="302" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1816,7 +1681,6 @@
 			<field eval="303" name="parent_left"/>
 			<field eval="240" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="304" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1830,7 +1694,6 @@
 			<field eval="250" name="sequence"/>
 			<field name="acc_val">init</field>
 			<field eval="0" name="amount"/>
-			<field eval="306" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1842,7 +1705,6 @@
 			<field eval="307" name="parent_left"/>
 			<field eval="260" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="308" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1854,7 +1716,6 @@
 			<field eval="270" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="310" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1868,7 +1729,6 @@
 			<field eval="280" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="312" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1882,7 +1742,6 @@
 			<field eval="285" name="sequence"/>
 			<field name="acc_val">init</field>
 			<field eval="0" name="amount"/>
-			<field eval="316" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
 			<field eval="[(6,0,[])]" name="total_ids"/>
@@ -1894,7 +1753,6 @@
 			<field eval="290" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="314" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_flujodeefectivo0"/>
@@ -1918,7 +1776,6 @@
 			<field name="name">Indices de Liquidez (veces)</field>
 			<field eval="317" name="parent_left"/>
 			<field eval="10" name="sequence"/>
-			<field eval="318" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -1932,7 +1789,6 @@
 			<field eval="20" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="320" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -1946,7 +1802,6 @@
 			<field eval="25" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="380" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -1960,7 +1815,6 @@
 			<field eval="30" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="322" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -1974,7 +1828,6 @@
 			<field eval="40" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="324" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -1986,7 +1839,6 @@
 			<field name="name">-</field>
 			<field eval="325" name="parent_left"/>
 			<field eval="45" name="sequence"/>
-			<field eval="326" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -1998,7 +1850,6 @@
 			<field name="name">Indices de Apalancamiento</field>
 			<field eval="327" name="parent_left"/>
 			<field eval="50" name="sequence"/>
-			<field eval="328" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2012,7 +1863,6 @@
 			<field eval="60" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="330" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2026,7 +1876,6 @@
 			<field eval="70" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="332" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2038,7 +1887,6 @@
 			<field name="name">-</field>
 			<field eval="333" name="parent_left"/>
 			<field eval="75" name="sequence"/>
-			<field eval="334" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2050,7 +1898,6 @@
 			<field name="name">Indices de Actividad</field>
 			<field eval="335" name="parent_left"/>
 			<field eval="80" name="sequence"/>
-			<field eval="336" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2063,7 +1910,6 @@
 			<field eval="383" name="parent_left"/>
 			<field eval="2800" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="384" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2078,7 +1924,6 @@
 			<field eval="85" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="382" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2092,7 +1937,6 @@
 			<field eval="90" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="338" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2105,7 +1949,6 @@
 			<field eval="385" name="parent_left"/>
 			<field eval="95" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="386" name="parent_right"/>
 			<field eval="1" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2119,7 +1962,6 @@
 			<field eval="100" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="340" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2133,7 +1975,6 @@
 			<field eval="105" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="388" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2147,7 +1988,6 @@
 			<field eval="110" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="342" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2161,7 +2001,6 @@
 			<field eval="115" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="390" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2175,7 +2014,6 @@
 			<field eval="120" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="344" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2188,7 +2026,6 @@
 			<field eval="391" name="parent_left"/>
 			<field eval="2900" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="392" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2203,7 +2040,6 @@
 			<field eval="125" name="sequence"/>
 			<field name="operator">product</field>
 			<field eval="0" name="amount"/>
-			<field eval="394" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2217,7 +2053,6 @@
 			<field eval="130" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="346" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2231,7 +2066,6 @@
 			<field eval="135" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="400" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2244,7 +2078,6 @@
 			<field eval="395" name="parent_left"/>
 			<field eval="3000" name="sequence"/>
 			<field eval="0" name="amount"/>
-			<field eval="396" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2260,7 +2093,6 @@
 			<field eval="3010" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="398" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2275,7 +2107,6 @@
 			<field eval="140" name="sequence"/>
 			<field name="operator">product</field>
 			<field eval="0" name="amount"/>
-			<field eval="348" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2289,7 +2120,6 @@
 			<field eval="145" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="402" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2304,7 +2134,6 @@
 			<field eval="150" name="sequence"/>
 			<field name="operator">product</field>
 			<field eval="0" name="amount"/>
-			<field eval="350" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2318,7 +2147,6 @@
 			<field eval="155" name="sequence"/>
 			<field name="operator">ratio</field>
 			<field eval="0" name="amount"/>
-			<field eval="404" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2332,7 +2160,6 @@
 			<field eval="160" name="sequence"/>
 			<field name="operator">product</field>
 			<field eval="0" name="amount"/>
-			<field eval="352" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2344,7 +2171,6 @@
 			<field name="name">-</field>
 			<field eval="353" name="parent_left"/>
 			<field eval="165" name="sequence"/>
-			<field eval="354" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2356,7 +2182,6 @@
 			<field name="name">Indices de Rentabilidad</field>
 			<field eval="355" name="parent_left"/>
 			<field eval="170" name="sequence"/>
-			<field eval="356" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2370,7 +2195,6 @@
 			<field eval="191" name="sequence"/>
 			<field name="operator">subtract</field>
 			<field eval="0" name="amount"/>
-			<field eval="406" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2384,7 +2208,6 @@
 			<field eval="180" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="358" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2398,7 +2221,6 @@
 			<field eval="200" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="362" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2412,7 +2234,6 @@
 			<field eval="210" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="364" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2426,7 +2247,6 @@
 			<field eval="220" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="366" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2440,7 +2260,6 @@
 			<field eval="230" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="368" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2452,7 +2271,6 @@
 			<field name="name">-</field>
 			<field eval="369" name="parent_left"/>
 			<field eval="235" name="sequence"/>
-			<field eval="370" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2464,7 +2282,6 @@
 			<field name="name">Comportamiento de Gastos / Ventas</field>
 			<field eval="371" name="parent_left"/>
 			<field eval="240" name="sequence"/>
-			<field eval="372" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2478,7 +2295,6 @@
 			<field eval="250" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="374" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2492,7 +2308,6 @@
 			<field eval="260" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="376" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2506,7 +2321,6 @@
 			<field eval="270" name="sequence"/>
 			<field name="operator">percent</field>
 			<field eval="0" name="amount"/>
-			<field eval="378" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2518,7 +2332,6 @@
 			<field name="name">-</field>
 			<field eval="407" name="parent_left"/>
 			<field eval="2600" name="sequence"/>
-			<field eval="408" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
@@ -2530,7 +2343,6 @@
 			<field name="name">-</field>
 			<field eval="409" name="parent_left"/>
 			<field eval="2700" name="sequence"/>
-			<field eval="410" name="parent_right"/>
 			<field eval="0" name="inv_sign"/>
 			<field eval="[(6,0,[])]" name="cons_ids"/>
 			<field model="ifrs.ifrs" name="ifrs_id" ref="ifrs_ifrs_razonesfinancieras0"/>
