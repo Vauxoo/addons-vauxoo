@@ -15,7 +15,8 @@
                 </group>
                 <div states="get">
                     <h2>You DIOT report has been successfully created!</h2>
-                    <p>Here is the exported DIOT Report file: <field name="file" readonly="1" filename="filename"/></p>
+                    <p>Here is the exported DIOT Report file:</p>
+                    <p>TXT: <field name="file" readonly="1" filename="filename"/> CSV:  <field name="file_csv" readonly="1" filename="filename_csv"/></p>
                 </div>
                 <div states="not_file">
                     <h2>You DIOT report not has been created!</h2>
