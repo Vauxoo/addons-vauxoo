@@ -66,7 +66,7 @@ class account_invoice(osv.Model):
                     attach_ids.append( ir_attach_obj.create(cr, uid, {
                       'name': invoice.fname_invoice, 'invoice_id': invoice.id,
                       'type': invoice.invoice_sequence_id.approval_id.type},
-                      context=context)
+                      context=None)#Context, because use a variable type of our code but we dont need it.
                     )
         if attach_ids:
             form_res = ir_model_data_obj.get_object_reference(

@@ -138,7 +138,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     'datas_fname': fname_invoice,
                     'res_model': 'account.invoice',
                     'res_id': invoice.id,
-                }, context=context)
+                }, context=None)#Context, because use a variable type of our code but we dont need it.
                 msj = _("Attached Successfully XML CFDI 3.2\n")
                 save_attach = True
             elif 'cfd' in type:
@@ -152,7 +152,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     'datas_fname': fname_invoice,
                     'res_model': 'account.invoice',
                     'res_id': invoice.id,
-                }, context=context)
+                }, context=None)#Context, because use a variable type of our code but we dont need it.
                 if attach:
                     index_xml = self.pool.get('ir.attachment').browse(cr, uid, attach).index_content
                     msj = _("Attached Successfully XML CFD 2.2")

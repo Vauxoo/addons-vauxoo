@@ -158,7 +158,7 @@ class account_invoice(osv.Model):
                 'datas_fname': fname_invoice,
                 'res_model': 'account.invoice',
                 'res_id': invoice.id,
-            }, context=context)
+            }, context=None)#Context, because use a variable type of our code but we dont need it.
         self.fdata = base64.encodestring(xml_data)
         msg = _("Press in the button  'Upload File'")
         return {'file': self.fdata, 'fname': fname_invoice,
