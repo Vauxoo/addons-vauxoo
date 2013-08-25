@@ -28,9 +28,5 @@
             <field name="parent_id" ref="res_partner_address_vauxoo_0"/>
         </record>
         
-        <record id="base.main_company" model="res.company">
-            <field name="address_invoice_parent_company_id" eval="ref('l10n_mx_partner_address.res_partner_address_vauxoo_0')"/>
-        </record>
-        
      </data>
 </openerp>
