@@ -50,7 +50,7 @@ class convert_note_task(osv.TransientModel):
                 'description': note_brw[0].memo,   
                 'project_id': cvt_brw[0].project_id.id,
                 'user_id': uid,
-                'date_deadline': cvt_brw[0].date_end,
+                'date_deadline': cvt_brw[0].date_deadline,
             },context=context); 
         note_obj.write(cr, uid, [context.get('active_id')], {
                 'open': False,
