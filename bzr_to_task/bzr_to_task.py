@@ -126,8 +126,8 @@ class sprint_kanban_tasks(osv.Model):
         user_obj = self.pool.get('res.users')
         obj_this = self.browse(cr, uid, ids)[0]
         url = obj_this.url_branch
-        res_id = obj_this(cr, uid, ids)[0].res_id
-        inferior = obj_this(cr, uid, ids)[0].from_revno
+        res_id = obj_this.res_id
+        inferior = obj_this.from_revno
         if url and res_id and inferior and int(res_id) > inferior:
             task_branch = branch.Branch.open(url)
             b_revno = task_branch.revno()
