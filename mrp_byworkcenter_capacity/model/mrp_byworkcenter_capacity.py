@@ -41,7 +41,6 @@ class mrp_workcenter(osv.Model):
             'mrp.workcenter.product.capacity',
             'workcenter_id',
             _('Products Maxime Capacity'),
-            ondelete='cascades',
             help=_('Workcenter capacities by product')),
     }
 
@@ -80,6 +79,10 @@ class mrp_workcenter_product_capacity(osv.Model):
             _('WorkCenter'),
             required=True,
             help=_('Work Center')),
+        'operation_id': fields.many2one(
+            'mrp.routing.workcenter',
+            _('Operation'),
+            help=_('Operation')),
         'product_id': fields.many2one(
             'product.product',
             _('Product'),
@@ -101,6 +104,31 @@ class mrp_workcenter_product_capacity(osv.Model):
          _('Error! There is already defined capacity for this product in the '
            'current workcenter'),
          'product_id')
+    }
+
+    def default_get(self, cr, uid, fields, context=None):
+        """
+        This method loads the workcenter_id extracted from the
+        workcenter operation wizard and added to the current product capacity
+        line. It garantee that the wor center is set.   
+        """
+        context = context or {}
+        res = super(mrp_workcenter_product_capacity, self).default_get(
+            cr, uid, fields, context)
+
+        res['workcenter_id'] = context.get('workcenter_id', False)
+        return res
+
+
+class mrp_routing_workcenter(osv.Model):
+
+    _inherit = 'mrp.routing.workcenter'
+    _columns = {
+        'product_ids': fields.one2many(
+            'mrp.workcenter.product.capacity',
+            'operation_id',
+            _('Products Needed'),
+            help=_('Products needed to the operation')),
     }
 
 class mrp_production(osv.Model):
@@ -157,11 +185,70 @@ class mrp_production(osv.Model):
         """
         context = context or {}
         routing_obj = self.pool.get('mrp.routing')
-        routing_brw = routing_obj.browse(cr, uid, ids, context=context)
-        wc_capacity = {}
+        uom_obj = self.pool.get('product.uom')
+        routing_brw = routing_obj.browse(cr, uid, rounting_id, context=context)
+        production = self.browse(cr, uid, ids, context=context)
 
-        for operation in routing_brw.workcenter_lines:
-            wc_capacity[operation.workcenter_id] = []
+        product_ids = [item.product_id.id
+                       for item in production.bom_id.bom_lines]
+
+        wc_brws = [item.workcenter_id
+                   for item in routing_brw.workcenter_lines]
+
+        product_to_produce = {}.fromkeys(product_ids)
+        for bom in production.bom_id.bom_lines:
+            product_to_produce[bom.product_id.id] = \
+                {'qty': bom.product_qty * production.product_qty,
+                 'uom': bom.product_uom.id}
+
+        import pprint
+        print '\n'*3
+        print 'product list'
+        pprint.pprint([(item.product_id.id, item.product_id.name)
+                for item in production.bom_id.bom_lines]) 
+
+        print '\n'
+        print 'product_to_produce'
+        pprint.pprint(product_to_produce)
+
+        product_capacity = {}
+        for product_id in product_ids:
+            product_capacity[product_id] = []
+
+        print '\n'
+        print 'production.product_qty', production.product_qty
+
+        print '\n'
+        print 'iteracion sobre...'
+        for wc in wc_brws:
+            print 'wc', wc.id
+
+            for wcpc_brw in wc.product_capacity_ids:
+                product_capacity[wcpc_brw.product_id.id] += \
+                    [(wc.id, wcpc_brw.product_id.id,
+                      production.product_qty * uom_obj._compute_qty(
+                        cr, uid, wcpc_brw.uom_id.id, wcpc_brw.qty,
+                        production.product_uom.id), wcpc_brw.qty,
+                     production.product_uom.id)]
+                print '_compute_qty(%s,%s)' % (wcpc_brw.product_id.id, wcpc_brw.qty), uom_obj._compute_qty(
+                        cr, uid, wcpc_brw.uom_id.id, wcpc_brw.qty,
+                        production.product_uom.id)
+
+
+        print 'product_capacity'
+        pprint.pprint(product_capacity)
+        print '\n'*3
+
+        raise osv.except_osv(
+            _('Warining'),
+            _('This functionality is on development.'))
+
+        wc_capacity = {}
+        wc_capacity[operation.workcenter_id] = []
+
+        #~ 'move_lines': fields.many2many('stock.move', 'mrp_production_move_ids', 'production_id', 'move_id', 'Products to Consume',
+            #~ domain=[('state','not in', ('done', 'cancel'))], readonly=True, states={'draft':[('readonly',False)]}),
+#~ 
 
         #~ import pprint
         #~ print '\n'*3
@@ -219,9 +306,6 @@ class mrp_production(osv.Model):
                 if batch_mode == 'max_cost':
                     wc_capacity = wc_brw.capacity_per_cycle
                 elif batch_mode == 'bottleneck':
-                    raise osv.except_osv(
-                        _('Warining'),
-                        _('This functionality is in development.'))
                     wc_capacity = self.get_wc_capacity(
                         cr, uid, production.id, routing_brw.id,
                         context=context)
