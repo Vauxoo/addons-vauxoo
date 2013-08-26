@@ -44,34 +44,11 @@ class mrp_workcenter(osv.Model):
             help=_('Workcenter capacities by product')),
     }
 
+
 class mrp_workcenter_product_capacity(osv.Model):
 
     _name = 'mrp.workcenter.product.capacity'
     _description = 'Workcenter Product Capacity'
-
-    #~ TODO: this method for constraint is not working like it supposed.
-    def _check_uniqueness(self, cr, uid, ids, context=None):
-        """
-        Check if a product capacity is already defined in a workcenter
-        @return True if there is unique, False if already exist
-        """
-        context = context or {}
-        wc_obj = self.pool.get('mrp.workcenter')
-        product_obj = self.pool.get('product.product')
-        wcpc_brw = self.browse(cr, uid, ids, context=context)[0]
-
-        product_capacity = self.search(
-            cr, uid, [('product_id', '=', wcpc_brw.product_id.id),
-            ('workcenter_id', '=', wcpc_brw.workcenter_id.id)],
-            context=context)
-
-        #~ print '\n'*4
-        #~ print '_check_uniqueness()'
-        #~ print 'wcpc_brw', wcpc_brw
-        #~ print 'product_capacity', product_capacity
-        #~ print '\n'*4
-
-        return product_capacity and True or False 
 
     _columns = {
         'workcenter_id': fields.many2one(
@@ -79,9 +56,39 @@ class mrp_workcenter_product_capacity(osv.Model):
             _('WorkCenter'),
             required=True,
             help=_('Work Center')),
+        'product_id': fields.many2one(
+            'product.product',
+            _('Product'),
+            required=True,
+            help=_('Product')),
+        'qty': fields.float(
+            _('Capacity'),
+            required=True,
+            help=_('Quantity')),
+        'uom_id': fields.many2one(
+            'product.uom',
+            _('Unit of Measure'),
+            required=True,
+            help=_('Unit of Measure')),
+    }
+
+    _sql_constraints = [
+        ('operation_prodct_uniq', 'unique (workcenter_id,product_id)',
+            'Error! There is already defined capacity for this product in the '
+           'current workcenter.')
+    ]
+
+
+class mrp_workcenter_operation_product_quantity(osv.Model):
+
+    _name = 'mrp.workcenter.operation.product.quantity'
+    _description = 'Work Center Operation Product Quantity'
+
+    _columns = {
         'operation_id': fields.many2one(
             'mrp.routing.workcenter',
             _('Operation'),
+            required=True,
             help=_('Operation')),
         'product_id': fields.many2one(
             'product.product',
@@ -99,25 +106,11 @@ class mrp_workcenter_product_capacity(osv.Model):
             help=_('Unit of Measure')),
     }
 
-    _constraints = {
-        (_check_uniqueness,
-         _('Error! There is already defined capacity for this product in the '
-           'current workcenter'),
-         'product_id')
-    }
-
-    def default_get(self, cr, uid, fields, context=None):
-        """
-        This method loads the workcenter_id extracted from the
-        workcenter operation wizard and added to the current product capacity
-        line. It garantee that the wor center is set.   
-        """
-        context = context or {}
-        res = super(mrp_workcenter_product_capacity, self).default_get(
-            cr, uid, fields, context)
-
-        res['workcenter_id'] = context.get('workcenter_id', False)
-        return res
+    _sql_constraints = [
+        ('operation_prodct_uniq', 'unique (operation_id,product_id)',
+            'Error! There is already defined capacity for this product in the '
+           'current operation.')
+    ]
 
 
 class mrp_routing_workcenter(osv.Model):
@@ -125,7 +118,7 @@ class mrp_routing_workcenter(osv.Model):
     _inherit = 'mrp.routing.workcenter'
     _columns = {
         'product_ids': fields.one2many(
-            'mrp.workcenter.product.capacity',
+            'mrp.workcenter.operation.product.quantity',
             'operation_id',
             _('Products Needed'),
             help=_('Products needed to the operation')),

@@ -69,7 +69,6 @@ mrp.workcenter.product.capacity
             <field name="arch" type="xml">
                 <tree string="Workcenter Product Capacities" version="7.0">
                     <field name="workcenter_id"/> 
-                    <field name="operation_id"/>
                     <field name="product_id"/>
                     <field name="qty"/>
                     <field name="uom_id"/>
@@ -84,11 +83,9 @@ mrp.workcenter.product.capacity
                 <search string="Workcenter Product Capacities">
                     <field name="workcenter_id"/> 
                     <field name="product_id"/>
-                    <field name="operation_id"/>
                     <group expand="0" string="Group By...">
                         <filter string="Work Center" icon="terp-blue-folder" name="group_report" context="{'group_by':'workcenter_id'}"/>
                         <filter string="Product" icon="terp-blue-folder" name="group_report" context="{'group_by':'product_id'}"/>
-                        <filter string="Operation" icon="terp-blue-folder" name="group_report" context="{'group_by':'operation_id'}"/>
                     </group>
                 </search>
             </field>
@@ -162,10 +159,8 @@ mrp.routing.workcenter inherits
 
                 <xpath expr="//group" position="after">
                     <group string="Products Needed">
-                        <field name="product_ids" nolabel="1" context="{'workcenter_id': workcenter_id}">
-                            <tree string="Workcenter Product Capacities" editable="bottom" version="7.0">
-                                <field name="workcenter_id" invisible="1"/> 
-                                <field name="operation_id" invisible="1"/>
+                        <field name="product_ids" nolabel="1">
+                            <tree string="Operation Product Quantities" editable="bottom" version="7.0">
                                 <field name="product_id"/>
                                 <field name="qty"/>
                                 <field name="uom_id"/>
