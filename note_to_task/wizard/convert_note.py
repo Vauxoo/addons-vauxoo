@@ -35,6 +35,38 @@ class convert_note_task(osv.TransientModel):
             'estimated_time':fields.float('Estimated Time', help="""Estimated Time to Complete the
                 Task"""), 
             'project_id':fields.many2one('project.project', 'Project', help='Project Linked'), 
-            'date_end':fields.date('Date End', help='Date to complete the Task'), 
-   }
+            'date_deadline':fields.date('Deadline', help='Date to complete the Task'), 
+    }
 
+    def create_task(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {} 
+        cvt_brw = self.browse(cr, uid, ids, context=context) 
+        task_obj = self.pool.get('project.task')
+        note_obj = self.pool.get('note.note')
+        note_brw = note_obj.browse(cr, uid, [context.get('active_id')], context=context)
+        task_id = task_obj.create(cr, uid, {
+                'name': note_brw[0].name,
+                'description': note_brw[0].memo,   
+                'project_id': cvt_brw[0].project_id.id,
+                'user_id': uid,
+                'date_deadline': cvt_brw[0].date_end,
+            },context=context); 
+        note_obj.write(cr, uid, [context.get('active_id')], {
+                'open': False,
+            })
+        obj_model = self.pool.get('ir.model.data')
+        model_data_ids = obj_model.search(
+            cr, uid, [('model', '=', 'ir.ui.view'),
+                     ('name', '=', 'view_task_form2')])
+        resource_id = obj_model.read(cr, uid, model_data_ids,
+                                    fields=['res_id'])[0]['res_id']
+        return {
+           'view_type': 'form',
+           'view_mode': 'form',
+           'res_model': 'project.task',
+           'views': [(resource_id, 'form')],
+           'res_id': task_id, 
+           'type': 'ir.actions.act_window',
+           'context': {},
+        }
