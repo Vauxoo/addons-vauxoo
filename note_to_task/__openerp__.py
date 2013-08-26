@@ -25,7 +25,7 @@
     'name': 'Convert Note to Task',                                                                             
     'version': '1.0',
     'category': 'Tools',
-    'depends': ['note', 'project'],
+    'depends': ['base','note', 'project'],
     'description': """
 Convert Note to Task
 ====================

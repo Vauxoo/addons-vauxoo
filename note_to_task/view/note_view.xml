@@ -6,8 +6,8 @@
             <field name="model">note.note</field>
             <field name="inherit_id" ref="note.view_note_note_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='tag_ids']" position="after">
-                    <button name="%(note_to_task.show_convert_note_action)d" type="action" string="Convert to Task"/> 
+                <xpath expr="//field[@name='tag_ids']" position="before">
+                    <button name="%(note_to_task.show_convert_note_action)d" type="action" string="Convert to Task" groups="base.group_user"/> 
                 </xpath>
             </field>
         </record>
