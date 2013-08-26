@@ -46,9 +46,10 @@ class project_project(osv.Model):
     def get_works(self, cr, uid, ids, context=None):
         user_obj = self.pool.get('res.users')
         task_obj = self.pool.get('project.task')
-        url = self.browse(cr, uid, ids)[0].url_branch
-        res_id = self.browse(cr, uid, ids)[0].res_id
-        inferior = self.browse(cr, uid, ids)[0].from_revno
+        obj_this = self.browse(cr, uid, ids)[0]
+        url = obj_this.url_branch
+        res_id = obj_this.res_id
+        inferior = obj_this.from_revno
         if url and res_id and inferior and int(res_id) > inferior:
             project_branch = branch.Branch.open(url)
             b_revno = project_branch.revno()
@@ -123,9 +124,10 @@ class sprint_kanban_tasks(osv.Model):
     def get_works(self, cr, uid, ids, context=None):
         tw_obj = self.pool.get('project.task.work')
         user_obj = self.pool.get('res.users')
-        url = self.browse(cr, uid, ids)[0].url_branch
-        res_id = self.browse(cr, uid, ids)[0].res_id
-        inferior = self.browse(cr, uid, ids)[0].from_revno
+        obj_this = self.browse(cr, uid, ids)[0]
+        url = obj_this.url_branch
+        res_id = obj_this(cr, uid, ids)[0].res_id
+        inferior = obj_this(cr, uid, ids)[0].from_revno
         if url and res_id and inferior and int(res_id) > inferior:
             task_branch = branch.Branch.open(url)
             b_revno = task_branch.revno()
