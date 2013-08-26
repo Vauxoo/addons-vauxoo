@@ -33,9 +33,9 @@ class convert_note_task(osv.TransientModel):
     
     _columns = {
             'estimated_time':fields.float('Estimated Time', help="""Estimated Time to Complete the
-                Task"""), 
-            'project_id':fields.many2one('project.project', 'Project', help='Project Linked'), 
-            'date_deadline':fields.date('Deadline', help='Date to complete the Task'), 
+                Task""", required=True), 
+            'project_id':fields.many2one('project.project', 'Project', help='Project Linked', required=True), 
+            'date_deadline':fields.date('Deadline', help='Date to complete the Task', required=True), 
     }
 
     def create_task(self, cr, uid, ids, context=None):
