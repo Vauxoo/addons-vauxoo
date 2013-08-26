@@ -181,64 +181,124 @@ class mrp_production(osv.Model):
     def get_wc_capacity(self, cr, uid, ids, rounting_id, context=None):
         """
         It calculate every workcenters capacity in the rounting_id.
-        @return the rorunting capacity (the minimun workcenter max capacity) 
+        @return the rorunting capacity (the minimun workcenter max capacity)
         """
         context = context or {}
         routing_obj = self.pool.get('mrp.routing')
         uom_obj = self.pool.get('product.uom')
+        product_obj = self.pool.get('product.product')
         routing_brw = routing_obj.browse(cr, uid, rounting_id, context=context)
         production = self.browse(cr, uid, ids, context=context)
 
-        product_ids = [item.product_id.id
-                       for item in production.bom_id.bom_lines]
-
-        wc_brws = [item.workcenter_id
-                   for item in routing_brw.workcenter_lines]
-
-        product_to_produce = {}.fromkeys(product_ids)
+        # Manufacturing Order Raw Material Needed
+        print '\n'
+        print '...Manufacturing Order Raw Material Needed'
+        production_rm = dict()
+        product_qty = production.product_qty
         for bom in production.bom_id.bom_lines:
-            product_to_produce[bom.product_id.id] = \
-                {'qty': bom.product_qty * production.product_qty,
-                 'uom': bom.product_uom.id}
+            production_rm[bom.product_id.id] = \
+                {'name': bom.product_id.name, 'qty': bom.product_qty, 'uom': bom.product_uom.id}
+        #~ TODO: this production_rm['qty'] * product_qty
 
+        # print debug data
         import pprint
-        print '\n'*3
-        print 'product list'
-        pprint.pprint([(item.product_id.id, item.product_id.name)
-                for item in production.bom_id.bom_lines]) 
+        print 'product_qty', product_qty
+        print 'production_rm'
+        pprint.pprint(production_rm)
 
-        print '\n'
-        print 'product_to_produce'
-        pprint.pprint(product_to_produce)
-
-        product_capacity = {}
-        for product_id in product_ids:
-            product_capacity[product_id] = []
-
-        print '\n'
-        print 'production.product_qty', production.product_qty
-
-        print '\n'
-        print 'iteracion sobre...'
+        # Work Centers Product Capacity
+        print '...Work Centers: Product Capacity and Operations'
+        wc_brws = [operation.workcenter_id for operation in routing_brw.workcenter_lines]
+        wc_brws = list(set(wc_brws))
+        wc_dict = {}.fromkeys(wc.id for wc in wc_brws)
         for wc in wc_brws:
-            print 'wc', wc.id
+            wc_dict[wc.id] = {'name': wc.name, 'capacity': {}, 'operations': [], 'bottleneck': []}
+            for product_id in production_rm.keys():
+                wc_dict[wc.id]['capacity'].update({product_id: False})
+        for wc in wc_brws:
+            for pc_brw in wc.product_capacity_ids:
+                wc_dict[wc.id]['capacity'].update({
+                    pc_brw.product_id.id:
+                        uom_obj._compute_qty(cr, uid, pc_brw.uom_id.id, pc_brw.qty,
+                                             production_rm[pc_brw.product_id.id]['uom'])
+                    })
+        wc_operation = [(operation.id, operation.workcenter_id.id)
+                        for operation in routing_brw.workcenter_lines]
 
-            for wcpc_brw in wc.product_capacity_ids:
-                product_capacity[wcpc_brw.product_id.id] += \
-                    [(wc.id, wcpc_brw.product_id.id,
-                      production.product_qty * uom_obj._compute_qty(
-                        cr, uid, wcpc_brw.uom_id.id, wcpc_brw.qty,
-                        production.product_uom.id), wcpc_brw.qty,
-                     production.product_uom.id)]
-                print '_compute_qty(%s,%s)' % (wcpc_brw.product_id.id, wcpc_brw.qty), uom_obj._compute_qty(
-                        cr, uid, wcpc_brw.uom_id.id, wcpc_brw.qty,
-                        production.product_uom.id)
+        for item in wc_operation:
+            wc_dict[item[1]]['operations'] += [item[0]]
+
+        # Routing Operations Raw Material Needed
+        print '...Routing Operations Raw Material Needed'
+        wc_ope_product_qty = dict()
+        for wc_ope in routing_brw.workcenter_lines:
+            wc_ope_product_qty[wc_ope.id] = dict()
+
+        for wc_ope in routing_brw.workcenter_lines:
+            for product in wc_ope.product_ids:
+                wc_ope_product_qty[wc_ope.id].update(
+                    {product.product_id.id:
+                        uom_obj._compute_qty(cr, uid, product.uom_id.id, product.qty,
+                                             production_rm[product.product_id.id]['uom'])})
+
+        print 'wc_ope_product_qty', wc_ope_product_qty
+
+        # Checking that operations product quantites are less or equal to the manufacturing order
+        # product quantities given.
+
+        routing_qty_error = str()
+        routing_qty = {}.fromkeys(production_rm.keys(), 0.0)
+
+        for operation in wc_ope_product_qty.keys():
+            for product_id in wc_ope_product_qty[operation].keys():
+                routing_qty[product_id] += wc_ope_product_qty[operation][product_id]
+
+        print 'routing_qty', routing_qty
+
+        for product_id in routing_qty.keys():
+            if routing_qty[product_id] > production_rm[product_id]['qty']:
+                routing_qty_error += '\n - It Needs at least %s %s of %s and only %s %s is given.' % (
+                    routing_qty[product_id],
+                    uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
+                    product_obj.browse(cr, uid, product_id, context=context).name,
+                    production_rm[product_id]['qty'],
+                    uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
+                )
+
+        if routing_qty_error:
+            raise osv.except_osv(
+                _('Error!'),
+                _('There is a problem with the definition of the routing quantities.'
+                  ' The operations requires more product quantity that the one is given in the'
+                  ' manufacturing order:\n' + str(routing_qty_error)))
+
+        # Cheking the Work Center Capacity with the Work Center Operation quantities.
+        print "...Cheking the Work Center Capacity with the Work Center Operation quantities"
+        print "(wc, operation, product_id, capacty, qty)"
+        for wc_id in wc_dict:
+            for operation_id in wc_dict[wc_id]['operations']:
+                for product_id in wc_ope_product_qty[operation_id]:
+                    print (wc_id, operation_id, product_id,
+                           wc_dict[wc_id]['capacity'][product_id],
+                           wc_ope_product_qty[operation_id][product_id])
+
+                #~ for (product_id, product_qty) in wc_ope_product_qty[operation_id].iteritems():
+                    #~ print (wc_id, operation_id, product_id, product_qty, wc_dict[wc]['capacity'][product_id])
+#~ 
+                    #~ print '(capacity, qty)',  wc_dict[wc]['capacity'][product_id], product_qty
+                    #~ if wc_dict[wc]['capacity'][product_id] and \
+                       #~ wc_dict[wc]['capacity'][product_id] < product_qty:
+                            #~ print  'soy menor'
+                            #~ wc_dict[wc]['bottleneck'] = (product_id, product_qty)
+
+        print '\n'
+        print '\n'
+        print '\n'
+        print 'wc_dict'
+        pprint.pprint(wc_dict)
 
 
-        print 'product_capacity'
-        pprint.pprint(product_capacity)
         print '\n'*3
-
         raise osv.except_osv(
             _('Warining'),
             _('This functionality is on development.'))
