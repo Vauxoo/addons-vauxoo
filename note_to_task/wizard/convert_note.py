@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved                                                        
 ################# Credits###################################################### 
-#    Coded by: Luis Escobar <Luis@vauxoo.com>
+#    Coded by: Luis Escobar <luis@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################### 
 #    This program is free software: you can redistribute it and/or modify       
@@ -21,28 +21,20 @@
 #    You should have received a copy of the GNU Affero General Public License   
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.      
 ###############################################################################    
-{                                                                                               
-    'name': 'Convert Note to Task',                                                                             
-    'version': '1.0',
-    'category': 'Tools',
-    'depends': ['note', 'project'],
-    'description': """
-Convert Note to Task
-====================
-    Add a button in Notes showing a wizard to convert the note into a task
-    asking:
-            1. - Estimated time for this task.
-            2.- Associate Project.
-            3.- Date to end.
-            """,
-    'author': 'Vauxoo',
-    'website': 'http://vauxoo.com',
-    'data': [
-        'wizard/convert_note_view.xml',
-        'view/note_view.xml',
-        ],
-    'js':[],
-    'css': [],
-    'qweb': [],
-    'installable': True,
-}
+
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
+
+class convert_note_task(osv.TransientModel):
+    
+    '''Convert Note to Task Wizard'''
+    
+    _name = 'convert.note.task'
+    
+    _columns = {
+            'estimated_time':fields.float('Estimated Time', help="""Estimated Time to Complete the
+                Task"""), 
+            'project_id':fields.many2one('project.project', 'Project', help='Project Linked'), 
+            'date_end':fields.date('Date End', help='Date to complete the Task'), 
+   }
+
