@@ -95,7 +95,7 @@ mrp.workcenter.product.capacity
         </record>
 
         <record id="mrp_workcenter_product_capacity_action" model="ir.actions.act_window">
-            <field name="name">Work Center Product Capacity</field>
+            <field name="name">Product Capacity</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mrp.workcenter.product.capacity</field>
             <field name="view_type">tree</field>
@@ -107,7 +107,7 @@ mrp.workcenter.product.capacity
         <menuitem
             id="menu_mrp_workcenter_capacity"
             parent="mrp.menu_mrp_configuration"
-            name="Work Center Product Capacity"
+            name="Product Capacity"
             sequence="40"
             action="mrp_workcenter_product_capacity_action"
         />
