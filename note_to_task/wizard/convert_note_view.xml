@@ -22,8 +22,9 @@
                     <label for="date_deadline" />
                     <field name="date_deadline" />
                     <footer>
-                        <button name="create_task" string="Create Task" icon="gtk-ok" type="object"/>
-                        <button special="cancel" string="Close" icon="gtk-cancel"/>
+                        <button name="create_task" string="Create Task" class="oe_highlight" type="object"/>
+                        or
+                        <button special="cancel" string="Close" class="oe_link"/>
                     </footer>
                 </form>
             </field>
