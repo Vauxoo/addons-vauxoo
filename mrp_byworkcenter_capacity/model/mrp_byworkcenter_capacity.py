@@ -185,7 +185,7 @@ class mrp_production(osv.Model):
 
         # Manufacturing Order Raw Material Needed
         print '\n'
-        print '...Manufacturing Order Raw Material Needed'
+        print '...Extracting Manufacturing Order Raw Material Needed Information'
         production_rm = dict()
         product_qty = production.product_qty
         for bom in production.bom_id.bom_lines:
@@ -200,7 +200,7 @@ class mrp_production(osv.Model):
         pprint.pprint(production_rm)
 
         # Work Centers Product Capacity
-        print '...Work Centers: Product Capacity and Operations'
+        print '...Extractiong Work Centers Information: Product Capacity and Operations'
         wc_brws = [operation.workcenter_id for operation in routing_brw.workcenter_lines]
         wc_brws = list(set(wc_brws))
         wc_dict = {}.fromkeys(wc.id for wc in wc_brws)
@@ -221,8 +221,11 @@ class mrp_production(osv.Model):
         for item in wc_operation:
             wc_dict[item[1]]['operations'] += [item[0]]
 
+        print 'wc_dict'
+        pprint.pprint(wc_dict)
+
         # Routing Operations Raw Material Needed
-        print '...Routing Operations Raw Material Needed'
+        print '...Extracting Routing Operations Product Quantity Needed'
         wc_ope_product_qty = dict()
         for wc_ope in routing_brw.workcenter_lines:
             wc_ope_product_qty[wc_ope.id] = dict()
@@ -238,6 +241,7 @@ class mrp_production(osv.Model):
 
         # Checking that operations product quantites are less or equal to the manufacturing order
         # product quantities given.
+        print '...Checking Operation Quantities <= Manufacturing Order Quantities'
 
         routing_qty_error = str()
         routing_qty = {}.fromkeys(production_rm.keys(), 0.0)
@@ -247,17 +251,16 @@ class mrp_production(osv.Model):
                 routing_qty[product_id] += wc_ope_product_qty[operation][product_id]
 
         print 'routing_qty', routing_qty
-
         for product_id in routing_qty.keys():
             if routing_qty[product_id] > production_rm[product_id]['qty']:
-                routing_qty_error += '\n - It Needs at least %s %s of %s and only %s %s is given.' % (
+                routing_qty_error += _('\n - It Needs at least %s %s of %s and only %s %s is'
+                    ' given.') % (
                     routing_qty[product_id],
                     uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
                     product_obj.browse(cr, uid, product_id, context=context).name,
                     production_rm[product_id]['qty'],
                     uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
                 )
-
         if routing_qty_error:
             raise osv.except_osv(
                 _('Error!'),
@@ -266,49 +269,27 @@ class mrp_production(osv.Model):
                   ' manufacturing order:\n' + str(routing_qty_error)))
 
         # Cheking the Work Center Capacity with the Work Center Operation quantities.
-        print "...Cheking the Work Center Capacity with the Work Center Operation quantities"
+        print "...Cheking the Work Center Capacity with the Work Center Operation quantities (Calculate Bottleneck)"
         print "(wc, operation, product_id, capacty, qty)"
         for wc_id in wc_dict:
             for operation_id in wc_dict[wc_id]['operations']:
-                for product_id in wc_ope_product_qty[operation_id]:
+                for (product_id, product_qty) in wc_ope_product_qty[operation_id].iteritems():
                     print (wc_id, operation_id, product_id,
                            wc_dict[wc_id]['capacity'][product_id],
-                           wc_ope_product_qty[operation_id][product_id])
+                           product_qty)
 
-                #~ for (product_id, product_qty) in wc_ope_product_qty[operation_id].iteritems():
-                    #~ print (wc_id, operation_id, product_id, product_qty, wc_dict[wc]['capacity'][product_id])
-#~ 
-                    #~ print '(capacity, qty)',  wc_dict[wc]['capacity'][product_id], product_qty
-                    #~ if wc_dict[wc]['capacity'][product_id] and \
-                       #~ wc_dict[wc]['capacity'][product_id] < product_qty:
-                            #~ print  'soy menor'
-                            #~ wc_dict[wc]['bottleneck'] = (product_id, product_qty)
+                    if wc_dict[wc_id]['capacity'][product_id] and \
+                       wc_dict[wc_id]['capacity'][product_id] < product_qty:
+                            wc_dict[wc_id]['bottleneck'] = (product_id, product_qty)
 
-        print '\n'
-        print '\n'
-        print '\n'
+
         print 'wc_dict'
         pprint.pprint(wc_dict)
-
 
         print '\n'*3
         raise osv.except_osv(
             _('Warining'),
             _('This functionality is on development.'))
-
-        wc_capacity = {}
-        wc_capacity[operation.workcenter_id] = []
-
-        #~ 'move_lines': fields.many2many('stock.move', 'mrp_production_move_ids', 'production_id', 'move_id', 'Products to Consume',
-            #~ domain=[('state','not in', ('done', 'cancel'))], readonly=True, states={'draft':[('readonly',False)]}),
-#~ 
-
-        #~ import pprint
-        #~ print '\n'*3
-        #~ print 'get_wc_capacity', get_wc_capacity
-        #~ print 'wc_capacity'
-        #~ pprint.pprint(wc_capacity)
-        #~ print '\n'*3
 
         return  0
 
