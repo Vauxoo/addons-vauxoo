@@ -7,8 +7,11 @@
             <field name="model">mrp.production</field>
             <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
             <field name="arch" type="xml">
-                   <xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="replace">
-            <button name="%(mrp.act_mrp_product_produce)d" states="in_production" string="Produce" icon="gtk-ok" type="action" groups="mrp_consume_produce.group_mrp_button_produce" invisible="1"/>
+                   <xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="attributes">
+                       <attribute name="states">in_production</attribute>
+                       <attribute name="icon">gtk-ok</attribute>
+                       <attribute name="groups">mrp_consume_produce.group_mrp_button_produce</attribute>
+                       <attribute name="invisible">1</attribute>
                     </xpath>
 
                     <xpath expr="//button[@name='%(mrp.act_mrp_product_produce)d']" position="after">
