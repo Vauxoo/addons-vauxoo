@@ -146,6 +146,7 @@ class sprint_kanban_tasks(osv.Model):
                             'name': revision.message,
                             'date': date,
                             'revno': revision_map[k][0],
+                            'hours': 0,
                         }
                         if user_ids:
                             tw_data['user_id'] = user_ids[0]
