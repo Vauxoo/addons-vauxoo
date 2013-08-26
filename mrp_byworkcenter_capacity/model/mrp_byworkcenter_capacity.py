@@ -187,15 +187,14 @@ class mrp_production(osv.Model):
         print '\n'
         print '...Extracting Manufacturing Order Raw Material Needed Information'
         production_rm = dict()
-        product_qty = production.product_qty
         for bom in production.bom_id.bom_lines:
             production_rm[bom.product_id.id] = \
-                {'name': bom.product_id.name, 'qty': bom.product_qty, 'uom': bom.product_uom.id}
-        #~ TODO: this production_rm['qty'] * product_qty
+                {'name': bom.product_id.name, 'qty': bom.product_qty * production.product_qty,
+                 'uom': bom.product_uom.id}
 
         # print debug data
         import pprint
-        print 'product_qty', product_qty
+        print 'production.product_qty', production.product_qty
         print 'production_rm'
         pprint.pprint(production_rm)
 
@@ -209,11 +208,15 @@ class mrp_production(osv.Model):
             for product_id in production_rm.keys():
                 wc_dict[wc.id]['capacity'].update({product_id: False})
         for wc in wc_brws:
-            for pc_brw in wc.product_capacity_ids:
+            pc_lines = [product_line
+                       for product_line in wc.product_capacity_ids
+                       if product_line.product_id.id in production_rm.keys()]
+            for pc_line in pc_lines:
                 wc_dict[wc.id]['capacity'].update({
-                    pc_brw.product_id.id:
-                        uom_obj._compute_qty(cr, uid, pc_brw.uom_id.id, pc_brw.qty,
-                                             production_rm[pc_brw.product_id.id]['uom'])
+                    pc_line.product_id.id:
+                        uom_obj._compute_qty(cr, uid, pc_line.uom_id.id,
+                                             pc_line.qty,
+                                             production_rm[pc_line.product_id.id]['uom'])
                     })
         wc_operation = [(operation.id, operation.workcenter_id.id)
                         for operation in routing_brw.workcenter_lines]
@@ -234,7 +237,8 @@ class mrp_production(osv.Model):
             for product in wc_ope.product_ids:
                 wc_ope_product_qty[wc_ope.id].update(
                     {product.product_id.id:
-                        uom_obj._compute_qty(cr, uid, product.uom_id.id, product.qty,
+                        uom_obj._compute_qty(cr, uid, product.uom_id.id,
+                                             product.qty * production.product_qty,
                                              production_rm[product.product_id.id]['uom'])})
 
         print 'wc_ope_product_qty', wc_ope_product_qty
@@ -249,18 +253,20 @@ class mrp_production(osv.Model):
         for operation in wc_ope_product_qty.keys():
             for product_id in wc_ope_product_qty[operation].keys():
                 routing_qty[product_id] += wc_ope_product_qty[operation][product_id]
+        #~ TODO: Ask rotuing qty will be the max of wc_ope_product_qty[operation][product_id] or
+        #~ the summatory of all? 
 
         print 'routing_qty', routing_qty
-        for product_id in routing_qty.keys():
-            if routing_qty[product_id] > production_rm[product_id]['qty']:
-                routing_qty_error += _('\n - It Needs at least %s %s of %s and only %s %s is'
-                    ' given.') % (
-                    routing_qty[product_id],
-                    uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
-                    product_obj.browse(cr, uid, product_id, context=context).name,
-                    production_rm[product_id]['qty'],
-                    uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
-                )
+        #~ for product_id in routing_qty.keys():
+            #~ if routing_qty[product_id] > production_rm[product_id]['qty']:
+                #~ routing_qty_error += _('\n - It Needs at least %s %s of %s and only %s %s is'
+                    #~ ' given.') % (
+                    #~ routing_qty[product_id],
+                    #~ uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
+                    #~ product_obj.browse(cr, uid, product_id, context=context).name,
+                    #~ production_rm[product_id]['qty'],
+                    #~ uom_obj.browse(cr, uid, production_rm[product_id]['uom'], context=context).name,
+                #~ )
         if routing_qty_error:
             raise osv.except_osv(
                 _('Error!'),
@@ -269,7 +275,8 @@ class mrp_production(osv.Model):
                   ' manufacturing order:\n' + str(routing_qty_error)))
 
         # Cheking the Work Center Capacity with the Work Center Operation quantities.
-        print "...Cheking the Work Center Capacity with the Work Center Operation quantities (Calculate Bottleneck)"
+        print _("...Cheking the Work Center Capacity with the Work Center Operation quantities "
+                "(Calculate Bottleneck)")
         print "(wc, operation, product_id, capacty, qty)"
         for wc_id in wc_dict:
             for operation_id in wc_dict[wc_id]['operations']:
@@ -280,18 +287,25 @@ class mrp_production(osv.Model):
 
                     if wc_dict[wc_id]['capacity'][product_id] and \
                        wc_dict[wc_id]['capacity'][product_id] < product_qty:
-                            wc_dict[wc_id]['bottleneck'] = (product_id, product_qty)
-
+                            div, mod = divmod(product_qty, wc_dict[wc_id]['capacity'][product_id])
+                            split_size = int(div + (mod and 1 or 0))
+                            wc_dict[wc_id]['bottleneck'] += [(split_size, product_id)]
 
         print 'wc_dict'
         pprint.pprint(wc_dict)
+
+        bottleneck_list = list()
+        for wc_id in wc_dict:
+            bottleneck_list.extend(wc_dict[wc_id]['bottleneck'])
+        bottleneck_list.sort(reverse=True)
+        print 'bottleneck_list', bottleneck_list
 
         print '\n'*3
         raise osv.except_osv(
             _('Warining'),
             _('This functionality is on development.'))
 
-        return  0
+        return bottleneck_list[0][0]
 
     def create_swo_dict(self, cr, uid, ids, context=None):
         """
