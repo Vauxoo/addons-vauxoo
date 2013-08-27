@@ -36,7 +36,7 @@
     </blockTableStyle>
     <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
+      <blockValign value="MIDDLE"/>
     </blockTableStyle>
     <blockTableStyle id="Table3">
       <blockAlignment value="LEFT"/>
@@ -99,7 +99,7 @@
       <para style="Standard">[[repeatIn(objects,'o')]]</para>
       <para style="P1">No. Contrato:[[o.name]]</para>
       <para style="P2">CONTRATO DE ARRENDAMIENTO</para>
-      <para style="P6">Contrato de arrendamiento a ser celebrado entre <font face="Helvetica-Bold">Rico Copiadoras Fax, SA de CV</font>, a ser identificado en este contrato como “el proveedor” y <font face="Helvetica-Bold">CTE</font>, a ser identificado en este contrato como “el cliente”.</para>
+      <para style="P6">Contrato de arrendamiento a ser celebrado entre <font face="Helvetica-Bold">Rico Copiadoras Fax, SA de CV</font>, a ser identificado en este contrato como “el proveedor” y <font face="Helvetica-Bold">[[o.partner_id.name]]</font>, a ser identificado en este contrato como “el cliente”.</para>
       <para style="P6">El precio de este contrato quedará estipulado por los siguientes productos y costos, por un período obligatorio de [[o.term_id.name]], a ser facturados mensualmente previa lectura del contador de impresiones.</para>
       <section>
         <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table1">
@@ -126,30 +126,49 @@
         </blockTable>
       </section>
       <section>
-        <para style="P3">[[repeatIn(o.feature_ids, 'features')]]</para>
-      
-      <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table2">
-        <tr>
-          <td>
-            <para style="P14">[[features.product_line_id and features.product_line_id.name]]</para>
-          </td>
-          <td>
-            <para style="P15">[[features.product_line_id and features.product_line_id.default_code]]</para>
-          </td>
-          <td>
-            <para style="P15" alignment="RIGHT">[[features.counter or '0']]</para>
-          </td>
-          <td>
-            <para style="P13">[[features.name and features.name.name]]</para>
-          </td>
-          <td>
-            <para style="P16" alignment="RIGHT">[[features.cost or '0.0']]</para>
-          </td>
-          <td>
-              <para style="P14">[[type_payment(features)]]</para>
-          </td>
-        </tr>
-      </blockTable>
+        <para style="P3">[[repeatIn(o.product_ids, 'product')]]</para>
+            <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table2">
+            <tr>
+              <td>
+                <para style="P14">[[product.product_id and product.product_id.name]]</para>
+              </td>
+              <td>
+                  <para style="P14">[[product.product_id and product.prodlot_id.name]]</para>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+              <td>
+              </td>
+            </tr>
+          </blockTable>
+          <section>
+            <para style="P3">[[repeatIn(o.feature_ids, 'features')]]</para>
+              <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table2">
+                <tr>
+                  <td>
+                    <para style="P14">[[get_data_features(product.product_id.id, features)[0] or removeParentNode('blockTable')]]</para>
+                  </td>
+                  <td>
+                  </td>
+                  <td>
+                      <para style="P14">[[get_data_features(product.product_id.id, features)[1] or '0.0']]</para>
+                  </td>
+                  <td>
+                      <para style="P14">[[get_data_features(product.product_id.id, features)[2] or '']]</para>
+                  </td>
+                  <td>
+                      <para style="P14">[[get_data_features(product.product_id.id, features)[3] or '0.0']]</para>
+                  </td>
+                  <td>
+                      <para style="P14">[[get_type_features(product.product_id.id, features)]]</para>
+                  </td>
+                </tr>
+              </blockTable>
+          </section>
       </section>
       <para style="P12">Accesorios:</para>
       <section>
@@ -367,7 +386,7 @@
           </td>
           <td>
             <para style="P7">
-              <font face="Helvetica" color="blue" size="8.0">alderon@ricocopiadoras.com</font>
+              <font face="Helvetica" color="blue" size="8.0">e.calderon@ricocopiadoras.com</font>
               <font face="Helvetica" size="8.0"> y </font>
               <font face="Helvetica" color="blue" size="8.0">angelica.perez@ricocopiadoras.com</font>
               <font face="Helvetica" size="8.0"/>

@@ -30,6 +30,8 @@ class account_analytic_account_report(report_sxw.rml_parse):
         self.localcontext.update({
             'accesory': self._accesory,
             'type_payment' : self._type_payment,
+            'get_data_features' : self._get_data_features,
+            'get_type_features' : self._get_type_features,
         })
     def _accesory(self,product_id):
         if product_id.type == 'accesory':
@@ -39,7 +41,19 @@ class account_analytic_account_report(report_sxw.rml_parse):
         if feature_id.name and feature_id.name.name == 'Copias Bco y Negro' or feature_id.name.name == 'Copias Color' :
             return 'Por copia procesada'
         return 'Mensual'
-
+    def _get_data_features(self, product_id, obj_features):
+        list_data = []
+        if product_id == obj_features.product_line_id.id:
+            list_data.append(obj_features.product_line_id.name)
+            list_data.append(obj_features.counter)
+            list_data.append(obj_features.name.name)
+            list_data.append(obj_features.cost)
+            return list_data
+        return ['','','','']
+    def _get_type_features(self, product_id, obj_features):
+        if product_id == obj_features.product_line_id.id:
+            return self._type_payment(obj_features)
+        return []
 
 report_sxw.report_sxw('report.account.analytic.account.report','account.analytic.account','addons/account_analytic_analysis_rent/report/account_analytic_analysis_report.rml',
     parser=account_analytic_account_report, header=False)
