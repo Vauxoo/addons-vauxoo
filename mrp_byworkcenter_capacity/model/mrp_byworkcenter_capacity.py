@@ -289,7 +289,8 @@ class mrp_production(osv.Model):
                        wc_dict[wc_id]['capacity'][product_id] < product_qty:
                             div, mod = divmod(product_qty, wc_dict[wc_id]['capacity'][product_id])
                             split_size = int(div + (mod and 1 or 0))
-                            wc_dict[wc_id]['bottleneck'] += [(split_size, product_id)]
+                            wc_dict[wc_id]['bottleneck'] += \
+                                [(split_size, wc_dict[wc_id]['capacity'][product_id], product_id)]
 
         print 'wc_dict'
         pprint.pprint(wc_dict)
@@ -300,12 +301,7 @@ class mrp_production(osv.Model):
         bottleneck_list.sort(reverse=True)
         print 'bottleneck_list', bottleneck_list
 
-        print '\n'*3
-        raise osv.except_osv(
-            _('Warining'),
-            _('This functionality is on development.'))
-
-        return bottleneck_list[0][0]
+        return bottleneck_list[0][1]
 
     def create_swo_dict(self, cr, uid, ids, context=None):
         """
@@ -362,12 +358,6 @@ class mrp_production(osv.Model):
                 d, m = divmod(factor, wc_capacity)
                 mult = int(d + (m and 1.0 or 0.0))
                 cycle = wc_op.cycle_nbr
-
-                #~ print "\n"*2
-                #~ print "factor", factor, "wc_capacity", wc_capacity
-                #~ print '(d, m)', (d, m)
-                #~ print 'mult', mult
-                #~ print 'cycle', cycle
 
                 process_qty = 0
                 for new_swo in xrange(mult):
