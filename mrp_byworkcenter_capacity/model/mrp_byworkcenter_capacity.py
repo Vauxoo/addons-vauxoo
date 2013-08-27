@@ -183,23 +183,17 @@ class mrp_production(osv.Model):
         routing_brw = routing_obj.browse(cr, uid, rounting_id, context=context)
         production = self.browse(cr, uid, ids, context=context)
 
-        # Manufacturing Order Raw Material Needed
-        print '\n'
-        print '...Extracting Manufacturing Order Raw Material Needed Information'
+        #~ print '\n...Extracting Manufacturing Order Raw Material Needed Information'
         production_rm = dict()
         for bom in production.bom_id.bom_lines:
             production_rm[bom.product_id.id] = \
                 {'name': bom.product_id.name, 'qty': bom.product_qty * production.product_qty,
                  'uom': bom.product_uom.id}
 
-        # print debug data
-        import pprint
-        print 'production.product_qty', production.product_qty
-        print 'production_rm'
-        pprint.pprint(production_rm)
+        #~ print 'production_rm'
+        #~ pprint.pprint(production_rm)
 
-        # Work Centers Product Capacity
-        print '...Extractiong Work Centers Information: Product Capacity and Operations'
+        #~ print '...Extractiong Work Centers Information: Product Capacity and Operations'
         wc_brws = [operation.workcenter_id for operation in routing_brw.workcenter_lines]
         wc_brws = list(set(wc_brws))
         wc_dict = {}.fromkeys(wc.id for wc in wc_brws)
@@ -224,11 +218,10 @@ class mrp_production(osv.Model):
         for item in wc_operation:
             wc_dict[item[1]]['operations'] += [item[0]]
 
-        print 'wc_dict'
-        pprint.pprint(wc_dict)
+        #~ print 'wc_dict'
+        #~ pprint.pprint(wc_dict)
 
-        # Routing Operations Raw Material Needed
-        print '...Extracting Routing Operations Product Quantity Needed'
+        #~ print '...Extracting Routing Operations Products Quantity Needed'
         wc_ope_product_qty = dict()
         for wc_ope in routing_brw.workcenter_lines:
             wc_ope_product_qty[wc_ope.id] = dict()
@@ -241,12 +234,9 @@ class mrp_production(osv.Model):
                                              product.qty * production.product_qty,
                                              production_rm[product.product_id.id]['uom'])})
 
-        print 'wc_ope_product_qty', wc_ope_product_qty
+        #~ print 'wc_ope_product_qty', wc_ope_product_qty
 
-        # Checking that operations product quantites are less or equal to the manufacturing order
-        # product quantities given.
-        print '...Checking Operation Quantities <= Manufacturing Order Quantities'
-
+        #~ print '...Checking that Operation Quantities are <= to Manufacturing Order Quantities'
         routing_qty_error = str()
         routing_qty = {}.fromkeys(production_rm.keys(), 0.0)
 
@@ -256,7 +246,8 @@ class mrp_production(osv.Model):
         #~ TODO: Ask rotuing qty will be the max of wc_ope_product_qty[operation][product_id] or
         #~ the summatory of all? 
 
-        print 'routing_qty', routing_qty
+        #~ print 'routing_qty', routing_qty
+
         #~ for product_id in routing_qty.keys():
             #~ if routing_qty[product_id] > production_rm[product_id]['qty']:
                 #~ routing_qty_error += _('\n - It Needs at least %s %s of %s and only %s %s is'
@@ -274,17 +265,15 @@ class mrp_production(osv.Model):
                   ' The operations requires more product quantity that the one is given in the'
                   ' manufacturing order:\n' + str(routing_qty_error)))
 
-        # Cheking the Work Center Capacity with the Work Center Operation quantities.
-        print _("...Cheking the Work Center Capacity with the Work Center Operation quantities "
-                "(Calculate Bottleneck)")
-        print "(wc, operation, product_id, capacty, qty)"
+        #~ print _("...Cheking the Work Center Capacity with the Work Center Operation quantities "
+                #~ "(Calculate Bottleneck)")
+        #~ print "(wc, operation, product_id, capacty, qty)"
         for wc_id in wc_dict:
             for operation_id in wc_dict[wc_id]['operations']:
                 for (product_id, product_qty) in wc_ope_product_qty[operation_id].iteritems():
-                    print (wc_id, operation_id, product_id,
-                           wc_dict[wc_id]['capacity'][product_id],
-                           product_qty)
-
+                    #~ print (wc_id, operation_id, product_id,
+                           #~ wc_dict[wc_id]['capacity'][product_id],
+                           #~ product_qty)
                     if wc_dict[wc_id]['capacity'][product_id] and \
                        wc_dict[wc_id]['capacity'][product_id] < product_qty:
                             div, mod = divmod(product_qty, wc_dict[wc_id]['capacity'][product_id])
@@ -292,14 +281,14 @@ class mrp_production(osv.Model):
                             wc_dict[wc_id]['bottleneck'] += \
                                 [(split_size, wc_dict[wc_id]['capacity'][product_id], product_id)]
 
-        print 'wc_dict'
-        pprint.pprint(wc_dict)
+        #~ print 'wc_dict'
+        #~ pprint.pprint(wc_dict)
 
         bottleneck_list = list()
         for wc_id in wc_dict:
             bottleneck_list.extend(wc_dict[wc_id]['bottleneck'])
         bottleneck_list.sort(reverse=True)
-        print 'bottleneck_list', bottleneck_list
+        #~ print 'bottleneck_list', bottleneck_list
 
         return bottleneck_list[0][1]
 
