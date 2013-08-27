@@ -390,22 +390,46 @@ class mrp_production(osv.Model):
                         'sequence': level+(wc_op.sequence or 0),
                         'qty': qty,
                         'cycle': cycle,
-                        'hour':
-                        float(wc_op.hour_nbr*wc_capacity +
-                              ((wc_brw.time_start or 0.0) +
-                               (wc_brw.time_stop or 0.0) +
-                               cycle * (wc_brw.time_cycle or 0.0)) *
-                              (wc_brw.time_efficiency or 1.0)),
-                        # TODO check is tis hours are well calculated with an
-                        # test case
-                        # NOTE: the field wc_brw.time_efficiency it does not
-                        # exist in the model. why this???
+                        'hour': self.get_swo_hour(
+                            cr, uid,
+                            op_hours=wc_op.hour_nbr,
+                            op_cycle=cycle,
+                            wc_capacity=wc_capacity,
+                            wc_time_start=wc_brw.time_start,
+                            wc_time_stop=wc_brw.time_stop,
+                            wc_time_cycle=wc_brw.time_cycle,
+                            wc_time_efficiency=wc_brw.time_efficiency,
+                            context=context),
                     })
+
+                # NOTE: the field wc_brw.time_efficiency it does
+                # not exist in the model. why this???
 
                 #~ print 'result'
                 #~ pprint.pprint(result)
 
         return result
+
+    #~ TODO: This calculation needs to be check. I think that is retorning a
+    #~ incorrect value
+    def get_swo_hour(self, cr, uid, op_hours, op_cycle, wc_capacity,
+                     wc_time_start=0.0, wc_time_stop=0.0, wc_time_cycle=0.0,
+                     wc_time_efficiency=1.0, context=None):
+        """
+        @param op_hours: Operation number of hours
+        @param op_cycle: Operation number of cycle repetition
+        @param wc_capacity: work center capacity
+        @param wc_time_start: work center time star
+        @param wc_time_stop: work center time stop
+        @param wc_time_cycle: work center time in hour per cycle
+        @return the number of hours need to complete the work order job.
+        """
+        res = float(
+            op_hours * wc_capacity +
+            (wc_time_start + wc_time_stop + op_cycle * wc_time_cycle)
+            * (wc_time_efficiency)
+        )
+        return res
 
 
 class mrp_scheduled_workorders(osv.Model):
