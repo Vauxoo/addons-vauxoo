@@ -23,7 +23,7 @@
             </field>
         </record>
 
-        <act_window id="sale_multicompany_report" key2="client_action_multi" name="Print" res_model="print.sale.order.report" view_id="wizard_print_sale_order_multicompany_form" view_mode="form" target="new" view_type="form" groups="base.group_extended"/>
+        <act_window id="sale_multicompany_report" key2="client_action_multi" name="Print" res_model="print.sale.order.report" view_id="wizard_print_sale_order_multicompany_form" view_mode="form" target="new" view_type="form" groups="base.group_user"/>
 
     </data>
 </openerp>
