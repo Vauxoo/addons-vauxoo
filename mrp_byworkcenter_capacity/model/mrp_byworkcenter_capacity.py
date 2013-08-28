@@ -314,7 +314,7 @@ class mrp_production(osv.Model):
         bottleneck_list.sort(reverse=True)
         #~ print 'bottleneck_list', bottleneck_list
 
-        return bottleneck_list[0][1]
+        return bottleneck_list and bottleneck_list[0][1] or False
 
     def create_swo_dict(self, cr, uid, ids, context=None):
         """
@@ -365,7 +365,7 @@ class mrp_production(osv.Model):
                 elif batch_mode == 'bottleneck':
                     wc_capacity = self.get_wc_capacity(
                         cr, uid, production.id, routing_brw.id,
-                        context=context)
+                        context=context) or 1.0
 
                 product_qty = production.product_qty
                 d, m = divmod(factor, wc_capacity)
