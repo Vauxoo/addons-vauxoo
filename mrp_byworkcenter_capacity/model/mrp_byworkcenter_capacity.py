@@ -444,7 +444,7 @@ class mrp_scheduled_workorders(osv.Model):
 
     _columns = {
         'wo_lot_id': fields.many2one('mrp.workoder.lot',
-                                     'Scheduled Work Order Lot')
+                                     _('Scheduled Work Order Lot'))
     }
 
 class mrp_workoder_lot(osv.Model):
