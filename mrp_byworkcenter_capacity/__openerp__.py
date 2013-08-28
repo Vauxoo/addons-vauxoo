@@ -74,6 +74,12 @@ Also it's needed active some technical settings. Go to
 Technical Settings`` and select the ``Manage Routings`` and 
 ``Manage Multiple Units of Measure`` checkboxs.
 
+Another pre-configure options:
+
+- Active the checkbox ``Track serial number on products`` in
+  ``Settings > Configuration > Warehouse > Traceability`` to show the product
+  serial numbers.
+
 .. note:: The module ``mrp_consume_produce`` can be find in
           ``lp:addons-vauxoo/7.0``.
 """,
