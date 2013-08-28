@@ -25,7 +25,7 @@
 {
     "name" : "Incoterm Decription",
     "version" : "0.1",
-    "depends" : ["sale"],
+    "depends" : ["sale", "stock"],
     "author" : "Vauxoo",
     "description" : """
     Add Formal Description to Incoterms.
