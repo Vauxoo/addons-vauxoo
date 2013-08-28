@@ -48,8 +48,7 @@ class res_partner(osv.Model):
     }
 
     def _address_fields(self, cr, uid, context=None):
-        "Devuelve la lista de los campos de dirección que se sincronizan\
-        desde el padre cuando se establece la bandera `use_parent_address."
+        _("Returns the list of the address fields that synchronizes from the parent when the flag is set use_parent_address.")
         res = super(res_partner, self)._address_fields(cr, uid, context=None)
         res.extend(['l10n_mx_street3', 'l10n_mx_street4', 'l10n_mx_city2'])
         return res
@@ -63,17 +62,24 @@ class res_partner(osv.Model):
         return id
 
     def fields_view_get_address(self, cr, uid, arch, context={}):
+        locality = _("placeholder='Locality...'")
+        street = _("placeholder='Street...'")
+        cp = _("placeholder='ZIP'")
+        state = _("placeholder='State'")
+        external = _("placeholder='No External...'")
+        internal = _("placeholder='No Internal...'")
+        colony = _("placeholder='Colony...'")
+        country = _("placeholder='Country...'")
         res = super(res_partner, self).fields_view_get_address(
             cr, uid, arch, context=context)
         user_obj = self.pool.get('res.users')
         fmt = user_obj.browse(
             cr, SUPERUSER_ID, uid, context).company_id.country_id
         fmt = fmt and fmt.address_format
-        city = '<field name="city" placeholder="City" style="width: 40%%"/>'
+        city = _('<field name="city" placeholder="City" style="width: 40%%"/>')
         for name, field in self._columns.items():
             if name == 'city_id':
-                city = '<field name="city" modifiers="{&quot;invisible&quot;: true}" placeholder="City....." style="width: 50%%"/><field name="city_id" on_change="onchange_city(city_id)" placeholder="City" style="width: 40%%"/>'
-
+                city = _('<field name="city" modifiers="{&quot;invisible&quot;: true}" placeholder="City....." style="width: 50%%"/><field name="city_id" on_change="onchange_city(city_id)" placeholder="City" style="width: 40%%"/>')
         layouts = {
             '%(l10n_mx_street3)s\n%(l10n_mx_street4)s\n%(l10n_mx_city2)s': """
                     <group>
@@ -89,17 +95,17 @@ class res_partner(osv.Model):
 
                             <label for="street" string="Address"/>
                             <div>
-                                <field name="street" placeholder="Street..."/>
-                                <field name="l10n_mx_street4" placeholder="No. Interior..."/>
-                                <field name="l10n_mx_street3" placeholder="No. Exterior..."/>
-                                <field name="street2" placeholder="Colonia..."/>
+                                <field name="street" %s/>
+                                <field name="l10n_mx_street4" %s/>
+                                <field name="l10n_mx_street3" %s/>
+                                <field name="street2" %s/>
                                 <div class="address_format">
                                     %s
-                                    <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
-                                    <field name="zip" placeholder="ZIP" style="width: 20%%"/>
+                                    <field name="state_id" class="oe_no_button" %s style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
+                                    <field name="zip" %s style="width: 20%%"/>
                                 </div>
-                                <field name="l10n_mx_city2" placeholder="Localidad"/>
-                                <field name="country_id" placeholder="Country" class="oe_no_button" options='{"no_open": True}'/>
+                                <field name="l10n_mx_city2" %s/>
+                                <field name="country_id" %s class="oe_no_button" options='{"no_open": True}'/>
                             </div>
                             <field name="website" widget="url" placeholder="e.g. www.openerp.com"/>
                         </group>
@@ -114,7 +120,7 @@ class res_partner(osv.Model):
                                 options='{"no_open": True}' attrs="{'invisible': [('is_company','=', True)]}" />
                         </group>
                     </group>
-            """ % (city)
+            """ % (street, internal, external, colony, city, state, cp, locality, country)
         }
         for k, v in layouts.items():
             if fmt and (k in fmt):
@@ -134,7 +140,7 @@ class res_partner(osv.Model):
             view_id = self.pool.get('ir.model.data').get_object_reference(
                 cr, user, 'base', 'view_partner_simple_form')[1]
         res = super(res_partner, self).fields_view_get(
-            cr, user, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
+            cr, SUPERUSER_ID, view_id, view_type, context, toolbar=toolbar, submenu=submenu)
         if view_type == 'form':
             fields_get = self.fields_get(cr, user, [
                 'l10n_mx_street3', 'l10n_mx_street4', 'l10n_mx_city2'], context)
