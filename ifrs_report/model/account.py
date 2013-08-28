@@ -27,7 +27,7 @@
 from osv import osv
 from osv import fields
 import mx.DateTime
-
+import time
 
 class account_period(osv.osv):
     _inherit = 'account.period'

@@ -9,17 +9,12 @@
                 <xpath expr="/form/sheet/notebook/page[@string='Project Stages']" position="after">
                     <page string="Technical Features">
 			            <group col="4">
-                            <field name="url_branch" widget="url"/>
-                            <newline/>
-                            <field name="merge_proposal" widget="url"/>
-                            <newline/>
-                            <field name="blueprint" widget="url"/>
-                            <newline/>
+                            <field name="url_branch"/>
+                            <field name="merge_proposal"/>
+                            <field name="blueprint"/>
                             <field name="from_revno"/>
-                            <newline/>
                             <field name="res_id"/>
-                            <newline/>
-                            <button name="get_works" string="Get Tasks" type="object" class="oe_highlight" />
+                            <button name="get_works" string="Get Tasks" type="object" />
                         </group>
                     </page>
                 </xpath>

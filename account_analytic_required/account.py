@@ -31,32 +31,27 @@ class account_account(osv.Model):
     _inherit = 'account.account'
 
     _columns = {
-        'analytic_required': fields.boolean('Analytic Required'),
+        'analytic_required': fields.boolean('Analytic Required', help='If '\
+        'this field is active, the journal items that used this account '\
+        'should have an analytic account'),
     }
 
 
 class account_move(osv.Model):
     _inherit = 'account.move'
 
-    def button_validate(self, cursor, user, ids, context=None):
-        account_move_obj = self.pool.get('account.move.line')
-        account_obj = self.pool.get('account.account')
-        moves = account_move_obj.search(cursor, user, [('move_id', 'in', ids)])
-        if moves:
-            for move_id in moves:
-                move = account_move_obj.browse(cursor, user, move_id)
-                name_move = move.name or ''
-                analytic_st = move.account_id and\
-                    move.account_id.analytic_required or False
-                if analytic_st is True:
-                    account_move_id = move.account_id and\
-                        move.account_id.id or False
-                    analytic_acc_move = move.analytic_account_id and\
-                        move.analytic_account_id.id or False
-                    if analytic_acc_move is False:
-                        raise osv.except_osv(_('Error'), _(
-                            'Need add analytic account in move whit name '
-                                             + name_move + '.'))
+    def button_validate(self, cr, uid, ids, context=None):
+        moves_without_analytic = ''
+        for move in self.browse(cr, uid, ids, context=context):
+            for line in move.line_id:
+                analytic_st = line.account_id.analytic_required
+                if analytic_st:
+                    analytic_acc_move = line.analytic_account_id
+                    if not analytic_acc_move:
+                        moves_without_analytic += '\n' + line.name
+            if moves_without_analytic:
+                raise osv.except_osv(_('Error'), _('Need add analytic account'\
+                    ' in move with name ' + moves_without_analytic + '.'))
         res = super(account_move, self).button_validate(
-            cursor, user, ids, context=context)
+            cr, uid, ids, context=context)
         return res

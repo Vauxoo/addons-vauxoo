@@ -1,0 +1,49 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_analytic_required
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-22 16:20+0000\n"
+"PO-Revision-Date: 2013-07-22 16:20+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_analytic_required
+#: model:ir.model,name:account_analytic_required.model_account_account
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_analytic_required
+#: model:ir.model,name:account_analytic_required.model_account_move
+msgid "Account Entry"
+msgstr "Asiento contable"
+
+#. module: account_analytic_required
+#: field:account.account,analytic_required:0
+msgid "Analytic Required"
+msgstr "Analítica Requerida"
+
+#. module: account_analytic_required
+#: code:addons/account_analytic_required/account.py:53
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: account_analytic_required
+#: code:addons/account_analytic_required/account.py:53
+#, python-format
+msgid "Need add analytic account in move with name ."
+msgstr "Se necesita agrera un cuenta analítica a el movimiento con nombre: ."
+
+#. module: account_analytic_required
+#: help:account.account,analytic_required:0
+msgid "If this field is active, the journal items that used this account should have an analytic account"
+msgstr "Si este campo esta activo, los apuntes contables que utilicen esta cuenta deberan tener una cuenta analítica"
+

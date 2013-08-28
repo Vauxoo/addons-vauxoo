@@ -10,10 +10,15 @@
             file="ifrs_report/report/report_webkit_html.mako"
             string="Print IFRS"
             report_type="webkit"
-            webkit_header="ir_header_webkit_ifrsreport_1"
-            multi="True"
-            />
-
+            multi="True"/>
+            
+        <record id="property_ifrs_report_webkit1" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('ifrs_report.ir_header_webkit_ifrsreport_two_colums'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('ifrs_report.ifrs_report'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
+        
         <report 
                 auto="True"
                 id="report_webkit_html_12"
@@ -22,7 +27,13 @@
                 file="ifrs_report/report/report_webkit_html_12.mako"
                 string="WebKit ifrs"
                 report_type="webkit"
-                webkit_header="ir_header_webkit_ifrsreport"
                 multi="True"/>
+        
+        <record id="property_ifrs_report_webkit2" model="ir.property">
+            <field name="name">webkit_header</field>
+            <field name="fields_id" ref="report_webkit.field_ir_act_report_xml_webkit_header"/>
+            <field eval="'ir.header_webkit,'+str(ref('ifrs_report.ir_header_webkit_ifrsreport'))" model="ir.header_webkit" name="value"/>
+            <field eval="'ir.actions.report.xml,'+str(ref('ifrs_report.report_webkit_html_12'))" model="ir.actions.report.xml" name="res_id"/>
+        </record>
     </data>
 </openerp>

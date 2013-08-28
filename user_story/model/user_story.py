@@ -209,7 +209,7 @@ class inherit_project(osv.Model):
     '''Inheirt project model to a new Descripcion field'''
     
     _inherit = 'project.project'
-    
+
     _columns = {
             'descriptions':fields.text('Description',
                                        help="reference on what the project "

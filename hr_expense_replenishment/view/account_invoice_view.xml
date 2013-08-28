@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-
         <record id="hr_expense_extended_invoice_form" model="ir.ui.view">
             <field name="name">hr.expense.extended.invoice.form</field>
             <field name="model">account.invoice</field>
@@ -17,28 +16,11 @@
                 <xpath expr="//field[@name='journal_id']" position="after">
                     <field name="expense_id" readonly="1"/>
                 </xpath>
-                <xpath expr="//field[@name='invoice_line']" position="replace">
-                            <field context="{'partner_id': partner_id, 'price_type': context.get('price_type') or False, 'type': type, 'analytic_exp': context.get('expense_id', False)}" name="invoice_line">
-                                <tree string="Invoice lines" editable="bottom">
-                                    <field name="product_id"
-                                        on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, context, parent.company_id)"/>
-                                    <field name="name"/>
-                                    <field name="company_id" invisible="1"/>
-                                    <field name="account_id" groups="account.group_account_user"
-                                        domain="[('company_id', '=', parent.company_id), ('journal_id', '=', parent.journal_id), ('type', '=', 'other')]"
-                                        on_change="onchange_account_id(product_id, parent.partner_id, parent.type, parent.fiscal_position,account_id)"/>
-                                    <field name="account_analytic_id" groups="analytic.group_analytic_accounting"
-                                        domain="[('type','!=','view'), ('company_id', '=', parent.company_id)]"/>
-                                    <field name="quantity"/>
-                                    <field name="uos_id" groups="product.group_uom"
-                                        on_change="uos_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.currency_id, context, parent.company_id)"/>
-                                    <field name="price_unit"/>
-                                    <field name="discount" groups="sale.group_discount_per_so_line"/>
-                                    <field name="invoice_line_tax_id" widget="many2many_tags" context="{'type':parent.type}"
-                                        domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
-                                    <field name="price_subtotal"/>
-                                </tree>
-                            </field>
+                <xpath expr="//field[@name='invoice_line']" position="attributes">
+                    <attribute name="context">{'partner_id': partner_id, 'price_type': context.get('price_type') or False, 'type': type, 'analytic_exp': context.get('expense_id', False), 'domain_exp':context.get('domain_exp_parent',[])}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="domain">context.get('domain_exp', [])</attribute>
                 </xpath>
             </field>
         </record>
@@ -49,9 +31,8 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('type','=','in_invoice'),('expense_id','=',context.get('active_id',False))]</field>
-            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False)}</field>
+            <field name="context">{'default_type': 'in_invoice', 'type': 'in_invoice', 'default_expense_id': context.get('active_id',False), 'expense_id': context.get('active_id',False), 'domain_exp_parent':[['hr_expense_ok', '=', 1]]}</field>
             <field name="target">current</field>
         </record>
-
     </data>
 </openerp>

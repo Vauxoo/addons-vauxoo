@@ -7,7 +7,6 @@
 		<record model="ir.ui.view" id="view_ifrs_ifrs_tree">
 		  <field name="name">ifrs.ifrs.tree</field>
 		  <field name="model">ifrs.ifrs</field>
-		  <field name="type">tree</field>
 		  <field name="arch" type="xml">
 			<tree string="International Financial Reporting Standards">
 			  <field name="name" />
@@ -74,15 +73,19 @@
                             <ul><label string='Total: This type is the one that summarize "Detail" Lines, you can even do mathematical operations with them'/></ul>
                             <ul><label string='Constant: This type is the one that just bears constant variable like Days of Period, Periods of Fiscal Year or Month of FiscalYear'/></ul>
                         </group>    
-                      <field name="ifrs_lines_ids"  nolabel="1" colspan="4">
-                        
+                        <field 
+                            name="ifrs_lines_ids"  
+                            nolabel="1" 
+                            context="{'ifrs_help':help, 'ifrs_id':active_id}"
+                            colspan="4">
                         <tree string="IFRS Lines">
                           <field name="id" />
-                          <field name="sequence" />
+                          <field name="priority" />
                           <field name="name" />
                           <field name="type" />
                           <field name="cons_ids" />
                           <field name="total_ids" />
+                          <field name="operand_ids" />
                           <field name="amount" />
                          <field name="value" />
                           <field name="invisible" />
@@ -119,7 +122,7 @@
                                   <group string='Invisible Line' colspan='2' attrs="{'invisible':[('help','=',False)]}">
                                       <i><label string='By setting this field to "True" will avoid this line from printing in your report. It is useful to set some lines to invisible when using them to make some computations but you do not want them to appear in the report printing.'/></i> 
                                   </group>    
-                                  <field name="sequence" colspan='2'/>
+                                  <field name="sequence" colspan='2' on_change='onchange_sequence(sequence)'/>
                                   <field name="invisible" />
                                   <group string='Line Amount' colspan='2' attrs="{'invisible':['|',('type','=','abstract'),('help','=',False)]}">
                                     <group colspan='2' >
@@ -161,16 +164,28 @@
                                             <label colspan='2' string='Balance: Will yield the Balances for the accounts being consulted within the "Accounting Span" being asked'/>
                                       </group>    
                                   </group>    
-                                  <field colspan='2' name="acc_val" attrs="{'invisible':[('type','!=','detail')]}"/>
-                                  <field colspan='2' name="value" attrs="{'invisible':[('type','!=','detail')]}"/>
+                                  <field 
+                                      colspan='2' 
+                                      name="acc_val" 
+                                      attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}"/>
+                                  <field 
+                                      colspan='2' 
+                                      name="value" 
+                                      attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}"/>
                                   <group string='Arithmetic Operator' colspan='2' attrs="{'invisible':['|',('type','!=','total'),('help','=',False)]}">
                                       <i><label string='If you are seen this Field it is because you are setting this line as "Total" Type. By Default All the lines within the same operand are summarized. If you want to perform Subtraction, Product, Division or Percentual Computations, you will have to fill both the First Operand &amp; the Second Operand. If "First Operand Only" operator is defined only the addition of the Elements in the First Operand will be performed and Elements in the Second Operand will be depreciated'/></i> 
                                   </group>    
                                   <group string='Comparison Type' colspan='2' attrs="{'invisible':['|',('type','!=','total'),('help','=',False)]}">
                                       <i><label string='This concept is somewhat more advanced. It will perform a Comparison between the value resulted for the period being asked and the value for this same line but for the pretty previous period to the one being asked. This operation is perform after the Arithmetic Operator has been performed. If not comparison is defined only the value yield by the Arithmetic Operator will be given.'/></i> 
                                   </group>    
-                                  <field name="operator" colspan='2' attrs="{'invisible':[('type','!=','total')]}"/>
-                                  <field name="comparison" colspan='2' attrs="{'invisible':[('type','!=','total')]}"/>
+                                  <field 
+                                      name="operator" 
+                                      colspan='2' 
+                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"/>
+                                  <field 
+                                      name="comparison" 
+                                      colspan='2' 
+                                      attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}"/>
                                 <separator string='Consolidated Accounts' colspan='2' attrs="{'invisible':[('type','!=','detail')]}"/>
                                 <separator string='Analytic Accounts' colspan='2' attrs="{'invisible':[('type','!=','detail')]}"/>
                                 <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
@@ -179,7 +194,12 @@
                                 <group colspan='2' attrs="{'invisible':['|',('type','!=','detail'),('help','=',False)]}">
                                     <i><label string='This field is to be filled with Analytic Accounts. Analytic Accounts serve as a way of filtering data from one Accounting Account. There are chances that you use one single account for multiple purposes though you have been using for a while Analytic Accounts to break down the details regarding that Account. Hence you can use a combination of Accounting Account and Analytic Accounts to retrieve valuable data from the Accounting system to your Line Report. Be aware that all the Accounting Account selected previously will be affected by the Analytic Accounts selected here. If you want one-to-one matches you should create as many lines as you want to fulfill your requirement.'/></i> 
                                 </group>    
-                                <field colspan='2' name="cons_ids" nolabel='1' attrs="{'invisible':[('type','!=','detail')]}">
+                                <field 
+                                    colspan='2' 
+                                    name="cons_ids" 
+                                    nolabel='1' 
+                                    attrs="{'invisible':[('type','!=','detail')]}">
+                                    <!--attrs="{'invisible':[('type','!=','detail')], 'required':[('type','=','detail')]}">-->
                                     <tree>
                                         <field name='code'/>
                                         <field name='name'/>
@@ -206,36 +226,37 @@
                                 <field
                                     name="total_ids" widget="many2many"
                                     nolabel="1" colspan='2' 
-                                    domain="[('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
-                                    attrs="{'invisible':[('type','!=','total')]}"
-                                    >
+                                    domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
+                                    attrs="{'invisible':[('type','!=','total')]}">
+                                    <!--attrs="{'invisible':[('type','!=','total')], 'required':[('type','=','total')]}">-->
                                     <tree>
-                                        <field name='sequence'/>
+                                        <field name='ifrs_id'/>
+                                        <field name='priority'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
-                                        <field name='invisible'/>
                                     </tree>
                                 </field>
                                 <field
                                     name="operand_ids" widget="many2many"
                                     nolabel='1' colspan='2' 
-                                    domain="['|',('ifrs_id','=',parent.id),('type','!=','abstract'),('id','!=',id)]"
-                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')]}"
-                                    >
+                                    domain="[('type','not in',('abstract','constant')),('id','!=',id),'|',('ifrs_id','=',parent.id),('ifrs_id','in',parent.ifrs_ids[0][2])]"
+                                    attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">
+                                    <!--attrs="{'invisible':[('type','!=','total')], 'readonly':[('operator','=','without')], 'required':[('type','=','total'),('operator','!=','without')]}">-->
                                     <tree>
-                                        <field name='sequence'/>
+                                        <field name='ifrs_id'/>
+                                        <field name='priority'/>
                                         <field name='name'/>
                                         <field name='type'/>
                                         <field name='amount'/>
-                                        <field name='invisible'/>
                                     </tree>
                                 </field>
                               </group>    
                           </group>
                           <separator string='Notes &amp; Comments' colspan='2' />
                           <field name="comment" colspan='4' nolabel='1'/>
-
+                          <field name="company_id" colspan='4' nolabel='1' readonly='1'/>
+                          <field name="priority" invisible='1'/>
                         </form>
                       </field>
                     </page>
@@ -253,24 +274,30 @@
 			</form>
 		  </field>
 		</record>
-<!--
-		    <record id="view_board_search" model="ir.ui.view">
+
+        <record id="view_board_search" model="ir.ui.view">
 			<field name="name">ifrs.lines.search</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">search</field>
 			<field name="arch" type="xml">
-			    <search string="Buscar">
-				<field name="name"/>
-				<field name="sequence"/>
-			    </search>
+               <search string="IFRS Lines Search">
+                   <filter 
+                       string="Report" 
+                       icon="terp-blue-folder"
+                       name="group_report"
+                       context="{'group_by':'ifrs_id'}"/>
+                   <filter 
+                       string="Type" 
+                       icon="terp-blue-folder"
+                       name="group_type"
+                       context="{'group_by':'type'}"/>
+               </search>
 			</field>
-		    </record> -->
+        </record>
 
 
 		<record model="ir.ui.view" id="view_ifrs_lines_form">
 			<field name="name">ifrs.lines.form</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="IFRS Line">
 					<group col="6" colspan="4">
@@ -289,16 +316,12 @@
 		<record model="ir.ui.view" id="view_ifrs_lines_tree">
 			<field name="name">ifrs.lines.tree</field>
 			<field name="model">ifrs.lines</field>
-			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="IFRS Line">
-						<field name="sequence"></field>
+                        <field name="ifrs_id" invisible='1'/>
+						<field name="priority"/>
 						<field name="name" />
 						<field name="type" />
-						<field name="amount"></field>
-						<field name="invisible"></field>
-						<field name="ifrs_id"></field>
-						<field name="comment"></field>
 				</tree>
 			</field>
 		</record>

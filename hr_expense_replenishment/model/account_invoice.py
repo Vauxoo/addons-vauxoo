@@ -58,6 +58,12 @@ class account_invoice(osv.Model):
             exp_obj.write(cr, uid, exp_id, {'line_ids': data}, context=context)
         return True
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'expense_id': False})
+        return super(account_invoice, self).copy(cr, uid, id, default, context=context)
 
 class account_invoice_line(osv.Model):
     _inherit = 'account.invoice.line'
@@ -73,9 +79,9 @@ class account_invoice_line(osv.Model):
     def _get_analytic_exp(self, cr, uid, context=None):
         hr_expense_obj = self.pool.get('hr.expense.expense')
         context = context or {}
-        analytic_id = hr_expense_obj.browse(cr, uid,
-                                        context.get('analytic_exp'),
-                                        context=context).account_analytic_id.id
+        analytic_id = context.get('analytic_exp') and hr_expense_obj.browse(cr, uid,
+                            context.get('analytic_exp'),
+                            context=context).account_analytic_id.id or False
         return analytic_id
     
     _defaults = {
