@@ -10,9 +10,6 @@
                     <field name="sequence"/>
                     <field name="att_bro"/>
                 </xpath>
-                <xpath expr="//field[@name='amount_total']" position="after">
-                        <button colspan="1" name="%(sale_multicompany_report)d" string="Print With Attachments" type="action" icon="terp-document-new"/>
-                </xpath>
             </field>
         </record>
         <record model="ir.ui.view" id="view_sale_order_tree_inherit">
