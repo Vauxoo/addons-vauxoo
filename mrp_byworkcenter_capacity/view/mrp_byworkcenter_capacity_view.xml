@@ -17,6 +17,7 @@ mrp.scheduled.workorders
                         <field name="sequence"/>
                         <field name="cycle"/>
                         <field name="hour"/>
+                        <field name="wo_lot_id"/>
                     </group>
                 </form>
             </field>
@@ -32,6 +33,7 @@ mrp.scheduled.workorders
                     <field name="workcenter_id"/>
                     <field name="cycle"/>
                     <field name="hour"/>
+                    <field name="wo_lot_id"/>
                 </tree>
             </field>
         </record>

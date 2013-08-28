@@ -441,3 +441,26 @@ class mrp_scheduled_workorders(osv.Model):
     """
     This is a prototype inheritance of work orders model
     """
+
+    _columns = {
+        'wo_lot_id': fields.many2one('mrp.workoder.lot',
+                                     'Scheduled Work Order Lot')
+    }
+
+class mrp_workoder_lot(osv.Model):
+
+    _name = 'mrp.workoder.lot'
+    _description = "Work Order Lot"
+
+    """
+    This model manage the Work Order Lot.
+    """
+
+    _columns = {
+        'number': fields.char('Lot Number', size=192),
+        'swo_ids': fields.one2many(
+            'mrp.scheduled.workorders', 'wo_lot_id',
+            string=_('Lot of Scheduled Work Orders'),
+            help=_('Lot of Scheduled Work Orders'),
+        )
+    }
