@@ -24,6 +24,7 @@
 #
 ##############################################################################
 from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
 class update_amount_base_tax_wizard(osv.osv_memory):
     _name = 'update.amount.tax.wizard'
@@ -33,9 +34,9 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         }
     
     _defaults = {
-        'warning' : 'This wizard only should be used when the company have '\
+        'warning' : _('This wizard only should be used when the company have '\
         'configured a tax by purchases and other by sales for each amount to '\
-        'tax, and the account of each tax is configured correctly'
+        'tax, and the account of each tax is configured correctly')
         }
     
     def update_tax_secondary(self, cr, uid, ids, context=None):
