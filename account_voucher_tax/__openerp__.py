@@ -70,6 +70,9 @@ Caused VAT is that actually charged to customers.
         ],
     "test": [
         'test/account_voucher_taxes.yml',
+        'test/account_voucher_tax_round_off.yml',
+        'test/account_voucher_tax_write_off.yml',
+        'test/account_voucher_tax_currency_diff.yml',
     ],
     "installable" : True,
     "active" : False,
