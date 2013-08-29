@@ -524,5 +524,16 @@ class mrp_workoder_lot(osv.Model):
                    ' belongs.')),
         'percentage': fields.float(
             _('Percentage'),
-            help=_('Percentage of the Raw Material to processs in the Lot.'))
+            help=_('Percentage of the Raw Material to processs in the Lot.')),
+        'state': fields.selection(
+            [('draft', 'New'),
+             ('open', 'In progress'),
+             ('done', 'Done'),
+             ('pending', 'Pending')],
+             string=_('State'),
+             help=_('Indicate the state of the Lot.')),
+    }
+
+    _defaults = {
+        'state': 'draft',
     }
