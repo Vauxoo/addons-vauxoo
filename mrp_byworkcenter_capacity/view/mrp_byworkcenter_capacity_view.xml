@@ -49,6 +49,15 @@ mrp.production inherit
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='workcenter_lines']" position="before">
+                    <separator string="Scheluded Orders Lots"/>
+                    <field name="wo_lot_ids">
+                        <tree>
+                            <field name="number"/>
+                            <field name="name"/>
+                            <field name="swo_ids"/>
+                        </tree>
+                    </field>
+
                     <separator string="Scheluded Orders"/>
                     <field name="swo_ids"/>
                     <separator string="Real Orders"/>
@@ -171,6 +180,57 @@ mrp.routing.workcenter inherits
                     </group>
                 </xpath>
 
+            </field>
+        </record>
+
+
+<!--
+mrp.workoder.lot
+-->
+
+        <record id="mrp_workoder_lot_tree" model="ir.ui.view">
+            <field name="name">mrp.workoder.lot.tree</field>
+            <field name="model">mrp.workoder.lot</field>
+            <field name="arch" type="xml">
+                <tree string="Scheduled Work Order Lots" version="7.0">
+                    <field name="number"/>
+                    <field name="name"/>
+                    <field name="production_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mrp_workoder_lot_form" model="ir.ui.view">
+            <field name="name">mrp.workoder.lot.form</field>
+            <field name="model">mrp.workoder.lot</field>
+            <field name="arch" type="xml">
+                <form string="Scheduled Work Order Lot" version="7.0">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" string="Lot Name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group colspan="4" col="4">
+                                <field name="number"/>
+                                <field name="production_id"/>
+                            </group>
+                            <group>
+                                <separator string="Scheduled Work Orders" colpan="4"/>
+                                <field name="swo_ids" colspan="4" nolabel="1">
+                                    <tree>
+                                        <field name="sequence"/>
+                                        <field name="name"/>
+                                        <field name="workcenter_id"/>
+                                        <field name="cycle"/>
+                                        <field name="hour"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
             </field>
         </record>
 

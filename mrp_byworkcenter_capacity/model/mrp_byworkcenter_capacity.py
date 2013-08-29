@@ -134,8 +134,11 @@ class mrp_production(osv.Model):
         'swo_ids': fields.one2many(
             'mrp.scheduled.workorders', 'production_id',
             string=_('Scheduled Work Orders'),
-            help=_('Scheduled Work Orders'),
-        )
+            help=_('Scheduled Work Orders')),
+        'wo_lot_ids': fields.one2many(
+            'mrp.workoder.lot', 'production_id',
+            string=_('Scheduled Work Orders Lots'),
+            help=_('Scheduled Work Orders Lots.')),
     }
 
     def action_compute(self, cr, uid, ids, properties=None, context=None):
@@ -355,6 +358,7 @@ class mrp_production(osv.Model):
                 return result
 
             batch_mode = production.company_id.batch_type
+            lot_list = False
 
             # for every routing operation
             for wc_op in routing_brw.workcenter_lines:
@@ -372,6 +376,11 @@ class mrp_production(osv.Model):
                 mult = int(d + (m and 1.0 or 0.0))
                 cycle = wc_op.cycle_nbr
 
+                # create dictionary of swo lots
+                lot_list = lot_list and lot_list or \
+                    self.create_swo_lot_dict(cr, uid, ids, mult,
+                                             context=context)
+
                 process_qty = 0
                 for new_swo in xrange(mult):
                     level += 10
@@ -388,6 +397,7 @@ class mrp_production(osv.Model):
                         ' (%s/%s)' % (new_swo+1, mult),
                         'workcenter_id': wc_brw.id,
                         'sequence': level+(wc_op.sequence or 0),
+                        'wo_lot_id': lot_list[new_swo],
                         'qty': qty,
                         'cycle': cycle,
                         'hour': self.get_swo_hour(
@@ -431,6 +441,26 @@ class mrp_production(osv.Model):
         )
         return res
 
+    def create_swo_lot_dict(self, cr, uid, ids, mult, context=None):
+        """
+        Create the records for the swo lots. Only the records, in a posterior
+        process will add the swo corresponding to every lot.
+        @param mult: number of lots to produce.
+        @return: a list of created lot ids
+        """
+        context = context or {}
+        res = []
+        wo_lot_obj = self.pool.get('mrp.workoder.lot')
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        for production in self.browse(cr, uid, ids, context=context):
+            for item in range(mult):
+                values = {
+                    'name': '%s/SWOLOT/%05i' % (production.name, item+1, ),
+                    'number': '%05i' % (item+1,),
+                    'production_id': production.id,
+                }
+                res += [wo_lot_obj.create(cr, uid, values, context=context)]
+        return res
 
 class mrp_scheduled_workorders(osv.Model):
 
@@ -457,10 +487,21 @@ class mrp_workoder_lot(osv.Model):
     """
 
     _columns = {
-        'number': fields.char('Lot Number', size=192),
+        'name': fields.char(
+            _('Ref'),
+            size=192,
+            help=_('Lot Reference Name.')),
+        'number': fields.char(
+            _('Number'),
+            size=192,
+            help=_('Lot Serial Number')),
         'swo_ids': fields.one2many(
             'mrp.scheduled.workorders', 'wo_lot_id',
-            string=_('Lot of Scheduled Work Orders'),
-            help=_('Lot of Scheduled Work Orders'),
-        )
+            string=_('Scheduled Work Orders'),
+            help=_('Scheduled Work Orders that belogns to this Lot.')),
+        'production_id': fields.many2one(
+            'mrp.production',
+            string=_('Manufacturing Order'),
+            help=_('The Manufacturing Order were this Scheduled Order Lot'
+                   ' belongs.'))
     }
