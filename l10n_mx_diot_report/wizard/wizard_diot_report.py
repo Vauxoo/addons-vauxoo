@@ -46,8 +46,8 @@ class wizard_account_diot_mx(osv.osv_memory):
         'filename': fields.char('File name', size=128, readonly=True,
             help='This is File name'),
         'filename_csv': fields.char('File name', size=128, readonly=True),
-        'file': fields.binary('File', readonly=True, help='This is File for export to SAT'),
-        'file_csv': fields.binary('File', readonly=True, help='This is the file to collate'),
+        'file': fields.binary('File', readonly=True, help='This file, you can import the SAT'),
+        'file_csv': fields.binary('File', readonly=True, help='It will open in your program office, to validate numbers'),
         'state': fields.selection([('choose', 'Choose'), ('get', 'Get'),
             ('not_file', 'Not File')]),
     }
