@@ -253,7 +253,7 @@ class ir_attachment_facturae_mx(osv.Model):
                                              "account.invoice.facturae.webkit", invoice.fname_invoice)
             attachment_ids = attachment_obj.search(cr, uid,[
                                                         ('res_model', '=', 'account.invoice'),
-                                                        ('res_id', '=', invoice),
+                                                        ('res_id', '=', invoice.id),
                                                         ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
             for attachment in self.browse(cr, uid, attachment_ids, context=context):
                 aids = attachment.id #TODO: aids.append( attachment.id ) but without error in last write
@@ -262,7 +262,7 @@ class ir_attachment_facturae_mx(osv.Model):
             if aids:
                 msj = _("Attached Successfully PDF\n")
             else:
-                msj = _("Not Attached PDF\n")
+                raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
             self.write(cr, uid, ids, {
                         'file_pdf': aids or False,
                         'msj': msj,
