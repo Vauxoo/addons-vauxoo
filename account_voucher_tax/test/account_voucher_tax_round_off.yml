@@ -75,7 +75,7 @@
   !assert {model: account.voucher, id: account_voucher_tax_round_off_2}:
     - state == 'posted'
 -
-  I create the voucher of payment01 with values 1.11
+  I create the voucher of payment01 with values 1.12
 -
   !record {model: account.voucher, id: account_voucher_tax_round_off_3, view: account_voucher.view_vendor_payment_form}:
     account_id: account.cash
@@ -151,6 +151,7 @@
     debit=0
     credit=0
     for move in moves_line :
-        debit+=move.debit
-        credit+=move.credit
+        if move.tax_id:
+            debit+=move.debit
+            credit+=move.credit
     print '\n\tdebit: ', debit , '\t credit: ',credit
