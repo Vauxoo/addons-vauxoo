@@ -55,6 +55,7 @@ mrp.production inherit
                             <field name="number"/>
                             <field name="name"/>
                             <field name="swo_ids"/>
+                            <field name="percentage"/>
                         </tree>
                     </field>
 
@@ -196,6 +197,7 @@ mrp.workoder.lot
                     <field name="number"/>
                     <field name="name"/>
                     <field name="production_id"/>
+                    <field name="percentage"/>
                 </tree>
             </field>
         </record>
@@ -215,6 +217,7 @@ mrp.workoder.lot
                             <group colspan="4" col="4">
                                 <field name="number"/>
                                 <field name="production_id"/>
+                                <field name="percentage"/>
                             </group>
                             <group>
                                 <separator string="Scheduled Work Orders" colpan="4"/>

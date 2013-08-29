@@ -503,5 +503,8 @@ class mrp_workoder_lot(osv.Model):
             'mrp.production',
             string=_('Manufacturing Order'),
             help=_('The Manufacturing Order were this Scheduled Order Lot'
-                   ' belongs.'))
+                   ' belongs.')),
+        'percentage': fields.float(
+            _('Percentage'),
+            help=_('Percentage of the Raw Material to processs in the Lot.'))
     }
