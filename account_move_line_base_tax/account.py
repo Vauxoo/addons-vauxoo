@@ -49,8 +49,8 @@ class account_move_line(osv.Model):
         else:
             return {'value' : {}}
             
-    def write(self, cr, uid, ids, vals, context=None):
-        res = super(account_move_line, self).write(cr, uid, ids, vals, context=context)
+    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+        res = super(account_move_line, self).write(cr, uid, ids, vals, context=context, check=check, update_check=update_check)
         acc_tax_obj = self.pool.get('account.tax')
         for line in self.browse(cr, uid, ids, context=context):
             if line.tax_id_secondary:
