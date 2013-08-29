@@ -421,7 +421,7 @@
             </td>
           </tr>
         </blockTable>
-        <para style="P10">Tijuana, B.C., a [[time.strftime('%d')]] de [[time.strftime('%B %Y')]]</para>
+        <para style="P10">Tijuana, B.C., a [[time.strftime('%d')]] de [[locale_date()]]</para>
         <para style="P9">
           <font color="white"> </font>
         </para>
