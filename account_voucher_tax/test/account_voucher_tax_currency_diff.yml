@@ -112,7 +112,7 @@
     debit=0
     credit=0
     for move in moves_line :
-        print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.amount_tax_unround,'\t',move.account_id.name,'\t',move.name 
+        print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
         debit+=move.debit
         credit+=move.credit
     print '\n\tdebit: ', debit , '\t credit: ',credit

@@ -106,10 +106,21 @@
     debit=0
     credit=0
     for move in moves_line :
-        print move.account_id.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name ,'\t',move.name
+        if move.credit == 3.34:
+            print move.account_id.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name ,'\t',move.name
+            assert move.account_id.id == ref('account.a_pay'), "Wrong account Creditors in Journal Item"
+        elif move.debit == 0.46:
+            print move.account_id.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name ,'\t',move.name
+            assert move.account_id.id == ref('account.iva'), "Wrong account IVA Voucher in Journal Item"
+        elif move.debit == 2.88:
+            print move.account_id.name ,'\t', move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name ,'\t',move.name
+            assert move.account_id.id == ref('account.a_expense'), "Wrong bank account in Journal Item"
+        else:
+            assert False, "Wrong entry. Unrecognized account move line for invoce."
         debit+=move.debit
         credit+=move.credit
     print '\n\tdebit: ', debit , '\t credit: ',credit
+    assert debit==credit , 'Wrong in credit or debit in invoice'
 -
     I check account move line of payment1
 -
@@ -119,7 +130,15 @@
     moves_ids = self.search( cr, uid, [('move_id','in', tuple(tuple_payments))])
     moves_line = self.browse (cr,uid, moves_ids)
     for move in moves_line :
-        print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.amount_tax_unround,'\t',move.account_id.name,'\t',move.name 
+        if move.tax_id:
+            if move.credit == 0.15:
+                print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
+                assert move.account_id.id == ref('account.iva'), "Wrong account Creditors in Journal Item"
+            elif move.debit == 0.15:
+                print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
+                assert move.account_id.id == ref('account_iva_voucher'), "Wrong account IVA Voucher in Journal Item"
+            else:
+                assert False, "Wrong entry. Unrecognized account move line for payment 1."
 -
     I check account move line of payment2
 -
@@ -129,7 +148,15 @@
     moves_ids = self.search( cr, uid, [('move_id','in', tuple(tuple_payments))])
     moves_line = self.browse (cr,uid, moves_ids)
     for move in moves_line :
-        print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.amount_tax_unround,'\t',move.account_id.name,'\t',move.name 
+        if move.tax_id:
+            if move.credit == 0.15:
+                print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
+                assert move.account_id.id == ref('account.iva'), "Wrong account Creditors in Journal Item"
+            elif move.debit == 0.15:
+                print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
+                assert move.account_id.id == ref('account_iva_voucher'), "Wrong account IVA Voucher in Journal Item"
+            else:
+                assert False, "Wrong entry. Unrecognized account move line for payment 2."
 -
     I check account move line of payment3
 -
@@ -139,7 +166,15 @@
     moves_ids = self.search( cr, uid, [('move_id','in', tuple(tuple_payments))])
     moves_line = self.browse (cr,uid, moves_ids)
     for move in moves_line :
-        print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.amount_tax_unround,'\t',move.account_id.name,'\t',move.name 
+        if move.tax_id:
+            if move.credit == 0.16:
+                print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
+                assert move.account_id.id == ref('account.iva'), "Wrong account Creditors in Journal Item"
+            elif move.debit == 0.16:
+                print move.date ,'\t', move.debit,'\t', move.credit,'\t', move.reconcile_id.name , '\t', move.reconcile_partial_id.name,'\t',move.account_id.name,'\t',move.name 
+                assert move.account_id.id == ref('account_iva_voucher'), "Wrong account IVA Voucher in Journal Item"
+            else:
+                assert False, "Wrong entry. Unrecognized account move line for payment 3."
 -
     I check account move line of General payment
 -
@@ -155,3 +190,4 @@
             debit+=move.debit
             credit+=move.credit
     print '\n\tdebit: ', debit , '\t credit: ',credit
+    assert debit==credit , 'Wrong test round off failed'
