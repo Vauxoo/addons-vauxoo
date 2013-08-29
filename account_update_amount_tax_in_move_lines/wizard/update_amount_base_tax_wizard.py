@@ -76,7 +76,7 @@ class update_amount_base_tax_wizard(osv.osv_memory):
             ('tax_category_id', 'in', category_iva_ids)], context=context)
         self.update_tax_secondary(cr, uid, ids, company_id, tax_ids, context=context)
         lines_without_amount = move_line_obj.search(cr, uid, [\
-            ('tax_id_secondary', 'in', tax_ids), ('amount_base', '=', 0)])
+            ('tax_id_secondary', 'in', tax_ids), ('amount_base', 'in', (0, False)),])
         for move in move_line_obj.browse(cr, uid, lines_without_amount,\
             context=context):
             amount_tax = move.tax_id_secondary.amount
