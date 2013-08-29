@@ -61,6 +61,15 @@ class account_move_line(osv.Model):
                     raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need have a value in the credit.'))
         return res
         
+    def onchange_account_id(self, cr, uid, ids, account_id=False, partner_id=False, context=None):
+        res = super(account_move_line, self).onchange_account_id(cr, uid, ids, account_id, partner_id, context=context)
+        acc_tax_obj = self.pool.get('account.tax')
+        tax_acc = acc_tax_obj.search(cr, uid, [
+            ('account_paid_voucher_id', '=', account_id)], context=context)
+        if tax_acc:
+            res['value'].update({'tax_id_secondary' : tax_acc[0]})
+        return res
+        
 class account_invoice_tax(osv.Model):
     _inherit = "account.invoice.tax"
     

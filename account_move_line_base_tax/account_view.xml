@@ -10,9 +10,12 @@
             <xpath expr='//group[@string="Taxes"]' position="after">
                 <group string="Taxes Effective Payment">
                     <field name="amount_base"/>
-                    <field name="tax_id_secondary"/>
+                    <field name="tax_id_secondary" domain="['|', ('account_collected_voucher_id', '=', account_id), ('account_paid_voucher_id', '=', account_id)]"/>
                     <field name="not_move_diot"/>
                 </group>
+            </xpath>
+            <xpath expr='//field[@name="account_id"]' position="replace">
+                <field name="account_id" domain="[('company_id', '=', company_id), ('type','&lt;&gt;','view'), ('type','&lt;&gt;','consolidation')]" on_change="onchange_tax_secondary(account_id)"/>
             </xpath>
         </field>
     </record>
@@ -27,7 +30,7 @@
             </xpath>
             <xpath expr='//field[@name="account_tax_id"]' position="after">
                 <field name="amount_base"/>
-                <field name="tax_id_secondary"/>
+                <field name="tax_id_secondary" domain="['|', ('account_collected_voucher_id', '=', account_id), ('account_paid_voucher_id', '=', account_id)]"/>
                 <field name="not_move_diot"/>
             </xpath>
         </field>
@@ -40,7 +43,7 @@
         <field name="arch" type="xml">
             <xpath expr='//tree/field[@name="tax_amount"]' position="after">
                 <field name="amount_base"/>
-                <field name="tax_id_secondary"/>
+                <field name="tax_id_secondary" domain="['|', ('account_collected_voucher_id', '=', account_id), ('account_paid_voucher_id', '=', account_id)]"/>
                 <field name="not_move_diot"/>
             </xpath>
             <xpath expr='//tree/field[@name="account_id"]' position="replace">
