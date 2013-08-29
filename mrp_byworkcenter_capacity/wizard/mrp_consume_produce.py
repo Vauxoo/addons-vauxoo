@@ -38,6 +38,7 @@ class mrp_consume(osv.TransientModel):
             help=_('Manufacturing Order')),
         'wo_lot_id': fields.many2one(
             'mrp.workoder.lot',
+            required=True,
             string=_('Scheduled Work Orders Lots'),
             help=_('Scheduled Work Orders Lots.')),
     }
