@@ -2137,3 +2137,18 @@ msgid ""
 msgstr ""
 "campo de control cantidad de 11vo período, funciona para prevenir cálculos "
 "repetidos"
+
+#. module: ifrs_report
+#: field:ifrs.report.wizard,report_format:0
+msgid "Report Format"
+msgstr "Formato del Reporte"
+
+#. module: ifrs_report
+#: selection:ifrs.report.wizard,report_format:0
+msgid "PDF"
+msgstr "PDF"
+
+#. module: ifrs_report
+#: selection:ifrs.report.wizard,report_format:0
+msgid "Spreadsheet"
+msgstr "Hoja de Cálculo"

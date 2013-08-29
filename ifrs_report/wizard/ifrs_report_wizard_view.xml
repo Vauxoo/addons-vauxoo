@@ -24,6 +24,7 @@
                              <field name="period" />
                          </group>
                          <field name="target_move"/>
+                         <field name="report_format"/>
                     </group>
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
