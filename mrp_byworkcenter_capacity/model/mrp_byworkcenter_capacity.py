@@ -386,10 +386,16 @@ class mrp_production(osv.Model):
                 critic_product_income_qty = critic_product_income_qty[0]
                 #~ TODO: need to manage here product_uom too?
 
+                percentage = {}.fromkeys(m and ['d', 'm'] or ['d'])
+                percentage['d'] = \
+                    (wc_capacity/critic_product_income_qty) * 100.0
+                percentage['m'] = m and (m/critic_product_income_qty) * 100.0 \
+                    or percentage['d']
+
                 # create dictionary of swo lots
                 lot_list = lot_list and lot_list or \
-                    self.create_swo_lot_dict(cr, uid, ids, mult,
-                                             context=context)
+                    self.create_swo_lot_dict(
+                        cr, uid, ids, mult, percentage, context=context)
 
                 process_qty = 0
                 for new_swo in xrange(mult):
@@ -451,7 +457,7 @@ class mrp_production(osv.Model):
         )
         return res
 
-    def create_swo_lot_dict(self, cr, uid, ids, mult, context=None):
+    def create_swo_lot_dict(self, cr, uid, ids, mult, percentage, context=None):
         """
         Create the records for the swo lots. Only the records, in a posterior
         process will add the swo corresponding to every lot.
@@ -468,6 +474,8 @@ class mrp_production(osv.Model):
                     'name': '%s/SWOLOT/%05i' % (production.name, item+1, ),
                     'number': '%05i' % (item+1,),
                     'production_id': production.id,
+                    'percentage': (item != mult-1) and percentage['d']
+                    or percentage['m']
                 }
                 res += [wo_lot_obj.create(cr, uid, values, context=context)]
         return res
