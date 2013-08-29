@@ -181,7 +181,9 @@ class mrp_production(osv.Model):
     def get_wc_capacity(self, cr, uid, ids, rounting_id, context=None):
         """
         It calculate every workcenters capacity in the rounting_id.
-        @return the rorunting capacity (the minimun workcenter max capacity)
+        @param rounting_id: routing id.
+        @return a tupla with the the rorunting capacity like (split_nbr,
+        product_qty, product_id)]
         """
         context = context or {}
         routing_obj = self.pool.get('mrp.routing')
@@ -317,7 +319,7 @@ class mrp_production(osv.Model):
         bottleneck_list.sort(reverse=True)
         #~ print 'bottleneck_list', bottleneck_list
 
-        return bottleneck_list and bottleneck_list[0][1] or False
+        return bottleneck_list and bottleneck_list[0] or False
 
     def create_swo_dict(self, cr, uid, ids, context=None):
         """
@@ -363,18 +365,26 @@ class mrp_production(osv.Model):
             # for every routing operation
             for wc_op in routing_brw.workcenter_lines:
                 wc_brw = wc_op.workcenter_id
+                cycle = wc_op.cycle_nbr
+                product_qty = production.product_qty
 
                 if batch_mode == 'max_cost':
                     wc_capacity = wc_brw.capacity_per_cycle
+                    d, m = divmod(factor, wc_capacity)
+                    mult = int(d + (m and 1.0 or 0.0))
                 elif batch_mode == 'bottleneck':
-                    wc_capacity = self.get_wc_capacity(
-                        cr, uid, production.id, routing_brw.id,
-                        context=context) or 1.0
+                    mult, wc_capacity, critic_product_id = \
+                        self.get_wc_capacity(
+                            cr, uid, production.id, routing_brw.id,
+                            context=context) or (1.0)
+                    d, m = divmod(factor, wc_capacity)
 
-                product_qty = production.product_qty
-                d, m = divmod(factor, wc_capacity)
-                mult = int(d + (m and 1.0 or 0.0))
-                cycle = wc_op.cycle_nbr
+                critic_product_income_qty = \
+                    [rm_bom.product_qty * product_qty
+                     for rm_bom in production.bom_id.bom_lines
+                     if rm_bom.product_id.id == critic_product_id]
+                critic_product_income_qty = critic_product_income_qty[0]
+                #~ TODO: need to manage here product_uom too?
 
                 # create dictionary of swo lots
                 lot_list = lot_list and lot_list or \
