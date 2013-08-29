@@ -88,6 +88,7 @@ Another pre-configure options:
         'view/mrp_byworkcenter_capacity_view.xml',
         'view/res_config_view.xml',
         'view/res_company_view.xml',
+        'wizard/mrp_consume_produce.xml',
     ],
     "demo": [],
     "test": [],
