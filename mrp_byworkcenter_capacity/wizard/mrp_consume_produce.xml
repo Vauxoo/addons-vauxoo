@@ -14,7 +14,7 @@ mrp.consume
                 <xpath expr="//field[@name='consume_line_ids']" position="before">
                     <group>
                         <field name="production_id" readonly="1"/>
-                        <field name="wo_lot_id" domain="[('production_id', '=', production_id)]"/>
+                        <field name="wo_lot_id" domain="[('production_id', '=', production_id)]" on_change="onchange_wo_lot_ids(production_id,wo_lot_id,consume_line_ids)"/>
                     </group>
                 </xpath>
 

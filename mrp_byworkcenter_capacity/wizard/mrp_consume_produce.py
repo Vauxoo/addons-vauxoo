@@ -46,3 +46,28 @@ class mrp_consume(osv.TransientModel):
     _defaults = {
         'production_id': lambda s, c, u, ctx: ctx.get('active_id', False), 
     }
+
+    def onchange_wo_lot_ids(self, cr, uid, ids, production_id, wo_lot_id,
+                            consume_line_ids, context=None):
+        """
+        Loads product information from the scheduled work order selected.
+        @param production_id: manufacturing order id.
+        @param wo_lot_id: selected scheduled work order lot.
+        @param consume_line_ids: current cosumne product lines.
+        """
+
+        context = context or {}
+        values = []
+        production = self.pool.get('mrp.production').browse(
+            cr, uid, production_id, context=context)
+        wo_lot_obj = self.pool.get('mrp.workoder.lot')
+
+        if wo_lot_id:
+            wo_lot = wo_lot_obj.browse(cr, uid, wo_lot_id, context=context)
+            for product_line in production.product_lines:
+                values += [
+                    {'product_id': product_line.product_id.id,
+                     'quantity': product_line.product_qty * wo_lot.percentage/100.0,
+                     'product_uom': product_line.product_uom.id}]
+
+        return {'value': {'consume_line_ids': values}}
