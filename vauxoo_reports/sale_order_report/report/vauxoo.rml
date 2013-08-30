@@ -254,7 +254,6 @@
                 <para style="ITEMSLEFT">[[ line.name  ]]</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
                 <para style="ITEMSLEFTITALIC">[[ line.product_id.description  or removeParentNode('para') ]]</para>
-                <para style="ITEMSLEFTITALIC">[[ line.notes or removeParentNode('para') ]]</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="lightgrey"/>
                 <para style="ITEMSLEFTITALIC">PLAZO DE ENTREGA: [[ formatLang(line.delay, digits=0, date=False, date_time=False, grouping=True, monetary=False) or removeParentNode('para') ]][[ line.delay==0.00 and removeParentNode('para')  ]] DÍAS</para>
                 <para style="ITEMSLEFTITALICPEQ">[[ line.delay==0.00 and 'A CONVENIR' or removeParentNode('para')  ]]</para>
