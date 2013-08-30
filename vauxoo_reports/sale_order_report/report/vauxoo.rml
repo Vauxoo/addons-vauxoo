@@ -37,7 +37,7 @@
                     <tr>
                         <td>
                             <para style="COMPANYNAME">[[ o.user_id.company_id.partner_id.name or removeParentNode('para') ]],  [[ get_rif(o.user_id.company_id.partner_id) or '' ]]</para>
-                            <para style="COMPANYNAME">[[get_addr(o.user_id.company_id.partner_id.child_ids,'company').upper() or '']]</para>
+                            <para style="COMPANYNAME">[[get_addr(o.user_id.company_id.partner_id,'company').upper() or '']]</para>
                         </td>
                     </tr>
                 </blockTable>

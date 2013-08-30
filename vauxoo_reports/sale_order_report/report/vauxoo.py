@@ -74,10 +74,13 @@ class sale_vauxoo_report(report_sxw.rml_parse):
         idp = []
 
         if type_r == "company":
-            for partner in idpartner:
-                idp = partner.id
-                if partner.type == "invoice":
-                    break
+            if idpartner.type == "invoice":
+                idp = idpartner.id
+            else:
+                for partner in idpartner.child_ids:
+                    idp = partner.id
+                    if partner.type == "invoice":
+                        break
         else:
             idp = idpartner
 
