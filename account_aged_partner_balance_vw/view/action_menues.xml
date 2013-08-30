@@ -20,6 +20,10 @@
             <field name="help"/>
         </record>
 
+        <record id="account.action_account_aged_balance_view" model="ir.actions.act_window">
+            <field name="target">inline</field>
+        </record>
+
         <menuitem 
             action="action_account_aged_partner_balance_vw" 
             id="menu_action_account_aged_partner_balance_vw" 
