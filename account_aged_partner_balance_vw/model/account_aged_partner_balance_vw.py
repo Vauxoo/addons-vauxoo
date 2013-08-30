@@ -33,11 +33,10 @@ import time
 import os
 
 
-class account_aged_partner_balance_vw(osv.Model):
+class account_aged_partner_balance_vw(osv.TransientModel):
     _name = 'account.aged.partner.balance.vw'
     _rec_name = 'partner_id'
-    _auto = False
-    _order = 'partner_id'
+    _order = 'partner_id.name'
 
     _columns = {
         'partner_id': fields.many2one('res.partner', u'Partner'),
@@ -51,7 +50,7 @@ class account_aged_partner_balance_vw(osv.Model):
         #'pending': fields.float(u'Pending'),
         'company_id': fields.many2one('res.company', u'Company'),
         'currency_company_id': fields.many2one('res.currency', u'Company Currency'),
-        #'currency_src_id': fields.many2one('res.currency', u'Source Currency'),
+#'currency_src_id': fields.many2one('res.currency', u'Source Currency'),
     }
 
     def init(self, cr):
