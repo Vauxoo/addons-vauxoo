@@ -36,9 +36,9 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "view/account_aged_partner_balance_vw_wizard.xml",
-        "view/account_aged_partner_balance_vw_view.xml",
-        'view/board_account_view.xml',
+        "view/wizard.xml",
+        "view/view.xml",
+        'view/action_menues.xml',
     ],
     "installable" : False,
     "active" : False,
