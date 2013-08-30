@@ -64,26 +64,34 @@ class sale_vauxoo_report(report_sxw.rml_parse):
         return any(aux)
          
     def _get_rif(self,partner):
-        rif = partner.vat[2]+'-'+partner.vat[3:-1]+'-'+partner.vat[-1]
+        rif = partner.vat and partner.vat[2]+'-'+partner.vat[3:-1]+'-'+partner.vat[-1] or ''
         return rif 
         
-    def _get_addr(self, idp=None,type_r=None):
-        if not idp:
+    def _get_addr(self, idpartner=None,type_r=None):
+        if not idpartner:
             return []
-        addr_obj = self.pool.get('res.partner.address')
+
+        idp = []
+
+        if type_r == "company":
+            for partner in idpartner:
+                idp = partner.id
+                if partner.type == "invoice":
+                    break
+        else:
+            idp = idpartner
+
+        addr_obj = self.pool.get('res.partner')
         res = ''
         
-        addr_ids = addr_obj.search(self.cr,self.uid,[('partner_id','=',idp),('type','=',type_r)])
-        
-        if not addr_ids:
-            addr_ids = addr_obj.search(self.cr,self.uid,[('partner_id','=',idp),('type','=','invoice')])
+        addr_ids = addr_obj.search(self.cr,self.uid,[('id','=',idp)])
         
         addr_inv={}
         lista=""
 
         if addr_ids: 
             addr = addr_obj.browse(self.cr,self.uid, addr_ids[0])
-            lista=(hasattr(addr,'street') and addr.street and ('%s'%(addr.street)) or '')+(hasattr(addr,'street2') and addr.street2 and (', %s'%(addr.street2)) or '')+(hasattr(addr,'zipcode_id') and addr.zipcode_id and (',C.P: %s'%(addr.zipcode_id.name)) or '')+(hasattr(addr,'municipality_id') and addr.municipality_id and (', %s'%(addr.municipality_id.name)) or '')+(hasattr(addr,'parish_id') and addr.parish_id and (', %s'%(addr.parish_id.name)) or '')+(hasattr(addr,'city_id') and addr.city_id and (', %s'%(addr.city_id.name)) or '')+(addr.state_id and (', %s'%(hasattr(addr,'state_id') and addr.state_id.name)) or '')+(hasattr(addr,'country_id') and addr.country_id and (', %s'%(addr.country_id.name)) or '')+(hasattr(addr,'phone') and addr.phone and (',TELF.: %s'%(addr.phone)) or '') + (hasattr(addr,'fax') and  addr.fax and (',FAX: %s'%(addr.fax)) or '') +(hasattr(addr,'mobile') and addr.mobile and (',CEL.: %s'%(addr.mobile)) or '') 
+            lista=(addr.street and ('%s'%(addr.street)) or '') +(hasattr(addr,'street2') and addr.street2 and (', %s'%(addr.street2)) or '')+(hasattr(addr,'zip') and addr.zip and (',C.P: %s'%(addr.zip)) or '')+(hasattr(addr,'city') and addr.city and (', %s'%(addr.city)) or '')+(addr.state_id and (', %s'%(hasattr(addr,'state_id') and addr.state_id.name)) or '')+(hasattr(addr,'country_id') and addr.country_id and (', %s'%(addr.country_id.name)) or '')+(hasattr(addr,'phone') and addr.phone and (',TELF.: %s'%(addr.phone)) or '') + (hasattr(addr,'fax') and  addr.fax and (',FAX: %s'%(addr.fax)) or '') +(hasattr(addr,'mobile') and addr.mobile and (',CEL.: %s'%(addr.mobile)) or '') 
         if lista:
             respuesta=lista
         else:
