@@ -49,4 +49,18 @@ class account_aged_partner_balance_vw(osv.TransientModel):
         'days_due_121togr': fields.float(u'+121'),
         'company_id': fields.many2one('res.company', u'Company'),
         'currency_company_id': fields.many2one('res.currency', u'Company Currency'),
+        'aatb_id':fields.many2one('account.aged.trial.balance', ('Aged Trial '
+            'Balance'), help='Aged Trail Balance Document'), 
+        
     }
+
+class account_aged_trial_balance(osv.TransientModel):
+    _inherit = 'account.aged.trial.balance'
+
+    _columns = {
+        'partner_line_ids':fields.one2many('account.aged.partner.balance.vw',
+        'aatb_id', 'Partner Aged Trail Balance', 
+        help='Partner Aged Trail Balance'), 
+        
+    }
+
