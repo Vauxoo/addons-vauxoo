@@ -26,7 +26,7 @@
 
 {
     "name" : "Report Account Aged Partner Balance view",
-    "version" : "1.0",
+    "version" : "2.0",
     "author" : "Vauxoo",
     "category" : "Localization/Mexico",
     "description" : """This module creates a sql view for Account Aged Partner Balance today.""",
@@ -40,6 +40,6 @@
         "view/view.xml",
         'view/action_menues.xml',
     ],
-    "installable" : False,
-    "active" : False,
+    "installable" : True,
+    "active" : True,
 }
