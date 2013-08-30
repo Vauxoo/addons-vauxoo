@@ -61,6 +61,10 @@ class account_aged_trial_balance(osv.TransientModel):
         'partner_line_ids':fields.one2many('account.aged.partner.balance.vw',
         'aatb_id', 'Partner Aged Trail Balance', 
         help='Partner Aged Trail Balance'), 
-        
+        'state':fields.selection([('draft','New'),('open','Open'),('done','Done'),
+                                    ], 'Status',help='Document State'), 
     }
 
+    _defaults = {
+        'state': 'draft',
+    }
