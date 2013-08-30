@@ -420,7 +420,7 @@ class hr_expense_expense(osv.Model):
              
             period_id=per_obj.find(cr, uid,dt=date_post)
             period_id=period_id and period_id[0]
-            exp.write({'date_post':date_post,'period_id':period_id})
+            exp.write({'date_post':date_post})
             x_aml_ids=[aml_brw.id for aml_brw in exp.account_move_id.line_id]
 
             vals={'date':date_post,'period_id':period_id}
