@@ -3,42 +3,6 @@
     <data>
 
 <!--
-mrp.scheduled.workorders
--->
-
-        <record id="mrp_scheduled_workorders_form" model="ir.ui.view">
-            <field name="name">mrp.scheduled.workorders.form</field>
-            <field name="model">mrp.scheduled.workorders</field>
-            <field name="arch" type="xml">
-                <form string="Scheduled Work Order" version="7.0">
-                    <group>
-                        <field name="name"/>
-                        <field name="workcenter_id"/>
-                        <field name="sequence"/>
-                        <field name="cycle"/>
-                        <field name="hour"/>
-                        <field name="wo_lot_id"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-
-        <record id="mrp_scheduled_workorders_tree" model="ir.ui.view">
-            <field name="name">mrp.scheduled.workorders.tree</field>
-            <field name="model">mrp.scheduled.workorders</field>
-            <field name="arch" type="xml">
-                <tree string="Scheduled Work Orders" version="7.0">
-                    <field name="sequence"/>
-                    <field name="name"/>
-                    <field name="workcenter_id"/>
-                    <field name="cycle"/>
-                    <field name="hour"/>
-                    <field name="wo_lot_id"/>
-                </tree>
-            </field>
-        </record>
-
-<!--
 mrp.production inherit
 -->
 
@@ -49,24 +13,21 @@ mrp.production inherit
             <field name="arch" type="xml">
 
                 <xpath expr="//field[@name='workcenter_lines']" position="before">
-                    <separator string="Scheluded Orders Lots"/>
+                    <separator string="Work Orders Lots"/>
                     <field name="wo_lot_ids">
                         <tree>
                             <field name="number"/>
                             <field name="name"/>
-                            <field name="swo_ids"/>
+                            <field name="wo_ids"/>
                             <field name="percentage"/>
                             <field name="state"/>
                         </tree>
                     </field>
-
-                    <separator string="Scheluded Orders"/>
-                    <field name="swo_ids"/>
-                    <separator string="Real Orders"/>
+                    <separator string="Work Orders"/>
                 </xpath>
 
-                <xpath expr="//button[@name='action_compute']" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                <xpath expr="//field[@name='workcenter_lines']/tree" position="inside">
+                    <field name="wo_lot_id"/>
                 </xpath>
 
             </field>
@@ -194,7 +155,7 @@ mrp.workoder.lot
             <field name="name">mrp.workoder.lot.tree</field>
             <field name="model">mrp.workoder.lot</field>
             <field name="arch" type="xml">
-                <tree string="Scheduled Work Order Lots" version="7.0">
+                <tree string="Work Order Lots" version="7.0">
                     <field name="number"/>
                     <field name="name"/>
                     <field name="production_id"/>
@@ -208,7 +169,7 @@ mrp.workoder.lot
             <field name="name">mrp.workoder.lot.form</field>
             <field name="model">mrp.workoder.lot</field>
             <field name="arch" type="xml">
-                <form string="Scheduled Work Order Lot" version="7.0">
+                <form string="Work Order Lot" version="7.0">
                     <header>
                         <field name="state" widget="statusbar"/>
                     </header>
@@ -225,8 +186,8 @@ mrp.workoder.lot
                                 <field name="percentage"/>
                             </group>
                             <group>
-                                <separator string="Scheduled Work Orders" colpan="4"/>
-                                <field name="swo_ids" colspan="4" nolabel="1">
+                                <separator string="Work Orders" colpan="4"/>
+                                <field name="wo_ids" colspan="4" nolabel="1">
                                     <tree>
                                         <field name="sequence"/>
                                         <field name="name"/>

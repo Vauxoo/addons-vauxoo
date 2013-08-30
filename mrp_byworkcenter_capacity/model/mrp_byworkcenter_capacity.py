@@ -131,48 +131,42 @@ class mrp_production(osv.Model):
 
     _inherit = 'mrp.production'
     _columns = {
-        'swo_ids': fields.one2many(
-            'mrp.scheduled.workorders', 'production_id',
-            string=_('Scheduled Work Orders'),
-            help=_('Scheduled Work Orders')),
         'wo_lot_ids': fields.one2many(
             'mrp.workoder.lot', 'production_id',
-            string=_('Scheduled Work Orders Lots'),
-            help=_('Scheduled Work Orders Lots.')),
+            string=_('Work Orders Lots'),
+            help=_('Work Orders Lots.')),
     }
 
     def action_compute(self, cr, uid, ids, properties=None, context=None):
         """
-        Overwrite method to take into a count the workcenter capacities to
-        split the manufacturing order workorders in batch. This batch is based
-        on raw materials capacity per workcenter.
+        Overwrite action_compute() method to delete regular work orders
+        creation and improve the process by taking into account the workcenter
+        capacities to split the manufacturing order work orders in lots.
+        (Workcenter capacities are mesuare in process capacity - per cycle - or
+        by income products max capacity - manufacturing order raw material).
         """
         context = context or {}
         properties = properties or []
         wo_obj = self.pool.get('mrp.production.workcenter.line')
-        swo_obj = self.pool.get('mrp.scheduled.workorders')
 
         # normal process of confirm
         res = super(mrp_production, self).action_compute(
             cr, uid, ids, properties=properties, context=context)
 
-        # delete work orders and create scheduled work orders
         for production in self.browse(cr, uid, ids, context=context):
 
-            # delete created work orders and old scheduled work orders
-            wo_models = [wo_obj, swo_obj]
-            for my_wo_obj in wo_models:
-                wo_ids = my_wo_obj.search(
-                    cr, uid, [('production_id', '=', production.id)],
-                    context=context)
-                my_wo_obj.unlink(cr, uid, wo_ids, context=context)
+            # delete the just created regular wo and older wo.
+            wo_ids = wo_obj.search(
+                cr, uid, [('production_id', '=', production.id)],
+                context=context)
+            wo_obj.unlink(cr, uid, wo_ids, context=context)
 
-            #~ create scheduled work orders
-            swo_dict_list = self.create_swo_dict(
+            #~ create work orders by wc capacity and work order lots
+            wo_dict_list = self.create_wo_dict(
                 cr, uid, [production.id], context=context)
-            swo_dict_list and self.write(
+            wo_dict_list and self.write(
                 cr, uid, [production.id],
-                {'swo_ids': map(lambda x: (0, 0, x), swo_dict_list)},
+                {'workcenter_lines': map(lambda x: (0, 0, x), wo_dict_list)},
                 context=context)
 
         return res
@@ -321,17 +315,17 @@ class mrp_production(osv.Model):
 
         return bottleneck_list and bottleneck_list[0] or False
 
-    def create_swo_dict(self, cr, uid, ids, context=None):
+    def create_wo_dict(self, cr, uid, ids, context=None):
         """
-        Generate a dictionary of scheduled work orders to create when
-        confirming a manufacturing order, take in count the operations of the
+        Generate a dictionary of work orders to create when confirming a
+        manufacturing order, taking into account the operations of the
         rounting plus the the capacity of the work centers.
-        @ return: List of dictionaries containing scheduled work orders to
+        @ return: List of dictionaries containing work orders to
         create.
         """
 
         #~ import pprint
-        #~ print "\n"*3, 'create_swo_dict()'
+        #~ print "\n"*3, 'create_wo_dict()'
 
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
@@ -392,13 +386,13 @@ class mrp_production(osv.Model):
                 percentage['m'] = m and (m/critic_product_income_qty) * 100.0 \
                     or percentage['d']
 
-                # create dictionary of swo lots
+                # create wo lots
                 lot_list = lot_list and lot_list or \
-                    self.create_swo_lot_dict(
-                        cr, uid, ids, mult, percentage, context=context)
+                    self.create_wo_lot(cr, uid, ids, mult, percentage,
+                                       context=context)
 
                 process_qty = 0
-                for new_swo in xrange(mult):
+                for new_wo in xrange(mult):
                     level += 10
                     qty = product_qty - process_qty > wc_capacity \
                         and wc_capacity or product_qty - process_qty
@@ -410,13 +404,13 @@ class mrp_production(osv.Model):
                         'name':
                         tools.ustr(wc_op.name) + ' - ' +
                         tools.ustr(production.bom_id.product_id.name) +
-                        ' (%s/%s)' % (new_swo+1, mult),
+                        ' (%s/%s)' % (new_wo+1, mult),
                         'workcenter_id': wc_brw.id,
                         'sequence': level+(wc_op.sequence or 0),
-                        'wo_lot_id': lot_list[new_swo],
+                        'wo_lot_id': lot_list[new_wo],
                         'qty': qty,
                         'cycle': cycle,
-                        'hour': self.get_swo_hour(
+                        'hour': self.get_wo_hour(
                             cr, uid,
                             op_hours=wc_op.hour_nbr,
                             op_cycle=cycle,
@@ -438,7 +432,7 @@ class mrp_production(osv.Model):
 
     #~ TODO: This calculation needs to be check. I think that is retorning a
     #~ incorrect value
-    def get_swo_hour(self, cr, uid, op_hours, op_cycle, wc_capacity,
+    def get_wo_hour(self, cr, uid, op_hours, op_cycle, wc_capacity,
                      wc_time_start=0.0, wc_time_stop=0.0, wc_time_cycle=0.0,
                      wc_time_efficiency=1.0, context=None):
         """
@@ -457,10 +451,10 @@ class mrp_production(osv.Model):
         )
         return res
 
-    def create_swo_lot_dict(self, cr, uid, ids, mult, percentage, context=None):
+    def create_wo_lot(self, cr, uid, ids, mult, percentage, context=None):
         """
-        Create the records for the swo lots. Only the records, in a posterior
-        process will add the swo corresponding to every lot.
+        Create the records for the wo lots. Only the records, in a posterior
+        process will add the wo corresponding to every lot.
         @param mult: number of lots to produce.
         @return: a list of created lot ids
         """
@@ -471,7 +465,7 @@ class mrp_production(osv.Model):
         for production in self.browse(cr, uid, ids, context=context):
             for item in range(mult):
                 values = {
-                    'name': '%s/SWOLOT/%05i' % (production.name, item+1, ),
+                    'name': '%s/WOLOT/%05i' % (production.name, item+1, ),
                     'number': '%05i' % (item+1,),
                     'production_id': production.id,
                     'percentage': (item != mult-1) and percentage['d']
@@ -480,19 +474,12 @@ class mrp_production(osv.Model):
                 res += [wo_lot_obj.create(cr, uid, values, context=context)]
         return res
 
-class mrp_scheduled_workorders(osv.Model):
+class mrp_production_workcenter_line(osv.Model):
 
-    _name = 'mrp.scheduled.workorders'
     _inherit = 'mrp.production.workcenter.line'
-    _description = _('Sheluded Work Order')
-
-    """
-    This is a prototype inheritance of work orders model
-    """
-
     _columns = {
         'wo_lot_id': fields.many2one('mrp.workoder.lot',
-                                     _('Scheduled Work Order Lot'))
+                                     _('Work Order Lot'))
     }
 
 class mrp_workoder_lot(osv.Model):
@@ -513,14 +500,14 @@ class mrp_workoder_lot(osv.Model):
             _('Number'),
             size=192,
             help=_('Lot Serial Number')),
-        'swo_ids': fields.one2many(
-            'mrp.scheduled.workorders', 'wo_lot_id',
-            string=_('Scheduled Work Orders'),
-            help=_('Scheduled Work Orders that belogns to this Lot.')),
+        'wo_ids': fields.one2many(
+            'mrp.production.workcenter.line', 'wo_lot_id',
+            string=_('Work Orders'),
+            help=_('Work Orders that belogns to this Lot.')),
         'production_id': fields.many2one(
             'mrp.production',
             string=_('Manufacturing Order'),
-            help=_('The Manufacturing Order were this Scheduled Order Lot'
+            help=_('The Manufacturing Order were this Work Order Lot'
                    ' belongs.')),
         'percentage': fields.float(
             _('Percentage'),

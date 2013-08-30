@@ -54,8 +54,8 @@ class mrp_consume(osv.TransientModel):
         'wo_lot_id': fields.many2one(
             'mrp.workoder.lot',
             required=True,
-            string=_('Scheduled Work Orders Lots'),
-            help=_('Scheduled Work Orders Lots.')),
+            string=_('Work Orders Lots'),
+            help=_('Work Orders Lots.')),
     }
 
     _defaults = {
@@ -66,9 +66,9 @@ class mrp_consume(osv.TransientModel):
     def onchange_wo_lot_ids(self, cr, uid, ids, production_id, wo_lot_id,
                             consume_line_ids, context=None):
         """
-        Loads product information from the scheduled work order selected.
+        Loads product information from the work order selected.
         @param production_id: manufacturing order id.
-        @param wo_lot_id: selected scheduled work order lot.
+        @param wo_lot_id: selected work order lot.
         @param consume_line_ids: current cosumne product lines.
         """
 
