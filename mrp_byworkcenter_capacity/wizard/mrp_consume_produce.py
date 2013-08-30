@@ -31,6 +31,21 @@ from openerp.tools.translate import _
 
 class mrp_consume(osv.TransientModel):
     _inherit = 'mrp.consume'
+
+    def _get_default_wo_lot(self, cr, uid, context=None):
+        """
+        @return: The first Lot to produce (cardinal order).
+        """
+        context = context or {}
+        production_obj = self.pool.get('mrp.production')
+        if context.get('active_id', False):
+            production_id = context.get('active_id')
+            res = production_obj.browse(
+                cr, uid, production_id, context=context).wo_lot_ids[0].id
+        else:
+            raise osv.except_osv(_('Error!'), _('No define active_id'))
+        return res
+
     _columns = {
         'production_id': fields.many2one(
             'mrp.production',
@@ -44,7 +59,8 @@ class mrp_consume(osv.TransientModel):
     }
 
     _defaults = {
-        'production_id': lambda s, c, u, ctx: ctx.get('active_id', False), 
+        'production_id': lambda s, c, u, ctx: ctx.get('active_id', False),
+        'wo_lot_id': _get_default_wo_lot,
     }
 
     def onchange_wo_lot_ids(self, cr, uid, ids, production_id, wo_lot_id,
