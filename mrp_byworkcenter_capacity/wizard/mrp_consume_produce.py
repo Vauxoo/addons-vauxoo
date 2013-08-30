@@ -80,10 +80,25 @@ class mrp_consume(osv.TransientModel):
 
         if wo_lot_id:
             wo_lot = wo_lot_obj.browse(cr, uid, wo_lot_id, context=context)
+            #~ extract move data for products
+            move_d = {}
+            for move in production.move_lines:
+                move_d[move.product_id.id] = {
+                    'move_id': move.id,
+                    'location_id': move.location_id.id,
+                    'location_dest_id': move.location_dest_id.id,
+                    }
+            #~ create consume lines
             for product_line in production.product_lines:
-                values += [
-                    {'product_id': product_line.product_id.id,
-                     'quantity': product_line.product_qty * wo_lot.percentage/100.0,
-                     'product_uom': product_line.product_uom.id}]
+                product_id = product_line.product_id.id
+                values += [{
+                    'product_id': product_id,
+                    'quantity':
+                    product_line.product_qty * wo_lot.percentage/100.0,
+                    'product_uom': product_line.product_uom.id,
+                    'move_id': move_d[product_id]['move_id'],
+                    'location_id': move_d[product_id]['location_id'],
+                    'location_dest_id': move_d[product_id]['location_dest_id']
+                }]
 
         return {'value': {'consume_line_ids': values}}
