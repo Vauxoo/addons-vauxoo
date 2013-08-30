@@ -53,9 +53,9 @@
                     <button name="%(wizard_open_move_line)d" string="91/120 Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':91,'days_due_end': 120}"/>
                     <field name="days_due_121togr" sum="+121"/>
                     <button name="%(wizard_open_move_line)d" string="+121 Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':121,'days_due_end': False}"/>
+<!--
                     <field name="company_id"/>
                     <field name="currency_company_id"/>
-<!--
                     <field name="currency_src_id"/>
 -->
                 </tree>
