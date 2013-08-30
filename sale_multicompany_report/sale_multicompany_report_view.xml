@@ -7,7 +7,9 @@
       <field name="inherit_id" ref="multireport_base.view_company_form_report_multi"/>
       <field name="arch" type="xml">
          <xpath expr="//page[@string='Reports']" position="inside">
-          <field name="sale_report_id"/>
+             <group col="4" colspan="4">
+                <field name="sale_report_id"/>
+             </group>
         </xpath>
       </field>
     </record>

@@ -5,8 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved                                                        
 ################# Credits###################################################### 
-#    Coded by: Maria Gabriela Quilarque <gabriela@vauxoo.com>                                   
-#              Luis Escobar <luis@vauxoo.com>
+#    Coded by: Luis Escobar <luis@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################### 
 #    This program is free software: you can redistribute it and/or modify       
@@ -23,17 +22,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.      
 ###############################################################################    
 {
-    "name" : "Incoterm Decription",
+    "name" : "Sale Order Custom Report for Vauxoo",
     "version" : "0.1",
-    "depends" : ["sale", "stock"],
+    "depends" : ["sale", "incoterm_ext"],
     "author" : "Vauxoo",
     "description" : """
-    Add Formal Description to Incoterms.
+    Add Custom Sale Order Report for Vauxoo.
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules/Sales",
     "data" : [
-        "incoterm_view.xml",
+        "sale_order_report.xml",
     ],
     "active": False,
     "installable": True,

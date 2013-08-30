@@ -6,12 +6,9 @@
             <field name="model">sale.order</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='product_packaging']" position="after">
+                <xpath expr="//field[@name='price_unit']" position="after">
                     <field name="sequence"/>
                     <field name="att_bro"/>
-                </xpath>
-                <xpath expr="//field[@name='amount_total']" position="after">
-                        <button colspan="1" name="%(sale_multicompany_report)d" string="Print With Attachments" type="action" icon="terp-document-new"/>
                 </xpath>
             </field>
         </record>

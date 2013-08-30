@@ -5,8 +5,7 @@
 #    Copyright (C) Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved                                                        
 ################# Credits###################################################### 
-#    Coded by: Maria Gabriela Quilarque <gabriela@vauxoo.com>                                   
-#              Luis Escobar <luis@vauxoo.com>
+#    Coded by: Luis Escobar <luis@vauxoo.com>
 #    Audited by: Nhomar Hernandez <nhomar@vauxoo.com>
 ############################################################################### 
 #    This program is free software: you can redistribute it and/or modify       
@@ -23,17 +22,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.      
 ###############################################################################    
 {
-    "name" : "Incoterm Decription",
+    "name" : "Sale Report for MultiReports Environment",
     "version" : "0.1",
-    "depends" : ["sale", "stock"],
+    "depends" : ["sale", "multireport_base"],
     "author" : "Vauxoo",
     "description" : """
-    Add Formal Description to Incoterms.
+    What do this module:
+    Just the quotation format.
                     """,
     "website" : "http://vauxoo.com",
     "category" : "Generic Modules/Sales",
     "data" : [
-        "incoterm_view.xml",
+        "wizard/sale_order_multicompany.xml",
+        "sale_multicompany_report_view.xml",
+        "sale_order_view.xml",
     ],
     "active": False,
     "installable": True,
