@@ -24,4 +24,4 @@
 #
 ##############################################################################
 
-import wizard_open_move_line
+#import wizard_open_move_line

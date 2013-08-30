@@ -25,7 +25,7 @@
 ##############################################################################
 
 import pooler
-
+import wizard
 
 class wizard_open_move_line(wizard.interface):
     def _open_window(self, cr, uid, data, context={}):

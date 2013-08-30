@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
-        <record id="board_account_form_inherit" model="ir.ui.view">
+        <!--        <record id="board_account_form_inherit" model="ir.ui.view">
             <field name="name">board.account.form</field>
             <field name="model">board.board</field>
             <field name="inherit_id" ref="account.board_account_form"/>
@@ -11,7 +11,7 @@
                 </xpath>
                 
             </field>
-        </record>
+        </record>-->
 
         <record model="ir.ui.view" id="view_account_aged_partner_balance_vw_tree">
             <field name="name">view.account.aged.partner.balance.vw.tree</field>
