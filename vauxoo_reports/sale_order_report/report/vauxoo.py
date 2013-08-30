@@ -64,7 +64,10 @@ class sale_vauxoo_report(report_sxw.rml_parse):
         return any(aux)
          
     def _get_rif(self,partner):
-        rif = partner.vat and partner.vat[2]+'-'+partner.vat[3:-1]+'-'+partner.vat[-1] or ''
+        if partner.country_id.code == "VE":
+            rif = partner.vat and partner.vat[2]+'-'+partner.vat[3:-1]+'-'+partner.vat[-1] or ''
+        else:
+            rif = partner.vat
         return rif 
         
     def _get_addr(self, idpartner=None,type_r=None):
