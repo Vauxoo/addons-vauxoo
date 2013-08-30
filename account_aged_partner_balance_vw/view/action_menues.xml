@@ -1,7 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <openerp>
     <data>
-
         <record id="action_expense_report_tree" model="ir.actions.act_window">
             <field name="name">Expense Company</field>
             <field name="res_model">account.aged.partner.balance.vw</field>
@@ -10,17 +9,22 @@
             <field name="view_id" ref="account_aged_partner_balance_vw.view_account_aged_partner_balance_vw_tree"/>
         </record>
 
-
-        <record id="board_account_form_inherit" model="ir.ui.view">
-            <field name="name">board.account.form</field>
-            <field name="model">board.board</field>
-            <field name="inherit_id" ref="account.board_account_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="/form/board/column/action[@string='Draft Customer Invoices']" position="before">
-                    <action name="%(action_expense_report_tree)d" string="Purchase Order Waiting Approval"/>
-                </xpath>
-                
-            </field>
+        <record id="action_account_aged_partner_balance_vw" model="ir.actions.act_window">
+            <field name="name">Aged Partner Balance View</field>
+            <field name="res_model">account.aged.partner.balance.vw</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_account_aged_partner_balance_vw_tree"/>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'search_default_posted': 0}</field>-->
+            <!--<field name="search_view_id" ref="account.view_account_move_line_filter"/>-->
+            <field name="help"/>
         </record>
+
+        <menuitem 
+            action="action_account_aged_partner_balance_vw" 
+            id="menu_action_account_aged_partner_balance_vw" 
+            parent="account.menu_finance_legal_statement" 
+            sequence="100"
+            />
     </data>
 </openerp>
