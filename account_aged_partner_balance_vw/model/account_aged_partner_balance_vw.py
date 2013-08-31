@@ -82,4 +82,211 @@ class account_aged_trial_balance(osv.TransientModel):
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
         wzd_brw.write({'state':'open'})
         res = self.check_report(cr, uid, ids, context=context)
-        return res
+
+        data = res['datas']
+        form = data['form']
+        self.set_context(cr,uid,ids,data,context=context)
+        self._get_lines(cr,uid,ids,form,context=context)
+        return {}
+
+    def set_context(self, cr, uid, ids, data, context=None): 
+        context = context or {}
+        self.total_account=[]
+        obj_move = self.pool.get('account.move.line')
+        context = data['form'].get('used_context', {})
+        context.update({'fiscalyear': False, 'all_fiscalyear': True})
+        self.query = obj_move._query_get(cr, uid, obj='l', context=context)
+        self.direction_selection = data['form'].get('direction_selection', 'past')
+        self.target_move = data['form'].get('target_move', 'all')
+        self.date_from = data['form'].get('date_from', time.strftime('%Y-%m-%d'))
+        if (data['form']['result_selection'] == 'customer' ):
+            self.ACCOUNT_TYPE = ['receivable']
+        elif (data['form']['result_selection'] == 'supplier'):
+            self.ACCOUNT_TYPE = ['payable']
+        else:
+            self.ACCOUNT_TYPE = ['payable','receivable']
+
+    def _get_lines(self, cr, uid, ids, form, context=None):
+        context = context or {}
+        res = []
+        move_state = ['draft','posted']
+        if self.target_move == 'posted':
+            move_state = ['posted']
+        cr.execute('SELECT DISTINCT res_partner.id AS id,\
+                    res_partner.name AS name \
+                FROM res_partner,account_move_line AS l, account_account, account_move am\
+                WHERE (l.account_id=account_account.id) \
+                    AND (l.move_id=am.id) \
+                    AND (am.state IN %s)\
+                    AND (account_account.type IN %s)\
+                    AND account_account.active\
+                    AND ((reconcile_id IS NULL)\
+                       OR (reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                    AND (l.partner_id=res_partner.id)\
+                    AND (l.date <= %s)\
+                    AND ' + self.query + ' \
+                ORDER BY res_partner.name', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, self.date_from,))
+        partners = cr.dictfetchall()
+        ## mise a 0 du total
+        for i in range(7):
+            self.total_account.append(0)
+        #
+        # Build a string like (1,2,3) for easy use in SQL query
+        partner_ids = [x['id'] for x in partners]
+        if not partner_ids:
+            return []
+        # This dictionary will store the debit-credit for all partners, using partner_id as key.
+
+        totals = {}
+        cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
+                    FROM account_move_line AS l, account_account, account_move am \
+                    WHERE (l.account_id = account_account.id) AND (l.move_id=am.id) \
+                    AND (am.state IN %s)\
+                    AND (account_account.type IN %s)\
+                    AND (l.partner_id IN %s)\
+                    AND ((l.reconcile_id IS NULL)\
+                    OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                    AND ' + self.query + '\
+                    AND account_account.active\
+                    AND (l.date <= %s)\
+                    GROUP BY l.partner_id ', (tuple(move_state), tuple(self.ACCOUNT_TYPE), tuple(partner_ids), self.date_from, self.date_from,))
+        t = cr.fetchall()
+        for i in t:
+            totals[i[0]] = i[1]
+
+        # This dictionary will store the future or past of all partners
+        future_past = {}
+        if self.direction_selection == 'future':
+            cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
+                        FROM account_move_line AS l, account_account, account_move am \
+                        WHERE (l.account_id=account_account.id) AND (l.move_id=am.id) \
+                        AND (am.state IN %s)\
+                        AND (account_account.type IN %s)\
+                        AND (COALESCE(l.date_maturity, l.date) < %s)\
+                        AND (l.partner_id IN %s)\
+                        AND ((l.reconcile_id IS NULL)\
+                        OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                        AND '+ self.query + '\
+                        AND account_account.active\
+                    AND (l.date <= %s)\
+                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, tuple(partner_ids),self.date_from, self.date_from,))
+            t = cr.fetchall()
+            for i in t:
+                future_past[i[0]] = i[1]
+        elif self.direction_selection == 'past': # Using elif so people could extend without this breaking
+            cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
+                    FROM account_move_line AS l, account_account, account_move am \
+                    WHERE (l.account_id=account_account.id) AND (l.move_id=am.id)\
+                        AND (am.state IN %s)\
+                        AND (account_account.type IN %s)\
+                        AND (COALESCE(l.date_maturity,l.date) > %s)\
+                        AND (l.partner_id IN %s)\
+                        AND ((l.reconcile_id IS NULL)\
+                        OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))\
+                        AND '+ self.query + '\
+                        AND account_account.active\
+                    AND (l.date <= %s)\
+                        GROUP BY l.partner_id', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
+            t = cr.fetchall()
+            for i in t:
+                future_past[i[0]] = i[1]
+
+        # Use one query per period and store results in history (a list variable)
+        # Each history will contain: history[1] = {'<partner_id>': <partner_debit-credit>}
+        history = []
+        for i in range(5):
+            args_list = (tuple(move_state), tuple(self.ACCOUNT_TYPE), tuple(partner_ids),self.date_from,)
+            dates_query = '(COALESCE(l.date_maturity,l.date)'
+            if form[str(i)]['start'] and form[str(i)]['stop']:
+                dates_query += ' BETWEEN %s AND %s)'
+                args_list += (form[str(i)]['start'], form[str(i)]['stop'])
+            elif form[str(i)]['start']:
+                dates_query += ' > %s)'
+                args_list += (form[str(i)]['start'],)
+            else:
+                dates_query += ' < %s)'
+                args_list += (form[str(i)]['stop'],)
+            args_list += (self.date_from,)
+            cr.execute('''SELECT l.partner_id, SUM(l.debit-l.credit)
+                    FROM account_move_line AS l, account_account, account_move am 
+                    WHERE (l.account_id = account_account.id) AND (l.move_id=am.id)
+                        AND (am.state IN %s)
+                        AND (account_account.type IN %s)
+                        AND (l.partner_id IN %s)
+                        AND ((l.reconcile_id IS NULL)
+                          OR (l.reconcile_id IN (SELECT recon.id FROM account_move_reconcile AS recon WHERE recon.create_date > %s )))
+                        AND ''' + self.query + '''
+                        AND account_account.active
+                        AND ''' + dates_query + '''
+                    AND (l.date <= %s)
+                    GROUP BY l.partner_id''', args_list)
+            t = cr.fetchall()
+            d = {}
+            for i in t:
+                d[i[0]] = i[1]
+            history.append(d)
+
+        for partner in partners:
+            values = {}
+            ## If choise selection is in the future
+            if self.direction_selection == 'future':
+                # Query here is replaced by one query which gets the all the partners their 'before' value
+                before = False
+                if future_past.has_key(partner['id']):
+                    before = [ future_past[partner['id']] ]
+                self.total_account[6] = self.total_account[6] + (before and before[0] or 0.0)
+                values['direction'] = before and before[0] or 0.0
+            elif self.direction_selection == 'past': # Changed this so people could in the future create new direction_selections
+                # Query here is replaced by one query which gets the all the partners their 'after' value
+                after = False
+                if future_past.has_key(partner['id']): # Making sure this partner actually was found by the query
+                    after = [ future_past[partner['id']] ]
+
+                self.total_account[6] = self.total_account[6] + (after and after[0] or 0.0)
+                values['direction'] = after and after[0] or 0.0
+
+            for i in range(5):
+                during = False
+                if history[i].has_key(partner['id']):
+                    during = [ history[i][partner['id']] ]
+                # Ajout du compteur
+                self.total_account[(i)] = self.total_account[(i)] + (during and during[0] or 0)
+                values[str(i)] = during and during[0] or 0.0
+            total = False
+            if totals.has_key( partner['id'] ):
+                total = [ totals[partner['id']] ]
+            values['total'] = total and total[0] or 0.0
+            ## Add for total
+            self.total_account[(i+1)] = self.total_account[(i+1)] + (total and total[0] or 0.0)
+            values['name'] = partner['name']
+            values['partner_id'] = partner['id']
+
+            res.append(values)
+
+        total = 0.0
+        totals = {}
+        for r in res:
+            total += float(r['total'] or 0.0)
+            for i in range(5)+['direction']:
+                totals.setdefault(str(i), 0.0)
+                totals[str(i)] += float(r[str(i)] or 0.0)
+        mapping = {
+                'direction' : 'not_due',
+                '4' : 'days_due_01to30', 
+                '3' : 'days_due_31to60', 
+                '2' : 'days_due_61to90',
+                '1' : 'days_due_91to120',
+                '0' : 'days_due_121togr',
+                }
+        print res
+        res2=[]
+        for r in res:
+            for j,k in mapping.iteritems():
+                r[k]=r.pop(j)
+                r['aatb_id']=ids[0], 
+            res2.append(r)
+        aapbv_obj = self.pool.get('account.aged.partner.balance.vw')
+        for l in res2:
+            aapbv_obj.create(cr, uid, l)
+        print res2
+        return res2
