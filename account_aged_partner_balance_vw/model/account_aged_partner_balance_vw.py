@@ -81,4 +81,5 @@ class account_aged_trial_balance(osv.TransientModel):
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
         wzd_brw.write({'state':'open'})
-        return {}
+        res = self.check_report(cr, uid, ids, context=context)
+        return res
