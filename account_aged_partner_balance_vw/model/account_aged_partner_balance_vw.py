@@ -36,7 +36,7 @@ import os
 class account_aged_partner_balance_vw(osv.TransientModel):
     _name = 'account.aged.partner.balance.vw'
     _rec_name = 'partner_id'
-    _order = 'partner_id.name'
+    _order = 'partner_id'
 
     _columns = {
         'partner_id': fields.many2one('res.partner', u'Partner'),
