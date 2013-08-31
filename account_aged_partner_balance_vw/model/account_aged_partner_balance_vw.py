@@ -68,3 +68,17 @@ class account_aged_trial_balance(osv.TransientModel):
     _defaults = {
         'state': 'draft',
     }
+
+    def to_start(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        wzd_brw.write({'state':'draft'})
+        return {}
+
+    def compute_lines(self, cr, uid, ids, context=None):
+        context = context or {}
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        wzd_brw.write({'state':'open'})
+        return {}

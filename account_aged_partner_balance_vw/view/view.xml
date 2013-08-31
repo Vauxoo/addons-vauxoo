@@ -23,6 +23,20 @@
                 <xpath expr='//separator[@string="Aged Partner Balance"]' position='before'>
                     <header>
                         <button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                        <button 
+                            name="compute_lines" 
+                            string="Compute" 
+                            type="object" 
+                            default_focus="0" 
+                            states="draft"
+                            class="oe_highlight"/>
+                        <button 
+                            name="to_start" 
+                            string="Back to Start" 
+                            type="object" 
+                            default_focus="0" 
+                            states="open"
+                            class="oe_highlight"/>
                         <field name="state" 
                             widget="statusbar" 
                             statusbar_visible="draft,open,done"
