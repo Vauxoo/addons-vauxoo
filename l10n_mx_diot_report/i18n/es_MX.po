@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-08-21 05:50+0000\n"
-"X-Generator: Launchpad (build 16731)\n"
+"X-Launchpad-Export-Date: 2013-08-31 05:31+0000\n"
+"X-Generator: Launchpad (build 16750)\n"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -77,11 +77,6 @@ msgstr "IN - India"
 #: selection:res.partner,diot_country:0
 msgid "CO - Colombia"
 msgstr "CO - Colombia"
-
-#. module: l10n_mx_diot_report
-#: help:account.diot.report,file:0
-msgid "This file, you can import the SAT"
-msgstr "Este archivo, lo podrá importar directamente al SAT"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,type_of_operation:0
@@ -197,11 +192,6 @@ msgstr "HN - República de Honduras"
 #: selection:res.partner,diot_country:0
 msgid "GU - Guam"
 msgstr "GU - Guam"
-
-#. module: l10n_mx_diot_report
-#: help:account.diot.report,file_csv:0
-msgid "It will open in your program office, to validate numbers"
-msgstr "Se abrirá en su programa office, para validar números"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
@@ -329,11 +319,6 @@ msgid "ZW - Zimbawe"
 msgstr "ZW - Zimbawe"
 
 #. module: l10n_mx_diot_report
-#: view:account.diot.report:0
-msgid "Spreadsheet:"
-msgstr "Hoja de Cálculo:"
-
-#. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
 msgid "DZ - Argelia"
 msgstr "DZ - Argelia"
@@ -387,11 +372,6 @@ msgstr "LA - Republica Democratica de Laos"
 #: selection:res.partner,diot_country:0
 msgid "HU - Hungaria"
 msgstr "HU - Hungaria"
-
-#. module: l10n_mx_diot_report
-#: view:account.diot.report:0
-msgid "TXT to import the SAT:"
-msgstr "TXT para importar al SAT:"
 
 #. module: l10n_mx_diot_report
 #: selection:res.partner,diot_country:0
