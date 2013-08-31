@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
-###########################################################################
+#
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) 2013 Vauxoo (<http://vauxoo.com>).
 #    All Rights Reserved
 # Credits######################################################
 #    Coded by: Juan Carlos Funes(juan@vauxoo.com)
-#############################################################################
+#
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 #
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-##########################################################################
+#
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp import pooler, tools
@@ -31,6 +31,7 @@ import base64
 import os
 from openerp import SUPERUSER_ID
 
+
 class ir_attachment_facturae_mx(osv.Model):
     _name = 'ir.attachment.facturae.mx'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
@@ -38,11 +39,11 @@ class ir_attachment_facturae_mx(osv.Model):
     def _get_type(self, cr, uid, ids=None, context=None):
         types = []
         return types
-    
+
     def get_driver_fc_sign(self):
         """function to inherit from module driver of pac and add particular function"""
         return {}
-        
+
     def get_driver_fc_cancel(self):
         """function to inherit from module driver of pac and add particular function"""
         return {}
@@ -50,8 +51,8 @@ class ir_attachment_facturae_mx(osv.Model):
     _columns = {
         'name': fields.char('Name', size=128, required=True, readonly=True,
                             help='Name of attachment generated'),
-        'invoice_id': fields.many2one('account.invoice', 'Invoice',
-                                      readonly=True, help='Invoice to which it belongs this attachment'),
+        'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True,
+                                      help='Invoice to which it belongs this attachment'),
         'company_id': fields.many2one('res.company', 'Company', readonly=True,
                                       help='Company to which it belongs this attachment'),
         'file_input': fields.many2one('ir.attachment', 'File input',
@@ -110,7 +111,7 @@ class ir_attachment_facturae_mx(osv.Model):
         if not self.signal_done(cr, uid, ids, context=context):
             return False
         return True
-    
+
     def signal_confirm(self, cr, uid, ids, context=None):
         try:
             if context is None:
@@ -138,7 +139,7 @@ class ir_attachment_facturae_mx(osv.Model):
                     'datas_fname': fname_invoice,
                     'res_model': 'account.invoice',
                     'res_id': invoice.id,
-                }, context=None)#Context, because use a variable type of our code but we dont need it.
+                }, context=None)
                 msj = _("Attached Successfully XML CFDI 3.2\n")
                 save_attach = True
             elif 'cfd' in type:
@@ -152,30 +153,33 @@ class ir_attachment_facturae_mx(osv.Model):
                     'datas_fname': fname_invoice,
                     'res_model': 'account.invoice',
                     'res_id': invoice.id,
-                }, context=None)#Context, because use a variable type of our code but we dont need it.
+                }, context=None)
                 if attach:
-                    index_xml = self.pool.get('ir.attachment').browse(cr, uid, attach).index_content
+                    index_xml = self.pool.get('ir.attachment').browse(
+                        cr, uid, attach).index_content
                     msj = _("Attached Successfully XML CFD 2.2")
                 save_attach = True
             else:
                 raise osv.except_osv(_("Type Electronic Invoice Unknow!"), _(
-                                "The Type Electronic Invoice:"+(type or '')) )
+                    "The Type Electronic Invoice:" + (type or '')))
             if save_attach:
                 self.write(cr, uid, ids,
-                              {'file_input': attach or False,
+                           {'file_input': attach or False,
                                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                                'msj': msj,
-                               'file_xml_sign_index': index_xml }, context=context)
-            wf_service.trg_validate(uid, self._name, ids[0], 'action_confirm', cr)
+                               'file_xml_sign_index': index_xml}, context=context)
+            wf_service.trg_validate(
+                uid, self._name, ids[0], 'action_confirm', cr)
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
-            import traceback, sys
+            import traceback
+            import sys
             traceback.print_stack()
             #traceback_str = repr(traceback.extract_stack())
-            #print traceback_str
+            # print traceback_str
             return False
-        
+
     def action_confirm(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'confirmed'}, context=context)
 
@@ -195,10 +199,11 @@ class ir_attachment_facturae_mx(osv.Model):
                 msj = _("Signed")
             if 'cfd' in type and not 'cfdi' in type:
                 attach = self.browse(cr, uid, ids)[0].file_input.id or False
-                index_xml = self.browse(cr, uid, ids)[0].file_xml_sign_index or False
+                index_xml = self.browse(cr, uid, ids)[
+                    0].file_xml_sign_index or False
                 msj = _("Attached Successfully XML CFD 2.2\n")
             if 'cfdi' in type:
-                #upload file in custom module for pac
+                # upload file in custom module for pac
                 type__fc = self.get_driver_fc_sign()
                 if type in type__fc.keys():
                     fname_invoice = invoice.fname_invoice and invoice.fname_invoice + \
@@ -218,11 +223,14 @@ class ir_attachment_facturae_mx(osv.Model):
                         'res_model': 'account.invoice',
                         #'res_id': invoice.id,
                     }
-                    attach = attachment_obj.create(cr, uid, data_attach, context=None)#Context, because use a variable type of our code but we dont need it.
+                    # Context, because use a variable type of our code but we
+                    # dont need it.
+                    attach = attachment_obj.create(
+                        cr, uid, data_attach, context=None)
                 else:
-                    msj += _("Unknow driver for %s"%(type))
+                    msj += _("Unknow driver for %s" % (type))
             self.write(cr, uid, ids,
-                          {'file_xml_sign': attach or False,
+                       {'file_xml_sign': attach or False,
                            'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
                            'msj': msj,
                            'file_xml_sign_index': index_xml}, context=context)
@@ -230,10 +238,11 @@ class ir_attachment_facturae_mx(osv.Model):
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
-            import traceback, sys
+            import traceback
+            import sys
             traceback.print_stack()
             return False
-                           
+
     def action_sign(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'signed'}, context=context)
 
@@ -250,13 +259,16 @@ class ir_attachment_facturae_mx(osv.Model):
             type = self.browse(cr, uid, ids)[0].type
             wf_service = netsvc.LocalService("workflow")
             report = invoice_obj.create_report(cr, SUPERUSER_ID, [invoice.id],
-                                             "account.invoice.facturae.webkit", invoice.fname_invoice)
-            attachment_ids = attachment_obj.search(cr, uid,[
-                                                        ('res_model', '=', 'account.invoice'),
-                                                        ('res_id', '=', invoice.id),
-                                                        ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
+                                               "account.invoice.facturae.webkit",
+                                               invoice.fname_invoice)
+            attachment_ids = attachment_obj.search(cr, uid, [
+                ('res_model', '=', 'account.invoice'),
+                ('res_id', '=', invoice.id),
+                ('datas_fname', '=', invoice.fname_invoice + '.pdf')])
             for attachment in self.browse(cr, uid, attachment_ids, context=context):
-                aids = attachment.id #TODO: aids.append( attachment.id ) but without error in last write
+                # TODO: aids.append( attachment.id ) but without error in last
+                # write
+                aids = attachment.id
                 attachment_obj.write(cr, uid, [attachment.id], {
                     'name': invoice.fname_invoice + '.pdf', }, context=context)
             if aids:
@@ -264,16 +276,17 @@ class ir_attachment_facturae_mx(osv.Model):
             else:
                 raise osv.except_osv(_('Warning'), _('Not Attached PDF\n'))
             self.write(cr, uid, ids, {
-                        'file_pdf': aids or False,
-                        'msj': msj,
-                        'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                        'file_pdf_index': index_pdf }, context=context)
-            wf_service.trg_validate(uid, self._name, ids[0], 'action_printable', cr)
+                'file_pdf': aids or False,
+                'msj': msj,
+                'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                'file_pdf_index': index_pdf}, context=context)
+            wf_service.trg_validate(
+                uid, self._name, ids[0], 'action_printable', cr)
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
             return False
-    
+
     def action_printable(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'printable'}, context=context)
 
@@ -287,7 +300,8 @@ class ir_attachment_facturae_mx(osv.Model):
             state = ''
             partner_mail = ''
             user_mail = ''
-            company_id = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.id
+            company_id = self.pool.get('res.users').browse(
+                cr, uid, uid, context=context).company_id.id
             invoice = self.browse(cr, uid, ids)[0].invoice_id
             address_id = self.pool.get('res.partner').address_get(
                 cr, uid, [invoice.partner_id.id], ['invoice'])['invoice']
@@ -298,7 +312,7 @@ class ir_attachment_facturae_mx(osv.Model):
             fname_invoice = invoice.fname_invoice and invoice.fname_invoice or ''
             adjuntos = self.pool.get('ir.attachment').search(cr, uid, [(
                 'res_model', '=', 'account.invoice'), ('res_id', '=', invoice)])
-            subject = 'Invoice '+invoice.number or False
+            subject = 'Invoice ' + invoice.number or False
             for attach in self.pool.get('ir.attachment').browse(cr, uid, adjuntos):
                 attachments.append(attach.id)
                 attach_name += attach.name + ', '
@@ -308,7 +322,7 @@ class ir_attachment_facturae_mx(osv.Model):
                 obj_users = self.pool.get('res.users')
                 obj_partner = self.pool.get('res.partner')
                 mail_server_id = obj_ir_mail_server.search(cr, uid,
-                                                           ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit = 1, order = 'sequence', context=None)
+                                                           ['|', ('company_id', '=', company_id), ('company_id', '=', False)], limit=1, order='sequence', context=None)
                 if mail_server_id:
                     for smtp_server in obj_ir_mail_server.browse(cr, uid,
                                                                  mail_server_id, context=context):
@@ -327,25 +341,33 @@ class ir_attachment_facturae_mx(osv.Model):
                     mail_compose_message_pool = self.pool.get(
                         'mail.compose.message')
                     email_pool = self.pool.get('email.template')
-                    tmp_id = email_pool.search(cr, uid, [('model_id.model', '=', 'account.invoice'),
-                                                            ('company_id', '=', company_id),
-                                                            ('mail_server_id', '=', smtp_server.id),
-                                                            ('report_template.report_name', '=', 'account.invoice.facturae.webkit')
-                                                            ], limit = 1, context=context)
+                    tmp_id = email_pool.search(
+                        cr, uid, [('model_id.model', '=', 'account.invoice'),
+                                  ('company_id', '=', company_id),
+                                  ('mail_server_id', '=', smtp_server.id),
+                                  ('report_template.report_name', '=',
+                                   'account.invoice.facturae.webkit')
+                                  ], limit=1, context=context)
                     if tmp_id:
                         message = mail_compose_message_pool.onchange_template_id(
-                            cr, uid, [], template_id=tmp_id[0], composition_mode=None,
+                            cr, uid, [], template_id=tmp_id[
+                                0], composition_mode=None,
                             model='account.invoice', res_id=invoice.id, context=context)
                         mssg = message.get('value', False)
-                        user_mail = obj_users.browse(cr, uid, uid, context=None).email
+                        user_mail = obj_users.browse(
+                            cr, uid, uid, context=None).email
                         partner_id = mssg.get('partner_ids', False)
-                        partner_mail = obj_partner.browse(cr, uid, partner_id)[0].email
-                        partner_name = obj_partner.browse(cr, uid, partner_id)[0].name
+                        partner_mail = obj_partner.browse(
+                            cr, uid, partner_id)[0].email
+                        partner_name = obj_partner.browse(
+                            cr, uid, partner_id)[0].name
                         if partner_mail:
                             if user_mail:
                                 if mssg.get('partner_ids', False) and tmp_id:
-                                    mssg['partner_ids'] = [(6, 0, mssg['partner_ids'])]
-                                    mssg['attachment_ids'] = [(6, 0, attachments)]
+                                    mssg['partner_ids'] = [
+                                        (6, 0, mssg['partner_ids'])]
+                                    mssg['attachment_ids'] = [
+                                        (6, 0, attachments)]
                                     mssg_id = self.pool.get(
                                         'mail.compose.message').create(cr, uid, mssg, context=None)
                                     state = self.pool.get('mail.compose.message').send_mail(
@@ -359,25 +381,29 @@ class ir_attachment_facturae_mx(osv.Model):
                                                 msj = _(
                                                     '\nNot correct email of the user or customer. Check in Menu Configuración\Tecnico\Email\Emails\n')
                                     else:
-                                        msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (partner_mail,server_name)
+                                        msj = _('Email Send Successfully.Attached is sent to %s for Outgoing Mail Server %s') % (
+                                            partner_mail, server_name)
                             else:
-                                raise osv.except_osv(_('Warning'), _('This user\
-                                        does not have mail'))
+                                raise osv.except_osv(
+                                    _('Warning'), _('This user does not have mail'))
                         else:
-                            raise osv.except_osv(_('Warning'), _('The customer %s\
-                            does not have mail') % (partner_name))
+                            raise osv.except_osv(
+                                _('Warning'), _('The customer %s does not have mail') % (partner_name))
                     else:
-                        raise osv.except_osv(_('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
+                        raise osv.except_osv(
+                            _('Warning'), _('Check that your template is assigned outgoing mail server named %s.\nAlso the field has report_template = Factura Electronica Report.\nTemplate is associated with the same company') % (server_name))
                 else:
                     raise osv.except_osv(_('Warning'), _('Not Found\
                     outgoing mail server.Configure the outgoing mail server named "FacturaE"'))
-                self.write(cr, uid, ids, {'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-                wf_service.trg_validate(uid, self._name, ids[0], 'action_send_customer', cr)
+                self.write(
+                    cr, uid, ids, {'msj': msj, 'last_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+                wf_service.trg_validate(
+                    uid, self._name, ids[0], 'action_send_customer', cr)
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
             return False
-    
+
     def action_send_customer(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_customer'}, context=context)
 
@@ -389,16 +415,18 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service = netsvc.LocalService("workflow")
             msj = _('Send Backup\n')
             self.write(cr, uid, ids, {'msj': msj,
-                'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
-            wf_service.trg_validate(uid, self._name, ids[0], 'action_send_backup', cr)
+                                      'last_date': time.strftime('%Y-%m-%d %H:%M:%S')
+                                      }, context=context)
+            wf_service.trg_validate(
+                uid, self._name, ids[0], 'action_send_backup', cr)
             return True
         except Exception, e:
             self.write(cr, uid, ids, {'msj': tools.ustr(e)}, context=context)
             return False
-        
+
     def action_send_backup(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'sent_backup'}, context=context)
-    
+
     def signal_done(self, cr, uid, ids, context=None):
         try:
             if context is None:
@@ -407,7 +435,8 @@ class ir_attachment_facturae_mx(osv.Model):
             wf_service = netsvc.LocalService("workflow")
             msj = _('Done\n')
             self.write(cr, uid, ids, {'msj': msj,
-                'last_date': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
+                                      'last_date': time.strftime('%Y-%m-%d %H:%M:%S')
+                                      }, context=context)
             wf_service.trg_validate(uid, self._name, ids[0], 'action_done', cr)
             return True
         except Exception, e:
@@ -415,8 +444,8 @@ class ir_attachment_facturae_mx(osv.Model):
             return False
 
     def action_done(self, cr, uid, ids, context=None):
-       return self.write(cr, uid, ids, {'state': 'done'}, context=context)
-    
+        return self.write(cr, uid, ids, {'state': 'done'}, context=context)
+
     def signal_cancel(self, cr, uid, ids, context=None):
         invoice_obj = self.pool.get('account.invoice')
         attach_obj = self.pool.get('ir.attachment')
@@ -430,42 +459,50 @@ class ir_attachment_facturae_mx(osv.Model):
                     type__fc = self.get_driver_fc_cancel()
                     if ir_attach_facturae_mx_id.type in type__fc.keys():
                         cfdi_cancel = res = type__fc[ir_attach_facturae_mx_id.type](
-                                cr, uid, [ir_attach_facturae_mx_id.id], context=context
+                            cr, uid, [
+                                ir_attach_facturae_mx_id.id], context=context
                         )
                         msj += tools.ustr(cfdi_cancel.get('message', False))
-                        if cfdi_cancel.get('status', True):#TODO, validate cfdi_cancel True or False
-                            wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                            if invoice.state <>  'cancel':
-                                inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                        # TODO, validate cfdi_cancel True or False
+                        if cfdi_cancel.get('status', True):
+                            wf_service.trg_validate(
+                                uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                            if invoice.state != 'cancel':
+                                inv_cancel_status = invoice_obj.action_cancel(
+                                    cr, uid, [invoice.id], context=context)
                             else:
                                 inv_cancel_status = True
                     else:
-                        msj += _("Unknow cfdi driver for %s"%(ir_attach_facturae_mx_id.type))
+                        msj += _("Unknow cfdi driver for %s" %
+                                 (ir_attach_facturae_mx_id.type))
             else:
-                wf_service.trg_validate(uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
-                if invoice.state <>  'cancel':
-                    inv_cancel_status = invoice_obj.action_cancel(cr, uid, [invoice.id], context=context)
+                wf_service.trg_validate(
+                    uid, self._name, ir_attach_facturae_mx_id.id, 'action_cancel', cr)
+                if invoice.state != 'cancel':
+                    inv_cancel_status = invoice_obj.action_cancel(
+                        cr, uid, [invoice.id], context=context)
                 else:
                     inv_cancel_status = True
                 msj = 'cancelled'
-                        
+
             self.write(cr, uid, ids, {
-              'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
-              'msj': msj,
-            })
+                       'last_date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                       'msj': msj,
+                       })
         return inv_cancel_status
-    
+
     def action_cancel(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
     def reset_to_draft(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state':'draft'})
+        self.write(cr, uid, ids, {'state': 'draft'})
         wf_service = netsvc.LocalService("workflow")
         for row in ids:
             # Deleting the existing instance of workflow
             wf_service.trg_delete(uid, self._name, row, cr)
             wf_service.trg_create(uid, self._name, row, cr)
         return True
+
 
 class ir_attachment(osv.Model):
     _inherit = 'ir.attachment'
