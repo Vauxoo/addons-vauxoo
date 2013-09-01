@@ -285,10 +285,10 @@ class account_aged_trial_balance(osv.TransientModel):
                 '1' : 'days_due_91to120',
                 '0' : 'days_due_121togr',
                 }
-        print res
         res2=[]
         for r in res:
             for j,k in mapping.iteritems():
                 r[k]=r.pop(j)
             res2.append(r)
         return res2
+
