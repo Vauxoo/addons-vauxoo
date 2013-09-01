@@ -55,8 +55,6 @@
             <field name="arch" type="xml">
                 <tree string="Aged Partner Balance View">
                     <field name="partner_id"/>
-                    <field name="total" sum="Total"/>
-                    <button name="%(wizard_open_move_line)d" string="Total Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':False,'days_due_end': False}"/>
                     <field name="not_due" sum="Not due"/>
                     <button name="%(wizard_open_move_line)d" string="Not Due Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':False,'days_due_end': 0}"/>
                     <field name="days_due_01to30" sum="01/30"/>
@@ -69,6 +67,8 @@
                     <button name="%(wizard_open_move_line)d" string="91/120 Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':91,'days_due_end': 120}"/>
                     <field name="days_due_121togr" sum="+121"/>
                     <button name="%(wizard_open_move_line)d" string="+121 Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':121,'days_due_end': False}"/>
+                    <field name="total" sum="Total"/>
+                    <button name="%(wizard_open_move_line)d" string="Total Open Moves" type="action" icon="gtk-go-forward" context="{'days_due_start':False,'days_due_end': False}"/>
 <!--
                     <field name="company_id"/>
                     <field name="currency_company_id"/>
