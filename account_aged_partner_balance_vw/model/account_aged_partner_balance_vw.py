@@ -73,7 +73,7 @@ class account_aged_trial_balance(osv.TransientModel):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
-        wzd_brw.write({'state':'draft'})
+        wzd_brw.write({'state':'draft', 'partner_line_ids':[(6,0,[])]})
         return {}
 
     def compute_lines(self, cr, uid, ids, context=None):
