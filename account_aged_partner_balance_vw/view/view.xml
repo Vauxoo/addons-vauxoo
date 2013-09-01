@@ -43,6 +43,9 @@
                             />
                     </header>
                 </xpath>
+                <xpath expr='//field[@name="result_selection"]' position='after'>
+                    <field name='type' required='1'/>
+                </xpath>
                 <xpath expr='//field[@name="journal_ids"]' position='after'>
                     <field name='partner_line_ids' nolabel='1'/>
                 </xpath>

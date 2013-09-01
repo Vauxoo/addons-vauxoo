@@ -61,12 +61,16 @@ class account_aged_trial_balance(osv.TransientModel):
         'partner_line_ids':fields.one2many('account.aged.partner.balance.vw',
         'aatb_id', 'Partner Aged Trail Balance', 
         help='Partner Aged Trail Balance'), 
+        'type':fields.selection([('variation','Variation in Periods'),
+                            ('distributed','Distributed Payments over Debts'),
+                            ], 'Type of Report',help='Reporte Type'), 
         'state':fields.selection([('draft','New'),('open','Open'),('done','Done'),
                                     ], 'Status',help='Document State'), 
     }
 
     _defaults = {
         'state': 'draft',
+        'type': 'variation',
     }
 
     def to_start(self, cr, uid, ids, context=None):
@@ -86,9 +90,10 @@ class account_aged_trial_balance(osv.TransientModel):
         data = res['datas']
         form = data['form']
         self.set_context(cr,uid,ids,data,context=context)
-        res = self._get_lines(cr,uid,ids,form,context=context)
-        res = map(lambda x: (0,0,x),res)
-        wzd_brw.write({'partner_line_ids':res})
+        if wzd_brw.type == 'variation':
+            res = self._get_lines(cr,uid,ids,form,context=context)
+            res = map(lambda x: (0,0,x),res)
+            wzd_brw.write({'partner_line_ids':res})
         return {}
 
     def set_context(self, cr, uid, ids, data, context=None): 
