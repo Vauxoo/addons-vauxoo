@@ -26,7 +26,7 @@
 {
     "name": "Accounting Closure Preparation",
     "version": "1.0",
-    "author": "Vauxoo C.A",
+    "author": "Vauxoo",
     "website": "http://vauxoo.com",
     "category": 'Accounting',
     "description": """

@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name" : "Purchase Order Lines With Discounts",
-    "author" : "Tiny & Vauxoo,C.A.",
+    "author" : "Openerp & Vauxoo",
     "version" : "2.0",
     "category" : "Generic Modules/Sales & Purchases",
     "depends" : [
