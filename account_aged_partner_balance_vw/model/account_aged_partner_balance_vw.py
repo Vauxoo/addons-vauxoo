@@ -86,7 +86,9 @@ class account_aged_trial_balance(osv.TransientModel):
         data = res['datas']
         form = data['form']
         self.set_context(cr,uid,ids,data,context=context)
-        self._get_lines(cr,uid,ids,form,context=context)
+        res = self._get_lines(cr,uid,ids,form,context=context)
+        res = map(lambda x: (0,0,x),res)
+        wzd_brw.write({'partner_line_ids':res})
         return {}
 
     def set_context(self, cr, uid, ids, data, context=None): 
@@ -283,10 +285,5 @@ class account_aged_trial_balance(osv.TransientModel):
         for r in res:
             for j,k in mapping.iteritems():
                 r[k]=r.pop(j)
-                r['aatb_id']=ids[0], 
             res2.append(r)
-        aapbv_obj = self.pool.get('account.aged.partner.balance.vw')
-        for l in res2:
-            aapbv_obj.create(cr, uid, l)
-        print res2
         return res2
