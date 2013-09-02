@@ -89,6 +89,7 @@ class wizard_account_diot_mx(osv.osv_memory):
         period = this.period_id
         matrix_row = []
         amount_exe = 0
+        partner_company_id = this.company_id.partner_id.id
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
         tax_purchase_ids = acc_tax_obj.search(cr, uid, [
@@ -99,6 +100,7 @@ class wizard_account_diot_mx(osv.osv_memory):
             account_ids_tax.append(tax.account_paid_voucher_id.id)
         move_lines_diot = acc_move_line_obj.search(cr, uid, [
             ('period_id', '=', period.id),
+            ('partner_id', '!=', partner_company_id),
             ('tax_id_secondary', 'in', tax_purchase_ids),
             ('state', '=', 'valid'),
             ('account_id', 'in', account_ids_tax),
