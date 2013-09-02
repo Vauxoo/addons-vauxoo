@@ -557,6 +557,25 @@ class mrp_production_workcenter_line(osv.Model):
         'stage_id': _get_draft_stage_id,
     }
 
+    def _group_by_full_state(self, cr, uid, ids, domain, read_group_order=None,
+                             access_rights_uid=None, context=None):
+        """
+        Return a tuple of 
+        """
+        context = context or {}
+        wos_obj = self.pool.get('mrp.workorder.stage')
+        wos_ids = wos_obj.search(cr, uid, [], context=context)
+        wos_brws = wos_obj.browse(cr, uid, wos_ids, context=context)
+        res = list()
+        for wos in wos_brws:
+            res.append((wos.id, wos.name))
+        visible = dict([(wos.id, wos.fold) for wos in wos_brws])
+        return res, visible
+
+    _group_by_full = {
+        'stage_id': _group_by_full_state,
+    }
+
 
 class mrp_workoder_lot(osv.Model):
 
