@@ -370,15 +370,18 @@ class mrp_production(osv.Model):
                     mult, wc_capacity, critic_product_id = \
                         self.get_wc_capacity(
                             cr, uid, production.id, routing_brw.id,
-                            context=context) or (1.0)
+                            context=context) or (1, product_qty, False)
                     d, m = divmod(factor, wc_capacity)
 
-                critic_product_income_qty = \
-                    [rm_bom.product_qty * product_qty
-                     for rm_bom in production.bom_id.bom_lines
-                     if rm_bom.product_id.id == critic_product_id]
-                critic_product_income_qty = critic_product_income_qty[0]
-                #~ TODO: need to manage here product_uom too?
+                if critic_product_id:
+                    critic_product_income_qty = \
+                        [rm_bom.product_qty * product_qty
+                         for rm_bom in production.bom_id.bom_lines
+                         if rm_bom.product_id.id == critic_product_id]
+                    critic_product_income_qty = critic_product_income_qty[0]
+                    #~ TODO: need to manage here product_uom too?
+                else:
+                    critic_product_income_qty = 100.0
 
                 percentage = {}.fromkeys(m and ['d', 'm'] or ['d'])
                 percentage['d'] = \
