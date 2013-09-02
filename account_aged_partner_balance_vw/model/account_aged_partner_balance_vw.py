@@ -90,7 +90,7 @@ class account_aged_trial_balance(osv.TransientModel):
         data = res['datas']
         form = data['form']
         self.set_context(cr,uid,ids,data,context=context)
-        if wzd_brw.type == 'variation':
+        if wzd_brw.type in ('variation','distributed'):
             res = self._get_lines(cr,uid,ids,form,context=context)
             res = map(lambda x: (0,0,x),res)
             wzd_brw.write({'partner_line_ids':res})
