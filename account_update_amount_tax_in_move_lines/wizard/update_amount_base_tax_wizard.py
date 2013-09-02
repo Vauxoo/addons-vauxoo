@@ -39,22 +39,12 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         'tax, and the account of each tax is configured correctly')
         }
     
-    def update_tax_secondary(self, cr, uid, ids, context=None):
+    def update_tax_secondary(self, cr, uid, ids, company_id, tax_ids, context=None):
         acc_tax_obj = self.pool.get('account.tax')
-        user_obj = self.pool.get('res.users')
         move_line_obj = self.pool.get('account.move.line')
-        acc_tax_category_obj = self.pool.get('account.tax.category')
-        company_user_id = user_obj.browse(cr, uid, uid, context=context).\
-            company_id.id
-        category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
-            ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
-        tax_ids = acc_tax_obj.search(cr, uid, [
-            ('company_id', '=' ,company_user_id),
-            ('type_tax_use', '=', 'purchase'),
-            ('tax_category_id', 'in', category_iva_ids)], context=context)
         acc_collected_ids = []
         for tax in acc_tax_obj.browse(cr, uid, tax_ids, context=context):
-            acc_collected_ids.append(tax.account_collected_id.id)
+            acc_collected_ids.append(tax.account_collected_voucher_id.id)
             acc_collected_ids.append(tax.account_paid_voucher_id.id)
         line_id = move_line_obj.search(cr, uid, [
             ('account_id', 'in', list(set(acc_collected_ids))),
@@ -72,22 +62,21 @@ class update_amount_base_tax_wizard(osv.osv_memory):
         return True
     
     def apply(self, cr, uid, ids, context=None):
-        self.update_tax_secondary(cr, uid, ids, context=context)
         invoice_obj = self.pool.get('account.invoice')
         move_line_obj = self.pool.get('account.move.line')
         acc_tax_category_obj = self.pool.get('account.tax.category')
         acc_tax_obj = self.pool.get('account.tax')
-        user_obj = self.pool.get('res.users')
-        company_user_id = user_obj.browse(cr, uid, uid, context=context).\
-        company_id.id
+        company_id = self.pool.get('res.company')._company_default_get(cr, uid,
+            'update.amount.tax.wizard', context=context)
         category_iva_ids = acc_tax_category_obj.search(cr, uid, [\
             ('name', 'in', ('IVA', 'IVA-EXENTO', 'IVA-RET'))], context=context)
         tax_ids = acc_tax_obj.search(cr, uid, [
-            ('company_id', '=' ,company_user_id),
+            ('company_id', '=' ,company_id),
             ('type_tax_use', '=', 'purchase'),
             ('tax_category_id', 'in', category_iva_ids)], context=context)
+        self.update_tax_secondary(cr, uid, ids, company_id, tax_ids, context=context)
         lines_without_amount = move_line_obj.search(cr, uid, [\
-            ('tax_id_secondary', 'in', tax_ids), ('amount_base', '=', False)])
+            ('tax_id_secondary', 'in', tax_ids), ('amount_base', 'in', (0, False)),])
         for move in move_line_obj.browse(cr, uid, lines_without_amount,\
             context=context):
             amount_tax = move.tax_id_secondary.amount
