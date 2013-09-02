@@ -1,7 +1,7 @@
 === modified file 'account_voucher/account_voucher.py'
---- account_voucher/account_voucher.py	2012-08-28 10:58:11 +0000
-+++ account_voucher/account_voucher.py	2012-12-21 17:46:40 +0000
-@@ -1010,6 +1010,8 @@
+--- account_voucher/account_voucher.py	2013-06-07 11:38:29 +0000
++++ account_voucher/account_voucher.py	2013-06-25 01:47:39 +0000
+@@ -1181,6 +1181,8 @@
          move_line_obj = self.pool.get('account.move.line')
          currency_obj = self.pool.get('res.currency')
          tax_obj = self.pool.get('account.tax')
@@ -10,9 +10,9 @@
          tot_line = line_total
          rec_lst_ids = []
  
-@@ -1027,7 +1029,15 @@
-             if line.amount == line.amount_unreconciled:
-                 currency_rate_difference = line.move_line_id.amount_residual - amount
+@@ -1209,7 +1211,15 @@
+                 sign = voucher.type in ('payment', 'purchase') and -1 or 1
+                 currency_rate_difference = sign * (line.move_line_id.amount_residual - amount)
              else:
 -                currency_rate_difference = 0.0
 +                line_id = line.id
@@ -25,6 +25,6 @@
 +                rate_voucher = currency_obj.compute(cr, uid, line.move_line_id.currency_id.id, company_user.currency_id.id, 1, context=context)
 +                currency_rate_difference = (rate_invoice - rate_voucher) * (amount/rate_voucher)
              move_line = {
-                 'journal_id': voucher_brw.journal_id.id,
-                 'period_id': voucher_brw.period_id.id,
+                 'journal_id': voucher.journal_id.id,
+                 'period_id': voucher.period_id.id,
 
