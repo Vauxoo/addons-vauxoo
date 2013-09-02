@@ -289,6 +289,7 @@ class account_aged_trial_balance(osv.TransientModel):
         for r in res:
             for j,k in mapping.iteritems():
                 r[k]=r.pop(j)
+            r.pop('name')
             res2.append(r)
         return res2
 
