@@ -63,11 +63,16 @@ class sale_vauxoo_report(report_sxw.rml_parse):
                 aux.append(False)
         return any(aux)
          
-    def _get_rif(self,partner):
+    def _get_rif(self,partner,label=False):
+        lb = ""
         if partner.country_id.code == "VE":
-            rif = partner.vat and partner.vat[2]+'-'+partner.vat[3:-1]+'-'+partner.vat[-1] or ''
+            if label:
+                lb = "RIF: "
+            rif = partner.vat and lb+partner.vat[2]+'-'+partner.vat[3:-1]+'-'+partner.vat[-1] or ''
         else:
-            rif = partner.vat and partner.vat[2:] or ''
+            if label:
+                lb = "RFC: "
+            rif = partner.vat and lb+partner.vat[2:] or ''
         return rif 
         
     def _get_addr(self, idpartner=None,type_r=None):
