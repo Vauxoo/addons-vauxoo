@@ -172,7 +172,7 @@
                     <para style="ITEMSSTRONG">[[ o.partner_invoice_id and o.partner_invoice_id.name.upper() or '']]</para>
                 </td>
                 <td>
-                    <para style="ITEMSLEFT"> [[o.partner_id.name and ('%s %s'%('Sr(a).:',o.partner_id.name.upper())) or ' ']] [[o.partner_id.phone and ('%s %s'%('TELF.:',o.partner_id.phone)) or '']] [[ o.partner_id.fax and ('%s %s'%('FAX.:',o.partner_id.fax)) or '']] [[ o.partner_id.mobile and ('%s %s'%('CEL.:',o.partner_id.mobile)) or '']] [[ o.partner_id.email and ('%s %s'%('EMAIL:',o.partner_id.email.upper())) or '' ]]</para>
+                    <para style="ITEMSLEFT"> [[o.partner_id.name and ('%s %s'%('Sr(a).:',o.partner_id.name.upper())) or ' ']] [[o.partner_id.phone and ('%s %s'%('TELF.:',o.partner_id.phone)) or '']] [[ o.partner_id.fax and ('%s %s'%('FAX.:',o.partner_id.fax)) or '']] [[ o.partner_id.mobile and ('%s %s'%('CEL.:',o.partner_id.mobile)) or '']] [[ o.partner_id.email and ('\n%s %s'%('EMAIL:',o.partner_id.email.upper())) or '' ]]</para>
                 </td>
                 <td>
                     <para style="ITEMSCENTER">[[o.origin and o.origin.upper() or '']] / [[ o.name and o.name.upper() or '' ]] / [[o.client_order_ref and o.client_order_ref.upper() or '']]</para>
@@ -204,7 +204,7 @@
         <blockTable colWidths="70mm,70mm,30mm,40mm" style="ITEMS">
             <tr>
                 <td>
-                    <para style="ITEMSLEFT">[[o.partner_invoice_id.name and o.partner_invoice_id.name or '']] [[ o.partner_invoice_id.vat and ('%s '%(get_rif(o.partner_invoice_id,True))) or " " ]]</para>
+                    <para style="ITEMSLEFT">[[o.partner_invoice_id.name and o.partner_invoice_id.name or '']] [[ o.partner_invoice_id.vat and ('\n%s '%(get_rif(o.partner_invoice_id,True))) or " " ]]</para>
                     <para style="ITEMSLEFT">DIRECCION: [[get_addr(o.partner_invoice_id.id,'invoice') or '']]</para>
                 </td>
                 <td>
