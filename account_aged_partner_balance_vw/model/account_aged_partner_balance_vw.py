@@ -247,8 +247,26 @@ class account_aged_trial_balance(osv.TransientModel):
                     GROUP BY l.partner_id''', args_list)
             t = cr.fetchall()
             d = {}
-            for i in t:
-                d[i[0]] = i[1]
+            if wzd_brw.type=='distributed':
+                if wzd_brw.result_selection in ('customer','supplier'):
+                    for i in t:
+                        if advances[i[0]] >= i[2]:
+                            d[i[0]] = 0.0
+                            advances[i[0]]-= i[2]
+                        elif advances[i[0]] < i[2] and advances[i[0]]:
+                            d[i[0]] = wzd_brw.result_selection == 'customer' \
+                                    and i[2] - advances[i[0]] or \
+                                    -(i[2] - advances[i[0]])
+                            advances[i[0]] = 0.0
+                        else:
+                            d[i[0]] = wzd_brw.result_selection == 'customer' \
+                                    and i[2] or -(i[2])
+                else:
+                    for i in t:
+                        d[i[0]] = i[1]
+            else:
+                for i in t:
+                    d[i[0]] = i[1]
             history.append(d)
 
         for partner in partners:
