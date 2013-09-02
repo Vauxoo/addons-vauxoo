@@ -116,6 +116,7 @@ class account_aged_trial_balance(osv.TransientModel):
     def _get_lines(self, cr, uid, ids, form, context=None):
         context = context or {}
         res = []
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
         move_state = ['draft','posted']
         if self.target_move == 'posted':
             move_state = ['posted']
@@ -144,8 +145,21 @@ class account_aged_trial_balance(osv.TransientModel):
             return []
         # This dictionary will store the debit-credit for all partners, using partner_id as key.
 
+        type_query = ''
+        type_query_r = ''
+        if wzd_brw.type=='distributed':
+            if wzd_brw.result_selection == 'customer':
+                type_query =  ', SUM(l.credit)'
+                type_query_r =  ', SUM(l.debit)'
+            elif wzd_brw.result_selection == 'supplier':
+                type_query =  ', SUM(l.debit)'
+                type_query_r =  ', SUM(l.credit)'
+
+        advances = {}
+
         totals = {}
         cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
+                    ' + type_query + '\
                     FROM account_move_line AS l, account_account, account_move am \
                     WHERE (l.account_id = account_account.id) AND (l.move_id=am.id) \
                     AND (am.state IN %s)\
