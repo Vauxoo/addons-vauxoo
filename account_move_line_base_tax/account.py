@@ -50,15 +50,20 @@ class account_move_line(osv.Model):
             return {'value' : {}}
             
     def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
-        res = super(account_move_line, self).write(cr, uid, ids, vals, context=context, check=check, update_check=update_check)
+        res = super(account_move_line, self).write(cr, uid, ids, vals,
+            context=context, check=check, update_check=update_check)
         acc_tax_obj = self.pool.get('account.tax')
         for line in self.browse(cr, uid, ids, context=context):
-            if line.tax_id_secondary:
+            if line.tax_id_secondary and line.tax_id_secondary.type_tax_use == 'purchase':
                 cat_tax = line.tax_id_secondary.tax_category_id
-                if cat_tax and cat_tax.name in ('IVA', 'IVA-EXENTO') and line.amount_base <= 0 and not line.not_move_diot:
-                    raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need have a value in the amount base.'))
-                elif cat_tax and cat_tax == 'IVA-RET' and line.credit <= 0 and not line.not_move_diot:
-                    raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need have a value in the credit.'))
+                if cat_tax and cat_tax.name in ('IVA', 'IVA-EXENTO') and line.amount_base <= 0 and\
+                    not line.not_move_diot:
+                    raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need '\
+                        'have a value in the amount base.'))
+                elif cat_tax and cat_tax == 'IVA-RET' and line.credit <= 0 and\
+                    not line.not_move_diot:
+                    raise osv.except_osv(_('Warning!'), _('The lines with tax of purchase, need '\
+                        'have a value in the credit.'))
         return res
         
     def onchange_account_id(self, cr, uid, ids, account_id=False, partner_id=False, context=None):
