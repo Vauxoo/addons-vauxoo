@@ -37,13 +37,12 @@ class mrp_consume(osv.TransientModel):
         @return: The first Lot to produce (cardinal order).
         """
         context = context or {}
+        res = False
         production_obj = self.pool.get('mrp.production')
         if context.get('active_id', False):
             production_id = context.get('active_id')
             res = production_obj.browse(
                 cr, uid, production_id, context=context).wo_lot_ids[0].id
-        else:
-            raise osv.except_osv(_('Error!'), _('No define active_id'))
         return res
 
     _columns = {
