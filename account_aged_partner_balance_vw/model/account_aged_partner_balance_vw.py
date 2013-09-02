@@ -174,6 +174,9 @@ class account_aged_trial_balance(osv.TransientModel):
         t = cr.fetchall()
         for i in t:
             totals[i[0]] = i[1]
+            if wzd_brw.type=='distributed':
+                if wzd_brw.result_selection in ('customer','supplier'):
+                    advances[i[0]] = i[2]
 
         # This dictionary will store the future or past of all partners
         future_past = {}
