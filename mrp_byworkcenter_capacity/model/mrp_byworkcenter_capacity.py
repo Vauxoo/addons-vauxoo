@@ -477,15 +477,30 @@ class mrp_production(osv.Model):
 class mrp_production_workcenter_line(osv.Model):
 
     _inherit = 'mrp.production.workcenter.line'
+
+    def _get_draft_stage_id(self, cr, uid, context=None):
+        """
+        """
+        context = context or {}
+        wos_obj = self.pool.get('mrp.workorder.stage')
+        wos_id = \
+            wos_obj.search(cr, uid, [('state', '=', 'draft')], context=context)
+        return wos_id[0]
+
     _columns = {
         'wo_lot_id': fields.many2one('mrp.workoder.lot',
                                      _('Work Order Lot')),
         'stage_id': fields.many2one('mrp.workorder.stage',
             string=_('Stage'),
+            required=True,
             track_visibility='onchange',
             help=_('The stage permits to manage the state of the work orders'
                    ' in the kanban views tools for visualization of the charge'
                    ' and for planning the manufacturing process.')),
+    }
+
+    _defaults = {
+        'stage_id': _get_draft_stage_id,
     }
 
 
