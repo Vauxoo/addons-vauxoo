@@ -479,8 +479,65 @@ class mrp_production_workcenter_line(osv.Model):
     _inherit = 'mrp.production.workcenter.line'
     _columns = {
         'wo_lot_id': fields.many2one('mrp.workoder.lot',
-                                     _('Work Order Lot'))
+                                     _('Work Order Lot')),
+        'stage_id': fields.many2one('mrp.workorder.stage',
+            string=_('Stage'),
+            track_visibility='onchange',
+            help=_('The stage permits to manage the state of the work orders'
+                   ' in the kanban views tools for visualization of the charge'
+                   ' and for planning the manufacturing process.')),
     }
+
+
+class mrp_workorder_stage(osv.Model):
+
+    _name = 'mrp.workorder.stage'
+    _description = 'Work Order Stage'
+    _inherit = ['mail.thread']
+    _order = 'sequence'
+
+    """
+    Manage the change of states of the work orders in kaban views. 
+    """
+
+    def _get_wo_state(self, cr, uid, context=None):
+        """
+        """
+        context = context or {}
+        wo_obj = self.pool.get('mrp.production.workcenter.line')
+        states = wo_obj.fields_get(cr, uid, ['state'], context=context)
+        states = states['state']['selection']
+        return states
+
+    _columns = {
+        'sequence': fields.integer(_('Sequence')),
+        'name': fields.char(
+            _('Stage Name'),
+            required=True,
+            size=64,
+            translate=True),
+        'description': fields.text(_('Description')),
+        'state': fields.selection(
+            _get_wo_state,
+            _('Related Status'),
+            required=True,
+            help=_('The status of your document is automatically changed'
+                   ' regarding the selected stage. For example, if a stage is'
+                   ' related to the status \'Close\', when your document'
+                   ' reaches this stage, it is automatically closed.')),
+        'fold': fields.boolean(
+            _('Folded by Default'),
+            help=_('This stage is not visible, for example in status bar or'
+                   ' kanban view, when there are no records in that stage to'
+                   ' display.')),
+    }
+
+    _defaults = {
+        'sequence': 1,
+        'state': 'draft',
+        'fold': False,
+    }
+
 
 class mrp_workoder_lot(osv.Model):
 
