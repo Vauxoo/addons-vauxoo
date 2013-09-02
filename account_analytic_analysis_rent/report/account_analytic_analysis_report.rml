@@ -66,13 +66,13 @@
     <paraStyle name="P3" fontName="Helvetica" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
     <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="10.0" leading="14" alignment="JUSTIFY"/>
     <paraStyle name="P5" fontName="Helvetica-Bold" fontSize="9.0" leading="14" alignment="CENTER"/>
-    <paraStyle name="P6" fontName="Helvetica" fontSize="7.0" leading="10" alignment="JUSTIFY"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="5.5" leading="10" alignment="JUSTIFY"/>
     <paraStyle name="P7" fontName="Helvetica" alignment="JUSTIFY"/>
     <paraStyle name="P8" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
     <paraStyle name="P9" fontName="Helvetica" alignment="CENTER"/>
     <paraStyle name="P10" fontName="Helvetica" fontSize="10.0" leading="13" alignment="CENTER"/>
     <paraStyle name="P11" rightIndent="149.0" leftIndent="0.0" fontName="Helvetica"/>
-    <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="6.0" leading="11" alignment="LEFT"/>
     <paraStyle name="P13" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
     <paraStyle name="P14" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
     <paraStyle name="P15" fontName="Helvetica" fontSize="7.0" leading="11" alignment="JUSTIFY"/>
@@ -81,6 +81,7 @@
     <paraStyle name="P18" fontName="Helvetica" fontSize="7.0" leading="10" alignment="JUSTIFY"/>
     <paraStyle name="P19" fontName="Helvetica" fontSize="7.0" leading="10" alignment="JUSTIFY"/>
     <paraStyle name="P20" fontName="Helvetica" fontSize="11.0" leading="14" alignment="JUSTIFY"/>
+    <paraStyle name="P21" fontName="Helvetica" fontSize="7.0" leading="10" alignment="RIGHT"/>
     <paraStyle name="Standard" fontName="Helvetica"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -108,7 +109,7 @@
               <para style="P12">Producto</para>
             </td>
             <td>
-              <para style="P12">No. Serie</para>
+              <para style="P12">No. Lote</para>
             </td>
             <td>
               <para style="P12">Contador Inicial</para>
@@ -126,54 +127,33 @@
         </blockTable>
       </section>
       <section>
-        <para style="P3">[[repeatIn(o.product_ids, 'product')]]</para>
-            <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table2">
-            <tr>
-              <td>
-                <para style="P14">[[product.product_id and product.product_id.name]]</para>
-              </td>
-              <td>
-                  <para style="P14">[[product.product_id and product.prodlot_id.name]]</para>
-              </td>
-              <td>
-              </td>
-              <td>
-              </td>
-              <td>
-              </td>
-              <td>
-              </td>
-            </tr>
-          </blockTable>
-          <section>
-            <para style="P3">[[repeatIn(o.feature_ids, 'features')]]</para>
-              <blockTable colWidths="138.0,55.0,55.0,85.0,48.0,58.0" style="Table2">
-                <tr>
-                  <td>
-                    <para style="P14">[[get_data_features(product.product_id.id, features)[0] or removeParentNode('blockTable')]]</para>
-                  </td>
-                  <td>
-                  </td>
-                  <td>
-                      <para style="P14">[[get_data_features(product.product_id.id, features)[1] or '0.0']]</para>
-                  </td>
-                  <td>
-                      <para style="P14">[[get_data_features(product.product_id.id, features)[2] or '']]</para>
-                  </td>
-                  <td>
-                      <para style="P14">[[get_data_features(product.product_id.id, features)[3] or '0.0']]</para>
-                  </td>
-                  <td>
-                      <para style="P14">[[get_type_features(product.product_id.id, features)]]</para>
-                  </td>
-                </tr>
-              </blockTable>
-          </section>
+          <para style="P1">[[repeatIn(o.feature_ids, 'feature_line')]]</para>
+          <blockTable colWidths="136.0,55.0,55.0,85.0,48.0,58.0" style="Table2">
+          <tr>
+            <td>
+              <para style="P6">[[feature_line.product_line_id.name or '']]</para>
+            </td>
+            <td>
+              <para style="P6">[[feature_line.prodlot_feature_id.name]]</para>
+            </td>
+            <td>
+              <para style="P21">[[feature_line.counter or '0.0']]</para>
+            </td>
+            <td>
+              <para style="P6">[[feature_line.name.name]]</para>
+            </td>
+            <td>
+              <para style="P21">[[feature_line.cost or '0.0']]</para>
+            </td>
+            <td>
+              <para style="P6">[[type_payment(feature_line)]]</para>
+            </td>
+          </tr>
+        </blockTable>
       </section>
       <para style="P12">Accesorios:</para>
       <section>
         <para style="P3">[[repeatIn(o.product_ids, 'product')]]</para>
-        
         <para style="P8">[[accesory(product)]]</para>
       </section>
       <para style="P6">Además del equipo mencionado con anterioridad se incluirán dentro del mismo contrato los siguientes conceptos: Tóner, consumibles y servicio técnico, en caso de equipo con conectividad se incluirá la asistencia correspondiente a dar de alta el equipo en su red. No se incluye el papel, cartulinas y cualquier otro medio utilizado para obtener una imagen impresa, así mismo no incluye el mantenimiento del equipo en su red. Se excluyen también de este contrato la reparación de los daños provocados al equipo por mal uso, piezas rotas por desconocimiento de su operación, intervención de terceras personas en el mismo o deficiencias en el suministro de energía eléctrica.</para>
@@ -405,7 +385,7 @@
         </tr>
       </blockTable>
       <section>
-        <para style="P6">Este contrato tendrá una validez de meses y en caso de cancelación anticipada el cliente se compromete a cubrir las mensualidades restantes correspondientes al costo de arrendamiento al fin de éste contrato. En caso de no ser devuelto este contrato debidamente firmado, el uso del equipo implica la aceptación del mismo y los términos establecidos.</para>
+        <para style="P6">Este contrato tendrá una validez de [[o.term_id.name]] y en caso de cancelación anticipada el cliente se compromete a cubrir las mensualidades restantes correspondientes al costo de arrendamiento al fin de éste contrato. En caso de no ser devuelto este contrato debidamente firmado, el uso del equipo implica la aceptación del mismo y los términos establecidos.</para>
       </section>
       <section>
         <para style="P9">

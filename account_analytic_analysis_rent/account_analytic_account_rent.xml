@@ -35,6 +35,7 @@
                                 <field name="name"/>
                                 <field name="counter"/>
                                 <field name="cost"/>
+                                <field name="prodlot_feature_id" invisible = '1'/>
                             </tree>
                             <form string='Features'>
                                 <field name="product_line_id"/>

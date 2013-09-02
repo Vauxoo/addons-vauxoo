@@ -123,7 +123,7 @@ class account_analytic_account(osv.osv):
             for prod in product_ids:
                 if prod[2]['product_id']:
                     for feature in product_obj.browse(cr, uid, prod[2]['product_id'], context=context).feature_ids:
-                        list_feature.append({'name':feature.name.id, 'product_line_id':prod[2]['product_id'],'counter':feature.counter})
+                        list_feature.append({'name':feature.name.id, 'product_line_id':prod[2]['product_id'],'counter':feature.counter, 'prodlot_feature_id' : prod[2]['prodlot_id']})
         return {'value':{'feature_ids': [(0, 6, data) for data in list_feature]}}
 
     def _get_journal(self, cr, uid, context=None):
