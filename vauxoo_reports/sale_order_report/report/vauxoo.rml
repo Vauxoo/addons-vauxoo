@@ -169,10 +169,10 @@
             </tr>
             <tr>
                 <td>
-                    <para style="ITEMSSTRONG">[[ o.partner_id and o.partner_id.name.upper() or '']]</para>
+                    <para style="ITEMSSTRONG">[[ o.partner_invoice_id and o.partner_invoice_id.name.upper() or '']]</para>
                 </td>
                 <td>
-                    <para style="ITEMSLEFT"> [[o.partner_invoice_id.name and ('%s %s'%('Sr(a).:',o.partner_invoice_id.name.upper())) or ' ']] [[o.partner_invoice_id.phone and ('%s %s'%('TELF.:',o.partner_invoice_id.phone)) or '']] [[ o.partner_invoice_id.fax and ('%s %s'%('FAX.:',o.partner_invoice_id.fax)) or '']] [[ o.partner_invoice_id.mobile and ('%s %s'%('CEL.:',o.partner_invoice_id.mobile)) or '']] [[ o.partner_invoice_id.email and ('%s %s'%('EMAIL:',o.partner_invoice_id.email.upper())) or '' ]]</para>
+                    <para style="ITEMSLEFT"> [[o.partner_id.name and ('%s %s'%('Sr(a).:',o.partner_id.name.upper())) or ' ']] [[o.partner_id.phone and ('%s %s'%('TELF.:',o.partner_id.phone)) or '']] [[ o.partner_id.fax and ('%s %s'%('FAX.:',o.partner_id.fax)) or '']] [[ o.partner_id.mobile and ('%s %s'%('CEL.:',o.partner_id.mobile)) or '']] [[ o.partner_id.email and ('%s %s'%('EMAIL:',o.partner_id.email.upper())) or '' ]]</para>
                 </td>
                 <td>
                     <para style="ITEMSCENTER">[[o.origin and o.origin.upper() or '']] / [[ o.name and o.name.upper() or '' ]] / [[o.client_order_ref and o.client_order_ref.upper() or '']]</para>
@@ -204,9 +204,8 @@
         <blockTable colWidths="70mm,70mm,30mm,40mm" style="ITEMS">
             <tr>
                 <td>
-                    <para style="ITEMSLEFT">[[o.partner_id.name and o.partner_id.name or '']] [[ o.partner_invoice_id.vat and ('%s %s'%('RIF.:',get_rif(o.partner_invoice_id))) or " " ]]</para>
+                    <para style="ITEMSLEFT">[[o.partner_invoice_id.name and o.partner_invoice_id.name or '']] [[ o.partner_invoice_id.vat and ('%s '%(get_rif(o.partner_invoice_id,True))) or " " ]]</para>
                     <para style="ITEMSLEFT">DIRECCION: [[get_addr(o.partner_invoice_id.id,'invoice') or '']]</para>
-                    <para style="ITEMSLEFT"> [[ o.partner_invoice_id.name and ('%s %s'%('Contacto:',o.partner_invoice_id.name)) or removeParentNode('para') ]]</para>
                 </td>
                 <td>
                     <para style="ITEMSLEFT">[[get_addr(o.partner_shipping_id.id,'delivery') or '']]</para>
@@ -236,7 +235,7 @@
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
                 <para style="ITEMSTITLE">DESCRIPCIÓN</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
-                <para style="ITEMSTITLE">PLAZO DE ENTREGA <super>(3)</super></para>
+                <para style="ITEMSTITLE">PLAZO DE ENTREGA</para>
                 </td>
                 <td><para style="ITEMSTITLE">UNIDAD</para>
                 <hr spaceBefore="3" spaceAfter="3" width="100%" thickness="0.5" color="white"/>
@@ -319,7 +318,7 @@
             </tr>
             <tr noRowsplits="1">
                 <td>
-                    <para style="ITEMSSMALL">[[ get_delay(o) and ('%s'%('(3) PLAZO DE ENTREGA')) or removeParentNode('tr')]]</para>
+                    <para style="ITEMSSMALL">[[ get_delay(o) and ('%s'%('Para más información')) or removeParentNode('tr')]]</para>
                     <para style="ITEMSSMALL">[[ o.user_id.company_id.rml_footer or removeParentNode('para')]]</para>
                 </td>
             </tr>
