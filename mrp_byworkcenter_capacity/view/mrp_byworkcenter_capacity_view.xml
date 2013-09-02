@@ -148,6 +148,70 @@ mrp.routing.workcenter inherits
 
 
 <!--
+mrp.production.workcenter.line
+-->
+
+        <record id="mrp_workoder_by_lot_kanban_view" model="ir.ui.view">
+            <field name="name">Work Order</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="arch" type="xml">
+                <kanban version="7.0" default_group_by="stage_id">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
+                            <div t-attf-class="oe_kanban_content">
+                                <b>WO:</b> <field name="name"/><br/>
+                                <b>MO:</b> <field name="production_id"/><br/>
+                                <b>LOT:</b> <field name="wo_lot_id"/><br/>
+                                <b>Product:</b> <field name="product"/><br/>
+                                <b>Hour:</b> <field name="hour"/><br/>
+                                <b>Delay:</b> <field name="delay"/><br/>
+                            </div>
+                        </div>
+                    </t>
+                    </templates>
+                </kanban>
+            </field>
+         </record>
+
+        <record id="mrp_workoder_active_kanban_action" model="ir.actions.act_window">
+            <field name="name">Active Work Orders</field>
+            <field name="res_model">mrp.production.workcenter.line</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="mrp_workoder_by_lot_kanban_view"/>
+        </record>
+
+         <record model="ir.ui.view" id="wo_lot_search_view">
+             <field name="name">mrp.production.workcenter.line.routing</field>
+             <field name="model">mrp.production.workcenter.line</field>
+             <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>
+             <field name="arch" type="xml">
+                 <data>
+                     <xpath expr="//field[@name='state']" position="after">
+                        <field name="wo_lot_id"/>
+                    </xpath>
+                 </data>
+             </field>
+         </record>
+
+        <record id="mrp_workoder_by_lot_kanban_action" model="ir.actions.act_window">
+            <field name="name">Work Orders</field>
+            <field name="res_model">mrp.production.workcenter.line</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="mrp_workoder_by_lot_kanban_view"/>
+            <field name="context">{'search_default_wo_lot_id': [context.get('active_id', False)], 'default_wo_lot_id': context.get('active_id', False), 'active_test': False}</field>
+            <field name="search_view_id" ref="wo_lot_search_view"/>
+         </record>
+
+        <menuitem
+            action="mrp_workoder_active_kanban_action"
+            id="menu_mrp_workorder_active"
+            parent="mrp.menu_mrp_planning"
+            sequence="3"/>
+
+<!--
 mrp.workoder.lot
 -->
 
@@ -202,6 +266,44 @@ mrp.workoder.lot
                 </form>
             </field>
         </record>
+
+        <record id="mrp_workoder_lot_kanban_view" model="ir.ui.view">
+            <field name="name">Work Order Lot</field>
+            <field name="model">mrp.workoder.lot</field>
+            <field name="arch" type="xml">
+                <kanban version="7.0" class="oe_background_grey">
+                    <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
+                            <div t-attf-class="oe_kanban_content">
+                                <b>WO LOT:</b> <field name="name"/><br/>
+                                <div>
+                                    <a name="%(mrp_workoder_by_lot_kanban_action)d" type="action" style="margin-right: 10px">
+                                    Work Orders
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    </templates>
+                </kanban>
+            </field>
+         </record>
+
+        <record id="mrp_workoder_lot_kanban_action" model="ir.actions.act_window">
+             <field name="name">Work Orders by Active Lot</field>
+             <field name="res_model">mrp.workoder.lot</field>
+             <field name="view_mode">kanban</field>
+             <field name="domain">[('state', '=', 'open')]</field>
+             <field name="view_id" ref="mrp_workoder_lot_kanban_view"/>
+         </record>
+
+        <menuitem
+            action="mrp_workoder_lot_kanban_action"
+            id="menu_mrp_workorder_active_lot"
+            parent="mrp.menu_mrp_planning"
+            sequence="4"/>
 
     </data>
 </openerp>
