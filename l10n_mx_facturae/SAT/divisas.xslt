@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:divisas="http://www.sat.gob.mx/divisas">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:divisas="http://www.sat.gob.mx/divisas">
 	<!-- Manejador de nodos tipo divisas:Divisas -->
 	<xsl:template match="divisas:Divisas">
 		<!-- Iniciamos el tratamiento de los atributos de divisas:Divisas -->
