@@ -66,6 +66,7 @@ class product_feature_line(osv.osv):
         'counter':fields.integer('Counter'),
         'analytic_id':fields.many2one('account.analytic.account','Product'),
         'cost':fields.float('cost'),
+        'prodlot_feature_id': fields.many2one('stock.production.lot', 'Production Lot', help="Production lot is used to put a serial number on the production", select=True),
     }
     
 product_feature_line()
