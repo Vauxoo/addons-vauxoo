@@ -32,7 +32,11 @@
     "description" : """This module creates a sql view for Account Aged Partner Balance today.""",
     "website" : "http://www.vauxoo.com/",
     "license" : "AGPL-3",
-    "depends" : ["account",'board'],
+    "depends" : [
+        "account",
+        'board',
+        'report_webkit',
+        ],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
