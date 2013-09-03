@@ -53,7 +53,8 @@ class res_company(osv.Model):
             "and when you need use an variable you put %(variable)s for use "\
             "information from an object. \nWhen you need information from "\
             "the partner, use partner.field that you need from the partner, "\
-            "for company use company.field an equal for an field from invoice."),
+            "for company use company.field an equal for an field from invoice."\
+            "\nNOTE: If you need use symbol '%', you need use %%."),
         'sample' : _('If you like put the text \nI Partner pay to the order of '\
             'My Company the amount of $500.00, you need put:'),
         'sample_text' : _("'I %(partner_name)s pay to the order of %(company_"\

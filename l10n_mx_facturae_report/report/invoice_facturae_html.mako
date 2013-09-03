@@ -245,6 +245,7 @@
             </tr>
             
         </table>
+        <br/>${o.comment or '' |entity}<br/>
         <br clear="all"/>
         <!--code for cfd-->
         %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
@@ -281,7 +282,7 @@
             </table>
         %endif
         <table class="basic_table">
-            <tr><td class="center_td">${ get_text_promissory(o.company_id, o.partner_id, o) or ''|entity }</td></tr>
+            <tr><td class="center_td"><pre>${ get_text_promissory(o.company_id, o.partner_id, o) or ''|entity }</pre></td></tr>
         </table>
         <!--code for cfd 3.2-->
         %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
