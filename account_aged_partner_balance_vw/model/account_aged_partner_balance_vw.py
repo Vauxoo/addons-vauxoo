@@ -84,7 +84,7 @@ class account_aged_trial_balance(osv.TransientModel):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
-        wzd_brw.write({'state':'open'})
+        wzd_brw.write({'state':'open', 'partner_line_ids':[(6,0,[])]})
         res = self.check_report(cr, uid, ids, context=context)
 
         data = res['datas']
@@ -199,6 +199,7 @@ class account_aged_trial_balance(osv.TransientModel):
                 future_past[i[0]] = i[1]
         elif self.direction_selection == 'past': # Using elif so people could extend without this breaking
             cr.execute('SELECT l.partner_id, SUM(l.debit-l.credit) \
+                    ' + type_query_r + '\
                     FROM account_move_line AS l, account_account, account_move am \
                     WHERE (l.account_id=account_account.id) AND (l.move_id=am.id)\
                         AND (am.state IN %s)\
@@ -212,8 +213,17 @@ class account_aged_trial_balance(osv.TransientModel):
                     AND (l.date <= %s)\
                         GROUP BY l.partner_id', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, tuple(partner_ids), self.date_from, self.date_from,))
             t = cr.fetchall()
-            for i in t:
-                future_past[i[0]] = i[1]
+            if wzd_brw.type=='distributed':
+                if wzd_brw.result_selection in ('customer','supplier'):
+                    for i in t:
+                        future_past[i[0]] = wzd_brw.result_selection == 'customer' \
+                            and i[2] or -(i[2])
+                else:
+                    for i in t:
+                        future_past[i[0]] = i[1]
+            else:
+                for i in t:
+                    future_past[i[0]] = i[1]
 
         # Use one query per period and store results in history (a list variable)
         # Each history will contain: history[1] = {'<partner_id>': <partner_debit-credit>}
@@ -286,7 +296,23 @@ class account_aged_trial_balance(osv.TransientModel):
                     after = [ future_past[partner['id']] ]
 
                 self.total_account[6] = self.total_account[6] + (after and after[0] or 0.0)
-                values['direction'] = after and after[0] or 0.0
+                if wzd_brw.type=='distributed':
+                    if wzd_brw.result_selection in ('customer','supplier') and advances.get(partner['id'],0.0):
+                        if advances.get(partner['id'],0.0) >= (after and after[0] or 0.0):
+                            values['direction'] =  0.0
+                            advances[partner['id']] -= after and after[0] or 0.0
+                        elif advances.get(partner['id'],0.0) < (after and after[0] or 0.0) and advances.get(partner['id'],0.0):
+                            values['direction'] = wzd_brw.result_selection == 'customer' \
+                                    and after and after[0] - advances[partner['id']] or \
+                                    -(after and after[0] - advances[partner['id']])
+                            advances[partner['id']] = 0.0
+                        else:
+                            values['direction'] = wzd_brw.result_selection == 'customer' \
+                                    and after and after[0] or 0.0 or -(after and after[0] or 0.0)
+                    else:
+                        values['direction'] = after and after[0] or 0.0
+                else:
+                    values['direction'] = after and after[0] or 0.0
 
             for i in range(5):
                 during = False
