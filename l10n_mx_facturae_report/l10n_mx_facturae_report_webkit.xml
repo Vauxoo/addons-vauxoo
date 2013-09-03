@@ -9,7 +9,8 @@
                 string="Factura Electronica Report"
                 report_type="webkit"
                 attachment_use="1"
-                attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"/>
+                attachment="(object.state in ('open','paid')) and (object.fname_invoice and (object.fname_invoice + ''))"
+                menu="False"/>
         
         <record id="property_l10n_mx_facturae_report_webkit" model="ir.property">
             <field name="name">webkit_header</field>
