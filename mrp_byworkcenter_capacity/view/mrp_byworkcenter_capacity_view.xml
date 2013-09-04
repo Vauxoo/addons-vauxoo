@@ -158,6 +158,7 @@ mrp.production.workcenter.line
                 <kanban version="7.0" default_group_by="stage_id">
                     <field name="name"/>
                     <field name="state"/>
+                    <field name="wo_lot_id"/>
                     <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
