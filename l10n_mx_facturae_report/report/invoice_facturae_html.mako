@@ -7,13 +7,13 @@
 <body>
     %for o in objects :
         ${set_global_data(o)}
-        <table>
+        <table class="basic_table">
             <tr>
                 <td style="vertical-align: top;">
                     ${helper.embed_image('jpeg',str(o.company_emitter_id.logo),180, 85)}
                 </td>
                 <td>
-                    <table>
+                    <table class="basic_table">
                         <tr>
                             <td width='50%'>
                                 <div class="title">${o.company_emitter_id.address_invoice_parent_company_id.name or ''|entity}</div>
@@ -282,7 +282,7 @@
             </table>
         %endif
         <table class="basic_table">
-            <tr><td class="center_td"><pre>${ get_text_promissory(o.company_id, o.partner_id, o) or ''|entity }</pre></td></tr>
+            <tr><td class="address"><pre>${ get_text_promissory(o.company_id, o.partner_id, address_emitter, o) or ''|entity }</pre></td></tr>
         </table>
         <!--code for cfd 3.2-->
         %if 'cfdi' in o.invoice_sequence_id.approval_id.type:
