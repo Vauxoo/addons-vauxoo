@@ -5,7 +5,7 @@
 #    Copyright (C) Vauxoo (<http://www.vauxoo.com>).                                                
 #    All Rights Reserved                                                                            
 # Credits######################################################                                     
-#    Coded by: Yanina Aular <yanina.aular@vauxoo.com> 
+#    Coded by: Yanina Aular <yanina.aular@vauxoo.com>
 #    Planified by: Humberto Arocha <humbertoarocha@gmail.com>
 #    Audited by: Humberto Arocha <humbertoarocha@gmail.com>
 ###############################################################################                     
@@ -23,33 +23,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.                          
 ###############################################################################
 
-{                                                                                                                                                  
-    'name': 'MRP Request Add Item',                                                       
-    'version': '1.0',                                                                               
-    'summary': 'Add new item in the wizard of Request/Return in order manufacturing',
-    'description': """                                                                             
+from openerp.osv import osv, fields
+from openerp.tools.translate import _
 
-MRP Request Add Item
-====================
-
-Configuration
-=============
-
-""",
-    'category': 'MRP',                                                                       
-    'author': 'Vauxoo C.A',                                                                         
-    'website': 'http://vauxoo.com',                                                                 
-    'license' : 'AGPL-3',
-    'depends': ['mrp','mrp_consume_produce','mrp_request_return'],
-    'data': [
-        'wizard/mrp_request_return_view.xml',
-        ],
-    'demo': [],
-    'installable': True,                                                                            
-    'auto_install' : False,
-    'js': [],
-    'qweb': [],
-    'css': [],
-    'images': [],
-    'test' : [],
-}
+class mrp_request_return(osv.TransientModel):                                                       
+     _inherit = 'mrp.request.return'                                                                    
+                                                                                                     
+     def action_request_return(self, cr, uid, ids, context=None):
+        super(mrp_request_return, self).action_request_return(cr, uid, ids, context=context)
+        print "\n\n\n\nhola"
+        return {}
