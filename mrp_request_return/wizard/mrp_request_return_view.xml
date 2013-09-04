@@ -9,7 +9,9 @@
             <field name="arch" type="xml">
                 <form string="Products" version="7.0">
             <newline/>
-            <field name="re_line_ids" mode="tree" nolabel="1" colspan="4" width="640" height="240" context="{'ctx':context}">
+            <field name="re_line_ids" mode="tree" nolabel="1" colspan="4" width="640" height="240"
+                context="{'act_ids':context.get('active_ids', [])}"
+                >
                 <tree string="Products" editable="bottom">
                     <field name="product_id" on_change="on_change_product_uom(product_id)"/>
                     <field name="product_qty"/>
