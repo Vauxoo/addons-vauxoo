@@ -60,6 +60,9 @@ class sign_youtube_conf(osv.Model):
 
 
     def get_items(self, entry):                                                                               
+        '''
+        Return the video details
+        '''
         entry_data = {                                                                                  
             'name': entry and entry.media.title.text or '',                                            
             'published': entry and entry.published.text or '',                                          
@@ -75,6 +78,9 @@ class sign_youtube_conf(osv.Model):
         return entry_data   
 
     def load_videos(self, cr, uid, ids, filters_name=None, context=None):
+        '''
+        Load the videos for your account and added in the config lines
+        '''
         if context is None:
             context = {}
         line = self.pool.get('sing.youtube.conf.line')
@@ -161,6 +167,9 @@ class sign_youtube_conf_line(osv.Model):
             }
 
     def load_url(self, cr, uid, ids, context=None):
+        '''
+        Launch a new window where you can the watch the video
+        '''
         if context is None:
             context = {}
         for wzr in self.browse(cr, uid, ids, context=context):
@@ -170,6 +179,9 @@ class sign_youtube_conf_line(osv.Model):
                     'target': 'new'
                     }
     def show_on_inbox(self, cr, uid, ids, context=None):
+        '''
+        Generate a new windows to add a message for then send it to the inbox message
+        '''
         if context is None:
             context = {}
         for wzr in self.browse(cr, uid, ids, context=context):
@@ -179,7 +191,7 @@ class sign_youtube_conf_line(osv.Model):
                           ('name', '=', 'sing_youtube_form2_view')])
             resource_id = obj_model.read(cr, uid, model_data_ids,
                                          fields=['res_id'])[0]['res_id']
-            message = 2*'<br>' + wzr.name + 2*'<br>' + 'You need watch this video ' + \
+            message = 2*'<br>' + wzr.name + 2*'<br>' + _('You need watch this video ') + \
                                                             '<a href="%s">%s</a>' % (wzr.url_swf,
                                                                     wzr.name)
             return {
@@ -192,6 +204,9 @@ class sign_youtube_conf_line(osv.Model):
                 'context':{'default_message': message},
                 }
     def send_to_inbox(self, cr, uid, ids, context=None):
+        '''
+        Send the message to the inbox for the specific group 
+        '''
         if context is None:
             context = {}
         message_obj = self.pool.get('mail.group')
@@ -207,4 +222,4 @@ class sign_youtube_conf_line(osv.Model):
 
             message_obj.message_post(cr, uid, [mail_group_id],                      
                                      body= wzr.message, subtype='mail.mt_comment', context=context)
-            return {'type': 'ir.actions.act_window_close'} 
+        return {'type': 'ir.actions.act_window_close'} 
