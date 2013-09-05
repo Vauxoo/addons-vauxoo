@@ -182,6 +182,7 @@ mrp.production.workcenter.line
             <field name="res_model">mrp.production.workcenter.line</field>
             <field name="view_mode">kanban</field>
             <field name="view_id" ref="mrp_workoder_by_lot_kanban_view"/>
+            <field name="context">{'search_default_actived': 1}</field>
         </record>
 
          <record model="ir.ui.view" id="wo_lot_search_view">
@@ -192,6 +193,7 @@ mrp.production.workcenter.line
                  <data>
                      <xpath expr="//field[@name='state']" position="after">
                         <field name="wo_lot_id"/>
+                        <filter name="actived" string="Actived" domain="[('active_lot','=',True)]"/>
                     </xpath>
                  </data>
              </field>

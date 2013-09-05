@@ -541,6 +541,36 @@ class mrp_production_workcenter_line(osv.Model):
             wos_obj.search(cr, uid, [('state', '=', 'draft')], context=context)
         return wos_id and wos_id[0]
 
+    def _update_active_lot(self, cr, uid, ids, file_name, arg, context=None):
+        """
+        Update the work orders active lot field. If a work order lot change its
+        state then the work orders associated to that lot will change its
+        active lot state too to True or False whatever the case is.
+        Note: The Work Order Lot its 'active' when is in open or pendding
+        state.
+        """
+        context = context or {}
+        res = {}.fromkeys(ids)
+        wol_obj = self.pool.get('mrp.workoder.lot')
+        open_wol_ids = wol_obj.search(
+            cr, uid, [('state', 'in', ['open','pending'])], context=context)
+        for wo_brw in self.browse(cr, uid, ids, context=context):
+            res[wo_brw.id] = \
+                (wo_brw.wo_lot_id.id in open_wol_ids) and True or False
+        return res
+
+    def _get_wo_ids_to_update(self, cr, uid, ids, context=None):
+        """
+        This method monitors the Work Order Lots that have been change of state
+        and return the corresponding work orders associated ids who active_lot
+        state need to be updated.
+        """
+        context = context or {}
+        wo_obj = self.pool.get('mrp.production.workcenter.line')
+        wo_ids = wo_obj.search(cr, uid, [('wo_lot_id', 'in', ids)],
+                               context=context)
+        return wo_ids
+
     _columns = {
         'wo_lot_id': fields.many2one('mrp.workoder.lot',
                                      _('Work Order Lot')),
@@ -551,6 +581,15 @@ class mrp_production_workcenter_line(osv.Model):
             help=_('The stage permits to manage the state of the work orders'
                    ' in the kanban views tools for visualization of the charge'
                    ' and for planning the manufacturing process.')),
+        'active_lot': fields.function(
+            _update_active_lot,
+            type='boolean',
+            store={
+                'mrp.workoder.lot': (_get_wo_ids_to_update, ['state'], 10),
+            },
+            string=_('Status by Lot'),
+            help=_('If a Work Order Lot is active, then the Work Order is take'
+                  ' like active to')),
     }
 
     _defaults = {
