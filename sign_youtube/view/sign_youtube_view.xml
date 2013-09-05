@@ -1,0 +1,66 @@
+<openerp>
+    <data>
+
+    <record model="ir.ui.view" id="sing_youtube_tree_view">
+        <field name="name">Sing YouTube</field>                                    
+        <field name="model">sing.youtube.conf</field>                                   
+        <field name="arch" type="xml">                                          
+            <tree string="Sing YouTube" version="7.0">
+                <field name="name"/>
+                <field name="passwd"/>
+                <field name="client_id"/>
+                <field name="developer_key"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="sing_youtube_form_view">
+        <field name="name">Sing YouTube</field>                                    
+        <field name="model">sing.youtube.conf</field>                                   
+        <field name="arch" type="xml">                                          
+            <form string="Sing YouTube" version="7.0">
+                <footer>
+                    <button type="object" name="load_videos" string="Load Videos"/>
+                </footer>
+                <group>
+                <field name="name" required="1"/>
+                <field name="passwd" required="1" password="1"/>
+                <field name="client_id" required="1"/>
+                <field name="developer_key" required="1"/>
+                <field name="max_v" required="1"/>
+                </group>
+                <field name="line" >
+                    <tree string="Videos Uploaded" colors="blue:update==1" editable="button" >
+                        <field name="info" width="10%%" col="1" colspan="1"/>
+                        <field name="update" invisible="1"/>
+                        <field name="name" readonly="1"/>
+                        <field name="category" readonly="1"/>
+                        <field name="description" readonly="1"/>
+                        <field name="published" readonly="1"/>
+                        <field name="duration_seconds" readonly="1" width="float_time"/>
+                        <field name="url_swf" widget="url" readonly="1"/>
+                        <button type="object" name="load_url" string="Launch Video"/>
+                    </tree>
+                </field>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="sing_youtube_action">
+      <field name="name">Sing YouTube</field>
+      <field name="res_model">sing.youtube.conf</field>
+      <field name="view_type">form</field>
+      <field name="vies_mode">tree,form</field>
+    </record>
+
+
+    <menuitem
+    id="sing_youtube_menu"
+    name="Sing YouTube Conf"
+    parent="base.menu_custom"
+    action="sing_youtube_action"/>        
+
+    </data>
+</openerp>
