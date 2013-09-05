@@ -61,14 +61,16 @@ class sign_youtube_conf(osv.Model):
 
     def get_items(self, entry):                                                                               
         entry_data = {                                                                                  
-            'title': entry and entry.media.title.text or '',                                            
+            'name': entry and entry.media.title.text or '',                                            
             'published': entry and entry.published.text or '',                                          
             'description': entry and entry.media.description.text or '',                                
             'category': entry and entry.media.category[0].text or '',                                   
             'tags': entry and entry.media.keywords.text or '',                                          
             'url_swf': entry and entry.GetSwfUrl() or '',                                               
             'duration_seconds': entry and float(entry.media.duration.seconds) or '',                           
-            #'private':                                                                                 
+            'favorites': entry and entry.statistics and entry.statistics.favorite_count or '',
+            'views': entry and entry.statistics and entry.statistics.view_count or '',
+            'private': entry.media.private and entry.media.private.text,
         }                                                                                               
         return entry_data   
 
@@ -132,7 +134,13 @@ class sign_youtube_conf_line(osv.Model):
     _name = 'sing.youtube.conf.line'
 
     _columns = {
-        'name':fields.char('Video Title ', 200, help='Tittle for YouTube Video'),
+        'views':fields.integer('Number of views',
+                                help='Number of times they have viewed the video'), 
+        'favorites':fields.integer('Number of favorites',
+                                   help='Number of times they have viewed the video'), 
+        'name':fields.text('Video Title ', help='Tittle for YouTube Video'),
+        'message':fields.text('Message', help='Message to shown in inbox'),
+        'private':fields.char('Private', 200, help='Private info about the video'),
         'info':fields.boolean('Add in messages', help='Select if you want add this video in the '
                                                       'company messages'), 
         'config_id':fields.many2one('sing.youtube.conf', 'Config'), 
@@ -161,3 +169,42 @@ class sign_youtube_conf_line(osv.Model):
                     'url':wzr.url_swf,
                     'target': 'new'
                     }
+    def show_on_inbox(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        for wzr in self.browse(cr, uid, ids, context=context):
+            obj_model = self.pool.get('ir.model.data')
+            model_data_ids = obj_model.search(
+                cr, uid, [('model', '=', 'ir.ui.view'),
+                          ('name', '=', 'sing_youtube_form2_view')])
+            resource_id = obj_model.read(cr, uid, model_data_ids,
+                                         fields=['res_id'])[0]['res_id']
+            message = 2*'<br>' + wzr.name + 2*'<br>' + 'You need watch this video ' + \
+                                                            '<a href="%s">%s</a>' % (wzr.url_swf,
+                                                                    wzr.name)
+            return {
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_model': 'sing.youtube.conf.line',
+                'views': [(resource_id, 'form')],
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+                'context':{'default_message': message},
+                }
+    def send_to_inbox(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        message_obj = self.pool.get('mail.group')
+        data_obj = self.pool.get('ir.model.data')
+        
+        for wzr in self.browse(cr, uid, ids, context=context):
+            try:
+                (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'portal_gallery',
+                                                                       'company_gallery_feed')
+            except:
+                (model, mail_group_id) = data_obj.get_object_reference(cr, uid, 'mail',
+                                                                       'group_all_employees')
+
+            message_obj.message_post(cr, uid, [mail_group_id],                      
+                                     body= wzr.message, subtype='mail.mt_comment', context=context)
+            return {'type': 'ir.actions.act_window_close'} 

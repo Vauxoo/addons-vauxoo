@@ -32,21 +32,47 @@
                 </group>
                 <field name="line" >
                     <tree string="Videos Uploaded" colors="blue:update==1" editable="button" >
-                        <field name="info" width="10%%" col="1" colspan="1"/>
                         <field name="update" invisible="1"/>
                         <field name="name" readonly="1"/>
                         <field name="category" readonly="1"/>
+                        <field name="tags" readonly="1"/>
                         <field name="description" readonly="1"/>
                         <field name="published" readonly="1"/>
+                        <field name="views" readonly="1"/>
+                        <field name="favorites" readonly="1"/>
                         <field name="duration_seconds" readonly="1" width="float_time"/>
                         <field name="url_swf" widget="url" readonly="1"/>
-                        <button type="object" name="load_url" string="Launch Video"/>
+                        <button type="object"
+                                name="load_url"
+                                help="Play the video"
+                                icon="STOCK_MEDIA_PLAY"
+                                string="Launch Video"/>
+                        <button type="object"
+                                name="show_on_inbox"
+                                help="Show on Inbox"
+                                icon="terp-idea"
+                                string="Launch Video"/>
                     </tree>
                 </field>
             </form>
         </field>
     </record>
 
+    <record model="ir.ui.view" id="sing_youtube_form2_view">
+        <field name="name">Sing YouTube</field>                                    
+        <field name="model">sing.youtube.conf.line</field>                                   
+        <field name="arch" type="xml">                                          
+            <form string="Sing YouTube" version="7.0">
+                <group>
+                    <field name="message" widget="html"/>
+                </group>
+                <button type="object"
+                        name="send_to_inbox"
+                        help="Used to send this video in company inbox"
+                        string="Send to Inbox"/>
+            </form>
+        </field>
+    </record>
 
     <record model="ir.actions.act_window" id="sing_youtube_action">
       <field name="name">Sing YouTube</field>
