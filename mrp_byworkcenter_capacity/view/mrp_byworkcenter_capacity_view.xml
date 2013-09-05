@@ -302,11 +302,12 @@ mrp.workorder.lot
              <field name="view_id" ref="mrp_workorder_lot_kanban_view"/>
              <field name="help" type="html">
                 <p>
-                    <strong> Create Work Order Lots </strong><br/>
+                    <strong> There's not Work Order Lots Active </strong><br/>
                 </p>
                 <p>
-                    Create them by Confirming a Manufacturing Order or by
-                    Compute its Work Orders Data.
+                    Create Work Order Lots by Confirming a Manufacturing Order.
+                    To Active a Work Order Lot make consumes in the
+                    Manufacturing Order.
                 </p>
              </field>
          </record>
