@@ -10,14 +10,14 @@
                 <form string="Consume" version="7.0">
             <field name="consume_line_ids" mode="tree" nolabel="1" width="640" height="240">
                 <tree string="Consume" editable="bottom" create="false">
-                    <field name="product_id"/>
+                    <field name="product_id" readonly="1"/>
                     <field name="quantity"/>
-                    <field name="product_uom"/>
+                    <field name="product_uom" readonly="1"/>
                 </tree>
                 <form string="Consume" version="7.0" create="false">
-                    <field name="product_id"/>
+                    <field name="product_id" readonly="1"/>
                     <field name="quantity"/>
-                    <field name="product_uom"/>
+                    <field name="product_uom" readonly="1"/>
                 </form>
             </field>
             <group colspan="4">
@@ -51,14 +51,14 @@
                 <form string="Produce" version="7.0">
             <field name="produce_line_ids" mode="tree" nolabel="1" width="640" height="240">
                 <tree string="Produce" editable="bottom" create="false">
-                    <field name="product_id"/>
+                    <field name="product_id" readonly="1"/>
                     <field name="quantity"/>
-                    <field name="product_uom"/>
+                    <field name="product_uom" readonly="1"/>
                 </tree>
                 <form string="Produce" version="7.0" create="false">
-                    <field name="product_id"/>
+                    <field name="product_id" readonly="1"/>
                     <field name="quantity"/>
-                    <field name="product_uom"/>
+                    <field name="product_uom" readonly="1"/>
                 </form>
             </field>
             <group colspan="4">
