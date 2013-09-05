@@ -34,16 +34,19 @@ class mrp_consume(osv.TransientModel):
 
     def _get_default_wo_lot(self, cr, uid, context=None):
         """
-        @return: The first Lot to produce (cardinal order).
+        @return: The first Work Order Lot to produce (cardinal order).
         """
         context = context or {}
         res = False
         production_obj = self.pool.get('mrp.production')
         if context.get('active_id', False):
             production_id = context.get('active_id')
-            res = production_obj.browse(
-                cr, uid, production_id, context=context).wo_lot_ids[0].id
-        return res
+            wol_brws = production_obj.browse(
+                cr, uid, production_id, context=context).wo_lot_ids
+            res = [wol_brw.id
+                   for wol_brw in wol_brws
+                   if wol_brw.state == 'draft']
+        return res[0]
 
     _columns = {
         'production_id': fields.many2one(
