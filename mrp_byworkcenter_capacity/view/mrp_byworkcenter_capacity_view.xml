@@ -274,7 +274,7 @@ mrp.workorder.lot
             <field name="name">Work Order Lot</field>
             <field name="model">mrp.workorder.lot</field>
             <field name="arch" type="xml">
-                <kanban version="7.0" class="oe_background_grey">
+                <kanban version="7.0" class="oe_background_grey" create="false">
                     <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_color_#{kanban_getcolor(FFFFFF)} oe_kanban_card oe_kanban_global_click">
