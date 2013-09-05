@@ -28,8 +28,3 @@ from openerp.tools.translate import _
 
 class mrp_request_return(osv.TransientModel):                                                       
      _inherit = 'mrp.request.return'                                                                    
-                                                                                                     
-     def action_request_return(self, cr, uid, ids, context=None):
-        super(mrp_request_return, self).action_request_return(cr, uid, ids, context=context)
-        print "\n\n\n\nhola"
-        return {}

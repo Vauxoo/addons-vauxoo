@@ -14,7 +14,22 @@
                 <xpath expr="//field[@name='re_line_ids']/form[@string='Products']" position="attributes">
                     <attribute name="create">true</attribute>              
                 </xpath>
+
+                <xpath expr="//field[@name='re_line_ids']" position="attributes">
+                    <attribute name="context">{'act_ids':context.get('act_ids', [])}</attribute>
+                </xpath>
+               
             </field>                                                                                
-        </record>    
+        </record>   
+
+        <record id="mrp_request_return.create_request_return_action" model="ir.actions.act_window">                     
+             <field name="name">Products</field>                                                     
+             <field name="res_model">mrp.request.return</field>                                      
+             <field name="view_type">form</field>                                                    
+             <field name="view_mode">form</field>                                                    
+             <field name="target">new</field>
+             <field name="context">{'act_ids':active_ids}</field>
+         </record> 
+
     </data>
 </openerp>
