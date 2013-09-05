@@ -110,7 +110,8 @@ class account_aged_trial_balance(osv.TransientModel):
         context = context or {}
         ids = isinstance(ids, (int, long)) and [ids] or ids
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
-        wzd_brw.write({'state':'open', 'partner_line_ids':[(6,0,[])]})
+        wzd_brw.write({'state':'open', 'partner_line_ids':[(6,0,[])],
+            'partner_doc_ids':[(6,0,[])]})
         res = self.check_report(cr, uid, ids, context=context)
 
         data = res['datas']
@@ -120,6 +121,10 @@ class account_aged_trial_balance(osv.TransientModel):
             res = self._get_lines(cr,uid,ids,form,context=context)
             res = map(lambda x: (0,0,x),res)
             wzd_brw.write({'partner_line_ids':res})
+        elif wzd_brw.type == 'by_document':
+            res = self._get_doc_lines(cr,uid,ids,form,context=context)
+            res = map(lambda x: (0,0,x),res)
+            wzd_brw.write({'partner_doc_ids':res})
         return {}
 
     def set_context(self, cr, uid, ids, data, context=None): 
@@ -139,7 +144,7 @@ class account_aged_trial_balance(osv.TransientModel):
         else:
             self.ACCOUNT_TYPE = ['payable','receivable']
 
-    def _get_lines(self, cr, uid, ids, form, context=None):
+    def _get_partners(self, cr, uid, ids, form, context=None):
         context = context or {}
         res = []
         wzd_brw = self.browse(cr,uid,ids[0],context=context)
@@ -160,7 +165,16 @@ class account_aged_trial_balance(osv.TransientModel):
                     AND (l.date <= %s)\
                     AND ' + self.query + ' \
                 ORDER BY res_partner.name', (tuple(move_state), tuple(self.ACCOUNT_TYPE), self.date_from, self.date_from,))
-        partners = cr.dictfetchall()
+        return cr.dictfetchall()
+
+    def _get_lines(self, cr, uid, ids, form, context=None):
+        context = context or {}
+        res = []
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        move_state = ['draft','posted']
+        if self.target_move == 'posted':
+            move_state = ['posted']
+        partners = self._get_partners(cr, uid, ids, form, context=context)
         ## mise a 0 du total
         for i in range(7):
             self.total_account.append(0)
@@ -380,4 +394,57 @@ class account_aged_trial_balance(osv.TransientModel):
             r.pop('name')
             res2.append(r)
         return res2
+
+    def _get_doc_lines(self, cr, uid, ids, form, context=None):
+        context = context or {}
+        res = []
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        partners = self._get_partners(cr, uid, ids, form, context=context)
+        partner_ids = [x['id'] for x in partners]
+        if not partner_ids:
+            return []
+        res = self._get_invoice_by_partner(cr, uid, ids, partner_ids)
+        return res
+
+    def _get_invoice_by_partner(self, cr, uid, ids, rp_ids, context=None):
+        res = [] 
+        context = context or {}
+        wzd_brw = self.browse(cr,uid,ids[0],context=context)
+        rp_obj = self.pool.get('res.partner')
+        inv_obj = self.pool.get('account.invoice')
+        args = [
+                ('residual', '!=', 0), 
+                ('state', 'not in', ('cancel', 'draft'))]
+
+        if wzd_brw.result_selection == 'customer':
+            args += [('type', '=', 'out_invoice')]
+        elif wzd_brw.result_selection == 'supplier':
+            args += [('type', '=', 'in_invoice')]
+        else:
+            return []
+
+        rp_brws = rp_obj.browse(cr, uid, rp_ids, context=context)
+
+        for rp_brw in rp_brws:
+            inv_ids = inv_obj.search(
+                cr, uid, [('partner_id', '=', rp_brw.id)] + args)
+            if not inv_ids:
+                continue
+            for inv_brw in inv_obj.browse(cr, uid, inv_ids):
+                residual = inv_brw.residual
+                date_due = mx.DateTime.strptime(
+                    inv_brw.date_due or inv_brw.date_invoice, '%Y-%m-%d')
+                today = mx.DateTime.now()
+                due_days = (today - date_due).day
+
+                if not residual:
+                    continue
+
+                res.append({
+                    'partner_id': rp_brw.id,
+                    'inv_id': inv_brw.id,
+                    'residual': residual,
+                    'due_days': due_days
+                })
+        return res
 
